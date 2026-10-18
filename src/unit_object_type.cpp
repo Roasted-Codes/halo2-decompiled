@@ -3038,7 +3038,7 @@ bool function_d1080(long unit_index, transform4x3f *matrix, s_unit_camera_data *
    past the definition's limit at +0x114, else 3; otherwise 0xc96b0's
    range (2 when forced, at most 1 when asked), held to 1 for players */
 // @retail 0xc9770
-long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, long unused, bool force, real c, real d)
+long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool held, bool force, real c, real d)
 {
 	s_unit *unit = UNIT_GET(unit_index);
 	byte *definition = UNIT_DEFINITION_GET(unit);
