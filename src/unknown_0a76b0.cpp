@@ -1025,10 +1025,12 @@ bool __stdcall function_e7fb0(long unit_index, s_unit_request *request)
 
 	if (!grenade || function_cdff0(unit_index, UNIT_ACTION_UNIT_GET(unit_index)->current_grenade_index) <= 0)
 	{
-		if (animate && unit_get_player_index(unit_index) != NONE &&
-			*(short *)(g_4e8c24->data + (unit_get_player_index(unit_index) & 0xffff) * 0x21c + 0x28) != NONE)
+		if (animate && unit_get_player_index(unit_index) != NONE)
 		{
-			function_2007b3(*(short *)(g_4e8c24->data + (unit_get_player_index(unit_index) & 0xffff) * 0x21c + 0x28), 0, 1, NONE);
+			short player_value = *(short *)(g_4e8c24->data + (unit_get_player_index(unit_index) & 0xffff) * 0x21c + 0x28);
+
+			if (player_value != NONE)
+				function_2007b3(player_value, 0, 1, NONE);
 		}
 		return result;
 	}
