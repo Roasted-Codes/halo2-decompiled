@@ -104,14 +104,14 @@ void __stdcall function_46230(short target, real const *bounds)
     real constants[32] = {
         bounds[1] - bounds[0], 0.0f, 0.0f, bounds[0],
         0.0f, bounds[3] - bounds[2], 0.0f, bounds[2],
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f
     };
-    D3DDevice_SetVertexShaderConstant(18, constants, 8);
+    D3DDevice_SetVertexShaderConstant(-78, constants, 8);
     memset(&g_484f68, 0, sizeof(g_484f68));
     g_484f68.PSTextureModes = 0x21;
     g_484f68.PSCombinerCount = 1;
