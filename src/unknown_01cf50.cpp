@@ -6276,7 +6276,8 @@ bool __stdcall function_37a60(void *context)
             function_143c0(*(long *)(input + 4 + (stage - 1) * 8), 0, (short)stage, 0.0f);
             D3DDevice_SetTextureStageState(stage, D3DTSS_ADDRESSU, 1);
             D3DDevice_SetTextureStageState(stage, D3DTSS_ADDRESSV, 1);
-            D3DDevice_SetTextureStageState(stage, D3DTSS_ADDRESSW, 1);
+            /* retail sets ADDRESSV a second time here (eleven dirty-flag updates, ADDRESSW never stored) */
+            D3DDevice_SetTextureStageState(stage, D3DTSS_ADDRESSV, 1);
             D3DDevice_SetTextureStageState(stage, D3DTSS_MAGFILTER, 2);
             D3DDevice_SetTextureStageState(stage, D3DTSS_MINFILTER, 2);
             D3DDevice_SetTextureStageState(stage, D3DTSS_MIPFILTER, 2);
@@ -6295,28 +6296,28 @@ bool __stdcall function_37a60(void *context)
         vertex2f(3, vertices[0].coordinates[1].x, vertices[0].coordinates[1].y);
         vertex2f(4, vertices[0].coordinates[2].x, vertices[0].coordinates[2].y);
         #pragma inline_depth(0)
-        D3DDevice_SetVertexData4f(0, vertices[0].x, vertices[0].y, z, w);
+        D3DDevice_SetVertexData4f(D3DVSDE_VERTEX, vertices[0].x, vertices[0].y, z, w);
         #pragma inline_depth(255)
         vertex2f(1, vertices[1].x, vertices[1].y);
         vertex2f(2, vertices[1].coordinates[0].x, vertices[1].coordinates[0].y);
         vertex2f(3, vertices[1].coordinates[1].x, vertices[1].coordinates[1].y);
         vertex2f(4, vertices[1].coordinates[2].x, vertices[1].coordinates[2].y);
         #pragma inline_depth(0)
-        D3DDevice_SetVertexData4f(0, vertices[1].x, vertices[1].y, z, w);
+        D3DDevice_SetVertexData4f(D3DVSDE_VERTEX, vertices[1].x, vertices[1].y, z, w);
         #pragma inline_depth(255)
         vertex2f(1, vertices[2].x, vertices[2].y);
         vertex2f(2, vertices[2].coordinates[0].x, vertices[2].coordinates[0].y);
         vertex2f(3, vertices[2].coordinates[1].x, vertices[2].coordinates[1].y);
         vertex2f(4, vertices[2].coordinates[2].x, vertices[2].coordinates[2].y);
         #pragma inline_depth(0)
-        D3DDevice_SetVertexData4f(0, vertices[2].x, vertices[2].y, z, w);
+        D3DDevice_SetVertexData4f(D3DVSDE_VERTEX, vertices[2].x, vertices[2].y, z, w);
         #pragma inline_depth(255)
         vertex2f(1, vertices[3].x, vertices[3].y);
         vertex2f(2, vertices[3].coordinates[0].x, vertices[3].coordinates[0].y);
         vertex2f(3, vertices[3].coordinates[1].x, vertices[3].coordinates[1].y);
         vertex2f(4, vertices[3].coordinates[2].x, vertices[3].coordinates[2].y);
         #pragma inline_depth(0)
-        D3DDevice_SetVertexData4f(0, vertices[3].x, vertices[3].y, z, w);
+        D3DDevice_SetVertexData4f(D3DVSDE_VERTEX, vertices[3].x, vertices[3].y, z, w);
         #pragma inline_depth(255)
         D3DDevice_End();
         D3DDevice_SetRenderState(D3DRS_ALPHATESTENABLE, 0);
