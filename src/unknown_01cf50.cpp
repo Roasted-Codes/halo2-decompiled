@@ -5723,9 +5723,9 @@ void function_46ea0(long tag, point3f const *position)
     D3DDevice_SetTextureStageState(0, D3DTSS_MAGFILTER, 2);
     D3DDevice_SetTextureStageState(0, D3DTSS_MINFILTER, 2);
     D3DDevice_SetTextureStageState(0, D3DTSS_MIPFILTER, 2);
-    D3DDevice_SetTextureStageState(0, D3DTSS_MAXMIPLEVEL, 0);
     D3DDevice_SetTextureStageState(0, D3DTSS_MAXANISOTROPY, 0);
     D3DDevice_SetTextureStageState(0, D3DTSS_MIPMAPLODBIAS, 0);
+    D3DDevice_SetTextureStageState(0, D3DTSS_MAXMIPLEVEL, 0);
     D3DDevice_SetTextureStageState(0, D3DTSS_COLORSIGN, 0);
     D3DDevice_SetTextureStageState(0, D3DTSS_ALPHAKILL, 0);
     g_4b8448 = 0x901; D3DDevice_SetRenderState(D3DRS_CULLMODE, 0x901);
@@ -5760,9 +5760,9 @@ void function_46ea0(long tag, point3f const *position)
     function_0224f0(0, D3DTSS_MAGFILTER, 2);
     function_0224f0(0, D3DTSS_MINFILTER, 2);
     function_0224f0(0, D3DTSS_MIPFILTER, 2);
-    function_0224f0(0, D3DTSS_MAXMIPLEVEL, 0);
     function_0224f0(0, D3DTSS_MAXANISOTROPY, 0);
     function_0224f0(0, D3DTSS_MIPMAPLODBIAS, 0);
+    function_0224f0(0, D3DTSS_MAXMIPLEVEL, 0);
     function_0224f0(0, D3DTSS_COLORSIGN, 0);
     function_0224f0(0, D3DTSS_ALPHAKILL, 0);
     g_4b8448 = 0x901; D3DDevice_SetRenderState(D3DRS_CULLMODE, 0x901);
