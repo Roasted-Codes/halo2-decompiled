@@ -3424,7 +3424,7 @@ short __stdcall function_467c0(short first, short second, short count)
             1.0f,0.0f,0.0f,-0.0078125f, 0.0f,1.0f,0.0f,0.0078125f,
             1.0f,0.0f,0.0f,0.0078125f, 0.0f,1.0f,0.0f,-0.0078125f
         };
-        D3DDevice_SetVertexShaderConstant(18, constants, 8);
+        D3DDevice_SetVertexShaderConstant(-78, constants, 8);
         D3DPIXELSHADERDEF program;
         memset(&program, 0, sizeof(program));
         program.PSAlphaOutputs[0] = 0xc00;
