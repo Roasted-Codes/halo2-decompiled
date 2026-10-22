@@ -60,6 +60,13 @@ void __cdecl function_2d91d0(void *array, long element_size);
 	{ \
 		ensure_capacity(count); \
 		size = count; \
+	} \
+	__forceinline type &operator[](long index) { return data[index]; } \
+	__forceinline type const &operator[](long index) const { return data[index]; } \
+	__forceinline void remove_at(long index) \
+	{ \
+		size--; \
+		(*this)[index] = (*this)[size]; \
 	}
 
 // declares `name`, the array of `type`, which can also append an element
