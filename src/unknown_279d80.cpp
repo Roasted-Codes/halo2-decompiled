@@ -107,6 +107,7 @@ PRIVATE inline void node_mask_clear(dword *mask)
 /* whether a bit is set in a bit vector */
 #define BIT_VECTOR_TEST(vector, bit) ((((dword const *)(vector))[(bit) >> 5] & (1 << ((bit) & 31))) != 0)
 
+#define MIN(a, b) ((a) > (b) ? (b) : (a))
 #define PIN(value, minimum, maximum) ((value) < (minimum) ? (minimum) : ((value) > (maximum) ? (maximum) : (value)))
 
 // @retail 0x2798a0
@@ -281,11 +282,7 @@ void function_279d80(s_graph_tag *graph, c_type_709360 animation_id, long node_c
 
 	function_1ddb40(&data, graph, animation_id);
 	address = data.data;
-	size = animation_data_size(data.sizes);
-	if (size > 0x400)
-	{
-		size = 0x400;
-	}
+	size = MIN(animation_data_size(data.sizes), 0x400);
 	for (; address < data.data + size; address += 0x20)
 	{
 		_mm_prefetch((char const *)address, _MM_HINT_T0);

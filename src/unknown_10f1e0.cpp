@@ -768,7 +768,7 @@ void function_113740(long unit_index)
 }
 
 // @retail 0x1137b0
-real function_1137b0(long set, bool other, real minimum, bool changed, long current_set)
+real function_1137b0(bool other, real minimum, bool changed, long set, long current_set)
 {
 	real result = 0.267f;
 
@@ -876,7 +876,7 @@ bool __stdcall function_10f430(long unit_index, long mode, long weapon_class, lo
 		}
 		if (mode_changed || set_changed)
 		{
-			real seconds = function_1137b0(set, false, blend, mode_changed, current_set);
+			real seconds = function_1137b0(false, blend, mode_changed, set, current_set);
 
 			if (seconds > 0.0f && !(bool)(((dword)(short)state->flags >> 4) & 1))
 				function_ba350(unit_index, seconds);
@@ -1012,7 +1012,7 @@ bool function_10fd40(long unit_index, long weapon_type, long weapon_class, bool 
 
 		if (class_changed || type_changed)
 		{
-			real seconds = function_1137b0(state->unknown7c, true, 0.0f, false, state->unknown7c);
+			real seconds = function_1137b0(true, 0.0f, false, state->unknown7c, state->unknown7c);
 
 			channel_refresh_if_valid(state, &control->channel_9c, 0x7000101, 0x7000101);
 			channel_refresh_if_valid(state, &control->channel_dc, 0x7000101, 0x7000101);

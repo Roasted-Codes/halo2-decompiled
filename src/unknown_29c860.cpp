@@ -44,7 +44,6 @@ __forceinline void function_29c9ee(vector3f const *arg_0, vector3f const *arg_1,
 void function_29c860(long arg_0, long arg_1, point2f const *arg_2,
 	point2f const *arg_3, real arg_4, vector3f *arg_5)
 {
-	real *local_9 = &arg_4;
 	s_actor_view *local_0 = actor_get(arg_0);
 	s_29c860 const *local_1 = (s_29c860 const *)function_1e5450(arg_0, *(long *)object_get(arg_1));
 	real local_3 = function_11cc90((vector2f const *)arg_2, (vector2f const *)arg_3);
@@ -64,10 +63,10 @@ void function_29c860(long arg_0, long arg_1, point2f const *arg_2,
 		arg_4 = -local_4;
 	else if (arg_4 > local_4)
 		arg_4 = local_4;
-	*local_9 += *(real *)((byte *)local_0 + 0x654);
+	arg_4 += *(real *)((byte *)local_0 + 0x654);
 	vector3f local_7;
 	vector3f local_8 = { arg_2->x, arg_2->y, 0.0f };
-	function_29c9ee(&local_8, g_4687b0, *local_9, &local_7);
+	function_29c9ee(&local_8, g_4687b0, arg_4, &local_7);
 	*(real *)((byte *)local_0 + 0x65c) = arg_4;
 	*arg_5 = local_7;
 }
