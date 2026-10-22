@@ -414,7 +414,8 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
-	long tags[4] = { NONE, NONE, NONE, NONE };
+	long tags[4];
+	memset(tags, 0xff, sizeof(tags));
 	s_portal_path_bsp *bsp = (s_portal_path_bsp *)g_4e0348;
 	for (long listener = 0; listener < 4; ++listener)
 	{
@@ -454,7 +455,8 @@ void __stdcall function_18bb80(real elapsed)
 					if (index != NONE)
 					{
 						s_listener_environment_definition *definition = &((s_listener_environment_bsp *)g_4e0348)->environments[index];
-						if (!(fabs(definition->transition_time) < 0.0001f)) transition = definition->transition_time;
+						real duration = definition->transition_time;
+						if (!(fabs(duration) < 0.0001f)) transition = duration;
 					}
 					requests[i].transition_time = transition;
 					requests[i].fade = 1.0f;
