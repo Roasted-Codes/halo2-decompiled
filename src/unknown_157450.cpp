@@ -919,6 +919,15 @@ real function_1591e0(long local_index)
 }
 
 
+// score 14 (was 14): retail compares the timer as a float with SSE: it loads
+// 1.0f into xmm1, copies it as the default and always runs comiss, even when
+// g_4b9ed8 is NONE. Our build folds the NONE path past the comparison in
+// every form. A float timer and 1.0f select SSE, but the shorter folded
+// sequence shifts the rest of the function (score 31); the double form's x87
+// sequence keeps it aligned (14), so it stays. A conditional expression, an
+// inline function, a 1.0f local and const or mutable references to the timer
+// or the constant all fold the same way; the 600 s permutation run found no
+// match.
 // @retail 0x159610
 bool function_159610(void)
 {
