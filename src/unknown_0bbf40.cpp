@@ -666,7 +666,7 @@ long function_bf760(long const *unique_id)
 		{
 			bool match = true;
 			match &= type == state.object->type;
-			match &= source == state.object->source;
+			match &= identifier->source == state.object->source;
 			match &= identifier->unique_id == state.object->unique_id;
 			if (match && source == 0)
 				match &= identifier->origin_bsp == state.object->origin_bsp;
