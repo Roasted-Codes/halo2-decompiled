@@ -291,9 +291,8 @@ void global_preferences_initialize(void)
 			{
 				signed_data = signature_calculate_end(&signature);
 			}
-			valid = true;
+			valid = signed_data && memcmp(&preferences.signature, &signature, sizeof(signature)) == 0;
 			valid &= preferences.version == k_preferences_version;
-			valid &= signed_data && memcmp(&preferences.signature, &signature, sizeof(signature)) == 0;
 			valid &= bytes_read == sizeof(preferences);
 			if (valid)
 			{
