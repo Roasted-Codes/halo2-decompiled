@@ -983,6 +983,8 @@ long function_d1850(long object_index, bool value, s_effect_color_query *query)
         {
             s_object *object = OBJECT_FROM_INDEX(object_index);
             dword object_flags = *(dword *)((byte *)object + 4);
+            /* definition and flags are volatile to keep them in stack slots; with this
+               form the near miss is at 52 (was 62) */
             byte *volatile definition = g_4e3b44[object->tag_index & 0xffff].bytes;
             long volatile flags;
             bool object_bit = (object_flags >> 13) & 1;
