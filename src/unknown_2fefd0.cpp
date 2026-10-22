@@ -152,7 +152,9 @@ void pair_state_2fefd0::function_2ff0c0(convex_2fefd0 const *first, triangle_2ff
 		placed++;
 		corner++;
 	}
-	__m128 normal = cross_2ff0c0(_mm_sub_ps(corners[1].value, corners[0].value), _mm_sub_ps(corners[2].value, corners[1].value));
+	__m128 const ab = _mm_sub_ps(corners[1].value, corners[0].value);
+	__m128 const cb = _mm_sub_ps(corners[2].value, corners[1].value);
+	__m128 normal = cross_2ff0c0(ab, cb);
 
 	__m128 centre;
 	first->centre(&centre);
