@@ -295,6 +295,9 @@ struct c_shape_arrays : c_a
 
 // @retail 0x1eb410 deleting c_shape_arrays
 
+// score 39 (was 39): retail's destructor starts with a this-call prologue
+// (push esi; mov esi, ecx) while our free function has no this pointer, so
+// the frame and the first load differ.
 // @retail 0x1eb440 destructor c_shape_arrays
 
 #include "unknown_1cec30.h"
