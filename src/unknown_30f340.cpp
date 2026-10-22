@@ -155,7 +155,12 @@ void owner_30c8e0::function_30f340(member_30c8e0 *member)
 // choice throughout: retail holds member in ebp, this in esi and the inlined
 // flag in ebx, ours this in ebp, member in ebx and the flag on the stack, and
 // the first loop's registers are permuted to match. A permuter run (10 min)
-// found only a volatile and a call reorder (242), not kept.
+// found only a volatile and a call reorder (242), not kept. The flag is
+// stored back as a byte, so of the saved registers only ebx can hold it:
+// ours gives ebx to the member. Declaring the island before the call, a
+// named constraint in the first loop (289), a bool for the branch (271) and
+// the pair's terms stored second first did not help; a second 10-minute run
+// again needed a volatile island.
 // adds the member, gives its island the constraints added with it, and notes
 // each member its constraints and actions tie it to that is not fixed; an
 // action the fixed island held moves to the member's island
