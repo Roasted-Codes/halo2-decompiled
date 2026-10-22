@@ -207,7 +207,8 @@ void function_28f3b0(long arg_0, long arg_1)
 				vector3f *local_5 = (vector3f *)((byte *)local_1 + 0x98);
 				if (*(short *)((byte *)local_1 + 0x24) == 0)
 				{
-					if (function_30bf0(&local_3) > 0.0f)
+					real magnitude = function_30bf0(&local_3);
+					if (magnitude > 0.0f)
 					{
 						local_1->field_80 = local_3;
 						function_28e600(arg_1, local_1);
