@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "unknown_0259d0.h"
 #include "globals.h"
+#include "unknown_11c010.h"
 // @flags /O2 /arch:SSE /Gr
 
 struct s_collision_result_1697c0
@@ -18,7 +19,6 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
  long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *collision);
 bool function_16a040(long flags, point3f const *point0, point3f const *point1, long ignore_object_index,
  long ignore_unit_index, s_collision_result_1697c0 *result);
-bool function_11c010(short row, short column);
 real function_30bf0(vector3f *v);
 real magnitude3d(vector3f const *v);
 extern vector3f *g_4687bc;
@@ -33,7 +33,7 @@ short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, s
  point3f const *local_3 = (point3f const *)arg_1;
  if (arg_9)
   *arg_9 = NONE;
- if (arg_2 != NONE && arg_3 != NONE && !(char)function_11c010(arg_2, arg_3))
+ if (!clusters_visible_11c010(arg_2, arg_3))
  {
   local_0 = 4;
   local_1 = 0.0f;
