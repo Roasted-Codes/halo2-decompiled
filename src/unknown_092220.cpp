@@ -29,6 +29,8 @@ static inline s_type_9df9da *online_task_try_and_get(long task_index)
 	return task;
 }
 
+static __forceinline long function_925c2();
+
 /* starts reading the given statistics */
 // score 46 (was 46): the prologue differs: retail loads the count into ebx and the record
 // pointer into esi, ours pushes esi and edi first and loads the count
@@ -44,11 +46,7 @@ long online_stats_read(word count, XONLINE_STAT_SPEC *specs)
 			goto done;
 	}
 	{
-		long task_index;
-		if (online_logon_connected())
-			task_index = online_task_new();
-		else
-			task_index = NONE;
+		long task_index = function_925c2();
 		s_type_9df9da *task = (s_type_9df9da *)datum_get_inlined(g_4cf78c, task_index);
 		if (task)
 		{

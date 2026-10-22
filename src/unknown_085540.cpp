@@ -700,8 +700,6 @@ struct s_85650
  s_sender *field_0c[15];
 };
 
-// score 116 (was 116): the frame is four bytes smaller than retail's, so every local offset and the
-// whole body layout differ.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
@@ -759,13 +757,15 @@ void function_85650(c_simulation_view *view, s_network_observer *observer, const
  }
  dword types[4];
  c_connection_client *clients[4];
- long count = 0;
+ long count;
  if (view->type == 3 || view->type == 4)
  {
   types[0] = 0x1a;
   clients[0] = (c_connection_client *)&((c_replication_view_storage *)view->data)->aggregate;
   count = 1;
  }
+ else
+  count = 0;
  bool active = view->world->state != 3 && view->world->state != 5;
  s_connection_callback *callback = (s_connection_callback *)view->unknown44;
  link_connection_callback_initialize(callback, clients, view,
