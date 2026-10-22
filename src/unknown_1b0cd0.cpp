@@ -465,10 +465,11 @@ void __stdcall function_1b1a90(long actor_index, s_slot *slot, s_slot_target_lis
 				}
 			}
 		}
+		short mode = list->mode;
 		if (actor->unknown086 >= 7)
 		{
 			if (state->position_index != NONE)
-				actor->unknown488 = function_1b1970(actor_index, list->mode, &forward, &left, state->position_index);
+				actor->unknown488 = function_1b1970(actor_index, mode, &forward, &left, state->position_index);
 			else
 				actor->unknown488 = false;
 			actor->unknown41c = 3;

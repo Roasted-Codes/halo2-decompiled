@@ -173,7 +173,8 @@ real function_12b0e0(void)
 	rate = g_485ac0;
 	if (rate <= 0)
 		rate = 60;
-	elapsed = (real)(next - LAST_FRAME_VBLANK_COUNT) / rate;
+	real frequency = rate;
+	elapsed = (real)(next - LAST_FRAME_VBLANK_COUNT) / frequency;
 	local_0 = 0.0f > elapsed ? 0.0f : (elapsed > 10.0f ? 10.0f : elapsed);
 	LAST_FRAME_VBLANK_COUNT = next;
 	g_4e6390.parts.low = now;

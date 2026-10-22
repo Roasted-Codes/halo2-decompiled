@@ -205,21 +205,21 @@ void __stdcall function_0af890(s_bitstream *stream, long size, s_message_0af890 
 	if (message->has_j)
 	{
 		stream_write_checked(stream, message->j_type, 3);
-		if (message->j_type == 1)
+		dword kind = message->j_type;
+		dword payload = 0;
+		if (kind == 1)
 		{
 			stream_write_checked(stream, message->j_value0, 4);
 			stream_write_checked(stream, message->j_value1, 4);
 			stream_write_checked(stream, message->j_value2, 6);
-			stream_write_checked(stream, message->j_value3, 10);
+			payload = message->j_value3;
 		}
-		else if (message->j_type == 2)
-		{
-			stream_write_checked(stream, message->j_value4, 10);
-		}
-		else if (message->j_type == 3)
-		{
-			stream_write_checked(stream, message->j_value5, 10);
-		}
+		else if (kind == 2)
+			payload = message->j_value4;
+		else if (kind == 3)
+			payload = message->j_value5;
+		if (kind == 1 || kind == 2 || kind == 3)
+			stream_write_checked(stream, payload, 10);
 	}
 
 	stream_write_bit(stream, message->has_k);
@@ -279,7 +279,7 @@ void __stdcall function_0af890(s_bitstream *stream, long size, s_message_0af890 
 	{
 		for (i = 0; i < 32; i++)
 		{
-			volatile word value = message->words[i];
+			word value = message->words[i];
 			function_195720(stream, value, 16);
 			if (!value)
 				break;

@@ -67,13 +67,28 @@ inline long find_box_2e29b0(cell_2e1090 const *cell, unsigned short value)
 	return -1;
 }
 
-// score 385 (was 395): the corners are now stored high then low per axis, and
-// the bounds are read in the expressions (no locals). Still differs: register
-// choice from the start: retail loads both bounds first into xmm4/xmm5 and the
-// 0x4125c0 bias after the scaling, ours the bias first; later the grid-cell
-// walk keeps the endpoint in ebx and xors the bit in place where ours spills
-// the word's address, and the box is 12 bytes shorter. Splitting the scaled
-// terms, a bias local and swapped operands did not help.
+// flips (or clears) a box's bit, reading the word into a register first
+__forceinline void flip_bit_2e24b0(long *bits, long id)
+{
+	long const word = id >> 5;
+	bits[word] = bits[word] ^ (1 << (id & 31));
+}
+
+__forceinline void drop_bit_2e24b0(long *bits, long id)
+{
+	long const mask = 1 << (id & 31);
+	long const word = id >> 5;
+	bits[word] = bits[word] & ~mask;
+}
+
+// score 371 (was 385; 395 before): the corners are stored high then low per
+// axis, the bounds are read in the expressions (no locals), the grid cell's
+// boxes are cleared reading each word into a register (drop_bit_2e24b0) and
+// the end of that walk is computed once, which brings the length to retail's.
+// Still differs from +0x23: retail loads both bounds first into xmm4/xmm5 and
+// the 0x4125c0 bias after the scaling, ours the bias first (bound locals load
+// them first but score 391); later retail keeps the bits in eax where ours
+// keeps them in edx, so the walks' registers and spill slots differ.
 // @retail 0x2e24b0
 void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pairs_2e1090 *pairs)
 {
@@ -149,11 +164,12 @@ void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pai
 				held++;
 			}
 			element_2e1090 *cell_box = &elements.data[cell->box];
-			for (endpoint_2e0f80 *inside = &axes[0].data[cell_box->slots[4] + 1]; inside < &axes[0].data[cell_box->slots[5]]; inside++)
+			endpoint_2e0f80 *const inside_end = &axes[0].data[cell_box->slots[5]];
+			for (endpoint_2e0f80 *inside = &axes[0].data[cell_box->slots[4] + 1]; inside < inside_end; inside++)
 			{
 				if ((inside->value & 1) == 0)
 				{
-					clear_bit_2e1090(bits, inside->id);
+					drop_bit_2e24b0(bits, inside->id);
 				}
 			}
 			endpoints = axes[0].data;
@@ -215,6 +231,14 @@ void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pai
 	}
 }
 
+// score 504 (was 504): retail's order of steps, 56 bytes short. Retail
+// is short of registers where ours is not: it keeps `this` in esi, the box in
+// edi, the lower x slot (scaled by 4) in ebx and the bits in eax, and spills
+// the element count, the clearing loop's counter and the overlap walk's box
+// pointer to the stack, reloading them at each use; ours keeps `this` in edi,
+// the box in esi and the counters in registers, so retail's extra spills and
+// reloads (about a dozen instructions) are missing throughout. Reordering the
+// early locals or reading the count again did not change the code.
 // takes a box out of the sweep: every box it overlaps loses its pair (or,
 // for a grid cell's box, the cell loses it), its endpoints leave each axis,
 // and the last box moves into its place

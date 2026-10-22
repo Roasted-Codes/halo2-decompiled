@@ -302,7 +302,7 @@ struct s_168ce0_bsp_view
 };
 
 // @retail 0x168ce0
-void *collision_reference_get_data(s_collision_reference const *reference)
+inline void *collision_reference_get_data(s_collision_reference const *reference)
 {
 	void *result = NULL;
 
@@ -1098,6 +1098,7 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
 					surface_bsp && function_14a280(surface_bsp, 0, &collision->point) == NONE));
 			}
 		}
+		return true;
 	}
 
 	return result;
