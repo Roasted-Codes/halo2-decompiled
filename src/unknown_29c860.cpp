@@ -40,6 +40,8 @@ __forceinline void function_29c9ee(vector3f const *arg_0, vector3f const *arg_1,
 	arg_3->k = arg_1->k * local_2 + local_1 * arg_0->k - local_3.k * local_0;
 }
 
+// score 67 (was 67): the SSE registers differ (retail xmm1/xmm4/xmm6, ours
+// xmm0/xmm4/xmm1).
 // @retail 0x29c860
 void function_29c860(long arg_0, long arg_1, point2f const *arg_2,
 	point2f const *arg_3, real arg_4, vector3f *arg_5)

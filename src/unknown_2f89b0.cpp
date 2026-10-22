@@ -122,6 +122,9 @@ public:
 	void function_2f89b0(body_2f89b0 const *a, body_2f89b0 const *b, void const *input, collector_2f89b0 *collector);
 };
 
+// score 157 (was 157): ours keeps the first body in esi and the second in edi
+// with its terms in the stack slot 0x20; retail keeps the first body in ebx
+// and its terms in 0x1c, so the whole loop differs in registers
 // @retail 0x2f89b0
 void rays_convex_2f89b0::function_2f89b0(body_2f89b0 const *a, body_2f89b0 const *b, void const *input, collector_2f89b0 *collector)
 {

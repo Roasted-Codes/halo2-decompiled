@@ -271,6 +271,9 @@ dword const *node_masks_combine(dword const *mask, dword const *other)
 }
 #pragma inline_depth(255)
 
+// score 31 (was 31): the three values are rotated between registers: ours keeps the pointer in
+// ECX and the accumulator in EAX, retail keeps the pointer in EAX and the
+// accumulator in EDX.
 // @retail 0x279d80
 void function_279d80(s_graph_tag *graph, c_type_709360 animation_id, long node_count, real frame, real weight,
 	s_graph_inheritance *inheritance, dword const *node_mask, real_quaternion_transform *transforms, bool interpolate)
@@ -1963,6 +1966,7 @@ void function_27dd10(void)
 	compute_orientations(1, 0, false, false);
 }
 
+// score 2 (was 2): the two stack slots are read in the opposite order inside the inlined helper.
 // @retail 0x27dff0
 void function_27dff0(void)
 {
@@ -2035,6 +2039,7 @@ void function_2818e0(void)
 	compute_orientations_component_count(2, 0, false, false);
 }
 
+// score 2 (was 2): the two stack slots are read in the opposite order inside the inlined helper.
 // @retail 0x281b60
 void function_281b60(void)
 {
@@ -2201,6 +2206,7 @@ void function_289580(void)
 	function_288571(4, 0, false, false);
 }
 
+// score 2 (was 2): the two stack slots are read in the opposite order inside the inlined helper.
 // @retail 0x2898b0
 void function_2898b0(void)
 {
