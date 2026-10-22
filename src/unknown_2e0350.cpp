@@ -14,17 +14,17 @@ __forceinline bool overlap_yz_2e0350(element_2e1090 const *box, element_2e1090 c
 }
 
 // whether two boxes' z and x intervals overlap
-__forceinline bool overlap_zx_2e0350(element_2e1090 const *box, element_2e1090 const *other)
+__forceinline unsigned long overlap_zx_2e0350(element_2e1090 const *box, element_2e1090 const *other)
 {
-	return (((unsigned short)(box->slots[3] - other->slots[1]) | (unsigned short)(other->slots[3] - box->slots[1])
-		| (unsigned short)(box->slots[5] - other->slots[4]) | (unsigned short)(other->slots[5] - box->slots[4])) & 0x8000) == 0;
+	return ((unsigned short)(box->slots[3] - other->slots[1]) | (unsigned short)(other->slots[3] - box->slots[1])
+		| (unsigned short)(box->slots[5] - other->slots[4]) | (unsigned short)(other->slots[5] - box->slots[4])) & 0x8000;
 }
 
 // whether two boxes' x and y intervals overlap
-__forceinline bool overlap_xy_2e0350(element_2e1090 const *box, element_2e1090 const *other)
+__forceinline unsigned long overlap_xy_2e0350(element_2e1090 const *box, element_2e1090 const *other)
 {
-	return (((unsigned short)(other->slots[5] - box->slots[4]) | (unsigned short)(box->slots[5] - other->slots[4])
-		| (unsigned short)(other->slots[2] - box->slots[0]) | (unsigned short)(box->slots[2] - other->slots[0])) & 0x8000) == 0;
+	return ((unsigned short)(other->slots[5] - box->slots[4]) | (unsigned short)(box->slots[5] - other->slots[4])
+		| (unsigned short)(other->slots[2] - box->slots[0]) | (unsigned short)(box->slots[2] - other->slots[0])) & 0x8000;
 }
 
 __forceinline bool overlap_2e0350(int axis, element_2e1090 const *box, element_2e1090 const *other)
@@ -35,9 +35,9 @@ __forceinline bool overlap_2e0350(int axis, element_2e1090 const *box, element_2
 	}
 	if (axis == 1)
 	{
-		return overlap_zx_2e0350(box, other);
+		return overlap_zx_2e0350(box, other) == 0;
 	}
-	return overlap_xy_2e0350(box, other);
+	return overlap_xy_2e0350(box, other) == 0;
 }
 
 // a pair that starts or stops overlapping
@@ -61,12 +61,45 @@ __forceinline long find_box_2e0350(cell_2e1090 const *cell, unsigned short value
 	return -1;
 }
 
+// the pair starts overlapping: added to the list, or on the x axis a grid
+// cell's box gains the box
+__forceinline void start_overlap_2e0350(class_2e1090 *sweep, int axis, pairs_2e1090 *added, element_2e1090 const *box,
+	element_2e1090 const *other, unsigned short id)
+{
+	if (axis != 0 || (other->owner & 1) == 0)
+	{
+		add_pair_2e0350(added, box, other);
+	}
+	else
+	{
+		((cell_2e1090 *)((char *)sweep->cells + (other->owner & ~1)))->boxes.append(id);
+	}
+}
+
+// the pair stops overlapping: added to the removed list, or on the x axis a
+// grid cell's box loses the box
+__forceinline void stop_overlap_2e0350(class_2e1090 *sweep, int axis, pairs_2e1090 *removed, element_2e1090 const *box,
+	element_2e1090 const *other, unsigned short id)
+{
+	if (axis != 0 || (other->owner & 1) == 0)
+	{
+		add_pair_2e0350(removed, box, other);
+	}
+	else
+	{
+		cell_2e1090 *const cell = (cell_2e1090 *)((char *)sweep->cells + (other->owner & ~1));
+		long const found = find_box_2e0350(cell, id);
+		cell->boxes.size--;
+		cell->boxes.data[found] = cell->boxes.data[cell->boxes.size];
+	}
+}
+
 // a box's endpoints on one axis moved to their new values: each endpoint
 // passed moves one slot over, and when a box's interval starts (or stops)
 // overlapping on this axis while the other two overlap already, the pair is
 // added (or removed); on the x axis a grid cell's box instead gains (or
 // loses) the box
-__forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elements, int axis, element_2e1090 *box, unsigned short id,
+__forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elements, int axis, element_2e1090 *box, long id,
 	int low_slot, int high_slot, long low, long high, pairs_2e1090 *added, pairs_2e1090 *removed)
 {
 	// the lower end moves down
@@ -80,7 +113,7 @@ __forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elem
 			{
 				break;
 			}
-			unsigned short const other_id = endpoint[-1].id;
+			unsigned long const other_id = endpoint[-1].id;
 			element_2e1090 *const other = &elements[other_id];
 			endpoint->value = (unsigned short)value;
 			endpoint->id = other_id;
@@ -89,14 +122,7 @@ __forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elem
 				other->slots[high_slot] = (unsigned short)position;
 				if (overlap_2e0350(axis, box, other))
 				{
-					if (axis != 0 || (other->owner & 1) == 0)
-					{
-						add_pair_2e0350(added, box, other);
-					}
-					else
-					{
-						((cell_2e1090 *)((char *)sweep->cells + (other->owner & ~1)))->boxes.append(id);
-					}
+					start_overlap_2e0350(sweep, axis, added, box, other, id);
 				}
 			}
 			else
@@ -133,14 +159,7 @@ __forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elem
 				other->slots[low_slot]--;
 				if (overlap_2e0350(axis, box, other))
 				{
-					if (axis != 0 || (other->owner & 1) == 0)
-					{
-						add_pair_2e0350(added, box, other);
-					}
-					else
-					{
-						((cell_2e1090 *)((char *)sweep->cells + (other->owner & ~1)))->boxes.append(id);
-					}
+					start_overlap_2e0350(sweep, axis, added, box, other, id);
 				}
 			}
 			next++;
@@ -170,17 +189,7 @@ __forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elem
 				other->slots[low_slot]++;
 				if (overlap_2e0350(axis, box, other))
 				{
-					if (axis != 0 || (other->owner & 1) == 0)
-					{
-						add_pair_2e0350(removed, box, other);
-					}
-					else
-					{
-						cell_2e1090 *const cell = (cell_2e1090 *)((char *)sweep->cells + (other->owner & ~1));
-						long const found = find_box_2e0350(cell, id);
-						cell->boxes.size--;
-						cell->boxes.data[found] = cell->boxes.data[cell->boxes.size];
-					}
+					stop_overlap_2e0350(sweep, axis, removed, box, other, id);
 				}
 			}
 		}
@@ -206,17 +215,7 @@ __forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elem
 				other->slots[high_slot]--;
 				if (overlap_2e0350(axis, box, other))
 				{
-					if (axis != 0 || (other->owner & 1) == 0)
-					{
-						add_pair_2e0350(removed, box, other);
-					}
-					else
-					{
-						cell_2e1090 *const cell = (cell_2e1090 *)((char *)sweep->cells + (other->owner & ~1));
-						long const found = find_box_2e0350(cell, id);
-						cell->boxes.size--;
-						cell->boxes.data[found] = cell->boxes.data[cell->boxes.size];
-					}
+					stop_overlap_2e0350(sweep, axis, removed, box, other, id);
 				}
 			}
 			else
@@ -230,24 +229,27 @@ __forceinline void move_on_axis_2e0350(class_2e1090 *sweep, element_2e1090 *elem
 
 // moves each box to its new bounds, adding the pairs that start overlapping
 // to `added` and those that stop to `removed`
-// Near miss: 3188 against 3107 bytes, the same twelve endpoint walks in the
-// same order; the first difference is at +0xd, where retail keeps `this` at
-// the bottom of the frame. Retail also keeps the box's id in a slot of its
-// own and the walk's position in ecx, so the registers differ through the
-// walks, and it reads the cells pointer before testing an owner's low bit.
+// score 927 (was 1044): 3121 against 3107 bytes, the same twelve endpoint
+// walks in the same order. The first difference is at +0xd: retail keeps
+// `this` at the bottom of the frame and the two quantized vectors below the
+// low and high arrays, and stores the first two low words while the upper
+// vector is still being computed. In the walks retail keeps `removed` in edx
+// and reloads the box's id from its slot at each use (ours holds the id in a
+// register), reads the cells pointer before testing an owner's low bit, and
+// in the second and third walks tests for a lower endpoint first.
 // @retail 0x2e0350
 void class_2e1090::function_2e0350(long *const *owners, bounds_2e0020 const *bounds, long count, pairs_2e1090 *added, pairs_2e1090 *removed)
 {
 	for (long *const *owner = owners; owner < owners + count; owner++, bounds++)
 	{
+		union
+		{
+			__m128 vector;
+			unsigned long bits[4];
+		} quantized, quantized_upper;
 		long low[3];
 		long high[3];
 		{
-			union
-			{
-				__m128 vector;
-				unsigned long bits[4];
-			} quantized, quantized_upper;
 			unsigned short low_words[3];
 			__m128 const ceiling = *(__m128 const *)g_4125d0;
 			__m128 const floor = *(__m128 const *)g_4125e0;
@@ -269,8 +271,8 @@ void class_2e1090::function_2e0350(long *const *owners, bounds_2e0020 const *bou
 		long const index = **owner;
 		element_2e1090 *const data = elements.data;
 		element_2e1090 *const box = &data[index];
-		move_on_axis_2e0350(this, data, 0, box, (unsigned short)index, 4, 5, low[0], high[0], added, removed);
-		move_on_axis_2e0350(this, data, 1, box, (unsigned short)index, 0, 2, low[1], high[1], added, removed);
-		move_on_axis_2e0350(this, data, 2, box, (unsigned short)index, 1, 3, low[2], high[2], added, removed);
+		move_on_axis_2e0350(this, data, 0, box, index, 4, 5, low[0], high[0], added, removed);
+		move_on_axis_2e0350(this, data, 1, box, index, 0, 2, low[1], high[1], added, removed);
+		move_on_axis_2e0350(this, data, 2, box, index, 1, 3, low[2], high[2], added, removed);
 	}
 }
