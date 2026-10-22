@@ -632,14 +632,7 @@ void function_113870(long unit_index)
 }
 
 
-/* retail calls 0x1cb410 out of line here */
-#pragma inline_depth(0)
-PRIVATE __forceinline bool channel_start_114330(s_animation_state *state, c_animation_channel *channel,
-	c_type_709360 animation_id)
-{
-	return state->channel_start(channel, animation_id, 0x10000551, NONE, NONE, 1, 0x803f);
-}
-#pragma inline_depth(255)
+#include "channel_start_out_of_line.h"
 
 // @retail 0x114330
 void function_114330(long unit_index)
@@ -655,7 +648,7 @@ void function_114330(long unit_index)
 			weapon[1], 0x10000551, NULL, NULL, NULL);
 
 		if (animation_id.index != NONE &&
-			channel_start_114330(state, &control->channel_dc, animation_id))
+			channel_start_out_of_line(state, &control->channel_dc, animation_id, 0x10000551, NONE, NONE, 1, 0x803f))
 		{
 			control->flag7 = false;
 		}
