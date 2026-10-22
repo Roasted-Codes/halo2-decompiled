@@ -215,6 +215,14 @@ void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pai
 	}
 }
 
+// score 504 (was 504): retail's order of steps, 56 bytes short. Retail
+// is short of registers where ours is not: it keeps `this` in esi, the box in
+// edi, the lower x slot (scaled by 4) in ebx and the bits in eax, and spills
+// the element count, the clearing loop's counter and the overlap walk's box
+// pointer to the stack, reloading them at each use; ours keeps `this` in edi,
+// the box in esi and the counters in registers, so retail's extra spills and
+// reloads (about a dozen instructions) are missing throughout. Reordering the
+// early locals or reading the count again did not change the code.
 // takes a box out of the sweep: every box it overlaps loses its pair (or,
 // for a grid cell's box, the cell loses it), its endpoints leave each axis,
 // and the last box moves into its place
