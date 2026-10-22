@@ -223,11 +223,11 @@ bool c_session_state_start_game::update()
 		}
 		else if (a->type == 2)
 		{
-			if (a->function_058d20() && function_06e720(a) && function_06e6b0(a, &flag10))
+			result = a->function_058d20() && function_06e720(a) && function_06e6b0(a, &flag10);
+			if (result)
 			{
 				network_session_stop_countdown(a);
 				network_session_set_mode(a, 4);
-				result = true;
 			}
 		}
 		else
@@ -616,8 +616,7 @@ bool c_session_state_joining::update()
 	}
 	if (unknown104 != 0)
 	{
-		long state = a->state;
-		if (state == 5 || state == 6 || state == 7 || state == 8)
+		if (a->function_058d20())
 			network_session_set_mode(a, 1);
 	}
 	if (flagf8)
