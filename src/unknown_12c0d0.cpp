@@ -799,8 +799,6 @@ D3DTexture *texture_cache_bitmap_get_texture(s_bitmap_data *bitmap, dword flags,
 	}
 	else if (bitmap->minimum_scale > scale)
 	{
-		long block_index;
-
 		level = 0;
 
 		if (scale >= 2.0f)
@@ -811,12 +809,11 @@ D3DTexture *texture_cache_bitmap_get_texture(s_bitmap_data *bitmap, dword flags,
 		{
 			level = 1;
 		}
-		block_index = bitmap->block_indices[level];
-		if (block_index != NONE)
+		if (bitmap->block_indices[level] != NONE)
 		{
-			s_texture_cache_entry *entry = texture_cache_entry_get(block_index);
+			s_texture_cache_entry *entry = texture_cache_entry_get(bitmap->block_indices[level]);
 
-			((s_physical_block *)g_4e6464->blocks->data)[block_index & 0xffff].time = g_4e6464->time;
+			((s_physical_block *)g_4e6464->blocks->data)[bitmap->block_indices[level] & 0xffff].time = g_4e6464->time;
 			if (entry->resident)
 			{
 				result = (D3DTexture *)&entry->resource;

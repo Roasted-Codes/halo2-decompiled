@@ -909,6 +909,8 @@ struct s_object_list_208070
 };
 
 // @retail 0x208070
+// score 21 (was 47): the two record pools are loaded in the opposite order, so the pointer of the
+// second pool is read before the first one's.
 void __stdcall function_208070(short function_index, long thread_index, bool initialize)
 {
     s_hs_frame *frame = hs_thread_get(thread_index)->frame;

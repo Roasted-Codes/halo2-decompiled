@@ -30,6 +30,9 @@ static inline s_type_9df9da *online_task_try_and_get(long task_index)
 }
 
 /* starts reading the given statistics */
+// score 46 (was 46): the prologue differs: retail loads the count into ebx and the record
+// pointer into esi, ours pushes esi and edi first and loads the count
+// later.
 // @retail 0x92220
 long online_stats_read(word count, XONLINE_STAT_SPEC *specs)
 {
@@ -181,6 +184,7 @@ static __forceinline long function_925c2()
     return local_0;
 }
 
+// score 14 (was 14): the user flags are loaded into eax in ours and into ecx in retail.
 // @retail 0x925c0
 long online_round_report(XNKID const *session_id, ULONGLONG const *round_key, long count, XONLINE_STAT_PROC const *procedures, bool flag0, bool flag1)
 {
