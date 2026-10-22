@@ -260,10 +260,10 @@ void simulation_player_collection_find_slot(const s_type_c67652 *collection, lon
 {
 	long local_2;
 	long found = NONE;
-	dword bit = 1 << player_index;
-	*occupied = (collection->player_mask & bit) != 0;
+	*occupied = (collection->player_mask & (1 << player_index)) != 0;
 	*slot = NONE;
 
+	dword bit = 1 << player_index;
 	local_2 = 0;
 	dword player_mask = collection->player_mask;
 	for (; local_2 < 16; local_2++)
