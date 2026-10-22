@@ -10,7 +10,7 @@
 #include "unknown_211060.h"
 
 /* the point's physics definition, as read here */
-struct s_point_physics_definition
+struct s_point_mover_settings
 {
 	dword flags;
 	real unit_mass;
@@ -53,13 +53,13 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
 void function_11bed0(s_location *location, point3f const *point);
 
 // @retail 0x211060
-long function_211060(vector3f *velocity, dword flags, void const *physics_definition, s_location *location,
-	long cell_index, point3f *position, vector3f const *force, vector3f *normal, short *material_type, real radius,
+long function_211060(vector3f *velocity, dword flags, void const *mover_settings, s_location *location,
+	long cell_slot, point3f *position, vector3f const *force, vector3f *normal, short *material_type, real radius,
 	real dt)
 {
 	long collision_flags = 0;
 	long result;
-	s_point_physics_definition const *physics = (s_point_physics_definition const *)physics_definition;
+	s_point_mover_settings const *physics = (s_point_mover_settings const *)mover_settings;
 
 	if (dt != 0.0f)
 	{
@@ -77,7 +77,7 @@ long function_211060(vector3f *velocity, dword flags, void const *physics_defini
 		if (flags & 1)
 		{
 			medium_unknown4 = (flags >> 1) & 1;
-			function_211b70((short)cell_index, position->n, (byte)mode, &cell);
+			function_211b70((short)cell_slot, position->n, (byte)mode, &cell);
 		}
 		else
 		{
