@@ -1821,7 +1821,6 @@ long function_75890(long time);
 
 bool network_session_host_become_leader(c_class_58d20 *session);
 
-#pragma inline_depth(0)
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {
@@ -1881,7 +1880,6 @@ bool c_session_state_start_match::update()
         network_session_host_set_value49f8(a, mode);
     return result;
 }
-#pragma inline_depth(255)
 
 long function_66050(c_class_58d20 *session, long variant_index);
 bool network_session_members_ready(c_class_58d20 *session, dword *unready_mask);
