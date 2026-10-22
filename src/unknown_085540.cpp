@@ -700,6 +700,8 @@ struct s_85650
  s_sender *field_0c[15];
 };
 
+// score 116 (was 116): the frame is four bytes smaller than retail's, so every local offset and the
+// whole body layout differ.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
@@ -852,6 +854,8 @@ static __forceinline byte *view_allocate_buffer(long size, long owner, long rele
  return (byte *)function_80e14(size, owner, 0, release, 30, 0.1f);
 }
 
+// score 22 (was 22): the dword local is written before the byte local; retail writes the byte
+// first and then the dword into the structure.
 // @retail 0x862e0
 bool function_862e0(c_simulation_view *view)
 {
@@ -900,6 +904,8 @@ bool function_862e0(c_simulation_view *view)
 
 bool function_685f0(void *block, long *size, byte *destination, long capacity);
 
+// score 2 (was 2): the constant 0xffff is loaded before the address of the buffer; retail loads
+// the address first.
 // @retail 0x869a0
 bool function_869a0(c_simulation_view *view, void *block)
 {
@@ -927,6 +933,8 @@ bool function_869a0(c_simulation_view *view, void *block)
 
 bool function_68670(byte *source, long size, void *block);
 
+// score 97 (was 97): the two fields of the record are read into the registers in the opposite
+// order (+0x1c before +0x18), so the rest of the block follows differently.
 // @retail 0x865d0
 void __stdcall function_865d0(c_simulation_view *view)
 {
