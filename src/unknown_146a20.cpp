@@ -267,7 +267,9 @@ c_havok_abstract_allocator *function_146e30(void)
 		}
 		while (!block && ((size >>= 1) >= 0x100000));
 
-		adjustment = (((dword)block + 0xf) & ~0xf) - (dword)block;
+		adjustment = (dword)block & 0xf;
+		if (adjustment)
+			adjustment = 0x10 - adjustment;
 		g_4798a0 = new ((byte *)g_479888 + 0x105440) c_havok_fixed_memory(block, size - adjustment);
 		function_1c4590(1);
 	}
