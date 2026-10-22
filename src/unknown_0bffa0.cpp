@@ -1558,11 +1558,11 @@ long __stdcall function_c1720(long object_index, long remove_from_partition, lon
         {
             if (remove_from_partition)
             {
-                byte *light = lights->data + (iterator.datum_index & 0xffff) * 0x110;
-                if (light[2] & 2)
+                s_light_ab *light = &((s_light_ab *)lights->data)[iterator.datum_index & 0xffff];
+                if (light->flags & 2)
                 {
-                    function_1cae40(&g_4e0310_partition, iterator.datum_index, (long *)(light + 0x10));
-                    light[2] &= ~8;
+                    function_1cae40(&g_4e0310_partition, iterator.datum_index, (long *)((byte *)light + 0x10));
+                    light->flags &= ~8;
                 }
             }
             if (update)
