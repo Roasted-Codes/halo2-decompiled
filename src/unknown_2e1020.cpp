@@ -56,9 +56,9 @@ __forceinline void report_2e10b0(element_2e1090 const *box, unsigned long const 
 	{
 		function_2d91d0(pairs, sizeof(pair_2e1090));
 	}
-	pair_2e1090 *added = &pairs->data[pairs->size];
-	added->first = 0;
-	added->second = owner;
+	long const at = pairs->size;
+	pairs->data[at].first = 0;
+	pairs->data[at].second = owner;
 	pairs->size++;
 }
 
@@ -79,17 +79,23 @@ struct stack_longs_2e10b0
 	}
 };
 
-// score 383 (was 521): one byte longer than retail. The pair is stored in
+// score 373 (was 383): one byte longer than retail. The pair is stored in
 // place after the room check (append by value builds it first and spills the
-// owner), and the element count is read again for the clearing loop. Still:
+// owner), through the size read once into a local and the data read for each
+// term (retail's indexed stores; a cached data pointer 430, a pointer to the
+// pair 383), and the element count is read again for the clearing loop (a
+// count local gives retail's single read but swaps ebx/edi: 471, 437 with the
+// allocation written out; locals in place of the stack block 466). Still:
 // retail reads the count once into ebx ahead of the allocator and keeps the
 // stack area's free size in edx (ours re-reads it through a pointer); retail
 // keeps the bits in edi and indexes them ([edi+eax*4]) where ours keeps them in
 // ebx and forms each word's address with lea (local helpers that read and
 // write the word separately compile alike); the low corner words sit at 0x20
 // in retail, apart from the y/z slots, where ours shares 0x28 with them (no
-// declaration order moves it); the grid cell's box is read before its address
-// is formed.
+// declaration order or block scope for the y/z slots moves it); the grid
+// cell's box is read before its address is formed; in the report retail
+// keeps the found bits in memory and reloads them after each pair (ours in
+// ecx), and its box pointer is biased by 0x24 (ours 0x1c).
 // every box the bounds overlap, as pairs with no first owner
 // @retail 0x2e10b0
 void class_2e1090::function_2e10b0(bounds_2e0020 const *bounds, pairs_2e1090 *pairs)

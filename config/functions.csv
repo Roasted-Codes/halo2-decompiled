@@ -7691,7 +7691,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00218b00,117,game,speed,a16 pad,,,,src/unknown_218ac0.cpp,matched
 00218b80,211,game,speed,a16 pad,,,,src/unknown_218ac0.cpp,matched
 00218c60,64,game,speed,a16 pad,,,,src/unknown_218c60.cpp,matched
-00218ca0,138,game,unknown,a16,,,00218b80,src/unknown_218ac0.cpp,near
+00218ca0,138,game,unknown,a16,,,00218b80,src/unknown_218ac0.cpp,matched
 00218d30,64,game,speed,a16 pad,,,00221810,src/unknown_218c60.cpp,matched
 00218d70,111,game,unknown,a16,,,,src/unknown_218c60.cpp,matched
 00218de0,112,game,speed,a16 pad,,,,src/unknown_218c60.cpp,matched
@@ -12654,7 +12654,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 003122b0,84,third:havok,speed,a16 pad,,,0030b480,src/unknown_3122b0.cpp,matched
 00312310,23,third:havok,speed,a16 pad,,,00315b80,src/unknown_312310.cpp,matched
 00312330,101,third:havok,speed,a16 pad,,,00315b80,src/unknown_312310.cpp,matched
-003123a0,138,third:havok,speed,a16 pad,,,,,todo
+003123a0,138,third:havok,speed,a16 pad,,,,src/unknown_3123a0.cpp,matched
 00312430,131,other:library,speed,a16 pad,,,002d9160,src/unknown_312430.cpp,todo
 003124c0,104,other:library,speed,a16 pad,,,002d9160,src/unknown_312430.cpp,todo
 00312530,85,other:library,speed,a16 pad,,,002d91d0,,todo
