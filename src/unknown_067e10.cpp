@@ -1568,7 +1568,8 @@ static __forceinline bool view_needs_join_buffer(short type)
 long function_6a040(c_class_6a600 *world, c_simulation_view *view)
 {
  long result = 0;
- if (view->state < 3)
+ long state = view->state;
+ if (state < 3)
  {
   bool ready = view_needs_join_buffer(view->type);
   if (!ready)
@@ -1579,7 +1580,8 @@ long function_6a040(c_class_6a600 *world, c_simulation_view *view)
   }
   if (ready) view->set_state(3, view->state_id);
  }
- if (view->state == 3)
+ state = view->state;
+ if (state == 3)
  {
   if (!view_needs_join_buffer(view->type))
   {

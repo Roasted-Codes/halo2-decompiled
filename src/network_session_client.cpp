@@ -600,8 +600,15 @@ bool function_06e720(c_class_58d20 *session)
 			long member_count = session->member_count;
 			machines.data[0] = (1 << member_count) - 1;
 			s_session_machine *addresses = (s_session_machine *)&machines.data[1];
-			for (long i = 0; i < member_count; i++)
-				addresses[i] = *(s_session_machine *)((byte *)session->members[i].words + 0xa);
+			if (member_count > 0)
+			{
+				long i = 0;
+				do
+				{
+					addresses[i] = *(s_session_machine *)((byte *)session->members[i].words + 0xa);
+					i++;
+				} while (i < member_count);
+			}
 			for (long i = 0; i < 16; i++)
 			{
 				if ((session->player_mask & (1 << i)) && session->players[i].unknown14 != NONE)

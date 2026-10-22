@@ -1455,11 +1455,8 @@ void __stdcall function_166d75(long user_index)
 			{
 				weapon->unknownf2--;
 			}
-			active = false;
-			if (user->unit_index != NONE && weapon->weapon_index != NONE)
-			{
-				active = !function_155760(user_index) && function_0b6780((s_index_triple *)&weapon->animation);
-			}
+			active = user->unit_index != NONE && weapon->weapon_index != NONE &&
+				!function_155760(user_index) && function_0b6780((s_index_triple *)&weapon->animation);
 			first_person_weapon_set_active(user_index, field_x11c898, active);
 
 			if (weapon->weapon_index != NONE)
