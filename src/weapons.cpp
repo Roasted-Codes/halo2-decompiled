@@ -2842,6 +2842,7 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
     s_weapon *weapon = WEAPON_GET(weapon_index);
     s_weapon_definition *definition = WEAPON_DEFINITION(weapon);
     s_weapon_barrel_definition *barrel_definition = &definition->barrels[barrel_index];
+    bool result = false;
     short magazine_index = barrel_definition->magazine_index;
     if (magazine_index != NONE)
     {
@@ -2850,25 +2851,28 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
         if ((magazine->rounds_loaded < barrel_definition->rounds_minimum && !TEST_FIELD_BIT(barrel_definition->flag2)) ||
             magazine->rounds_loaded < barrel_definition->rounds_per_shot || magazine->rounds_loaded == 0)
         {
-            if (function_1008f0(magazine_index, weapon_index, false) > 0 &&
+            if (function_1008f0(barrel_definition->magazine_index, weapon_index, false) > 0 &&
                 magazine->rounds_loaded < magazine_definition->rounds_loaded_maximum)
             {
                 if (!TEST_FIELD_BIT(((s_weapon_flags_view_1023d0 const *)&weapon->value_16e)->flag5) && weapon->parent_index != NONE)
                     function_fdc70(weapon_index, barrel_definition->magazine_index);
-                return true;
+                result = true;
             }
-            for (long i = 0; i < definition->trigger_count; ++i)
+            else
             {
-                s_weapon *current = WEAPON_GET(weapon_index);
-                current->triggers[(short)i].state = 0;
-                current->triggers[(short)i].timer = 0;
+                for (long i = 0; i < definition->trigger_count; ++i)
+                {
+                    s_weapon *current = WEAPON_GET(weapon_index);
+                    current->triggers[(short)i].state = 0;
+                    current->triggers[(short)i].timer = 0;
+                }
+                for (long i = 0; i < definition->barrel_count; ++i)
+                    if (weapon->barrels[i].state == 1)
+                        function_103e60(weapon_index, (short)i);
             }
-            for (long i = 0; i < definition->barrel_count; ++i)
-                if (weapon->barrels[i].state == 1)
-                    function_103e60(weapon_index, (short)i);
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x1023d0
