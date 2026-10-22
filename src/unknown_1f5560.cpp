@@ -381,7 +381,7 @@ bool __stdcall function_110ab0(long unit_index);
 bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_type_c3b527 const *point, bool face_prop)
 {
 	s_actor_moving *actor = actor_moving_get(actor_index);
-	bool result = false;
+	byte result = 0;
 
 	if (!function_110ab0(actor->unit_index))
 	{

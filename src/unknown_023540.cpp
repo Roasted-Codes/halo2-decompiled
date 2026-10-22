@@ -825,26 +825,23 @@ struct s_24490_definition
 	s_geometry_block_info block;
 };
 
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
 // @retail 0x24490
 void *function_24490(long key, s_24490_definition *definition, long entry_key)
 {
 	long index = find_table_entry(key);
 	if (index == NONE)
 		return NULL;
-	long maximum = definition->count - 1;
-	long group = 5 - (short)g_4b89b0[index].unknown4;
-	if (group >= maximum)
-		group = maximum;
-	long entry_count = definition->groups[group].count;
-	long i = 0;
-	if (entry_count > 0)
+	long level = (short)g_4b89b0[index].unknown4;
+	long group = MIN(5 - level, definition->count - 1);
+	s_24490_group *block = &definition->groups[group];
+	for (long i = 0; i < block->count; i++)
 	{
-		s_24490_entry *current = definition->groups[group].entries;
-		do
+		s_24490_entry *entry = &block->entries[i];
+		if (entry->key == entry_key)
 		{
-		if (current->key == entry_key)
-		{
-			long count = current->count / 5;
+			long count = entry->count / 5;
 			if (!function_12de70(&definition->block, 3))
 				return NULL;
 			byte *data = definition->data;
@@ -853,10 +850,6 @@ void *function_24490(long key, s_24490_definition *definition, long entry_key)
 			*(long *)(data + 8) = size;
 			return data;
 		}
-	
-			++i;
-			++current;
-		} while (i < entry_count);
 	}
 	return NULL;
 }

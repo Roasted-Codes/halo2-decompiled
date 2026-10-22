@@ -1305,7 +1305,7 @@ long function_127010(short class_index)
 
 /* a sound's gain in decibels: between its definition's bounds, with its
    class's and the caller's */
-#pragma inline_depth(0)
+inline long function_1251e0(void const *definition_pointer, long gain, real interpolation);
 // @retail 0x1251e0
 long function_1251e0(void const *definition_pointer, long gain, real interpolation)
 {
@@ -1314,12 +1314,11 @@ long function_1251e0(void const *definition_pointer, long gain, real interpolati
 	long lower_decibels = sound_definition_gain_lower(definition);
 	real lower = function_2195f0(*(real *)&lower_decibels);
 	real upper = function_2195f0(*(real *)&upper_decibels);
-	long volatile decibels = function_2197f0((upper - lower) * interpolation + lower);
+	long volatile interpolated_decibels = function_2197f0((upper - lower) * interpolation + lower);
 	long class_gain = function_127010(definition->promotion_index);
 
-	return decibels_add(decibels, decibels_add(class_gain, gain));
+	return decibels_add(interpolated_decibels, decibels_add(class_gain, gain));
 }
-#pragma inline_depth(255)
 
 /* requests the chunk a playing sound is at; true once it is loaded. Retail
    keeps the sound on the stack (ret 4): its address is taken */

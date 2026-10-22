@@ -98,7 +98,7 @@ void function_200462(long arg_0)
         if (!(local_3 & (1 << local_15)))
             continue;
         byte *local_17 = g_4e3b44[*(long *)(local_16 + 4) & 0xffff].bytes;
-        short local_18 = *(short *)(local_16 + 0x10);
+        long local_18 = *(short *)(local_16 + 0x10);
         s_float_rect local_19 = {0.0f, 1.0f, 0.0f, 1.0f};
         if (local_18 < 0)
             continue;

@@ -2705,8 +2705,8 @@ void function_14d8b0(void)
         }
         if (*(signed char *)(player + 0x3f) > 0) --player[0x3f];
         if (*(signed char *)(player + 0x40) > 0) --player[0x40];
-        short &timer = *(short *)(player + 0x180);
-        if (g_4e6948->mode != 4 && timer > 0 && --timer == 0)
+        short timer = *(short *)(player + 0x180);
+        if (g_4e6948->mode != 4 && timer > 0 && (*(short *)(player + 0x180) = --timer) == 0)
         {
             player[3] &= ~8;
             if (game_engine_get())

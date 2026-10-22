@@ -978,14 +978,15 @@ bool __stdcall function_118700(long arg_0)
             function_1197b0(arg_0);
         vector3f local_7;
         function_ba1d0(arg_0, &local_7, NULL);
-        byte *local_8 = local_1 + 0xd4;
         byte *local_9 = (byte *)local_0 + 0x17c;
+        s_forward_flags object_flags = local_0->flags;
         word local_10 = *(word *)((byte *)local_0 + 0xc0);
+        byte *local_8 = local_1 + 0xd4;
         function_1e5bb0((s_biped_physics_output *)&local_3, local_9, local_2, 1.0f,
             *(long *)((byte *)local_0 + 0xb4), arg_0, local_8, 0xf,
             (bool)((local_10 >> 6) & 1), false, true, false,
-            (bool)((local_10 >> 8) & 1), TEST_FIELD_BIT(local_0->flags.flag5),
-            (bool)((local_0->flags.value >> 8) & 1), false, g_51e9c4->unknown0, 1.0f,
+            (bool)((local_10 >> 8) & 1), TEST_FIELD_BIT(object_flags.flag5),
+            (bool)((object_flags.value >> 8) & 1), false, g_51e9c4->unknown0, 1.0f,
             &local_0->control, &local_5, &local_0->forward, &local_0->up,
             &local_0->forward, &local_0->forward, &local_7, 0);
         if ((bool)((*(dword *)local_8 >> 4) & 1))
