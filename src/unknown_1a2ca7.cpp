@@ -1148,6 +1148,9 @@ static inline s_friend_player *clan_member_reference_get_player(void const *refe
 }
 
 /* the order of the team members list: whether a goes after b */
+// score 79 (was 79): retail holds the first flag word in EDX and spills the
+// extracted bits to [ebp-2]..[ebp-7] with the result at [ebp-8]; ours keeps
+// the word in EBX, uses other slots and reads the low bytes again.
 // @retail 0x1a391f
 bool __stdcall clan_member_compare(void const *a, void const *b, void const *context)
 {
