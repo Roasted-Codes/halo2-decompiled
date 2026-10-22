@@ -46,6 +46,7 @@ void function_0bfd20(long object_index)
 	s_match_globals *globals = g_4e0348;
 	long header_index = object_index & 0xffff;
 	s_object_hdr *object = headers[header_index].object;
+	short selected_index = NONE;
 	if (TEST_FIELD_BIT(g_4e3b44[(object->tag_index & 0xffff)].flags->flag0))
 	{
 		for (long i = 0; i < globals->count; i++)
@@ -56,12 +57,12 @@ void function_0bfd20(long object_index)
 				match &= entry->subkey == object->subkey;
 			if (match)
 			{
-				object->match_index = (short)i;
-				return;
+				selected_index = (short)i;
+				break;
 			}
 		}
 	}
-	object->match_index = NONE;
+	object->match_index = selected_index;
 }
 
 // @retail 0xbfe20
