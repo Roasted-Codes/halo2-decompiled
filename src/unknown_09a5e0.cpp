@@ -704,6 +704,8 @@ struct s_typed_object_header
 /* 0xe68c0, src/unknown_0e68c0.cpp */
 bool function_e68c0(long type, long unit_index);
 
+// score 85 (was 97): the prologue saves EBX and EBP where retail saves ECX and EBX, so the saved
+// register set and the order of the body differ.
 // @retail 0x9ee20
 bool c_unit_exit_vehicle_event_definition::v11(long a, long const *entities, long c, void const *data)
 {

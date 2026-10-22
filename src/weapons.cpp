@@ -2507,6 +2507,8 @@ long __stdcall function_fda00(long weapon_index, s_scenario_weapon_view *placeme
 	return weapon_index;
 }
 
+// score 3 (was 3): the word is stored at +0x254 where retail stores it at +0x256, so the two
+// stores are in the wrong order.
 // @retail 0xfdad0
 bool __stdcall function_fdad0(long weapon_index, void *placement, bool *flag)
 {
@@ -2871,6 +2873,8 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
     return false;
 }
 
+// score 101 (was 69): the prologue pushes EBX where retail pushes EBP and the parameter is masked
+// in the other register; the baseline number predates the current tree.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
