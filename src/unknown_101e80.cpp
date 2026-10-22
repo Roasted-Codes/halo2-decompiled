@@ -272,8 +272,8 @@ bool function_102100(short link_index, long object_index, bool *out_a, bool *out
 
 	if (link->flags & 0x40)
 	{
-		*out_b = true;
 		result = false;
+		*out_b = true;
 	}
 	else if (result)
 	{

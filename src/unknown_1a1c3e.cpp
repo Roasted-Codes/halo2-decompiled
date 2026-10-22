@@ -320,15 +320,20 @@ char motion_sensor_object_type(long local_player_index, long object_index)
 							rider_index = object->unknown248;
 						if (rider_index != NONE)
 						{
-							result = function_1df560(SENSOR_OBJECT(rider_index)->team138, team) ? 5 : 4;
+							if (function_1df560(SENSOR_OBJECT(rider_index)->team138, team))
+								result = 5;
+							else
+								result = 4;
 						}
 						else
 						{
 							s_sensor_definition *definition = SENSOR_DEFINITION(object->definition_index);
-							if (definition->block_count > 1 && definition->block[0].type == 0xa000082)
-								result = 5;
-							else
-								result = 4;
+							result = 4;
+							if (definition->block_count > 1)
+							{
+								if (definition->block[0].type == 0xa000082)
+									result = 5;
+							}
 						}
 					}
 					else
@@ -362,16 +367,14 @@ char motion_sensor_object_type(long local_player_index, long object_index)
 	return result;
 }
 
-#pragma optimize("g", off)
-__forceinline short function_1a1fb0(short arg_0)
+__forceinline short function_1a1fb0(short height)
 {
-	short local_0;
-	if (arg_0 < 0) local_0 = 0;
-	else if (arg_0 > 3) local_0 = 3;
-	else local_0 = arg_0;
-	return local_0;
+	if (height < 0)
+		height = 0;
+	else if (height > 3)
+		height = 3;
+	return height;
 }
-#pragma optimize("", on)
 
 // @retail 0x1a1faf
 void motion_sensor_blip_set_type(long local_player_index, long object_index, s_motion_sensor_blip *blip)
@@ -379,7 +382,6 @@ void motion_sensor_blip_set_type(long local_player_index, long object_index, s_m
 	s_motion_sensor_blip *volatile *local_0 = (s_motion_sensor_blip *volatile *)&blip;
 	char type = motion_sensor_object_type(local_player_index, object_index);
 	s_motion_sensor_blip *local_1 = *local_0;
-	volatile char local_2 = type;
 
 	local_1->type = type;
 	if (object_index == NONE)
@@ -389,18 +391,16 @@ void motion_sensor_blip_set_type(long local_player_index, long object_index, s_m
 	else
 	{
 		s_sensor_object *object = SENSOR_OBJECT(object_index);
-		long mask = 1 << object->type;
-
-		if ((byte)mask & 3)
+		if ((1 << object->type) & 3)
 		{
 			short height = SENSOR_DEFINITION(object->definition_index)->height194;
 			height = function_1a1fb0(height);
 			local_1 = *local_0;
 			local_1->height = (char)height;
-			if (g_4e6948->state == 2 && (local_2 == 7 || local_2 == 8))
+			if (g_4e6948->state == 2 && (type == 7 || type == 8))
 				local_1->height = 2;
 		}
-		else if (mask & 0x1000)
+		else if ((1 << object->type) & 0x1000)
 		{
 			short height = SENSOR_DEFINITION(object->definition_index)->heightc2;
 			height = function_1a1fb0(height);
@@ -664,12 +664,14 @@ void motion_sensor_build_sample(long local_player_index)
 				real dx = object->position.x - origin.x;
 				real dy = object->position.y - origin.y;
 				real range = g_510c94->motion_sensor_range;
-				if (range * range > dx * dx + dy * dy)
+				if (dx * dx + dy * dy < range * range)
 				{
 					s_motion_sensor_blip *blip = &sample->blips[sample->count++];
 					point2f point;
-					point.x = ((dy * sine - dx * cosine) * scale + 1.0f) * 32.0f;
-					point.y = ((dy * cosine + dx * sine) * scale + 1.0f) * 32.0f;
+					point.x = dy * sine - dx * cosine;
+					point.y = dy * cosine + dx * sine;
+					point.x = (point.x * scale + 1.0f) * 32.0f;
+					point.y = (point.y * scale + 1.0f) * 32.0f;
 					motion_sensor_blip_set_position(&point, blip);
 					motion_sensor_blip_set_type(local_player_index, object_index, blip);
 				}

@@ -247,13 +247,13 @@ void function_1197b0(long object_index)
 	vector3f temporary_velocity = *g_4687a4;
 	vector3f up;
 	world_up_1197b0(object_index, &up);
-	vector3f new_forward, target_up, left1, left2, forward2;
-	function_11d180(&forward, &object->requested_up, &new_forward, &left1, &target_up);
-	function_11d180(&forward, &up, &forward2, &left2, &up);
+	vector3f new_forward, target_up, left, forward2;
+	function_11d180(&forward, &object->requested_up, &new_forward, &left, &target_up);
+	function_11d180(&forward, &up, &forward2, &left, &up);
 	if (function_11ce20(&up, &target_up) > max_angle * g_510c54->rate)
 	{
 		function_11f0d0(&temporary_velocity, &up, &target_up, g_510c54->rate, max_angle, acceleration * 2.0f);
-		function_11d180(&forward, &up, &forward2, &left2, &up);
+		function_11d180(&forward, &up, &forward2, &left, &up);
 	}
 	else
 		up = target_up;

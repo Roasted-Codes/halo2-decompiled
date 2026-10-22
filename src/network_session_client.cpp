@@ -53,13 +53,20 @@ void __stdcall function_06d380(c_session_client *client, const s_session_id *id)
 				found++;
 			}
 		}
-		for (long j = 0; j < found; j++)
+		if (found > 0)
 		{
-			session = client->session;
-			long index = network_session_find_member(session, &members[j]);
-			if (index != NONE && index != session->current_member &&
-				session->state != 7 && session->state != 6 && session->state != 8)
-				network_session_disband_member(session, index);
+			long remaining = found;
+			s_session_member_identity *member = members;
+			do
+			{
+				session = client->session;
+				long index = network_session_find_member(session, member);
+				if (index != NONE && index != session->current_member &&
+					session->state != 7 && session->state != 6 && session->state != 8)
+					network_session_disband_member(session, index);
+				member++;
+			}
+			while (--remaining);
 		}
 	}
 	network_session_cancel_reservations(client->session, id);
@@ -603,11 +610,12 @@ bool function_06e720(c_class_58d20 *session)
 			if (member_count > 0)
 			{
 				long i = 0;
+				long members_remaining = member_count;
 				do
 				{
 					addresses[i] = *(s_session_machine *)((byte *)session->members[i].words + 0xa);
 					i++;
-				} while (i < member_count);
+				} while (--members_remaining);
 			}
 			for (long i = 0; i < 16; i++)
 			{

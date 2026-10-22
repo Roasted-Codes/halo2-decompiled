@@ -599,25 +599,19 @@ bool c_session_state_joining::update()
 	s_session_owner *o = owner;
 	c_class_58d20 *c = o->session_c;
 	c_class_58d20 *a = o->session_a;
-	if (unknown104 == 0)
+	if (unknown104 == 0 && flag10)
 	{
-		if (flag10)
+		function_06f4b0(this);
+	}
+	if (unknown104 == 0 && !flag10)
+	{
+		if (a->state != 0)
 		{
-			function_06f4b0(this);
+			function_06f700(this);
 		}
-		if (unknown104 == 0)
+		else
 		{
-			if (!flag10)
-			{
-				if (a->state != 0)
-				{
-					function_06f700(this);
-				}
-				else
-				{
-					function_06fcc0(this);
-				}
-			}
+			function_06fcc0(this);
 		}
 	}
 	if (unknown104 != 0)

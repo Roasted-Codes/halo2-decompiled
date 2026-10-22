@@ -1937,7 +1937,8 @@ void sound_system_update_time(void)
 		}
 		else if (!function_12be90())
 		{
-			real step = sound_system->elapsed_time / (0.001f > sound_system->master_fade_times.k ? 0.001f : sound_system->master_fade_times.k);
+			real fade_seconds = sound_system->elapsed_time;
+			real step = fade_seconds / (0.001f > sound_system->master_fade_times.k ? 0.001f : sound_system->master_fade_times.k);
 
 			approach_126660(&sound_system->master_fade, 1.0f - sound_system->master_fade, 0.0f - step, step);
 			sound_system->master_fade_delay = NONE;
@@ -2452,13 +2453,17 @@ static inline real sound_vector_normalize(vector3f *v)
 {
 	real length = (real)sqrt(v->i * v->i + v->j * v->j + v->k * v->k);
 
+	real i = v->i;
+	real j = v->j;
+	real k = v->k;
+
 	if (!(0.0001f > fabs(length)))
 	{
 		real inverse = 1.0f / length;
 
-		v->i = inverse * v->i;
-		v->j *= inverse;
-		v->k *= inverse;
+		v->i = inverse * i;
+		v->j = j * inverse;
+		v->k = k * inverse;
 	}
 	return length;
 }
