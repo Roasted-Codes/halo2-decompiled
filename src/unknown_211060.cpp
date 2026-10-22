@@ -40,7 +40,7 @@ struct s_collision_result_1697c0
 	short material_type;
 	byte unknown26[2];
 	plane3f plane;
-	byte unknown38[0x5c - 0x38];
+	byte unknown38[0x68 - 0x38];
 };
 
 extern real g_4f93ac;
@@ -57,9 +57,9 @@ long function_211060(vector3f *velocity, dword flags, void const *physics_defini
 	long cell_index, point3f *position, vector3f const *force, vector3f *normal, short *material_type, real radius,
 	real dt)
 {
-	s_point_physics_definition const *physics = (s_point_physics_definition const *)physics_definition;
-	long result;
 	long collision_flags = 0;
+	long result;
+	s_point_physics_definition const *physics = (s_point_physics_definition const *)physics_definition;
 
 	if (dt != 0.0f)
 	{
@@ -178,7 +178,9 @@ long function_211060(vector3f *velocity, dword flags, void const *physics_defini
 			if (material_type)
 				*material_type = collision.material_type;
 
-			real d = velocity->k * collision.plane.k + velocity->j * collision.plane.j + velocity->i * collision.plane.i;
+			real d = velocity->k * collision.plane.k;
+			d += velocity->j * collision.plane.j;
+			d += velocity->i * collision.plane.i;
 			vector3f along = { d * collision.plane.i, d * collision.plane.j, d * collision.plane.k };
 			vector3f tangent = { velocity->i - along.i, velocity->j - along.j, velocity->k - along.k };
 			velocity->i = (1.0f - physics->tangential_loss) * tangent.i - physics->restitution * along.i;
