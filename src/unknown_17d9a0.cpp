@@ -2,6 +2,7 @@
 /* UNKNOWN_17D9A0.CPP: decal placement and rendering (0x17d9a0 onwards) */
 
 #include "unknown_11c920.h"
+#include "vector_products.h"
 #include "segment_sphere.h"
 #include "unknown_0259d0.h"
 #include <float.h>
@@ -591,9 +592,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 				if (length > 0.0f)
 				{
 					vector3f cross;
-					cross.i = selected_plane.n.j * projection->quad.plane.n.k - selected_plane.n.k * projection->quad.plane.n.j;
-					cross.j = selected_plane.n.k * projection->quad.plane.n.i - selected_plane.n.i * projection->quad.plane.n.k;
-					cross.k = selected_plane.n.i * projection->quad.plane.n.j - selected_plane.n.j * projection->quad.plane.n.i;
+					cross3f(&selected_plane.n, &projection->quad.plane.n, &cross);
 					real sign = cross.i * axis.i + cross.k * axis.k + cross.j * axis.j < 0.0f ? 1.0f : -1.0f;
 					real angle = decal_normal_angle_17fd20(&selected_plane.n, &projection->quad.plane.n) * sign;
 					real sine = (real)sin(angle);

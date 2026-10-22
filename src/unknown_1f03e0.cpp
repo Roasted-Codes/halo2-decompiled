@@ -482,11 +482,11 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 }
 
 // @retail 0x1f1460
-void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *arg_9650d9, vector3f *arg_3a7661)
+void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
     struct s_1f1466 { vector3f *field_0; byte const *field_4; vector3f *field_8; } local_0;
-    local_0.field_8 = arg_9650d9;
-    local_0.field_0 = arg_3a7661;
+    local_0.field_8 = forward_result;
+    local_0.field_0 = up_result;
     local_0.field_4 = state;
     byte *settings = *(byte **)(local_0.field_4 + 8);
     if (function_1f1462(*(dword *)settings))

@@ -28,7 +28,7 @@ struct s_motion_sensor_sample
 
 struct s_motion_sensor_player
 {
-	void motion_sensor_add_other_object(long object_index);
+	__declspec(noinline) void motion_sensor_add_other_object(long object_index);
 	s_motion_sensor_sample samples[10];
 	long objects[16];
 	long nearby_count;
@@ -202,7 +202,7 @@ inline void motion_sensor_add_nearby_object(s_motion_sensor_player *sensor, long
 }
 
 // @retail 0x1a1c8e
-void s_motion_sensor_player::motion_sensor_add_other_object(long object_index)
+inline void s_motion_sensor_player::motion_sensor_add_other_object(long object_index)
 {
 	if (nearby_count + other_count < 16)
 	{
@@ -580,20 +580,10 @@ void motion_sensor_clear_objects(void)
 // @retail 0x1a2505
 void motion_sensor_update_other_objects(void)
 {
-	struct
-	{
-		point3f field_0[4];
-		s_sensor_object *volatile field_30;
-		s_type_f1af8e field_34;
-		bool field_44[4];
-		real field_48;
-		volatile long field_4c;
-	} local_0;
-	point3f (&positions)[4] = local_0.field_0;
-	bool (&valid)[4] = local_0.field_44;
+	point3f positions[4];
+	bool valid[4];
 	real range = g_510c94->motion_sensor_range * 1.5f;
-	real &range_squared = local_0.field_48;
-	range_squared = range * range;
+	real range_squared = range * range;
 	long i;
 
 	for (i = 0; i < 4; i++)
@@ -610,25 +600,25 @@ void motion_sensor_update_other_objects(void)
 		}
 	}
 
-	s_type_f1af8e &iterator = local_0.field_34;
-	function_bae80(&iterator, 0x1003, 1);
-	s_sensor_object *object;
-	while ((object = (s_sensor_object *)function_baeb0(&iterator), local_0.field_30 = object, object) != NULL)
+	struct
 	{
-		if (motion_sensor_object_valid(iterator.object_index))
+		s_sensor_object *object;
+		s_type_f1af8e iterator;
+	} state;
+	function_bae80(&state.iterator, 0x1003, 1);
+	while ((state.object = (s_sensor_object *)function_baeb0(&state.iterator)) != NULL)
+	{
+		if (motion_sensor_object_valid(state.iterator.object_index))
 		{
-			volatile bool room = false;
-			s_motion_sensor_player *sensor = g_51e994->players;
-			point3f *local_1 = positions;
-			for (*(long *)&local_0.field_4c = 0; local_0.field_4c < 4; (*(long *)&local_0.field_4c)++, sensor++, local_1++)
+			bool room = false;
+			for (i = 0; i < 4; i++)
 			{
-				if (valid[local_0.field_4c] && sensor->other_count + sensor->nearby_count < 16)
+				s_motion_sensor_player *sensor = &g_51e994->players[i];
+				if (valid[i] && sensor->other_count + sensor->nearby_count < 16)
 				{
-					real dy = object->position.y - local_1->y;
-					real dx = object->position.x - local_1->x;
 					room = true;
-					if (range_squared >= dx * dx + dy * dy)
-						sensor->motion_sensor_add_other_object(iterator.object_index);
+					if (range_squared >= function_1a2337(&positions[i], &state.object->position))
+						sensor->motion_sensor_add_other_object(state.iterator.object_index);
 				}
 			}
 			if (!room)

@@ -296,15 +296,15 @@ long network_session_interface_get_user_state(c_class_58d20 *session, long user_
 			if (player_index != NONE)
 			{
 				s_network_session_player *player = &session->players[player_index];
-				if (player->unknown14 != NONE)
-				{
-					if (player->unknown14 == g_4cd868.users[user_index].unknown10 &&
-						memcmp(player->properties18, g_4cd868.users[user_index].properties, sizeof(player->properties18)) == 0 &&
-						player->unknown138 == g_4cd868.users[user_index].unknowna4)
-						return 6;
+				if (player->unknown14 == NONE)
+					return 4;
+				if (player->unknown14 != g_4cd868.users[user_index].unknown10)
 					return 5;
-				}
-				return 4;
+				if (memcmp(player->properties18, g_4cd868.users[user_index].properties, sizeof(player->properties18)) != 0)
+					return 5;
+				if (player->unknown138 != g_4cd868.users[user_index].unknowna4)
+					return 5;
+				return 6;
 			}
 			return g_4cd868.users[user_index].unknowncc[session->value10] ? 3 : 2;
 		}

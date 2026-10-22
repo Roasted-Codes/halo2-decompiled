@@ -568,9 +568,7 @@ void __stdcall function_2b9060(s_particle_properties_2ba const *definition, void
     s_particle_property_entry_2ba *properties = definition->properties;
     c_particle_collision_interface_2b *material = (c_particle_collision_interface_2b *)function_137bd0(
         ((s_particle_system_datum *)system)->function_1751d0()->tag_index);
-    dword remaining = definition->constant_mask;
-    long next;
-    real coefficients[2];
+    long next = first;
     union
     {
         s_collision_result_1697c0 value;
@@ -581,9 +579,8 @@ void __stdcall function_2b9060(s_particle_properties_2ba const *definition, void
     cache.current_system = 0;
     cache.current_emitter = 0;
     cache.current_particle = 0;
-    coefficients[0] = 0.0f;
-    coefficients[1] = 0.0f;
-    next = first;
+    real coefficients[2] = { 0.0f, 0.0f };
+    dword remaining = definition->constant_mask;
     if (system)
     {
         cache.current_system = system;
@@ -611,7 +608,7 @@ void __stdcall function_2b9060(s_particle_properties_2ba const *definition, void
         word countdown = *flags >> 13;
         if (countdown == 0)
         {
-            if (cache.current_particle != particle)
+            if (particle != cache.current_particle)
             {
                 cache.current_particle = particle;
                 cache.valid &= 0xffff07f0;

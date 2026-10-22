@@ -274,10 +274,9 @@ bool function_102100(short link_index, long object_index, bool *out_a, bool *out
 	if (link->flags & 0x40)
 	{
 		*out_b = true;
-		return false;
+		result = false;
 	}
-
-	if (result)
+	else if (result)
 	{
 		s_object *holder = OBJECT_HEADER(object_index)->object;
 		if ((holder->flags12c & 1) && holder->child_index != NONE)

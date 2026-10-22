@@ -122,7 +122,9 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 		real local_15[4];
 		s_2922b1 local_16;
 		*(short *)((byte *)&local_16 + 0x24) = NONE;
-		for (long local_17 = 0; local_17 < 4; local_17++)
+		long local_17 = 0;
+		long remaining = 4;
+		do
 		{
 			vector3f local_18;
 			local_18.i = local_10->i * local_14[local_17];
@@ -140,7 +142,8 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 				local_5[local_17] = true;
 				if (local_4 > local_19) local_4 = local_19;
 			}
-		}
+			++local_17;
+		} while (--remaining);
 		if (local_0)
 		{
 			real local_17 = 0.0f;

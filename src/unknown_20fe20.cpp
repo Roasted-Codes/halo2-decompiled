@@ -1205,7 +1205,7 @@ void function_211cc0(void)
 void function_211fd0(vector3f *out, real const *position, real scale, real time)
 {
 	real frequencies[3] = { 0.1f, 0.2f, 0.07f };
-	short i = 0;
+	long i = 0;
 
 	*out = *g_4687a4;
 	scale *= 1.0f / 3.0f;
