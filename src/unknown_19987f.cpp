@@ -1437,14 +1437,14 @@ void function_19ae0f(long change, long pending, long error)
 			}
 			if (!window_manager_window_has_dialog(1, 4, dialog_id))
 			{
-				word dialog_flags = function_1901fc();
+				word show_options = function_1901fc();
 				if (choice)
 				{
-					dialog_choice_show(1, dialog_id, 4, dialog_flags, first_chosen, second_chosen, 0);
+					dialog_choice_show(1, dialog_id, 4, show_options, first_chosen, second_chosen, 0);
 				}
 				else
 				{
-					dialog_ok_show(1, dialog_id, 4, dialog_flags, first_chosen, 0);
+					dialog_ok_show(1, dialog_id, 4, show_options, first_chosen, 0);
 				}
 			}
 			return;
