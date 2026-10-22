@@ -980,6 +980,8 @@ struct s_string_buffer
 
 /* the player's name, team and the game engine's two scores */
 // @retail 0x2342e9
+// score 65 (was 50): the arguments are pushed in the opposite order and the two virtual calls are
+// made in the other order.
 void c_postgame_statistics_list_459680::fill_row(c_class_1a2c81 *item, long row)
 {
 	c_class_1a2c81 *header = item->find_child(10, 0, false);
