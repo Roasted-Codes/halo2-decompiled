@@ -67,6 +67,8 @@ void c_object_type_definition::v21(s_entity *link)
 	}
 }
 
+// score 49 (was 49): the prologue differs: retail masks the index before saving the
+// registers, ours pushes ebx, esi and edi first and masks afterwards.
 // @retail 0xa0700
 void c_object_type_definition::v26(long object_index, long unused, s_entity_state *state)
 {
