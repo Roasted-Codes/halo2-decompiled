@@ -800,8 +800,7 @@ real function_267370(long volatile object_index)
 		if (!((bool)((s_object_activity_flags *)object)->blocked) && ((1 << object->type) & 3))
 		{
 			long actor_index = object->actor_index;
-			if (actor_index != NONE)
-				actor = actor_get(actor_index);
+			actor = actor_index != NONE ? actor_get(actor_index) : NULL;
 			long first;
 			if (actor)
 			{
