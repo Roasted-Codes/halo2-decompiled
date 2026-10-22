@@ -75,9 +75,10 @@ public:
 	void function_30df80(member_30c8e0 *member);
 };
 
-// score 41 (was 65): the tolerance, the pending count and the group are read
-// into locals as retail does; retail still keeps the shape's vtable in eax
-// where ours keeps it in edx
+// score 17 (was 29): the collidable's address is now a local of its own, so
+// retail's ebx and edi hold the member and the collidable as retail has them;
+// the dispatcher and the pair's data still swap registers, and the motion is
+// still read through the member instead of the collidable
 // @retail 0x30df80
 void owner_30c8e0::function_30df80(member_30c8e0 *member)
 {
@@ -87,14 +88,16 @@ void owner_30c8e0::function_30df80(member_30c8e0 *member)
 	}
 	pairs_30d870 added(pair_capacity_234);
 	bounds_312800 bounds;
+	collidable_30df80 *const collidable = &member->collidable;
+	shape_30df80 *const shape = collidable->shape;
 	float const tolerance_value = tolerance->value;
-	member->collidable.shape->get_bounds(member->collidable.motion->transform, tolerance_value * 0.5f, &bounds);
-	pair_finder->slot_1(&member->collidable.handle, &bounds, &added);
+	shape->get_bounds(member->collidable.motion->transform, tolerance_value * 0.5f, &bounds);
+	pair_finder->slot_1(&collidable->handle, &bounds, &added);
 	if (added.size > 0)
 	{
 		if (member->fixed)
 		{
-			holder_30dc80 recorder(&member->collidable);
+			holder_30dc80 recorder(collidable);
 			dispatcher->handler = (pair_handler_3173f0 *)&recorder;
 			dispatcher->function_3728c0(added.data, added.size, 0, 0, pair_listener);
 			dispatcher->handler = &dispatcher->own_handler;
