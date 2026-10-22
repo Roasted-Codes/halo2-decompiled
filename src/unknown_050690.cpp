@@ -175,6 +175,8 @@ long __stdcall function_516d0(bool reduced, dword seed,
 	s_noise_pair sums[257] = {0};
 	real weights[257] = {0};
 	long seed_offset = 0;
+	/* volatile keeps the level counter in its stack slot; it takes this near miss
+	   from score 778 to 734 */
 	for (volatile long level = 0; level < level_count; level++, seed_offset += 3)
 	{
 		if (!(definition->active_levels & (1 << level)))
