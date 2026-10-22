@@ -90,11 +90,10 @@ public:
 	virtual void add_contact(contact_2f8110 const *contact) {}
 };
 
-// score 81 (was 88): the triangle's shape is taken before the spheres' and
-// the sphere count is read as soon as the spheres' shape is, so the two bodies
-// are loaded in retail's order; ours still keeps the spheres' shape in ebx
-// where retail keeps it in ecx, and spills the count where retail reads it
-// from the shape
+// score 77 (was 81): the contact's two sides are set before the call that
+// works out the terms, as retail does; ours still keeps the triangle's shape
+// in esi where retail keeps it in ecx, and keeps the sphere count in a stack
+// slot where retail reads it from the shape
 // @retail 0x2f8110
 void __cdecl function_2f8110(void const *a, void const *b, void const *input, void *collector)
 {
@@ -129,10 +128,10 @@ void __cdecl function_2f8110(void const *a, void const *b, void const *input, vo
 		}
 	}
 	float terms[4];
-	function_308910(triangle->corners, terms);
 	contact_2f8110 contact;
 	contact.a = a;
 	contact.b = b;
+	function_308910(triangle->corners, terms);
 	__m128 const *centre = centres;
 	__m128 const *sphere = spheres->spheres;
 	for (int count = sphere_count; count > 0; count--)
