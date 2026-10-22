@@ -687,6 +687,8 @@ long log2_floor(dword value);
 
 /* builds a bitmap's hardware texture header over its description, pointing
    into the shared pixel data */
+// score 98 (was 98): the prologue saves EBX where retail saves EDI and the global is added to EAX
+// at a different point.
 // @retail 0x12c820
 void texture_cache_bitmap_build_texture(s_bitmap_data *bitmap)
 {
@@ -759,6 +761,8 @@ bool g_4e647b;
    cached, the shared one for scalable formats, else the cached level the
    scale (raised by the cache's own bias) asks for when it is resident; a
    texture remembered for this frame or the next wins */
+// score 40 (was 40): the loop counter is cleared in EDI where retail clears ECX, so the compare
+// uses a different register.
 // @retail 0x12ccf0
 D3DTexture *texture_cache_bitmap_get_texture(s_bitmap_data *bitmap, dword flags, real bias)
 {
@@ -859,6 +863,8 @@ long texture_cache_bitmap_level(s_bitmap_data const *bitmap, real scale)
 /* function_12d2f0, pumping the cache until a block is free: not at all
    (type 0), or for up to 30 pumps and 0.1 seconds (type 1) or 90 pumps and
    one second (type 2) */
+// score 2 (was 2): the value is stored to the stack before EDI is pushed; retail pushes EDI
+// first and stores it afterwards.
 // @retail 0x12d400
 long function_12d400(long type, long size, long user_data, long update, long release)
 {

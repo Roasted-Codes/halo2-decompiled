@@ -1006,6 +1006,9 @@ struct s_equipped_object_view
 
 /* The held-object lookup rereads the pool's data field. */
 
+// score 6 (was 6): the tag lookup: retail keeps the index in ecx and the
+// table base in eax, ours keeps the index in eax and the base in ecx;
+// thirteen source rewrites all scored 6.
 // @retail 0x2675f0
 bool function_2675f0(long object_index)
 {
