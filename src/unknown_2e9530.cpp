@@ -359,10 +359,16 @@ __forceinline bool unmoved_2e96a0(bounded_2e9530 const *self, bounds_2e9140 cons
 // first side's bounds (in the second side's frame, widened by one and a half
 // times the tolerance) overlap, brought up to date in key order; left as they
 // are while the bounds moved less than half the tolerance
-// score 414 (was 423): the placements now load in retail's order; retail
-// keeps `half` and the key walk in other stack slots, reads g_480398 before
-// the children's fields are stored, and the in-place refresh reads the
-// elements' size after their data, so its registers differ from there on.
+// score 412 (was 414): the placements now load in retail's order, and the
+// children's container and placement are stored in each branch (the compiler
+// merges them past the flag test, so g_480398 is read first as in retail;
+// all three stores in the branches 425, with the side's registers swapped).
+// Still: retail keeps `half` and the key walk in other stack slots, loads
+// the container into the tree's register before its stores, and the
+// in-place refresh reads the elements' size after their data, so its
+// registers differ from there on; retail's insertion keeps the key in ebx
+// and the count in memory, and walks the shift with the destination as its
+// base (a separate destination pointer gives that walk but scores 432).
 // @retail 0x2e96a0
 void class_2e96a0::function_2e96a0(void const *a, void const *b, void const *input, pair_query_2e90f0 query)
 {
@@ -386,15 +392,17 @@ void class_2e96a0::function_2e96a0(void const *a, void const *b, void const *inp
 	children_2e96a0 children;
 	keys_2e96a0 keys;
 	tree->overlapping_keys(&bounds, &keys);
-	children.container = tree->container;
-	children.child.placement = (long)side_b->placement;
 	children.child.parent = b;
 	if (g_480398)
 	{
+		children.child.placement = (long)side_b->placement;
+		children.container = tree->container;
 		refresh_in_place_2e96a0(self, &keys, a, &children, (context_2e9210 const *)input, query);
 	}
 	else
 	{
+		children.child.placement = (long)side_b->placement;
+		children.container = tree->container;
 		rebuild_2e96a0(self, &keys, a, &children, (context_2e9210 const *)input, query);
 	}
 }
