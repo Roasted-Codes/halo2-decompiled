@@ -59,12 +59,11 @@ byte const g_44178c[k_number_of_function_types] = { 0, 1, 2, 4, 6, 20, 32, 12, 4
 real function_17c900(short function_type, real input);
 real function_17ca10(real x, short curve);
 
-/* sqrt(a) / sqrt(b), approximately: the square root of a from its bits,
-   times rsqrtss of b */
+/* sqrt(a) / sqrt(b), approximately: the square root of a from its bits (built in a's own
+   storage), times rsqrtss of b */
 static __forceinline real square_root_ratio_approximate(real a, real b)
 {
-	long bits = (*(long *)&a >> 1) + 0x1fc00000;
-	real square_root = *(real *)&bits;
+	*(long *)&a = (*(long *)&a >> 1) + 0x1fc00000;
 	real reciprocal;
 
 	__asm
@@ -72,7 +71,7 @@ static __forceinline real square_root_ratio_approximate(real a, real b)
 		rsqrtss xmm0, b
 		movss reciprocal, xmm0
 		fld reciprocal
-		fmul square_root
+		fmul a
 	}
 }
 
@@ -81,15 +80,15 @@ struct vector2f
 	real i, j;
 };
 
-static inline void vector_from_points2d(point2f const *p0, point2f const *p1, vector2f *out)
-{
-	out->i = p1->x - p0->x;
-	out->j = p1->y - p0->y;
-}
-
 static inline real length_sq2f(vector2f const *v)
 {
 	return v->i * v->i + v->j * v->j;
+}
+
+/* a squared plus b squared, from two coordinate differences */
+static inline real length_squared_components(real a, real b)
+{
+	return a * a + b * b;
 }
 
 static inline real interpolate_linear(real a, real b, real t)
@@ -109,6 +108,10 @@ point2f *function_13bec0(s_tag_data const *function, byte range_index, byte poin
 	return NULL;
 }
 
+// score 11 (was 364): the remaining differences are in square_root_ratio_approximate, in both
+// spline2 ranges (7 instructions in the low range, 4 in the high): retail spills the numerator into
+// the slot rsqrtss then reuses for its operand and stores the shifted root before that operand;
+// ours uses other slots and emits the two stores in the opposite order.
 // @retail 0x13b390
 real function_13b390(void const *function, real input, real range)
 {
@@ -231,13 +234,10 @@ real function_13b390(void const *function, real input, real range)
 				point2f const *p1 = function_13bec0(field_4_7, 0, 1);
 				point2f const *p2 = function_13bec0(field_4_7, 0, 2);
 				point2f const *p3 = function_13bec0(field_4_7, 0, 3);
-				vector2f vector;
-				vector_from_points2d(p3, p2, &vector);
-				real end_length_squared = length_sq2f(&vector);
+				real end_length_squared = length_squared_components(p2->x - p3->x, p2->y - p3->y);
 				if (end_length_squared > 0.0001f)
 				{
-					vector_from_points2d(p1, p0, &vector);
-					real start_length_squared = length_sq2f(&vector);
+					real start_length_squared = length_squared_components(p0->x - p1->x, p0->y - p1->y);
 					if (fabs(start_length_squared) < 0.0001f)
 					{
 						t = 1.0f;
@@ -263,12 +263,14 @@ real function_13b390(void const *function, real input, real range)
 					point2f const *p1 = function_13bec0(field_4_7, 1, 1);
 					point2f const *p2 = function_13bec0(field_4_7, 1, 2);
 					point2f const *p3 = function_13bec0(field_4_7, 1, 3);
-					vector2f vector;
-					vector_from_points2d(p3, p2, &vector);
-					real end_length_squared = length_sq2f(&vector);
+					/* the differences are passed y first here, which is the order retail evaluates them in the high range */
+					real end_length_squared = length_squared_components(p2->y - p3->y, p2->x - p3->x);
 					if (end_length_squared > 0.0001f)
 					{
-						vector_from_points2d(p1, p0, &vector);
+						/* also y first; the length is still x squared plus y squared */
+						vector2f vector;
+						vector.j = p0->y - p1->y;
+						vector.i = p0->x - p1->x;
 						real start_length_squared = length_sq2f(&vector);
 						if (fabs(start_length_squared) < 0.0001f)
 						{
@@ -292,19 +294,10 @@ real function_13b390(void const *function, real input, real range)
 		default:
 			goto done;
 		}
-
-		if (0.0f > result)
-		{
-			result = 0.0f;
-		}
-		else if (result > 1.0f)
-		{
-			return 1.0f;
-		}
 	}
 
 done:
-	return result;
+	return 0.0f > result ? 0.0f : (result > 1.0f ? 1.0f : result);
 }
 
 // @retail 0x13bb40
