@@ -223,6 +223,8 @@ bool __stdcall function_1aefc0(long actor_index, s_slot *slot)
 	return true;
 }
 
+// score 8 (was 8): the branch on the flag falls through where retail jumps to the end of the
+// block, so the two halves are laid out the other way round.
 // @retail 0x1af0a0
 short __stdcall function_1af0a0(long actor_index, s_slot *slot, s_slot *arg_2)
 {
@@ -331,6 +333,8 @@ struct s_unit_state_0f
 
 static __forceinline long real_to_long(real value);
 
+// score 114 (was 114): the argument is read into ECX and the other value into EDX; retail reads them
+// in the opposite order.
 // @retail 0x1afb30
 void __stdcall function_1afb30(long actor_index, s_slot *slot)
 {
@@ -518,6 +522,8 @@ struct s_1af5c6
 	point3f field_10;
 };
 
+// score 20 (was 20): the index is masked in EAX where retail masks it in ECX; the argument is
+// passed in the other register.
 // @retail 0x1af5c0
 long function_1af5c0(long arg_0, long arg_1, point3f const *arg_2, long arg_3)
 {
