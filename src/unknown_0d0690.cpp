@@ -982,11 +982,15 @@ long function_d1850(long object_index, bool value, s_effect_color_query *query)
         if (*(long *)(bsp + 0x1c) != NONE && *(long *)(bsp + 4) == *(long *)((byte *)g_4e0348 + 8))
         {
             s_object *object = OBJECT_FROM_INDEX(object_index);
-            byte *volatile definition = g_4e3b44[object->tag_index & 0xffff].bytes;
             dword object_flags = *(dword *)((byte *)object + 4);
+            byte *volatile definition = g_4e3b44[object->tag_index & 0xffff].bytes;
+            long volatile flags;
+            bool object_bit = (object_flags >> 13) & 1;
+            if (object_bit) flags = 1;
+            else flags = 0;
             byte tag_flags = definition[2];
-            long volatile flags = (object_flags >> 13) & 1;
-            flags |= (tag_flags >> 1) & 1;
+            bool tag_bit = (tag_flags >> 1) & 1;
+            if (tag_bit) flags |= 1;
             point3f *point = (point3f *)((byte *)object + 0x30);
             long status = function_d2a50(flags, object_index, value, query, 0, point);
             if (surface_status_failed(status))
