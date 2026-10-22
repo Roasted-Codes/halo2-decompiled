@@ -599,7 +599,8 @@ bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short cou
 {
  long result = true;
  s_pathfinding_data const *pathfinding = (s_pathfinding_data const *)state->pathfinding;
- real radius = state->source.radius > 0.2f ? state->source.radius : 0.2f;
+ real radius = 0.2f;
+ if (state->source.radius > radius) radius = state->source.radius;
  bool final_complete = *complete;
  long previous_node;
  point3f previous_point;
