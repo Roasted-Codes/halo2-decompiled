@@ -51,8 +51,8 @@ void function_67e30(void)
 	memset(g_546974.entities, 0, sizeof(g_546974.entities));
 	g_546974.event_count = NONE;
 	memset(g_546974.events, 0, sizeof(g_546974.events));
-	long entity_count;
-	long event_count;
+	long entity_count = NONE;
+	long event_count = NONE;
 	function_82240((s_simulation_definition_registry *)g_4cf784, &entity_count, &event_count);
 	s_simulation_definition_registry *registry = (s_simulation_definition_registry *)g_4cf784;
 	registry->entity_count = entity_count;
