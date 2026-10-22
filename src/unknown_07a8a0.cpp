@@ -32,7 +32,7 @@ bool transport_security_register_key(long index, long local, bool host, const XN
 	const XNKID *local_1 = *local_0;
 	s_xnet_registry_entry *entry = &g_4cf7d4[index];
 
-	if (entry->valid && entry->valid)
+	if (entry->valid && g_4cf7d4[index].valid)
 	{
 		XNetUnregisterKey(&entry->kid);
 		entry->valid = local_2;

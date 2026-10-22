@@ -1,4 +1,5 @@
 #include "unknown_11c920.h"
+#include <string.h>
 #include "globals.h"
 #include "unknown_0a58d0.h"
 
@@ -32,11 +33,7 @@ struct s_object_creation
 
 static void object_state_clear(s_entity_state *state)
 {
-	state->field0 = 0;
-	state->field4 = 0;
-	state->field8_long = 0;
-	state->fieldc = 0;
-	state->field10 = 0;
+	memset(state, 0, sizeof(*state));
 }
 
 // @retail 0x9fe30
