@@ -270,25 +270,23 @@ void __stdcall function_1f3e40(long object_index, vector3f const *forward, vecto
 	vector3f object_left;
 	vector3f object_up;
 	function_11d180(&object_forward, g_4687b0, &unused1, &object_left, &object_up);
-	real input_i = vector->i;
-	real input_j = vector->j;
-	real input_k = vector->k;
 	vector3f world;
-	vector3f contribution;
-	long component;
-	vector3f_scale(&object_forward, input_i, &contribution);
-	for (component = 0; component < 3; ++component)
-		world.n[component] = g_4687a4->n[component] + contribution.n[component];
-	vector3f_scale(&object_left, input_j, &contribution);
-	for (component = 0; component < 3; ++component)
-		world.n[component] += contribution.n[component];
-	vector3f_scale(&object_up, input_k, &contribution);
-	for (component = 0; component < 3; ++component)
-		world.n[component] += contribution.n[component];
+	vector3f_scale(&object_forward, vector->i, &world);
+	world.i += g_4687a4->i;
+	world.j += g_4687a4->j;
+	world.k += g_4687a4->k;
+	real input_j = vector->j;
+	world.i += object_left.i * input_j;
+	world.j += object_left.j * input_j;
+	world.k += object_left.k * input_j;
+	real input_k = vector->k;
+	world.i += object_up.i * input_k;
+	world.j += object_up.j * input_k;
+	world.k += object_up.k * input_k;
 	vector3f result;
-	result.i = forward->k * world.k + forward->j * world.j + forward->i * world.i;
-	result.j = left.k * world.k + left.j * world.j + left.i * world.i;
-	result.k = up.k * world.k + up.j * world.j + up.i * world.i;
+	result.i = dot3f(forward, &world);
+	result.j = dot3f(&left, &world);
+	result.k = dot3f(&up, &world);
 	*vector = result;
 }
 

@@ -226,13 +226,12 @@ void function_264940(long actor_index, long prop_ref_index)
 		else
 		{
 			object = *(byte **)(headers + (object_index & 0xffff) * 12 + 8);
-			long player_index = *(long *)(object + 0x13c);
-			if (player_index != NONE)
+			if (*(long *)(object + 0x13c) != NONE)
 			{
 				if (category <= 0)
 				{
 					actor[0x30c] = true;
-					*(short *)(actor + 0x310) = ai_player_index_get(player_index);
+					*(short *)(actor + 0x310) = ai_player_index_get(*(long *)(object + 0x13c));
 				}
 				else
 				{

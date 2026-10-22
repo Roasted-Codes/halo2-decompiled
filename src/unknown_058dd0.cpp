@@ -1359,20 +1359,23 @@ bool function_71f80(c_session_state_matchmaking *state)
 	{
 		if (!function_058d90(session) && current > 2 && current <= 8)
 		{
-			long next;
-			long type = session->type;
-			if (type >= 2 && type <= 4)
-				next = 7;
-			else if (type == 5)
-				next = 9;
-			else
-				goto local_1;
-			function_06df60(owner, next, 0, 0);
-			state->mode = 2;
-			local_0 = true;
+			switch (session->type)
+			{
+			case 2:
+			case 3:
+			case 4:
+				function_06df60(owner, 7, 0, 0);
+				state->mode = 2;
+				local_0 = true;
+				break;
+			case 5:
+				function_06df60(owner, 9, 0, 0);
+				state->mode = 2;
+				local_0 = true;
+				break;
+			}
 		}
 	}
-local_1:
 	return local_0;
 }
 

@@ -1393,6 +1393,7 @@ struct s_shape_counts
 
 PRIVATE __forceinline long shape_cluster_next(long *next)
 {
+    long result = NONE;
     if (*next != NONE)
     {
         s_record_pool *pool = (s_record_pool *)g_4de2e4;
@@ -1400,9 +1401,9 @@ PRIVATE __forceinline long shape_cluster_next(long *next)
         *next = *(long *)(entry + 8);
         if (*next != NONE)
             _mm_prefetch((char const *)(pool->data + pool->size * (*next & 0xffff)), _MM_HINT_T0);
-        return *(long *)(entry + 4);
+        result = *(long *)(entry + 4);
     }
-    return NONE;
+    return result;
 }
 
 // @retail 0x16a440
