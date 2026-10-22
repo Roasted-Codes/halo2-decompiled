@@ -919,8 +919,8 @@ bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
   *flags |= 0x200;
  }
  long valid = result;
- if (valid && stream->bit_position <= (stream->size_in_bytes << 3)) return true;
- return false;
+ if (!valid) return false;
+ return stream->bit_position <= (stream->size_in_bytes << 3);
 }
 
 
