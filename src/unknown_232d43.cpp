@@ -1024,7 +1024,7 @@ void c_postgame_statistics_list_459680::fill_row(c_class_1a2c81 *item, long row)
 		}
 		else
 		{
-			if (g_50224c == 1 || g_50224c == 3 || g_50224c == 4 || g_50224c == 7 || g_50224c == 8 || g_50224c == 9)
+			if (g_50224c == 1 || g_50224c == 3 || g_50224c == 4 || (g_50224c >= 7 && g_50224c <= 9))
 			{
 				value1 = g_55caf0[row].value10c;
 				value2 = g_55caf0[row].value110;
