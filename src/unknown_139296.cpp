@@ -978,7 +978,7 @@ struct s_hud_weapon_record
 };
 
 // @retail 0x13afa9
-void function_13afa9(long object_index, s_hud_weapon_record *record, long *definition_out)
+void function_13afa9(long object_index, long *definition_out, s_hud_weapon_record *record)
 {
 	s_13b164_object *object = ((s_13b164_header *)g_4e0300->data)[object_index & 0xffff].object;
 	s_weapon_status status;

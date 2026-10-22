@@ -628,6 +628,8 @@ HRESULT online_task_update(s_type_9df9da *task)
 		case XONLINETASK_S_RESULTS_AVAIL:
 			task->flags |= 2;
 			break;
+		case XONLINETASK_S_SUCCESS:
+			{} // falls through; the separate case keeps retail's binary-search switch
 		default:
 			task->flags = (task->flags & ~1) | 4;
 			break;
