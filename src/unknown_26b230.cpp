@@ -429,6 +429,10 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 	return result != NULL;
 }
 
+// score 65 (was 65): our body is 13 bytes longer: retail drives the pool
+// iterator through a call to function_16bc00 and keeps the datum index in
+// a register, ours keeps the iterator and the result in a frame struct;
+// rewriting it the retail way scores 141.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1322,6 +1326,8 @@ PRIVATE __forceinline s_type_76cf92 *clump_next_prop(s_iterator *iterator)
 	return prop;
 }
 
+// score 52 (was 52): the prologue: retail loads the pool global before
+// saving ebx/ebp/esi, ours saves the registers first.
 // @retail 0x26b120
 long function_26b120(long object_index, long clump_index)
 {
@@ -1687,6 +1693,8 @@ void function_269580(long destination_index, long source_index)
 	}
 }
 
+// score 70 (was 70): our body is 6 bytes longer and the prologue order
+// differs; dropping the address-of-local tricks scores 83, so they stay.
 // @retail 0x26ace0
 long function_26ace0(long object_index, long actor_index, short type)
 {
