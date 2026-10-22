@@ -1156,11 +1156,11 @@ bool __stdcall clan_member_compare(void const *a, void const *b, void const *con
 {
 	s_friend_player *player_a = clan_member_reference_get_player(a);
 	s_friend_player *player_b = clan_member_reference_get_player(b);
+	bool result = false;
 	dword flags_a = player_a->flags20;
-	dword flags_b = player_b->flags20;
 	bool a9 = (bool)((flags_a >> 9) & 1);
+	dword flags_b = player_b->flags20;
 	bool b9 = (bool)((flags_b >> 9) & 1);
-	volatile bool result = false;
 	bool a_c0 = false;
 	bool b_c0;
 
@@ -1171,37 +1171,37 @@ bool __stdcall clan_member_compare(void const *a, void const *b, void const *con
 		b_c0 = true;
 
 	bool a11 = (bool)((flags_a >> 11) & 1);
-	bool a10 = (bool)((flags_a >> 10) & 1);
 	bool b11 = (bool)((flags_b >> 11) & 1);
+	bool a10 = (bool)((flags_a >> 10) & 1);
 	bool b10 = (bool)((flags_b >> 10) & 1);
 	bool a0 = (bool)(player_a->unknown20 & 1);
 	bool b0 = (bool)(player_b->unknown20 & 1);
 
-	if (a10)
+	if (a10 || b10)
 	{
-		if (!b10)
+		if (b10 && !a10)
+		{
+			result = true;
+			goto done;
+		}
+		if (a10 && !b10)
 		{
 			result = false;
 			goto done;
 		}
 	}
-	else if (b10)
+	else if (a11 || b11)
 	{
-		result = true;
-		goto done;
-	}
-	else if (a11)
-	{
-		if (!b11)
+		if (a11 && !b11)
 		{
 			result = true;
 			goto done;
 		}
-	}
-	else if (b11)
-	{
-		result = false;
-		goto done;
+		if (b11 && !a11)
+		{
+			result = false;
+			goto done;
+		}
 	}
 	else
 	{
