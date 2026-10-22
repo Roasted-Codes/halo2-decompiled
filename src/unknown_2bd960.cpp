@@ -1043,6 +1043,8 @@ PRIVATE __forceinline void territory_marker_position_copy(point3f *destination, 
     *destination = *source;
 }
 
+// score 29 (was 29): the same xmm4 radius argument as 0x2c0980, plus a
+// different stack layout for the two out-pointers.
 // @retail 0x2bf5b0
 void c_game_engine_45c948::v12()
 {
@@ -1078,6 +1080,9 @@ void c_game_engine_45c948::v12()
 	}
 }
 
+// score 14 (was 14): retail loads the engine global g_4e6948 into edx at the
+// top of the function, ours loads it just before the mode test, so the load
+// and the compare come in the other order.
 // @retail 0x2bf480
 void c_game_engine_45c948::v6(long a)
 {
@@ -1390,6 +1395,10 @@ struct s_territory_tag
 	s_territory_tag_data *data;
 };
 
+// score 24 (was 24): the tag's data pointer is loaded into ecx where retail
+// keeps it in eax, the marker index is kept in edx where retail uses eax, and
+// the colour mask is read at the top of the function instead of just before
+// it is changed.
 // @retail 0x2c0980
 long territory_create_item(long player_index, long territory)
 {
@@ -1707,6 +1716,8 @@ void territory_marker_color(long player_index, long territory, s_color_bits *col
 	}
 }
 
+// score 50 (was 50): the stack slots of the outer frame differ ([esp+0x14]
+// where retail has [esp+0x10]).
 // @retail 0x2bf960
 void c_game_engine_45c948::v14(long local_player)
 {
