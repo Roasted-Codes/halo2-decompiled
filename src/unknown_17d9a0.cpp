@@ -143,11 +143,10 @@ void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_qu
 	quad->edges[0].j = corners[1].y - corners[0].y;
 	quad->edges[1].i = corners[3].x - corners[0].x;
 	quad->edges[1].j = corners[3].y - corners[0].y;
+	quad->inverse_determinant = 0.0f;
 	if (quad->edges[0].i * quad->edges[0].i + quad->edges[0].j * quad->edges[0].j > 0.0001f &&
 		quad->edges[1].i * quad->edges[1].i + quad->edges[1].j * quad->edges[1].j > 0.0001f)
 		quad->inverse_determinant = 1.0f / (quad->edges[1].j * quad->edges[0].i - quad->edges[0].j * quad->edges[1].i);
-	else
-		quad->inverse_determinant = 0.0f;
 }
 
 struct s_decal_mesh_edge
