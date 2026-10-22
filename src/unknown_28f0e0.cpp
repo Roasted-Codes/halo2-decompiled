@@ -25,9 +25,7 @@ bool function_28f0e0(vector3f const *arg_0, s_28f0e0 const *arg_1, long arg_2, l
 {
     s_28f0e1 *local_0 = (s_28f0e1 *)object_get(arg_2);
     vector3f local_1;
-    local_1.i = arg_0->k * arg_1->field_3c.j - arg_0->j * arg_1->field_3c.k;
-    local_1.j = arg_1->field_3c.k * arg_0->i - arg_0->k * arg_1->field_3c.i;
-    local_1.k = arg_1->field_3c.i * arg_0->j - arg_1->field_3c.j * arg_0->i;
+    cross3f(&arg_1->field_3c, arg_0, &local_1);
     vector3f tangent;
     vector3f const *local_2;
     vector3f const *local_3;
