@@ -23,6 +23,9 @@ PRIVATE __forceinline real function_1d9241(real arg_0, real arg_1)
 
 static __forceinline long real_to_long(real value);
 
+// score 7 (was 7): retail loads the flag byte into eax with movzx and masks
+// it with a 32-bit and; ours narrows the load to al and masks it in al, so
+// the load, the mask and every block offset after them differ.
 // @retail 0x1d9240
 void function_1d9240(s_1d9240 *p, char flag, real x)
 {

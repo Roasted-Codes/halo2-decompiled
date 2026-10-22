@@ -24,6 +24,9 @@ long __stdcall function_1e0160(long squad_index, long entry_index, long unit_ind
 
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type);
 
+// score 2 (was 2): retail writes the request's fields in the order type (0x31),
+// arguments[0] and arguments[2], ours writes arguments[0], type and
+// arguments[2]
 // @retail 0x1e0dc0
 long function_1e0dc0(short team, long unit_index, short request_value, short squad_index)
 {
