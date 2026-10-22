@@ -1366,7 +1366,7 @@ bool __stdcall function_bab40(long object_index, long name, real *value);
 bool function_bad50(long object_index, long index, point3f *out);
 color3f *function_131c20(color3f const *a, color3f const *b, dword flags, real t, color3f *result);
 color3f *function_131d60(color4f const *a, color4f const *b, dword flags, real t,
-    color3f const *tint, color3f *result);
+    color3f *result, color3f const *tint);
 long function_baf80(long object_index);
 bool object_or_parent_hidden(long object_index);
 bool function_b9d20(long object_index);
@@ -1438,9 +1438,9 @@ void __stdcall function_c0c80(long light_index)
         function_bab40(object_index, light->name, fraction);
         function_bad50(object_index, light->colour_index, (point3f *)&tint);
         function_131d60(&first, &second, *(dword *)(definition + 0x34),
-            *fraction, &tint, &light->colour);
+            *fraction, &light->colour, &tint);
         function_131d60(&pair_first, &pair_second, *(dword *)(definition + 0x34),
-            light->fraction, &tint, &light->pair_colour);
+            light->fraction, &light->pair_colour, &tint);
         real blend = light->fraction;
         light->intensity = (1.0f - blend) *
             *(real *)(definition + 0x70) + *(real *)(definition + 0x74) * blend;

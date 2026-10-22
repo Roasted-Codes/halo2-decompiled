@@ -648,8 +648,8 @@ void function_13f700(box2f const *bounds, box2f const *clip, short first,
 void __stdcall function_13f0e0(text_glyph_callback callback, short_rectangle2d const *bounds,
 	short *arg_c5cac5, short_rectangle2d const *clip, short line_gap, real scale, dword const *text)
 {
-	long line = 0;
 	long tab = 0;
+	long line = 0;
 	long maximum_lines = 0;
 	long wrapped_line = 0;
 	point2f position = { (real)bounds->left, (real)bounds->top };
@@ -668,20 +668,20 @@ void __stdcall function_13f0e0(text_glyph_callback callback, short_rectangle2d c
 				line_bounds.x0 = g_4e73a0.tab_stops[(short)tab - 1] * scale;
 			else
 			{
-				if ((short)line == 0)
-					line_bounds.x0 += g_4e73a0.unknown5e * scale;
-				else
+				if ((short)line != 0)
 					line_bounds.x0 += g_4e73a0.unknown60 * scale;
+				else
+					line_bounds.x0 += g_4e73a0.unknown5e * scale;
 			}
 			if ((short)tab < g_4e73a0.tab_stop_count)
 				line_bounds.x1 = g_4e73a0.tab_stops[(short)tab] * scale;
 		}
 		else
 		{
-			if ((short)line == 0)
-				line_bounds.x0 += g_4e73a0.unknown5e * scale;
-			else
+			if ((short)line != 0)
 				line_bounds.x0 += g_4e73a0.unknown60 * scale;
+			else
+				line_bounds.x0 += g_4e73a0.unknown5e * scale;
 		}
 		s_font_header *header = iterator.field_4_3;
 		position.x = *(short *)header->unknown0a * scale + line_bounds.x0;
@@ -733,8 +733,8 @@ void __stdcall function_13f0e0(text_glyph_callback callback, short_rectangle2d c
 			}
 			break;
 		case _text_token_newline:
-			line += maximum_lines + 1;
 			tab = 0;
+			line += maximum_lines + 1;
 			maximum_lines = 0;
 			wrapped_line = 0;
 			break;
