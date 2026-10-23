@@ -103,6 +103,10 @@ PRIVATE __forceinline void collision_damage_location(dword key, long *instance, 
 	}
 }
 
+/* fills a collision damage entry from one of an object's contacts when its
+   impulse is above 0.4 */
+// score 13 (was 95): the tail's loads of the location are scheduled
+// differently (retail reloads the instance right after function_1201a0)
 // @retail 0x1da550
 bool function_1da550(long object_index, long contact_index, s_collision_damage_entry *entry)
 {
@@ -110,7 +114,7 @@ bool function_1da550(long object_index, long contact_index, s_collision_damage_e
 	s_havok_component *component = havok_component_get(object->component_index);
 	s_havok_component_element48 *contact = collision_damage_contact_get(component, contact_index);
 	bool result = false;
-	if (contact->impulse > 0.4f)
+	if (component->unknown88.data[contact_index].impulse > 0.4f)
 	{
 		s_collision_damage_location location;
 		collision_damage_location(*(dword *)&contact->unknown00[4], &location.instance, &location.material, &location.surface);
@@ -124,8 +128,8 @@ bool function_1da550(long object_index, long contact_index, s_collision_damage_e
 		entry->object_value28 = object->value28;
 		entry->object_value2c = object->value2c;
 		entry->flags |= 0x100;
-		entry->surface_index = location.surface;
 		entry->instance_index = location.instance;
+		entry->surface_index = location.surface;
 		entry->material_index = location.material;
 		result = true;
 	}
@@ -269,7 +273,7 @@ bool function_1da6d0(long object_index, long other_object_index, real speed_a, r
     if (speed_b > speed_a * 0.25f && other->havok_component_index != NONE && (byte)function_1dac00(*object_index_reference))
     {
         s_havok_component *component = havok_component_get(other->havok_component_index);
-        if ((byte)function_1dac40(component->object_index, *object_index_reference) && component->rigid_bodies.size > 0)
+        if ((byte)function_1dac40(*object_index_reference, component->object_index) && component->rigid_bodies.size > 0)
         {
             s_collision_force_definition *other_definition = (s_collision_force_definition *)g_4e3b44[*(long *)other & 0xffff].bytes;
             vector3f velocity = component->rigid_bodies[0].linear_velocity;
