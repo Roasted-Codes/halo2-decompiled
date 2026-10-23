@@ -97,7 +97,7 @@ struct s_fire_event_barrel
 };
 typedef char assert_fire_event_barrel_size[(sizeof(s_fire_event_barrel) == 0xec) ? 1 : -1];
 
-/* applies a weapon-fire event: the firing unit's object relevance and aim
+/* applies a weapon-fire event: the firing unit's object relevance and target
    point, the barrel's attachment, then fires the weapon's barrel */
 // @retail 0xa2ba0
 bool c_weapon_fire_event::v11(long a, long const *entities, long c, void const *data)
