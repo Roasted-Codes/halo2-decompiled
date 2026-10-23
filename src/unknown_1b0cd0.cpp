@@ -132,10 +132,10 @@ short __stdcall function_1b0d10(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 23 (was 23): retail keeps the false constant in EDX and the unknown24 byte in BL
-// and schedules the two stores before the compare; ours keeps them in EAX/DL and after it.
+/* returns the element index the slot keeps: the remembered entry's, or the
+   newly chosen one (NONE when there is none) */
 // @retail 0x1b0d50
-void __stdcall function_1b0d50(long actor_index, s_slot *slot)
+long __stdcall function_1b0d50(long actor_index, s_slot *slot)
 {
 	s_slot_7e *state = (s_slot_7e *)slot;
 	s_slot_entry_iterator iterator;
@@ -150,7 +150,7 @@ void __stdcall function_1b0d50(long actor_index, s_slot *slot)
 			long entry_value = entry->unknown4;
 			state->position_index = NONE;
 			if (entry_value != NONE)
-				return;
+				return entry_value;
 			break;
 		}
 	}
@@ -159,13 +159,13 @@ void __stdcall function_1b0d50(long actor_index, s_slot *slot)
 
 	if (element_index != NONE)
 	{
-		s_slot_target_list *list = (s_slot_target_list *)element_502424_get(element_index);
-		bool unknown24 = state->unknown24;
-
 		state->unknown0c = true;
 		state->element_index = element_index;
+
+		s_slot_target_list *list = (s_slot_target_list *)element_502424_get(element_index);
+
 		state->position_index = 0;
-		if (unknown24)
+		if (state->unknown24)
 		{
 			list->mode = state->unknown1e;
 			list->unknown84 = state->unknown28;
@@ -180,6 +180,7 @@ void __stdcall function_1b0d50(long actor_index, s_slot *slot)
 			list->unknown80 = false;
 		}
 	}
+	return element_index;
 }
 
 
@@ -560,7 +561,7 @@ s_slot_handler_2x g_47df60 =
 		},
 		(t_slot_proc)joint_update, joint_activate, joint_deactivate
 	},
-	function_1b0d50, 0, (t_slot_release)function_1b13b0, 0, function_1b1a90, (t_slot_proc4)function_1b1d90,
+	(t_slot_proc)function_1b0d50, 0, (t_slot_release)function_1b13b0, 0, function_1b1a90, (t_slot_proc4)function_1b1d90,
 	3, 10, 1.0f, 0
 };
 

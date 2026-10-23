@@ -167,8 +167,9 @@ long function_1366d0(short width, short height, short depth, short format, short
 	return total;
 }
 
-// score 4 (was 4): the word is written to [esi+0xa] before the dword is loaded; retail loads the
-// dword first and reads the word from a different stack slot.
+// score 4 (was 4): retail loads the count word into cx and stores it to
+// [esi+0x14] before it stores the type to [esi+0xa]; ours stores the type
+// first and only loads the count into ax afterwards.
 // @retail 0x1358e0
 s_type_7ba8e9 *function_1358e0(short width, short height, short mipmap_count, short format, word flags)
 {
