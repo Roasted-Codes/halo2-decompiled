@@ -270,6 +270,9 @@ static inline void font_copy_wait(bool volatile *done)
 			SwitchToThread();
 }
 
+// score 4 (was 4): the three font file arrays sit in the frame in another
+// order: retail puts the old directory's files first, then the source's,
+// ours puts the source's first and the old ones in the middle.
 // @retail 0x121b00
 bool function_121b00(void)
 {

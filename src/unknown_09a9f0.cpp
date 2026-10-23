@@ -531,6 +531,9 @@ bool c_projectile_type::v8(long a, long b)
  return result;
 }
 
+// score 5 (was 5): retail masks the 16-bit index with and eax, 0xffff, ours
+// truncates it with movzx eax, ax; masking explicitly gives the right
+// instruction but re-schedules the whole prologue
 // @retail 0xa3df0
 long c_device_type::v27(long a, long b, long c, long d)
 {
@@ -715,6 +718,9 @@ void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f 
  point3f const *point, vector3f const *normal, long index, bool attached, long object_index,
  short node_index, bool alternate);
 
+// score 28 (was 28): the effect call's arguments are pushed in the other order
+// and the field is loaded into the low half of a cleared register instead of
+// being zero extended
 // @retail 0xa1a80
 bool c_projectile_impact_effect_event::v11(long a, long const *entities, long c, void const *data)
 {
@@ -731,6 +737,9 @@ bool c_projectile_impact_effect_event::v11(long a, long const *entities, long c,
 
 bool function_100f00(long weapon_index);
 
+// score 93 (was 93): the flags word is kept in the other register and the
+// result in the other one, so retail tests the flag bits in the high byte of
+// the word and keeps the result in edx while ours keeps them in dx and eax
 // @retail 0xa1f70
 long c_weapon_type::v27(long a, long b, long c, long d)
 {
@@ -1131,6 +1140,10 @@ struct s_z_weapon_update_object
  short field22c;
 };
 
+// score 22 (was 22): the first argument is stored to the stack and reloaded in
+// retail and kept in a register in ours, retail masks the second argument
+// before the first call while ours masks it after, and ours makes an extra
+// call before the two calls that read the item's definition
 // @retail 0xa2140
 void c_weapon_type::v31(long a, long b, long c, long d)
 {

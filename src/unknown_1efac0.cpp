@@ -378,8 +378,10 @@ struct s_surface_object_header
 
 // score 8 (was 8): the record address is computed in ECX; retail computes it in EDX and reads
 // the flags from it.
+/* the first argument is the caller's shape owner (or its object reference); the body
+   never reads it, but every retail caller still computes it before the call */
 // @retail 0x1ef3e0
-bool function_1ef3e0(dword key)
+bool function_1ef3e0(void const *owner, dword key)
 {
 	bool result = true;
 	long object_index = key & 0xffff;
@@ -441,15 +443,15 @@ struct s_surface_key_array
 };
 
 // @retail 0x1eece0
-void function_1eece0(s_surface_key_array *array, void *volatile owner)
+void function_1eece0(s_surface_key_array *array, void *owner)
 {
  long index = 0;
  if (array->count > 0)
  {
-  owner = (byte *)owner + 0x14;
   do
   {
-   if (!function_1ef3e0(array->keys[index]))
+   /* the owner's object reference, c_shape_owner::object */
+   if (!function_1ef3e0((byte *)owner + 0x14, array->keys[index]))
    {
     array->count--;
     for (long i = index; i < array->count; i++)
