@@ -114,6 +114,8 @@ bool function_1da550(long object_index, long contact_index, s_collision_damage_e
 	s_havok_component *component = havok_component_get(object->component_index);
 	s_havok_component_element48 *contact = collision_damage_contact_get(component, contact_index);
 	bool result = false;
+	/* retail reads the impulse through the component again (it computes the
+	   component pointer and then drops it) */
 	if (component->unknown88.data[contact_index].impulse > 0.4f)
 	{
 		s_collision_damage_location location;
@@ -299,8 +301,8 @@ bool function_1da6d0(long object_index, long other_object_index, real speed_a, r
             real maximum_speed = *impulse_reference > body_speed ? *impulse_reference : body_speed;
             if (!(1.5f > *impulse_reference && 1.5f > body_speed))
             {
-                real ratio = body_speed / maximum_speed;
-                real force = ratio * other_definition->transfer_scale * scale * collision_speed;
+                real speed_ratio = body_speed / maximum_speed;
+                real force = speed_ratio * other_definition->transfer_scale * scale * collision_speed;
                 if (maximum_speed >= 0.001f && force > definition->minimum_force && definition->maximum_force - definition->minimum_force >= 0.001f)
                 {
                     real lower = definition->minimum_damage;
