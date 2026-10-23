@@ -331,6 +331,8 @@ void function_154310(long index, s_speed_result *result)
 	}
 }
 
+// score 63 (was 63): the float temporaries live in different xmm registers, the spill slots are [esp+8] and
+// [esp+4] instead of retail's, and retail computes an address with lea where ours uses add.
 // @retail 0x1544e0
 void function_1544e0(transform4x3f *matrix, real distance, real angle)
 {
@@ -540,6 +542,8 @@ struct s_player_axes_153d10
 	vector3f up;
 };
 
+// score 2 (was 2): one product is built with its operands in the other order: retail multiplies up.k by
+// forward.i, ours multiplies forward.i by up.k. Everything else is identical.
 // @retail 0x153d10
 void __stdcall function_153d10(long user_index, long tag_index, void *owner, void *direction, long unused, real scale, real priority, bool directional)
 {
