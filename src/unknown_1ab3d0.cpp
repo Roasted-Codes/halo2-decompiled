@@ -5,6 +5,7 @@
 #include "unknown_11c920.h"
 #include "slot_handler.h"
 #include "ai_actor.h"
+#include "vector_products.h"
 #include "unknown_26c380.h"
 
 /* the state of a slot of type 0x53 */
@@ -124,9 +125,7 @@ PRIVATE __forceinline vector3f *function_1ab4b1(vector3f const *arg_0, real arg_
     local_0.x = arg_0->i * arg_1 + arg_2->x;
     local_0.y = arg_0->j * arg_1 + arg_2->y;
     local_0.z = arg_0->k * arg_1 + arg_2->z;
-    arg_4->i = local_0.x - arg_3->x;
-    arg_4->j = local_0.y - arg_3->y;
-    arg_4->k = local_0.z - arg_3->z;
+    scaled_difference3f(arg_3->n, local_0.n, 1.0f, arg_4->n);
     return arg_4;
 }
 

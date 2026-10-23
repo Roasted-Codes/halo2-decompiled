@@ -12,6 +12,7 @@
 #include <new>
 #include "tagged_objects_2e4ff0.h"
 #include "sweep_quantize_2e1090.h"
+#include "motion_step_319f70.h"
 
 #define ARRAY_2E1850(name, T) 	struct name 	{ 		T *data; 		long size; 		unsigned long capacity_and_flags; 		name() : data(0), size(0), capacity_and_flags(0x80000000) {} 		~name() 		{ 			if ((capacity_and_flags & 0x80000000) == 0) 			{ 				g_memory_2d88a0->release_block(data, (capacity_and_flags & 0x7fffffff) * sizeof(T), 0x12); 			} 		} 	};
 
@@ -111,16 +112,6 @@ bytes_2e1be0::~bytes_2e1be0()
 
 static __declspec(align(16)) const unsigned long sign_mask_2e1d10[4] = {0x80000000, 0x80000000, 0x80000000, 0x80000000};
 
-// score 215 (was 235): the halving loop now goes through the two-level box
-// quantizer and matches retail, the 32-bit `below 12` compare included. Still:
-// retail keeps the first axis array's address (the vector constructor
-// iterator's argument) in edi and the element array's in ebx, re-making the
-// latter with lea after the loop; ours keeps the element array in edi and a
-// zero in ebx, so the appends and pushes differ in registers (the axes or
-// elements reached through this class's own members compile alike or worse,
-// 257). In the scale block retail stores the 65532 splat to the member and
-// reloads it before multiplying; a reference to the member gives that reload
-// but scores 275, so the forwarded form is kept. One byte longer than retail.
 // the sweep over the box from the corner at `arg_0` to the corner at
 // `arg_1`, with a grid of 2 to the power `bits`, less one, cells: the
 // quantizing scale and offsets, the largest value that still quantizes below
@@ -130,6 +121,7 @@ static __declspec(align(16)) const unsigned long sign_mask_2e1d10[4] = {0x800000
 class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 {
 	class_2e1090 *sweep = (class_2e1090 *)this;
+	endpoints_2e0f80 *axis = sweep->axes;
 	sweep->elements.ensure_capacity(0x100);
 	{
 		sweep->lower_offset = _mm_setzero_ps();
@@ -164,9 +156,9 @@ class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 		inverse.m128_f32[2] = 1.0f / extent.m128_f32[2];
 		inverse.m128_f32[3] = 0.0f;
 		sweep->scale = _mm_set_ps1(65532.0f);
-		sweep->scale = _mm_mul_ps(sweep->scale, inverse);
+		sweep->scale = _mm_mul_ps(_mm_load_ps(sweep->scale.m128_f32), inverse);
 		sweep->lower_offset = _mm_xor_ps(*(__m128 const *)arg_0, *(__m128 const *)sign_mask_2e1d10);
-		__m128 const margin = _mm_mul_ps(_mm_set_ps1(1.52597204e-05f), extent);
+		__m128 const margin = _mm_mul_ps(broadcast_319f70(1.52597204e-05f), extent);
 		sweep->upper_offset = _mm_add_ps(sweep->lower_offset, margin);
 		sweep->scale.m128_f32[3] = 0.0f;
 		sweep->lower_offset.m128_f32[3] = 0.0f;
@@ -174,13 +166,13 @@ class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 	}
 	element_2e1090 &first = sweep->elements.next_slot();
 	first.slots[4] = first.slots[0] = first.slots[1] = 0;
-	sweep->axes[0].ensure_capacity(0x202);
+	axis->ensure_capacity(0x202);
 	sweep->axes[1].ensure_capacity(0x202);
 	sweep->axes[2].ensure_capacity(0x202);
 	endpoint_2e0f80 start;
 	start.id = 0;
 	start.value = 0;
-	sweep->axes[0].data[sweep->axes[0].size++] = start;
+	axis->data[axis->size++] = start;
 	sweep->axes[1].data[sweep->axes[1].size++] = start;
 	sweep->axes[2].data[sweep->axes[2].size++] = start;
 	sweep->cells = 0;
@@ -195,15 +187,15 @@ class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 		entry_2e4ff0 *entry = new (&entries[cell]) entry_2e4ff0;
 		endpoint_2e0f80 endpoint;
 		endpoint.id = (unsigned short)sweep->elements.size;
-		((unsigned short *)&entry->field_0)[0] = endpoint.id;
 		endpoint.value = (unsigned short)((cell + 1) << (16 - sweep->cell_shift));
+		((unsigned short *)&entry->field_0)[0] = endpoint.id;
 		((unsigned short *)&entry->field_0)[1] = endpoint.value;
 		element_2e1090 &element = sweep->elements.next_slot();
 		element.slots[4] = (unsigned short)sweep->axes[0].size;
-		sweep->axes[0].data[sweep->axes[0].size++] = endpoint;
+		axis->data[axis->size++] = endpoint;
 		endpoint.value |= 1;
 		element.slots[5] = (unsigned short)sweep->axes[0].size;
-		sweep->axes[0].data[sweep->axes[0].size++] = endpoint;
+		axis->data[axis->size++] = endpoint;
 		element.owner = (cell * sizeof(cell_2e1090)) | 1;
 		element.slots[0] = element.slots[1] = 0;
 		element.slots[2] = element.slots[3] = 1;
@@ -214,7 +206,7 @@ class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 	endpoint_2e0f80 end;
 	end.id = 0;
 	end.value = 0xfffd;
-	sweep->axes[0].data[sweep->axes[0].size++] = end;
+	axis->data[axis->size++] = end;
 	sweep->axes[1].data[sweep->axes[1].size++] = end;
 	sweep->axes[2].data[sweep->axes[2].size++] = end;
 }
