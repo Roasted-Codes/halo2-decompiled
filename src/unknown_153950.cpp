@@ -331,8 +331,6 @@ void function_154310(long index, s_speed_result *result)
 	}
 }
 
-// score 63 (was 63): the float temporaries live in different xmm registers, the spill slots are [esp+8] and
-// [esp+4] instead of retail's, and retail computes an address with lea where ours uses add.
 // @retail 0x1544e0
 void function_1544e0(transform4x3f *matrix, real distance, real angle)
 {
@@ -347,26 +345,27 @@ void function_1544e0(transform4x3f *matrix, real distance, real angle)
 		real s = (real)sin(angle);
 		real c = (real)cos(angle);
 		real ii = axis.i * axis.i;
-		real kk = axis.k * axis.k;
-		real ks = axis.k * s;
 		real jj = axis.j * axis.j;
+		real kk = axis.k * axis.k;
+		vector3f sine_axis;
+		sine_axis.i = axis.i * s;
+		sine_axis.j = axis.j * s;
+		sine_axis.k = axis.k * s;
 		matrix->scale = 1.0f;
-		real is = axis.i * s;
 		matrix->forward.i = (1.0f - ii) * c + ii;
 		real t = 1.0f - c;
-		real js = axis.j * s;
-		real tij = t * axis.i * axis.j;
-		matrix->forward.j = tij + ks;
-		matrix->left.i = tij - ks;
+		real tij = (t * axis.i) * axis.j;
+		matrix->left.i = tij - sine_axis.k;
+		matrix->forward.j = tij + sine_axis.k;
 		matrix->left.j = (1.0f - jj) * c + jj;
 		real tk = t * axis.k;
 		real tki = tk * axis.i;
-		matrix->forward.k = tki - js;
-		matrix->up.i = tki + js;
+		matrix->up.i = tki + sine_axis.j;
+		matrix->forward.k = tki - sine_axis.j;
 		matrix->up.k = (1.0f - kk) * c + kk;
 		real tkj = tk * axis.j;
-		matrix->up.j = tkj - is;
-		matrix->left.k = tkj + is;
+		matrix->up.j = tkj - sine_axis.i;
+		matrix->left.k = tkj + sine_axis.i;
 		matrix->position.z = 0.0f;
 		matrix->position.y = 0.0f;
 		matrix->position.x = 0.0f;
