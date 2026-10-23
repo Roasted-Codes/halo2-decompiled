@@ -1174,34 +1174,46 @@ short function_263ed0(long actor_index, s_perception_origin_view const *origin, 
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
 void function_2640c0(long object_index, s_object_motion_view *result);
 
-// score 83 (was 83): retail jumps to the common exit where ours falls through, and the return values are set in
-// the opposite order; ours is padded with nine int3s.
+// score 12 (was 83): retail copies object_index into edi just before the first function_badc0 call where ours
+// copies it after the squad lookup, and retail lays out the return-3 exit before the shared return-0 exit.
 // @retail 0x25cb60
 short function_25cb60(long arg_0, long arg_1, short arg_2, void *arg_3, void *arg_4, long arg_5, long arg_6)
 {
+	short result;
 	s_actor_view *local_0 = actor_get(arg_0);
 	s_squad_datum *local_1 = local_0->unknown030 != NONE ? squad_get(local_0->unknown030) : NULL;
-	if (local_1 && local_1->flag1)
-		return 0;
-	if (arg_2 == 1 || arg_2 == 2)
-		return 3;
 	long local_2 = arg_1;
-	s_slot_object_view *local_3 = (s_slot_object_view *)function_badc0(arg_1, 3);
-	if (local_3)
+	if (local_1 && local_1->flag1)
 	{
-		if (local_3->actor_index != NONE && actor_get(local_3->actor_index)->unknown004 == 15)
-			local_2 = NONE;
-		else if (local_3->parent_index != NONE && object_get(local_3->parent_index)->type == 1)
-			local_2 = local_3->parent_index;
+		result = 0;
 	}
-	local_3 = (s_slot_object_view *)function_badc0(local_2, 3);
-	if (local_3)
+	else if (arg_2 == 1 || arg_2 == 2)
 	{
-		byte *local_4 = g_4e3b44[local_3->tag_index & 0xffff].bytes;
-		short local_5 = g_4e6948->state == 1 && g_4f55ea ? 2 : *(short *)(local_4 + 0xc2);
-		return function_263ed0(arg_0, (s_perception_origin_view const *)arg_3, (point3f const *)arg_4, (s_location const *)arg_5, local_5, (short)arg_6);
+		result = 3;
 	}
-	return 0;
+	else
+	{
+		s_slot_object_view *local_3 = (s_slot_object_view *)function_badc0(arg_1, 3);
+		if (local_3)
+		{
+			if (local_3->actor_index != NONE && actor_get(local_3->actor_index)->unknown004 == 15)
+				local_2 = NONE;
+			else if (local_3->parent_index != NONE && object_get(local_3->parent_index)->type == 1)
+				local_2 = local_3->parent_index;
+		}
+		local_3 = (s_slot_object_view *)function_badc0(local_2, 3);
+		if (local_3)
+		{
+			byte *local_4 = g_4e3b44[local_3->tag_index & 0xffff].bytes;
+			short local_5 = g_4e6948->state == 1 && g_4f55ea ? 2 : *(short *)(local_4 + 0xc2);
+			result = function_263ed0(arg_0, (s_perception_origin_view const *)arg_3, (point3f const *)arg_4, (s_location const *)arg_5, local_5, (short)arg_6);
+		}
+		else
+		{
+			result = 0;
+		}
+	}
+	return result;
 }
 
 // @retail 0x25c9d0
