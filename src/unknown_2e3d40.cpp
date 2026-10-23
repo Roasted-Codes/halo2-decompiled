@@ -137,7 +137,7 @@ __forceinline void reach_all_2e3d40(char flags, element_2e1090 const *element, r
 			float &slot = ((float *)left.data)[r];
 			float const distance = collector->add_box(element->owner, r);
 			float const kept = slot;
-			slot = kept < distance ? kept : distance;
+			((float *)left.data)[r] = kept < distance ? kept : distance;
 			collector = (ray_collector_2e4660 *)((char *)collector + collector_stride);
 		}
 	}
@@ -221,37 +221,36 @@ void class_2e1090::function_2e3d40(rays_2e3d40 const *rays, ray_collector_2e4660
 
 	// the boxes that hold the start point
 	{
-		long index = 0;
+		element_2e1090 const *element = elements.data;
 		unsigned long const *word = (unsigned long const *)flags.data;
 		unsigned long const *const words_end = word + (elements.size >> 2) + 1;
 		while (word < words_end)
 		{
 			if (((word[0] + 0x01010101) & 0x08080808) == 0)
 			{
-				if ((word[1] + 0x01010101) & 0x08080808)
+				if (((word[1] + 0x01010101) & 0x08080808) == 0)
 				{
-					word += 1;
-					index += 4;
-				}
-				else if ((word[2] + 0x01010101) & 0x08080808)
-				{
+					if (((word[2] + 0x01010101) & 0x08080808) == 0)
+					{
+						element += 12;
+						word += 3;
+						continue;
+					}
+					element += 8;
 					word += 2;
-					index += 8;
+					continue;
 				}
-				else
-				{
-					word += 3;
-					index += 12;
-				}
+				element += 4;
+				word++;
 				continue;
 			}
 			char const *bytes = (char const *)word;
-			reach_all_2e3d40(bytes[0], &elements.data[index], rays, collectors, collector_stride, left);
-			reach_all_2e3d40(bytes[1], &elements.data[index + 1], rays, collectors, collector_stride, left);
-			reach_all_2e3d40(bytes[2], &elements.data[index + 2], rays, collectors, collector_stride, left);
-			reach_all_2e3d40(bytes[3], &elements.data[index + 3], rays, collectors, collector_stride, left);
+			reach_all_2e3d40(bytes[0], element, rays, collectors, collector_stride, left);
+			reach_all_2e3d40(bytes[1], element + 1, rays, collectors, collector_stride, left);
+			reach_all_2e3d40(bytes[2], element + 2, rays, collectors, collector_stride, left);
+			reach_all_2e3d40(bytes[3], element + 3, rays, collectors, collector_stride, left);
 			word++;
-			index += 4;
+			element += 4;
 		}
 	}
 	// the first box's byte stands for the axes' sentinels
