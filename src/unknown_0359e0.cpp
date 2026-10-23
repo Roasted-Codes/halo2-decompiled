@@ -55,7 +55,6 @@ PRIVATE inline long swizzle_log2(dword value)
 	return result;
 }
 
-// score 87 (was 84): the arguments are set up in the other order: retail moves the index into si and clears ecx before the test, ours pushes the index and clears ecx
 // @retail 0x358d0
 void function_358d0(short width, short x, short y, short height, dword *out)
 {

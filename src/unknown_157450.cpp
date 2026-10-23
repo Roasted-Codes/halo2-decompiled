@@ -922,6 +922,15 @@ real function_1591e0(long local_index)
 }
 
 
+// score 14 (was 14): retail compares the timer as a float with SSE: it loads
+// 1.0f into xmm1, copies it as the default and always runs comiss, even when
+// g_4b9ed8 is NONE. Our build folds the NONE path past the comparison in
+// every form. A float timer and 1.0f select SSE, but the shorter folded
+// sequence shifts the rest of the function (score 31); the double form's x87
+// sequence keeps it aligned (14), so it stays. A conditional expression, an
+// inline function, a 1.0f local and const or mutable references to the timer
+// or the constant all fold the same way; the 600 s permutation run found no
+// match.
 // @retail 0x159610
 bool function_159610(void)
 {
@@ -929,22 +938,19 @@ bool function_159610(void)
 
 	if (game_engine_get())
 	{
-		real timer = 1.0f;
+		double timer = 1.0;
 
 		if (g_4b9ed8 != NONE)
 		{
 			timer = function_xaee93d()->timers[g_4b9ed8];
 		}
-
-		long local_user = g_4b9ed8;
-
-		if (timer >= 1.0f)
+		if (timer >= 1.0)
 		{
 			long player_index = NONE;
 
-			if (local_user != NONE)
+			if (g_4b9ed8 != NONE)
 			{
-				player_index = g_4e8c20->entries[local_user];
+				player_index = g_4e8c20->entries[g_4b9ed8];
 			}
 			result = true;
 			if (player_index != NONE && engine_player_get(player_index)->unit_index != NONE)
@@ -4449,7 +4455,7 @@ void function_15e970(long unit_index)
 
 #include "font_loading.h"
 #include "unknown_030290.h"
-#include "draw_string_state.h"
+#include "text_style_clear.h"
 extern long g_4ba04c;
 extern real g_4e69c0[4];
 extern point3f *g_468718;
@@ -4500,7 +4506,7 @@ void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *p
     function_13edb0(font_index, NONE, 2, 0, &color, &shadow);
     function_13ec70(&color);
     text->function_1fa50(&bounds, 0, 0, 0, 1.0f, 0, 0);
-    draw_string_state_reset();
+    text_style_clear();
 }
 
 bool function_15b2f0();

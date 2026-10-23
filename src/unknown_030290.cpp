@@ -1,7 +1,5 @@
 #include "unknown_11c920.h"
 #include "unknown_0259d0.h"
-#include "vector_products.h"
-#include "normalize3d.h"
 #include "unknown_030290.h"
 #include "globals.h"
 #include <math.h>
@@ -413,17 +411,38 @@ void function_30e30(long key, long value, bool add, real x)
 
 real function_30bf0(vector3f *v);
 
-// score 40 (was 57): the shared cross product and normalisation give retail's
-// shape (j and k cached in xmm, the else path reloading i); left are the x87
-// operand order of the first cross product, the xmm numbering, and the second
-// cross product, which retail computes in full (k first) before its stores.
+PRIVATE __forceinline void normalize_cross_vector(vector3f *v)
+{
+	real length = (real)sqrt(v->k * v->k + v->j * v->j + v->i * v->i);
+	if (!(fabs(length) < k_real_epsilon))
+	{
+		real inverse = 1.0f / length;
+		for (long component = 0; component < 3; ++component)
+			v->n[component] *= inverse;
+	}
+}
+
+static __forceinline void cross_product_31b40(vector3f const *a, vector3f const *b, vector3f *out)
+{
+	out->i = a->j * b->k - b->j * a->k;
+	out->j = b->i * a->k - a->i * b->k;
+	out->k = b->j * a->i - a->j * b->i;
+}
+
+// score 61 (was 61): the float products are evaluated in a different order and end up in
+// different xmm registers: retail keeps the sums in the x87 stack and
+// divides at the end.
 // @retail 0x31b40
 real function_31b40(vector3f *vector, vector3f const *axis)
 {
 	vector3f cross;
-	cross3f(vector, axis, &cross);
-	normalize3d(&cross);
-	cross3f(axis, &cross, vector);
+	cross_product_31b40(vector, axis, &cross);
+	normalize_cross_vector(&cross);
+	vector3f result;
+	cross_product_31b40(axis, &cross, &result);
+	vector->i = result.i;
+	vector->j = result.j;
+	vector->k = result.k;
 	return function_30bf0(vector);
 }
 
