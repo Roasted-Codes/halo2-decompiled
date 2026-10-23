@@ -104,16 +104,16 @@ bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
   local_point.y = inverse.up.j * z + inverse.left.j * y + inverse.forward.j * x + inverse.position.y;
   local_point.z = inverse.up.k * z + inverse.left.k * y + inverse.forward.k * x + inverse.position.z;
   vector3f local_direction;
-  x = direction->i; y = direction->j; z = direction->k;
+  real i = direction->i, j = direction->j, k = direction->k;
   if (inverse.scale != 1.0f)
   {
-   x *= inverse.scale;
-   y *= inverse.scale;
-   z *= inverse.scale;
+   i *= inverse.scale;
+   j *= inverse.scale;
+   k *= inverse.scale;
   }
-  local_direction.i = inverse.up.i * z + inverse.left.i * y + inverse.forward.i * x;
-  local_direction.j = inverse.up.j * z + inverse.left.j * y + inverse.forward.j * x;
-  local_direction.k = inverse.up.k * z + inverse.left.k * y + inverse.forward.k * x;
+  local_direction.i = inverse.up.i * k + inverse.left.i * j + inverse.forward.i * i;
+  local_direction.j = inverse.up.j * k + inverse.left.j * j + inverse.forward.j * i;
+  local_direction.k = inverse.up.k * k + inverse.left.k * j + inverse.forward.k * i;
   s_1de6d0 query;
   query.field_0 = flags;
   query.field_4 = (s_1de6d2 const *)iterator.current;
@@ -126,11 +126,9 @@ bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
   query.field_20 = 0;
   query.field_24 = NONE;
   real fraction = hit->field_0;
-  real bounded = fraction < 0.0f ? 0.0f : fraction;
-  hit->field_0 = bounded;
+  hit->field_0 = fraction < 0.0f ? 0.0f : fraction;
   hit->field_18 = 0;
-  bounded = bounded > 1.0f ? 1.0f : bounded;
-  if (function_1de6d0(&query, 0, 0.0f, bounded))
+  if (function_1de6d0(&query, 0, 0.0f, fraction < 0.0f ? 0.0f : fraction > 1.0f ? 1.0f : fraction))
   {
    (*result_reference)->position = position;
    (*result_reference)->node = (short)node;
