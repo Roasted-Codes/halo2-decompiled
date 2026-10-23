@@ -1398,7 +1398,7 @@ struct s_object_relevance_result
 void function_82b30(s_object_relevance_result const *source, s_object_relevance_source *result);
 
 // @retail 0xa3420
-bool c_weapon_pickup_event::v11(long a, long const *entities, volatile long c, void const *data)
+bool c_weapon_pickup_event::v11(long a, long const *entities, long c, void const *data)
 {
     struct s_unit_flags
     {
@@ -1409,45 +1409,43 @@ bool c_weapon_pickup_event::v11(long a, long const *entities, volatile long c, v
     };
     bool result = false;
     long unit = function_a58d0(entities[0]);
-    long weapon = c = function_a58d0(entities[1]);
+    long weapon = function_a58d0(entities[1]);
     if (unit != NONE && weapon != NONE)
     {
-        byte *headers = g_4e0300->data;
-        long unit_offset = (unit & 0xffff) * 12;
-        if ((1 << *(byte *)(headers + unit_offset + 3)) & 3)
+        s_z_event_header *headers = (s_z_event_header *)g_4e0300->data;
+        if (((1 << headers[unit & 0xffff].type) & 3) && ((1 << headers[weapon & 0xffff].type) & 4))
         {
-            long local_ffe5f7 = (c & 0xffff) * 12;
-            if ((1 << *(byte *)(headers + local_ffe5f7 + 3)) & 4)
-            {
-            byte *unit_object = *(byte **)(headers + unit_offset + 8);
-            byte *weapon_object = *(byte **)(headers + local_ffe5f7 + 8);
-            long const *event = (long const *)data;
+            byte *unit_object = ((s_z_event_header *)g_4e0300->data)[unit & 0xffff].object;
+            byte *weapon_object = ((s_z_event_header *)g_4e0300->data)[weapon & 0xffff].object;
             if (!((bool)((s_unit_flags *)unit_object)->suppressed) && *(long *)(weapon_object + 0x14c) != unit &&
-                !(weapon_object[0x12c] & 1) && *(long *)(unit_object + 0x210) == event[0])
+                !(weapon_object[0x12c] & 1))
             {
-                bool modes[4];
-                weapon = c;
-                if (function_cd7b0(unit, weapon, modes))
+                // the event's data, read from the parameter's stack slot once the unit and weapon pass
+                long const *event = (long const *)*(void const *const volatile *)&data;
+                if (*(long *)(unit_object + 0x210) == event[0])
                 {
-                    bool allowed = false;
-                    switch (event[1])
+                    bool modes[4];
+                    if (function_cd7b0(unit, weapon, modes))
                     {
-                    case 3: allowed = modes[0]; break;
-                    case 4: allowed = modes[2]; break;
-                    case 5: allowed = modes[1]; break;
-                    case 6: allowed = modes[3]; break;
-                    }
-                    if (allowed)
-                    {
-                        s_unit_request request;
-                        memset(&request, 0, sizeof(request));
-                        request.type = 0x14;
-                        *(long *)request.arguments = weapon;
-                        *(short *)(request.arguments + 4) = (short)event[1];
-                        if (function_e6900(unit, &request)) result = true;
+                        bool allowed = false;
+                        switch (event[1])
+                        {
+                        case 3: allowed = modes[0]; break;
+                        case 4: allowed = modes[2]; break;
+                        case 5: allowed = modes[1]; break;
+                        case 6: allowed = modes[3]; break;
+                        }
+                        if (allowed)
+                        {
+                            s_unit_request request;
+                            memset(&request, 0, sizeof(request));
+                            request.type = 0x14;
+                            *(long *)request.arguments = weapon;
+                            *(short *)(request.arguments + 4) = (short)event[1];
+                            if (function_e6900(unit, &request)) result = true;
+                        }
                     }
                 }
-            }
             }
         }
     }

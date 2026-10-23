@@ -893,6 +893,7 @@ void function_11b710(long unit_index, long field_7c)
 	if (unit_index != NONE)
 	{
 		s_unit_11a4d0 *unit = unit_get_11a4d0(unit_index);
+		s_unit_flags_c0_11b710 *object = (s_unit_flags_c0_11b710 *)unit_get_11a4d0(unit_index);
 		s_unit_scripted_animation_11a4d0 *animation =
 			(s_unit_scripted_animation_11a4d0 *)((byte *)unit + unit->offset33e);
 		if (TEST_FIELD_BIT(animation->active))
@@ -938,14 +939,14 @@ void function_11b710(long unit_index, long field_7c)
 				}
 			}
 
-			if (attached_object_index != NONE && attached)
+			if (attached && attached_object_index != NONE)
 			{
 				transform4x3f matrix;
 				function_ba3d0(unit_index);
 				byte *model = (byte *)render_model_get_model_definition(
 					*(long *)(g_4e3b44[unit->definition_index & 0xffff].bytes + 0x38));
 				function_142a60(function_b8bd0(unit_index, 0), (transform4x3f *)(*(byte **)(model + 0x4c) + 0x28), &matrix);
-				((s_unit_flags_c0_11b710 *)unit)->flag7 = false;
+				object->flag7 = false;
 				if (unit->parent_index == NONE)
 				{
 					function_b75a0(unit_index, &matrix.position, &matrix.forward, &matrix.up, NULL, false);

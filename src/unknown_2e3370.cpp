@@ -48,9 +48,10 @@ void class_2e1090::function_2e3370(bounds_2e0020 const *bounds, overlap_endpoint
 	{
 		endpoint_2e0f80 *storage = lists->storage;
 		long const capacity = found.size * 2 + 2;
-		new (&lists->axes[0]) endpoint_list_2e3370(storage, capacity);
-		new (&lists->axes[1]) endpoint_list_2e3370(storage + capacity, capacity);
-		new (&lists->axes[2]) endpoint_list_2e3370(storage + capacity * 2, capacity);
+		for (int axis = 0; axis < 3; axis++)
+		{
+			new (&lists->axes[axis]) endpoint_list_2e3370(storage + axis * capacity, capacity);
+		}
 	}
 	endpoint_2e0f80 sentinel;
 	sentinel.value = 0;

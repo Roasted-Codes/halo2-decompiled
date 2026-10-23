@@ -97,11 +97,14 @@ __forceinline void drop_bit_2e1090(long *bits, int id)
 // box's upper words and the other's lower words goes negative
 __forceinline unsigned long apart_yz_2e1090(element_2e1090 const &box, element_2e1090 const &other)
 {
-	unsigned long const box_upper = ((unsigned long const *)box.slots)[1];
+	unsigned long box_upper = ((unsigned long const *)box.slots)[1];
 	unsigned long const other_lower = ((unsigned long const *)other.slots)[0];
-	unsigned long const other_upper = ((unsigned long const *)other.slots)[1];
+	unsigned long other_upper = ((unsigned long const *)other.slots)[1];
 	unsigned long const box_lower = ((unsigned long const *)box.slots)[0];
-	return ((box_upper - other_lower) | (other_upper - box_lower)) & 0x80008000;
+	box_upper -= other_lower;
+	other_upper -= box_lower;
+	other_upper |= box_upper;
+	return other_upper & 0x80008000;
 }
 
 #endif
