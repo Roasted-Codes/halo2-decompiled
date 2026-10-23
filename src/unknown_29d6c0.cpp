@@ -108,10 +108,10 @@ bool function_29d7b0(long index, s_pathfinding_data *pathfinding, s_type_d4fbfa 
 			check_start = true;
 			check_end = true;
 		}
-		if (check_start && 0.4f > position && (((byte *)edge)[5] & 0x10))
+		result = check_start && 0.4f > position && (((byte *)edge)[5] & 0x10);
+		if (result)
 		{
 			position = 0.0f;
-			result = true;
 			if (side)
 				*side = 1;
 		}
