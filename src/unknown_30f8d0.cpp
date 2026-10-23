@@ -37,6 +37,11 @@ public:
 	entity_316000 *first;
 	entity_316000 *second;
 	constraint_owner_30f960 *owner;
+
+	void set_owner(constraint_owner_30f960 *owner_)
+	{
+		owner = owner_;
+	}
 };
 
 ELEMENTS_2D91D0(constraints_30f960, constraint_30f960 *);
@@ -68,6 +73,11 @@ public:
 
 	char unknown4[0x10 - 4];
 	constraint_owner_30f960 *owner;
+
+	void set_owner(constraint_owner_30f960 *owner_)
+	{
+		owner = owner_;
+	}
 };
 
 class entity_316000
@@ -166,10 +176,6 @@ bool_30f8d0 class_30e140::function_30f8d0(entity_316000 *entity)
 // the entity's island gives up to the world each constraint whose other
 // entity is fixed, and each action all of whose other entities are fixed;
 // then the entity is removed
-// score 23 (was 169): the constraint is read where it is used, and the one
-// that is moved is read before the list shrinks, so the loop uses the
-// registers retail uses; the last call still loads this after its arguments
-// instead of before them
 // @retail 0x30f960
 void class_30e140::function_30f960(entity_316000 *entity)
 {
@@ -193,7 +199,7 @@ void class_30e140::function_30f960(entity_316000 *entity)
 			island->remove_constraint(moved, &info);
 			constraint_owner->constraints.append(moved);
 			constraint_owner->add_constraint(moved, &info);
-			moved->owner = constraint_owner;
+			moved->set_owner(constraint_owner);
 			i--;
 		}
 		}
@@ -212,7 +218,7 @@ void class_30e140::function_30f960(entity_316000 *entity)
 		}
 		((class_316c50 *)constraint_owner)->function_316d60((member_316d60 *)entity->actions[k]);
 		((list_owner_3169c0 *)island)->function_3169c0((entry_3169c0 *)entity->actions[k]);
-		entity->actions[k]->owner = constraint_owner;
+		entity->actions[k]->set_owner(constraint_owner);
 next:;
 	}
 	function_30f8d0(entity);

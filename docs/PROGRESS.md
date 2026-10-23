@@ -2,6 +2,46 @@
 
 The newest entry comes first.
 
+## 2026-10-23: 9485 functions match
+
+```
+matched 9485 of 11321 game functions (1478035 of 2784283 bytes, 53.08%)
+matched 917 of 1041 Havok functions (126627 of 234536 bytes, 53.99%)
+```
+
+3 new matches, none lost:
+- Machine 3's batch 108 (#709): `0x15b220`, `0x15dec0`, `0x2b98b0`, `0x2e96a0`, `0x2eeb40`, `0x2eeed0`, `0x2f13e0`, `0x2fa2f0`, `0x305790` and `0x317c00` match.
+
+## 2026-10-23: 9482 functions match
+
+```
+matched 9482 of 11321 game functions (1477278 of 2784283 bytes, 53.06%)
+matched 910 of 1041 Havok functions (120317 of 234536 bytes, 51.30%)
+```
+
+6 new matches, none lost:
+- Machine 3's batch 107 (#706): `0xaf890`, `0xd2bf0`, `0x125260`, `0x1ff010`, `0x2bf5b0` and `0x2c2740` match.
+
+## 2026-10-23: 9476 functions match
+
+```
+matched 9476 of 11321 game functions (1471138 of 2784283 bytes, 52.84%)
+matched 901 of 1041 Havok functions (116488 of 234536 bytes, 49.67%)
+```
+
+1 new matches, none lost:
+- @ccgman123's #705: `0x1f3230` match.
+
+## 2026-10-23: 9475 functions match
+
+```
+matched 9475 of 11321 game functions (1470633 of 2784283 bytes, 52.82%)
+matched 901 of 1041 Havok functions (116488 of 234536 bytes, 49.67%)
+```
+
+0 new matches, none lost:
+- @ccgman123's #704:  match.
+
 ## 2026-10-23: 9475 functions match
 
 ```

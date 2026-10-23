@@ -28,14 +28,14 @@ struct s_1c8560_iterator
 
 /* steps the iterator while g_4f55d0 is active (an inline copy of the
    record pool step, with the found datum kept apart until the end) */
-PRIVATE __forceinline bool function_1c8561(s_1c8560_iterator *arg_0)
+PRIVATE __forceinline byte *function_1c8561(s_1c8560_iterator *arg_0)
 {
     byte *datum = NULL;
     s_record_pool *data;
     long index;
 
     if (!g_4f55d0->active)
-        return false;
+        return NULL;
     data = arg_0->records.data;
     index = data_next_absolute_index_inlined(data, arg_0->records.index + 1);
     if (index != NONE)
@@ -50,10 +50,12 @@ PRIVATE __forceinline bool function_1c8561(s_1c8560_iterator *arg_0)
         arg_0->records.index = data->maximum_count;
         arg_0->records.datum_index = NONE;
     }
-    arg_0->datum = datum;
-    return datum != NULL;
+    return datum;
 }
 
+// score 67 (was 84): the iterator step returns the datum and the loop tests the pointer, as in
+// retail, but the block that computes the found datum is laid out after the exit test here and
+// before it in retail, which moves the two exits of the loop.
 // @retail 0x1c8560
 long __stdcall function_1c8560(long arg_0, void *arg_1, long arg_2, bool *arg_3, void *arg_4, long arg_5)
 {
@@ -65,7 +67,7 @@ long __stdcall function_1c8560(long arg_0, void *arg_1, long arg_2, bool *arg_3,
 		local_1.records.data = g_5044c8;
 		local_1.records.index = NONE;
 	}
-	while (function_1c8561(&local_1))
+	while ((local_1.datum = function_1c8561(&local_1)) != NULL)
 	{
 		local_2 = (s_1c8560 *)local_1.datum;
 		long local_7 = local_2->field_4;
