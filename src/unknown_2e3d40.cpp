@@ -142,17 +142,6 @@ __forceinline void reach_all_2e3d40(char flags, element_2e1090 const *element, r
 		}
 	}
 }
-// score 626 (was 672): the start point is quantized through the shared corner
-// helper in its own block (the clamps load first and the fourth word's dead
-// 16-bit store appears), and inverse and offset are vector locals with the
-// segment's end and delta in a nested block. Still (2350 against 2334 bytes):
-// the frame is 0x10 larger than retail's, with the start words at 0x40 and
-// the byte array at 0xcc where retail has 0x50 and 0x90 (retail's step array
-// reuses the dead start words' slot), so most stack operands differ; ours
-// pads the clearing loop's top where retail does not, keeps the axis walk's
-// counters in registers (retail: i times 4 and the axis pointer in slots),
-// and the word scan still indexes the elements (the card's element pointer
-// stepping 12, 8 or 4 scores 695).
 // each box a segment's end reaches from the start point, by the axes' high
 // nibbles (the low nibbles say which boxes hold the start point, and the
 // high ones start the same for each segment), is passed to that segment's
@@ -265,9 +254,8 @@ void class_2e1090::function_2e3d40(rays_2e3d40 const *rays, ray_collector_2e4660
 			index += 4;
 		}
 	}
-	char *const bits = flags.data;
 	// the first box's byte stands for the axes' sentinels
-	bits[0] = (char)0x88;
+	flags.data[0] = (char)0x88;
 
 	ray_collector_2e4660 *collector = collectors;
 	for (int r = 0; r < rays->count; collector = (ray_collector_2e4660 *)((char *)collector + collector_stride), r++)
@@ -312,6 +300,7 @@ void class_2e1090::function_2e3d40(rays_2e3d40 const *rays, ray_collector_2e4660
 		time[0] = (float)position[0]->value * inverse.terms[0] - offset.terms[0];
 		time[1] = (float)position[1]->value * inverse.terms[1] - offset.terms[1];
 		time[2] = (float)position[2]->value * inverse.terms[2] - offset.terms[2];
+		char *const bits = flags.data;
 		for (;;)
 		{
 			int const axis = earliest_2e4660(time);
@@ -368,14 +357,6 @@ void class_2e1090::function_2e3d40(rays_2e3d40 const *rays, ray_collector_2e4660
 		}
 	}
 }
-// score 699 (was 755): both corners are formed first and quantized in one
-// block through the shared corner helper (the scale's address kept in a slot
-// and each corner's dead fourth-word store now as in retail), the walks read
-// the words from the aligned arrays, and inverse and the two offsets are
-// vector locals ahead of the step and toggle arrays. Still (2416 against 2305
-// bytes): the frame is 0x10 larger than retail's (retail's low offset reuses
-// the dead quantizing temp at 0x50), so the stack operands differ from the
-// first store on, and the later walks differ in registers and length.
 // each box the moving box overlaps at the start, then each box whose three
 // intervals it enters on the way, is passed to the collector, until the
 // collector's distance left is passed
@@ -566,15 +547,17 @@ void class_2e1090::function_2e4660(ray_2e4660 const *ray, ray_collector_2e4660 *
 			for (;;)
 			{
 				endpoint_2e0f80 *const p = high_position[high_axis];
-				unsigned char const reached = bits[p->id] ^= (char)(((p->value & 1) ^ (char)high_toggle[high_axis]) << high_axis);
+				unsigned long const id = p->id;
+				unsigned char const reached = bits[id] ^ (char)(((p->value & 1) ^ (char)high_toggle[high_axis]) << high_axis);
+				bits[id] = reached;
 				if (reached >= 7)
 				{
-					if (p->id == 0)
+					if (id == 0)
 					{
 						*high_next = 2.0f;
 						break;
 					}
-					long const owner = elements.data[p->id].owner;
+					long const owner = elements.data[id].owner;
 					if ((owner & 1) == 0)
 					{
 						float const distance = collector->add_box(owner, 0);
@@ -604,7 +587,9 @@ void class_2e1090::function_2e4660(ray_2e4660 const *ray, ray_collector_2e4660 *
 			for (;;)
 			{
 				endpoint_2e0f80 *const p = low_position[low_axis];
-				unsigned char const left_box = bits[p->id] ^= (char)(((p->value & 1) ^ toggle) << low_axis);
+				unsigned long const id = p->id;
+				unsigned char const left_box = bits[id] ^ (char)(((p->value & 1) ^ toggle) << low_axis);
+				bits[id] = left_box;
 				if (left_box > 8)
 				{
 					*low_next = 2.0f;
