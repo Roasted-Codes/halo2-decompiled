@@ -1501,7 +1501,7 @@ long function_269040(point3f const *center, short team)
 // @retail 0x26a4f0
 long function_26a4f0(s_clump_activity_view *clump, short priority)
 {
-	volatile long result = NONE;
+	long result = NONE;
 	if (priority >= clump->update_state)
 	{
 		result = record_pool_allocate(g_50241c);
