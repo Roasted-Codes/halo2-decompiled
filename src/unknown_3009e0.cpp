@@ -43,6 +43,15 @@ struct ray_301800
 	__m128 to;
 	long field_20;
 	class filter_3009e0 *filter;
+
+	// takes another ray's ends and filter
+	void copy_from(ray_301800 const *other)
+	{
+		from = other->from;
+		to = other->to;
+		field_20 = other->field_20;
+		filter = other->filter;
+	}
 };
 
 // whether a cast hit, given back by value
@@ -612,27 +621,27 @@ result_2df6e0 class_2df670::function_301720(void const *shape_, void const *tree
 	tree_301800 const *source = (tree_301800 const *)tree_;
 	tree = source;
 	closest = (closest_3009e0 *)output_;
+	// the tree's commands are always there
+	void const *const root = source->root;
+	__assume(root != 0);
 	fraction = 1.0f;
 	pending_301800 pending;
 	pending.offset = _mm_setzero_ps();
-	inverse_scale = 1.0f / source->origin.m128_f32[3];
-	float const scale = source->origin.m128_f32[3] * (1.0f / 65536.0f);
+	inverse_scale = 1.0f / tree->origin.m128_f32[3];
+	float const scale = tree->origin.m128_f32[3] * (1.0f / 65536.0f);
 	pending.scale = scale;
 	ray_301800 const *input = (ray_301800 const *)ray_;
 	fixed_ray_301800 fixed;
-	__m128 const to = _mm_sub_ps(input->to, source->origin);
-	__m128 const from = _mm_sub_ps(input->from, source->origin);
-	fixed.from = _mm_mul_ps(splat_301720(scale), from);
-	ray.from = input->from;
-	fixed.to = _mm_mul_ps(splat_301720(scale), to);
-	ray.to = input->to;
-	ray.field_20 = input->field_20;
-	ray.filter = input->filter;
+	fixed.from = _mm_sub_ps(input->from, source->origin);
+	fixed.to = _mm_sub_ps(input->to, source->origin);
+	fixed.from = _mm_mul_ps(splat_301720(scale), fixed.from);
+	fixed.to = _mm_mul_ps(splat_301720(scale), fixed.to);
+	ray.copy_from(input);
 	hit = false;
 	pending.key_base = 0;
 	pending.depth = 0;
 	pending.values[0] = 0;
-	function_3009e0(&pending, source->root, &fixed);
+	function_3009e0(&pending, root, &fixed);
 	result_2df6e0 result;
 	result.hit = hit;
 	return result;
@@ -642,31 +651,30 @@ result_2df6e0 class_2df670::function_301720(void const *shape_, void const *tree
 void class_2df670::function_301800(void const *shape_, void const *tree_, s_244980_ray const *ray_, s_244980_output *output_, c_244c10 *callback_)
 {
 	shape = (shape_3009e0 const *)shape_;
+	closest = 0;
 	output = output_;
 	callback = callback_;
-	closest = 0;
 	field_54 = ((callback_301800 const *)callback_)->field_4;
 	tree_301800 const *source = (tree_301800 const *)tree_;
 	tree = source;
+	// the tree's commands are always there
+	void const *const root = source->root;
+	__assume(root != 0);
 	pending_301800 pending;
 	pending.offset = _mm_setzero_ps();
-	inverse_scale = 1.0f / source->origin.m128_f32[3];
-	float const scale = source->origin.m128_f32[3] * (1.0f / 65536.0f);
+	inverse_scale = 1.0f / tree->origin.m128_f32[3];
+	float const scale = tree->origin.m128_f32[3] * (1.0f / 65536.0f);
 	pending.scale = scale;
 	ray_301800 const *input = (ray_301800 const *)ray_;
 	fixed_ray_301800 fixed;
-	__m128 const to = _mm_sub_ps(input->to, source->origin);
-	__m128 const from = _mm_sub_ps(input->from, source->origin);
-	__m128 const single = _mm_load_ss(&scale);
-	fixed.from = _mm_mul_ps(_mm_shuffle_ps(single, single, 0), from);
-	fixed.to = _mm_mul_ps(_mm_shuffle_ps(single, single, 0), to);
-	ray.from = input->from;
-	ray.to = input->to;
-	ray.field_20 = input->field_20;
-	ray.filter = input->filter;
+	fixed.from = _mm_sub_ps(input->from, source->origin);
+	fixed.to = _mm_sub_ps(input->to, source->origin);
+	fixed.from = _mm_mul_ps(splat_301720(scale), fixed.from);
+	fixed.to = _mm_mul_ps(splat_301720(scale), fixed.to);
+	ray.copy_from(input);
 	hit = false;
 	pending.key_base = 0;
 	pending.depth = 0;
 	pending.values[0] = 0;
-	function_3009e0(&pending, source->root, &fixed);
+	function_3009e0(&pending, root, &fixed);
 }

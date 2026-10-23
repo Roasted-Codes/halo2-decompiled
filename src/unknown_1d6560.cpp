@@ -100,6 +100,8 @@ void __stdcall function_1d6560(s_havok_component *component, s_physics_model_own
 }
 
 /* the collision layer of one of the object's rigid bodies, by object type */
+// score 96 (was 89): retail pushes ebp and holds the base pointer there, ours keeps the record in esi and ecx;
+// the whole register allocation differs.
 // @retail 0x1d69d0
 long function_1d69d0(s_havok_component *component, long kind, s_physics_model_owner *owner, long level, long rigid_body_index)
 {
@@ -400,6 +402,7 @@ PRIVATE __forceinline void physics_mass_copy(byte const *body, s_physics_mass_ar
     array->data[i].mass.inertia = *(hkRotation const *)(body + 0x50);
 }
 
+// score 4 (was 4): the two values are stored to the stack in the opposite order; ours is padded with six int3s.
 // @retail 0x1d5ec0
 c_havok_reference_counted *__stdcall function_1d5ec0(s_havok_component *component,
     s_physics_model_owner *owner, char const *kinds, char *output, long *output_count,

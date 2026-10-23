@@ -201,32 +201,24 @@ long sound_get_outer_cone_gain(s_sound const *sound, long definition_index)
 	return function_xaa8231(sound_definition_get(definition_index)->class_index)->outer_cone_gain;
 }
 
-struct s_125261
-{
-    long field_0;
-};
-
 struct s_125262
 {
     real field_0;
 };
 
-static __forceinline s_125262 function_125262(long arg_0, real const volatile *arg_1, long arg_2)
+// volatile, as retail does it: the zero is stored to the stack and loaded back
+// as a float, and the scale is read through its pointer at the point of use
+static __forceinline long function_125262(long arg_0, long arg_1, real const volatile *arg_2)
 {
-    s_125262 local_0;
-    local_0.field_0 = *(real *)&arg_0;
-    long volatile local_1 = arg_2;
-    real local_2 = *(real const *)&local_1;
-    local_0.field_0 = (local_0.field_0 - local_2) * *arg_1 + local_2;
-    return local_0;
-}
-
-
-static __forceinline s_125261 function_125261(long arg_0, s_125262 arg_1)
-{
-    s_125261 local_0;
-    arg_1.field_0 += *(real *)&arg_0;
-    local_0.field_0 = *(long *)&arg_1.field_0;
+    long local_0 = arg_0;
+    s_125262 local_1;
+    local_1.field_0 = *(real *)&local_0;
+    long volatile local_2 = 0;
+    real local_3 = *(real const *)&local_2;
+    local_1.field_0 = (local_1.field_0 - local_3) * *arg_2 + local_3;
+    local_0 = arg_1;
+    local_1.field_0 += *(real *)&local_0;
+    *(real *)&local_0 = local_1.field_0;
     return local_0;
 }
 
@@ -236,7 +228,7 @@ long sound_definition_random_gain(s_sound_definition const *definition)
 	s_sound_class *sound_class = function_xaa8231(definition->class_index);
 
 	real volatile local_0 = function_x82e52f(&g_4e7408->seed, __FILE__, __LINE__);
-	return function_125261(sound_class->gain_base, function_125262(sound_class->gain_variance, &local_0, 0)).field_0;
+	return function_125262(sound_class->gain_variance, sound_class->gain_base, &local_0);
 }
 
 // @retail 0x1252f0
@@ -1317,7 +1309,7 @@ long function_1251e0(void const *definition_pointer, long gain, real interpolati
 	long volatile interpolated_decibels = function_2197f0((upper - lower) * interpolation + lower);
 	long class_gain = function_127010(definition->promotion_index);
 
-	return decibels_add(interpolated_decibels, decibels_add(class_gain, gain));
+	return decibels_add(interpolated_decibels, decibels_add(gain, class_gain));
 }
 
 /* requests the chunk a playing sound is at; true once it is loaded. Retail

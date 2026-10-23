@@ -37,17 +37,15 @@ public:
 
 // the vertex furthest along a direction, with its index in the fourth term
 // tagged with the bits of 0.5
-// score 50 (was 50): the block's z, y and x terms are read from one block
-// earlier than retail's, the largest float is set up after the shift in retail
-// and before it here, and the direction's terms come out of the registers in
-// another order.
+// score 33 (was 50): the direction's terms are loaded in another order, the
+// case 14 block sits before the default's block instead of after it, and the
+// tagged index is computed before the last term is stored.
 // @retail 0x2fd260
 void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *support) const
 {
-	vertex_block_2fd260 const *first = blocks;
-	vertex_block_2fd260 const *block = first;
-	int const vertex_count = block_count * 4;
+	vertex_block_2fd260 const *block = blocks;
 	__m128 best = _mm_set_ps1(-FLT_MAX);
+	int const vertex_count = block_count * 4;
 	int best_index = 0;
 	for (int i = 0; i < vertex_count; i += 4, block++)
 	{
@@ -186,7 +184,7 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 			best = _mm_set_ps1(best_dot);
 		}
 	}
-	vertex_block_2fd260 const *found = &first[best_index >> 2];
+	vertex_block_2fd260 const *found = &blocks[best_index >> 2];
 	int const lane = best_index & 3;
 	support->m128_f32[0] = found->x.m128_f32[lane];
 	support->m128_f32[1] = found->y.m128_f32[lane];
@@ -195,16 +193,14 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 }
 
 // the vertices for a list of indices
-// score 147 (was 147): retail takes four vertices per step and writes each
-// vertex's four words through a register, where ours writes them straight to
-// memory and takes one vertex per step.
+// score 114 (was 147): retail's loop reads the indices from the pointer's
+// start and keeps the vertex pointer in ebp, where ours reads them from an
+// offset and keeps the pointer in eax.
 // @retail 0x2fd430
 void convex_vertices_2fd260::function_2fd430(unsigned short const *indices, int count, __m128 *vertices) const
 {
-	for (int i = count - 1; i >= 0; i--)
+	for (int i = 0; i < count; i++)
 	{
-		fetch_vertex(*indices, vertices);
-		indices++;
-		vertices++;
+		fetch_vertex(indices[i], &vertices[i]);
 	}
 }
