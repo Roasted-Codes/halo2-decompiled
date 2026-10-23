@@ -110,19 +110,6 @@ struct pair_30f380
 
 ELEMENTS_2D91D0(pairs_30f380, pair_30f380);
 
-// one more pair at the end, the array grown first when full
-__forceinline void expand_pairs_30f380(pairs_30f380 *pairs)
-{
-	long size = pairs->size + 1;
-	long capacity = pairs->capacity_and_flags & 0x7fffffff;
-	if (capacity < size)
-	{
-		capacity *= 2;
-		function_2d9160(pairs, size >= capacity ? size : capacity, sizeof(pair_30f380));
-	}
-	pairs->size = size;
-}
-
 class owner_30c8e0
 {
 public:
@@ -136,6 +123,14 @@ public:
 	void function_30df80(member_30c8e0 *member);
 	void function_30f340(member_30c8e0 *member);
 	void function_30f380(member_30c8e0 *member, constraints_30f380 const *added);
+
+	__forceinline void append_pair(member_30c8e0 *first, member_30c8e0 *second)
+	{
+		pairs.resize(pairs.size + 1);
+		pairs.data[pairs.size - 1].first = first;
+		pairs.data[pairs.size - 1].second = second;
+	}
+
 };
 
 // @retail 0x30f340
@@ -148,19 +143,6 @@ void owner_30c8e0::function_30f340(member_30c8e0 *member)
 	flag_12c = flag;
 }
 
-// score 257 (was 334): retail tests the second member only when the first is
-// the member being added, and otherwise (also when that second one is fixed)
-// falls to the first member's test, so the pair append is emitted twice; the
-// else-if form gives retail's length. Still differs from +0x19: register
-// choice throughout: retail holds member in ebp, this in esi and the inlined
-// flag in ebx, ours this in ebp, member in ebx and the flag on the stack, and
-// the first loop's registers are permuted to match. A permuter run (10 min)
-// found only a volatile and a call reorder (242), not kept. The flag is
-// stored back as a byte, so of the saved registers only ebx can hold it:
-// ours gives ebx to the member. Declaring the island before the call, a
-// named constraint in the first loop (289), a bool for the branch (271) and
-// the pair's terms stored second first did not help; a second 10-minute run
-// again needed a volatile island.
 // adds the member, gives its island the constraints added with it, and notes
 // each member its constraints and actions tie it to that is not fixed; an
 // action the fixed island held moves to the member's island
@@ -186,15 +168,11 @@ void owner_30c8e0::function_30f380(member_30c8e0 *member, constraints_30f380 con
 			member_30c8e0 *second;
 			if (first == member && !(second = constraint->second)->fixed)
 			{
-				expand_pairs_30f380(&pairs);
-				pairs.data[pairs.size - 1].first = member;
-				pairs.data[pairs.size - 1].second = second;
+				append_pair(member, second);
 			}
 			else if (!first->fixed)
 			{
-				expand_pairs_30f380(&pairs);
-				pairs.data[pairs.size - 1].first = member;
-				pairs.data[pairs.size - 1].second = first;
+				append_pair(member, first);
 			}
 		}
 	}
@@ -218,9 +196,7 @@ void owner_30c8e0::function_30f380(member_30c8e0 *member, constraints_30f380 con
 			member_30c8e0 *other = (member_30c8e0 *)others.data[n];
 			if (!other->fixed && other != member)
 			{
-				expand_pairs_30f380(&pairs);
-				pairs.data[pairs.size - 1].first = other;
-				pairs.data[pairs.size - 1].second = member;
+				append_pair(other, member);
 			}
 		}
 	}

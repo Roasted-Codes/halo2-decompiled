@@ -148,6 +148,11 @@ inline void end_agent_316110(agent_316110 *agent)
 	}
 }
 
+// score 167 (was 185): the second collidable is now taken up front, so the
+// pair dies in edx as retail's does; retail still reloads the pair from its
+// slot inside the loop and keeps the array pointer in esi, ours keeps the
+// second in the slot and the pointer in edx, and the two virtual calls swap
+// their vtable registers
 // @retail 0x316110
 void cache_316110::function_316110(pair_316110 const *pair)
 {
@@ -163,25 +168,25 @@ void cache_316110::function_316110(pair_316110 const *pair)
 		while (next < record)
 		{
 			*written = *next;
-			next++;
 			written++;
+			next++;
 		}
 		end_agent_316110(next->agent);
 		next++;
 		return;
 	}
 	collidable_316110 *first = pair->first;
+	collidable_316110 *second = pair->second;
 	pairs_316110 *pairs = &island_of_316110(first)->pairs;
 	int i;
 	for (i = 0; i < pairs->size; i++)
 	{
-		if (pairs->data[i].first->id == first->id && pairs->data[i].second->id == pair->second->id)
+		if (pairs->data[i].first->id == first->id && pairs->data[i].second->id == second->id)
 		{
 			goto remove;
 		}
 	}
 	{
-		collidable_316110 *second = pair->second;
 		pairs = &island_of_316110(second)->pairs;
 		for (i = 0; i < pairs->size; i++)
 		{

@@ -174,6 +174,11 @@ struct linked_30e720 : head_30e720, side_30e720
 	body_30e720 *body;
 };
 
+__forceinline void *__cdecl byte_offset_30e720(void *address, int offset)
+{
+	return static_cast<char *>(address) + offset;
+}
+
 struct link_30e720
 {
 	side_30e720 *first;
@@ -228,25 +233,15 @@ public:
 	void function_30e720();
 };
 
-// score 465 (was 506): the same steps in the same order as retail. The
-// island test now goes through a bool local, so it is set with sete and
-// tested, as in retail (grouping_3720a0::single_group, in a shared header,
-// would need the same to match retail's sete there; a local copy of it scores
-// 495). Still: the registers differ throughout (retail keeps the world in edi,
-// the island index in ebx and zero in ebp; it reloads the world at the top of
-// the groups loop, entering past the reload, where ours reloads it on the back
-// edge), and the frame is realigned to 8 bytes because the grouping is 8 bytes
-// here; retail's grouping takes 12 bytes (0x34-0x40) and no realignment (a
-// local wrapper with a third word drops the realignment but scores 518-525).
-// Retail converts a linked pair's side to its holder with a plain `sub 0x10`
-// left unfolded; static_cast null-checks it here, and char arithmetic folds
-// the offset away (both tried: 509, or 485 with the wrapper). The grouping's
-// destructor is the empty function 0x175f40, called here without retail's
-// `lea ecx`.
+grouping_3720a0::~grouping_3720a0()
+{
+}
+
 // @retail 0x30e720
 void c_311100::function_30e720()
 {
-	for (int i = islands.size - 1; i >= 0; i--)
+	int original_count = islands.size;
+	for (int i = original_count - 1; i >= 0; i--)
 	{
 		island_30e720 *island = islands.data[i];
 		if (island->bodies.size == 0)
@@ -274,11 +269,12 @@ void c_311100::function_30e720()
 					islands.append(created);
 					created->index = islands.size - 1;
 					created->field_30 = island->field_30;
-					if ((created->bodies.capacity_and_flags & 0x7fffffff) < groups.data[g].size)
+					bodies_30e720 &moved = created->bodies;
+					if ((moved.capacity_and_flags & 0x7fffffff) < groups.data[g].size)
 					{
-						function_2d9160(&created->bodies, groups.data[g].size, sizeof(body_30e720 *));
+						function_2d9160(&moved, groups.data[g].size, sizeof(body_30e720 *));
 					}
-					created->bodies.resize(groups.data[g].size);
+					moved.resize(groups.data[g].size);
 					if (island->flag_ae)
 					{
 						created->flag_ae = 1;
@@ -291,7 +287,7 @@ void c_311100::function_30e720()
 						long weight = body->shape->slot_5();
 						island->weight -= weight;
 						created->weight += weight;
-						created->bodies.data[j] = body;
+						moved[j] = body;
 					}
 				}
 				for (int k = 0; k < island->bodies.size;)
@@ -299,8 +295,7 @@ void c_311100::function_30e720()
 					body_30e720 *body = island->bodies.data[k];
 					if (body->island != island)
 					{
-						island->bodies.size--;
-						island->bodies.data[k] = island->bodies.data[island->bodies.size];
+						island->bodies.remove_at(k);
 					}
 					else
 					{
@@ -325,40 +320,39 @@ void c_311100::function_30e720()
 					island_30e720 *kept_by = island->actions.data[a]->island;
 					if (kept_by != island)
 					{
-						kept_by->actions.append(island->actions.data[a]);
-						island->actions.size--;
-						island->actions.data[a] = island->actions.data[island->actions.size];
+						kept_by->actions.append_copy(island->actions[a]);
+						island->actions.remove_at(a);
 					}
 				}
 				for (int c = island->joins.size - 1; c >= 0; c--)
 				{
-					join_30e720 *join = island->joins.data[c];
-					island_30e720 *owner = join->first->island;
+					join_30e720 *const &entry = island->joins[c];
+					island_30e720 *owner = entry->first->island;
 					if (owner->taken_out_of_world())
 					{
-						owner = join->second->island;
+						owner = entry->second->island;
 					}
 					if (owner != island)
 					{
-						join = island->joins.data[c];
-						island->joins.size--;
-						island->joins.data[c] = island->joins.data[island->joins.size];
+						join_info_30e720 info;
+						join_30e720 *join = entry;
+						island->joins.remove_at(c);
 						owner->joins.append(join);
 						join->island = owner;
-						join_info_30e720 info;
 						join->fill_move_info(&info);
 						owner->join_added(join, &info);
 						island->join_removed(join, &info);
 					}
 				}
+				links_30e720 &links = island->links;
 				long kept = 0;
-				for (int l = 0; l < island->links.size; l++)
+				for (int l = 0; l < links.size; l++)
 				{
-					link_30e720 *link = &island->links.data[l];
-					island_30e720 *owner = static_cast<linked_30e720 &>(*link->first).body->island;
+					link_30e720 *link = &links[l];
+					island_30e720 *owner = static_cast<linked_30e720 *>(byte_offset_30e720(link->first, -int(sizeof(head_30e720))))->body->island;
 					if (owner->taken_out_of_world())
 					{
-						owner = static_cast<linked_30e720 &>(*link->second).body->island;
+						owner = static_cast<linked_30e720 *>(byte_offset_30e720(link->second, -int(sizeof(head_30e720))))->body->island;
 					}
 					if (owner != island)
 					{
@@ -366,11 +360,11 @@ void c_311100::function_30e720()
 					}
 					else
 					{
-						island->links.data[kept] = *link;
+						links[kept] = *link;
 						kept++;
 					}
 				}
-				island->links.resize(kept);
+				links.resize(kept);
 			}
 			island->needs_split = false;
 		}

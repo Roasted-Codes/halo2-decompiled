@@ -708,7 +708,10 @@ bool __stdcall function_0b0900(s_bitstream *stream, long unused, s_message_0b090
 	if (message->flag14cc)
 	{
 		long v = message->value14d0;
-		valid = valid && ((v < 0 ? 0 : (v > 15 ? 15 : v)) == v || v == NONE);
+		long clipped = v;
+		if (clipped < 0) clipped = 0;
+		else if (clipped > 15) clipped = 15;
+		valid = valid && (clipped == v || v == NONE);
 	}
 	return valid;
 }

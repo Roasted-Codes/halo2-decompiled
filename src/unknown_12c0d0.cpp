@@ -687,14 +687,11 @@ long log2_floor(dword value);
 
 /* builds a bitmap's hardware texture header over its description, pointing
    into the shared pixel data */
-// score 98 (was 98): the prologue saves EBX where retail saves EDI and the global is added to EAX
-// at a different point.
+// score 86 (was 98): the hardware format is kept in EDI and the width spilled across the mip count
+// call, where retail keeps all three sizes in registers and the hardware format on the stack.
 // @retail 0x12c820
 void texture_cache_bitmap_build_texture(s_bitmap_data *bitmap)
 {
-	short depth;
-	short height;
-	short width;
 	D3DTexture *texture = (D3DTexture *)&bitmap->hardware_common;
 	dword data = bitmap->hardware_data + g_4e646c;
 	short format = bitmap->format;
@@ -709,14 +706,18 @@ void texture_cache_bitmap_build_texture(s_bitmap_data *bitmap)
 	{
 		hardware_format = g_450768[0][format];
 	}
-	depth = bitmap->depth;
-	height = bitmap->height;
-	width = bitmap->width;
+	short depth = bitmap->depth;
+	short height = bitmap->height;
+	short width = bitmap->width;
 	levels = bitmap_get_mipmap_count(width, height, depth, format, (bitmap->flags >> 4) & 1, 0);
 	texture->Data = 0;
 	texture->Lock = 0;
 	texture->Common = 0x40001;
 	texture->Format = 9;
+	/* the size fields are taken as 32-bit values from here on */
+	dword texture_width = width;
+	dword texture_height = height;
+	dword texture_depth = depth;
 	if (bitmap->type == 2)
 	{
 		texture->Format = 0xd;
@@ -725,9 +726,9 @@ void texture_cache_bitmap_build_texture(s_bitmap_data *bitmap)
 	if (bitmap->type != 1) local_0 = 2;
 	else local_0 = 3;
 	texture->Format |= ((local_0 | (hardware_format << 4)) << 4) | ((levels + 1) << 16);
-	texture->Format |= (short)log2_floor(width) << 20;
-	texture->Format |= (short)log2_floor(height) << 24;
-	texture->Format |= (short)log2_floor(depth) << 28;
+	texture->Format |= (short)log2_floor(texture_width) << 20;
+	texture->Format |= (short)log2_floor(texture_height) << 24;
+	texture->Format |= (short)log2_floor(texture_depth) << 28;
 	texture->Size = 0;
 	texture->Data = data & 0xfffffff;
 }

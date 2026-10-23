@@ -1406,6 +1406,7 @@ void function_55990(s_voice_player_values *values)
 {
 	if (values->enabled)
 	{
+		long i = 0;
 		dword players = 0;
 		if (voice_available())
 		{
@@ -1419,9 +1420,9 @@ void function_55990(s_voice_player_values *values)
 		if (voice_available())
 			active = g_4c9878.unknownEE;
 		memset(values->values, 0, sizeof(values->values));
-		for (long i = 0; i < 16; i++)
+		for (; i < 16; i++)
 		{
-			dword bit = 1 << i;
+			word bit = 1 << i;
 			if ((local & bit) && (active & bit))
 			{
 				dword muted = 0;
@@ -1430,10 +1431,12 @@ void function_55990(s_voice_player_values *values)
 				dword mask = remote & ~muted;
 				if (voice_available())
 				{
+					dword policy = ~0UL;
 					if (g_4c9878.mode == 1)
-						mask &= voice_player_settings_get_active_value(&g_527104.settings, i);
+						policy = voice_player_settings_get_active_value(&g_527104.settings, i);
 					else if (g_4c9878.mode == 2 || g_4c9878.mode == 3)
-						mask &= function_56c60(&g_527104.settings, i);
+						policy = function_56c60(&g_527104.settings, i);
+					mask &= policy;
 				}
 				for (long j = 0; j < 16; j++)
 				{

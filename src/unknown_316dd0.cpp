@@ -200,6 +200,8 @@ public:
 	void function_316dd0(handle_pair_316dd0 const *pair);
 };
 
+// score 122 (was 122): retail pushes edi and keeps the merger in it, ours
+// keeps the merger in esi and leaves edi to the pair's parts
 // @retail 0x316dd0
 void merger_316dd0::function_316dd0(handle_pair_316dd0 const *pair)
 {
