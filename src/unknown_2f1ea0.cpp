@@ -5,24 +5,7 @@
 // reported when the centre is closer to the box than the sum of their radii.
 // Each is bracketed by two marks in the timing stream.
 #include "timer_mark_2ebc80.h"
-#include <xmmintrin.h>
-
-static __declspec(align(16)) const unsigned long g_sign_mask_4124a0[4] = {0x80000000, 0x80000000, 0x80000000, 0x80000000};
-static __declspec(align(16)) const unsigned long g_magnitude_mask_455940[4] = {0x7fffffff, 0x7fffffff, 0x7fffffff, 0x7fffffff};
-
-// three axes and a position
-struct c_query_transform
-{
-	__m128 axes[3];
-	__m128 position;
-};
-
-// a point taken into a transform's frame (0x2da660)
-struct c_query_point
-{
-	__m128 value;
-	void inverse_transform(const c_query_transform *matrix, const __m128 *point);
-};
+#include "sphere_box_2f1ea0.h"
 
 // a point placed by a transform
 struct placed_point_2f23c0
@@ -39,33 +22,6 @@ struct placed_point_2f23c0
 	}
 };
 
-struct sphere_2f23c0
-{
-	char unknown0[0xc];
-	float radius;
-};
-
-// a box: its radius and its half extents
-struct box_2f23c0
-{
-	char unknown0[0xc];
-	float radius;
-	__m128 half_extents;
-};
-
-struct motion_2f23c0
-{
-	char unknown0[0x20];
-	c_query_transform transform;
-};
-
-struct body_2f23c0
-{
-	void const *shape;
-	long key;
-	motion_2f23c0 const *motion;
-};
-
 class collector_2f23c0
 {
 public:
@@ -73,19 +29,10 @@ public:
 	virtual void add_pair(body_2f23c0 const *a, body_2f23c0 const *b) {}
 };
 
-struct input_2f2130
-{
-	long field_0;
-	long field_4;
-	float tolerance;
-};
-
-// a contact: its point, with the separation in the fourth lane, its normal,
-// and the two sides
+// a contact: where the two sides touch, and the two sides
 struct contact_2f2130
 {
-	__m128 point;
-	__m128 normal;
+	contact_point_2f1ea0 where;
 	body_2f23c0 const *a;
 	body_2f23c0 const *b;
 };
@@ -97,120 +44,18 @@ public:
 	virtual void add_contact(contact_2f2130 const *contact) {}
 };
 
-// a direction turned by a transform
-__forceinline __m128 rotate_2f2130(c_query_transform const *transform, __m128 const &d)
-{
-	__m128 z = _mm_mul_ps(transform->axes[2], _mm_shuffle_ps(d, d, 0xaa));
-	__m128 y = _mm_mul_ps(transform->axes[1], _mm_shuffle_ps(d, d, 0x55));
-	__m128 x = _mm_mul_ps(transform->axes[0], _mm_shuffle_ps(d, d, 0x00));
-	return _mm_add_ps(_mm_add_ps(x, y), z);
-}
-
-// one over the square root of the low term, refined by a Newton step, in
-// all four terms
-__forceinline __m128 inverse_sqrt_2f2130(__m128 const &value)
-{
-	__m128 const estimate = _mm_rsqrt_ss(value);
-	__m128 const product = _mm_mul_ss(_mm_mul_ss(value, estimate), estimate);
-	__m128 const refined = _mm_mul_ss(_mm_mul_ss(_mm_set_ss(0.5f), estimate), _mm_sub_ss(_mm_set_ss(3.0f), product));
-	return _mm_shuffle_ps(refined, refined, 0);
-}
-
-// a vector of four copies of a float
-inline __m128 splat_2f2130(float value)
-{
-	__m128 const single = _mm_set_ss(value);
-	return _mm_shuffle_ps(single, single, 0);
-}
-
 // the contact of a sphere with a box, passed on when they are within the
 // tolerance or the centre is inside the box
-__forceinline void sphere_box_contact_2f1ea0(void const *a_, void const *b_, void const *input_, void *collector_)
+__forceinline void pass_sphere_box_contact_2f1ea0(void const *a, void const *b, void const *input, void *collector)
 {
-	body_2f23c0 const *a = (body_2f23c0 const *)a_;
-	body_2f23c0 const *b = (body_2f23c0 const *)b_;
-	input_2f2130 const *input = (input_2f2130 const *)input_;
 	timer_add_2ebc80("TtSphereBox");
-	__m128 magnitude;
 	contact_2f2130 contact;
-	contact.a = a;
-	contact.b = b;
-	__m128 const *centre = &a->motion->transform.position;
-	sphere_2f23c0 const *sphere;
-	float separation;
+	contact.a = (body_2f23c0 const *)a;
+	contact.b = (body_2f23c0 const *)b;
+	if (sphere_box_contact_2f1ea0(a, b, input, contact.where))
 	{
-		c_query_point local;
-		local.inverse_transform(&b->motion->transform, centre);
-		box_2f23c0 const *box = (box_2f23c0 const *)b->shape;
-		sphere = (sphere_2f23c0 const *)a->shape;
-		magnitude = _mm_and_ps(local.value, *(__m128 const *)g_magnitude_mask_455940);
-		__m128 const outside = _mm_sub_ps(_mm_min_ps(magnitude, box->half_extents), magnitude);
-		if (_mm_movemask_ps(outside) & 7)
-		{
-			float const radius = box->radius + sphere->radius;
-			__m128 const squares = _mm_mul_ps(outside, outside);
-			__m128 const length_squared = _mm_add_ss(_mm_shuffle_ps(squares, squares, 0xaa), _mm_add_ss(_mm_shuffle_ps(squares, squares, 0x55), squares));
-			__m128 const inverse = inverse_sqrt_2f2130(length_squared);
-			float length;
-			_mm_store_ss(&length, _mm_mul_ss(length_squared, inverse));
-			separation = length - radius;
-			if (separation > input->tolerance)
-			{
-				goto done;
-			}
-			__m128 const sign = _mm_and_ps(local.value, *(__m128 const *)g_sign_mask_4124a0);
-			__m128 const direction = _mm_xor_ps(_mm_xor_ps(_mm_mul_ps(inverse, outside), sign), *(__m128 const *)g_sign_mask_4124a0);
-			contact.normal = rotate_2f2130(&b->motion->transform, direction);
-		}
-		else
-		{
-			float const *depths_of = (float const *)&magnitude;
-			float const dx = depths_of[0] - box->half_extents.m128_f32[0];
-			float const dy = depths_of[1] - box->half_extents.m128_f32[1];
-			float const dz = depths_of[2] - box->half_extents.m128_f32[2];
-			c_query_transform const *transform = &b->motion->transform;
-			int axis;
-			float depth;
-			__m128 normal;
-			if (dx > dy)
-			{
-				if (dx > dz)
-				{
-					normal = transform->axes[0];
-					depth = dx;
-					axis = 0;
-				}
-				else
-				{
-					normal = transform->axes[2];
-					depth = dz;
-					axis = 2;
-				}
-			}
-			else if (dy > dz)
-			{
-				normal = transform->axes[1];
-				depth = dy;
-				axis = 1;
-			}
-			else
-			{
-				normal = transform->axes[2];
-				depth = dz;
-				axis = 2;
-			}
-			contact.normal = normal;
-			if (local.value.m128_f32[axis] < 0.0f)
-			{
-				contact.normal = _mm_xor_ps(normal, *(__m128 const *)g_sign_mask_4124a0);
-			}
-			separation = depth - box->radius - sphere->radius;
-		}
+		((contact_collector_2f2130 *)collector)->add_contact(&contact);
 	}
-	contact.point = _mm_add_ps(*centre, _mm_mul_ps(splat_2f2130(-separation - sphere->radius), contact.normal));
-	contact.point.m128_f32[3] = separation;
-	((contact_collector_2f2130 *)collector_)->add_contact(&contact);
-done:
 	timer_add_2ebc80("Et");
 }
 
@@ -220,22 +65,22 @@ public:
 	void function_2f1ea0(void const *a, void const *b, void const *input, void *collector);
 };
 
-// score 61 (was 70): retail holds the first side in ebx and the centre in edi,
-// where ours has the two the other way round, and retail loads the sign mask
-// twice where ours loads it once.
+// score 20 (was 38): body A and the sphere take edi here and ebx in retail
+// (the centre the other way round), body B's motion in the inside branch
+// takes esi where retail has edx, and the collector's table and the record's
+// address (and the end mark's time) have eax and edx swapped.
 // @retail 0x2f1ea0
 void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *input, void *collector)
 {
-	sphere_box_contact_2f1ea0(a, b, input, collector);
+	pass_sphere_box_contact_2f1ea0(a, b, input, collector);
 }
 
 // the same as a function
-// score 61 (was 70): as 0x2f1ea0, the first side and the centre take the other
-// registers, and the sign mask is loaded once where retail loads it twice.
+// score 20 (was 38): as 0x2f1ea0.
 // @retail 0x2f2130
 void __cdecl function_2f2130(void const *a, void const *b, void const *input, void *collector)
 {
-	sphere_box_contact_2f1ea0(a, b, input, collector);
+	pass_sphere_box_contact_2f1ea0(a, b, input, collector);
 }
 
 // @retail 0x2f23c0

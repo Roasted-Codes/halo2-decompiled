@@ -136,12 +136,53 @@ struct hit_info_3009e0
 	s_244980_output *output;
 };
 
+// a vector of four copies of a float
+__forceinline __m128 splat_3009e0(float value)
+{
+	__m128 const single = _mm_set_ss(value);
+	return _mm_shuffle_ps(single, single, 0);
+}
+
+// a vector of four floats; its operations change it in place
+struct vector_3009e0
+{
+	__m128 value;
+
+	void operator=(vector_3009e0 const &other)
+	{
+		value = other.value;
+	}
+
+	// one of its four terms
+	float &operator()(int i)
+	{
+		return value.m128_f32[i];
+	}
+
+	float operator()(int i) const
+	{
+		return value.m128_f32[i];
+	}
+
+	// this vector less another
+	void subtract(vector_3009e0 const &other)
+	{
+		value = _mm_sub_ps(value, other.value);
+	}
+
+	// this vector times a number
+	void scale(float factor)
+	{
+		value = _mm_mul_ps(splat_3009e0(factor), value);
+	}
+};
+
 // the nodes still to visit: the offset of the tree's fixed point, the depth,
 // the size of one unit, the base of the leaves' keys, and a value the commands
 // set
 struct pending_301800
 {
-	__m128 offset;
+	vector_3009e0 offset;
 	long depth;
 	float scale;
 	long key_base;
@@ -151,8 +192,8 @@ struct pending_301800
 // the ray's two ends in the tree's fixed-point units
 struct fixed_ray_301800
 {
-	__m128 from;
-	__m128 to;
+	vector_3009e0 from;
+	vector_3009e0 to;
 };
 
 struct class_2df670
@@ -194,13 +235,6 @@ __forceinline pending_301800 *writable_3009e0(pending_301800 *&position, pending
 	return &copy;
 }
 
-// a vector of four copies of a float
-__forceinline __m128 splat_3009e0(float value)
-{
-	__m128 const single = _mm_load_ss(&value);
-	return _mm_shuffle_ps(single, single, 0);
-}
-
 // the point a fraction of the way from one point to another
 __forceinline __m128 lerp_3009e0(__m128 from, __m128 to, float fraction)
 {
@@ -208,21 +242,20 @@ __forceinline __m128 lerp_3009e0(__m128 from, __m128 to, float fraction)
 	return _mm_add_ps(_mm_mul_ps(_mm_sub_ps(*(__m128 const *)g_412420, t), from), _mm_mul_ps(t, to));
 }
 
-// score 1022 (was 1037): the same cases, split and bound code as retail, in the
-// same order, but the registers differ: retail keeps the commands in esi, the
-// position in ebx and the segment in edi with the split's axis on the stack;
-// ours keeps the segment on the stack and the first child's offset in edi,
-// which shifts nearly every line.
+// score 999 (was 1022), 4 bytes long: retail keeps the command in eax and
+// copies it to ecx for the scale case's shift; ours keeps it in ecx, so `this`
+// moves to eax at the start and most cases take other scratch registers. Also
+// different: the 24-bit bound case loads its second value's middle byte first,
+// and the 32-bit leaf case shifts its high half by 16 (ours: a 4-byte chain).
 // The ray's walk down the tree: splits test the ray's two ends against the
 // two children's ranges along an axis or a diagonal, visiting the near child
 // first (recursively, with the ray cut at the split) and then the far one
 // with what is left of the ray; bounds cut the ray to a node's range; each
 // leaf reached is cast against.
 // @retail 0x3009e0
-void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fixed_ray_301800 const *segment)
+void class_2df670::function_3009e0(pending_301800 *position, void const *root, fixed_ray_301800 const *segment)
 {
 	unsigned char const *commands = (unsigned char const *)root;
-	pending_301800 *position = pending;
 	pending_301800 copy;
 	fixed_ray_301800 other;
 	long first_offset;
@@ -245,74 +278,74 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 		case 0x13:
 			first_end = (float)(commands[1] * 2);
 			second_start = (float)(commands[2] * 2);
-			a = segment->from.m128_f32[2] + segment->from.m128_f32[1];
-			b = segment->to.m128_f32[2] + segment->to.m128_f32[1];
+			a = segment->from(2) + segment->from(1);
+			b = segment->to(2) + segment->to(1);
 			goto split_4;
 		case 0x14:
 			first_end = (float)(commands[1] * 2 - 0xff);
 			second_start = (float)(commands[2] * 2 - 0xff);
-			a = segment->from.m128_f32[1] - segment->from.m128_f32[2];
-			b = segment->to.m128_f32[1] - segment->to.m128_f32[2];
+			a = segment->from(1) - segment->from(2);
+			b = segment->to(1) - segment->to(2);
 			goto split_4;
 		case 0x15:
 			first_end = (float)(commands[1] * 2);
 			second_start = (float)(commands[2] * 2);
-			a = segment->from.m128_f32[2] + segment->from.m128_f32[0];
-			b = segment->to.m128_f32[2] + segment->to.m128_f32[0];
+			a = segment->from(2) + segment->from(0);
+			b = segment->to(2) + segment->to(0);
 			goto split_4;
 		case 0x16:
 			first_end = (float)(commands[1] * 2 - 0xff);
 			second_start = (float)(commands[2] * 2 - 0xff);
-			a = segment->from.m128_f32[0] - segment->from.m128_f32[2];
-			b = segment->to.m128_f32[0] - segment->to.m128_f32[2];
+			a = segment->from(0) - segment->from(2);
+			b = segment->to(0) - segment->to(2);
 			goto split_4;
 		case 0x17:
 			first_end = (float)(commands[1] * 2);
 			second_start = (float)(commands[2] * 2);
-			a = segment->from.m128_f32[1] + segment->from.m128_f32[0];
-			b = segment->to.m128_f32[1] + segment->to.m128_f32[0];
+			a = segment->from(1) + segment->from(0);
+			b = segment->to(1) + segment->to(0);
 			goto split_4;
 		case 0x18:
 			first_end = (float)(commands[1] * 2 - 0xff);
 			second_start = (float)(commands[2] * 2 - 0xff);
-			a = segment->from.m128_f32[0] - segment->from.m128_f32[1];
-			b = segment->to.m128_f32[0] - segment->to.m128_f32[1];
+			a = segment->from(0) - segment->from(1);
+			b = segment->to(0) - segment->to(1);
 			goto split_4;
 		case 0x19:
 			first_end = (float)(commands[1] * 3);
 			second_start = (float)(commands[2] * 3);
-			a = segment->from.m128_f32[2] + segment->from.m128_f32[1] + segment->from.m128_f32[0];
-			b = segment->to.m128_f32[2] + segment->to.m128_f32[1] + segment->to.m128_f32[0];
+			a = segment->from(2) + segment->from(1) + segment->from(0);
+			b = segment->to(2) + segment->to(1) + segment->to(0);
 			goto split_4;
 		case 0x1a:
 			first_end = (float)((commands[1] - 0x55) * 3);
 			second_start = (float)((commands[2] - 0x55) * 3);
-			a = segment->from.m128_f32[1] + segment->from.m128_f32[0] - segment->from.m128_f32[2];
-			b = segment->to.m128_f32[1] + segment->to.m128_f32[0] - segment->to.m128_f32[2];
+			a = segment->from(1) + segment->from(0) - segment->from(2);
+			b = segment->to(1) + segment->to(0) - segment->to(2);
 			goto split_4;
 		case 0x1b:
 			first_end = (float)((commands[1] - 0x55) * 3);
 			second_start = (float)((commands[2] - 0x55) * 3);
-			a = segment->from.m128_f32[0] - segment->from.m128_f32[1] + segment->from.m128_f32[2];
-			b = segment->to.m128_f32[0] - segment->to.m128_f32[1] + segment->to.m128_f32[2];
+			a = segment->from(0) - segment->from(1) + segment->from(2);
+			b = segment->to(0) - segment->to(1) + segment->to(2);
 			goto split_4;
 		case 0x1c:
 			first_end = (float)((commands[1] - 0xaa) * 3);
 			second_start = (float)((commands[2] - 0xaa) * 3);
-			a = segment->from.m128_f32[0] - segment->from.m128_f32[1] - segment->from.m128_f32[2];
-			b = segment->to.m128_f32[0] - segment->to.m128_f32[1] - segment->to.m128_f32[2];
+			a = segment->from(0) - segment->from(1) - segment->from(2);
+			b = segment->to(0) - segment->to(1) - segment->to(2);
 			goto split_4;
 		case 0x20:
 		case 0x21:
 		case 0x22:
 			axis = op - 0x20;
 			second_start = (float)commands[1];
-			second_offset = commands[2];
+			first_end = second_start + 1.0f;
 			commands += 3;
 			first_offset = 0;
-			first_end = second_start + 1.0f;
-			a = segment->from.m128_f32[axis];
-			b = segment->to.m128_f32[axis];
+			second_offset = commands[-1];
+			a = segment->from(axis);
+			b = segment->to(axis);
 			goto split;
 		case 0x23:
 		case 0x24:
@@ -320,11 +353,11 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 			axis = op - 0x23;
 			first_end = (float)commands[1];
 			second_start = (float)commands[2];
-			a = segment->from.m128_f32[axis];
-			b = segment->to.m128_f32[axis];
-			first_offset = READ_2_3009E0(commands + 3);
-			second_offset = READ_2_3009E0(commands + 5);
+			a = segment->from(axis);
+			b = segment->to(axis);
 			commands += 7;
+			first_offset = READ_2_3009E0(commands - 4);
+			second_offset = READ_2_3009E0(commands - 2);
 			goto split;
 		case 0x10:
 		case 0x11:
@@ -332,8 +365,8 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 			axis = op - 0x10;
 			first_end = (float)commands[1];
 			second_start = (float)commands[2];
-			a = segment->from.m128_f32[axis];
-			b = segment->to.m128_f32[axis];
+			a = segment->from(axis);
+			b = segment->to(axis);
 		split_4:
 			second_offset = commands[3];
 			commands += 4;
@@ -353,10 +386,10 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 			}
 			{
 				float const high_a = a - first_end;
-				__m128 const from = segment->from;
-				__m128 const to = segment->to;
-				other.from = from;
-				other.to = to;
+				__m128 const from = segment->from.value;
+				__m128 const to = segment->to.value;
+				other.from.value = from;
+				other.to.value = to;
 				float const low_a = a - second_start;
 				float const high_b = b - first_end;
 				float const low_b = b - second_start;
@@ -365,19 +398,19 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 					// the first child first, with the ray cut where it leaves it
 					if (high_b * high_a < 0.0f)
 					{
-						other.to = lerp_3009e0(from, to, high_a / (high_a - high_b));
+						other.to.value = lerp_3009e0(from, to, high_a / (high_a - high_b));
 					}
 					function_3009e0(position, commands - second_offset + first_offset, &other);
 					if (low_b * low_a < 0.0f)
 					{
-						((fixed_ray_301800 *)segment)->from = lerp_3009e0(segment->from, segment->to, low_a / (low_a - low_b));
+						((fixed_ray_301800 *)segment)->from.value = lerp_3009e0(segment->from.value, segment->to.value, low_a / (low_a - low_b));
 					}
 					if (fraction < 1.0f)
 					{
-						((fixed_ray_301800 *)segment)->to = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
-						((fixed_ray_301800 *)segment)->to = _mm_mul_ps(splat_3009e0(position->scale), segment->to);
-						((fixed_ray_301800 *)segment)->to = _mm_sub_ps(segment->to, position->offset);
-						if (axis < 3 && segment->to.m128_f32[axis] < second_start)
+						((fixed_ray_301800 *)segment)->to.value = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
+						((fixed_ray_301800 *)segment)->to.scale(position->scale);
+						((fixed_ray_301800 *)segment)->to.subtract(position->offset);
+						if (axis < 3 && segment->to(axis) < second_start)
 						{
 							return;
 						}
@@ -388,19 +421,19 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 					// the second child first, with the ray cut where it leaves it
 					if (low_b * low_a < 0.0f)
 					{
-						other.to = lerp_3009e0(from, to, low_a / (low_a - low_b));
+						other.to.value = lerp_3009e0(from, to, low_a / (low_a - low_b));
 					}
 					function_3009e0(position, commands, &other);
 					if (high_b * high_a < 0.0f)
 					{
-						((fixed_ray_301800 *)segment)->from = lerp_3009e0(segment->from, segment->to, high_a / (high_a - high_b));
+						((fixed_ray_301800 *)segment)->from.value = lerp_3009e0(segment->from.value, segment->to.value, high_a / (high_a - high_b));
 					}
 					if (fraction < 1.0f)
 					{
-						((fixed_ray_301800 *)segment)->to = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
-						((fixed_ray_301800 *)segment)->to = _mm_mul_ps(splat_3009e0(position->scale), segment->to);
-						((fixed_ray_301800 *)segment)->to = _mm_sub_ps(segment->to, position->offset);
-						if (axis < 3 && segment->to.m128_f32[axis] > first_end)
+						((fixed_ray_301800 *)segment)->to.value = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
+						((fixed_ray_301800 *)segment)->to.scale(position->scale);
+						((fixed_ray_301800 *)segment)->to.subtract(position->offset);
+						if (axis < 3 && segment->to(axis) > first_end)
 						{
 							return;
 						}
@@ -413,8 +446,8 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 		case 0x2a:
 		case 0x2b:
 			axis = op - 0x29;
-			low = (float)READ_3_3009E0(commands + 1) * inverse_scale * position->scale - position->offset.m128_f32[axis];
-			high = (float)READ_3_3009E0(commands + 4) * inverse_scale * position->scale - position->offset.m128_f32[axis];
+			low = ((float)READ_3_3009E0(commands + 1) * inverse_scale) * position->scale - position->offset(axis);
+			high = ((float)READ_3_3009E0(commands + 4) * inverse_scale) * position->scale - position->offset(axis);
 			commands += 7;
 			goto bounds;
 		case 0x26:
@@ -427,16 +460,16 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 		bounds:
 			// the ray cut to the node's range along the axis
 			{
-				float const a_end = segment->from.m128_f32[axis];
-				float const b_end = segment->to.m128_f32[axis];
+				a = segment->from(axis);
+				b = segment->to(axis);
 				long flip;
-				if (a_end < b_end)
+				if (a < b)
 				{
-					if (b_end < low)
+					if (b < low)
 					{
 						return;
 					}
-					if (a_end > high)
+					if (a > high)
 					{
 						return;
 					}
@@ -444,29 +477,29 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 				}
 				else
 				{
-					if (a_end < low)
+					if (a < low)
 					{
 						return;
 					}
-					if (b_end > high)
+					if (b > high)
 					{
 						return;
 					}
 					flip = 1;
 				}
-				__m128 const from = segment->from;
-				__m128 const to = segment->to;
-				float const high_a = a_end - high;
-				float const high_b = b_end - high;
+				__m128 const from = segment->from.value;
+				__m128 const to = segment->to.value;
+				float const high_a = a - high;
+				float const high_b = b - high;
 				if (high_a * high_b < 0.0f)
 				{
-					(&((fixed_ray_301800 *)segment)->from)[1 - flip] = lerp_3009e0(from, to, high_a / (high_a - high_b));
+					(&((fixed_ray_301800 *)segment)->from)[1 - flip].value = lerp_3009e0(from, to, high_a / (high_a - high_b));
 				}
-				float const low_a = a_end - low;
-				float const low_b = b_end - low;
+				float const low_a = a - low;
+				float const low_b = b - low;
 				if (low_a * low_b < 0.0f)
 				{
-					(&((fixed_ray_301800 *)segment)->from)[flip] = lerp_3009e0(from, to, low_a / (low_a - low_b));
+					(&((fixed_ray_301800 *)segment)->from)[flip].value = lerp_3009e0(from, to, low_a / (low_a - low_b));
 				}
 			}
 			continue;
@@ -484,17 +517,17 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 		case 0x03:
 		case 0x04:
 		{
-			__m128 corner;
-			corner.m128_f32[0] = (float)commands[1];
-			corner.m128_f32[1] = (float)commands[2];
-			corner.m128_f32[2] = (float)commands[3];
-			corner.m128_f32[3] = 0.0f;
-			((fixed_ray_301800 *)segment)->from = _mm_sub_ps(segment->from, corner);
-			((fixed_ray_301800 *)segment)->to = _mm_sub_ps(segment->to, corner);
+			vector_3009e0 corner;
+			corner(0) = (float)commands[1];
+			corner(1) = (float)commands[2];
+			corner(2) = (float)commands[3];
+			corner(3) = 0.0f;
+			((fixed_ray_301800 *)segment)->from.subtract(corner);
+			((fixed_ray_301800 *)segment)->to.subtract(corner);
 			float const factor = (float)(1 << op);
-			((fixed_ray_301800 *)segment)->from = _mm_mul_ps(splat_3009e0(factor), segment->from);
-			((fixed_ray_301800 *)segment)->to = _mm_mul_ps(splat_3009e0(factor), segment->to);
-			copy.offset = _mm_mul_ps(splat_3009e0(factor), _mm_add_ps(position->offset, corner));
+			((fixed_ray_301800 *)segment)->from.scale(factor);
+			((fixed_ray_301800 *)segment)->to.scale(factor);
+			copy.offset.value = _mm_mul_ps(splat_3009e0(factor), _mm_add_ps(position->offset.value, corner.value));
 			copy.depth = position->depth + op;
 			copy.scale = factor * position->scale;
 			copy.values[0] = position->values[0];
@@ -530,9 +563,12 @@ void class_2df670::function_3009e0(pending_301800 *pending, void const *root, fi
 		case 0x61:
 		case 0x62:
 		case 0x63:
-			copy.values[op - 0x60] = commands[1];
+		{
+			long const read = commands[1];
 			commands += 2;
+			copy.values[op - 0x60] = read;
 			goto record_value;
+		}
 		case 0x64:
 		case 0x65:
 		case 0x66:
@@ -595,15 +631,17 @@ reached:
 		hit = true;
 		field_54 = closest->fraction;
 		closest->key = key;
-		return;
 	}
-	hit_info_3009e0 info;
-	info.output = output;
-	info.field_8 = ((long *)output)[2];
-	info.leaf = leaf;
-	info.key = key;
-	leaf->cast_reporting(&ray, &info, callback);
-	field_54 = ((callback_301800 const *)callback)->field_4;
+	else
+	{
+		hit_info_3009e0 info;
+		info.output = output;
+		info.field_8 = ((long *)output)[2];
+		info.leaf = leaf;
+		info.key = key;
+		leaf->cast_reporting(&ray, &info, callback);
+		field_54 = ((callback_301800 const *)callback)->field_4;
+	}
 }
 
 // a vector of four copies of a float
@@ -626,16 +664,16 @@ result_2df6e0 class_2df670::function_301720(void const *shape_, void const *tree
 	__assume(root != 0);
 	fraction = 1.0f;
 	pending_301800 pending;
-	pending.offset = _mm_setzero_ps();
+	pending.offset.value = _mm_setzero_ps();
 	inverse_scale = 1.0f / tree->origin.m128_f32[3];
 	float const scale = tree->origin.m128_f32[3] * (1.0f / 65536.0f);
 	pending.scale = scale;
 	ray_301800 const *input = (ray_301800 const *)ray_;
 	fixed_ray_301800 fixed;
-	fixed.from = _mm_sub_ps(input->from, source->origin);
-	fixed.to = _mm_sub_ps(input->to, source->origin);
-	fixed.from = _mm_mul_ps(splat_301720(scale), fixed.from);
-	fixed.to = _mm_mul_ps(splat_301720(scale), fixed.to);
+	fixed.from.value = _mm_sub_ps(input->from, source->origin);
+	fixed.to.value = _mm_sub_ps(input->to, source->origin);
+	fixed.from.value = _mm_mul_ps(splat_301720(scale), fixed.from.value);
+	fixed.to.value = _mm_mul_ps(splat_301720(scale), fixed.to.value);
 	ray.copy_from(input);
 	hit = false;
 	pending.key_base = 0;
@@ -661,16 +699,16 @@ void class_2df670::function_301800(void const *shape_, void const *tree_, s_2449
 	void const *const root = source->root;
 	__assume(root != 0);
 	pending_301800 pending;
-	pending.offset = _mm_setzero_ps();
+	pending.offset.value = _mm_setzero_ps();
 	inverse_scale = 1.0f / tree->origin.m128_f32[3];
 	float const scale = tree->origin.m128_f32[3] * (1.0f / 65536.0f);
 	pending.scale = scale;
 	ray_301800 const *input = (ray_301800 const *)ray_;
 	fixed_ray_301800 fixed;
-	fixed.from = _mm_sub_ps(input->from, source->origin);
-	fixed.to = _mm_sub_ps(input->to, source->origin);
-	fixed.from = _mm_mul_ps(splat_301720(scale), fixed.from);
-	fixed.to = _mm_mul_ps(splat_301720(scale), fixed.to);
+	fixed.from.value = _mm_sub_ps(input->from, source->origin);
+	fixed.to.value = _mm_sub_ps(input->to, source->origin);
+	fixed.from.value = _mm_mul_ps(splat_301720(scale), fixed.from.value);
+	fixed.to.value = _mm_mul_ps(splat_301720(scale), fixed.to.value);
 	ray.copy_from(input);
 	hit = false;
 	pending.key_base = 0;
