@@ -149,45 +149,45 @@ bool function_15eb20(long player_index);
 void function_22beb5(long local_player_index, dword state, s_interface_sound_block const *block,
 	long *sounds, word *playing);
 
-// score 33 (was 33): retail pushes edi before the first test and zeroes it there, ours pushes it later; retail
-// loads the word index with movzx into edi, ours into di. Ours is four bytes longer.
 // @retail 0x13a720
 void function_13a720(long user_index, s_13a720_status const *status)
 {
 	s_new_hud_user *user = &((s_new_hud_globals *)g_510c4c)->users[user_index];
-	dword flags;
+	dword flags = 0;
 	if (!(status->low_flags & 4) && !(0.0f >= status->value28) && !function_13cb40())
 	{
-		flags = 0;
+		dword status_flags = 0;
 		if (user->value00 != -1.0f && function_15eb20(function_14de70(user_index)))
 		{
-			flags = (status->flags >> 9) & 1;
+			if (status->flags & 0x200)
+				status_flags |= 1;
+			else
+				status_flags &= ~1;
 			if (user->value00 > status->value2c)
-				flags |= 2;
+				status_flags |= 2;
 			else
-				flags &= ~2;
+				status_flags &= ~2;
 			if (status->value2c < 0.25f && status->value2c > 0.0f)
-				flags |= 4;
+				status_flags |= 4;
 			else
-				flags &= ~4;
+				status_flags &= ~4;
 			if (status->value2c == 0.0f)
-				flags |= 8;
+				status_flags |= 8;
 			else
-				flags &= ~8;
+				status_flags &= ~8;
 			if (status->flagad)
-				flags |= 0x100;
+				status_flags |= 0x100;
 			else
-				flags &= ~0x100;
+				status_flags &= ~0x100;
 			if (status->flagae)
-				flags |= 0x200;
+				status_flags |= 0x200;
 			else
-				flags &= ~0x200;
+				status_flags &= ~0x200;
 		}
+		flags = status_flags;
 		if (g_4e6948->state == 2 && status->value2c >= 1.0f)
 			flags &= ~2;
 	}
-	else
-		flags = 0;
 	function_22beb5(user_index, flags, (s_interface_sound_block *)((byte *)g_510c94 + 0x418),
 		user->unknown50, (word *)&user->unknown68);
 }
