@@ -260,6 +260,10 @@ real magnitude3d(vector3f const *vector);
 long function_1dac40(long object_index, long other_object_index);
 void function_e3f00(long object_index);
 
+// score 90 (was 142): object_get_damage_owner (0xd66d0, unmatched) takes its
+// object index in eax here but on the stack in retail, which shifts the tail;
+// retail also swaps the stack slots of speed and body_speed, keeps scale in
+// xmm1 and the speed in xmm3, and copies the velocity through other registers
 // @retail 0x1da6d0
 bool function_1da6d0(long object_index, long other_object_index, real speed_a, real speed_b, real impulse)
 {
@@ -268,8 +272,14 @@ bool function_1da6d0(long object_index, long other_object_index, real speed_a, r
     s_havok_object *object = havok_object_get(*object_index_reference);
     s_havok_object *other = havok_object_get(other_object_index);
     s_collision_force_definition *definition = (s_collision_force_definition *)g_4e3b44[*(long *)object & 0xffff].bytes;
-    volatile real speed = speed_a > speed_b ? speed_a : speed_b;
-    volatile bool result = false;
+    /* volatile: retail stores the larger speed to its stack slot straight
+       from either argument and reads it back once, after the calls */
+    volatile real speed;
+    if (speed_a > speed_b)
+        speed = speed_a;
+    else
+        speed = speed_b;
+    bool result = false;
     if (speed_b > speed_a * 0.25f && other->havok_component_index != NONE && (byte)function_1dac00(*object_index_reference))
     {
         s_havok_component *component = havok_component_get(other->havok_component_index);
@@ -279,16 +289,18 @@ bool function_1da6d0(long object_index, long other_object_index, real speed_a, r
             vector3f velocity = component->rigid_bodies[0].linear_velocity;
             real body_speed = magnitude3d(&velocity);
             real scale = 1.0f;
+            real collision_speed = speed;
             if (havok_component_unknown10_recent(component))
             {
                 body_speed += component->unknown14;
-                if (speed >= 0.001f)
-                    scale = (component->unknown14 + speed) / speed;
+                if (collision_speed >= 0.001f)
+                    scale = (component->unknown14 + collision_speed) / collision_speed;
             }
             real maximum_speed = *impulse_reference > body_speed ? *impulse_reference : body_speed;
             if (!(1.5f > *impulse_reference && 1.5f > body_speed))
             {
-                real force = body_speed / maximum_speed * other_definition->transfer_scale * scale * speed;
+                real ratio = body_speed / maximum_speed;
+                real force = ratio * other_definition->transfer_scale * scale * collision_speed;
                 if (maximum_speed >= 0.001f && force > definition->minimum_force && definition->maximum_force - definition->minimum_force >= 0.001f)
                 {
                     real lower = definition->minimum_damage;
