@@ -329,6 +329,9 @@ public:
 // its contacts are collected at that step's time, and the search moves on a
 // step while one is too close, or back a step when every contact is clear of
 // the earlier step's time too; the contacts then go to the agent's handler
+// score 169 (was 184): retail's frame is 0x20 bytes and it keeps the pair
+// count in a stack slot; ours holds the count in ebp, so the frame is 0x1c
+// and one more register is pushed.
 // @retail 0x317950
 void narrow_phase_317c00::function_317950(void const *input)
 {
@@ -346,11 +349,11 @@ void narrow_phase_317c00::function_317950(void const *input)
 		mark->time = time;
 		g_480154 = (char *)(mark + 1);
 	}
+	int const count = pair_count;
 	{
 		output_316460 output;
 		stack_array_317060 results(0x40);
 		pair_316460 *pair = pairs;
-		int const count = pair_count;
 		output.contacts = (contacts_316460 *)&results;
 		for (int index = count - 1; index >= 0; index--, pair++)
 		{
