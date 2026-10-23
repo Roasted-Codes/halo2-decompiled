@@ -183,9 +183,9 @@ __inline void quaternion_rotate_point(
 	point3f const *v,
 	point3f *out)
 {
-	real d = (q->j * v->y + v->x * q->i + v->z * q->k) * 2.f;
 	real w2 = q->w * 2.f;
 	real m = q->w * q->w * 2.f - 1.f;
+	real d = (q->j * v->y + v->x * q->i + v->z * q->k) * 2.f;
 	real cx = q->j * v->z - v->y * q->k;
 	real cy = v->x * q->k - q->i * v->z;
 	real cz = q->i * v->y - q->j * v->x;
@@ -249,20 +249,7 @@ void function_11dd80(
 
 	out->rotation = in->rotation;
 	out->rotation.w = out->rotation.w * -1.f;
-	{
-		quaternionf const *q = &out->rotation;
-		point3f const *v = &in->position;
-		real d = (v->x * q->i + v->y * q->j + q->k * v->z) * 2.f;
-		real m = q->w * q->w * 2.f - 1.f;
-		real w2 = q->w * 2.f;
-		real cy = q->k * v->x - q->i * v->z;
-		real cz = v->y * q->i - v->x * q->j;
-		real cx = q->j * v->z - v->y * q->k;
-
-		out->position.x = cx * w2 + v->x * m + q->i * d;
-		out->position.y = v->y * m + q->j * d + cy * w2;
-		out->position.z = q->k * d + cz * w2 + m * v->z;
-	}
+	quaternion_rotate_point(&out->rotation, &in->position, &out->position);
 	if (0.f == in->scale)
 		inv = 10000.f;
 	else if (1.f == in->scale)
