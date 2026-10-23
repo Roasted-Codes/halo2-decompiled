@@ -182,11 +182,13 @@ void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
             long local_26 = local_3[local_25];
             long local_27 = *(long *)((byte *)g_4e3b44[local_26 & 0xffff].bytes + 0x288);
             long local_28;
-            switch (local_27)
+            if (local_27 == 0x5000720)
             {
-            case 0x5000720:
                 local_23 = local_26;
                 goto local_29;
+            }
+            switch (local_27)
+            {
             case 0x500000a:
             case 0x5000722:
                 local_28 = 2;

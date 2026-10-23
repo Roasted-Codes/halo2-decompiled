@@ -439,18 +439,11 @@ void DecodeBlockRGBA_interpolated__single_pixel(S3TCBlockRGBA_interpolated const
 void function_358d0(short width, short x, short y, short height, dword *out);
 bool g_55e72c;
 
-union s_136141
-{
-	void const *field_0;
-	dword field_1;
-};
-
 // @retail 0x136140
-dword __fastcall function_136140(long arg_1, long arg_2, s_136141 arg_3, long size, void const *pixels, short x, short height, short format, word flags)
+dword __fastcall function_136140(void const *base, long size, void const *pixels, short x, word unsigned_y, word unsigned_width, short height, short format, word flags)
 {
-	void const *base = arg_3.field_0;
-	short y = (short)arg_1;
-	short width = (short)arg_2;
+	short y = unsigned_y;
+	short width = unsigned_width;
 	if (flags & 2)
 	{
 		long bits = 0;
@@ -502,39 +495,35 @@ dword function_1362b0(s_type_7ba8e9 const *bitmap, point2f const *uv, real detai
 {
 	if (bitmap->base_address)
 	{
-		long mipmap;
+		short mipmap;
 		if (detail < 1.0f && bitmap->mipmap_count > 0)
 			mipmap = bitmap_round((1.0f - detail) * bitmap->mipmap_count);
 		else
 			mipmap = 0;
-		long width = (short)(bitmap->width >> (short)mipmap) > 1 ? (short)(bitmap->width >> (short)mipmap) : 1;
+		short width = bitmap->width >> mipmap > 1 ? bitmap->width >> mipmap : 1;
 		if (bitmap->flags & 2)
-			width += (byte)(-(byte)width) & 3;
-		long height = (short)(bitmap->height >> (short)mipmap) > 1 ? (short)(bitmap->height >> (short)mipmap) : 1;
+			width += -width & 3;
+		short height = bitmap->height >> mipmap > 1 ? bitmap->height >> mipmap : 1;
 		if (bitmap->flags & 2)
-			height += (byte)(-(byte)height) & 3;
-		real value = (short)width * uv->x - 0.5f;
-		long x;
-		if (!((short)width & ((short)width - 1)))
-			x = bitmap_round(value) & ((short)width - 1);
+			height += -height & 3;
+		short x;
+		if (!(width & (width - 1)))
+			x = bitmap_round(width * uv->x - 0.5f) & (width - 1);
 		else
-			x = (bitmap_round(value) % (short)width + (short)width) % (short)width;
-		value = (short)height * uv->y - 0.5f;
-		long y;
-		if (!((short)height & ((short)height - 1)))
-			y = bitmap_round(value) & ((short)height - 1);
+			x = (bitmap_round(width * uv->x - 0.5f) % width + width) % width;
+		short y;
+		if (!(height & (height - 1)))
+			y = bitmap_round(height * uv->y - 0.5f) & (height - 1);
 		else
-			y = (bitmap_round(value) % (short)height + (short)height) % (short)height;
+			y = (bitmap_round(height * uv->y - 0.5f) % height + height) % height;
 		void *pixels;
 		switch (bitmap->type)
 		{
-		case 0: pixels = function_135a30(bitmap, (short)mipmap, 0, 0); break;
-		case 1: pixels = function_135af0(bitmap, 0, 0, 0, (short)mipmap); break;
-		default: pixels = function_135c00(bitmap, 0, 0, 0, (short)mipmap); break;
+		case 0: pixels = function_135a30(bitmap, mipmap, 0, 0); break;
+		case 1: pixels = function_135af0(bitmap, 0, 0, 0, mipmap); break;
+		default: pixels = function_135c00(bitmap, 0, 0, 0, mipmap); break;
 		}
-		s_136141 local_1;
-		local_1.field_0 = bitmap->base_address;
-		return function_136140((short)y, (short)width, local_1, *(long *)((byte *)bitmap + 0x34), pixels, (short)x, (short)height, bitmap->format, bitmap->flags);
+		return function_136140(bitmap->base_address, *(long *)((byte *)bitmap + 0x34), pixels, x, y, width, height, bitmap->format, bitmap->flags);
 	}
 	return 0xffffffff;
 }
