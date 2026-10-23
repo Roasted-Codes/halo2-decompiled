@@ -130,6 +130,9 @@ void __stdcall function_2562c0(long actor_index, s_slot *slot)
 }
 
 #pragma inline_depth(0)
+// score 19 (was 19): retail loads the pointer into ecx and the byte into dl, ours uses eax and cl; retail
+// compares the two floats with comiss against memory where ours compares registers. Ours is
+// padded with five int3s.
 // @retail 0x256300
 short __stdcall function_256300(long actor_index, s_slot *slot, bool active)
 {
@@ -432,6 +435,8 @@ static inline s_prop_datum *prop_ref_iterator_next_256810(s_prop_ref_iterator_25
 	return prop_ref;
 }
 
+// score 107 (was 107): retail takes the actor array from g_4f55f0 and keeps the element pointer in a stack slot,
+// ours reads another global and keeps it in ebp; our frame is eight bytes smaller.
 // @retail 0x256810
 short __stdcall function_256810(long actor_index, s_slot *slot)
 {

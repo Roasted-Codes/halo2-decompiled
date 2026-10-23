@@ -56,6 +56,8 @@ static inline s_player_datum *player_get(long player_index)
 	return (s_player_datum *)g_4e8c24->data + (player_index & 0xffff);
 }
 
+// score 3 (was 3): ours computes the record address in ecx and copies it into esi, retail computes it in esi
+// directly; ours is padded with three int3s.
 // @retail 0x187ec0
 bool function_187ec0(void)
 {
@@ -205,6 +207,8 @@ struct s_seat_animations
 	s_seat_animation *animations;
 };
 
+// score 63 (was 63): retail uses ebp as a frame pointer and keeps a word index in di, ours uses stack slots and
+// 32-bit registers.
 // @retail 0x187fe0
 s_seat_animation_entry *function_187fe0(long type, s_seat_animation const *animation, short element_index)
 {

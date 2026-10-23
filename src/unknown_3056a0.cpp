@@ -96,9 +96,10 @@ inline int axis_305790(long flags)
 	return (bits & 2) ? 1 : 2;
 }
 
-// score 4 (was 4): the final sete writes al in retail, dl in ours; the negated
-// flag on its own, a named flag with and without const, an if and an else, a
-// reference to the flag and a pointer to it all keep dl.
+// score 4 (was 4): the final sete writes al in retail, dl in ours; the register
+// is chosen by the callees' bodies (the same source over simple noinline callees
+// writes al), so every flag, store, member and declaration spelling of the
+// caller keeps dl.
 // @retail 0x305790
 void pair_305790::function_305790(manifold_305790 *manifold, long first_flags, long second_flags)
 {
