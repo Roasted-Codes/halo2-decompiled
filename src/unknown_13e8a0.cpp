@@ -8,6 +8,7 @@
 #include "globals.h"
 #include "font_loading.h"
 #include "unknown_030290.h"
+#include "draw_string_state.h"
 #include <string.h>
 
 
@@ -105,14 +106,7 @@ void function_13ec70(color4f const *color)
 // @retail 0x13e8a0
 void function_13e8a0()
 {
-	memset(&g_4e73a0, 0, sizeof(g_4e73a0));
-	g_4e73a0.font = 0;
-	g_4e73a0.tab_stop_count = 0;
-	g_4e73a0.flags = 0;
-	g_4e73a0.justification = 0;
-	g_4e73a0.unknown5e = 0;
-	g_4e73a0.unknown60 = 0;
-	function_13ec70(g_4686cc);
+	draw_string_state_reset();
 }
 
 // @retail 0x13eb20
