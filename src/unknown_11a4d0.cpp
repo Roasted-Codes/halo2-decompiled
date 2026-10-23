@@ -200,6 +200,8 @@ void function_11a430(long list_index, real body_vitality, real shield_vitality)
 }
 
 /* whether the unit holds a weapon of the given definition */
+// score 45 (was 45): retail loads the global once into esi and keeps it there, ours loads it into edx and
+// re-reads the array base; ours ends with an extra xor al,al and four int3s.
 // @retail 0x11a4d0
 bool function_11a4d0(long unit_index, long definition_index)
 {
@@ -572,6 +574,8 @@ void function_11af90(long unit_index, short mode)
 
 /* puts the units of an object list into the free seats (passing a filter) of
    the vehicle; returns how many got in */
+// score 2 (was 2): the two copies are made in the opposite order: retail copies esi into eax first and ebx
+// into ecx, ours does it the other way round.
 // @retail 0x11b0c0
 short function_11b0c0(long vehicle_index, long filter_range, long volatile list_index)
 {
