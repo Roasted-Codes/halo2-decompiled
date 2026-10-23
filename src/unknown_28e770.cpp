@@ -89,7 +89,7 @@ long function_1469f0(real arg_0);
 byte function_118f70(long arg_0);
 void function_b9a90(long arg_0);
 point3f *function_b9dd0(long arg_0, point3f *arg_1);
-bool function_28f0e0(vector3f const *arg_0, s_28f0e0 const *arg_1, long arg_2, long arg_3);
+bool function_28f0e0(long arg_2, s_28f0e0 const *arg_1, vector3f const *arg_0, long arg_3);
 bool function_28f290(long arg_0, vector3f *arg_1, vector3f *arg_2);
 void function_28e600(long arg_0, s_28e600 *arg_1);
 vector3f *g_4687b4;
@@ -265,7 +265,7 @@ void __stdcall function_28e770(long arg_0, long arg_1)
 							*local_29 = direction;
 							local_3->field_98 = *g_4687a8;
 							if (local_24 < 0.2f)
-								function_28f0e0(&direction, (s_28f0e0 const *)&local_15, arg_1, local_10);
+								function_28f0e0(arg_1, (s_28f0e0 const *)&local_15, &direction, local_10);
 							else if (local_12->field_17c == 1 && !(bool)local_12->field_12c)
 							{
 								real local_25 = dot3f(&local_12->field_1f0, &direction);
