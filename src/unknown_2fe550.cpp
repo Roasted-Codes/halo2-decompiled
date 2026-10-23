@@ -40,11 +40,11 @@ public:
 // a segment starting inside the box misses; otherwise the faces are taken
 // first on the positive side, then on the negative side, each one the start
 // lies outside of moving the entry and each other one moving the exit
-// score 141 (was 141): retail keeps the four masks in ebx, edx, ecx and eax
-// while ours keeps them in esi, ebx and ecx, retail walks the three axes
-// through one array in the frame while ours writes the three axis bits with
-// a lea and keeps them in the frame's slots, and our code is 29 bytes longer
-// than retail's.
+// score 73 (was 141): retail walks the three axes by their byte offset, so the
+// offset is the loop's one counter and every access is a plain displacement;
+// ours still derives the axis from the offset and scales it, and our four
+// masks and the frame's slots for the normal and the negated extents sit in
+// other registers and other places than retail's.
 // @retail 0x2fe550
 answer_2fe550 box_2fe550::function_2fe550(segment_2fe550 const *segment, hit_2fe550 *hit) const
 {
@@ -67,8 +67,9 @@ answer_2fe550 box_2fe550::function_2fe550(segment_2fe550 const *segment, hit_2fe
 	int outside = start_above;
 	for (int pass = 1; pass >= 0; pass--)
 	{
-		for (int axis = 2; axis >= 0; axis--)
+		for (int offset = 8; offset >= 0; offset -= 4)
 		{
+			int const axis = offset >> 2;
 			if ((crossed & axis_bits[axis]) == 0)
 			{
 				continue;

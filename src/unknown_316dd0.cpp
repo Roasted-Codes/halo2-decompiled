@@ -173,7 +173,7 @@ struct record_316dd0
 // whether a pair sorts before another by its objects' ids
 inline bool sorts_before_316dd0(record_316dd0 const *record, handle_pair_316dd0 const *pair)
 {
-	if (record->a->id < pair->a->id)
+	if (pair->a->id > record->a->id)
 	{
 		return true;
 	}
@@ -200,8 +200,9 @@ public:
 	void function_316dd0(handle_pair_316dd0 const *pair);
 };
 
-// score 122 (was 122): retail pushes edi and keeps the merger in it, ours
-// keeps the merger in esi and leaves edi to the pair's parts
+// score 115 (was 122): the two id comparisons now read the pair's object
+// first, as retail does, but retail keeps the merger in edi and the pair in
+// esi where ours keeps the merger in esi and the pair in edi
 // @retail 0x316dd0
 void merger_316dd0::function_316dd0(handle_pair_316dd0 const *pair)
 {
@@ -211,7 +212,7 @@ void merger_316dd0::function_316dd0(handle_pair_316dd0 const *pair)
 		out++;
 		cursor++;
 	}
-	if (skip_existing != 0 && cursor != end && cursor->a->id == pair->a->id && cursor->b->id == pair->b->id)
+	if (skip_existing != 0 && cursor != end && pair->a->id == cursor->a->id && cursor->b->id == pair->b->id)
 	{
 		return;
 	}
