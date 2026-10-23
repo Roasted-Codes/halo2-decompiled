@@ -721,6 +721,9 @@ static inline short session_get_value_5dd0_inline(c_class_58d20 *session)
 	return result;
 }
 
+// score 32 (was 32): retail keeps the three temporary values (value498c, the
+// maximum player count and the global state) in eax, ours keeps them in esi
+// and saves esi around the body; the checks and the exits match.
 // @retail 0x63e00
 bool network_session_interface_can_add_player(void)
 {
@@ -1135,6 +1138,8 @@ static inline bool session_member_get_qos(s_network_observer *observer, c_class_
 	return result;
 }
 
+// score 67 (was 67): the frame is four bytes smaller than retail's and the locals
+// (the count, the minimum and the maximum) are set up in another order.
 // @retail 0x64480
 void network_session_get_member_latency(s_session_member_latency *latency, c_class_58d20 *session)
 {
@@ -1482,6 +1487,9 @@ struct s_cached_player_source;
 void function_80490(const s_cached_player_identity *identity, const s_cached_player_source *source,
  bool local, bool recent);
 
+// score 45 (was 45): the user struct is reached through a pointer, so ours adds the
+// base of the global to the scaled index; retail leaves the whole offset in the
+// displacement of the store.
 // @retail 0x65530
 void __stdcall function_65530(long user_index)
 {
@@ -1568,6 +1576,8 @@ static __forceinline bool function_65341(c_class_58d20 **out)
  return result;
 }
 
+// score 114 (was 120): retail picks the observer pointer with a conditional move
+// after the flag test; ours computes the same value with a negation and a test.
 // @retail 0x65340
 void function_065340(void)
 {
