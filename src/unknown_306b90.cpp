@@ -87,9 +87,6 @@ void box_306b90::function_306b90(face_306b90 *face, int axis) const
 	face->first_frame_normal = transform_point_306b90(&transform, &face->second_frame_normal);
 }
 
-// score 67 (was 67): the mask constant is loaded once at the top of ours and
-// twice in retail, the axis values are read before the branch here and after
-// it there, and the registers the terms are built in differ.
 // @retail 0x306d00
 void box_306b90::function_306d00(face_306b90 *face, int axis) const
 {
@@ -105,12 +102,12 @@ void box_306b90::function_306d00(face_306b90 *face, int axis) const
 		face->side = 1.0f;
 		face->first_frame_normal = second_direction;
 	}
-	float const side_value = -face->side;
+	__m128 const side_single = _mm_set_ss(-face->side);
 	__m128 const positive = _mm_cmplt_ps(splat_306b90(0.0f), axis_values_b0);
 	__m128 const positive_tiny = {1e-5f, 1e-5f, 1e-5f, 0.0f};
 	__m128 const nudge = _mm_or_ps(_mm_and_ps(positive, splat_306b90(-1e-5f)), _mm_andnot_ps(positive, positive_tiny));
-	__m128 const signs = _mm_and_ps(_mm_add_ps(axis_direction, _mm_mul_ps(splat_306b90(side_value), nudge)), *(__m128 const *)g_4124a0);
-	__m128 const normal = _mm_xor_ps(face->first_frame_normal, signs);
+	__m128 const signs = _mm_and_ps(_mm_add_ps(axis_direction, _mm_mul_ps(_mm_shuffle_ps(side_single, side_single, 0), nudge)), *(__m128 const *)g_4124a0);
+	__m128 const normal = _mm_xor_ps(signs, face->first_frame_normal);
 	face->first_frame_normal = normal;
 	// the normal's point seen from the second frame
 	__m128 const d = _mm_sub_ps(normal, transform.position);
