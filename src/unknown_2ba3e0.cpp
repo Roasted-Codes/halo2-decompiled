@@ -5,6 +5,7 @@
 #include "unknown_0259d0.h"
 #include "unknown_1eb550.h"
 #include "normalize3d.h"
+#include "vector_products.h"
 
 // @flags /O2 /arch:SSE /Gr
 
@@ -143,9 +144,10 @@ void function_2b98b0(s_particle_2b96 const *particle, s_particle_2b96 const *oth
     vector3f b = other->velocity;
     normalize_particle_vector_2b(&a);
     normalize_particle_direction_2b(&b);
-    result->i += (b.i - a.i) * scale;
-    result->j += (b.j - a.j) * scale;
-    result->k += (b.k - a.k) * scale;
+    vector3f delta;
+    scaled_difference3f(a.n, b.n, scale, delta.n);
+    for (long component = 0; component < 3; ++component)
+        result->n[component] += delta.n[component];
 }
 
 PRIVATE __forceinline real particle_distance_estimate_2b(real squared)
