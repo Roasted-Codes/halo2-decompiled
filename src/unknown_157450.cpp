@@ -473,6 +473,9 @@ static inline void input_counter_set_inlined(long c, long a, long b, long value)
 }
 
 /* recomputes the teams that have players */
+// score 32 (was 32): the old team mask is kept as a 32 bit value here and as a 16 bit one in
+// retail; the comparison and the update of the two masks use different registers, and the input
+// counter loop uses different ones too.
 // @retail 0x158140
 void function_158140(void)
 {
@@ -1376,6 +1379,7 @@ struct s_item_collection
 	short spawn_time;
 };
 
+// score 5 (was 5): the tick count is sign extended into eax here and into edx in retail.
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -1416,12 +1420,11 @@ void c_engine_equipment::release_entry(long object_index, long index)
 // @retail 0x15b220
 void function_15b220(long object_index, long index)
 {
-	long const *index_reference = &index;
 	s_engine_object *object = engine_object_get(object_index);
 
 	if (g_4e6948->mode != 4)
 	{
-		function_xaee93d()->netgame_entries[*index_reference].index = NONE;
+		function_xaee93d()->netgame_entries[*(long const volatile *)&index].index = NONE;
 	}
 	object->netgame_entry = NONE;
 }
@@ -1492,6 +1495,8 @@ short function_15cca0(long player_index, byte code)
 	return result;
 }
 
+// score 24 (was 24): the datum index and the record count are kept in swapped registers through
+// the whole lookup.
 // @retail 0x15cd90
 void function_15cd90(long player_index, short identifier, long other_player_index)
 {
@@ -1960,6 +1965,8 @@ void function_159460(long player_index, bool *leading, bool *tied)
 
 #include "object_iterator.h"
 
+// score 8 (was 8): the inlined equipment lookup keeps the object table base and the index in
+// swapped registers.
 // @retail 0x15adb0
 void function_15adb0(s_netgame_entry_state *entries)
 {
@@ -1994,40 +2001,45 @@ real function_15dec0(long player_index, long other_index)
 {
 	real result = 1.0f;
 
-	if (game_engine_get() && player_index != other_index && player_index != NONE)
+	if (game_engine_get() && player_index != other_index)
 	{
-		switch (engine_player_get(player_index)->value_c1)
+		result = 1.0f;
+
+		if (player_index != NONE)
 		{
-		case 0:
-			result *= 1.0f;
-			break;
-		case 1:
-			result *= 0.75f;
-			break;
-		case 2:
-			result *= 0.5f;
-			break;
-		case 3:
-			result *= 0.25f;
-			break;
-		}
-		if (other_index != NONE)
-		{
-			if (function_15ff50(player_index, 2))
+			switch (engine_player_get(player_index)->value_c1)
 			{
-				result *= 1.5f;
-			}
-			if (function_15ff50(other_index, 3))
-			{
+			case 0:
+				result *= 1.0f;
+				break;
+			case 1:
+				result *= 0.75f;
+				break;
+			case 2:
 				result *= 0.5f;
+				break;
+			case 3:
+				result *= 0.25f;
+				break;
 			}
-			if (engine_player_get(other_index)->value194 > 0)
+			if (other_index != NONE)
 			{
-				result *= 0.1f;
-			}
-			if (!TEST_FIELD_BIT(engine_options()->flags_bit7) && !function_15e020(engine_player_get(player_index)->team, engine_player_get(other_index)->team))
-			{
-				result = 0.0f;
+				if (function_15ff50(player_index, 2))
+				{
+					result *= 1.5f;
+				}
+				if (function_15ff50(other_index, 3))
+				{
+					result *= 0.5f;
+				}
+				if (engine_player_get(other_index)->value194 > 0)
+				{
+					result *= 0.1f;
+				}
+				if (!TEST_FIELD_BIT(engine_options()->flags_bit7) && !function_15e020(engine_player_get(player_index)->team, engine_player_get(other_index)->team))
+				{
+					result = 0.0f;
+				}
 			}
 		}
 	}
@@ -2156,6 +2168,8 @@ static __forceinline void add_clamped_score(short *score, short delta)
 	*score = (short)value;
 }
 
+// score 5 (was 5): the two operands of the clamped score are sign extended into swapped registers,
+// and the peer lookup keeps them in different ones.
 // @retail 0x15b7c0
 bool function_15b7c0(long delta, long player_index)
 {
@@ -2630,6 +2644,8 @@ void function_158090(long player_index, short old_team)
 	}
 }
 
+// score 12 (was 12): the player index and the player table base are kept in swapped registers, and
+// the peer lookup after it reloads them the other way round.
 // @retail 0x157de0
 void function_157de0(long player_index)
 {
@@ -2903,6 +2919,8 @@ void function_15ba20(void)
 		function_15b3a0(winner, few_teams);
 }
 
+// score 16 (was 16): the event fields are stored in a different order than retail, and the player
+// lookup keeps the index in a different register.
 // @retail 0x157ed0
 void function_157ed0(long player_index)
 {
@@ -3058,6 +3076,8 @@ struct s_engine_border_state
 
 void function_36880(color4f const *color, s_short_rectangle const *rectangle);
 
+// score 4 (was 4): the store of the border bottom is scheduled after the call arguments are set up
+// instead of before them.
 // @retail 0x15ff80
 void function_15ff80(s_engine_border_state const *state)
 {
@@ -3185,6 +3205,8 @@ real function_159690(long player_index, long target_index)
 
 void function_1e9f40(long player_index, s_object_values *table);
 
+// score 2 (was 2): the two global reloads after the event call are in the opposite order: retail
+// loads the engine globals before the game state.
 // @retail 0x157be0
 void function_157be0(dword player_index)
 {
@@ -4364,6 +4386,8 @@ bool function_158eb0()
     return result;
 }
 
+// score 5 (was 5): the mode and the player index are kept in swapped registers: retail computes the
+// mode in ecx and the index in edx, ours the other way round.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -4557,6 +4581,9 @@ void function_15be20()
 bool function_30710(s_camera const *camera, short_rectangle2d const *bounds, vector3f const *vector, point2f *point, s_view const *view);
 void parse_text(word *text);
 
+// score 6 (was 18): the projected point is a twelve byte point3f, so the frame size and the
+// marker and text offsets match, but the point and the transformed vector still take each
+// other's stack slots.
 // @retail 0x159250
 void function_159250(long player_index, real alpha)
 {
@@ -4575,7 +4602,7 @@ void function_159250(long player_index, real alpha)
 	if (player && player->unit_index != NONE)
 	{
 		word text[0x100];
-		point2f point;
+		point3f point;
 		s_object_marker marker;
 		function_b8d30(player->unit_index, 0x04000095, &marker, 1, false);
 		point3f position = marker.matrix.position;
@@ -4603,13 +4630,13 @@ void function_159250(long player_index, real alpha)
 		transformed.k += g_4b9e14.right.k * x;
 		transformed.k += g_4b9e14.up.k * y;
 		transformed.k += g_4b9e14.position.z;
-		if (function_30710((s_camera const *)&g_4b9e14, 0, &transformed, &point, (s_view const *)&g_camera_storage))
+		if (function_30710((s_camera const *)&g_4b9e14, 0, &transformed, (point2f *)&point, (s_view const *)&g_camera_storage))
 		{
 			text[0] = 0;
 			wcsncpy((wchar_t *)text, (wchar_t const *)((byte *)player + 0x44), 0xff);
 			text[0xff] = 0;
 			parse_text(text);
-			function_15e530((c_1fa50 const *)text, alpha, &point);
+			function_15e530((c_1fa50 const *)text, alpha, (point2f const *)&point);
 		}
 	}
 }
