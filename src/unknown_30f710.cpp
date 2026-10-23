@@ -28,7 +28,15 @@ struct group_30f710
 };
 
 ELEMENTS_2D91D0(groups_30f710, group_30f710 *);
-ELEMENTS_2D91D0(objects_30f710, object_30dce0 *);
+struct objects_30f710
+{
+	ELEMENTS_2D91D0_MEMBERS(object_30dce0 *)
+
+	inline object_30dce0 *&operator[](int index)
+	{
+		return data[index];
+	}
+};
 
 class class_30e140
 {
@@ -58,7 +66,7 @@ struct flag_30dce0
 class world_30dce0
 {
 public:
-	void function_30dce0(object_30dce0 *object, flag_30dce0 notify);
+	void function_30dce0(object_30dce0 *object, flag_30dce0 notify = true);
 };
 
 class class_30f710
@@ -73,9 +81,6 @@ public:
 	void function_30f710();
 };
 
-// score 24 (was 24): the two group loops match; the last call differs because
-// retail passes 0x30dce0 its flag as a one-byte object built in the argument
-// slot, where 0x30dce0's declaration (src/unknown_30dce0.cpp) takes a bool.
 // @retail 0x30f710
 void class_30f710::function_30f710()
 {
@@ -104,6 +109,6 @@ void class_30f710::function_30f710()
 	}
 	for (int k = 0; k < objects.size; k++)
 	{
-		((world_30dce0 *)this)->function_30dce0(objects.data[k], flag_30dce0(true));
+		((world_30dce0 *)this)->function_30dce0(objects[k]);
 	}
 }

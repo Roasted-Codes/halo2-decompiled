@@ -232,6 +232,10 @@ bool function_14480(long tag, short stage, short index);
 
 /* sets a texture stage's bitmap from the tag (or the default one), then its
    sampler states unless the bitmap call reports a skip */
+// score 7 (was 7): the only difference is the call to 0x14560: retail moves
+// the stage into ecx and passes the flags on the stack (ret 0xc), ours pushes
+// the stage and passes four stack arguments (ret 0x10); 0x14560 lives in
+// src/unknown_01cf50.cpp, which this lane may not edit
 // @retail 0x47fd0
 bool function_47fd0(long tag, short stage, short index, byte flags)
 {

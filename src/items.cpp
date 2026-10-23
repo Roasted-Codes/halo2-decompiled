@@ -400,6 +400,11 @@ inline real item_real_random_range(real lower, real upper)
 	return lower + (upper - lower) * ((real)(*seed >> 16) * (1.0f / 65535.0f));
 }
 
+// score 6 (was 6): the effect call's argument setup has three x87
+// instructions one slot earlier in ours: the fxch st(1) before the first push 0,
+// the delay spill before the tag-index load and the fstp st(0) before the push
+// eax; the x87 sequence, the argument registers and the owner struct's stores
+// all match
 // @retail 0x10d4e0
 void function_10d4e0(long item_index)
 {

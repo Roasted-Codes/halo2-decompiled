@@ -48,7 +48,9 @@ public:
 // score 28 (was 83): the block's start is taken first and zeroed afterwards,
 // so retail's branch on the partial comes before the difference; ours keeps
 // the zero in eax where retail keeps it in edx, and reuses ecx for the -1
-// where retail reuses eax.
+// where retail reuses eax. Retail also branches on the partial being zero
+// where ours branches on it not being zero, and writing the start as an if
+// and an else or as a ternary makes the code far worse (83).
 // @retail 0x2d9850
 int class_2d99d0::function_2d9850()
 {

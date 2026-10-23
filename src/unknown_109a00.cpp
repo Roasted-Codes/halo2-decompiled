@@ -313,6 +313,9 @@ PRIVATE inline void carrier_body_angular_velocity_get(s_carrier_body const *body
 }
 
 // @retail 0x109660
+// score 112 (was 112): retail keeps the record index multiplied by the record
+// size in ebx and the object lookup in eax, ours has the index in eax and the
+// entry pointer in ebx, and the two are computed in the other order
 void function_109660(long object_index, long entry_index)
 {
 	s_carried_object *object = ((s_carried_object_header *)g_4e0300->data)[object_index & 0xffff].object;

@@ -225,18 +225,6 @@ __forceinline answer_2fb150 repeats_plane_2fb150(contact_2fb150 const *other, co
 	return answer_2fb150(!apart);
 }
 
-// score 467 (was 532): retail's order of steps. The plane test now forms
-// its answer as a byte (a ternary, then `!`), as retail does (sete and two
-// tests), and the first shape's pointer is read just after the part's, before
-// the two kind calls. Still: retail keeps `this` in esi and the container's
-// body in ebx (ours edi/esi) and reads the entry's agent from memory after
-// the none-agent call each time, where ours loads it once ahead of the call
-// (reading it at each use scores 497); retail places the along-normal
-// arithmetic of the plane test after the loop and jumps back (ours inline,
-// 36 bytes short overall; `bool apart = true; if (!(w < -0.1f)) apart = ...` gives
-// retail's length but a stack byte, 471); the swap copies the integer fields
-// through ebx with spills in retail; a new contact's slot comes from the
-// incremented size (`size++` then `size - 1`, 492 here).
 // a query against a container's triangles, each through its part's agent:
 // the triangles' contacts are gathered, sorted closest first, those that
 // only repeat a closer one's plane dropped, and the rest passed to the
@@ -297,7 +285,7 @@ void class_2fb150::function_2fb150(void const *a_, void const *b_, void const *i
 	// closest first; a contact with the triangle's other parts that only
 	// repeats a closer one's plane is dropped to the end
 	long count = contacts.size;
-	for (long i = 0; i < count; )
+	for (long i = 0; i < count; i++)
 	{
 		contact_2fb150 *first = &contacts.data[i];
 		float closest_distance = first->point.value.m128_f32[3];
@@ -312,8 +300,7 @@ void class_2fb150::function_2fb150(void const *a_, void const *b_, void const *i
 		}
 		swap_2fb150(contacts.data[closest], *first);
 		contact_2fb150 const *closer = &contacts.data[i];
-		i++;
-		for (long j = i; j < count; )
+		for (long j = i + 1; j < count; )
 		{
 			if (contacts.data[j].found == 2 && repeats_plane_2fb150(&contacts.data[j], closer, input->settings->plane_tolerance).value)
 			{

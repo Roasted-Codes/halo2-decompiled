@@ -130,6 +130,9 @@ s_lighting_record *function_3db00(long object_index, real priority)
     return &g_55ee60;
 }
 // @retail 0x3ddd0
+// score 77 (was 77): retail keeps the result in esi and tests it before the
+// reload, ours copies it into eax at the merge point and puts the cold "no
+// result" return block ahead of the initialization instead of after it
 long __stdcall function_3ddd0(long object_index)
 {
     byte *object = ((s_3dd10_object_header *)g_4e0300->data)[object_index & 0xffff].object;
