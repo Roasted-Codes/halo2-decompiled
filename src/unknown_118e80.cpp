@@ -111,6 +111,8 @@ void function_118fe0(long object_index, bool enabled)
 	object_flag_set_118fe0(&object->flags, enabled);
 }
 
+__declspec(noinline) bool function_119bc0(long object_index);
+
 // @retail 0x119bc0
 bool function_119bc0(long object_index)
 {
@@ -1013,10 +1015,7 @@ bool __stdcall function_118700(long arg_0)
         }
         vector3f *local_12 = (vector3f *)((byte *)&local_3 + 0x138);
         bool local_13 = local_12->k * local_12->k + local_12->j * local_12->j + local_12->i * local_12->i > 0.0f;
-        if (local_13)
-            local_0->flags.flag4 = true;
-        else
-            local_0->flags.flag4 = false;
+        local_0->flags.flag4 = local_13;
         bool local_14 = function_119bc0(arg_0);
         s_forward_object *local_15 = ((s_forward_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
         *(vector3f *)((byte *)local_15 + 0x88) = local_11.field_c;
