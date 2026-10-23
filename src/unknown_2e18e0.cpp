@@ -112,6 +112,13 @@ bytes_2e1be0::~bytes_2e1be0()
 
 static __declspec(align(16)) const unsigned long sign_mask_2e1d10[4] = {0x80000000, 0x80000000, 0x80000000, 0x80000000};
 
+// stores `value` after the axis's last endpoint, in room already made
+inline void push_endpoint_2e1d10(endpoints_2e0f80 *axis, endpoint_2e0f80 value)
+{
+	axis->data[axis->size] = value;
+	axis->size++;
+}
+
 // the sweep over the box from the corner at `arg_0` to the corner at
 // `arg_1`, with a grid of 2 to the power `bits`, less one, cells: the
 // quantizing scale and offsets, the largest value that still quantizes below
@@ -172,9 +179,9 @@ class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 	endpoint_2e0f80 start;
 	start.id = 0;
 	start.value = 0;
-	axis->data[axis->size++] = start;
-	sweep->axes[1].data[sweep->axes[1].size++] = start;
-	sweep->axes[2].data[sweep->axes[2].size++] = start;
+	push_endpoint_2e1d10(axis, start);
+	push_endpoint_2e1d10(&sweep->axes[1], start);
+	push_endpoint_2e1d10(&sweep->axes[2], start);
 	sweep->cells = 0;
 	sweep->cell_shift = bits;
 	sweep->cells_used = (1 << bits) - 1;
@@ -192,10 +199,10 @@ class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 		((unsigned short *)&entry->field_0)[1] = endpoint.value;
 		element_2e1090 &element = sweep->elements.next_slot();
 		element.slots[4] = (unsigned short)sweep->axes[0].size;
-		axis->data[axis->size++] = endpoint;
+		push_endpoint_2e1d10(axis, endpoint);
 		endpoint.value |= 1;
 		element.slots[5] = (unsigned short)sweep->axes[0].size;
-		axis->data[axis->size++] = endpoint;
+		push_endpoint_2e1d10(axis, endpoint);
 		element.owner = (cell * sizeof(cell_2e1090)) | 1;
 		element.slots[0] = element.slots[1] = 0;
 		element.slots[2] = element.slots[3] = 1;
@@ -206,7 +213,7 @@ class_2e4ff0::class_2e4ff0(long arg_0, long arg_1, int bits)
 	endpoint_2e0f80 end;
 	end.id = 0;
 	end.value = 0xfffd;
-	axis->data[axis->size++] = end;
-	sweep->axes[1].data[sweep->axes[1].size++] = end;
-	sweep->axes[2].data[sweep->axes[2].size++] = end;
+	push_endpoint_2e1d10(axis, end);
+	push_endpoint_2e1d10(&sweep->axes[1], end);
+	push_endpoint_2e1d10(&sweep->axes[2], end);
 }
