@@ -1331,7 +1331,7 @@ bool s_animation_state::velocity_get(vector3f *delta, vector3f *velocity)
 	{
 		return channels[1].velocity_get(delta, velocity);
 	}
-	else if (g_46fbf4 && channel_valid(&channels[1]) && unknown80 > 0.0001f && unknown80 < 0.9999f)
+	else if (g_46fbf4 && channel_valid(&channels[1]) && !(0.0001f >= unknown80) && unknown80 < 0.9999f)
 	{
 		real fraction = blend_fraction_get();
 		vector3f blend_velocity;
