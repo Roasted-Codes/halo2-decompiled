@@ -4,6 +4,7 @@
 // contacts are taken closest first, and a contact's surface hides the
 // contacts behind it; each part's kept points are then brought up to date.
 #include "pair_agents_2eab70.h"
+#include "child_query_2f9950.h"
 #include "reference_counted_2d88a0.h"
 #include "timer_mark_2ebc80.h"
 #include <xmmintrin.h>
@@ -42,10 +43,23 @@ struct placement_2fa2f0
 	c_query_transform transform;
 };
 
-// a direction turned back by a transform's axes (src/unknown_2da610.cpp)
+// a vector, copied a lane group at a time (its assignment returns nothing),
+// with its lanes as floats; it can be a direction turned back by a
+// transform's axes (src/unknown_2da610.cpp)
 struct vector_2da6e0
 {
 	__m128 value;
+
+	vector_2da6e0() {}
+	vector_2da6e0(vector_2da6e0 const &other) : value(other.value) {}
+	void operator=(vector_2da6e0 const &other)
+	{
+		value = other.value;
+	}
+	float &operator()(int index)
+	{
+		return value.m128_f32[index];
+	}
 	void inverse_rotate(const c_query_transform *matrix, const __m128 *direction);
 };
 
@@ -81,6 +95,13 @@ struct body_2fa2f0
 	long key;
 	placement_2fa2f0 const *placement;
 	body_2fa2f0 const *parent;
+
+	body_2fa2f0() {}
+	void set_shape(shape_2fa2f0 const *shape_, long key_)
+	{
+		shape = shape_;
+		key = key_;
+	}
 };
 
 // whether a dispatcher's table has a convex handler for a pair of kinds
@@ -106,27 +127,15 @@ struct input_2fa2f0
 	limits_2f97e0 const *limits;
 };
 
-// a vector copied as a whole
-struct vector_2fa0d0
-{
-	__m128 value;
-
-	vector_2fa0d0 &operator=(vector_2fa0d0 const &other)
-	{
-		value = other.value;
-		return *this;
-	}
-};
-
 // a part's contact as its agent finds it
 struct contact_2fa2f0
 {
-	vector_2fa0d0 field_0;
-	vector_2fa0d0 field_10;
+	vector_2da6e0 field_0;
+	vector_2da6e0 field_10;
 	float field_20;
 	float field_24;
-	vector_2fa0d0 field_30;
-	vector_2fa0d0 field_40;
+	vector_2da6e0 field_30;
+	vector_2da6e0 field_40;
 };
 
 // a ray: a point and a direction (src/unknown_2fa0d0.cpp)
@@ -138,27 +147,24 @@ struct ray_2f97e0
 
 struct surface_2f97e0
 {
-	__m128 point;
-	__m128 direction;
+	vector_2da6e0 point;
+	vector_2da6e0 direction;
 };
+
+class part_agent_2fa2f0;
 
 // a part's contact as the welding keeps it: the contact, its surface in the
 // container's frame, the part's agent, shape and key, whether it is a
 // surface that hides others, and whether it was found
 struct entry_2fa0d0
 {
-	vector_2fa0d0 field_0;
-	vector_2fa0d0 field_10;
-	float field_20;
-	float field_24;
-	vector_2fa0d0 field_30;
-	vector_2fa0d0 field_40;
+	contact_2fa2f0 contact;
 	surface_2f97e0 surface;
-	long field_70;
-	long field_74;
-	long field_78;
+	part_agent_2fa2f0 *agent;
+	shape_2fa2f0 const *shape;
+	long key;
 	char state;
-	char field_7d;
+	char found;
 };
 
 struct entries_2fa0d0
@@ -184,14 +190,15 @@ public:
 	block_2f9b40 *function_2f9e80();
 };
 
-// the entries, held in place while there are four or fewer
+// the entries, held in place while there are four or fewer (raw storage: the
+// entries are not constructed)
 struct welded_2fa2f0 : class_2f9e80
 {
-	entry_2fa0d0 storage[4];
+	__declspec(align(16)) float storage[4 * sizeof(entry_2fa0d0) / sizeof(float)];
 
 	welded_2fa2f0()
 	{
-		data = storage;
+		data = (entry_2fa0d0 *)storage;
 		size = 0;
 		capacity_and_flags = 0x80000004;
 	}
@@ -245,10 +252,12 @@ struct kept_point_2fa2f0
 	__m128 normal;
 };
 
-// whether a part's agent found a contact
+// whether a part's agent found a contact: the flag in the first of the
+// answer's four bytes (the caller keeps a four-byte cell for it)
 struct found_2fa2f0
 {
 	char value;
+	char unknown1[3];
 
 	found_2fa2f0(bool value_) : value((char)value_) {}
 };
@@ -272,7 +281,8 @@ public:
 	char unknown16[2];
 	int count;
 	char unknown1c[0x14];
-	kept_point_2fa2f0 points[1];
+	// up to four kept points, the first at 0x30
+	char points[4 * sizeof(kept_point_2fa2f0)];
 };
 
 struct agent_entry_2fa2f0
@@ -284,13 +294,22 @@ struct agent_entry_2fa2f0
 
 class owner_302a10;
 
+// the agents of the parts: an array, and its size
+struct agent_entries_2fa2f0
+{
+	agent_entry_2fa2f0 *data;
+	long size;
+	long capacity_and_flags;
+
+	long count() const { return size; }
+};
+
 class agents_2fa2f0
 {
 public:
 	char unknown0[8];
 	owner_302a10 *owner;
-	agent_entry_2fa2f0 *entries;
-	long entry_count;
+	agent_entries_2fa2f0 entries;
 };
 
 // the agent that stands for none (src/unknown_301a40.cpp)
@@ -324,57 +343,48 @@ void class_2fa2f0::function_2fa2f0(void const *a_, void const *b_, void const *i
 	body_2fa2f0 const *b = (body_2fa2f0 const *)b_;
 	input_2fa2f0 const *input = (input_2fa2f0 const *)input_;
 	agents_2fa2f0 *agents = (agents_2fa2f0 *)this;
-	body_2fa2f0 container_side;
-	container_side.placement = b->placement;
-	container_side.parent = b;
-	container_side.shape = b->shape->child;
-	container_side.key = b->key;
+	body_2ea940 container_side((body_2ea940 const *)b, b->placement, (wrapper_2f9950 const *)b->shape);
 	((class_2e96a0 *)this)->function_2e96a0(a, &container_side, input, function_2e90f0);
 	welded_2fa2f0 welded;
-	stack_array_2f9c10 buffers(agents->entry_count);
-	buffers.size = agents->entry_count;
-	shape_2fa2f0 const *container = container_side.shape;
+	stack_array_2f9c10 buffers(agents->entries.count());
+	buffers.size = agents->entries.count();
 
 	// each part's contact through its agent, or the part passed on
 	{
 	body_2fa2f0 part;
 	part.parent = b;
 	part.placement = b->placement;
-	for (long i = 0; i < agents->entry_count; i++)
+	shape_2fa2f0 const *container = (shape_2fa2f0 const *)container_side.shape;
+	for (long i = 0; i < agents->entries.count(); i++)
 	{
-		agent_entry_2fa2f0 const *entry = &agents->entries[i];
+		agent_entry_2fa2f0 const *entry = &agents->entries.data[i];
 		if ((object_4805a4 *)entry->agent == function_301a40())
 		{
 			continue;
 		}
-		part.shape = container->child->part(entry->key, buffers.data[i].bytes);
-		part.key = entry->key;
-		if (g_461f0c(input->dispatcher, a->shape->kind(), part.shape->kind()).value)
+		shape_2fa2f0 const *shape = container->child->part(entry->key, buffers.data[i].bytes);
+		part.set_shape(shape, entry->key);
+		if (g_461f0c(input->dispatcher, a->shape->kind(), shape->kind()).value)
 		{
 			part_agent_2fa2f0 *agent = entry->agent;
 			contact_2fa2f0 contact;
 			found_2fa2f0 const found = agent->slot_8(a, &part, input, &contact);
 			welded.function_2f9e80();
-			welded.data[welded.size - 1].field_70 = (long)agent;
-			welded.data[welded.size - 1].field_74 = (long)part.shape;
-			welded.data[welded.size - 1].field_78 = entry->key;
-			welded.data[welded.size - 1].field_7d = found.value;
+			welded.data[welded.size - 1].agent = agent;
+			long const key = entry->key;
+			welded.data[welded.size - 1].shape = shape;
+			welded.data[welded.size - 1].key = key;
+			welded.data[welded.size - 1].found = found.value;
 			if (found.value)
 			{
-				entry_2fa0d0 *last = &welded.data[welded.size - 1];
-				last->field_0 = contact.field_0;
-				last->field_10 = contact.field_10;
-				last->field_20 = contact.field_20;
-				last->field_24 = contact.field_24;
-				last->field_30 = contact.field_30;
-				last->field_40 = contact.field_40;
+				welded.data[welded.size - 1].contact = contact;
 				vector_2da6e0 direction;
 				direction.inverse_rotate(&part.placement->transform, &contact.field_40.value);
 				surface_2f97e0 *surface = &welded.data[welded.size - 1].surface;
 				float const separation = contact.field_20;
-				surface->point = contact.field_30.value;
-				surface->direction = direction.value;
-				surface->point.m128_f32[3] = separation;
+				surface->point = contact.field_30;
+				surface->direction = direction;
+				surface->point(3) = separation;
 				char const kind = agent->kind;
 				welded.data[welded.size - 1].state = kind == 1 || kind == 2;
 			}
@@ -392,20 +402,21 @@ void class_2fa2f0::function_2fa2f0(void const *a_, void const *b_, void const *i
 	for (long i = 0; i < count; i++)
 	{
 		entry_2fa0d0 *first = &welded.data[i];
-		float closest_distance = first->field_20;
+		float closest_distance = first->contact.field_20;
 		long closest = i;
 		for (long j = i; j < count; j++)
 		{
-			if (welded.data[j].field_20 < closest_distance)
+			if (welded.data[j].contact.field_20 < closest_distance)
 			{
-				closest_distance = welded.data[j].field_20;
+				closest_distance = welded.data[j].contact.field_20;
 				closest = j;
 			}
 		}
 		swap_2fa2f0(welded.data[closest], *first);
-		if (welded.data[i].field_7d)
+		surface_2f97e0 const *surface = &welded.data[i].surface;
+		if (welded.data[i].found)
 		{
-			count = ((ray_test_2f97e0 *)this)->function_2fa0d0((ray_2f97e0 const *)&welded.data[i].surface,
+			count = ((ray_test_2f97e0 *)this)->function_2fa0d0((ray_2f97e0 const *)surface,
 				(entries_2fa0d0 *)&welded, i + 1, count, input->limits);
 		}
 	}
@@ -414,13 +425,14 @@ void class_2fa2f0::function_2fa2f0(void const *a_, void const *b_, void const *i
 	long const total = welded.size;
 	for (long k = 0; k < total; k++)
 	{
-		part_agent_2fa2f0 *agent = (part_agent_2fa2f0 *)welded.data[k].field_70;
-		kept_point_2fa2f0 const *point = agent->points;
+		part_agent_2fa2f0 *agent = welded.data[k].agent;
+		kept_point_2fa2f0 const *point = (kept_point_2fa2f0 const *)agent->points;
 		for (int remaining = agent->count; remaining > 0; remaining--)
 		{
+			float const distance = point->normal.m128_f32[3];
 			ray_2f97e0 ray;
 			ray.start = point->second;
-			ray.start.m128_f32[3] = point->normal.m128_f32[3];
+			ray.start.m128_f32[3] = distance;
 			vector_2da6e0 direction;
 			direction.inverse_rotate(&b->placement->transform, &point->normal);
 			ray.direction = direction.value;
@@ -437,16 +449,16 @@ void class_2fa2f0::function_2fa2f0(void const *a_, void const *b_, void const *i
 		part.parent = b;
 		part.placement = b->placement;
 		entry_2fa0d0 const *entry = &welded.data[k];
-		part.shape = (shape_2fa2f0 const *)entry->field_74;
-		part.key = entry->field_78;
-		part_agent_2fa2f0 *agent = (part_agent_2fa2f0 *)entry->field_70;
-		if (k < count && entry->field_7d)
+		part.set_shape(entry->shape, entry->key);
+		part_agent_2fa2f0 *agent = entry->agent;
+		if (k < count && entry->found)
 		{
 			function_302c70(a, &part, input, (candidate_302c70 const *)entry, agents->owner,
 				(point_302a10 *)agent->points, &agent->count);
 		}
+		float const minimum = welded.data[k].contact.field_20 - 0.001f;
 		function_302eb0((body_302eb0 const *)a, (body_302eb0 const *)&part, (input_302eb0 const *)input,
-			welded.data[k].field_20 - 0.001f, (contact_302eb0 *)agent->points, &agent->count,
+			minimum, (contact_302eb0 *)agent->points, &agent->count,
 			(world_contacts_302eb0 **)collector, (id_owner_302eb0 *)agents->owner);
 	}
 	timer_add_2fa2f0("Et");

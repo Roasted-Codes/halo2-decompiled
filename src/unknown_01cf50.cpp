@@ -7291,8 +7291,10 @@ void function_141c0()
 
 // Disabled: retail clears the contiguous 0x40c0-byte state at 0x51f408; its owner declares split globals.
 #if 0
-extern byte *g_5093e4;
-extern long g_485a58;
+struct s_5093e4;
+extern s_5093e4 *g_5093e4;
+struct s_33a0b_view;
+extern s_33a0b_view *g_485a58;
 void function_20e50(long index);
 
 // Retail 0x22590
@@ -7316,14 +7318,15 @@ void function_22590()
     *(real *)(g_50934c + 0x18) = 0.5f;
     *(real *)(g_50934c + 0x28) = 0.5f;
     *(real *)(g_50934c + 0x30) = 0.5f;
-    g_5093e4[0] = g_5093e4[1] = 0;
-    for (long i = 4; i <= 0x14; i += 4) *(real *)(g_5093e4 + i) = -1.0f;
-    g_5093e4[0x18] = 1;
-    g_5093e4[0x19] = 0;
-    *(real *)(g_5093e4 + 0x1c) = -1.0f;
-    *(real *)(g_5093e4 + 0x20) = -1.0f;
-    g_5093e4[0x1a] = 0;
-    memset(g_51f408, 0, sizeof(g_51f408));
+    byte *view = (byte *)g_5093e4;
+    view[0] = view[1] = 0;
+    for (long i = 4; i <= 0x14; i += 4) *(real *)(view + i) = -1.0f;
+    view[0x18] = 1;
+    view[0x19] = 0;
+    *(real *)(view + 0x1c) = -1.0f;
+    *(real *)(view + 0x20) = -1.0f;
+    view[0x1a] = 0;
+    memset(&g_51f408, 0, sizeof(g_render_state_storage));
     for (long i = 0; i < 0x1ff; ++i) function_20e50(i);
     if (effects) *(real *)effects->unknown190 = 0.0f;
     g_485a58 = 0;
