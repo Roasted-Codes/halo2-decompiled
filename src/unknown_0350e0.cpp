@@ -1516,12 +1516,24 @@ void function_36f50(byte *state)
     }
 }
 
+#ifndef PIN
+#define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
+#endif
+
+// score 127 (was 323): clamping the squared distance and the fraction with
+// PIN, which reevaluates the clamped expression, and squaring the y offset
+// in place gives retail's size and its repeated loads. What still differs:
+// the floating-point registers (retail keeps 0.5 in xmm3 and the y centre in
+// xmm2), the y centre's stack slot, and the operand order of the mode 0
+// scaling (retail loads out[0] and multiplies by parameters[24]). Clamping
+// with if/else on locals, a y local inside PIN and reordered products score
+// 135 to 323.
 // @retail 0x34100
 bool __stdcall function_34100(long mode, real const *rectangle, real const *coordinates,
     real *out, real const *parameters)
 {
-    real center_y = (rectangle[2] + rectangle[3]) * 0.5f;
     real center_x = (rectangle[0] + rectangle[1]) * 0.5f;
+    real center_y = (rectangle[2] + rectangle[3]) * 0.5f;
     long index = mode - 1;
     switch (mode)
     {
@@ -1546,18 +1558,16 @@ bool __stdcall function_34100(long mode, real const *rectangle, real const *coor
             if (parameters[22] != parameters[23])
             {
                 real x = coordinates[0] * 2.0f - 1.0f;
-                real y = coordinates[1] * 2.0f - 1.0f;
-                real distance_squared = y * y + x * x;
-                if (distance_squared < 0.0f) distance_squared = 0.0f;
-                else if (distance_squared > 1.0f) distance_squared = 1.0f;
-                real radius = (real)sqrt(distance_squared);
-                real fraction = (radius - parameters[22]) / (parameters[23] - parameters[22]);
-                if (fraction < 0.0f) fraction = 0.0f;
-                else if (fraction > 1.0f) fraction = 1.0f;
+                real radius = (real)sqrt(PIN((coordinates[1] * 2.0f - 1.0f) * (coordinates[1] * 2.0f - 1.0f) + x * x, 0.0f, 1.0f));
+                real fraction = PIN((radius - parameters[22]) / (parameters[23] - parameters[22]), 0.0f, 1.0f);
                 weight *= fraction;
             }
-            real x_sign = (index & 1) ? 0.5f : -0.5f;
-            real y_sign = (index & ~1) ? 0.5f : -0.5f;
+            real x_sign = -0.5f;
+            if (index & 1)
+                x_sign = 0.5f;
+            real y_sign = -0.5f;
+            if (index & ~1)
+                y_sign = 0.5f;
             out[0] = (parameters[1] * x_sign + weight * center_x + (1.0f - weight) * out[0]) * parameters[10 + index * 2];
             out[1] = ((1.0f - weight) * out[1] + parameters[1] * y_sign + weight * center_y) * parameters[11 + index * 2];
         }
