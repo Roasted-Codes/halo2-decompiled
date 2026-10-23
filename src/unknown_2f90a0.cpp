@@ -112,6 +112,11 @@ struct contact_points_2f90a0
 	contact_point_2f90a0 *points;
 	int count;
 	int capacity;
+
+	__forceinline void pop_back()
+	{
+		count--;
+	}
 };
 
 void __cdecl function_2d91d0(void *array, long element_size);
@@ -135,10 +140,6 @@ inline __m128 transformed_2f90a0(c_query_transform const *transform, __m128 cons
 	return _mm_add_ps(_mm_add_ps(x, y), z);
 }
 
-// score 13 (was 70): with &entries[i] held in a local for the add-contact
-// branch, only that branch's tail differs: retail takes &entries[i] (lea)
-// before the 0xffff test and marks it valid through it, then reloads the id
-// into eax/cx where ours uses ecx/dx; the else branch differs the same way.
 // a contact point of the pair for one ray
 // @retail 0x2f90a0
 void class_2f90a0::function_2f90a0(void const *a_, void const *b_, void const *input, void *collector)
@@ -182,10 +183,9 @@ void class_2f90a0::function_2f90a0(void const *a_, void const *b_, void const *i
 			point->position.transform(&b->motion->transform, &at);
 			point->normal.rotate(&b->motion->transform, &output.normal);
 			point->position_and_distance[3] = (output.fraction - 1.0f) * ((float const *)&each->start)[3];
-			contact_entry_2f90a0 *entry = &entries[i];
-			if (!entries[i].valid)
+			if (entries[i].valid == false)
 			{
-				entry->id = manager->add_contact(a, b, input, point);
+				entries[i].id = manager->add_contact(a, b, input, point);
 				if (entries[i].id != 0xffff)
 				{
 					entries[i].valid = true;
@@ -193,7 +193,7 @@ void class_2f90a0::function_2f90a0(void const *a_, void const *b_, void const *i
 				}
 				else
 				{
-					(*(contact_points_2f90a0 **)collector)->count--;
+					(*(contact_points_2f90a0 **)collector)->pop_back();
 				}
 			}
 			point->id = entries[i].id;
