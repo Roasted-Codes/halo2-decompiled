@@ -197,8 +197,8 @@ __forceinline void capsule_triangle_2f4f00(void const *a, void const *b, void co
 		}
 	}
 	{
-		frame_2f4f00 const *frame = &((body_2f4f00 const *)b)->placement->frame;
 		__m128 const *corner = triangle->points;
+		frame_2f4f00 const *frame = &((body_2f4f00 const *)b)->placement->frame;
 		__m128 *placed = query->corners;
 		for (int count = 3; count != 0; count--)
 		{
@@ -303,14 +303,13 @@ __forceinline void capsule_triangle_2f4f00(void const *a, void const *b, void co
 							slope = -slope;
 						}
 						__m128 const scale4 = splat_2f4f00(scale);
-						__m128 const slope4 = splat_2f4f00(-slope);
 						float const distance = (float)sqrt(distance_squared);
 						plane = _mm_mul_ps(scale4, plane);
-						__m128 const direction = normalized_2f4f00(_mm_add_ps(plane, _mm_mul_ps(slope4, normal)));
-						contact->normal = direction;
+						__m128 const slope4 = splat_2f4f00(-slope);
+						contact->normal = normalized_2f4f00(_mm_add_ps(plane, _mm_mul_ps(slope4, normal)));
 						__m128 const at4 = splat_2f4f00(at);
 						float const depth = -distance;
-						contact->point = _mm_add_ps(_mm_add_ps(_mm_mul_ps(_mm_sub_ps(*(__m128 const *)g_412420, at4), ends[0]), _mm_mul_ps(at4, ends[1])), _mm_mul_ps(splat_2f4f00(triangle->radius - depth), direction));
+						contact->point = _mm_add_ps(_mm_add_ps(_mm_mul_ps(_mm_sub_ps(*(__m128 const *)g_412420, at4), ends[0]), _mm_mul_ps(at4, ends[1])), _mm_mul_ps(splat_2f4f00(triangle->radius - depth), contact->normal));
 						contact->point.m128_f32[3] = depth - radius;
 					}
 				}
@@ -470,7 +469,7 @@ __forceinline void report_pair_2f4f00(contact_2f4f00 const *contacts, void const
 	}
 }
 
-// score 540 (was 570): retail's frame is 0x10 smaller (it keeps the outside
+// score 401 (was 540): retail's frame is 0x10 smaller (it keeps the outside
 // flag at 0x10, sharing the inside case's slope slot; ours gives it its own
 // byte), and retail keeps the second body in ebx and the capsule in edi, ours
 // the other way round;
@@ -503,7 +502,7 @@ void class_2f4f00::function_2f4f00(void const *a, void const *b, void const *inp
 	timer_add_2ebc80("Et");
 }
 
-// score 455 (was 454): the frame is laid out differently, the registers
+// score 389 (was 455): the frame is laid out differently, the registers
 // differ in places;
 // the edge planes' terms are copied with integer moves where retail uses
 // the FPU, and the code for the edges is placed before the report instead of
@@ -536,7 +535,7 @@ void __cdecl function_2f5960(void const *a, void const *b, void const *input, vo
 	timer_add_2ebc80("Et");
 }
 
-// score 387 (was 389): the frame is laid out differently, the registers
+// score 370 (was 387): the frame is laid out differently, the registers
 // differ in places (retail: inside case, report, ret, then the edges' code
 // jumping back; ending the query inline with a goto to the report and placing
 // the edges' code after it scored 522: the corner loops rotate);
@@ -566,7 +565,7 @@ void class_2f63d0::function_2f63d0(void const *a, void const *b, void const *inp
 	timer_add_2ebc80("Et");
 }
 
-// score 424 (was 434): the frame is laid out differently, the registers
+// score 397 (was 424): the frame is laid out differently, the registers
 // differ in places;
 // the edge planes' terms are copied with integer moves where retail uses
 // the FPU, and the code for the edges is placed before the report instead of
