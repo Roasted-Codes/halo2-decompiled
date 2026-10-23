@@ -231,12 +231,21 @@ void function_11dbb0(
 	out->position.z = a->position.z + out->position.z;
 }
 
+/* p scaled by s into result (p and result may be the same point) */
+static __inline point3f *point3f_scale(point3f const *p, real s, point3f *result)
+{
+	result->x = s * p->x;
+	result->y = s * p->y;
+	result->z = s * p->z;
+	return result;
+}
+
 // @retail 0x11dd80
 void function_11dd80(
 	real_quaternion_transform const *in,
 	real_quaternion_transform *out)
 {
-	real inv = 1.f;
+	real inv;
 
 	out->rotation = in->rotation;
 	out->rotation.w = out->rotation.w * -1.f;
@@ -256,14 +265,12 @@ void function_11dd80(
 	}
 	if (0.f == in->scale)
 		inv = 10000.f;
-	else if (1.f != in->scale)
+	else if (1.f == in->scale)
+		inv = 1.f;
+	else
 		inv = 1.f / in->scale;
-	out->position.x = out->position.x * inv;
-	out->position.y = out->position.y * inv;
-	out->position.z = out->position.z * inv;
-	out->position.x = out->position.x * -1.f;
-	out->position.y = out->position.y * -1.f;
-	out->position.z = out->position.z * -1.f;
+	point3f_scale(&out->position, inv, &out->position);
+	point3f_scale(&out->position, -1.f, &out->position);
 	out->scale = inv;
 }
 
