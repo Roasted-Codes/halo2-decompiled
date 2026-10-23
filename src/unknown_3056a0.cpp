@@ -11,6 +11,14 @@ struct entry_305790
 	unsigned short id;
 };
 
+class flag_305790
+{
+public:
+	char value;
+	flag_305790(bool state) : value(state) {}
+	operator bool() const { return value != 0; }
+};
+
 class manifold_305790
 {
 public:
@@ -18,7 +26,8 @@ public:
 	entry_305790 entries[8];
 	long field_50;
 	int count;
-	bool done;
+	flag_305790 done;
+	void set_done(flag_305790 state) { done = state; }
 
 };
 
@@ -96,9 +105,6 @@ inline int axis_305790(long flags)
 	return (bits & 2) ? 1 : 2;
 }
 
-// score 4 (was 4): the final sete writes al in retail, dl in ours; the negated
-// flag on its own, a named flag with and without const, an if and an else, a
-// reference to the flag and a pointer to it all keep dl.
 // @retail 0x305790
 void pair_305790::function_305790(manifold_305790 *manifold, long first_flags, long second_flags)
 {
@@ -108,7 +114,7 @@ void pair_305790::function_305790(manifold_305790 *manifold, long first_flags, l
 	}
 	if (manifold->field_50 >= 4)
 	{
-		manifold->done = true;
+		manifold->set_done(true);
 		return;
 	}
 	int const first_axis = axis_305790(first_flags);
@@ -132,6 +138,6 @@ void pair_305790::function_305790(manifold_305790 *manifold, long first_flags, l
 			function_305730(entry->key, &second_counters);
 		}
 	}
-	bool const reached_once = (first_counters & 0x555555) > 0 || (second_counters & 0x555555) > 0;
-	manifold->done = !reached_once;
+	flag_305790 const reached_once = (first_counters & 0x555555) > 0 || (second_counters & 0x555555) > 0;
+	manifold->set_done(!reached_once);
 }
