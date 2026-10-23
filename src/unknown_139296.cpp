@@ -149,6 +149,8 @@ bool function_15eb20(long player_index);
 void function_22beb5(long local_player_index, dword state, s_interface_sound_block const *block,
 	long *sounds, word *playing);
 
+// score 33 (was 33): retail pushes edi before the first test and zeroes it there, ours pushes it later; retail
+// loads the word index with movzx into edi, ours into di. Ours is four bytes longer.
 // @retail 0x13a720
 void function_13a720(long user_index, s_13a720_status const *status)
 {
@@ -532,6 +534,8 @@ long function_155760(long index);
 bool function_155d60(long index);
 bool g_4f55e2;
 
+// score 7 (was 7): ours masks the byte with an and against a memory constant and negates it, retail masks a
+// dword in memory and tests the low byte.
 // @retail 0x13939b
 bool function_13939b()
 {

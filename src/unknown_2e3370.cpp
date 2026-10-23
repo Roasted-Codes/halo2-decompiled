@@ -22,7 +22,7 @@ struct endpoint_list_2e3370
 
 	endpoint_list_2e3370(endpoint_2e0f80 *storage, long capacity) : data(storage), size(0), capacity_and_flags(capacity | 0x80000000) {}
 
-	void append(endpoint_2e0f80 endpoint)
+	void append(endpoint_2e0f80 const &endpoint)
 	{
 		data[size] = endpoint;
 		size++;

@@ -136,47 +136,62 @@ __forceinline void sphere_box_contact_2f1ea0(void const *a_, void const *b_, voi
 	contact.a = a;
 	contact.b = b;
 	__m128 const *centre = &a->motion->transform.position;
-	c_query_point local;
-	local.inverse_transform(&b->motion->transform, centre);
-	box_2f23c0 const *box = (box_2f23c0 const *)b->shape;
-	sphere_2f23c0 const *sphere = (sphere_2f23c0 const *)a->shape;
-	magnitude = _mm_and_ps(local.value, *(__m128 const *)g_magnitude_mask_455940);
-	__m128 const outside = _mm_sub_ps(_mm_min_ps(magnitude, box->half_extents), magnitude);
+	sphere_2f23c0 const *sphere;
 	float separation;
-	if (_mm_movemask_ps(outside) & 7)
 	{
-		float const radius = box->radius + sphere->radius;
-		__m128 const squares = _mm_mul_ps(outside, outside);
-		__m128 const length_squared = _mm_add_ss(_mm_shuffle_ps(squares, squares, 0xaa), _mm_add_ss(_mm_shuffle_ps(squares, squares, 0x55), squares));
-		__m128 const inverse = inverse_sqrt_2f2130(length_squared);
-		float length;
-		_mm_store_ss(&length, _mm_mul_ss(length_squared, inverse));
-		separation = length - radius;
-		if (separation > input->tolerance)
+		c_query_point local;
+		local.inverse_transform(&b->motion->transform, centre);
+		box_2f23c0 const *box = (box_2f23c0 const *)b->shape;
+		sphere = (sphere_2f23c0 const *)a->shape;
+		magnitude = _mm_and_ps(local.value, *(__m128 const *)g_magnitude_mask_455940);
+		__m128 const outside = _mm_sub_ps(_mm_min_ps(magnitude, box->half_extents), magnitude);
+		if (_mm_movemask_ps(outside) & 7)
 		{
-			goto done;
-		}
-		__m128 const sign = _mm_and_ps(local.value, *(__m128 const *)g_sign_mask_4124a0);
-		__m128 const direction = _mm_xor_ps(_mm_xor_ps(_mm_mul_ps(inverse, outside), sign), *(__m128 const *)g_sign_mask_4124a0);
-		contact.normal = rotate_2f2130(&b->motion->transform, direction);
-	}
-	else
-	{
-		float const *depths_of = (float const *)&magnitude;
-		float const dx = depths_of[0] - box->half_extents.m128_f32[0];
-		float const dy = depths_of[1] - box->half_extents.m128_f32[1];
-		float const dz = depths_of[2] - box->half_extents.m128_f32[2];
-		c_query_transform const *transform = &b->motion->transform;
-		int axis;
-		float depth;
-		__m128 normal;
-		if (dx > dy)
-		{
-			if (dx > dz)
+			float const radius = box->radius + sphere->radius;
+			__m128 const squares = _mm_mul_ps(outside, outside);
+			__m128 const length_squared = _mm_add_ss(_mm_shuffle_ps(squares, squares, 0xaa), _mm_add_ss(_mm_shuffle_ps(squares, squares, 0x55), squares));
+			__m128 const inverse = inverse_sqrt_2f2130(length_squared);
+			float length;
+			_mm_store_ss(&length, _mm_mul_ss(length_squared, inverse));
+			separation = length - radius;
+			if (separation > input->tolerance)
 			{
-				normal = transform->axes[0];
-				depth = dx;
-				axis = 0;
+				goto done;
+			}
+			__m128 const sign = _mm_and_ps(local.value, *(__m128 const *)g_sign_mask_4124a0);
+			__m128 const direction = _mm_xor_ps(_mm_xor_ps(_mm_mul_ps(inverse, outside), sign), *(__m128 const *)g_sign_mask_4124a0);
+			contact.normal = rotate_2f2130(&b->motion->transform, direction);
+		}
+		else
+		{
+			float const *depths_of = (float const *)&magnitude;
+			float const dx = depths_of[0] - box->half_extents.m128_f32[0];
+			float const dy = depths_of[1] - box->half_extents.m128_f32[1];
+			float const dz = depths_of[2] - box->half_extents.m128_f32[2];
+			c_query_transform const *transform = &b->motion->transform;
+			int axis;
+			float depth;
+			__m128 normal;
+			if (dx > dy)
+			{
+				if (dx > dz)
+				{
+					normal = transform->axes[0];
+					depth = dx;
+					axis = 0;
+				}
+				else
+				{
+					normal = transform->axes[2];
+					depth = dz;
+					axis = 2;
+				}
+			}
+			else if (dy > dz)
+			{
+				normal = transform->axes[1];
+				depth = dy;
+				axis = 1;
 			}
 			else
 			{
@@ -184,25 +199,13 @@ __forceinline void sphere_box_contact_2f1ea0(void const *a_, void const *b_, voi
 				depth = dz;
 				axis = 2;
 			}
+			contact.normal = normal;
+			if (local.value.m128_f32[axis] < 0.0f)
+			{
+				contact.normal = _mm_xor_ps(normal, *(__m128 const *)g_sign_mask_4124a0);
+			}
+			separation = depth - box->radius - sphere->radius;
 		}
-		else if (dy > dz)
-		{
-			normal = transform->axes[1];
-			depth = dy;
-			axis = 1;
-		}
-		else
-		{
-			normal = transform->axes[2];
-			depth = dz;
-			axis = 2;
-		}
-		contact.normal = normal;
-		if (local.value.m128_f32[axis] < 0.0f)
-		{
-			contact.normal = _mm_xor_ps(normal, *(__m128 const *)g_sign_mask_4124a0);
-		}
-		separation = depth - box->radius - sphere->radius;
 	}
 	contact.point = _mm_add_ps(*centre, _mm_mul_ps(splat_2f2130(-separation - sphere->radius), contact.normal));
 	contact.point.m128_f32[3] = separation;
@@ -217,8 +220,9 @@ public:
 	void function_2f1ea0(void const *a, void const *b, void const *input, void *collector);
 };
 
-// score 70 (was 70): the contact's point and normal sit at esp+0x20 in retail and
-// esp+0x30 in ours, so the shape's pointer takes edi here and ebx in retail.
+// score 61 (was 70): retail holds the first side in ebx and the centre in edi,
+// where ours has the two the other way round, and retail loads the sign mask
+// twice where ours loads it once.
 // @retail 0x2f1ea0
 void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *input, void *collector)
 {
@@ -226,8 +230,8 @@ void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *inp
 }
 
 // the same as a function
-// score 70 (was 70): as 0x2f1ea0, the contact's point and normal sit at esp+0x20
-// in retail and esp+0x30 in ours.
+// score 61 (was 70): as 0x2f1ea0, the first side and the centre take the other
+// registers, and the sign mask is loaded once where retail loads it twice.
 // @retail 0x2f2130
 void __cdecl function_2f2130(void const *a, void const *b, void const *input, void *collector)
 {

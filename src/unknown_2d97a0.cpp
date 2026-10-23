@@ -1,4 +1,4 @@
-// @flags /O2 /GL-
+// @flags /O2 /GL- /GX
 // Havok (third-party physics library): the deleting destructor of an object
 // whose destructor is its base's; its block goes back with tag 0x19.
 #include "unknown_0a9f20.h"
