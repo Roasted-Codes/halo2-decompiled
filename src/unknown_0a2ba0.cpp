@@ -25,12 +25,19 @@ void function_103e60(long weapon_index, short barrel);
 void __stdcall function_fd980(long weapon_index);
 transform4x3f *function_b8c00(long object_index, long *count);
 point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *point, point3f *result);
+
+/* a unit's object relevance (0x24 bytes, at +0x1c8), which 0x82b30 fills */
 struct s_object_relevance_source
 {
     long object_index, identifier;
-    byte unknown08[0x1c - 8];
+    long unknown08;
+    point3f point;
+    word flags;                           /* 2: point is valid */
+    word unknown1a;
     real first, second;
 };
+typedef char assert_object_relevance_source_size[(sizeof(s_object_relevance_source) == 0x24) ? 1 : -1];
+
 struct s_object_relevance_result
 {
     real first, second;
@@ -38,80 +45,148 @@ struct s_object_relevance_result
 };
 void function_82b30(s_object_relevance_result const *source, s_object_relevance_source *result);
 
+/* the data of a weapon-fire event (0x44 bytes, c_weapon_fire_event::v2) */
+struct s_weapon_fire_event_data
+{
+    long slot;
+    long definition_index;
+    long barrel;
+    bool field_c;
+    short node;
+    point3f point;
+    vector3f direction;
+    s_object_relevance_result relevance;
+    bool field_38;
+    long attachment_object;
+    long attachment;
+};
+typedef char assert_weapon_fire_event_data_size[(sizeof(s_weapon_fire_event_data) == 0x44) ? 1 : -1];
+
+/* the unit fields read here */
+struct s_fire_event_unit
+{
+    byte unknown000[0x10a];
+    word unknown_bits0 : 2;
+    word suppressed : 1;
+    word unknown_bits3 : 13;
+    byte unknown10c[0x1c8 - 0x10c];
+    s_object_relevance_source unknown1c8;
+    byte unknown1ec[0x218 - 0x1ec];
+    long weapon_object_indices[4];
+    byte unknown228[0x24c - 0x228];
+    long unknown24c;
+};
+
+/* the weapon fields written here */
+struct s_fire_event_weapon
+{
+    long definition_index;
+    byte unknown004[0x177 - 4];
+    char unknown177;
+    byte unknown178[0x194 - 0x178];
+    long unknown194;
+};
+
+/* a barrel of a weapon definition (0xec bytes) */
+struct s_fire_event_barrel
+{
+    dword unknown_bits0 : 13;
+    dword flag13 : 1;
+    dword unknown_bits14 : 18;
+    byte unknown04[0xec - 4];
+};
+typedef char assert_fire_event_barrel_size[(sizeof(s_fire_event_barrel) == 0xec) ? 1 : -1];
+
+/* applies a weapon-fire event: the firing unit's object relevance and aim
+   point, the barrel's attachment, then fires the weapon's barrel */
 // @retail 0xa2ba0
 bool c_weapon_fire_event::v11(long a, long const *entities, long c, void const *data)
 {
-    volatile bool result = false;
+    bool result = false;
     long entity = function_a58d0(entities[0]);
-    if (entity == NONE) return result;
-    s_z_event_header *headers = (s_z_event_header *)g_4e0300->data;
-    s_z_event_header *header = headers + (entity & 0xffff);
-    long type = header->type;
-    byte const *event = (byte const *)data;
-    long unit = NONE;
-    volatile long weapon = c;
-    if (type == 2) weapon = entity;
-    else
+
+    if (entity != NONE)
     {
-        long slot = *(long const *)event;
-        if (!((1 << type) & 3) || slot < 0 || slot >= 4 || (header->object[0x10a] & 4)) return result;
-        weapon = *(long *)(header->object + 0x218 + slot * 4);
-        unit = *(long *)(header->object + 0x24c);
-        if (unit == NONE) unit = entity;
-    }
-    if (weapon == NONE) return result;
-    byte *weapon_object = headers[weapon & 0xffff].object;
-    long tag = *(long *)weapon_object;
-    byte *definition = g_4e3b44[tag & 0xffff].bytes;
-    long barrel = *(long const *)(event + 8);
-    if (*(long const *)(event + 4) != tag || barrel < 0 || barrel >= *(long *)(definition + 0x2d0)) return result;
-    if (unit != NONE)
-    {
-        byte *unit_object = headers[unit & 0xffff].object;
-        s_object_relevance_source source;
-        source.object_index = source.identifier = *(long *)source.unknown08 = NONE;
-        *(word *)(source.unknown08 + 0x10) = 0;
-        source.first = source.second = 0.0f;
-        function_82b30((s_object_relevance_result const *)(event + 0x28), &source);
-        if ((source.first > 0.0f || source.second > 0.0f) && source.object_index != NONE)
-            memcpy(unit_object + 0x1c8, &source, sizeof(source));
-        byte *barrel_definition = *(byte **)(definition + 0x2d4) + barrel * 0xec;
-        if ((*(dword *)barrel_definition & 0x2000) && event[0x38])
+        s_z_event_header *header = (s_z_event_header *)g_4e0300->data + (entity & 0xffff);
+        long type = header->type;
+        s_weapon_fire_event_data const *event = (s_weapon_fire_event_data const *)data;
+        long unit_index = NONE;
+        long weapon_index = NONE;
+
+        if (type == 2)
         {
-            long target = function_a58d0(*(long const *)(event + 0x3c));
-            if (target != NONE)
+            weapon_index = entity;
+        }
+        else if (((1 << type) & 3) && event->slot >= 0 && event->slot < 4 &&
+            !(bool)((s_fire_event_unit *)header->object)->suppressed)
+        {
+            s_fire_event_unit *unit = (s_fire_event_unit *)header->object;
+
+            weapon_index = unit->weapon_object_indices[event->slot];
+            unit_index = unit->unknown24c != NONE ? unit->unknown24c : entity;
+        }
+        if (weapon_index != NONE)
+        {
+            s_fire_event_weapon *weapon = (s_fire_event_weapon *)((s_z_event_header *)g_4e0300->data)[weapon_index & 0xffff].object;
+            byte *definition = g_4e3b44[weapon->definition_index & 0xffff].bytes;
+
+            if (event->definition_index == weapon->definition_index && event->barrel >= 0 && event->barrel < *(long *)(definition + 0x2d0))
             {
-                long attachment = *(long const *)(event + 0x40);
-                if (attachment != NONE)
+                if (unit_index != NONE)
                 {
-                    weapon_object[0x177] = (byte)attachment;
-                    *(long *)(weapon_object + 0x194) = target;
+                    s_fire_event_unit *unit = (s_fire_event_unit *)((s_z_event_header *)g_4e0300->data)[unit_index & 0xffff].object;
+                    s_object_relevance_source source;
+
+                    source.object_index = NONE;
+                    source.identifier = NONE;
+                    source.unknown08 = NONE;
+                    source.first = 0.0f;
+                    source.second = 0.0f;
+                    source.flags = 0;
+                    function_82b30(&event->relevance, &source);
+                    if ((source.first > 0.0f || source.second > 0.0f) && source.object_index != NONE)
+                        unit->unknown1c8 = source;
+                    if ((bool)(*(s_fire_event_barrel **)(definition + 0x2d4))[event->barrel].flag13 && event->field_38)
+                    {
+                        long attachment_object = function_a58d0(event->attachment_object);
+
+                        if (attachment_object != NONE && event->attachment != NONE)
+                        {
+                            weapon->unknown177 = (char)event->attachment;
+                            weapon->unknown194 = attachment_object;
+                        }
+                    }
+                    if (event->field_c && entities[1] != NONE)
+                    {
+                        long target = function_a58d0(entities[1]);
+
+                        if (target != NONE)
+                        {
+                            long count = 0;
+                            transform4x3f *matrices = function_b8c00(target, &count);
+
+                            if (event->node >= 0 && event->node < count)
+                            {
+                                transform4x3f_apply_point(&matrices[event->node], &event->point, &unit->unknown1c8.point);
+                                unit->unknown1c8.flags |= 2;
+                            }
+                        }
+                    }
+                    function_d0930(unit_index, (vector3f *)&event->direction);
                 }
+                function_102fb0(weapon_index, (short)event->barrel);
+                function_103e60(weapon_index, (short)event->barrel);
+                function_fd980(weapon_index);
+                if (unit_index != NONE && event->field_c)
+                {
+                    s_fire_event_unit *unit = (s_fire_event_unit *)((s_z_event_header *)g_4e0300->data)[unit_index & 0xffff].object;
+                    s_object_relevance_source *relevance = &unit->unknown1c8;
+
+                    relevance->flags &= ~2;
+                }
+                result = true;
             }
         }
-        if (event[0xc] && entities[1] != NONE)
-        {
-            long target = function_a58d0(entities[1]);
-            if (target != NONE)
-            {
-                long count = 0;
-                transform4x3f *matrices = function_b8c00(target, &count);
-                short node = *(short const *)(event + 0xe);
-                if (node >= 0 && node < count)
-                {
-                    transform4x3f_apply_point(matrices + node, (point3f const *)(event + 0x10),
-                        (point3f *)(unit_object + 0x1d4));
-                    unit_object[0x1e0] |= 2;
-                }
-            }
-        }
-        function_d0930(unit, (vector3f *)(event + 0x1c));
     }
-    function_102fb0(weapon, (short)barrel);
-    function_103e60(weapon, (short)barrel);
-    function_fd980(weapon);
-    if (unit != NONE && event[0xc])
-        ((s_z_event_header *)g_4e0300->data)[unit & 0xffff].object[0x1e0] &= ~2;
-    result = true;
     return result;
 }
