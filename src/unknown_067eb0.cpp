@@ -36,7 +36,7 @@ s_simulation_definition_registry g_546974;
 void __stdcall function_82240(s_simulation_definition_registry *registry,
 	long *entity_count, long *event_count);
 
-// score 42 (was 42): retail keeps the two -1 stores to the entity and event counts and
+// score 30 (was 42): retail keeps the two -1 stores to the entity and event counts and
 // reloads the registry pointer after the call, because it cannot see what the callee does
 // to the global; ours drops the -1 stores as dead and reuses the address it just stored,
 // since the callee's body is visible to LTCG in the reduced image. The callee lives in

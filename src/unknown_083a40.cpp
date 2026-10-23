@@ -864,7 +864,8 @@ bool function_6aee0(c_class_6a600 *world);
 void function_6b310(c_class_6a600 *world);
 void function_6b350(c_class_6a600 *world);
 
-// score 2 (was 2): the loop index is loaded into EDX and pushed; retail loads it into EAX.
+// score 2 (was 2): the member index that function_5a680 wrote is reloaded into
+// EDX and pushed for the call; retail loads it into EAX.
 // @retail 0x83220
 bool function_83220(s_simulation_world_owner *watcher)
 {

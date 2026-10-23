@@ -1166,10 +1166,10 @@ struct s_component_collision_model_link
 struct s_component_collision_object
 {
 	long definition_index;
-	byte unknown04[0x108 - 4];
-	dword flags0 : 18;
-	dword flag18 : 1;
-	dword flags19 : 13;
+	byte unknown04[0x10a - 4];
+	word flags10a_0 : 2;
+	word flag10a_2 : 1;
+	word flags10a_3 : 13;
 	byte unknown10c[0x13c - 0x10c];
 	long attached_index;
 };
@@ -1197,12 +1197,12 @@ bool function_1d1d00(long other_component_index, long shape_index, long componen
 		s_component_collision_rule *rule = &physics->rules[physics->shapes[shape_index].rule_index];
 		s_havok_component *other = havok_component_get(other_component_index);
 		s_component_collision_header *header = &((s_component_collision_header *)g_4e0300->data)[other->object_index & 0xffff];
-		s_component_collision_object *volatile other_object = header->object;
+		s_component_collision_object *other_object = header->object;
 		long mode = *(char *)&other->unknown1c;
 		long type = header->type;
 		long type_mask = 1 << type;
-		bool attached = (type_mask & 3) && header->object->attached_index != NONE;
-		bool flagged = (type_mask & 1) && TEST_FIELD_BIT(other_object->flag18);
+		bool attached = (type_mask & 3) && ((s_component_collision_object *)havok_object_get(other->object_index))->attached_index != NONE;
+		bool flagged = (type_mask & 1) && TEST_FIELD_BIT(other_object->flag10a_2);
 		if (mode)
 		{
 			long lower = rule->lower;
