@@ -51,6 +51,18 @@ def test_open_files_skips_persons_and_finished_files():
     assert files[1][2] == 30
 
 
+def test_open_files_leaves_out_disabled_drafts():
+    rows = {
+        0x100: row(0x100, 10, 'todo', 'src/a.cpp'),         # disabled draft
+        0x200: row(0x200, 20, 'todo', 'src/b.cpp'),
+        0x300: row(0x300, 30, 'todo', 'src/b.cpp'),         # disabled draft
+    }
+    files = open_files(rows, person_claims(TABLE), disabled={0x100, 0x300})
+    assert [f[0] for f in files] == ['src/b.cpp']
+    assert files[0][1] == [0x200]
+    assert files[0][2] == 20
+
+
 def test_claim_text_range_or_list():
     near = {0x2100: row(0x2100, 30, 'near', 'src/b.cpp'), 0x2200: row(0x2200, 50, 'matched', 'src/b.cpp')}
     assert claim_text(near, ('src/b.cpp', [0x2100, 0x2200], 30, None)) == \

@@ -307,6 +307,10 @@ struct s_23600_object_header
 	byte *object;
 };
 
+// score 3 (was 3): the section's number is loaded into eax and the table of
+// numbers into ecx, ours loads the table into eax and the number into ecx.
+// Swapping the operands of the address, copying the two parameters into
+// locals and dropping the address hacks all leave the load order alone
 // @retail 0x23600
 void *function_23600(long tag, long object_index, byte const *indices, long section_index, long node_index)
 {
@@ -1179,6 +1183,9 @@ void __cdecl function_24970(s_histogram_state *state)
     XRestoreFloatingPointStateForDpc();
 }
 
+// score 17 (was 17): the two float temporaries sit in the other registers,
+// ours keeps the zero in xmm2 and the scale in xmm1 while retail keeps the
+// zero in xmm1 and the scale in xmm2
 // @retail 0x27520
 bool __stdcall function_27520(long mode, real const *bounds, real const *t, real *out, long unused)
 {
@@ -1885,6 +1892,9 @@ struct s_filter_rows
     s_filter_row header, first, second, third, fourth;
 };
 
+// score 17 (was 17): the second argument of the call near the end is read
+// with an add of the offset and then a load of the field, ours folds the
+// offset into the load's displacement
 // @retail 0x26880
 bool __stdcall function_26880(void *context)
 {
@@ -1997,6 +2007,8 @@ static __forceinline void *surface_texture_get(long index)
     return result;
 }
 
+// score 2 (was 2): the loop's head reloads the two bounds from the stack in
+// the other order, ours reloads the low bound first and retail the high bound
 // @retail 0x24ee0
 void function_24ee0(s_24ee0_state const *state, short mode)
 {
@@ -3177,6 +3189,10 @@ failure:
 
 dword g_4b8424;
 void function_27aa0();
+// score 16 (was 16): the dot product's third term multiplies the direction's
+// component by the position's, retail multiplies the position's by the
+// direction's, and the third constant of the first group is built from a copy
+// of the scale rather than from the direction's component
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {
@@ -3505,6 +3521,9 @@ void function_147af1(long first, long second, c_render_window *window);
 struct s_2f800_view;
 void function_2fd90(s_2f800_view const *view, box2f const *clip, byte *out);
 
+// score 34 (was 34): the two globals are written in the other order, a byte
+// is loaded where retail loads a whole word, and the calls at the end are in
+// a different order with their arguments set up differently
 // @retail 0x2ba10
 void function_2ba10(s_2f970_view const *view, long cluster, long player,
     byte const *camera, bool enabled, long leaf, bool invalid, vector3f const *sky_color,

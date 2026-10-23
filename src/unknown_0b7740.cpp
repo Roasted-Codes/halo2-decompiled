@@ -2,6 +2,7 @@
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "unknown_0259d0.h"
+#include "bit_vector.h"
 #include "effects.h"
 #include <string.h>
 #include <xmmintrin.h>
@@ -413,12 +414,7 @@ void function_b7930(void *data, long tag_index, long object_index, s_effect_owne
 	if (object)
 	{
 		placement->object_index = object_index;
-		dword flags = *(volatile dword *)&placement->flags;
-		if ((bool)((object->flags_c0 >> 2) & 1))
-			flags |= 0x20;
-		else
-			flags &= ~0x20;
-		placement->flags = flags;
+		bit_vector_set(&placement->flags, 5, (bool)((object->flags_c0 >> 2) & 1));
 		if ((1 << object->type) & 3)
 		{
 			placement->player_index = object->player_index;

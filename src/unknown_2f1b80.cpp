@@ -104,14 +104,6 @@ __forceinline __m128 inverse_sqrt_2f1b80(__m128 const &value)
 	__m128 const refined = _mm_mul_ss(_mm_mul_ss(_mm_set_ss(0.5f), estimate), _mm_sub_ss(_mm_set_ss(3.0f), product));
 	return _mm_shuffle_ps(refined, refined, 0);
 }
-// score 174 (was 192): retail loads the sign mask at 0x4124a0 twice, into two
-// registers, where ours loads it once (a second copy of the mask elsewhere gets
-// 143, but retail has no such copy, so it can't match); retail also places the
-// miss block after the contact's tail
-// (here right after the outside branch), loads b after a's motion (here
-// hoisted, so ebx and edi trade places), and keeps the box-frame centre at
-// esp+0x30 and its magnitude at esp+0x20 (here the reverse; declaration order
-// and names do not move them).
 // @retail 0x2f1b80
 void class_2f1b80::function_2f1b80(void const *a_, void const *b_, void const *input_, void *collector)
 {
@@ -177,7 +169,7 @@ void class_2f1b80::function_2f1b80(void const *a_, void const *b_, void const *i
 				axis = 2;
 			}
 		}
-		else if (dz < dy)
+		else if (dy > dz)
 		{
 			contact->normal = motion->transform.axes[1];
 			depth = dy;

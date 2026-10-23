@@ -1901,6 +1901,9 @@ extern dword g_54d5b8;
 
 /* shows the session's state in a dialog once; a live session leaves it three
    seconds later */
+// score 36 (was 36): the cases' blocks sit in the other order, ours tests the
+// state's value before the call while retail calls first and tests after, and
+// the argument of the call is built in the other registers
 // @retail 0x250804
 void c_session_lobby_screen::show_session_state()
 {
@@ -2053,6 +2056,9 @@ long function_199fd6(void);
 long function_19a279(void);
 void function_1905bf(long controller, bool flag);
 
+// score 93 (was 93): the call at the top of the function goes to another
+// helper in ours and to retail's 0x14917c, and the branches around it land in
+// the other order
 // @retail 0x250b1e
 bool c_session_lobby_screen::v10(s_widget_event *event)
 {
@@ -2364,6 +2370,10 @@ static __forceinline long local_player_find(long const *local_list, long player)
 
 /* fills the lobby's player list (players, count of them), with the local
    players' chosen teams; hides the slots past the count */
+// score 118 (was 118): the locals live in the other stack slots, ours keeps
+// the count at ebp-8 and the flags byte at ebp-0xc while retail keeps them at
+// ebp-0xc and ebp-8, and the switch's table and the words it loads sit in
+// the other order
 // @retail 0x25042d
 void function_25042d(c_session_lobby_screen *screen, long valid, s_session_flags_view *session, long *players, long *local_list, long count)
 {
