@@ -385,6 +385,9 @@ real sound_permutation_reference_duration(long definition_index, s_sound_permuta
 /* replays the impulse sounds in the slots of g_4ed288 on their objects and
    frees the slots whose sounds are over or whose objects are gone */
 #pragma inline_depth(0)
+// score 58 (was 58): retail keeps the slot's datum index in edi and does not
+// push ebx, ours keeps it in ebx and pushes ebx, so the prologue and every
+// stack offset after it shift.
 // @retail 0x18bf90
 void function_18bf90(void)
 {
