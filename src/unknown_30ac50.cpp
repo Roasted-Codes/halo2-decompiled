@@ -209,6 +209,9 @@ struct new_faces_30ae70
 
 // adds a vertex at the position, and a fan of new faces from it over the
 // horizon; the object starts with the pool the faces come from
+// score 59 (was 59): retail keeps the object in ecx across the call to the
+// pool and reloads it for neither call, ours copies the object into esi and
+// reloads ecx before both calls, which is eight bytes more
 // @retail 0x30ae70
 int class_30a810::function_30ae70(long count, edge_30aac0 *horizon, __m128 const *position)
 {
