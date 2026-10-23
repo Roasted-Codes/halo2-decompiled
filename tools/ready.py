@@ -15,12 +15,16 @@ Havok callees decompiled; calls back into the game never block.
 ranges. The Finished section is not claimed. A parenthetical "(except ...)"
 is a hole, claimed only if another row lists it. Without --claims, the list
 is unchanged. The tool does not read GitHub.
+
+A function whose draft is disabled in the source (inside an `#if 0` block,
+see tools/drafts.py) is not ready to write either, so it is left out.
 """
 import argparse
 import bisect
 import re
 import sys
 
+from drafts import disabled_addresses
 from inventory import read_rows
 from xbe import FUNCTIONS_CSV
 
@@ -189,11 +193,11 @@ def _by_size(r):
     return int(r['size']), r['va']
 
 
-def ready(rows, owner='game'):
+def ready(rows, owner='game', disabled=()):
     """The functions of one owner (the game by default; 'third:havok' for
     Havok) whose callees of that same owner are all decompiled. Calls to other
     owners never block: for the game those are libraries; for Havok, the game's
-    callbacks."""
+    callbacks. An address in disabled has a draft already, so it is left out."""
     def calls(va):
         text = rows[va]['calls']
         return {int(c, 16) for c in text.split()} if text else set()
@@ -210,7 +214,7 @@ def ready(rows, owner='game'):
         outside = set().union(*(calls(va) for va in group)) - group
         if all(c not in rows or rows[c]['owner'] != owner or done(c) for c in outside):
             result += [rows[va] for va in group if not done(va)]
-    return sorted(result, key=_by_size)
+    return sorted((r for r in result if int(r['va'], 16) not in disabled), key=_by_size)
 
 
 def line(r):
@@ -226,7 +230,7 @@ def main():
                     help="the functions to list: 'game' (default) or 'third:havok' for Havok")
     args = ap.parse_args()
     rows = read_rows(FUNCTIONS_CSV)
-    found = ready(rows, args.owner)
+    found = ready(rows, args.owner, disabled=disabled_addresses())
     if args.claims:
         with open(args.claims, encoding='utf-8') as fh:
             claims = parse_claims(fh.read(), warn=lambda msg: print(f'warning: {msg}', file=sys.stderr))

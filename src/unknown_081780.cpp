@@ -292,6 +292,10 @@ static __forceinline void network_memory_track(void *block, long size)
 }
 
 // @retail 0x81780
+// score 74 (was 74): retail branches to the later of the two blocks on the
+// stage test and keeps the connection count in ebx across it, ours pushes the
+// saved registers after the test and keeps the count in another register, so
+// the inlined allocator reads the stage through that register too
 void __stdcall function_81780(long stage)
 {
 	long count = 15;
