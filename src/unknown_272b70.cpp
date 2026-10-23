@@ -948,7 +948,12 @@ void function_274e70(long ai_index, bool flag)
 		s_ai_actor_iterator iterator;
 		ai_actor_iterator_new(ai_index, &iterator);
 		while (ai_actor_iterator_next(&iterator))
-			actor_274f30_update(iterator.actor_index, flag);
+		{
+			long actor_index = iterator.actor_index;
+			/* retail stores a copy of the actor index in a stack slot it never reads */
+			volatile long stored_actor_index = actor_index;
+			actor_274f30_update(actor_index, flag);
+		}
 	}
 }
 
