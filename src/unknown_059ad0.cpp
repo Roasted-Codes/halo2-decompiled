@@ -3515,6 +3515,11 @@ void function_61050(c_class_58d20 *session, long channel_index,
 
 long network_observer_attach_channel(s_network_observer *observer, long owner_index, const XNADDR *address);
 
+// score 119 (was 119): the channel call's arguments are set up in the other
+// registers, the failure reason is written before the return value is cleared
+// instead of after, the member's flag byte is read through a computed address
+// instead of an indexed load, and the reservation loop's arguments are pushed
+// in the other order
 // @retail 0x5c720
 bool __stdcall function_5c720(c_class_58d20 *session, const s_session_member_identity *identity,
 	long player_count, const dword *identities, const long *values, bool reserve,
@@ -4509,6 +4514,10 @@ void function_62640(c_class_58d20 *session)
  memcpy(&session->value24e0, &session->value4c, 0x2494);
 }
 
+// score 98 (was 98): the two masks are cleared in the other order and live in
+// the other stack slots, the frame is four bytes shorter, the bit is shifted
+// in the other register and merged in a register instead of in memory, and the
+// second loop walks the member states from the flag byte
 // @retail 0x627e0
 void function_627e0(c_class_58d20 *session)
 {

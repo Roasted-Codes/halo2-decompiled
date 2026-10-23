@@ -187,19 +187,13 @@ inline __m128 normalized_2f4440(__m128 const &v)
 	return _mm_mul_ps(_mm_shuffle_ps(scale, scale, 0), v);
 }
 
-// what a query works out: the triangle's planes, the contacts, and its corners
-struct query_2f4440
-{
-	matrix_308c20 planes;
-	contact_point_2f28f0 contacts[3];
-	__m128 corners[3];
-};
-
 // the up to three contacts of a capsule and a triangle, each with the
 // separation in its point's fourth term, or that term left at the largest
 // float (or the tolerance) when there is none
-__forceinline void capsule_triangle_2f4440(void const *a, void const *b, void const *input, weights_308c20 const *weights, query_2f4440 *query)
+__forceinline void capsule_triangle_2f4440(void const *a, void const *b, void const *input, weights_308c20 const *weights, contact_point_2f28f0 *contacts)
 {
+	matrix_308c20 planes;
+	__m128 corners[3];
 	shape_2f4440 const *capsule = ((body_2f4440 const *)a)->shape;
 	shape_2f4440 const *triangle = ((body_2f4440 const *)b)->shape;
 	__m128 ends[2];
@@ -217,7 +211,7 @@ __forceinline void capsule_triangle_2f4440(void const *a, void const *b, void co
 	{
 		frame_2f4440 const *frame = &((body_2f4440 const *)b)->placement->frame;
 		__m128 const *corner = triangle->points;
-		__m128 *placed = query->corners;
+		__m128 *placed = corners;
 		for (int count = 3; count != 0; count--)
 		{
 			*placed = frame_point_2f4440(frame, corner);
@@ -226,10 +220,7 @@ __forceinline void capsule_triangle_2f4440(void const *a, void const *b, void co
 		}
 	}
 	__m128 normal;
-	function_308c20(query->corners, weights, &query->planes, &normal);
-	__m128 const *corners = query->corners;
-	matrix_308c20 const &planes = query->planes;
-	contact_point_2f28f0 *contacts = query->contacts;
+	function_308c20(corners, weights, &planes, &normal);
 
 	int signs[2];
 	{
@@ -313,13 +304,11 @@ __forceinline void capsule_triangle_2f4440(void const *a, void const *b, void co
 						float const at = -(slope * heights[0].m128_f32[edge] + change.m128_f32[3] * heights[0].m128_f32[3]) * inverse;
 						if (at > -0.0001f && at < 1.0001f)
 						{
-							float const *terms = (float const *)&planes;
 							__m128 plane;
-							float *plane_terms = (float *)&plane;
-							plane_terms[3] = 0.0f;
-							plane_terms[0] = terms[edge];
-							plane_terms[1] = terms[edge + 4];
-							plane_terms[2] = terms[edge + 8];
+							plane.m128_f32[3] = 0.0f;
+							plane.m128_f32[0] = planes.rows[0].value.m128_f32[edge];
+							plane.m128_f32[1] = planes.rows[1].value.m128_f32[edge];
+							plane.m128_f32[2] = planes.rows[2].value.m128_f32[edge];
 							if (change.m128_f32[3] < 0.0f)
 							{
 								scale = -change.m128_f32[3];
@@ -403,15 +392,13 @@ __forceinline void capsule_triangle_2f4440(void const *a, void const *b, void co
 				}
 				else
 				{
-					float const *terms = (float const *)&planes;
-					float *offset_terms = (float *)&closest.offset;
-					offset_terms[0] = terms[edge];
-					offset_terms[1] = terms[edge + 4];
-					offset_terms[2] = terms[edge + 8];
+					closest.offset.m128_f32[0] = planes.rows[0].value.m128_f32[edge];
+					closest.offset.m128_f32[1] = planes.rows[1].value.m128_f32[edge];
+					closest.offset.m128_f32[2] = planes.rows[2].value.m128_f32[edge];
 					across = cross_2f4440(direction, side);
 					float length_squared;
 					_mm_store_ss(&length_squared, sum_2f4440(_mm_mul_ps(across, across)));
-					offset_terms[3] = 0.0f;
+					closest.offset.m128_f32[3] = 0.0f;
 					if (length_squared <= 1.4210854715202004e-14f)
 					{
 						across = closest.offset;
@@ -459,16 +446,6 @@ edges:
 	}
 }
 
-// score 727 (was 731): the frame is 0x20 larger and laid out differently
-// (retail: the edges' segment at 0x40, the contacts at 0x130; ours 0x50 and
-// 0x150), our build keeps the second body in ebx where retail keeps the
-// capsule there and the triangle in edi (and reloads the body), retail keeps
-// the input in esi, and the end loop's counters live in different registers;
-// the code is otherwise in retail's order. The edge contact's dot product is
-// read into its own local (retail's sign flip on the FPU), and the near-zero
-// tests are written with <= for retail's jp; retail copies the edge plane's
-// terms with fld/fstp indexed by the edge, ours with integer moves through a
-// stepped pointer (a float-returning accessor changed nothing).
 // The contacts of the capsule and the triangle that lie within the tolerance
 // added to the results, each with its id from the owner
 // @retail 0x2f4440
@@ -476,9 +453,9 @@ void class_2f4440::function_2f4440(void const *a, void const *b, void const *inp
 {
 	timer_add_2ebc80("TtCapsuleTri");
 	agent_2f4440 *agent = (agent_2f4440 *)this;
-	query_2f4440 query;
-	capsule_triangle_2f4440(a, b, input, &agent->weights, &query);
-	contact_point_2f28f0 *point = query.contacts;
+	contact_point_2f28f0 points[3];
+	capsule_triangle_2f4440(a, b, input, &agent->weights, points);
+	contact_point_2f28f0 *point = points;
 	unsigned short *id = agent->ids;
 	for (int count = 3; count != 0; count--)
 	{

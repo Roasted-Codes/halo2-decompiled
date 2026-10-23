@@ -509,6 +509,9 @@ struct s_text_line_measurement
 };
 
 // @retail 0x13ef40
+// score 77 (was 77): retail loads the width into xmm4 before the multiply
+// chain and accumulates the four terms in xmm3; ours reloads the width into
+// xmm3 after the multiplies and accumulates in xmm0
 s_text_line_measurement function_13ef40(s_text_iterator *iterator, point2f const *position, box2f const *bounds, real scale)
 {
 	long index = 0;

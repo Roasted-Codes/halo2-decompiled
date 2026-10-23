@@ -366,6 +366,8 @@ struct s_direction_event_data
     vector3f direction;
 };
 
+// score 19 (was 19): the fields are copied into the output struct in the other
+// order and the locals live in the other stack slots
 // @retail 0xa91c0
 void function_a91c0(long index, long value, point3f const *origin, vector3f const *direction)
 {
@@ -391,6 +393,9 @@ struct s_slot_event_data
     long definition;
 };
 
+// score 17 (was 17): the constant 0x212 is folded into the load in ours and
+// into the address in retail, so ours reads the byte at [eax+ecx+0x212] and
+// retail computes the address first and reads the byte at [ecx]
 // @retail 0xa8f80
 void function_a8f80(long index, short slot)
 {
@@ -418,6 +423,9 @@ void function_a8f80(long index, short slot)
     }
 }
 
+// score 17 (was 17): the constant 0x212 is folded into the load in ours and
+// into the address in retail, so ours reads the byte at [eax+ecx+0x212] and
+// retail computes the address first and reads the byte at [ecx]
 // @retail 0xa9030
 void function_a9030(long index, short slot)
 {
