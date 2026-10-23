@@ -8,7 +8,10 @@
 
 // sorts entries from low to high (both included) by key (src/unknown_2e0120.cpp)
 struct entry_2e0250;
-void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, long context);
+struct order_2e0250
+{
+};
+void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, order_2e0250 order);
 
 // the indices of the endpoints to remove (src/unknown_2e2190.cpp)
 struct removed_2e2370
@@ -82,13 +85,6 @@ __forceinline void *grow_by_2e50d0(void *array, long count, long element_size)
 	return (char *)header->data + old_size * element_size;
 }
 
-// score 196 (new): the growth, the quantizing and the room fill match retail's
-// code. Still (1178 against 1216 bytes): the stack slots differ (`this`,
-// the first index and the pointer differences sit apart from retail's), and
-// the sort loop passes 0x2e0250's last argument as a long where retail builds
-// an empty comparator object in a byte slot and pushes it (0x2e0250 is
-// declared with a long in src/unknown_2e0120.cpp); retail also keeps twice
-// the count in ebx from the sort loop through the cell fix-up.
 // the boxes of `bounds`, one for each owner, added together: each
 // axis's new endpoints are sorted and merged into place, the grid cells'
 // boxes keep spanning the axes, and the pairs the new boxes make are
@@ -138,9 +134,10 @@ void sweep_batches_2e50d0::function_2e50d0(owners_2e50d0 const *owners, bounds_a
 		element_2e1090 *data = elements.data;
 		for (int a = 0; a < 3; a++)
 		{
+			order_2e0250 order = {};
 			if (count * 2 > 1)
 			{
-				function_2e0250((entry_2e0250 *)room[a], 0, count * 2 - 1, 0);
+				function_2e0250((entry_2e0250 *)room[a], 0, count * 2 - 1, order);
 			}
 		}
 		for (int a = 0; a < 3; a++)
@@ -152,7 +149,8 @@ void sweep_batches_2e50d0::function_2e50d0(owners_2e50d0 const *owners, bounds_a
 			int const added = count * 2;
 			for (int k = 0; k < cells_used; k++)
 			{
-				element_2e1090 &cell_box = elements.data[cells[k].box];
+				cell_2e1090 const &cell = cells[k];
+				element_2e1090 &cell_box = elements.data[cell.box];
 				cell_box.slots[2] += added;
 				cell_box.slots[3] += added;
 			}
@@ -163,9 +161,8 @@ void sweep_batches_2e50d0::function_2e50d0(owners_2e50d0 const *owners, bounds_a
 		lower_ends.size = count;
 		for (int i = 0; i < count; i++)
 		{
-			endpoint_2e0f80 &end = ((endpoint_2e0f80 *)lower_ends.data)[i];
-			end.id = (unsigned short)(first_index + i);
-			end.value = elements.data[first_index + i].slots[4];
+			((endpoint_2e0f80 *)lower_ends.data)[i].id = (unsigned short)(first_index + i);
+			((endpoint_2e0f80 *)lower_ends.data)[i].value = elements.data[first_index + i].slots[4];
 		}
 		function_2e2f70((endpoint_2e0f80 *)lower_ends.data, count, pairs, 1);
 	}

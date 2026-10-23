@@ -487,9 +487,13 @@ public:
 	void function_2dce60(pending_2ddbd0 *pending, void const *root, __m128 const *offset);
 };
 
-// score 122 (was 124): the same length as retail. The walk's position is
+// score 86 (was 122): the same length as retail. The walk's position is
 // the parameter itself, so it is loaded after the first command's range check
-// as in retail. The first side's bound
+// as in retail. A split at the next unit stores its high bound first; retail
+// stores the low bound first, but every low-first form tried here (named or
+// inline bounds, the high reassigned, `int`, an unsigned char unit, compound
+// assignments) computes the high with inc where retail uses lea. Case 0x23's
+// low is in edx (retail ecx). The first side's bound
 // loop tests for the corner bounds first: with the three-byte arm first (as
 // retail lays it out) the compiler loads q[1] once ahead of the branch, five
 // bytes short, which misaligned everything after it; this way the length and
@@ -497,17 +501,15 @@ public:
 // arm's registers differ (ecx/edx swapped). Tried for the arm-first order: the
 // operands in any order, an inline reader, `!(bound < 0x29)`, `bound > 0x28`,
 // a `continue` arm, a separate local for the shift or the index, and an inline
-// for the whole loop (+24 bytes); also the shift arm reading through
+// for the whole loop (+24 bytes) or for one bound (+8 bytes); also the shift
+// arm reading through
 // commands[first_offset + 1], a pointer for the lower corner, the first read
 // as a named local (all 195-197; the hoisted load sits between the cmp and
 // the jl, so retail's arm must get another register for it); a 10-minute
-// permuter run found nothing below 124. Still: a split at the next unit keeps
-// its low
-// bound at another slot and computes the high one with inc (retail lea, after
-// loading the low into ecx; locals, `value`, a separate `low + 1` and operand
-// orders all compile alike); the per-side states trade stack slots; the
-// three-byte reads of case 0x29 have ecx/edx swapped (any macro form gives
-// the same code).
+// permuter run found nothing below 124. Still: the per-side states trade
+// stack slots (also with the second side's commands passed straight to its
+// test); the three-byte reads of case 0x29 have ecx/edx swapped (any macro
+// form gives the same code).
 // Walks the commands below a node whose box is `offset` (a lower and an upper
 // corner, narrowed in place as the walk goes down): a split gives each side
 // its box, a side the sphere misses is dropped, a side it holds whole has its
@@ -561,11 +563,9 @@ void class_2dce60::function_2dce60(pending_2ddbd0 *position, void const *root, _
 		{
 			other[0] = box[0];
 			other[1] = box[1];
-			long low = commands[1];
-			long const high = ((low + 1) << position->shift) + position->corner[op - 0x20];
-			low = (low << position->shift) + position->corner[op - 0x20];
-			other[0].m128_f32[op - 0x20] = (float)low * scale;
-			box[1].m128_f32[op - 0x20] = (float)high * scale;
+			long const low = commands[1];
+			box[1].m128_f32[op - 0x20] = (float)(((low + 1) << position->shift) + position->corner[op - 0x20]) * scale;
+			other[0].m128_f32[op - 0x20] = (float)((low << position->shift) + position->corner[op - 0x20]) * scale;
 			first_offset = 0;
 			commands += 3;
 			second_offset = commands[-1];

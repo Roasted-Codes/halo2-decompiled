@@ -255,10 +255,6 @@ public:
 	virtual void get_closest(body_2fe830 const *a, body_2fe830 const *b, query_header_2fe830 const *header, closest_collector_2fe830 *collector) {}
 };
 
-// score 190 (was 190): stack layout: retail puts closest at esp+0x30 and
-// result at 0x60, ours the reverse (declaration order, scopes and names do
-// not move them); retail also resets moved_closest before it moves the body
-// in the loop, which here scores 197.
 // the same cast, the closest points found by the object itself; a move that
 // finds no closest points passes on the last hit
 // @retail 0x2fec10
@@ -270,7 +266,6 @@ void class_2fec10::function_2fec10(void const *a_, void const *b_, void const *i
 	query_2fe830 const *input = (query_2fe830 const *)input_;
 	cast_collector_2fe830 *collector = (cast_collector_2fe830 *)collector_;
 	cast_collector_2fe830 *second_collector = (cast_collector_2fe830 *)second_collector_;
-	cast_hit_2fe830 result;
 	closest_collector_2fe830 closest;
 	query_header_2fe830 header = input->header;
 	header.tolerance += input->extra_tolerance;
@@ -279,11 +274,12 @@ void class_2fec10::function_2fec10(void const *a_, void const *b_, void const *i
 	{
 		return;
 	}
+	cast_hit_2fe830 result;
 	result.hit.position = closest.hit.position;
 	result.hit.position.m128_f32[3] = closest.hit.position.m128_f32[3];
-	result.hit.normal = closest.hit.normal;
 	result.a = a;
 	result.b = b;
+	result.hit.normal = closest.hit.normal;
 	if (closest.hit.position.m128_f32[3] < input->header.tolerance && second_collector != 0)
 	{
 		second_collector->add_hit(&result);
@@ -318,43 +314,45 @@ void class_2fec10::function_2fec10(void const *a_, void const *b_, void const *i
 		return;
 	}
 	result.hit.position.m128_f32[3] = closest.hit.position.m128_f32[3] / (closest.hit.position.m128_f32[3] - end_distance);
-	closest_collector_2fe830 moved_closest;
-	class_2e7d80 moved(*a->placement);
-	body_2fe830 moved_a;
-	moved_a.shape = a->shape;
-	moved_a.parent = a;
-	moved_a.placement = &moved;
-	moved_a.key = a->key;
-	for (int i = input->header.config->iterations - 1; i >= 0; i--)
 	{
-		__m128 const single = _mm_set_ss(result.hit.position.m128_f32[3]);
-		moved.rows[5] = _mm_add_ps(a->placement->rows[5], _mm_mul_ps(_mm_shuffle_ps(single, single, 0), input->direction));
-		moved_closest.has_hit = false;
-		moved_closest.hit.position.m128_f32[3] = 3.402823466e+38f;
-		moved_closest.early_out = 3.402823466e+38f;
-		query->get_closest(&moved_a, b, &header, &moved_closest);
-		float const moved_approach = dot3_2fe830(moved_closest.hit.normal, input->direction);
-		if (moved_approach >= 0.0f)
+		class_2e7d80 moved(*a->placement);
+		closest_collector_2fe830 moved_closest;
+		body_2fe830 moved_a;
+		moved_a.placement = &moved;
+		moved_a.parent = a;
+		moved_a.shape = a->shape;
+		moved_a.key = a->key;
+		for (int i = input->header.config->iterations - 1; i >= 0; i--)
 		{
-			return;
-		}
-		float const speed = -moved_approach;
-		float const moved_distance = moved_closest.hit.position.m128_f32[3];
-		if (moved_distance + result.hit.position.m128_f32[3] * speed > speed)
-		{
-			return;
-		}
-		float const fraction = moved_distance / speed + result.hit.position.m128_f32[3];
-		if (fraction > collector->early_out)
-		{
-			return;
-		}
-		result.hit.position = moved_closest.hit.position;
-		result.hit.position.m128_f32[3] = fraction;
-		result.hit.normal = moved_closest.hit.normal;
-		if (moved_distance <= input->header.config->tolerance)
-		{
-			break;
+			moved_closest.has_hit = false;
+			moved_closest.hit.position.m128_f32[3] = 3.402823466e+38f;
+			moved_closest.early_out = 3.402823466e+38f;
+			__m128 const single = _mm_set_ss(result.hit.position.m128_f32[3]);
+			moved.rows[5] = _mm_add_ps(a->placement->rows[5], _mm_mul_ps(_mm_shuffle_ps(single, single, 0), input->direction));
+			query->get_closest(&moved_a, b, &header, &moved_closest);
+			float const moved_approach = dot3_2fe830(moved_closest.hit.normal, input->direction);
+			if (moved_approach >= 0.0f)
+			{
+				return;
+			}
+			float const speed = -moved_approach;
+			float const moved_distance = moved_closest.hit.position.m128_f32[3];
+			if (moved_distance + result.hit.position.m128_f32[3] * speed > speed)
+			{
+				return;
+			}
+			float const fraction = moved_distance / speed + result.hit.position.m128_f32[3];
+			if (fraction > collector->early_out)
+			{
+				return;
+			}
+			result.hit.position = moved_closest.hit.position;
+			result.hit.position.m128_f32[3] = fraction;
+			result.hit.normal = moved_closest.hit.normal;
+			if (moved_distance <= input->header.config->tolerance)
+			{
+				break;
+			}
 		}
 	}
 	collector->add_hit(&result);
