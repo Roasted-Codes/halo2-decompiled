@@ -34,9 +34,8 @@ public:
 
 // the contact of a sphere with a box, added to the output with the id the
 // owner hands out; a miss drops it and hands the id back
-// score 67 (was 174): the centre and body B take edi and ebx where retail has
-// ebx and edi, three 4-byte stack slots are packed differently, and the normal
-// is stored once before it is turned.
+// score 37 (was 67): the centre and body B take edi and ebx where retail has
+// ebx and edi, and three 4-byte stack slots are packed differently.
 // @retail 0x2f1b80
 void class_2f1b80::function_2f1b80(void const *a, void const *b, void const *input, void *collector)
 {
