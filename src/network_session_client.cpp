@@ -36,14 +36,17 @@ __declspec(noinline) long network_session_cancel_reservations(c_class_58d20 *ses
 bool session_summary_remove_machine(s_session_summary *summary, s_session_id *id);
 bool network_session_host_set_summary(c_class_58d20 *session, const s_session_summary *summary);
 
+// score 9 (was 11): the found/count initialisation order matches retail now;
+// only the summary address still differs: retail recomputes `lea eax,[esp+0x24]`
+// after the push, ours reuses the `ebx` copy of `&summary`.
 // @retail 0x6d380
 void __stdcall function_06d380(c_session_client *client, const s_session_id *id)
 {
 	{
 		c_class_58d20 *session = client->session;
 		long current = session->current_member;
-		long count = session->member_count;
 		long found = 0;
+		long count = session->member_count;
 		s_session_member_identity members[16];
 		for (long i = 0; i < count; i++)
 		{

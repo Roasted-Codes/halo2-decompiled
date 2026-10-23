@@ -1,4 +1,5 @@
 #include "unknown_11c920.h"
+#include "unknown_0a58d0.h"
 #include "globals.h"
 
 // @flags /O2 /arch:SSE /Gr
@@ -116,10 +117,10 @@ bool __stdcall function_20bbb0(short condition, long object_index, real *weight)
             result = actor != NULL;
             break;
         case 3:
-            if (object[0xaa] == 0) result = !(bool)((object[0x10a] >> 2) & 1);
+            result = object[0xaa] == 0 && !TEST_FIELD_BIT(((s_object_view *)object)->flag2);
             break;
         case 4:
-            if (object[0xaa] == 0 && (bool)((object[0x10a] >> 2) & 1)) result = true;
+            result = object[0xaa] == 0 && TEST_FIELD_BIT(((s_object_view *)object)->flag2);
             break;
         case 5:
             result = object[0xaa] == 1 && !function_20bb70(object_index);
@@ -232,7 +233,7 @@ bool __stdcall function_20bbb0(short condition, long object_index, real *weight)
                     s_object_seat seats[64];
                     result = true;
                     short count = function_c8b80(function_1b8c80(*(long *)(unit + 0x14)), seats, 64);
-                    for (long i = 0; i < count; i++)
+                    for (short i = 0; i < count; i++)
                     {
                         long occupant = function_c8f60(seats[i].object_index, seats[i].seat_index);
                         if (occupant != NONE && occupant != object_index)
@@ -267,8 +268,8 @@ bool __stdcall function_20bbb0(short condition, long object_index, real *weight)
         case 24:
             if (object[0xaa] == 5)
             {
-                byte type = g_4e3b44[*(long *)object & 0xffff].bytes[0x128];
-                if (type == 0x15 || type == 0x16)
+                byte *definition = g_4e3b44[*(long *)object & 0xffff].bytes;
+                if (definition[0x128] == 0x15 || definition[0x128] == 0x16)
                     result = true;
             }
             break;

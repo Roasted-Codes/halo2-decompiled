@@ -1174,6 +1174,8 @@ short function_263ed0(long actor_index, s_perception_origin_view const *origin, 
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
 void function_2640c0(long object_index, s_object_motion_view *result);
 
+// score 83 (was 83): retail jumps to the common exit where ours falls through, and the return values are set in
+// the opposite order; ours is padded with nine int3s.
 // @retail 0x25cb60
 short function_25cb60(long arg_0, long arg_1, short arg_2, void *arg_3, void *arg_4, long arg_5, long arg_6)
 {
