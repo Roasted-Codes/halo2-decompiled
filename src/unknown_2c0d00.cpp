@@ -800,9 +800,6 @@ void function_2c2910(point2f const *center, point2f const *points, point2f const
     result->y = points[0].y + normal.y * radius;
 }
 
-// score 34 (was 34): the two squares of the direction are in the other order
-// (retail x² in xmm0, ours y²), and retail spills the direction's x and y
-// to two separate slots while ours keeps them adjacent in one point2f.
 // @retail 0x2c2740
 void function_2c2740(point2f const *point, point2f const *center, real radius, bool side, point2f *result)
 {
@@ -815,10 +812,10 @@ void function_2c2740(point2f const *point, point2f const *center, real radius, b
     if (tangent_squared > 0.0f)
     {
         real tangent = (real)sqrt(tangent_squared);
-        candidates[0].x = center->x + (direction.x * radius + direction.y * tangent) * factor;
+        candidates[0].x = center->x + (direction.y * tangent + direction.x * radius) * factor;
         candidates[0].y = center->y + (direction.y * radius - direction.x * tangent) * factor;
         candidates[1].x = center->x + (direction.x * radius - direction.y * tangent) * factor;
-        candidates[1].y = center->y + (direction.y * radius + direction.x * tangent) * factor;
+        candidates[1].y = center->y + (direction.x * tangent + direction.y * radius) * factor;
         point2f first, second;
         vector2d_from_points2d(point, &candidates[0], &first);
         vector2d_from_points2d(point, &candidates[1], &second);
