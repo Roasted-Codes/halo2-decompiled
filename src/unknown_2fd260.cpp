@@ -193,14 +193,12 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 }
 
 // the vertices for a list of indices
-// score 114 (was 147): retail's loop reads the indices from the pointer's
-// start and keeps the vertex pointer in ebp, where ours reads them from an
-// offset and keeps the pointer in eax.
 // @retail 0x2fd430
 void convex_vertices_2fd260::function_2fd430(unsigned short const *indices, int count, __m128 *vertices) const
 {
-	for (int i = 0; i < count; i++)
+	while (count > 0)
 	{
-		fetch_vertex(indices[i], &vertices[i]);
+		fetch_vertex(*indices++, vertices++);
+		--count;
 	}
 }
