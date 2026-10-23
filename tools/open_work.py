@@ -12,6 +12,9 @@ off limits. This tool lists:
 - functions not decompiled yet whose callees are all done (as tools/ready.py
   lists them), outside every person's claim.
 
+A function whose draft is disabled in the source (inside an `#if 0` block, see
+tools/drafts.py) is not open work: it is left out of both lists.
+
     python tools/open_work.py --claims claims.md [N]
 
 claims.md is a saved copy of issue #9's body (for example
@@ -22,6 +25,7 @@ import argparse
 import collections
 import sys
 
+from drafts import disabled_addresses
 from inventory import read_rows
 from ready import claim_rows, covers, ready, _merge
 from xbe import FUNCTIONS_CSV
@@ -35,12 +39,15 @@ def person_claims(text, warn=None):
                    if who.startswith('@') and 'maintainer' not in who.lower() for s in spans])
 
 
-def open_files(rows, claimed):
+def open_files(rows, claimed, disabled=()):
     """[(file, vas, unmatched bytes, counts)] for source files with unmatched
-    game functions and none in a person's claim, fewest unmatched bytes first."""
+    game functions and none in a person's claim, fewest unmatched bytes first.
+    Addresses in disabled have a draft already, so they are left out."""
     by_file = collections.defaultdict(list)
     for va, r in rows.items():
         src = r.get('source') or ''
+        if va in disabled:
+            continue
         if r['owner'] == 'game' and src.startswith('src/') and not src.startswith('src/stubs/'):
             by_file[src].append(va)
     out = []
@@ -76,8 +83,12 @@ def main():
         ap.error('no claims table found (expected a saved copy of issue #9)')
     claimed = person_claims(text, warn=lambda msg: print(f'warning: {msg}', file=sys.stderr))
     rows = read_rows(FUNCTIONS_CSV)
+    disabled = disabled_addresses()
+    hidden = sum(1 for va in disabled if rows.get(va) and rows[va]['status'] != 'matched')
+    if hidden:
+        print(f'{hidden} disabled drafts are not offered (see tools/drafts.py)', file=sys.stderr)
 
-    files = open_files(rows, claimed)
+    files = open_files(rows, claimed, disabled)
     print(f'Open source files: {len(files)} with unmatched functions outside every person\'s claim.')
     print('Fewest unmatched bytes first. near = differs by at most two instructions.\n')
     print(f'{"file":38} {"retail range":24} {"funcs":>5} {"match":>5} {"near":>4} {"todo":>4} {"bytes left":>10}')
@@ -87,7 +98,7 @@ def main():
     if files:
         print('\nTo claim the first, open a draft pull request whose description says:\n  ' + claim_text(rows, files[0]))
 
-    fresh = [r for r in ready(rows) if not covers(claimed, int(r['va'], 16))]
+    fresh = [r for r in ready(rows, disabled=disabled) if not covers(claimed, int(r['va'], 16))]
     print(f'\nNot decompiled yet, every callee done: {len(fresh)} functions outside every person\'s claim.')
     print('Smallest first: va, size, calls. Claim one, or a range of up to 0x2000 bytes around it.')
     for r in fresh[:args.count]:
