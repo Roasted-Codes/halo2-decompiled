@@ -212,12 +212,12 @@ s_lighting_record g_55ee60;
 
 // Disabled: camera fallback passes shared cache storage to an outside-owner producer.
 #if 0
-extern long g_4c1bd4;
 extern long g_4b72c0;
 struct s_unknown_78;
 extern s_unknown_78 *g_510c6c;
-void *function_badc0(long object_index, dword mask);
-bool function_155760(long player_index);
+struct s_object;
+s_object *function_badc0(long object_index, dword mask);
+long function_155760(long player_index);
 long __stdcall function_165f16(long player_index, long object_index, long count, long *cache);
 
 // Retail 0x3d2c0
@@ -241,7 +241,7 @@ void function_3d2c0()
             long player = g_4e8c20->entries[g_4b9ed8];
             long unit = player != NONE ? *(long *)(g_4e8c24->data + (player & 0xffff) * 0x21c + 0x2c) : NONE;
             g_4c1bd0 = unit;
-            g_4c1bd4 = function_165f16(g_4b9ed8, unit, 4, g_4c1bd8);
+            g_4c1bd4 = function_165f16(g_4b9ed8, unit, 4, (long *)g_4c1bd8);
         }
     }
 }

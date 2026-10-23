@@ -2,7 +2,6 @@
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "unknown_0259d0.h"
-#include "bit_vector.h"
 #include "effects.h"
 #include <string.h>
 #include <xmmintrin.h>
@@ -349,13 +348,18 @@ long function_b8a10(short cluster_index, s_object_cluster_reference **record, s_
 	return object_cluster_next_ab((s_record_pool *)g_4de2d8, iterator, record);
 }
 
+struct s_scenario_identifier_ab
+{
+	long unique_id;
+	short origin_bsp;
+	char type;
+	char source;
+};
+
 struct s_placement_defaults_ab
 {
 	long tag_index;
-	long unique_id;
-	short bsp_index;
-	char type;
-	char source;
+	s_scenario_identifier_ab identifier;
 	long field_0c;
 	long scenario_index;
 	byte bsp_policy;
@@ -394,6 +398,9 @@ struct s_placement_source_ab
 struct s_object;
 s_object *function_badc0(long object_index, dword type_mask);
 
+#define FLAG(bit) (1 << (bit))
+#define SET_FLAG(flags, bit, value) ((value) ? ((flags) |= FLAG(bit)) : ((flags) &= ~FLAG(bit)))
+
 // @retail 0xb7930
 void function_b7930(void *data, long tag_index, long object_index, s_effect_owner const *owner)
 {
@@ -401,12 +408,13 @@ void function_b7930(void *data, long tag_index, long object_index, s_effect_owne
 	memset(placement, 0, sizeof(*placement));
 	placement->tag_index = tag_index;
 	placement->field_0c = 0;
-	placement->flags = 0;
+	memset(&placement->flags, 0, sizeof(placement->flags));
 	placement->forward = *g_4687a8;
 	placement->up = *g_4687b0;
 	placement->scale = 1.0f;
 	placement->field_74 = 0;
-	placement->field_b4 = NONE;
+	short *unknown_b4 = &placement->field_b4;
+	*unknown_b4 = NONE;
 	placement->bsp_policy = 0;
 	s_placement_source_ab *object = (s_placement_source_ab *)function_badc0(object_index, NONE);
 	placement->team = NONE;
@@ -414,7 +422,7 @@ void function_b7930(void *data, long tag_index, long object_index, s_effect_owne
 	if (object)
 	{
 		placement->object_index = object_index;
-		bit_vector_set(&placement->flags, 5, (bool)((object->flags_c0 >> 2) & 1));
+		SET_FLAG(placement->flags, 5, (bool)((object->flags_c0 >> 2) & 1));
 		if ((1 << object->type) & 3)
 		{
 			placement->player_index = object->player_index;
@@ -431,21 +439,14 @@ void function_b7930(void *data, long tag_index, long object_index, s_effect_owne
 		placement->owner.unknown0 = NONE;
 		placement->owner.unknown8 = NONE;
 	}
-	placement->type = NONE;
-	placement->source = NONE;
-	placement->bsp_index = NONE;
-	placement->unique_id = NONE;
+	s_scenario_identifier_ab *identifier = &placement->identifier;
+	identifier->type = NONE;
+	identifier->source = NONE;
+	identifier->origin_bsp = NONE;
+	identifier->unique_id = NONE;
 	placement->scenario_index = NONE;
 	placement->field_b8 = 0;
 }
-
-struct s_scenario_identifier_ab
-{
-	long unique_id;
-	short origin_bsp;
-	char type;
-	char source;
-};
 
 struct s_scenario_type_ab
 {
