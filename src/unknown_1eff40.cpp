@@ -140,12 +140,12 @@ bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
   query.field_10 = &local_point;
   query.field_14 = &local_direction;
   query.field_18 = hit;
-  query.field_1c = NONE;
-  query.field_20 = 0;
-  query.field_24 = NONE;
   real fraction = hit->field_0;
   hit->field_0 = fraction < 0.0f ? 0.0f : fraction;
   hit->field_18 = 0;
+  query.field_1c = NONE;
+  query.field_20 = 0;
+  query.field_24 = NONE;
   if (function_1de6d0(&query, 0, 0.0f, fraction < 0.0f ? 0.0f : fraction > 1.0f ? 1.0f : fraction))
   {
    (*result_reference)->position = position;
