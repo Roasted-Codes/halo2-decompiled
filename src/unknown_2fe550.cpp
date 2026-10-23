@@ -40,6 +40,11 @@ public:
 // a segment starting inside the box misses; otherwise the faces are taken
 // first on the positive side, then on the negative side, each one the start
 // lies outside of moving the entry and each other one moving the exit
+// score 141 (was 141): retail keeps the four masks in ebx, edx, ecx and eax
+// while ours keeps them in esi, ebx and ecx, retail walks the three axes
+// through one array in the frame while ours writes the three axis bits with
+// a lea and keeps them in the frame's slots, and our code is 29 bytes longer
+// than retail's.
 // @retail 0x2fe550
 answer_2fe550 box_2fe550::function_2fe550(segment_2fe550 const *segment, hit_2fe550 *hit) const
 {

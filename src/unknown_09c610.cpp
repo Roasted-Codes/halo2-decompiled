@@ -26,6 +26,9 @@ static __forceinline long function_9c912(long arg_0, long arg_1, long arg_2)
     return local_0;
 }
 
+// score 57 (was 57): the table pointer is kept in edi in ours and in esi in
+// retail, the member's fields are copied in the other order and the store of
+// the second field sits before the comparison in ours and after it in retail
 // @retail 0x9c910
 bool c_damage_section_response_event_definition::v11(long arg_0, long const *arg_1, long arg_2, void const *arg_3)
 {
@@ -91,6 +94,9 @@ struct s_9cca0
     byte field_7e[10];
 };
 
+// score 9 (was 9): the two vector copies and the global's test are ordered
+// differently; retail sinks the k component's store past the global's test and
+// loads the tag after it, ours stores the tag before the test
 // @retail 0x9cca0
 bool c_breakable_surface_damage_event_definition::v11(long arg_0, long const *arg_1, long arg_2, void const *arg_3)
 {

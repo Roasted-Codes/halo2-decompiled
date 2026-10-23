@@ -787,6 +787,13 @@ struct s_64310
 	s_network_session_player *field_10;
 };
 
+// score 43 (was 43), as 0x643f0: retail keeps the player mask in ebp and the
+// address of the players array in edi (lea edi, [eax + 0x1120]), then reads a
+// player's member index through it; ours folds the array into the load
+// ([ecx + eax + 0x112c]), needs no ebp and is 6 bytes shorter. Plain locals,
+// the struct's fields in another order or layout, const references to the
+// players or members pointer, an inline function filling the struct and a
+// player pointer score 43 to 53; the 600 s permutation run found no match.
 // @retail 0x64310
 bool network_session_interface_kick_player(long player_index)
 {
@@ -810,6 +817,8 @@ bool network_session_interface_kick_player(long player_index)
 	return result;
 }
 
+// score 43 (was 43): the same as 0x64310 above, which differs only in the
+// function it calls.
 // @retail 0x643f0
 bool network_session_interface_ban_player(long player_index)
 {

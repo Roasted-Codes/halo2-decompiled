@@ -171,20 +171,57 @@ public:
 
 class contact_manager_2f90a0;
 
+struct flag_2f90a0
+{
+	char value;
+
+	flag_2f90a0() {}
+	flag_2f90a0(bool state) : value((char)state) {}
+	__forceinline void operator=(bool state)
+	{
+		value = (char)state;
+	}
+	__forceinline flag_2f90a0 operator==(bool state) const
+	{
+		return flag_2f90a0(value == (char)state);
+	}
+	__forceinline operator bool() const
+	{
+		return value != 0;
+	}
+};
+
 // whether a ray of the pair has a contact point, and its id
 struct contact_entry_2f90a0
 {
-	bool valid;
+	flag_2f90a0 valid;
 	char unknown1;
 	unsigned short id;
 };
+
+struct contacts_2f90a0
+{
+	contact_entry_2f90a0 *data;
+	long size;
+	long capacity;
+
+	__forceinline contact_entry_2f90a0 &operator[](int index)
+	{
+		return data[index];
+	}
+};
+
+typedef char assert_flag_2f90a0[(sizeof(flag_2f90a0) == 1) ? 1 : -1];
+typedef char assert_contact_entry_2f90a0[(sizeof(contact_entry_2f90a0) == 4) ? 1 : -1];
+typedef char assert_contacts_2f90a0[(sizeof(contacts_2f90a0) == 0xc) ? 1 : -1];
 
 class class_2f90a0
 {
 public:
 	char unknown0[8];
 	contact_manager_2f90a0 *manager;
-	contact_entry_2f90a0 *entries;
+	contacts_2f90a0 entries;
+	contact_entry_2f90a0 inline_entries[4];
 
 	void function_2f90a0(void const *a, void const *b, void const *input, void *collector);
 	void function_2f94a0(void const *a, void const *b, void const *input, hit_collector_2f88a0 *collector);

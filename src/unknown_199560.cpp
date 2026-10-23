@@ -77,6 +77,9 @@ static __forceinline s_loop_allocator *compression_pool_allocate(long size)
 bool __stdcall function_199740(byte *buffer, long size, byte *destination, long *decompressed_size);
 
 // @retail 0x1995a0
+// score 63 (was 63): retail hands the compressor the source and its size in
+// the first two registers and the destination and its size in the next two, so
+// its frame is four bytes smaller than ours
 bool function_1995a0(byte const *source, dword source_size, byte *destination, long *compressed_size, dword capacity, long level)
 {
     bool result = false;

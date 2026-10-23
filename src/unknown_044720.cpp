@@ -162,6 +162,9 @@ void function_44720(void)
     }
 }
 // @retail 0x44c90
+// score 107 (was 107): retail keeps the entry index in eax and the table base
+// in ebp with a frame four bytes smaller, ours puts the index in ebp and the
+// frame four bytes larger, so every local sits four bytes higher
 void __stdcall function_44c90(long group, dword selection_mask, long level,
     dword and_mask, dword or_mask, dword fallback_and_mask, dword fallback_or_mask, bool force)
 {
