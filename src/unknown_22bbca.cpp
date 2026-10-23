@@ -25,7 +25,7 @@ struct s_4e6950
 	byte field_40[0x40];
 };
 
-static inline void point2f_set(point2f *point, real x, real y)
+inline void point2f_set(point2f *point, real x, real y)
 {
 	point->x = x;
 	point->y = y;
