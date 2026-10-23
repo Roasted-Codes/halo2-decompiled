@@ -245,35 +245,39 @@ __forceinline found_2ee610 query_kept_2ee610(convex_pair_2ee2e0 *pair, body_2ee3
 		}
 	}
 	timer_add_2ebc80("StGsk");
-	c_query_transform transform;
-	transform.inverse_product(&a->placement->transform, &b->placement->transform);
-	class_3048a0 search;
-	search.field_c = false;
-	closest_3048a0 closest;
-	if (search.function_3048a0(first, second, &transform, &pair->state, &closest) != 0)
 	{
+		c_query_transform transform;
+		transform.inverse_product(&a->placement->transform, &b->placement->transform);
+		{
+			class_3048a0 search;
+			search.field_c = false;
+			closest_3048a0 closest;
+			if (search.function_3048a0(first, second, &transform, &pair->state, &closest) != 0)
+			{
+				return found_2ee610(false);
+			}
+			((source_3032c0 const *)&search)->function_3032c0(&pair->state, (plane_3032c0 *)&closest, &out->found);
+		}
+		vector_2da6e0 *normal = &out->normal;
+		normal->rotate(&a->placement->transform, &out->found.normal);
+		float const distance = out->found.distance - first->radius - second->radius;
+		out->found.distance = distance;
+		if (distance < input->tolerance)
+		{
+			add_scaled_2ee610(&out->found.point, -first->radius, &out->found.normal);
+			__m128 const surface = _mm_add_ps(out->found.point, _mm_mul_ps(splat_2ee8b0(-distance), out->found.normal));
+			local_point_2ee8b0 local;
+			local.inverse_transform(&transform, surface);
+			out->local_point = local.value;
+			return found_2ee610(true);
+		}
+		if (pair->field_18 == 0 && *input->keep_separation)
+		{
+			pair->separation = normal->value;
+			pair->separation.m128_f32[3] = distance - input->tolerance * 1.1f;
+		}
 		return found_2ee610(false);
 	}
-	((source_3032c0 const *)&search)->function_3032c0(&pair->state, (plane_3032c0 *)&closest, &out->found);
-	vector_2da6e0 *normal = &out->normal;
-	normal->rotate(&a->placement->transform, &out->found.normal);
-	float const distance = out->found.distance - first->radius - second->radius;
-	out->found.distance = distance;
-	if (distance < input->tolerance)
-	{
-		add_scaled_2ee610(&out->found.point, -first->radius, &out->found.normal);
-		__m128 const surface = _mm_add_ps(out->found.point, _mm_mul_ps(splat_2ee8b0(-distance), out->found.normal));
-		local_point_2ee8b0 local;
-		local.inverse_transform(&transform, surface);
-		out->local_point = local.value;
-		return found_2ee610(true);
-	}
-	if (pair->field_18 == 0 && *input->keep_separation)
-	{
-		pair->separation = normal->value;
-		pair->separation.m128_f32[3] = distance - input->tolerance * 1.1f;
-	}
-	return found_2ee610(false);
 }
 
 #endif

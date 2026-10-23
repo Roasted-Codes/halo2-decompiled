@@ -423,6 +423,8 @@ struct s_parent_effect_definition_11a140
 	long alternate_effect_index;
 };
 
+// score 5 (was 5): the call to object_get_damage_owner gets its first argument in a register here,
+// while retail passes both arguments on the stack.
 // @retail 0x11a140
 void function_11a140(long object_index)
 {
@@ -575,6 +577,9 @@ bool function_119380(long arg_0, s_119380 *arg_1)
 void function_1e54d0(void *arg_0, long arg_1);
 bool function_bc380(long arg_0, long arg_1, long arg_2, long arg_3);
 
+// score 83 (was 83): the object table base and the looked up object are kept in different
+// registers, one word field is loaded zero extended here and as a plain word in retail, and the
+// value stored at the 0x134 slot is sign extended differently.
 // @retail 0x118510
 bool __stdcall function_118510(long arg_0, void const *arg_1, bool *arg_2)
 {
