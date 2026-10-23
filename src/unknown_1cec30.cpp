@@ -2514,10 +2514,10 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
     long child_b = NONE;
     for (long i = 0; i < body->node_count && (child_a == NONE || child_b == NONE); i++)
     {
-        long node = physics->bodies[body->nodes[i]].node;
-        if (node == node_a && child_a == NONE)
+        s_component_node_body_link *link = &physics->bodies[body->nodes[i]];
+        if (link->node == node_a && child_a == NONE)
             child_a = i;
-        if (node == node_b && child_b == NONE)
+        if (link->node == node_b && child_b == NONE)
             child_b = i;
     }
     c_component_child_frames *shape = *(c_component_child_frames **)((byte *)body->rigid_body + 0xc);
