@@ -112,6 +112,8 @@ bool function_1a58b0(long object_index)
 void __stdcall function_df6c0(point3f *bottom, vector3f *axis, long object_index, real *radius);
 void function_1a6340(vector3f const *b, vector3f const *a, point3f *out, point3f const *c, point3f const *p, real radius);
 
+// score 32 (was 32): the arguments are pushed in a different order and one of the values is passed
+// in a register here and on the stack in retail.
 // @retail 0x1a62e0
 bool function_1a62e0(long object_index, point3f const *origin, vector3f const *direction, point3f *out)
 {
@@ -358,6 +360,8 @@ void function_1a6f70(long owner_index)
 	}
 }
 
+// score 62 (was 62): the table base and the index are loaded into different registers, and the
+// index is kept in a different one through the lookup.
 // @retail 0x1a7030
 short function_1a7030(long owner_index, short slot_index, long argument, short *out)
 {
@@ -618,6 +622,8 @@ void function_1a6d80(void)
 	}
 }
 
+// score 6 (was 6): the two output pointers are loaded one after the other here and both before the
+// first store in retail, and the word is written after the stack is restored in retail.
 // @retail 0x1a73c0
 s_action_node **function_1a73c0(long owner_index, short id, bool *valid, short *count)
 {
@@ -1468,6 +1474,8 @@ struct s_target_link_definition
 bool function_1a59f0(long object_index, long excluded_index, short team, bool *has_hostile);
 bool function_1a5b00(long object_index, short team, bool *has_hostile);
 
+// score 32 (was 32): the helper is called with a different register and the return value is built
+// with a different order of the pops.
 // @retail 0x1a5910
 bool __stdcall function_1a5910(long object_index, long excluded_index, short team, bool *has_hostile)
 {
@@ -1941,6 +1949,8 @@ struct s_1a5370
 	s_1a5371 *field_30;
 };
 
+// score 10 (was 10): the local record sits at a different stack address and its fields are read
+// from different offsets.
 // @retail 0x1a5370
 bool __stdcall function_1a5370(s_sort_weight_view const *arg_0, point3f const *arg_1,
 	vector3f const *arg_2, long arg_3, short arg_4, s_sort_candidate_view *arg_5)
@@ -2175,6 +2185,8 @@ struct s_1a4c01
 	byte field_26[0x5c - 0x26];
 };
 
+// score 116 (was 116): the stack frame is four bytes smaller than retail's, so every stack offset
+// inside the function is shifted.
 // @retail 0x1a4c00
 bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector3f *direction, point3f *point)
 {

@@ -459,19 +459,24 @@ void __stdcall function_1b1a90(long actor_index, s_slot *slot, s_slot_target_lis
 					}
 					else
 					{
+						vector3f *facing = &actor->unknown458;
+
 						actor->unknown456 = true;
-						actor->unknown458.i = direction.x;
-						actor->unknown458.j = direction.y;
-						actor->unknown458.k = 0.0f;
+						facing->i = direction.x;
+						facing->j = direction.y;
+						facing->k = 0.0f;
 					}
 				}
 			}
 		}
-		short mode = list->mode;
 		if (actor->unknown086 >= 7)
 		{
 			if (state->position_index != NONE)
+			{
+				short mode = list->mode;
+
 				actor->unknown488 = function_1b1970(actor_index, mode, &forward, &left, state->position_index);
+			}
 			else
 				actor->unknown488 = false;
 			actor->unknown41c = 3;
