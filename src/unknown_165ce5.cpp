@@ -1183,6 +1183,8 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 /* rebuilds a weapon of a user from the unit's current weapon in that slot:
    its animation state, the node maps of the weapon and the arms, the
    overlays it plays */
+// score 231 (was 50): the stack frame is four bytes smaller than retail's, so every stack offset
+// inside the function is shifted.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1969,6 +1971,8 @@ void function_1421b0(transform4x3f *out, point3f const *position, quaternionf co
 void function_1dd7a0(long *reference);
 
 /* attaches the arms to the weapon's markers while the unit's aiming blends */
+// score 9 (was 9): the object pointer and the entry index are kept in swapped registers in the
+// second lookup.
 // @retail 0x168644
 void function_168644(long user_index, s_first_person_model *arms, s_first_person_model *arg_2f82bc)
 {
@@ -2045,6 +2049,8 @@ extern bool g_4f55e2;
 
 /* the render models a user's first person view draws: the arms, each
    active weapon and the unit's own body; returns how many */
+// score 20 (was 20): the game state check is tested as a byte here and and-ed with the flag mask
+// in retail, and the second condition is combined with it as a word here and as a byte in retail.
 // @retail 0x165f16
 long __stdcall first_person_weapons_get_models(long user_index, long unit_index, long maximum_count,
 	s_first_person_model *models)

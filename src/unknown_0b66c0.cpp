@@ -132,6 +132,8 @@ static __forceinline char *upload_copy_ab(char *destination, char const *source,
 	return destination;
 }
 
+// score 40 (was 40): the string pointer and the character counter are kept in different registers
+// here, and an extra register is pushed and restored around the copy loop.
 // @retail 0xb6220
 bool function_b6220(char const *volatile string, long start, long count, char *destination)
 {
@@ -304,6 +306,9 @@ bool function_b51b0(s_transport_endpoint *endpoint, s_type_99af70 const *address
 
 bool function_7af40(s_type_99af70 const *address);
 
+// score 32 (was 32): the connection state is cleared with the three field stores in a different
+// order here, the flag is written as a word here and or-ed into the field in retail, and the two
+// calls take their arguments in a different order.
 // @retail 0xb5d40
 bool s_http_connection_ab::connect(long address, word port, char const *path, bool flag)
 {
@@ -365,6 +370,9 @@ struct s_http_callbacks_ab
 
 s_http_callbacks_ab g_4d8b1c;
 
+// score 20 (was 20): the two zeroed endpoint words are written through a register here and through
+// memory in retail, the registry entry stores the state field instead of zero, and the count is
+// incremented in place instead of being read, incremented and written back.
 // @retail 0xb5cd0
 s_http_connection_ab *function_b5cd0(s_http_connection_ab *connection)
 {

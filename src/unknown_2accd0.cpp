@@ -422,6 +422,8 @@ bool file_copy_open(s_saved_game_file *copy, bool *exists)
 done:
 	return result;
 }
+// score 19 (was 19): the second argument of the save call is a pointer held in a register here and
+// the address of the local buffer in retail.
 // @retail 0x2ad480
 void saved_game_file_copy_finish(s_saved_game_file *file, bool succeeded)
 {
