@@ -372,14 +372,14 @@ real __stdcall function_265d30(long actor_index, long prop_index);
 
 /* the iterators of unknown_26b230.cpp (clump_next_prop and clump_next_node
    are copies of its own); this one also keeps the clump's datum index */
-struct s_clump_iterator
+struct s_indexed_clump_walk
 {
 	s_clump *clump;
 	s_record_pool_iterator pool;
 	long clump_index;
 };
 
-PRIVATE __forceinline bool clump_iterator_next(s_clump_iterator *iterator)
+PRIVATE __forceinline bool indexed_clump_walk_next(s_indexed_clump_walk *iterator)
 {
 	s_clump *result = NULL;
 	if (g_4f55d0->active)
@@ -428,10 +428,10 @@ void __stdcall function_1c9830(short team_a, short team_b, bool broken, bool rem
 	if (!g_4f55d0->active)
 		return;
 
-	s_clump_iterator clumps;
+	s_indexed_clump_walk clumps;
 	clumps.pool.data = g_502420;
 	clumps.pool.index = NONE;
-	while (clump_iterator_next(&clumps))
+	while (indexed_clump_walk_next(&clumps))
 	{
 		short other_team;
 		if (clumps.clump->team == team_a)
