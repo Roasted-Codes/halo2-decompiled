@@ -10,6 +10,16 @@ matched 895 of 1041 Havok functions (112359 of 234536 bytes, 47.91%)
 ```
 
 0 new matches, none lost:
+- @marioag0412's #686, #687:  match.
+
+## 2026-10-22: 9468 functions match
+
+```
+matched 9468 of 11321 game functions (1465173 of 2784283 bytes, 52.62%)
+matched 895 of 1041 Havok functions (112359 of 234536 bytes, 47.91%)
+```
+
+0 new matches, none lost:
 - @ccgman123's #654, #663:  match.
 
 ## 2026-10-22: 9468 functions match
