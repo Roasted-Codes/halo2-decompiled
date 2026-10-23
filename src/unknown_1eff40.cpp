@@ -74,9 +74,10 @@ struct s_lookup_ray_result
 void function_141590(const transform4x3f *matrix, transform4x3f *inverse);
 bool __stdcall function_1de6d0(s_1de6d0 *query, long root, real start, real end);
 
-/* the point and the vector in the matrix's frame (the x row sums as
-   unknown_11c380.cpp's transform4x3f_apply_point does) */
-static inline void transform_point(transform4x3f const *matrix, point3f const *point, point3f *result)
+/* the point and the vector in the matrix's frame; the point's x row is
+   summed term by term, as unknown_11c380.cpp's transform4x3f_apply_point
+   does, which keeps retail's order of the products */
+static inline void transform4x3f_apply_point(transform4x3f const *matrix, point3f const *point, point3f *result)
 {
  real x = point->x, y = point->y, z = point->z;
  if (matrix->scale != 1.0f)
@@ -93,7 +94,7 @@ static inline void transform_point(transform4x3f const *matrix, point3f const *p
  result->z = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x + matrix->position.z;
 }
 
-static inline void transform_vector(transform4x3f const *matrix, vector3f const *vector, vector3f *result)
+static inline void transform4x3f_apply_vector(transform4x3f const *matrix, vector3f const *vector, vector3f *result)
 {
  real i = vector->i, j = vector->j, k = vector->k;
  if (matrix->scale != 1.0f)
@@ -107,13 +108,14 @@ static inline void transform_vector(transform4x3f const *matrix, vector3f const 
  result->k = matrix->up.k * k + matrix->left.k * j + matrix->forward.k * i;
 }
 
+// score 9 (was 123): in the point's x row retail multiplies forward first
+// and adds up last ((left + forward) + up); every order of the three
+// products tried keeps left.i in xmm0 only in up-left-forward order
 // @retail 0x1eff40
 bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
  const vector3f *direction, s_lookup_ray_result *result)
 {
- (void)&lookup; (void)&flags; (void)&point; (void)&direction; (void)&result;
- s_lookup_ray_result *const *result_reference = &result;
- s_1de6d3 *hit = &(*result_reference)->hit;
+ s_1de6d3 *hit = &result->hit;
  bool found = false;
  s_iterator iterator;
  hit->field_0 = FLT_MAX;
@@ -126,9 +128,9 @@ bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
   transform4x3f inverse;
   function_141590((const transform4x3f *)lookup->pointer_b + node, &inverse);
   point3f local_point;
-  transform_point(&inverse, point, &local_point);
+  transform4x3f_apply_point(&inverse, point, &local_point);
   vector3f local_direction;
-  transform_vector(&inverse, direction, &local_direction);
+  transform4x3f_apply_vector(&inverse, direction, &local_direction);
   s_1de6d0 query;
   query.field_0 = flags;
   query.field_4 = (s_1de6d2 const *)iterator.current;
@@ -145,9 +147,9 @@ bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
   query.field_24 = NONE;
   if (function_1de6d0(&query, 0, 0.0f, fraction < 0.0f ? 0.0f : fraction > 1.0f ? 1.0f : fraction))
   {
-   (*result_reference)->position = position;
-   (*result_reference)->node = (short)node;
-   (*result_reference)->item = iterator.group;
+   result->position = position;
+   result->node = (short)node;
+   result->item = iterator.group;
    found = true;
   }
  }
