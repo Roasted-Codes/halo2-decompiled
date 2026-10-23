@@ -24,8 +24,7 @@ void unicode_string_snprintf(word *buffer, long maximum_count, word const *forma
 
 // score 9 (was 9): the call to XCreateSaveGame takes the full name from the
 // register edi, retail recomputes its address with a lea, so retail's code is
-// three bytes longer, its two branch targets sit further away and ours has
-// three more bytes of padding at the end
+// five bytes longer and ours has five more bytes of padding at the end
 // @retail 0x215f40
 bool __stdcall function_215f40(long type, byte *buffer)
 {

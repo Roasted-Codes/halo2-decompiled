@@ -53,6 +53,8 @@ void function_1d0080(hkRigidBody *arg_0, s_havok_component *arg_1, byte const *a
 void function_1d6ad0(s_havok_component *arg_0, s_physics_model_owner *arg_1);
 
 #pragma inline_depth(0)
+// score 9 (was 9): retail zeroes the eight words of the mask with eax and
+// ours with ecx, so the zeroing and the eight stores differ.
 // @retail 0x1d5940
 long __stdcall function_1d5940(s_havok_component *arg_0, bool arg_1, bool arg_2, bool arg_3)
 {
