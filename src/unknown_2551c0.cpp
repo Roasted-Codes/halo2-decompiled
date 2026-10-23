@@ -305,13 +305,16 @@ bool function_255d60(long arg_0, point3f const *arg_1, real arg_2, real arg_3, s
 			break;
 		}
 		bool local_8 = function_1df560(local_0->unknown024, local_6->field_12);
-		if (distance3d(&local_6->field_4, arg_1) < local_20 + 6.0)
+		vector3f local_9;
+		vector3d_from_points3d(&local_6->field_4, arg_1, &local_9);
+		if (sqrt(length_sq3f(&local_9)) < local_20 + 6.0)
 		{
-			long local_10 = local_6->field_18;
-			while (local_10 != NONE)
+			s_element_502420_member_iterator local_10;
+			s_actor_view *local_11;
+			local_10.next_index = local_6->field_18;
+			local_10.index = NONE;
+			while ((local_11 = element_502420_member_next(&local_10)) != NULL)
 			{
-				s_actor_view *local_11 = actor_get(local_10);
-				local_10 = local_11->next_index;
 				if (local_11->unknown018 != NONE)
 				{
 					point3f local_12;
@@ -337,16 +340,12 @@ bool function_255d60(long arg_0, point3f const *arg_1, real arg_2, real arg_3, s
 	}
 	if (!local_3 && !team_is_enemy(local_0->unknown024, 1))
 	{
-		s_record_pool *local_15 = g_4e8c24;
-		long local_16 = NONE;
+		s_record_pool_iterator local_15;
+		local_15.data = g_4e8c24;
+		local_15.index = NONE;
 		for (;;)
 		{
-			local_16 = function_16bc00(local_15, local_16 + 1);
-			if (local_16 == NONE)
-			{
-				break;
-			}
-			byte *local_17 = local_15->data + local_15->size * local_16;
+			byte *local_17 = data_iterator_next_calling(&local_15);
 			if (!local_17)
 			{
 				break;
