@@ -700,6 +700,9 @@ struct s_85650
  s_sender *field_0c[15];
 };
 
+// score 112 (was 116): the frame is four bytes smaller than retail's
+// (sub esp,0x24 against sub esp,0x28), so every stack slot sits at another
+// offset and the record pointer is kept in EBP here and in EDX in retail.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
@@ -799,6 +802,9 @@ static inline long view_buffer_write(s_ring_buffer *buffer, long count, const vo
 }
 bool function_1995a0(const byte *source, dword source_size, byte *destination, long *compressed_size, dword capacity, long level);
 
+// score 90 (was 90): ours is seven bytes longer: the running total is zeroed
+// in a stack slot here and in a register in retail, and the two stack slots
+// that hold the count and the flag are at other offsets.
 // @retail 0x86800
 bool function_86800(dword capacity, c_simulation_view *view, dword source_size, byte *destination)
 {
@@ -905,7 +911,9 @@ bool function_862e0(c_simulation_view *view)
 bool function_685f0(void *block, long *size, byte *destination, long capacity);
 
 // score 2 (was 2): the constant 0xffff is loaded before the address of the buffer; retail loads
-// the address first.
+// the address first. The registers that carry the destination and the capacity are the
+// callee's choice, and function_685f0 in src/unknown_067e10.cpp is three instructions
+// off retail.
 // @retail 0x869a0
 bool function_869a0(c_simulation_view *view, void *block)
 {

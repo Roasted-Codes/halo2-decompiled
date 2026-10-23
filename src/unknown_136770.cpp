@@ -247,41 +247,35 @@ void function_1373c0(char *path)
 // @retail 0x137400
 void function_137400(char *path, char **a, char **b, char **c, char **d, bool flag)
 {
-	long length = (short)strlen(path);
+	short length = (short)strlen(path);
 	char *end = path + length;
 	*c = end;
 	*d = end;
 	*a = end;
 	*b = end;
-	if (length > 0)
+	for (short i = length; i > 0; i--)
 	{
-		char *p = end;
-		dword n = (word)length;
-		do
+		char *p = &path[i];
+		if (*p == '.')
 		{
-			if (*p == '.')
+			if (flag && **a == 0 && **b == 0)
 			{
-				if (flag && **a == 0 && **b == 0)
-				{
-					*p = 0;
-					*b = p + 1;
-				}
+				*p = 0;
+				*b = p + 1;
 			}
-			else if (*p == '\\')
+		}
+		else if (*p == '\\')
+		{
+			if (flag && **a == 0)
 			{
-				if (flag && **a == 0)
-				{
-					*p = 0;
-					*a = p + 1;
-				}
-				else if (**d == 0)
-				{
-					*d = p + 1;
-				}
+				*p = 0;
+				*a = p + 1;
 			}
-			p--;
-			n--;
-		} while (n);
+			else if (**d == 0)
+			{
+				*d = p + 1;
+			}
+		}
 	}
 	if (flag && **a == 0)
 	{
