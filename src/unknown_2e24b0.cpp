@@ -30,14 +30,16 @@ public:
 // where `value` sits in the cell's list of boxes, or -1
 inline long find_box_2e29b0(cell_2e1090 const *cell, unsigned short value)
 {
+	long result = -1;
 	for (long position = 0; position < cell->boxes.size; position++)
 	{
 		if (cell->boxes.data[position] == value)
 		{
-			return position;
+			result = position;
+			break;
 		}
 	}
-	return -1;
+	return result;
 }
 
 // one bit per box, set for the boxes whose x interval holds a box's lower
@@ -225,12 +227,6 @@ void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pai
 	}
 }
 
-// score 373 (was 504): the steps follow retail, with the bit setter and the
-// removal scan as inline helpers taking their inputs as arguments. Still:
-// retail keeps `this` in esi and the box in edi where ours has them the other
-// way round (reading the owner's index first, a box pointer, a signed count
-// compile alike), so most of the body differs in those two registers, and
-// ours is 24 bytes short of retail.
 // takes a box out of the sweep: every box it overlaps loses its pair (or,
 // for a grid cell's box, the cell loses it), its endpoints leave each axis,
 // and the last box moves into its place
