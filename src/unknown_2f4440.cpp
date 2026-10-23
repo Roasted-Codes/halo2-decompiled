@@ -230,11 +230,9 @@ __forceinline void capsule_triangle_2f4440(void const *a, void const *b, void co
 		heights[1] = _mm_sub_ps(ends[1], corners[0]);
 		{
 			frame_2f4440 const *frame = (frame_2f4440 const *)&planes;
-			__m128 *height = heights;
-			for (int count = 2; count != 0; count--)
+			for (int i = 0; i < 2; i++)
 			{
-				*height = frame_point_2f4440(frame, height);
-				height++;
+				heights[i] = frame_point_2f4440(frame, &heights[i]);
 			}
 		}
 		float const radius = capsule->radius + triangle->radius;
@@ -334,7 +332,26 @@ __forceinline void capsule_triangle_2f4440(void const *a, void const *b, void co
 		__m128 const direction = _mm_sub_ps(ends[1], ends[0]);
 		if (((signs[0] | signs[1]) & 7) != 7)
 		{
-			goto edges;
+			// outside an edge at both ends: each such edge taken as a
+			// capsule's segment
+			float const tolerance = ((input_2f4440 const *)input)->tolerance;
+			contacts[0].point.m128_f32[3] = tolerance;
+			contacts[1].point.m128_f32[3] = tolerance;
+			contacts[2].point.m128_f32[3] = tolerance;
+			__m128 segment[2];
+			vector_constructor_iterator(segment, sizeof(__m128), 2, function_31bc70);
+			int bit = 1;
+			for (int edge = 0; edge < 3; edge++, bit <<= 1)
+			{
+				if ((signs[0] | signs[1]) & bit)
+				{
+					continue;
+				}
+				segment[0] = corners[g_4136b0[edge + 2]];
+				segment[1] = corners[g_4136b0[edge]];
+				function_2f28f0((body_2f28f0 const *)a, segment, triangle->radius, contacts);
+			}
+			return;
 		}
 
 		// each end that lies over the triangle gives a contact, and each that does
@@ -419,31 +436,6 @@ __forceinline void capsule_triangle_2f4440(void const *a, void const *b, void co
 			}
 		}
 	}
-	return;
-
-	// outside an edge at both ends: each such edge taken as a capsule's
-	// segment
-edges:
-	{
-		float const tolerance = ((input_2f4440 const *)input)->tolerance;
-		contacts[0].point.m128_f32[3] = tolerance;
-		contacts[1].point.m128_f32[3] = tolerance;
-		contacts[2].point.m128_f32[3] = tolerance;
-		__m128 segment[2];
-		vector_constructor_iterator(segment, sizeof(__m128), 2, function_31bc70);
-		int bit = 1;
-		for (int edge = 0; edge < 3; edge++, bit <<= 1)
-		{
-			if ((signs[0] | signs[1]) & bit)
-			{
-				continue;
-			}
-			segment[0] = corners[g_4136b0[edge + 2]];
-			segment[1] = corners[g_4136b0[edge]];
-			function_2f28f0((body_2f28f0 const *)a, segment, triangle->radius, contacts);
-		}
-		return;
-	}
 }
 
 // The contacts of the capsule and the triangle that lie within the tolerance
@@ -455,35 +447,28 @@ void class_2f4440::function_2f4440(void const *a, void const *b, void const *inp
 	agent_2f4440 *agent = (agent_2f4440 *)this;
 	contact_point_2f28f0 points[3];
 	capsule_triangle_2f4440(a, b, input, &agent->weights, points);
-	contact_point_2f28f0 *point = points;
-	unsigned short *id = agent->ids;
-	for (int count = 3; count != 0; count--)
+	for (int i = 0; i < 3; i++)
 	{
-		if (point->point.m128_f32[3] < ((input_2f4440 const *)input)->tolerance)
+		if (points[i].point.m128_f32[3] < ((input_2f4440 const *)input)->tolerance)
 		{
-			if (*id == 0xffff)
+			if (agent->ids[i] == 0xffff)
 			{
-				*id = agent->owner->add_contact(a, b, input, point);
-				if (*id == 0xffff)
+				agent->ids[i] = agent->owner->add_contact(a, b, input, &points[i]);
+				if (agent->ids[i] == 0xffff)
 				{
-					goto next;
+					continue;
 				}
 			}
-			{
-				contact_2f4440 &kept = ((results_2f4440 *)collector)->contacts->next_slot();
-				kept.point = point->point;
-				kept.normal = point->normal;
-				kept.id = *id;
-			}
+			contact_2f4440 &kept = ((results_2f4440 *)collector)->contacts->next_slot();
+			kept.point = points[i].point;
+			kept.normal = points[i].normal;
+			kept.id = agent->ids[i];
 		}
-		else if (*id != 0xffff)
+		else if (agent->ids[i] != 0xffff)
 		{
-			agent->owner->release_id(*id);
-			*id = 0xffff;
+			agent->owner->release_id(agent->ids[i]);
+			agent->ids[i] = 0xffff;
 		}
-	next:
-		id++;
-		point++;
 	}
 	timer_add_2ebc80("Et");
 }

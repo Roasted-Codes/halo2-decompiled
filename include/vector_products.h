@@ -23,4 +23,11 @@ static inline vector3f *scale_vector_by_double(vector3f const *input, double sca
 	return output;
 }
 
+
+static __forceinline void scaled_difference3f(real const *first, real const *second, real scale, real *result)
+{
+    for (long component = 0; component < 3; ++component)
+        result[component] = (second[component] - first[component]) * scale;
+}
+
 #endif
