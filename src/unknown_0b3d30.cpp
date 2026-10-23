@@ -89,6 +89,9 @@ wchar_t const *g_4672dc = L"test";
 void unicode_string_snprintf(word *buffer, long maximum_count, word const *format, ...);
 
 // @retail 0xb4120
+// score 88 (was 88): retail puts the three case values in ebp and starts from
+// a value of three, ours puts them in ebx and clears ebp first, and the stack
+// slots of the locals are in another order
 bool function_b4120(long kind, struct _XUID owner, wchar_t const *filename, wchar_t *arg_d4faef, dword *path_size)
 {
     long facility;

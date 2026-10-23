@@ -539,12 +539,7 @@ short sound_driver_voice_new(
 			buffer_description.dwSize = sizeof(buffer_description);
 			buffer_description.dwFlags = (play ? DSBCAPS_FXIN2 : 0) + DSBCAPS_FXIN | DSBCAPS_CTRL3D;
 			buffer_description.dwInputMixBin = input_mixbin;
-			if (FAILED(IDirectSound_CreateSoundBuffer(SOUND_DRIVER_GLOBALS->direct_sound, &buffer_description, &voice->buffer, NULL)))
-			{
-				SOUND_DRIVER_GLOBALS->voice_count--;
-				return result;
-			}
-			else
+			if (SUCCEEDED(IDirectSound_CreateSoundBuffer(SOUND_DRIVER_GLOBALS->direct_sound, &buffer_description, &voice->buffer, NULL)))
 			{
 				DSMIXBINVOLUMEPAIR (&pairs)[5] = storage.pairs_second;
 				DSMIXBINS &mixbins = storage.mixbins;
@@ -567,6 +562,11 @@ short sound_driver_voice_new(
 				IDirectSoundBuffer_SetMinDistance(voice->buffer, FLT_MAX, DS3D_DEFERRED);
 				if (play)
 					IDirectSoundBuffer_Play(voice->buffer, 0, 0, 0);
+			}
+			else
+			{
+				SOUND_DRIVER_GLOBALS->voice_count--;
+				return result;
 			}
 		}
 		else

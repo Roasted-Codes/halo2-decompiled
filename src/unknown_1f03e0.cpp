@@ -180,6 +180,8 @@ struct s_component
 	byte unknown8c[0xa0 - 0x8c];
 };
 
+// score 3 (was 3): retail loads the fallback material into cx with the
+// seven-byte form, ours loads it into ax with the six-byte form
 // @retail 0x1f1df0
 void function_1f1df0(long component_index, long material_index, vector3f const *normal, s_shape_state *state)
 {
