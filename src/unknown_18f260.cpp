@@ -22,6 +22,9 @@ public:
 	s_key key;
 };
 
+// score 4 (was 4): retail saves edi before it stores the call's arguments,
+// ours stores the handle first and saves edi after it, so the two instructions
+// and the offsets that follow them differ.
 // @retail 0x18f260
 long c_resource_lock::method0(long handle)
 {
