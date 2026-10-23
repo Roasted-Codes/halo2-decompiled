@@ -1105,8 +1105,38 @@ void function_1c79e0(void)
 }
 
 
+/* the players as player_queries.h's s_player_iterator walks them: from +4 an
+   s_record_pool_iterator */
+struct s_ai_player_iterator
+{
+	s_ai_player_datum *player;
+	s_record_pool_iterator records;
+};
+
+struct s_actor_prop_iterator
+{
+	long index;
+	long next;
+};
+
+PRIVATE __forceinline s_prop_node_view *actor_next_prop(s_actor_prop_iterator *iterator)
+{
+	s_prop_node_view *node = NULL;
+	long index = iterator->next;
+	if (index != NONE)
+	{
+		node = prop_node_get(index);
+		iterator->index = index;
+		iterator->next = node->next_index;
+	}
+	return node;
+}
+
 long function_25d810(long object_index, long actor_index, bool create);
 
+// score 17 (was 183): the player loop keeps the player record and the object headers in the
+// other of esi and edi, with minor instruction ordering there, and the prop capsule call loads
+// its arguments in another order.
 // @retail 0x1c89b0
 short __stdcall function_1c89b0(long actor_index, short maximum_count, s_ai_capsule_view *capsules)
 {
@@ -1117,13 +1147,13 @@ short __stdcall function_1c89b0(long actor_index, short maximum_count, s_ai_caps
  long count = 0;
  if (actor->unknown07c != NONE)
  {
-  long next = element_502420_get(actor->unknown07c)->first_actor_index;
-  while (next != NONE)
+  s_element_502420_member_iterator iterator;
+  s_actor_view *other;
+  iterator.next_index = element_502420_get(actor->unknown07c)->first_actor_index;
+  iterator.index = NONE;
+  while ((other = element_502420_member_next(&iterator)) != NULL)
   {
-   long index = next;
-   s_actor_view *other = actor_get(index);
-   next = other->next_index;
-   if (index != actor_index && (short)count < maximum_count && other->unknown018 != NONE && other->unknown26c == NONE)
+   if (iterator.index != actor_index && (short)count < maximum_count && other->unknown018 != NONE && other->unknown26c == NONE)
    {
     long object_index = other->unknown018;
     if (((s_ai_object_header *)g_4e0300->data)[object_index & 0xffff].type == 0)
@@ -1131,38 +1161,43 @@ short __stdcall function_1c89b0(long actor_index, short maximum_count, s_ai_caps
    }
   }
  }
- long next = actor_get(actor_index)->first_prop_index;
- while (next != NONE)
+ s_actor_prop_iterator prop_iterator;
+ s_prop_node_view *node;
+ prop_iterator.next = actor_get(actor_index)->first_prop_index;
+ while ((node = actor_next_prop(&prop_iterator)) != NULL)
  {
-  long index = next;
-  s_prop_node_view *node = &((s_prop_node_view *)g_502418->data)[index & 0xffff];
-  next = node->next_index;
   s_prop_state_view *state = prop_node_state(node);
   s_ai_prop_target *target = &((s_ai_prop_target *)g_50241c->data)[node->unknown08 & 0xffff];
   if (!target->unknown23 && !*((bool *)state + 0x5e) && node->unknown24 == 1 && state->unknown3c == NONE)
   {
    long object_index = node->object_index;
    if (((1 << object_get(object_index)->type) & 1) && (short)count < maximum_count)
-    function_1c8940(&capsules[(short)count++], object_index, index);
+   {
+    /* retail keeps the current prop index in memory across prop_node_state */
+    function_1c8940(&capsules[(short)count], object_index, *(long const volatile *)&prop_iterator.index);
+    ++count;
+   }
   }
  }
  if (!team_is_enemy(actor->unknown024, 1))
  {
-  s_record_pool_iterator iterator;
-  iterator.data = g_4e8c24;
-  iterator.index = NONE;
+  s_ai_player_iterator iterator;
+  iterator.records.data = g_4e8c24;
+  iterator.records.index = NONE;
   s_ai_player_datum *player;
-  while ((player = (s_ai_player_datum *)data_iterator_next_inlined(&iterator)) != NULL)
+  while ((player = (s_ai_player_datum *)data_iterator_next_inlined(&iterator.records)) != NULL)
   {
    long object_index = player->unit_index;
    if (object_index == NONE)
     continue;
    s_ai_object_header *headers = (s_ai_object_header *)g_4e0300->data;
-   if (headers[object_index & 0xffff].type != 0)
+   s_ai_object_header *header = &headers[object_index & 0xffff];
+   if (header->type != 0)
     continue;
-   long parent = object_get(object_index)->parent_index;
-   if (parent != NONE)
+   s_slot_object_view *object = (s_slot_object_view *)header->object;
+   if (object->parent_index != NONE)
    {
+    long parent = object->parent_index;
     long root = function_baf40(parent);
     if (headers[root & 0xffff].type == 1)
      parent = root;
