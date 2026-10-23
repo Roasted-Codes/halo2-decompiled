@@ -40,6 +40,9 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 }
 
 // @retail 0x11fc80
+// score 83 (was 83): retail multiplies the two plane components in the other
+// order and keeps the running distance in xmm2, ours in xmm3; the helper that
+// builds the vector is inlined from include/unknown_0259d0.h
 long function_11fc80(
 	plane3f const *plane,
 	bool keep_inside,

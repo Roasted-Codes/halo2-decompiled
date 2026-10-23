@@ -188,42 +188,23 @@ bool c_session_client::function_06de10(s_session_remote *remote)
 	return found;
 }
 
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
-// score 14 (was 14): retail keeps the memset's zero in ecx and copies every
-// argument through edx; ours copies some through ecx, so it clears ecx again
-// before the mode store, and it clears the flags at +0x48, +0x49, +0x4a where
-// retail clears +0x49, +0x48, +0x4a. A zero local held through a const
-// reference, references to the cleared fields, a volatile owner, chained
-// clears, and fewer or no barriers score 15 to 30. Clearing the last two flags
-// in one assignment scores 13, but only by lining up one instruction while
-// moving the store order further from retail's; the 600 s permutation runs
-// found nothing else.
 // @retail 0x6de50
 void session_owner_initialize(s_session_owner *owner_, long unknown40, long unknown44, void *unknown2c, c_class_58d20 *session_a, c_class_58d20 *session_c, c_class_58d20 *session_b, void *unknown3c)
 {
 	s_session_owner_view *owner = (s_session_owner_view *)owner_;
 	memset(owner->states, 0, sizeof(owner->states));
-	_ReadWriteBarrier();
-	owner->unknown40 = unknown40;
-	_ReadWriteBarrier();
-	owner->unknown44 = unknown44;
-	_ReadWriteBarrier();
-	owner->unknown2c = unknown2c;
-	_ReadWriteBarrier();
-	owner->session_a = session_a;
-	_ReadWriteBarrier();
-	owner->session_c = session_c;
-	_ReadWriteBarrier();
-	owner->session_b = session_b;
-	_ReadWriteBarrier();
 	owner->mode = 0;
+	owner->unknown40 = unknown40;
+	owner->unknown44 = unknown44;
+	owner->unknown2c = unknown2c;
+	owner->session_a = session_a;
+	owner->session_c = session_c;
+	owner->session_b = session_b;
 	owner->unknown3c = unknown3c;
-	owner->unknown48 = false;
 	owner->unknown49 = false;
+	owner->unknown48 = false;
 	owner->failed = false;
 }
-#pragma function(_ReadWriteBarrier)
 
 // @retail 0x6df60
 inline void function_06df60(s_session_owner *o, long a, long b, long c)
@@ -865,6 +846,10 @@ bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
 
 // Retail aligns its frame; 0x6fcc0, 0x6f940 and 0x6fa60 push all three arguments.
 // The body still differs; this boundary preserves those callers.
+// score 40 (was 40): the three copies in the loop keep the source and the
+// destination in the other registers, ours copies from esi to ecx and retail
+// from ecx to esi, and the count's increment sits before the loop counter's
+// reload in ours and after it in retail
 // @retail 0x6fe90 standard
 bool __stdcall function_6fe90(c_session_state_joining *state, bool all_players, bool reserve)
 {

@@ -52,6 +52,9 @@ PRIVATE __forceinline real extent_length(__m128 vector)
 #define EXTENT_MAX(a, b) ((a) > (b) ? (a) : (b))
 
 // @retail 0x182d90
+// score 103 (was 98): in the case-4 branch retail clamps both bounds and
+// returns from there, ours takes the square root of the sum first and clamps
+// once, and the two branches sit in another order
 real __stdcall function_182d90(c_extent_shape *shape, real radius,
 	s_extent_transform const *transform, real *minimum, real *maximum)
 {

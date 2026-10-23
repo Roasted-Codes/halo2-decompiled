@@ -275,22 +275,6 @@ __forceinline __m128 weighted_309b50(__m128 const *points, float const *weights)
 	return _mm_add_ps(_mm_add_ps(_mm_mul_ps(w0, points[0]), second), third);
 }
 
-// score 529 (was 572; 738 before round 47): the switch only jumps to labelled blocks written in
-// retail's order (four points down to none, then the three growth steps);
-// with the cases' code inside the switch our build laid it out from case 0
-// along the growth gotos. The second-shape points are declared before the
-// first-shape ones, which puts them in retail's slots, and the tetrahedron's
-// cross product is spelled out (the shared helper scored 696) with its edges
-// taken through a reference helper (so the second difference is read again
-// as retail does), the triangle's edges are named before the cross product
-// (arguments are evaluated last first), and the near-zero tests are written
-// !(x <= c) for retail's jp. Still: the
-// frame is 0x10 larger (retail shares 0x20 between the hull's new point, the
-// first step's answer and the collapsed case's along vector, and keeps the
-// weights at 0x20 and 0x30; ours at 0x40 and 0x20), the three squared
-// lengths sit in other slots (retail: segment 0x54, height 0x58, triangle
-// 0x5c, point 0x10), and retail's copies of the face's corners add the offset to
-// the pointer before storing.
 // The penetration of the two shapes: 0 with the direction, point and
 // distance in `arg_0` (or nothing found by the first step), 2 when the
 // simplex can't grow or the hull fails too often, and from the hull, 1 when
@@ -463,7 +447,7 @@ long class_309b50::function_309b50(long arg_0)
 			normal = normalized_309b50(normal);
 			result->distance = 0.0f;
 			result->direction = normal;
-			float weights[4];
+			float weights[3];
 			function_308260(&g_4801e0, &differences[0], &differences[1], &differences[2], weights);
 			result->point = weighted_309b50(simplex->points, weights);
 			result->field_24 = 0.5f;
@@ -552,7 +536,7 @@ long class_309b50::function_309b50(long arg_0)
 		found:
 			// the face the origin projects into, walked to from the nearest
 			{
-				float weights[4];
+				float weights[3];
 				for (int step = 0; ; )
 				{
 					differences[0] = *face->edges[0].vertex;

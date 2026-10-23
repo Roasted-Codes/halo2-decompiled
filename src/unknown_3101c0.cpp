@@ -223,6 +223,11 @@ struct array_3101c0
 	}
 };
 
+struct s_30cb70
+{
+	unsigned char field_0;
+};
+
 // the world's description
 struct s_3111d0
 {
@@ -238,7 +243,7 @@ struct s_3111d0
 	float field_48;
 	long field_4c;
 	bool field_50;
-	unsigned char field_51;
+	s_30cb70 field_51;
 	char unknown52[2];
 	float field_54;
 	float field_58;
@@ -260,10 +265,25 @@ struct s_3111d0
 	long field_8c;
 };
 
-struct s_30cb70
+struct s_steps_3101c0
 {
-	unsigned char field_0;
+	float field_0;
+	float field_4;
+	float field_8;
+	float field_c;
+	char unknown10[8];
+	float field_18;
+	long field_1c;
+	float field_20;
 };
+
+struct s_pair_3101c0
+{
+	float field_0;
+	float field_4;
+};
+
+enum state_3101c0 { state_3101c0_clear = 0 };
 
 class c_3101c0 : public referenced_2d88a0
 {
@@ -298,9 +318,8 @@ public:
 	array_3101c0 array_108;
 	array_3101c0 array_114;
 	array_3101c0 array_120;
-	bool field_12c;
-	bool field_12d;
-	char unknown12e[2];
+	state_3101c0 field_12c : 8;
+	state_3101c0 field_12d : 8;
 	long field_130;
 	long field_134;
 	slot_table_372a40 *slots;
@@ -308,17 +327,9 @@ public:
 	settings_values_3101c0 settings_copy;
 	long field_150;
 	char unknown154[0x160 - 0x154];
-	float field_160;
-	float field_164;
-	float field_168;
-	float field_16c;
-	char unknown170[0x178 - 0x170];
-	float field_178;
-	long field_17c;
-	float field_180;
+	s_steps_3101c0 field_160;
 	char unknown184[0x1a8 - 0x184];
-	float field_1a8;
-	float field_1ac;
+	s_pair_3101c0 field_1a8;
 	char unknown1b0[0x210 - 0x1b0];
 	__m128 field_210;
 	__m128 field_220;
@@ -341,15 +352,6 @@ public:
 	void function_30cb70(s_30cb70 arg_0);
 };
 
-// score 35 (was 35): the call to 0x30cb70 passes its one-byte argument
-// through a stack copy where retail pushes it zero-extended (retail's callee
-// takes a plain byte; the existing declaration takes s_30cb70), the 0.99 and
-// the reciprocal at 0x178 and 0x180 are copied on to 0x1a8 and 0x1ac from
-// the FPU and a register where retail reloads them, and the flag at 0x12c is
-// cleared after the last object is kept rather than before. Copying the two
-// through integer casts, one-float structs or memcpy gives retail's reloads but
-// lets the integer stores move ahead of them (score 52); a constructor on
-// s_30cb70 keeps the stack copy, and the permuter found nothing.
 // @retail 0x3101c0
 c_3101c0::c_3101c0(s_3111d0 const &description, long version)
 {
@@ -412,29 +414,29 @@ c_3101c0::c_3101c0(s_3111d0 const &description, long version)
 		((hkWorld *)this)->entity_world_insert((hkEntity *)fixed_body);
 	}
 	settings_copy = *(settings_values_3101c0 *)settings;
-	field_160 = 1.0f;
-	field_164 = description.field_44;
-	field_168 = description.field_48;
-	field_16c = description.field_44 * 0.5f;
-	field_17c = description.field_4c;
-	field_178 = 0.99f;
-	field_180 = 1.0f / description.field_4c;
-	field_1ac = field_180;
-	field_1a8 = field_178;
+	s_steps_3101c0 &steps = field_160;
+	steps.field_0 = 1.0f;
+	steps.field_4 = description.field_44;
+	steps.field_8 = description.field_48;
+	steps.field_c = description.field_44 * 0.5f;
+	steps.field_1c = description.field_4c;
+	steps.field_20 = 1.0f / description.field_4c;
+	steps.field_18 = 0.99f;
+	s_pair_3101c0 &pair = field_1a8;
+	pair.field_4 = steps.field_20;
+	pair.field_0 = steps.field_18;
 	field_150 = 0;
 	field_254 = 0;
 	field_23e = false;
 	field_240 = false;
 	if (description.field_50)
 	{
-		s_30cb70 value;
-		value.field_0 = description.field_51;
-		function_30cb70(value);
+		function_30cb70(description.field_51);
 	}
 	field_248 = (field_244 = description.field_54) * description.field_58;
 	field_24c = description.field_5c;
 	field_250 = new last_object_3101c0();
-	field_12c = false;
 	field_c0 = 0;
-	field_12d = false;
+	field_12c = state_3101c0_clear;
+	field_12d = state_3101c0_clear;
 }
