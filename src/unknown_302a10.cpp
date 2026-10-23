@@ -24,11 +24,6 @@ inline __m128 cross_302a10(__m128 const &a, __m128 const &b)
 		_mm_mul_ps(_mm_shuffle_ps(a, a, 0xd2), _mm_shuffle_ps(b, b, 0xc9)));
 }
 
-// score 30 (was 102): the dropped point is copied field by field through a
-// source and a destination of its own, and the five is set before the used
-// flags; ours still keeps the second point's offset in ebx where retail keeps
-// it in edx, and so holds the third point in a register instead of reloading
-// it, which moves the cross product's registers
 // @retail 0x302a10
 int __cdecl function_302a10(point_302a10 **points, void *arg_1, void *arg_2, owner_302a10 *owner)
 {
@@ -57,8 +52,8 @@ int __cdecl function_302a10(point_302a10 **points, void *arg_1, void *arg_2, own
 	int second_index = best;
 	used[best] = true;
 
-	point_302a10 const *second = points[second_index];
 	largest = 0.0f;
+	point_302a10 const *second = points[second_index];
 	for (int i = 0; i < 5; i++)
 	{
 		if (!used[i])
@@ -73,8 +68,9 @@ int __cdecl function_302a10(point_302a10 **points, void *arg_1, void *arg_2, own
 	}
 	used[best] = true;
 
+	int third_index = best;
 	point_302a10 const *third = points[best];
-	__m128 edge = _mm_sub_ps(points[second_index]->position, third->position);
+	__m128 edge = _mm_sub_ps(points[second_index]->position, points[third_index]->position);
 	largest = 0.0f;
 	for (int i = 0; i < 5; i++)
 	{

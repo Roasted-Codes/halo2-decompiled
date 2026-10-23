@@ -547,6 +547,7 @@ void __stdcall function_43720(s_43740_input *input)
     function_52d40(input->bitmap, input->vertices.shader, input->tag, false);
 }
 
+// score 63 (was 63): retail reads the object's field before the frame is set up and compares it with -1, ours loads it into ebp and compares ebp
 // @retail 0x43740
 void function_43740(s_ribbon_source *source, s_ribbon_definition *definition, short slot)
 {

@@ -1045,8 +1045,6 @@ PRIVATE __forceinline void function_25a131(vector3f const *arg_0, vector3f const
 	arg_2->k -= first.j * arg_1->i;
 }
 
-// score 51 (was 51): the float temporaries are in different xmm registers and the multiplications are in the
-// other order.
 // @retail 0x25a130
 void function_25a130(long actor_index, long object_index, s_cs_facing *facing)
 {
@@ -1082,9 +1080,7 @@ void function_25a130(long actor_index, long object_index, s_cs_facing *facing)
 			{
 				s_cs_facing_object *object = ((s_cs_facing_object_header *)g_4e0300->data)[object_index & 0xffff].object;
 
-				vector3f const *up_source = &object->up;
-				vector3f const *forward_source = &forward;
-				function_25a131(up_source, forward_source, &side);
+				cs_cross_product3d(&object->up, &forward, &side);
 				if (function_30bf0(&side) == 0.f)
 				{
 					side = *g_4687a8;
