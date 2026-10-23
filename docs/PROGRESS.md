@@ -9,6 +9,16 @@ matched 9512 of 11321 game functions (1489204 of 2784283 bytes, 53.49%)
 matched 927 of 1041 Havok functions (132952 of 234536 bytes, 56.69%)
 ```
 
+0 new matches, none lost:
+- @marioag0412's #733, #737:  match.
+
+## 2026-10-23: 9512 functions match
+
+```
+matched 9512 of 11321 game functions (1489204 of 2784283 bytes, 53.49%)
+matched 927 of 1041 Havok functions (132952 of 234536 bytes, 56.69%)
+```
+
 2 new matches, none lost:
 - @coldspear's #715, #734, #735: `0x1b6450` and `0x255d60` match.
 
