@@ -3900,7 +3900,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00121120,252,game,speed,a16 pad,,,001a1050 00213380 002d6765 002d6779,src/unknown_120d80.cpp,matched
 00121220,87,game,speed,a16 pad,,,,src/unknown_120d80.cpp,matched
 00121280,199,game,speed,a16 pad,,,,src/unknown_120d80.cpp,matched
-00121350,534,game,speed,a16 pad,,,001208b0 001209c0 00120d80 00121220 00121280 001a0f10 001a1310 00213380 002d2084 002d6765 002d6779,src/unknown_120d80.cpp,todo
+00121350,534,game,speed,a16 pad,,,001208b0 001209c0 00120d80 00121220 00121280 001a0f10 001a1310 00213380 002d2084 002d6765 002d6779,src/unknown_120d80.cpp,matched
 00121570,433,game,speed,a16 pad ebp,,,0011ca80 0011cb00 00122810 001368f0 00137320 001373c0 003203e0 0033039a,src/font_loading.cpp,matched
 00121730,89,game,speed,a16 pad,,,0011c9c0 00137320,src/font_loading.cpp,matched
 00121790,533,game,speed,a16 pad,,,001373c0 003203e0 003218f0 00321940,src/font_loading.cpp,matched
