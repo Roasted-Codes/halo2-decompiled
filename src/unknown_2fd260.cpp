@@ -37,9 +37,6 @@ public:
 
 // the vertex furthest along a direction, with its index in the fourth term
 // tagged with the bits of 0.5
-// score 33 (was 50): the direction's terms are loaded in another order, the
-// case 14 block sits before the default's block instead of after it, and the
-// tagged index is computed before the last term is stored.
 // @retail 0x2fd260
 void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *support) const
 {
@@ -63,7 +60,33 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 			switch (better)
 			{
 			default:
-				if (dots.m128_f32[0] > dots.m128_f32[1])
+				if (!(dots.m128_f32[0] > dots.m128_f32[1]))
+				{
+					if (dots.m128_f32[1] > dots.m128_f32[2])
+					{
+						if (dots.m128_f32[1] > dots.m128_f32[3])
+						{
+							best_dot = dots.m128_f32[1];
+							best_index = i + 1;
+						}
+						else
+						{
+							best_dot = dots.m128_f32[3];
+							best_index = i + 3;
+						}
+					}
+					else if (dots.m128_f32[2] > dots.m128_f32[3])
+					{
+						best_dot = dots.m128_f32[2];
+						best_index = i + 2;
+					}
+					else
+					{
+						best_dot = dots.m128_f32[3];
+						best_index = i + 3;
+					}
+				}
+				else
 				{
 					if (dots.m128_f32[0] > dots.m128_f32[2])
 					{
@@ -88,29 +111,6 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 						best_dot = dots.m128_f32[3];
 						best_index = i + 3;
 					}
-				}
-				else if (dots.m128_f32[1] > dots.m128_f32[2])
-				{
-					if (dots.m128_f32[1] > dots.m128_f32[3])
-					{
-						best_dot = dots.m128_f32[1];
-						best_index = i + 1;
-					}
-					else
-					{
-						best_dot = dots.m128_f32[3];
-						best_index = i + 3;
-					}
-				}
-				else if (dots.m128_f32[2] > dots.m128_f32[3])
-				{
-					best_dot = dots.m128_f32[2];
-					best_index = i + 2;
-				}
-				else
-				{
-					best_dot = dots.m128_f32[3];
-					best_index = i + 3;
 				}
 				break;
 			case 0:

@@ -477,8 +477,7 @@ void class_2e9d90::function_2e9d90(void const *a, void const *b, void const *inp
 		children.container = container;
 		if (g_480398)
 		{
-			array_2e9530 *const elements = &self->elements;
-			refresh_in_place_2e96a0(elements, &keys, a, &children, (context_2e9210 const *)input, query, self->value);
+			refresh_in_place_2e96a0(&self->elements, &keys, a, &children, (context_2e9210 const *)input, query, self->value);
 		}
 		else
 		{

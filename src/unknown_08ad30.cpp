@@ -804,6 +804,9 @@ local_3:
 }
 
 /* makes count (at most four) new entities, chained, of the given handlers */
+// score 10 (was 10): in the cleanup loop retail keeps the index in ebp and the
+// empty marker in ebx, ours keeps the index in ebx and the marker in ebp, so
+// the two loads, the two stores and the counter differ.
 // @retail 0x8a210
 bool entity_table_new_entities(long *identifiers, c_entry_table *table, long count, long const *handler_indices)
 {
