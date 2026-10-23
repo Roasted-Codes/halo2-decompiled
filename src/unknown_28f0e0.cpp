@@ -21,7 +21,7 @@ struct s_28f0e1 { byte field_0[0x134]; long field_134; byte field_138[2]; short 
 struct s_28f0e2 { byte field_0[0xa4]; bool field_a4; byte field_a5[3]; long field_a8; long field_ac; };
 
 // @retail 0x28f0e0
-bool function_28f0e0(vector3f const *arg_0, s_28f0e0 const *arg_1, long arg_2, long arg_3)
+bool function_28f0e0(long arg_2, s_28f0e0 const *arg_1, vector3f const *arg_0, long arg_3)
 {
     s_28f0e1 *local_0 = (s_28f0e1 *)object_get(arg_2);
     vector3f local_1;
@@ -29,7 +29,8 @@ bool function_28f0e0(vector3f const *arg_0, s_28f0e0 const *arg_1, long arg_2, l
     vector3f tangent;
     vector3f const *local_2;
     vector3f const *local_3;
-    if (normalize_inline(&local_1) > 0.0f)
+    real magnitude = normalize_inline(&local_1);
+    if (magnitude > 0.0f)
     {
         cross3f(&local_1, &arg_1->field_3c, &tangent);
         if (function_30bf0(&tangent) > 0.0f)

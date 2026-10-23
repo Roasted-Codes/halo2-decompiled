@@ -1046,6 +1046,7 @@ bool __stdcall function_38450(byte *state, byte const *definition, real remainin
 
 // Disabled: the shared camera is a 0x24-byte prefix, but 0x12fa0 reads through +0x36; shared addresses prohibited.
 #if 0
+#include <xtl.h>
 extern byte g_4670bc;
 extern byte *g_485a80;
 extern long g_4858b8;

@@ -168,13 +168,6 @@ void sweep_batches_2e50d0::function_2e50d0(owners_2e50d0 const *owners, bounds_a
 	}
 }
 
-// score 243 (new): the same length as retail and the same steps. Still: ours
-// keeps `this` in edi and the owner count in esi where retail has them the
-// other way round, and the frame orders the arrays differently (retail: the
-// x, y and z lists at 0x70, 0x5c and 0x48, the endpoint list at 0x34; ours:
-// the endpoint list at 0x70 and the three lists below it). Scoping the lists
-// or the renumber table in blocks, or the endpoint list in a helper, did not
-// move them.
 // the boxes of the owners taken out together: the pairs they ended are
 // reported, the last boxes move into their places, each axis drops their
 // endpoints and renumbers the rest, and the grid cells follow
@@ -201,7 +194,7 @@ void sweep_batches_2e50d0::function_2e5590(owners_2e50d0 const *owners, pairs_2e
 	x_slots.size = removed;
 	y_slots.size = removed;
 	z_slots.size = removed;
-	long gone;
+	long gone = 0;
 	{
 		for (int i = 0, j = 0; i < count; i++, j += 2)
 		{

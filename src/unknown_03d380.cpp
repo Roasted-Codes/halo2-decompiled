@@ -684,11 +684,9 @@ void __stdcall function_226030(dword flags)
 
 // Disabled: shared decal handles currently hold 256 entries; retail initializes 1024.
 #if 0
-extern byte *g_509444;
-long __stdcall function_43820(long value, void const *a, void const *b);
-bool __stdcall function_43850(void const *a, void const *b);
-void function_13d170(void *memory, char const *name, long size, long data_size, long maximum,
-    void *hash, void *compare, long context, c_data_allocator *allocator);
+#include "crc.h"
+#include "physical_memory.h"
+extern D3DResource *g_509444;
 
 // Retail 0x43890
 void function_43890()
@@ -697,18 +695,18 @@ void function_43890()
     if (!state) GetLastError();
     *(long *)state = 1;
     long size = 0x14000;
-    game_state_globals.field_8 += size;
-    byte *buffer = (byte *)game_state_globals.base_address + 0x3fe000 - game_state_globals.field_8;
-    g_509444 = state;
-    function_163ba0(&size, 4, &game_state_globals.allocation_size_checksum);
+    game_state_globals.unknown8 += size;
+    byte *buffer = (byte *)game_state_globals.base_address + 0x3fe000 - game_state_globals.unknown8;
+    g_509444 = (D3DResource *)state;
+    function_163ba0(&game_state_globals.allocation_size_checksum, &size, 4);
     *(byte **)(state + 4) = buffer;
     *(long *)(state + 8) = 0;
     if ((*(long *)state & 0x70000) != 0x20000) buffer = (byte *)((dword)buffer & 0x0fffffff);
     *(byte **)(state + 4) = buffer;
     c_data_allocator *allocator = g_510c2c;
     void *table = allocator->allocate(0x613c);
-    function_13d170(table, "decal vertex cache", 0x500, 6, 1024,
-        (void *)function_43820, (void *)function_43850, 0, allocator);
+    function_13d170((s_physical_object *)table, "decal vertex cache", 0x500, 6, 1024,
+        function_43820, (physical_block_busy_proc)function_43850, 0, allocator);
     memset(g_4c8798, 0xff, 1024 * sizeof(dword));
     g_509448 = (s_game_proc_table_509448 *)table;
 }
