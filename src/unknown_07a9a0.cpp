@@ -214,50 +214,9 @@ void function_07b3e0(void)
 	g_4cf8d8 = data_new_inlined("transport qos attempts", 0x20, 8, 0, g_468758);
 }
 
-/* retail inlines the absolute-index walk of function_16bc00 here */
-static __inline long next_absolute_index(s_record_pool *data, long index)
-{
-	long result = NONE;
-
-	if (index >= 0)
-	{
-		for (; index < data->high_water_index; index++)
-		{
-			if (data->bitmap[index >> 5] & (1 << (index & 0x1f)))
-			{
-				result = index;
-				break;
-			}
-		}
-	}
-
-	return result;
-}
-
-static __inline byte *iterator_next(s_record_pool_iterator *iterator)
-{
-	s_record_pool *data = iterator->data;
-	long index = next_absolute_index(data, iterator->index + 1);
-	byte *result;
-
-	if (index != NONE)
-	{
-		result = data->data + data->size * index;
-		iterator->index = index;
-		iterator->datum_index = (*(short *)result << 16) | index;
-	}
-	else
-	{
-		iterator->index = data->maximum_count;
-		iterator->datum_index = NONE;
-		result = 0;
-	}
-
-	return result;
-}
-
-// score 58 (was 58): retail pushes ebx and loads the base pointer into ebp, ours pushes ebp
-// and loads it into ebx; the loop also starts at a different offset.
+// score 58 (was 58): retail keeps the pool in two registers (ebx for the
+// bitmap scan, ebp for the datum address) and aligns the scan loop; ours uses
+// one register and no loop padding (the 11 missing bytes).
 // @retail 0x7b430
 void function_07b430(void)
 {
@@ -268,7 +227,7 @@ void function_07b430(void)
 		iterator.data = g_4cf8d8;
 		iterator.datum_index = NONE;
 		iterator.index = NONE;
-		while (iterator_next(&iterator))
+		while (data_iterator_next_inlined(&iterator))
 		{
 			qos_release(iterator.datum_index);
 		}

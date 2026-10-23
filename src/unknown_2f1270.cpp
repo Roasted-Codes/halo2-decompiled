@@ -86,14 +86,13 @@ __forceinline int __cdecl query_contact_2f1270(body_2f1270 const *a, body_2f1270
 	rounded_2f1270 const *sphere = a->shape;
 	rounded_2f1270 const *triangle = b->shape;
 	__m128 const *centre = &a->placement->transform.position;
-	transform_2f1270 const *frame = &b->placement->transform;
 	__m128 corners[3];
 	__m128 *out = corners;
 	__m128 const *in = triangle->corners;
 	int count = 3;
 	while (--count >= 0)
 	{
-		transform_2f1270_point(*out, frame, *in);
+		transform_2f1270_point(*out, &b->placement->transform, *in);
 		out++;
 		in++;
 	}

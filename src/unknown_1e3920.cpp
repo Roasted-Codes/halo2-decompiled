@@ -108,8 +108,7 @@ struct s_actor_point_request
 	long iterator_index;
 	long datum_index;
 	long group_index;
-	long actor_index;
-	long next_actor_index;
+	s_element_502420_member_iterator actors;
 	short type;
 	short mode;
 	real radius;
@@ -161,12 +160,10 @@ PRIVATE __forceinline s_actor_point_group *actor_point_next_group(s_actor_point_
 	return result;
 }
 
-// score 50 (was 50): retail holds the field in EAX and the -1 sentinel in EDX
-// where ours holds the field in ECX and the sentinel in EAX, so the compares
-// and the conditional moves differ.
 // @retail 0x1e47d0
 s_actor_moving *function_1e47d0(s_actor_point_request *request)
 {
+	s_actor_view *actor;
 	for (;;)
 	{
 		if (request->index == NONE)
@@ -188,38 +185,33 @@ s_actor_moving *function_1e47d0(s_actor_point_request *request)
 					if (sqrt(length_sq3f(&delta)) < request->radius + 6.0)
 					{
 						request->index = request->group_index;
-						request->next_actor_index = ((s_actor_point_group *)g_502420->data)[request->index & 0xffff].first_actor;
+						request->actors.next_index = ((s_actor_point_group *)g_502420->data)[request->index & 0xffff].first_actor;
 						break;
 					}
 				}
 			}
 		}
 		if (request->index == NONE)
-			return NULL;
-		long next_actor_index = request->next_actor_index;
-		s_actor_moving *actor = NULL;
-		if (next_actor_index != NONE)
 		{
-			actor = actor_moving_get(next_actor_index);
-			request->actor_index = next_actor_index;
-			if (actor)
-				request->next_actor_index = *(long *)((byte *)actor + 0x80);
+			actor = NULL;
+			break;
 		}
-		if (actor)
+		while ((actor = element_502420_member_next(&request->actors)) != NULL)
 		{
 			vector3f delta;
 			vector3d_from_points3d(&actor->position, &request->point, &delta);
 			real squared = length_sq3f(&delta);
 			if (squared < request->radius_squared)
 			{
-				request->result_index = request->actor_index;
+				request->result_index = request->actors.index;
 				request->squared_distance = squared;
-				return actor;
+				goto done;
 			}
 		}
-		else
-			request->index = NONE;
+		request->index = NONE;
 	}
+done:
+	return (s_actor_moving *)actor;
 }
 
 __forceinline void actor_point_iterator_initialize(s_record_pool_iterator *iterator)
