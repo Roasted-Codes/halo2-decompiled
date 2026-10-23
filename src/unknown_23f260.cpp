@@ -399,10 +399,11 @@ void function_23f3e0(s_score_display *display, long mode, bool fallback)
 	s_record_pool *data = g_4e8c24;
 	display->player_count = 0;
 	display->team_count = 0;
-	long index = NONE;
-	while ((index = score_next_player(data, index + 1)) != NONE)
+	long cursor = NONE;
+	long player;
+	while (score_next_entry(data, &cursor, &player) != NULL)
 	{
-		display->players[display->player_count++] = data_datum_index(data, index);
+		display->players[display->player_count++] = player;
 	}
 	s_score_sort_context player_context;
 	player_context.criteria = criteria;
