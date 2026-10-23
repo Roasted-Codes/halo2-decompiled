@@ -206,6 +206,8 @@ struct s_125262
     real field_0;
 };
 
+// volatile, as retail does it: the zero is stored to the stack and loaded back
+// as a float, and the scale is read through its pointer at the point of use
 static __forceinline long function_125262(long arg_0, long arg_1, real const volatile *arg_2)
 {
     long local_0 = arg_0;
