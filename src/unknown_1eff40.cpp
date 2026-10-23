@@ -85,8 +85,8 @@ static inline void transform_point(transform4x3f const *matrix, point3f const *p
   y = matrix->scale * y;
   z = matrix->scale * z;
  }
- real result_x = matrix->left.i * y;
- result_x += matrix->forward.i * x;
+ real result_x = matrix->forward.i * x;
+ result_x += matrix->left.i * y;
  result_x += matrix->up.i * z;
  result->x = result_x + matrix->position.x;
  result->y = matrix->up.j * z + matrix->left.j * y + matrix->forward.j * x + matrix->position.y;
