@@ -634,6 +634,9 @@ struct s_device_machine_view
 
 #define DEVICE_PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
+// score 42 (was 42): the group-flag test is two bytes longer than retail's: ours shifts the flags byte down by
+// one before the second test, retail tests bit 2 directly; retail also clears the result in
+// case 0x1200055f where ours does not.
 // @retail 0x106d70
 bool __stdcall device_export_function(long device_index, long name, real *value, bool *active)
 {
@@ -1001,6 +1004,8 @@ PRIVATE inline real device_translation_distance_squared(point3f const *a, point3
 	return difference.k * difference.k + difference.j * difference.j + difference.i * difference.i;
 }
 
+// score 2 (was 2): the float argument is stored to the stack before edi is pushed; retail pushes edi first and
+// stores the float one slot higher.
 // @retail 0x107ed0
 bool __stdcall function_107ed0(long device_index, long name, real seconds)
 {
