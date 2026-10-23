@@ -378,6 +378,8 @@ __forceinline void function_183672(point3f *arg_0, point3f const *arg_1, __m128 
     arg_0->z = local_0.k * arg_3 + arg_1->z;
 }
 
+// score 8 (was 8): the three values of the query loop are kept in the stack slots in the
+// opposite order.
 // @retail 0x183670
 bool __stdcall function_183670(long component_a, long component_b, point3f *a, point3f *b, real *distance)
 {
