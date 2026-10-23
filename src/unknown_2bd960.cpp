@@ -1008,7 +1008,7 @@ void c_game_engine_45c948::v32(long player_index, long list_pointer)
 	for (long i = 0; i < (short)g_51eccc->w114; i++)
 	{
 		long holder = state->l70[i];
-		long marker = (short)state->w60[i];
+		short marker = (short)state->w60[i];
 
 		if (marker != NONE)
 		{
