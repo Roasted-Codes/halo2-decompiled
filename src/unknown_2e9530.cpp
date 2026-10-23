@@ -125,8 +125,9 @@ __forceinline kept_child_2e9210 *new_agent_2e96a0(void const *a, children_2e96a0
 // takes element `index` out, the later ones moving down over it
 __forceinline void remove_element_2e96a0(array_2e9530 *elements, element_2e9530 const *at)
 {
+	element_2e9530 *const data = elements->data;
 	elements->size--;
-	for (int i = at - elements->data; i < elements->size; i++)
+	for (int i = at - data; i < elements->size; i++)
 	{
 		elements->data[i] = elements->data[i + 1];
 	}
@@ -409,12 +410,6 @@ __forceinline flag_2e96a0 corners_close_2e96a0(__m128 const &kept, __m128 fresh,
 // first side's bounds (in the second side's frame, widened by one and a half
 // times the tolerance) overlap, brought up to date in key order; left as they
 // are while the bounds moved less than half the tolerance
-// score 5 (was 412): with the bounds in a block of their own, the key array
-// before the children, and the array steps as inlines, only the removal of
-// an element differs: retail holds the decremented size in ecx and the data
-// in eax, ours in eax and edx. Passing the removal an int index computed by
-// the caller (instead of the element) reads the data before the decrement
-// and scores 444.
 // @retail 0x2e96a0
 void class_2e96a0::function_2e96a0(void const *a, void const *b, void const *input, pair_query_2e90f0 query)
 {
@@ -462,12 +457,6 @@ void class_2e96a0::function_2e96a0(void const *a, void const *b, void const *inp
 }
 // the objects kept for the children of the second side's tree that the
 // first side's bounds overlap, brought up to date in key order
-// score 51 (was 512): the shared inlines of 0x2e96a0 and a named pointer to
-// the elements for the in-place refresh (without it the keys' count takes
-// ebx and the score is 500). Still: retail keeps the first side in ebx, the
-// second in edi and `this` in esi (ours edi, esi, ebx), reloads the keys'
-// count after the second sort, and differs in the removal's registers as
-// 0x2e96a0 does.
 // @retail 0x2e9d90
 void class_2e9d90::function_2e9d90(void const *a, void const *b, void const *input, pair_query_2e90f0 query)
 {
