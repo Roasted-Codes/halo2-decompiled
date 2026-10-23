@@ -57,12 +57,12 @@ long function_211060(vector3f *velocity, dword flags, void const *mover_settings
 	long cell_slot, point3f *position, vector3f const *force, vector3f *normal, short *material_type, real radius,
 	real dt)
 {
-	long collision_flags = 0;
 	long result;
 	s_point_mover_settings const *physics = (s_point_mover_settings const *)mover_settings;
 
 	if (dt != 0.0f)
 	{
+		long collision_flags = 0;
 		real unit_mass = physics->unit_mass;
 		real radius_squared = radius * radius;
 		real radius_cubed = radius_squared * radius;
@@ -85,26 +85,24 @@ long function_211060(vector3f *velocity, dword flags, void const *mover_settings
 		}
 
 		real total_unit_mass;
-		real buoyancy;
+		real gravity_scale;
 		real coefficient;
 		if (medium_unknown4)
 		{
 			total_unit_mass = g_4f93ac + unit_mass;
-			buoyancy = physics->density * 2.0f / (g_51e9c4->unknown4 + physics->density);
-			coefficient = physics->drag_unknown4;
+			gravity_scale = 1.0f - physics->density * 2.0f / (g_51e9c4->unknown4 + physics->density);
+			coefficient = physics->drag_unknown4 * radius_squared;
 			result = 2;
 		}
 		else
 		{
 			total_unit_mass = g_4f93b0 + unit_mass;
-			buoyancy = physics->density * 2.0f / (g_51e9c4->unknown8 + physics->density);
-			coefficient = physics->drag_unknown8;
+			gravity_scale = 1.0f - physics->density * 2.0f / (g_51e9c4->unknown8 + physics->density);
+			coefficient = physics->drag_unknown8 * radius_squared;
 			result = 1;
 		}
-		real gravity_scale = 1.0f - buoyancy;
 		if (physics->flags & 0x20)
 			gravity_scale = 0.0f;
-		coefficient *= radius_squared;
 
 		real drag;
 		real mass = total_unit_mass * radius_cubed;
