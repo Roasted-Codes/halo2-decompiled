@@ -27,6 +27,8 @@ struct s_11c1b0
 
 #define g_440df0 (*( s_11c1b0 const (*)[68])((byte const *)g_440dd8 + 0x18))
 
+// score 99 (was 99): the argument is kept in bp and the limit in dx where retail keeps them
+// in bx and di, so the two range tests and the loop use different registers.
 // @retail 0x11c1b0 standard
 bool __stdcall function_11c1b0(short arg_0, bool arg_1)
 {
