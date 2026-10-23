@@ -17,6 +17,8 @@ bool function_1f4a20(s_1f4a20_entry const *arg_2, long arg_0, s_reference arg_1,
 bool function_1af530(long arg_0, long *arg_1, long *arg_2);
 void function_265c30(long arg_0, long arg_1, bool arg_2);
 
+// score 36 (was 36): the locals sit at stack addresses eight bytes lower than retail's, so the
+// values handed to the calls are taken from the wrong slots.
 // @retail 0x1af160
 bool function_1af160(long arg_0, s_1af160 *arg_1)
 {

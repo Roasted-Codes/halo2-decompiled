@@ -491,6 +491,9 @@ static __forceinline void function_x7a3668(plane3f const *plane, transform4x3f *
 	matrix4x3_basis_store(out, &position, &w, &plane->n);
 }
 
+// score 51 (was 51): the three components are squared and summed in a different order, the scaled
+// component is kept in a different register, and the cross product holds its operands in swapped
+// registers.
 // @retail 0x142390
 void function_142390(
 	plane3f const *plane,
