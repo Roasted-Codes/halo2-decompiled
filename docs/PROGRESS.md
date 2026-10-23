@@ -2,6 +2,46 @@
 
 The newest entry comes first.
 
+## 2026-10-23: 9476 functions match
+
+```
+matched 9476 of 11321 game functions (1471138 of 2784283 bytes, 52.84%)
+matched 901 of 1041 Havok functions (116488 of 234536 bytes, 49.67%)
+```
+
+1 new matches, none lost:
+- @ccgman123's #705: `0x1f3230` match.
+
+## 2026-10-23: 9475 functions match
+
+```
+matched 9475 of 11321 game functions (1470633 of 2784283 bytes, 52.82%)
+matched 901 of 1041 Havok functions (116488 of 234536 bytes, 49.67%)
+```
+
+0 new matches, none lost:
+- @ccgman123's #704:  match.
+
+## 2026-10-23: 9475 functions match
+
+```
+matched 9475 of 11321 game functions (1470633 of 2784283 bytes, 52.82%)
+matched 901 of 1041 Havok functions (116488 of 234536 bytes, 49.67%)
+```
+
+1 new matches, none lost:
+- @marioag0412's #701: `0x20bbb0` match.
+
+## 2026-10-22: 9474 functions match
+
+```
+matched 9474 of 11321 game functions (1468781 of 2784283 bytes, 52.75%)
+matched 901 of 1041 Havok functions (116488 of 234536 bytes, 49.67%)
+```
+
+1 new matches, none lost:
+- @marioag0412's #699: `0x1dc8c0` match.
+
 ## 2026-10-22: 9473 functions match
 
 ```
