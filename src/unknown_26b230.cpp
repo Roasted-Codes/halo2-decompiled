@@ -102,8 +102,8 @@ void function_268840()
 	}
 	for (;;)
 	{
-		byte *clump = g_4f55d0->active ? data_iterator_next_inlined(&iterator.pool) : NULL;
-		iterator.current = clump;
+		iterator.current = g_4f55d0->active ? data_iterator_next_inlined(&iterator.pool) : NULL;
+		byte *clump = iterator.current;
 		iterator.datum_index = clump ? iterator.pool.datum_index : NONE;
 		if (!clump) break;
 		if (clump[0x1c])
