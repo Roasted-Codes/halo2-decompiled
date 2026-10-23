@@ -2002,6 +2002,13 @@ struct s_component_bounds_model
 
 extern hkWorld *g_51e9a4;
 
+// a vector of four copies of a real
+PRIVATE inline __m128 component_bounds_splat(real value)
+{
+    __m128 const single = _mm_set_ss(value);
+    return _mm_shuffle_ps(single, single, 0);
+}
+
 // @retail 0x1d44f0
 bool __stdcall function_1d44f0(s_havok_component *component, point3f *center, real *radius)
 {
@@ -2049,8 +2056,8 @@ bool __stdcall function_1d44f0(s_havok_component *component, point3f *center, re
                     combined.upper = _mm_max_ps(combined.upper, bounds.upper);
                 }
             }
-            __m128 middle = _mm_mul_ps(_mm_set1_ps(0.5f), _mm_add_ps(combined.lower, combined.upper));
-            __m128 extent = _mm_mul_ps(_mm_set1_ps(0.5f), _mm_sub_ps(combined.upper, combined.lower));
+            __m128 middle = _mm_mul_ps(component_bounds_splat(0.5f), _mm_add_ps(combined.lower, combined.upper));
+            __m128 extent = _mm_mul_ps(component_bounds_splat(0.5f), _mm_sub_ps(combined.upper, combined.lower));
             center->x = middle.m128_f32[0];
             center->y = middle.m128_f32[1];
             center->z = middle.m128_f32[2];
