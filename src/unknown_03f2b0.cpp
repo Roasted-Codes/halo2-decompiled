@@ -452,6 +452,7 @@ void function_144f0(long tag, short stage, long fallback, short fallback_index, 
 void function_1cf50(void);
 
 #pragma inline_depth(0)
+// score 100 (was 100): the record index is scaled by 0x40 in retail and by 0x4 here, and the table retail reads is not the one this tree reads
 // @retail 0x44040
 void __stdcall function_44040(long cell, short mask)
 {
@@ -914,6 +915,7 @@ void __stdcall function_2cbc0(bool enabled)
 	function_133720(current, enabled);
 }
 
+// score 64 (was 64): the frame is four bytes larger and the camera buffer sits at another offset, and the float subtraction uses x87 where retail uses SSE
 // @retail 0x3f2c0
 void function_3f2c0(s_planar_camera_source const *source, byte const *view, long object_index, long identifier)
 {
@@ -962,6 +964,7 @@ void __stdcall function_3f830(byte const *tree, point3f const *center);
 long function_155760(long index);
 void function_3f3f0(void);
 
+// score 23 (was 23): the camera setup is called with one argument in a register and three on the stack, retail passes two in registers and two on the stack
 // @retail 0x2b990
 void function_2b990(long player_index)
 {
@@ -1228,6 +1231,7 @@ static inline long render_memory_allocate(long bytes)
     return result;
 }
 
+// score 1 (was 1): the permutation pointer arrives in eax, retail passes it in ecx; the register is fixed by the caller function_4c690, which is not retail's yet
 // @retail 0x3e380
 long function_3e380(long model_index, byte lod, transform4x3f const *nodes,
     byte const *permutations, long *node_count, long extra_bytes)
