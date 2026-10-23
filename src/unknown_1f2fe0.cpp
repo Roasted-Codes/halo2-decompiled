@@ -143,7 +143,7 @@ bool function_1f3230(long actor_index, real radius)
 			else
 				function_210be0(&actor->path_start, target, &segment);
 			function_210c90(position, target, &offset);
-			result = dot3f(&offset, &segment) < 0.0f;
+			result = offset.i * segment.i + segment.j * offset.j + segment.k * offset.k < 0.0f;
 		}
 	}
 	else if (radius * radius > distance_squared)
