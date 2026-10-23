@@ -1045,6 +1045,8 @@ PRIVATE __forceinline void function_25a131(vector3f const *arg_0, vector3f const
 	arg_2->k -= first.j * arg_1->i;
 }
 
+// score 51 (was 51): the float temporaries are in different xmm registers and the multiplications are in the
+// other order.
 // @retail 0x25a130
 void function_25a130(long actor_index, long object_index, s_cs_facing *facing)
 {
@@ -1855,6 +1857,8 @@ void function_25aba0(long actor_index)
 	while (--local_1);
 }
 
+// score 100 (was 100): the prologue differs: retail reserves eight bytes with sub esp,8 where ours pushes ecx, and
+// retail zeroes eax and makes three stack stores where ours zeroes ebx and makes two.
 // @retail 0x258b60
 short function_258b60(long actor_index, cs_iterate_proc proc, long cs_index)
 {
