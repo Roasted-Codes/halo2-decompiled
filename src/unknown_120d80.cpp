@@ -293,8 +293,9 @@ void global_preferences_initialize(void)
 			}
 			valid = true;
 			valid &= preferences.version == k_preferences_version;
-			valid &= signed_data && memcmp(&preferences.signature, &signature, sizeof(signature)) == 0;
-			valid &= bytes_read == sizeof(preferences);
+			valid &= signed_data && memcmp(&signature, &preferences.signature, sizeof(signature)) == 0;
+			bool const &header_checked = valid;
+			valid = header_checked & (bytes_read == sizeof(preferences));
 			if (valid)
 			{
 				global_preferences_verify(&preferences);
