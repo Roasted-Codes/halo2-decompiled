@@ -23,8 +23,6 @@ struct s_xnet_registry_entry
 
 #define BYTE_SWAP_LONG(v) ((((v) & 0xff0000) | ((v) >> 16)) >> 8 | ((((v) << 16) | ((v) & 0xff00)) << 8))
 
-// score 49 (was 49): retail computes the table entry with shl eax,5 and lea esi,[eax+base],
-// ours copies eax into esi, shifts esi and adds the table address.
 // @retail 0x7a920
 bool transport_security_register_key(long index, long local, bool host, const XNKID *kid, const XNKEY *key)
 {
@@ -41,11 +39,11 @@ bool transport_security_register_key(long index, long local, bool host, const XN
 	}
 	if (*local_3 || XNetRegisterKey(local_1, key) == 0)
 	{
+		local_2 = true;
 		entry->kid = *local_1;
 		entry->key = *key;
 		entry->host = host;
 		entry->local = *local_3;
-		local_2 = true;
 		entry->valid = local_2;
 	}
 	return local_2;

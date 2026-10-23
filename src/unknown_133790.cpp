@@ -135,6 +135,7 @@ void function_133720(s_bit_vector_pool *arg_1, bool arg_2)
 }
 #pragma inline_depth(255)
 
+// score 95 (was 95): the float multiply reads its operands from the other two globals and the sum is added in the other order
 // @retail 0x133790
 bool function_133790(s_bit_vector_pool *arg_1, short arg_2, bool arg_3, long *arg_4, long arg_5, bool arg_6)
 {

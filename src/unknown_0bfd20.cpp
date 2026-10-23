@@ -46,23 +46,29 @@ void function_0bfd20(long object_index)
 	s_match_globals *globals = g_4e0348;
 	long header_index = object_index & 0xffff;
 	s_object_hdr *object = headers[header_index].object;
-	short selected_index = NONE;
 	if (TEST_FIELD_BIT(g_4e3b44[(object->tag_index & 0xffff)].flags->flag0))
 	{
 		for (long i = 0; i < globals->count; i++)
 		{
 			s_match_entry const *entry = &globals->match_entries[i];
-			bool match = (entry->byte_06 == object->byte_aa) & (entry->byte_07 == object->byte_ab) & (entry->key == object->key);
+			bool match = true;
+			match &= entry->byte_06 == object->byte_aa;
+			match &= entry->byte_07 == object->byte_ab;
+			match &= entry->key == object->key;
 			if (match && entry->byte_07 == 0)
 				match &= entry->subkey == object->subkey;
 			if (match)
 			{
-				selected_index = (short)i;
-				break;
+				object->match_index = (short)i;
+				return;
 			}
 		}
+		object->match_index = NONE;
 	}
-	object->match_index = selected_index;
+	else
+	{
+		object->match_index = NONE;
+	}
 }
 
 // @retail 0xbfe20
