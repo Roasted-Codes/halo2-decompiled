@@ -199,11 +199,12 @@ __forceinline void report_removed_2e29b0(class_2e1090 *sweep, long *owner, unsig
 // score 106 (was 371): the quantizing (two-level helper, its steps as separate
 // statements), the appends and the bit setter now match retail's code. Still:
 // in the grid cell's walk ours reloads the cell pointer into edx where retail
-// uses ecx; and in the pair scan retail keeps the found bits in ebx and the
-// box in ecx, computing the box's upper minus the other's lower first, where
-// ours has the bits in ecx, the box in eax and the other difference first
-// (either argument order of the y/z test and either order of its terms
-// compile alike), which shifts the scan's registers and its stack slots.
+// uses ecx, and in the pair scan the word pointer and the scanned box take
+// ecx and edx the other way round. The y/z test is one instruction short of
+// retail's; written as in-place statements (each upper word minus the other
+// box's lower word, then the OR into the other box's word) it compiles to
+// retail's length here and in 0x2e29b0, but that helper is shared with
+// 0x2e0350 and the searches of 0x2e10b0 and 0x2e3370.
 // @retail 0x2e24b0
 void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pairs_2e1090 *pairs)
 {
@@ -230,6 +231,13 @@ void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pai
 // takes a box out of the sweep: every box it overlaps loses its pair (or,
 // for a grid cell's box, the cell loses it), its endpoints leave each axis,
 // and the last box moves into its place
+// score 312 (was 338): `this` and the box take retail's esi and edi now that
+// the element data goes straight to the slot fix-up call (a local holding it
+// across the endpoint removals took ebx). Still: the count, index, `this` and
+// element array spill to other stack slots, the second x walk evicts `this`
+// where retail spills the word index, and the removal scan keeps the scanned
+// box in a register where retail reloads it each time; with the in-place y/z
+// test (see 0x2e24b0) it compiles to retail's length.
 // @retail 0x2e29b0
 void class_2e1090::function_2e29b0(long *owner, pairs_2e1090 *pairs)
 {
@@ -244,11 +252,10 @@ void class_2e1090::function_2e29b0(long *owner, pairs_2e1090 *pairs)
 		report_removed_2e29b0(this, owner, index, bits, box, pairs);
 	}
 
-	element_2e1090 *data = elements.data;
 	((array_2dffa0 *)&axes[0])->remove_two(box.slots[4], box.slots[5]);
 	((array_2dffa0 *)&axes[1])->remove_two(box.slots[0], box.slots[2]);
 	((array_2dffa0 *)&axes[2])->remove_two(box.slots[1], box.slots[3]);
-	((quantized_boxes_2dfcc0 *)this)->function_2dfdc0((quantized_box_2dfcc0 *)data, count, box.slots);
+	((quantized_boxes_2dfcc0 *)this)->function_2dfdc0((quantized_box_2dfcc0 *)elements.data, count, box.slots);
 
 	// the last box moves into the freed place
 	if (index < count - 1)
