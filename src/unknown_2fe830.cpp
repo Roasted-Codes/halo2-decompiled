@@ -72,7 +72,7 @@ public:
 	hit_2fe830() {}
 
 	float distance() const { return position.value.m128_f32[3]; }
-	void set_position(vector_2fe830 const &value) { position = value; }
+	void take_point(vector_2fe830 const &value) { position = value; }
 	void set_normal(vector_2fe830 const &value) { normal = value; }
 	void set_distance(float value) { position.value.m128_f32[3] = value; }
 };
@@ -204,7 +204,7 @@ void __cdecl function_2fe830(void const *a_, void const *b_, void const *input_,
 	}
 	cast_hit_2fe830 result(*a, *b);
 	result.hit.set_normal(closest.hit.normal);
-	result.hit.set_position(closest.hit.position);
+	result.hit.take_point(closest.hit.position);
 	result.hit.set_distance(closest.hit.distance());
 	if (closest.hit.distance() < input->header.tolerance && second_collector != 0)
 	{
@@ -274,7 +274,7 @@ void __cdecl function_2fe830(void const *a_, void const *b_, void const *input_,
 			{
 				return;
 			}
-			result.hit.set_position(moved_closest.hit.position);
+			result.hit.take_point(moved_closest.hit.position);
 			result.hit.set_distance(fraction);
 			result.hit.set_normal(moved_closest.hit.normal);
 			if (moved_closest.hit.distance() <= input->header.config->tolerance)
@@ -321,7 +321,7 @@ void class_2fec10::function_2fec10(void const *a_, void const *b_, void const *i
 	}
 	cast_hit_2fe830 result(*a, *b);
 	result.hit.set_normal(closest.hit.normal);
-	result.hit.set_position(closest.hit.position);
+	result.hit.take_point(closest.hit.position);
 	result.hit.set_distance(closest.hit.distance());
 	if (closest.hit.distance() < input->header.tolerance && second_collector != 0)
 	{
@@ -386,7 +386,7 @@ void class_2fec10::function_2fec10(void const *a_, void const *b_, void const *i
 			{
 				return;
 			}
-			result.hit.set_position(moved_closest.hit.position);
+			result.hit.take_point(moved_closest.hit.position);
 			result.hit.set_distance(fraction);
 			result.hit.set_normal(moved_closest.hit.normal);
 			if (moved_closest.hit.distance() <= input->header.config->tolerance)
