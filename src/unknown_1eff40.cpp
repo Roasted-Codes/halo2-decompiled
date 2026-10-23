@@ -85,9 +85,9 @@ static inline void transform_point(transform4x3f const *matrix, point3f const *p
   y = matrix->scale * y;
   z = matrix->scale * z;
  }
- real result_x = matrix->forward.i * x;
+ real result_x = matrix->up.i * z;
  result_x += matrix->left.i * y;
- result_x += matrix->up.i * z;
+ result_x += matrix->forward.i * x;
  result->x = result_x + matrix->position.x;
  result->y = matrix->up.j * z + matrix->left.j * y + matrix->forward.j * x + matrix->position.y;
  result->z = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x + matrix->position.z;
@@ -102,10 +102,7 @@ static inline void transform_vector(transform4x3f const *matrix, vector3f const 
   j *= matrix->scale;
   k *= matrix->scale;
  }
- real result_i = matrix->left.i * j;
- result_i += matrix->forward.i * i;
- result_i += matrix->up.i * k;
- result->i = result_i;
+ result->i = matrix->up.i * k + matrix->left.i * j + matrix->forward.i * i;
  result->j = matrix->up.j * k + matrix->left.j * j + matrix->forward.j * i;
  result->k = matrix->up.k * k + matrix->left.k * j + matrix->forward.k * i;
 }
