@@ -1105,6 +1105,14 @@ void function_1c79e0(void)
 }
 
 
+/* the players as player_queries.h's s_player_iterator walks them: from +4 an
+   s_record_pool_iterator */
+struct s_ai_player_iterator
+{
+	s_ai_player_datum *player;
+	s_record_pool_iterator records;
+};
+
 struct s_actor_prop_iterator
 {
 	long index;
@@ -1126,9 +1134,9 @@ PRIVATE __forceinline s_prop_node_view *actor_next_prop(s_actor_prop_iterator *i
 
 long function_25d810(long object_index, long actor_index, bool create);
 
-// score 46 (was 183): retail's frame is 4 bytes larger (sub esp, 0x20 against 0x1c).
-// Remaining differences include stack offsets and register selection/instruction ordering
-// in the prop capsule call and player loop.
+// score 17 (was 183): the player loop keeps the player record and the object headers in the
+// other of esi and edi, with minor instruction ordering there, and the prop capsule call loads
+// its arguments in another order.
 // @retail 0x1c89b0
 short __stdcall function_1c89b0(long actor_index, short maximum_count, s_ai_capsule_view *capsules)
 {
@@ -1173,11 +1181,11 @@ short __stdcall function_1c89b0(long actor_index, short maximum_count, s_ai_caps
  }
  if (!team_is_enemy(actor->unknown024, 1))
  {
-  s_record_pool_iterator iterator;
-  iterator.data = g_4e8c24;
-  iterator.index = NONE;
+  s_ai_player_iterator iterator;
+  iterator.records.data = g_4e8c24;
+  iterator.records.index = NONE;
   s_ai_player_datum *player;
-  while ((player = (s_ai_player_datum *)data_iterator_next_inlined(&iterator)) != NULL)
+  while ((player = (s_ai_player_datum *)data_iterator_next_inlined(&iterator.records)) != NULL)
   {
    long object_index = player->unit_index;
    if (object_index == NONE)
@@ -1186,9 +1194,10 @@ short __stdcall function_1c89b0(long actor_index, short maximum_count, s_ai_caps
    s_ai_object_header *header = &headers[object_index & 0xffff];
    if (header->type != 0)
     continue;
-   if (((s_slot_object_view *)header->object)->parent_index != NONE)
+   s_slot_object_view *object = (s_slot_object_view *)header->object;
+   if (object->parent_index != NONE)
    {
-    long parent = ((s_slot_object_view *)header->object)->parent_index;
+    long parent = object->parent_index;
     long root = function_baf40(parent);
     if (headers[root & 0xffff].type == 1)
      parent = root;
