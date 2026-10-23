@@ -1220,21 +1220,28 @@ c_type_709360 s_graph_tag::transition_find(long mode, long weapon_class, long we
 		long const *mode_reference = &mode;
 
 		iterator.graph = this;
-		iterator.mode = *mode_reference;
-		iterator.weapon_class = weapon_class;
-		iterator.weapon_type = weapon_type;
 		iterator.step = 0;
 		iterator.mode_entry = NULL;
 		iterator.class_entry = NULL;
-		while ((weapon_type_entry = graph_weapon_type_iterate(&iterator, &iterator_mode, &iterator_weapon_class,
-			&iterator_weapon_type)) != NULL)
+		iterator.mode = *mode_reference;
+		iterator.weapon_class = weapon_class;
+		iterator.weapon_type = weapon_type;
+		weapon_type_entry = graph_weapon_type_iterate(&iterator, &iterator_mode, &iterator_weapon_class,
+			&iterator_weapon_type);
+		bool found = false;
+		while (!found && weapon_type_entry)
 		{
 			result = weapon_type_entry->variant_find(name, a, b, c, d, e, f, g);
 			if (result.index != NONE)
 			{
 				function_1dd9d0(this, result);
 				graph_resources_request(this, c, iterator_weapon_class, iterator_weapon_type, true, false);
-				break;
+				found = true;
+			}
+			else
+			{
+				weapon_type_entry = graph_weapon_type_iterate(&iterator, &iterator_mode, &iterator_weapon_class,
+					&iterator_weapon_type);
 			}
 		}
 	}
