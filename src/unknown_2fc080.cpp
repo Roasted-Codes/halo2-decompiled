@@ -60,11 +60,9 @@ s_2fc080_result class_2fc080::function_2fc080(long a, long b)
 }
 
 // @retail 0x2fc0a0
-// score 10 (was 17): the query is passed to the target through the member of
-// this object rather than through the copy stored in the query, but retail
-// loads the target once into edx and reuses it for the call where ours loads
-// it twice, and retail stores the fields in the order q+8, q+0xc, q+0, q+4
-// where ours stores q+0, q+4, q+8, q+0xc.
+// score 10 (was 17): retail loads the target once into edx and reuses it for
+// the call, and stores the query's fields as q+8, q+0xc, q+0, q+4; ours loads
+// the target twice and stores the fields in the source's order.
 void class_2fc080::function_2fc0a0(long a, const s_2fc080_input *input, long c)
 {
 	s_2fc080_query query;

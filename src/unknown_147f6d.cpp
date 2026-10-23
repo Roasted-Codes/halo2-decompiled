@@ -1200,6 +1200,9 @@ bool __stdcall function_148f36(long controller)
 }
 
 /* whether the user's frontmost screen takes the user's input */
+// score 73 (was 73): the two global checks come before the address is computed
+// in retail and after it in ours, retail keeps the address in esi and calls the
+// helper with it while ours calls the helper with the index
 // @retail 0x148fff
 bool __stdcall function_148fff(long user_index)
 {
@@ -1413,6 +1416,8 @@ extern bool g_54e7cc;
 extern dword g_54e7fc;
 void player_slots_initialize();
 
+// score 19 (was 19): the globals are cleared in the other order, ours writes
+// the byte flags after the blocks it fills while retail writes them before
 // @retail 0x1476c7
 void function_1476c7()
 {

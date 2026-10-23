@@ -1424,14 +1424,14 @@ void function_2422d0(long slot)
 }
 
 // @retail 0x2423f0
-// score 65 (was 65): the counter is kept in a byte wide stack slot where retail keeps it in a dword
-// slot, so our stack frame is four bytes larger.
+// score 7 (was 65): the object index is kept in EDI and the object in EBP, retail keeps them the other
+// way round.
 bool function_2423f0()
 {
 	long others[8];
 	long slot_objects[9];
 	bool result = true;
-	byte count = 0;
+	long count = 0;
 	long i;
 
 	memset(slot_objects, NONE, sizeof(slot_objects));
@@ -1440,8 +1440,10 @@ bool function_2423f0()
 	{
 		long object_index = ((s_ctf_team_view *)g_4e9ae8)->teams[i].object_index;
 		s_slot_object *object = slot_object_get(object_index);
+		long slot = object->slot;
 
-		if (function_243a80(object->slot) && slot_objects[object->slot] == NONE)
+		/* the table test reads the slot again after the call */
+		if (function_243a80(slot) && slot_objects[object->slot] == NONE)
 		{
 			slot_objects[object->slot] = object_index;
 		}
@@ -1758,7 +1760,6 @@ long function_242ef0(s_242ef1 arg_0, long team)
 	return function_242ef4(g_51ec80, arg_0, team);
 }
 
-#pragma inline_depth(1)
 // @retail 0x2430a0
 // score 53 (was 53): the fields of the event are written in the opposite order and the argument is
 // passed in the other register.
@@ -1780,7 +1781,6 @@ void function_2430a0(long player_index, bool flag)
 		}
 	}
 }
-#pragma inline_depth(255)
 
 // @retail 0x2431a0
 void function_2431a0()

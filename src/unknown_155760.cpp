@@ -158,6 +158,9 @@ bool function_0c7070(long object_index);
 long function_10f5f0(long object_index);
 
 // @retail 0x155810
+// score 78 (was 78): retail pushes esi and edi at the top and keeps a zero in
+// esi for the mode, and it pushes ebp only around the call that needs it;
+// ours pushes ebp at the top and stores the literal zero
 short function_155810(long unit_index, short *mode)
 {
 	short result = 0;

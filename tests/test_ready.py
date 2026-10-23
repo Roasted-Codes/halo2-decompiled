@@ -53,6 +53,12 @@ def test_ready_treats_recursion_as_one_unit():
     assert {r['va'] for r in ready(rows)} == {'00000010', '00000020'}
 
 
+def test_ready_leaves_out_disabled_drafts():
+    rows = {0x10: row(0x10), 0x20: row(0x20)}
+    assert [r['va'] for r in ready(rows)] == ['00000010', '00000020']
+    assert [r['va'] for r in ready(rows, disabled={0x10})] == ['00000020']
+
+
 def test_ready_line():
     assert line(row(0x20, size=9)) == '00000020 9 - -'
     assert line(row(0x20, size=9, name='_strncmp', calls=[0x30])) == '00000020 9 _strncmp 00000030'
