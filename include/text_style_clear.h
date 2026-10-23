@@ -1,5 +1,5 @@
 #pragma once
-/* The text drawing state's reset (g_4e73a0, src/unknown_13e8a0.cpp). Retail
+/* Clearing the text style (g_4e73a0, src/unknown_13e8a0.cpp). Retail
    inlines it into 0x15e530 and calls the out-of-line copy (0x13e8a0)
    elsewhere. */
 
@@ -8,8 +8,8 @@
 
 void function_13ec70(color4f const *color);
 
-/* clears the text drawing state and selects the first global colour */
-inline void draw_string_state_reset()
+/* clears the text style (font, tab stops, flags, justification) and selects the first global colour */
+inline void text_style_clear()
 {
 	memset(&g_4e73a0, 0, sizeof(g_4e73a0));
 	g_4e73a0.font = 0;

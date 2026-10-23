@@ -17,6 +17,8 @@
 #include "object_queries.h"
 #include "unknown_1428b0.h"
 
+inline void point2f_set(point2f *point, real x, real y);
+
 real function_30bf0(vector3f *vector);
 point3f *function_b9dd0(long object_index, point3f *result);
 bool object_or_parent_hidden(long object_index);
@@ -112,9 +114,6 @@ static inline void bit_vector_set(dword *bits, long index)
 /* the two directions, turned either way from the direction, that just touch
    a circle of the radius at the distance, and how far along them it is
    touched */
-// score 42 (was 42): the SSE constants are in the other registers (retail
-// xmm2/xmm1, ours xmm1/xmm0) and the zero is materialised in xmm0 rather
-// than xmm1.
 // @retail 0x2c0c40
 void tangent_directions(point2f const *direction, point2f *left, point2f *right, real distance, real radius, real *tangent_length)
 {
@@ -132,11 +131,10 @@ void tangent_directions(point2f const *direction, point2f *left, point2f *right,
 	}
 	cosine = (real)sqrt(1.0f - sine * sine);
 	negative_sine = 0.0f - sine;
-	point2f const *input = direction;
-	left->y = input->x * negative_sine + cosine * input->y;
-	left->x = input->x * cosine - negative_sine * input->y;
-	right->y = input->x * sine + cosine * input->y;
-	right->x = cosine * input->x - sine * input->y;
+	point2f_set(left, direction->x * cosine - negative_sine * direction->y,
+		direction->x * negative_sine + cosine * direction->y);
+	point2f_set(right, cosine * direction->x - sine * direction->y,
+		direction->x * sine + cosine * direction->y);
 	*tangent_length = cosine * distance;
 }
 

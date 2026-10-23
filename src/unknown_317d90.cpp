@@ -103,9 +103,10 @@ public:
 	void function_317d90(id_pairs_317d90 *pairs) const;
 };
 
-// score 105 (was 111): the three loops share one index, as retail does, but
-// retail keeps the joint count and the number of bodies in registers where
-// ours reads them from the members and the stack
+// score 59 (was 105): retail loads the joint count into a register before
+// comparing it, ours compares the member in place; retail compares the found
+// index as a full word, ours as a sixteen bit value, so ours sign extends it
+// when it indexes the bodies
 // @retail 0x317d90
 void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 {
@@ -117,7 +118,7 @@ void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 		{
 			bodies.size = 0;
 			joints[i]->list_bodies(&bodies);
-			long first = -1;
+			short first = -1;
 			long j = 0;
 			for (; first == -1 && j < bodies.size; j++)
 			{

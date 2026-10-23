@@ -8,7 +8,7 @@
 #include "globals.h"
 #include "font_loading.h"
 #include "unknown_030290.h"
-#include "draw_string_state.h"
+#include "text_style_clear.h"
 #include <string.h>
 
 
@@ -106,7 +106,7 @@ void function_13ec70(color4f const *color)
 // @retail 0x13e8a0
 void function_13e8a0()
 {
-	draw_string_state_reset();
+	text_style_clear();
 }
 
 // @retail 0x13eb20

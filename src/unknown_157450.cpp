@@ -4455,7 +4455,7 @@ void function_15e970(long unit_index)
 
 #include "font_loading.h"
 #include "unknown_030290.h"
-#include "draw_string_state.h"
+#include "text_style_clear.h"
 extern long g_4ba04c;
 extern real g_4e69c0[4];
 extern point3f *g_468718;
@@ -4506,7 +4506,7 @@ void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *p
     function_13edb0(font_index, NONE, 2, 0, &color, &shadow);
     function_13ec70(&color);
     text->function_1fa50(&bounds, 0, 0, 0, 1.0f, 0, 0);
-    draw_string_state_reset();
+    text_style_clear();
 }
 
 bool function_15b2f0();
