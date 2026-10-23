@@ -124,6 +124,9 @@ struct s_motion_globals_view
 
 bool function_355e0(long tag, long index, real *first, real *second);
 
+// score 29 (was 29): retail loads the three components of the first vector
+// and then the third of the second, ours loads the first of the second and the
+// first of the first, and ours reloads the result pointer from the stack.
 // @retail 0x181db0
 bool function_181db0(long index, vector3f *result)
 {
