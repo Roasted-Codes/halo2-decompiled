@@ -1,9 +1,10 @@
 """Finds draft bodies that are disabled in the source, so ready.py and
 open_work.py do not offer them as unwritten work.
 
-A disabled draft keeps a `// Retail 0x...` marker (not `// @retail`, which the
-build would compile) inside an `#if 0` block; the file's heading says
-BLOCKED-BY and why. This module walks src/ and returns those addresses.
+A disabled draft is inside an `#if 0` block and says so in one of three ways:
+a `// Retail 0x...` marker (not `// @retail`, which the build would compile),
+a `// Disabled implementation for 0x...` comment, or a function definition
+named `function_<va>`. This module walks src/ and returns those addresses.
 
     python tools/drafts.py [--root src]
 
@@ -19,6 +20,13 @@ import sys
 from xbe import ROOT
 
 MARKER = re.compile(r'^\s*//\s*(?:@retail|retail)\s+(0x[0-9a-fA-F]+)\b', re.IGNORECASE)
+DISABLED_COMMENT = re.compile(r'//\s*disabled implementation for\s+(0x[0-9a-fA-F]+)', re.IGNORECASE)
+# A definition, not a call or a prototype: it has a return type before the
+# name, and the signature's closing parenthesis is followed by `{` (possibly
+# on the next line of the same disabled block).
+DEFINITION = re.compile(
+    r'^[ \t]*(?!return\b)(?:[A-Za-z_]\w*[\s*&]+)+function_([0-9a-fA-F]+)\s*\([^;{}]*\)\s*(?:\r?\n[ \t]*)?\{',
+    re.MULTILINE)
 _CONDITIONAL = re.compile(r'^\s*#\s*(if|ifdef|ifndef|elif|else|endif)\b(.*)$')
 _COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 
@@ -63,10 +71,14 @@ def disabled_addresses(root=os.path.join(ROOT, 'src')):
             if not name.endswith('.cpp'):
                 continue
             path = os.path.join(directory, name)
-            for _, line in disabled_lines(path):
-                m = MARKER.match(line)
+            lines = list(disabled_lines(path))
+            for _, line in lines:
+                m = MARKER.match(line) or DISABLED_COMMENT.search(line)
                 if m:
                     found[int(m.group(1), 16)] = path
+            text = ''.join(line for _, line in lines)
+            for m in DEFINITION.finditer(text):
+                found[int(m.group(1), 16)] = path
     return found
 
 

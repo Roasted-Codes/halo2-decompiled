@@ -423,8 +423,6 @@ bool function_1c9290(long arg_0, point3f const *arg_1, vector3f const *arg_2,
 real normalize2d(point2f *arg_0);
 
 // @retail 0x1ff010
-// score 2 (was 2): the two factors of the multiply are in the opposite order: ours keeps the value
-// read from the structure in the destination register, retail the one from the stack.
 bool __stdcall function_1ff010(long arg_0, point3f const *arg_1)
 {
     bool local_0 = false;
@@ -449,8 +447,10 @@ bool __stdcall function_1ff010(long arg_0, point3f const *arg_1)
             &local_8, &local_9, &local_10, NULL, &local_11))
         {
             point2f local_13 = *(point2f *)&local_8;
+            point2f *local_13_ptr = &local_13;
+            vector3f *unknown290_ptr = &local_3->unknown290;
             if (normalize2d(&local_13) > 0.0f &&
-                local_3->unknown290.i * local_13.x + local_3->unknown290.j * local_13.y > 0.8660253882408142f)
+                local_13_ptr->x * unknown290_ptr->i + unknown290_ptr->j * local_13_ptr->y > 0.8660253882408142f)
             {
                 vector3f local_14;
                 local_14.i = local_8.i * local_9;
