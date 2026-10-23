@@ -1369,9 +1369,9 @@ public:
   c_contact_shape_container *container, long key);
 };
 
-// score 24 (was 24): the contact shape is picked with a ternary here and with
-// an if/else in retail, so the branch after the virtual call is laid out
-// differently and the shape pointer is copied through EAX there.
+// score 24 (was 24): retail keeps the contact shape in EAX where the two
+// branches meet and copies it into ESI there, ours keeps it in ESI; retail
+// also computes the metadata flag in CL, ours in EAX.
 // @retail 0x1c32d0
 hkBool c_contact_rule_filter::accepts(void const *query, s_contact_body_view const *a, s_contact_body_view const *b,
  c_contact_shape_container *container, long key)

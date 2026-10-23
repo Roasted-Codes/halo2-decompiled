@@ -4455,13 +4455,13 @@ void function_15e970(long unit_index)
 
 #include "font_loading.h"
 #include "unknown_030290.h"
+#include "text_style_clear.h"
 extern long g_4ba04c;
 extern real g_4e69c0[4];
 extern point3f *g_468718;
 void function_13edb0(long font, long style, long justification, dword flags,
     color4f const *color, color4f const *shadow);
 void function_13ec70(color4f const *color);
-void function_13e8a0();
 class c_1fa50
 {
 public:
@@ -4474,9 +4474,6 @@ PRIVATE color3f const alternate_score_text_color = { 0.8078431487083435f, 0.5607
 // @retail 0x15e530
 void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *point)
 {
-    (void)&text;
-    (void)&alpha;
-    point2f const *const *point_reference = &point;
     long font_index = (g_4ba04c <= 1) + 5;
     short_rectangle2d bounds = g_4b9dd8;
     s_font_header *font = font_get(g_4e28f4[font_index]);
@@ -4500,8 +4497,8 @@ void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *p
     color4f shadow;
     *(point3f *)&shadow.red = *g_468718;
     shadow.alpha = ((g_4b9ed8 >= 0 && g_4b9ed8 < 4) ? g_4e69c0[g_4b9ed8] : 1.0f) * alpha;
-    real x = (*point_reference)->x - g_4b9dd2;
-    real y = (*point_reference)->y - g_4b9dd0;
+    real x = point->x - g_4b9dd2;
+    real y = point->y - g_4b9dd0;
     bounds.left = (short)(x - 300.0f);
     bounds.right = (short)(x + 300.0f);
     bounds.top = (short)(y - (short)height);
@@ -4509,7 +4506,7 @@ void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *p
     function_13edb0(font_index, NONE, 2, 0, &color, &shadow);
     function_13ec70(&color);
     text->function_1fa50(&bounds, 0, 0, 0, 1.0f, 0, 0);
-    function_13e8a0();
+    text_style_clear();
 }
 
 bool function_15b2f0();
@@ -4581,9 +4578,6 @@ void function_15be20()
 bool function_30710(s_camera const *camera, short_rectangle2d const *bounds, vector3f const *vector, point2f *point, s_view const *view);
 void parse_text(word *text);
 
-// score 6 (was 18): the projected point is a twelve byte point3f, so the frame size and the
-// marker and text offsets match, but the point and the transformed vector still take each
-// other's stack slots.
 // @retail 0x159250
 void function_159250(long player_index, real alpha)
 {
@@ -4602,7 +4596,7 @@ void function_159250(long player_index, real alpha)
 	if (player && player->unit_index != NONE)
 	{
 		word text[0x100];
-		point3f point;
+		point2f point;
 		s_object_marker marker;
 		function_b8d30(player->unit_index, 0x04000095, &marker, 1, false);
 		point3f position = marker.matrix.position;
@@ -4630,13 +4624,13 @@ void function_159250(long player_index, real alpha)
 		transformed.k += g_4b9e14.right.k * x;
 		transformed.k += g_4b9e14.up.k * y;
 		transformed.k += g_4b9e14.position.z;
-		if (function_30710((s_camera const *)&g_4b9e14, 0, &transformed, (point2f *)&point, (s_view const *)&g_camera_storage))
+		if (function_30710((s_camera const *)&g_4b9e14, 0, &transformed, &point, (s_view const *)&g_camera_storage))
 		{
 			text[0] = 0;
 			wcsncpy((wchar_t *)text, (wchar_t const *)((byte *)player + 0x44), 0xff);
 			text[0xff] = 0;
 			parse_text(text);
-			function_15e530((c_1fa50 const *)text, alpha, (point2f const *)&point);
+			function_15e530((c_1fa50 const *)text, alpha, &point);
 		}
 	}
 }
