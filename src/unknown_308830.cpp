@@ -50,16 +50,13 @@ inline __m128 cross_308910(__m128 const &a, __m128 const &b)
 }
 
 // a vector's first term
-inline float first_term_308910(__m128 const &v)
+inline float first_term_308910(__m128 v)
 {
 	float result;
 	_mm_store_ss(&result, v);
 	return result;
 }
 
-// score 27 (was 27): retail keeps the inverse on the x87 stack through all three products and pops
-// it afterwards, and stores the normal's length after them; ours folds the last product and stores
-// the length first, and starts the determinant one instruction later.
 // a triangle's two edges from its second corner, as the terms that solve for
 // a point's weights in its plane: the edges' squared lengths and their dot
 // product over the determinant, then one over the length of their cross
@@ -73,9 +70,10 @@ void __cdecl function_308910(__m128 const *corners, float *out)
 	dot3_308830(&length_a_squared, edge_a, edge_a);
 	float length_b_squared;
 	dot3_308830(&length_b_squared, edge_b, edge_b);
+	float const squared_product = length_b_squared * length_a_squared;
 	float edges_dot;
 	dot3_308830(&edges_dot, edge_b, edge_a);
-	float const inverse = 1.0f / (length_b_squared * length_a_squared - edges_dot * edges_dot);
+	double const inverse = 1.0f / (squared_product - edges_dot * edges_dot);
 	__m128 const normal = cross_308910(edge_a, edge_b);
 	__m128 const squares = _mm_mul_ps(normal, normal);
 	__m128 const length = _mm_sqrt_ss(_mm_add_ss(_mm_shuffle_ps(squares, squares, 0xaa), _mm_add_ss(_mm_shuffle_ps(squares, squares, 0x55), squares)));
@@ -224,7 +222,8 @@ __m128 g_4801e0;
 static const signed char g_4136a8[8] = {-1, 0, 1, -6, 2, -7, -8, -1};
 
 // corner indices: the corner before a corner at [i], and after it at [i + 2]
-static const signed char g_4136b0[5] = {2, 0, 1, 2, 0};
+// The zero-mask path also reads entries 7 and 9.
+static const signed char g_4136b0[10] = {2, 0, 1, 2, 0, 0, 0, 0, 0, 0};
 
 // the dot product of two vectors' first three terms
 __forceinline float dot3_308d90(__m128 const &a, __m128 const &b)
@@ -245,9 +244,6 @@ __forceinline __m128 inverse_sqrt_308d90(__m128 const &value)
 	return _mm_shuffle_ps(refined, refined, 0);
 }
 
-// score 116 (was 136): in the edge branch retail loads out before the
-// subtraction and stores the distance through a stack temporary after the
-// normal; a distance local, an out local or an inline helper all score 136.
 // 0 when the point lies over the triangle (the normal faces the point), 1
 // when it is nearest an edge or a corner
 // @retail 0x308d90
@@ -299,7 +295,7 @@ int __cdecl function_308d90(__m128 const *point, __m128 const *corners, float co
 		__m128 const length_squared = _mm_add_ss(_mm_shuffle_ps(squares, squares, 0xaa), _mm_add_ss(_mm_shuffle_ps(squares, squares, 0x55), squares));
 		__m128 const inverse = inverse_sqrt_308d90(length_squared);
 		out->normal = _mm_mul_ps(inverse, offset);
-		_mm_store_ss(&out->distance, _mm_mul_ss(length_squared, inverse));
+		out->distance = first_term_308910(_mm_mul_ss(length_squared, inverse));
 		return 1;
 	}
 	__m128 first;
