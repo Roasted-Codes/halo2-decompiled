@@ -74,6 +74,42 @@ struct s_lookup_ray_result
 void function_141590(const transform4x3f *matrix, transform4x3f *inverse);
 bool __stdcall function_1de6d0(s_1de6d0 *query, long root, real start, real end);
 
+/* the point and the vector in the matrix's frame (the x row sums as
+   unknown_11c380.cpp's transform4x3f_apply_point does) */
+static inline void transform_point(transform4x3f const *matrix, point3f const *point, point3f *result)
+{
+ real x = point->x, y = point->y, z = point->z;
+ if (matrix->scale != 1.0f)
+ {
+  x = matrix->scale * x;
+  y = matrix->scale * y;
+  z = matrix->scale * z;
+ }
+ real result_x = matrix->left.i * y;
+ result_x += matrix->forward.i * x;
+ result_x += matrix->up.i * z;
+ result->x = result_x + matrix->position.x;
+ result->y = matrix->up.j * z + matrix->left.j * y + matrix->forward.j * x + matrix->position.y;
+ result->z = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x + matrix->position.z;
+}
+
+static inline void transform_vector(transform4x3f const *matrix, vector3f const *vector, vector3f *result)
+{
+ real i = vector->i, j = vector->j, k = vector->k;
+ if (matrix->scale != 1.0f)
+ {
+  i *= matrix->scale;
+  j *= matrix->scale;
+  k *= matrix->scale;
+ }
+ real result_i = matrix->left.i * j;
+ result_i += matrix->forward.i * i;
+ result_i += matrix->up.i * k;
+ result->i = result_i;
+ result->j = matrix->up.j * k + matrix->left.j * j + matrix->forward.j * i;
+ result->k = matrix->up.k * k + matrix->left.k * j + matrix->forward.k * i;
+}
+
 // @retail 0x1eff40
 bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
  const vector3f *direction, s_lookup_ray_result *result)
@@ -93,27 +129,9 @@ bool function_1eff40(s_lookup *lookup, long flags, const point3f *point,
   transform4x3f inverse;
   function_141590((const transform4x3f *)lookup->pointer_b + node, &inverse);
   point3f local_point;
-  real x = point->x, y = point->y, z = point->z;
-  if (inverse.scale != 1.0f)
-  {
-   x = inverse.scale * x;
-   y = inverse.scale * y;
-   z = inverse.scale * z;
-  }
-  local_point.x = inverse.up.i * z + inverse.left.i * y + inverse.forward.i * x + inverse.position.x;
-  local_point.y = inverse.up.j * z + inverse.left.j * y + inverse.forward.j * x + inverse.position.y;
-  local_point.z = inverse.up.k * z + inverse.left.k * y + inverse.forward.k * x + inverse.position.z;
+  transform_point(&inverse, point, &local_point);
   vector3f local_direction;
-  real i = direction->i, j = direction->j, k = direction->k;
-  if (inverse.scale != 1.0f)
-  {
-   i *= inverse.scale;
-   j *= inverse.scale;
-   k *= inverse.scale;
-  }
-  local_direction.i = inverse.up.i * k + inverse.left.i * j + inverse.forward.i * i;
-  local_direction.j = inverse.up.j * k + inverse.left.j * j + inverse.forward.j * i;
-  local_direction.k = inverse.up.k * k + inverse.left.k * j + inverse.forward.k * i;
+  transform_vector(&inverse, direction, &local_direction);
   s_1de6d0 query;
   query.field_0 = flags;
   query.field_4 = (s_1de6d2 const *)iterator.current;
