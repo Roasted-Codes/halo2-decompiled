@@ -1117,6 +1117,9 @@ void function_2118c0(void)
 
 	g_4f9cbc = (short)globals->count;
 }
+// score 14 (was 14): the two locals are kept in the other stack slots: the
+// float is stored at [esp+0x30] here and at [esp+0x38] in retail, so every
+// slot of the frame is at another offset.
 // @retail 0x211cc0
 void function_211cc0(void)
 {
@@ -1201,6 +1204,8 @@ void function_211cc0(void)
 	while (k < 8);
 }
 
+// score 61 (was 61): retail's prologue saves EBP as well and pushes EBP, ESI
+// and EDI; ours pushes only ESI and EDI, so the frame is seven bytes longer.
 // @retail 0x211fd0
 void function_211fd0(vector3f *out, real const *position, real scale, real time)
 {
@@ -2504,6 +2509,9 @@ static inline real distance_squared3d_20c440(point3f const *a, point3f const *b)
 	return sum;
 }
 
+// score 3 (was 3): the y value is loaded into XMM1 before the call here and
+// after it in retail, so the load of the z value sits on the other side of
+// the call as well.
 // @retail 0x20c440
 void function_20c440(byte const *request, s_audio_priority_table *table, long target_index,
     long source_index, long previous_index, long ai_index, short category, short first_state,
@@ -2702,6 +2710,9 @@ void function_20c440(byte const *request, s_audio_priority_table *table, long ta
 
 bool function_1df640(short team_a, short team_b);
 
+// score 6 (was 6): the address of the entry is built in EAX here and in ECX
+// in retail, and the two words of the group are read into the registers the
+// other way round after the call.
 // @retail 0x20cbd0
 void function_20cbd0(short group_index, s_audio_priority_table *table, long target_index,
     long source_index, long previous_index, long ai_index, short category,
@@ -2765,6 +2776,9 @@ void function_20cbd0(short group_index, s_audio_priority_table *table, long targ
 void __stdcall function_20d570(short arg_1, long arg_0, long arg_2, void *arg_3);
 void function_20fda0(long arg_0);
 
+// score 19 (was 19): the short that comes back from the call is sign extended
+// here after the call and in retail before it, and the global is read into
+// EDX here and into EAX in retail.
 // @retail 0x20fec0
 void function_20fec0(long arg_0, long arg_1)
 {

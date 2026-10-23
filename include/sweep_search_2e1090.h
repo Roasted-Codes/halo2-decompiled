@@ -198,4 +198,22 @@ __forceinline void search_boxes_2e1090(class_2e1090 *sweep, bounds_2e0020 const 
 	g_memory_2d88a0->release_stack(bits, (words * sizeof(long) + 15) & ~15);
 }
 
+// sorts entries from low to high (both included) by key (src/unknown_2e0120.cpp)
+struct entry_2e0250;
+struct order_2e0250
+{
+};
+void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, order_2e0250 order);
+
+// sorts `count` entries by key
+inline void sort_2e0250(entry_2e0250 *entries, int count)
+{
+	order_2e0250 order = {};
+	if (count > 1)
+	{
+		int const last = count - 1;
+		function_2e0250(entries, 0, last, order);
+	}
+}
+
 #endif

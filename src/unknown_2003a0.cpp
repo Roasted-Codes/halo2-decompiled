@@ -1522,10 +1522,12 @@ PRIVATE __forceinline bool squad_transfer_request(long unit_index, long object_i
     bool result = definition->perform(unit_index, &request);
     if (unit_index != NONE)
     {
-        long player_index = *(long *)(squad_transfer_object(unit_index) + 0x13c);
+        byte *const &object = squad_transfer_object(unit_index);
+        long player_index = *(long *)(object + 0x13c);
         if (player_index != NONE)
         {
-            short controller = *(short *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c + 0x28);
+            byte *const &player = g_4e8c24->data + (player_index & 0xffff) * 0x21c;
+            short controller = *(short *)(player + 0x28);
             if (controller != NONE)
             {
 /* retail calls the controller update out of line */
@@ -1592,8 +1594,8 @@ void function_204010(long squad_index, long other_squad_index)
             {
                 for (long target = squad->first_vehicle_index; target != NONE; )
                 {
-                    byte *target_vehicle = squad_transfer_object(target);
                     long selected = NONE;
+                    byte *target_vehicle = squad_transfer_object(target);
                     short seat = function_200ee0(target, 0, &selected, NULL);
                     if (seat != NONE && squad_transfer_request(actor->unit_index, selected, seat))
                         break;

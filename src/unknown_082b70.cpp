@@ -135,7 +135,7 @@ struct s_082b70_player
 	byte unknown030[0x21c - 0x30];
 };
 
-// score 48 (was 62): retail reads another global for the record pointer and keeps it in edx,
+// score 48 (was 48): retail reads another global for the record pointer and keeps it in edx,
 // ours reads a different global and keeps the pointer in eax.
 // @retail 0x828b0
 bool function_828b0(long player_index, s_player_object_motion *result)

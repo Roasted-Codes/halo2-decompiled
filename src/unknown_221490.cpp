@@ -151,6 +151,9 @@ void function_221490(
     function_221491(1, 0, buffer_reference);
 }
 
+// score 83 (was 83): the prologue and the loop's registers differ: retail pushes ebp, esi
+// and edi first and keeps the pair count in ebp and the pair pointer in ebx, ours loads the
+// pointer into ebx before the pushes and counts in ecx.
 // @retail 0x2215d0
 void function_2215d0(
 	s_mixbin_list *list,
@@ -222,6 +225,9 @@ set_all:
 	IDirectSoundStream_SetMixBins(stream, &settings->mixbins);
 }
 
+// score 83 (was 83): the prologue and the loop's registers differ: retail pushes ebp, esi
+// and edi first and keeps the pair count in ebp and the pair pointer in ebx, ours loads the
+// pointer into ebx before the pushes and counts in ecx.
 // @retail 0x2216f0
 void function_2216f0(
 	s_mixbin_list *list,
@@ -610,6 +616,8 @@ void function_220fd0(
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
+// score 21 (was 21): the truncated float is kept in ecx where retail keeps it in edx, and
+// the flag byte follows it.
 // @retail 0x2211e0
 void sound_driver_voice_environment_set(
 	long voice_index,

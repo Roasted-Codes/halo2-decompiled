@@ -2,6 +2,26 @@
 
 The newest entry comes first.
 
+## 2026-10-23: 9509 functions match
+
+```
+matched 9509 of 11321 game functions (1487228 of 2784283 bytes, 53.42%)
+matched 927 of 1041 Havok functions (132952 of 234536 bytes, 56.69%)
+```
+
+3 new matches, none lost:
+- @coldspear's #714, @marioag0412's #716, @marioag0412's #703: `0xa2ba0`, `0xee8a0` and `0x204010` match.
+
+## 2026-10-23: 9506 functions match
+
+```
+matched 9506 of 11321 game functions (1485562 of 2784283 bytes, 53.36%)
+matched 927 of 1041 Havok functions (132952 of 234536 bytes, 56.69%)
+```
+
+8 new matches, none lost:
+- Machine 3's batch 111 (#719): `0x11d3b0`, `0x12b0e0`, `0x137400`, `0x1544e0`, `0x1a1100`, `0x1a7030`, `0x1cd8a0` and `0x1d1d00` match.
+
 ## 2026-10-23: 9498 functions match
 
 ```
