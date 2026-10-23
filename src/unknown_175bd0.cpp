@@ -1193,6 +1193,33 @@ done:
 	return location;
 }
 
+/* effect_location_next expanded at the call (retail inlines it in some of its location loops) */
+static __forceinline s_effect_location_datum *effect_location_next_inline(s_effect_datum *effect, long *location_index, short mode)
+{
+	s_effect_location_datum *location = 0;
+
+	if (*location_index != NONE)
+	{
+		location = DATUM(g_4ea938, s_effect_location_datum, *location_index);
+		*location_index = location->next_index;
+		bool on_first_person = location->node_index != NONE && (location->node_index & 0x8000);
+		bool wanted = false;
+
+		switch (mode)
+		{
+		case 1:
+			wanted = true;
+			break;
+		case 3:
+			goto done;
+		}
+		if (on_first_person != wanted)
+			location = effect_location_next(effect, location_index, mode);
+	}
+done:
+	return location;
+}
+
 __declspec(noinline) void function_17aec0(short node_index, s_effect_datum *effect, transform4x3f *matrix);
 
 // @retail 0x17aec0
@@ -2044,14 +2071,10 @@ long function_179190(s_effect_datum *effect)
 			event_index++;
 		if (event_index >= definition->event_count)
 			break;
-		real skip_chance = definition->events[event_index].skip_chance;
-
-		if (!(skip_chance > 0.0f))
+		if (!(definition->events[event_index].skip_chance > 0.0f))
 			break;
-		dword *seed = &g_4e7408->unknown0;
-		if (!TEST_FIELD_BIT(TAG_GET(s_effect_definition, effect->tag_index)->flag2))
-			seed = &g_4e7408->seed;
-		if (!(skip_chance > function_x82e52f(seed, __FILE__, __LINE__)))
+		dword *seed = TEST_FIELD_BIT(TAG_GET(s_effect_definition, effect->tag_index)->flag2) ? &g_4e7408->unknown0 : &g_4e7408->seed;
+		if (!(definition->events[event_index].skip_chance > function_x82e52f(seed, __FILE__, __LINE__)))
 			break;
 	}
 	return event_index;
@@ -2286,20 +2309,6 @@ void function_179850(long effect_index, real dt)
 		function_1792b0(effect_index, dt);
 }
 
-static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effect_datum *effect, long *location_index)
-{
-	s_effect_location_datum *location = 0;
-
-	if (*location_index != NONE)
-	{
-		location = DATUM(g_4ea938, s_effect_location_datum, *location_index);
-		*location_index = location->next_index;
-		if (location->node_index != NONE && (location->node_index & 0x8000))
-			location = effect_location_next(effect, location_index, 0);
-	}
-	return location;
-}
-
 static __forceinline void transform_point_179fb0(transform4x3f const *matrix, point3f const *point, point3f *out)
 {
 	point3f p = *point;
@@ -2313,6 +2322,20 @@ static __forceinline void transform_point_179fb0(transform4x3f const *matrix, po
 	out->x = matrix->up.i * p.z + matrix->left.i * p.y + matrix->forward.i * p.x + matrix->position.x;
 	out->y = matrix->up.j * p.z + matrix->left.j * p.y + matrix->forward.j * p.x + matrix->position.y;
 	out->z = matrix->up.k * p.z + matrix->left.k * p.y + matrix->forward.k * p.x + matrix->position.z;
+}
+
+static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effect_datum *effect, long *location_index)
+{
+	s_effect_location_datum *location = 0;
+
+	if (*location_index != NONE)
+	{
+		location = DATUM(g_4ea938, s_effect_location_datum, *location_index);
+		*location_index = location->next_index;
+		if (location->node_index != NONE && (location->node_index & 0x8000))
+			location = effect_location_next(effect, location_index, 0);
+	}
+	return location;
 }
 
 // @retail 0x179fb0
@@ -2684,20 +2707,6 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 	return next_index;
 }
 
-static __forceinline s_effect_location_datum *effect_location_next_1778d0(s_effect_datum *effect, long *location_index)
-{
-	s_effect_location_datum *location = 0;
-
-	if (*location_index != NONE)
-	{
-		location = DATUM(g_4ea938, s_effect_location_datum, *location_index);
-		*location_index = location->next_index;
-		if (location->node_index != NONE && (location->node_index & 0x8000))
-			location = effect_location_next(effect, location_index, 0);
-	}
-	return location;
-}
-
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
@@ -2731,7 +2740,7 @@ bool function_1778d0(void)
 					long location_index = effect->location_indices[0];
 					s_effect_location_datum *location;
 
-					while ((location = effect_location_next_1778d0(effect, &location_index)) != 0)
+					while ((location = effect_location_next_inline(effect, &location_index, 0)) != 0)
 					{
 						point3f point;
 						vector3f delta;
@@ -2865,16 +2874,13 @@ void __stdcall function_179e80(s_effect_datum *effect)
 	for (long i = 0; i < event->beam_count; i++)
 	{
 		s_effect_beam *beam = &event->beams[i];
-		short beam_location = beam->location;
 		real progress = effect->event_delay > 0.0f ? effect->unknown60 / effect->event_delay : 0.0f;
 
-		long location_index = effect->location_indices[beam_location];
+		long location_index = effect->location_indices[beam->location];
+		s_effect_location_datum *location;
 
-		while (location_index != NONE)
+		while ((location = effect_location_next_inline(effect, &location_index, 3)) != 0)
 		{
-			s_effect_location_datum *location = DATUM(g_4ea938, s_effect_location_datum, location_index);
-
-			long next_index = location->next_index;
 			if (location->node_index != NONE)
 			{
 				transform4x3f node_matrix;
@@ -2888,7 +2894,6 @@ void __stdcall function_179e80(s_effect_datum *effect)
 			{
 				function_156b60(beam, progress, &location->matrix);
 			}
-			location_index = next_index;
 		}
 	}
 }
