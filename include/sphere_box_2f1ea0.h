@@ -7,6 +7,9 @@
 #include <xmmintrin.h>
 
 static __declspec(align(16)) const unsigned long g_sign_mask_4124a0[4] = {0x80000000, 0x80000000, 0x80000000, 0x80000000};
+// the same bits, kept apart for reversing a direction (retail's linker merges
+// the two)
+static __declspec(align(16)) const unsigned long g_negate_mask_4124a0[4] = {0x80000000, 0x80000000, 0x80000000, 0x80000000};
 static __declspec(align(16)) const unsigned long g_magnitude_mask_455940[4] = {0x7fffffff, 0x7fffffff, 0x7fffffff, 0x7fffffff};
 
 // three axes and a position
@@ -124,8 +127,8 @@ __forceinline bool sphere_box_contact_2f1ea0(void const *a_, void const *b_, voi
 		// of the centre's terms in the box's frame, then reversed to point
 		// at the centre and turned out of that frame
 		__m128 const sign = _mm_and_ps(local.value, *(__m128 const *)g_sign_mask_4124a0);
-		contact.normal = _mm_xor_ps(_mm_mul_ps(inverse, outside), sign);
-		contact.normal = rotate_2f2130(&b->motion->transform, _mm_xor_ps(contact.normal, *(__m128 const *)g_sign_mask_4124a0));
+		__m128 const direction = _mm_xor_ps(_mm_mul_ps(inverse, outside), sign);
+		contact.normal = rotate_2f2130(&b->motion->transform, _mm_xor_ps(direction, *(__m128 const *)g_negate_mask_4124a0));
 	}
 	else
 	{
@@ -164,7 +167,7 @@ __forceinline bool sphere_box_contact_2f1ea0(void const *a_, void const *b_, voi
 		}
 		if (local.value.m128_f32[axis] < 0.0f)
 		{
-			contact.normal = _mm_xor_ps(contact.normal, *(__m128 const *)g_sign_mask_4124a0);
+			contact.normal = _mm_xor_ps(contact.normal, *(__m128 const *)g_negate_mask_4124a0);
 		}
 		separation = depth - box->radius - sphere->radius;
 	}
