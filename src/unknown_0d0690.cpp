@@ -646,11 +646,14 @@ void function_d2bf0(s_mesh *mesh, long triangle_index, real u, real v, real *out
 			point2f a, b, c;
 
 			unpack_point(data, triangle->a, &a);
-			unpack_point(data, triangle->c, &c);
 			unpack_point(data, triangle->b, &b);
+			unpack_point(data, triangle->c, &c);
 
-			*out_a = (c.x - a.x) * v + (b.x - a.x) * u + a.x;
-			*out_b = (c.y - a.y) * v + (b.y - a.y) * u + a.y;
+			real ax = a.x, ay = a.y;
+			real bx = b.x, by = b.y;
+			real cx = c.x, cy = c.y;
+			*out_a = (cx - ax) * v + (bx - ax) * u + ax;
+			*out_b = (cy - ay) * v + (by - ay) * u + ay;
 		}
 	}
 }
