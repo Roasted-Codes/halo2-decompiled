@@ -691,6 +691,8 @@ s_effect_particle_system_definition *s_particle_system_datum::function_1751d0()
 	return 0;
 }
 
+// score 21 (was 21): the or-ed mask is written into the local after the call arguments are pushed
+// here and before them in retail.
 // @retail 0x175270
 void function_175270(s_particle_system_datum *particle_system, s_particle_system_spawn *spawn, transform4x3f const *matrix, bool field_b4)
 {
