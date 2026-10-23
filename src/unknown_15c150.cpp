@@ -181,6 +181,7 @@ PRIVATE __forceinline s_mp_globals *transition_start_time_set(s_mp_globals *glob
 	return globals;
 }
 
+// score 5 (was 5): the game options pointer is kept in ebp where retail keeps it in ebx.
 // @retail 0x15c550
 void function_15c550()
 {

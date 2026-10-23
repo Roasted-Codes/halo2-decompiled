@@ -655,18 +655,18 @@ void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_ins
     s_query_owner *definition = &globals->owners[instance->owner];
     if (definition->surface_count <= 0x2000)
     {
-     c_instance_surface_query *query = (c_instance_surface_query *)(definition->shape + 0x50);
+     byte *shape = definition->shape;
      c_query_transform transform;
      c_query_point center;
      center.value = *sphere;
      query_transform(&instance->matrix, &transform);
      center.inverse_transform(&transform, &center.value);
      query_remove_key(keys, i);
+     long first = keys->count;
      __m128 local = center.value;
      ((real *)&local)[3] = ((const real *)sphere)[3];
-     long first = keys->count;
      --i;
-     query->query_sphere(&local, keys);
+     ((c_instance_surface_query *)(shape + 0x50))->query_sphere(&local, keys);
      query_remap_keys(&owner->object, keys, first, instance_index);
     }
    }
