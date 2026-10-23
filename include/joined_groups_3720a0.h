@@ -44,12 +44,10 @@ class grouping_3720a0
 public:
 	array_2d91d0 *parents;
 	array_2d91d0 *scratch;
+	long group_count;
 
 	grouping_3720a0(array_2d91d0 *parents, array_2d91d0 *scratch);
-	~grouping_3720a0()
-	{
-		function_175f40();
-	}
+	__declspec(noinline) ~grouping_3720a0();
 
 	// starts `count` bodies each in its own group, then joins the two
 	// bodies of each pair
