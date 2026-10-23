@@ -676,6 +676,7 @@ struct s_ai_importance_entry
 };
 
 #define MAXIMUM_AI_IMPORTANCE_ENTRIES 0x100
+#define NUMBEROF(array) (sizeof(array) / sizeof((array)[0]))
 
 struct s_ai_importance_list
 {
@@ -729,53 +730,107 @@ bool __stdcall ai_importance_compare(void const *a, void const *b, void const *c
 	return result;
 }
 
+/* laid out like s_squad_actor_iterator (include/squads.h), walking all actors */
+struct s_ai_importance_actor_iterator
+{
+	long squad_index;
+	long index;
+	long next_index;
+};
+
+PRIVATE inline void ai_importance_actor_iterator_new(s_ai_importance_actor_iterator *iterator)
+{
+	if (g_4f55d0->active)
+	{
+		iterator->squad_index = NONE;
+		iterator->index = NONE;
+		iterator->next_index = g_4f55d0->unknown14;
+	}
+}
+
+PRIVATE inline s_ai_importance_actor *ai_importance_actor_iterator_next(s_ai_importance_actor_iterator *iterator)
+{
+	s_ai_importance_actor *actor = NULL;
+	if (g_4f55d0->active && iterator->next_index != NONE)
+	{
+		actor = (s_ai_importance_actor *)(g_4f55f0->data + (iterator->next_index & 0xffff) * 0x888);
+		iterator->index = iterator->next_index;
+		iterator->next_index = actor->next_index;
+	}
+	return actor;
+}
+
+/* the squads, as the squad iterator of src/unknown_2003a0.cpp walks them */
+struct s_ai_importance_squad_iterator
+{
+	s_ai_importance_squad *squad;
+	s_record_pool_iterator records;
+	long squad_index;
+};
+
+PRIVATE inline void ai_importance_squad_iterator_new(s_ai_importance_squad_iterator *iterator)
+{
+	if (g_4f55d0->active)
+	{
+		iterator->records.data = g_51e9d8;
+		iterator->records.index = NONE;
+	}
+}
+
+PRIVATE __forceinline s_ai_importance_squad *ai_importance_squad_iterator_next(s_ai_importance_squad_iterator *iterator)
+{
+	s_ai_importance_squad *squad = NULL;
+	if (g_4f55d0->active)
+	{
+		s_record_pool *records = iterator->records.data;
+		long index = data_next_absolute_index_inlined(records, iterator->records.index + 1);
+		if (index != NONE)
+		{
+			squad = (s_ai_importance_squad *)(records->data + records->size * index);
+			iterator->records.index = index;
+			iterator->records.datum_index = (*(short *)squad << 16) | index;
+		}
+		else
+		{
+			iterator->records.index = records->maximum_count;
+			iterator->records.datum_index = NONE;
+		}
+		iterator->squad_index = iterator->records.datum_index & 0xffff;
+		iterator->squad = squad;
+	}
+	return squad;
+}
+
+// score 2 (was 143): retail reloads the squad pool pointer between cmp edx, -1 and je in the
+// squad step; ours reloads it after the je on fall-through, the taken branch going to the shared reload.
 // @retail 0x1c8700
 void __stdcall ai_importance_list_build(long unused, s_ai_importance_list *list, long unused2)
 {
-	long actor_index;
-	s_record_pool_iterator iterator;
+	s_ai_importance_actor_iterator actors;
+	s_ai_importance_actor *actor;
+	s_ai_importance_squad_iterator iterator;
 
 	list->count = 0;
 	list->unknown2 = 0;
-	if (g_4f55d0->active)
+	ai_importance_actor_iterator_new(&actors);
+	while ((actor = ai_importance_actor_iterator_next(&actors)) != NULL && list->count < NUMBEROF(list->entries))
 	{
-		actor_index = g_4f55d0->unknown14;
-	}
-	while (g_4f55d0->active && actor_index != NONE)
-	{
-		s_ai_importance_actor *actor = (s_ai_importance_actor *)(g_4f55f0->data + (actor_index & 0xffff) * 0x888);
-		long index = actor_index;
-
-		if (list->count >= MAXIMUM_AI_IMPORTANCE_ENTRIES)
-		{
-			break;
-		}
-		actor_index = actor->next_index;
 		if (!actor->unknown09 && actor->importance != NONE)
 		{
 			list->entries[list->count].kind = 1;
-			list->entries[list->count].index = index;
+			list->entries[list->count].index = actors.index;
 			list->entries[list->count].importance = actor->importance;
 			list->count++;
 		}
 	}
-	if (g_4f55d0->active)
+	ai_importance_squad_iterator_new(&iterator);
+	s_ai_importance_squad *squad;
+	while ((squad = ai_importance_squad_iterator_next(&iterator)) != NULL && list->count < NUMBEROF(list->entries))
 	{
-		iterator.data = g_51e9d8;
-		iterator.index = NONE;
-	}
-	while (g_4f55d0->active)
-	{
-		s_ai_importance_squad *squad = (s_ai_importance_squad *)data_iterator_next_inlined(&iterator);
-
-		if (!squad || list->count >= MAXIMUM_AI_IMPORTANCE_ENTRIES)
-		{
-			break;
-		}
 		if (!(squad->flags & 0x80) && squad->unknown0a > 0 && squad->importance != NONE)
 		{
 			list->entries[list->count].kind = 0;
-			list->entries[list->count].index = iterator.datum_index;
+			list->entries[list->count].index = iterator.squad_index;
 			list->entries[list->count].importance = squad->importance;
 			list->count++;
 		}
