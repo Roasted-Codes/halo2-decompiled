@@ -33,6 +33,7 @@ s_51e9f8 g_51e9f8;
 /* the subsystem's initialize (in the table in src/unknown_157450.cpp,
    with 0x215730 as its dispose): makes sure n:\sgf exists and resets the state */
 #pragma inline_depth(0)
+// score 35 (was 35): retail clears one contiguous block of globals with a single rep stosd and sets the flag byte first; here the globals are separate objects, so they are cleared with separate stores
 // @retail 0x215690
 void saved_game_storage_initialize(void)
 {
