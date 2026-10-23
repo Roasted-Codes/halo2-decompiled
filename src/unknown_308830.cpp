@@ -176,9 +176,10 @@ struct vector_308c20
 struct matrix_308c20
 {
 	vector_308c20 rows[4];
+
+	vector_308c20 &column(int index) { return rows[index]; }
 };
 
-// score 6 (was 6): retail stores rows 0 and 1 in the middle of the third cross product; ours stores them after it.
 // @retail 0x308c20
 void __cdecl function_308c20(__m128 const *corners, weights_308c20 const *weights, matrix_308c20 *out, __m128 *normal)
 {
@@ -190,9 +191,9 @@ void __cdecl function_308c20(__m128 const *corners, weights_308c20 const *weight
 	__m128 const weighted_0 = _mm_mul_ps(splat_308c20(weights->edges[0]), edge_0);
 	__m128 const weighted_1 = _mm_mul_ps(splat_308c20(weights->edges[1]), edge_1);
 	__m128 const weighted_2 = _mm_mul_ps(splat_308c20(weights->edges[2]), edge_2);
-	out->rows[0].set_cross(weighted_0, scaled_normal);
-	out->rows[1].set_cross(weighted_1, scaled_normal);
-	out->rows[2].set_cross(weighted_2, scaled_normal);
+	out->column(0).set_cross(weighted_0, scaled_normal);
+	out->column(1).set_cross(weighted_1, scaled_normal);
+	out->column(2).set_cross(weighted_2, scaled_normal);
 	float *terms = (float *)out->rows;
 	swap_308c20(terms[4], terms[1]);
 	swap_308c20(terms[8], terms[2]);
@@ -201,7 +202,7 @@ void __cdecl function_308c20(__m128 const *corners, weights_308c20 const *weight
 	terms[3] = normal_terms[0];
 	terms[7] = normal_terms[1];
 	terms[11] = normal_terms[2];
-	out->rows[3].value = _mm_setzero_ps();
+	out->column(3).value = _mm_setzero_ps();
 	terms[12] = -(weights->last * weights->edges[0]);
 }
 
