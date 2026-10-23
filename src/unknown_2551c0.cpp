@@ -274,13 +274,13 @@ struct s_255d60
 point3f *function_b9dd0(long object_index, point3f *result);
 
 /* walks the clumps of g_502420, only while the ai is active */
-struct s_clump_iterator
+struct s_clump_datum_walk
 {
 	s_data_datum_iterator iterator;
 	long clump_index;
 };
 
-static inline void clump_iterator_new(s_clump_iterator *iterator)
+static inline void clump_datum_walk_new(s_clump_datum_walk *iterator)
 {
 	if (g_4f55d0->active)
 	{
@@ -292,7 +292,7 @@ static inline void clump_iterator_new(s_clump_iterator *iterator)
 
 /* the next clump, or NULL; retail inlines it with the index scan, where LTCG
    keeps a plain inline out of line */
-PRIVATE __forceinline s_255d60 *clump_iterator_next(s_clump_iterator *iterator)
+PRIVATE __forceinline s_255d60 *clump_datum_walk_next(s_clump_datum_walk *iterator)
 {
 	s_255d60 *clump = NULL;
 
@@ -331,11 +331,11 @@ bool function_255d60(long arg_0, point3f const *arg_1, real arg_2, real arg_3, s
 	long local_4 = 0;
 	real local_1 = local_20 * local_20;
 	real local_2 = arg_2 * arg_2;
-	s_clump_iterator local_5;
-	clump_iterator_new(&local_5);
+	s_clump_datum_walk local_5;
+	clump_datum_walk_new(&local_5);
 	for (;;)
 	{
-		s_255d60 *local_6 = clump_iterator_next(&local_5);
+		s_255d60 *local_6 = clump_datum_walk_next(&local_5);
 		if (!local_6)
 		{
 			break;
