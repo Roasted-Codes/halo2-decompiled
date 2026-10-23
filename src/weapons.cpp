@@ -1800,6 +1800,8 @@ bool function_101490(long weapon_index, long magazine_index)
 }
 /* finds a weapon's animation (its overlay, else the animation) in the graph
    for its holder's character, and makes it the weapon's current one */
+// score 4 (was 4): the graph index is kept in ecx where retail keeps it in edx,
+// and the two values that are read out of the frame are read in the other order.
 // @retail 0x105c20
 bool __stdcall function_105c20(long weapon_index, long animation_name)
 {
@@ -2877,8 +2879,8 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
     return result;
 }
 
-// score 101 (was 69): the prologue pushes EBX where retail pushes EBP and the parameter is masked
-// in the other register; the baseline number predates the current tree.
+// score 52 (was 69): the record's pointer is kept in ebx where retail keeps it in
+// ebp, and the word of the record is read into cx where retail reads it into dx.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {

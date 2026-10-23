@@ -377,6 +377,9 @@ bool __stdcall function_110ab0(long unit_index);
 /* asks the actor's unit to move to the point facing the given way (request
    0x25), once it is within half a world unit of it; when asked, only while
    it faces within 45 degrees of its prop */
+// score 100 (was 100): retail's prologue saves ESI as well and pushes the
+// registers in the order EBP, EBX, ESI, EDI; here only EBX, EBP and EDI are
+// saved, so every stack slot after the prologue sits at another offset.
 // @retail 0x1f4f40
 bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_type_c3b527 const *point, bool face_prop)
 {
@@ -433,6 +436,8 @@ static inline real heading_distance3d(point3f const *a, point3f const *b)
 
 /* while the actor's target point (+0x638) is fresh: faces it, and once
    within half a world unit of it asks the unit to stop there (request 0x2d) */
+// score 66 (was 66): retail saves ESI in the prologue, ours does not, and
+// ours is ten bytes longer than retail.
 // @retail 0x1f58c0
 bool function_1f58c0(long actor_index, vector3f *facing, short *unknown)
 {
@@ -475,6 +480,10 @@ bool function_e7020(long unit_index, bool *alternate, long name);
 bool function_10f340(long unit_index, long mode, long set);
 bool function_10f9b0(long unit_index, long mode, long set, long lookup_flags, transform4x3f *matrix, bool any_weapon);
 
+// score 5 (was 5): retail reads the argument of the callee into EDX before it
+// reads the field into EDI; here the field is read first. The registers the
+// callee takes are its own choice, and function_e7020 in src/unknown_0a76b0.cpp
+// is far from retail.
 // @retail 0x1f57a0
 bool function_1f57a0(long actor_index, long name)
 {
@@ -622,6 +631,9 @@ struct s_1f9762
 	s_actor_point_entry field_30[4];
 };
 
+// score 108 (was 108): ours is five bytes longer than retail: the value that
+// is compared is loaded into another register and the call that follows takes
+// its argument from another stack slot.
 // @retail 0x1f9760
 bool function_1f9760(long actor_index, long object_index, point3f const *point, real distance,
 	bool *last_out, bool *direction_valid_out, vector3f *direction_out)
@@ -697,6 +709,9 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
 	real *speed_out, real *time_out, real *distance, real *vertical_speed, real *horizontal_speed);
 
+// score 5 (was 5): the arguments of the ballistics call are pushed in another
+// order and the high arc flag goes into EDX; retail's function_fa1a0 takes the
+// target before the origin and is defined in src/projectiles.cpp.
 // @retail 0x1f8100
 bool function_1f8100(long actor_index, point3f const *origin, point3f const *target)
 {
