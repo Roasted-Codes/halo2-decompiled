@@ -642,14 +642,16 @@ long function_1ef810(long index)
  return index;
 }
 
-// score 53 (was 53): the prologue sets up a 0x58-byte frame; retail loads the global first and has
-// no frame of its own.
+// score 22 (was 53): retail reads the globals pointer inside the branch that uses it, where
+// ours reads it before the surface count is checked, and retail copies the count into a second
+// register before the flag test.
 // @retail 0x1ef6d0
 dword c_shape_global_owner::next_key(dword key)
 {
+ s_surface_globals *globals = (s_surface_globals *)g_4e0348;
  s_surface_list *world = (s_surface_list *)g_4e0340;
  long count = *(long *)((byte *)world + 0x28);
- long volatile last = count;
+ long last = count;
  if (count > 0 && (world->surfaces[last - 1].flags & 0x10)) --count;
  long *objects = g_51e9cc;
  long index = key & 0xffff;
@@ -662,7 +664,6 @@ dword c_shape_global_owner::next_key(dword key)
  }
  if (kind == 1 || kind == 2)
  {
-  s_surface_globals *globals = (s_surface_globals *)g_4e0348;
   if (globals->count > 0)
   {
    for (; index < globals->count - 1; ++index)

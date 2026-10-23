@@ -1048,6 +1048,7 @@ static __forceinline void b98e0_translation(transform4x3f *out, point3f const *p
     out->position = *position;
 }
 
+// score 69 (was 69): the zero float is set up before the table load in ours, retail loads the table first and the float after it
 // @retail 0xb98e0
 void __stdcall function_b98e0(long object_index, transform4x3f const *matrix)
 {
@@ -1075,6 +1076,7 @@ extern s_object_list *g_4de2f4;
 void function_c0110();
 void function_1089d0(long object_index);
 
+// score 3 (was 3): the record pointer is materialised in esi in ours, retail loads the table into ecx and computes the record address with lea
 // @retail 0xb6c50
 void function_b6c50()
 {
@@ -1410,6 +1412,7 @@ done:
     return result;
 }
 
+// score 26 (was 26): the name index parameter is read as a dword, retail reads it as a word, and the placement helper is called with one argument more
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {
@@ -1450,6 +1453,7 @@ long __stdcall function_bb670(short name_index, bool force)
     return result;
 }
 
+// score 84 (was 84): the two fields of the definition are read in the other order and the -1 sentinel is kept in edi instead of ecx
 // @retail 0xa73b0
 long __stdcall function_a73b0(s_entity_info *info)
 {

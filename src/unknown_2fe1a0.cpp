@@ -21,11 +21,27 @@ struct s_2fe1a0_input
 
 class class_2fe1a0_target;
 
-struct s_2fe1a0_query
+// the body a query is built on: the shape it hit, its key, where it sits and
+// the body it was made from
+class c_2fe1a0_query
 {
-	class_2fe1a0_target *target;
-	s_2fe1a0_range range;
-	const s_2fe1a0_input *input;
+public:
+	class_2fe1a0_target *shape;
+	long key;
+	long placement;
+	const s_2fe1a0_input *parent;
+
+	__forceinline c_2fe1a0_query(const s_2fe1a0_input *body)
+	{
+		parent = body;
+		placement = body->range.field_4;
+	}
+
+	__forceinline void set_shape(class_2fe1a0_target *value)
+	{
+		key = parent->range.field_0;
+		shape = value;
+	}
 };
 
 class class_2fe1a0_target
@@ -40,7 +56,7 @@ public:
 	virtual void slot6() = 0;
 	virtual void slot7() = 0;
 	virtual s_2fe1a0_result slot8(long a, long b) = 0;
-	virtual void slot9(long a, const s_2fe1a0_query *query, long c) = 0;
+	virtual void slot9(long a, const c_2fe1a0_query *query, long c) = 0;
 };
 
 class class_2fe1a0
@@ -60,14 +76,9 @@ s_2fe1a0_result class_2fe1a0::function_2fe1a0(long a, long b)
 }
 
 // @retail 0x2fe1c0
-// score 10 (was 17): retail loads the target once into edx and reuses it for
-// the call, and stores the query's fields as q+8, q+0xc, q+0, q+4; ours loads
-// the target twice and stores the fields in the source's order.
 void class_2fe1a0::function_2fe1c0(long a, const s_2fe1a0_input *input, long c)
 {
-	s_2fe1a0_query query;
-	query.target = target;
-	query.range = input->range;
-	query.input = input;
+	c_2fe1a0_query query(input);
+	query.set_shape(target);
 	target->slot9(a, &query, c);
 }

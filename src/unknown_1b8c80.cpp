@@ -213,15 +213,15 @@ bool function_1b8eb0(long actor_index, long object_index, short seat_index, bool
 	return result;
 }
 
-// score 117 (was 145): the loop body now matches (the seat array indexed by a
-// byte offset), but retail pushes ebp and esi after the loop's entry check and
-// keeps the actor pool in ecx, ours saves them in the prologue.
+// score 109 (was 117): the loop body matches, but retail pushes ebp and esi
+// after the loop's entry check while ours saves them in the prologue, and
+// retail reads the second argument before the pushes.
 // @retail 0x1b8f30
 bool function_1b8f30(long actor_index, long object_index)
 {
 	s_actor_view *actor = actor_get(actor_index);
 	short count = 0;
-	bool result = false;
+	byte result = 0;
 	long last_object_index = NONE;
 	s_object_seat seats[0x40];
 
@@ -536,8 +536,8 @@ void __stdcall function_1ba3f0(long actor_index, s_slot *slot, s_slot_target_lis
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 // score 6 (was 6): retail loads the slot pointer into ECX before the actor
-// index is masked, ours loads it after the actor lookup, so the two blocks are
-// one instruction out of step.
+// index is masked, ours loads it after the actor lookup and after the branch
+// that tests the actor, so the two builds are one instruction out of step.
 // @retail 0x1ba8c0
 void __stdcall function_1ba8c0(long actor_index, s_slot *slot, s_slot_target_list *list)
 {
@@ -900,8 +900,8 @@ short __stdcall function_1b9890(long actor_index, s_slot *slot)
 
 /* invites the clump members to the joint, the nearest first, when the
    object has more than one seat to take */
-// score 17 (was 17): retail loads the element pool count into EDX before the
-// actor is fetched and keeps the element record in ECX, ours loads the count
+// score 17 (was 17): retail loads the element pool data into EDX before the
+// actor is fetched and keeps the element record in ECX, ours loads the data
 // later into ESI and the record in EAX.
 // @retail 0x1bb3a0
 short __stdcall function_1bb3a0(long actor_index, long joint_index, long a, long b)
@@ -1062,9 +1062,9 @@ struct s_seat_approach_result
 	bool approaching;
 };
 
-// score 176 (was 176): our stack frame is 4 bytes smaller than retail's, so
-// every local offset is shifted and the branches over the distance computation
-// land in different places.
+// score 176 (was 176): retail computes the seat differences in x87 and keeps
+// them unrounded, ours computes them in single precision, and our stack frame
+// is 4 bytes smaller than retail's, so every local offset is shifted.
 // @retail 0x1baae0
 bool function_1baae0(long actor_index, long object_index, short seat_index, bool ignore_bonus,
 	bool ignore_reserved, bool vertical, s_seat_approach_result *out)

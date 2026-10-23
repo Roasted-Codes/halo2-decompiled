@@ -216,7 +216,7 @@ struct class_2df670
 
 	result_2df6e0 function_301720(void const *shape, void const *tree, void const *ray, void *output);
 	void function_301800(void const *shape, void const *tree, s_244980_ray const *ray, s_244980_output *output, c_244c10 *callback);
-	void function_3009e0(pending_301800 *pending, void const *root, fixed_ray_301800 const *ray);
+	void function_3009e0(pending_301800 *pending, void const *root, fixed_ray_301800 *const ray);
 };
 
 // a big-endian number of two, three or four bytes
@@ -242,18 +242,13 @@ __forceinline __m128 lerp_3009e0(__m128 from, __m128 to, float fraction)
 	return _mm_add_ps(_mm_mul_ps(_mm_sub_ps(*(__m128 const *)g_412420, t), from), _mm_mul_ps(t, to));
 }
 
-// score 999 (was 1022), 4 bytes long: retail keeps the command in eax and
-// copies it to ecx for the scale case's shift; ours keeps it in ecx, so `this`
-// moves to eax at the start and most cases take other scratch registers. Also
-// different: the 24-bit bound case loads its second value's middle byte first,
-// and the 32-bit leaf case shifts its high half by 16 (ours: a 4-byte chain).
 // The ray's walk down the tree: splits test the ray's two ends against the
 // two children's ranges along an axis or a diagonal, visiting the near child
 // first (recursively, with the ray cut at the split) and then the far one
 // with what is left of the ray; bounds cut the ray to a node's range; each
 // leaf reached is cast against.
 // @retail 0x3009e0
-void class_2df670::function_3009e0(pending_301800 *position, void const *root, fixed_ray_301800 const *segment)
+void class_2df670::function_3009e0(pending_301800 *position, void const *root, fixed_ray_301800 *const segment)
 {
 	unsigned char const *commands = (unsigned char const *)root;
 	pending_301800 copy;
@@ -271,7 +266,7 @@ void class_2df670::function_3009e0(pending_301800 *position, void const *root, f
 	float high;
 	for (;;)
 	{
-		long const op = *commands;
+		unsigned char const op = *commands;
 		axis = 999;
 		switch (op)
 		{
@@ -403,13 +398,13 @@ void class_2df670::function_3009e0(pending_301800 *position, void const *root, f
 					function_3009e0(position, commands - second_offset + first_offset, &other);
 					if (low_b * low_a < 0.0f)
 					{
-						((fixed_ray_301800 *)segment)->from.value = lerp_3009e0(segment->from.value, segment->to.value, low_a / (low_a - low_b));
+						segment->from.value = lerp_3009e0(segment->from.value, segment->to.value, low_a / (low_a - low_b));
 					}
 					if (fraction < 1.0f)
 					{
-						((fixed_ray_301800 *)segment)->to.value = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
-						((fixed_ray_301800 *)segment)->to.scale(position->scale);
-						((fixed_ray_301800 *)segment)->to.subtract(position->offset);
+						segment->to.value = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
+						segment->to.scale(position->scale);
+						segment->to.subtract(position->offset);
 						if (axis < 3 && segment->to(axis) < second_start)
 						{
 							return;
@@ -426,13 +421,13 @@ void class_2df670::function_3009e0(pending_301800 *position, void const *root, f
 					function_3009e0(position, commands, &other);
 					if (high_b * high_a < 0.0f)
 					{
-						((fixed_ray_301800 *)segment)->from.value = lerp_3009e0(segment->from.value, segment->to.value, high_a / (high_a - high_b));
+						segment->from.value = lerp_3009e0(segment->from.value, segment->to.value, high_a / (high_a - high_b));
 					}
 					if (fraction < 1.0f)
 					{
-						((fixed_ray_301800 *)segment)->to.value = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
-						((fixed_ray_301800 *)segment)->to.scale(position->scale);
-						((fixed_ray_301800 *)segment)->to.subtract(position->offset);
+						segment->to.value = _mm_sub_ps(lerp_3009e0(this->ray.from, this->ray.to, fraction), tree->origin);
+						segment->to.scale(position->scale);
+						segment->to.subtract(position->offset);
 						if (axis < 3 && segment->to(axis) > first_end)
 						{
 							return;
@@ -493,13 +488,13 @@ void class_2df670::function_3009e0(pending_301800 *position, void const *root, f
 				float const high_b = b - high;
 				if (high_a * high_b < 0.0f)
 				{
-					(&((fixed_ray_301800 *)segment)->from)[1 - flip].value = lerp_3009e0(from, to, high_a / (high_a - high_b));
+					(&segment->from)[1 - flip].value = lerp_3009e0(from, to, high_a / (high_a - high_b));
 				}
 				float const low_a = a - low;
 				float const low_b = b - low;
 				if (low_a * low_b < 0.0f)
 				{
-					(&((fixed_ray_301800 *)segment)->from)[flip].value = lerp_3009e0(from, to, low_a / (low_a - low_b));
+					(&segment->from)[flip].value = lerp_3009e0(from, to, low_a / (low_a - low_b));
 				}
 			}
 			continue;
@@ -522,11 +517,11 @@ void class_2df670::function_3009e0(pending_301800 *position, void const *root, f
 			corner(1) = (float)commands[2];
 			corner(2) = (float)commands[3];
 			corner(3) = 0.0f;
-			((fixed_ray_301800 *)segment)->from.subtract(corner);
-			((fixed_ray_301800 *)segment)->to.subtract(corner);
+			segment->from.subtract(corner);
+			segment->to.subtract(corner);
 			float const factor = (float)(1 << op);
-			((fixed_ray_301800 *)segment)->from.scale(factor);
-			((fixed_ray_301800 *)segment)->to.scale(factor);
+			segment->from.scale(factor);
+			segment->to.scale(factor);
 			copy.offset.value = _mm_mul_ps(splat_3009e0(factor), _mm_add_ps(position->offset.value, corner.value));
 			copy.depth = position->depth + op;
 			copy.scale = factor * position->scale;

@@ -166,8 +166,8 @@ long sound_classes_match(long class_a, long class_b)
 
 /* whether a playing sound can share a voice */
 // score 2 (was 2): retail loads the source's compare callback into ebp after
-// the object index test; ours loads it into eax, so the load, the test and
-// the call differ.
+// the object index test, ours loads it before the test, so the load and the
+// branch that follows it differ.
 // @retail 0x21e0b0
 long sound_voice_matches(s_voice_playing_sound const *sound, s_sound_voice const *voice)
 {

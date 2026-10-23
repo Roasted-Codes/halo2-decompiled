@@ -671,6 +671,7 @@ void function_176330(point3f const *point, s_effect_marker *markers)
 	markers[1].name = 0x20000ca;
 }
 
+// score 20 (was 20): the copy of the normal and the swap of the two pointers happen in the other order
 // @retail 0x1763a0
 void function_1763a0(point3f const *point, vector3f const *direction, s_effect_marker *markers, vector3f const *normal)
 {
@@ -1013,6 +1014,7 @@ void function_178240(point3f const *origin, vector3f const *direction, s_effect_
 	}
 }
 
+// score 38 (was 38): the branches that reject the value jump to a different place and the table pointer is loaded into edx instead of ecx
 // @retail 0x1782a0
 void function_1782a0(long effect_index, short event_index)
 {
@@ -1230,6 +1232,7 @@ done:
 
 __declspec(noinline) void function_17aec0(short node_index, s_effect_datum *effect, transform4x3f *matrix);
 
+// score 11 (was 11): the node index is masked after the branch that tests the high bit, retail masks it before the call
 // @retail 0x17aec0
 void function_17aec0(short node_index, s_effect_datum *effect, transform4x3f *matrix)
 {
@@ -1246,6 +1249,7 @@ void function_17aec0(short node_index, s_effect_datum *effect, transform4x3f *ma
     *matrix = nodes[(short)index];
 }
 
+// score 13 (was 13): the node index is masked in ecx in retail, ours loads it from the stack into ecx and masks it later
 // @retail 0x17af30
 void function_17af30(bool field_b4, short node_index, s_effect_datum *effect, transform4x3f *matrix)
 {
@@ -2674,6 +2678,7 @@ void __stdcall function_17a380(s_effect_datum *effect)
 	}
 }
 
+// score 109 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {
