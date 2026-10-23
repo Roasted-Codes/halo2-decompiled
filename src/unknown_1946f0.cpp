@@ -113,6 +113,10 @@ void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *fo
 }
 
 // @retail 0x195070
+// score 96 (was 96): retail multiplies the two scale factors in the other
+// order, by two first, and keeps them in xmm2 and xmm3 with the two components
+// in xmm0 and xmm1; ours keeps the first factor in xmm0 and the components in
+// xmm1 and xmm2
 void function_195070(s_bitstream *stream, vector3f *out, real lo, real hi, long bits)
 {
 	if (!function_1957d0(stream))

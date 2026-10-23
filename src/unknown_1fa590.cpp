@@ -463,6 +463,9 @@ real function_30bf0(vector3f *v);
 void function_c7840(vector3f const *desired, vector3f *current, transform4x3f const *frame, real rate,
     vector3f *velocity, real const *limits, real max_speed, real acceleration);
 
+// score 8 (was 8): the last term of the dot product and the first product of
+// the cross product keep their operands in the other order, so retail loads
+// the forward vector's component into the register and ours the facing one
 // @retail 0x1faf80
 bool function_1faf80(vector3f *facing, long object_index, void const *settings_pointer,
     vector3f const *control, real threshold, real *turn)

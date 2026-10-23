@@ -10,13 +10,29 @@
 
 static __declspec(align(16)) const unsigned long g_4124a0[4] = {0x80000000, 0x80000000, 0x80000000, 0x80000000};
 
+// a packed vector with native copy operations
+struct vector_3093e0
+{
+	__m128 value;
+
+	vector_3093e0() {}
+	vector_3093e0(__m128 initial) : value(initial) {}
+	vector_3093e0(vector_3093e0 const &other) : value(other.value) {}
+	vector_3093e0 &operator=(vector_3093e0 const &other)
+	{
+		value = other.value;
+		return *this;
+	}
+	operator __m128() const { return value; }
+};
+
 // a support point: the first shape's point, the second's in its own frame,
 // and that point in the first shape's frame
 struct support_309300
 {
-	__m128 first;
-	__m128 second;
-	__m128 second_placed;
+	vector_3093e0 first;
+	vector_3093e0 second;
+	vector_3093e0 second_placed;
 };
 
 class shape_309300;
@@ -116,7 +132,6 @@ public:
 	void function_309700();
 };
 
-// score 2 (was 2): in the copy branch retail loads the second point before the distance; ours loads the distance first.
 // the support points along a direction and against it, keeping in out the
 // one that lies further along its own direction from the origin
 // @retail 0x3093e0
@@ -130,9 +145,7 @@ void search_3093e0::function_3093e0(__m128 const *direction, __m128 const *origi
 	float const against_distance = dot3_3093e0(_mm_sub_ps(_mm_sub_ps(out->support.first, out->support.second_placed), *origin), opposite);
 	if (along_distance >= against_distance)
 	{
-		out->support.first = along.first;
-		out->support.second = along.second;
-		out->support.second_placed = along.second_placed;
+		out->support = along;
 		out->distance = along_distance;
 	}
 	else
@@ -205,22 +218,19 @@ __forceinline void normalize_309700(__m128 &v)
 	v = _mm_mul_ps(_mm_shuffle_ps(scale, scale, 0), v);
 }
 
-// score 11 (was 17): only stack places differ: retail keeps the second term's size at esp+0x2c
-// (ours 0x3c) and the square direction at 0x30 (ours 0x20), and refines the square direction
-// through the edge's slot; reordering or renaming the locals changes nothing.
 // two directions square to the edge between the first two simplex points
 // (one in the plane of the edge's smallest term, one square to both), and
 // the support point along either that lies further out added to the simplex
 // @retail 0x309700
 void search_3093e0::function_309700()
 {
-	__m128 const edge = _mm_sub_ps(differences[0], differences[1]);
+	vector_3093e0 const edge = _mm_sub_ps(differences[0], differences[1]);
 	int smallest = 0;
 	int second = 1;
 	int third = 2;
-	float least = fabsf(edge.m128_f32[0]);
-	float const size_1 = fabsf(edge.m128_f32[1]);
-	float const size_2 = fabsf(edge.m128_f32[2]);
+	float least = fabsf(edge.value.m128_f32[0]);
+	float const size_1 = fabsf(edge.value.m128_f32[1]);
+	float const size_2 = fabsf(edge.value.m128_f32[2]);
 	if (size_1 < least)
 	{
 		second = 0;
@@ -232,19 +242,19 @@ void search_3093e0::function_309700()
 		third = smallest;
 		smallest = 2;
 	}
-	__m128 square;
-	square.m128_f32[smallest] = 0.0f;
-	square.m128_f32[second] = edge.m128_f32[third];
-	square.m128_f32[third] = -edge.m128_f32[second];
-	__m128 cross = _mm_sub_ps(
+	vector_3093e0 square;
+	square.value.m128_f32[smallest] = 0.0f;
+	square.value.m128_f32[second] = edge.value.m128_f32[third];
+	square.value.m128_f32[third] = -edge.value.m128_f32[second];
+	vector_3093e0 cross = _mm_sub_ps(
 		_mm_mul_ps(_mm_shuffle_ps(edge, edge, 0xc9), _mm_shuffle_ps(square, square, 0xd2)),
 		_mm_mul_ps(_mm_shuffle_ps(edge, edge, 0xd2), _mm_shuffle_ps(square, square, 0xc9)));
-	normalize_309700(square);
-	normalize_309700(cross);
+	normalize_309700(square.value);
+	normalize_309700(cross.value);
 	scored_support_3093e0 first;
-	function_3093e0(&square, differences, &first);
+	function_3093e0(&square.value, differences, &first);
 	scored_support_3093e0 second_support;
-	function_3093e0(&cross, differences, &second_support);
+	function_3093e0(&cross.value, differences, &second_support);
 	if (first.distance > second_support.distance)
 	{
 		((class_309200 *)this)->add((vertex_309200 const *)&first);

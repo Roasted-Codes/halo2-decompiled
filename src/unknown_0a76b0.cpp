@@ -4599,6 +4599,9 @@ short first_person_weapon_animation_ticks(long weapon_index, long animation_name
 bool function_1058b0(long weapon_index, long state, bool force);
 
 // @retail 0xfff40
+// score 70 (was 70): the first difference is inside the body of function_1058b0,
+// which is inlined here but lives in src/weapons.cpp, so the object lookup and
+// the tag table are read through different registers than retail
 void __stdcall function_fff40(long weapon_index, bool silent, bool immediate)
 {
     byte *object = *(byte **)(g_4e0300->data + (weapon_index & 0xffff) * 12 + 8);

@@ -5102,6 +5102,10 @@ void __stdcall function_4efa0(long tag, long context, long first, long second,
 }
 
 // @retail 0x4ebd0
+// score 54 (was 54): retail reads the block base out of the table before it
+// reads the record tag and keeps that tag in a register, ours spills the tag
+// to a stack slot and reloads it, and adds the table's base pointer in after
+// the definition lookup instead of before it
 void __stdcall function_4ebd0(long tag, long context, long first, long second,
     long third, dword handle, byte *material)
 {

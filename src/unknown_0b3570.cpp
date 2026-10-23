@@ -303,6 +303,9 @@ PRIVATE __forceinline s_qos_handle *search_qos_handle(long handle)
 }
 
 // @retail 0xb3200
+// score 73 (was 73): the count, the loop index and the entry pointer take the
+// three frame slots in the other order, and retail reads the qos result fields
+// through the entry pointer instead of keeping the result in ebp
 void function_b3200(void)
 {
 	union

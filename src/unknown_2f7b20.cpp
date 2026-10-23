@@ -52,17 +52,19 @@ public:
 	}
 };
 
-// score 12 (was 12): retail keeps the triangle** in ecx and dereferences it
-// after the four index stores; ours takes it in eax and dereferences it before
-// them (a body with the four stores moved after the load scores 11, worth 1,
-// and was dropped at review)
+// score 12 (was 12): retail loads the triangle** into ecx before the four
+// index stores, keeps the -1 in edx and dereferences the pointer after the
+// stores; ours loads it into eax after the stores and keeps the -1 in eax.
+// The vtable's address cannot match in the reduced image
 // @retail 0x2f7b20
 triangle_terms_2f7b20 *__cdecl function_2f7b20(description_2ed170 const *description, triangle_2f7b20 const **other, dispatcher_2ed170 **dispatcher, long arg_3)
 {
 	return new triangle_terms_2f7b20(other, arg_3);
 }
 
-// score 12 (was 12): the same body as 0x2f7b20 and the same gap
+// score 12 (was 12): the same body as 0x2f7b20 and the same gap: retail
+// loads the triangle** into ecx before the four index stores and keeps the -1
+// in edx, ours loads it into eax after the stores and keeps the -1 in eax
 // @retail 0x2f7bb0
 swapped_triangle_terms_2f7b20 *__cdecl function_2f7bb0(triangle_2f7b20 const **description, typed_2ed170 **other, dispatcher_2ed170 **dispatcher, long arg_3)
 {
