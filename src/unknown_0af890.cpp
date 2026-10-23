@@ -206,20 +206,17 @@ void __stdcall function_0af890(s_bitstream *stream, long size, s_message_0af890 
 	{
 		stream_write_checked(stream, message->j_type, 3);
 		dword kind = message->j_type;
-		dword payload = 0;
 		if (kind == 1)
 		{
 			stream_write_checked(stream, message->j_value0, 4);
 			stream_write_checked(stream, message->j_value1, 4);
 			stream_write_checked(stream, message->j_value2, 6);
-			payload = message->j_value3;
+			stream_write_checked(stream, message->j_value3, 10);
 		}
-		else if (kind == 2)
-			payload = message->j_value4;
-		else if (kind == 3)
-			payload = message->j_value5;
-		if (kind == 1 || kind == 2 || kind == 3)
-			stream_write_checked(stream, payload, 10);
+		if (kind == 2)
+			stream_write_checked(stream, message->j_value4, 10);
+		if (kind == 3)
+			stream_write_checked(stream, message->j_value5, 10);
 	}
 
 	stream_write_bit(stream, message->has_k);
@@ -711,7 +708,10 @@ bool __stdcall function_0b0900(s_bitstream *stream, long unused, s_message_0b090
 	if (message->flag14cc)
 	{
 		long v = message->value14d0;
-		valid = valid && ((v < 0 ? 0 : (v > 15 ? 15 : v)) == v || v == NONE);
+		long clipped = v;
+		if (clipped < 0) clipped = 0;
+		else if (clipped > 15) clipped = 15;
+		valid = valid && (clipped == v || v == NONE);
 	}
 	return valid;
 }

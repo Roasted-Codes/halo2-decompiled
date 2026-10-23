@@ -81,6 +81,8 @@ struct contact_2ef9a0
 	__m128 normal;
 	body_2ef9a0 const *a;
 	body_2ef9a0 const *b;
+
+	contact_2ef9a0(body_2ef9a0 const *a_, body_2ef9a0 const *b_) : a(a_), b(b_) {}
 };
 
 class collector_2ef9a0
@@ -96,16 +98,13 @@ public:
 	void function_2ef9a0(body_2ef9a0 const *a, body_2ef9a0 const *b, input_2ef9a0 const *input, collector_2ef9a0 *collector);
 };
 
-__forceinline void report_contact_2ef9a0(body_2ef9a0 const *a, body_2ef9a0 const *b, input_2ef9a0 const *input, collector_2ef9a0 *collector)
+static __forceinline bool __cdecl report_contact_2ef9a0(body_2ef9a0 const *a, body_2ef9a0 const *b, input_2ef9a0 const *input, contact_2ef9a0 &contact)
 {
 	sphere_2ef9a0 const *sphere_a = a->shape;
 	sphere_2ef9a0 const *sphere_b = b->shape;
-	contact_2ef9a0 contact;
-	contact.a = a;
-	contact.b = b;
-	__m128 const *position_a = &a->motion->position;
-	__m128 const *position_b = &b->motion->position;
-	__m128 const offset = _mm_sub_ps(*position_a, *position_b);
+	__m128 const &position_a = a->motion->position;
+	__m128 const &position_b = b->motion->position;
+	__m128 const offset = _mm_sub_ps(position_a, position_b);
 	__m128 const squares = _mm_mul_ps(offset, offset);
 	float distance_squared;
 	_mm_store_ss(&distance_squared, _mm_add_ss(_mm_shuffle_ps(squares, squares, 0xaa), _mm_add_ss(_mm_shuffle_ps(squares, squares, 0x55), squares)));
@@ -113,33 +112,36 @@ __forceinline void report_contact_2ef9a0(body_2ef9a0 const *a, body_2ef9a0 const
 	if (distance_squared < reach * reach)
 	{
 		float distance;
-		__m128 normal;
 		if (distance_squared > 0.0f)
 		{
-			normal = _mm_mul_ps(splat_2ef9a0(1.0f / (float)sqrt(distance_squared)), offset);
-			distance = (1.0f / (float)sqrt(distance_squared)) * distance_squared;
+			float inverse = 1.0f / (float)sqrt(distance_squared);
+			contact.normal = _mm_mul_ps(splat_2ef9a0(inverse), offset);
+			distance = distance_squared * inverse;
 		}
 		else
 		{
 			distance = 0.0f;
-			normal = *(__m128 const *)g_unit_x_461ea0;
+			contact.normal = *(__m128 const *)g_unit_x_461ea0;
 		}
-		contact.normal = normal;
-		float const radii = sphere_b->radius + sphere_a->radius;
-		contact.point = _mm_add_ps(*position_b, _mm_mul_ps(splat_2ef9a0(sphere_b->radius), normal));
-		contact.point.m128_f32[3] = distance - radii;
-		collector->add_contact(&contact);
+		float const radius_a = sphere_a->radius;
+		float const radius_b = sphere_b->radius;
+		distance -= radius_a + radius_b;
+		contact.point = _mm_add_ps(position_b, _mm_mul_ps(splat_2ef9a0(sphere_b->radius), contact.normal));
+		contact.point.m128_f32[3] = distance;
+		return true;
 	}
+	return false;
 }
 
-// score 28 (was 28), 0x2efb10 score 29 (was 29): at the contact point retail keeps the first
-// radius and the distance on the x87 stack (adding the radii as fld/fld/fadd st(1), subtracting
-// with fsubr st(2), then popping both); ours folds the first radius from memory and keeps the sum.
 // @retail 0x2ef9a0
 void sphere_pair_2ef9a0::function_2ef9a0(body_2ef9a0 const *a, body_2ef9a0 const *b, input_2ef9a0 const *input, collector_2ef9a0 *collector)
 {
 	timer_add_2ebc80("TtSphereSphere");
-	report_contact_2ef9a0(a, b, input, collector);
+	contact_2ef9a0 contact(a, b);
+	if (report_contact_2ef9a0(a, b, input, contact))
+	{
+		collector->add_contact(&contact);
+	}
 	timer_add_2ebc80("Et");
 }
 
@@ -147,6 +149,10 @@ void sphere_pair_2ef9a0::function_2ef9a0(body_2ef9a0 const *a, body_2ef9a0 const
 void __cdecl function_2efb10(body_2ef9a0 const *a, body_2ef9a0 const *b, input_2ef9a0 const *input, collector_2ef9a0 *collector)
 {
 	timer_add_2ebc80("TtSphereSphere");
-	report_contact_2ef9a0(a, b, input, collector);
+	contact_2ef9a0 contact(a, b);
+	if (report_contact_2ef9a0(a, b, input, contact))
+	{
+		collector->add_contact(&contact);
+	}
 	timer_add_2ebc80("Et");
 }

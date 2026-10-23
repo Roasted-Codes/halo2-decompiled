@@ -138,6 +138,9 @@ PRIVATE __forceinline void function_244de2(real thickness, short count, point3f 
 	}
 }
 
+// score 6 (was 6): the sum of squares is emitted with the x87 terms in the
+// other order and the loads inside the second inlined call are ordered
+// differently; the frame, the two prism writes and the calls all match
 // @retail 0x244de0
 void function_244de0(point3f const *arg_0, vector3f const *arg_1, real arg_2,
 	real arg_3, long arg_4, long arg_5, long arg_6, byte arg_7,

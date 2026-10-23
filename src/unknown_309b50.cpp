@@ -16,12 +16,10 @@ static __declspec(align(16)) const float g_461f20[4] = {0.001f, 0.001f, 0.001f, 
 // the zero vector (src/unknown_308830.cpp)
 extern __m128 g_4801e0;
 
-// three axes and a position (src/unknown_2da610.cpp)
+// Matrix columns read by the vector rotation methods.
 struct c_query_transform
 {
 	__m128 axes[3];
-	__m128 position;
-	void inverse_product(const c_query_transform *a, const c_query_transform *b);
 };
 
 // a direction carried through a transform's axes (0x2da730)
@@ -275,22 +273,6 @@ __forceinline __m128 weighted_309b50(__m128 const *points, float const *weights)
 	return _mm_add_ps(_mm_add_ps(_mm_mul_ps(w0, points[0]), second), third);
 }
 
-// score 529 (was 572; 738 before round 47): the switch only jumps to labelled blocks written in
-// retail's order (four points down to none, then the three growth steps);
-// with the cases' code inside the switch our build laid it out from case 0
-// along the growth gotos. The second-shape points are declared before the
-// first-shape ones, which puts them in retail's slots, and the tetrahedron's
-// cross product is spelled out (the shared helper scored 696) with its edges
-// taken through a reference helper (so the second difference is read again
-// as retail does), the triangle's edges are named before the cross product
-// (arguments are evaluated last first), and the near-zero tests are written
-// !(x <= c) for retail's jp. Still: the
-// frame is 0x10 larger (retail shares 0x20 between the hull's new point, the
-// first step's answer and the collapsed case's along vector, and keeps the
-// weights at 0x20 and 0x30; ours at 0x40 and 0x20), the three squared
-// lengths sit in other slots (retail: segment 0x54, height 0x58, triangle
-// 0x5c, point 0x10), and retail's copies of the face's corners add the offset to
-// the pointer before storing.
 // The penetration of the two shapes: 0 with the direction, point and
 // distance in `arg_0` (or nothing found by the first step), 2 when the
 // simplex can't grow or the hull fails too often, and from the hull, 1 when
@@ -303,6 +285,7 @@ long class_309b50::function_309b50(long arg_0)
 	{
 		int grown = -1;
 		__m128 normal;
+		__m128 delta;
 		switch (simplex->count)
 		{
 		case 0:
@@ -421,14 +404,13 @@ long class_309b50::function_309b50(long arg_0)
 			// the simplex is a segment: a direction across it, and the point
 			// between its ends
 			result->distance = 0.0f;
-			__m128 along_vector = _mm_sub_ps(differences[0], differences[1]);
-			float const *along = (float const *)&along_vector;
+			delta = _mm_sub_ps(differences[0], differences[1]);
 			int across = 1;
 			int smallest = 0;
 			int other = 2;
-			float least = (float)fabs(along[0]);
-			float const second = (float)fabs(along[1]);
-			float const third = (float)fabs(along[2]);
+			float least = (float)fabs(delta.m128_f32[0]);
+			float const second = (float)fabs(delta.m128_f32[1]);
+			float const third = (float)fabs(delta.m128_f32[2]);
 			if (second < least)
 			{
 				least = second;
@@ -442,8 +424,8 @@ long class_309b50::function_309b50(long arg_0)
 			}
 			float *direction = (float *)&result->direction;
 			direction[smallest] = 0.0f;
-			direction[across] = along[other];
-			direction[other] = -along[across];
+			direction[across] = delta.m128_f32[other];
+			direction[other] = -delta.m128_f32[across];
 			result->direction = normalized_309b50(result->direction);
 			__m128 const magnitude = _mm_and_ps(differences[0], *(__m128 const *)g_455940);
 			float first_size;
@@ -463,7 +445,7 @@ long class_309b50::function_309b50(long arg_0)
 			normal = normalized_309b50(normal);
 			result->distance = 0.0f;
 			result->direction = normal;
-			float weights[4];
+			float weights[3];
 			function_308260(&g_4801e0, &differences[0], &differences[1], &differences[2], weights);
 			result->point = weighted_309b50(simplex->points, weights);
 			result->field_24 = 0.5f;
@@ -492,11 +474,11 @@ long class_309b50::function_309b50(long arg_0)
 				face = (face_30aac0 *)((list_309120 const *)&hull)->function_309120();
 				support_309300 support;
 				((pair_309300 const *)this)->function_309300(&face->normal, &support);
-				__m128 point = _mm_sub_ps(support.first, support.second_placed);
+				delta = _mm_sub_ps(support.first, support.second_placed);
 				c_query_transform offsets;
-				offsets.axes[0] = _mm_sub_ps(point, *face->edges[0].vertex);
-				offsets.axes[1] = _mm_sub_ps(point, *face->edges[1].vertex);
-				offsets.axes[2] = _mm_sub_ps(point, *face->edges[2].vertex);
+				offsets.axes[0] = _mm_sub_ps(delta, *face->edges[0].vertex);
+				offsets.axes[1] = _mm_sub_ps(delta, *face->edges[1].vertex);
+				offsets.axes[2] = _mm_sub_ps(delta, *face->edges[2].vertex);
 				vector_2da6e0 heights;
 				heights.inverse_rotate(&offsets, &face->normal);
 				if (_mm_movemask_ps(_mm_cmplt_ps(heights.value, *(__m128 const *)g_461f20)) & 7)
@@ -505,7 +487,7 @@ long class_309b50::function_309b50(long arg_0)
 				}
 				int count = 0;
 				edge_30aac0 const *horizon;
-				if (hull.function_30abe0(&count, &horizon, face, &point) != 0)
+				if (hull.function_30abe0(&count, &horizon, face, &delta) != 0)
 				{
 					goto restart;
 				}
@@ -519,7 +501,7 @@ long class_309b50::function_309b50(long arg_0)
 					state = 1;
 					break;
 				}
-				int const failed = hull.function_30ae70(count, (edge_30aac0 *)horizon, &point);
+				int const failed = hull.function_30ae70(count, (edge_30aac0 *)horizon, &delta);
 				firsts.data[firsts.size++] = support.first;
 				seconds.data[seconds.size++] = support.second;
 				if (failed != 0)
@@ -552,7 +534,7 @@ long class_309b50::function_309b50(long arg_0)
 		found:
 			// the face the origin projects into, walked to from the nearest
 			{
-				float weights[4];
+				float weights[3];
 				for (int step = 0; ; )
 				{
 					differences[0] = *face->edges[0].vertex;

@@ -1008,7 +1008,7 @@ void c_game_engine_45c948::v32(long player_index, long list_pointer)
 	for (long i = 0; i < (short)g_51eccc->w114; i++)
 	{
 		long holder = state->l70[i];
-		long marker = (short)state->w60[i];
+		short marker = (short)state->w60[i];
 
 		if (marker != NONE)
 		{
@@ -1030,8 +1030,7 @@ PRIVATE __forceinline void territory_marker_extents_include(s_state_2bf *state, 
 {
     vector3f delta;
     vector3d_from_points3d(origin, point, &delta);
-    real square = delta.i * delta.i;
-    square += delta.j * delta.j;
+    real square = delta.j * delta.j + delta.i * delta.i;
     real distance = (real)sqrt(square);
     real below = origin->z - point->z;
     real above = point->z - origin->z + 0.8f;
@@ -1045,8 +1044,6 @@ PRIVATE __forceinline void territory_marker_position_copy(point3f *destination, 
     *destination = *source;
 }
 
-// score 29 (was 29): the same xmm4 radius argument as 0x2c0980, plus a
-// different stack layout for the two out-pointers.
 // @retail 0x2bf5b0
 void c_game_engine_45c948::v12()
 {

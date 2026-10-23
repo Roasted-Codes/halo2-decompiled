@@ -150,11 +150,31 @@ inline void step_products_311100::set_from(step_terms_311100 const *terms)
 }
 struct step_info_311100
 {
-	long field_0;
-	long field_4;
-	long field_8;
-	long field_c;
+	void *field_0;
+	void *field_4;
+	float field_8;
+	void *field_c;
 };
+
+struct step_scalars_30fcb0
+{
+	char unknown0[0x18];
+	float scaled_delta;
+	float scaled_field_4;
+	char unknown20[4];
+	long field_24;
+	float field_28;
+	char unknown2c[0x14];
+	step_products_311100 products;
+};
+
+struct step_state_30fcb0 : step_info_311100
+{
+	s_311100 description;
+	step_scalars_30fcb0 terms;
+};
+
+typedef char assert_step_state_30fcb0[(sizeof(step_state_30fcb0) == 0x68) ? 1 : -1];
 
 // an object the world holds a reference to until the step's end
 class released_30fef0
@@ -236,10 +256,18 @@ public:
 	bool stepping;
 	bool collision_pass_running;
 	char unknown12e[0x140 - 0x12e];
-	step_info_311100 input;
-	s_311100 description;
-	char unknown158[0x170 - 0x158];
-	step_terms_311100 terms;
+	// Both step methods use this storage through their respective views.
+	union
+	{
+		step_state_30fcb0 state;
+		struct
+		{
+			step_info_311100 input;
+			s_311100 description;
+			char unknown158[0x170 - 0x158];
+			step_terms_311100 terms;
+		};
+	};
 	char unknown1a8[0x23c - 0x1a8];
 	bool flag_23c;
 	// islands may be discarded after integrating
@@ -250,10 +278,6 @@ public:
 	void function_30e720();
 };
 
-// score 5 (was 110): retail loads info before description_, and its last
-// product loads field_10 first (fld field_10, fmul scaled_field_4); 0x30fef0
-// matches with the same inline. Copy orders, an explicit scale and two
-// anneals found nothing better.
 // runs the collision part of a world's step: the step's terms set from the
 // description, each island's contacts worked out and the island listeners
 // told, the pending removals and other work flushed, and the post-collide
@@ -262,10 +286,19 @@ public:
 void c_311100::function_30fcb0(s_311100 const *description_)
 {
 	timer_add_2ebc80("LtSimulate");
-	step_info_311100 const *source = info;
-	description = *description_;
-	input = *source;
-	terms.scale_by(description_);
+	{
+		state.description = *description_;
+		step_info_311100 &base = state;
+		base = *info;
+		step_scalars_30fcb0 &terms = state.terms;
+		terms.scaled_delta = description_->delta * terms.field_28;
+		terms.scaled_field_4 = description_->field_4 * terms.field_24;
+		step_products_311100 &products = terms.products;
+		products.scaled_delta = terms.scaled_delta;
+		products.scaled_field_4 = terms.scaled_field_4;
+		products.field_8 = terms.scaled_delta * terms.field_24;
+		products.field_c = terms.scaled_field_4 * terms.field_28;
+	}
 	stepping = true;
 	if (pending_count > 0)
 	{

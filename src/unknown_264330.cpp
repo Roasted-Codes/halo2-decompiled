@@ -146,6 +146,7 @@ finished:
 	}
 }
 
+// score 1 (was 1): ours compares esi with ecx, retail copies esi into edi and compares edi with ecx.
 // @retail 0x265050
 void function_265050(long actor_index, long prop_ref_index)
 {
@@ -192,6 +193,8 @@ owner_selected:
 	}
 }
 
+// score 67 (was 67): retail loads the array base into esi and copies the three fields in a different order, ours
+// uses ecx.
 // @retail 0x264940
 void function_264940(long actor_index, long prop_ref_index)
 {

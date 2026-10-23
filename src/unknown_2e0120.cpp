@@ -97,9 +97,13 @@ void __cdecl function_2e01c0(unsigned short *entries, int low, int high, order_2
 	}
 }
 
+struct order_2e0250
+{
+};
+
 // sorts the entries from low to high (both included) by key
 // @retail 0x2e0250
-void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, long context)
+void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, order_2e0250 order)
 {
 	int j = high;
 	int i = low;
@@ -128,11 +132,11 @@ void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, long cont
 	} while (i <= j);
 	if (low < j)
 	{
-		function_2e0250(entries, low, j, context);
+		function_2e0250(entries, low, j, order);
 	}
 	if (i < high)
 	{
-		function_2e0250(entries, i, high, context);
+		function_2e0250(entries, i, high, order);
 	}
 }
 
