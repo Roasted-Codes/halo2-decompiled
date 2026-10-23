@@ -6,13 +6,6 @@
 #include "sweep_batches_2e50d0.h"
 #include "sweep_search_2e1090.h"
 
-// sorts entries from low to high (both included) by key (src/unknown_2e0120.cpp)
-struct entry_2e0250;
-struct order_2e0250
-{
-};
-void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, order_2e0250 order);
-
 // the indices of the endpoints to remove (src/unknown_2e2190.cpp)
 struct removed_2e2370
 {
@@ -134,11 +127,7 @@ void sweep_batches_2e50d0::function_2e50d0(owners_2e50d0 const *owners, bounds_a
 		element_2e1090 *data = elements.data;
 		for (int a = 0; a < 3; a++)
 		{
-			order_2e0250 order = {};
-			if (count * 2 > 1)
-			{
-				function_2e0250((entry_2e0250 *)room[a], 0, count * 2 - 1, order);
-			}
+			sort_2e0250((entry_2e0250 *)room[a], count * 2);
 		}
 		for (int a = 0; a < 3; a++)
 		{

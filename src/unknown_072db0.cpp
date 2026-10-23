@@ -548,15 +548,16 @@ struct s_match_player_rating_collection
 };
 
 // @retail 0x74800
+// score 16 (was 22): retail holds the entry skill sign-extended in ESI (movsx at the load, mov ebx,esi for the call); a 32-bit local gives that movsx but MSVC then picks EBX for it and moves the team-mode byte to CL, so the whole frame shifts.
 long __stdcall function_74800(const s_match_player_rating_collection *collection, long selected)
 {
 	long key = collection->key;
-	bool team_mode = collection->team_mode;
 	const s_match_player_rating_entry *current = &collection->players[selected];
+	long count = 0;
 	long skill = current->skill;
 	long team = current->team;
 	long value = current->value;
-	long count = 0;
+	bool team_mode = collection->team_mode;
 	long total = 0;
 	long rank;
 	if (team_mode)

@@ -138,29 +138,24 @@ PRIVATE __forceinline void function_1befd1(long arg_0)
 
 static __forceinline long real_to_long(real value);
 
-// score 42 (was 42): retail sets up its frame with a single push where ours
-// reserves 0x14 bytes, and the random seed it passes to function_259d0 comes
-// from a different global than ours.
+// score 38 (was 42): our frame reserves eight bytes where retail reserves
+// four, so the two temporaries sit four bytes higher; retail also scales the
+// first draw before it converts the second one, loads the tick source after
+// the slot reference (which puts the reference in ECX, not EDX) and stores the
+// actor's 0x5b0 field before its 0x4ac and 0x504 fields.
 // @retail 0x1befd0
 bool __stdcall function_1befd0(long actor_index, s_slot *slot)
 {
-	struct s_1befd4 { double field_0; double field_8; } local_0;
+	struct s_1befd4 { real field_0; real field_4; } local_0;
 	s_slot_0a *state = (s_slot_0a *)slot;
-	local_0.field_0 = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 3.0f, 5.0f);
-	local_0.field_8 = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 0.0f, 0.5f);
-	real ticks;
-	long rounded;
+	local_0.field_4 = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 3.0f, 5.0f);
+	local_0.field_0 = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 0.0f, 0.5f);
 
 	function_1befd1(actor_index);
 	state->reference = g_470fa0;
 
-	ticks = g_510c54->field_2_3 * local_0.field_0;
-	rounded = real_to_long(ticks);
-	state->unknown10 = (short)rounded;
-
-	ticks = g_510c54->field_2_3 * local_0.field_8;
-	rounded = real_to_long(ticks);
-	state->unknown12 = (short)rounded;
+	state->unknown10 = (short)real_to_long(g_510c54->field_2_3 * local_0.field_4);
+	state->unknown12 = (short)real_to_long(g_510c54->field_2_3 * local_0.field_0);
 	return true;
 }
 
