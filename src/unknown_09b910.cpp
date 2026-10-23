@@ -832,6 +832,7 @@ void c_weapon_drop_event::v9(long a, void const *data, s_bitstream *stream)
 	scenario_object_name_encode(event->object_name, stream);
 }
 
+// score 11 (was 11): the event pointer is kept in esi and the sentinel in ebx, retail keeps the event pointer in ebx and the sentinel in esi
 // @retail 0xa3010
 bool c_weapon_object_event::v10(long a, void *data, s_bitstream *stream)
 {
@@ -978,6 +979,7 @@ void function_fcdd0(long definition_index, point3f const *point, vector3f const 
 void function_fcea0(long effects_index, point3f const *point, vector3f const *direction,
  s_effect_owner const *owner, long index, vector3f const *normal);
 
+// score 22 (was 22): the effect call passes the definition index in ecx where retail uses edx, and the effect setup sets its arguments up in another order and zero-extends the word field with a 16-bit move where ours uses movzx; both calls follow the conventions of the callees in src/projectiles.cpp
 // @retail 0xa17d0
 bool c_projectile_effect_event::v11(long a, long const *entities, long c, void const *data)
 {
