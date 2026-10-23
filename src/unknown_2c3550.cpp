@@ -166,6 +166,8 @@ static __forceinline real avoidance_normalize2d(point2f *direction)
 
 /* adds a node at the point, passing the obstacle on the side, unless it
    leads back around an obstacle on its way; returns its index or NONE */
+// score 92 (was 92): the scaled components are kept in different registers and the length is
+// squared and summed in a different order.
 // @retail 0x2c3680
 short avoidance_add_node(s_avoidance_search *search, point2f const *point, bool side, long value08, short obstacle,
 	short value1a, real cost, short parent)
@@ -422,6 +424,8 @@ short __stdcall avoidance_expand_obstacle(s_pathfinding_data const *pathfinding,
 	return added;
 }
 
+// score 21 (was 21): the computed distance is stored to the stack and read back here, while retail
+// keeps it in a register.
 // @retail 0x2c3d40
 bool avoidance_search_step(s_avoidance_search *search, s_pathfinding_data const *pathfinding, bool allow_partial)
 {
