@@ -260,6 +260,9 @@ void function_bb8f0(long a)
 	}
 }
 
+// score 4 (was 4): retail keeps the delta in the accumulator and adds the
+// game time to it, ours keeps the game time in the accumulator and adds the
+// delta to that, so the four instructions that build the time differ.
 // @retail 0xbb950
 void function_bb950(long object_index, bool add, long delta)
 {
@@ -579,6 +582,10 @@ struct s_colour_function_ab
 };
 color3f *function_131c20(color3f const *a, color3f const *b, dword flags, real t, color3f *result);
 
+// score 91 (was 91): retail tests the count against zero before it computes
+// the output pointer, ours computes the pointer first, and retail keeps the
+// running offset in another register, so the test, the two leas and the
+// loop's bookkeeping differ.
 // @retail 0xbe8e0
 bool __stdcall function_be8e0(long object_index)
 {
