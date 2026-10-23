@@ -73,9 +73,9 @@ extern byte *g_51eca8;
 extern short g_51ecb0;
 c_2d8ab0 *g_47f044;
 
-// score 7 (was 7): the table pointer and the index are loaded into the
-// opposite registers
-// here, and the loop bound is compared the other way round.
+// score 7 (was 7): all seven differing instructions are in the loop over the
+// groups: retail loads the seat table into ECX and the index into EDX, ours
+// loads the table into EAX and the index into ECX.
 // @retail 0x1c3d30
 void function_1c3d30()
 {
