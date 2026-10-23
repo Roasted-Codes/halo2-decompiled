@@ -370,7 +370,8 @@ PRIVATE void __stdcall function_1df9c0(s_type_e695f2 *volatile allegiance, bool 
 
 real __stdcall function_265d30(long actor_index, long prop_index);
 
-/* the iterators of unknown_26b230.cpp; this one also keeps the clump's index */
+/* the iterators of unknown_26b230.cpp (clump_next_prop and clump_next_node
+   are copies of its own); this one also keeps the clump's datum index */
 struct s_clump_iterator
 {
 	s_clump *clump;
@@ -416,11 +417,17 @@ PRIVATE __forceinline s_clump_node *clump_next_node(s_iterator *iterator)
 	return node;
 }
 
+/* passes a change in the alliance of two teams on to the props each team's
+   clumps hold of the other team */
+// score 81 (was 134): retail keeps the clump in esi, cleared at the top of
+// the loop, and places the not-found path of the pool step after the body;
+// ours keeps it in ecx and clears it on that path
 // @retail 0x1c9830
 void __stdcall function_1c9830(short team_a, short team_b, bool broken, bool removed)
 {
 	if (!g_4f55d0->active)
 		return;
+
 	s_clump_iterator clumps;
 	clumps.pool.data = g_502420;
 	clumps.pool.index = NONE;
@@ -441,26 +448,25 @@ void __stdcall function_1c9830(short team_a, short team_b, bool broken, bool rem
 		s_type_76cf92 *prop;
 		while ((prop = clump_next_prop(&props)) != NULL)
 		{
-			if (*(short *)prop->unknown20 != other_team)
+			if (prop->team != other_team)
 				continue;
 			if (!removed)
 				prop->unknown24 = true;
 			prop->unknown23 = broken;
 			prop->unknown3c = true;
 			if (!broken && !removed)
-				function_20ba60(0xc4, *(long *)(prop->unknown06 + 2), NONE, NONE, NONE, NULL);
+				function_20ba60(0xc4, prop->object_index, NONE, NONE, NONE, NULL);
 			if (prop->unknown23)
 			{
 				s_iterator nodes;
-				nodes.next = *(long *)((byte *)prop_get(props.index) + 0x18);
+				nodes.next = prop_get(props.index)->first_node_index;
 				s_clump_node *node;
 				while ((node = clump_next_node(&nodes)) != NULL)
 				{
-					long tracking_index = *(long *)(node->unknown08 + 0xc);
-					s_type_e5ff81 *tracking = tracking_index == NONE ? NULL : tracking_get(tracking_index);
+					s_type_e5ff81 *tracking = node->tracking_index == NONE ? NULL : tracking_get(node->tracking_index);
 					s_type_f95cd3 *view = tracking ? &tracking->view : NULL;
 					if (view && prop->unknown23)
-						*(real *)(view->unknown3a + 2) = function_265d30(node->actor_index, nodes.index);
+						view->unknown3c = function_265d30(node->actor_index, nodes.index);
 				}
 			}
 		}
