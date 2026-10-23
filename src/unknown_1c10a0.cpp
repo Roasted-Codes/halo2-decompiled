@@ -219,9 +219,8 @@ short __stdcall function_1c10a0(long actor_index)
 	return result;
 }
 
-// score 2 (was 2): ours reads the actor pool through a second global before
-// the record count, retail reads the pool pointer and the count straight from
-// g_4f55f0.
+// score 2 (was 2): the pool pointer is loaded into ECX here and into EDX in
+// retail, the rest of the function matches.
 // @retail 0x1c10f0
 bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 {
@@ -307,8 +306,8 @@ short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 17 (was 17): the chosen reference is kept in a local that lands in the
-// dead slot argument slot here and in a different register in retail.
+// score 17 (was 17): our stack frame is 4 bytes bigger than retail's, so one
+// of the two longs lands in the frame here and in a dead argument slot there.
 // @retail 0x1c1320
 bool __stdcall function_1c1320(long actor_index, s_slot *slot)
 {

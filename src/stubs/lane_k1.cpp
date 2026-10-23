@@ -105,7 +105,7 @@ struct class_2df670
 {
 	result_2df6e0 function_301720(void const *shape, void const *tree, void const *ray, void *output);
 	void function_301800(void const *shape, void const *tree, s_244980_ray const *ray, s_244980_output *output, c_244c10 *callback);
-	void function_3009e0(pending_301800 *pending, void const *root, fixed_ray_301800 const *ray);
+	void function_3009e0(pending_301800 *pending, void const *root, fixed_ray_301800 *const ray);
 };
 
 
