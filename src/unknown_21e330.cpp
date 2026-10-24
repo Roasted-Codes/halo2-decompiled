@@ -727,6 +727,12 @@ PRIVATE __forceinline real function_21ece1(real arg_0, real arg_1)
 
 // score 25 (was 25): retail loads the x87 accumulator before the value it
 // adds to it, ours loads that value first, so the fadd order differs.
+// Only the first sum loads the gain first in retail (later sums load the
+// copied field first, as ours); the rest is x87/SSE interleaving. Tried: the
+// gain as `*(real *)&gain_bits` 25, or read that way at each call 25; the
+// existing bit-pattern helper with the field's bits 89 (the gain bits stay in
+// edi and are stored again for each sum); the helper's sum written field first
+// 25; the field read through its parameter's address instead of the copy 144.
 // @retail 0x21ece0
 void function_21ece0(long effect_index, s_sound_driver_reverb const *reverb)
 {

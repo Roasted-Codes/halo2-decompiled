@@ -136,11 +136,12 @@ public:
 
 	// the groups before `end` moved to the tree's origin with their distances
 	// doubled, and their normals' magnitudes kept alongside
-	__forceinline void finish_groups(planes4_2dd930 *end, tree_2ddbd0 const *tree)
+	__forceinline void finish_groups(tree_2ddbd0 const *tree)
 	{
-		planes4_2dd930 *magnitude = &magnitudes[group_count - 1];
-		for (planes4_2dd930 *group = end - 1; group >= groups; group--, magnitude--)
+		for (long index = group_count - 1; index >= 0; index--)
 		{
+			planes4_2dd930 *magnitude = &magnitudes[index];
+			planes4_2dd930 *group = &groups[index];
 			magnitude->x = _mm_and_ps(group->x, *(__m128 const *)abs_mask_2dd930);
 			magnitude->y = _mm_and_ps(group->y, *(__m128 const *)abs_mask_2dd930);
 			magnitude->z = _mm_and_ps(group->z, *(__m128 const *)abs_mask_2dd930);
@@ -159,9 +160,11 @@ public:
 // collects what the planes touch: the planes moved into the tree's
 // coordinates four at a time (the last group padded with the first of its
 // planes), with their normals' magnitudes alongside
-// score 184 (was 184): retail computes the groups' magnitudes first and then
+// score 178 (was 184): entry registers, load order and final-loop layout
+// still differ. Indexed arrays reach a 672-byte checked extent. Previously,
+// retail computes the groups' magnitudes first and then
 // their distances, reads the distance back from the group before doubling it
-// and keeps the query in eax; ours takes the origin's terms first, keeps the
+// and loads the query through esi; ours takes the origin's terms first, keeps the
 // distance in a register across the doubling and takes the query in ecx. The
 // loop's registers and the order of its two halves are the whole difference.
 // Further trials: local bit/vector mask 184; intrinsic mask 183; doubling
@@ -172,6 +175,10 @@ public:
 // with a larger frame; finishing arguments 166; minimal iterator 167;
 // early query snapshot 167. Original mask and arithmetic retained.
 // Two explicit loads of the distance for the doubling 166 (not kept: they only force the reloads).
+// Further trials: indexed arrays 178; ordinary inline 348; forced setters
+// 184; aligned inputs 184; plane references 184; descending lanes 379;
+// guarded remainder 278; named products 184; packed lane construction 379;
+// indexed arrays without the unused boundary argument 178.
 // @retail 0x2dd930
 void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
@@ -210,7 +217,7 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 		group++;
 		walk.group_count++;
 	}
-	walk.finish_groups(group, tree);
+	walk.finish_groups(tree);
 	walk.first = first;
 	walk.function_2dc220(&pending, root, &fixed_point);
 }
@@ -225,6 +232,10 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 // 42; sphere reference 33; renamed state/position/deltas 33; memcpy centre
 // 33; vector/point view 33; a shared coordinate setter failed to build, then
 // timed out. Original body retained.
+// Further trials: shared scalar/vector origin 60; origin field reference 33;
+// scalar SIMD coordinate stores 53; descending coordinate stores 33; early
+// diameter 46; scalar sphere fields 33; scalar header view 33; global
+// optimization disabled 158. Opening body retained.
 // Further trials: split reciprocal lifetime 49; late reciprocal field 49;
 // sphere value snapshot 61; size preference 40; explicit scalar splat 48;
 // in-place delta 33; named radius times two 33; aligned intrinsic loads 48.
