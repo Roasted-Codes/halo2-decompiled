@@ -3275,7 +3275,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1470 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
+// score 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
 // @retail 0xfdfb0
