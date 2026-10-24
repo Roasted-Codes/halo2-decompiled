@@ -2941,6 +2941,9 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
  return count;
 }
 
+// score 139 (was 139): frame and extent agree; channel/cursor/count registers and route homes differ.
+// Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
+// entry route lifetime 139; ordinary delivery arm first 162.
 // @retail 0x55e10
 long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, bool relay)
 {
