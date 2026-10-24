@@ -10,6 +10,7 @@
 
 real distance_sq3f(point3f const *a, point3f const *b);
 
+// score 65 (was 65): preheader key and entry registers remain; distance inline 65; force-inline 65; count global at use 65; count and inline 65; entry position copy 64; entry copy and force-inline 64; capacity lifetime 65; vertical difference 65.
 // @retail 0x19ec40
 long function_19ec40(
 	point3f const *point,

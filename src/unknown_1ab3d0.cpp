@@ -131,6 +131,10 @@ PRIVATE __forceinline vector3f *function_1ab4b1(vector3f const *arg_0, real arg_
 
 static __forceinline long real_to_long(real value);
 
+// score 2 (was 2): final i-product load/multiply operands differ at +0xf4.
+// Projection in the existing helper 6; Boolean projection 6; facing first 6;
+// Boolean facing first 6; product scalars kji/ijk 2/2; Boolean scalars 2;
+// facing first with scalars 2.
 // @retail 0x1ab4b0
 bool __stdcall function_1ab4b0(long actor_index, s_slot *slot)
 {

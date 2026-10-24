@@ -170,6 +170,10 @@ struct s_block_candidate
 	long pages;
 };
 
+// score 370 (was 370): frame 0x1050 versus 0x1054; retail spills the ring
+// tail and keeps page offset in EBX. Limit-first guard 385; oldest timestamp
+// initialised 381; enclosing inner-next scope 370; short ring endpoints 392;
+// candidate copy through memcpy 370.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {
