@@ -5,6 +5,7 @@
 #include <new>
 #include "unknown_1eb350.h"
 #include "havok_reference.h"
+#include "shape_2de750.h"
 
 struct c_transformed_point
 {
@@ -64,16 +65,8 @@ struct s_shape_ray_result
 	real fraction;
 };
 
-struct c_vertex_reference
+struct c_vertex_shape : radius_shape_2de750
 {
-	word allocation_size;
-	word references;
-};
-
-struct c_vertex_shape : c_vertex_reference
-{
-	long user;
-	real radius;
 	long surface_index;
 	long vertex_count;
 	short material;
@@ -110,15 +103,12 @@ PRIVATE inline void shape_transform_point(const transform4x3f *matrix, const poi
 
 // @retail 0x1edd00
 c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, long index,
-	long user_data, const transform4x3f *matrix)
+	long user_data, const transform4x3f *matrix) : radius_shape_2de750(0.01f)
 {
-	user = 0;
 	vertex_count = 0;
 	kind = type;
 	surface_index = index;
 	value = data;
-	references = 1;
-	radius = 0.01f;
 	s_shape_surface *surface = &source->surfaces[index];
 	long edge_index = surface->edge;
 	long first_edge = edge_index;
@@ -142,7 +132,7 @@ c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, lon
 	} while (edge_index != first_edge);
 	material = surface->material;
 	flags = surface->flags;
-	user = user_data;
+	user_value = user_data;
 }
 
 short function_120850(const vector3f *vector);

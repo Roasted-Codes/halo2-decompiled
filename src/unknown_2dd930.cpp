@@ -159,12 +159,20 @@ public:
 // collects what the planes touch: the planes moved into the tree's
 // coordinates four at a time (the last group padded with the first of its
 // planes), with their normals' magnitudes alongside
-// @retail 0x2dd930
 // score 184 (was 184): retail computes the groups' magnitudes first and then
 // their distances, reads the distance back from the group before doubling it
 // and keeps the query in eax; ours takes the origin's terms first, keeps the
 // distance in a register across the doubling and takes the query in ecx. The
 // loop's registers and the order of its two halves are the whole difference.
+// Further trials: local bit/vector mask 184; intrinsic mask 183; doubling
+// loads 174; distance/magnitude stores and direct origin uses 174; pointer
+// before count and writable mask 174; value/output magnitude helpers 184;
+// mixed distance reads/origin intrinsic 178; consumed group pointer 173;
+// vector planes 166; shared sum 168
+// with a larger frame; finishing arguments 166; minimal iterator 167;
+// early query snapshot 167. Original mask and arithmetic retained.
+// Two explicit loads of the distance for the doubling 166 (not kept: they only force the reloads).
+// @retail 0x2dd930
 void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
 {
@@ -207,13 +215,17 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 	walk.function_2dc220(&pending, root, &fixed_point);
 }
 
-// @retail 0x2ddbd0
 // score 33 (was 33): retail reads the tree's origin before the second list,
 // takes the root with a lea before the query is read and keeps the query in
 // eax; ours reads the second list first, adds 0x30 to the tree pointer for
 // the root and keeps the query in ecx. Reading the origin, the root, the
 // query and the first list into locals of their own, early, leaves the code
 // exactly as it was.
+// Further trials: early difference/doubling 42/42; early fourth-list store
+// 42; sphere reference 33; renamed state/position/deltas 33; memcpy centre
+// 33; vector/point view 33; a shared coordinate setter failed to build, then
+// timed out. Original body retained.
+// @retail 0x2ddbd0
 void __cdecl function_2ddbd0(void *data, s_visibility_sphere_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
 {

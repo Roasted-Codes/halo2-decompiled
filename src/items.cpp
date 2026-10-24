@@ -1177,6 +1177,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // score 182 (was 182): frame 0xac agrees; release-byte clears, vector-tail sharing
 // and event-point homes differ; impulse loop 182; damping loop 182; both loops 182;
 // source-vector reference 182; owner/request at entry 184.
+// release-byte RMW, impulse sharing and event-point homes differ;
+// scale-first 204; shared release with current carriers 182; shared damping 182; both scales 183;
+// detached arm first 199; expiry guard first 181; event point function scope 184.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
