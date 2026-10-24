@@ -200,9 +200,16 @@ public:
 	void function_316dd0(handle_pair_316dd0 const *pair);
 };
 
-// score 115 (was 122): the two id comparisons now read the pair's object
+// score 71 (was 115): saved dispatcher restores the entry registers; record
+// and object spill homes, repeated loads and later agent scheduling differ.
+// Record ref/post-increment 71; island locals/if-else 71; filter arms 71;
+// nested/reversed repeated test 77; record rename 77; const object locals 71;
+// creator local with saved dispatcher 71. One-use callback 2 (not kept);
+// a nested repeated test, separate id guards, incoming handle, const old range
+// and old id with callback 2 each; a repeated result flag 190. Earlier score 115 (was 122): the two id
+// comparisons now read the pair's object
 // first, as retail does, but retail keeps the merger in edi and the pair in
-// esi where ours keeps the merger in esi and the pair in edi
+// esi; that register swap is fixed by the saved dispatcher below
 // @retail 0x316dd0
 void merger_316dd0::function_316dd0(handle_pair_316dd0 const *pair)
 {
@@ -242,10 +249,11 @@ void merger_316dd0::function_316dd0(handle_pair_316dd0 const *pair)
 		}
 	}
 	agent_info_316dd0 *info = dispatcher->tables->creators[first->type][second->type]->create(a, b, dispatcher);
-	tables_316dd0 *tables = dispatcher->tables;
+	dispatcher_316dd0 *dispatch = dispatcher;
+	tables_316dd0 *tables = dispatch->tables;
 	long const first_shape = a->shape->type();
 	long const second_shape = b->shape->type();
-	agent_316dd0 *agent = tables->handlers[first_shape][second_shape](a, b, dispatcher, info);
+	agent_316dd0 *agent = tables->handlers[first_shape][second_shape](a, b, dispatch, info);
 	record->agent = agent;
 	if (agent != 0 && agent->field_8 != 0)
 	{

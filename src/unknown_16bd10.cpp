@@ -763,6 +763,8 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // score 241 (was 241): frame 72 agrees; direction preload, length/zero XMM roles and flag stores differ.
 // Source-field reference 245; copied-normal squared length 258; adjacent trig factors 246;
 // native pan point 290; separate final state pointer 245 (unchanged reduced preview 245).
+// frame 0x48 agrees; direction preload and length/zero XMM roles, flag RMWs and interpolation differ.
+// Entry flag result 459; depth one 245; native plane construction 248; matrix return 326; point-category conditionals 272.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

@@ -1167,7 +1167,9 @@ bool function_111490(long unit_index)
 
 
 // score 1 (was 1): the argument is copied into EAX where retail passes it in ECX, because the
-// callee at 0xc7070 keeps its parameter in ECX.
+// callee at 0xc7070 keeps its parameter in ECX. Split pointer declarations 1; read-only pointees 1;
+// const pointer homes 1; an argument-address read 1; unsigned state selector 5;
+// default-first channel/state switches 1 each; scoped favor-speed-off 114.
 // @retail 0x1112f0
 bool function_1112f0(long unit_index)
 {
@@ -1216,6 +1218,9 @@ PRIVATE __forceinline long held_object_110ab0(long unit_index, short slot)
 
 bool function_c70b0(long unit_index);
 
+// score 347 (was 347): overlay/frame and depletion/interruptibility homes differ;
+// direct parameter plus word/native interruptibility 376/378, second depletion 337
+// (plain: thirteen caller matches lost), native result 382, held helper inline 358.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1560,6 +1565,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * v->k + up->j * v->j + up->i * v->i;
 }
 
+// score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
+// depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
+// native centered 834, separate secondary activity 833.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2152,11 +2160,14 @@ bool function_10dc70(long arg_0);
 bool function_10eaf0(long arg_0);
 long g_55e70c;
 
-PRIVATE __forceinline bool function_111651(c_animation_channel const *arg_0)
+PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 {
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
+// score 679 (was 707): frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
+// ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
+// requested-name snapshots 709; inline plus native final/validity 696/707.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
