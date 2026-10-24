@@ -1955,7 +1955,10 @@ struct s_player_creation_record
 
 // score 33 (was 33): the value that is handed to the call is read into EDI
 // here and into EDX in retail, so the register that carries the argument
-// differs; the rest of the call is the same.
+// differs; the rest of the call is the same. Retail inlines 0x14f270 for the
+// variable controller here (only the inner NONE reset stays a call). Tried: a
+// plain call with an inline declaration of 0x14f270 267; with
+// inline_recursion pragmas or a reworded 0x14f270 the call is still kept.
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {

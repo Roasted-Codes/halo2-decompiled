@@ -979,7 +979,7 @@ void function_fcdd0(long definition_index, point3f const *point, vector3f const 
 void function_fcea0(long effects_index, point3f const *point, vector3f const *direction,
  s_effect_owner const *owner, long index, vector3f const *normal);
 
-// score 22 (was 22): the effect call passes the definition index in ecx where retail uses edx, and the effect setup sets its arguments up in another order and zero-extends the word field with a 16-bit move where ours uses movzx; both calls follow the conventions of the callees in src/projectiles.cpp
+// score 22 (was 22): the effect call passes the definition index in ecx where retail uses edx, and the effect setup sets its arguments up in another order and zero-extends the word field with a 16-bit move where ours uses movzx; both calls follow the conventions of the callees in src/projectiles.cpp (BLOCKED-BY 0xfcbc0: with its normal and definition parameters swapped it matches and this is 20; BLOCKED-BY 0xfcea0: with that and a short index there this matches, but 0xfcea0 then differs more); position and direction pointer locals for the three calls 50
 // @retail 0xa17d0
 bool c_projectile_effect_event::v11(long a, long const *entities, long c, void const *data)
 {

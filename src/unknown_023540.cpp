@@ -3544,7 +3544,9 @@ void function_2fd90(s_2f800_view const *view, box2f const *clip, byte *out);
 
 // score 34 (was 34): the two globals are written in the other order, a byte
 // is loaded where retail loads a whole word, and the calls at the end are in
-// a different order with their arguments set up differently
+// a different order with their arguments set up differently. The tail is
+// 0x13680's convention (retail passes the flag in bl; BLOCKED-BY 0x13680);
+// the flag passed from the frame's copy 34.
 // @retail 0x2ba10
 void function_2ba10(s_2f970_view const *view, long cluster, long player,
     byte const *camera, bool enabled, long leaf, bool invalid, vector3f const *sky_color,
