@@ -2175,6 +2175,10 @@ void network_session_leave_joining(c_class_58d20 *session)
 	network_session_update_leaving_join(session);
 }
 
+// score 3 (was 3): retail stores the NONE request time before clearing the
+// state block; ours stores it after the clear. Tried: the copy as a word loop
+// 49, as a pointer range or a byte loop 0 (not kept: the matched siblings
+// 0x61180 and 0x614a0 copy the same way with memcpy).
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {

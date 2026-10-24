@@ -1497,10 +1497,9 @@ void function_266640(long actor_index)
 	short best_level = 0;
 	real strongest = 0.0f;
 	memset(data + 0x324, 0, 0x10);
-	long next = actor_get(actor_index)->first_prop_index;
-	while (next != NONE)
+	long next;
+	for (long index = actor_get(actor_index)->first_prop_index; index != NONE; index = next)
 	{
-		long index = next;
 		s_prop_datum *node = prop_ref_get(index);
 		next = *(long *)((byte *)node + 0x2c);
 		s_type_f95cd3 *view = NULL;

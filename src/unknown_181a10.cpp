@@ -509,6 +509,9 @@ PRIVATE __forceinline bool batch_shape_pointer(dword data)
 	return limited != value;
 }
 
+// score 319 (was 319): frame 0x48 versus 0x44 and plane/output homes;
+// normal component loop 319; material-output scope 319; direct validity 351;
+// key-clamp result arms 319; optional entity result 319.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
