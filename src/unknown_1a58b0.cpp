@@ -1963,6 +1963,9 @@ struct s_1a5370
 
 // score 10 (was 10): the local record sits at a different stack address and its fields are read
 // from different offsets.
+// Retail bases the induction cursor at candidate+0x14, not +0; after-sort and full-lifetime aliases 10;
+// radius-origin parent, pointer arithmetic, indexed/const/array views, index/count lifetimes and output
+// indexing 10 each.
 // @retail 0x1a5370
 bool __stdcall function_1a5370(s_sort_weight_view const *arg_0, point3f const *arg_1,
 	vector3f const *arg_2, long arg_3, short arg_4, s_sort_candidate_view *arg_5)

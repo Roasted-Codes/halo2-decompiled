@@ -693,6 +693,8 @@ s_effect_particle_system_definition *s_particle_system_datum::function_1751d0()
 
 // score 21 (was 21): the or-ed mask is written into the local after the call arguments are pushed
 // here and before them in retail.
+// The final callee takes its flag on the stack, not in AL; inline+noinline, noinline and inline 21;
+// force-inline 21 with caller regressions; late values, flag, location and successor-reference forms 21.
 // @retail 0x175270
 void function_175270(s_particle_system_datum *particle_system, s_particle_system_spawn *spawn, transform4x3f const *matrix, bool field_b4)
 {
