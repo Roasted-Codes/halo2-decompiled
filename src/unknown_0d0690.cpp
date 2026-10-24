@@ -1213,6 +1213,9 @@ real g_467484 = 15.0f;
 real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
+// score 364 (was 429): frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// copied limited color kept; early squared length 428, decoded-color names 429,
+// in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1239,10 +1242,10 @@ void function_d4080(long type, s_effect_color_query const *query, s_lighting_rec
 		record->color1 = lightmap;
 		function_117c80(&normal, &record->direction1, g_467484);
 		lighting_negate(&record->direction1);
-		color3f limited;
-		limited.red = base.red < 0.25 ? 0.25 : base.red > 0.75 ? 0.75 : base.red;
-		limited.green = base.green < 0.25 ? 0.25 : base.green > 0.75 ? 0.75 : base.green;
-		limited.blue = base.blue < 0.25 ? 0.25 : base.blue > 0.75 ? 0.75 : base.blue;
+		color3f limited = base;
+		limited.red = limited.red < 0.25 ? 0.25 : limited.red > 0.75 ? 0.75 : limited.red;
+		limited.green = limited.green < 0.25 ? 0.25 : limited.green > 0.75 ? 0.75 : limited.green;
+		limited.blue = limited.blue < 0.25 ? 0.25 : limited.blue > 0.75 ? 0.75 : limited.blue;
 		record->color2.red = lighting_pin((lightmap.red * limited.red) * 2.0f, 0.0f, 1.0f);
 		record->color2.green = lighting_pin((lightmap.green * limited.green) * 2.0f, 0.0f, 1.0f);
 		record->color2.blue = lighting_pin((lightmap.blue * limited.blue) * 2.0f, 0.0f, 1.0f);

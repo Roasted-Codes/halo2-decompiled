@@ -1293,6 +1293,9 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
+// score 175 (was 175): early ESI save, update-result byte and motion-copy registers differ;
+// native observed-state width 187; activity word 178; level word 194; readiness word 174
+// (only one lower, rejected); old-state-first conjunction 179 (fast).
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
