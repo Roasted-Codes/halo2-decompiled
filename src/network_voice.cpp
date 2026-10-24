@@ -1401,6 +1401,8 @@ dword function_56c60(s_voice_player_settings *settings, long player);
 
 static __forceinline bool function_57d63(long arg_0, long arg_1);
 
+// score 94 (was 94): frame 0x14 vs 0x18, bit spill and flag-query boundary differ;
+// word outer/target induction 118/106; word active 97; mask names 94; skip cleared inactive entries 110.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {
