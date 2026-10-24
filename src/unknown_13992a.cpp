@@ -81,6 +81,8 @@ long function_14de70(long arg_1);
 // typed lookup through getter / directly / depth one 134/113/134 (plain).
 // sentinel loop 527f; typed selection arrays 298f; handle/rank/both snapshots 138/131/131f;
 // child test order 141f; wider selection scope 131f; cached zone count 145f (control 131f).
+// Native output sentinel/flag/scalar/pairs/full/scoped views 131f (control 131f);
+// the original prefix stores and all protected query interfaces are retained.
 // @retail 0x13992a
 void function_13992a(byte *arg_1, long arg_2)
 {
