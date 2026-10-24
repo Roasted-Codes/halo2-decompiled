@@ -408,10 +408,10 @@ void function_22850(void)
             rotation[6] = axis.k * complement * axis.i + axis.j * sine;
             rotation[7] = axis.j * axis.k * complement - axis.i * sine;
             rotation[8] = (1.0f - axis.k * axis.k) * cosine + axis.k * axis.k;
-            for (long color = 0; color < 3; ++color)
+            for (real *coefficients = (real *)(sample + 0xc);
+                coefficients != (real *)(sample + 0x78); coefficients += 9)
             {
                 real result[9];
-                real *coefficients = (real *)(sample + 0xc + color * 0x24);
                 function_143600(rotation, 3, coefficients, result);
                 memcpy(coefficients, result, sizeof(result));
             }
@@ -2377,19 +2377,18 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     if (!g_4b99b0[1] && alternate_target) return;
     real default_source[4];
     real default_destination[4];
-    real width = 1.0f, height = 1.0f;
-    if (tag != NONE)
+    real width;
+    real height;
+    byte *definition = tag != NONE ? g_4e3b44[tag & 0xffff].bytes : NULL;
+    if (tag != NONE && bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
     {
-        byte *definition = g_4e3b44[tag & 0xffff].bytes;
-        if (bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
-        {
-            byte *bitmap = *(byte **)(definition + 0x48) + bitmap_index * 0x74;
-            real w = (real)*(short *)(bitmap + 4);
-            width = 1.0f > w ? 1.0f : w;
-            real h = (real)*(short *)(bitmap + 6);
-            height = 1.0f > h ? 1.0f : h;
-        }
+        byte *bitmap = *(byte **)(definition + 0x48) + bitmap_index * 0x74;
+        real w = (real)*(short *)(bitmap + 4);
+        width = 1.0f > w ? 1.0f : w;
+        real h = (real)*(short *)(bitmap + 6);
+        height = 1.0f > h ? 1.0f : h;
     }
+    else width = height = 1.0f;
     if (alternate_target) function_14bc0(*(short *)(g_4b99b0 + 0x38), 0, false);
     else if (screen_target) function_14bc0(0, 0, false);
     else function_14bc0(*(short *)(g_4b99b0 + 0x34), 0, false);
@@ -2553,12 +2552,12 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         for (long bucket = 0; bucket < count; ++bucket)
         {
             byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-            long available = *(word const *)(pair + 2);
-            if (!available) continue;
+            long samples = *(word const *)(pair + 2);
+            if (!samples) continue;
             real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
             transform4x3f matrix;
             function_0235a0(source, &matrix);
-            long samples = available > 1 ? 2 : 1;
+            if (samples > 2) samples = 2;
             for (short sample = 0; sample < samples; ++sample)
             {
                 if (sample) function_0235a0(source + 12, &matrix);
@@ -2919,8 +2918,8 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     bool result = false;
     real offset = 0.0f;
     bool small = false;
-    bool allow_small = false;
-    bool allow_negative = false;
+    long allow_small = false;
+    long allow_negative = false;
     real maximum = 1.0f;
     real inverse_distance = 1.0f / g_48565c;
     low *= inverse_distance;

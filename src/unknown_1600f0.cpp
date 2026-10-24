@@ -1203,6 +1203,9 @@ PRIVATE inline long score_string_list_1608e0()
 	return result;
 }
 
+// score 810 (was 817): player register and scalar homes; scalar names 817;
+// header/name reuse 818; header/decoder reuse 818; both short team walks 811;
+// short player walk 835; short outer team walk 818; short rank search 810.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1379,13 +1382,12 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		byte *player = g_4e8c24->data + (index & 0xffff) * 0x21c;
 		++row_number;
 		long place = display.player_ranks[player_row] / 2 + 1;
-		bool dim = false;
 		bool has_engine = game_engine_get() != NULL;
 		bool teams = has_engine && g_4e6948->flags184.bit0;
 		char team = *(char *)(player + 0xc0);
 		if (teams && team != NONE)
 		{
-			for (long team_row = 0; team_row < display.team_count; ++team_row)
+			for (short team_row = 0; team_row < display.team_count; ++team_row)
 				if (team == display.teams[team_row])
 				{
 					place = display.team_ranks[team_row] / 2 + 1;
@@ -1396,10 +1398,9 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		function_7f790(teams ? team : NONE, team == NONE, (s_player_appearance *)(player + 0x84), colors);
 		color3f color = colors[0];
 		word flags = *(word *)(player + 2);
-		if ((flags & 2) || !(flags & 1) || team == NONE ||
+		bool dim = (flags & 2) || !(flags & 1) || team == NONE ||
 			(g_4e6948->value1b8 > 0 && *(long *)(player + 0x2c) == NONE &&
-			*(short *)(player + 0x1ac) == 0))
-			dim = true;
+			*(short *)(player + 0x1ac) == 0);
 		work.position[1] += 0x14;
 		bool show_icon = team != NONE && *(long *)(player + 0x2c) == NONE && !(flags & 2);
 		byte *entry = scores + (index & 0xffff) * 0x1c;
