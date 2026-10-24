@@ -1575,6 +1575,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
+// seat-weight branches 874, overlay pointer countdown 863, refreshed object 833,
+// direct bounds fallback 859, size preference 1557, object pointer name 833,
+// control-first declaration 833.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

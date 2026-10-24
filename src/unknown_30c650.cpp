@@ -10,8 +10,8 @@ struct pointers_30c650
 
 	pointers_30c650() : data(0), size(0), capacity_and_flags(0x80000000) {}
 	// a view of `count` pointers at `elements`, whose storage it does not own
-	pointers_30c650(void **elements, long count)
-		: data(elements), size(count), capacity_and_flags(count | 0x80000000) {}
+	pointers_30c650(void **elements, long count, long capacity)
+		: data(elements), size(count), capacity_and_flags(capacity | 0x80000000) {}
 	~pointers_30c650()
 	{
 		if ((capacity_and_flags & 0x80000000) == 0)
@@ -184,33 +184,37 @@ static void __cdecl function_30d0c0(pointers_30c650 *out, owner_30d480 const *ow
 
 // appends everything the owner lists to `out`: the +0x3c lists, the owner's
 // own +0x120 list, the parts, the +0x4c lists, then its +0xd0 pointer
-// score 183 (was 183): retail keeps the zero in eax and the gathered array's
+// score 152 (was 183): retail keeps the zero in eax and the gathered array's
 // data in ebx and computes the freed size with lea, ours keeps the zero in
-// ebx, reloads the data pointer and computes the size with shl
+// ebx, reloads the data pointer and computes the size with shl.
+// Explicit capacity 152; distinct array types 183, with capacity 152;
+// capacity word 181; object names 152; size-first view stores 201;
+// empty-array stores, a view base and pointer-first view stores 152;
+// unsigned capacity 183.
 // @retail 0x30d480
 void __cdecl function_30d480(owner_30d480 const *owner, pointers_30c650 *out)
 {
 	{
 		pointers_30c650 gathered;
 		function_30ced0(&gathered, owner);
-		pointers_30c650 view(gathered.data, gathered.size);
+		pointers_30c650 view(gathered.data, gathered.size, gathered.size);
 		out->function_30c650(out->size, &view);
 	}
 	if (owner->field_124 > 0)
 	{
-		pointers_30c650 view(owner->field_120, owner->field_124);
+		pointers_30c650 view(owner->field_120, owner->field_124, owner->field_124);
 		out->function_30c650(out->size, &view);
 	}
 	{
 		pointers_30c650 gathered;
 		function_30cf70(&gathered, owner);
-		pointers_30c650 view(gathered.data, gathered.size);
+		pointers_30c650 view(gathered.data, gathered.size, gathered.size);
 		out->function_30c650(out->size, &view);
 	}
 	{
 		pointers_30c650 gathered;
 		function_30d0c0(&gathered, owner);
-		pointers_30c650 view(gathered.data, gathered.size);
+		pointers_30c650 view(gathered.data, gathered.size, gathered.size);
 		out->function_30c650(out->size, &view);
 	}
 	void *last = owner->field_d0;

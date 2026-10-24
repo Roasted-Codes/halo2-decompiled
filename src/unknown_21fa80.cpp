@@ -76,6 +76,8 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // score 541 (was 541): frame 0x22c versus 0x224; stream/gain homes and math expansion differ.
 // native input direct bit 541; all native input bits 548; captured direct use 540;
 // shared gain converter 629; inline depth one 541; native output bits with captured direct 544.
+// frame 0x22c versus 0x224; stream and gain homes plus SSE and x87 scheduling differ; native-bit tests gain only three
+// tried initial driver value 541; native send bit writes 567; native send bit tests 538; native pitch truncation 551; level pointer traversal 558; real absolute values 541; native flags real abs 538; native flags driver 538.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)
