@@ -17,8 +17,8 @@ void function_24f0fc(s_marker_list const *list, s_24ecae_placement const *placem
 	center.x = placement->position.x;
 	center.y = placement->position.y;
 	center.y -= placement->scale * 16.0f + offset + 1.0f;
-	real left_width = count > 1 ? 32.0f : 16.0f;
 	real right_width = count > 1 ? 32.0f : 16.0f;
+	real left_width = count > 1 ? 32.0f : 16.0f;
 	box2f rect;
 	rect.x0 = center.x - (placement->scale * left_width + 1.0f);
 	rect.x1 = center.x + (placement->scale * right_width + 1.0f);
@@ -46,8 +46,9 @@ void function_24f0fc(s_marker_list const *list, s_24ecae_placement const *placem
 		bool right_side = corner == 1 || corner == 2;
 		real x = right_side ? rect.x1 : rect.x0;
 		real y = upper ? rect.y0 : rect.y1;
+		real outer_y = upper ? -2.0f : 2.0f;
 		points[0].x = x + (right_side ? 2.0f : -2.0f);
-		points[0].y = y + (upper ? -2.0f : 2.0f);
+		points[0].y = y + outer_y;
 		points[1].x = x;
 		points[1].y = y + (upper ? -2.0f : 2.0f);
 		points[2].x = x;
@@ -91,8 +92,8 @@ void function_24f0fc(s_marker_list const *list, s_24ecae_placement const *placem
 	points[3].y = rect.y1;
 	function_22a664((s_widget_quad_2b11 const *)points, (s_float_rect const *)&bounds,
 		kind->border_bitmap, 0, kind->shader_index);
-	real split = center.x - placement->scale * 16.0f + 1.0f;
 	real edge = rect.y1 + 2.0f;
+	real split = center.x - placement->scale * 16.0f + 1.0f;
 	points[0].x = rect.x0;
 	points[0].y = edge;
 	points[1].x = split;
