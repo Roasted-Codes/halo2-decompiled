@@ -2953,7 +2953,9 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
  return count;
 }
 
-// score 139 (was 139): frame and extent agree; channel/cursor/count registers and route homes differ.
+// score 139 (was 139): channel/cursor/count registers and route homes differ;
+// frame pointer 188; short stride 163; short index 139; recipient-bit reuse 161; route name 139.
+// frame and extent agree; channel/cursor/count registers and route homes differ.
 // Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
 // entry route lifetime 139; ordinary delivery arm first 162.
 // @retail 0x55e10

@@ -799,7 +799,10 @@ static inline real unit_clamp_176a0(real value)
     return value;
 }
 
-// score 124 (was 124): frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
+// score 124 (was 124): frame 0x2c agrees; cursor EDI versus EBP and clamp
+// result publication differ. Indexed entry walk 186; alpha-first clamps with
+// body entry step 122; frame pointer 229; global optimization off 385; size 301.
+// frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
 // Entry step in body 122; indexed clamp loop 151; short/byte entry counter 122/133; inline depth one 122.
 // @retail 0x176a0
 void function_176a0(byte *state, s_packed_shader_range const *range)
@@ -1194,7 +1197,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 // score 246 (was 246): sampler convention and captured descriptor versus dirty-store rereads;
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
-// pack result at store 344; existing clamp calls 318.
+// pack result at store 344; existing clamp calls 318. Frame pointer 365;
+// zero inline depth 652; global optimization off 1687; size 517; native
+// ternary clamp loops 359.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

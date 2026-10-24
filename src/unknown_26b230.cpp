@@ -1630,6 +1630,7 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // score 128 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
 // Round 280: remaining-count traversal 128 plain; current-child handle 164; collection write cursor 172; array scope 167; early active flag 199.
 // Child/countdown 125; short remaining 125; unsigned remaining 125 (each only three below the retained countdown).
+// Frame pointer 198; depth zero 313; later generation increment 130; native source slot 175; size preference 360; first-walk generation snapshot 178.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1741,7 +1742,9 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
-// score 134 (was 134): frame 0x38 versus 0x3c; pool register and common null-current join differ.
+// score 134 (was 134): frame 0x38 versus 0x3c; pool/selection homes and threaded exhaustion differ.
+// Retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133; size preference 338.
+// frame 0x38 versus 0x3c; pool register and common null-current join differ.
 // Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
 // @retail 0x2689d0
 void function_2689d0(void)
