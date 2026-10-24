@@ -1185,6 +1185,9 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
    overlays it plays */
 // score 231 (was 50): the stack frame is four bytes smaller than retail's, so every stack offset
 // inside the function is shifted.
+// score 36 (was 46): the 0x20 frame agrees; node-address registers and one byte still differ.
+// Field reference with calls in both arms 36; wide parent 117; unsigned root 115;
+// root reference 115; parent reference 115; predicate 46; signed mask 47; unsigned mask 46.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1263,22 +1266,20 @@ void __stdcall function_167e86(long user_index, long field_x11c898)
 
 							if (root_node_index != NONE)
 							{
-								short parent_index = graph->nodes[root_node_index].parent_index;
+								short const &parent_index = graph->nodes[root_node_index].parent_index;
 
 								if (parent_index != NONE)
 								{
-									long flags;
 									short node_index;
 
 									if (graph->nodes[parent_index].flags & 8)
 									{
-										flags = 0x10;
+										node_index = (short)function_1dd490(graph, 0x10);
 									}
 									else
 									{
-										flags = 8;
+										node_index = (short)function_1dd490(graph, 8);
 									}
-									node_index = (short)function_1dd490(graph, flags);
 
 									weapon->unknown2fe_node = node_index;
 									if (node_index != NONE)
