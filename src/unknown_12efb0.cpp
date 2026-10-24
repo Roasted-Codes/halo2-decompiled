@@ -70,8 +70,8 @@ real g_547f80 = 1.0f;
 
 static __forceinline real function_12efb1(real arg_0)
 {
-	if (arg_0 < 0.0f) return 0.0f;
-	if (arg_0 > 1.0f) return 1.0f;
+	if (arg_0 < 0.0f) arg_0 = 0.0f;
+	else if (arg_0 > 1.0f) arg_0 = 1.0f;
 	return arg_0;
 }
 
@@ -91,9 +91,12 @@ static __forceinline void function_12efb2(s_fog_accumulator *arg_0, real const *
 static __forceinline void function_12efb3(s_fog_accumulator *arg_0, s_fog_accumulator const *arg_1, real arg_2)
 {
 	arg_2 = function_12efb1(arg_2);
-	if (arg_1->weight > 0.0f)
+	real weight = arg_1->weight;
+	arg_0->weight += arg_2;
+	arg_0->remaining *= 1.0f - arg_2;
+	if (weight > 0.0f)
 	{
-		real local_0 = arg_2 / arg_1->weight;
+		real local_0 = arg_2 / weight;
 		arg_0->color.red += arg_1->color.red * local_0;
 		arg_0->color.green += arg_1->color.green * local_0;
 		arg_0->color.blue += arg_1->color.blue * local_0;
@@ -101,8 +104,6 @@ static __forceinline void function_12efb3(s_fog_accumulator *arg_0, s_fog_accumu
 		arg_0->distance += arg_1->distance * local_0;
 		arg_0->height += arg_1->height * local_0;
 	}
-	arg_0->weight += arg_2;
-	arg_0->remaining *= 1.0f - arg_2;
 }
 
 static __forceinline void function_12efb4(s_fog_accumulator const *arg_0, real *arg_1)
@@ -122,24 +123,19 @@ static __forceinline void function_12efb4(s_fog_accumulator const *arg_0, real *
 static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, real arg_2)
 {
 	arg_2 = function_12efb1(arg_2);
-	real intensity = arg_1[3];
-	if (intensity == 0.0f)
-		intensity = 1.0f;
-	arg_0->field_c += intensity * arg_2;
 	arg_0->field_0.red += arg_1[0] * arg_2;
 	arg_0->field_0.green += arg_1[1] * arg_2;
 	arg_0->field_0.blue += arg_1[2] * arg_2;
+	arg_0->field_c += (arg_1[3] == 0.0f ? 1.0f : arg_1[3]) * arg_2;
 	arg_0->field_10 += arg_2;
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 693 (was 707): frame 0x4820 agrees; clear scheduling, output cursor
+// score 692 (was 725): frame 0x4820 agrees; clear scheduling, output cursor
 // +0x10 versus +8 and palette/cluster registers still differ. Interleaved
-// scalar helper 727; color scalar first 707 kept; ordinary output inline 725;
-// ordinary color inline 725; output-helper output-first parameters 725.
-// Earlier accumulator initialization 865; delayed selection state 776; early-return
-// clamp 707; conditional clamp 707; intensity result 704; early-return clamp
-// plus intensity result 693 kept. Cluster cursor and clear scheduling remain.
+// scalar helper 727; the alpha term first 707 alone but 713 together with
+// the weight local (not kept); ordinary output inline 725; ordinary color
+// inline 725; output-helper output-first parameters 725.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

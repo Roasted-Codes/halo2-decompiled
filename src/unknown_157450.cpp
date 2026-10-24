@@ -5059,7 +5059,7 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
         }
         if (*timer == 0)
         {
-            bool schedule = entries[i].index == NONE;
+            long schedule = entries[i].index == NONE;
             if (entries[i].index != NONE)
             {
                 switch (*(short *)(placement + 0x12))
@@ -5095,19 +5095,25 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                 *timer = (short)delay;
             }
         }
-        if (*timer > 0 && --*timer == 0)
+        short countdown = *timer;
+        if (countdown > 0)
         {
-            index = entries[i].index;
-            if (index != NONE && (placement[0] & 2) && object[0xaa] != 2)
+            --countdown;
+            *timer = countdown;
+            if (countdown == 0)
             {
-                if (object[0xaa] == 1 && (function_158ff0(index) || function_15f060((point3f *)(object + 0x30), *(real *)(preset + 0x28))))
+                index = entries[i].index;
+                if (index != NONE && (placement[0] & 2) && object[0xaa] != 2)
                 {
-                    *timer = 1;
-                    continue;
+                    if (object[0xaa] == 1 && (function_158ff0(index) || function_15f060((point3f *)(object + 0x30), *(real *)(preset + 0x28))))
+                    {
+                        *timer = 1;
+                        continue;
+                    }
+                    function_d6bc0(entries[i].index);
                 }
-                function_d6bc0(entries[i].index);
+                function_15aad0(entries, i);
             }
-            function_15aad0(entries, i);
         }
     }
 }

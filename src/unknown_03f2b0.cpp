@@ -1357,6 +1357,8 @@ struct s_batch_cache_4b5d0
 
 struct s_133f70;
 
+// score 219 (was 219): distance load, nullable-entry address and cache/level scheduling differ;
+// distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
