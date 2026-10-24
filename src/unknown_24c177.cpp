@@ -281,6 +281,9 @@ void function_236299(long sound);
 
 /* moves the list's focus one item in the direction; at either end the data
    scrolls through the items instead (or wraps to the other end) */
+// score 84 (was 84): the loaded neighbour's virtual receiver stays in eax
+// where retail keeps it in ecx, and retail pushes the selected neighbour
+// straight from memory instead of through a register copy.
 // @retail 0x24c1c5
 void function_24c1c5(c_widget *widget, char direction)
 {

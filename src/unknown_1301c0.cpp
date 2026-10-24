@@ -85,6 +85,9 @@ void function_130bb0(s_fog_state *fog)
 	}
 }
 
+// score 57 (was 75): the classification block still sits inline right after the
+// pending intensity test, where retail runs the value10c and value118 tests
+// first; those two comparisons are ucomiss with an unordered test in retail.
 // @retail 0x130de0
 long function_130de0(s_fog_state *fog)
 {

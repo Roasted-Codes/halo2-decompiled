@@ -35,12 +35,9 @@ long function_1e4990(long arg_0);
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4);
 void __stdcall swarm_delete(long arg_0);
 
-// score 53 (was 53): the tag pointer is in esi where retail keeps it in edi
-// (the constant -1 is in the other one), and retail keeps the loop limit in
-// ebx with a cmov where ours puts it in a stack slot with a branch. Nine
-// source rewrites (the declaration order, the result split from the
-// allocation, the comparison against the variable, the goto, the width of the
-// limit) all scored 53 or worse.
+// score 44 (was 53): the fresh-record field stores now match retail's order, but
+// the tag pointer is still in esi where retail keeps it in edi, and retail keeps
+// the loop limit in ebx with a cmov where ours keeps it in a stack slot.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {
