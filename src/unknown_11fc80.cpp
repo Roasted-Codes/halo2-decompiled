@@ -39,6 +39,11 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 	arg_0->z = arg_3 + arg_1->z;
 }
 
+// score 79 (was 79): current distance uses xmm3 instead of xmm2, then
+// delta y/z use xmm4/2 instead of xmm3/4 through the unroll and remainder.
+// Per-use indexed current 356; unsigned ordinal 82; accepted memcpy 79;
+// interpolation output/previous references 79/79; complete result value
+// 517; positive intersection/current capacity scopes 79/79.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,

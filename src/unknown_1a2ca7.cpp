@@ -1407,6 +1407,9 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 
 /* copies the presence task's results into the friends and team members
    lists */
+// score 159 (was 159): frame agrees; count homes, early zero and flag reloads differ. Global optimization
+// off 1206; bounded friend search 230; bounded member search 219; both 211; indexed merge-record pointer
+// 162.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {

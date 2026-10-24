@@ -20,6 +20,7 @@ struct s_28f0e0
 struct s_28f0e1 { byte field_0[0x134]; long field_134; byte field_138[2]; short field_13a; };
 struct s_28f0e2 { byte field_0[0xa4]; bool field_a4; byte field_a5[3]; long field_a8; long field_ac; };
 
+// score 13 (was 13): one cross-product load order and nullable up register remain; local normalizer force-inline 13; placement noinline 13; normalization inline 13; attachment inline 13; combined boundaries 13; nesting depth 13; basis names 13; early basis declarations 13.
 // @retail 0x28f0e0
 bool function_28f0e0(long arg_2, s_28f0e0 const *arg_1, vector3f const *arg_0, long arg_3)
 {

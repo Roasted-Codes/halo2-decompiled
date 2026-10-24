@@ -1070,6 +1070,10 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
+// score 43 (was 43): frame and first two passes agree; later parent loads lose the record address.
+// Const current group 43; unsigned squad parent 43; unsigned group parent 63;
+// unsigned sibling 43; full-width final index 63; parent-field view 43;
+// parent view in both passes 82; append noinline declaration 43.
 // @retail 0x2009d0
 void function_2009d0(void)
 {
@@ -1645,6 +1649,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
     }
 }
 
+// score 344 (was 344): frame 0x30 versus 0x3c; packed references and entry-index schedules differ.
+// Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
+// native reference indices 350; entry fields at use 344; inline distance call 678.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2539,6 +2546,9 @@ PRIVATE __forceinline byte *function_202752(s_record_pool_iterator *arg_0)
 
 static __forceinline long real_to_long(real value);
 
+// score 227 (was 227): frame 0x30 agrees; active/pool reloads and zero-result joins differ.
+// Role names 227; native squad iterator 227; squad result local 227; short timers 227;
+// timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // @retail 0x202720
 void function_202720(void)
 {

@@ -156,6 +156,9 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
+// score 183 (was 222): frame 0x84/0x88, callee registers and render-state expansion differ;
+// dword selection 183; word setup flags 234; combined mask 222;
+// brightness component loop 238; redundant bit-clear removal 217.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -181,7 +184,7 @@ bool function_404b0(long mode)
         if (g_485950.i > 0.0f || g_485950.j > 0.0f || g_485950.k > 0.0f) flags |= 2;
         else flags &= ~2UL;
         g_4ba014 = flags & ~0x3cUL;
-        bool selected = (bool)((g_4c1a48[1].flags >> 11) & 1);
+        long selected = (bool)((g_4c1a48[1].flags >> 11) & 1);
         if (selected)
         {
             g_467130 = 11; g_467134 = (void *)1; g_467138 = &g_4c1a48[1];

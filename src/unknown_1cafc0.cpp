@@ -1278,6 +1278,9 @@ struct s_animated_object_header
 	s_animated_object *object;
 };
 
+// score 131 (was 131): frame agrees; initial zero-output arm precedes channel chain instead of following it.
+// Vector homes by call order 131; scalar homes by call order 131; counted component blend 131;
+// complete blended vector 136; inline depth zero 163.
 // @retail 0x1cd6c0
 void s_animation_state::movement_rate_get(long object_index, vector3f *vector, real *value)
 {
@@ -1533,7 +1536,7 @@ bool s_animation_state::channel_refresh(c_animation_channel *channel, long weapo
 }
 
 // @retail 0x1cb9d0
-c_type_709360 s_animation_state::overlay_find(long set, long weapon_class, long weapon_type)
+c_type_709360 s_animation_state::overlay_find_for_class(long weapon_class, long weapon_type, long set)
 {
 	c_type_709360 none;
 
@@ -1562,7 +1565,7 @@ c_type_709360 s_animation_state::overlay_or_animation_get(long weapon_class, lon
 	{
 		weapon_type = unknown78;
 	}
-	animation_id = overlay_find(set, weapon_class, weapon_type);
+	animation_id = overlay_find_for_class(weapon_class, weapon_type, set);
 	if (animation_id.index == NONE)
 	{
 		animation_id = animation_get(set, weapon_class, weapon_type);

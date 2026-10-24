@@ -1061,6 +1061,9 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 	return result;
 }
 
+// score 142 (was 142): clock/compare schedule and vector homes differ; ordinary
+// pooled/clock reads with memset zero 178; projected-point loop 297; wide query
+// results 318; named maximum 146; target-copy loop 141 (one-count gain rejected).
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
@@ -1491,6 +1494,10 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
+// score 695 (was 711): frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// Conditional facing 731; wide best level 701; direct parameter 701; shared difference 705;
+// wide retention 704; live relative inputs 695; native velocity copy 695; early defaults 755;
+// phase defaults 752.
 // @retail 0x266640
 void function_266640(long actor_index)
 {
@@ -1498,7 +1505,7 @@ void function_266640(long actor_index)
 	s_actor_view *actor = actor_get(actor_index);
 	byte *data = (byte *)actor;
 	long best_node = NONE, strongest_node = NONE;
-	short best_level = 0;
+	long best_level = 0;
 	real strongest = 0.0f;
 	memset(data + 0x324, 0, 0x10);
 	long next;
@@ -1647,9 +1654,9 @@ void function_266640(long actor_index)
 				long reference = function_25d810(unit_index, *actor_reference, false);
 				vector3f velocity = unit->velocity;
 				vector3f relative;
-				relative.i = velocity.i - vehicle->velocity.i;
-				relative.j = velocity.j - vehicle->velocity.j;
-				relative.k = velocity.k - vehicle->velocity.k;
+				relative.i = unit->velocity.i - vehicle->velocity.i;
+				relative.j = unit->velocity.j - vehicle->velocity.j;
+				relative.k = unit->velocity.k - vehicle->velocity.k;
 				real approach = 0.0f;
 				if (function_30bf0(&velocity) > 0.0f)
 					approach = velocity.k * direction.k + velocity.j * direction.j + velocity.i * direction.i;
