@@ -399,6 +399,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // score 74 (was 78): frame 0x24 versus 0x18; independent query homes still differ.
 // Output-first helper 80; ordinary inline 80; depth one 80; not-loaded arm first 128;
 // guarded stages 126; nested name guard 76 fast, 74 plain.
+// Later-three scratch 194; menu/shared scratch 180; final-pair scratch 109;
+// nested-guard value return 211; post-switch validity 76; scoped later scratch 194;
+// nested-guard direct persistent outputs 203 (fast preview 76). Original body retained.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {

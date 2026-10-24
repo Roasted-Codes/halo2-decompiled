@@ -412,6 +412,9 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Transition result 235; unsigned listener 264; byte listener 319; angle lifetime 264; separate request indices 264.
 // Request transition field 263; bounded listener result 223 plain; separate fill guard 255;
 // depth one 235; size optimization 441; direct search returns 254.
+// Default-first sampled duration 259; default-first field reload 267 (frame 0x148);
+// bounded pointer search 225; bounded while search 223; equality exhaustion 255.
+// Original body/helper retained; fast preview 223.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
