@@ -108,7 +108,8 @@ c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, re
     }
     else
     {
-     c_havok_reference_counted *local_11 = (c_havok_reference_counted *)function_1d7400(((s_1d7401 *)local_8)->field_c, arg_1, arg_2);
+     c_extent_shape *local_27 = ((s_1d7401 *)local_8)->field_c;
+     c_havok_reference_counted *local_11 = (c_havok_reference_counted *)function_1d7400(local_27, arg_1, arg_2);
      void *local_19 = ((c_1d7390 *)g_480118)->function_1d7390(0x50, 0x22);
      c_child_transform *local_20 = local_19 ? new (local_19) c_child_transform(local_11) : NULL;
      local_20->transform = ((s_1d7401 *)local_8)->field_10;
