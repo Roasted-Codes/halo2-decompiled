@@ -1572,6 +1572,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
 // metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
 // lifetime 825; depth one 835; material noinline 870/866.
+// shared cross-path normal 820; shared cross-path base color 825; native scale helper 853;
+// texture carrier name 819; first sample lexical position 819.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
