@@ -556,6 +556,9 @@ struct s_item_collision_bsp
 	s_item_collision_instance *instances;
 };
 
+// score 249 (was 253): plane-index width, plane-join registers and spin stores differ;
+// seed before square root 249; fallback input copy 364; up pointer 253;
+// plane input scalars 254; angular output initializer 253.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
@@ -635,8 +638,8 @@ void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effe
 	}
 	else
 	{
-		real speed = (real)sqrt(impulse->j * impulse->j + impulse->k * impulse->k + impulse->i * impulse->i);
 		dword *seed = &g_4e7408->unknown0;
+		real speed = (real)sqrt(impulse->j * impulse->j + impulse->k * impulse->k + impulse->i * impulse->i);
 		if (speed < 0.0001f)
 		{
 			*seed = *seed * 0x19660d + 0x3c6ef35f;
