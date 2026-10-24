@@ -242,6 +242,9 @@ PRIVATE __forceinline real function_112e21(real arg_0)
     return local_0;
 }
 
+// score 133 (was 133): frame 0x80 versus 0x84 and squared/yaw/pitch homes differ;
+// shared normalization scale 133, relative scale 136, both scales 136,
+// reciprocal-root intrinsic 168, two-angle helper precision probe 119 (rejected).
 // @retail 0x112e20
 void function_112e20(transform4x3f *matrix, point3f const *target, transform4x3f const *orientation)
 {
@@ -387,6 +390,9 @@ bool function_1d9320(s_1d9240 *slot);
 void function_1d90e0(long render_model_index, long node_index, transform4x3f *nodes, transform4x3f const *marker_matrix,
 	transform4x3f const *target_matrix, real weight, long node_count);
 
+// score 42 (was 42): frame 0x104 agrees; visited update still loads, ORs and stores.
+// Branch-local graph 42; saved mode 74; const model 42; visited base 42;
+// iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
@@ -1221,6 +1227,13 @@ bool function_c70b0(long unit_index);
 // score 347 (was 347): overlay/frame and depletion/interruptibility homes differ;
 // direct parameter plus word/native interruptibility 376/378, second depletion 337
 // (plain: thirteen caller matches lost), native result 382, held helper inline 358.
+// score 194 (was 347): frame 8 and depleted BL recovered; object/header/state registers
+// and count-result materialization differ. Second predicate 194; native interruptible 341;
+// status names 347; size policy 602; overlay-first exits 415; conditional first 336;
+// conditional first with native interruptible 335.
+// score 164 (was 194): retail length recovered; object/header/state registers and count joins differ.
+// Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
+// byte result 164; unsigned identifiers 218.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1232,7 +1245,7 @@ bool __stdcall function_110ab0(long unit_index)
 	long overlay = control->channel_9c.unknown08;
 	long name = state->unknown7c;
 	long controlling = unit->field_13c;
-	bool result = false;
+	byte result = false;
 	bool depleted = false;
 	bool interruptible = false;
 	if (controlling != NONE)
@@ -1240,8 +1253,7 @@ bool __stdcall function_110ab0(long unit_index)
 		long first = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x212));
 		depleted = first != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(first) + 0x17c) <= 0;
 		long second = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x213));
-		if (second != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(second) + 0x17c) > 0)
-			depleted = false;
+		depleted = depleted && (second == NONE || *(short *)((byte *)UNIT_ANIMATION_OBJECT(second) + 0x17c) <= 0);
 		if (*(byte *)((byte *)state + 0x14) & 0x10)
 			interruptible = true;
 	}
@@ -1346,6 +1358,10 @@ bool __stdcall function_110ab0(long unit_index)
 // score 453 (was 478): frame 8 versus 12 and requested/state registers still differ.
 // Predicate names 478; byte result 538; byte depleted/overlay 453; global optimization off 1195;
 // merged interruptible cases 473; byte depleted alone 458; byte overlay alone 477; merged cases with bytes 456.
+// score 451 (was 451): frame 8 versus 12 and requested/state homes remain.
+// Byte-context word/native interruptible 456/453; named channel words 453;
+// size policy 827; common requested override 754 (unchanged fast preview 453).
+// Second depletion accumulation 468; bitwise depletion 482.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1568,6 +1584,14 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
+// two inline levels 833, sequential channel construction 833, activity byte 833,
+// short overlay counter 833, channels before curve weights 833.
+// seat-weight branches 874, overlay pointer countdown 863, refreshed object 833,
+// direct bounds fallback 859, size preference 1557, object pointer name 833,
+// control-first declaration 833.
+// score 833 (was 833): unit/state homes and first angle expansion remain. Primary direction
+// snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
+// centered predicate after channel preparation 871.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -1602,8 +1626,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 		if (*(real *)((byte *)unit + 0x208) > 0.0f &&
 			*(short *)((byte *)UNIT_ANIMATION_CONTROL(UNIT_ANIMATION_OBJECT(unit_index)) + 0x36) == NONE)
 		{
-			c_type_709360 id;
-			state->current_animation_get(&id);
+			c_type_709360 id = state->overlay_default_get();
 			if (id.index != NONE && state->channel_play(&channel, id, 0))
 				channel.sample(*(real *)((byte *)unit + 0x208), node_mask, node_count, transforms);
 		}
@@ -2168,6 +2191,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // score 679 (was 707): frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
 // requested-name snapshots 709; inline plus native final/validity 696/707.
+// score 679 (was 679): ordinary-helper Boolean transition 712; native helper result 706;
+// explicit helper result 679; size policy 1026; byte validity 679. Request/control
+// homes and the second stack argument remain unresolved.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2465,6 +2491,8 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // score 152 (was 162): frame 60 versus 56; action-output and seat-query argument registers still differ.
 // Native channel workspace 139; copy return to play 152; accumulated channel failure 177;
 // unsigned word result 173; short table index 188.
+// Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
+// repeated table index 152; mode after animation 157.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

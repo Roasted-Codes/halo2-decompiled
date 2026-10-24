@@ -191,6 +191,9 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // vector argument homes and retained clock differ in the 0x24 frame.
 // Void return 708; native failure 716; input role names 709;
 // native extra ticks 709; vector memmove 730.
+// score 660 (was 660): vector argument homes still differ; selected velocity pointer 685;
+// activation velocity snapshot 786 (caller lost); contiguous velocity scale 660;
+// fast-byte observations 660; integer remaining-tick test 699.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
@@ -768,6 +771,10 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
  return next;
 }
 
+// score 88 (was 157): attached ESI/EBP roles and scan setup still differ; per-use direction 88.
+// Unsigned attached handle 157; const contacts 157; unsigned selection 157;
+// initialized found 364; forward workspace 482; shared difference 237; const objects 157.
+// On per-use scan: direct count 88; direct table 356; both 356; found first 87 (one-point addition dropped).
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {
@@ -819,8 +826,11 @@ attached_done:
    real best = -FLT_MAX;
    for (long i = 0; i < count; i++)
    {
-    real z = contacts[i].direction.k;
-    if (z > 0.70710677f && z > best) { selected = i; best = z; }
+    if (contacts[i].direction.k > 0.70710677f && contacts[i].direction.k > best)
+    {
+     selected = i;
+     best = contacts[i].direction.k;
+    }
    }
    bool found;
    s_movement_contact_1ed4a0 *contact;

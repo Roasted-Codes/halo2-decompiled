@@ -263,6 +263,8 @@ void function_bb8f0(long a)
 // score 4 (was 4): retail keeps the delta in the accumulator and adds the
 // game time to it, ours keeps the game time in the accumulator and adds the
 // delta to that, so the four instructions that build the time differ.
+// Delta-first clock getter 4; old-deadline declaration before sum 4; branch-entry declaration homes 4;
+// const old deadline 4; const delta 4; const object pointer 4; const header pointer 4; scoped favor-size 88.
 // @retail 0xbb950
 void function_bb950(long object_index, bool add, long delta)
 {
@@ -453,6 +455,10 @@ hsv3f *function_1318d0(color3f const *rgb, hsv3f *hsv);
 color3f *function_131a00(hsv3f const *hsv, color3f *rgb);
 void function_3dd10(long object_index, bool force);
 
+// score 134 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// Distinct seeds 138; last before weight 136; accumulator first 134;
+// signed variant ordinal 138; const choices 138; unsigned variant key 138;
+// skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
@@ -504,8 +510,8 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                 }
                 if (eligible && weight > 0.0f)
                 {
-                    real target = selection * weight;
                     real cumulative = 0.0f;
+                    real target = selection * weight;
                     long j = 0;
                     do
                     {
@@ -586,6 +592,9 @@ color3f *function_131c20(color3f const *a, color3f const *b, dword flags, real t
 // the output pointer, ours computes the pointer first, and retail keeps the
 // running offset in another register, so the test, the two leas and the
 // loop's bookkeeping differ.
+// Direct size/24 count 161; const base, entry and function views 91;
+// unsigned count 171; component clamp loop 91; scale loop and both loops 90
+// (one-count gain rejected).
 // @retail 0xbe8e0
 bool __stdcall function_be8e0(long object_index)
 {

@@ -25,6 +25,9 @@ struct s_weapon_aim_ranges
 	real maximum_fraction;
 };
 
+// score 139 (was 139): frame agrees; actor/tag EDI/ESI homes and folded projectile flag test differ.
+// Full-scope fraction 153; native fraction predicate 138; adjusted point construction 140;
+// inline depth zero 195; native barrel ordinal 186.
 // @retail 0x1ffbd0
 bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	point3f const *origin, point3f const *target, bool flag, vector3f *direction,
@@ -491,6 +494,9 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // direction-copy registers and planar stack homes differ.
 // Direct products 173; native side predicate 152; nested guards 153;
 // entry magnitude 153; both planar normalizations inline 153.
+// score 142 (was 142): with the native horizontal copy, direct final products 154;
+// shared direct scale 154; depth one 142; size policy 366; shared output-vector
+// scale 142; native turn side 145. Planar copy/rotation scheduling still differs.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {

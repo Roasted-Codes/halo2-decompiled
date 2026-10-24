@@ -1000,6 +1000,7 @@ PRIVATE __forceinline bool territory_holder_matches_player(long holder, long pla
     return players[holder & 0xffff].team == players[player_index & 0xffff].team;
 }
 
+// score 88 (was 88): holder and marker registers plus append carriers remain; append output last 88; point last 88; full-list guard 88; short ordinal 153; word ordinal 151; player team first 88; team failure exit 92; short ordinal with output last 153.
 // @retail 0x2bf740
 void c_game_engine_45c948::v32(long player_index, long list_pointer)
 {
@@ -1398,6 +1399,9 @@ struct s_territory_tag
 // keeps it in eax, the marker index is kept in edx where retail uses eax, and
 // the colour mask is read at the top of the function instead of just before
 // it is changed.
+// Tried: the player lookup before the position copy 29; the mask update first
+// 50, or between the copy and the player lookup 32; the tag chain as byte
+// offsets 24; a const player pointer 24; a 600 s permuter run, none below 24.
 // @retail 0x2c0980
 long territory_create_item(long player_index, long territory)
 {
@@ -1715,8 +1719,12 @@ void territory_marker_color(long player_index, long territory, s_color_bits *col
 	}
 }
 
-// score 50 (was 50): the stack slots of the outer frame differ ([esp+0x14]
+// Earlier comparison: score 50 (was 50): the stack slots of the outer frame differ ([esp+0x14]
 // where retail has [esp+0x10]).
+// score 50 (was 50): frame and scalar homes agree; point/holder scheduling
+// and color registers differ; input memcpy 50, input memmove 171, item/top
+// color loops 144/149, one/two color loops 172/130, input memcpy with
+// item/all color loop 144/172.
 // @retail 0x2bf960
 void c_game_engine_45c948::v14(long local_player)
 {

@@ -2,6 +2,86 @@
 
 The newest entry comes first.
 
+## 2026-10-24: 9551 functions match
+
+```
+matched 9551 of 11321 game functions (1505085 of 2784283 bytes, 54.06%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @coldspear's #776: closer scores and notes, no new match.
+
+## 2026-10-24: 9551 functions match
+
+```
+matched 9551 of 11321 game functions (1505085 of 2784283 bytes, 54.06%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @andrewnakas's #771, @andrewnakas's #772, @coldspear's #773, @coldspear's #775: closer scores and notes, no new match.
+
+## 2026-10-24: 9551 functions match
+
+```
+matched 9551 of 11321 game functions (1505085 of 2784283 bytes, 54.06%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+5 new matches, none lost:
+- Machine 3's batch 118 (#770): `0x92220`, `0xa3010`, `0xba410`, `0x105c20` and `0x179190` match.
+
+## 2026-10-24: 9546 functions match
+
+```
+matched 9546 of 11321 game functions (1503676 of 2784283 bytes, 54.01%)
+matched 937 of 1041 Havok functions (137760 of 234536 bytes, 58.74%)
+```
+
+0 new matches, none lost:
+- @andrewnakas's #769: closer scores and notes, no new match.
+
+## 2026-10-24: 9546 functions match
+
+```
+matched 9546 of 11321 game functions (1503676 of 2784283 bytes, 54.01%)
+matched 937 of 1041 Havok functions (137760 of 234536 bytes, 58.74%)
+```
+
+0 new matches, none lost:
+- @andrewnakas's #761, #766, #767, #768: closer scores and notes, no new match.
+
+## 2026-10-24: 9546 functions match
+
+```
+matched 9546 of 11321 game functions (1503676 of 2784283 bytes, 54.01%)
+matched 937 of 1041 Havok functions (137760 of 234536 bytes, 58.74%)
+```
+
+8 new matches, none lost:
+- Machine 3's batch 117 (#765): `0x3e9c0`, `0x63e00`, `0x699a0`, `0x6f3a0`, `0xa2140`, `0xa91c0`, `0x2477b0` and `0x25b440` match.
+
+## 2026-10-24: 9538 functions match
+
+```
+matched 9538 of 11321 game functions (1501624 of 2784283 bytes, 53.93%)
+matched 937 of 1041 Havok functions (137760 of 234536 bytes, 58.74%)
+```
+
+1 new matches, none lost:
+- @coldspear's #762: `0x203120` match.
+
+## 2026-10-24: 9537 functions match
+
+```
+matched 9537 of 11321 game functions (1501351 of 2784283 bytes, 53.92%)
+matched 937 of 1041 Havok functions (137760 of 234536 bytes, 58.74%)
+```
+
+0 new matches, none lost:
+- @coldspear's #760: closer scores and notes, no new match.
+
 ## 2026-10-24: 9537 functions match
 
 ```

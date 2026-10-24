@@ -96,6 +96,10 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // frame now 0x64; entry load schedule, point/magnitude homes
 // and candidate arithmetic differ. Byte candidate count 417; byte endpoint 427;
 // later center sum 444; early facing result 441; short angle count 433; both byte counts 408.
+// Separate trig pairs 408; byte angle countdown 408; retained candidate entry 441;
+// angle result from branches 408; separate evaluation scratches 425; general arm first 441.
+// Signed byte candidate/endpoint/both 408/408/408; quarter-turn table loop 481;
+// short facing result 430. Entry loads and 0x18 versus 0x1c return cleanup remain.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -258,6 +262,8 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 	arg_3->y = arg_1 * arg_2->y + arg_0->y;
 }
 
+// score 767 (was 767): frame 0x11c versus 0x114; radius caching and trace/point homes differ.
+// Trace-field forward sector 772, reverse 776, both 774; settings radius rereads 812; short-index obstacle cursor 814.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,
