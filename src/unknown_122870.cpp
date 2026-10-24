@@ -402,6 +402,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // Later-three scratch 194; menu/shared scratch 180; final-pair scratch 109;
 // nested-guard value return 211; post-switch validity 76; scoped later scratch 194;
 // nested-guard direct persistent outputs 203 (fast preview 76). Original body retained.
+// Direct menu/shared/campaign outputs 157/148/134; paired direct menu/shared 207;
+// menu/campaign 192; shared/campaign 179; early menu completion 232;
+// per-query completion lifetimes 256. Independent query homes and incoming-slot reuse still differ.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {
