@@ -116,6 +116,12 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 /* two-bone inverse kinematics: moves the middle node so that the chain from
    the root reaches the target (clamped to the chain's reach), rebuilds the
    root and middle axes and copies the target into the end node */
+// score 215 (was 232): the frame and statement order agree; what differs is
+// the register allocation from the target direction on (retail keeps the
+// direction in xmm0-2 and scales it in place, with to_mid in xmm4-6; ours puts
+// the reciprocal in xmm0 and the products in fresh registers), which reorders
+// the inlined cross products after it.
+// Tried: e * height as three scalars (216), height * e (215).
 // @retail 0x120220
 void function_120220(
 	transform4x3f *target,
@@ -174,19 +180,14 @@ void function_120220(
 		else
 			height = 0.f;
 
-		vector3f lift;
-		lift.i = e.i * height;
-		lift.j = e.j * height;
-		lift.k = e.k * height;
-
 		vector3f *root_left = &root->left;
 		vector3f *mid_left = &mid->left;
 		vector3f *root_forward = &root->forward;
 		vector3f *root_up = &root->up;
 
-		root_forward->i = along * u.i + lift.i;
-		root_forward->j = along * u.j + lift.j;
-		root_forward->k = along * u.k + lift.k;
+		root_forward->i = along * u.i + e.i * height;
+		root_forward->j = along * u.j + e.j * height;
+		root_forward->k = along * u.k + e.k * height;
 		function_30bf0(root_forward);
 
 		function_2922b1(root_forward, root_left, root_up);
@@ -202,9 +203,9 @@ void function_120220(
 		vector3f *mid_forward = &mid->forward;
 		vector3f *mid_up = &mid->up;
 
-		mid_forward->i = remaining * u.i - lift.i;
-		mid_forward->j = remaining * u.j - lift.j;
-		mid_forward->k = remaining * u.k - lift.k;
+		mid_forward->i = remaining * u.i - e.i * height;
+		mid_forward->j = remaining * u.j - e.j * height;
+		mid_forward->k = remaining * u.k - e.k * height;
 		function_30bf0(mid_forward);
 
 		function_2922b1(mid_forward, mid_left, mid_up);
