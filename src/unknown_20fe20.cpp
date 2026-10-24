@@ -1119,7 +1119,10 @@ void function_2118c0(void)
 }
 // score 14 (was 14): the two locals are kept in the other stack slots: the
 // float is stored at [esp+0x30] here and at [esp+0x38] in retail, so every
-// slot of the frame is at another offset.
+// slot of the frame is at another offset. Also: retail steps b * 8 in esi
+// where ours steps b and scales it. Tried: t to tc in the band loop 14;
+// m set before the indices 14; a for loop over b 14; index operands swapped
+// 14; the output rows indexed from row 175.
 // @retail 0x211cc0
 void function_211cc0(void)
 {
