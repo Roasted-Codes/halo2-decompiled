@@ -28,6 +28,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
+// score 187 (was 187): frame 0x18 agrees; index/options/mask registers differ.
+// Long validation result 275; long player uniqueness 270; byte uniqueness 187;
+// short membership result 190; word active count 195. Body restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

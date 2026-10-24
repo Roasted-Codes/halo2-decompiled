@@ -154,6 +154,8 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 	return index;
 }
 
+// score 919 (was 919): frame 0x4e0 agrees; target/primary and query-array homes differ.
+// Existing-count word 939; query-cursor word 927; completed append 929; early primary 940; primary word 925.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

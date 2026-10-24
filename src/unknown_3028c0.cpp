@@ -100,6 +100,10 @@ public:
 // vector first, and the grid's origin is read once for both ends. What is
 // left is the two call arguments, which retail pushes late and ours still
 // pushes at the top.
+// Further trials from 42: ordered scalar clears 45; scale-first direction
+// 45; endpoint deltas 45; reversed declarations 45; stored scale 45;
+// shared splat 60; renamed locals 45; both pointers 45; staged segment
+// members 45; inline/force-inline byte accessor diagnostics 42/45 (removed).
 // @retail 0x3028c0
 void walker_3028c0::function_3028c0(input_3028c0 const *input_, long arg_1, long arg_2)
 {

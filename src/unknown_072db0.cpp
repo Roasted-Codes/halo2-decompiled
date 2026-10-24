@@ -1510,6 +1510,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 }
 #pragma optimize("", on)
 
+// score 770 (was 770): user-cursor and identity-word homes differ;
+// long validity 770; pending read guard first 786; timestamp before
+// counts 770; unsigned property initializer 770; unsigned user group 781.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
