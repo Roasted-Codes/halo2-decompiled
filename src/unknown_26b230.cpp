@@ -457,6 +457,8 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // Promoted initial team 94 (sign extension recovered); result from initial test 127.
 // Shared datum iterator 174; wide side 68; unsigned side 68; initial done 68; complete iterator 115; current
 // initialized 68; prop type snapshot 93; prop reference 68.
+// Both-arm step result/stored-current result/native step result/activity input/member step 68 each.
+// Node query/prop query/both separate noinline declarations 68/68/68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1634,6 +1636,8 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // score 128 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
 // Round 280: remaining-count traversal 128 plain; current-child handle 164; collection write cursor 172; array scope 167; early active flag 199.
 // Child/countdown 125; short remaining 125; unsigned remaining 125 (each only three below the retained countdown).
+// generation after destination 221; generation after head 126; read-only source 128; source reference 128.
+// read-only copy 128; read-only first walk 128; ordinary prop inline 128; separate copy noinline 128.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1894,6 +1898,8 @@ void function_269250(long clump_index, long actor_index)
 // Complete workspace scope 189; depth zero 391; member-link result first 222; replacement-result loop 206; promoted category 195.
 // Depth one 189; outer datum API 290; word unit 218; word group 192; calling scan 237.
 // Direct pool step 254; activity-controlled loop 194; existing prop lookup 189; short/signed byte change 244/189; cached-bound scan 189.
+// Read-only object/external object reference/read-only member/extensions 189/189/189/189.
+// Ordinary prop/node/both iterator inline and separate removal noinline 189/189/189/189.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
