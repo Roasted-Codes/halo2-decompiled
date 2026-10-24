@@ -1167,7 +1167,9 @@ bool function_111490(long unit_index)
 
 
 // score 1 (was 1): the argument is copied into EAX where retail passes it in ECX, because the
-// callee at 0xc7070 keeps its parameter in ECX.
+// callee at 0xc7070 keeps its parameter in ECX. Split pointer declarations 1; read-only pointees 1;
+// const pointer homes 1; an argument-address read 1; unsigned state selector 5;
+// default-first channel/state switches 1 each; scoped favor-speed-off 114.
 // @retail 0x1112f0
 bool function_1112f0(long unit_index)
 {
@@ -1216,6 +1218,9 @@ PRIVATE __forceinline long held_object_110ab0(long unit_index, short slot)
 
 bool function_c70b0(long unit_index);
 
+// score 347 (was 347): overlay/frame and depletion/interruptibility homes differ;
+// direct parameter plus word/native interruptibility 376/378, second depletion 337
+// (plain: thirteen caller matches lost), native result 382, held helper inline 358.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1338,6 +1343,9 @@ bool __stdcall function_110ab0(long unit_index)
 }
 
 
+// score 453 (was 478): frame 8 versus 12 and requested/state registers still differ.
+// Predicate names 478; byte result 538; byte depleted/overlay 453; global optimization off 1195;
+// merged interruptible cases 473; byte depleted alone 458; byte overlay alone 477; merged cases with bytes 456.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1349,7 +1357,7 @@ bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 	s_animation_state *state = UNIT_ANIMATION_STATE(unit);
 	long controlling = unit->field_13c;
 	bool result;
-	bool depleted = false;
+	byte depleted = false;
 	bool interruptible = false;
 	if (controlling != NONE)
 	{
@@ -1466,7 +1474,7 @@ bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 			break;
 		}
 	}
-	bool overlay_interruptible = false;
+	byte overlay_interruptible = false;
 	if (controlling != NONE && (*(byte *)((byte *)control + 0xb0) & 0x10))
 		overlay_interruptible = true;
 	switch (control->channel_9c.unknown08)
@@ -1557,6 +1565,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * v->k + up->j * v->j + up->i * v->i;
 }
 
+// score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
+// depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
+// native centered 834, separate secondary activity 833.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2149,11 +2160,14 @@ bool function_10dc70(long arg_0);
 bool function_10eaf0(long arg_0);
 long g_55e70c;
 
-PRIVATE __forceinline bool function_111651(c_animation_channel const *arg_0)
+PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 {
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
+// score 679 (was 707): frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
+// ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
+// requested-name snapshots 709; inline plus native final/validity 696/707.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2448,6 +2462,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
+// score 152 (was 162): frame 60 versus 56; action-output and seat-query argument registers still differ.
+// Native channel workspace 139; copy return to play 152; accumulated channel failure 177;
+// unsigned word result 173; short table index 188.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
@@ -2486,8 +2503,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
         {
             byte channel_storage[sizeof(c_animation_channel)];
             c_animation_channel *channel = (c_animation_channel *)channel_storage;
-            channel->copy_from(&state->channels[0]);
-            if (!state->channel_play_indexed(channel, animation, side, value, 0, 0))
+            if (!state->channel_play_indexed(channel->copy_from(&state->channels[0]), animation, side, value, 0, 0))
                 force_overlay = true;
         }
         if (force_overlay)

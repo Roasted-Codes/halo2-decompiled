@@ -515,7 +515,8 @@ struct s_sound_send_parameters
 		struct
 		{
 			dword flag0 : 1;
-			dword : 3;
+			dword : 2;
+			dword flag3 : 1;
 			dword flag4 : 1;
 			dword : 27;
 		};
@@ -624,10 +625,14 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 	return mode == 1 ? (TEST_FLAG(parameters->flags, 6) ? g_44f70c : effects->m_settings.level2c) : effects->m_settings.level10;
 }
 
-// score 532 (was 532): frame 4 versus 12; gain spills still differ.
+// score 527 (was 532): frame 4 versus 12; gain spills still differ.
 // Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
 // completed-path return 532; offset reads 554; retail-order base 514;
 // base/bin snapshots 484; base/primary snapshots 504 (caller losses).
+// global optimization off 364 (caller lost); inline depth one 532.
+// short destinations 531; boolean routing extraction 527.
+// scalar home names 532; selector bitfield 527 (split 276).
+// both named flag fields 524 (+3; split 276); routing bitfield 527.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -647,7 +652,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	{
 		real send_level = sound_effects_send_level(this, parameters, mode);
 		real offset = parameters->level_offset + parameters->level;
-		if (!TEST_FLAG(parameters->flags, 3))
+		if (!TEST_FIELD_BIT(parameters->flag3))
 		{
 			sound_stream_append_mixbin(mixbins, m_buffers->mixbin00, parameters->gain0c + (send_level + parameters->level));
 			sound_stream_append_mixbin(mixbins, m_buffers->mixbin04, parameters->gain10 + (parameters->level + send_level));

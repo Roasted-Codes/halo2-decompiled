@@ -166,6 +166,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
+// score 649 (was 649): frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
