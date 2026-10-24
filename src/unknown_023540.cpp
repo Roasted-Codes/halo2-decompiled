@@ -390,7 +390,7 @@ void function_22850(void)
     long count = *(long *)(source + 0x38);
     if (count <= 0) return;
     byte *samples = *(byte **)(source + 0x3c);
-    for (long i = 0, remaining = count; remaining > 0; ++i, --remaining)
+    for (long i = 0, remaining = count; remaining > 0; ++i)
     {
         byte *sample = samples + i * 0xdc;
         real angle = *(real *)(sample + 0xa0);
@@ -416,6 +416,7 @@ void function_22850(void)
                 memcpy(coefficients, result, sizeof(result));
             }
         }
+        --remaining;
     }
     real period = *(real const *)(structure + 0x34);
     if (period <= 0.0f)
@@ -426,7 +427,7 @@ void function_22850(void)
     real previous = g_5093ec;
     g_5093ec = (real)g_4858a0;
     real phase = (g_5093ec - previous) / period + g_5093f0;
-    phase -= (long)phase;
+    phase -= real_truncate(phase);
     g_5093f4 = true;
     if (phase < 0.0f) phase = 0.0f;
     g_5093f0 = phase;
@@ -440,7 +441,7 @@ void function_22850(void)
     {
         real step = 1.0f / (count - 1);
         real inverse = 1.0f / step;
-        long index = (long)(phase * inverse);
+        long index = real_truncate(phase * inverse);
         real fraction = (phase - index * step) * inverse;
         byte *sample = samples + index * 0xdc;
         function_022750((real *)(sample + 0xe8), 3, (real *)(sample + 0xc), g_4b8940, fraction);

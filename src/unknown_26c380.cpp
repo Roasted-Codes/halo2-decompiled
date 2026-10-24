@@ -291,14 +291,14 @@ bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origi
 					}
 					if (result->blocked)
 					{
-						success = result->blocked;
+						success = hit;
 						goto done;
 					}
 					if (location && (((s_sector_edge const *)edge)->flags & 0x80) &&
 						function_270600(location, iterator.edge_index))
 					{
 						result->blocked = true;
-						success = result->blocked;
+						success = hit;
 						goto done;
 					}
 					if (count > 200)
