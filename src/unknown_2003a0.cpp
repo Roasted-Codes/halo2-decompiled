@@ -2451,15 +2451,13 @@ local_16:
 struct s_1fb7e0_data;
 bool __stdcall function_20ba60(short arg_0, long arg_1, long arg_2, long arg_3, short arg_4, s_1fb7e0_data const *arg_5);
 
-// score 107 (was 126): registers differ: retail keeps the record and index in EBP/EDI and the
-// inherited and new choices in EBX/ESI, loads the 0x1c choice with xor eax,eax; mov ax, and keeps
-// the next index in BX on that path where ours stores it. Tried: the branch as a force-inlined
-// helper (136), a choice variable with no gotos (116-153), the index as a word local (122).
+// score 107 (was 126): registers differ: retail keeps the record and its index in EBP/EDI and the
+// inherited and new choices in EBX/ESI, reads the 0x1c choice zero-extended into EAX (xor eax,eax;
+// mov ax), and keeps the next script index in BX on that path where ours stores it. Retail sets the
+// choice passed down back to NONE on every path that finds none, which the `local_11` branch
+// reproduces. Tried: the branch as a force-inlined helper (136), a choice variable with no gotos
+// (116-153), the index as a word local (122).
 // @retail 0x202a00
-// score 107 (was 126): the record and its index swap EBP/EDI (and the inherited and new choices
-// EBX/ESI) against retail; retail also reads the 0x1c choice zero-extended into EAX and keeps the
-// next script index in a register in that path. Retail sets the choice passed down back to NONE
-// on every path that finds none, which the `local_11` branch reproduces.
 void __stdcall function_202a00(long arg_0, long arg_1)
 {
     long *local_0 = &arg_0;
