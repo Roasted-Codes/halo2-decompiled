@@ -431,12 +431,7 @@ void function_262ba0(long actor_index)
 		if (sample)
 		{
 			function_2640c0(*(long *)(p + 0x20), (s_object_motion_view *)&motion);
-			byte *current = (byte *)actor_get(actor_index);
-			if (current[7] && *(long *)(current + 0x1c) != NONE)
-			{
-				if (!function_28fa60(*(long *)(current + 0x1c), &motion.field_c, (s_actor_object_sample *)&context)) sample = false;
-			}
-			else context = *(s_2641c0 *)(current + 0x22c);
+			sample = function_2641c0(actor_index, &context, &motion.field_c);
 			if (sample && update && function_25d610(node)) function_264b50(actor_index, index, &context, &motion);
 		}
 		s_type_f95cd3 *tracking;
