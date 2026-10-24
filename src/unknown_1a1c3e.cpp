@@ -285,6 +285,10 @@ void motion_sensor_blip_set_position(point2f const *point, s_motion_sensor_blip 
 	blip->y = (char)y;
 }
 
+// score 26 (was 26): pool/index/mask registers differ and the pool reload
+// follows rider selection. Selected header reference 26; object reference 26;
+// player reference 26; full-width absolute slot 26; word slot 35; header pointer
+// 26; conditional pool refresh with header reference 24, with absolute slot 24.
 // @retail 0x1a1e49
 char motion_sensor_object_type(long local_player_index, long object_index)
 {

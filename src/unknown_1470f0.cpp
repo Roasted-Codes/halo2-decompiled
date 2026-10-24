@@ -160,6 +160,11 @@ void *c_game_havok_memory::allocate16(long size, long memory_class)
 // Fixed membership 95; paired memberships 146; independent pool/fixed/physical bounds 106/48/48;
 // all independent bounds 134; separate pool-bound decisions 36; eager memberships 114.
 // First upper-bound branch pair, EAX bound reuse and shared-dispatch placement still differ.
+// first upper-bound branch pair is missing and bound
+// registers differ. Typed pool bounds 36; typed bounds and pool dispatch 73;
+// direct pool fields 36; typed bounds with delayed fixed receiver 43; fixed
+// object size 36; physical object reference 36; pool object reference 36;
+// typed fixed receiver 36.
 // @retail 0x147320
 void c_game_havok_memory::deallocate16(void *address, long size, long memory_class)
 {

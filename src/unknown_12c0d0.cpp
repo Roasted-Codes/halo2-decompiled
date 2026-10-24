@@ -347,6 +347,10 @@ byte __stdcall texture_cache_entry_state(long datum_index)
 	return result;
 }
 
+// score 11 (was 11): GPU result uses setne and another return; retail branches
+// back to the format-failure return. Combined protection state 28; selected mask 18;
+// override first 15; record reference 11; inverse idle result 26; early format
+// with override first 31; early format 26; format and residency snapshots 11.
 // @retail 0x12d1a0
 bool __stdcall texture_cache_entry_busy(long datum_index)
 {

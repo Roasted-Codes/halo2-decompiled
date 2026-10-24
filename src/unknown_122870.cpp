@@ -396,7 +396,7 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 	}
 }
 
-// score 74 (was 78): frame 0x24 versus 0x18; independent query homes still differ.
+// score 75 (was 75): frame 0x24 versus 0x18; independent query homes still differ.
 // Output-first helper 80; ordinary inline 80; depth one 80; not-loaded arm first 128;
 // guarded stages 126; nested name guard 76 fast, 74 plain.
 // Later-three scratch 194; menu/shared scratch 180; final-pair scratch 109;
@@ -405,6 +405,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // Direct menu/shared/campaign outputs 157/148/134; paired direct menu/shared 207;
 // menu/campaign 192; shared/campaign 179; early menu completion 232;
 // per-query completion lifetimes 256. Independent query homes and incoming-slot reuse still differ.
+// Current independent-output trials: loaded/readback names 76/76; delayed accumulation 256;
+// delayed map weight 224; delayed accumulation plus names 256; completion selections 76;
+// final result selection 76; query declarations together 76.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {
