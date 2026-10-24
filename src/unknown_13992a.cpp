@@ -79,6 +79,9 @@ long function_14de70(long arg_1);
 // short suppression 173; cached seat selector 152; missing-player return 134 (plain).
 // caller depth 1/2/0 134/134/651; global optimization off 1911; const lookup 134;
 // typed lookup through getter / directly / depth one 134/113/134 (plain).
+// score 113 (was 113): mask/player register roles and parent-load scheduling remain;
+// parent/seat/both references 131f; native current/parent-child tags 131f;
+// repeated secondary pass 446f; bulk sentinel initialization 527f; frame omission 131f.
 // @retail 0x13992a
 void function_13992a(byte *arg_1, long arg_2)
 {

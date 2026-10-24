@@ -312,6 +312,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // score 220 (was 220): frame eight versus four and opposite start/delete expansion;
 // joined query/allocation 220, unforced failure-first 221, effect pointer scope 220,
 // shifted platform flag 220, inline depth zero 391.
+// score 220 (was 220): frame/start/delete expansion remains; allocator reuse/const class/request reference/tested result/combined 220/220/220/236/220f;
+// global/size/depth-two policies 246/359/220f.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

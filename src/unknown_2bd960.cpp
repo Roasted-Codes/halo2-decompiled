@@ -436,6 +436,8 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // score 134 (was 134): control-call convention and scan induction differ;
 // segment control scope 141 fast; sample point scope 141 fast; late marker
 // array 141 fast; unsigned edges 142 fast; separate marker counters 141 fast.
+// score 134 (was 134): protected control/sampling calls and scan induction remain;
+// center/radius/both/height/all endpoint scans 375/475/716/378/950f; frame/size/global 237/276/1164f.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
