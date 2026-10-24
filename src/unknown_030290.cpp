@@ -430,6 +430,10 @@ static __forceinline void cross_product_31b40(vector3f const *a, vector3f const 
 	out->k = b->j * a->i - a->j * b->i;
 }
 
+// score 47 (was 47): first x87 product loads and second-product SSE roles
+// differ. First input by value 138; second 173; both 240; vector return 209;
+// scalar input groups 112; coordinate pairs 112; scalar first stage 94;
+// scalar second stage 78. Original squared-length result and loop restored.
 // @retail 0x31b40
 real function_31b40(vector3f *vector, vector3f const *axis)
 {

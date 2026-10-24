@@ -985,6 +985,9 @@ PRIVATE __forceinline bool surface_status_failed(long status)
 // differ, followed by tag-bit extraction. Zero then OR 148; const tag 44;
 // byte tag bitfield 135; dword object bitfield 44; named query failure 44;
 // explicit final exits 181; inverse failure result 44; retry flag update 44.
+// Status predicate as byte 65, short 69, long 68; arm-assigned result 129;
+// signed status bounds 130; selected predicate 161; staged result 58;
+// ordinary predicate inline 139. Original predicate and locals restored.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
