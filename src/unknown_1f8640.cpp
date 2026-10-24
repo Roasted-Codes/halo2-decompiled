@@ -368,6 +368,9 @@ struct s_1f8a70_actor
 	s_1f8a70_frame frame;
 };
 
+// score 413 (was 413): pool/data load schedule, unit-mode call and result/route homes differ;
+// fast control 415; signed-char result 425; entry workspaces 415; common target query 440;
+// shared cases four/five 448; position-owner local 415.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

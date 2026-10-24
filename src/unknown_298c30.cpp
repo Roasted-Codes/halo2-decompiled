@@ -92,6 +92,9 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 	g_5047f8[arg_0].field_18 = arg_0;
 }
 
+// score 408 (was 433): frame now 0x64; entry load schedule, point/magnitude homes
+// and candidate arithmetic differ. Byte candidate count 417; byte endpoint 427;
+// later center sum 444; early facing result 441; short angle count 433; both byte counts 408.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -114,8 +117,8 @@ void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f cons
 	bool local_4 = local_2.x * (*local_26)->x + local_2.y * (*local_26)->y >= 0.0;
 	point2f const *local_31 = (point2f const *)((byte *)local_0 + 0x88);
 	real local_5 = local_31->y * (*local_26)->y + (*local_26)->x * local_31->x;
-	short local_6 = 0;
-	for (short local_7 = 0; local_7 < 2; local_7++)
+	byte local_6 = 0;
+	for (byte local_7 = 0; local_7 < 2; local_7++)
 	{
 		point2f *local_8 = &local_3[local_7];
 		real local_9 = (real)sqrt((local_1.x - local_8->x) * (local_1.x - local_8->x) + (local_1.y - local_8->y) * (local_1.y - local_8->y));

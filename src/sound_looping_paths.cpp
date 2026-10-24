@@ -154,6 +154,9 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 	return index;
 }
 
+// score 919 (was 919): count/array homes and choice registers differ in the 0x4e0 frame;
+// choice pointer/post-increment 931; byte choice count 922; duplicate break 959;
+// unsigned target count 919; used-mask memset 919.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

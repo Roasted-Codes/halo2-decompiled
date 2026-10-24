@@ -1362,6 +1362,9 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 }
 
 /* fills the list with the session's players, then the empty slots */
+// score 116 (was 116): extra frame dword, count homes and counted tail stores remain;
+// common guarded fill 172; common fill/shared query 166; definite comparator 124;
+// byte selected count 145; signed-char predicates 116.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {
