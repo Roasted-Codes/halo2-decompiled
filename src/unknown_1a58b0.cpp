@@ -783,6 +783,8 @@ void function_25aba0(long actor_index);
 // score 69 (was 143): frame 0x4c agrees; ESI/EDI, state-one decrement and zero-fill differ.
 // Native workspace initializer 69; owner lifetime 266; level lifetime 320;
 // entry pointer walk 261; full-width choice 150; full-width type 338.
+// Two-word initializer 68; full member initializer 287; retained ordinal 244;
+// shared final exit 69; frame pointer on native initializer 334.
 // Round 280: outer workspace 143; short copy counter 69; long level 173; retained handler reads 69; ordinary dispatch first 131.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
@@ -2081,6 +2083,8 @@ long function_baf40(long object_index);
 // score 177 (was 177): frame 0xb4 versus 0xb8; output record uses stack/EBP, retail EBX.
 // Full-width selector 203; later player view 200; wide secondary selector 177;
 // native vector/workspace role names 177; outer return guard 177.
+// Reversed velocity lexical homes 177; x/y/z scalar names 177; combined 177;
+// geometry-only scope 177; target frame pointer 264.
 // Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225; candidate score tests 186; retained direction unit index 210.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
