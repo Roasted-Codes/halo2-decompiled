@@ -80,9 +80,37 @@ real havok_component_rigid_body_mass_get(long arg_0, s_havok_component *arg_1);
 void havok_component_transform_set(s_havok_component *arg_0, transform4x3f const *arg_1);
 void function_1cfb90(s_havok_component *arg_0, transform4x3f const *arg_1, void const *arg_2);
 
-// score 216 (was 238): stack homes of the component, marker pointer and byte table
-// differ (retail 0x14/0x18/0x1c below the vector at 0x20); 0x11a offset is read after the
-// division; the rigid-body index 0 is loaded after the component; dot-product registers.
+/* the vector rotated into the matrix's axes and divided by its scale */
+PRIVATE inline vector3f *matrix_inverse_transform_vector(transform4x3f const *matrix,
+    vector3f const *vector, vector3f *result)
+{
+    real i, j, k;
+    if (matrix->scale != 1.0f)
+    {
+        real inverse_scale = 1.0f / matrix->scale;
+        i = vector->i * inverse_scale;
+        j = vector->j * inverse_scale;
+        k = vector->k * inverse_scale;
+    }
+    else
+    {
+        i = vector->i;
+        j = vector->j;
+        k = vector->k;
+    }
+    result->i = matrix->forward.i * i + matrix->forward.j * j + matrix->forward.k * k;
+    result->j = matrix->left.i * i + matrix->left.j * j + matrix->left.k * k;
+    result->k = matrix->up.i * i + matrix->up.j * j + matrix->up.k * k;
+    return result;
+}
+
+// score 127 (was 238): retail loads all three components before the scale test (ours sinks
+// the j load into the unscaled path), and homes the component, marker pointer and byte table
+// at 0x14/0x18/0x1c below the vector at 0x20 (ours: vector at 0x14); the 0x11a offset is read
+// after the division; the rigid-body index 0 is loaded after the component.
+// Tried: components copied before the scale test (266: right frame, but j gets an extra
+// register and two movaps), in-place vector3f_scale on the vector (188), declaration and
+// multiply orders of i/j/k (264-271), object pointer recomputed from arg_1 (216).
 // @retail 0x205be0
 bool __stdcall function_205be0(s_vehicle_physics_state *arg_0, long arg_1)
 {
@@ -111,19 +139,7 @@ bool __stdcall function_205be0(s_vehicle_physics_state *arg_0, long arg_1)
         local_6->field_70 = 0.0f;
         transform4x3f *local_8 = &local_6->field_8;
         function_ba160(arg_1, local_8);
-        vector3f *local_21 = &local_6->field_80;
-        if (local_8->scale != 1.0f)
-        {
-            real local_9 = 1.0f / local_8->scale;
-            vector3f_scale(&local_5, local_9, &local_5);
-        }
-        local_21->i = local_8->forward.i * local_5.i +
-            local_8->forward.j * local_5.j + local_8->forward.k * local_5.k;
-        local_21->j = local_8->left.i * local_5.i +
-            local_8->left.j * local_5.j + local_8->left.k * local_5.k;
-        local_21->k = local_8->up.i * local_5.i +
-            local_8->up.j * local_5.j + local_8->up.k * local_5.k;
-        function_30bf0(local_21);
+        function_30bf0(matrix_inverse_transform_vector(local_8, &local_5, &local_6->field_80));
         local_6->field_8c = 0.0f;
         local_6->field_74 = *(vector3f *)(local_1 + 0x1b0);
         memset(local_6->field_90, 0, *(long *)(local_2 + 0x3c) * sizeof(s_205be0_record));
