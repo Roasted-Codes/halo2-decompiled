@@ -1525,6 +1525,8 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 			prism->plane.n.n[indices[1]] * point->y) / prism->plane.n.n[axis];
 }
 
+// score 552 (was 552): frame 0xb964 agrees; sum/counter homes and EBX/ESI zero carrier still differ.
+// Result-first edge cap 625; long inside 600; long normal selection 552; projected entry lifetime 552; independent sums with word counters 594; shared initial point 553.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

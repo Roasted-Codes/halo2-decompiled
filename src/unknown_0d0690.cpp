@@ -1567,6 +1567,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
+// score 819 (was 835): frame 0xa8 versus 0x90; mesh, UV and color homes and helper expansion still differ.
+// Metadata dispatch 847; long per-vertex 831; dynamic entry lifetime 835; model sample lifetime 825; depth one 835; samples plus long 819; material noinline 870/866.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
@@ -1596,7 +1598,7 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
             real base_u = 0.0f, base_v = 0.0f;
             long bitmap_index = NONE;
             long palette_index = NONE;
-            bool per_vertex = index != NONE &&
+            long per_vertex = index != NONE &&
                 *(word *)(*(byte **)((byte *)g_4e0348 + 0x144) + index * 0x58 + 0x56) != 0;
             if (!per_vertex)
             {
@@ -1646,6 +1648,9 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
         byte *definition = g_4e3b44[*(long const *)(record + 0xc) & 0xffff].bytes;
         s_mesh *mesh = *(s_mesh **)(*(byte **)(definition + 0x28) + section_index * 0x5c + 0x34);
         word const *vertices = (word const *)((byte *)mesh->triangles + triangle->part_offset * 2);
+        s_sample_point point_a;
+        s_sample_point point_b;
+        s_sample_point point_c;
         bool dynamic_valid = false;
         color3f dynamic_color;
         vector3f dynamic_normal;
@@ -1656,9 +1661,6 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
             if (block)
             {
                 byte *data = *(byte **)(block + 0xc) + *(long *)(block + 4);
-                s_sample_point point_a;
-                s_sample_point point_b;
-                s_sample_point point_c;
                 s_sample_point const *a, *b, *c;
                 if (block[0] != 0x39)
                 {

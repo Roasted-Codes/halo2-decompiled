@@ -1364,6 +1364,7 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 /* fills the list with the session's players, then the empty slots */
 // score 116 (was 116): frame 0x58 versus 0x54; query/count homes, scalar tail stores and final row registers differ.
 // Initial slot memset 187; unsigned selected count 116; query failure guard 136; comparator default 124; native secondary result 140.
+// Guarded fills with current cursor/sort 197, with shared query 195; short mode 125; byte mode 121; selected-end tests 158.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {
