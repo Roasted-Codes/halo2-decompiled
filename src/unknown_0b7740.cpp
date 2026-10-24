@@ -596,16 +596,24 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
         if (g_4de300[index] != g_4de2fc)
         {
             g_4de300[index] = g_4de2fc;
-            real z = record->center.z - position->z;
-            real y = record->center.y - position->y;
-            real x = record->center.x - position->x;
             real combined = record->radius + radius;
-            return combined * combined >= z * z + y * y + x * x;
+            real dx = record->center.x - position->x;
+            real dy = record->center.y - position->y;
+            real dz = record->center.z - position->z;
+            return dz * dz + dy * dy + dx * dx <= combined * combined;
         }
     }
     return false;
 }
 
+// score 188 (was 204): count stays in esi (a second zero register) until the
+// loop, so the empty-cluster exit gets its own epilogue (mov ax, si); the
+// g_4e7414 increment goes through ebp and is stored after the pushes (retail:
+// ecx, stored at once); the record/iterator reloads after each first-object
+// call are swapped; the second inlined distance test computes dz, dx, dy in
+// retail (dz, dy, dx here); retail sign-extends the cluster pushed to
+// 0xb8940/0xb8a10. Tried: second inline copy with dz,dx,dy or dy,dx,dz or a
+// vector3f delta (no change); count = 0 just before the loop (205).
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
@@ -633,7 +641,7 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
     }
     ++g_4de2fc;
     g_4de2f8 = true;
-    for (long i = 0; i < cluster_count; ++i)
+    for (short i = 0; i < cluster_count; ++i)
     {
         short cluster = clusters[i];
         struct search_slots { s_object_cluster_reference *record; s_object_cluster_iterator second, first; } search;
