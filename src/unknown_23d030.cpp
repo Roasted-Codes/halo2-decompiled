@@ -124,11 +124,21 @@ struct s_free_state_23d260
 	real roll;
 };
 
-// score 118 (was 234): from the side vector to the movement the registers and
-// schedule differ (retail divides before the zero test and keeps up.i live into
-// the turn about forward). Tried: the hand-written normalize with gotos (296 with
-// the transforms below), the transforms as __forceinline helpers taking the
-// global's address (322), fresh names for the scaled point (373)
+// score 118 (was 234): the rest is register allocation in the side vector
+// block: retail keeps zero in xmm1 (ours xmm3) and the side vector in
+// xmm2/xmm3/xmm4 (ours xmm1/xmm2/xmm0, retail moves side.k out of the inverse's
+// register), divides before the lahf, and stores up as k, j, i (ours k, i, j);
+// the registers after it follow. Locals `real yaw_cosine = (real)cos(yaw)` and
+// `yaw_sine` for the movement give retail's x87 sequence exactly (fmul [0x18];
+// fxch; fmul [0x1c]) but score 274 here, since the side block is then one
+// instruction short and shifts the rest: apply them once that block matches.
+// Tried: the hand-written normalize with gotos (278), normalize_inline (110 but
+// 1330 bytes, squares i first), early-return or reordered-scale normalize helpers
+// (118 / 288), cross3f(&side, &forward, &up) (277), up written i, j, k (253),
+// k, i, j (276) or j, k, i / i, k, j / j, i, k (106-111 but not 1326 bytes: they
+// spill forward.k to a parameter slot), the transforms as __forceinline helpers (322), fresh names for the
+// scaled point (373), movement operands swapped (282), the roll if/else inverted
+// (279), a cross vector in the turn about forward (277), declaration order (same)
 // @retail 0x23d260
 void __stdcall function_23d260(void *state, void *input, void *output)
 {
