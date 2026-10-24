@@ -459,6 +459,10 @@ void function_3dd10(long object_index, bool force);
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
+// Native blend remainder/immediate and delayed rounding 148/161; paired native remainders 196;
+// variant read at uses 136; shared color interpolation alone/with remainder 376/374;
+// initialized HSV outputs 158; separate RGB output 156. Second remainder publication, signed scan
+// exits and one reload still differ; original arithmetic and scans restored.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
