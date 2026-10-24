@@ -550,11 +550,29 @@ PRIVATE inline long camera_round_23de50(real value)
 	return result;
 }
 
+PRIVATE inline s_player_state *local_player_state(long local_index)
+{
+	s_player_state *result = NULL;
+
+	if (local_index != NONE && g_4686c4 != NONE)
+	{
+		s_player_4e9bd4 *player = &g_4e9bd4[local_index];
+		result = &player->state;
+	}
+	return result;
+}
+
+// score 58 (was 338): camera-basis scheduling/register allocation still differs.
+// Retail loads previous_up.k after storing distance and holds right.i/j/k in
+// xmm2/xmm1/xmm0; ours uses xmm2/xmm0/xmm1. Retail's second cross product copies
+// registers and addresses forward through ecx; ours mixes ecx/edi and stores up.i early.
+// The else branch stores forward.j/k through ecx in retail and through edi here.
 // @retail 0x23de50
 void __stdcall function_23de50(void *state, void *input, s_observer_command *output)
 {
 	s_observer_state *observer = (s_observer_state *)state;
 	s_follow_output_23de50 *command = (s_follow_output_23de50 *)output;
+	bool advance = false;
 	if (observer->target_unit_index != NONE && !function_badc0(observer->target_unit_index, -1))
 		observer->target_unit_index = NONE;
 	if (observer->target_unit_index == NONE)
@@ -598,17 +616,21 @@ void __stdcall function_23de50(void *state, void *input, s_observer_command *out
 		command->position = observer->position;
 	if (observer->reset == camera_round_23de50((real)g_510c54->field_2_3 * 0.33f))
 	{
-		vector3f previous_up = *(vector3f *)((byte *)function_16f3a0(observer->local_index) + 0x2c);
-		point3f *kept = (point3f *)observer->unknown0c;
+		vector3f previous_up = *(vector3f *)((byte *)local_player_state(observer->local_index) + 0x2c);
 		vector3f direction;
-		direction.i = command->position.x - kept->x;
-		direction.j = command->position.y - kept->y;
-		direction.k = command->position.z - kept->z;
+		vector3d_from_points3d((point3f *)observer->unknown0c, &command->position, &direction);
 		command->distance = function_30bf0(&direction);
 		command->forward = direction;
 		vector3f right;
 		cross3f(&previous_up, &command->forward, &right);
-		cross3f(&command->forward, &right, &command->up);
+		{
+			real k = command->forward.i * right.j - command->forward.j * right.i;
+			real j = command->forward.k * right.i - command->forward.i * right.k;
+			real i = right.k * command->forward.j - right.j * command->forward.k;
+			command->up.i = i;
+			command->up.j = j;
+			command->up.k = k;
+		}
 		function_30bf0(&command->up);
 		command->field_of_view = observer->field_of_view;
 		command->offset = *g_4687a4;
@@ -638,26 +660,29 @@ void __stdcall function_23de50(void *state, void *input, s_observer_command *out
 		command->valuea0 = 0.f;
 		command->modes[3] = 3;
 	}
-	real delta = ((real *)input)[2];
-	observer->timer -= delta;
-	observer->delay = 0.f > observer->delay - delta ? 0.f : observer->delay - delta;
-	bool advance = false;
+	observer->timer -= ((real *)input)[2];
+	observer->delay = 0.f > observer->delay - ((real *)input)[2] ? 0.f : observer->delay - ((real *)input)[2];
 	if (observer->player_index != NONE)
 	{
 		s_player *player = PLAYER(g_4e8c24, observer->player_index & 0xffff);
-		long controller = *(long *)((byte *)player + 0x24);
-		if (controller != NONE && g_4e61cc[(short)controller])
+		if (*(long *)((byte *)player + 0x24) != NONE)
 		{
-			byte pressed = g_4e61b9 ? g_4e630c.values[0] : g_4e61dc[(short)controller].values[0];
-			if (pressed == 1)
+			short slot = (short)*(long *)((byte *)player + 0x24);
+			if (g_4e61cc[slot])
 			{
-				real delay = g_4e6948->state == 2 ? 15.f : 3.f;
-				if (delay > observer->delay + 1.f)
-					advance = true;
+				s_input_state *gamepad = g_4e61b9 ? &g_4e630c : &g_4e61dc[slot];
+				if (gamepad && gamepad->values[0] == 1)
+				{
+					real delay = 3.f;
+					if (g_4e6948->state == 2)
+						delay = 15.f;
+					if (delay > observer->delay + 1.f)
+						advance = true;
+				}
 			}
 		}
 	}
-	if ((observer->delay == 0.f && (!g_510c54->active || !g_510c54->unknown01)) || advance)
+	if ((0.f == observer->delay && (!g_510c54->active || !g_510c54->unknown01)) || advance)
 		function_23dda0(observer);
 	function_172520(output);
 }
