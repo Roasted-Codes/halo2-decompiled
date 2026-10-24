@@ -1384,6 +1384,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 
 // score 252 (was 252): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
+// score 250 (was 250): frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
+// Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
+// all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
