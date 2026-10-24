@@ -525,8 +525,9 @@ static __forceinline void index_state_flags_update_31660(s_index_state_31660 *st
 // score 98 (was 133): only the 0x3800 loops differ: ours tests set13 before loading the value (movzx),
 // retail loads first, splitting the zero extension around the test (xor eax, eax / test dl / mov ax).
 // Tried: plain loops without the helper (133), word flags (162), direct *value updates (213),
-// long set13/set12 (186), while-loop for the 0x20000 pass (134); dword flags, ternary flag updates and
-// passing flag13 without != 0 change nothing.
+// long set13/set12 (186), set12 before set13 (175), loading the value in each branch (194),
+// while-loop for the 0x20000 pass (134); dword flags, ternary flag updates, byte set13/set12,
+// *value & 0xffff and passing flag13 without != 0 change nothing.
 // @retail 0x31660
 void function_31660(long index, long tag, s_index_state_31660 *state,
     long first_group, long second_group, bool skip, bool *output)
