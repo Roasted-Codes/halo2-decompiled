@@ -1601,7 +1601,7 @@ static inline bool weapon_state_replaceable(long current, long state)
 }
 
 /* puts a weapon in a state and plays the state's animation */
-// score 67 (was 69): success-byte scheduling and final call argument registers still differ.
+// score 69 (was 69): success-byte scheduling and final call argument registers still differ.
 // Byte outcome 67; short/word outcomes 87; actual object references and nested scope 69;
 // signed-word mask 83; owner-first test 68.
 // @retail 0x1058b0

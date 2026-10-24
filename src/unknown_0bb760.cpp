@@ -462,6 +462,9 @@ void function_3dd10(long object_index, bool force);
 // Selected choice result 134; selected ordinal 155; late variant key 229;
 // variant between seed and remainder 122; late scan outputs 256;
 // HSV output role names 134; immutable blend 134; immutable selection 134.
+// native position pointer 137; position value snapshot 295; blend declaration first 134; variant
+// declaration first 134; unsigned mask bits 134; unsigned last ordinal 134; component clamp loop
+// 136; non-hue component blend loop 134.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {

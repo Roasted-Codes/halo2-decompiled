@@ -109,6 +109,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // score 1218 (was 1259): frame agrees; early EBX save, array/entry allocation and delta reloads differ.
 // Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
 // inline depth one 1259; counted angular residual 1218, kept after plain check.
+// score 1214 (was 1218): frame 0x1d0 versus 0x1d4; early EBX/entry allocation and vector reloads differ.
+// Direct radial residual loop 1282; planar residual loop 1261; angular residual loop 1214, kept;
+// displacement loop 1246; all three residual loops 1227.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
@@ -289,9 +292,8 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
      function_1d24a2(&local_63, local_67, &local_59);
      vector3f local_68;
      function_1d24a2(&local_63, local_65, &local_68);
-     local_68.i = local_29.i - local_68.i;
-     local_68.j = local_29.j - local_68.j;
-     local_68.k = local_29.k - local_68.k;
+     for (long axis = 0; axis < 3; ++axis)
+      local_68.n[axis] = local_29.n[axis] - local_68.n[axis];
      function_a75d0(&local_68, g_510c54->rate * local_12->field_58);
      for (long component = 0; component < 3; ++component)
       local_59.n[component] = local_68.n[component] * -1.0f + local_59.n[component];

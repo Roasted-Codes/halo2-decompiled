@@ -525,6 +525,9 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // Reduced trials: integer stores reversed 363; result calculation reversed 362; table stores reversed 363;
 // shared multiplier 363; first interpolation local 363; second interpolation local 363; explicit low cases
 // 448; shared rounding 460.
+// Lanes also tried: first-table result names 363; loop-scope steps 363; initialized steps 363;
+// first regular table tail loop 531; second tail loop 530; zero inline depth 610; depth one 363;
+// frame pointer 487; global optimization off 1180; size preference 538.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {

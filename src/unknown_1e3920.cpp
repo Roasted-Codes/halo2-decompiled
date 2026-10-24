@@ -540,6 +540,9 @@ real function_267370(long volatile object_index);
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
 // direct actor receiver 371; forward scalar names 371; sampled radius 371;
 // word/native plane key 308/308; plain word 385, early result 379, native key 385.
+// frame 0x8c versus 0x90; early NONE and held-bit byte home differ;
+// frame pointer 468; inline depth zero 608; index-clear schedule fast 376/plain 272;
+// direct plane result 418; named held-direction result 371 (fast control 371).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -922,6 +925,10 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // guarded Boolean 384; typed actor fields 364.
 // frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
 // Byte creation predicate 383; word predicate 361; short grenade 377; depth one 364; grenade first 364; word pair 375.
+// Equipment base read at use 342 (frame 0x118; three-point gain rejected);
+// count reads 350; both 352; selected-character local 380; outer creation buffer 348;
+// base read plus Boolean predicate 365, shifted Boolean 364, combined loop guard 438,
+// or full-width shifted predicate 350.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

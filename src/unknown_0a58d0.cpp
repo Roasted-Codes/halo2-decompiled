@@ -287,6 +287,11 @@ struct s_z_state_world
 
 // score 11 (was 11): the entity pointer is materialised in EAX and the record is read through it;
 // retail folds the address into the load itself.
+// The fold is the scheduler's rewrite of `lea; mov cl, [eax+6]`; ours can't do it because the
+// database pointer is in ecx (retail edx) and the active byte goes to cl. Tried: inline active
+// test, record getter or dispatch helper 11; world local in the inner block 11; state through the
+// re-read 11; database local 11; active read before the pointer (72 spellings) 14-21; renames 11;
+// a 600 s permuter run, none below 11.
 // @retail 0xa9820
 bool function_a9820(long *block, long index)
 {

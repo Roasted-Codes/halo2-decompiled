@@ -64,6 +64,8 @@ extern long g_55c154;
 // request-mode classification 161; immutable classification 61; explicit live source 62;
 // entry reference 61; creation output 99; immutable output 99; shared mode request 88;
 // failed-creation join 61. Classification spill and copy expansion still differ.
+// byte classification 61; signed-byte classification 61; initialized variant 170; initialized request 155;
+// frame pointer 98; global optimization disabled 518; controller-index snapshot 61; speed preference 466.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {

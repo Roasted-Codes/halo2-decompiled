@@ -224,6 +224,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Classification order 898; common center 887; common offset 867; marker count 866; inline depth two 866;
 // paired object centers 907; first/sphere centers 907; vehicle-check/sphere centers 907.
 // frame 0x2cb8 versus 0x2cac and actor/unit retention;
+// inline depth zero 1008; global optimization off 3195;
+// long blocking 912; long classification 949; long enabled 906 (plain);
+// fast control 916, trials 1008/3199/910/947/916.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -869,6 +872,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Reduced trials: direct dot predicate 401; shared dot product 401; immutable predicates 401; geometry
 // names 401; output memcpy 401; earlier offset workspaces 401; native first-open 416; word selected vertex
 // 404.
+// j91: frame 0x30 versus 0x28; edge/history homes and indexed node selection differ; origin snapshots gain only one and grow frame to 0x38.
+// first offset in place 401; second offset in place 401; both offsets in place 401; first offset origin
+// snapshot 400; second offset origin snapshot 400
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -996,6 +1002,8 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // score 342 (was 342): frame 0x3c versus 0x34 and angular/planar homes differ.
 // Zero-first length guard 342; cross before angle 413; direct angle selection 403;
 // frame pointer 458; shared side dot products 384.
+// Nested expansion zero 1163, one 342; global optimization off 2011; size policy 518;
+// ordinary signed-angle inline 342.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1075,7 +1083,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
 
-// score 478 (was 478): frame 0x104 versus 0x10c; radius and emitted-index homes differ.
+// score 478 (was 478): frame 0x104 versus 0x10c; metadata result homes recover 0x10c at 482 but radius, index and branch allocation still differ.
+// metadata common emission 482; metadata long type 482; metadata long link 483; metadata both long 482;
+// metadata outer index 482; metadata radius home 482; metadata ordinary output 513; metadata index register
+// 522
+// frame 0x104 versus 0x10c; radius and emitted-index homes differ.
 // Short outer index with original qualifiers 513; broader trace outputs 478; native copied-last 504;
 // native found-step 494; current-step fallback first 478.
 // @retail 0x2c2060

@@ -101,6 +101,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // signed allocation byte 165; word allocation state 301; unsigned category 165;
 // counts record reference 166; count field reference 165; published first 165;
 // field plus first 165; signed byte plus field 165. Success/type spills still differ.
+// returned byte 313; returned byte/count cursor 341; serial HRESULT 169; descriptor prefixes 323;
+// complete listener value 468; frame pointer 443; global optimization disabled 1166; size preference 645;
+// separate final-call result 302; result transfer before reset 294.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
