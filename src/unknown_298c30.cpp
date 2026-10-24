@@ -92,6 +92,7 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 	g_5047f8[arg_0].field_18 = arg_0;
 }
 
+// score 433 (was 433): frame 0x68 versus 0x64; normalization homes differ; shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)

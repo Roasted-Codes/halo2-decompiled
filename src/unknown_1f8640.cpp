@@ -368,6 +368,7 @@ struct s_1f8a70_actor
 	s_1f8a70_frame frame;
 };
 
+// score 414 (was 414): frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
