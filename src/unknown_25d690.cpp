@@ -1443,8 +1443,6 @@ bool __stdcall function_25c230(long arg_0, long arg_1, short arg_2)
 void __stdcall function_26c2d0(long arg_0);
 void function_1e4500(long arg_0, short arg_1);
 
-// score 21 (was 21): the g_510c54 load and the compare that follows it are
-// in the other order.
 // @retail 0x25b440
 void __stdcall function_25b440(long arg_0, long arg_1)
 {
@@ -1454,7 +1452,7 @@ void __stdcall function_25b440(long arg_0, long arg_1)
 	s_prop_datum *local_1 = prop_ref_get(arg_1);
 	long local_2 = NONE;
 	s_iterator local_3;
-	local_3.next = local_0->first_prop_index;
+	function_26be00(arg_0, &local_3);
 	s_prop_datum *local_4;
 	while ((local_4 = prop_ref_next_25d510(&local_3)) != NULL)
 	{
@@ -1472,8 +1470,7 @@ void __stdcall function_25b440(long arg_0, long arg_1)
 	if (local_2 != NONE)
 	{
 		s_prop_datum *local_6 = prop_ref_get(local_2);
-		long local_9 = local_6->object_index;
-		if (function_25d020(arg_0, local_9, 0, local_2, NONE, NONE))
+		if (function_25d020(arg_0, local_6->object_index, 0, local_2, NONE, NONE))
 		{
 			s_type_5cfb45 *local_7 = function_25d690(local_1);
 			s_type_5cfb45 *local_8 = function_25d690(local_6);

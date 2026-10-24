@@ -145,6 +145,8 @@ union s_185be7
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
 // word mask plus selected byte 1023, plus word index 1080.
+// Shared curve inputs 1043; late input buffers 1074; active-branch pointers 1075;
+// native clear mask 1023; retained response predicate 1023.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

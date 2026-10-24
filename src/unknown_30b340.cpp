@@ -16,6 +16,10 @@
 // ahead of the fields), the list's fields assigned in the body as well (44: the
 // list's constructor's stores are not eliminated as dead, so they appear
 // twice)
+// further trials: public input/handle bases 13; reference prefix 13;
+// full payload base 18; handle tail initialized together 18; zero word
+// assigned with the handle 18; prefix/input base 13, initializers 11;
+// reference/input base 14. Public bases delay the final vtable store.
 // member input record 4; member input and handle records 0, but existing
 // descendants require direct object/placement/id fields and list.field_0;
 // base input record with the original exposed fields 12

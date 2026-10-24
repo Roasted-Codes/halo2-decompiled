@@ -1399,6 +1399,9 @@ struct s_territory_tag
 // keeps it in eax, the marker index is kept in edx where retail uses eax, and
 // the colour mask is read at the top of the function instead of just before
 // it is changed.
+// Tried: the player lookup before the position copy 29; the mask update first
+// 50, or between the copy and the player lookup 32; the tag chain as byte
+// offsets 24; a const player pointer 24; a 600 s permuter run, none below 24.
 // @retail 0x2c0980
 long territory_create_item(long player_index, long territory)
 {
