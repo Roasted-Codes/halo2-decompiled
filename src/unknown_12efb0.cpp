@@ -131,6 +131,11 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
+// score 692 (was 725): frame 0x4820 agrees; clear scheduling, output cursor
+// +0x10 versus +8 and palette/cluster registers still differ. Interleaved
+// scalar helper 727; the alpha term first 707 alone but 713 together with
+// the weight local (not kept); ordinary output inline 725; ordinary color
+// inline 725; output-helper output-first parameters 725.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

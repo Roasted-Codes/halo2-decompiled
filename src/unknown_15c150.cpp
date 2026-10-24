@@ -76,6 +76,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // score 196 (was 196): delayed EBP save, team-byte home and word slot spill.
 // Cursor player 253; count at loop tail 199; both 257; signed/unsigned
 // word team counters 248; tail count plus word team counter 252.
+// early EBP save, teams byte home and local-slot spill differ;
+// unsigned count 242; short count 249; byte team 248; shared crowded with word slot 248; indexed fade with word slot 196.
 // @retail 0x15c150
 void function_15c150()
 {

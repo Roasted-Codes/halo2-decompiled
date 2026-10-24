@@ -67,6 +67,9 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // score 449 (was 449): frame 1000 versus 996, result byte home and second state/getter handling differ.
 // Refreshed first balance inputs 454; fallback balance inputs 466; both phases 513;
 // native state-value getter 449; final transition-result union 449.
+// frame 0x3e8 versus 0x3e4, result-byte home and getter boundary differ;
+// output-scalar lifetime 449; type/first-state/second-state scopes 449; inline depth one 449; the five
+// settings read into one-use locals first 443 (not kept: the locals only fix the argument order).
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

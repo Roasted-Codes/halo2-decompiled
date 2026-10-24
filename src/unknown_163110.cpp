@@ -374,6 +374,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
 
+// score 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
+// corner loop 432; side-plane loop 1154; reverse direction loop 423;
+// default plane first 423; direct first-diagnostic expression 423.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
