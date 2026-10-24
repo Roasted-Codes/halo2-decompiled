@@ -9,6 +9,16 @@ matched 9521 of 11321 game functions (1495238 of 2784283 bytes, 53.70%)
 matched 932 of 1041 Havok functions (134284 of 234536 bytes, 57.26%)
 ```
 
+0 new matches, none lost:
+- @coldspear's #750, #752:  match.
+
+## 2026-10-24: 9521 functions match
+
+```
+matched 9521 of 11321 game functions (1495238 of 2784283 bytes, 53.70%)
+matched 932 of 1041 Havok functions (134284 of 234536 bytes, 57.26%)
+```
+
 1 new matches, none lost:
 - Machine 3's batch 113 (#751): `0x1f3640` match.
 
