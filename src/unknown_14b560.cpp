@@ -1544,6 +1544,9 @@ struct s_unit_player_assignment
 
 // score 17 (was 17): the value that is read from the record is passed in ECX
 // here and in EAX in retail, and ours is one byte shorter than retail.
+// Tried: the engine test through game_engine_get 17; the state test in each
+// representation arm 45; the representation declared before the call 17;
+// the stored unit index field passed to function_1682bf 16.
 // @retail 0x14cad0
 void function_14cad0(long player_index, long unit_index)
 {
