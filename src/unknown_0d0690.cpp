@@ -1591,6 +1591,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
 // metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
 // lifetime 825; depth one 835; material noinline 870/866.
+// shared cross-path normal 820; shared cross-path base color 825; native scale helper 853;
+// texture carrier name 819; first sample lexical position 819.
 // Dynamic validity long 863; base validity short 819; accumulated sampled color 828;
 // weighted normal loop 892; both lengths before scaling 837; one broad sample scope
 // with the other two narrowed (first/second/third) 831/831/831.

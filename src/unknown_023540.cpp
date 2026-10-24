@@ -371,6 +371,8 @@ extern real g_4b8940[9], g_4b8964[9], g_4b8988[9];
 void function_022750(real const *a, long size, real const *b, real *out, real t);
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result);
 
+// score 258 (was 258): frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
+// Sample cursor 258; sine-scaled axis 259; diagonals first 288; elapsed snapshot 258; size optimization 397.
 // @retail 0x22850
 void function_22850(void)
 {
@@ -2511,6 +2513,9 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
 
+// score 575 (was 575): frame 0x208 versus 0x200; coefficient homes and shared sample paths differ.
+// Full-width order 578; byte sample 575; bucket cursor 580; bucket rotation scope 575;
+// found-index search 572; long found-index 603.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
