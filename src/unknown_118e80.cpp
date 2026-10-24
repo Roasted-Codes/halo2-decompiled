@@ -958,6 +958,9 @@ void function_1e6120(s_biped_physics_output *arg_0, void *arg_1, real arg_2, boo
     bool arg_5, real arg_6);
 void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped_physics_output *arg_2);
 
+// score 98 (was 98): MOV/LEA call setup, movement flag merge, force argument and activity register still differ;
+// stationary/byte/word movement result 107/98/111; complete flag value 98;
+// initial-state/parent/update/countdown activity values 265/119/98/101. Original body restored.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {
