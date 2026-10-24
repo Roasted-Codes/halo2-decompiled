@@ -950,6 +950,9 @@ struct s_item_flags_view_10b850
     byte flag7 : 1;
 };
 
+// score 819 (was 819): frame 0x154 versus 0x12c; direction workspace 861;
+// bounce-first 894; shared support predicate 838; direct rotation first 819;
+// correction assigned by branch 861. Original body retained.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

@@ -120,6 +120,9 @@ void function_268840()
 	function_268c90();
 }
 
+// score 296 (was 296): frame 0x48 versus 0x50; iterator result and pool homes differ;
+// outer while 296; player while 296; actor for-loop 331; native handle parts 327;
+// proxy-before-unit loads 296. Original body retained.
 // @retail 0x268c90
 void function_268c90()
 {
