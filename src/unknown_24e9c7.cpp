@@ -116,6 +116,9 @@ struct s_24e9c7_bounds
 
 /* Draws one marker's sprite at its placement; returns the sprite's height. */
 // score 125 (was 135): scalar homes, sprite-copy source and SSE scheduling remain; table read at each use 125 plain (743/743), real half width 135f, direct height 135f, sprite pointer 133f, global optimization off 716f.
+// Truncation helper at height 194, width 167, both 198; side before upper 139;
+// both sides before upper 138; direct alpha stores 125; const metadata 125;
+// native sprite rectangle 125. Result/kind/bitmap homes and sprite-source staging remain.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {

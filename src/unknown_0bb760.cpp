@@ -453,6 +453,10 @@ hsv3f *function_1318d0(color3f const *rgb, hsv3f *hsv);
 color3f *function_131a00(hsv3f const *hsv, color3f *rgb);
 void function_3dd10(long object_index, bool force);
 
+// score 134 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// Distinct seeds 138; last before weight 136; accumulator first 134;
+// signed variant ordinal 138; const choices 138; unsigned variant key 138;
+// skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
@@ -504,8 +508,8 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                 }
                 if (eligible && weight > 0.0f)
                 {
-                    real target = selection * weight;
                     real cumulative = 0.0f;
+                    real target = selection * weight;
                     long j = 0;
                     do
                     {
