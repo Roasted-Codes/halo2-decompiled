@@ -2175,10 +2175,13 @@ void network_session_leave_joining(c_class_58d20 *session)
 	network_session_update_leaving_join(session);
 }
 
-// score 3 (was 3): retail stores the NONE request time before clearing the
-// state block; ours stores it after the clear. Tried: the copy as a word loop
+// score 3 (was 3): our NONE request sentinel is defined before clearing the
+// state block; retail defines it afterwards. Tried: the copy as a word loop
 // 49, as a pointer range or a byte loop 0 (not kept: the matched siblings
 // 0x61180 and 0x614a0 copy the same way with memcpy).
+// New trials: memmove 42; request field fill 3; clear result as copy target 9;
+// all-one record fill 31; tail-only clear 32; fill with memmove 37;
+// tail clear with fill 30; tail clear with memmove 46.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {

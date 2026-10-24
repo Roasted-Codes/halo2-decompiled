@@ -3218,6 +3218,9 @@ void function_27aa0();
 // first in the products 16; vector3f_scale for the rows 101-105; position as
 // the first parameter (with the caller) gives retail's dot with z, y, x but
 // the j products then load the component first, 14 (654 bytes)
+// New trials at 5: zero-initialized buffer 160; cleared buffer 160;
+// cleared trailing triple 105; first/third/second row component loops
+// 242/242/242; coefficient loop 242; first reciprocal divided in place 104.
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {

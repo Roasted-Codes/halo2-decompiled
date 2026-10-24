@@ -1070,6 +1070,10 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
+// score 43 (was 43): frame and first two passes agree; later parent loads lose the record address.
+// Const current group 43; unsigned squad parent 43; unsigned group parent 63;
+// unsigned sibling 43; full-width final index 63; parent-field view 43;
+// parent view in both passes 82; append noinline declaration 43.
 // @retail 0x2009d0
 void function_2009d0(void)
 {

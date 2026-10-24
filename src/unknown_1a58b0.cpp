@@ -1149,6 +1149,9 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
 // the frame and projection agree. Sampling name 18; vector names 18;
 // vectors declared first 18; const unit 18; saved body count 124;
 // workspace memcpy 18; indexed output 23; const component 18.
+// Support handle 18; nullable component 110; body read first 30;
+// valid body interval 85; entry workspace 18; unit-scope workspace 18;
+// const support 18; unsigned object handle 18.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {

@@ -402,6 +402,11 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 	slot->flags |= 1;
 }
 
+// score 64 (was 64): dot/cross product operands, rotation xmm roles and
+// final component reloads still differ; executable tail is three bytes short.
+// Norm scalar 67; nested norm tests 64; early 2D cross 207; direction
+// copy loop 271; rotation/scale/both component loops 166/166/166;
+// const bounds input 64.
 // @retail 0x154df0
 void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vector3f *direction, real priority)
 {

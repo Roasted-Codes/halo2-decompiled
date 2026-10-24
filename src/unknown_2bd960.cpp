@@ -1718,8 +1718,12 @@ void territory_marker_color(long player_index, long territory, s_color_bits *col
 	}
 }
 
-// score 50 (was 50): the stack slots of the outer frame differ ([esp+0x14]
+// Earlier comparison: score 50 (was 50): the stack slots of the outer frame differ ([esp+0x14]
 // where retail has [esp+0x10]).
+// score 50 (was 50): frame and scalar homes agree; point/holder scheduling
+// and color registers differ; input memcpy 50, input memmove 171, item/top
+// color loops 144/149, one/two color loops 172/130, input memcpy with
+// item/all color loop 144/172.
 // @retail 0x2bf960
 void c_game_engine_45c948::v14(long local_player)
 {
