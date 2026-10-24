@@ -1083,7 +1083,6 @@ void __stdcall function_25f290(
 		return;
 	}
 
-	bool scored = false;
 	real weight = 12.f;
 
 	if (context->unknown618)
@@ -1129,6 +1128,7 @@ void __stdcall function_25f290(
 		}
 	}
 
+	bool scored = false;
 	if (actor->unknown030 != NONE)
 	{
 		s_squad_firing_view *squad = (s_squad_firing_view *)(g_51e9d8->data + (actor->unknown030 & 0xffff) * sizeof(s_squad_firing_view));
@@ -1160,9 +1160,7 @@ void __stdcall function_25f290(
 						real distance;
 						real bonus = 12.f;
 
-						delta.i = position->position.x - origin.x;
-						delta.j = position->position.y - origin.y;
-						delta.k = position->position.z - origin.z;
+						vector3d_from_points3d(&origin, &position->position, &delta);
 						distance = (real)sqrt((double)(delta.i * delta.i + delta.j * delta.j + delta.k * delta.k));
 						if (!(inner > distance) && outer > distance)
 						{
