@@ -107,6 +107,10 @@ public:
 // comparing it, ours compares the member in place; retail compares the found
 // index as a full word, ours as a sixteen bit value, so ours sign extends it
 // when it indexes the bodies
+// count/data snapshots 112, reverse declarations 112, count alone 106, data
+// alone 112; stored char 59; forced append 59, shared resize 59, element
+// result 59; typed members 59, full scan 106, direct members 106, body
+// indexer 106. Initial count load and scan allocation still differ.
 // @retail 0x317d90
 void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 {
