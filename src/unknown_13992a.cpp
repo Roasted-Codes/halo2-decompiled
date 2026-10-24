@@ -78,6 +78,9 @@ __forceinline byte *function_13992b(long arg_1)
     return *(byte **)(g_4e0300->data + (arg_1 & 0xffff) * 12 + 8);
 }
 
+// score 134 (was 134): frame 0x120 and scalar homes agree; the first branch span and
+// mask/player register roles still differ. Word lookup index 580; byte slot counter 314;
+// short suppression 173; cached seat selector 152; missing-player return 134 (plain).
 // @retail 0x13992a
 void function_13992a(byte *arg_1, long arg_2)
 {

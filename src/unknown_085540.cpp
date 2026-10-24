@@ -862,6 +862,9 @@ static __forceinline byte *view_allocate_buffer(long size, long owner, long rele
 
 // score 22 (was 22): the dword local is written before the byte local; retail writes the byte
 // first and then the dword into the structure.
+// score 22 (was 22): ours hoists the time stamp's volatile low store and the header memset's
+// low store, and packs start's spill apart from the volatile. Tried: the volatile and start
+// renamed 22; used zeroed before start 22; the header declared before the view stores 22.
 // @retail 0x862e0
 bool function_862e0(c_simulation_view *view)
 {
