@@ -1660,18 +1660,18 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
                 s_sample_point point_b;
                 s_sample_point point_c;
                 s_sample_point const *a, *b, *c;
-                if (block[0] == 0x39)
+                if (block[0] != 0x39)
+                {
+                    a = (s_sample_point *)(data + vertices[0] * 20);
+                    b = (s_sample_point *)(data + vertices[1] * 20);
+                    c = (s_sample_point *)(data + vertices[2] * 20);
+                }
+                else
                 {
                     surface_sample_unpack((short *)(data + vertices[0] * 10), &point_a);
                     surface_sample_unpack((short *)(data + vertices[1] * 10), &point_b);
                     surface_sample_unpack((short *)(data + vertices[2] * 10), &point_c);
                     a = &point_a; b = &point_b; c = &point_c;
-                }
-                else
-                {
-                    a = (s_sample_point *)(data + vertices[0] * 20);
-                    b = (s_sample_point *)(data + vertices[1] * 20);
-                    c = (s_sample_point *)(data + vertices[2] * 20);
                 }
                 dynamic_valid = function_0241c0(*(long const *)(record + 8), *(long const *)triangle->unknown2c,
                     &dynamic_normal, *(long const *)(record + 0x1c), a, b, c, triangle->u, triangle->v,
