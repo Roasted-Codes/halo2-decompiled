@@ -380,6 +380,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // default plane first 423; direct first-diagnostic expression 423.
 // Native matrix snapshot 778; input-rectangle products 446; coordinate-pair
 // product initialization 425; unsigned direction ordinal 423; optional-plane copy 647.
+// j90: camera/points saved registers remain exchanged; native copy boundaries tie and geometry/store lifetime changes regress.
+// normal setter 610; bounds copy block 423; position copy block 423; directions after bounds 578; complete
+// planes before normalize 515; identifier at geometry end 767
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
