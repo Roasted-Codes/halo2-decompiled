@@ -90,7 +90,7 @@ public:
 // motion through the pointer then 19 (the last receiver moves to ecx);
 // outer receiver declaration, shared shape types, first pointer declaration,
 // renamed last receiver or reference receiver 19; early shape snapshot 64;
-// reused receiver 15, two multiple-use receivers 63, restore-only receiver 15;
+// second receiver use 15, two multiple-use receivers 63, restore-only receiver 15;
 // scaled float local 133; inline factor or combined outer scope 68;
 // 1/3 forms require one-use field pointers and remain rejected
 // @retail 0x30df80
