@@ -522,10 +522,11 @@ static __forceinline void index_state_flags_update_31660(s_index_state_31660 *st
     }
 }
 
-// score 101 (was 133): the 0x3800 loops test set13 before loading the value (retail loads first, as
-// xor/mov ax around the test) and the last loop reloads state->first at its head; dead-loop pads match.
+// score 98 (was 133): only the 0x3800 loops differ: ours tests set13 before loading the value (movzx),
+// retail loads first, splitting the zero extension around the test (xor eax, eax / test dl / mov ax).
 // Tried: plain loops without the helper (133), word flags (162), direct *value updates (213),
-// ternary flag updates (134), while-loop for the 0x20000 pass (134).
+// long set13/set12 (186), while-loop for the 0x20000 pass (134); dword flags, ternary flag updates and
+// passing flag13 without != 0 change nothing.
 // @retail 0x31660
 void function_31660(long index, long tag, s_index_state_31660 *state,
     long first_group, long second_group, bool skip, bool *output)
@@ -552,7 +553,10 @@ void function_31660(long index, long tag, s_index_state_31660 *state,
         if (!output && !skip)
         {
             for (long i = 0; i < state->first->count; ++i)
-                state->first->values[(short)i] |= 0x3000;
+            {
+                word *value = &state->first->values[(short)i];
+                *value |= 0x3000;
+            }
             *output = true;
         }
     }
