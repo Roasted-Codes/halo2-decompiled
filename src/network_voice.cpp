@@ -2298,27 +2298,30 @@ void __stdcall function_577d0(s_voice_player_settings *settings)
 void function_583c0(s_voice_player_settings *settings, dword players, long talker)
 {
 	dword ports = 0;
-	dword talker_bit = 1 << talker;
 	for (long player = 0; player < 16; player++)
 	{
-		long port = voice_get_player_unknown14(player);
+		long port = NONE;
+		if (voice_available() && (voice_get_local_player_mask() & (1 << player)))
+		{
+			s_network_session_player *session_players = voice_get_players_inlined();
+			if (session_players)
+				port = session_players[player].unknown14;
+		}
 		if (players & (1 << player))
 		{
-			settings->unknown108[player] |= talker_bit;
+			settings->unknown108[player] |= 1 << talker;
 			if (port != NONE)
 				ports |= 1 << port;
 		}
 		else
-			settings->unknown108[player] &= ~talker_bit;
+			settings->unknown108[player] &= ~(1 << talker);
 	}
 	for (long port = 0; port != NONE; port = voice_port_next_index(port))
 	{
 		if (ports & (1 << port))
 		{
-			DSMIXBINVOLUMEPAIR pair;
-			memset(&pair, 0, sizeof(pair));
-			DSMIXBINS bins;
-			memset(&bins, 0, sizeof(bins));
+			DSMIXBINVOLUMEPAIR pair = {0};
+			DSMIXBINS bins = {0};
 			bins.dwMixBinCount = 1;
 			bins.lpMixBinVolumePairs = &pair;
 			pair.dwMixBin = 2;
@@ -2933,12 +2936,12 @@ long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, b
 {
  if (voice_packet_clamp_count(data[1], 1, 16) != data[1])
   return NONE;
- byte *packet = data + 2;
+ long packet_size = relay ? 13 : 11;
  size -= 2;
  long consumed = 2;
- long packet_size = relay ? 13 : 11;
  for (long i = 0; i < data[1]; i++)
  {
+  byte *packet = data + consumed;
   if (size < packet_size) return NONE;
   if (relay)
   {
@@ -2968,7 +2971,7 @@ long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, b
   else
   {
    if (packet[0] >= 2) return NONE;
-   if (voice_available() && voice_xhv_has_remote_talker(&g_476fc8, channel->index))
+   if (voice_has_remote_talker_inlined(channel->index))
    {
     function_56df0(&g_527104.settings, channel->index, packet[0]);
     voice_submit_incoming_packet(channel->index, packet + 1, 10);
@@ -2976,7 +2979,6 @@ long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, b
   }
   size -= packet_size;
   consumed += packet_size;
-  packet += packet_size;
  }
  return consumed;
 }

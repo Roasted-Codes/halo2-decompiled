@@ -825,6 +825,9 @@ __forceinline bool visibility_append(c_entry_list *list, long index, short flags
 	return false;
 }
 
+// score 67 (was 340): retail tests the flags' sign bit with test/jns where ours uses jge, combines the
+// instance flags with behind last (ours earlier), and reloads data->lists[3] after function_16e210 in the
+// duplicate-instance branch; writing that reload swaps edx and edi in the instance loop (score 70).
 // @retail 0x134390
 void __stdcall function_134390(s_bit_vector_pool *data)
 {
@@ -841,13 +844,13 @@ void __stdcall function_134390(s_bit_vector_pool *data)
 			long cluster_index = item->value;
 			s_visible_cluster *bounds = &((s_visibility_bsp *)g_4e0348)->clusters[cluster_index];
 			point3f center;
-			center.z = (bounds->bounds[2][0] + bounds->bounds[2][1]) * 0.5f;
-			center.y = (bounds->bounds[1][0] + bounds->bounds[1][1]) * 0.5f;
-			center.x = (bounds->bounds[0][0] + bounds->bounds[0][1]) * 0.5f;
-			real x = bounds->bounds[0][1] - center.x;
-			real y = bounds->bounds[1][1] - center.y;
-			real z = bounds->bounds[2][1] - center.z;
-			real radius = sqrt(z * z + y * y + x * x);
+			real_point3d_set(&center, (bounds->bounds[0][0] + bounds->bounds[0][1]) * 0.5f,
+				(bounds->bounds[1][0] + bounds->bounds[1][1]) * 0.5f, (bounds->bounds[2][0] + bounds->bounds[2][1]) * 0.5f);
+			point3f corner;
+			real_point3d_set(&corner, bounds->bounds[0][1], bounds->bounds[1][1], bounds->bounds[2][1]);
+			vector3f extent;
+			vector3d_from_points3d(&center, &corner, &extent);
+			real radius = sqrt(length_sq3f(&extent));
 			bool behind;
 			bool in_front;
 			function_132fd0(data, &center, &behind, &in_front, radius);
@@ -867,8 +870,16 @@ void __stdcall function_134390(s_bit_vector_pool *data)
 					continue;
 			}
 			short flags = (function_16e210(cluster_index, g_4b9f8c) ? 0x400 : 0) |
-				(behind ? 0x8000 : 0) | 0x3000 | (in_front ? 0x4000 : 0);
-			visibility_append(data->lists[0], cluster_index, flags, NONE);
+				(behind ? 0x8000 : 0) | 0x3000;
+			c_entry_list *list = data->lists[0];
+			if ((word)list->count < list->maximum_count - 1)
+			{
+				list->longs_a[(word)list->count] = cluster_index;
+				list->shorts_b[(word)list->count] = (in_front ? 0x4000 : 0) | flags;
+				list->longs_c[(word)list->count] = 0;
+				list->shorts_d[(word)list->count] = NONE;
+				list->count++;
+			}
 		}
 		for (long j = 0; j < cluster->instance_count; j++)
 		{
@@ -878,19 +889,21 @@ void __stdcall function_134390(s_bit_vector_pool *data)
 			byte *definition = current_bsp->definitions + instance->definition * 0xc8;
 			if (g_4e7c20[(short)instance_index] != g_4e7c1c)
 			{
-				c_entry_list *filter = data->filter ? *(c_entry_list **)((byte *)data->filter + 0x18) : NULL;
+				c_entry_list *filter = (c_entry_list *)data->filter;
+				if (filter)
+					filter = *(c_entry_list **)((byte *)filter + 0x18);
 				if (*(word *)(definition + 0x24) > 0)
 				{
 					bool contained, first, second;
 					if (function_132e60(data, &instance->center, instance->radius, filter, instance_index, (short)i, false, &contained, &first, &second) || (char)data->flags2a60 < 0)
 					{
+						long entry = NONE;
 						bool behind;
 						bool in_front;
 						function_132fd0(data, &instance->center, &behind, &in_front, instance->radius);
 						short flags = (function_16e210(item->value, g_4b9f8c) ? 0x400 : 0) |
 							(in_front ? 0x4000 : 0) | (second ? 0x2000 : 0) | (first ? 0x1000 : 0) |
 							(contained ? 0x800 : 0) | (behind ? 0x8000 : 0);
-						long entry = NONE;
 						if (!(flags & 0x800))
 							entry = function_134300(data, (short)i);
 						if (visibility_append(data->lists[3], instance_index, flags, (short)entry))
