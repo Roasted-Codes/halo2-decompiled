@@ -474,6 +474,58 @@ struct s_index_state_31660
     s_index_flags_31660 *third;
 };
 
+/* Retail pads the labels after the 0x20000 loop and after the 0x3800 loops for alignment: those are the
+   ends of an inlined helper whose constant arguments removed its trailing loops. */
+static __forceinline void index_state_flags_update_31660(s_index_state_31660 *state, bool update_second,
+    long first_group, long second_group, bool update_first_and_third, bool set13, bool set12)
+{
+    if (update_second)
+    {
+        for (long i = 0; i < state->second->count; ++i)
+            if (first_group == NONE || first_group == state->second->groups[(short)i])
+            {
+                word *value = &state->second->values[(short)i];
+                long flags = *value;
+                if (set13) flags |= 0x2000; else flags &= ~0x2000;
+                if (set12) flags |= 0x1000; else flags &= ~0x1000;
+                *value = (word)flags;
+            }
+        if (first_group != second_group)
+            for (long i = 0; i < state->second->count; ++i)
+                if (second_group == NONE || second_group == state->second->groups[(short)i])
+                {
+                    word *value = &state->second->values[(short)i];
+                    long flags = *value;
+                    if (set13) flags |= 0x2000; else flags &= ~0x2000;
+                    if (set12) flags |= 0x1000; else flags &= ~0x1000;
+                    *value = (word)flags;
+                }
+    }
+    if (update_first_and_third)
+    {
+        for (long i = 0; i < state->first->count; ++i)
+        {
+            word *value = &state->first->values[(short)i];
+            long flags = *value;
+            if (set13) flags |= 0x2000; else flags &= ~0x2000;
+            if (set12) flags |= 0x1000; else flags &= ~0x1000;
+            *value = (word)flags;
+        }
+        for (long i = 0; i < state->third->count; ++i)
+        {
+            word *value = &state->third->values[(short)i];
+            long flags = *value;
+            if (set13) flags |= 0x2000; else flags &= ~0x2000;
+            if (set12) flags |= 0x1000; else flags &= ~0x1000;
+            *value = (word)flags;
+        }
+    }
+}
+
+// score 101 (was 133): the 0x3800 loops test set13 before loading the value (retail loads first, as
+// xor/mov ax around the test) and the last loop reloads state->first at its head; dead-loop pads match.
+// Tried: plain loops without the helper (133), word flags (162), direct *value updates (213),
+// ternary flag updates (134), while-loop for the 0x20000 pass (134).
 // @retail 0x31660
 void function_31660(long index, long tag, s_index_state_31660 *state,
     long first_group, long second_group, bool skip, bool *output)
@@ -481,33 +533,9 @@ void function_31660(long index, long tag, s_index_state_31660 *state,
     s_render_entry_110 *entry = &((s_render_entry_110 *)g_4e030c->data)[index & 0xffff];
     dword const *definition = (dword const *)g_4e3b44[tag & 0xffff].bytes;
     if (*definition & 0x10000)
-    {
-        for (long i = 0; i < state->first->count; ++i)
-        {
-            word *value = &state->first->values[(short)i];
-            long flags = *value;
-            flags &= 0xdfff;
-            flags |= 0x1000;
-            *value = (word)flags;
-        }
-        for (long i = 0; i < state->third->count; ++i)
-        {
-            word *value = &state->third->values[(short)i];
-            long flags = *value;
-            flags &= 0xdfff;
-            flags |= 0x1000;
-            *value = (word)flags;
-        }
-    }
+        index_state_flags_update_31660(state, false, NONE, NONE, true, false, true);
     if (*definition & 0x20000)
-        for (long i = 0; i < state->second->count; ++i)
-        {
-            word *value = &state->second->values[(short)i];
-            long flags = *value;
-            flags &= 0xdfff;
-            flags |= 0x1000;
-            *value = (word)flags;
-        }
+        index_state_flags_update_31660(state, true, NONE, NONE, false, false, true);
     if (*definition & 0x3800)
     {
         byte flag11 = (byte)~(*definition >> 11);
@@ -515,28 +543,7 @@ void function_31660(long index, long tag, s_index_state_31660 *state,
         byte flag12_source = (byte)~(*definition >> 12);
         byte flag12 = (flag11 | flag13_source) & 1;
         byte flag13 = (flag12_source | flag13_source) & 1;
-        for (long i = 0; i < state->second->count; ++i)
-            if (first_group == NONE || state->second->groups[(short)i] == first_group)
-            {
-                word *value = &state->second->values[(short)i];
-                long flags = *value;
-                if (!(flag13))
-                    flags &= ~0x2000;
-                else
-                    flags |= 0x2000;
-                if (flag12) flags |= 0x1000; else flags &= ~0x1000;
-                *value = (word)flags;
-            }
-        if (first_group != second_group)
-            for (long i = 0; i < state->second->count; ++i)
-                if (second_group == NONE || state->second->groups[(short)i] == second_group)
-                {
-                    word *value = &state->second->values[(short)i];
-                    long flags = *value;
-                    if (flag13) flags |= 0x2000; else flags &= ~0x2000;
-                    if (flag12) flags |= 0x1000; else flags &= ~0x1000;
-                    *value = (word)flags;
-                }
+        index_state_flags_update_31660(state, true, first_group, second_group, false, flag13 != 0, flag12 != 0);
     }
     if (state->first->count > 0 && (*definition & 4) && state->first->count > 1)
     {
