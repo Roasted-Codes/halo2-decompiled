@@ -39,6 +39,7 @@ static __forceinline long real_to_long(real value);
 // score 144 (was 144): frame 0x18 versus 0x20; first-pass pointer/datum homes and slice-call interface differ.
 // Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
 // Depth one 144; unsigned maximum 146; word update state 155; first datum API 272; calling scan 208.
+// Activity-controlled first/slice/both loops 158/156/168; signed byte update with short/long maximum 146/152.
 // @retail 0x268510
 void function_268510()
 {
@@ -1868,6 +1869,7 @@ void function_269250(long clump_index, long actor_index)
 // Byte type 195; membership result earlier 189; existing group lookup 189; removal arm first 189; guarded pointer-result loop 194.
 // Complete workspace scope 189; depth zero 391; member-link result first 222; replacement-result loop 206; promoted category 195.
 // Depth one 189; outer datum API 290; word unit 218; word group 192; calling scan 237.
+// Direct pool step 254; activity-controlled loop 194; existing prop lookup 189; short/signed byte change 244/189; cached-bound scan 189.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

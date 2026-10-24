@@ -1602,11 +1602,13 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
-// score 186 (was 186): frame 0x10 agrees; object register, geometry-call convention and result/angle exits differ.
+// score 42 (was 186): frame/length agree; geometry-call convention, flag branches and angle tails differ.
 // Axis name 186; result first 220; query result 195; first-bit assignment 186; size optimization 348.
 // Depth zero 386; depth one 186; success return 203; clamped input on current frame 216; word result 227.
 // object register, geometry-call convention and failure/angle tails differ;
 // axis name 186; result first 220; geometry result guard 195; masked first bit 186; size optimization 348.
+// Failure to common exit 98; signed byte result 196; second-bit results 178; angle result 201; radius snapshot 209.
+// Exit plus second-bit results 199; exit plus scalar clamp 42.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1623,7 +1625,7 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 		if ((1 << object->type) & 1)
 		{
 			if (!function_1a62e0(object_index, origin, direction, &candidate->point))
-				return false;
+				goto done;
 			s_candidate_unit_definition *definition = (s_candidate_unit_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 			if (definition->flags & 1)
 				candidate->flags |= 1;
@@ -1670,11 +1672,10 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 		candidate->distance = function_30bf0(&candidate->direction);
 		candidate->alternate = alternate;
 		real cosine = dot3f(&candidate->direction, direction);
-		if (-1.0f > cosine)
-			candidate->angle = function_50650(-1.0f);
-		else
-			candidate->angle = function_50650(cosine > 1.0f ? 1.0f : cosine);
+		cosine = -1.0f > cosine ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
+		candidate->angle = function_50650(cosine);
 	}
+done:
 	return result;
 }
 
