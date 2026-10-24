@@ -96,6 +96,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // frame now 0x64; entry load schedule, point/magnitude homes
 // and candidate arithmetic differ. Byte candidate count 417; byte endpoint 427;
 // later center sum 444; early facing result 441; short angle count 433; both byte counts 408.
+// Separate trig pairs 408; byte angle countdown 408; retained candidate entry 441;
+// angle result from branches 408; separate evaluation scratches 425; general arm first 441.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)

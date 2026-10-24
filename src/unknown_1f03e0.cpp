@@ -815,6 +815,8 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
 // Ordinary gravity with shared normalization 622; cached mode 648; limited-first 625;
 // request bitfields 621; global optimization off 2562; direct scalar lifetimes 623; bitfields plus scalars 626.
+// Request-record snapshot 625; inline depth two 621; ordinary gravity on native flags 621;
+// shared direct/general delta 621; complete horizontal point copies 630.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
