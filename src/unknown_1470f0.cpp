@@ -157,6 +157,9 @@ void *c_game_havok_memory::allocate16(long size, long memory_class)
 // score 36 (was 36): First upper-bound branch pair and EAX bound reuse still differ; shared bounds 36;
 // outer bounds 36; shared bounds with delayed fixed receiver 43; numeric bounds 36;
 // shared upper/lower 36/36; read-only bounds 36; shared bounds with exits 45.
+// Fixed membership 95; paired memberships 146; independent pool/fixed/physical bounds 106/48/48;
+// all independent bounds 134; separate pool-bound decisions 36; eager memberships 114.
+// First upper-bound branch pair, EAX bound reuse and shared-dispatch placement still differ.
 // @retail 0x147320
 void c_game_havok_memory::deallocate16(void *address, long size, long memory_class)
 {

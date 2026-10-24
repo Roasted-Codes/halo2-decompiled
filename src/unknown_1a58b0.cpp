@@ -786,6 +786,9 @@ void function_25aba0(long actor_index);
 // Two-word initializer 68; full member initializer 287; retained ordinal 244;
 // shared final exit 69; frame pointer on native initializer 334.
 // Round 280: outer workspace 143; short copy counter 69; long level 173; retained handler reads 69; ordinary dispatch first 131.
+// Empty native initializer 143; value/assigned-value initialization 249 each; empty initializer with early state pop 146;
+// owner/handler records 69 each; current-level snapshot 69; level snapshot with empty initializer 143.
+// Actor/result ESI/EDI, state-one decrement, zero-fill and insertion setup still differ.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -1761,6 +1764,9 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // score 113 (was 131): call argument setup, marker-loop homes and terminal epilogues still differ.
 // Direct count increment 121; native short query 129; shared exit 131; direct optional transform 115.
 // Positive marker count 129; combined increment/transform 113; combined short query 114; direct count cleanup 113.
+// Two-phase candidate cursor 125; marker/table/both records 113 each; cursor with marker record 125;
+// cursor with native query 129; cursor with positive table 126; separate count result 169.
+// Existing helper argument setup, marker-loop homes and terminal exits still differ.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
@@ -2211,6 +2217,9 @@ struct s_1a4c01
 // score 36 (was 116): the target index and the unit index sit in each other's stack slots, the
 // interpolation loads forward.i where retail copies 1 - fraction, and the closing stores use
 // other registers.
+// Controlled/selected/both handle names 36 each; target declaration beside controlled handle 36;
+// blend in target/forward workspace 66/87; result copied from forward/target 170/353.
+// Handle homes, interpolation coefficient allocation and closing publication registers still differ.
 // @retail 0x1a4c00
 bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector3f *direction, point3f *point)
 {
