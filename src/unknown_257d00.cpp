@@ -1590,7 +1590,7 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 532 (was 600): actor/output registers, branch layout and rounding homes differ;
+// score 539 (was 600): actor/output registers, branch layout and rounding homes differ;
 // direct entry guard 631 fast; notification ranges 642 fast; selection-result field 597 plain
 // (only three lower, rejected); actor pointer name 618 fast; tail case order 639 fast;
 // observed selector with a case scope 611 fast, same as the selection-result form.

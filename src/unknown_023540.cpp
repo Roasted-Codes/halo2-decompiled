@@ -371,6 +371,11 @@ extern real g_4b8940[9], g_4b8964[9], g_4b8988[9];
 void function_022750(real const *a, long size, real const *b, real *out, real t);
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result);
 
+// score 252 (was 258): frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
+// Sample cursor 258; sine-scaled axis 259; diagonals first 288; elapsed snapshot 258; size optimization 397.
+// frame 0x7c versus 0x68; axis/trigonometric homes and rotation-call layout differ.
+// Complement at use 264; reused axis squares 252; coefficient countdown 273;
+// contiguous payload reset 286; conditional phase clamp 258.
 // @retail 0x22850
 void function_22850(void)
 {
@@ -398,16 +403,19 @@ void function_22850(void)
         {
             vector3f axis = *(vector3f *)(sample + 0x94);
             real sine = (real)sin(angle), cosine = (real)cos(angle), complement = 1.0f - cosine;
+            real square_i = axis.i * axis.i;
+            real square_j = axis.j * axis.j;
+            real square_k = axis.k * axis.k;
             real rotation[9];
-            rotation[0] = (1.0f - axis.i * axis.i) * cosine + axis.i * axis.i;
+            rotation[0] = (1.0f - square_i) * cosine + square_i;
             rotation[1] = axis.j * complement * axis.i + axis.k * sine;
             rotation[2] = axis.k * complement * axis.i - axis.j * sine;
             rotation[3] = axis.j * complement * axis.i - axis.k * sine;
-            rotation[4] = (1.0f - axis.j * axis.j) * cosine + axis.j * axis.j;
+            rotation[4] = (1.0f - square_j) * cosine + square_j;
             rotation[5] = axis.j * axis.k * complement + axis.i * sine;
             rotation[6] = axis.k * complement * axis.i + axis.j * sine;
             rotation[7] = axis.j * axis.k * complement - axis.i * sine;
-            rotation[8] = (1.0f - axis.k * axis.k) * cosine + axis.k * axis.k;
+            rotation[8] = (1.0f - square_k) * cosine + square_k;
             for (real *coefficients = (real *)(sample + 0xc);
                 coefficients != (real *)(sample + 0x78); coefficients += 9)
             {
@@ -2514,6 +2522,11 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
 
+// score 575 (was 575): frame 0x208 versus 0x200; coefficient homes and shared sample paths differ.
+// Full-width order 578; byte sample 575; bucket cursor 580; bucket rotation scope 575;
+// found-index search 572; long found-index 603.
+// Native cache cursor 590; bounded sample while 575; bounded bucket while 575;
+// per-bucket transformed buffers 575; inclusive level cap 575.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2919,6 +2932,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
+// score 978 (was 978): frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
+// Short capability flags 1195; short rescale state 1204; color homes renamed 978;
+// eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
