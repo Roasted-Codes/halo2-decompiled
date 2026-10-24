@@ -118,6 +118,8 @@ void function_8dd70(void);
 // score 230 (was 234): entry predicate, helper boundaries and global reloads differ;
 // short readiness/list value initialization 230; short readiness/list memset 230;
 // session construction loop 352; separate session results 231; list/direct observer result 248.
+// readiness homes, repeated pointer loads and out-of-line calls differ;
+// short readiness 232; unsigned readiness 234; session-list value initialization 231; long observer result 250; long session prerequisite 243.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

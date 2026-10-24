@@ -62,6 +62,16 @@ static inline real event_dequantize_real(long value, long maximum, real minimum_
 	return (minimum_value * (maximum - value) + maximum_value * value) / maximum;
 }
 
+/* the identifier in one of the eight slot table slots, or NONE outside them */
+static long slot_table_identifier(long slot)
+{
+	long id = NONE;
+
+	if (slot >= 0 && slot < 8)
+		id = g_4eca60[slot];
+	return id;
+}
+
 /* the identifier in a slot, or NONE when there is no manager */
 static long slot_identifier(short index)
 {
@@ -525,14 +535,10 @@ bool c_breakable_surface_group_entity_definition::v19(long a, long b, long c, lo
 void c_breakable_surface_group_entity_definition::v21(s_entity_slot *entity)
 {
 	long slot = entity->slot;
+	long id = slot_table_identifier(slot);
 
-	if (slot >= 0 && slot < 8)
-	{
-		long id = g_4eca60[slot];
-
-		if (id != NONE && ((entity->id ^ id) & 0x3ff) == 0)
-			g_4eca60[slot] = entity->id;
-	}
+	if (id != NONE && ((entity->id ^ id) & 0x3ff) == 0)
+		g_4eca60[slot] = entity->id;
 }
 
 // @retail 0x9d0e0
@@ -551,8 +557,6 @@ bool c_breakable_surface_group_entity_definition::v24(s_entity_slot *entity)
 	return true;
 }
 
-// score 11 (was 11): ours holds -1 in a register for the compare and the
-// clear because of the two stores to one address; retail uses immediates.
 // @retail 0x9d1c0
 bool c_breakable_surface_group_entity_definition::v25(s_entity_slot *entity)
 {
@@ -560,9 +564,7 @@ bool c_breakable_surface_group_entity_definition::v25(s_entity_slot *entity)
 
 	if (slot >= 0 && slot < 8)
 	{
-		long id = g_4eca60[slot];
-
-		if (id != NONE)
+		if (slot_table_identifier(slot) != NONE)
 			g_4eca60[slot] = NONE;
 		g_4eca60[slot] = entity->id;
 	}
