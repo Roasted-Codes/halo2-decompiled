@@ -1797,13 +1797,13 @@ void __stdcall function_1c4590(long flags)
     long active_entities = 0, inactive_entities = 0;
     allocator->statistics(allocator_statistics);
     s_2797a0_iterator iterator;
-    ++g_51ecb0;
     iterator.groups = (s_2797a0_groups *)g_51e9a4;
     iterator.mode = 0;
     iterator.second = false;
     iterator.group = NONE;
     iterator.index = NONE;
     iterator.unknown00 = 1;
+    ++g_51ecb0;
     while (function_2797a0(&iterator))
         ++active_entities;
     iterator.groups = (s_2797a0_groups *)g_51e9a4;
