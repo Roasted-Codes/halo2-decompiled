@@ -1590,6 +1590,10 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(0)
+// score 602 (was 600): actor/output registers and retained math/object calls differ;
+// direct entry guard 631 fast; notification ranges 642 fast; selection-result field 597 plain
+// (only three lower, rejected); actor pointer name 618 fast; tail case order 639 fast;
+// observed selector with a case scope 611 fast, same as the selection-result form.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -1979,6 +1983,8 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
+// score 502 (was 502): actor/state registers and the first point home differ;
+// signed completion 502; direct point result 628; captured unit 503; direct state access 502; inline depth one 502; staged alignment 503; staged squared distance 502.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

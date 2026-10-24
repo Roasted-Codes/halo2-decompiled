@@ -1127,6 +1127,8 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
+// score 215 (was 215): retained oldest/false registers and copy-loop entry differ;
+// scan getter 302; copy getter 325; both getters 361; unsigned byte progress 215; decode buffer first 213; forced-inline getters 223.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {

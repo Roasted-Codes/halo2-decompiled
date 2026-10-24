@@ -50,6 +50,9 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
+// score 136 (was 136): count/cursor and sum/product homes still differ;
+// unsigned table 136; indexed output 140; indexed clusters 136;
+// component accumulation 538; component blend 615.
 // @retail 0x12eb00
 long function_12eb00(long count, s_fog_cluster_distance *clusters, s_12eb00 *output)
 {
