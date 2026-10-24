@@ -70,6 +70,8 @@ bool function_26ba60(long prop_index, long actor_index, long clump_index);
 
 static __forceinline long real_to_long(real value);
 
+// score 216 (was 216): actor/reference registers, result/node homes and random factors differ;
+// unsigned allocation 216; index-first publication 216; paired sentinels 216; shared dot 231; entry scope with separated allocation 216.
 // @retail 0x1b6120
 long __stdcall function_1b6120(long actor_index, s_slot *slot)
 {

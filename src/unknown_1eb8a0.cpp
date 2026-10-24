@@ -188,6 +188,9 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // workspace native copy 709; existing displacement scale 750; native target displacement 709; native output
 // scale loops 733; native qr post clamp coefficient 719; native qr guarded coefficients 660; coefficient
 // reference lifetime 739; coefficient direction lifetime 666; coefficient both input lifetimes 743.
+// vector argument homes and retained clock differ in the 0x24 frame.
+// Void return 708; native failure 716; input role names 709;
+// native extra ticks 709; vector memmove 730.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

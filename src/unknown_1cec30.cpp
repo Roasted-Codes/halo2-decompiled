@@ -1672,6 +1672,8 @@ PRIVATE inline transform4x3f *component_node_matrices(long object_index)
  return (transform4x3f *)((byte *)object + object->matrices_offset);
 }
 
+// score 172 (was 172): frame 0x84 vs 0x80, retained header spill; stable handle 197;
+// pointer names 172; in-place composition 212; default point setters 188; sibling induction 175.
 // @retail 0x1d3d20 standard
 void s_havok_component::function_1d3d20(long node_index, dword *updated, dword const *restore,
  rigid_transform_scaled *orientations, long unknown)
@@ -2550,6 +2552,8 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
 
+// score 175 (was 175): staggered register saves and paired velocity homes differ;
+// marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2634,6 +2638,12 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     frame->m_translation = position;
 }
 
+// score 206 (was 206): body/stride registers and relative-call input differ;
+// body getters 206; first count after lookup 205 (below gate), both 275;
+// node streams 336; streams with getters 336 (plain scores). Original kept.
+// body stride/base registers and transform call differ;
+// count names 206; search names 206; transformed name 206; entry phase
+// transforms 301; equal-node arm first 248.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

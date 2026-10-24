@@ -658,6 +658,10 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
     widget->function_22f52e()->set_text(text);
 }
 
+// score 598 (was 619): frame 0x858 versus biased 0x85c; flag/time/state
+// carriers and status-helper convention still differ. Flag bit at uses 647;
+// long active 624; long local 623; long campaign 598 kept; branch-local
+// game-name table 624. Buffers, loops, calls and common exit are unchanged.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {
@@ -713,7 +717,7 @@ void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const
             update_friend_status(friend_, session);
         else
         {
-            bool campaign = *(long *)(details + 0xa68) != NONE && *(long *)(details + 0xa70) != NONE;
+            long campaign = *(long *)(details + 0xa68) != NONE && *(long *)(details + 0xa70) != NONE;
             long game_names[11] = {0x7000180, 0x3000439, 0x600010f, 0x7000110, 0x4000237,
                 0x4000112, 0xa000114, 0xa000113, 0xb000115, 0x700010e, 0x7000180};
             short count = *(short *)(details + 0xa80);

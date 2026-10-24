@@ -488,6 +488,9 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // output length still differ; tried planar scale loop 153; direction branch update 204; horizontal native
 // copy 142; rotation native copy 153; real signed sine 170; horizontal shared facing base 195; horizontal
 // facing rotation copy 195; horizontal native vector copy 142; horizontal rotation copy 142.
+// direction-copy registers and planar stack homes differ.
+// Direct products 173; native side predicate 152; nested guards 153;
+// entry magnitude 153; both planar normalizations inline 153.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {
