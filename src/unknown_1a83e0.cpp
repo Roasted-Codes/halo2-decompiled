@@ -98,12 +98,9 @@ bool __stdcall function_1a83e0(long arg_0, short *arg_1, real *arg_2, point2f *a
         local_11.i = local_6.y;
         local_11.j = 0.0f - local_6.x;
         local_11.k = 0.0f;
-        real offset_x = local_10.i * local_2;
-        real offset_y = local_10.j * local_2;
-        real offset_z = local_10.k * local_2;
-        local_8.x = offset_x + local_0->position.x;
-        local_8.y = offset_y + local_0->position.y;
-        local_8.z = offset_z + local_0->position.z;
+        local_8.x = local_10.i * local_2 + local_0->position.x;
+        local_8.y = local_10.j * local_2 + local_0->position.y;
+        local_8.z = local_10.k * local_2 + local_0->position.z;
         local_9.x = local_11.i * local_2 + local_0->position.x;
         local_9.y = local_11.j * local_2 + local_0->position.y;
         local_9.z = local_11.k * local_2 + local_0->position.z;
