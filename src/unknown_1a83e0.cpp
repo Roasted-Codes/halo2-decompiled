@@ -9,39 +9,33 @@ real normalize2d(point2f *arg_0);
 bool function_1f5110(long arg_0, point2f const *arg_1, real arg_2,
     real arg_3, bool *arg_4, s_path_trace_result *arg_5);
 
-PRIVATE __forceinline real function_1a83e1(point3f const *arg_0, vector3f const *arg_1, point3f const *arg_2)
+PRIVATE __forceinline real function_1a83e1(point3f const *start, vector3f const *segment, point3f const *point)
 {
-    point3f const *local_3 = arg_0;
-    vector3f const *local_4 = arg_1;
-    vector3f local_5;
-    local_5.k = local_4->k;
-    local_5.j = local_4->j;
-    local_5.i = local_4->i;
-    vector3f local_0;
+    vector3f delta;
     real squared_distance;
-    real local_1 = local_5.k * local_5.k + local_5.j * local_5.j + local_5.i * local_5.i;
-    if (local_1 > 0.0001f)
+    real length_squared = segment->k * segment->k + segment->j * segment->j + segment->i * segment->i;
+    if (length_squared > 0.0001f)
     {
-        local_0.i = arg_2->x - local_3->x;
-        local_0.j = arg_2->y - local_3->y;
-        local_0.k = arg_2->z - local_3->z;
-        real local_2 = (local_0.k * local_5.k + local_0.j * local_5.j + local_0.i * local_5.i) / local_1;
-        if (local_2 < 0.0f)
-            local_2 = 0.0f;
-        else if (local_2 > 1.0f)
-            local_2 = 1.0f;
-        local_2 = 0.0f - local_2;
-        local_0.i += local_5.i * local_2;
-        local_0.j += local_5.j * local_2;
-        local_0.k += local_5.k * local_2;
-        squared_distance = local_0.k * local_0.k + local_0.j * local_0.j + local_0.i * local_0.i;
+        delta.i = point->x - start->x;
+        delta.j = point->y - start->y;
+        delta.k = point->z - start->z;
+        real t = (delta.k * segment->k + delta.j * segment->j + delta.i * segment->i) / length_squared;
+        if (t < 0.0f)
+            t = 0.0f;
+        else if (t > 1.0f)
+            t = 1.0f;
+        t = -t;
+        delta.i += segment->i * t;
+        delta.j += segment->j * t;
+        delta.k += segment->k * t;
+        squared_distance = delta.k * delta.k + delta.j * delta.j + delta.i * delta.i;
     }
     else
     {
-        local_0.i = local_3->x - arg_2->x;
-        local_0.j = local_3->y - arg_2->y;
-        local_0.k = local_3->z - arg_2->z;
-        squared_distance = local_0.k * local_0.k + local_0.j * local_0.j + local_0.i * local_0.i;
+        delta.i = start->x - point->x;
+        delta.j = start->y - point->y;
+        delta.k = start->z - point->z;
+        squared_distance = delta.k * delta.k + delta.j * delta.j + delta.i * delta.i;
     }
     return (real)sqrt(squared_distance);
 }
