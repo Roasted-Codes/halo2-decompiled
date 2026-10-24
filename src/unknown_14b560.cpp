@@ -1956,6 +1956,10 @@ struct s_player_creation_record
 // score 33 (was 33): the value that is handed to the call is read into EDI
 // here and into EDX in retail, so the register that carries the argument
 // differs; the rest of the call is the same.
+// Frame 0x10 agrees; the controller reset expands on the opposite arm.
+// Caller depth 1/2 33/33; size preference 335; common reset 55;
+// auto-inline off 33; global optimization off 395; depth 0 305;
+// common reset with size preference 343.
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {

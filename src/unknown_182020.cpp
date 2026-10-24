@@ -133,6 +133,9 @@ static inline short shape_material_index_get(c_material_shape *shape)
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
+// score 1 (was 1): second lookup short at esp+0xc, retail +0xe;
+// shared entry/component bool 1/1, component/entry byte 1/1, component long 22;
+// initialized lookup short 164, output memcpy 1, output memmove 139.
 // @retail 0x182b90
 void function_182b90(c_material_shape *shape, hkEntity const *entity,
 	real *friction, real *restitution, short *material)
