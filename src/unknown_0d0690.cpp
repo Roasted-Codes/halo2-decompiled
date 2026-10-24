@@ -1567,10 +1567,11 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 835 (was 835): frame 0x90 agrees; mesh +0x14 versus +0x20 and UV/color homes differ.
-// Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009.
-// frame 0xa8 versus 0x90; mesh, UV and color homes and helper expansion still differ.
-// Metadata dispatch 847; long per-vertex 831; dynamic entry lifetime 835; model sample lifetime 825; depth one 835; samples plus long 819; material noinline 870/866.
+// score 819 (was 835): the long per-vertex flag and the sample points declared at the top of
+// their scope; mesh, UV and color homes and helper expansion still differ (frame 0xa8 versus 0x90).
+// Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
+// metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
+// lifetime 825; depth one 835; material noinline 870/866.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
