@@ -6,13 +6,6 @@
 #include "reference_counted_2d88a0.h"
 #include <new>
 
-// sorts entries from low to high (both included) by key (src/unknown_2e0120.cpp)
-struct entry_2e0250;
-struct order_2e0250
-{
-};
-void __cdecl function_2e0250(entry_2e0250 *entries, int low, int high, order_2e0250 order);
-
 // a list of endpoints over storage it does not own
 struct endpoint_list_2e3370
 {
@@ -73,12 +66,7 @@ void class_2e1090::function_2e3370(bounds_2e0020 const *bounds, overlap_endpoint
 	endpoint_list_2e3370 *list = lists->axes;
 	for (int axis = 3; axis != 0; axis--)
 	{
-		order_2e0250 order = {};
-		long const last = list->size - 1;
-		if (last > 1)
-		{
-			function_2e0250((entry_2e0250 *)(list->data + 1), 0, last - 1, order);
-		}
+		sort_2e0250((entry_2e0250 *)(list->data + 1), list->size - 1);
 		list++;
 	}
 	sentinel.value = 0xfffc;

@@ -56,13 +56,15 @@ public:
 	void function_306d00(face_306b90 *face, int axis) const;
 };
 
-// score 35 (was 35): the mask's second lane is +1e-5 here and -1e-5 in retail,
-// the mask constant is loaded once at the top of ours and twice in retail, and
-// the axis values are read before the branch here and after it there.
+// score 9 (was 35): retail keeps the zero splat's shuffle and the second
+// centre in xmm2 where ours uses xmm1, and its sign `and` writes the sum's
+// register where ours writes the mask's (written sum first, our mask load
+// moves to the top of the block).
 // @retail 0x306b90
 void box_306b90::function_306b90(face_306b90 *face, int axis) const
 {
 	face->axis = (unsigned short)axis;
+	__m128 &normal = face->second_frame_normal;
 	__m128 axis_direction;
 	axis_direction.m128_f32[0] = transform.axes[0].m128_f32[axis];
 	axis_direction.m128_f32[3] = 0.0f;
@@ -71,22 +73,25 @@ void box_306b90::function_306b90(face_306b90 *face, int axis) const
 	if (axis_values_b0.m128_f32[axis] < 0.0f)
 	{
 		face->side = -1.0f;
-		face->second_frame_normal = first_direction;
+		normal = first_direction;
 	}
 	else
 	{
 		face->side = 1.0f;
-		face->second_frame_normal = _mm_xor_ps(first_direction, *(__m128 const *)g_4124a0);
+		normal = _mm_xor_ps(first_direction, *(__m128 const *)g_4124a0);
 	}
 	float const side_value = face->side;
-	__m128 const positive = _mm_cmplt_ps(splat_306b90(0.0f), axis_values_c0);
+	__m128 const positive = _mm_cmpgt_ps(axis_values_c0, splat_306b90(0.0f));
 	__m128 const negative_tiny = {-1e-5f, -1e-5f, -1e-5f, 0.0f};
 	__m128 const nudge = _mm_or_ps(_mm_and_ps(positive, splat_306b90(1e-5f)), _mm_andnot_ps(positive, negative_tiny));
-	__m128 const signs = _mm_and_ps(_mm_add_ps(axis_direction, _mm_mul_ps(splat_306b90(side_value), nudge)), *(__m128 const *)g_4124a0);
-	face->second_frame_normal = _mm_xor_ps(face->second_frame_normal, signs);
+	__m128 const signs = _mm_and_ps(*(__m128 const *)g_4124a0, _mm_add_ps(axis_direction, _mm_mul_ps(splat_306b90(side_value), nudge)));
+	normal = _mm_xor_ps(normal, signs);
 	face->first_frame_normal = transform_point_306b90(&transform, &face->second_frame_normal);
 }
 
+// score 13 (was 28): as 0x306b90, the zero splat's shuffle and the first
+// centre take xmm3 in retail (xmm2 here), and the sign `and` writes the sum's
+// register there, the mask's here.
 // @retail 0x306d00
 void box_306b90::function_306d00(face_306b90 *face, int axis) const
 {
@@ -102,12 +107,11 @@ void box_306b90::function_306d00(face_306b90 *face, int axis) const
 		face->side = 1.0f;
 		face->first_frame_normal = second_direction;
 	}
-	__m128 const side_single = _mm_set_ss(-face->side);
-	__m128 const positive = _mm_cmplt_ps(splat_306b90(0.0f), axis_values_b0);
+	__m128 const positive = _mm_cmpgt_ps(axis_values_b0, splat_306b90(0.0f));
 	__m128 const positive_tiny = {1e-5f, 1e-5f, 1e-5f, 0.0f};
 	__m128 const nudge = _mm_or_ps(_mm_and_ps(positive, splat_306b90(-1e-5f)), _mm_andnot_ps(positive, positive_tiny));
-	__m128 const signs = _mm_and_ps(_mm_add_ps(axis_direction, _mm_mul_ps(_mm_shuffle_ps(side_single, side_single, 0), nudge)), *(__m128 const *)g_4124a0);
-	__m128 const normal = _mm_xor_ps(signs, face->first_frame_normal);
+	__m128 const signs = _mm_and_ps(*(__m128 const *)g_4124a0, _mm_add_ps(axis_direction, _mm_mul_ps(splat_306b90(-face->side), nudge)));
+	__m128 const normal = _mm_xor_ps(face->first_frame_normal, signs);
 	face->first_frame_normal = normal;
 	// the normal's point seen from the second frame
 	__m128 const d = _mm_sub_ps(normal, transform.position);

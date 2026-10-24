@@ -390,7 +390,7 @@ void function_22850(void)
     long count = *(long *)(source + 0x38);
     if (count <= 0) return;
     byte *samples = *(byte **)(source + 0x3c);
-    for (long i = 0, remaining = count; remaining > 0; ++i, --remaining)
+    for (long i = 0, remaining = count; remaining > 0; ++i)
     {
         byte *sample = samples + i * 0xdc;
         real angle = *(real *)(sample + 0xa0);
@@ -416,6 +416,7 @@ void function_22850(void)
                 memcpy(coefficients, result, sizeof(result));
             }
         }
+        --remaining;
     }
     real period = *(real const *)(structure + 0x34);
     if (period <= 0.0f)
@@ -426,7 +427,7 @@ void function_22850(void)
     real previous = g_5093ec;
     g_5093ec = (real)g_4858a0;
     real phase = (g_5093ec - previous) / period + g_5093f0;
-    phase -= (long)phase;
+    phase -= real_truncate(phase);
     g_5093f4 = true;
     if (phase < 0.0f) phase = 0.0f;
     g_5093f0 = phase;
@@ -440,7 +441,7 @@ void function_22850(void)
     {
         real step = 1.0f / (count - 1);
         real inverse = 1.0f / step;
-        long index = (long)(phase * inverse);
+        long index = real_truncate(phase * inverse);
         real fraction = (phase - index * step) * inverse;
         byte *sample = samples + index * 0xdc;
         function_022750((real *)(sample + 0xe8), 3, (real *)(sample + 0xc), g_4b8940, fraction);
@@ -988,28 +989,35 @@ struct s_block_layout
 };
 
 /* dot product of two 3x3 blocks stored as nine reals */
-#define DOT_PRODUCT9(result, a, b) \
-	__asm mov ecx, a \
-	__asm mov edx, b \
-	__asm movlps xmm0, qword ptr [ecx] \
-	__asm movlps xmm1, qword ptr [edx] \
-	__asm movlps xmm2, qword ptr [ecx + 0x10] \
-	__asm movlps xmm3, qword ptr [edx + 0x10] \
-	__asm movhps xmm0, qword ptr [ecx + 8] \
-	__asm movhps xmm1, qword ptr [edx + 8] \
-	__asm movhps xmm2, qword ptr [ecx + 0x18] \
-	__asm movhps xmm3, qword ptr [edx + 0x18] \
-	__asm mulps xmm0, xmm1 \
-	__asm mulps xmm2, xmm3 \
-	__asm addps xmm0, xmm2 \
-	__asm movss xmm1, dword ptr [ecx + 0x20] \
-	__asm movhlps xmm2, xmm0 \
-	__asm mulss xmm1, dword ptr [edx + 0x20] \
-	__asm addps xmm0, xmm2 \
-	__asm addss xmm1, xmm0 \
-	__asm shufps xmm0, xmm0, 0x55 \
-	__asm addss xmm0, xmm1 \
-	__asm movss result, xmm0
+PRIVATE __forceinline real block_dot_product9(real const *a, real const *b)
+{
+	real result;
+	__asm
+	{
+		mov ecx, a
+		mov edx, b
+		movlps xmm0, qword ptr [ecx]
+		movlps xmm1, qword ptr [edx]
+		movlps xmm2, qword ptr [ecx + 0x10]
+		movlps xmm3, qword ptr [edx + 0x10]
+		movhps xmm0, qword ptr [ecx + 8]
+		movhps xmm1, qword ptr [edx + 8]
+		movhps xmm2, qword ptr [ecx + 0x18]
+		movhps xmm3, qword ptr [edx + 0x18]
+		mulps xmm0, xmm1
+		mulps xmm2, xmm3
+		addps xmm0, xmm2
+		movss xmm1, dword ptr [ecx + 0x20]
+		movhlps xmm2, xmm0
+		mulss xmm1, dword ptr [edx + 0x20]
+		addps xmm0, xmm2
+		addss xmm1, xmm0
+		shufps xmm0, xmm0, 0x55
+		addss xmm0, xmm1
+		movss result, xmm0
+	}
+	return result;
+}
 
 // @retail 0x23ca0
 void function_023ca0(
@@ -1023,58 +1031,23 @@ void function_023ca0(
 	long block_size = layout->size * layout->size;
 	long group_size = block_size * 3;
 	long stride = (layout->columns + 1) * group_size;
-	if (layout->groups > 0)
+	for (long i = 0; i < layout->groups; i++)
 	{
-		real const *block0 = data;
-		real const *first_cell0 = block0 + group_size;
-		real const *block1 = data + block_size;
-		real const *first_cell1 = block1 + group_size;
-		real const *block2 = data + block_size * 2;
-		real const *first_cell2 = block2 + group_size;
-		for (long i = 0; i < layout->groups; i++)
+		real dot0 = block_dot_product9(data + stride * i, vector0);
+		real dot1 = block_dot_product9(data + stride * i + block_size, vector1);
+		real dot2 = block_dot_product9(data + stride * i + block_size * 2, vector2);
+		out[(layout->columns * 3 + 4) * i] = dot0;
+		out[(layout->columns * 3 + 4) * i + 1] = dot1;
+		out[(layout->columns * 3 + 4) * i + 2] = dot2;
+		real *row = out + (layout->columns * 3 + 4) * i + 4;
+		for (long j = 0; j < layout->columns; j++)
 		{
-			real const *cell0 = first_cell0;
-			real const *cell1 = first_cell1;
-			real const *cell2 = first_cell2;
-			real const *block;
-			real dot0;
-			real dot1;
-			real dot2;
-			block = block0;
-			DOT_PRODUCT9(dot0, block, vector0);
-			block = block1;
-			DOT_PRODUCT9(dot1, block, vector1);
-			block = block2;
-			DOT_PRODUCT9(dot2, block, vector2);
-			out[(layout->columns * 3 + 4) * i] = dot0;
-			out[(layout->columns * 3 + 4) * i + 1] = dot1;
-			out[(layout->columns * 3 + 4) * i + 2] = dot2;
-			real *row = out + (layout->columns * 3 + 4) * i + 4;
-			for (long j = 0; j < layout->columns; j++)
-			{
-				real const *cell_block;
-				real cell_dot0;
-				real cell_dot1;
-				real cell_dot2;
-				cell_block = cell0;
-				DOT_PRODUCT9(cell_dot0, cell_block, vector0);
-				cell_block = cell1;
-				DOT_PRODUCT9(cell_dot1, cell_block, vector1);
-				cell_block = cell2;
-				DOT_PRODUCT9(cell_dot2, cell_block, vector2);
-				row[j] = cell_dot0;
-				row[layout->columns + j] = cell_dot1;
-				row[layout->columns * 2 + j] = cell_dot2;
-				cell0 += group_size;
-				cell1 += group_size;
-				cell2 += group_size;
-			}
-			block0 += stride;
-			block1 += stride;
-			block2 += stride;
-			first_cell0 += stride;
-			first_cell1 += stride;
-			first_cell2 += stride;
+			real cell_dot0 = block_dot_product9(data + stride * i + group_size * (j + 1), vector0);
+			real cell_dot1 = block_dot_product9(data + stride * i + group_size * (j + 1) + block_size, vector1);
+			real cell_dot2 = block_dot_product9(data + stride * i + group_size * (j + 1) + block_size * 2, vector2);
+			row[j] = cell_dot0;
+			row[layout->columns + j] = cell_dot1;
+			row[layout->columns * 2 + j] = cell_dot2;
 		}
 	}
 }
@@ -2474,16 +2447,22 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     function_1ccf0(&g_484f68);
     function_1cc30(12);
     function_1c710(g_51f0f0);
-    default_source[0] = 0.0f;
-    default_source[1] = width;
-    default_source[2] = 0.0f;
-    default_source[3] = height;
-    default_destination[0] = 320.0f - width * 0.5f;
-    default_destination[1] = 320.0f + width * 0.5f;
-    default_destination[2] = 240.0f - height * 0.5f + arg_af5a49;
-    default_destination[3] = arg_af5a49 + height * 0.5f + 240.0f;
-    if (!source) source = default_source;
-    if (!destination) destination = default_destination;
+    if (!source)
+    {
+        default_source[0] = 0.0f;
+        default_source[1] = width;
+        default_source[2] = 0.0f;
+        default_source[3] = height;
+        source = default_source;
+    }
+    if (!destination)
+    {
+        default_destination[0] = 320.0f - width * 0.5f;
+        default_destination[1] = 320.0f + width * 0.5f;
+        default_destination[2] = 240.0f - height * 0.5f + arg_af5a49;
+        default_destination[3] = arg_af5a49 + height * 0.5f + 240.0f;
+        destination = default_destination;
+    }
     D3DDevice_Begin(D3DPT_TRIANGLEFAN);
     real inverse_width = 1.0f / width;
     real inverse_height = 1.0f / height;
@@ -2528,78 +2507,83 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
 {
-    bool found = false;
-    for (short i = 0; i < g_5093e8; ++i)
-        if (g_4b89b0[i].key == object_index) found = true;
-    if (found || g_5093e8 >= 24) return true;
-    s_table_entry *entry = &g_4b89b0[g_5093e8];
-    entry->key = object_index;
-    *(short *)&entry->unknown4 = order;
-    byte const *structure = (byte *)g_4e0344;
-    bool use_samples = structure && *(long const *)(structure + 0x80) > 0 && g_4e0348 &&
-        *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
-        *(long const *)(*(byte const **)(structure + 0x84) + 4) == *(long const *)((byte *)g_4e0348 + 8);
-    real red[16], green[16], blue[16];
-    if (!use_samples)
+    bool result = true;
     {
-        vector3f direction = { 0.0f, 0.0f, -1.0f };
-        spherical_harmonics_evaluate_directional_light(&direction, layout->order,
-            1.0f, 1.0f, 1.0f, red, green, blue);
-    }
-    long level = 5 - order;
-    if (level > layout->level_count - 1) level = layout->level_count - 1;
-    real const *data = layout->data + layout->levels[level].offset;
-    long stride = layout->groups * (layout->columns * 3 + 4);
-    s_bucket_source const *buckets = (s_bucket_source const *)vertices;
-    long total = function_023540((short)count, buckets, entry, stride);
-    long bytes = total * stride * sizeof(real);
-    if (!bytes) return true;
-    long next = g_487b18.size + bytes;
-    if (next > 0x27000) return false;
-    long handle = g_487b18.size & 0x0fffffff;
-    g_487b18.size = next;
-    entry->data_handle = handle;
-    real *output = (real *)(g_487b18.data + handle);
-    for (long bucket = 0; bucket < count; ++bucket)
-    {
-        byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-        long available = *(word const *)(pair + 2);
-        if (!available) continue;
-        real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
-        transform4x3f matrix;
-        function_0235a0(source, &matrix);
-        long samples = available > 1 ? 2 : 1;
-        for (short sample = 0; sample < samples; ++sample)
+        bool found = false;
+        for (short i = 0; i < g_5093e8; ++i)
+            if (g_4b89b0[i].key == object_index) found = true;
+        if (found || g_5093e8 >= 24) goto done;
+        s_table_entry *entry = &g_4b89b0[g_5093e8];
+        entry->key = object_index;
+        *(short *)&entry->unknown4 = order;
+        byte const *structure = (byte *)g_4e0344;
+        bool use_samples = structure && *(long const *)(structure + 0x80) > 0 && g_4e0348 &&
+            *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
+            *(long const *)(*(byte const **)(structure + 0x84) + 4) == *(long const *)((byte *)g_4e0348 + 8);
+        real red[16], green[16], blue[16];
+        if (!use_samples)
         {
-            if (sample) function_0235a0(source + 12, &matrix);
-            real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
-            determinant += matrix.forward.k * matrix.up.j * matrix.left.i;
-            determinant += matrix.up.k * matrix.left.j * matrix.forward.i;
-            determinant -= matrix.forward.i * matrix.left.k * matrix.up.j;
-            determinant -= matrix.forward.j * matrix.left.i * matrix.up.k;
-            determinant -= matrix.forward.k * matrix.left.j * matrix.up.i;
-            matrix3x3 rotation;
-            function_142bf0((matrix3x3 const *)&matrix.forward, determinant, &rotation);
-            if (use_samples)
-            {
-                point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, sample);
-                if (position)
-                {
-                    byte *bsp = *(byte **)(structure + 0x84);
-                    function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
-                        (byte)layout->order, &entry->scale, position);
-                }
-            }
-            real rotated_red[16], rotated_green[16], rotated_blue[16];
-            function_143600((real const *)&rotation, 3, red, rotated_red);
-            function_143600((real const *)&rotation, 3, green, rotated_green);
-            function_143600((real const *)&rotation, 3, blue, rotated_blue);
-            function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
-            output += stride;
+            vector3f direction = { 0.0f, 0.0f, -1.0f };
+            spherical_harmonics_evaluate_directional_light(&direction, layout->order,
+                1.0f, 1.0f, 1.0f, red, green, blue);
         }
+        long level = 5 - order;
+        if (level > layout->level_count - 1) level = layout->level_count - 1;
+        real const *data = layout->data + layout->levels[level].offset;
+        long stride = layout->groups * (layout->columns * 3 + 4);
+        s_bucket_source const *buckets = (s_bucket_source const *)vertices;
+        long total = function_023540((short)count, buckets, entry, stride);
+        long bytes = total * stride * sizeof(real);
+        if (!bytes) goto done;
+        long next = g_487b18.size + bytes;
+        if (next > 0x27000) { result = false; goto done; }
+        long handle = g_487b18.size & 0x0fffffff;
+        g_487b18.size = next;
+        entry->data_handle = handle;
+        real *output = (real *)(g_487b18.data + handle);
+        for (long bucket = 0; bucket < count; ++bucket)
+        {
+            byte const *pair = (byte const *)vertices + 4 + bucket * 4;
+            long available = *(word const *)(pair + 2);
+            if (!available) continue;
+            real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
+            transform4x3f matrix;
+            function_0235a0(source, &matrix);
+            long samples = available > 1 ? 2 : 1;
+            for (short sample = 0; sample < samples; ++sample)
+            {
+                if (sample) function_0235a0(source + 12, &matrix);
+                if (use_samples)
+                {
+                    point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, sample);
+                    if (position)
+                    {
+                        byte *bsp = *(byte **)(structure + 0x84);
+                        function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
+                            (byte)layout->order, &entry->scale, position);
+                    }
+                }
+                real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
+                determinant += matrix.forward.k * matrix.up.j * matrix.left.i;
+                determinant += matrix.up.k * matrix.left.j * matrix.forward.i;
+                determinant -= matrix.forward.i * matrix.left.k * matrix.up.j;
+                determinant -= matrix.forward.j * matrix.left.i * matrix.up.k;
+                determinant -= matrix.forward.k * matrix.left.j * matrix.up.i;
+                matrix3x3 rotation;
+                function_142bf0((matrix3x3 const *)&matrix.forward, determinant, &rotation);
+                real rotated_red[16], rotated_green[16], rotated_blue[16];
+                function_143600((real const *)&rotation, 3, red, rotated_red);
+                function_143600((real const *)&rotation, 3, green, rotated_green);
+                function_143600((real const *)&rotation, 3, blue, rotated_blue);
+                function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                output += stride;
+            }
+        }
+        ++g_5093e8;
+        goto done;
     }
-    ++g_5093e8;
-    return true;
+done:
+    return result;
 }
 
 /* a corner of the unit square, rotated by an angle and scaled, as a texture
@@ -2923,11 +2907,12 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
 {
+    bool result = false;
     real offset = 0.0f;
-    real maximum = 1.0f;
     bool small = false;
     bool allow_small = false;
     bool allow_negative = false;
+    real maximum = 1.0f;
     real inverse_distance = 1.0f / g_48565c;
     low *= inverse_distance;
     high *= inverse_distance;
@@ -2967,17 +2952,17 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     {
         function_14bc0((short)g_4858b8, 0, true);
         function_14f60(0, 0);
-        sampler_state_write(0, D3DTSS_ADDRESSU, 3);
-        sampler_state_write(0, D3DTSS_ADDRESSV, 3);
-        sampler_state_write(0, D3DTSS_ADDRESSW, 3);
-        sampler_state_write(0, D3DTSS_MAGFILTER, 1);
-        sampler_state_write(0, D3DTSS_MINFILTER, 1);
-        sampler_state_write(0, D3DTSS_MIPFILTER, 0);
-        sampler_state_write(0, D3DTSS_MAXMIPLEVEL, 0);
-        sampler_state_write(0, D3DTSS_MAXANISOTROPY, 0);
-        sampler_state_write(0, D3DTSS_MIPMAPLODBIAS, 0);
-        sampler_state_write(0, D3DTSS_COLORSIGN, 0);
-        sampler_state_write(0, D3DTSS_ALPHAKILL, 0);
+        function_0224f0(0, D3DTSS_ADDRESSU, 3);
+        function_0224f0(0, D3DTSS_ADDRESSV, 3);
+        function_0224f0(0, D3DTSS_ADDRESSW, 3);
+        function_0224f0(0, D3DTSS_MAGFILTER, 1);
+        function_0224f0(0, D3DTSS_MINFILTER, 1);
+        function_0224f0(0, D3DTSS_MIPFILTER, 0);
+        function_0224f0(0, D3DTSS_MAXMIPLEVEL, 0);
+        function_0224f0(0, D3DTSS_MAXANISOTROPY, 0);
+        function_0224f0(0, D3DTSS_MIPMAPLODBIAS, 0);
+        function_0224f0(0, D3DTSS_COLORSIGN, 0);
+        function_0224f0(0, D3DTSS_ALPHAKILL, 0);
         g_4b8308 = 0x1010101; D3DDevice_SetRenderState(D3DRS_COLORWRITEENABLE, 0x1010101);
         g_4b82e8 = 0; D3DDevice_SetRenderState(D3DRS_ALPHABLENDENABLE, 0);
         g_4b82ec = 0; D3DDevice_SetRenderState(D3DRS_ALPHATESTENABLE, 0);
@@ -3182,9 +3167,9 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
         }
         *depth_out = depth;
     }
-    return true;
+    result = true;
 failure:
-    return false;
+    return result;
 }
 
 dword g_4b8424;

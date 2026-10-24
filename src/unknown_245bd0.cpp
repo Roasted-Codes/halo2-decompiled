@@ -233,6 +233,9 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 	out->unknown0e = source->unknown0e;
 }
 
+// score 61 (was 61): the first float of the pair is loaded into XMM2 here and
+// into XMM1 in retail, so the registers of the following subtractions are
+// swapped as well.
 // @retail 0x245ef0
 bool function_245ef0(s_shapes const *shapes, point3f const *point, s_shape_result *result)
 {

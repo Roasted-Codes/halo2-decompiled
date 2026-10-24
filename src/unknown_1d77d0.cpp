@@ -422,11 +422,10 @@ void __stdcall function_1d77d0(s_havok_component *component, s_physics_model_own
 		if (!function_db4c0(object_index, type, index) && joint->frames.node_a != NONE)
 		{
 			long body_a = rigid_body_list_get(&bodies, joint->frames.node_a);
-			short node_b = joint->frames.node_b;
-			long body_b = rigid_body_list_get(&bodies, node_b);
+			long body_b = rigid_body_list_get(&bodies, joint->frames.node_b);
 			if (body_a != body_b && body_a != NONE &&
 				!component->rigid_bodies.data[body_a].rigid_body->m_fixed &&
-				(node_b == NONE) == (body_b == NONE))
+				(body_b == NONE) == (joint->frames.node_b == NONE))
 			{
 				s_havok_contact_entities *constraint = joint_constraint_create(component, owner, &bodies, joint, &iterator, type, index);
 				function_1d0150(component, constraint, (short)type, (short)index);

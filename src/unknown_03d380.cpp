@@ -314,6 +314,9 @@ void __stdcall function_124750(dword flags)
 
 void function_125a90(long value);
 
+// score 46 (was 46): the address of the record is built here with an imul
+// into ESI and an add; retail multiplies into EAX and forms the address with a
+// lea, so the type byte that is tested afterwards is compared in another value.
 // @retail 0x1264c0
 void __stdcall function_1264c0(dword flags)
 {

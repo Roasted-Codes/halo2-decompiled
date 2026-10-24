@@ -218,41 +218,35 @@ void function_146660(real seconds, real *elapsed, long *ticks_due)
 		if (options->field_1120 && !globals->unknown01 && globals->scale > 0.0f)
 		{
 			bool synchronous = false;
+			bool unlimited = false;
 			long maximum_ticks;
 			real ticks_elapsed;
 
-			bool unlimited = g_510c50 && ((s_510c50_time_view *)g_510c50)->unlimited;
-			long mode = options->mode;
-
-			switch (mode)
+			if (g_510c50 && ((s_510c50_time_view *)g_510c50)->unlimited)
 			{
-			case 2:
-			case 3:
-			case 4:
-			case 5:
+				unlimited = true;
+			}
+			long mode = options->mode;
+			/* modes 2 to 5 run on the network's ticks (the test function_138840 makes) */
+			bool networked = false;
+			if (mode >= 2 && mode <= 5)
+			{
+				networked = true;
+			}
+			if (!networked)
+			{
+				maximum_ticks = globals->field_2_3 * 5;
+			}
+			else
+			{
 				maximum_ticks = function_680c0(&synchronous);
 				globals = g_510c54;
-				break;
-			default:
-				maximum_ticks = globals->field_2_3 * 5;
-				break;
 			}
 			if (!synchronous && !unlimited)
 			{
-				real scale = globals->scale;
-				real limit;
-				long limit_ticks;
+				real scale = globals->scale < 1.0f ? 1.0f : (globals->scale > 5.0f ? 5.0f : globals->scale);
+				long limit_ticks = real_to_long(scale * 2.0f);
 
-				if (1.0f > scale)
-				{
-					scale = 1.0f;
-				}
-				else if (scale > 5.0f)
-				{
-					scale = 5.0f;
-				}
-				limit = scale * 2.0f;
-				limit_ticks = real_to_long(limit);
 				if (maximum_ticks > limit_ticks)
 				{
 					maximum_ticks = limit_ticks;
@@ -260,16 +254,30 @@ void function_146660(real seconds, real *elapsed, long *ticks_due)
 			}
 			elapsed_seconds = globals->scale * seconds;
 			ticks_elapsed = (real)globals->field_2_3 * elapsed_seconds + globals->leftover_ticks;
-			long candidate_ticks = (long)ticks_elapsed;
-			if (synchronous ? (candidate_ticks <= maximum_ticks && candidate_ticks + 7 >= maximum_ticks && candidate_ticks + 1 == maximum_ticks) : candidate_ticks <= maximum_ticks)
+			long candidate_ticks = real_truncate(ticks_elapsed);
+			/* a synchronous game runs the candidate only when it is one tick short of the network's count */
+			bool limited = true;
+			if (synchronous)
 			{
-				leftover = ticks_elapsed - (real)candidate_ticks;
-				ticks = candidate_ticks;
+				if (candidate_ticks <= maximum_ticks && candidate_ticks + 7 >= maximum_ticks &&
+					candidate_ticks + 1 >= maximum_ticks && candidate_ticks + 1 <= maximum_ticks)
+				{
+					limited = false;
+				}
 			}
-			else
+			else if (candidate_ticks <= maximum_ticks)
+			{
+				limited = false;
+			}
+			if (limited)
 			{
 				elapsed_seconds = (real)maximum_ticks * globals->rate;
 				ticks = maximum_ticks;
+			}
+			else
+			{
+				ticks = candidate_ticks;
+				leftover = ticks_elapsed - (real)candidate_ticks;
 			}
 		}
 	}
