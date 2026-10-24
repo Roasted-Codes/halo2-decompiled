@@ -363,6 +363,21 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
+// score 195 (was 226): the register allocation differs from the first block
+// on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
+// round), and our seat loop keeps secondary and primary in xmm1/xmm2 across
+// iterations where retail compares them in memory and reloads them after the
+// loop, which also moves retail's not-facing block after the result-3 exit.
+// Frame: retail has result, secondary, primary at +0/+4/+8 and range at +0x20;
+// ours has secondary, primary, range at +0/+4/+8 and result at +0x20.
+// Tried: if/else for the 3-or-2 result, retail's separate exits (262: the
+// frame shifts), result/secondary/primary as one struct (270), secondary and
+// primary at function scope (262), volatile long result (262), range declared
+// after the motion block (291), range re-read from settings (275), range read
+// through a pointer (229), the facing block as an inlined helper with pointer
+// outputs (281, inlines c8b80), the clip as a clipped point (280),
+// vector3d_from_points3d for delta and motion (200), a and b at function scope
+// and `secondary < a` compares (no change).
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -435,9 +450,10 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 						{
 							s_object_seat seats[64];
 							short count = function_c8b80(object_index, seats, 64);
-							for (short i = 0; i < count; ++i)
+							s_object_seat *seat = seats;
+							for (short i = 0; i < count; ++i, ++seat)
 							{
-								long occupant = function_c8f60(seats[i].object_index, seats[i].seat_index);
+								long occupant = function_c8f60(seat->object_index, seat->seat_index);
 								if (occupant != NONE)
 								{
 									s_slot_object_view *object = object_get(occupant);
