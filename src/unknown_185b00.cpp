@@ -711,11 +711,12 @@ PRIVATE inline void control_pitch_approach(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 260 (was 272): pitch-bound/settings/direction/turn-difference homes differ within
+// score 244 (was 272): pitch-bound/settings/direction/turn-difference homes differ within
 // frame 0xa8 (retail: maximum 4, minimum 8, direction 0x10, settings 0x1c); retail keeps the
 // full turn in xmm3 and spills the range; the step pins get other registers.
 // Tried: interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280;
-// isolated range scope 272.
+// isolated range scope 272; maximum declared first 243 (shifts the prologue); direction,
+// target or marker-before-camera at the top 244; upper/lower declared apart from assignment.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
@@ -724,6 +725,7 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 	real maximum = 1.4922565f;
 	byte *settings = *(byte **)((byte *)g_4e034c + 0xf4);
 	s_player_control_camera camera;
+	s_object_marker marker;
 	player_control_get_camera(player_index, &camera);
 	entry->facing.yaw += yaw_delta;
 	if (camera.seat_index != NONE)
@@ -732,7 +734,6 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		s_control_turn_seat *seat = &((s_control_turn_seat *)PLAYER_CONTROL_UNIT_DEFINITION(unit->definition_index)->seats)[camera.seat_index];
 		if (seat->minimum != 0.0f || seat->maximum != 0.0f)
 		{
-			s_object_marker marker;
 			function_b8d30(camera.unit_index, seat->field_8, &marker, 1, false);
 			real yaw = (real)atan2(marker.matrix.forward.j, marker.matrix.forward.i);
 			real lower = seat->minimum + yaw;
