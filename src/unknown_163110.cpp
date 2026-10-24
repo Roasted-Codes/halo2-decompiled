@@ -381,6 +381,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // j90: camera/points saved registers remain exchanged; native copy boundaries tie and geometry/store lifetime changes regress.
 // normal setter 610; bounds copy block 423; position copy block 423; directions after bounds 578; complete
 // planes before normalize 515; identifier at geometry end 767
+// j92: camera/points saved registers remain exchanged; corner order and diagnostic/lifetime forms do not improve the frameless entry.
+// corners in index order 426; diagnostic result chain 423; plane tests result 671; camera plane predicate 669;
+// far depth snapshot 646.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

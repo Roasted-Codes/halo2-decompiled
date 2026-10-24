@@ -512,6 +512,9 @@ PRIVATE __forceinline bool batch_shape_pointer(dword data)
 // score 319 (was 319): frame 0x48 versus 0x44 and plane/output homes;
 // normal component loop 319; material-output scope 319; direct validity 351;
 // key-clamp result arms 319; optional entity result 319.
+// j92: frame 0x48 versus 0x44 and node/plane/output homes remain; delayed reads and native rotation copy regress; coordinate names and positive root guard tie.
+// hit snapshot after test 353; first node after root 352; origin coordinate homes 319; hit coordinate homes
+// 319; native rotation copy 442; root positive body 319.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
