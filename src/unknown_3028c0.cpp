@@ -104,6 +104,9 @@ public:
 // 45; endpoint deltas 45; reversed declarations 45; stored scale 45;
 // shared splat 60; renamed locals 45; both pointers 45; staged segment
 // members 45; inline/force-inline byte accessor diagnostics 42/45 (removed).
+// Further trials: sum by value 40; staged sum 42; vector sum result 56;
+// direct splat 65; forced inline math 42; whole query initializer 48;
+// sum through output 44; size preference 121; value sum with late clears 43.
 // @retail 0x3028c0
 void walker_3028c0::function_3028c0(input_3028c0 const *input_, long arg_1, long arg_2)
 {

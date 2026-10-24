@@ -225,6 +225,9 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 // 42; sphere reference 33; renamed state/position/deltas 33; memcpy centre
 // 33; vector/point view 33; a shared coordinate setter failed to build, then
 // timed out. Original body retained.
+// Further trials: split reciprocal lifetime 49; late reciprocal field 49;
+// sphere value snapshot 61; size preference 40; explicit scalar splat 48;
+// in-place delta 33; named radius times two 33; aligned intrinsic loads 48.
 // @retail 0x2ddbd0
 void __cdecl function_2ddbd0(void *data, s_visibility_sphere_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
