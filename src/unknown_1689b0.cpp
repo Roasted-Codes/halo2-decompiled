@@ -576,7 +576,7 @@ bool function_1de630(dword test_flags, s_slot_entry_list *bsp, s_collision_bsp_t
 	long maximum_leaf_count, byte const *arg_c9e1f7, point3f const *point, vector3f const *vector);
 bool function_244980(long cluster_index, point3f const *point, vector3f const *vector, dword flags,
 	dword test_flags, s_collision_result_1697c0 *result);
-long function_b8940(short cluster_index, s_object_cluster_reference **reference, s_object_cluster_iterator *iterator);
+long function_b8940(long cluster_index, s_object_cluster_reference **reference, s_object_cluster_iterator *iterator);
 long function_b89b0(s_object_cluster_reference **reference, s_object_cluster_iterator *iterator);
 bool __stdcall function_169510(long object_index, bool a, dword flags, dword test_flags, point3f const *point,
 	vector3f const *vector, long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *result);
@@ -798,7 +798,7 @@ bool __stdcall function_168f40(long flags, s_vehicle_ray const *ray,
 			word object_flags = collision_flags_to_object_flags(flags);
 			word types = (word)(((dword)flags >> 4) & 0x1fff);
 			s_object_cluster_iterator iterator;
-			for (long object_index = function_b8940((short)cluster_index, &reference, &iterator);
+			for (long object_index = function_b8940(cluster_index, &reference, &iterator);
 				object_index != NONE; object_index = function_b89b0(&reference, &iterator))
 			{
 				if ((types & (1 << reference->type)) && !(reference->flags & object_flags))
@@ -1005,7 +1005,7 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
 					s_object_cluster_iterator iterator;
 					long object_index;
 
-					for (object_index = function_b8940((short)cluster_index, &reference, &iterator); object_index != NONE;
+					for (object_index = function_b8940(cluster_index, &reference, &iterator); object_index != NONE;
 						object_index = function_b89b0(&reference, &iterator))
 					{
 						long object_mark_index = object_index & 0xffff;

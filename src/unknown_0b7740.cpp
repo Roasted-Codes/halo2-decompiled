@@ -327,10 +327,9 @@ static __forceinline long object_cluster_next_ab(s_record_pool *array, s_object_
 }
 
 // @retail 0xb8940
-long function_b8940(short cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
+long function_b8940(long cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
 {
-	short const *cluster_reference = &cluster_index;
-	iterator->next = ((long *)g_4de2e0)[*cluster_reference];
+	iterator->next = ((long *)g_4de2e0)[(short)cluster_index];
 	return object_cluster_next_ab((s_record_pool *)g_4de2e4, iterator, record);
 }
 
@@ -341,10 +340,9 @@ long function_b89b0(s_object_cluster_reference **record, s_object_cluster_iterat
 }
 
 // @retail 0xb8a10
-long function_b8a10(short cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
+long function_b8a10(long cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
 {
-	short const *cluster_reference = &cluster_index;
-	iterator->next = ((long *)g_4de2d4)[*cluster_reference];
+	iterator->next = ((long *)g_4de2d4)[(short)cluster_index];
 	return object_cluster_next_ab((s_record_pool *)g_4de2d8, iterator, record);
 }
 
@@ -606,14 +604,16 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
     return false;
 }
 
-// score 188 (was 204): count stays in esi (a second zero register) until the
-// loop, so the empty-cluster exit gets its own epilogue (mov ax, si); the
-// g_4e7414 increment goes through ebp and is stored after the pushes (retail:
-// ecx, stored at once); the record/iterator reloads after each first-object
-// call are swapped; the second inlined distance test computes dz, dx, dy in
-// retail (dz, dy, dx here); retail sign-extends the cluster pushed to
-// 0xb8940/0xb8a10. Tried: second inline copy with dz,dx,dy or dy,dx,dz or a
-// vector3f delta (no change); count = 0 just before the loop (205).
+// score 196 (was 204; 188 before 0xb8940/0xb8a10 took a long cluster index,
+// whose sign extension retail pushes, the rise is alignment): count stays in
+// esi (a second zero register) until the loop, so the empty-cluster exit gets
+// its own epilogue (mov ax, si); the g_4e7414 increment goes through ebp and is
+// stored after the pushes (retail: ecx, stored at once); the record/iterator
+// reloads after each first-object call are swapped; retail aligns the second
+// object loop (jmp; lea ecx, [ecx]); the second inlined distance test computes
+// dz, dx, dy in retail (dz, dy, dx here). Tried: second inline copy with
+// dz,dx,dy or dy,dx,dz or a vector3f delta (no change); count = 0 just before
+// the loop (205).
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
