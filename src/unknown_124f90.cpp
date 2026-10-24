@@ -3049,8 +3049,9 @@ static inline long decibels_sum(long const &a, long const &b)
 }
 vector3f *function_1427f0(transform4x3f const *arg_0, vector3f const *arg_1, vector3f *arg_2);
 
-// score 35 (was 310): only register choices differ (fade start, gain sum and its temporary, flag reads),
-// and the no-distance path's flag set folds to a store.
+// score 6 (was 310): the no-distance path's flag set folds to a store (retail ors the byte), the fade start
+// is read into ecx instead of edx, and the gain sum lands in [esp+0x60] instead of retail's [esp+0x10].
+// Tried: one gain local stored after the if/else 35; sum written back into a by-value operand 128.
 // Depth zero 417, depth one 310, fade scope 310, shared attenuation 334, callback table 311.
 // @retail 0x129aa0
 void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization *arg_2)
@@ -3119,13 +3120,12 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 	}
 	local_2->field_14 = (local_0->unknown0a & 1) ? 0.0f : 1.0f;
 	long local_11 = SOUND_SYSTEM->time;
-	long local_20;
 	if (!local_0->unknown0b)
 	{
 		*(long *)local_0->unknown14 = 0;
 		local_2->field_8 = *((local_0->unknown0a & 1) ? &g_440c48 : &g_440c4c);
 		long local_19;
-		local_20 = *((local_0->unknown0a & 2) ? (local_19 = function_2197f0(local_2->field_18), &local_19) : &g_440c4c);
+		local_2->field_4 = *((local_0->unknown0a & 2) ? (local_19 = function_2197f0(local_2->field_18), &local_19) : &g_440c4c);
 	}
 	else
 	{
@@ -3149,9 +3149,8 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 		local_0->unknown0b = local_0->unknown0a;
 		local_2->field_8 = *((local_0->unknown0a & 1) ? &local_13 : &local_14);
 		long const *local_21 = (local_0->unknown0a & 2) ? &local_13 : &local_14;
-		local_20 = decibels_sum(*local_21, function_2197f0(local_2->field_18));
+		local_2->field_4 = decibels_sum(*local_21, function_2197f0(local_2->field_18));
 	}
-	local_2->field_4 = local_20;
 	local_2->field_0 = local_0->unknown0a;
 	local_2->field_c = 0;
 	local_2->field_10 = 0;
