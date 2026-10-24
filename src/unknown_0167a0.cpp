@@ -79,6 +79,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // logarithm width/reset schedule and restore/final pointer allocation;
 // final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
 // promoted inverse 248; float consistency 306; coordinated texture inputs 167.
+// Typed numeric state fields 167; typed pointer fields 181; full state view 181;
+// force-inline material lookup 167; global-first mask unions on full view 181.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
