@@ -29,6 +29,9 @@
 // member input record 4; member input and handle records 0, but existing
 // descendants require direct object/placement/id fields and list.field_0;
 // base input record with the original exposed fields 12
+// aggregate tail and body stores 23; first two tail stores in constructor
+// body 17, first only 17, owner only 16; two public tail bases with list/body
+// constructors in all four combinations 12
 // @retail 0x30b340
 class_30b340::class_30b340(referenced_2d88a0 *object_, long value)
 	: field_8(0), object(object_), field_10(-1), field_14(0), field_18(0), field_1c(0), field_20(0), field_24(value)

@@ -94,6 +94,13 @@ public:
 // reread 34; motion through collidable 53; direct pending operands 55;
 // object names or mutable pointers 55; placed after array/recorder helpers
 // 55, with original body 17
+// separate receiver snapshots 3; direct group fields with those snapshots 1;
+// motion through the pointer then 19 (the last receiver moves to ecx);
+// outer receiver declaration, shared shape types, first pointer declaration,
+// renamed last receiver or reference receiver 19; early shape snapshot 64;
+// second receiver use 15, two multiple-use receivers 63, restore-only receiver 15;
+// scaled float local 133; inline factor or combined outer scope 68;
+// 1/3 forms require one-use field pointers and remain rejected
 // @retail 0x30df80
 void owner_30c8e0::function_30df80(member_30c8e0 *member)
 {

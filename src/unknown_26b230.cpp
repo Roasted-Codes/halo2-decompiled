@@ -448,6 +448,8 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // score 68 (was 68): retail sign-extends the first team argument and passes the second one
 // narrow, and its frame is four bytes larger than ours, so the stack offsets and the register
 // that holds the clump pointer differ as well.
+// Shared datum iterator 174; wide side 68; unsigned side 68; initial done 68; complete iterator 115; current
+// initialized 68; prop type snapshot 93; prop reference 68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1795,6 +1797,8 @@ void function_2689d0(void)
 	}
 }
 
+// score 5 (was 5): node/prop next homes 0x1c/0x14 versus 0x18/0x1c; setup scope 5; typed prop 5; both 5;
+// link references 5; array views 5; prop names 5; record references 5; joint declarations 5.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {
