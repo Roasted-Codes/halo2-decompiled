@@ -3793,10 +3793,11 @@ void __stdcall function_104150(long weapon_index, short barrel_index)
     vector3f repeated_direction;
     for (long marker_index = 0; marker_index < marker_count; ++marker_index)
     {
+        s_object_marker const *marker = &markers[marker_index];
         if (marker_count > 1 && (bool)(((dword)WEAPON_LONG_AT(barrel_definition, 0) >> 12) & 1) &&
             WEAPON_BYTE_AT(barrel, 0x2e) % marker_count != marker_index) continue;
-        point3f origin = markers[marker_index].matrix.position;
-        vector3f direction = markers[marker_index].matrix.forward;
+        point3f origin = marker->matrix.position;
+        vector3f direction = marker->matrix.forward;
         vector3f motion = *g_4687a4;
         real inherited_speed = 0.0f, spread = 0.0f;
         real actor_speed = 0.0f;
@@ -3834,7 +3835,7 @@ void __stdcall function_104150(long weapon_index, short barrel_index)
                 if (inherited_speed < 0.0f) inherited_speed = 0.0f;
                 if (WEAPON_LONG_AT(barrel_definition, 0) & 8)
                 {
-                    origin = markers[marker_index].matrix.position;
+                    origin = marker->matrix.position;
                     point3f center, clipped;
                     function_cafc0(unit_index, &center);
                     if (function_16a7c0(&center, &origin, function_baf40(unit_index), NONE, &clipped)) origin = clipped;
@@ -3880,7 +3881,7 @@ void __stdcall function_104150(long weapon_index, short barrel_index)
             real upper = WEAPON_REAL_AT(barrel_definition, 0x44) * 0.01745329238474369f;
             real angle = lower + weapon_emission_random(&seed) * (upper - lower);
             real turn = weapon_emission_random(&seed) * 6.2831854820251465f;
-            vector3f axis = markers[marker_index].matrix.up;
+            vector3f axis = marker->matrix.up;
             weapon_emission_rotate(&axis, &direction, turn);
             weapon_emission_rotate(&direction, &axis, angle);
         }
