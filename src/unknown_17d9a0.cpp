@@ -482,8 +482,10 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 774 (was 890): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
+// score 753 (was 890): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
+// From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.
+// Long emission index 763; tag-pointer rename/lifetime 774/774; group-first plus offset 786; plus long emission 747 (alignment worse).
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
@@ -516,7 +518,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 		do
 		{
 			short group_count = 0;
-			for (short i = 0; i < secondary_count && !group_count; ++i)
+			for (short i = 0; !group_count && i < secondary_count; ++i)
 			{
 				long first_face = secondary[i];
 				if (first_face == NONE)
