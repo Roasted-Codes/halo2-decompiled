@@ -401,6 +401,9 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 	return constraint;
 }
 
+// score 29 (was 30): frame 0x454 agrees; entry setup and split final flag update differ; fast control 31.
+// Returned map 431; block reference 31; size lifetime 31; flags reference 34; paired bits 31; contact entry 174;
+// size name 31; model pointer 36.
 // @retail 0x1d77d0
 void __stdcall function_1d77d0(s_havok_component *component, s_physics_model_owner *owner)
 {

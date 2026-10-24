@@ -25,6 +25,9 @@ struct s_weapon_aim_ranges
 	real maximum_fraction;
 };
 
+// score 139 (was 139): frame agrees; actor/tag EDI/ESI homes and folded projectile flag test differ.
+// Full-scope fraction 153; native fraction predicate 138; adjusted point construction 140;
+// inline depth zero 195; native barrel ordinal 186.
 // @retail 0x1ffbd0
 bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	point3f const *origin, point3f const *target, bool flag, vector3f *direction,

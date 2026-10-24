@@ -101,6 +101,11 @@ PRIVATE inline void shape_transform_point(const transform4x3f *matrix, const poi
 	result->z = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x + matrix->position.z;
 }
 
+// score 6 (was 6): radius/index loads swap; vertex x uses the completed
+// address before its store. Derived count/kind/value initializers 33; all
+// member initializers 6; index/count/kind initializers 6; const source 6;
+// point memcpy 120; point value with in-place transform 128; word edge
+// cursors 97; full-width side 97.
 // @retail 0x1edd00
 c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, long index,
 	long user_data, const transform4x3f *matrix) : radius_shape_2de750(0.01f)

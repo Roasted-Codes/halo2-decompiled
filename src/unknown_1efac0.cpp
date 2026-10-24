@@ -377,7 +377,8 @@ struct s_surface_object_header
 };
 
 // score 8 (was 8): the record address is computed in ECX; retail computes it in EDX and reads
-// the flags from it.
+// the flags from it. Tried: a byte flags local 8; a dword index 8; the object as bytes 8;
+// `case 4: case 3:` 8; the value read as one sum 8; the parameters as (key, owner) 8.
 /* the first argument is the caller's shape owner (or its object reference); the body
    never reads it, but every retail caller still computes it before the call */
 // @retail 0x1ef3e0

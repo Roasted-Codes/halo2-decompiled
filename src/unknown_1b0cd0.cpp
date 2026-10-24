@@ -399,6 +399,10 @@ bool function_1b1970(long actor_index, short mode, vector2f const *forward,
 	return result;
 }
 
+// score 19 (was 19): origin/forward setup and native index/mode arguments differ;
+// origin pointer 19; origin reference 19; external index reference 79.
+// external mode reference 46; no target vector setter 65; native index type 19.
+// alias analysis 19; size preference 321; external field pair 78.
 // @retail 0x1b1a90
 void __stdcall function_1b1a90(long actor_index, s_slot *slot, s_slot_target_list *list)
 {

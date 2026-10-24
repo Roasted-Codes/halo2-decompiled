@@ -2079,6 +2079,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // native unit view 184; read-only unit view 184; native child view 184;
 // both native views 184; unsigned result mask 184; child defaults reversed 186;
 // immutable output binding 184; read-only byte source 184.
+// frame 0x1c agrees; object/offset homes and slot mask differ.
+// Frame pointer 291; scalar clamp input 184; sample-first clamp result 189;
+// indexed snapshot records 230; native-word ordinary tail flags 192.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

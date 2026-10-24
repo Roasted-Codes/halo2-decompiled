@@ -1956,6 +1956,10 @@ struct s_player_creation_record
 // score 33 (was 33): the value that is handed to the call is read into EDI
 // here and into EDX in retail, so the register that carries the argument
 // differs; the rest of the call is the same.
+// Frame 0x10 agrees; the controller reset expands on the opposite arm.
+// Caller depth 1/2 33/33; size preference 335; common reset 55;
+// auto-inline off 33; global optimization off 395; depth 0 305;
+// common reset with size preference 343.
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {
@@ -2093,6 +2097,9 @@ static __forceinline long player_round_ticks(real value)
     return result;
 }
 
+// score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
+// Frame pointer 816; native input fields 701; native player cooldown fields 701;
+// direct permission result 707; combined native fields and direct result 707.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
