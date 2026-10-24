@@ -2452,6 +2452,10 @@ struct s_1fb7e0_data;
 bool __stdcall function_20ba60(short arg_0, long arg_1, long arg_2, long arg_3, short arg_4, s_1fb7e0_data const *arg_5);
 
 // @retail 0x202a00
+// score 107 (was 126): the record and its index swap EBP/EDI (and the inherited and new choices
+// EBX/ESI) against retail; retail also reads the 0x1c choice zero-extended into EAX and keeps the
+// next script index in a register in that path. Retail sets the choice passed down back to NONE
+// on every path that finds none, which the `local_11` branch reproduces.
 void __stdcall function_202a00(long arg_0, long arg_1)
 {
     long *local_0 = &arg_0;
@@ -2476,10 +2480,10 @@ void __stdcall function_202a00(long arg_0, long arg_1)
         }
         else if (local_4[0x16] && *(short *)(local_4 + 0x14) != NONE)
         {
-            long local_5 = NONE;
+            short local_5 = NONE;
             short local_6;
-            word local_7 = *(word *)(local_4 + 0x1c);
-            if (local_7 != (word)NONE)
+            short local_7 = *(short *)(local_4 + 0x1c);
+            if (local_7 != NONE)
             {
                 if (*(short *)(local_4 + 0x1e) > 0)
                     goto local_11;
@@ -2487,26 +2491,30 @@ void __stdcall function_202a00(long arg_0, long arg_1)
             }
             else
             {
-                local_7 = function_290cd0(*(short *)(local_4 + 0x14), NONE, *local_0, &local_6, (short *)&local_5);
-                if (local_7 == (word)NONE)
+                local_7 = function_290cd0(*(short *)(local_4 + 0x14), NONE, *local_0, &local_6, &local_5);
+                if (local_7 == NONE)
                     goto local_11;
                 if (local_6 > 0)
                 {
                     *(short *)(local_4 + 0x1e) = local_6;
-                    *(word *)(local_4 + 0x1c) = local_7;
-                    *(short *)(local_4 + 0x20) = (short)local_5;
+                    *(short *)(local_4 + 0x1c) = local_7;
+                    *(short *)(local_4 + 0x20) = local_5;
                     goto local_11;
                 }
             }
-            if (local_7 != (word)NONE)
+            if (local_7 != NONE)
             {
-                local_2 = (short)local_7;
-                function_202e30((short)local_2, *local_0, true);
-                if ((short)local_5 != NONE)
-                    function_20ba60((short)local_5, NONE, NONE, local_3 | 0x40000000, NONE, NULL);
+                local_2 = local_7;
+                function_202e30(local_7, *local_0, true);
+                if (local_5 != NONE)
+                    function_20ba60(local_5, NONE, NONE, local_3 | 0x40000000, NONE, NULL);
+            }
+            else
+            {
+local_11:
+                local_2 = NONE;
             }
         }
-local_11:
         if (*(long *)(local_4 + 4) != NONE)
             function_202a00(*(long *)(local_4 + 4), local_2);
         for (long local_8 = *(long *)(local_4 + 8); local_8 != NONE; )
