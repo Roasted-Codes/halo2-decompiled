@@ -986,6 +986,10 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
 // Signed rounding result, alpha before switch/loop 90; low-mask OR 259;
 // high-mask XOR 91; clear/OR state update 259; shared scalar rounding result 90;
 // cases 0/2/1 90; unsigned return from existing alpha helper 90.
+// rounded alpha shifts in a register instead of its stack slot; branch offsets differ.
+// byte alpha 89; word alpha 89; integer alpha raw 90.
+// raw alpha integer 90; shared previous state 90; float consistency 90.
+// frame pointer 742; size preference 730.
 // @retail 0x17b60
 void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 {
@@ -1099,6 +1103,12 @@ void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 // Frame 0x10 agrees; state/range and evaluator component registers still differ.
 // Unsigned range accessors 54; output/mask/both bank predicates 54;
 // byte component 51 (193 bytes), byte kind 73, both byte inputs 60; output fields 54.
+// state stays in EBX and range in EBP; retail keeps state in EBP
+// and reloads range. The evaluator component is stacked instead of EDI;
+// packed-field extraction order still differs.
+// const pointer tables 54; vector bank elements 54; packed record fields 54.
+// byte record fields 75; frame pointer 71; global optimization 153.
+// size preference 77; float consistency 54.
 // @retail 0x19be0 standard
 void __stdcall function_19be0(byte *state, word const *range)
 {
