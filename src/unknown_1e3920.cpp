@@ -536,6 +536,9 @@ void function_118e80(long object_index, vector3f *forward);
 real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
+// score 273 (was 273): frame 0x8c versus 0x90; early NONE and held-bit byte home differ;
+// frame pointer 468; inline depth zero 608; index-clear schedule fast 376/plain 272;
+// direct plane result 418; named held-direction result 371 (fast control 371).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {

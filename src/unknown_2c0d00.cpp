@@ -224,6 +224,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Classification order 898; common center 887; common offset 867; marker count 866; inline depth two 866;
 // paired object centers 907; first/sphere centers 907; vehicle-check/sphere centers 907.
 // frame 0x2cb8 versus 0x2cac and actor/unit retention;
+// inline depth zero 1008; global optimization off 3195;
+// long blocking 912; long classification 949; long enabled 906 (plain);
+// fast control 916, trials 1008/3199/910/947/916.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,

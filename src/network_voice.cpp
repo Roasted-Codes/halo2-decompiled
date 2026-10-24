@@ -2941,6 +2941,8 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
  return count;
 }
 
+// score 139 (was 139): channel/cursor/count registers and route homes differ;
+// frame pointer 188; short stride 163; short index 139; recipient-bit reuse 161; route name 139.
 // @retail 0x55e10
 long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, bool relay)
 {

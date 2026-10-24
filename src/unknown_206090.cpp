@@ -118,6 +118,9 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
+// score 1600 (was 1600): frame 0x580 versus 0x58c; velocity homes and contact induction differ;
+// frame pointer 2092; inline depth zero 3049, eight 1600; point/contact row tables 1600/1600;
+// double magnitude accumulator 1654.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
