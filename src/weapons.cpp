@@ -3906,12 +3906,14 @@ void __stdcall function_104150(long weapon_index, short barrel_index)
             *(point3f *)(creation + 0x1c) = origin;
             *(vector3f *)(creation + 0x28) = direction;
             if (player_controlled) WEAPON_LONG_AT(creation, 0x18) |= 4;
-            bool tracer = WEAPON_REAL_AT(barrel, 0x10) != 0.0f;
+            /* retail: a barrel whose +0x10 is zero always fires a tracer; otherwise the
+               signed shot counter at +0xe counts up to the definition's +0x2e */
+            bool tracer = WEAPON_REAL_AT(barrel, 0x10) == 0.0f;
             if (!tracer)
             {
-                word previous = (word)WEAPON_SHORT_AT(barrel, 0xe);
+                short previous = WEAPON_SHORT_AT(barrel, 0xe);
                 WEAPON_SHORT_AT(barrel, 0xe) = (short)(previous + 1);
-                if (previous >= (word)WEAPON_SHORT_AT(barrel_definition, 0x2e)) tracer = true;
+                if (previous >= WEAPON_SHORT_AT(barrel_definition, 0x2e)) tracer = true;
             }
             if (tracer) WEAPON_SHORT_AT(barrel, 0xe) = 0;
             vector3f *shot_direction = (vector3f *)(creation + 0x28);
