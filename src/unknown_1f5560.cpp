@@ -445,7 +445,9 @@ static inline real heading_distance3d(point3f const *a, point3f const *b)
 /* while the actor's target point (+0x638) is fresh: faces it, and once
    within half a world unit of it asks the unit to stop there (request 0x2d) */
 // score 66 (was 66): retail saves ESI in the prologue, ours does not, and
-// ours is ten bytes longer than retail.
+// ours is ten bytes longer than retail. Inline depths one/two 66, zero 197;
+// size preference 221; frame pointer 133; global optimization off 177;
+// explicit availability outcomes 64/421 bytes; force-inline distance 66.
 // @retail 0x1f58c0
 bool function_1f58c0(long actor_index, vector3f *facing, short *unknown)
 {
@@ -741,6 +743,10 @@ real normalize2d(point2f *v);
 // named first normalization result 172; global optimization off 542.
 // low-bit presence guard 228; native type clamp 236; branch-defined chosen speed 220;
 // target snapshot 234; inline depth zero 231. Frame 0x48 still agrees.
+// score 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// result homes differ. Validity initialized in typed arm 241; first type initialized by branch
+// 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
+// movement flag stores 174; retry speed first 172; native planar output copies 172.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -974,6 +980,8 @@ done:
         *movement_out = movement;
 }
 
+// score 307 (was 307): frame 0x18 versus 0x1c; actor/object roles and factor homes differ.
+// Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1246,6 +1254,8 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
     return 0.0f;
 }
 
+// score 294 (was 294): frame 0x3c agrees; radius/result homes and initial direction materialization differ.
+// With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

@@ -453,6 +453,9 @@ void function_1cf50(void);
 
 #pragma inline_depth(0)
 // score 100 (was 100): the record index is scaled by 0x40 in retail and by 0x4 here, and the table retail reads is not the one this tree reads
+// Current stride agrees; the hoisted zero, callee convention and color/draw
+// scheduling differ. Record view, byte-channel locals, material/color results,
+// block-pool/byte-offset lifetimes and typed-record for 100; byte bitmap 98.
 // @retail 0x44040
 void __stdcall function_44040(long cell, short mask)
 {
@@ -1229,6 +1232,7 @@ static inline long render_memory_allocate(long bytes)
 }
 
 // score 1 (was 1): the permutation pointer arrives in eax, retail passes it in ecx; the register is fixed by the caller function_4c690, which is not retail's yet
+// frame pointer 27; alias analysis off 1; global expressions off 62; inline depths one/zero 1/89; native result/count 1/1; input role names 1.
 // @retail 0x3e380
 long function_3e380(long model_index, byte lod, transform4x3f const *nodes,
     byte const *permutations, long *node_count, long extra_bytes)

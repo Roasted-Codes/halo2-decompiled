@@ -468,6 +468,9 @@ real function_3eb70(void);
 typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_particle_value_cache *, point3f const *, vector3f const *, real, color4f const *, void *);
 
 
+// score 56 (was 56): Offset initialization, scalar initializer order, property reloads and rotation scheduling differ.
+// Combined entry decisions 53; entry decisions with shared cache 53; scale/alpha/both result locals 119/56/119;
+// saved successor 217; particle cache with scale result 119; combined entry/property/cache 116.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {
@@ -693,6 +696,8 @@ s_effect_particle_system_definition *s_particle_system_datum::function_1751d0()
 
 // score 21 (was 21): the or-ed mask is written into the local after the call arguments are pushed
 // here and before them in retail.
+// The final callee takes its flag on the stack, not in AL; inline+noinline, noinline and inline 21;
+// force-inline 21 with caller regressions; late values, flag, location and successor-reference forms 21.
 // @retail 0x175270
 void function_175270(s_particle_system_datum *particle_system, s_particle_system_spawn *spawn, transform4x3f const *matrix, bool field_b4)
 {
@@ -797,6 +802,9 @@ public:
 	virtual long const *names() = 0;
 };
 
+// score 355 (was 355): frame agrees; byte flag clear, child carriers and selective inlining differ.
+// Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
+// perpendicular call 394; inline depth one 394, zero 517.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -977,6 +985,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
     result->k = a->i * b->j - a->j * b->i;
 }
 
+// score 213 (was 213): frame and length agree; early EDI and tag carriers differ. Native draw 354; native
+// membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {
@@ -1092,7 +1102,17 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
 long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
+// score 106 (was 106): frame 0x14 agrees; owner/NONE coalescing and Boolean homes differ.
+// Next-slot assignments 107; word absolute slot 158; separate scan result 107;
+// shared datum conversion 199; long attachment 120; short same-view 145; byte draw 107;
+// long camera-relative 144 (fast preview 107, full 106). Original body retained.
+// Round 109: unavailable predicate 148; other-view predicate 146; detached predicate 108;
+// fixed-camera result 148; external system reference 107; nullable effect view 149;
+// const definition 107; packed effect handle 107 (fast preview 107, full 106).
 // @retail 0x174220
+// score 106 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
+// availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag
+// in al, and it tests the definition's bit 9 as a byte instead of a shifted word.
 void __stdcall function_174220(bool view_pass)
 {
     s_record_pool *systems = g_510c74;

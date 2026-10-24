@@ -1,4 +1,4 @@
-// @flags /O2 /GL-
+// @flags /O2 /GL- /GX
 // Havok (third-party physics library): reporting an error message through
 // the error handler the game installs.
 #include "stream_holder_2d8e70.h"
@@ -14,23 +14,13 @@ public:
 
 error_handler_2d97d0 *g_480178;
 
-// score 29 (was 29): retail's frame is four bytes larger and holds a store of
-// the flag's address, which is how MSVC records an exception scope; our build
-// has no /EHsc and so never writes it, and every EH switch here (/GX, /EHa,
-// /EHsc, /EHs) adds the handler registration retail does not have. Tried:
-// implicit and explicit arguments 29; trivial copies 29/26; char storage
-// 29/26; constructor and initializer variants 29; with /GX 93.
-// The exception-scope explanation above is unproven: the saved address of
-// the flag is the actual remaining evidence. Empty argument destructor with
-// custom or implicit copying 29; char storage with a converting interface 29
-// (constructor loses its match); explicit destructible argument 26; stream
-// name, out-of-class destructor and member initialization 29. Restored.
+__declspec(nothrow) void __cdecl function_2d97d0(char const *message);
+
 // @retail 0x2d97d0
 void __cdecl function_2d97d0(char const *message)
 {
 	char buffer[0x200];
-	flag_2d8e70 zero(true);
-	stream_holder_2d8e70 stream(buffer, sizeof(buffer), zero);
+	stream_holder_2d8e70 stream(buffer, sizeof(buffer), true);
 	stream.function_2d8f10(message);
 	g_480178->report("Error", 0x2636fe25, buffer, ".\\error\\hkError.cpp", 27);
 }

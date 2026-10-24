@@ -430,6 +430,11 @@ bool function_b6320(s_upload_ab *upload, byte *buffer, long maximum, long *writt
 
 short function_b5000(s_transport_endpoint *endpoint, void const *buffer, short length);
 
+// score 10 (was 10): retail lays the shared false exit out after the would-block test and the
+// restore exit last; ours puts the restore exit first. Tried: `return true` in the would-block arm 44;
+// direct returns everywhere 72 (retail's block order, but the results fold to constants); the
+// plain failure as `return false` behind `if (sent != -2)` 20; looping while the iteration
+// succeeded with the completion guarded after the loop 44; success arm ending in `continue` 10.
 // @retail 0xb6000
 bool s_http_connection_ab::send()
 {

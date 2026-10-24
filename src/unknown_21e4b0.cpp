@@ -98,6 +98,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // aggregate with early result 357; early result with count cursor 300.
 // failure arm first 168; direct result exits 364; byte category index 311;
 // headroom do 167; flat eight-entry submix scan 258. Frame 0x80 still agrees.
+// returned byte 313; returned byte/count cursor 341; serial HRESULT 169; descriptor prefixes 323;
+// complete listener value 468; frame pointer 443; global optimization disabled 1166; size preference 645;
+// separate final-call result 302; result transfer before reset 294.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

@@ -61,6 +61,8 @@ extern long g_55c154;
 // creation classification spill and copy inline boundary;
 // inline depths zero 88, one 61; shared request 90; integer classification 71;
 // separate load inputs with shared publication 178.
+// byte classification 61; signed-byte classification 61; initialized variant 170; initialized request 155;
+// frame pointer 98; global optimization disabled 518; controller-index snapshot 61; speed preference 466.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {

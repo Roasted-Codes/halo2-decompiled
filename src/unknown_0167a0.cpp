@@ -77,10 +77,14 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 167 (was 167): logarithm width/reset schedule and restore/final pointer allocation;
 // final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
 // promoted inverse 248; float consistency 306; coordinated texture inputs 167.
+// Typed numeric state fields 167; typed pointer fields 181; full state view 181;
+// force-inline material lookup 167; global-first mask unions on full view 181.
 // frame/entry agree; logarithm width, reset and restore scheduling differ.
 // Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
-// frame/entry agree; logarithm width, reset and restore scheduling differ.
 // logarithm width/reset schedule and restore/final pointer allocation;
+// Logarithm width and reset/restore scheduling remain;
+// rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
+// record reload after render call 192; raw global-first unions 167.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -795,6 +799,11 @@ static inline real unit_clamp_176a0(real value)
     return value;
 }
 
+// score 124 (was 124): frame 0x2c agrees; cursor EDI versus EBP and clamp
+// result publication differ. Indexed entry walk 186; alpha-first clamps with
+// body entry step 122; frame pointer 229; global optimization off 385; size 301.
+// frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
+// Entry step in body 122; indexed clamp loop 151; short/byte entry counter 122/133; inline depth one 122.
 // @retail 0x176a0
 void function_176a0(byte *state, s_packed_shader_range const *range)
 {
@@ -976,6 +985,14 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
     }
 }
 
+// score 90 (was 90): Frame 0x18 agrees; rounded alpha shifts in a register instead of its conversion slot.
+// Signed rounding result, alpha before switch/loop 90; low-mask OR 259;
+// high-mask XOR 91; clear/OR state update 259; shared scalar rounding result 90;
+// cases 0/2/1 90; unsigned return from existing alpha helper 90.
+// rounded alpha shifts in a register instead of its stack slot; branch offsets differ.
+// byte alpha 89; word alpha 89; integer alpha raw 90.
+// raw alpha integer 90; shared previous state 90; float consistency 90.
+// frame pointer 742; size preference 730.
 // @retail 0x17b60
 void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 {
@@ -1036,6 +1053,9 @@ void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 // score 51 (was 51): the switch on the procedure id is compiled to a different table: retail
 // reads the entry with movzx ecx from a table at another base, ours uses
 // esi and another table.
+// Frame 0x10 agrees; table pointer and alpha memory shift still differ.
+// Short counter 51; word counter 220; unsigned counter 210; byte alpha 50;
+// word alpha 50; scalar memcpy 322; color-input pointer 51; const entry 51.
 // @retail 0x1ab50
 void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 {
@@ -1083,6 +1103,15 @@ void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 
 // score 54 (was 54): the two arguments land in different registers (retail uses ebp for the
 // second and ecx for the first) and the bit-field extraction order differs.
+// Frame 0x10 agrees; state/range and evaluator component registers still differ.
+// Unsigned range accessors 54; output/mask/both bank predicates 54;
+// byte component 51 (193 bytes), byte kind 73, both byte inputs 60; output fields 54.
+// state stays in EBX and range in EBP; retail keeps state in EBP
+// and reloads range. The evaluator component is stacked instead of EDI;
+// packed-field extraction order still differs.
+// const pointer tables 54; vector bank elements 54; packed record fields 54.
+// byte record fields 75; frame pointer 71; global optimization 153.
+// size preference 77; float consistency 54.
 // @retail 0x19be0 standard
 void __stdcall function_19be0(byte *state, word const *range)
 {
@@ -1105,6 +1134,9 @@ void __stdcall function_19be0(byte *state, word const *range)
 // score 39 (was 39): the jump table's targets and the shifts around it differ: retail shifts
 // the word at esp+0x18 and keeps the index in ecx, ours keeps it in esi
 // and shifts later.
+// Frame 0x18 agrees; alpha still shifts in a register.
+// Byte alpha 38; word alpha 38; short counter 250; unsigned counter 251;
+// rounding-result name 39; scale name 39; result first 41; integer case first 39.
 // @retail 0x18560
 void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 {
@@ -1165,7 +1197,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 // score 246 (was 246): sampler convention and captured descriptor versus dirty-store rereads;
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
-// pack result at store 344; existing clamp calls 318.
+// pack result at store 344; existing clamp calls 318. Frame pointer 365;
+// zero inline depth 652; global optimization off 1687; size 517; native
+// ternary clamp loops 359.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

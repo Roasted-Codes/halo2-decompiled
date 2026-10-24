@@ -40,6 +40,9 @@ static __forceinline long real_to_long(real value);
 // Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
 // Depth one 144; unsigned maximum 146; word update state 155; first datum API 272; calling scan 208.
 // Activity-controlled first/slice/both loops 158/156/168; signed byte update with short/long maximum 146/152.
+// Native current-pointer/cursor view 132; with Boolean slice API 127; independent
+// long budget 114; separate native cursors 178; native first only 198; short
+// increment 121; Boolean branch 130; handle snapshots 127. Cursor views rejected.
 // @retail 0x268510
 void function_268510()
 {
@@ -99,6 +102,11 @@ void function_268510()
 // frame and pushes the registers, and it keeps the pool pointer in ebx and the index in edi;
 // ours reserves the frame first and holds the global in ebp, so the prologue and the loop
 // head differ.
+// First/second/both callee noinline 81/81/81; existing typed current 81; typed const view 81.
+// Typed unsigned handle/role names/both noinline 81/81/81; cached global and nullable join remain.
+// Entry guard 90; inactive return 86; outer current 81; zero initialization 53
+// (extra entry stores, restored); byte activity 81; calling scanner 120;
+// shared datum iterator 158; inactive continue 81. Original body retained.
 // @retail 0x268840
 void function_268840()
 {
@@ -448,6 +456,12 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // score 68 (was 68): retail sign-extends the first team argument and passes the second one
 // narrow, and its frame is four bytes larger than ours, so the stack offsets and the register
 // that holds the clump pointer differ as well.
+// Pointer result/reference/both 68/68/68; current field first/pointer/reference 94/94/94.
+// Promoted initial team 94 (sign extension recovered); result from initial test 127.
+// Shared datum iterator 174; wide side 68; unsigned side 68; initial done 68; complete iterator 115; current
+// initialized 68; prop type snapshot 93; prop reference 68.
+// Both-arm step result/stored-current result/native step result/activity input/member step 68 each.
+// Node query/prop query/both separate noinline declarations 68/68/68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1459,6 +1473,8 @@ long function_26bc60(long clump_index)
 	return 2;
 }
 
+// score 127 (was 127): frame 0x1c versus 0x20; result register, iterator null join and center copy differ.
+// Plain oldest-time/index storage separately 136/126; byte activity 127; native pool step 160; activity while 136.
 // @retail 0x269040
 long function_269040(point3f const *center, short team)
 {
@@ -1623,6 +1639,9 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // score 128 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
 // Round 280: remaining-count traversal 128 plain; current-child handle 164; collection write cursor 172; array scope 167; early active flag 199.
 // Child/countdown 125; short remaining 125; unsigned remaining 125 (each only three below the retained countdown).
+// Frame pointer 198; depth zero 313; later generation increment 130; native source slot 175; size preference 360; first-walk generation snapshot 178.
+// generation after destination 221; generation after head 126; read-only source 128; source reference 128.
+// read-only copy 128; read-only first walk 128; ordinary prop inline 128; separate copy noinline 128.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1734,6 +1753,10 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
+// score 134 (was 134): frame 0x38 versus 0x3c; pool/selection homes and threaded exhaustion differ.
+// Retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133; size preference 338.
+// frame 0x38 versus 0x3c; pool register and common null-current join differ.
+// Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
 // @retail 0x2689d0
 void function_2689d0(void)
 {
@@ -1795,6 +1818,13 @@ void function_2689d0(void)
 	}
 }
 
+// score 5 (was 5): node next is at stack +0x1c instead of +0x18; prop next is at +0x14 instead of +0x1c.
+// Member for-loop 204; prop for-loop 222; both for-loops 316; disjoint traversal scopes 5.
+// Scopes/member for-loop 204; scopes/prop for-loop 222; scopes/both for-loops 316; setup record references 5.
+// Member/prop/role iterator names 5/5/5; member/prop/both iterator references 5/5/5.
+// Member/prop ordinary inline 5/5; every plain whole-program trial preserves all baseline matches.
+// node/prop next homes 0x1c/0x14 versus 0x18/0x1c; setup scope 5; typed prop 5; both 5;
+// link references 5; array views 5; prop names 5; record references 5; joint declarations 5.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {
@@ -1874,6 +1904,8 @@ void function_269250(long clump_index, long actor_index)
 // Complete workspace scope 189; depth zero 391; member-link result first 222; replacement-result loop 206; promoted category 195.
 // Depth one 189; outer datum API 290; word unit 218; word group 192; calling scan 237.
 // Direct pool step 254; activity-controlled loop 194; existing prop lookup 189; short/signed byte change 244/189; cached-bound scan 189.
+// Read-only object/external object reference/read-only member/extensions 189/189/189/189.
+// Ordinary prop/node/both iterator inline and separate removal noinline 189/189/189/189.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

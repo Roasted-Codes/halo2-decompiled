@@ -92,50 +92,52 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 	}
 }
 
-// score 32 (was 32): the blocks are laid out in another order, so the relative
-// offsets of the jumps differ, and the value in ebx is set after the test on esi
-// where retail sets it before.
+// score 25 (was 32): retail places the allocation failure's `error = 2` arm after
+// the release block's return (it jumps back to the null test); ours lays it out
+// before the release block. Was: the error codes folded into the release test
+// (32); the error set in an if/else with `result = error` before the release, the
+// index test nested: 25.
 // @retail 0x8b110
 long c_vtable_450cb8::v0(long index, long a2, long a3, long *count, s_item_450cb8 *items, void *a6)
 {
-	long result;
-	result = 0;
-	if (index < 0 || index >= handlers->count)
-		{ result = 3; goto local_0; }
-
-	c_handler_450cb8 * handler;
-	handler = handlers->handlers[index];
-	long size;
-	size = handler->v2();
-	if (size > 0)
+	long result = 0;
+	if (index >= 0 && index < handlers->count)
 	{
-		int error;
-		void * block;
-		block = function_96e90(size);
-		if (block != 0 && handler->v10(size, block, a6))
+		c_handler_450cb8 *handler = handlers->handlers[index];
+		long size = handler->v2();
+		if (size > 0)
 		{
-			s_item_450cb8 * item = &items[(*count)++];
-			item->data = block;
-			item->size = (short)size;
-			item->type = 0xe;
-			goto local_0;
+			long error;
+			void *block = function_96e90(size);
+			if (block != 0)
+			{
+				if (handler->v10(size, block, a6))
+				{
+					s_item_450cb8 * item = &items[(*count)++];
+					item->data = block;
+					item->size = (short)size;
+					item->type = 0xe;
+					goto local_0;
+				}
+				error = 3;
+			}
+			else
+				error = 2;
+			result = error;
+			if (0 != block)
+			{
+				s_allocator_globals * globals;
+				unsigned long info;
+				g_4d87f8->allocator->get_info(block, &info);
+				globals = g_4d87f8;
+				globals->allocator->release(block, NONE);
+				globals->count--;
+			}
 		}
-		error = 2;
-		if (block != 0)
-			error = 3;
-		if (0 != block)
-		{
-			s_allocator_globals * globals;
-			unsigned long info;
-			g_4d87f8->allocator->get_info(block, &info);
-			globals = g_4d87f8;
-			globals->allocator->release(block, NONE);
-			globals->count--;
-		}
-		result = error;
-		goto local_0;
 	}
-	local_0:
+	else
+		result = 3;
+local_0:
 	return result;
 }
 

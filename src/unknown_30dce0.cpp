@@ -155,6 +155,10 @@ public:
 // append 190; default result constructor 190; after array helpers 190.
 // Implicit true plus indexers fixes the entry registers, but pair-loop
 // register ownership and instruction scheduling still regress overall.
+// Further trials on 101: reversed self-test operands, a two-use pair
+// pointer, a long pair index, the index initialized before the receiver,
+// the box declared first, pointer plus reversed test, direct filter input,
+// and an external-field reference all score 101 at 667 bytes.
 // @retail 0x30dce0
 void world_30dce0::function_30dce0(object_30dce0 *object, flag_30dce0 notify)
 {

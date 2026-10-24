@@ -1278,6 +1278,9 @@ struct s_animated_object_header
 	s_animated_object *object;
 };
 
+// score 131 (was 131): frame agrees; initial zero-output arm precedes channel chain instead of following it.
+// Vector homes by call order 131; scalar homes by call order 131; counted component blend 131;
+// complete blended vector 136; inline depth zero 163.
 // @retail 0x1cd6c0
 void s_animation_state::movement_rate_get(long object_index, vector3f *vector, real *value)
 {

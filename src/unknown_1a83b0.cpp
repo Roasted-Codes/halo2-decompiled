@@ -37,6 +37,9 @@ PRIVATE __forceinline real function_1a8fa1(vector3f const *arg_0)
 }
 #pragma optimize("", on)
 
+// score 53 (was 53): Final distance-call registers and the output-exit displacement differ.
+// Read-only actor/target 53/53; full-width segment/actor/point results
+// 78/86/66; named segment/sample distances 53/53; delayed segment default 139.
 // @retail 0x1a8fa0
 void function_1a8fa0(long actor_index, real distance, bool *near_point, bool *near_actor, bool *near_segment)
 {
@@ -471,6 +474,11 @@ s_1a8a10 g_4453c0[] =
 // score 17 (was 17): retail subtracts the local at [esi+0x294] inside the sum
 // and keeps the two partial products in xmm2 and xmm3; ours subtracts after
 // the products and multiplies the terms in the other order.
+// Also tried: the second sum computed first 31; the facing read into two scalar
+// locals 33; the facing read in place in both sums 93; the four stores in the
+// order [3], [1], [2], [0] 21; the pragma replaced by a noinline declaration of
+// 0x1f57a0 here 214 (more gets inlined). Retail reads j again after the y store
+// of the rotated point, as if that store could alias the actor.
 // @retail 0x1a8a10
 bool function_1a8a10(point2f const *arg_0, long arg_1, short arg_2, real arg_3, real arg_4)
 {

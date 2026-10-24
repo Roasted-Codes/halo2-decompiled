@@ -936,6 +936,8 @@ void device_motion_start(s_device_motion *motion, real target, real duration, re
 
 /* starts a device's power motion (if the device takes power changes) */
 // @retail 0x108600
+// score 31 (was 31): retail passes the initial velocity to 0x107ab0 in xmm6 with five
+// stack floats; our 0x107ab0 takes it on the stack, so its call pushes one argument more.
 void function_108600(long device_index, real target, real duration, real ramp_up_time, real ramp_down_time,
 	bool keep_velocity)
 {
@@ -1214,12 +1216,18 @@ struct s_index_pair
 };
 bool function_0b6760(s_index_pair const *pair);
 
+// score 351 (was 365): frame 0x1c versus 0x20; index/header and state/result homes differ.
+// Long direction flag 367; shared completion 365; shared previous value 361;
+// channel guard helper 382; ordinary result 355; shared previous/ordinary result 351 kept.
+// Round 290: ordinary index with shared previous 408; shared previous and header index 408; header index
+// and ordinary tag pointer 384; group path first 392; byte direction predicate 351.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
 	s_device *device = DEVICE_GET(device_index);
 	byte const *volatile saved_definition = g_4e3b44[device->definition_index & 0xffff].bytes;
-	volatile bool result = false;
+	bool result = false;
+	real previous;
 	s_animation_state *state = NULL;
 	if (device->animation_state_offset != NONE)
 		state = device_get_animation_state(device);
@@ -1228,7 +1236,7 @@ bool __stdcall function_106790(long volatile device_index)
 	{
 		if (!(device->flags & 0x20))
 		{
-			real previous = device->power;
+			previous = device->power;
 			real position;
 			bool finished = function_107cc0(device_index, &device->motion_14c,
 				&device->channels[0], state, previous, &position);
@@ -1277,7 +1285,7 @@ bool __stdcall function_106790(long volatile device_index)
 			else
 			{
 				real local_c01284_2 = device->power_velocity;
-				real previous = device->power;
+				previous = device->power;
 				if (fabs(local_c01284_2) > speed)
 					device->power_velocity = increasing ? speed : 0.0f - speed;
 				bool reached = function_11eed0(&device->power, &device->power_velocity,
@@ -1320,7 +1328,7 @@ bool __stdcall function_106790(long volatile device_index)
 		{
 			if (state && function_0b6760((s_index_pair const *)&device->channels[1]))
 				device->channels[1].set_frame_ratio(device->position);
-			real previous = device->position;
+			previous = device->position;
 			function_11eed0(&device->position, &device->position_velocity, group->value, g_510c54->rate,
 				*(real const *)(saved_definition + 0xc0), *(real const *)(saved_definition + 0xc4), false, 0.0f, 1.0f);
 			if (previous != device->position)

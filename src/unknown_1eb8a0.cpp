@@ -771,6 +771,16 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
  return next;
 }
 
+// score 88 (was 157): attached ESI/EBP roles and scan setup still differ; per-use direction 88.
+// Unsigned attached handle 157; const contacts 157; unsigned selection 157;
+// initialized found 364; forward workspace 482; shared difference 237; const objects 157.
+// On per-use scan: direct count 88; direct table 356; both 356; found first 87 (one-point addition dropped).
+// Validated attached handle 88; detached selection lifetime 396; outer found 88;
+// state reference 88; output flag reference 88; post-validation selection 106;
+// selected contact reference 88; direct output test result 104. Attached object/node and scan setup still differ.
+// score 88 (was 88): attached object/node roles and scan setup remain; current-handle bits 88;
+// node-transform input pointer 88; full-width definition bits 90; shared object handle,
+// shared receiver and both lifetimes 88; live input flags 88; native contact count 88.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {
@@ -822,8 +832,11 @@ attached_done:
    real best = -FLT_MAX;
    for (long i = 0; i < count; i++)
    {
-    real z = contacts[i].direction.k;
-    if (z > 0.70710677f && z > best) { selected = i; best = z; }
+    if (contacts[i].direction.k > 0.70710677f && contacts[i].direction.k > best)
+    {
+     selected = i;
+     best = contacts[i].direction.k;
+    }
    }
    bool found;
    s_movement_contact_1ed4a0 *contact;

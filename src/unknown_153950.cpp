@@ -402,6 +402,18 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 	slot->flags |= 1;
 }
 
+// score 64 (was 64): dot/cross product operands, rotation xmm roles and
+// final component reloads still differ; executable tail is three bytes short.
+// Norm scalar 67; nested norm tests 64; early 2D cross 207; direction
+// copy loop 271; rotation/scale/both component loops 166/166/166;
+// const bounds input 64.
+// Shared scale 64; previous-priority snapshot 280; requested-duration
+// snapshot 271; external bounds reference 67; forward x/y observations
+// 165/163; normalized x observation 81; cosine-complement scalar 64.
+// product loads, rotation registers and final scale reloads.
+// Timer rereads and long update 64; validity result and angle-phase scope 85;
+// forward snapshot 126; normal snapshot 119; entry sine/cosine 64;
+// both draws after normalizing the cross vector 174.
 // @retail 0x154df0
 void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vector3f *direction, real priority)
 {
@@ -762,14 +774,18 @@ void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
         amount = 0.0f > amount ? 0.0f : (amount > 1.0f ? 1.0f : amount);
         s_random_globals *random = g_4e7408;
         g_502120->value228 = amount;
-        function_141ce0(
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->angles[0] * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->angles[1] * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->angles[2] * amount, &transform);
-        point_set_1546f0(&transform.position,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->point.y * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->point.x * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->point.z * amount);
+        /* retail advances the seed three times and then reads it once for all three axes
+           (0x1547cc-0x154806, again at 0x154888-0x1548d0): the third draw scales every axis */
+        random_real_1546f0(&random->seed);
+        random_real_1546f0(&random->seed);
+        real shake = random_real_1546f0(&random->seed) * 2.0f - 1.0f;
+        function_141ce0(shake * speed->angles[0] * amount, shake * speed->angles[1] * amount,
+            shake * speed->angles[2] * amount, &transform);
+        random_real_1546f0(&random->seed);
+        random_real_1546f0(&random->seed);
+        shake = random_real_1546f0(&random->seed) * 2.0f - 1.0f;
+        point_set_1546f0(&transform.position, shake * speed->point.y * amount, shake * speed->point.x * amount,
+            shake * speed->point.z * amount);
         function_142a60(matrix, &transform, matrix);
     }
     else

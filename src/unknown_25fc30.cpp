@@ -406,6 +406,9 @@ void __stdcall function_25dd50(
 	}
 }
 
+// score 38 (was 38): Face base/index, definition setup, cover registers and failed-facing placement differ;
+// face pointer arithmetic 38; validated edge 38; definition receiver 191; cover reference 38;
+// target setter 38; target initializer 38; lateral component loop 38; output point setter 166.
 // @retail 0x25e430
 void __stdcall function_25e430(
 	long actor_index,
@@ -906,6 +909,14 @@ void __stdcall function_25edd0(
 	}
 }
 
+// score 50 (was 50): protected iterator setup and range-bonus comparisons/multiplies differ.
+// Normalized clamp 66; bounded raw margin 137; positive fraction 83; source-domain fraction 51;
+// nested candidate 50; conditional weapon result 50; real unit reference 50; guarded owner result 264.
+// iterator setup, bonus tests/multiplies and query load scheduling differ.
+// Upper-margin-first 58; range once/limit once/range before root 155; full-width mode 258;
+// reversed style cases 50; forward position countdown 255; nearest conditional 50.
+// Selected-arm staged scales 72; upper-first staged 66; half by division 50;
+// selected margin carrier 186; near/far or separate bonus names 50; staged/name pairs 66.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,

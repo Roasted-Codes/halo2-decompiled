@@ -76,6 +76,9 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // cached-pointer compare and in-loop lookup differ;
 // metadata read order 142; direct child getter 160; early result declaration
 // 142; word flag update 244; reciprocal default first 142.
+// read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
+// child datum accessor 146; both datum accessors 298; native child ordinal 142; immutable
+// creation inputs 142; reciprocal before child link 143.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)
@@ -221,6 +224,15 @@ vector3f *function_143070(matrix3x3 const *arg_1, vector3f const *arg_0, vector3
 void placement_set(s_placement *arg_0, vector3f const *arg_1, point3f const *arg_2, vector3f const *arg_3, short arg_4);
 void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_object_246eb0 const *arg_3, long arg_4);
 
+// score 408 (was 408): exact 0xb0 frame; late EBP save, random stores/getter expansion differ.
+// Interpolation remainder 415; child-duration default 411; failed-child continue 408;
+// overwritten placement default removed 409; definition reads at use 449.
+// frame 0xb0 agrees; EBP is saved after the early exits,
+// random scratch stores and interpolation/collision homes differ. Entry scalar
+// blend components 417; branch-scoped components 417; native kind snapshot 408;
+// inline depth one 408; independent random outputs 435.
+// random-word array loop 591; array loop with scalar draw 589;
+// position scale loop 418; position-add loop 408; byte guard 408.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

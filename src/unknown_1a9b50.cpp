@@ -406,6 +406,11 @@ real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
+// score 379 (was 384): actor-table/result/prop carriers still differ; first
+// prediction loop 391; second prediction loop 391; planar reverse loop 391;
+// repeated vector-field access 387; direct final result 379, plain verified.
+// Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
+// planar request workspace 391; byte result 399; actor first with direct final result 413.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -540,8 +545,7 @@ bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 			function_1a9d80(arg_0, local_1->field_c, &local_2->field_2c, &local_2->field_2d);
 		if (!local_2->field_12)
 			function_1a9e00(arg_0, local_1->field_c, local_2->field_2d);
-		if (!local_2->field_14 && !local_2->field_13 && !local_2->field_2d)
-			result = true;
+		result = !local_2->field_14 && !local_2->field_13 && !local_2->field_2d;
 	}
 	return result;
 }
@@ -574,6 +578,9 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
+// score 478 (was 478): early false exit, actor/settings carriers and scratch
+// homes differ; prediction loop 482; initial velocity snapshot 538; direct
+// eligibility 484; full-width readiness 495; fallback copy loops 541.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
@@ -753,6 +760,14 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 	return local_2;
 }
 
+// score 31 (was 31): native frame agrees; stack-input scratch and object/prop
+// receivers differ. Fast: native result enum 32; lookup declarations 32;
+// immutable actor binding 32; read-only entry 32; inner facing 32;
+// complete state memory view 32, with inner facing 32; callback
+// noinline declaration 32. Original fast 32, plain 31; time getter kept.
+// object/prop scratch registers, state receiver and exit displacements differ.
+// External tag reference 32 fast; actor reference 32; node reference 32; tag/actor 32; tag/node 32.
+// Node/actor references 32; tag/node/actor 32; state reference 32. Unchanged fast preview is also 32.
 // @retail 0x1a9ec0
 short __stdcall function_1a9ec0(long arg_0)
 {

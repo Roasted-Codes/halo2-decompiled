@@ -3,6 +3,7 @@
 #include "unknown_11c920.h"
 #include "camera_storage.h"
 #include "unknown_0259d0.h"
+#include "normalize3d.h"
 #include "globals.h"
 #include "unknown_13fd90.h"
 #include "unknown_19c1d0.h"
@@ -377,6 +378,11 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // score 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
 // corner loop 432; side-plane loop 1154; reverse direction loop 423;
 // default plane first 423; direct first-diagnostic expression 423.
+// Native matrix snapshot 778; input-rectangle products 446; coordinate-pair
+// product initialization 425; unsigned direction ordinal 423; optional-plane copy 647.
+// j90: camera/points saved registers remain exchanged; native copy boundaries tie and geometry/store lifetime changes regress.
+// normal setter 610; bounds copy block 423; position copy block 423; directions after bounds 578; complete
+// planes before normalize 515; identifier at geometry end 767
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
@@ -603,6 +609,11 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 	return success;
 }
 
+// score 115 (was 119): coefficient XMM roles, classification operands and projection staging still differ.
+// Intersection/projected point setters 119/119; existing in-place vector scale 115; long/byte result 216/119.
+// Forward value copy 474; direct projected element 246; scaled direct element 247; separate scaled vector 115.
+// Second-plane-first 425; reuse first negated normal 463; indexed plane selection 375.
+// Frame pointer 574; zero inline depth 609.
 // @retail 0x1652e0
 bool function_1652e0(s_view *view, real margin, const point3f *points, long point_count, point3f *projected_points, short *projected_count, s_bounds3d *bounds, bool use_plane0, bool use_plane1)
 {
@@ -691,10 +702,11 @@ bool function_1652e0(s_view *view, real margin, const point3f *points, long poin
 				}
 				else
 					t = 0.0f;
+				vector3f_scale(&delta, t, &delta);
 				point3f intersection;
-				intersection.x = t * delta.i + p0->x;
-				intersection.y = delta.j * t + p0->y;
-				intersection.z = delta.k * t + p0->z;
+				intersection.x = delta.i + p0->x;
+				intersection.y = delta.j + p0->y;
+				intersection.z = delta.k + p0->z;
 				if (!outside0)
 					*p0 = intersection;
 				else
