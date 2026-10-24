@@ -865,6 +865,10 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // score 208 (was 208): eight-byte frame and inherited x87 send sums differ.
 // Levels before flag 208; scalar names 208; depth one 208;
 // size preference 449; shared gain loop 384.
+// With a per-function precision pragma (173, not kept: pragmas other than a file-scope inline_depth
+// steer the compiler) the frame is four bytes and the late level sum remains.
+// Native channel bit 208; const samples 208; immutable input 208; bit/input 208;
+// scoped precision pragma 173; global optimization off 229; frame pointer 225; precision/early sum 224.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
