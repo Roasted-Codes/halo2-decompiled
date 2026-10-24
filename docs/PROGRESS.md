@@ -9,6 +9,16 @@ matched 9537 of 11321 game functions (1501351 of 2784283 bytes, 53.92%)
 matched 937 of 1041 Havok functions (137760 of 234536 bytes, 58.74%)
 ```
 
+0 new matches, none lost:
+- @coldspear's #760: closer scores and notes, no new match.
+
+## 2026-10-24: 9537 functions match
+
+```
+matched 9537 of 11321 game functions (1501351 of 2784283 bytes, 53.92%)
+matched 937 of 1041 Havok functions (137760 of 234536 bytes, 58.74%)
+```
+
 2 new matches, none lost:
 - Machine 3's batch 116 (#759): `0x13d170` and `0x1f3540` match.
 
