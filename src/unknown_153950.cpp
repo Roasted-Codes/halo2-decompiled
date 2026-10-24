@@ -760,19 +760,23 @@ void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
             real x = axis.i, y = axis.j, z = axis.k;
             real yy = y * y, zz = z * z, xx = x * x;
             transform4x3f transform;
+            matrix3x3 rotation;
             transform.scale = 1.0f;
             real zs = z * sine;
             real xs = x * sine;
             real ys = y * sine;
+            rotation.forward.i = (1.0f - xx) * cosine + xx;
             real xy = (1.0f - cosine) * y * x;
+            rotation.left.i = xy - zs;
+            rotation.forward.j = xy + zs;
+            rotation.left.j = (1.0f - yy) * cosine + yy;
             real xz = (1.0f - cosine) * z * x;
+            rotation.up.i = xz + ys;
+            rotation.forward.k = xz - ys;
+            rotation.up.k = (1.0f - zz) * cosine + zz;
             real yz = (1.0f - cosine) * z * y;
-            matrix3x3 rotation =
-            {
-                {{ (1.0f - xx) * cosine + xx, xy + zs, xz - ys }},
-                {{ xy - zs, (1.0f - yy) * cosine + yy, yz + xs }},
-                {{ xz + ys, yz - xs, (1.0f - zz) * cosine + zz }}
-            };
+            rotation.up.j = yz - xs;
+            rotation.left.k = yz + xs;
             transform.rotation = rotation;
             real distance = slot->bounds.unknown04[2] * amount;
             vector3f offset;
