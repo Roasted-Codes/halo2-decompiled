@@ -1410,6 +1410,9 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // score 159 (was 159): frame agrees; count homes, early zero and flag reloads differ. Global optimization
 // off 1206; bounded friend search 230; bounded member search 219; both 211; indexed merge-record pointer
 // 162.
+// Completed friend/member/both flag results 159/218/218; signed friend/member results
+// 159/218; complete friend flag accumulation 229; both results with friend-first count 219;
+// merged field result 164. Count homes, early zero and post-call flags still differ.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {
