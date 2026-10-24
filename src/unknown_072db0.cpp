@@ -1090,24 +1090,27 @@ void function_73e00(long lower, s_query_batch *batch, const XUID *xuid, long val
 	query_stat_set(&second[3], 5, value5);
 	query_stat_set(&second[4], 6, value6);
 	attribute_count += 5;
-	XONLINE_STAT *upper_first = &batch->attributes[attribute_count++];
+	XONLINE_STAT *upper_first = &batch->attributes[attribute_count];
 	query_stat_set(upper_first, 2, upper);
-	XONLINE_STAT *upper_second = &batch->attributes[attribute_count++];
+	attribute_count++;
+	XONLINE_STAT *upper_second = &batch->attributes[attribute_count];
 	query_stat_set(upper_second, 3, upper);
+	attribute_count++;
 	for (long i = 0; i < count; i++)
 	{
 		long leaderboard = leaderboards[i];
 		if (leaderboard != NONE)
 		{
-			XONLINE_STAT_PROC *procedure = &batch->operations[operation_count++];
+			// an update names its conditional by the conditional's one-based index
+			XONLINE_STAT_PROC *procedure = &batch->operations[operation_count];
+			long first_reference = ++operation_count;
 			query_conditional_set(procedure, xuid, leaderboard, XONLINE_STAT_COMPTYPE_NOT_EXISTS, first);
-			long first_reference = operation_count;
-			procedure = &batch->operations[operation_count++];
+			procedure = &batch->operations[operation_count];
+			long second_reference = ++operation_count;
 			query_conditional_set(procedure, xuid, leaderboard, XONLINE_STAT_COMPTYPE_EXISTS, upper_first);
-			long second_reference = operation_count;
-			procedure = &batch->operations[operation_count++];
+			procedure = &batch->operations[operation_count];
+			long third_reference = ++operation_count;
 			query_conditional_set(procedure, xuid, leaderboard, XONLINE_STAT_COMPTYPE_LESS, upper_second);
-			long third_reference = operation_count;
 			procedure = &batch->operations[operation_count++];
 			query_update_set(procedure, XONLINE_STAT_PROCID_UPDATE_REPLACE, xuid, leaderboard, first_reference, 7, first);
 			procedure = &batch->operations[operation_count++];
