@@ -292,6 +292,9 @@ int __fastcall function_142a60(transform4x3f const *a, transform4x3f const *b, t
 real function_f5e00(long vehicle_index);
 extern real g_47f05c;
 
+// score 202 (was 202): frame/displacement materialization and shape/entry retention;
+// float consistency 279; split root result 204; native normal 221; unsigned best 202;
+// integer result 276; scaled difference 203; point helper with height/point views 292.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -1059,6 +1062,9 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
 real function_1201a0(vector3f *vector, vector3f const *fallback);
 bool havok_component_any_rigid_body_active(s_havok_component *component);
 
+// score 230 (was 230): zero-load width, reset/selection lifetimes and material-call expansion;
+// float consistency 392; native normal 368; current supported long 261; current flag long 361;
+// unsupported-first with original magnitude 258; native movement input 284.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {
