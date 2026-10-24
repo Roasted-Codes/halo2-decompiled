@@ -1907,6 +1907,12 @@ extern dword g_54d5b8;
 // score 36 (was 36): the cases' blocks sit in the other order, ours tests the
 // state's value before the call while retail calls first and tests after, and
 // the argument of the call is built in the other registers
+// Our compiler lays the shared call out after the highest case (case blocks go in
+// value order); only a separate call in case 4 puts it after case 4 as retail does,
+// but that copy pushes 0xad and the state register instead of eax and 4: 81 (176
+// bytes). Tried: that copy with the dialog set before the switch, inside the guard,
+// or with a goto to the store 81; case 4 as `if (!g_51ec99) {...; break;} goto
+// shown;` 37; `case 1:` with the default 36.
 // @retail 0x250804
 void c_session_lobby_screen::show_session_state()
 {
