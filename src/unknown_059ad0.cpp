@@ -3680,6 +3680,9 @@ struct s_network_session_list;
 c_class_58d20 *network_session_manager_find_session(s_network_session_list *manager, const s_session_id *id);
 bool function_07ab10(long key_index, s_type_99af70 *address, long local, word port, const XNADDR *xnaddr);
 
+// score 136 (was 136): host/session homes, cleanup placement and clock expansion differ;
+// isolated failure-first 159, identifier assignment 136, delayed ready flag 136,
+// redundant false removed from one-exit flow 165, inline depth zero 136.
 // @retail 0x59e50
 bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
  const XNKID *kid, const XNKEY *key, const s_session_member_identity *host,
@@ -4479,6 +4482,9 @@ bool __stdcall function_05d9e0(c_class_58d20 *session, const void *message_)
 
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update);
 
+// score 122 (was 122): missing owner spill leaves frame 0x9148 versus 0x914c;
+// mask/counter role names 122, first-loop cursor 122, eligibility guard 122,
+// member bit live across readiness 159, named readiness result 122.
 // @retail 0x62640
 void function_62640(c_class_58d20 *session)
 {

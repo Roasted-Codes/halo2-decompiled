@@ -1758,26 +1758,27 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 	return (s_target_link_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 }
 
+// score 113 (was 131): call argument setup, marker-loop homes and terminal epilogues still differ.
+// Direct count increment 121; native short query 129; shared exit 131; direct optional transform 115.
+// Positive marker count 129; combined increment/transform 113; combined short query 114; direct count cleanup 113.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
 {
-	long &local_0 = count;
 	s_target_link_view *object = (s_target_link_view *)OBJECT_HEADER(object_index)->object;
 	byte *definition = g_4e3b44[object->definition_index & 0xffff].bytes;
 	real scale = 1.0f;
 	if (((1 << object->field_aa) & 3) &&
 		(bool)((function_1a5c01(object_index)->field_bc >> 19) & 1))
 		scale = ((s_candidate_scale_globals *)g_4e034c)->field_f4->field_8;
-	if (local_0 < 64 && function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
-		origin, direction, &candidates[local_0]) && function_1a60f0(&candidates[local_0], weights, scale))
-		local_0++;
+	if (count < 64 && function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
+		origin, direction, &candidates[count]) && function_1a60f0(&candidates[count], weights, scale))
+		count++;
 	long marker_tag = *(long *)(definition + 0x38);
 	if (marker_tag != NONE)
 	{
 		s_target_marker_table *table = (s_target_marker_table *)g_4e3b44[marker_tag & 0xffff].bytes;
-		s_sort_candidate_view *candidate = &candidates[local_0];
-		long volatile &local_1 = count;
+		s_sort_candidate_view *candidate = &candidates[count];
 		for (long marker_index = 0; marker_index < table->count; marker_index++)
 		{
 			s_target_marker *marker = &table->markers[marker_index];
@@ -1785,19 +1786,18 @@ long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool 
 			long marker_count = function_b8d30(object_index, marker->name, markers, 2, false);
 			if (marker_count != 0)
 			{
-				s_object_marker *second = marker_count == 2 ? &markers[1] : NULL;
-				if (local_1 < 64 && function_1a5e40(object_index, alternate, marker_index, marker,
-					&markers[0].matrix, second ? &second->matrix : NULL,
+				if (count < 64 && function_1a5e40(object_index, alternate, marker_index, marker,
+					&markers[0].matrix, marker_count == 2 ? &markers[1].matrix : NULL,
 					origin, direction, candidate) &&
 					function_1a60f0(candidate, weights, marker->field_10 * scale))
 				{
-					local_1++;
+					count++;
 					candidate++;
 				}
 			}
 		}
 	}
-	return local_0;
+	return count;
 }
 
 struct s_1a56c0

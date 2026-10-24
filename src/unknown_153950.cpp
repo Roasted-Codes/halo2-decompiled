@@ -407,6 +407,10 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 // Norm scalar 67; nested norm tests 64; early 2D cross 207; direction
 // copy loop 271; rotation/scale/both component loops 166/166/166;
 // const bounds input 64.
+// product loads, rotation registers and final scale reloads.
+// Timer rereads and long update 64; validity result and angle-phase scope 85;
+// forward snapshot 126; normal snapshot 119; entry sine/cosine 64;
+// both draws after normalizing the cross vector 174.
 // @retail 0x154df0
 void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vector3f *direction, real priority)
 {

@@ -1097,6 +1097,10 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
 long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
+// score 106 (was 106): frame 0x14 agrees; owner/NONE coalescing and Boolean homes differ.
+// Next-slot assignments 107; word absolute slot 158; separate scan result 107;
+// shared datum conversion 199; long attachment 120; short same-view 145; byte draw 107;
+// long camera-relative 144 (fast preview 107, full 106). Original body retained.
 // @retail 0x174220
 void __stdcall function_174220(bool view_pass)
 {
