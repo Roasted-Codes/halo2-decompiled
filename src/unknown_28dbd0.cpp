@@ -70,6 +70,7 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 	return local_1;
 }
 
+// score 213 (was 213): 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {
