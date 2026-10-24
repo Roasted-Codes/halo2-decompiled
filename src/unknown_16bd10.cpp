@@ -760,6 +760,8 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 }
 
 /* the camera director of scripted cameras: fills the observer's command */
+// score 245 (was 245): frame 0x48 agrees; direction preload and length/zero XMM roles, flag RMWs and interpolation differ.
+// Entry flag result 459; depth one 245; native plane construction 248; matrix return 326; point-category conditionals 272.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

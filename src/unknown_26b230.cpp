@@ -1857,6 +1857,7 @@ void function_269250(long clump_index, long actor_index)
 
 // score 189 (was 189): frame 0x1c versus 0x24; current/replacement/object homes and iterator exit differ.
 // Byte type 195; membership result earlier 189; existing group lookup 189; removal arm first 189; guarded pointer-result loop 194.
+// Complete workspace scope 189; depth zero 391; member-link result first 222; replacement-result loop 206; promoted category 195.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
