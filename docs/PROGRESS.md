@@ -2,6 +2,46 @@
 
 The newest entry comes first.
 
+## 2026-10-24: 9532 functions match
+
+```
+matched 9532 of 11321 game functions (1500643 of 2784283 bytes, 53.90%)
+matched 933 of 1041 Havok functions (135693 of 234536 bytes, 57.86%)
+```
+
+2 new matches, none lost:
+- @coldspear's #754, #755, #757: `0x1d7400` and `0x1ddea0` match.
+
+## 2026-10-24: 9530 functions match
+
+```
+matched 9530 of 11321 game functions (1498786 of 2784283 bytes, 53.83%)
+matched 933 of 1041 Havok functions (135693 of 234536 bytes, 57.86%)
+```
+
+1 new matches, none lost:
+- @BrassMonkey71's #464: `0x1dfb90` match.
+
+## 2026-10-24: 9529 functions match
+
+```
+matched 9529 of 11321 game functions (1497312 of 2784283 bytes, 53.78%)
+matched 933 of 1041 Havok functions (135693 of 234536 bytes, 57.86%)
+```
+
+8 new matches, none lost:
+- Machine 3's batch 114 (#753): `0x83220`, `0x8bbd0`, `0x92ae0`, `0xa0e50`, `0xbee60`, `0x18a6c0`, `0x18a750` and `0x1a5910` match.
+
+## 2026-10-24: 9521 functions match
+
+```
+matched 9521 of 11321 game functions (1495238 of 2784283 bytes, 53.70%)
+matched 932 of 1041 Havok functions (134284 of 234536 bytes, 57.26%)
+```
+
+0 new matches, none lost:
+- @coldspear's #749: closer scores and notes, no new match.
+
 ## 2026-10-24: 9521 functions match
 
 ```

@@ -1413,19 +1413,20 @@ void c_matchmaking_list::v3()
 		else
 		{
 			item_count = player_count;
-			if (mode == 3)
-			{
-				int (__cdecl *compare)(void const *, void const *) = NULL;
-				if (teams)
-					compare = values ? matchmaking_compare_team_and_value : matchmaking_compare_value;
-				else if (values)
-					compare = matchmaking_compare_team;
-				if (compare)
-					qsort(indices, index_count, sizeof(long), compare);
-			}
 		}
 	}
+	if (mode == 3)
+	{
+		int (__cdecl *compare)(void const *, void const *) = NULL;
+		if (teams)
+			compare = values ? matchmaking_compare_team_and_value : matchmaking_compare_value;
+		else if (values)
+			compare = matchmaking_compare_team;
+		if (compare)
+			qsort(indices, index_count, sizeof(long), compare);
+	}
 	record_pool_release_all(data);
+	long *selected = indices;
 	for (i = 0; i < item_count; i++)
 	{
 		long datum_index = record_pool_allocate(data);
@@ -1436,7 +1437,7 @@ void c_matchmaking_list::v3()
 
 			if (i < index_count)
 			{
-				datum->player = (short)indices[i];
+				datum->player = (short)*selected;
 			}
 			else if (i >= player_count)
 			{
@@ -1447,6 +1448,8 @@ void c_matchmaking_list::v3()
 				datum->player = 16;
 			}
 		}
+		if (i < index_count)
+			++selected;
 	}
 	function_24c0c4((c_widget *)this);
 	((c_widget *)this)->c_widget::v11();
