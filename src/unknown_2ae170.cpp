@@ -572,6 +572,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // First-buffer input 578; late workspaces 583; muted-send loop 576;
 // native rear predicate 584; workspace role names 583; input plus loop 565
 // (not kept: the loop's index formula only reproduces 6, 8, 7, 9).
+// score 552 (was 578): frame 0xd8 versus 0x94; repeated constant conversions still coalesce.
+// Native settings copy 574; last-two scopes 616; direct routing table 552; pair table 553;
+// constant append helper 552; variable append helper 552; last workspace scope 552.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -580,7 +583,7 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 	s_mixbin_settings third;
 
 	m_buffers = buffers;
-	memmove(&m_settings, settings, sizeof(m_settings));
+	m_settings = *settings;
 
 	sound_mixbins_initialize(&mixbins);
 	c_sound_effects::add_send(6, 0, m_settings.level00, &mixbins);
@@ -607,10 +610,9 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer1c, -6400);
 
 	sound_mixbins_initialize(&third);
-	c_sound_effects::add_send(6, 0, -64.0f, &third);
-	c_sound_effects::add_send(8, 0, -64.0f, &third);
-	c_sound_effects::add_send(7, 0, -64.0f, &third);
-	c_sound_effects::add_send(9, 0, -64.0f, &third);
+	static long const muted_mixbins[4] = {6, 8, 7, 9};
+	for (long mixbin_index = 0; mixbin_index < 4; ++mixbin_index)
+		c_sound_effects::add_send(muted_mixbins[mixbin_index], 0, -64.0f, &third);
 	c_sound_effects::add_send(10, 0, 0.0f, &third);
 	IDirectSoundBuffer_SetMixBinVolumes(m_buffers->buffer20, &third.mixbins);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer20, 0);
