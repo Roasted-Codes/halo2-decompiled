@@ -726,6 +726,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // visible-view arm first 376; tracking-handle snapshot 373.
 // ordinary current scope 375; suppression scope 366 (plain 373); object/unit
 // scope 371; all ordinary captures scoped 363 (plain 358); active single exit 373.
+// Prop pointer scoped to ordinary arm 369; prop/squad scopes 371; Boolean
+// mode snapshots 378; branch-assigned two-priority maximum 363; single final
+// priority store 367 (fast control 363, full baseline 358); all restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

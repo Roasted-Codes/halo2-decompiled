@@ -2355,6 +2355,9 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
+// score 424 (was 424): frame 0x24 versus 0x28, early saves and float-call setup differ;
+// fast control 427; direct inverse 427; selected destination/source pointer 427/427;
+// distinct final alpha 427; separate clamped strength 428. Original body restored.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2594,6 +2597,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
+// score 348 (was 374): frame 0x58 agrees; stage-call convention and constants differ.
+// Byte stage 617; distinct second trig scalars 374; separate texture scales 348
+// (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -2654,31 +2660,33 @@ void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     function_1c590((s_shader_cache *)g_51f0f0,
         *(long *)(*(byte **)(g_485a80 + 0x5c) + 0x64), 0);
     function_1c710(g_51f0f0);
-    real scale = first_scale > second_scale ? first_scale : second_scale;
+    real first_texture_scale = first_scale;
+    real second_texture_scale = second_scale;
+    real scale = first_texture_scale > second_texture_scale ? first_texture_scale : second_texture_scale;
     if (scale > 0.0f)
     {
         real inverse_scale = 1.0f / scale;
-        first_scale *= inverse_scale;
-        second_scale *= inverse_scale;
+        first_texture_scale *= inverse_scale;
+        second_texture_scale *= inverse_scale;
     }
     real bounds[4];
     bounds[0] = 320.0f - scale * width * 0.5f;
     bounds[1] = 320.0f + scale * width * 0.5f;
     bounds[2] = 240.0f - scale * height * 0.5f;
     bounds[3] = 240.0f + scale * height * 0.5f;
-    if (first_scale == 0.0f) first_scale = 1.0f;
-    if (second_scale == 0.0f) second_scale = 1.0f;
+    if (first_texture_scale == 0.0f) first_texture_scale = 1.0f;
+    if (second_texture_scale == 0.0f) second_texture_scale = 1.0f;
     real first_coordinates[8], second_coordinates[8];
     real cosine = (real)cos(first_angle), sine = (real)sin(first_angle);
-    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, first_scale, &first_coordinates[0]);
-    texture_corner_rotate(1.0f, -1.0f, cosine, sine, first_scale, &first_coordinates[2]);
-    texture_corner_rotate(1.0f, 1.0f, cosine, sine, first_scale, &first_coordinates[4]);
-    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, first_scale, &first_coordinates[6]);
+    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, first_texture_scale, &first_coordinates[0]);
+    texture_corner_rotate(1.0f, -1.0f, cosine, sine, first_texture_scale, &first_coordinates[2]);
+    texture_corner_rotate(1.0f, 1.0f, cosine, sine, first_texture_scale, &first_coordinates[4]);
+    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, first_texture_scale, &first_coordinates[6]);
     cosine = (real)cos(second_angle); sine = (real)sin(second_angle);
-    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, second_scale, &second_coordinates[0]);
-    texture_corner_rotate(1.0f, -1.0f, cosine, sine, second_scale, &second_coordinates[2]);
-    texture_corner_rotate(1.0f, 1.0f, cosine, sine, second_scale, &second_coordinates[4]);
-    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, second_scale, &second_coordinates[6]);
+    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, second_texture_scale, &second_coordinates[0]);
+    texture_corner_rotate(1.0f, -1.0f, cosine, sine, second_texture_scale, &second_coordinates[2]);
+    texture_corner_rotate(1.0f, 1.0f, cosine, sine, second_texture_scale, &second_coordinates[4]);
+    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, second_texture_scale, &second_coordinates[6]);
 #pragma inline_depth(0)
     D3DDevice_Begin(D3DPT_TRIANGLEFAN);
     D3DDevice_SetVertexData2f(1, first_coordinates[0], first_coordinates[1]);
