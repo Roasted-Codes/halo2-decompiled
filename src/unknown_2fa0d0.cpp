@@ -71,14 +71,12 @@ public:
 };
 
 // returns the range's new end
-// score 24 (was 144): the 0xb4 frame and memberwise copies now agree;
-// the two index shifts and some vector/word copy scheduling still differ.
-// Original field types with copy construction 252; generic exchange 511;
-// vector copies and nested surface with generic exchange 511; direct nested
-// copy 223; early template instantiation 511, cdecl 508, forced copies 508;
-// concrete exchange 22 (restored); direct element references 24; internal
-// generic exchange 514, constructor assignment 514, static member 508;
-// copy name 24, reversed reference declarations 22 (restored), forced copies 24.
+// score 24 (was 144): the 0xb4 frame and the field-by-field copies now
+// agree; the two index shifts and some vector/word copy scheduling still
+// differ. The original field types with copy construction 252; a swap
+// helper in several forms 508-514; a direct copy of the surface 223;
+// direct element references 24; a copy name 24; two other orders 22
+// (restored).
 // @retail 0x2fa0d0
 int ray_test_2f97e0::function_2fa0d0(ray_2f97e0 const *ray, entries_2fa0d0 *entries, int first, int end, limits_2f97e0 const *limits)
 {

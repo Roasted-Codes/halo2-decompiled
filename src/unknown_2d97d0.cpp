@@ -14,13 +14,12 @@ public:
 
 error_handler_2d97d0 *g_480178;
 
-// score 29 (was 29): retail reserves four more frame bytes and records the
-// outgoing flag object's address. Earlier /GX, /EHa, /EHsc and /EHs forms
-// add exception registration or leave the store absent. Implicit argument
-// 29; explicit object 29; trivial copy implicit/explicit 29/26; char storage
-// 29/26; default constructor and conversion 29; member initializer 29;
-// forced constructor 29; placement after the stream constructor with /GX
-// 93; out-of-class inline/force-inline constructor 29/29. Original body kept.
+// score 29 (was 29): retail's frame is four bytes larger and holds a store of
+// the flag's address, which is how MSVC records an exception scope; our build
+// has no /EHsc and so never writes it, and every EH switch here (/GX, /EHa,
+// /EHsc, /EHs) adds the handler registration retail does not have. Tried:
+// implicit and explicit arguments 29; trivial copies 29/26; char storage
+// 29/26; constructor and initializer variants 29; with /GX 93.
 // @retail 0x2d97d0
 void __cdecl function_2d97d0(char const *message)
 {
