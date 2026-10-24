@@ -308,6 +308,9 @@ static inline bool teams_enabled_19e1c0()
 }
 
 /* writes the text of one token for the event, returning its length */
+// score 443 (was 443): frame/result register and separate copy tails still differ.
+// Depth one with plain result 709; depth one with original result 443; unsigned mode 443;
+// opponent eligibility continue 443; opponent text initialized after scan 459; all restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

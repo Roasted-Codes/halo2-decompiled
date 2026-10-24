@@ -167,6 +167,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 }
 
 // score 649 (was 649): frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
+// score 656 (was 656): frame/type agree; state/player/unit allocation remains.
+// Direct state receiver 656; unsigned unit carrier 656; early blocked local 656;
+// multi-use magazine view 656; seat-before-parent acquisition 656; all restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
