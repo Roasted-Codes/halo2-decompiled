@@ -62,8 +62,8 @@ long __stdcall function_24ecae(s_marker_list const *list, s_24ecae_placement con
 					if (sequence->sprite_count > 0)
 					{
 						bounds = sequence->sprites->bounds;
-						pivot.x = (bounds.x1 + bounds.x0) * 0.5f;
-						pivot.y = (bounds.y1 + bounds.y0) * 0.5f;
+						pivot.x = (bounds.x0 + bounds.x1) * 0.5f;
+						pivot.y = (bounds.y0 + bounds.y1) * 0.5f;
 					}
 					else
 					{
@@ -103,18 +103,18 @@ long __stdcall function_24ecae(s_marker_list const *list, s_24ecae_placement con
 				}
 				else
 					origin = center;
-				real height = (real)bitmap->height * placement->scale;
 				real width = (real)bitmap->width * placement->scale;
+				real height = (real)bitmap->height * placement->scale;
 				point2f points[4];
 				for (long vertex = 0; vertex < 4; ++vertex)
 				{
 					bool top = vertex == 0 || vertex == 1;
 					bool right = vertex == 1 || vertex == 2;
 					points[vertex] = origin;
-					real y = top ? bounds.y0 : bounds.y1;
-					real x = right ? bounds.x1 : bounds.x0;
-					points[vertex].x += width * (x - pivot.x);
-					points[vertex].y += height * (y - pivot.y);
+					real dy = (top ? bounds.y0 : bounds.y1) - pivot.y;
+					real dx = (right ? bounds.x1 : bounds.x0) - pivot.x;
+					points[vertex].x += width * dx;
+					points[vertex].y += height * dy;
 				}
 				g_4e6950.field_0 = *(color3f const *)&item->a;
 				g_4e6950.field_c = *(point3f const *)&item->b;
