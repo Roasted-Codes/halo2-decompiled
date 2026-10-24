@@ -455,10 +455,13 @@ hsv3f *function_1318d0(color3f const *rgb, hsv3f *hsv);
 color3f *function_131a00(hsv3f const *hsv, color3f *rgb);
 void function_3dd10(long object_index, bool force);
 
-// score 134 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// score 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
+// Selected choice result 134; selected ordinal 155; late variant key 229;
+// variant between seed and remainder 122; late scan outputs 256;
+// HSV output role names 134; immutable blend 134; immutable selection 134.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
@@ -486,9 +489,9 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                 real seed = (real)fabs((*(real *)(object + 0x6c) * 744.1241455078125f + *(real *)(object + 0x64) * 315.89312744140625f + index * 431.1289367675781f) + *(real *)(object + 0x68) * 587.1294555664062f);
                 real selection = (real)fmod((double)seed, 1.0);
                 seed = (real)fabs(index * 0.7121099829673767f + *(real *)(object + 0x68));
+                char variant_index = *(char *)(object + 0xb1);
                 real blend = (real)fmod((double)seed, 1.0);
 
-                char variant_index = *(char *)(object + 0xb1);
                 if (variant_index != NONE && *(long *)(definition + 0x38) != NONE)
                 {
                     byte *model = g_4e3b44[*(long *)(definition + 0x38) & 0xffff].bytes;

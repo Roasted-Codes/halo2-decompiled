@@ -1187,6 +1187,10 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // release-byte RMW, impulse sharing and event-point homes differ;
 // scale-first 204; shared release with current carriers 182; shared damping 182; both scales 183;
 // detached arm first 199; expiry guard first 181; event point function scope 184.
+// impulse output name 182; contact output name 182.
+// both output names 182; immutable damage key 182.
+// read-only event result 182; ordinary release inline 290.
+// immutable release scale 182; angular input value 191.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
