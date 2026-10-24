@@ -1619,7 +1619,9 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 	return function_26a780(clump, &candidate);
 }
 
-// score 167 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
+// score 128 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
+// Round 280: remaining-count traversal 128 plain; current-child handle 164; collection write cursor 172; array scope 167; early active flag 199.
+// Child/countdown 125; short remaining 125; unsigned remaining 125 (each only three below the retained countdown).
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1664,9 +1666,11 @@ void function_269580(long destination_index, long source_index)
 	short count = 0;
 	iterator.next = ((s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	while (clump_next_prop(&iterator)) indices[count++] = iterator.index;
-	for (long *cursor = indices; cursor != indices + count; ++cursor)
+	long *cursor = indices;
+	for (long remaining = count; remaining > 0; --remaining)
 	{
 		long index = *cursor;
+		++cursor;
 		if (index == NONE || (index & 0xffff) >= g_50241c->high_water_index) continue;
 		s_prop_copy_view *copy = (s_prop_copy_view *)(g_50241c->data + g_50241c->size * (index & 0xffff));
 		if (!copy->salt || copy->salt != (index >> 16)) continue;
@@ -2004,6 +2008,7 @@ int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
 // score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
+// Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
