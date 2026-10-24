@@ -567,6 +567,7 @@ bool function_2b720(point3f *point, long *cluster, long *leaf)
 
 long function_baf80(long object_index);
 long function_155760(long index);
+long function_14de70(long local_player_index);
 
 struct s_inactive_object_header
 {
@@ -582,18 +583,14 @@ bool function_3e9c0(long object_index)
     bool result = false;
     if (object_index != NONE)
     {
-        long index = g_4b9ed8;
-        if (index != NONE && !function_155760(index))
+        if (g_4b9ed8 != NONE && !function_155760(g_4b9ed8))
         {
             long parent = function_baf80(object_index);
             s_inactive_object_header *header = &((s_inactive_object_header *)g_4e0300->data)[parent & 0xffff];
             if (!header->inactive)
             {
                 byte *object = header->object;
-                s_index_table *table = g_4e8c20;
-                s_index_table *const *table_reference = &table;
-                long entry = (*table_reference)->entries[index];
-                if (*(long *)(object + 0x13c) == entry)
+                if (function_14de70(g_4b9ed8) == *(long *)(object + 0x13c))
                     result = true;
             }
         }
@@ -965,22 +962,18 @@ long function_155760(long index);
 void function_3f3f0(void);
 
 // score 23 (was 23): the camera setup is called with one argument in a register and three on the stack, retail passes two in registers and two on the stack
+// Now only the camera setup's fourth argument differs: retail loads and pushes g_4b9ee4 (0x3f2c0 ends with ret 4 and never reads it); ours drops the unused parameter.
+// Tried: the local player getter with a NONE preset 45; with if/else 23 (kept, replaces a goto); the identifier as 0x3f2c0's first parameter 23, second 23; UNREFERENCED_PARAMETER in 0x3f2c0 23.
 // @retail 0x2b990
-void function_2b990(long player_index)
+void function_2b990(long local_player_index)
 {
 	byte const *tree = *(byte **)((byte *)g_4e0348 + 0x238);
 	long object_index;
-	if (player_index != NONE)
-	{
-		object_index = g_4e8c20->entries[player_index];
-		if (object_index != NONE && !function_155760(player_index))
-		{
-			object_index = *(long *)((byte *)g_4e8c24->data + (object_index & 0xffff) * 0x21c + 0x2c);
-			goto object_selected;
-		}
-	}
-	object_index = NONE;
-object_selected:
+	long player_index = function_14de70(local_player_index);
+	if (player_index != NONE && !function_155760(local_player_index))
+		object_index = *(long *)((byte *)g_4e8c24->data + (player_index & 0xffff) * 0x21c + 0x2c);
+	else
+		object_index = NONE;
 	function_3f2c0((s_planar_camera_source const *)&g_camera_storage, (byte const *)&g_projection_storage, object_index, g_4b9ee4);
 	function_3f3f0();
 	if (g_4ba025)
