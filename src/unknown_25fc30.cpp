@@ -906,6 +906,9 @@ void __stdcall function_25edd0(
 	}
 }
 
+// score 50 (was 50): iterator setup, bonus tests/multiplies and query load scheduling differ.
+// Upper-margin-first 58; range once/limit once/range before root 155; full-width mode 258;
+// reversed style cases 50; forward position countdown 255; nearest conditional 50.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,
