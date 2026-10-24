@@ -97,7 +97,7 @@ struct s_animation_state
 	bool update(animation_event_callback callback, long user, long node_count, s_blend_orientation *orientations,
 		s_blend_orientation const *targets);
 	bool overlay_play(c_animation_channel *channel, dword channel_flags, long set, long weapon_class, long weapon_type);
-	c_type_709360 overlay_find(long set, long weapon_class, long weapon_type);
+	c_type_709360 overlay_find_for_class(long weapon_class, long weapon_type, long set);
 };
 
 /* the weapon's indices and timer (at +0xd8, 0x14 bytes) */
@@ -1306,9 +1306,9 @@ void __stdcall function_167e86(long user_index, long field_x11c898)
 						weapon->channel98.clear();
 						first_person_indices_reset(&weapon->indices);
 						state->overlay_play(&weapon->channelb8, 0x803f, 0x12000068, mode, 0x7000101);
-						*(c_type_709360 *)&weapon->indices.unknown4 = state->overlay_find(0x8000061, mode, 0x7000101);
-						*(c_type_709360 *)&weapon->indices.unknown8 = state->overlay_find(0xa000069, mode, 0x7000101);
-						*(c_type_709360 *)&weapon->indices.unknown0 = state->overlay_find(0xe0000de, mode, 0x7000101);
+						*(c_type_709360 *)&weapon->indices.unknown4 = state->overlay_find_for_class(mode, 0x7000101, 0x8000061);
+						*(c_type_709360 *)&weapon->indices.unknown8 = state->overlay_find_for_class(mode, 0x7000101, 0xa000069);
+						*(c_type_709360 *)&weapon->indices.unknown0 = state->overlay_find_for_class(mode, 0x7000101, 0xe0000de);
 						if (active)
 						{
 							first_person_weapon_set_active(user_index, field_x11c898, true);
