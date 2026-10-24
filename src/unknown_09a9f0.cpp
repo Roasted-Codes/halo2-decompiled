@@ -1144,6 +1144,12 @@ struct s_z_weapon_update_object
 // retail and kept in a register in ours, retail masks the second argument
 // before the first call while ours masks it after, and ours makes an extra
 // call before the two calls that read the item's definition
+// score 22 (was 22): retail's dead store of this comes from function_a6430 taking the
+// definition as an unused first parameter (every retail caller stores this); with that,
+// the object read before a word mask and the lower mask in its own long local, this
+// matches (plain check); function_a6430's file was held by another lane. Tried: the
+// parameter alone 107; with the object first 114; with a word parameter MATCH but
+// function_a6430 16 -> 28.
 // @retail 0xa2140
 void c_weapon_type::v31(long a, long b, long c, long d)
 {
