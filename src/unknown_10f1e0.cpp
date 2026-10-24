@@ -242,6 +242,9 @@ PRIVATE __forceinline real function_112e21(real arg_0)
     return local_0;
 }
 
+// score 133 (was 133): frame 0x80 versus 0x84 and squared/yaw/pitch homes differ;
+// shared normalization scale 133, relative scale 136, both scales 136,
+// reciprocal-root intrinsic 168, two-angle helper precision probe 119 (rejected).
 // @retail 0x112e20
 void function_112e20(transform4x3f *matrix, point3f const *target, transform4x3f const *orientation)
 {
@@ -1568,6 +1571,8 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
+// two inline levels 833, sequential channel construction 833, activity byte 833,
+// short overlay counter 833, channels before curve weights 833.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
