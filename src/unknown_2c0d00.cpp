@@ -865,6 +865,10 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // score 401 (was 401): ordinary previous/first/both history 399/401/400;
 // word node index 408; alternate normalizer 401; indexed node pair 428;
 // indexed pair with ordinary previous history 438. Frame and edge/history homes remain.
+// score 401 (was 401): frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
+// Reduced trials: direct dot predicate 401; shared dot product 401; immutable predicates 401; geometry
+// names 401; output memcpy 401; earlier offset workspaces 401; native first-open 416; word selected vertex
+// 404.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
