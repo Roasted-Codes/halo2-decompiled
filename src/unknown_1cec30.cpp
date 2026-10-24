@@ -1675,6 +1675,9 @@ PRIVATE inline transform4x3f *component_node_matrices(long object_index)
 // score 172 (was 172): frame 0x84 vs 0x80, retained header spill; stable handle 197;
 // pointer names 172; in-place composition 212; default point setters 188; sibling induction 175.
 // @retail 0x1d3d20 standard
+// score 29 (was 172): with the orientations, retail reads both matrix offsets before inverting
+// the parent and keeps the node's matrix base (object plus offset) in EDI across that call, where
+// this build keeps the object and reads the offset again after it.
 void s_havok_component::function_1d3d20(long node_index, dword *updated, dword const *restore,
  rigid_transform_scaled *orientations, long unknown)
 {
@@ -1684,9 +1687,9 @@ void s_havok_component::function_1d3d20(long node_index, dword *updated, dword c
  s_component_transform_model *model = (s_component_transform_model *)g_4e3b44[definition->model_index & 0xffff].bytes;
  long physics_index = ((s_component_collision_model_link *)model)->physics_model_index;
  s_component_node_physics *physics = (s_component_node_physics *)g_4e3b44[physics_index & 0xffff].bytes;
- s_component_node_render_model *render_model = (s_component_node_render_model *)g_4e3b44[model->render_model_index & 0xffff].bytes;
  s_component_node_link *node = &physics->nodes[node_index];
  short parent = node->parent;
+ s_component_node_render_model *render_model = (s_component_node_render_model *)g_4e3b44[model->render_model_index & 0xffff].bytes;
  if (parent != NONE)
  {
   dword mask = 1 << (node_index & 31);
@@ -1694,10 +1697,12 @@ void s_havok_component::function_1d3d20(long node_index, dword *updated, dword c
   {
    if (orientations)
    {
+    transform4x3f *matrices = component_node_matrices(component->object_index);
+    transform4x3f *parent_matrix = object_node_matrix(object_get(component->object_index), parent);
     transform4x3f inverse;
     transform4x3f relative;
-    function_141590(object_node_matrix(object_get(component->object_index), parent), &inverse);
-    function_142a60(&inverse, object_node_matrix(object_get(component->object_index), (short)node_index), &relative);
+    function_141590(parent_matrix, &inverse);
+    function_142a60(&inverse, &matrices[(short)node_index], &relative);
     orientation_from_matrix4x3(&relative, &orientations[node_index]);
    }
   }
@@ -1705,13 +1710,14 @@ void s_havok_component::function_1d3d20(long node_index, dword *updated, dword c
   {
    s_component_node_default *initial = &render_model->nodes[node_index];
    transform4x3f *matrix = object_node_matrix(object_get(component->object_index), (short)node_index);
+   transform4x3f *matrices = component_node_matrices(component->object_index);
    function_141e10(&matrix->rotation, &initial->rotation);
    matrix->position.x = 0.0f;
    matrix->position.y = 0.0f;
    matrix->position.z = 0.0f;
    matrix->scale = 1.0f;
    matrix->position = initial->position;
-   function_142a60(object_node_matrix(object_get(component->object_index), parent), matrix, matrix);
+   function_142a60(&matrices[parent], matrix, matrix);
    updated[node_index >> 5] |= mask;
    if (orientations)
    {
