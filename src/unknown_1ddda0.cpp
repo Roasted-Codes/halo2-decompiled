@@ -500,6 +500,16 @@ PRIVATE __forceinline bool function_1ddea1(s_1de2c0 const *arg_0, long arg_1)
  return false;
 }
 
+/* the point's coordinates in the plane of side axis * 2 + positive, as 0x120810 projects them */
+PRIVATE __forceinline void function_1ddea2(real const *arg_0, short arg_1, bool arg_2, point2f *arg_3)
+{
+ long local_0 = arg_2 + arg_1 * 2;
+ real local_1 = arg_0[g_440b94[local_0][0]];
+ real local_2 = arg_0[g_440b94[local_0][1]];
+ arg_3->x = local_1;
+ arg_3->y = local_2;
+}
+
 // @retail 0x1ddea0
 void __stdcall function_1ddea0(s_1de2c0 *arg_0, long arg_1)
 {
@@ -536,9 +546,7 @@ void __stdcall function_1ddea0(s_1de2c0 *arg_0, long arg_1)
      else local_22 = 0;
      arg_0->field_21c = local_22;
      arg_0->field_21e = plane3f_axis_positive(local_15, local_22) != ((local_13->field_0 & 0x8000) != 0);
-     short const *local_23 = g_440b94[local_22 * 2 + arg_0->field_21e];
-     arg_0->field_220.x = ((real const *)&local_18)[local_23[0]];
-     arg_0->field_220.y = ((real const *)&local_18)[local_23[1]];
+     function_1ddea2(local_18.n, local_22, arg_0->field_21e, &arg_0->field_220);
      function_1de220(arg_0, local_13->field_2);
     }
    }
