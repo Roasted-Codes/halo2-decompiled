@@ -1653,9 +1653,9 @@ void function_269580(long destination_index, long source_index)
 	long count = 0;
 	iterator.next = ((s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	while (clump_next_prop(&iterator)) indices[count++] = iterator.index;
-	for (short i = 0; i < count; i++)
+	for (long *cursor = indices; cursor != indices + count; ++cursor)
 	{
-		long index = indices[i];
+		long index = *cursor;
 		if (index == NONE || (index & 0xffff) >= g_50241c->high_water_index) continue;
 		s_prop_copy_view *copy = (s_prop_copy_view *)(g_50241c->data + g_50241c->size * (index & 0xffff));
 		if (!copy->salt || copy->salt != (index >> 16)) continue;
@@ -2082,9 +2082,9 @@ void function_269870(long clump_index)
     }
     g_4de2f8 = false;
     qsort(candidates, count, sizeof(*candidates), function_269da0);
+    s_prop_candidate_view *candidate = candidates;
     while (cursor < count)
     {
-        s_prop_candidate_view *candidate = &candidates[cursor];
         if (candidate->priority < 3 && selected >= 20)
             break;
         if (candidate->prop_index == NONE)
@@ -2144,15 +2144,17 @@ void function_269870(long clump_index)
             }
         }
         ++cursor;
+        ++candidate;
         if (selected >= 50)
             break;
     }
     while (cursor < count)
     {
-        long index = candidates[cursor].prop_index;
+        long index = candidate->prop_index;
         if (index != NONE && datum_get_inlined(g_50241c, index))
             function_26aaf0((s_clump *)clump, index);
         ++cursor;
+        ++candidate;
     }
 }
 
