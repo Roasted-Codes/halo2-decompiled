@@ -70,6 +70,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 	return local_1;
 }
 
+// score 213 (was 213): frame 0x11c versus 0x118 and rotation cross homes;
+// named request word 213; complete creation-stage scope 213; random arm first
+// 284; shared rotation output setter 226; size optimization 563.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

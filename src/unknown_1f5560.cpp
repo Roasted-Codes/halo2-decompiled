@@ -729,6 +729,8 @@ real normalize2d(point2f *v);
 // score 172 (was 191): fast-byte initialization and trajectory call convention;
 // search then selection 172; unsigned scan 178; fixed do/while 191;
 // types arm first 191; fallback setters 195; split plus unsigned scan 223.
+// signed-long search 192; signed-byte search 188; exact exhaustion 210;
+// named first normalization result 172; global optimization off 542.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

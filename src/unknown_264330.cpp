@@ -721,6 +721,8 @@ real function_296600(long actor_index, long prop_ref_index);
 // visible-view arm first 376; tracking-handle snapshot 373.
 // ordinary current scope 375; suppression scope 366 (plain 373); object/unit
 // scope 371; all ordinary captures scoped 363 (plain 358); active single exit 373.
+// saved actor in ordinary arm 371 (plain 367); native actor fields 363;
+// both 371; timestamp name 363; inline depth one 363 (preview 363).
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

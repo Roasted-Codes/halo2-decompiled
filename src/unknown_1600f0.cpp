@@ -1209,6 +1209,8 @@ PRIVATE inline long score_string_list_1608e0()
 // score 810 (was 817): player register and scalar homes; scalar names 817;
 // header/name reuse 818; header/decoder reuse 818; both short team walks 811;
 // short player walk 835; short outer team walk 818; short rank search 810.
+// explicit scroll clamp 810; title workspace scope 810; bounds-field arithmetic 810;
+// global optimization off 2237; size optimization 1348.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
