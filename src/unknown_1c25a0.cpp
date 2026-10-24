@@ -1830,7 +1830,7 @@ void __stdcall function_1c4590(long flags)
     fixed_memory_get_statistics_16(g_47989c, &memory.scratch);
     function_22cb00(g_479898, &memory.pool);
     function_22c390(g_479894, &memory.startup);
-    havok_printf("Havok Memory (total %.2f KB, debug %.2f KB, percent used %.3f)", 1045.109375, (memory.startup.unknown0c + memory.scratch.unknown0c + memory.pool.metadata_size) * (1.0f / 1024.0f), memory.pool.used_fraction * 100.0f);
+    havok_printf("Havok Memory (total %.2f KB, debug %.2f KB, percent used %.3f)", 1045.109375, (memory.pool.metadata_size + memory.scratch.unknown0c + memory.startup.unknown0c) * (1.0f / 1024.0f), memory.pool.used_fraction * 100.0f);
     havok_printf("Startup pool: mem(%.2f KB/%.2f KB), allocs(%d)", memory.startup.allocated_size * (1.0f / 1024.0f), memory.startup.header_size * (1.0f / 1024.0f), memory.startup.allocation_count);
     havok_printf("Overflow pool: mem(%.2f KB/%.2f KB), allocs(%d))", memory.scratch.allocated_size * (1.0f / 1024.0f), memory.scratch.header_size * (1.0f / 1024.0f), memory.scratch.allocation_count);
     havok_printf("2nd Overflow pool: mem(%.2f KB/%.2f KB), allocs(%d))", memory.physical.allocated_size * (1.0f / 1024.0f), memory.physical.header_size * (1.0f / 1024.0f), memory.physical.allocation_count);
