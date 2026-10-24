@@ -1283,6 +1283,8 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 // score 134 (was 134): player input is EDI rather than EAX; mask and length
 // homes differ. Five coordinated register-input orders 134; shared invalid
 // exit 169; entry size as unsigned word 188 or byte 170. Original kept.
+// Real entry/header/both field views 134; direct valid range 153; remaining-budget local 171;
+// result length before header with raw/entry/all fields 134.
 // @retail 0x55c40
 long function_55c40(s_voice_queue *queue, long player, byte *cursor, byte *output, long capacity, bool include_mask)
 {
@@ -2457,6 +2459,8 @@ void function_56790(long *capacity, dword *remaining, dword allowed, word *selec
 // Guarded return 20; fully assigned result arms 23; conditional count 23;
 // enabled-query lifetime 21; scoped count 23; packet lifetime 4; available-byte
 // lifetime 4; immutable input bindings 4. The original call tuple remains.
+// Separate packet-call / gate / both declarations 4; assigned result with noinline 23;
+// numeric query result with forceinline / both 19; guarded single exit with either boundary 4.
 // @retail 0x53b00
 long __stdcall function_53b00(long player, byte *output, long capacity)
 {

@@ -982,6 +982,10 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
     }
 }
 
+// score 90 (was 90): Frame 0x18 agrees; rounded alpha shifts in a register instead of its conversion slot.
+// Signed rounding result, alpha before switch/loop 90; low-mask OR 259;
+// high-mask XOR 91; clear/OR state update 259; shared scalar rounding result 90;
+// cases 0/2/1 90; unsigned return from existing alpha helper 90.
 // @retail 0x17b60
 void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 {
@@ -1092,6 +1096,9 @@ void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 
 // score 54 (was 54): the two arguments land in different registers (retail uses ebp for the
 // second and ecx for the first) and the bit-field extraction order differs.
+// Frame 0x10 agrees; state/range and evaluator component registers still differ.
+// Unsigned range accessors 54; output/mask/both bank predicates 54;
+// byte component 51 (193 bytes), byte kind 73, both byte inputs 60; output fields 54.
 // @retail 0x19be0 standard
 void __stdcall function_19be0(byte *state, word const *range)
 {

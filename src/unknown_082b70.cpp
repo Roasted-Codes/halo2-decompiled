@@ -82,6 +82,9 @@ static __forceinline long object_query_weapon(long unit_index, short slot)
 
 // score 65 (was 65): the value at [edx+0x10] is compared in a different register: retail
 // loads it into edx and keeps eax for the index, ours loads it into eax.
+// Shared-helper arm result 76; early exit 76; byte slot 71; long slot 75;
+// selected result 76; wide selection 86; unsigned handle 65;
+// slot-validity local 65; shared parent/sibling cursor 65.
 // Shared object getter 65; shared header getter 65; output references 65; child reference 65; association
 // result 65; byte slots 65; shared/output 65; reference/result 65.
 // @retail 0x82c10
