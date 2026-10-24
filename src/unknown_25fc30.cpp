@@ -906,6 +906,9 @@ void __stdcall function_25edd0(
 	}
 }
 
+// score 50 (was 50): protected iterator setup and range-bonus comparisons/multiplies differ.
+// Normalized clamp 66; bounded raw margin 137; positive fraction 83; source-domain fraction 51;
+// nested candidate 50; conditional weapon result 50; real unit reference 50; guarded owner result 264.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,
