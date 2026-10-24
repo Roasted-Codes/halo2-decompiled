@@ -36,6 +36,8 @@ __declspec(noinline) void function_268840();
 
 static __forceinline long real_to_long(real value);
 
+// score 144 (was 144): frame 0x18 versus 0x20; first-pass pointer/datum homes and slice-call interface differ.
+// Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
 // @retail 0x268510
 void function_268510()
 {
@@ -1853,6 +1855,8 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
+// score 189 (was 189): frame 0x1c versus 0x24; current/replacement/object homes and iterator exit differ.
+// Byte type 195; membership result earlier 189; existing group lookup 189; removal arm first 189; guarded pointer-result loop 194.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
