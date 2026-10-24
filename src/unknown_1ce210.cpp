@@ -7,6 +7,12 @@ __declspec(align(16)) const dword g_4124a0[4] = {0x80000000, 0x80000000, 0x80000
 
 // score 13 (was 13): our build gives this function a custom convention (the first two
 // arguments in EAX/EDX) while retail passes all five arguments on the stack.
+// Now all five come from the stack in both; left: the extent pointer in ecx (retail
+// edx), the broadcast shuffle after the first multiply and the first sum in the
+// broadcast's register. Tried: every dependency-respecting order of the first
+// phase's statements 14-22 (compile-only); the y product as local_7[1] * local_3 13;
+// that with local_2 + local_5 16, or with local_2 * local_3 16; the centre read
+// through local_8 13; the x product as local_7[0] * local_4 51.
 // @retail 0x1ce210
 void __cdecl function_1ce210(const __m128 *arg_0, const __m128 *arg_1, const __m128 *arg_2, real arg_3, __m128 *arg_4)
 {

@@ -1788,6 +1788,11 @@ public:
     void set_strength(real strength);
 };
 
+// score 10 (was 10): the component arrives in eax and the constraint index in ecx,
+// retail the reverse (BLOCKED-BY 0xe0e00: its declaration and call need the
+// (component, constraint_index, scale) order); the rest matches. Tried: constraint
+// pointer after the lookups 23, just before the override loop 23, as data + index 10,
+// object lookup first 10, object index read into a local first 10.
 // @retail 0x1d35d0
 void function_1d35d0(long constraint_index, s_havok_component *component, real scale)
 {
