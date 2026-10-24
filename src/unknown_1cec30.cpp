@@ -2634,6 +2634,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     frame->m_translation = position;
 }
 
+// score 206 (was 206): body/stride registers and relative-call input differ;
+// body getters 206; first count after lookup 205 (below gate), both 275;
+// node streams 336; streams with getters 336 (plain scores). Original kept.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
