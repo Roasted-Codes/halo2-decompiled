@@ -71,10 +71,10 @@ bool __stdcall function_1a83e0(long arg_0, short *arg_1, real *arg_2, point2f *a
 {
     s_actor_view *local_0 = actor_get(arg_0);
     byte *local_1 = g_4e3b44[ai_object_get(local_0->unknown018)->definition_index & 0xffff].bytes;
-    real local_2 = *(real *)(local_1 + 0x124);
     bool local_3 = false;
     bool local_4 = false;
     short local_5 = NONE;
+    real local_2 = *(real *)(local_1 + 0x124);
     point2f local_6;
     if (local_2 > 0.0f)
     {
