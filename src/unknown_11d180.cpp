@@ -66,10 +66,11 @@ bool function_11d3b0(
 	vector3f const *a,
 	vector3f *out,
 	vector3f const *b,
-	vector2f angle)
+	real sine,
+	real cosine)
 {
 	vector3f axis;
-	if (angle.n[1] <= a->j * b->j + a->i * b->i + b->k * a->k)
+	if (cosine <= a->j * b->j + a->i * b->i + b->k * a->k)
 	{
 		*out = *a;
 		return false;
@@ -84,8 +85,6 @@ bool function_11d3b0(
 	}
 	*out = *b;
 	{
-		real sine = angle.n[0];
-		real cosine = angle.n[1];
 		real d = (out->k * axis.k + out->j * axis.j + out->i * axis.i) * (1.f - cosine);
 		real t0 = out->j * axis.k - out->k * axis.j;
 		real t1 = out->k * axis.i - out->i * axis.k;

@@ -1109,7 +1109,6 @@ void function_c0110()
 void __stdcall function_c3260(long light_index, bool clear_object_flag)
 {
     long const *light_index_reference = &light_index;
-    bool const *clear_flag_reference = &clear_object_flag;
     s_record_pool *lights = g_4e030c;
     s_light_delete_view *light = &((s_light_delete_view *)lights->data)[*light_index_reference & 0xffff];
     if ((light->flags & 8) && (light->flags & 2))
@@ -1118,28 +1117,30 @@ void __stdcall function_c3260(long light_index, bool clear_object_flag)
         light->flags &= ~8;
     }
     long object_index = light->object_index;
-    if (object_index != NONE && *clear_flag_reference)
+    if (object_index != NONE && clear_object_flag)
     {
         struct s_object_header { byte unknown00[8]; byte *object; };
         byte *object = ((s_object_header *)g_4e0300->data)[object_index & 0xffff].object;
         bool remaining = false;
-        long next = NONE;
-        while ((next = function_16bc00(lights, next + 1)) != NONE)
+        s_record_pool_iterator iterator;
+        iterator.data = lights;
+        iterator.index = NONE;
+        iterator.datum_index = NONE;
+        s_light_delete_view *entry;
+        while ((entry = (s_light_delete_view *)data_iterator_next_calling(&iterator)) != 0)
         {
-            long size = *(long volatile *)&lights->size;
-            byte *data = *(byte *volatile *)&lights->data;
-            s_light_delete_view *entry = (s_light_delete_view *)(data + next * size);
-            long index = ((long)entry->identifier << 16) | next;
-            if (index != *light_index_reference && entry->object_index == object_index)
+            if (iterator.datum_index != *light_index_reference && entry->object_index == object_index)
             {
                 remaining = true;
                 break;
             }
         }
+        dword flags = *(dword *)(object + 4);
         if (remaining)
-            *(dword *)(object + 4) |= 0x40;
+            flags |= 0x40;
         else
-            *(dword *)(object + 4) &= ~0x40;
+            flags &= ~0x40;
+        *(dword *)(object + 4) = flags;
     }
     record_pool_release(lights, *light_index_reference);
 }

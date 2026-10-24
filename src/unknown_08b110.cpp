@@ -92,6 +92,9 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 	}
 }
 
+// score 32 (was 32): the blocks are laid out in another order, so the relative
+// offsets of the jumps differ, and the value in ebx is set after the test on esi
+// where retail sets it before.
 // @retail 0x8b110
 long c_vtable_450cb8::v0(long index, long a2, long a3, long *count, s_item_450cb8 *items, void *a6)
 {

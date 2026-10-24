@@ -91,6 +91,10 @@ void function_268510()
 	}
 }
 
+// score 81 (was 81): retail loads the global and tests its active byte before it reserves the
+// frame and pushes the registers, and it keeps the pool pointer in ebx and the index in edi;
+// ours reserves the frame first and holds the global in ebp, so the prologue and the loop
+// head differ.
 // @retail 0x268840
 void function_268840()
 {
@@ -201,13 +205,14 @@ void function_268c90()
 					{
 						s_object_child_iterator children;
 						function_d0620(extra, &children);
-						bool held = false;
-						while (function_d0690(&children))
+						bool child_available = function_d0690(&children);
+						while (child_available)
 						{
 							byte *child = *(byte **)(g_4e0300->data + (children.child_index & 0xffff) * 12 + 8);
-							if (!child[0xaa]) { held = true; break; }
+							if (!child[0xaa]) break;
+							child_available = function_d0690(&children);
 						}
-						if (!held) function_b8540(extra);
+						if (!child_available) function_b8540(extra);
 					}
 				}
 			}
@@ -429,6 +434,9 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 	return result != NULL;
 }
 
+// score 68 (was 68): retail sign-extends the first team argument and passes the second one
+// narrow, and its frame is four bytes larger than ours, so the stack offsets and the register
+// that holds the clump pointer differ as well.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1501,7 +1509,7 @@ long function_269040(point3f const *center, short team)
 // @retail 0x26a4f0
 long function_26a4f0(s_clump_activity_view *clump, short priority)
 {
-	volatile long result = NONE;
+	long result = NONE;
 	if (priority >= clump->update_state)
 	{
 		result = record_pool_allocate(g_50241c);
@@ -1642,7 +1650,7 @@ void function_269580(long destination_index, long source_index)
 			g_4de300[object_index & 0xffff] = g_4de2fc;
 	}
 	long indices[50];
-	short count = 0;
+	long count = 0;
 	iterator.next = ((s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	while (clump_next_prop(&iterator)) indices[count++] = iterator.index;
 	for (short i = 0; i < count; i++)

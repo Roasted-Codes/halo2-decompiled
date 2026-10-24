@@ -9,6 +9,7 @@
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 #include "unknown_2551c0.h"
+#include "swarm.h"
 #include <string.h>
 
 /* a command script (0xd4 bytes) */
@@ -1853,8 +1854,38 @@ void function_25aba0(long actor_index)
 	while (--local_1);
 }
 
-// score 100 (was 100): the prologue differs: retail reserves eight bytes with sub esp,8 where ours pushes ecx, and
-// retail zeroes eax and makes three stack stores where ours zeroes ebx and makes two.
+/* swarm_creature_iterator_next, inlined; this copy reads the next creature
+   before it records the current one, which keeps the current index in ebx
+   and the actor index in ebp as retail does (with the shared one,
+   function_258b60 takes the actor index in ebx and its callers stop
+   matching) */
+__forceinline s_handler_object_view *cs_creature_iterator_next(s_ai_object_iterator *iterator)
+{
+	s_handler_object_view *object = NULL;
+
+	if (iterator->next_index != NONE)
+	{
+		s_object_ai_data *creature;
+		long next_index;
+
+		object = handler_object_get(iterator->next_index);
+		next_index = NONE;
+		if (!object->flags134 && (creature = (s_object_ai_data *)((byte *)object + object->ai_offset)) != NULL)
+		{
+			next_index = creature->next_creature_index;
+		}
+		iterator->index = iterator->next_index;
+		iterator->next_index = next_index;
+	}
+
+	return object;
+}
+
+/* runs a command script step on an actor, or on each creature of its
+   perception; with creatures, the result is 0 unless at least 80% of them
+   finished or failed, then 2 when more finished than failed, else 1 */
+// score 21 (was 100): the loop keeps the next index in esi and the creature data in edi where retail swaps them,
+// and ours steps the next index through edx where retail writes edi directly.
 // @retail 0x258b60
 short function_258b60(long actor_index, cs_iterate_proc proc, long cs_index)
 {
@@ -1873,13 +1904,11 @@ short function_258b60(long actor_index, cs_iterate_proc proc, long cs_index)
 			s_handler_object_view *object;
 
 			iterator.next_index = perception_get(perception_index)->object_index;
-			iterator.index = NONE;
-			while ((object = swarm_creature_iterator_next(&iterator)) != NULL)
+			while ((object = cs_creature_iterator_next(&iterator)) != NULL)
 			{
 				byte *data;
 				if (!object->flags134 && (data = (byte *)object + object->ai_offset) != NULL)
 				{
-					count++;
 					short outcome = proc(actor_index, iterator.index, (s_cs_state *)(data + 0x28), cs_index);
 					*(short *)(data + 0x2c) = outcome;
 					if (outcome == 2)
@@ -1890,6 +1919,7 @@ short function_258b60(long actor_index, cs_iterate_proc proc, long cs_index)
 					{
 						failed++;
 					}
+					count++;
 				}
 			}
 
@@ -2015,9 +2045,11 @@ short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long 
 		{
 			point3f local_7;
 			function_b9dd0(arg_1, &local_7);
-			local_3 = local_2->field_c.k * (local_7.z - local_2->field_18.z) +
-				local_2->field_c.j * (local_7.y - local_2->field_18.y) +
-				(local_7.x - local_2->field_18.x) * local_2->field_c.i > local_1->unknown08;
+			vector3f displacement;
+			vector3d_from_points3d(&local_2->field_18, &local_7, &displacement);
+			local_3 = local_2->field_c.k * displacement.k +
+				local_2->field_c.j * displacement.j +
+				displacement.i * local_2->field_c.i > local_1->unknown08;
 		}
 		break;
 	case 7: case 8:

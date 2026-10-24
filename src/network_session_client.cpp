@@ -847,6 +847,9 @@ bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
  long count, const dword *identities, const long *values, const long *other_values,
  bool reserve, long timeout, const s_session_id *id, const void *extra);
 
+// score 40 (was 40): the twelve bytes of the member's record are copied with the
+// source and the destination in the other registers, and the two stores that
+// follow are scheduled in the other order.
 // Retail aligns its frame; 0x6fcc0, 0x6f940 and 0x6fa60 push all three arguments.
 // The body still differs; this boundary preserves those callers.
 // score 40 (was 40): the three copies in the loop keep the source and the

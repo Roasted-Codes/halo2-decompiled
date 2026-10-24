@@ -804,6 +804,8 @@ static inline bool player_datum_iterator_next_inlined(s_data_datum_iterator *ite
 	return datum != 0;
 }
 
+// score 55 (was 55): the record pointer is kept in EBX here and in EDI in
+// retail, and the two are used the other way round after the index is masked.
 // @retail 0x14df40
 bool __stdcall function_14df40(long *unit_index)
 {
@@ -1029,6 +1031,8 @@ bool function_14ed80(void)
 }
 
 
+// score 8 (was 8): the global is kept in EDX here and in ESI in retail, which
+// also moves the push of ESI in front of the add.
 // @retail 0x14f040
 void player_get_representation(long player_index, long *field_b4, long *third_person)
 {
@@ -1532,6 +1536,8 @@ struct s_unit_player_assignment
 	long previous_player_index;
 };
 
+// score 17 (was 17): the value that is read from the record is passed in ECX
+// here and in EAX in retail, and ours is one byte shorter than retail.
 // @retail 0x14cad0
 void function_14cad0(long player_index, long unit_index)
 {
@@ -1865,6 +1871,8 @@ real function_23ba90(point3f const *point, long player_index, bool deterministic
     s_spawn_influence_list *list, dword *seed);
 bool function_23bb70(long tag_index, point3f const *position);
 
+// score 19 (was 19): the global is read into EDX here and into EAX in retail,
+// and the four values that are pushed for the call are pushed in another order.
 // @retail 0x14ef00
 long function_14ef00(long player_index, long tag_index, bool deterministic, bool preserve_counter)
 {
@@ -1936,6 +1944,9 @@ struct s_player_creation_record
 };
 #pragma pack(pop)
 
+// score 33 (was 33): the value that is handed to the call is read into EDI
+// here and into EDX in retail, so the register that carries the argument
+// differs; the rest of the call is the same.
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {
@@ -2183,7 +2194,7 @@ void __stdcall function_14f820(long player_index, long unit_index, byte *input)
                     real z = unit_position.z-victim_position.z;
                     real y = unit_position.y-victim_position.y;
                     real x = unit_position.x-victim_position.x;
-                    if (z*z + y*y + x*x > 0.809999942779541f) lunge = true;
+                    lunge = z*z + y*y + x*x > 0.809999942779541f;
                 }
                 if (*(signed char *)(player + 0x3f) > 0 || unit[0x212] != unit[0x216]) allowed = false;
             }
@@ -2239,8 +2250,9 @@ void __stdcall function_14f820(long player_index, long unit_index, byte *input)
     if (*(long *)(unit + 0x14) == NONE && g_4e6948->state != 2)
     {
         byte *settings = *(byte **)((byte *)g_4e034c + 0xf4);
-        long first = player_round_ticks((real)g_510c54->field_2_3 * *(real *)(settings + 0x20));
-        long second = player_round_ticks((real)g_510c54->field_2_3 * *(real *)(settings + 0x24));
+        real tick_scale = (real)g_510c54->field_2_3;
+        long first = player_round_ticks(tick_scale * *(real *)(settings + 0x20));
+        long second = player_round_ticks(tick_scale * *(real *)(settings + 0x24));
         real decay = *(real *)(settings + 0x28);
         weapon = player_current_weapon(unit_index, 0);
         bool local_85417d = weapon != NONE && function_101340(weapon);
@@ -2468,6 +2480,9 @@ static inline bool player_datum_iterator_next(s_data_datum_iterator *iterator)
     return datum != 0;
 }
 
+// score 103 (was 103): the global is kept in EDI here and in ESI in retail,
+// so the prologue saves the other registers and the field that is written
+// afterwards is reached through a different base register.
 // @retail 0x14cdd0
 void function_14cdd0(void)
 {

@@ -148,8 +148,10 @@ void function_146b80(void)
 	g_47989c = new ((byte *)g_479888 + 0x105410) c_havok_fixed_memory(buffer, size);
 }
 
-// score 5 (was 5): the byte local is loaded into DL before the other byte is stored; retail
-// stores the byte first and then loads the dword.
+// score 5 (was 5): retail's function_1c4040 takes the active flag in AL and reads
+// it after the other arguments are pushed; here the callee takes it in DL, so the
+// byte is loaded into DL before the other byte is stored. The callee lives in
+// src/unknown_1c25a0.cpp and is far from retail.
 // @retail 0x146bf0
 void function_146bf0(void)
 {

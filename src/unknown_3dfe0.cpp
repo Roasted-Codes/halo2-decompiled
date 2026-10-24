@@ -2,6 +2,7 @@
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "unknown_3dfe0.h"
+#include "unknown_0259d0.h"
 
 extern s_record_pool *g_509434;
 extern dword g_4ba034;
@@ -46,10 +47,8 @@ void function_3dfe0(long cache_index, long object_index, real priority)
         if (cache->valid)
         {
             vector3f delta;
-            delta.i = *(real *)(object + 0x30) - cache->position.x;
-            delta.j = *(real *)(object + 0x34) - cache->position.y;
-            delta.k = *(real *)(object + 0x38) - cache->position.z;
-            stationary = delta.k * delta.k + delta.i * delta.i + delta.j * delta.j < 0.002500000176951289f;
+            vector3d_from_points3d(&cache->position, (point3f *)(object + 0x30), &delta);
+            stationary = dot3f(&delta, &delta) < 0.002500000176951289f;
         }
         if (!stationary)
         {
@@ -62,9 +61,9 @@ void function_3dfe0(long cache_index, long object_index, real priority)
         }
     }
     if (!cache->valid) return;
-    s_effect_color_query *current = &cache->current;
     if (cache->initialized && g_467464 && !update)
     {
+        s_effect_color_query *current = &cache->current;
         s_effect_color_query const *target = &cache->target;
         vector3f velocity;
         function_ba1d0(object_index, &velocity, 0);
@@ -75,21 +74,24 @@ void function_3dfe0(long cache_index, long object_index, real priority)
             (distance3d(&cache->position, (point3f *)(object + 0x30)) > 0.05000000074505806f && blend > 0.0f) ||
             function_badc0(object_index, 0x80))
         {
-            function_3e5a0((vector3f *)&(*current), (vector3f const *)target, blend * 0.009999999776482582f);
-            function_3e4e0(&(*current).color_b, &target->color_b, blend * 0.5f);
-            function_3e4e0(&(*current).color_a, &target->color_a, blend * 0.5f);
+            real half = blend * 0.5f;
+            function_3e5a0((vector3f *)current, (vector3f const *)target, blend * 0.009999999776482582f);
+            function_3e4e0(&current->color_b, &target->color_b, half);
+            function_3e4e0(&current->color_a, &target->color_a, half);
         }
     }
-    else (*current) = cache->target;
+    else
+        cache->current = cache->target;
     long type = NONE;
-    long special = false;
+    long special = 0;
     if (cache->parent != NONE)
     {
         byte *parent = ((s_3dd10_object_header *)g_4e0300->data)[cache->parent & 0xffff].object;
         byte *definition = g_4e3b44[*(long *)parent & 0xffff].bytes;
         type = *(short *)definition;
-        special = (bool)(((*(dword *)(parent + 4)) >> 13) & 1) || (bool)((*(word *)(definition + 2) >> 1) & 1);
+        if ((bool)(((*(dword *)(parent + 4)) >> 13) & 1)) special = 1;
+        if ((bool)((*(word *)(definition + 2) >> 1) & 1)) special |= 1;
     }
-    function_d4080(type, &(*current), &cache->lighting, special);
+    function_d4080(type, &cache->current, &cache->lighting, special);
     cache->initialized = true;
 }

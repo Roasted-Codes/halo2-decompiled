@@ -57,6 +57,8 @@ static inline void cross3f(vector3f const *a, vector3f const *b, vector3f *resul
 	result->k = a->i * b->j - a->j * b->i;
 }
 
+// score 37 (was 37): the blocks are laid out in another order and the float
+// registers are used in the other order.
 // @retail 0x109e00
 bool function_109e00(long object_index, vector3f *velocity, bool definition_flag_required)
 {
