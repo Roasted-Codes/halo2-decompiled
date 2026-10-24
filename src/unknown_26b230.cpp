@@ -1618,6 +1618,7 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 	return function_26a780(clump, &candidate);
 }
 
+// score 167 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1626,7 +1627,7 @@ void function_269580(long destination_index, long source_index)
 	s_clump_activity_view *source = (s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view));
 	g_4de2f8 = true;
 	s_iterator iterator;
-	iterator.next = destination->first_prop;
+	iterator.next = ((s_clump_activity_view *)(g_502420->data + (destination_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	s_type_76cf92 *prop;
 	while ((prop = clump_next_prop(&iterator)) != NULL)
 	{
@@ -1659,7 +1660,7 @@ void function_269580(long destination_index, long source_index)
 			g_4de300[object_index & 0xffff] = g_4de2fc;
 	}
 	long indices[50];
-	long count = 0;
+	short count = 0;
 	iterator.next = ((s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	while (clump_next_prop(&iterator)) indices[count++] = iterator.index;
 	for (long *cursor = indices; cursor != indices + count; ++cursor)
@@ -1999,6 +2000,7 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
+// score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

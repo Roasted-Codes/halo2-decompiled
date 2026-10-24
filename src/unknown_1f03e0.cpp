@@ -485,6 +485,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // score 182 (was 195): state/forward registers agree; rotation scheduling differs.
 // Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
+// Direct state dot loads still cost six bytes; cross before trig 247; late limited snapshot 190;
+// cosine first 183; shared cosine scale 241; native settings mask 303.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -627,15 +629,26 @@ PRIVATE __forceinline vector3f function_1f0873(vector3f const &arg_0, vector3f c
 }
 
 #pragma optimize("", on)
+struct s_flags_1f0870
+{
+    dword enabled : 1;
+    dword unknown1 : 1;
+    dword direct : 1;
+    dword gravity : 1;
+    dword damping : 1;
+    dword unknown5 : 27;
+};
+
 PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f const *arg_2, byte const *arg_3)
 {
 #define settings (*(byte **)(arg_3 + 8))
     dword mode = *(dword *)settings;
     bool flying = ((mode >> 3) & 1) != 0;
     dword flags = *(dword *)(arg_3 + 0x14);
-    bool damping = ((flags >> 4) & 1) != 0;
-    bool direct = ((flags >> 2) & 1) != 0;
-    volatile bool gravity = ((flags >> 3) & 1) != 0;
+    s_flags_1f0870 const *flags_view = (s_flags_1f0870 const *)(arg_3 + 0x14);
+    bool damping = TEST_FIELD_BIT(flags_view->damping);
+    bool direct = TEST_FIELD_BIT(flags_view->direct);
+    volatile bool gravity = TEST_FIELD_BIT(flags_view->gravity);
     vector3f const &input = *(vector3f const *)(arg_3 + 0x138);
     vector3f const &facing = *(vector3f const *)(arg_3 + 0x9c);
     vector3f const &up = *(vector3f const *)(arg_3 + 0x100);
@@ -795,8 +808,10 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 }
 #undef settings
 
-// score 630 (was 630): frame 0x34 versus 0x30; direct-bit and vector homes differ.
+// score 621 (was 625): frame 0x34 versus 0x30; direct-bit and vector homes still differ.
 // Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
+// Ordinary gravity with shared normalization 622; cached mode 648; limited-first 625;
+// request bitfields 621; global optimization off 2562; direct scalar lifetimes 623; bitfields plus scalars 626.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -909,6 +924,8 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // score 428 (was 489): frame now 0x64; count/component and vector homes still differ.
 // Three-pass countdown 490; preferred-contact cursor 527; search cursor 428;
 // inline depth one 489; existing snapshot cross helper 488.
+// Byte flag helper 471; shared adjustment join 437; final contact cursor 595;
+// accepted-count pass bound 492; result publication 431.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
