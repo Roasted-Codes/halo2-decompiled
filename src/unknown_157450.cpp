@@ -5018,6 +5018,9 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
+// score 175 (was 175): frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
+// reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
+// nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

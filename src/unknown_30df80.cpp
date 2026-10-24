@@ -82,6 +82,10 @@ public:
 // further trials: bounds first 17; pending data/count through the group 19;
 // listener conversion 17, before the handler 24; tolerance argument 34;
 // member group directly 36; pending member receiver 19; empty-pair guard 17.
+// scoped bounds/array and initial pointers 127; inline tolerance and shape
+// reread 34; motion through collidable 53; direct pending operands 55;
+// object names or mutable pointers 55; placed after array/recorder helpers
+// 55, with original body 17
 // @retail 0x30df80
 void owner_30c8e0::function_30df80(member_30c8e0 *member)
 {

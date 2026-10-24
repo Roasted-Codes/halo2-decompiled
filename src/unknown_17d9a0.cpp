@@ -465,7 +465,8 @@ PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh
 
 PRIVATE __forceinline real decal_normal_angle_17fd20(vector3f const *a, vector3f const *b)
 {
-	vector3f first_vector = *a;
+	vector3f first_vector;
+	memcpy(&first_vector, a, sizeof(first_vector));
 	if (!memcmp(&first_vector, b, sizeof(first_vector)))
 		return 0.0f;
 	real cosine = first_vector.i * b->i + first_vector.k * b->k + first_vector.j * b->j;
@@ -487,6 +488,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.
 // Long emission index 763; tag-pointer rename/lifetime 774/774; group-first plus offset 786; plus long emission 747 (alignment worse).
+// score 749 (was 753): frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
+// Native initial face cursor 752; group-search cursor 785; candidate cursor 786;
+// native bounds-component access 753; angle-input memcpy 749; single cosine clamp 803.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
