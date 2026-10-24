@@ -976,6 +976,10 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
     }
 }
 
+// score 90 (was 90): rounded alpha shifts in a register instead of its stack slot; branch offsets differ.
+// byte alpha 89; word alpha 89; integer alpha raw 90.
+// raw alpha integer 90; shared previous state 90; float consistency 90.
+// frame pointer 742; size preference 730.
 // @retail 0x17b60
 void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 {
@@ -1081,8 +1085,12 @@ void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 }
 
 
-// score 54 (was 54): the two arguments land in different registers (retail uses ebp for the
-// second and ecx for the first) and the bit-field extraction order differs.
+// score 54 (was 54): state stays in EBX and range in EBP; retail keeps state in EBP
+// and reloads range. The evaluator component is stacked instead of EDI;
+// packed-field extraction order still differs.
+// const pointer tables 54; vector bank elements 54; packed record fields 54.
+// byte record fields 75; frame pointer 71; global optimization 153.
+// size preference 77; float consistency 54.
 // @retail 0x19be0 standard
 void __stdcall function_19be0(byte *state, word const *range)
 {
