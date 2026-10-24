@@ -562,15 +562,15 @@ void __stdcall function_1ddea0(s_1de2c0 *arg_0, long arg_1)
    if (function_1ddea1(arg_0, local_13->field_0))
    {
     plane3f const *local_15 = &local_12->field_c[local_13->field_0 & 0x7fff];
-    real local_19 = (real)fabs(local_15->i);
-    real local_20 = (real)fabs(local_15->j);
-    real local_21 = (real)fabs(local_15->k);
-    real local_16 = plane_distance_to_point(local_15, arg_0->field_c);
+    real local_16 = local_15->k * arg_0->field_c->z + local_15->j * arg_0->field_c->y + local_15->i * arg_0->field_c->x - local_15->d;
     real local_17 = 0.0f - local_16;
     point3f local_18;
     local_18.x = local_17 * local_15->i + arg_0->field_c->x;
     local_18.y = local_17 * local_15->j + arg_0->field_c->y;
     local_18.z = local_15->k * local_17 + arg_0->field_c->z;
+    real local_19 = (real)fabs(local_15->i);
+    real local_20 = (real)fabs(local_15->j);
+    real local_21 = (real)fabs(local_15->k);
     short local_22;
     if (local_21 >= local_20 && local_21 >= local_19) local_22 = 2;
     else if (local_20 >= local_19) local_22 = 1;
