@@ -1426,7 +1426,7 @@ void function_55990(s_voice_player_values *values)
 			word bit = 1 << i;
 			if ((local & bit) && (active & bit))
 			{
-				dword muted = 0;
+				word muted = 0;
 				if (voice_available())
 					muted = g_4c9878.unknownF0[i];
 				mask = remote & ~muted;
