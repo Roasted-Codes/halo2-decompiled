@@ -3049,8 +3049,8 @@ static inline long decibels_sum(long const &a, long const &b)
 }
 vector3f *function_1427f0(transform4x3f const *arg_0, vector3f const *arg_1, vector3f *arg_2);
 
-// score 126 (was 310): the listener-space position and velocity are one s_sound_position (frame 0x48 now);
-// function_221810 is inlined here (retail calls it); flag byte registers and a gain temporary's slot differ.
+// score 35 (was 310): only register choices differ (fade start, gain sum and its temporary, flag reads),
+// and the no-distance path's flag set folds to a store.
 // Depth zero 417, depth one 310, fade scope 310, shared attenuation 334, callback table 311.
 // @retail 0x129aa0
 void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization *arg_2)
@@ -3148,14 +3148,22 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 		local_2->field_14 = function_2195f0(*(real *)&local_16);
 		local_0->unknown0b = local_0->unknown0a;
 		local_2->field_8 = *((local_0->unknown0a & 1) ? &local_13 : &local_14);
-		local_20 = decibels_sum(*((local_0->unknown0a & 2) ? &local_13 : &local_14), function_2197f0(local_2->field_18));
+		long const *local_21 = (local_0->unknown0a & 2) ? &local_13 : &local_14;
+		local_20 = decibels_sum(*local_21, function_2197f0(local_2->field_18));
 	}
 	local_2->field_4 = local_20;
 	local_2->field_0 = local_0->unknown0a;
 	local_2->field_c = 0;
 	local_2->field_10 = 0;
 	if (SOUND_FLAG(local_1->location.flags, 11))
-		local_2->field_8 = decibels_sum(*(long *)((byte *)function_221810(sound_definition_get(local_1->definition_index)->promotion_index) + 0x14), local_2->field_8);
+	{
+		s_sound_definition *local_22 = sound_definition_get(local_1->definition_index);
+		/* retail calls the class lookup out of line here */
+#pragma inline_depth(0)
+		s_unknown_5c *local_23 = function_221810(local_22->promotion_index);
+#pragma inline_depth()
+		local_2->field_8 = decibels_sum(*(long *)((byte *)local_23 + 0x14), local_2->field_8);
+	}
 	if (!TEST_FIELD_BIT(local_1->source_updated) && local_1->source && local_1->source->spatialize)
 	{
 		s_type_12a1b0_spatial local_17 = *local_2;
