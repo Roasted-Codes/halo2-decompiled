@@ -419,12 +419,7 @@ bool __stdcall function_183670(long component_a, long component_b, point3f *a, p
 						if (*distance > contacts[k].position_distance.m128_f32[3])
 						{
 							*distance = contacts[k].position_distance.m128_f32[3];
-							real px = contacts[k].position_distance.m128_f32[0];
-							real pz = contacts[k].position_distance.m128_f32[2];
-							real py = contacts[k].position_distance.m128_f32[1];
-							b->x = px;
-							b->z = pz;
-							b->y = py;
+							real_point3d_set(b, contacts[k].position_distance.m128_f32[0], contacts[k].position_distance.m128_f32[1], contacts[k].position_distance.m128_f32[2]);
 							function_183672(a, b, &contacts[k].normal, *distance);
 							result = true;
 						}
