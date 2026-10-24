@@ -721,6 +721,9 @@ void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f 
 // score 28 (was 28): the effect call's arguments are pushed in the other order
 // and the field is loaded into the low half of a cleared register instead of
 // being zero extended
+// payload reference 28; const payload pointer 28; const data parameter 28;
+// validation name snapshot 28; shared name snapshot 42; late name snapshot 28;
+// explicit lookup null test 28; separate negated scale tests 28; paired tests 28.
 // @retail 0xa1a80
 bool c_projectile_impact_effect_event::v11(long a, long const *entities, long c, void const *data)
 {

@@ -1147,6 +1147,9 @@ void function_1e3b60(long actor_index);
 // function_1f38c0 in EAX; our build passes the first on the stack and the
 // second in ECX, because those two callees' argument registers are fixed in
 // their own translation units.
+// inline/noinline callee declaration 26; noinline declaration 26;
+// unsigned callee input 26; inline unsigned callee declaration 26;
+// unsigned caller input 26; inline caller 26; inline depth two 26; depth three 26.
 // @retail 0x1e34e0
 void function_1e34e0(long actor_index)
 {
