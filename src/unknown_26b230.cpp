@@ -99,6 +99,8 @@ void function_268510()
 // frame and pushes the registers, and it keeps the pool pointer in ebx and the index in edi;
 // ours reserves the frame first and holds the global in ebp, so the prologue and the loop
 // head differ.
+// First/second/both callee noinline 81/81/81; existing typed current 81; typed const view 81.
+// Typed unsigned handle/role names/both noinline 81/81/81; cached global and nullable join remain.
 // @retail 0x268840
 void function_268840()
 {
@@ -448,6 +450,8 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // score 68 (was 68): retail sign-extends the first team argument and passes the second one
 // narrow, and its frame is four bytes larger than ours, so the stack offsets and the register
 // that holds the clump pointer differ as well.
+// Pointer result/reference/both 68/68/68; current field first/pointer/reference 94/94/94.
+// Promoted initial team 94 (sign extension recovered); result from initial test 127.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1798,6 +1802,8 @@ void function_2689d0(void)
 // score 5 (was 5): node next is at stack +0x1c instead of +0x18; prop next is at +0x14 instead of +0x1c.
 // Member for-loop 204; prop for-loop 222; both for-loops 316; disjoint traversal scopes 5.
 // Scopes/member for-loop 204; scopes/prop for-loop 222; scopes/both for-loops 316; setup record references 5.
+// Member/prop/role iterator names 5/5/5; member/prop/both iterator references 5/5/5.
+// Member/prop ordinary inline 5/5; every plain whole-program trial preserves all baseline matches.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {

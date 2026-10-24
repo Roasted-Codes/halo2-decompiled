@@ -785,6 +785,9 @@ struct s_object_activity_flags
 	word unused : 13;
 };
 
+// score 79 (was 79): entry input is EAX versus EDX; nullable actor and save timing still differ.
+// Entry/all header helpers 79/79; external object reference 79; const object/actor/settings views 79/79/79.
+// Combined const views 79; header helper with const object 79; existing scalar qualifier and original body restored.
 // @retail 0x267370
 real function_267370(long volatile object_index)
 {
