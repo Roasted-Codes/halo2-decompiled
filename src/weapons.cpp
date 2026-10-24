@@ -1927,6 +1927,8 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 }
 /* takes rounds from a weapon's reserve for a magazine: first its own, then
    the reserves of the holder's other weapons of the same kind */
+// score 124 (was 124): frame eight bytes agrees; magazine, available and taken registers and pool reloads differ
+// tried all lookups pool value 124; needed result first 171; positive take continue 124; availability before update 124; first reserve field reference 123.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2384,6 +2386,8 @@ struct s_weapon_target_model
 
 bool function_106280(long object_index, long *out_index, byte *out_entry);
 
+// score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
+// tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
@@ -3717,6 +3721,8 @@ static inline bool weapon_game_mode_is_4(void)
     return result;
 }
 
+// score 1130 (was 1130): frame 0x1ebc versus 0x1e98; native request homes and normalization expansion differ
+// tried shared unit normalizer 1218; wide creation predicate 1168; wide network predicate 1176; wide synchronization predicate 1167; native owner initializer 1130; marker query results 1162; shared velocity scale 1130.
 // @retail 0x104150
 void __stdcall function_104150(long weapon_index, short barrel_index)
 {
