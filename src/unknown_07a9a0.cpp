@@ -1065,6 +1065,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	}
 }
 
+// score 834 (was 834): frame 0xd4 versus 0xb4; session entry and lookup differ.
+// Reduced preview 864 (754 code); ID phase 864; phased dword histogram 885;
+// histogram phase 934; bound snapshots 936; split guards 864; capacity inline 920.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

@@ -154,6 +154,8 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 	return index;
 }
 
+// score 919 (was 919): frame 0x4e0 agrees; target/primary and query-array homes differ.
+// Existing-count word 939; query-cursor word 927; completed append 929; early primary 940; primary word 925.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
@@ -409,6 +411,8 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 	function_189fe0(&request, tag);
 }
 
+// score 235 (was 264): frame 0x14c versus 0x148; BSP/camera lifetimes and query/output homes still differ.
+// Transition result 235; unsigned listener 264; byte listener 319; angle lifetime 264; separate request indices 264.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
@@ -449,13 +453,15 @@ void __stdcall function_18bb80(real elapsed)
 				{
 					long index = indices[i];
 					long tag = index != NONE ? ((s_listener_environment_bsp *)bsp)->environments[index].tag : NONE;
-					real transition = 2.0f;
+					real transition;
 					if (index != NONE)
 					{
 						s_listener_environment_definition *definition = &((s_listener_environment_bsp *)g_4e0348)->environments[index];
-						real duration = definition->transition_time;
-						if (!(fabs(duration) < 0.0001f)) transition = duration;
+						transition = definition->transition_time;
+						if (fabs(transition) < 0.0001f) transition = 2.0f;
 					}
+					else
+						transition = 2.0f;
 					requests[i].transition_time = transition;
 					requests[i].fade = 1.0f;
 					requests[i].index = tag;

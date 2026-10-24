@@ -531,6 +531,11 @@ PRIVATE __forceinline void motion_cross(vector3f const &a, vector3f const &b, ve
     result->k = a.i * b.j - a.j * b.i;
 }
 
+// score 235 (was 251): frame 0x28 agrees; trig homes and projection registers differ;
+// shared trig scope 254; sine declared first 251; forward projection loop 235;
+// rotation loop 246; idle base loop 235; projection plus base loops 235; all loops 246.
+// pointer scale loop 239; fixed do scale 237; idle reconstruction loop 235;
+// two-component idle projection loop 235; native bounds pair 235.
 // @retail 0x1faa20
 void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *ticks)
 {
@@ -579,9 +584,8 @@ void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *t
         real angle = *(real const *)(state + 0x28);
         real cosine = (real)cos(angle);
         real sine = (real)sin(angle);
-        base.i *= cosine;
-        base.j *= cosine;
-        base.k *= cosine;
+        for (long component = 0; component < 3; ++component)
+            base.n[component] *= cosine;
         function_30bf0(&axis);
         up->i = axis.i * sine + base.i;
         up->j = axis.j * sine + base.j;

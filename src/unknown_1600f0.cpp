@@ -1203,6 +1203,9 @@ PRIVATE inline long score_string_list_1608e0()
 	return result;
 }
 
+// score 810 (was 817): player register and scalar homes; scalar names 817;
+// header/name reuse 818; header/decoder reuse 818; both short team walks 811;
+// short player walk 835; short outer team walk 818; short rank search 810.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1384,7 +1387,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		char team = *(char *)(player + 0xc0);
 		if (teams && team != NONE)
 		{
-			for (long team_row = 0; team_row < display.team_count; ++team_row)
+			for (short team_row = 0; team_row < display.team_count; ++team_row)
 				if (team == display.teams[team_row])
 				{
 					place = display.team_ranks[team_row] / 2 + 1;

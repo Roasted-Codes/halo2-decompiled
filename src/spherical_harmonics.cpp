@@ -10,6 +10,9 @@
 #define k_spherical_harmonics_pi 3.14159265f
 
 /* the basis functions of the first order*order bands in a direction */
+// score 123 (was 123): Y/scalar homes and retained x87 roots differ;
+// outer order return 123; cubic order return 123; roots before inputs 137;
+// early Z square 128; first-band Z store first 128.
 // @retail 0x143360
 void spherical_harmonics_evaluate_direction(vector3f const *direction, dword order, real *result)
 {
