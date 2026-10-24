@@ -492,6 +492,9 @@ bool sound_driver_voice_create_buffer(
 // First/second/both pair aggregates 125/132/160; scoped mixbin aggregates 120;
 // complete descriptor aggregates 229; reused descriptor 171; direct count increment 98;
 // success-path result assignments 110 (caller differs).
+// score 98 (was 98): early saves and descriptor zero/input scheduling remain;
+// voice before modes/result after count/next count word/spatial signed byte 98 each;
+// spatial word 151; play signed byte 98; spatial word with play byte 151; play long 101.
 // @retail 0x220b90
 short sound_driver_voice_new(
 	dword flags,

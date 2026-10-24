@@ -55,6 +55,9 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // Fresh first-pass entry base 70; indexed user 103; user before table 215;
 // shared entry/sequence/user combination 103/103/103; extent values 103;
 // late accepted mask 229. Pulse-base setup and second-pass homes still differ.
+// score 70 (was 70): pulse-base setup and draw-pass row/sequence homes remain;
+// scalar row X/Y/both 89/87/89; native rectangle library copy 70;
+// pulse array after user base/base before row offset/named row offset 70/70/70; sequence count once 161.
 // @retail 0x200462
 void function_200462(long arg_0)
 {
