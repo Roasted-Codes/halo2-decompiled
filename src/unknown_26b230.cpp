@@ -1459,6 +1459,8 @@ long function_26bc60(long clump_index)
 	return 2;
 }
 
+// score 127 (was 127): frame 0x1c versus 0x20; result register, iterator null join and center copy differ.
+// Plain oldest-time/index storage separately 136/126; byte activity 127; native pool step 160; activity while 136.
 // @retail 0x269040
 long function_269040(point3f const *center, short team)
 {
@@ -1730,6 +1732,8 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
+// score 134 (was 134): frame 0x38 versus 0x3c; pool register and common null-current join differ.
+// Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
 // @retail 0x2689d0
 void function_2689d0(void)
 {

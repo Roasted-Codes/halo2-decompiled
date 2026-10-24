@@ -793,6 +793,8 @@ static inline real unit_clamp_176a0(real value)
     return value;
 }
 
+// score 124 (was 124): frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
+// Entry step in body 122; indexed clamp loop 151; short/byte entry counter 122/133; inline depth one 122.
 // @retail 0x176a0
 void function_176a0(byte *state, s_packed_shader_range const *range)
 {
