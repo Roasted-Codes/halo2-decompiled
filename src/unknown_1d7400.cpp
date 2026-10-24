@@ -77,7 +77,7 @@ struct s_1d7400
 // @retail 0x1d7400
 c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, real arg_2)
 {
- c_extent_shape *result = arg_0;
+ c_extent_shape *result;
  real local_1, local_0;
  function_182aa0(arg_0, &local_1, &local_0);
  real local_2 = (local_0 * arg_2 * 0.5f + g_47f05c) * g_510c54->field_2_3;
@@ -130,15 +130,14 @@ c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, re
   }
   void *local_12 = ((c_1d7390 *)g_480118)->function_1d7390(0x38, 0x22);
   ((c_havok_reference_counted *)local_12)->allocation_size = 0x38;
-  c_extent_shape *local_13 = (c_extent_shape *)new (local_12) c_physics_shape_list((c_havok_reference_counted **)local_4, local_5);
+  result = (c_extent_shape *)new (local_12) c_physics_shape_list((c_havok_reference_counted **)local_4, local_5);
   for (long local_14 = 0; local_14 < local_5; ++local_14)
    if (local_4[local_14]->shape_kind() != 0x11)
     havok_reference_remove((c_havok_reference_counted *)local_4[local_14]);
-  result = local_13;
  }
- else if (arg_0->shape_kind() != 0x11)
- {
- if (arg_0->shape_kind() == 0x15)
+ else if (arg_0->shape_kind() == 0x11)
+  result = arg_0;
+ else if (arg_0->shape_kind() == 0x15)
  {
   c_havok_reference_counted *local_15 = (c_havok_reference_counted *)function_1d7390((long)((s_1d7401 *)arg_0)->field_c, arg_1, local_2);
   void *local_21 = ((c_1d7390 *)g_480118)->function_1d7390(0x50, 0x22);
@@ -149,9 +148,8 @@ c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, re
  }
  else
   result = (c_extent_shape *)function_1d7390((long)arg_0, arg_1, local_2);
- }
  return result;
- }
+}
 
 extern byte g_47f06f;
 
