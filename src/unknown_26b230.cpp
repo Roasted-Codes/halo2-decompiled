@@ -99,6 +99,9 @@ void function_268510()
 // frame and pushes the registers, and it keeps the pool pointer in ebx and the index in edi;
 // ours reserves the frame first and holds the global in ebp, so the prologue and the loop
 // head differ.
+// Entry guard 90; inactive return 86; outer current 81; zero initialization 53
+// (extra entry stores, restored); byte activity 81; calling scanner 120;
+// shared datum iterator 158; inactive continue 81. Original body retained.
 // @retail 0x268840
 void function_268840()
 {

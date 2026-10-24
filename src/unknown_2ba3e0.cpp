@@ -554,6 +554,10 @@ void function_247070(s_object_246eb0 const *particle, s_particle_impact const *i
 
 real g_55e618;
 
+// score 102 (was 102): frame 0x124 agrees; sweep/collision homes and projection spills differ.
+// Velocity snapshot argument 676; reflection loop 102; reflected value 241; sweep scale 129;
+// both scales 129; coefficient local 102; displacement scale 129; snapshot plus loop 676;
+// shared tangent 190; shared start 102; both shared differences 102. Original body retained.
 // @retail 0x2b9060
 void __stdcall function_2b9060(s_particle_properties_2ba const *definition, void *system,
     long first, real scale, long mode)
