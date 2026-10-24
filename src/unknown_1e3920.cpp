@@ -913,7 +913,10 @@ void function_a7b30(long index);
 void __stdcall swarm_delete(long perception_index);
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type);
 
-// score 364 (was 364): frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
+// score 345 (was 364): frame 0x11c versus 0x118; sentinel and success blocks differ.
+// Facing products 345/1272; split squad lookup 388; direct substitution gates 369;
+// guarded Boolean 384; typed actor fields 364.
+// frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
 // Byte creation predicate 383; word predicate 361; short grenade 377; depth one 364; grenade first 364; word pair 375.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
@@ -1014,8 +1017,8 @@ long __stdcall function_1e0850(long character_index, long squad_index, s_203780 
 				{
 					*(long *)request = 0x22;
 					function_b9dd0(unit, (point3f *)(request + 4));
-					*(real *)(request + 0x10) = -forward.i;
-					*(real *)(request + 0x14) = -forward.j;
+					*(real *)(request + 0x10) = forward.i * -1.0f;
+					*(real *)(request + 0x14) = forward.j * -1.0f;
 					request[0x18] = true;
 					function_e6900(unit, (s_unit_request *)request);
 				}
