@@ -988,7 +988,7 @@ struct s_block_layout
 };
 
 /* dot product of two 3x3 blocks stored as nine reals */
-static __forceinline real block_dot_product9(real const *a, real const *b)
+PRIVATE __forceinline real block_dot_product9(real const *a, real const *b)
 {
 	real result;
 	__asm
