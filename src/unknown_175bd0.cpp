@@ -2087,8 +2087,8 @@ long function_179190(s_effect_datum *effect)
 		if (!(skip_chance > 0.0f))
 			break;
 		dword *seed = TEST_FIELD_BIT(TAG_GET(s_effect_definition, effect->tag_index)->flag2) ? &g_4e7408->unknown0 : &g_4e7408->seed;
-		real random_chance = function_x82e52f(seed, __FILE__, __LINE__);
-		if (!(random_chance < definition->events[event_index].skip_chance))
+		real skip_roll = function_x82e52f(seed, __FILE__, __LINE__);
+		if (!(skip_roll < definition->events[event_index].skip_chance))
 			break;
 	}
 	return event_index;
