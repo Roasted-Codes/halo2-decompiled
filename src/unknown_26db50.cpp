@@ -464,6 +464,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // signed-byte spoke 213; size optimization 395.
 // rotation spill keeps frame 0xdc versus 0xd8; radius copy and sector-test registers differ.
 // Current-allocation plain radius 209; scalar cross lifetimes 195; dot lifetime 195; unsigned-word spoke 195; depth one 195.
+// cosine complement 195; cosine first 197; output scalars 195; direct-input outputs 256;
+// components before dot 195; shared rotation 195/1091; output scalars plus plain radius 209;
+// shared rotation plus plain radius 208/1095. Rotation spill and frame 0xdc remain.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

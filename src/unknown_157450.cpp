@@ -1381,6 +1381,9 @@ struct s_item_collection
 };
 
 // score 5 (was 5): the tick count is sign extended into eax here and into edx in retail.
+// collection object reference 5; positive fallback 5; selection scope 5;
+// nested positive groups 5; object plus scope 5; valid-selection result 25;
+// native-short valid selection 29; object plus positive fallback 5. Integer join still differs.
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -4400,6 +4403,9 @@ bool function_158eb0()
 // mode in ecx and the index in edx, ours the other way round. Ours evaluates the index argument
 // first (right to left, the mode is 0x23f260's first parameter); retail behaves as if the mode were
 // last. Tried: `(long)(flag != 0)` 5; `!!flag` 5; a byte flag 5; `> 1` for `/ 2 > 0` 35.
+// actual mode reference 38; options record reference 5; complete iterator 46;
+// iterator scope 5; byte result 69; wide result 59; byte plus mode reference 66;
+// direct final count rejection 23. Scratch index/mode allocation still differs.
 // @retail 0x158f50
 bool function_158f50()
 {

@@ -61,6 +61,9 @@ extern long g_55c154;
 // creation classification spill and copy inline boundary;
 // inline depths zero 88, one 61; shared request 90; integer classification 71;
 // separate load inputs with shared publication 178.
+// request-mode classification 161; immutable classification 61; explicit live source 62;
+// entry reference 61; creation output 99; immutable output 99; shared mode request 88;
+// failed-creation join 61. Classification spill and copy expansion still differ.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {
