@@ -253,6 +253,9 @@ void function_146de0(void)
 	}
 }
 
+// score 143 (was 143): timestamp high-word home and update expansion still differ.
+// Global analysis off 120 (0x50 frame); frame pointer 161; size/speed 281/143;
+// local analysis with frame/size 120/158; frame with size/speed 281/161; policies restored.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {

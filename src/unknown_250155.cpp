@@ -1368,6 +1368,9 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // frame 0x58 versus 0x54; query/count homes, scalar tail stores and final row registers differ.
 // Initial slot memset 187; unsigned selected count 116; query failure guard 136; comparator default 124; native secondary result 140.
 // Guarded fills with current cursor/sort 197, with shared query 195; short mode 125; byte mode 121; selected-end tests 158.
+// score 116 (was 116): extra count home and scalar tail fills still differ.
+// Standard range/count fills 166/164; first/second counted fill 164/166;
+// first/second/both maxima 135/124/159; counted fill with maxima 143.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {

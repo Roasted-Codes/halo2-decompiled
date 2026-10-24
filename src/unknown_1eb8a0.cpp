@@ -775,6 +775,9 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // Unsigned attached handle 157; const contacts 157; unsigned selection 157;
 // initialized found 364; forward workspace 482; shared difference 237; const objects 157.
 // On per-use scan: direct count 88; direct table 356; both 356; found first 87 (one-point addition dropped).
+// score 88 (was 88): own-object/node registers and contact-table setup still differ.
+// Native flags/parent/both 88/88/88; attachment/position/input-field references 88/88/88;
+// frame pointer 563; global analysis off 1220.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {
