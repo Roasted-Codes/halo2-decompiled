@@ -238,6 +238,8 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // BSP/section registers and range/plane homes remain;
 // reference table before traversal 221; instance case first 232; byte success result 185;
 // result-controlled traversal 205; reference table and result traversal 216.
+// byte vertex validity 185; range index at use 199; cached range end 183
+// (below gate); later plane 211; native strip start 220.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -347,6 +349,8 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Region scheduling and model/node storage still differ;
 // direct surface-group expression 240; byte success result 244; word section ordinal 247;
 // direct group and byte result 244; late bounds and byte result 236.
+// cached reference end 250; native strip start 244; no search sentinel 248;
+// shared point setter 238; positive parts scope 243; byte return 237.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)
