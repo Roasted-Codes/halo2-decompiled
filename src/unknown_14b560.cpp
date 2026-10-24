@@ -2637,6 +2637,9 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
+// score 155 (was 155): iterator store/test and rate/tick scheduling differ;
+// flag snapshot 155; long timer 204; parent-carried root walk 182;
+// low-time arm first 179; inline depth one 155. Damage call convention differs.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

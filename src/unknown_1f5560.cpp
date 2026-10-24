@@ -735,6 +735,8 @@ real normalize2d(point2f *v);
 // types arm first 191; fallback setters 195; split plus unsigned scan 223.
 // signed-long search 192; signed-byte search 188; exact exhaustion 210;
 // named first normalization result 172; global optimization off 542.
+// low-bit presence guard 228; native type clamp 236; branch-defined chosen speed 220;
+// target snapshot 234; inline depth zero 231. Frame 0x48 still agrees.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
