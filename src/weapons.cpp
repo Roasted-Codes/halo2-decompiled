@@ -3721,8 +3721,6 @@ static inline bool weapon_game_mode_is_4(void)
     return result;
 }
 
-// score 1130 (was 1130): frame 0x1ebc versus 0x1e98; native request homes and normalization expansion differ
-// tried shared unit normalizer 1218; wide creation predicate 1168; wide network predicate 1176; wide synchronization predicate 1167; native owner initializer 1130; marker query results 1162; shared velocity scale 1130.
 // @retail 0x104150
 void __stdcall function_104150(long weapon_index, short barrel_index)
 {

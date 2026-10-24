@@ -79,6 +79,9 @@ public:
 // retail's ebx and edi hold the member and the collidable as retail has them;
 // the dispatcher and the pair's data still swap registers, and the motion is
 // still read through the member instead of the collidable
+// further trials: bounds first 17; pending data/count through the group 19;
+// listener conversion 17, before the handler 24; tolerance argument 34;
+// member group directly 36; pending member receiver 19; empty-pair guard 17.
 // @retail 0x30df80
 void owner_30c8e0::function_30df80(member_30c8e0 *member)
 {
