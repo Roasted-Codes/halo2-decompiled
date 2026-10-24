@@ -40,6 +40,9 @@ static __forceinline long real_to_long(real value);
 // Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
 // Depth one 144; unsigned maximum 146; word update state 155; first datum API 272; calling scan 208.
 // Activity-controlled first/slice/both loops 158/156/168; signed byte update with short/long maximum 146/152.
+// Native current-pointer/cursor view 132; with Boolean slice API 127; independent
+// long budget 114; separate native cursors 178; native first only 198; short
+// increment 121; Boolean branch 130; handle snapshots 127. Cursor views rejected.
 // @retail 0x268510
 void function_268510()
 {
