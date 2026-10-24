@@ -49,8 +49,8 @@ void function_24f0fc(s_marker_list const *list, s_24ecae_placement const *placem
 		real outer_y = upper ? -2.0f : 2.0f;
 		points[0].x = x + (right_side ? 2.0f : -2.0f);
 		points[0].y = y + outer_y;
-		points[1].x = x;
 		points[1].y = y + (upper ? -2.0f : 2.0f);
+		points[1].x = x;
 		points[2].x = x;
 		points[2].y = y;
 		points[3].x = x + (right_side ? 2.0f : -2.0f);
