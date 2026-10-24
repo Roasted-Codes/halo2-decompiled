@@ -255,6 +255,8 @@ void function_264940(long actor_index, long prop_ref_index)
 	}
 }
 
+// score 358 (was 358): frame 0x24 versus 0x20; object/view allocation and cached object index differ.
+// Full-width unit mask 439; sampled-time reuse 380; deferred tracking view 431; fallback state default 358; inline depth one 358.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
