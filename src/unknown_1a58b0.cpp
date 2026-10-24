@@ -1596,6 +1596,8 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
+// score 186 (was 186): object register, geometry-call convention and failure/angle tails differ;
+// axis name 186; result first 220; geometry result guard 195; masked first bit 186; size optimization 348.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
