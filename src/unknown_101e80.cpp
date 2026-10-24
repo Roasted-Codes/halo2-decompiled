@@ -233,6 +233,10 @@ PRIVATE inline s_object *object_get_102100(long object_index)
 // index times 12 in esi and the link offset in edx (ours swaps them), forms
 // the tag link's address once in ecx, and loads the object's tag index
 // into a register before comparing it with the other object's.
+// Tried: the getter also for the holder or the other object (92), the
+// child read through a local copy of the pool pointer (110), a forced-inline
+// slot-to-object helper (110), tag and tag link declared before the link
+// (179, 209, 211), the tag index comparison reversed (87).
 // @retail 0x102100
 bool function_102100(short link_index, long object_index, bool *out_a, bool *out_b)
 {
