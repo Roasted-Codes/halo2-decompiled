@@ -217,6 +217,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 	}
 }
 
+// score 235 (was 235): frame 0x78 versus 0x6c; early ESI save and position home differ.
+// Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
+// shared-left output with one exit 233 (two-point gain dropped).
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -684,6 +687,9 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
 
+// score 95 (was 99): frame 0x6c agrees; flag/handle carriers and final state stores differ.
+// Target size 225; global optimization off 639; saturation before increment 139;
+// shared output-bit branch 95; direct final state result 101.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -739,13 +745,15 @@ void __stdcall function_118b80(long arg_0)
                 *((byte *)local_1 + 0x131) = (byte)local_15;
             }
             if (local_11.field_4 & 1)
+            {
                 *((byte *)local_1 + 0x12d) |= 1;
-            else
-                *((byte *)local_1 + 0x12d) &= ~1;
-            if (local_11.field_4 & 1)
                 *((byte *)local_1 + 0x12c) |= 0x80;
+            }
             else
+            {
+                *((byte *)local_1 + 0x12d) &= ~1;
                 *((byte *)local_1 + 0x12c) &= ~0x80;
+            }
             real threshold_scale = (*(dword *)local_12 & 8) ? 3.0f : 1.0f;
             if (TEST_FIELD_BIT(local_1->flags.flag5))
             {
@@ -804,6 +812,9 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 
+// score 278 (was 278): frame 0x124 agrees; sweep/point homes and store timing differ.
+// Complete request type 278; scale at each use 278; aggregate sweep 278;
+// point/normal/location copies first 278; target size optimization 536.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
