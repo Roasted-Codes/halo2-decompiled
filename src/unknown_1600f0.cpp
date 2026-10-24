@@ -1005,6 +1005,9 @@ struct s_game_engine_globals_connections_view
 };
 
 /* builds a player's row of the scoreboard at a position */
+// score 184 (was 184): deferred icon tail and time/connection register schedule;
+// default-zero byte icon 230, native integer 184; parsed-name scope 184;
+// separate connection rectangle 206; both name buffers scoped 184.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1206,6 +1209,8 @@ PRIVATE inline long score_string_list_1608e0()
 // score 810 (was 817): player register and scalar homes; scalar names 817;
 // header/name reuse 818; header/decoder reuse 818; both short team walks 811;
 // short player walk 835; short outer team walk 818; short rank search 810.
+// explicit scroll clamp 810; title workspace scope 810; bounds-field arithmetic 810;
+// global optimization off 2237; size optimization 1348.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

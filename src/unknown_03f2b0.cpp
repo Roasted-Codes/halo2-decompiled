@@ -576,6 +576,10 @@ struct s_inactive_object_header
     byte *object;
 };
 
+// score 2 (was 2): object-field load versus table-entry load in the equality;
+// test result 23; byte result 18; equality arms 23; const object 2;
+// unaliased test result 20; guarded equality 27; table before parent 46;
+// outer index with separate guards 2.
 // @retail 0x3e9c0
 bool function_3e9c0(long object_index)
 {
