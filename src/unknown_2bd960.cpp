@@ -433,11 +433,14 @@ void function_2bde90(real t, point3f *out, point3f *points)
 /* builds the hill's polygon on the spline through its markers, and its
    center, radius, perimeter and height range (the height range also covers
    the hill's other markers) */
+// score 134 (was 134): control-call convention and scan induction differ;
+// segment control scope 141 fast; sample point scope 141 fast; late marker
+// array 141 fast; unsigned edges 142 fast; separate marker counters 141 fast.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
 	long half;
-	long vertex = 0;
+	long vertex;
 	long marker_ids[8];
 	point3f control[4];
 	point3f point;
@@ -446,6 +449,7 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 	long count;
 
 	half = hill->count / 2;
+	vertex = 0;
 	function_2bdd20((s_spline_2bd *)hill, points);
 	for (i = 0; i < half; i++)
 	{

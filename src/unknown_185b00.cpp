@@ -698,6 +698,8 @@ PRIVATE inline real control_pitch_pin(real value, real minimum, real maximum)
 	return minimum > value ? minimum : (value > maximum ? maximum : value);
 }
 
+// score 272 (was 272): pitch-bound/settings/direction homes differ within frame 0xa8;
+// interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280; isolated range scope 272.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

@@ -49,6 +49,9 @@ static __forceinline long marker_viewer_unit(void)
 	return unit_index;
 }
 
+// score 123 (was 233): projection-result store, coordinate registers and later helper scheduling differ;
+// bool result 231; early placement 233; position snapshot 282; late collision 237;
+// final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
@@ -93,11 +96,11 @@ void __stdcall function_24e59f(s_marker_list *list)
 
 	point2f offset;
 	real nx, ny;
-	long on_screen = function_30710(&g_4b9e14, 0, (vector3f const *)&transformed, &offset, (s_view const *)&g_camera_storage);
+	bool on_screen = function_30710(&g_4b9e14, 0, (vector3f const *)&transformed, &offset, (s_view const *)&g_camera_storage);
 	if (on_screen)
 	{
-		long half_width = (g_4b9dd6 - g_4b9dd2) / 2;
-		long half_height = (g_4b9dd4 - g_4b9dd0) / 2;
+		short half_width = (g_4b9dd6 - g_4b9dd2) / 2;
+		short half_height = (g_4b9dd4 - g_4b9dd0) / 2;
 		nx = (offset.x - (real)(g_4b9dd2 + half_width)) / (real)half_width;
 		ny = (offset.y - (real)(g_4b9dd0 + half_height)) / (real)half_height;
 	}
@@ -109,9 +112,9 @@ void __stdcall function_24e59f(s_marker_list *list)
 
 	real half_width = (real)(g_4b9dd8.right - g_4b9dd8.left) * 0.5f;
 	real half_height = (real)(g_4b9dd8.bottom - g_4b9dd8.top) * 0.5f;
-	real half_extents = half_height * half_width;
 	real ex = half_height * nx;
 	real ey = half_width * ny;
+	real half_extents = half_height * half_width;
 
 	if (on_screen && ey * ey + ex * ex < half_extents * half_extents)
 	{
@@ -143,8 +146,9 @@ void __stdcall function_24e59f(s_marker_list *list)
 
 	offset.x += (real)((g_4b9dd6 - g_4b9dd2) / 2);
 	offset.y += (real)((g_4b9dd4 - g_4b9dd0) / 2);
-	placement.position.x = (real)g_4b9dd2 + offset.x;
-	placement.position.y = (real)g_4b9dd0 + offset.y;
+	placement.position = offset;
+	placement.position.x = (real)g_4b9dd2 + placement.position.x;
+	placement.position.y = (real)g_4b9dd0 + placement.position.y;
 
 	real t = placement.unknown1c * 0.1f;
 	if (0.0f > t)

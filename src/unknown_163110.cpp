@@ -374,6 +374,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
 
+// score 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
+// corner loop 432; side-plane loop 1154; reverse direction loop 423;
+// default plane first 423; direct first-diagnostic expression 423.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
@@ -450,9 +453,7 @@ bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long
 		transform_plane_163db0(&camera->matrix, &result->planes[5]);
 		for (long i = 0; i < 4; i++)
 		{
-			result->directions[i].i = result->points[i].x - result->points[4].x;
-			result->directions[i].j = result->points[i].y - result->points[4].y;
-			result->directions[i].k = result->points[i].z - result->points[4].z;
+			vector3d_from_points3d(&result->points[4], &result->points[i], &result->directions[i]);
 		}
 		if (!(plane_error_163db0(&result->planes[0], &result->points[1]) < 0.01f &&
 			plane_error_163db0(&result->planes[2], &result->points[1]) < 0.01f &&

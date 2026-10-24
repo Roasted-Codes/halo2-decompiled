@@ -236,6 +236,9 @@ bool function_404b0(long mode)
     return true;
 }
 
+// score 250 (was 250): weight/material scheduling and pass-call boundaries differ;
+// word material index 298; unsigned weight 309; typed geometry header 250;
+// entry observations reordered 326; native local names 250 (fast).
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

@@ -210,6 +210,9 @@ struct s_weapon_definition_view
  byte *barrels;
 };
 
+// score 149 (was 149): frame 0x20 versus 0x1c; weapon-table CSE and
+// sentinel/trigger homes differ; invalid weapon initialization 149; flat
+// fallbacks 149; unsigned hand 149; typed trigger state 149; state at use 149.
 // @retail 0x82d20
 void function_82d20(long object_index, s_object_relevance_source *source, s_weapon_activity_result *result)
 {
@@ -245,7 +248,7 @@ void function_82d20(long object_index, s_object_relevance_source *source, s_weap
    for (long trigger_index = 0; trigger_index < definition->trigger_count; trigger_index++)
    {
     s_weapon_trigger_view *trigger = &definition->triggers[trigger_index];
-    long barrel = trigger->barrel;
+    short barrel = trigger->barrel;
     if (definition->barrel_count > 0 && PIN(barrel, 0, definition->barrel_count - 1) == barrel)
     {
      byte *state = (byte *)object_get_082b70(weapon_index) + 0x1a4 + barrel * 0x34;

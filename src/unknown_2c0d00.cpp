@@ -215,6 +215,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
     s_path_settings const *settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
     point3f const *position, real radius, vector3f const *direction, long unit_index, long ignore_index);
 
+// score 866 (was 866): frame 0x2cb8 versus 0x2cac; actor/unit and workspace homes differ.
+// Classification order 898; common center 887; common offset 867; marker count 866; inline depth two 866;
+// paired object centers 907; first/sphere centers 907; vehicle-check/sphere centers 907.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -884,8 +887,13 @@ bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real
         vector2d_from_points2d(start, end, &direction);
         point2f normal = { direction.y, 0.0f - direction.x };
         normalize_offset_direction_2c(&normal);
-        point2f positive = { origin->x + normal.x * radius, origin->y + normal.y * radius };
-        point2f negative = { origin->x + normal.x * (0.0f - radius), origin->y + normal.y * (0.0f - radius) };
+        point2f positive, negative;
+        scale_offset_direction_2c(radius, &normal, &positive);
+        positive.x = origin->x + positive.x;
+        positive.y = origin->y + positive.y;
+        scale_offset_direction_2c(0.0f - radius, &normal, &negative);
+        negative.x = origin->x + negative.x;
+        negative.y = origin->y + negative.y;
         point2f first, second;
         vector2d_from_points2d(&positive, start, &first);
         vector2d_from_points2d(&negative, start, &second);

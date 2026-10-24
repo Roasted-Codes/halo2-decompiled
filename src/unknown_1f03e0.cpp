@@ -482,32 +482,32 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 	return (arg_0 >> 3) & 1;
 }
 
+// score 182 (was 195): state/forward registers agree; rotation scheduling differs.
+// Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
+// vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
-    struct s_1f1466 { vector3f *field_0; byte const *field_4; vector3f *field_8; } local_0;
-    local_0.field_8 = forward_result;
-    local_0.field_0 = up_result;
-    local_0.field_4 = state;
-    byte *settings = *(byte **)(local_0.field_4 + 8);
+    byte *settings = *(byte **)(state + 8);
     if (function_1f1462(*(dword *)settings))
     {
-        vector3f const *old_up = (vector3f const *)(local_0.field_4 + 0x100);
         vector3f up = ground->normal;
         vector3f axis;
-        function_1f1461(old_up, &up, &axis);
+        function_1f1461((vector3f const *)(state + 0x100), &up, &axis);
         bool rotate = true;
         if (function_30bf0(&axis) == 0.0f)
         {
-            real dot = old_up->j * up.j + old_up->k * up.k + old_up->i * up.i;
+            real dot = ((vector3f const *)(state + 0x100))->j * up.j +
+                ((vector3f const *)(state + 0x100))->k * up.k +
+                ((vector3f const *)(state + 0x100))->i * up.i;
             if (dot > 0.0f)
                 rotate = false;
             else
-                axis = *old_up;
+                axis = *(vector3f const *)(state + 0x100);
         }
         if (rotate)
         {
-            vector3f limited = *old_up;
+            vector3f limited = *(vector3f const *)(state + 0x100);
             real angle = g_510c54->rate * 5.235987663269043f;
             real sine = (real)sin(angle);
             real cosine = (real)cos(angle);
@@ -521,14 +521,14 @@ void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *u
             if (cross.k * axis.k + cross.j * axis.j + cross.i * axis.i > 0.0f)
                 up = limited;
         }
-        vector3f const *old_forward = (vector3f const *)(local_0.field_4 + 0xf4);
+        vector3f const *old_forward = (vector3f const *)(state + 0xf4);
         vector3f cross;
         function_1f1461(old_forward, &up, &cross);
         vector3f forward;
         function_1f1461(&up, &cross, &forward);
         if (function_30bf0(&forward) == 0.0f)
         {
-            function_1f1461(&up, old_up, &cross);
+            function_1f1461(&up, (vector3f const *)(state + 0x100), &cross);
             function_1f1461(&up, &cross, &forward);
             if (function_30bf0(&forward) == 0.0f)
             {
@@ -536,16 +536,16 @@ void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *u
                 forward = *g_4687a8;
             }
         }
-        *local_0.field_8 = forward;
-        *local_0.field_0 = up;
+        *forward_result = forward;
+        *up_result = up;
     }
     else
     {
-        *local_0.field_8 = *(vector3f const *)(local_0.field_4 + 0xf4);
-        *local_0.field_0 = *g_4687b0;
-        local_0.field_8->k = 0.0f;
-        if (function_30bf0(local_0.field_8) == 0.0f)
-            *local_0.field_8 = *g_4687a8;
+        *forward_result = *(vector3f const *)(state + 0xf4);
+        *up_result = *g_4687b0;
+        forward_result->k = 0.0f;
+        if (function_30bf0(forward_result) == 0.0f)
+            *forward_result = *g_4687a8;
     }
 }
 
@@ -708,7 +708,6 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
             desired.j = left.j * input.j + forward.j * input.i;
             desired.k = left.k * input.j + forward.k * input.i;
             desired.k += input.k;
-            function_30bf0(&desired);
         }
         else
         {
@@ -737,7 +736,10 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
                 desired.k = left.k * input.j + forward.k * input.i;
                 desired.k = (desired.k + input.k) * 5.0f;
             }
-            function_30bf0(&desired);
+        }
+        function_30bf0(&desired);
+        if (!flying)
+        {
             if (*(real *)(settings + 0x58) >= desired.k)
                 magnitude *= *(real *)(settings + 0x4c);
             else if (*(real *)(settings + 0x58) > desired.k)
@@ -793,6 +795,8 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 }
 #undef settings
 
+// score 630 (was 630): frame 0x34 versus 0x30; direct-bit and vector homes differ.
+// Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -902,6 +906,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
     return length;
 }
 
+// score 428 (was 489): frame now 0x64; count/component and vector homes still differ.
+// Three-pass countdown 490; preferred-contact cursor 527; search cursor 428;
+// inline depth one 489; existing snapshot cross helper 488.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -987,20 +994,21 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
             real minimum = 3.4028234663852886e+38f;
             long selected = NONE;
             long contacts = *(long *)(component + 0x8c);
+            byte *candidate = *(byte **)(component + 0x88);
             for (long i = 0; i < contacts; ++i)
             {
-                byte *contact = *(byte **)(component + 0x88) + i * 0x48;
-                if (function_1f2e60((s_shape_ground *)contact, moving, velocity, (((*(dword *)(request + 0x18) >> 1) & 1) != 0),
+                if (function_1f2e60((s_shape_ground *)candidate, moving, velocity, (((*(dword *)(request + 0x18) >> 1) & 1) != 0),
                     (point3f const *)(request + 0x1c), *(real *)((*(byte **)request) + 0xc)) &&
-                    (!((*(dword *)(request + 0x18) & 2) != 0) || *(long *)(request + 0x44) == NONE || *(long *)(request + 0x44) == *(long *)(contact + 0x14)))
+                    (!((*(dword *)(request + 0x18) & 2) != 0) || *(long *)(request + 0x44) == NONE || *(long *)(request + 0x44) == *(long *)(candidate + 0x14)))
                 {
-                    real dot = dot3f(&direction, (vector3f *)(contact + 0x28));
+                    real dot = dot3f(&direction, (vector3f *)(candidate + 0x28));
                     if (dot < -0.025f && dot < minimum)
                     {
                         minimum = dot;
                         selected = i;
                     }
                 }
+                candidate += 0x48;
             }
             if (selected == NONE)
             {

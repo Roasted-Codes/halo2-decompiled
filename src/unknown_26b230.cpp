@@ -36,6 +36,8 @@ __declspec(noinline) void function_268840();
 
 static __forceinline long real_to_long(real value);
 
+// score 144 (was 144): frame 0x18 versus 0x20; first-pass pointer/datum homes and slice-call interface differ.
+// Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
 // @retail 0x268510
 void function_268510()
 {
@@ -67,7 +69,7 @@ void function_268510()
 		}
 		for (;;)
 		{
-			byte *clump = g_4f55d0->active ? data_iterator_next_inlined(&iterator) : NULL;
+			byte *clump = g_4f55d0->active ? record_pool_iterator_step(&iterator) : NULL;
 			if (!clump) break;
 			if (clump[0x1c])
 			{
@@ -81,7 +83,7 @@ void function_268510()
 				}
 				else
 				{
-					short count = ++*(short *)(clump + 0x1e);
+					long count = ++*(short *)(clump + 0x1e);
 					if (count > maximum) maximum = count;
 				}
 			}
@@ -120,6 +122,13 @@ void function_268840()
 	function_268c90();
 }
 
+// score 296 (was 296): frame 0x48 versus 0x50; iterator result/exhaustion and
+// player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
+// scoped bool keep 320; entry point scratch 314; entry player pool 297
+// (the latter four use the current-datum iterator). All body forms restored.
+// frame 0x48 versus 0x50; iterator result and pool homes differ;
+// outer while 296; player while 296; actor for-loop 331; native handle parts 327;
+// proxy-before-unit loads 296. Original body retained.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -205,13 +214,14 @@ void function_268c90()
 					{
 						s_object_child_iterator children;
 						function_d0620(extra, &children);
-						bool held = false;
-						while (function_d0690(&children))
+						bool child_available = function_d0690(&children);
+						while (child_available)
 						{
 							byte *child = *(byte **)(g_4e0300->data + (children.child_index & 0xffff) * 12 + 8);
-							if (!child[0xaa]) { held = true; break; }
+							if (!child[0xaa]) break;
+							child_available = function_d0690(&children);
 						}
-						if (!held) function_b8540(extra);
+						if (!child_available) function_b8540(extra);
 					}
 				}
 			}
@@ -1649,12 +1659,12 @@ void function_269580(long destination_index, long source_index)
 			g_4de300[object_index & 0xffff] = g_4de2fc;
 	}
 	long indices[50];
-	short count = 0;
+	long count = 0;
 	iterator.next = ((s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	while (clump_next_prop(&iterator)) indices[count++] = iterator.index;
-	for (short i = 0; i < count; i++)
+	for (long *cursor = indices; cursor != indices + count; ++cursor)
 	{
-		long index = indices[i];
+		long index = *cursor;
 		if (index == NONE || (index & 0xffff) >= g_50241c->high_water_index) continue;
 		s_prop_copy_view *copy = (s_prop_copy_view *)(g_50241c->data + g_50241c->size * (index & 0xffff));
 		if (!copy->salt || copy->salt != (index >> 16)) continue;
@@ -1852,6 +1862,8 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
+// score 189 (was 189): frame 0x1c versus 0x24; current/replacement/object homes and iterator exit differ.
+// Byte type 195; membership result earlier 189; existing group lookup 189; removal arm first 189; guarded pointer-result loop 194.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
@@ -1891,8 +1903,8 @@ void function_26ae30(long object_index)
 			}
 		}
 	}
-	else if ((1 << type) & 3)
-		unit = true;
+	else
+		unit = ((1 << type) & 3) != 0;
 	s_clump_pool_iterator groups;
 	if (g_4f55d0->active)
 	{
@@ -1948,11 +1960,10 @@ void function_26ae30(long object_index)
 	}
 	if (object->type == 1)
 	{
-		long index = NONE;
-		for (;;)
+		for (long index = data_next_absolute_index_inlined(g_502414, 0);
+			index != NONE;
+			index = data_next_absolute_index_inlined(g_502414, index + 1))
 		{
-			index = data_next_absolute_index_inlined(g_502414, index + 1);
-			if (index == NONE) break;
 			byte *tracking = g_502414->data + g_502414->size * index;
 			if (!tracking) break;
 			if (*(long *)(tracking + 0x40) == object_index)
@@ -2081,9 +2092,9 @@ void function_269870(long clump_index)
     }
     g_4de2f8 = false;
     qsort(candidates, count, sizeof(*candidates), function_269da0);
+    s_prop_candidate_view *candidate = candidates;
     while (cursor < count)
     {
-        s_prop_candidate_view *candidate = &candidates[cursor];
         if (candidate->priority < 3 && selected >= 20)
             break;
         if (candidate->prop_index == NONE)
@@ -2143,15 +2154,17 @@ void function_269870(long clump_index)
             }
         }
         ++cursor;
+        ++candidate;
         if (selected >= 50)
             break;
     }
     while (cursor < count)
     {
-        long index = candidates[cursor].prop_index;
+        long index = candidate->prop_index;
         if (index != NONE && datum_get_inlined(g_50241c, index))
             function_26aaf0((s_clump *)clump, index);
         ++cursor;
+        ++candidate;
     }
 }
 

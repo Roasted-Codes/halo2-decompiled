@@ -419,12 +419,7 @@ bool __stdcall function_183670(long component_a, long component_b, point3f *a, p
 						if (*distance > contacts[k].position_distance.m128_f32[3])
 						{
 							*distance = contacts[k].position_distance.m128_f32[3];
-							real px = contacts[k].position_distance.m128_f32[0];
-							real pz = contacts[k].position_distance.m128_f32[2];
-							real py = contacts[k].position_distance.m128_f32[1];
-							b->x = px;
-							b->z = pz;
-							b->y = py;
+							real_point3d_set(b, contacts[k].position_distance.m128_f32[0], contacts[k].position_distance.m128_f32[1], contacts[k].position_distance.m128_f32[2]);
 							function_183672(a, b, &contacts[k].normal, *distance);
 							result = true;
 						}
@@ -514,6 +509,9 @@ PRIVATE __forceinline bool batch_shape_pointer(dword data)
 	return limited != value;
 }
 
+// score 319 (was 319): frame 0x48 versus 0x44 and plane/output homes;
+// normal component loop 319; material-output scope 319; direct validity 351;
+// key-clamp result arms 319; optional entity result 319.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
@@ -532,7 +530,9 @@ void c_query_batch_collector::collect(s_batch_contact const *contact)
 		key += first->next->shape->data * 8 - 8;
 	long limited = key < 0 ? 0 : (key > count - 1 ? count - 1 : key);
 	if (limited != key) return;
-	point3f origin = *(point3f *)(first->transform + 0x50);
+	real origin_x = ((point3f *)(first->transform + 0x50))->x;
+	real origin_y = ((point3f *)(first->transform + 0x50))->y;
+	real origin_z = ((point3f *)(first->transform + 0x50))->z;
 	real hit_x = contact->position.x;
 	real hit_y = contact->position.y;
 	real hit_z = contact->position.z;
@@ -556,7 +556,7 @@ void c_query_batch_collector::collect(s_batch_contact const *contact)
 				bsp3d_get_plane((s_bsp3d *)g_4e0340, *(short *)record, &plane);
 				if (record[4] & 0x20)
 					results[key].flag2c = function_181db0(*(short *)(record + 6), &results[key].surface_vector);
-				side = plane.n.j * origin.y + plane.n.k * origin.z + plane.n.i * origin.x - plane.d;
+				side = plane.n.j * origin_y + plane.n.k * origin_z + plane.n.i * origin_x - plane.d;
 			}
 			else
 			{
@@ -572,7 +572,7 @@ void c_query_batch_collector::collect(s_batch_contact const *contact)
 				normal.k = matrix->up.k * plane.n.k + matrix->left.k * plane.n.j + matrix->forward.k * plane.n.i;
 				plane.d = matrix->position.z * normal.k + matrix->position.y * normal.j + matrix->scale * plane.d + matrix->position.x * normal.i;
 				plane.n = normal;
-				side = plane.n.k * origin.z + plane.n.j * origin.y + plane.n.i * origin.x - plane.d;
+				side = plane.n.k * origin_z + plane.n.j * origin_y + plane.n.i * origin_x - plane.d;
 			}
 			if (side > 0.0f) results[key].normal = plane.n;
 			else valid = false;

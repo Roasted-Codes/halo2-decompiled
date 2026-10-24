@@ -950,6 +950,9 @@ struct s_item_flags_view_10b850
     byte flag7 : 1;
 };
 
+// score 819 (was 819): frame 0x154 versus 0x12c; direction workspace 861;
+// bounce-first 894; shared support predicate 838; direct rotation first 819;
+// correction assigned by branch 861. Original body retained.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1165,11 +1168,15 @@ void __stdcall function_b8540(long);
 
 static __forceinline void item_release_impulse_10b4d0(long object_index)
 {
+	vector3f const *direction = g_4687bc;
 	real scale = g_510c54->rate * g_51e9c4->unknown0;
-	vector3f velocity = {g_4687bc->i*scale, g_4687bc->j*scale, g_4687bc->k*scale};
+	vector3f velocity = {direction->i*scale, direction->j*scale, direction->k*scale};
 	function_10cf80(&velocity, object_index, false);
 }
 
+// score 182 (was 182): release-byte RMW, impulse sharing and event-point homes differ;
+// scale-first 204; shared release with current carriers 182; shared damping 182; both scales 183;
+// detached arm first 199; expiry guard first 181; event point function scope 184.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

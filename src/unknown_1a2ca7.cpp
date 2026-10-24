@@ -900,6 +900,9 @@ static inline XUID *message_entry_get_xuid(s_entry *entry)
 
 /* adds the senders of the player's messages (at most 20) to the players
    list, except those given and those already on it */
+// score 81 (was 81): count/sender homes +0x6c/+0x68 remain reversed; nullable getter and exclusion cursor differ.
+// Exclusion pointer at use 82; native exclusion result 132; enumeration-count lifetime 82; format buffers swapped 81; getter force-inline declaration 81.
+// Byte added count 103; signed/unsigned word exclusion result 128/128; cumulative conditional 113; rejection guards 81.
 // @retail 0x1a4441
 long players_list_add_message_senders(XUID const *excluded, long excluded_count)
 {
@@ -922,8 +925,7 @@ long players_list_add_message_senders(XUID const *excluded, long excluded_count)
 
 			for (; remaining > 0; --remaining, ++excluded_xuid)
 			{
-				if (xuid_equal(xuid, excluded_xuid, false))
-					is_excluded = true;
+				is_excluded = xuid_equal(xuid, excluded_xuid, false) || is_excluded;
 			}
 			if (!is_excluded && !players_list_contains(xuid))
 			{

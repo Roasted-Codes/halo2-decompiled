@@ -183,6 +183,9 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 	}
 }
 
+// score 709 (was 709): vector argument homes and retained clock differ in the 0x24 frame.
+// Void return 708; native failure 716; input role names 709;
+// native extra ticks 709; vector memmove 730.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
@@ -344,8 +347,7 @@ long function_1eb8a0(
 		if (counter == 0)
 			q = g_4687a4;
 		w = w * globals->rate;
-		vector3f qr;
-		qr.k = q->k; qr.i = q->i; qr.j = q->j;
+		vector3f qr = *q;
 		real third3 = e3 * 0.33333334f;
 		real lo = (w - third3) * 3.f * 0.5f;
 		real hi = (e3 - third3) * 3.f * 0.5f;

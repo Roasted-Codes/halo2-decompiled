@@ -1293,6 +1293,12 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
+// score 175 (was 175): frame 0x84 agrees; early ESI save/computed return byte
+// and actor/motion homes differ; scratch at entry 175; pointer/index names 175;
+// byte update result 232; byte readiness 182; byte behavior result 182.
+// early ESI save, update-result byte and motion-copy registers differ;
+// native observed-state width 187; activity word 178; level word 194; readiness word 174
+// (only one lower, rejected); old-state-first conjunction 179 (fast).
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
@@ -1378,7 +1384,7 @@ bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *ar
 	bool local_9 = ((*((byte *)local_2 + 0x10a) >> 2) & 1) != 0;
 	arg_0->unknown5f = local_9 && !arg_0->unknown5e;
 	arg_0->unknown5e = local_9;
-	bool local_10;
+	long local_10;
 	bool local_11;
 	if (local_4 == NONE)
 	{

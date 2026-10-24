@@ -1362,6 +1362,9 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 }
 
 /* fills the list with the session's players, then the empty slots */
+// score 116 (was 116): frame 0x58 versus 0x54; query/count homes, scalar tail stores and final row registers differ.
+// Initial slot memset 187; unsigned selected count 116; query failure guard 136; comparator default 124; native secondary result 140.
+// Guarded fills with current cursor/sort 197, with shared query 195; short mode 125; byte mode 121; selected-end tests 158.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {
@@ -1388,7 +1391,8 @@ void c_matchmaking_list::v3()
 				indices[index_count++] = i;
 			}
 		}
-		memset(indices + index_count, 0xff, (16 - index_count) * sizeof(long));
+		for (long *empty = indices + index_count; empty != indices + 16; ++empty)
+			*empty = NONE;
 	}
 	else
 	{
@@ -1400,7 +1404,8 @@ void c_matchmaking_list::v3()
 				indices[index_count++] = i;
 			}
 		}
-		memset(indices + index_count, 0xff, (16 - index_count) * sizeof(long));
+		for (long *empty = indices + index_count; empty != indices + 16; ++empty)
+			*empty = NONE;
 		if (mode == 1)
 		{
 			long count = 0;
@@ -1411,27 +1416,20 @@ void c_matchmaking_list::v3()
 		else
 		{
 			item_count = player_count;
-			if (mode == 3)
-			{
-				if (teams)
-				{
-					if (values)
-					{
-						qsort(indices, index_count, sizeof(long), matchmaking_compare_team_and_value);
-					}
-					else
-					{
-						qsort(indices, index_count, sizeof(long), matchmaking_compare_value);
-					}
-				}
-				else if (values)
-				{
-					qsort(indices, index_count, sizeof(long), matchmaking_compare_team);
-				}
-			}
 		}
 	}
+	if (mode == 3)
+	{
+		int (__cdecl *compare)(void const *, void const *) = NULL;
+		if (teams)
+			compare = values ? matchmaking_compare_team_and_value : matchmaking_compare_value;
+		else if (values)
+			compare = matchmaking_compare_team;
+		if (compare)
+			qsort(indices, index_count, sizeof(long), compare);
+	}
 	record_pool_release_all(data);
+	long *selected = indices;
 	for (i = 0; i < item_count; i++)
 	{
 		long datum_index = record_pool_allocate(data);
@@ -1442,7 +1440,7 @@ void c_matchmaking_list::v3()
 
 			if (i < index_count)
 			{
-				datum->player = (short)indices[i];
+				datum->player = (short)*selected;
 			}
 			else if (i >= player_count)
 			{
@@ -1453,6 +1451,8 @@ void c_matchmaking_list::v3()
 				datum->player = 16;
 			}
 		}
+		if (i < index_count)
+			++selected;
 	}
 	function_24c0c4((c_widget *)this);
 	((c_widget *)this)->c_widget::v11();

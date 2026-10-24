@@ -780,6 +780,9 @@ void function_25aba0(long actor_index);
 
 
 
+// score 69 (was 143): frame 0x4c agrees; ESI/EDI, state-one decrement and zero-fill differ.
+// Native workspace initializer 69; owner lifetime 266; level lifetime 320;
+// entry pointer walk 261; full-width choice 150; full-width type 338.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -869,8 +872,7 @@ void __stdcall function_1a7cc0(long actor_index)
 			continue;
 		}
 
-		s_slot data;
-		memset(&data, 0, sizeof(data));
+		s_slot data = {0};
 		short choice = ((short (__stdcall *)(long, short, s_slot *))((s_slot_handler_1 *)handler)->choose)(actor_index, level, &data);
 
 		if (choice == g_46fbe4)
@@ -1172,15 +1174,11 @@ void function_1a68a0(long object_index, vector3f *velocity)
 			}
 			function_ba1d0(object_index, velocity, NULL);
 			vector3f relative;
-			relative.i = velocity->i - local_3.field_0.i;
-			relative.j = velocity->j - local_3.field_0.j;
-			relative.k = velocity->k - local_3.field_0.k;
-			real along_i = unit->normal.i * relative.i;
-			real along_k = unit->normal.k * relative.k;
-			real along_j = unit->normal.j * relative.j;
-			real projection = (along_i + along_k) + along_j;
+			vector3d_from_points3d((point3f const *)&local_3.field_0, (point3f const *)velocity, &relative);
+			vector3f const *normal = &unit->normal;
+			real projection = dot3f(normal, &relative);
 			vector3f projected;
-			function_1a68a2(&unit->normal, projection, &projected);
+			function_1a68a2(normal, projection, &projected);
 			velocity->i -= projected.i;
 			velocity->j -= projected.j;
 			velocity->k -= projected.k;
@@ -1478,16 +1476,17 @@ struct s_target_link_definition
 bool function_1a59f0(long object_index, long excluded_index, short team, bool *has_hostile);
 bool function_1a5b00(long object_index, short team, bool *has_hostile);
 
-// score 32 (was 32): the helper is called with a different register and the return value is built
-// with a different order of the pops.
 // @retail 0x1a5910
 bool __stdcall function_1a5910(long object_index, long excluded_index, short team, bool *has_hostile)
 {
 	bool result;
 	*has_hostile = false;
 	if (object_index != excluded_index)
-	{
 		result = true;
+	else
+		result = false;
+	if (result)
+	{
 		s_object_header *header = OBJECT_HEADER(object_index);
 		if ((1 << header->type) & 3)
 		{
@@ -1506,8 +1505,6 @@ bool __stdcall function_1a5910(long object_index, long excluded_index, short tea
 			}
 		}
 	}
-	else
-		result = false;
 	return result;
 }
 
@@ -1601,6 +1598,8 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
+// score 186 (was 186): object register, geometry-call convention and failure/angle tails differ;
+// axis name 186; result first 220; geometry result guard 195; masked first bit 186; size optimization 348.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -2067,6 +2066,9 @@ long function_cb6d0(long unit_index);
 bool function_cb810(long unit_index, vector3f *vector);
 long function_baf40(long object_index);
 
+// score 177 (was 177): frame 0xb4 versus 0xb8; output record uses stack/EBP, retail EBX.
+// Full-width selector 203; later player view 200; wide secondary selector 177;
+// native vector/workspace role names 177; outer return guard 177.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {
