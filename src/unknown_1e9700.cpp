@@ -124,6 +124,9 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 
 // score 421 (was 421): frame 0x48 versus 0x50; victim/result homes and rounding calls differ.
 // Assist cursor 464; damage snapshot 466; early hostility 463; hostile arm first 421; size optimization 713.
+// j91: frame 0x48 versus 0x50 and victim/selection/count homes remain; isolated early killer recovers 0x50 at 454 but regresses.
+// early killer result 454; early assist threshold 440; early attribution results 463; shared tick frequency
+// 421; attribution shared frequency 460
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

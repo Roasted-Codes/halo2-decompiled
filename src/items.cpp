@@ -953,6 +953,9 @@ struct s_item_flags_view_10b850
 // score 819 (was 819): frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
 // correction assigned by branch 861. Original body retained.
+// j91: frame 0x154 versus 0x12c and Boolean homes remain; native rotation copies reach 0x148 but regress.
+// collision result predicate 819; settle result predicate 888; collision settle predicate 879; native rotation
+// copies 885; shared native rotation 886
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
