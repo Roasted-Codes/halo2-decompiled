@@ -136,7 +136,8 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 // (253); a separate distance local (193); the cross product written to out
 // directly, cross3f (174), with its components in i-j-k, j-i-k or j-k-i order
 // (50; k-j-i, k-i-j and i-k-j give 26), or with each product's operands
-// swapped (26); new_mid.x as root_forward->i * mid_root (26).
+// swapped (26); new_mid.x as root_forward->i * mid_root (26); the node axes
+// written as root->forward etc. without the pointer locals (59).
 // @retail 0x120220
 void function_120220(
 	transform4x3f *target,
