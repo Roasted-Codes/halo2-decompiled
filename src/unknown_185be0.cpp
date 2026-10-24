@@ -120,8 +120,10 @@ __forceinline bool function_185be3(long arg_0)
 }
 __forceinline void function_185be4(dword *arg_0, dword arg_1, bool arg_2)
 {
-    if (arg_2) *arg_0 |= arg_1;
-    else *arg_0 &= ~arg_1;
+    dword flags = *arg_0;
+    if (arg_2) flags |= arg_1;
+    else flags &= ~arg_1;
+    *arg_0 = flags;
 }
 __forceinline void function_185be5(s_186ab2 *arg_0)
 {
@@ -140,11 +142,14 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 1023 (was 1082): frame 0xe8 versus 0xe0; state/output carriers and mask/flag schedules still differ.
-// Counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
+// score 1013 (was 1023): frame 0xe8 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
 // word mask plus selected byte 1023, plus word index 1080.
+// Whole-output reset 1082; output clear first 1056; inactive input clear 1047;
+// common flag store 1042; action byte 1044; chained index reset 1023;
+// common flag store with indexed mask 1013.
 // Shared curve inputs 1043; late input buffers 1074; active-branch pointers 1075;
 // native clear mask 1023; retained response predicate 1023.
 // @retail 0x185be0
@@ -291,15 +296,13 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         word local_8 = local_1->field_e & local_1->field_c;
         if (local_8)
         {
-            word mask = 1;
             for (long local_9 = 0; local_9 < 16; ++local_9)
             {
-                if ((local_8 & mask) && !local_2.field_0[local_9])
+                if ((local_8 & (1 << local_9)) && !local_2.field_0[local_9])
                 {
-                    local_1->field_c &= ~mask;
-                    local_1->field_e &= ~mask;
+                    local_1->field_c &= ~(1 << local_9);
+                    local_1->field_e &= ~(1 << local_9);
                 }
-                mask <<= 1;
             }
         }
         local_8 = local_1->field_c;

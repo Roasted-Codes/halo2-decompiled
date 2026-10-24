@@ -757,6 +757,9 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
+// score 225 (was 225): inline table clear aligns the frame and occupies EBP;
+// reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
+// indexed batch-entry pointer 225; previous-gain snapshot 262.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

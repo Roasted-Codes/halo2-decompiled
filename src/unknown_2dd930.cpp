@@ -147,10 +147,10 @@ public:
 			magnitude->z = _mm_and_ps(group->z, *(__m128 const *)abs_mask_2dd930);
 			magnitude->d = _mm_setzero_ps();
 			__m128 const origin = tree->origin;
-			group->d = _mm_add_ps(group->d, _mm_add_ps(_mm_add_ps(
+			_mm_store_ps(group->d.m128_f32, _mm_add_ps(group->d, _mm_add_ps(_mm_add_ps(
 				_mm_mul_ps(group->x, _mm_shuffle_ps(origin, origin, 0x00)),
 				_mm_mul_ps(group->y, _mm_shuffle_ps(origin, origin, 0x55))),
-				_mm_mul_ps(group->z, _mm_shuffle_ps(origin, origin, 0xaa))));
+				_mm_mul_ps(group->z, _mm_shuffle_ps(origin, origin, 0xaa)))));
 			group->d = _mm_add_ps(group->d, group->d);
 		}
 	}
@@ -160,8 +160,8 @@ public:
 // collects what the planes touch: the planes moved into the tree's
 // coordinates four at a time (the last group padded with the first of its
 // planes), with their normals' magnitudes alongside
-// score 178 (was 184): entry registers, load order and final-loop layout
-// still differ. Indexed arrays reach a 672-byte checked extent. Previously,
+// score 171 (was 178): entry registers, load order and final-loop layout
+// still differ. Before the SIMD store, indexed arrays reached 672 bytes. Previously,
 // retail computes the groups' magnitudes first and then
 // their distances, reads the distance back from the group before doubling it
 // and loads the query through esi; ours takes the origin's terms first, keeps the
@@ -179,6 +179,11 @@ public:
 // 184; aligned inputs 184; plane references 184; descending lanes 379;
 // guarded remainder 278; named products 184; packed lane construction 379;
 // indexed arrays without the unused boundary argument 178.
+// Further trials: reverse end pointers 180; SIMD output stores 171; query
+// object reference 178; translation-only SIMD store 171; packed inputs with
+// that store 171; input countdown 171; finishing optimization disabled 171;
+// local writable mask 171; reverse pointers with the store 174. The single
+// translated-distance SIMD store is retained, at 674/672 bytes.
 // @retail 0x2dd930
 void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
