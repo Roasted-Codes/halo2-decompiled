@@ -86,6 +86,8 @@ solver_result_31a0d0 const *motion_31a0d0::function_31a0d0(float const *step, fl
 // the assignment as the argument (the same bytes), the product in brackets
 // (23), the field's factor first (10), the length's factor through the
 // vector's accessor (46)
+// object names separately/together 10; distinct duration name 10;
+// grouped product with renamed offset or all renamed objects 23
 // @retail 0x31a2b0
 void motion_31a2b0::function_31a2b0(float time, float step_length)
 {

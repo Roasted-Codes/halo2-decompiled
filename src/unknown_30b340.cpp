@@ -16,6 +16,9 @@
 // ahead of the fields), the list's fields assigned in the body as well (44: the
 // list's constructor's stores are not eliminated as dead, so they appear
 // twice)
+// member input record 4; member input and handle records 0, but existing
+// descendants require direct object/placement/id fields and list.field_0;
+// base input record with the original exposed fields 12
 // @retail 0x30b340
 class_30b340::class_30b340(referenced_2d88a0 *object_, long value)
 	: field_8(0), object(object_), field_10(-1), field_14(0), field_18(0), field_1c(0), field_20(0), field_24(value)
