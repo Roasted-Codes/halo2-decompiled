@@ -40,7 +40,7 @@ PRIVATE __forceinline real function_1a83e1(point3f const *start, vector3f const 
     return (real)sqrt(squared_distance);
 }
 
-static inline void point_from_line3d(point3f const *point, vector3f const *vector, real t, point3f *result)
+static inline void point_offset_along_vector(point3f const *point, vector3f const *vector, real t, point3f *result)
 {
     result->x = vector->i * t + point->x;
     result->y = vector->j * t + point->y;
@@ -99,8 +99,8 @@ bool __stdcall function_1a83e0(long arg_0, short *arg_1, real *arg_2, point2f *a
         local_11.i = local_6.y;
         local_11.j = 0.0f - local_6.x;
         local_11.k = 0.0f;
-        point_from_line3d(&local_0->position, &local_10, local_2, &local_8);
-        point_from_line3d(&local_0->position, &local_11, local_2, &local_9);
+        point_offset_along_vector(&local_0->position, &local_10, local_2, &local_8);
+        point_offset_along_vector(&local_0->position, &local_11, local_2, &local_9);
         bool local_12;
         bool local_13;
         s_path_trace_result local_14;
