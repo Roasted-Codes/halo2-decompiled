@@ -459,6 +459,11 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 	vector->k = axis->k * along + k * cosine - (axis->j * i - axis->i * j) * sine;
 }
 
+// score 195 (was 195): frame 0xdc versus 0xd8 and a rotation spill; shared cross
+// 244; native component loop 244; cross before dot 257;
+// signed-byte spoke 213; size optimization 395.
+// rotation spill keeps frame 0xdc versus 0xd8; radius copy and sector-test registers differ.
+// Current-allocation plain radius 209; scalar cross lifetimes 195; dot lifetime 195; unsigned-word spoke 195; depth one 195.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

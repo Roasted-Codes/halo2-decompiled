@@ -536,6 +536,8 @@ PRIVATE __forceinline void motion_cross(vector3f const &a, vector3f const &b, ve
 // rotation loop 246; idle base loop 235; projection plus base loops 235; all loops 246.
 // pointer scale loop 239; fixed do scale 237; idle reconstruction loop 235;
 // two-component idle projection loop 235; native bounds pair 235.
+// global optimization off 721; size optimization 409; inline depth zero 362;
+// active rotation scope 235; idle sine after scaling 235.
 // @retail 0x1faa20
 void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *ticks)
 {

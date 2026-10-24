@@ -461,6 +461,9 @@ struct s_message_0b0900
 	long value14d0;
 };
 
+// score 73 (was 73): entry register, prior payload base and result stores;
+// per-entry result 618; word entry ordinal 624; prior-entry reference 73;
+// native array-bound walks 712; byte message result 863.
 // @retail 0xb0900
 bool __stdcall function_0b0900(s_bitstream *stream, long unused, s_message_0b0900 *message)
 {
