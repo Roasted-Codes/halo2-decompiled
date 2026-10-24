@@ -159,12 +159,20 @@ public:
 // collects what the planes touch: the planes moved into the tree's
 // coordinates four at a time (the last group padded with the first of its
 // planes), with their normals' magnitudes alongside
-// @retail 0x2dd930
 // score 184 (was 184): retail computes the groups' magnitudes first and then
 // their distances, reads the distance back from the group before doubling it
 // and keeps the query in eax; ours takes the origin's terms first, keeps the
 // distance in a register across the doubling and takes the query in ecx. The
 // loop's registers and the order of its two halves are the whole difference.
+// Further trials: local bit/vector mask 184; intrinsic mask 183; doubling
+// loads 174; distance/magnitude stores and direct origin uses 174; pointer
+// before count and writable mask 174; value/output magnitude helpers 184;
+// mixed distance reads/origin intrinsic 178; consumed group pointer 173;
+// vector planes 166; shared sum 168
+// with a larger frame; finishing arguments 166; minimal iterator 167;
+// early query snapshot 167. Original mask and arithmetic retained.
+// Two explicit loads of the distance for the doubling 166 (not kept: they only force the reloads).
+// @retail 0x2dd930
 void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
 {
