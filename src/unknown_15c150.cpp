@@ -78,6 +78,9 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // word team counters 248; tail count plus word team counter 252.
 // early EBP save, teams byte home and local-slot spill differ;
 // unsigned count 242; short count 249; byte team 248; shared crowded with word slot 248; indexed fade with word slot 196.
+// score 196 (was 196): early EBP save, team-byte home and local-slot spill remain.
+// Shared iterator 196; typed pooled player 196; native team bitfield 196; all three 196;
+// direct four-slot traversal 351; with shared types 351; with native bitfield 351; all 351.
 // @retail 0x15c150
 void function_15c150()
 {

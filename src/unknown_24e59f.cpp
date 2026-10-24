@@ -54,6 +54,10 @@ static __forceinline long marker_viewer_unit(void)
 // final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
 // projected endpoints 123; word centers 225; final endpoints 123; native direction 264; distance lifetime 141.
 // Branch status with word/native extents 218/212 (match-only, reverted); numerator lifetimes 123; viewer exits 123; earlier extent product 213.
+// score 123 (was 123): projection-status store, coordinate registers and helper scheduling remain.
+// Failure predicate 280; sequential word normalization 222; named ellipse predicate 123;
+// outside-first ellipse arms 123; failure/sequential 249; named/sequential 222;
+// outside-first/sequential 222; failure/outside-first/sequential 249.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
