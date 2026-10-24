@@ -1821,6 +1821,9 @@ long function_75890(long time);
 
 bool network_session_host_become_leader(c_class_58d20 *session);
 
+// score 90 (was 90): frame 0xc agrees; readiness uses BL and the failure/mode join differs.
+// cleanup-first mode 90; byte readiness 90; byte completion 94; single state read 90;
+// readiness before countdown 140; shared live-state predicate 90.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {

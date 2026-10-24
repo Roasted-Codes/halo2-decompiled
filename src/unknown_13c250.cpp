@@ -82,6 +82,9 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
     return TEST_FIELD_BIT(arg_1->field_10a2);
 }
 
+// score 171 (was 171): receiver reloads and count/ranking allocation;
+// typed fallback entries 171; end cursor 173; signed-word count 168;
+// byte count 195; carried tag read before count update 171.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {
