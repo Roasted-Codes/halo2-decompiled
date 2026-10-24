@@ -1672,8 +1672,11 @@ PRIVATE inline transform4x3f *component_node_matrices(long object_index)
  return (transform4x3f *)((byte *)object + object->matrices_offset);
 }
 
-// score 172 (was 172): frame 0x84 vs 0x80, retained header spill; stable handle 197;
-// pointer names 172; in-place composition 212; default point setters 188; sibling induction 175.
+// score 29 (was 172): only the orientations branch differs: retail reads both matrix offsets
+// before calling 0x141590 and keeps the node's base (object + offset) in EDI across the call,
+// where ours keeps the object and reads the offset again after it. Tried at 172 (lane): stable
+// handle 197; pointer names 172; in-place composition 212; default point setters 188; sibling
+// induction 175. Tried at 29: reordering the locals, precomputing the matrix pointer (no change).
 // @retail 0x1d3d20 standard
 // score 29 (was 172): with the orientations, retail reads both matrix offsets before inverting
 // the parent and keeps the node's matrix base (object plus offset) in EDI across that call, where
