@@ -490,6 +490,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
 // Direct state dot loads still cost six bytes; cross before trig 247; late limited snapshot 190;
 // cosine first 183; shared cosine scale 241; native settings mask 303.
+// Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
+// rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -929,6 +931,8 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // inline depth one 489; existing snapshot cross helper 488.
 // Byte flag helper 471; shared adjustment join 437; final contact cursor 595;
 // accepted-count pass bound 492; result publication 431.
+// Ordinary count with search cursor 525; candidate countdown 474; fixed-pass do loop 427;
+// snapshot projection helper 428; native relative-velocity subtraction 642.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
