@@ -535,7 +535,8 @@ bool function_155d60(long index);
 bool g_4f55e2;
 
 // score 7 (was 7): ours masks the byte with an and against a memory constant and negates it, retail masks a
-// dword in memory and tests the low byte.
+// dword in memory and tests the low byte; a four-byte global read into a char local already gives retail's
+// dword and, so what is left is the end: retail branches on the mask, ours negates it and pops esi early.
 // @retail 0x13939b
 bool function_13939b()
 {
