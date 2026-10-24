@@ -53,6 +53,10 @@ public:
 // 129, component loop 154; shared axis bit 196, endpoint arrays 196, common
 // limit 123; later bit table 75; earlier sign 73, later exit load 71 (dropped);
 // explicit endpoint vector loads 73; shared bit with byte counter 73.
+// Reference arguments 73; SIMD/scalar vector unions 141; vector references
+// with one extent load 202; one result exit 110; post-decrement axis 140;
+// long axis and guarded body with one extent load 202; outside mask
+// initialized earlier 104; unsigned masks and table 73.
 // @retail 0x2fe550
 answer_2fe550 box_2fe550::function_2fe550(segment_2fe550 const *segment, hit_2fe550 *hit) const
 {

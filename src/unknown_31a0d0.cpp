@@ -98,6 +98,8 @@ solver_result_31a0d0 const *motion_31a0d0::function_31a0d0(float const *step, fl
 // both file neighbours); out-of-class helper 10; four local names 5 each;
 // point's wider/entry scopes 16 each; returned translation 10.
 // direct final lane assignment 17/594.
+// object names separately/together 10; distinct duration name 10;
+// grouped product with renamed offset or all renamed objects 23
 // @retail 0x31a2b0
 void motion_31a2b0::function_31a2b0(float time, float step_length)
 {
