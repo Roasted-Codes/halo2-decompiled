@@ -57,6 +57,8 @@ void *c_game_havok_memory::allocate(long size, long memory_class)
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
+// score 19 (was 19): retail tests the end of the block with >= and gives the second block its own
+// deallocate, ours shares the first and the second.
 // @retail 0x147160
 void c_game_havok_memory::deallocate(void *address)
 {
@@ -106,6 +108,8 @@ void *c_game_havok_memory::allocate_aligned(long alignment, long size, long memo
 }
 
 #pragma intrinsic(_ReadWriteBarrier)
+// score 19 (was 19): retail tests the end of the block with >= and gives the second block its own
+// deallocate, ours shares the first and the second.
 // @retail 0x147240
 void c_game_havok_memory::deallocate_aligned(void *address)
 {

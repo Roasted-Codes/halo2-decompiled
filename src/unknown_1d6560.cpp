@@ -402,7 +402,8 @@ PRIVATE __forceinline void physics_mass_copy(byte const *body, s_physics_mass_ar
     array->data[i].mass.inertia = *(hkRotation const *)(body + 0x50);
 }
 
-// score 4 (was 4): the two values are stored to the stack in the opposite order; ours is padded with six int3s.
+// score 4 (was 4): retail loads the 1.0f constant after it stores the array pointer, and
+// loads the allocator global before it stores the centre; ours does both the other way round.
 // @retail 0x1d5ec0
 c_havok_reference_counted *__stdcall function_1d5ec0(s_havok_component *component,
     s_physics_model_owner *owner, char const *kinds, char *output, long *output_count,

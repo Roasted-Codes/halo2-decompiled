@@ -347,21 +347,23 @@ byte __stdcall texture_cache_entry_state(long datum_index)
 	return result;
 }
 
+// score 10 (was 11): the shared false block is emitted after the resource check, where retail
+// emits it right after the hardware format compare and jumps back to it.
 // @retail 0x12d1a0
 bool __stdcall texture_cache_entry_busy(long datum_index)
 {
 	s_texture_cache_entry *entry = texture_cache_entry_get(datum_index);
 
-	if (!(entry->flags & 1) && (!(entry->flags & 2) || g_4e6479))
+	if (entry->flags & 1)
+		return true;
+	if ((entry->flags & 2) && !g_4e6479)
+		return true;
+	if (entry->hardware_format == NONE)
+		return false;
+	if (entry->resident)
 	{
-		if (entry->hardware_format == NONE)
+		if (!D3DResource_IsBusy(&entry->resource))
 			return false;
-		if (entry->resident)
-		{
-			if (!D3DResource_IsBusy(&entry->resource))
-				return false;
-			return true;
-		}
 	}
 	return true;
 }
@@ -973,6 +975,8 @@ struct s_bitmap_texture_view
 	dword level_addresses[3];
 };
 
+// score 3 (was 3): the masked level address is loaded into EDX, retail reuses the base register,
+// which is dead after that load.
 // @retail 0x12d6d0
 void __stdcall function_12d6d0(s_bitmap_texture_view const *bitmap, long level, D3DTexture *texture)
 {

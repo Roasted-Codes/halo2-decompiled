@@ -285,6 +285,7 @@ void motion_sensor_blip_set_position(point2f const *point, s_motion_sensor_blip 
 	blip->y = (char)y;
 }
 
+// score 26 (was 26): the sensor table pointer is kept in ECX, retail keeps it in EAX.
 // @retail 0x1a1e49
 char motion_sensor_object_type(long local_player_index, long object_index)
 {
@@ -376,6 +377,7 @@ __forceinline short function_1a1fb0(short height)
 	return height;
 }
 
+// score 9 (was 9): retail loads the global after the store of the height, ours loads it before.
 // @retail 0x1a1faf
 void motion_sensor_blip_set_type(long local_player_index, long object_index, s_motion_sensor_blip *blip)
 {
