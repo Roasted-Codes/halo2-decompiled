@@ -2,6 +2,16 @@
 
 The newest entry comes first.
 
+## 2026-10-24: 9520 functions match
+
+```
+matched 9520 of 11321 game functions (1494605 of 2784283 bytes, 53.68%)
+matched 931 of 1041 Havok functions (134044 of 234536 bytes, 57.15%)
+```
+
+1 new matches, none lost:
+- @coldspear's #745, #746, #747: `0x24f0fc` match.
+
 ## 2026-10-24: 9519 functions match
 
 ```
