@@ -797,10 +797,9 @@ void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *
 	{
 		long root = function_baf40(is_unit && *(long *)(object + 0x14) != NONE ? *(long *)(object + 0x14) : reference->object_index);
 		long mode = prop[0x25] && prop[0x23] ? 2 : 0;
-		bool alternate = !current;
 		short sight = function_1c8df0(root, &motion->field_0, *(short *)((byte *)motion + 0x28),
 			*(short *)((byte *)sample + 0x28), sample, mode, false,
-			*(long *)(actor + 0x26c) != NONE, alternate, current ? (long *)(actor + 0x348) : NULL);
+			*(long *)(actor + 0x26c) != NONE, !current, current ? (long *)(actor + 0x348) : NULL);
 		actor = saved_actor;
 		if (*(long *)(actor + 0x7c) != NONE && prop[0x25] && 25.0f > reference->unknown28 &&
 			(sight == 0 || sight == 1))
@@ -819,7 +818,7 @@ void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *
 					long other_mode = prop[0x25] && prop[0x23] ? 2 : 0;
 					short other_sight = function_1c8df0(root, (point3f const *)((byte *)state + 0x30), *(short *)((byte *)state + 0x2c),
 						*(short *)((byte *)sample + 0x28), sample, other_mode, false,
-						*(long *)(actor + 0x26c) != NONE, alternate, current ? (long *)(actor + 0x348) : NULL);
+						*(long *)(actor + 0x26c) != NONE, !current, current ? (long *)(actor + 0x348) : NULL);
 					view->unknown8c = (short)other_sight;
 					view->unknown8a = function_263810((point3f const *)sample, actor_index, (point3f const *)((byte *)state + 0x30), NULL, 2, (short)other_sight, true, NULL);
 				}
