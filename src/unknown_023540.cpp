@@ -3054,7 +3054,7 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
         g_484f68.PSRGBOutputs[7] = 0x4500;
         g_484f68.PSAlphaInputs[7] = 0xd120c02;
         g_484f68.PSAlphaOutputs[7] = filter_output_first_shift(exponent);
-        g_484f68.PSFinalCombinerConstant1 = function_131fc0(offset);
+        g_484f68.PSFinalCombinerConstant0 = function_131fc0(offset);
         g_484f68.PSFinalCombinerInputsABCD = 0x41d1105;
         g_484f68.PSFinalCombinerInputsEFG = (extra_texture ? 25 : 32) << 8;
     }
@@ -3091,7 +3091,7 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
         g_484f68.PSConstant0[7] = pack_color4f(&second);
         g_484f68.PSAlphaInputs[7] = 0x11141d05;
         g_484f68.PSAlphaOutputs[7] = 0xc00;
-        g_484f68.PSFinalCombinerConstant1 = pack_color4f(&second);
+        g_484f68.PSFinalCombinerConstant0 = pack_color4f(&second);
         g_484f68.PSFinalCombinerInputsABCD = 0x114000f;
         g_484f68.PSFinalCombinerInputsEFG = 0x1d041c00;
     }
@@ -3130,7 +3130,7 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
         }
         else
         {
-            g_484f68.PSFinalCombinerConstant1 = pack_color3f((color3f const *)(configuration + 8));
+            g_484f68.PSFinalCombinerConstant0 = pack_color3f((color3f const *)(configuration + 8));
             g_484f68.PSFinalCombinerInputsABCD = 0x1d010000;
             g_484f68.PSFinalCombinerInputsEFG = 0x1d00;
         }
@@ -3159,7 +3159,7 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
         g_484f68.PSAlphaOutputs[6] = filter_output_first_shift(exponent);
         g_484f68.PSAlphaInputs[7] = 0x1d2d0000;
         g_484f68.PSAlphaOutputs[7] = 0xd0;
-        g_484f68.PSFinalCombinerConstant1 = pack_color3f((color3f const *)(configuration + 0x28));
+        g_484f68.PSFinalCombinerConstant0 = pack_color3f((color3f const *)(configuration + 0x28));
         g_484f68.PSFinalCombinerInputsABCD = 0x1d010000;
         g_484f68.PSFinalCombinerInputsEFG = 0x1d00;
     }
