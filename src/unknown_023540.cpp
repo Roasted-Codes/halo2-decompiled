@@ -408,10 +408,10 @@ void function_22850(void)
             rotation[6] = axis.k * complement * axis.i + axis.j * sine;
             rotation[7] = axis.j * axis.k * complement - axis.i * sine;
             rotation[8] = (1.0f - axis.k * axis.k) * cosine + axis.k * axis.k;
-            for (long color = 0; color < 3; ++color)
+            for (real *coefficients = (real *)(sample + 0xc);
+                coefficients != (real *)(sample + 0x78); coefficients += 9)
             {
                 real result[9];
-                real *coefficients = (real *)(sample + 0xc + color * 0x24);
                 function_143600(rotation, 3, coefficients, result);
                 memcpy(coefficients, result, sizeof(result));
             }
@@ -2544,12 +2544,12 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         for (long bucket = 0; bucket < count; ++bucket)
         {
             byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-            long available = *(word const *)(pair + 2);
-            if (!available) continue;
+            long samples = *(word const *)(pair + 2);
+            if (!samples) continue;
             real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
             transform4x3f matrix;
             function_0235a0(source, &matrix);
-            long samples = available > 1 ? 2 : 1;
+            if (samples > 2) samples = 2;
             for (short sample = 0; sample < samples; ++sample)
             {
                 if (sample) function_0235a0(source + 12, &matrix);
@@ -2910,8 +2910,8 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     bool result = false;
     real offset = 0.0f;
     bool small = false;
-    bool allow_small = false;
-    bool allow_negative = false;
+    long allow_small = false;
+    long allow_negative = false;
     real maximum = 1.0f;
     real inverse_distance = 1.0f / g_48565c;
     low *= inverse_distance;
