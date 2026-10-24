@@ -566,7 +566,7 @@ void __stdcall function_1ddea0(s_1de2c0 *arg_0, long arg_1)
     real local_19 = (real)fabs(local_15->i);
     real local_20 = (real)fabs(local_15->j);
     real local_21 = (real)fabs(local_15->k);
-    real local_16 = local_15->k * arg_0->field_c->z + local_15->j * arg_0->field_c->y + local_15->i * arg_0->field_c->x - local_15->d;
+    real local_16 = plane_distance_to_point(local_15, arg_0->field_c);
     real local_17 = 0.0f - local_16;
     point3f local_18;
     local_18.x = local_17 * local_15->i + arg_0->field_c->x;
