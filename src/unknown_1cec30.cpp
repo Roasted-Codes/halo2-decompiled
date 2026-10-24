@@ -1692,26 +1692,24 @@ void s_havok_component::function_1d3d20(long node_index, dword *updated, dword c
   {
    if (orientations)
    {
-    transform4x3f *matrices = component_node_matrices(component->object_index);
     transform4x3f inverse;
     transform4x3f relative;
-    function_141590(&matrices[parent], &inverse);
-    function_142a60(&inverse, &matrices[(short)node_index], &relative);
+    function_141590(object_node_matrix(object_get(component->object_index), parent), &inverse);
+    function_142a60(&inverse, object_node_matrix(object_get(component->object_index), (short)node_index), &relative);
     orientation_from_matrix4x3(&relative, &orientations[node_index]);
    }
   }
   else if (restore[node_index >> 5] & mask)
   {
    s_component_node_default *initial = &render_model->nodes[node_index];
-   transform4x3f *matrices = component_node_matrices(component->object_index);
-   transform4x3f *matrix = &matrices[(short)node_index];
+   transform4x3f *matrix = object_node_matrix(object_get(component->object_index), (short)node_index);
    function_141e10(&matrix->rotation, &initial->rotation);
    matrix->position.x = 0.0f;
    matrix->position.y = 0.0f;
    matrix->position.z = 0.0f;
    matrix->scale = 1.0f;
    matrix->position = initial->position;
-   function_142a60(&matrices[parent], matrix, matrix);
+   function_142a60(object_node_matrix(object_get(component->object_index), parent), matrix, matrix);
    updated[node_index >> 5] |= mask;
    if (orientations)
    {
