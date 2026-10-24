@@ -2634,6 +2634,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     frame->m_translation = position;
 }
 
+// score 206 (was 206): body stride/base registers and transform call differ;
+// count names 206; search names 206; transformed name 206; entry phase
+// transforms 301; equal-node arm first 248.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
