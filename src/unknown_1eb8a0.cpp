@@ -194,6 +194,9 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // score 660 (was 660): vector argument homes still differ; selected velocity pointer 685;
 // activation velocity snapshot 786 (caller lost); contiguous velocity scale 660;
 // fast-byte observations 660; integer remaining-tick test 699.
+// Ordinary counter conversion on guarded-coefficient body 710; indexed activation displacement 667;
+// interleaved displacement/sample loop 696; target-coordinate loop 699; impulse-coordinate loop 661.
+// Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
