@@ -29,6 +29,9 @@ extern vector3f *g_4687bc;
 // score 170 (was 170): frame 0x8c versus 0x94; secondary-result home and probe tail differ.
 // Native clear with byte probe result 74 (not matched); fraction/index names 170/170;
 // earlier native clear declaration 170; short clear state 237; short clear with byte result 240 (not matched).
+// score 170 (was 170): frame 0x8c versus 0x94; raw secondary-result home and common probe tail still differ.
+// Early clear/blocked/triple test results 221/173/179; all early test results 241;
+// shared preliminary predicate 186; floating consistency 415; size policy 402; target pointer 187.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

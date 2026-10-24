@@ -178,6 +178,9 @@ struct s_effect_inputs
 dword function_191660(long string_handle, long index);
 
 /* fills the data block of one component of a sound effect */
+// score 169 (was 169): frame 0x24 versus 0x28; full parameter spill and BP/BX selector allocation differ.
+// Parameter record reference 200; both native selectors 188; named gains 169; size policy 400;
+// floating consistency 169; natural while 215; source count after header 186; native header copy 169.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)
