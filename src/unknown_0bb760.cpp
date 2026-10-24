@@ -586,6 +586,9 @@ color3f *function_131c20(color3f const *a, color3f const *b, dword flags, real t
 // the output pointer, ours computes the pointer first, and retail keeps the
 // running offset in another register, so the test, the two leas and the
 // loop's bookkeeping differ.
+// Direct size/24 count 161; const base, entry and function views 91;
+// unsigned count 171; component clamp loop 91; scale loop and both loops 90
+// (one-count gain rejected).
 // @retail 0xbe8e0
 bool __stdcall function_be8e0(long object_index)
 {
