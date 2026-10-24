@@ -387,6 +387,9 @@ bool function_1d9320(s_1d9240 *slot);
 void function_1d90e0(long render_model_index, long node_index, transform4x3f *nodes, transform4x3f const *marker_matrix,
 	transform4x3f const *target_matrix, real weight, long node_count);
 
+// score 42 (was 42): frame 0x104 agrees; visited update still loads, ORs and stores.
+// Branch-local graph 42; saved mode 74; const model 42; visited base 42;
+// iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
