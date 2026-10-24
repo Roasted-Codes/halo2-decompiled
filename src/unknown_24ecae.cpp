@@ -9,11 +9,10 @@ long __stdcall function_24ecae(s_marker_list const *list, s_24ecae_placement con
 {
 	dword mask = 0;
 	long count = 0;
-	s_24ecae_globals *globals;
+	s_24ecae_globals *globals = (s_24ecae_globals *)g_510c94;
 	long index;
 	for (index = 0; index < list->count; ++index)
 	{
-		globals = (s_24ecae_globals *)g_510c94;
 		long kind_index = list->items[index].kind;
 		if (globals && kind_index >= 0 && kind_index < globals->image_count)
 		{
