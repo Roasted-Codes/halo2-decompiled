@@ -67,7 +67,7 @@ void function_268510()
 		}
 		for (;;)
 		{
-			byte *clump = g_4f55d0->active ? data_iterator_next_inlined(&iterator) : NULL;
+			byte *clump = g_4f55d0->active ? record_pool_iterator_step(&iterator) : NULL;
 			if (!clump) break;
 			if (clump[0x1c])
 			{
@@ -81,7 +81,7 @@ void function_268510()
 				}
 				else
 				{
-					short count = ++*(short *)(clump + 0x1e);
+					long count = ++*(short *)(clump + 0x1e);
 					if (count > maximum) maximum = count;
 				}
 			}
@@ -1891,8 +1891,8 @@ void function_26ae30(long object_index)
 			}
 		}
 	}
-	else if ((1 << type) & 3)
-		unit = true;
+	else
+		unit = ((1 << type) & 3) != 0;
 	s_clump_pool_iterator groups;
 	if (g_4f55d0->active)
 	{
@@ -1948,11 +1948,10 @@ void function_26ae30(long object_index)
 	}
 	if (object->type == 1)
 	{
-		long index = NONE;
-		for (;;)
+		for (long index = data_next_absolute_index_inlined(g_502414, 0);
+			index != NONE;
+			index = data_next_absolute_index_inlined(g_502414, index + 1))
 		{
-			index = data_next_absolute_index_inlined(g_502414, index + 1);
-			if (index == NONE) break;
 			byte *tracking = g_502414->data + g_502414->size * index;
 			if (!tracking) break;
 			if (*(long *)(tracking + 0x40) == object_index)
