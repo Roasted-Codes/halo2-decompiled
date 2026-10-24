@@ -111,6 +111,10 @@ public:
 // 106; byte accessor 161; pair reference 161; bool storage 161; separate
 // counter scopes 128; stored byte object 128; scan-only accessor 161;
 // plain bool accessor 106. Bottom joint tests already reload the member.
+// Bound-first negative sentinel 208; int counts and full-width scan 106;
+// cdecl append 59; append member 59; renamed full-width counters 106;
+// distinct outer counters with short scan 59; break scan 147;
+// one element loop 216. Initial count load and scan allocation remain.
 // @retail 0x317d90
 void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 {
