@@ -127,6 +127,7 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 	out->y = ((real const *)&point)[vertical_axis];
 }
 
+// score 164 (was 164): plane-distance store base and projection/edge scheduling remain; both indices long 179f, horizontal long 164f, vertical long 179f, captured-index Y-first 164f, plane view after normal copy 181f.
 // @retail 0x17d9a0
 void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_quad_17d9a0 *quad)
 {

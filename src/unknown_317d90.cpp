@@ -111,6 +111,10 @@ public:
 // alone 112; stored char 59; forced append 59, shared resize 59, element
 // result 59; typed members 59, full scan 106, direct members 106, body
 // indexer 106. Initial count load and scan allocation still differ.
+// Ordered full-width while 106; array base/ref fill 106; size/index accessors
+// 106; byte accessor 161; pair reference 161; bool storage 161; separate
+// counter scopes 128; stored byte object 128; scan-only accessor 161;
+// plain bool accessor 106. Bottom joint tests already reload the member.
 // @retail 0x317d90
 void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 {

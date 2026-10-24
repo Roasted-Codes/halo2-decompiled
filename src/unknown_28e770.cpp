@@ -101,6 +101,7 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 	arg_2->k = arg_0->z - arg_1->z;
 }
 
+// score 136 (was 136): first alignment product, case-five clear join and contribution scheduling remain; staged alignment 136 plain, direct motion 235f, direct forward 253f, double-factor scaling 190f, signed-byte mode 504f.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {

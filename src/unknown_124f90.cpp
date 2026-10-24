@@ -2463,6 +2463,8 @@ static inline real sound_vector_normalize(vector3f *v)
 /* the doppler shift of a sound for a listener, in cents: from the speeds of
    the listener and the sound toward each other, the speed of sound 111.5
    world units a second, the frequency ratio between 1/8 and 4 */
+// score 122 (was 122): direction j/k versus i register/memory split and length scheduling differ.
+// Shared length helper 122; early source speed 143; projection order 133; cached direction 125; void normalizer 122.
 // @retail 0x12a9d0
 real function_12a9d0(long listener_index, s_sound_position const *position)
 {
@@ -3030,6 +3032,8 @@ struct s_type_12a1b0_spatial
 vector3f *vector3d_decompress(dword arg_0, vector3f *arg_1);
 vector3f *function_1427f0(transform4x3f const *arg_0, vector3f const *arg_1, vector3f *arg_2);
 
+// score 310 (was 310): frame 0x54 versus 0x48; callback copy does not reuse vector homes.
+// Depth zero 417, depth one 310, fade scope 310, shared attenuation 334, callback table 311.
 // @retail 0x129aa0
 void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization *arg_2)
 {

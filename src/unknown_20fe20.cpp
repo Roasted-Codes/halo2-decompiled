@@ -245,6 +245,11 @@ PRIVATE __forceinline bool audio_object_type_matches(byte *object, long type)
 	return *(long *)(definition + 0x5c) > 0 && *(long *)(*(byte **)(definition + 0x60) + 4) == type;
 }
 
+// score 2 (was 2): the parent is loaded before the seat test's branch here
+// and after it in retail; read inside the seat test it lands in eax and is
+// moved to esi for the call: a header pointer 73, related NONE by default and
+// tested after the seat test 73, a ternary 73, the unit fetched again 64, the
+// call inside the condition 73.
 // @retail 0x20c2f0
 bool __stdcall function_20c2f0(long object_index, long type, real *scale)
 {
@@ -2712,7 +2717,10 @@ bool function_1df640(short team_a, short team_b);
 
 // score 6 (was 6): the address of the entry is built in EAX here and in ECX
 // in retail, and the two words of the group are read into the registers the
-// other way round after the call.
+// other way round after the call. Also tried: a const group pointer 6, the
+// count test as if/else 6, the byte view passed as the table 6, the entries
+// read through the table parameter 6, the bound's terms swapped 6 (VC sorts
+// them), a (long) cast on either or both terms 6.
 // @retail 0x20cbd0
 void function_20cbd0(short group_index, s_audio_priority_table *table, long target_index,
     long source_index, long previous_index, long ai_index, short category,

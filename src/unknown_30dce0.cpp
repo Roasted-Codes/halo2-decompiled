@@ -149,6 +149,12 @@ public:
 // candidate with result object 198, scalar decision 200; named pair index 190;
 // mutable pair 101; iteration pair 101; handle snapshot 176; pair alone 150;
 // pair and true 118; pair and indexers 145; pair and default true 101.
+// Implicit true 207; direct collidable 207; list names 207; reference
+// indexers 190; byte-result conversion 190; named result 200; per-iteration
+// collidable 200; shared append slot 192; size accessors 190; force-inline
+// append 190; default result constructor 190; after array helpers 190.
+// Implicit true plus indexers fixes the entry registers, but pair-loop
+// register ownership and instruction scheduling still regress overall.
 // @retail 0x30dce0
 void world_30dce0::function_30dce0(object_30dce0 *object, flag_30dce0 notify)
 {
