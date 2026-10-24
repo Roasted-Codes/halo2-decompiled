@@ -853,6 +853,9 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // score 101 (was 101): final override load order and rotation input/coefficient schedule differ.
 // Rotation pointer/reference results 101/101; matrix reference 101; remaining helper orders 101/101/101.
 // Deferred rotation stores 102; left-coefficient snapshots 102; original alias copy and arithmetic restored.
+// reading the input vector's components at each use in shape_rotate_vector scores
+// 76-82, but both calls rotate in place (input and out are the same vector), so every input component
+// must be read before the first store; that form is not kept.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

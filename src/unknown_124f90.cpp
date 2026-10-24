@@ -1298,6 +1298,12 @@ long function_127010(short class_index)
 /* a sound's gain in decibels: between its definition's bounds, with its
    class's and the caller's */
 inline long function_1251e0(void const *definition_pointer, long gain, real interpolation);
+// score 15 (was 15): retail stores the converted gain in the frame slot before the class gain
+// call and adds it last from there; ours keeps it in the volatile local and copies it through
+// ecx. Without the volatile the conversions move below the class gain call (they are pure);
+// a pointer write to 0x2195f0's own parameter stops that (12 at retail's length) but changes
+// 0x2195f0. Tried: the outer sum's operands swapped 36; no volatile 27; no volatile with the
+// operands swapped 49; the inner sum named, operands swapped 36.
 // @retail 0x1251e0
 long function_1251e0(void const *definition_pointer, long gain, real interpolation)
 {

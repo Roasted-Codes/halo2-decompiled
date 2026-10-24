@@ -144,6 +144,10 @@ public:
 // output and array references 107; both array and contact references 107;
 // manifold object reference 107; array read before distance 101; typed contact 97;
 // shared validity result 170; distinct record names 97; direct key tests 180.
+// Further trials: array reference with the positive edge arm 97; nested
+// output/array/contact references 97; direct append argument in that arm 97;
+// const member 97; index renamed 97; iterator renamed 97; global
+// optimization disabled 781; size preference 220. Opening body retained.
 // @retail 0x3072f0
 void box_pair_3072f0::function_3072f0(class_308180 *manifold)
 {

@@ -101,6 +101,9 @@ void function_268510()
 // head differ.
 // First/second/both callee noinline 81/81/81; existing typed current 81; typed const view 81.
 // Typed unsigned handle/role names/both noinline 81/81/81; cached global and nullable join remain.
+// Entry guard 90; inactive return 86; outer current 81; zero initialization 53
+// (extra entry stores, restored); byte activity 81; calling scanner 120;
+// shared datum iterator 158; inactive continue 81. Original body retained.
 // @retail 0x268840
 void function_268840()
 {
@@ -452,6 +455,8 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // that holds the clump pointer differ as well.
 // Pointer result/reference/both 68/68/68; current field first/pointer/reference 94/94/94.
 // Promoted initial team 94 (sign extension recovered); result from initial test 127.
+// Shared datum iterator 174; wide side 68; unsigned side 68; initial done 68; complete iterator 115; current
+// initialized 68; prop type snapshot 93; prop reference 68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1463,6 +1468,8 @@ long function_26bc60(long clump_index)
 	return 2;
 }
 
+// score 127 (was 127): frame 0x1c versus 0x20; result register, iterator null join and center copy differ.
+// Plain oldest-time/index storage separately 136/126; byte activity 127; native pool step 160; activity while 136.
 // @retail 0x269040
 long function_269040(point3f const *center, short team)
 {
@@ -1738,6 +1745,8 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
+// score 134 (was 134): frame 0x38 versus 0x3c; pool register and common null-current join differ.
+// Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
 // @retail 0x2689d0
 void function_2689d0(void)
 {
@@ -1804,6 +1813,8 @@ void function_2689d0(void)
 // Scopes/member for-loop 204; scopes/prop for-loop 222; scopes/both for-loops 316; setup record references 5.
 // Member/prop/role iterator names 5/5/5; member/prop/both iterator references 5/5/5.
 // Member/prop ordinary inline 5/5; every plain whole-program trial preserves all baseline matches.
+// node/prop next homes 0x1c/0x14 versus 0x18/0x1c; setup scope 5; typed prop 5; both 5;
+// link references 5; array views 5; prop names 5; record references 5; joint declarations 5.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {

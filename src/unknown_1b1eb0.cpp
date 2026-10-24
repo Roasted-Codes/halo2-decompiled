@@ -154,6 +154,10 @@ bool function_262890(long actor_index, s_reference reference);
 bool function_1f8660(long actor_index);
 real function_1e3920(long actor_index);
 
+// score 168 (was 168): slot load, actor/permission/index/scratch homes and cold reference arms still differ.
+// Early invalid copy 168; early mode copy 140; both copies 140 (nonmatches dropped);
+// unsigned actor handle 168; byte permission 195; reference receiver order 170;
+// request mode first 168; permission first 168; shared active mode 168/635.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

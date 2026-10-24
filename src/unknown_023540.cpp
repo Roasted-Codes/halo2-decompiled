@@ -2938,6 +2938,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // score 978 (was 978): frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
 // eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
+// score 971 (was 978): frame 0x2c agrees; saved registers, mode flags and state expansion differ.
+// Inner depth pairs removed 1212; direct texture API 983; dispatch defaults 1224;
+// normalization after dispatch 984; four-use alpha snapshot 971.
 // Byte capabilities 1086; rescale-state name 978; case three first 978;
 // short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
 // @retail 0x3a5c0
@@ -3090,10 +3093,11 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     else if (mode == 1)
     {
         color4f first, second;
-        first.alpha = clamp_filter_unit(*(real const *)(configuration + 0x28));
-        first.red = clamp_filter_unit(*(real const *)(configuration + 0x1c) * *(real const *)(configuration + 0x28));
-        first.green = clamp_filter_unit(*(real const *)(configuration + 0x20) * *(real const *)(configuration + 0x28));
-        first.blue = clamp_filter_unit(*(real const *)(configuration + 0x24) * *(real const *)(configuration + 0x28));
+        real alpha = *(real const *)(configuration + 0x28);
+        first.alpha = clamp_filter_unit(alpha);
+        first.red = clamp_filter_unit(*(real const *)(configuration + 0x1c) * alpha);
+        first.green = clamp_filter_unit(*(real const *)(configuration + 0x20) * alpha);
+        first.blue = clamp_filter_unit(*(real const *)(configuration + 0x24) * alpha);
         second.alpha = clamp_filter_unit(*(real const *)(configuration + 0x68));
         second.red = clamp_filter_unit(*(real const *)(configuration + 0x5c));
         second.green = clamp_filter_unit(*(real const *)(configuration + 0x60));
@@ -3219,6 +3223,9 @@ void function_27aa0();
 // first in the products 16; vector3f_scale for the rows 101-105; position as
 // the first parameter (with the caller) gives retail's dot with z, y, x but
 // the j products then load the component first, 14 (654 bytes)
+// New trials at 5: zero-initialized buffer 160; cleared buffer 160;
+// cleared trailing triple 105; first/third/second row component loops
+// 242/242/242; coefficient loop 242; first reciprocal divided in place 104.
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {

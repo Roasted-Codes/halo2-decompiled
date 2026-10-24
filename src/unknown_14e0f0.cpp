@@ -108,6 +108,10 @@ static inline byte *attachment_object(long index)
     return *(byte **)(g_4e0300->data + (index & 0xffff) * 12 + 8);
 }
 
+// score 47 (was 47): previous-unit store is early, second object lookup and
+// spilled receiver registers differ; unit view 47, const unit 47, unsigned
+// lookup handle 47, intrinsic flag clear 47, state view 47, parent value 47,
+// unsigned unit handle 47, captured player pool 60.
 // @retail 0x14ee20
 void function_14ee20(long player_index, long target_index)
 {

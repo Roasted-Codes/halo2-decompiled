@@ -274,6 +274,9 @@ void function_245400(s_source_245400 const *source, long index,
 		material->field_04, material->field_05, point, material->field_06);
 }
 
+// score 204 (was 204): frame 0x24 versus 0x2c; source register and independent
+// side-byte homes differ. Native plane field 204; signed surface field 204;
+// combined views 204; native side bitfields 207; indexed vector scaling 205.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
