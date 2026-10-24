@@ -486,6 +486,10 @@ struct s_request_profile
 	byte field_148[0x1e0 - 0x148];
 };
 
+// score 108 (was 108): aligned frame 0x1e8 agrees; player/version registers and flag reads differ.
+// Default profile 164; early memset 150; unsigned version 143; aligned byte prefix 180;
+// unsigned local index 143; aligned dword prefix 180; common bits 370; separate tick reset 335.
+// All use ordinary player data and native loops; original profile and body retained.
 // @retail 0x1e73b0
 void function_1e73b0()
 {
@@ -631,12 +635,15 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 
 long function_1469f0(real seconds);
 
+// score 290 (was 302): First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
+// Native signed-word slot 283 fast/290 plain; full-width difficulty 308; shared elapsed 309;
+// cooldown-first 296; fixed initial do scan 340; slot plus cooldown-first 281.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {
  s_game_options_view *options = g_4e6948;
  s_player_request_view *player = (s_player_request_view *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c);
- long local_index = player->local_player_index;
+ short local_index = player->local_player_index;
  bool restricted = options->state == 1 && (options->difficulty == 3 || options->difficulty == 2);
  if (local_index != NONE && *((byte *)g_51e9c0 + 0x6c5) && !restricted)
  {

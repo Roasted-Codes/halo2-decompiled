@@ -844,6 +844,9 @@ PRIVATE inline bool z_state_real_valid(real value)
  return (*(long *)&value & 0x7f800000) != 0x7f800000;
 }
 
+// score 154 (was 154): initial byte-result store and scalar-zero lifetime differ.
+// Scoped inline depth zero 610; scoped global optimization off 368; decode cursor 161;
+// decode countdown cursor 161; final native acceptance result 155.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {

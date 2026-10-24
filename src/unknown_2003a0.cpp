@@ -1070,6 +1070,10 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
+// score 43 (was 43): frame and first two passes agree; later parent loads lose the record address.
+// Const current group 43; unsigned squad parent 43; unsigned group parent 63;
+// unsigned sibling 43; full-width final index 63; parent-field view 43;
+// parent view in both passes 82; append noinline declaration 43.
 // @retail 0x2009d0
 void function_2009d0(void)
 {
@@ -1645,6 +1649,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
     }
 }
 
+// score 344 (was 344): frame 0x30 versus 0x3c; packed references and entry-index schedules differ.
+// Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
+// native reference indices 350; entry fields at use 344; inline distance call 678.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2315,26 +2322,26 @@ void __stdcall function_201100(long arg_0, dword *arg_1)
 }
 
 // @retail 0x203120
-// score 26 (was 26): the squad group's record is looked up in ECX where retail uses EAX, so the flag
-// byte is read into AL instead of into the record pointer.
 void __stdcall function_203120(long arg_0, short arg_1, long arg_2)
 {
     long const *local_0 = &arg_0;
     short const *local_1 = &arg_1;
-    long *local_2 = &arg_2;
     byte *local_3 = (byte *)squad_group_get(*local_0);
-    long initial_flag = arg_2;
-    if (!(byte)*local_2 && local_3[0x16] && *(short *)(local_3 + 0x14) != NONE)
+    /* retail stores the choice's ignore bit to the stack before testing it (into arg_0's
+       dead slot), so it is kept in memory through a pointer here */
+    byte ignored;
+    byte *local_2 = &ignored;
+    if (!(byte)arg_2 && local_3[0x16] && *(short *)(local_3 + 0x14) != NONE)
     {
         byte *local_4 = *(byte **)((byte *)g_4e0350 + 0x244) + *(short *)(local_3 + 0x14) * 0x7c;
         if (local_4)
         {
             *local_2 = local_4[0x24] & 1;
-            if ((byte)*local_2)
+            if (*local_2)
                 return;
         }
     }
-    function_202e30((short)*local_1, *local_0, (byte)initial_flag);
+    function_202e30((short)*local_1, *local_0, (byte)arg_2);
     for (long local_5 = *(long *)(local_3 + 4); local_5 != NONE; )
     {
         byte *local_6 = (byte *)squad_group_get(local_5);
@@ -2451,6 +2458,12 @@ local_16:
 struct s_1fb7e0_data;
 bool __stdcall function_20ba60(short arg_0, long arg_1, long arg_2, long arg_3, short arg_4, s_1fb7e0_data const *arg_5);
 
+// score 107 (was 126): registers differ: retail keeps the record and its index in EBP/EDI and the
+// inherited and new choices in EBX/ESI, reads the 0x1c choice zero-extended into EAX (xor eax,eax;
+// mov ax), and keeps the next script index in BX on that path where ours stores it. Retail sets the
+// choice passed down back to NONE on every path that finds none, which the `local_11` branch
+// reproduces. Tried: the branch as a force-inlined helper (136), a choice variable with no gotos
+// (116-153), the index as a word local (122).
 // @retail 0x202a00
 void __stdcall function_202a00(long arg_0, long arg_1)
 {
@@ -2476,10 +2489,10 @@ void __stdcall function_202a00(long arg_0, long arg_1)
         }
         else if (local_4[0x16] && *(short *)(local_4 + 0x14) != NONE)
         {
-            long local_5 = NONE;
+            short local_5 = NONE;
             short local_6;
-            word local_7 = *(word *)(local_4 + 0x1c);
-            if (local_7 != (word)NONE)
+            short local_7 = *(short *)(local_4 + 0x1c);
+            if (local_7 != NONE)
             {
                 if (*(short *)(local_4 + 0x1e) > 0)
                     goto local_11;
@@ -2487,26 +2500,30 @@ void __stdcall function_202a00(long arg_0, long arg_1)
             }
             else
             {
-                local_7 = function_290cd0(*(short *)(local_4 + 0x14), NONE, *local_0, &local_6, (short *)&local_5);
-                if (local_7 == (word)NONE)
+                local_7 = function_290cd0(*(short *)(local_4 + 0x14), NONE, *local_0, &local_6, &local_5);
+                if (local_7 == NONE)
                     goto local_11;
                 if (local_6 > 0)
                 {
                     *(short *)(local_4 + 0x1e) = local_6;
-                    *(word *)(local_4 + 0x1c) = local_7;
-                    *(short *)(local_4 + 0x20) = (short)local_5;
+                    *(short *)(local_4 + 0x1c) = local_7;
+                    *(short *)(local_4 + 0x20) = local_5;
                     goto local_11;
                 }
             }
-            if (local_7 != (word)NONE)
+            if (local_7 != NONE)
             {
-                local_2 = (short)local_7;
-                function_202e30((short)local_2, *local_0, true);
-                if ((short)local_5 != NONE)
-                    function_20ba60((short)local_5, NONE, NONE, local_3 | 0x40000000, NONE, NULL);
+                local_2 = local_7;
+                function_202e30(local_7, *local_0, true);
+                if (local_5 != NONE)
+                    function_20ba60(local_5, NONE, NONE, local_3 | 0x40000000, NONE, NULL);
+            }
+            else
+            {
+local_11:
+                local_2 = NONE;
             }
         }
-local_11:
         if (*(long *)(local_4 + 4) != NONE)
             function_202a00(*(long *)(local_4 + 4), local_2);
         for (long local_8 = *(long *)(local_4 + 8); local_8 != NONE; )
@@ -2529,6 +2546,9 @@ PRIVATE __forceinline byte *function_202752(s_record_pool_iterator *arg_0)
 
 static __forceinline long real_to_long(real value);
 
+// score 227 (was 227): frame 0x30 agrees; active/pool reloads and zero-result joins differ.
+// Role names 227; native squad iterator 227; squad result local 227; short timers 227;
+// timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // @retail 0x202720
 void function_202720(void)
 {

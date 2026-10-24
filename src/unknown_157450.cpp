@@ -3078,7 +3078,10 @@ struct s_engine_border_state
 void function_36880(color4f const *color, s_short_rectangle const *rectangle);
 
 // score 4 (was 4): the store of the border bottom is scheduled after the call arguments are set up
-// instead of before them.
+// instead of before them. With four stores before a call the last one always sinks below the push
+// (three do not). Tried: every order of the first, second and fourth calls' statements 4 or more;
+// the widening as three ifs 72 or in a short local 4; the third call's top stored last 6; an edge
+// pointer for the third call 4.
 // @retail 0x15ff80
 void function_15ff80(s_engine_border_state const *state)
 {
@@ -3207,7 +3210,10 @@ real function_159690(long player_index, long target_index)
 void function_1e9f40(long player_index, s_object_values *table);
 
 // score 2 (was 2): the two global reloads after the event call are in the opposite order: retail
-// loads the engine globals before the game state.
+// loads the engine globals before the game state. Ours follows the first read after the join (the
+// lives block's mode test), not the order of the earlier loads. Tried: the lives through
+// engine_options() 2; the out-of-line statistics getter 151 (stays a call); the out-of-line
+// mark-dirty 2; a named game-time local 2; the lookups through the masked index 109.
 // @retail 0x157be0
 void function_157be0(dword player_index)
 {
@@ -3776,6 +3782,8 @@ static __forceinline long nonnegative_15ce70(long value)
 	return value < 0 ? 0 : value;
 }
 
+// score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
+// tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4389,7 +4397,9 @@ bool function_158eb0()
 }
 
 // score 5 (was 5): the mode and the player index are kept in swapped registers: retail computes the
-// mode in ecx and the index in edx, ours the other way round.
+// mode in ecx and the index in edx, ours the other way round. Ours evaluates the index argument
+// first (right to left, the mode is 0x23f260's first parameter); retail behaves as if the mode were
+// last. Tried: `(long)(flag != 0)` 5; `!!flag` 5; a byte flag 5; `> 1` for `/ 2 > 0` 35.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -5016,6 +5026,9 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
+// score 175 (was 175): frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
+// reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
+// nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
