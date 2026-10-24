@@ -1590,10 +1590,12 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(0)
-// score 602 (was 600): actor/output registers and retained math/object calls differ;
+// score 547 (was 600): actor/output registers and retained math/object calls differ;
 // direct entry guard 631 fast; notification ranges 642 fast; selection-result field 597 plain
 // (only three lower, rejected); actor pointer name 618 fast; tail case order 639 fast;
 // observed selector with a case scope 611 fast, same as the selection-result form.
+// Native orientation/point/entry/movement results 641/623/622/642 fast; invalidity in
+// the real default case 572 fast, 547 plain (entry full 604, unchanged fast 620).
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -1745,7 +1747,6 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 			return 0;
 		}
 	case 10:
-		local_1->unknown8c = false;
 		switch (*(short *)local_1->unknown06)
 		{
 		case 0: local_1->unknown8c = true; local_1->unknown90 = 0x700002c; break;
@@ -1758,6 +1759,7 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 		case 7: local_1->unknown8c = true; local_1->unknown90 = 0x9000012; break;
 		case 8: local_1->unknown8c = true; local_1->unknown90 = 0xa000013; break;
 		case 9: case 10: local_1->unknown90 = NONE; local_1->unknown8c = true; break;
+		default: local_1->unknown8c = false; break;
 		}
 		return local_1->unknown8c ? 0 : 2;
 	case 5:
