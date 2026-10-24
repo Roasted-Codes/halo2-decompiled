@@ -407,6 +407,9 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 // Norm scalar 67; nested norm tests 64; early 2D cross 207; direction
 // copy loop 271; rotation/scale/both component loops 166/166/166;
 // const bounds input 64.
+// Shared scale 64; previous-priority snapshot 280; requested-duration
+// snapshot 271; external bounds reference 67; forward x/y observations
+// 165/163; normalized x observation 81; cosine-complement scalar 64.
 // @retail 0x154df0
 void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vector3f *direction, real priority)
 {

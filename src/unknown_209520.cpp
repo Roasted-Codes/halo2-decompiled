@@ -965,6 +965,10 @@ s_type_f4462a const g_44b0d8 = { _hs_type_passthrough, 2, function_208070, "<var
 extern long g_4686c0;
 long function_16b990(s_record_pool *data, long index);
 
+// score 5 (was 5): Expression preload precedes resets/destination setup. Allocated record
+// reference 5; native value reference 6; unsigned expression bits 5; thread
+// rereads 130; size memset 88; script-index memset 12; unsigned allocated
+// index 5; external thread reference 5.
 // @retail 0x2090a0
 void function_2090a0(void)
 {
