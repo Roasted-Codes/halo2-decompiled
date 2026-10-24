@@ -70,6 +70,10 @@ short __stdcall function_1b7920(long actor_index)
 // score 74 (was 74): retail inlines the linear congruential generator (imul by
 // 0x19660d, add 0x3c6ef35f) where ours calls a helper that reads the value out
 // of the state, so our code is four bytes longer.
+// Current drift: both generator steps inline, but interval bounds use SSE
+// instead of x87. Inline depth two 74, zero 251; global optimization off 189;
+// header interval helper alone 148; force-inline draw/step 74/74;
+// double delay/ticks carriers 78/74.
 // @retail 0x1b79d0
 bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 {
@@ -99,7 +103,10 @@ bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 
 // score 75 (was 75): retail pushes EBP first and keeps the character in EBP,
 // and calls function_25d740 out of line; our build inlines that helper and
-// keeps the character in EBX.
+// keeps the character in EBX. Wrapper depths one/two 75; global optimization
+// off 75/223 bytes; size preference 129; point-getter result 80; direct view
+// getter with point result 80; point result/depth zero 120; point result
+// with explicit outcome arms 77.
 // @retail 0x1b7b90
 short __stdcall function_1b7b90(long actor_index, s_slot *slot, bool active)
 {

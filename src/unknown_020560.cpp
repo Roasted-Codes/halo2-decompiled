@@ -1375,6 +1375,9 @@ PRIVATE __forceinline void configure_filter_textures(long const &source)
     }
 }
 
+// score 4 (was 4): the source and pass-count incoming registers are reversed. Pass-count snapshot 4;
+// const pass parameter 4; output snapshot 4; aggregate weights 4; pretested while 4; nested output tests 4;
+// alternate/configure/radius order 33; scoped favor-size 139.
 // @retail 0x21360
 long function_21360(long source, real radius, real low, real high, long target,
     long alternate, long passes, long output, bool configure, bool full_surface, real scale)

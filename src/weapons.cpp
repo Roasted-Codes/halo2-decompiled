@@ -1800,8 +1800,6 @@ bool function_101490(long weapon_index, long magazine_index)
 }
 /* finds a weapon's animation (its overlay, else the animation) in the graph
    for its holder's character, and makes it the weapon's current one */
-// score 4 (was 4): the graph index is kept in ecx where retail keeps it in edx,
-// and the two values that are read out of the frame are read in the other order.
 // @retail 0x105c20
 bool __stdcall function_105c20(long weapon_index, long animation_name)
 {
@@ -1834,8 +1832,8 @@ bool __stdcall function_105c20(long weapon_index, long animation_name)
 						{
 							long graph_index = player_animation->graph_index;
 
-							weapon->animation_254 = animation_id;
 							weapon->value250 = graph_index;
+							weapon->animation_254 = animation_id;
 							weapon->value258 = 0.0f;
 							function_b7360(weapon_index);
 							result = true;
@@ -1927,6 +1925,8 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 }
 /* takes rounds from a weapon's reserve for a magazine: first its own, then
    the reserves of the holder's other weapons of the same kind */
+// score 124 (was 124): frame eight bytes agrees; magazine, available and taken registers and pool reloads differ
+// tried all lookups pool value 124; needed result first 171; positive take continue 124; availability before update 124; first reserve field reference 123.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2384,6 +2384,8 @@ struct s_weapon_target_model
 
 bool function_106280(long object_index, long *out_index, byte *out_entry);
 
+// score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
+// tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
@@ -2510,7 +2512,11 @@ long __stdcall function_fda00(long weapon_index, s_scenario_weapon_view *placeme
 }
 
 // score 3 (was 3): the word is stored at +0x254 where retail stores it at +0x256, so the two
-// stores are in the wrong order.
+// stores are in the wrong order. That is `pop esi`: ours pops it right after edi, before the
+// inlined reset's two word stores; retail after them. Tried: the reset storing value250 before
+// value258 3 (0x105be0 2); the reset's animation as one default object 18; 0x105be0 defined
+// after this function 3; one short index for all three loops 3; the definition read after the
+// field resets 110.
 // @retail 0xfdad0
 bool __stdcall function_fdad0(long weapon_index, void *placement, bool *flag)
 {
@@ -2710,6 +2716,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 	return result > value ? result : value;
 }
 
+// score 407 (was 407): frame 8 versus 4; activity/dispatch registers and tag spill differ.
+// direct barrel maximum 413; helper maximum branches 409; independent loop indices 407;
+// final accumulated maximum 409; size optimization 672.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3917,12 +3926,14 @@ void __stdcall function_104150(long weapon_index, short barrel_index)
             *(point3f *)(creation + 0x1c) = origin;
             *(vector3f *)(creation + 0x28) = direction;
             if (player_controlled) WEAPON_LONG_AT(creation, 0x18) |= 4;
-            bool tracer = WEAPON_REAL_AT(barrel, 0x10) != 0.0f;
+            /* retail: a barrel whose +0x10 is zero always fires a tracer; otherwise the
+               signed shot counter at +0xe counts up to the definition's +0x2e */
+            bool tracer = WEAPON_REAL_AT(barrel, 0x10) == 0.0f;
             if (!tracer)
             {
-                word previous = (word)WEAPON_SHORT_AT(barrel, 0xe);
+                short previous = WEAPON_SHORT_AT(barrel, 0xe);
                 WEAPON_SHORT_AT(barrel, 0xe) = (short)(previous + 1);
-                if (previous >= (word)WEAPON_SHORT_AT(barrel_definition, 0x2e)) tracer = true;
+                if (previous >= WEAPON_SHORT_AT(barrel_definition, 0x2e)) tracer = true;
             }
             if (tracer) WEAPON_SHORT_AT(barrel, 0xe) = 0;
             vector3f *shot_direction = (vector3f *)(creation + 0x28);
