@@ -90,9 +90,15 @@ s_flag_bits g_557c74;
 
 #define ACTION_ID_VALID(id) ((id) >= 0 && (id) < 0x83)
 
+/* whether the type's bit is set in the enabled set g_557c40 */
+PRIVATE __forceinline bool action_type_bit_set(short id)
+{
+	return (g_557c40[id >> 5] & (1 << (id & 0x1f))) != 0;
+}
+
 /* whether the handler is enabled in this build */
 #define ACTION_HANDLER_ENABLED(id) \
-	(g_46eeb8[id]->unknown8 != g_46f348 && (g_46eeb8[id]->mask & g_4ee4ec) == g_4ee4ec && (g_557c40[(id) >> 5] & (1 << ((id) & 0x1f))))
+	(g_46eeb8[id]->unknown8 != g_46f348 && (g_46eeb8[id]->mask & g_4ee4ec) == g_4ee4ec && action_type_bit_set(id))
 
 /* ---- functions ---- */
 
@@ -360,8 +366,6 @@ void function_1a6f70(long owner_index)
 	}
 }
 
-// score 62 (was 62): the table base and the index are loaded into different registers, and the
-// index is kept in a different one through the lookup.
 // @retail 0x1a7030
 short function_1a7030(long owner_index, short slot_index, long argument, short *out)
 {
@@ -2166,7 +2170,7 @@ void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 
 struct s_entry_pair;
 #include "unknown_11cc90.h"
-bool function_11d3b0(vector3f const *a, vector3f *out, vector3f const *b, vector2f angle);
+bool function_11d3b0(vector3f const *a, vector3f *out, vector3f const *b, real sine, real cosine);
 short function_1557c0(long unit_index, point3f *position, vector3f *forward);
 long function_baf80(long object_index);
 
@@ -2185,8 +2189,9 @@ struct s_1a4c01
 	byte field_26[0x5c - 0x26];
 };
 
-// score 116 (was 116): the stack frame is four bytes smaller than retail's, so every stack offset
-// inside the function is shifted.
+// score 36 (was 116): the target index and the unit index sit in each other's stack slots, the
+// interpolation loads forward.i where retail copies 1 - fraction, and the closing stores use
+// other registers.
 // @retail 0x1a4c00
 bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector3f *direction, point3f *point)
 {
@@ -2285,19 +2290,11 @@ bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector
 
 			if (length_squared != 0.0f)
 			{
-				real inverse = 1.0f / (real)sqrt(length_squared);
-
-				result_direction.i *= inverse;
-				result_direction.j *= inverse;
-				result_direction.k *= inverse;
+				scale_vector_by_double(&result_direction, 1.0f / sqrt(length_squared), &result_direction);
 			}
 			if (function_1a6d30(player_index))
 			{
-				vector2f angle;
-
-				angle.n[1] = (real)cos(weights.outer_distance);
-				angle.n[0] = (real)sin(weights.outer_distance);
-				accepted = !function_11d3b0(&result_direction, direction, direction, angle);
+				accepted = !function_11d3b0(&result_direction, direction, direction, (real)sin(weights.outer_distance), (real)cos(weights.outer_distance));
 			}
 			else
 			{

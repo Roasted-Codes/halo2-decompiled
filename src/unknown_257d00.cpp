@@ -9,6 +9,7 @@
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 #include "unknown_2551c0.h"
+#include "swarm.h"
 #include <string.h>
 
 /* a command script (0xd4 bytes) */
@@ -1045,8 +1046,6 @@ PRIVATE __forceinline void function_25a131(vector3f const *arg_0, vector3f const
 	arg_2->k -= first.j * arg_1->i;
 }
 
-// score 51 (was 51): the float temporaries are in different xmm registers and the multiplications are in the
-// other order.
 // @retail 0x25a130
 void function_25a130(long actor_index, long object_index, s_cs_facing *facing)
 {
@@ -1082,9 +1081,7 @@ void function_25a130(long actor_index, long object_index, s_cs_facing *facing)
 			{
 				s_cs_facing_object *object = ((s_cs_facing_object_header *)g_4e0300->data)[object_index & 0xffff].object;
 
-				vector3f const *up_source = &object->up;
-				vector3f const *forward_source = &forward;
-				function_25a131(up_source, forward_source, &side);
+				cs_cross_product3d(&object->up, &forward, &side);
 				if (function_30bf0(&side) == 0.f)
 				{
 					side = *g_4687a8;
@@ -1857,8 +1854,38 @@ void function_25aba0(long actor_index)
 	while (--local_1);
 }
 
-// score 100 (was 100): the prologue differs: retail reserves eight bytes with sub esp,8 where ours pushes ecx, and
-// retail zeroes eax and makes three stack stores where ours zeroes ebx and makes two.
+/* swarm_creature_iterator_next, inlined; this copy reads the next creature
+   before it records the current one, which keeps the current index in ebx
+   and the actor index in ebp as retail does (with the shared one,
+   function_258b60 takes the actor index in ebx and its callers stop
+   matching) */
+__forceinline s_handler_object_view *cs_creature_iterator_next(s_ai_object_iterator *iterator)
+{
+	s_handler_object_view *object = NULL;
+
+	if (iterator->next_index != NONE)
+	{
+		s_object_ai_data *creature;
+		long next_index;
+
+		object = handler_object_get(iterator->next_index);
+		next_index = NONE;
+		if (!object->flags134 && (creature = (s_object_ai_data *)((byte *)object + object->ai_offset)) != NULL)
+		{
+			next_index = creature->next_creature_index;
+		}
+		iterator->index = iterator->next_index;
+		iterator->next_index = next_index;
+	}
+
+	return object;
+}
+
+/* runs a command script step on an actor, or on each creature of its
+   perception; with creatures, the result is 0 unless at least 80% of them
+   finished or failed, then 2 when more finished than failed, else 1 */
+// score 21 (was 100): the loop keeps the next index in esi and the creature data in edi where retail swaps them,
+// and ours steps the next index through edx where retail writes edi directly.
 // @retail 0x258b60
 short function_258b60(long actor_index, cs_iterate_proc proc, long cs_index)
 {
@@ -1877,13 +1904,11 @@ short function_258b60(long actor_index, cs_iterate_proc proc, long cs_index)
 			s_handler_object_view *object;
 
 			iterator.next_index = perception_get(perception_index)->object_index;
-			iterator.index = NONE;
-			while ((object = swarm_creature_iterator_next(&iterator)) != NULL)
+			while ((object = cs_creature_iterator_next(&iterator)) != NULL)
 			{
 				byte *data;
 				if (!object->flags134 && (data = (byte *)object + object->ai_offset) != NULL)
 				{
-					count++;
 					short outcome = proc(actor_index, iterator.index, (s_cs_state *)(data + 0x28), cs_index);
 					*(short *)(data + 0x2c) = outcome;
 					if (outcome == 2)
@@ -1894,6 +1919,7 @@ short function_258b60(long actor_index, cs_iterate_proc proc, long cs_index)
 					{
 						failed++;
 					}
+					count++;
 				}
 			}
 

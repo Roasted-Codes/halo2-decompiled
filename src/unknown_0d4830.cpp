@@ -231,8 +231,7 @@ void object_widgets_delete(long object_index)
 // @retail 0xd4ae0
 void object_widget_delete(long object_index, long handle)
 {
-    long handle_value = handle;
-    if (handle_value != NONE)
+    if (handle != NONE)
     {
         s_widget_object_header *header = (s_widget_object_header *)(g_4e0300->data + (object_index & 0xffff) * 12);
         s_widget_object *object = (s_widget_object *)header->object;
@@ -242,13 +241,13 @@ void object_widget_delete(long object_index, long handle)
         {
             s_widget *widget = (s_widget *)(g_4e0320->data + (widget_index & 0xffff) * 12);
 
-            if (widget->handle == handle_value)
+            if (widget->handle == handle)
             {
-                void (__stdcall *dispose)(long) = g_467498[widget->type].dispose;
+                s_widget_type *widget_type = &g_467498[widget->type];
                 object->widget_head = widget->next;
 
                 if (widget->handle != NONE)
-                    dispose(widget->handle);
+                    widget_type->dispose(widget->handle);
 
                 record_pool_release(g_4e0320, widget_index);
             }
@@ -261,7 +260,7 @@ void object_widget_delete(long object_index, long handle)
                     if (next_index == NONE)
                         break;
                     widget = (s_widget *)(g_4e0320->data + (next_index & 0xffff) * 12);
-                    if (widget->handle == handle_value)
+                    if (widget->handle == handle)
                     {
                         previous->next = widget->next;
                         if (widget->handle != NONE)

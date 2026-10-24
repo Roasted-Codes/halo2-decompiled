@@ -600,6 +600,9 @@ static inline void unpack_point(byte *data, long index, point2f *point)
 	point->y = dequantize16(p[1]);
 }
 
+// score 4 (was 4): in the compressed branch retail reads the triangle's b and
+// c indices in the other order, so the two unpacked points land in the other
+// pair of SSE registers and u and v swap registers.
 // @retail 0xd2bf0
 void function_d2bf0(s_mesh *mesh, long triangle_index, real u, real v, real *out_a, real *out_b)
 {
