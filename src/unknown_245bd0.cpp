@@ -236,6 +236,9 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // score 61 (was 61): the first float of the pair is loaded into XMM2 here and
 // into XMM1 in retail, so the registers of the following subtractions are
 // swapped as well.
+// score 61 (was 61): separate normal workspace 397; default normal workspace 397;
+// displacement in output normal 181; radius-square local 61; component-square lifetimes 61;
+// immutable distance 61; sphere reference 61; point reference 61. Sphere XMM homes still differ.
 // @retail 0x245ef0
 bool function_245ef0(s_shapes const *shapes, point3f const *point, s_shape_result *result)
 {
@@ -344,6 +347,10 @@ bool function_2461a0(
 	return result;
 }
 
+// score 106 (was 106): frame agrees; opening axis/direction product XMM allocation differs.
+// Opening axis object 257; opening direction object 234; both objects 274; immutable coefficients 106;
+// radius-square lifetime 208; reciprocal before root 106; coefficient storage names 106;
+// contact initializer 106; output normal reference 212.
 // @retail 0x246360
 bool function_246360(
 	vector3f const *direction,
@@ -450,6 +457,9 @@ bool function_246360(
 
 // score 53 (was 53): the multiplier is kept in XMM1 and multiplied into XMM0; retail loads the
 // multiplier into XMM0 and multiplies by XMM1.
+// score 53 (was 53): plane object reference 210; origin reference 57; direction reference 53;
+// projected-start initializer 53; projected-direction initializer 53; paired initializers 55;
+// vertex-end traversal 66; quotient update 53. Projection operands and edge allocation still differ.
 // @retail 0x2466b0
 bool function_2466b0(
 	point3f const *start,

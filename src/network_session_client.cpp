@@ -580,6 +580,10 @@ static inline bool session_set_machine_limit(c_class_58d20 *session, long value)
 	return result;
 }
 
+// score 55 (was 55): aligned frame agrees; session ESI/EBX and machine/player carriers differ.
+// Countdown native object copy 55; native address copy 55; machine object reference 55;
+// machine value copy 55; short machine alias 55; immutable member count 55;
+// machine counter names 55; top-tested countdown 114.
 // @retail 0x6e720
 bool function_06e720(c_class_58d20 *session)
 {
