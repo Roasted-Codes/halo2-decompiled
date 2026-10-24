@@ -165,6 +165,9 @@ inline void end_agent_316110(agent_316110 *agent)
 // slot inside the loop and keeps the array pointer in esi, ours keeps the
 // second in the slot and the pointer in edx, and the two virtual calls swap
 // their vtable registers
+// Isolated end/flag forms 87; delayed second handle and first-id per-use
+// 141; cleanup receiver reference and caller null guards 87; first id once
+// 240; shared equality predicate 87. Original body and inline functions retained.
 // @retail 0x316110
 void cache_316110::function_316110(pair_316110 const *pair)
 {

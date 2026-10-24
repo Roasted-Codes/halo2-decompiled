@@ -64,6 +64,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
+// score 652 (was 652): frame 0xf8 versus 0x108; result/basis/rotation homes differ.
+// Frame pointer 960; size preference 1163; cosine-difference carrier 652;
+// cross before trigonometry 655; inline depth one 652.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

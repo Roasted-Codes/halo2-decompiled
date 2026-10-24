@@ -823,6 +823,10 @@ bool __stdcall function_168f40(long flags, s_vehicle_ray const *ray,
 	return result;
 }
 
+// score 25 (was 25): plane k/j product operands at +0x314, late i/y
+// products and success-result reload differ; single plane k/j snapshots
+// 340/357; start z/y 124/124; movement j 56; plane k+j 390;
+// correction movement i 56; start z+y 157.
 // @retail 0x1697c0
 bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const *vector,
 	long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *collision)

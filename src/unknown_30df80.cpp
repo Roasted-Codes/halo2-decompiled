@@ -79,6 +79,14 @@ public:
 // retail's ebx and edi hold the member and the collidable as retail has them;
 // the dispatcher and the pair's data still swap registers, and the motion is
 // still read through the member instead of the collidable
+// an external object reference with direct array reads 15; inherited array
+// storage 15; early pointer declarations with either form 15; a count saved
+// before the branch 131, with an inline float argument 134; inline depth one 15.
+// Further trials: common pair type 17; that type with the motion read
+// through the embedded record 35; shared shape/transform types 17, with that
+// motion read 35; a count sampled after the handler store 17; an external
+// reference for restoration 17; a receiver base of its own type 17, with that motion
+// read 35. The original body remains; frame 0x68 and length 442 agree.
 // further trials: bounds first 17; pending data/count through the group 19;
 // listener conversion 17, before the handler 24; tolerance argument 34;
 // member group directly 36; pending member receiver 19; empty-pair guard 17.
@@ -90,7 +98,7 @@ public:
 // motion through the pointer then 19 (the last receiver moves to ecx);
 // outer receiver declaration, shared shape types, first pointer declaration,
 // renamed last receiver or reference receiver 19; early shape snapshot 64;
-// reused receiver 15, two multiple-use receivers 63, restore-only receiver 15;
+// second receiver use 15, two multiple-use receivers 63, restore-only receiver 15;
 // scaled float local 133; inline factor or combined outer scope 68;
 // 1/3 forms require one-use field pointers and remain rejected
 // @retail 0x30df80

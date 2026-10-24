@@ -216,6 +216,10 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 	return *(byte const *const *)(block + 4) + index * size;
 }
 
+// score 149 (was 149): ECX table hoist versus saved EDI and lookup-register ownership still differ.
+// Unsigned root/leaf handles 149/149; signed masked indices 149; const input 149;
+// cache-tail memset 150; callback seed initializer 160; mapping element 149;
+// native block-helper return type 149. Early mask read and matched wrapper retained.
 // @retail 0x224db0
 void __stdcall function_224db0(s_interface_definition *arg_0, long arg_1, long arg_2,
 	long arg_3, long arg_4)

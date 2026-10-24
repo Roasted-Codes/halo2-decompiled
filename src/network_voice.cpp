@@ -1406,6 +1406,8 @@ static __forceinline bool function_57d63(long arg_0, long arg_1);
 
 // score 94 (was 94): frame 0x14 vs 0x18, bit spill and flag-query boundary differ;
 // word outer/target induction 118/106; word active 97; mask names 94; skip cleared inactive entries 110.
+// caller depth 0/1/2 241/94/94; wide bit with depth 1/2 118/118;
+// complete mask/policy/both assignments 108/104/110.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {
@@ -2941,6 +2943,9 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
  return count;
 }
 
+// score 139 (was 139): frame and extent agree; channel/cursor/count registers and route homes differ.
+// Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
+// entry route lifetime 139; ordinary delivery arm first 162.
 // @retail 0x55e10
 long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, bool relay)
 {
