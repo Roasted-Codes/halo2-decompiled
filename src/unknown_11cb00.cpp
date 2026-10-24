@@ -183,9 +183,9 @@ __inline void quaternion_rotate_point(
 	point3f const *v,
 	point3f *out)
 {
-	real d = (q->j * v->y + v->x * q->i + v->z * q->k) * 2.f;
 	real w2 = q->w * 2.f;
 	real m = q->w * q->w * 2.f - 1.f;
+	real d = (q->j * v->y + v->x * q->i + v->z * q->k) * 2.f;
 	real cx = q->j * v->z - v->y * q->k;
 	real cy = v->x * q->k - q->i * v->z;
 	real cz = q->i * v->y - q->j * v->x;
@@ -231,39 +231,33 @@ void function_11dbb0(
 	out->position.z = a->position.z + out->position.z;
 }
 
+/* p scaled by s into result (p and result may be the same point) */
+static __inline point3f *point3f_scale(point3f const *p, real s, point3f *result)
+{
+	result->x = s * p->x;
+	result->y = s * p->y;
+	result->z = s * p->z;
+	return result;
+}
+
 // @retail 0x11dd80
 void function_11dd80(
 	real_quaternion_transform const *in,
 	real_quaternion_transform *out)
 {
-	real inv = 1.f;
+	real inv;
 
 	out->rotation = in->rotation;
 	out->rotation.w = out->rotation.w * -1.f;
-	{
-		quaternionf const *q = &out->rotation;
-		point3f const *v = &in->position;
-		real d = (v->x * q->i + v->y * q->j + q->k * v->z) * 2.f;
-		real m = q->w * q->w * 2.f - 1.f;
-		real w2 = q->w * 2.f;
-		real cy = q->k * v->x - q->i * v->z;
-		real cz = v->y * q->i - v->x * q->j;
-		real cx = q->j * v->z - v->y * q->k;
-
-		out->position.x = cx * w2 + v->x * m + q->i * d;
-		out->position.y = v->y * m + q->j * d + cy * w2;
-		out->position.z = q->k * d + cz * w2 + m * v->z;
-	}
+	quaternion_rotate_point(&out->rotation, &in->position, &out->position);
 	if (0.f == in->scale)
 		inv = 10000.f;
-	else if (1.f != in->scale)
+	else if (1.f == in->scale)
+		inv = 1.f;
+	else
 		inv = 1.f / in->scale;
-	out->position.x = out->position.x * inv;
-	out->position.y = out->position.y * inv;
-	out->position.z = out->position.z * inv;
-	out->position.x = out->position.x * -1.f;
-	out->position.y = out->position.y * -1.f;
-	out->position.z = out->position.z * -1.f;
+	point3f_scale(&out->position, inv, &out->position);
+	point3f_scale(&out->position, -1.f, &out->position);
 	out->scale = inv;
 }
 

@@ -135,7 +135,7 @@ struct s_082b70_player
 	byte unknown030[0x21c - 0x30];
 };
 
-// score 48 (was 62): retail reads another global for the record pointer and keeps it in edx,
+// score 48 (was 48): retail reads another global for the record pointer and keeps it in edx,
 // ours reads a different global and keeps the pointer in eax.
 // @retail 0x828b0
 bool function_828b0(long player_index, s_player_object_motion *result)
@@ -245,7 +245,7 @@ void function_82d20(long object_index, s_object_relevance_source *source, s_weap
    for (long trigger_index = 0; trigger_index < definition->trigger_count; trigger_index++)
    {
     s_weapon_trigger_view *trigger = &definition->triggers[trigger_index];
-    long barrel = trigger->barrel;
+    short barrel = trigger->barrel;
     if (definition->barrel_count > 0 && PIN(barrel, 0, definition->barrel_count - 1) == barrel)
     {
      byte *state = (byte *)object_get_082b70(weapon_index) + 0x1a4 + barrel * 0x34;

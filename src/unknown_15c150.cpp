@@ -137,11 +137,11 @@ void function_15c150()
 			(g_4e6948->mode == 4 || globals->lc04 == 1))
 			*(short *)((byte *)globals + 0xfa) = 0;
 		else ++*(short *)((byte *)globals + 0xfa);
-		for (short local = (short)transition_local_player_next_15c150(NONE); local != NONE;
+		for (word local = transition_local_player_next_15c150(NONE); local != (word)NONE;
 			local = transition_local_player_next_15c150(local))
 		{
 			long index = NONE;
-			if (local != NONE)
+			if (local != (word)NONE)
 				index = g_4e8c20->entries[local];
 			if (index != NONE)
 			{
@@ -181,6 +181,7 @@ PRIVATE __forceinline s_mp_globals *transition_start_time_set(s_mp_globals *glob
 	return globals;
 }
 
+// score 5 (was 5): the game options pointer is kept in ebp where retail keeps it in ebx.
 // @retail 0x15c550
 void function_15c550()
 {

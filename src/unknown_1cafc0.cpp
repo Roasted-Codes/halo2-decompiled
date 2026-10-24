@@ -1727,7 +1727,9 @@ bool __stdcall function_1cd8a0(s_animation_state *state, long object_index, vect
             real primary_frames = (real)primary->function_1c6440()->frame_count;
             real ratio = primary_frames / (real)secondary->function_1c6440()->frame_count;
             rate = (1.0f - ratio) * fraction + ratio;
-            weight = PIN(1.0f - fraction, 0.0f, 1.0f);
+            weight = 1.0f - fraction;
+            if (weight < 0.0f) weight = 0.0f;
+            else if (weight > 1.0f) weight = 1.0f;
             rate = PIN(rate, 0.0f, 1.0f);
         }
         real smoothed = state->unknown80 * 0.9f;
@@ -1736,7 +1738,7 @@ bool __stdcall function_1cd8a0(s_animation_state *state, long object_index, vect
         if (rate > 0.9f)
             rate = 1.0f;
         primary->rate = rate;
-        return true;
+        result = true;
     }
     else
         state->unknown80 = 0.0f;

@@ -35,7 +35,22 @@ struct s_vblank_history
 	short counts[15];
 };
 
-s_vblank_history g_4e6400;
+/* the frame's interval in vertical blanks, the interval the game asks for,
+   whether a frame is due, and the vertical blank history */
+struct s_frame_timing
+{
+	short frame_interval;
+	short requested_interval;
+	bool frame_due;
+	byte unknown05[0x43];
+	s_vblank_history history;
+};
+
+s_frame_timing g_frame_timing;
+#define g_4e63b8 (g_frame_timing.frame_interval)
+#define g_4e63ba (g_frame_timing.requested_interval)
+#define g_4e63bc (g_frame_timing.frame_due)
+#define g_4e6400 (g_frame_timing.history)
 
 // @retail 0x12b2a0
 void __cdecl main_vblank_callback(D3DVBLANKDATA *data)
@@ -68,8 +83,6 @@ void function_12b070(void)
 
 __int64 g_4e63a8;
 __int64 g_4e63b0;
-short g_4e63b8;
-bool g_4e63bc;
 
 /* waits for the vertical blank before the one the last frame asked for, and
    notes whether a frame is due */
@@ -128,7 +141,6 @@ bool function_12b3c0(void)
 }
 
 short g_485ac0;
-short g_4e63ba;
 long g_4e638c;
 __int64 g_4e63a0;
 
@@ -142,15 +154,13 @@ real function_12b0e0(void)
 {
 	real local_0;
 	dword now = GetTickCount();
-	__int64 target = g_4e63b0;
+	__int64 target = LAST_FRAME_VBLANK_COUNT > g_4e63b0 ? LAST_FRAME_VBLANK_COUNT : g_4e63b0;
 	__int64 next;
 	__int64 ticks;
 	long game_time;
 	long rate;
 	real elapsed;
 
-	if (LAST_FRAME_VBLANK_COUNT > target)
-		target = LAST_FRAME_VBLANK_COUNT;
 	if (g_4e6948 && g_4e6948->flag1120)
 		game_time = g_510c54->game_time;
 	else
@@ -165,7 +175,8 @@ real function_12b0e0(void)
 		next = target + g_4e63b8;
 	}
 	now = GetTickCount();
-	ticks = (g_4e6390.value & 0xffffffff00000000) | now;
+	ticks = now;
+	ticks |= g_4e6390.value & 0xffffffff00000000;
 	if (ticks < g_4e6390.value)
 		ticks += 0x100000000;
 	if (VBLANK_COUNT > next)
@@ -176,10 +187,9 @@ real function_12b0e0(void)
 	real frequency = rate;
 	elapsed = (real)(next - LAST_FRAME_VBLANK_COUNT) / frequency;
 	local_0 = 0.0f > elapsed ? 0.0f : (elapsed > 10.0f ? 10.0f : elapsed);
-	LAST_FRAME_VBLANK_COUNT = next;
-	g_4e6390.parts.low = now;
-	g_4e6390.parts.high = (dword)(ticks >> 32);
 	g_4e638c = game_time;
+	LAST_FRAME_VBLANK_COUNT = next;
+	g_4e6390.value = ticks;
 	g_4e63a0 = VBLANK_COUNT;
 	return local_0;
 }
