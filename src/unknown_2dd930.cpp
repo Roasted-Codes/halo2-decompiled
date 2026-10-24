@@ -207,13 +207,17 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 	walk.function_2dc220(&pending, root, &fixed_point);
 }
 
-// @retail 0x2ddbd0
 // score 33 (was 33): retail reads the tree's origin before the second list,
 // takes the root with a lea before the query is read and keeps the query in
 // eax; ours reads the second list first, adds 0x30 to the tree pointer for
 // the root and keeps the query in ecx. Reading the origin, the root, the
 // query and the first list into locals of their own, early, leaves the code
 // exactly as it was.
+// Further trials: early difference/doubling 42/42; early fourth-list store
+// 42; sphere reference 33; renamed state/position/deltas 33; memcpy centre
+// 33; vector/point view 33; a shared coordinate setter failed to build, then
+// timed out. Original body retained.
+// @retail 0x2ddbd0
 void __cdecl function_2ddbd0(void *data, s_visibility_sphere_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
 {
