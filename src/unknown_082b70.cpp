@@ -213,6 +213,10 @@ struct s_weapon_definition_view
 // score 149 (was 149): frame 0x20 versus 0x1c; weapon-table CSE and
 // sentinel/trigger homes differ; invalid weapon initialization 149; flat
 // fallbacks 149; unsigned hand 149; typed trigger state 149; state at use 149.
+// score 149 (was 149): selector/frame interference remains; barrel field at use 159;
+// selector inside positive guard 159; native mode 149; read-only tag 149;
+// read-only trigger 149; active interval 150; shared false stores 155;
+// selector declared before receiver 149.
 // @retail 0x82d20
 void function_82d20(long object_index, s_object_relevance_source *source, s_weapon_activity_result *result)
 {
