@@ -201,13 +201,14 @@ void function_268c90()
 					{
 						s_object_child_iterator children;
 						function_d0620(extra, &children);
-						bool held = false;
-						while (function_d0690(&children))
+						bool child_available = function_d0690(&children);
+						while (child_available)
 						{
 							byte *child = *(byte **)(g_4e0300->data + (children.child_index & 0xffff) * 12 + 8);
-							if (!child[0xaa]) { held = true; break; }
+							if (!child[0xaa]) break;
+							child_available = function_d0690(&children);
 						}
-						if (!held) function_b8540(extra);
+						if (!child_available) function_b8540(extra);
 					}
 				}
 			}
