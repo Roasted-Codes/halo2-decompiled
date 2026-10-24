@@ -389,6 +389,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
+// score 203 (was 203): frame 0x14 agrees; request/count registers and cross scheduling differ.
+// Word component handle 207; unsigned selection 203; final scale helper 203;
+// reversed independent dot order 203; stepping snapshot 303.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
