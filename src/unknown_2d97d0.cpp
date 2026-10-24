@@ -14,11 +14,13 @@ public:
 
 error_handler_2d97d0 *g_480178;
 
-// @retail 0x2d97d0
 // score 29 (was 29): retail's frame is four bytes larger and holds a store of
 // the flag's address, which is how MSVC records an exception scope; our build
 // has no /EHsc and so never writes it, and every EH switch here (/GX, /EHa,
-// /EHsc, /EHs) adds the handler registration retail does not have.
+// /EHsc, /EHs) adds the handler registration retail does not have. Tried:
+// implicit and explicit arguments 29; trivial copies 29/26; char storage
+// 29/26; constructor and initializer variants 29; with /GX 93.
+// @retail 0x2d97d0
 void __cdecl function_2d97d0(char const *message)
 {
 	char buffer[0x200];

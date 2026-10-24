@@ -718,6 +718,9 @@ union s_60403
  long field_00;
 };
 
+// score 214 (was 214): current/previous registers and map-loop homes differ;
+// retained-player word index 348; emitted-player word index 248; both 359;
+// explicit append indices 324; advancing retained bit 411. Original kept.
 // @retail 0x60400
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update)
 {
