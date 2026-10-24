@@ -507,6 +507,10 @@ static inline word font_character_pixel(long alpha, long color)
 
 /* decodes a character's run-length coded pixels to 16 bit pixels; returns
    how many pixels there are (with no destination it only counts them) */
+// score 85 (was 85): alpha extension, case scheduling and colour-word assembly.
+// Word colour input 85; short alpha 91; Boolean parity and word result 85;
+// named upper/lower alpha 85; two-byte payload memcpy 88;
+// switch-fill endpoint 174; ordinary-fill endpoint 199.
 // @retail 0x122610
 long function_122610(long size, void const *pixels, void *destination)
 {

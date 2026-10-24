@@ -218,10 +218,11 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // score 866 (was 866): frame 0x2cb8 versus 0x2cac and actor/unit retention;
 // point workspace names 866; initial actor value 869; query index value 916;
 // conditional self-unit 911; wide initial predicates 1011; native location copy 911.
+// Frame pointer 1207; size preference 1436; native object fields 866;
+// direct restricted predicate 911; direct device predicate 912.
 // frame 0x2cb8 versus 0x2cac; actor/unit and workspace homes differ.
 // Classification order 898; common center 887; common offset 867; marker count 866; inline depth two 866;
 // paired object centers 907; first/sphere centers 907; vehicle-check/sphere centers 907.
-// frame 0x2cb8 versus 0x2cac; actor/unit and workspace homes differ.
 // frame 0x2cb8 versus 0x2cac and actor/unit retention;
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
@@ -988,6 +989,9 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
     return angle;
 }
 
+// score 342 (was 342): frame 0x3c versus 0x34 and angular/planar homes differ.
+// Zero-first length guard 342; cross before angle 413; direct angle selection 403;
+// frame pointer 458; shared side dot products 384.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1067,6 +1071,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
 
+// score 478 (was 478): frame 0x104 versus 0x10c; radius and emitted-index homes differ.
+// Short outer index with original qualifiers 513; broader trace outputs 478; native copied-last 504;
+// native found-step 494; current-step fallback first 478.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

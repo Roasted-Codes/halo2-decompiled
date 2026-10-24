@@ -486,6 +486,10 @@ struct s_request_profile
 	byte field_148[0x1e0 - 0x148];
 };
 
+// score 108 (was 108): aligned frame 0x1e8 agrees; player/version registers and flag reads differ.
+// Default profile 164; early memset 150; unsigned version 143; aligned byte prefix 180;
+// unsigned local index 143; aligned dword prefix 180; common bits 370; separate tick reset 335.
+// All use ordinary player data and native loops; original profile and body retained.
 // @retail 0x1e73b0
 void function_1e73b0()
 {

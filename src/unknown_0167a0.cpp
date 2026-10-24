@@ -77,9 +77,10 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 167 (was 167): logarithm width/reset schedule and restore/final pointer allocation;
 // final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
 // promoted inverse 248; float consistency 306; coordinated texture inputs 167.
+// Typed numeric state fields 167; typed pointer fields 181; full state view 181;
+// force-inline material lookup 167; global-first mask unions on full view 181.
 // frame/entry agree; logarithm width, reset and restore scheduling differ.
 // Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
-// frame/entry agree; logarithm width, reset and restore scheduling differ.
 // logarithm width/reset schedule and restore/final pointer allocation;
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
@@ -795,6 +796,8 @@ static inline real unit_clamp_176a0(real value)
     return value;
 }
 
+// score 124 (was 124): frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
+// Entry step in body 122; indexed clamp loop 151; short/byte entry counter 122/133; inline depth one 122.
 // @retail 0x176a0
 void function_176a0(byte *state, s_packed_shader_range const *range)
 {

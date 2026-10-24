@@ -1122,6 +1122,9 @@ long __stdcall function_063190(void *summary, long user);
 // Read-only session 115; external session reference 115; short missing
 // 116; direct readiness 119; shifted membership bit 120; average scalar
 // 115; external rank reference 110 kept; both rating references 124.
+// EBP frame has three words versus one session spill; aggregate registers differ.
+// Session per-use 169, mode-scoped 115; word ordinal 134; absent/user continues 115/116;
+// ready-first 112; sum-first 118; rating-data reference 115.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
@@ -1829,6 +1832,8 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // score 90 (was 90): frame 0xc agrees; readiness uses BL and the failure/mode join differs.
 // cleanup-first mode 90; byte readiness 90; byte completion 94; single state read 90;
 // readiness before countdown 140; shared live-state predicate 90.
+// Owner/secondary/primary/paired object references 90; completion from test 129;
+// host return guard 90; paired preparation result 90; reversed timed-type tests 93.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {

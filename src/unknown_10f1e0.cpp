@@ -242,6 +242,9 @@ PRIVATE __forceinline real function_112e21(real arg_0)
     return local_0;
 }
 
+// score 133 (was 133): frame 0x80 versus 0x84 and squared/yaw/pitch homes differ;
+// shared normalization scale 133, relative scale 136, both scales 136,
+// reciprocal-root intrinsic 168, two-angle helper precision probe 119 (rejected).
 // @retail 0x112e20
 void function_112e20(transform4x3f *matrix, point3f const *target, transform4x3f const *orientation)
 {
@@ -1228,6 +1231,9 @@ bool function_c70b0(long unit_index);
 // and count-result materialization differ. Second predicate 194; native interruptible 341;
 // status names 347; size policy 602; overlay-first exits 415; conditional first 336;
 // conditional first with native interruptible 335.
+// score 164 (was 194): retail length recovered; object/header/state registers and count joins differ.
+// Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
+// byte result 164; unsigned identifiers 218.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1239,7 +1245,7 @@ bool __stdcall function_110ab0(long unit_index)
 	long overlay = control->channel_9c.unknown08;
 	long name = state->unknown7c;
 	long controlling = unit->field_13c;
-	bool result = false;
+	byte result = false;
 	bool depleted = false;
 	bool interruptible = false;
 	if (controlling != NONE)
@@ -1578,9 +1584,14 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
+// two inline levels 833, sequential channel construction 833, activity byte 833,
+// short overlay counter 833, channels before curve weights 833.
 // seat-weight branches 874, overlay pointer countdown 863, refreshed object 833,
 // direct bounds fallback 859, size preference 1557, object pointer name 833,
 // control-first declaration 833.
+// score 833 (was 833): unit/state homes and first angle expansion remain. Primary direction
+// snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
+// centered predicate after channel preparation 871.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2480,6 +2491,8 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // score 152 (was 162): frame 60 versus 56; action-output and seat-query argument registers still differ.
 // Native channel workspace 139; copy return to play 152; accumulated channel failure 177;
 // unsigned word result 173; short table index 188.
+// Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
+// repeated table index 152; mode after animation 157.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
