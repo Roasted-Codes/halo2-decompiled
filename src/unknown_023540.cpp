@@ -2506,78 +2506,83 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
 {
-    bool found = false;
-    for (short i = 0; i < g_5093e8; ++i)
-        if (g_4b89b0[i].key == object_index) found = true;
-    if (found || g_5093e8 >= 24) return true;
-    s_table_entry *entry = &g_4b89b0[g_5093e8];
-    entry->key = object_index;
-    *(short *)&entry->unknown4 = order;
-    byte const *structure = (byte *)g_4e0344;
-    bool use_samples = structure && *(long const *)(structure + 0x80) > 0 && g_4e0348 &&
-        *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
-        *(long const *)(*(byte const **)(structure + 0x84) + 4) == *(long const *)((byte *)g_4e0348 + 8);
-    real red[16], green[16], blue[16];
-    if (!use_samples)
+    bool result = true;
     {
-        vector3f direction = { 0.0f, 0.0f, -1.0f };
-        spherical_harmonics_evaluate_directional_light(&direction, layout->order,
-            1.0f, 1.0f, 1.0f, red, green, blue);
-    }
-    long level = 5 - order;
-    if (level > layout->level_count - 1) level = layout->level_count - 1;
-    real const *data = layout->data + layout->levels[level].offset;
-    long stride = layout->groups * (layout->columns * 3 + 4);
-    s_bucket_source const *buckets = (s_bucket_source const *)vertices;
-    long total = function_023540((short)count, buckets, entry, stride);
-    long bytes = total * stride * sizeof(real);
-    if (!bytes) return true;
-    long next = g_487b18.size + bytes;
-    if (next > 0x27000) return false;
-    long handle = g_487b18.size & 0x0fffffff;
-    g_487b18.size = next;
-    entry->data_handle = handle;
-    real *output = (real *)(g_487b18.data + handle);
-    for (long bucket = 0; bucket < count; ++bucket)
-    {
-        byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-        long available = *(word const *)(pair + 2);
-        if (!available) continue;
-        real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
-        transform4x3f matrix;
-        function_0235a0(source, &matrix);
-        long samples = available > 1 ? 2 : 1;
-        for (short sample = 0; sample < samples; ++sample)
+        bool found = false;
+        for (short i = 0; i < g_5093e8; ++i)
+            if (g_4b89b0[i].key == object_index) found = true;
+        if (found || g_5093e8 >= 24) goto done;
+        s_table_entry *entry = &g_4b89b0[g_5093e8];
+        entry->key = object_index;
+        *(short *)&entry->unknown4 = order;
+        byte const *structure = (byte *)g_4e0344;
+        bool use_samples = structure && *(long const *)(structure + 0x80) > 0 && g_4e0348 &&
+            *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
+            *(long const *)(*(byte const **)(structure + 0x84) + 4) == *(long const *)((byte *)g_4e0348 + 8);
+        real red[16], green[16], blue[16];
+        if (!use_samples)
         {
-            if (sample) function_0235a0(source + 12, &matrix);
-            real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
-            determinant += matrix.forward.k * matrix.up.j * matrix.left.i;
-            determinant += matrix.up.k * matrix.left.j * matrix.forward.i;
-            determinant -= matrix.forward.i * matrix.left.k * matrix.up.j;
-            determinant -= matrix.forward.j * matrix.left.i * matrix.up.k;
-            determinant -= matrix.forward.k * matrix.left.j * matrix.up.i;
-            matrix3x3 rotation;
-            function_142bf0((matrix3x3 const *)&matrix.forward, determinant, &rotation);
-            if (use_samples)
-            {
-                point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, sample);
-                if (position)
-                {
-                    byte *bsp = *(byte **)(structure + 0x84);
-                    function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
-                        (byte)layout->order, &entry->scale, position);
-                }
-            }
-            real rotated_red[16], rotated_green[16], rotated_blue[16];
-            function_143600((real const *)&rotation, 3, red, rotated_red);
-            function_143600((real const *)&rotation, 3, green, rotated_green);
-            function_143600((real const *)&rotation, 3, blue, rotated_blue);
-            function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
-            output += stride;
+            vector3f direction = { 0.0f, 0.0f, -1.0f };
+            spherical_harmonics_evaluate_directional_light(&direction, layout->order,
+                1.0f, 1.0f, 1.0f, red, green, blue);
         }
+        long level = 5 - order;
+        if (level > layout->level_count - 1) level = layout->level_count - 1;
+        real const *data = layout->data + layout->levels[level].offset;
+        long stride = layout->groups * (layout->columns * 3 + 4);
+        s_bucket_source const *buckets = (s_bucket_source const *)vertices;
+        long total = function_023540((short)count, buckets, entry, stride);
+        long bytes = total * stride * sizeof(real);
+        if (!bytes) goto done;
+        long next = g_487b18.size + bytes;
+        if (next > 0x27000) { result = false; goto done; }
+        long handle = g_487b18.size & 0x0fffffff;
+        g_487b18.size = next;
+        entry->data_handle = handle;
+        real *output = (real *)(g_487b18.data + handle);
+        for (long bucket = 0; bucket < count; ++bucket)
+        {
+            byte const *pair = (byte const *)vertices + 4 + bucket * 4;
+            long available = *(word const *)(pair + 2);
+            if (!available) continue;
+            real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
+            transform4x3f matrix;
+            function_0235a0(source, &matrix);
+            long samples = available > 1 ? 2 : 1;
+            for (short sample = 0; sample < samples; ++sample)
+            {
+                if (sample) function_0235a0(source + 12, &matrix);
+                if (use_samples)
+                {
+                    point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, sample);
+                    if (position)
+                    {
+                        byte *bsp = *(byte **)(structure + 0x84);
+                        function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
+                            (byte)layout->order, &entry->scale, position);
+                    }
+                }
+                real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
+                determinant += matrix.forward.k * matrix.up.j * matrix.left.i;
+                determinant += matrix.up.k * matrix.left.j * matrix.forward.i;
+                determinant -= matrix.forward.i * matrix.left.k * matrix.up.j;
+                determinant -= matrix.forward.j * matrix.left.i * matrix.up.k;
+                determinant -= matrix.forward.k * matrix.left.j * matrix.up.i;
+                matrix3x3 rotation;
+                function_142bf0((matrix3x3 const *)&matrix.forward, determinant, &rotation);
+                real rotated_red[16], rotated_green[16], rotated_blue[16];
+                function_143600((real const *)&rotation, 3, red, rotated_red);
+                function_143600((real const *)&rotation, 3, green, rotated_green);
+                function_143600((real const *)&rotation, 3, blue, rotated_blue);
+                function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                output += stride;
+            }
+        }
+        ++g_5093e8;
+        goto done;
     }
-    ++g_5093e8;
-    return true;
+done:
+    return result;
 }
 
 /* a corner of the unit square, rotated by an angle and scaled, as a texture
@@ -2901,11 +2906,12 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
 {
+    bool result = false;
     real offset = 0.0f;
-    real maximum = 1.0f;
     bool small = false;
     bool allow_small = false;
     bool allow_negative = false;
+    real maximum = 1.0f;
     real inverse_distance = 1.0f / g_48565c;
     low *= inverse_distance;
     high *= inverse_distance;
@@ -2945,17 +2951,17 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     {
         function_14bc0((short)g_4858b8, 0, true);
         function_14f60(0, 0);
-        sampler_state_write(0, D3DTSS_ADDRESSU, 3);
-        sampler_state_write(0, D3DTSS_ADDRESSV, 3);
-        sampler_state_write(0, D3DTSS_ADDRESSW, 3);
-        sampler_state_write(0, D3DTSS_MAGFILTER, 1);
-        sampler_state_write(0, D3DTSS_MINFILTER, 1);
-        sampler_state_write(0, D3DTSS_MIPFILTER, 0);
-        sampler_state_write(0, D3DTSS_MAXMIPLEVEL, 0);
-        sampler_state_write(0, D3DTSS_MAXANISOTROPY, 0);
-        sampler_state_write(0, D3DTSS_MIPMAPLODBIAS, 0);
-        sampler_state_write(0, D3DTSS_COLORSIGN, 0);
-        sampler_state_write(0, D3DTSS_ALPHAKILL, 0);
+        function_0224f0(0, D3DTSS_ADDRESSU, 3);
+        function_0224f0(0, D3DTSS_ADDRESSV, 3);
+        function_0224f0(0, D3DTSS_ADDRESSW, 3);
+        function_0224f0(0, D3DTSS_MAGFILTER, 1);
+        function_0224f0(0, D3DTSS_MINFILTER, 1);
+        function_0224f0(0, D3DTSS_MIPFILTER, 0);
+        function_0224f0(0, D3DTSS_MAXMIPLEVEL, 0);
+        function_0224f0(0, D3DTSS_MAXANISOTROPY, 0);
+        function_0224f0(0, D3DTSS_MIPMAPLODBIAS, 0);
+        function_0224f0(0, D3DTSS_COLORSIGN, 0);
+        function_0224f0(0, D3DTSS_ALPHAKILL, 0);
         g_4b8308 = 0x1010101; D3DDevice_SetRenderState(D3DRS_COLORWRITEENABLE, 0x1010101);
         g_4b82e8 = 0; D3DDevice_SetRenderState(D3DRS_ALPHABLENDENABLE, 0);
         g_4b82ec = 0; D3DDevice_SetRenderState(D3DRS_ALPHATESTENABLE, 0);
@@ -3160,9 +3166,9 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
         }
         *depth_out = depth;
     }
-    return true;
+    result = true;
 failure:
-    return false;
+    return result;
 }
 
 dword g_4b8424;
