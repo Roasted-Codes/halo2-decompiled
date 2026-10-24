@@ -5,16 +5,7 @@
 __declspec(align(16)) const dword g_455940[4] = {0x7fffffff, 0x7fffffff, 0x7fffffff, 0x7fffffff};
 __declspec(align(16)) const dword g_4124a0[4] = {0x80000000, 0x80000000, 0x80000000, 0x80000000};
 
-// score 13 (was 13): our build gives this function a custom convention (the first two
-// arguments in EAX/EDX) while retail passes all five arguments on the stack.
-// Now all five come from the stack in both; left: the extent pointer in ecx (retail
-// edx), the broadcast shuffle after the first multiply and the first sum in the
-// broadcast's register. Tried: every dependency-respecting order of the first
-// phase's statements 14-22 (compile-only); the y product as local_7[1] * local_3 13;
-// that with local_2 + local_5 16, or with local_2 * local_3 16; the centre read
-// through local_8 13; the x product as local_7[0] * local_4 51.
-// @retail 0x1ce210 standard
-// retail's prologue self-aligns the frame and retail's callers
+// score 2 (was 13): retail's prologue self-aligns the frame and retail's callers
 // (0x1cfb90, 0x1ef040 and 0x2fd8a0) push every argument, so the function keeps the
 // standard stack convention; the first block now computes the 0x55 shuffle in a
 // temporary of its own and adds the broadcast of arg_3 to the masked term, and only
