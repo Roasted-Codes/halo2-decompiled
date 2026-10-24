@@ -20,6 +20,11 @@ error_handler_2d97d0 *g_480178;
 // /EHsc, /EHs) adds the handler registration retail does not have. Tried:
 // implicit and explicit arguments 29; trivial copies 29/26; char storage
 // 29/26; constructor and initializer variants 29; with /GX 93.
+// The exception-scope explanation above is unproven: the saved address of
+// the flag is the actual remaining evidence. Empty argument destructor with
+// custom or implicit copying 29; char storage with a converting interface 29
+// (constructor loses its match); explicit destructible argument 26; stream
+// name, out-of-class destructor and member initialization 29. Restored.
 // @retail 0x2d97d0
 void __cdecl function_2d97d0(char const *message)
 {

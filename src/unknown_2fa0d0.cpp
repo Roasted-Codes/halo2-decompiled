@@ -77,6 +77,10 @@ public:
 // helper in several forms 508-514; a direct copy of the surface 223;
 // direct element references 24; a copy name 24; two other orders 22
 // (restored).
+// Further trials: const snapshot, element pointers, direct copy initialization,
+// const array pointer, outer while index and vector copy-body assignment 24;
+// decrement before the swap 87; first parameter as index 125; index and
+// element-reference names 24.
 // @retail 0x2fa0d0
 int ray_test_2f97e0::function_2fa0d0(ray_2f97e0 const *ray, entries_2fa0d0 *entries, int first, int end, limits_2f97e0 const *limits)
 {

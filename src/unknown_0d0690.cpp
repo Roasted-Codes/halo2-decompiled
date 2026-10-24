@@ -1145,6 +1145,10 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Late success return 577; short result 585; direct primary output 598; early square 579;
 // negate normal before copy 546; late return plus parameter order 577; ordered countdown
 // traversal 560 (retail length); countdown with tested result 566.
+// score 529 (was 539): second scale starts at its application; retail length, extra frame word remains.
+// Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
+// early final fade 529/2196; second scale at use 529/2189 kept.
+// Final fade with late second scale 541/2175 (restored).
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1201,10 +1205,10 @@ bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color
 		real luminance = 2.0f * (0.11f * lightmap->blue + 0.59f * lightmap->green + 0.3f * lightmap->red);
 		record->value1c = lighting_function(&parameters->value1c, lighting_pin(luminance, 0.0f, 1.0f));
 		real scale1 = lighting_function(&parameters->scale1, length);
-		real scale2 = lighting_function(&parameters->scale2, length);
 		record->color1.red *= scale1;
 		record->color1.green *= scale1;
 		record->color1.blue *= scale1;
+		real scale2 = lighting_function(&parameters->scale2, length);
 		record->color2.red *= scale2;
 		record->color2.green *= scale2;
 		record->color2.blue *= scale2;
@@ -1228,6 +1232,9 @@ real function_30bf0(vector3f *vector);
 // in-place rotation 435 (retail length); scales at first use 381; shared surface clamp 481;
 // shared axis view 515, with in-place rotation 463, with in-place base clamp 542
 // (all three axis views lose the matched caller). Original helper and bodies restored.
+// score 364 (was 364): rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
+// shared negate then native output 460; scoped turned vector 364; single-result normalizer 380;
+// ordinary rotation inline 364.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1584,6 +1591,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
 // metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
 // lifetime 825; depth one 835; material noinline 870/866.
+// shared cross-path normal 820; shared cross-path base color 825; native scale helper 853;
+// texture carrier name 819; first sample lexical position 819.
 // Dynamic validity long 863; base validity short 819; accumulated sampled color 828;
 // weighted normal loop 892; both lengths before scaling 837; one broad sample scope
 // with the other two narrowed (first/second/third) 831/831/831.
