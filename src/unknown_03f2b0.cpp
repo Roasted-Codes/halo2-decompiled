@@ -576,6 +576,10 @@ struct s_inactive_object_header
     byte *object;
 };
 
+// score 2 (was 2): object-field load versus table-entry load in the equality;
+// test result 23; byte result 18; equality arms 23; const object 2;
+// unaliased test result 20; guarded equality 27; table before parent 46;
+// outer index with separate guards 2.
 // @retail 0x3e9c0
 bool function_3e9c0(long object_index)
 {
@@ -1357,6 +1361,8 @@ struct s_batch_cache_4b5d0
 
 struct s_133f70;
 
+// score 219 (was 219): distance load, nullable-entry address and cache/level scheduling differ;
+// distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

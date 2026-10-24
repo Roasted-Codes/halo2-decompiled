@@ -140,6 +140,11 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
+// score 1023 (was 1082): frame 0xe8 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// Counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
+// Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
+// Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
+// word mask plus selected byte 1023, plus word index 1080.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
@@ -284,9 +289,8 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         word local_8 = local_1->field_e & local_1->field_c;
         if (local_8)
         {
-            long local_9 = 0;
-            dword mask = 1;
-            do
+            word mask = 1;
+            for (long local_9 = 0; local_9 < 16; ++local_9)
             {
                 if ((local_8 & mask) && !local_2.field_0[local_9])
                 {
@@ -294,7 +298,7 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
                     local_1->field_e &= ~mask;
                 }
                 mask <<= 1;
-            } while (++local_9 < 16);
+            }
         }
         local_8 = local_1->field_c;
         for (long local_24 = 0; local_24 < 16; local_24++)
@@ -323,7 +327,7 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         function_185be4((dword *)&arg_5->field_1c, 8, local_3[11] != 0);
         arg_5->field_8 = local_2.field_4e ? local_2.field_30 : local_2.field_34;
         arg_5->field_c = local_2.field_4e ? local_2.field_34 : local_2.field_30;
-        long local_11 = local_3[local_2.field_4c];
+        byte local_11 = local_3[local_2.field_4c];
         byte *local_12 = &local_3[local_2.field_4c];
         if (local_1->field_0 != NONE && function_185be2(local_1->field_0)[0x212] != 0xff && function_185be2(local_1->field_0)[0x213] != 0xff)
         {

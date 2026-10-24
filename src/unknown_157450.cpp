@@ -17,6 +17,7 @@
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 #include <string.h>
+#include "unknown_13fd90.h"
 #include <math.h>
 
 extern s_record_pool *g_509434;
@@ -4004,6 +4005,9 @@ struct s_score_zone_view
     short count;
 };
 
+// score 481 (was 544): scalar homes now agree; text-workspace and later call/store allocation differ.
+// Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
+// unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4014,8 +4018,8 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
     memset(display, 0, sizeof(*display));
     if (player_index != NONE && stats)
     {
-        s_engine_player *player = engine_player_get(player_index);
         bool rounds = false;
+        s_engine_player *player = engine_player_get(player_index);
         if (*(long *)((byte *)g_4e6948 + 0x18c) == 1) rounds = true;
         if (player->team != NONE)
         {
@@ -4074,8 +4078,7 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     word text[256];
                     text[0] = 0;
                     function_159130(best_score, text);
-                    wcsncpy((wchar_t *)display->rival_text, (wchar_t const *)text, 7);
-                    display->rival_text[7] = 0;
+                    unicode_string_copy(display->rival_text, text, 8);
                     color3f color;
                     display->rival_color = *function_7f720(&color, (short)best);
                     display->rival_score = best_score;
@@ -4119,8 +4122,7 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     word text[256];
                     text[0] = 0;
                     function_159130(best_score, text);
-                    wcsncpy((wchar_t *)display->rival_text, (wchar_t const *)text, 7);
-                    display->rival_text[7] = 0;
+                    unicode_string_copy(display->rival_text, text, 8);
                     color3f colors[4];
                     function_7f790(display->teams ? other->team : NONE, false, (s_player_appearance *)((byte *)other + 0x84), colors);
                     display->rival_color = colors[0];
@@ -4471,6 +4473,9 @@ public:
 PRIVATE color3f const score_text_color = { 0.4588235318660736f, 0.729411780834198f, 1.0f };
 PRIVATE color3f const alternate_score_text_color = { 0.8078431487083435f, 0.5607843399047852f, 0.8705882430076599f };
 
+// score 41 (was 41): zero uses EBP vs EBX; player lookup folds its base before the byte read.
+// Fast CRT color copies 41; unsigned font index 41; horizontal bounds before y 70;
+// branch font selector 137; scoped size optimization 233.
 // @retail 0x15e530
 void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *point)
 {
@@ -5054,7 +5059,7 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
         }
         if (*timer == 0)
         {
-            bool schedule = entries[i].index == NONE;
+            long schedule = entries[i].index == NONE;
             if (entries[i].index != NONE)
             {
                 switch (*(short *)(placement + 0x12))
@@ -5090,19 +5095,25 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                 *timer = (short)delay;
             }
         }
-        if (*timer > 0 && --*timer == 0)
+        short countdown = *timer;
+        if (countdown > 0)
         {
-            index = entries[i].index;
-            if (index != NONE && (placement[0] & 2) && object[0xaa] != 2)
+            --countdown;
+            *timer = countdown;
+            if (countdown == 0)
             {
-                if (object[0xaa] == 1 && (function_158ff0(index) || function_15f060((point3f *)(object + 0x30), *(real *)(preset + 0x28))))
+                index = entries[i].index;
+                if (index != NONE && (placement[0] & 2) && object[0xaa] != 2)
                 {
-                    *timer = 1;
-                    continue;
+                    if (object[0xaa] == 1 && (function_158ff0(index) || function_15f060((point3f *)(object + 0x30), *(real *)(preset + 0x28))))
+                    {
+                        *timer = 1;
+                        continue;
+                    }
+                    function_d6bc0(entries[i].index);
                 }
-                function_d6bc0(entries[i].index);
+                function_15aad0(entries, i);
             }
-            function_15aad0(entries, i);
         }
     }
 }

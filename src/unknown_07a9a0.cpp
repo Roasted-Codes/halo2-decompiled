@@ -1065,6 +1065,12 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	}
 }
 
+// score 834 (was 834): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
+// private histogram 852; wide group decision 840; shared group total base 879; native group identity copy
+// 918; membership native maximum 834.
+// frame 0xd4 versus 0xb4; session entry and lookup differ.
+// Reduced preview 864 (754 code); ID phase 864; phased dword histogram 885;
+// histogram phase 934; bound snapshots 936; split guards 864; capacity inline 920.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {
@@ -1164,7 +1170,7 @@ bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 		if (!out->rated_counts) out->averages[i] = NONE;
 		else out->averages[i] /= out->rated_counts[i];
 	}
-	long histogram[16];
+	word histogram[16];
 	memset(histogram, 0, sizeof(histogram));
 	for (long i = 0; i < out->group_count; i++) histogram[out->total_counts[i] - 1]++;
 	long last = NONE;

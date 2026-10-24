@@ -1362,6 +1362,12 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 }
 
 /* fills the list with the session's players, then the empty slots */
+// score 116 (was 116): extra frame dword, count homes and counted tail stores remain;
+// common guarded fill 172; common fill/shared query 166; definite comparator 124;
+// byte selected count 145; signed-char predicates 116.
+// frame 0x58 versus 0x54; query/count homes, scalar tail stores and final row registers differ.
+// Initial slot memset 187; unsigned selected count 116; query failure guard 136; comparator default 124; native secondary result 140.
+// Guarded fills with current cursor/sort 197, with shared query 195; short mode 125; byte mode 121; selected-end tests 158.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {
@@ -1413,19 +1419,20 @@ void c_matchmaking_list::v3()
 		else
 		{
 			item_count = player_count;
-			if (mode == 3)
-			{
-				int (__cdecl *compare)(void const *, void const *) = NULL;
-				if (teams)
-					compare = values ? matchmaking_compare_team_and_value : matchmaking_compare_value;
-				else if (values)
-					compare = matchmaking_compare_team;
-				if (compare)
-					qsort(indices, index_count, sizeof(long), compare);
-			}
 		}
 	}
+	if (mode == 3)
+	{
+		int (__cdecl *compare)(void const *, void const *) = NULL;
+		if (teams)
+			compare = values ? matchmaking_compare_team_and_value : matchmaking_compare_value;
+		else if (values)
+			compare = matchmaking_compare_team;
+		if (compare)
+			qsort(indices, index_count, sizeof(long), compare);
+	}
 	record_pool_release_all(data);
+	long *selected = indices;
 	for (i = 0; i < item_count; i++)
 	{
 		long datum_index = record_pool_allocate(data);
@@ -1436,7 +1443,7 @@ void c_matchmaking_list::v3()
 
 			if (i < index_count)
 			{
-				datum->player = (short)indices[i];
+				datum->player = (short)*selected;
 			}
 			else if (i >= player_count)
 			{
@@ -1447,6 +1454,8 @@ void c_matchmaking_list::v3()
 				datum->player = 16;
 			}
 		}
+		if (i < index_count)
+			++selected;
 	}
 	function_24c0c4((c_widget *)this);
 	((c_widget *)this)->c_widget::v11();

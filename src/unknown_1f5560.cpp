@@ -317,6 +317,10 @@ static inline short heading_unit_get_state(s_heading_unit *unit)
 
 /* where the actor's unit (a biped) is heading: backwards out of its current
    animation, or toward the actor's target point */
+// score 11 (was 11): state is sign-extended and spilled as a dword; retail
+// loads and spills a word. State 7 first 13; state before movement 86;
+// animation first 19; promoted accessor return 11; unsigned accessor 11;
+// indexed forward 11; indexed target 11; immutable long state 11.
 // @retail 0x1f55e0
 bool function_1f55e0(long actor_index, point3f *point, vector3f *direction)
 {
@@ -726,6 +730,11 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 
 real normalize2d(point2f *v);
 
+// score 172 (was 191): fast-byte initialization and trajectory call convention;
+// search then selection 172; unsigned scan 178; fixed do/while 191;
+// types arm first 191; fallback setters 195; split plus unsigned scan 223.
+// signed-long search 192; signed-byte search 188; exact exhaustion 210;
+// named first normalization result 172; global optimization off 542.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -753,21 +762,20 @@ bool function_1f8160(long actor_index, signed char const *types, point3f const *
             }
             else
             {
-                for (short i = 0; i < 6; i++)
+                short i = 0;
+                while (i < 6 && !(*types & (1 << i)))
+                    ++i;
+                if (i < 6)
                 {
-                    if (*types & (1 << i))
-                    {
-                        if (i <= selected_type)
-                            selected_type = i;
-                        real selected_speed = 0.0f;
-                        byte *globals = (byte *)g_4e034c;
-                        if (selected_type >= 0 && selected_type < 6 && globals && *(long *)(globals + 0xc8) > 0)
-                            selected_speed = *(real *)(*(byte **)(globals + 0xcc) + 0x80 + selected_type * 4);
-                        speed = selected_speed;
-                        first_type = i == 0;
-                        valid = true;
-                        break;
-                    }
+                    if (i <= selected_type)
+                        selected_type = i;
+                    real selected_speed = 0.0f;
+                    byte *globals = (byte *)g_4e034c;
+                    if (selected_type >= 0 && selected_type < 6 && globals && *(long *)(globals + 0xc8) > 0)
+                        selected_speed = *(real *)(*(byte **)(globals + 0xcc) + 0x80 + selected_type * 4);
+                    speed = selected_speed;
+                    first_type = i == 0;
+                    valid = true;
                 }
             }
         }

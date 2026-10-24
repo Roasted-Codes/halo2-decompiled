@@ -1007,7 +1007,11 @@ struct s_equipped_object_view
 
 // score 6 (was 6): the tag lookup: retail keeps the index in ecx and the
 // table base in eax, ours keeps the index in eax and the base in ecx;
-// thirteen source rewrites all scored 6.
+// thirteen source rewrites all scored 6. Retail reloads the pool's data for
+// the held object with no store or call in between; every form without the
+// volatile pool view shares the first load (28): the held index through
+// function_cbd50 28 (6 with the view kept), the held object through
+// object_get 28 or object_header_get 28.
 // @retail 0x2675f0
 bool function_2675f0(long object_index)
 {
@@ -1497,10 +1501,9 @@ void function_266640(long actor_index)
 	short best_level = 0;
 	real strongest = 0.0f;
 	memset(data + 0x324, 0, 0x10);
-	long next = actor_get(actor_index)->first_prop_index;
-	while (next != NONE)
+	long next;
+	for (long index = actor_get(actor_index)->first_prop_index; index != NONE; index = next)
 	{
-		long index = next;
 		s_prop_datum *node = prop_ref_get(index);
 		next = *(long *)((byte *)node + 0x2c);
 		s_type_f95cd3 *view = NULL;

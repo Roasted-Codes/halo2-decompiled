@@ -761,6 +761,9 @@ done:
 	return result;
 }
 
+// score 176 (was 176): frame 8 agrees; next stays in CX and the sentinel takes EBX.
+// Full-width result 211; full-width entries 214; full-width palettes 186;
+// result plus entries 214; selection role names 176.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -1789,6 +1792,9 @@ extern s_record_pool *g_5044c8;
 bool function_1e1de0(long actor_index);
 bool function_1df5d0(short team_a, short team_b);
 
+// score 242 (was 242): frame 0x14 agrees; iterator index is cached and the flag clear splits.
+// Earlier iterator declaration 242; iterator/count role names 242; natural for
+// walks 348; unsigned full-width count 242; delayed flag clear 242.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2130,6 +2136,11 @@ void function_26b290(long arg_0);
 
 // score 2 (was 3): the squad flag bit is turned into a 0/1 value by
 // shifting first and masking after, retail masks first and shifts.
+// Also tried (all canonicalised to shift-then-mask or a byte form): word,
+// byte, bool and dword bitfields 2/166, `!= 0` 2, `? 1 : 0` 2, `!!` 2,
+// `/ 0x40` 2, `(word)`/`(dword)` casts of the mask 2, a `(byte)` cast 166,
+// short/dword/byte reads of the flags 2/166, `== 0x40` 167. In all of retail
+// only 0x203bf0 (bit 7 of the same byte) shows the mask-then-shift shape.
 // @retail 0x202e90
 void __stdcall function_202e90(long arg_0, short arg_1, long arg_2)
 {
@@ -2663,6 +2674,9 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
+// score 387 (was 387): frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
+// Direct low-word index 387; other direct parameters 387; all direct reads 387;
+// workspace role names 387; one shared native request 399.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
