@@ -2315,26 +2315,26 @@ void __stdcall function_201100(long arg_0, dword *arg_1)
 }
 
 // @retail 0x203120
-// score 26 (was 26): the squad group's record is looked up in ECX where retail uses EAX, so the flag
-// byte is read into AL instead of into the record pointer.
 void __stdcall function_203120(long arg_0, short arg_1, long arg_2)
 {
     long const *local_0 = &arg_0;
     short const *local_1 = &arg_1;
-    long *local_2 = &arg_2;
     byte *local_3 = (byte *)squad_group_get(*local_0);
-    long initial_flag = arg_2;
-    if (!(byte)*local_2 && local_3[0x16] && *(short *)(local_3 + 0x14) != NONE)
+    /* retail stores the choice's ignore bit to the stack before testing it (into arg_0's
+       dead slot), so it is kept in memory through a pointer here */
+    byte ignored;
+    byte *local_2 = &ignored;
+    if (!(byte)arg_2 && local_3[0x16] && *(short *)(local_3 + 0x14) != NONE)
     {
         byte *local_4 = *(byte **)((byte *)g_4e0350 + 0x244) + *(short *)(local_3 + 0x14) * 0x7c;
         if (local_4)
         {
             *local_2 = local_4[0x24] & 1;
-            if ((byte)*local_2)
+            if (*local_2)
                 return;
         }
     }
-    function_202e30((short)*local_1, *local_0, (byte)initial_flag);
+    function_202e30((short)*local_1, *local_0, (byte)arg_2);
     for (long local_5 = *(long *)(local_3 + 4); local_5 != NONE; )
     {
         byte *local_6 = (byte *)squad_group_get(local_5);
