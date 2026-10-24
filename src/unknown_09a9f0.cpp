@@ -373,11 +373,10 @@ bool c_turret_entity_definition::v30(long index)
 // @retail 0xa3ae0
 void c_object_type_definition::v31(long a, long b, long c, long d)
 {
-	c_object_type_definition *volatile definition = this;
 	long index = b & 0x3ff;
 	if (index)
 	{
-		function_a6430(index, a, d);
+		function_a6430(this, index, a, d);
 	}
 }
 
@@ -1052,21 +1051,19 @@ bool c_weapon_type::v14(long a1, long a2, long a3, long a4, long a5, long a6, lo
 // @retail 0xa03d0
 void c_item_type::v31(long a, long b, long c, long d)
 {
- c_object_type_definition *volatile definition = this;
  if (b & 0x400)
   function_b9b90(a, *(bool const *)(d + 0x90));
  long mask = b & 0x3ff;
  if (mask)
-  function_a6430(mask, a, d);
+  function_a6430(this, mask, a, d);
 }
 
 // @retail 0xa0e10
 void c_projectile_type::v31(long a, long b, long c, long d)
 {
- c_object_type_definition *volatile definition = this;
  long mask = b & 0x3ff;
  if (mask)
-  function_a6430(mask, a, d);
+  function_a6430(this, mask, a, d);
  if (b & 0x400)
   function_b9b90(a, *(bool const *)(d + 0x90));
 }
@@ -1086,10 +1083,9 @@ bool c_weapon_type::v16(long a, long b, long c)
 // @retail 0xa3f70
 void c_device_type::v31(long a, long b, long c, long d)
 {
- c_object_type_definition *volatile definition = this;
  long mask = b & 0x3ff;
  if (mask)
-  function_a6430(mask, a, d);
+  function_a6430(this, mask, a, d);
  if (b & 0xc00)
   function_a3fd0(a, false, (bool)(((dword)b >> 10) & 1), *(real const *)(d + 0x90),
    (bool)(((dword)b >> 11) & 1), *(real const *)(d + 0x94));
@@ -1143,22 +1139,18 @@ struct s_z_weapon_update_object
  short field22c;
 };
 
-// score 22 (was 22): the first argument is stored to the stack and reloaded in
-// retail and kept in a register in ours, retail masks the second argument
-// before the first call while ours masks it after, and ours makes an extra
-// call before the two calls that read the item's definition
 // @retail 0xa2140
 void c_weapon_type::v31(long a, long b, long c, long d)
 {
- long mask = b & 0x7ff;
  s_z_weapon_update_object *object = (s_z_weapon_update_object *)OBJECT(a);
+ word mask = b & 0x7ff;
  if (mask)
  {
   if (mask & 0x400)
    function_b9b90(a, *(bool const *)(d + 0x90));
-  mask &= 0x3ff;
-  if (mask)
-   function_a6430(mask, a, d);
+  long low_mask = mask & 0x3ff;
+  if (low_mask)
+   function_a6430(this, low_mask, a, d);
  }
  long state_mask = b & 0x800;
  if (state_mask || (b & 0x1000))

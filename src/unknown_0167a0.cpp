@@ -74,8 +74,13 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 167 (was 167): frame/entry agree; logarithm width, reset and restore scheduling differ.
+// score 167 (was 167): logarithm width/reset schedule and restore/final pointer allocation;
+// final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
+// promoted inverse 248; float consistency 306; coordinated texture inputs 167.
+// frame/entry agree; logarithm width, reset and restore scheduling differ.
 // Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
+// frame/entry agree; logarithm width, reset and restore scheduling differ.
+// logarithm width/reset schedule and restore/final pointer allocation;
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -1158,6 +1163,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
+// score 246 (was 246): sampler convention and captured descriptor versus dirty-store rereads;
+// short counter 246; byte counter 282; source index long 248; selector byte 246;
+// pack result at store 344; existing clamp calls 318.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

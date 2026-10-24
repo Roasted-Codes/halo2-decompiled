@@ -215,9 +215,14 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
     s_path_settings const *settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
     point3f const *position, real radius, vector3f const *direction, long unit_index, long ignore_index);
 
-// score 866 (was 866): frame 0x2cb8 versus 0x2cac; actor/unit and workspace homes differ.
+// score 866 (was 866): frame 0x2cb8 versus 0x2cac and actor/unit retention;
+// point workspace names 866; initial actor value 869; query index value 916;
+// conditional self-unit 911; wide initial predicates 1011; native location copy 911.
+// frame 0x2cb8 versus 0x2cac; actor/unit and workspace homes differ.
 // Classification order 898; common center 887; common offset 867; marker count 866; inline depth two 866;
 // paired object centers 907; first/sphere centers 907; vehicle-check/sphere centers 907.
+// frame 0x2cb8 versus 0x2cac; actor/unit and workspace homes differ.
+// frame 0x2cb8 versus 0x2cac and actor/unit retention;
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -854,6 +859,11 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
     return (node->flags & 1) && (!(node->flags & 2) || !function_1fa6b0(node, data));
 }
 
+// score 401 (was 405): frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
+// Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
+// score 401 (was 401): ordinary previous/first/both history 399/401/400;
+// word node index 408; alternate normalizer 401; indexed node pair 428;
+// indexed pair with ordinary previous history 438. Frame and edge/history homes remain.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -862,7 +872,7 @@ bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real
     volatile long first_vertex = NONE;
     for (;;)
     {
-        s_pathfinding_edge const *volatile edge = &data->edges[edge_index];
+        s_pathfinding_edge const *edge = &data->edges[edge_index];
         bool first_open = path_node_open_2c(data, edge_node_2c(edge, 0));
         long node_index = edge_node_2c(edge, !first_open);
         if (!path_node_open_2c(data, node_index))

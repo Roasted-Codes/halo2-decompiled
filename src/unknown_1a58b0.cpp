@@ -783,6 +783,7 @@ void function_25aba0(long actor_index);
 // score 69 (was 143): frame 0x4c agrees; ESI/EDI, state-one decrement and zero-fill differ.
 // Native workspace initializer 69; owner lifetime 266; level lifetime 320;
 // entry pointer walk 261; full-width choice 150; full-width type 338.
+// Round 280: outer workspace 143; short copy counter 69; long level 173; retained handler reads 69; ordinary dispatch first 131.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -1144,6 +1145,10 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
     arg_2->k = arg_0->k * arg_1;
 }
 
+// score 18 (was 18): point argument is rematerialized instead of copied;
+// the frame and projection agree. Sampling name 18; vector names 18;
+// vectors declared first 18; const unit 18; saved body count 124;
+// workspace memcpy 18; indexed output 23; const component 18.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {
@@ -1598,8 +1603,13 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
-// score 186 (was 186): object register, geometry-call convention and failure/angle tails differ;
+// score 42 (was 186): frame/length agree; geometry-call convention, flag branches and angle tails differ.
+// Axis name 186; result first 220; query result 195; first-bit assignment 186; size optimization 348.
+// Depth zero 386; depth one 186; success return 203; clamped input on current frame 216; word result 227.
+// object register, geometry-call convention and failure/angle tails differ;
 // axis name 186; result first 220; geometry result guard 195; masked first bit 186; size optimization 348.
+// Failure to common exit 98; signed byte result 196; second-bit results 178; angle result 201; radius snapshot 209.
+// Exit plus second-bit results 199; exit plus scalar clamp 42.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1616,7 +1626,7 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 		if ((1 << object->type) & 1)
 		{
 			if (!function_1a62e0(object_index, origin, direction, &candidate->point))
-				return false;
+				goto done;
 			s_candidate_unit_definition *definition = (s_candidate_unit_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 			if (definition->flags & 1)
 				candidate->flags |= 1;
@@ -1663,11 +1673,10 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 		candidate->distance = function_30bf0(&candidate->direction);
 		candidate->alternate = alternate;
 		real cosine = dot3f(&candidate->direction, direction);
-		if (-1.0f > cosine)
-			candidate->angle = function_50650(-1.0f);
-		else
-			candidate->angle = function_50650(cosine > 1.0f ? 1.0f : cosine);
+		cosine = -1.0f > cosine ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
+		candidate->angle = function_50650(cosine);
 	}
+done:
 	return result;
 }
 
@@ -2069,6 +2078,7 @@ long function_baf40(long object_index);
 // score 177 (was 177): frame 0xb4 versus 0xb8; output record uses stack/EBP, retail EBX.
 // Full-width selector 203; later player view 200; wide secondary selector 177;
 // native vector/workspace role names 177; outer return guard 177.
+// Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225; candidate score tests 186; retained direction unit index 210.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {

@@ -115,14 +115,17 @@ struct s_24e9c7_bounds
 };
 
 /* Draws one marker's sprite at its placement; returns the sprite's height. */
+// score 125 (was 135): scalar homes, sprite-copy source and SSE scheduling remain; table read at each use 125 plain (743/743), real half width 135f, direct height 135f, sprite pointer 133f, global optimization off 716f.
+// Round 280: plain quad passes 198; faded alpha first 125; lookup scope ended 125; shared bounds value 125; x then y coordinates 130.
+// Upper components 125; side components 125; reverse components 133; all components 133;
+// earlier upper displacement 123 plain (two points, dropped), with components 123; direct reverse uses 167.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {
 	real result = 0.0f;
-	s_24e9c7_kinds_view *globals = (s_24e9c7_kinds_view *)g_510c94;
-	if (globals && marker->kind >= 0 && marker->kind < globals->count)
+	if (g_510c94 && marker->kind >= 0 && marker->kind < ((s_24e9c7_kinds_view *)g_510c94)->count)
 	{
-		s_24e9c7_kind *kind = &globals->entries[marker->kind];
+		s_24e9c7_kind *kind = &((s_24e9c7_kinds_view *)g_510c94)->entries[marker->kind];
 		long bitmap_index = kind->bitmap_index;
 		if (bitmap_index != NONE && kind->shader_index != NONE)
 		{

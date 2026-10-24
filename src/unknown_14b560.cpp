@@ -1032,7 +1032,13 @@ bool function_14ed80(void)
 
 
 // score 8 (was 8): the global is kept in EDX here and in ESI in retail, which
-// also moves the push of ESI in front of the add.
+// also moves the push of ESI in front of the add. Also tried: one declaration
+// for both outputs 8, the outputs declared between the player and the
+// globals 8 or after the index 8, the globals declared first and assigned
+// after the player 8, the outputs assigned after their declarations 8 (third
+// first 9), the representation pointer declared at the top 8, const views 8,
+// dword outputs 8. The globals pointer always takes the register the player
+// lookup frees.
 // @retail 0x14f040
 void player_get_representation(long player_index, long *field_b4, long *third_person)
 {
@@ -1538,6 +1544,9 @@ struct s_unit_player_assignment
 
 // score 17 (was 17): the value that is read from the record is passed in ECX
 // here and in EAX in retail, and ours is one byte shorter than retail.
+// Tried: the engine test through game_engine_get 17; the state test in each
+// representation arm 45; the representation declared before the call 17;
+// the stored unit index field passed to function_1682bf 16.
 // @retail 0x14cad0
 void function_14cad0(long player_index, long unit_index)
 {
@@ -2631,6 +2640,9 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
+// score 155 (was 155): iterator store/test and rate/tick scheduling differ;
+// flag snapshot 155; long timer 204; parent-carried root walk 182;
+// low-time arm first 179; inline depth one 155. Damage call convention differs.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
