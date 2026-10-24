@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "unknown_0259d0.h"
 #include "effects.h"
+#include "placement_identifier.h"
 #include <string.h>
 #include <xmmintrin.h>
 
@@ -348,14 +349,6 @@ long function_b8a10(short cluster_index, s_object_cluster_reference **record, s_
 	return object_cluster_next_ab((s_record_pool *)g_4de2d8, iterator, record);
 }
 
-struct s_scenario_identifier_ab
-{
-	long unique_id;
-	short origin_bsp;
-	char type;
-	char source;
-};
-
 struct s_placement_defaults_ab
 {
 	long tag_index;
@@ -481,13 +474,7 @@ void *__stdcall function_b7a40(s_scenario_identifier_ab const *identifier, long 
 			{
 				byte *element = block->elements + i * size;
 				s_scenario_identifier_ab *current = (s_scenario_identifier_ab *)(element + 0x28);
-				bool match = true;
-				match &= current->unique_id == identifier->unique_id;
-				match &= current->type == type;
-				match &= current->source == source;
-				if (match && current->source == 0)
-					match &= current->origin_bsp == identifier->origin_bsp;
-				if (match)
+				if (placement_identifier_equal(current, identifier))
 				{
 					if (index_out)
 						*index_out = i;

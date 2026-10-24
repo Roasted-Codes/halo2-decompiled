@@ -10,6 +10,7 @@
 #include "unknown_1cafc0.h"
 #include "object_queries.h"
 #include "bit_vector.h"
+#include "placement_identifier.h"
 #include <string.h>
 
 #define FLAG(bit) (1 << (bit))
@@ -457,10 +458,7 @@ bool function_bbe90(long definition_index)
 struct s_object_query_bbf40
 {
 	byte unknown00[0xa4];
-	long unique_id;
-	short origin_bsp;
-	char type;
-	char source;
+	s_scenario_identifier_ab identifier;
 	short name_index;
 	byte unknownae[0xc2 - 0xae];
 	short team;
@@ -638,43 +636,23 @@ void __stdcall function_bc7b0(long object_index)
 	}
 }
 
-struct s_object_identifier_bbf40
-{
-	long unique_id;
-	short origin_bsp;
-	char type;
-	char source;
-};
-
-// score 9 (was 41): the byte field is read into DL and the stack byte into CL; retail reads the
-// byte at +0xaa into DL and the stack byte into CL.
-// Type/source/id equality order still differs. Byte differences 156;
-// mismatch count 144; match count 146; boolean product 59; byte-pair
-// memcmp 139; id memcmp 136; eager origin 34; const candidate 9.
+// the last object whose placement identifier equals the one given, or NONE
 // @retail 0xbf760
 long function_bf760(long const *unique_id)
 {
-	s_object_identifier_bbf40 const *identifier = (s_object_identifier_bbf40 const *)unique_id;
+	s_scenario_identifier_ab const *identifier = (s_scenario_identifier_ab const *)unique_id;
 	long result = NONE;
-	char source = identifier->source;
-	if (source != NONE)
+	if (identifier->source != NONE)
 	{
-		char type = identifier->type;
 		struct
 		{
 			s_object_query_bbf40 *object;
 			s_type_f1af8e iterator;
 		} state;
-		function_bae80(&state.iterator, 1 << type, 0);
+		function_bae80(&state.iterator, 1 << identifier->type, 0);
 		while ((state.object = (s_object_query_bbf40 *)function_baeb0(&state.iterator)) != 0)
 		{
-			bool match = true;
-			match &= type == state.object->type;
-			match &= identifier->source == state.object->source;
-			match &= identifier->unique_id == state.object->unique_id;
-			if (match && source == 0)
-				match &= identifier->origin_bsp == state.object->origin_bsp;
-			if (match)
+			if (placement_identifier_equal(identifier, &state.object->identifier))
 				result = state.iterator.object_index;
 		}
 	}
