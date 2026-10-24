@@ -409,6 +409,8 @@ extern point2f *g_468778;
 // score 379 (was 384): actor-table/result/prop carriers still differ; first
 // prediction loop 391; second prediction loop 391; planar reverse loop 391;
 // repeated vector-field access 387; direct final result 379, plain verified.
+// Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
+// planar request workspace 391; byte result 399; actor first with direct final result 413.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

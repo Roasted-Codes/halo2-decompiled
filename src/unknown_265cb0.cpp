@@ -363,6 +363,9 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
+// score 226 (was 226): result home +0x28 versus +8; delta/motion registers differ.
+// Qualified long result 226; qualified byte result 232; long seat count 240;
+// long seat index 226; shared seat-element pointer 226.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1064,6 +1067,8 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // score 142 (was 142): clock/compare schedule and vector homes differ; ordinary
 // pooled/clock reads with memset zero 178; projected-point loop 297; wide query
 // results 318; named maximum 146; target-copy loop 141 (one-count gain rejected).
+// ordinary-access common tick conversion 400; native point setter 146;
+// activity lifetime 344; iterator rejection continue 146; elapsed interval 293.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
@@ -1498,6 +1503,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Conditional facing 731; wide best level 701; direct parameter 701; shared difference 705;
 // wide retention 704; live relative inputs 695; native velocity copy 695; early defaults 755;
 // phase defaults 752.
+// word threshold 712; byte conditions 712; both 712; geometry names 712 (reduced);
+// direct transformed output 700 reduced, 715 plain; entry cursor advance 708 reduced, 726 plain.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

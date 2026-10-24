@@ -217,6 +217,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 	}
 }
 
+// score 235 (was 235): Frame and basis/position homes still differ.
+// normalized forward shared 265; basis scratch roles reused 269; velocity/basis scratch shared 252;
+// shared forward and scoped velocity 257; early position snapshot 263.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -684,6 +687,9 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
 
+// score 99 (was 99): Word-flag/handle registers and call Boolean roles still differ.
+// absent-component exit 99; signed flags with early Boolean 99; long state with early Boolean 135;
+// counter reset before increment 103; threshold default and override 99.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -804,6 +810,9 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 
+// score 278 (was 278): Sweep/impact homes and store scheduling still differ.
+// targeted sweep name 278; sweep/impact names exchanged 278; completed normal reused 285; candidate
+// countdown 284; header flag at use 278.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

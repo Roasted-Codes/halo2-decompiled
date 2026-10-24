@@ -232,10 +232,16 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
+// score 185 (was 197): exact 0x58 frame; BSP/section registers and range/plane homes differ.
+// BSP reads at use 217; conditional section selection 229; direct success returns 243;
+// instance reads at use 213; relative triangle-range counter 206.
+// BSP/section registers and range/plane homes remain;
+// reference table before traversal 221; instance case first 232; byte success result 185;
+// result-controlled traversal 205; reference table and result traversal 216.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
-	bool result = false;
+	byte result = false;
 	point3f point = collision->point;
 	s_structure_bsp_view *bsp = (s_structure_bsp_view *)g_4e0348;
 	long surface_range_index = collision->surface_range_index;
@@ -335,11 +341,17 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
+// score 236 (was 240): 0x58 frame; region scheduling/model spill remain.
+// Retained mesh 258; unsigned node ordinal 240; masked plane snapshot 264;
+// native surface-table view 240; relative range ordinal 252.
+// Region scheduling and model/node storage still differ;
+// direct surface-group expression 240; byte success result 244; word section ordinal 247;
+// direct group and byte result 244; late bounds and byte result 236.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)
 {
-	bool result = false;
+	byte result = false;
 	{
 		triangle->unknown18 = NONE;
 		*(long *)((byte *)triangle + 8) = NONE;
@@ -363,8 +375,8 @@ bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 		long section_index = *(long *)((byte *)triangle + 0x14);
 		if (section_index == 0xff) goto done;
 		byte *section = *(byte **)(model + 0x28) + section_index * 0x5c;
-		s_vertex_bounds_23ac30 const *bounds = *(s_vertex_bounds_23ac30 const **)(model + 0x18);
 		if (!function_12de70((s_geometry_block_info *)(section + 0x38), 3)) goto done;
+		s_vertex_bounds_23ac30 const *bounds = *(s_vertex_bounds_23ac30 const **)(model + 0x18);
 		object = *(byte **)(g_4e0300->data + (COLLISION_OBJECT_14A8E0 & 0xffff) * 12 + 8);
 		point3f point = collision->point;
 		if ((unsigned long)*(short *)(object + 0x114) / 0x34 > 0)
