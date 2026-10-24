@@ -123,6 +123,9 @@ struct new_faces_30ae70
 // direct counter 48; split increment 3; long index 3; 100 permutations, best 3.
 // Call-only apex forms at 3 removed; apex edge write 5; reference from apex 4;
 // that reference with edge first 14; constructor zero first 4.
+// With the multi-use pointer: aligned load 61; load plus store 61; array
+// between writes 28; split count 4; outer result 4; member initializers 4;
+// external base reference 4; long index 4.
 // @retail 0x30ae70
 int class_30a810::function_30ae70(long count, edge_30aac0 *horizon, __m128 const *position)
 {
