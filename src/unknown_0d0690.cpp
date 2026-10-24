@@ -978,6 +978,10 @@ PRIVATE __forceinline bool surface_status_failed(long status)
     return status == 1 || status == 2 || status == 3;
 }
 
+// score 44 (was 44): early object-flag register and pointer/flags homes
+// differ, followed by tag-bit extraction. Zero then OR 148; const tag 44;
+// byte tag bitfield 135; dword object bitfield 44; named query failure 44;
+// explicit final exits 181; inverse failure result 44; retry flag update 44.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
