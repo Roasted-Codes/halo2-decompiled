@@ -208,6 +208,9 @@ struct s_physics_component_walk : s_havok_component
         char *output, long *output_count, void *other_context, dword *visited, bool *active);
 };
 
+// score 275 (was 275): frame 0x1c versus 0x18, current/entry homes and group
+// spill differ; direct receiver 275; signed-word next 310; byte body 319;
+// direct model uses 275; conditional first body 300. Original body kept.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

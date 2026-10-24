@@ -512,6 +512,8 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // score 363 (was 363): constant-five lifetime and first-table induction differ;
 // initial real stores first 363; outer word index 469 signed or unsigned;
 // column word index 464; both signed-word indices 512. Original kept.
+// first-table result names 363; loop-scope steps 363; initialized steps 363;
+// first regular table tail loop 531; second tail loop 530.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {
