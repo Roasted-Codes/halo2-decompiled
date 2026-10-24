@@ -401,7 +401,7 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 	return constraint;
 }
 
-// score 34 (was 34): entry load/owner registers and final flag OR differ.
+// score 33 (was 34): entry load/owner registers and final flag OR differ.
 // Owner-first builder 31; joint-first 31; key-first 31; map-first 31;
 // first-body name 31; body outputs first 31; reversed frames 31;
 // shared fresh object index 31 (all reduced; executable unchanged).
