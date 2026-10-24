@@ -183,6 +183,11 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 	}
 }
 
+// score 660 (was 709): clock register recovered by capped-use coefficient lifetimes; vector argument homes,
+// scalar schedules and counter return still differ; tried initial output native copy 745; normalizer
+// workspace native copy 709; existing displacement scale 750; native target displacement 709; native output
+// scale loops 733; native qr post clamp coefficient 719; native qr guarded coefficients 660; coefficient
+// reference lifetime 739; coefficient direction lifetime 666; coefficient both input lifetimes 743.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
@@ -204,7 +209,6 @@ long function_1eb8a0(
 		{
 			if (dt > 0.001f)
 			{
-				real k = s->fast ? 12.f : 8.f;
 				real step = dt;
 				if (s->limit != 0.f && step > s->limit)
 					step = s->limit;
@@ -213,6 +217,7 @@ long function_1eb8a0(
 				real e = 0.001f;
 				if (!(0.001f > t))
 				{
+					real k = s->fast ? 12.f : 8.f;
 					real cap = globals->rate * k;
 					e = t > cap ? cap : t;
 				}
@@ -259,11 +264,11 @@ long function_1eb8a0(
 				else
 					len3 = len2;
 
-				real k2 = s->fast ? 12.f : 8.f;
 				real t2 = len3 * 0.375f;
 				real e2 = 0.001f;
 				if (!(0.001f > t2))
 				{
+					real k2 = s->fast ? 12.f : 8.f;
 					real cap2 = globals->rate * k2;
 					e2 = t2 > cap2 ? cap2 : t2;
 				}
@@ -330,11 +335,11 @@ long function_1eb8a0(
 
 	if (s->active)
 	{
-		real k3 = s->fast ? 12.f : 8.f;
 		real t3 = s->distance * 0.375f;
 		real e3 = 0.001f;
 				if (!(0.001f > t3))
 				{
+					real k3 = s->fast ? 12.f : 8.f;
 					real cap3 = globals->rate * k3;
 					e3 = t3 > cap3 ? cap3 : t3;
 				}

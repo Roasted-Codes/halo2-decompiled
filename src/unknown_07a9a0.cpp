@@ -1065,6 +1065,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	}
 }
 
+// score 834 (was 834): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
+// private histogram 852; wide group decision 840; shared group total base 879; native group identity copy
+// 918; membership native maximum 834.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

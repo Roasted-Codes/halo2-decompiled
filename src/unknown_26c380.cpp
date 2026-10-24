@@ -143,6 +143,9 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 	return success;
 }
 
+// score 435 (was 435): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
+// tails remain; tried late first independent normal 490; late first native result word 438; native edge
+// orientation 438; existing planar product inline 435; late first unsigned count 435.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,
