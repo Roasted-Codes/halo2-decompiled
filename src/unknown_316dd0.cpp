@@ -210,6 +210,10 @@ public:
 // comparisons now read the pair's object
 // first, as retail does, but retail keeps the merger in edi and the pair in
 // esi; that register swap is fixed by the saved dispatcher below
+// Reversed first/second/both equalities with callback 8/4/8; stored-agent
+// test 71; existing-record reference and record pair base with callback 2;
+// two guarded handles 8; a conditional repeated test 186; id-field references 2;
+// two id values 8. Callback forms remain discarded while unmatched.
 // @retail 0x316dd0
 void merger_316dd0::function_316dd0(handle_pair_316dd0 const *pair)
 {
