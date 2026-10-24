@@ -231,6 +231,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
+// score 197 (was 197): exact 0x58 frame; BSP/section registers and range/plane homes differ.
+// BSP reads at use 217; conditional section selection 229; direct success returns 243;
+// instance reads at use 213; relative triangle-range counter 206.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -334,6 +337,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
+// score 240 (was 240): exact 0x58 frame and length; region scheduling/model spill remain.
+// Retained mesh 258; unsigned node ordinal 240; masked plane snapshot 264;
+// native surface-table view 240; relative range ordinal 252.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)
