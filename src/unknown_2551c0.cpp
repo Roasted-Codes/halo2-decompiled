@@ -228,7 +228,9 @@ struct s_2556c0
 };
 
 // score 1 (was 1): the byte test uses the other SIB base and index slot;
-// the address is the same.
+// the address is the same. Immutable index 1; index predeclared/read before the blocked test 1 each;
+// edge predeclaration, a post-bounds edges base, a field-base flag pointer and an exact flag pointer 1 each;
+// scoped favor-speed-off 37.
 // @retail 0x2556b0
 long function_2556b0(point3f const *arg_0, vector3f const *arg_1, long arg_2, real *arg_3)
 {

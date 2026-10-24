@@ -92,7 +92,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 	g_5047f8[arg_0].field_18 = arg_0;
 }
 
-// score 408 (was 433): frame now 0x64; entry load schedule, point/magnitude homes
+// score 408 (was 433): frame 0x68 versus 0x64; normalization homes differ; shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
+// frame now 0x64; entry load schedule, point/magnitude homes
 // and candidate arithmetic differ. Byte candidate count 417; byte endpoint 427;
 // later center sum 444; early facing result 441; short angle count 433; both byte counts 408.
 // Signed byte candidate/endpoint/both 408/408/408; quarter-turn table loop 481;

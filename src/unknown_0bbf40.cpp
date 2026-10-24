@@ -646,8 +646,11 @@ struct s_object_identifier_bbf40
 	char source;
 };
 
-// score 37 (was 41): the byte field is read into DL and the stack byte into CL; retail reads the
+// score 9 (was 41): the byte field is read into DL and the stack byte into CL; retail reads the
 // byte at +0xaa into DL and the stack byte into CL.
+// Type/source/id equality order still differs. Byte differences 156;
+// mismatch count 144; match count 146; boolean product 59; byte-pair
+// memcmp 139; id memcmp 136; eager origin 34; const candidate 9.
 // @retail 0xbf760
 long function_bf760(long const *unique_id)
 {
