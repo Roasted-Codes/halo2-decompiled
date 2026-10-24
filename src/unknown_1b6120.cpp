@@ -106,12 +106,13 @@ long __stdcall function_1b6120(long actor_index, s_slot *slot)
 
 			if (joint_index == NONE)
 			{
-				joint_index = function_26e940(actor_index);
-				if (joint_index != NONE)
+				long allocated_index = function_26e940(actor_index);
+				if (allocated_index != NONE)
 				{
 					state->unknown0c = true;
-					state->element_index = joint_index;
+					state->element_index = allocated_index;
 				}
+				joint_index = allocated_index;
 			}
 
 			if (joint_index != NONE)

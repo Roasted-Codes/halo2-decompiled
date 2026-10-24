@@ -1422,13 +1422,14 @@ void function_55990(s_voice_player_values *values)
 		memset(values->values, 0, sizeof(values->values));
 		for (; i < 16; i++)
 		{
+			dword mask = 0;
 			word bit = 1 << i;
 			if ((local & bit) && (active & bit))
 			{
 				dword muted = 0;
 				if (voice_available())
 					muted = g_4c9878.unknownF0[i];
-				dword mask = remote & ~muted;
+				mask = remote & ~muted;
 				if (voice_available())
 				{
 					dword policy = ~0UL;
@@ -1438,15 +1439,16 @@ void function_55990(s_voice_player_values *values)
 						policy = function_56c60(&g_527104.settings, i);
 					mask &= policy;
 				}
+				dword target = 1;
 				for (long j = 0; j < 16; j++)
 				{
-					dword target = 1 << j;
 					if ((mask & target) &&
 						(function_57d63(j, i) || voice_port_flag1(j) || voice_port_flag2(j)))
 						mask &= ~target;
+					target <<= 1;
 				}
-				values->values[i] = mask;
 			}
+			values->values[i] = mask;
 		}
 	}
 }
@@ -2936,12 +2938,12 @@ long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, b
 {
  if (voice_packet_clamp_count(data[1], 1, 16) != data[1])
   return NONE;
- byte *packet = data + 2;
+ long packet_size = relay ? 13 : 11;
  size -= 2;
  long consumed = 2;
- long packet_size = relay ? 13 : 11;
  for (long i = 0; i < data[1]; i++)
  {
+  byte *packet = data + consumed;
   if (size < packet_size) return NONE;
   if (relay)
   {
@@ -2971,7 +2973,7 @@ long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, b
   else
   {
    if (packet[0] >= 2) return NONE;
-   if (voice_available() && voice_xhv_has_remote_talker(&g_476fc8, channel->index))
+   if (voice_has_remote_talker_inlined(channel->index))
    {
     function_56df0(&g_527104.settings, channel->index, packet[0]);
     voice_submit_incoming_packet(channel->index, packet + 1, 10);
@@ -2979,7 +2981,6 @@ long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, b
   }
   size -= packet_size;
   consumed += packet_size;
-  packet += packet_size;
  }
  return consumed;
 }
