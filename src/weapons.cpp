@@ -3274,13 +3274,13 @@ bool __stdcall function_fdfb0(long weapon_index)
     s_weapon *weapon = WEAPON_GET(weapon_index);
     s_weapon_definition *definition = WEAPON_DEFINITION(weapon);
     bool dual = function_101690(weapon_index);
-    long unit_index = TEST_FIELD_BIT(WEAPON_GET(weapon_index)->in_inventory) ? WEAPON_GET(weapon_index)->unit_index : NONE;
+    long unit_index = weapon_get_owner_unit_index(weapon_index);
     real scale = function_d1490(unit_index, weapon_index);
     if ((bool)((WEAPON_LONG_AT(definition, 0x12c) >> 27) & 1)) scale = dual ? 1.0f : 0.0f;
     long owner_index = function_101fb0(weapon_index);
     long player_index = owner_index != NONE ? WEAPON_LONG_AT(WEAPON_GET(owner_index), 0x13c) : NONE;
     if (weapon->object_index_194 != NONE && !function_badc0(weapon->object_index_194, NONE)) weapon->object_index_194 = NONE;
-    volatile bool result = function_105e80(weapon_index);
+    bool result = function_105e80(weapon_index);
     if (WEAPON_GET(weapon_index)->animation_state_offset != NONE)
     {
         byte *state = (byte *)weapon + weapon->animation_state_offset;
@@ -3554,7 +3554,7 @@ bool __stdcall function_fdfb0(long weapon_index)
             { weapon_request_barrel(weapon_index, secondary, true); weapon_clear_trigger(weapon_index, i); }
             else
             {
-                long owner = TEST_FIELD_BIT(WEAPON_GET(weapon_index)->in_inventory) ? WEAPON_GET(weapon_index)->unit_index : NONE;
+                long owner = weapon_get_owner_unit_index(weapon_index);
                 if (function_1061c0(owner, &target, &target_entry) && weapon->object_index_194 == target) function_103bd0(weapon_index, i);
                 if (!trigger->timer && player_index != NONE) function_103b70(weapon_index, i);
             }
@@ -3791,7 +3791,7 @@ void __stdcall function_104150(long weapon_index, short barrel_index)
         }
     }
     vector3f repeated_direction;
-    for (short marker_index = 0; marker_index < marker_count; ++marker_index)
+    for (long marker_index = 0; marker_index < marker_count; ++marker_index)
     {
         if (marker_count > 1 && (bool)(((dword)WEAPON_LONG_AT(barrel_definition, 0) >> 12) & 1) &&
             WEAPON_BYTE_AT(barrel, 0x2e) % marker_count != marker_index) continue;
