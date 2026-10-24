@@ -3047,7 +3047,9 @@ void __stdcall function_102fb0(long weapon_index, short barrel_index)
     s_weapon_definition *definition = WEAPON_DEFINITION(weapon);
     s_weapon_barrel_definition *barrel_definition = &definition->barrels[*barrel_reference];
     s_weapon_barrel *barrel = &weapon->barrels[*barrel_reference];
-    volatile long  unit_index = TEST_FIELD_BIT(weapon->in_inventory) ? weapon->unit_index : NONE;
+    volatile long unit_index;
+    if (TEST_FIELD_BIT(weapon->in_inventory)) unit_index = weapon->unit_index;
+    else unit_index = NONE;
     long tag_index = NONE, unit_tag_index = NONE;
     real scale_a = 0.0f, scale_b = 0.0f;
     bool fired = false, failure = false;
@@ -3519,17 +3521,6 @@ bool __stdcall function_fdfb0(long weapon_index)
                 trigger->flag6 = false;
             }
             break;
-        case 3:
-        case 7:
-            if (down || blocked)
-            { if (function_106280(weapon_index, &target, &target_entry)) function_103c40(weapon_index, i); }
-            else
-            {
-                if (trigger->state != 7 && primary != NONE && function_102540(weapon_index, primary, false))
-                { weapon_request_barrel(weapon_index, primary, false); trigger->flag0 = false; }
-                weapon_clear_trigger(weapon_index, i);
-            }
-            break;
         case 4: break;
         case 5:
             if (down || blocked)
@@ -3557,6 +3548,17 @@ bool __stdcall function_fdfb0(long weapon_index)
                 long owner = weapon_get_owner_unit_index(weapon_index);
                 if (function_1061c0(owner, &target, &target_entry) && weapon->object_index_194 == target) function_103bd0(weapon_index, i);
                 if (!trigger->timer && player_index != NONE) function_103b70(weapon_index, i);
+            }
+            break;
+        case 3:
+        case 7:
+            if (down || blocked)
+            { if (function_106280(weapon_index, &target, &target_entry)) function_103c40(weapon_index, i); }
+            else
+            {
+                if (trigger->state != 7 && primary != NONE && function_102540(weapon_index, primary, false))
+                { weapon_request_barrel(weapon_index, primary, false); trigger->flag0 = false; }
+                weapon_clear_trigger(weapon_index, i);
             }
             break;
         }

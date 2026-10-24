@@ -999,7 +999,6 @@ void __stdcall function_25eea0(
 			if (maximum_range > 0.f && maximum_range > distance)
 			{
 				real margin;
-				real bonus = 0.f;
 
 				if (!(minimum_range > context->unknown678))
 				{
@@ -1010,13 +1009,10 @@ void __stdcall function_25eea0(
 				{
 					margin = distance - minimum_range;
 				}
-				if (margin > 2.f)
+				real bonus = 0.f;
+				if (margin > 0.f)
 				{
-					bonus = 10.f;
-				}
-				else if (margin > 0.f)
-				{
-					bonus = margin * 0.5f * 10.f;
+					bonus = margin > 2.f ? 10.f : margin * 0.5f * 10.f;
 				}
 				position->score += bonus;
 			}
@@ -1035,19 +1031,20 @@ void __stdcall function_25eea0(
 			{
 				if (context->lines[j].type == 2)
 				{
+					vector3f const *direction = &context->lines[j].direction;
 					vector3f offset;
 					real t;
 
 					vector3d_from_points3d(&context->lines[j].point, &position->position, &offset);
-					t = dot3f(&context->lines[j].direction, &offset);
+					t = dot3f(direction, &offset);
 					if (t > 0.f)
 					{
 						vector3f closest;
 						real nt = 0.f - t;
 
-						closest.i = context->lines[j].direction.i * nt + offset.i;
-						closest.j = context->lines[j].direction.j * nt + offset.j;
-						closest.k = nt * context->lines[j].direction.k + offset.k;
+						closest.i = direction->i * nt + offset.i;
+						closest.j = direction->j * nt + offset.j;
+						closest.k = nt * direction->k + offset.k;
 						if (nearest > length_sq3f(&closest))
 						{
 							nearest = length_sq3f(&closest);
