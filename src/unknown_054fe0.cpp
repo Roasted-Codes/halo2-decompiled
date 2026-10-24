@@ -717,7 +717,7 @@ static inline long session_get_maximum_player_count(c_class_58d20 *session)
 	return result;
 }
 
-static inline short session_get_value_5dd0_inline(c_class_58d20 *session)
+static __forceinline short session_get_value_5dd0_inline(c_class_58d20 *session)
 {
 	short result = NONE;
 	if (SESSION_STATE_IS_LIVE(session->state))
@@ -725,31 +725,16 @@ static inline short session_get_value_5dd0_inline(c_class_58d20 *session)
 	return result;
 }
 
-// score 32 (was 32): retail keeps the three temporary values (value498c, the
-// maximum player count and the global state) in eax, ours keeps them in esi
-// and saves esi around the body; the checks and the exits match.
 // @retail 0x63e00
 bool network_session_interface_can_add_player(void)
 {
 	bool result = false;
-	c_class_58d20 *session = network_session_get_live();
-	if (!session)
-		goto done;
-	if (session_get_value_498c(session) != 0)
-		goto done;
-	if (session->player_count >= session_get_maximum_player_count(session))
-		goto done;
-	if (g_527330.state == 6 || g_527330.state == 7 || g_527330.state == 8 || g_527330.state == 9)
-		goto done;
-	{
-		short local_0 = NONE;
-		if (SESSION_STATE_IS_LIVE(session->state))
-			local_0 = session->value5dd0;
-		if (local_0 != NONE)
-			goto done;
-	}
-	result = true;
-done:
+	c_class_58d20 *session;
+	if (network_session_get_current_if_valid(&session) && session_state_is_live(session))
+		result = session_get_value_498c(session) == 0 &&
+			session->player_count < session_get_maximum_player_count(session) &&
+			g_527330.state != 6 && g_527330.state != 7 && g_527330.state != 8 && g_527330.state != 9 &&
+			session_get_value_5dd0_inline(session) == NONE;
 	return result;
 }
 

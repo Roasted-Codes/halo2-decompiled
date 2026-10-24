@@ -442,22 +442,20 @@ void c_session_state_joining::function_06f3a0(const s_session_description *descr
 	state->unknown104 = 0;
 	function_06f1a0();
 	if (!state->unknown104)
-	{
 		function_06f2b0(description, count);
-		if (!state->unknown104)
-		{
-			s_session_owner *owner = (s_session_owner *)state->owner;
-			state->entry_count = count;
-			memset(state->entries, 0, sizeof(state->entries));
-			memcpy(state->entries, entries, count * 12);
-			state->part.unknown00 = description->unknown02;
-			*(XNKID *)state->part.unknown04 = description->kid;
-			*(XNKEY *)state->part.unknown0c = description->key;
-			*(XNADDR *)state->part.unknown1c = description->address;
-			state->part.unknown40 = description->unknown10;
-			state->unknown68 = true;
-			function_06df60(owner, 5, 0, 0);
-		}
+	if (!state->unknown104)
+	{
+		s_session_owner *owner = (s_session_owner *)state->owner;
+		state->entry_count = count;
+		memset(state->entries, 0, sizeof(state->entries));
+		memcpy(state->entries, entries, count * 12);
+		state->part.unknown00 = description->unknown02;
+		*(XNKID *)state->part.unknown04 = description->kid;
+		*(XNKEY *)state->part.unknown0c = description->key;
+		*(XNADDR *)state->part.unknown1c = description->address;
+		state->part.unknown40 = description->unknown10;
+		state->unknown68 = true;
+		function_06df60(owner, 5, 0, 0);
 	}
 }
 

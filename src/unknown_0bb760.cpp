@@ -263,6 +263,8 @@ void function_bb8f0(long a)
 // score 4 (was 4): retail keeps the delta in the accumulator and adds the
 // game time to it, ours keeps the game time in the accumulator and adds the
 // delta to that, so the four instructions that build the time differ.
+// Delta-first clock getter 4; old-deadline declaration before sum 4; branch-entry declaration homes 4;
+// const old deadline 4; const delta 4; const object pointer 4; const header pointer 4; scoped favor-size 88.
 // @retail 0xbb950
 void function_bb950(long object_index, bool add, long delta)
 {
