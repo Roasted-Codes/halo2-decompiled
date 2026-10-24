@@ -102,6 +102,10 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 }
 
 // score 136 (was 136): first alignment product, case-five clear join and contribution scheduling remain; staged alignment 136 plain, direct motion 235f, direct forward 253f, double-factor scaling 190f, signed-byte mode 504f.
+// score 140 (was 140): alignment/clear-join/contribution schedules remain; fast preview 144.
+// Read-only forward 144f; alignment snapshot 414f; named alignment 144f;
+// marker failure break 185f; in-place contribution 204f; scale result 149f;
+// aggregate sum 210f; shared retreat scale 144f.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {

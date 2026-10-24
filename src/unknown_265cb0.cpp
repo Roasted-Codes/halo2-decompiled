@@ -788,6 +788,9 @@ struct s_object_activity_flags
 	word unused : 13;
 };
 
+// score 79 (was 79): initial input register, early actor null and exit saves
+// differ; explicit actor arms, unsigned selected handles, bonus snapshots and
+// actor-bonus result 79; split first selection 114; fallback formal read 82.
 // @retail 0x267370
 real function_267370(long volatile object_index)
 {
