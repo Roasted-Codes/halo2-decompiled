@@ -70,6 +70,9 @@ void function_1ea770(byte code, long player_index, s_statborg *statistics, long 
 	*(dword *)g_4e9ae8 |= 0x20;
 }
 
+// score 115 (was 115): the byte of the global is loaded into DL here and into
+// AL in retail, and the -1 is held in EAX instead of ECX; ours is eighteen
+// bytes shorter than retail.
 // @retail 0x1ea5b0
 void function_1ea5b0(long player_index, s_statborg *statistics, long threshold, byte code)
 {
@@ -254,6 +257,9 @@ void __stdcall function_1e9fa0(void *engine_globals, long object_index, long rep
 	}
 }
 
+// score 13 (was 13): retail reads the field argument into EDX before the
+// prologue pushes and adds it there; here the load happens after the pushes
+// and goes into ECX, which forces the counter to be moved out first.
 // @retail 0x1e9ce0
 void function_1e9ce0(long player_index, long counter, s_statborg *statistics,
 	long field, long volatile delta, bool by_team)
@@ -561,7 +567,7 @@ void function_1e9e80(long first, s_object_values *table, long second)
 }
 
 /* The 35 short entries beginning at retail 0x445580. */
-const short g_445580[35] =
+const unsigned short g_445580[35] =
 {
 	4, 5, 6, 7, -1, -1, -1, -1, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -569,6 +575,10 @@ const short g_445580[35] =
 	-1, -1, -1, -1, -1
 };
 
+// score 1 (was 8): the table entry is read as an unsigned 16 bit value and
+// copied into the 32 bit kind, so the copy is a plain register move like
+// retail's; retail still loads the entry with a 16 bit mov ax, this loads it
+// with movzx.
 // @retail 0x1e9720
 real function_1e9720(long kind, short team)
 {
@@ -583,8 +593,8 @@ real function_1e9720(long kind, short team)
 	}
 	else if (g_4e6948->state == 1 && !team_is_enemy(1, team))
 	{
-		short alternate = g_445580[(short)kind];
-		if (alternate == NONE)
+		unsigned long alternate = g_445580[(short)kind];
+		if ((short)alternate == NONE)
 			difficulty = 1;
 		else
 			kind = alternate;
@@ -642,6 +652,8 @@ D3DTexture *function_3bcb0(s_bitmap_data *bitmap);
 void function_22a664(s_widget_quad_2b11 const *quad, s_float_rect const *coordinates,
 	long bitmap_index, long sequence, long color);
 
+// score 2 (was 2): the two words are read in the other order: retail loads the
+// global into CX before it reads the word of the record into AX.
 // @retail 0x1e9140
 bool __stdcall function_1e9140(s_request_screen_bounds const *bounds)
 {

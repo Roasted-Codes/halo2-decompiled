@@ -101,6 +101,9 @@ PRIVATE __forceinline vector3f *function_11c471(real arg_0, vector3f const *arg_
 }
 
 /* whether a point is inside a trigger volume */
+// score 62 (was 62): the three dot products are scheduled differently: retail copies the
+// factor into xmm4 with movaps and interleaves the products with the sums, ours multiplies
+// each factor in place.
 // @retail 0x11c470
 bool function_11c470(long trigger_volume_index, point3f const *point)
 {

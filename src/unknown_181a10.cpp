@@ -378,6 +378,8 @@ __forceinline void function_183672(point3f *arg_0, point3f const *arg_1, __m128 
     arg_0->z = local_0.k * arg_3 + arg_1->z;
 }
 
+// score 8 (was 8): the three values of the query loop are kept in the stack slots in the
+// opposite order.
 // @retail 0x183670
 bool __stdcall function_183670(long component_a, long component_b, point3f *a, point3f *b, real *distance)
 {
@@ -530,7 +532,9 @@ void c_query_batch_collector::collect(s_batch_contact const *contact)
 		key += first->next->shape->data * 8 - 8;
 	long limited = key < 0 ? 0 : (key > count - 1 ? count - 1 : key);
 	if (limited != key) return;
-	point3f origin = *(point3f *)(first->transform + 0x50);
+	real origin_x = ((point3f *)(first->transform + 0x50))->x;
+	real origin_y = ((point3f *)(first->transform + 0x50))->y;
+	real origin_z = ((point3f *)(first->transform + 0x50))->z;
 	real hit_x = contact->position.x;
 	real hit_y = contact->position.y;
 	real hit_z = contact->position.z;
@@ -554,7 +558,7 @@ void c_query_batch_collector::collect(s_batch_contact const *contact)
 				bsp3d_get_plane((s_bsp3d *)g_4e0340, *(short *)record, &plane);
 				if (record[4] & 0x20)
 					results[key].flag2c = function_181db0(*(short *)(record + 6), &results[key].surface_vector);
-				side = plane.n.j * origin.y + plane.n.k * origin.z + plane.n.i * origin.x - plane.d;
+				side = plane.n.j * origin_y + plane.n.k * origin_z + plane.n.i * origin_x - plane.d;
 			}
 			else
 			{
@@ -570,7 +574,7 @@ void c_query_batch_collector::collect(s_batch_contact const *contact)
 				normal.k = matrix->up.k * plane.n.k + matrix->left.k * plane.n.j + matrix->forward.k * plane.n.i;
 				plane.d = matrix->position.z * normal.k + matrix->position.y * normal.j + matrix->scale * plane.d + matrix->position.x * normal.i;
 				plane.n = normal;
-				side = plane.n.k * origin.z + plane.n.j * origin.y + plane.n.i * origin.x - plane.d;
+				side = plane.n.k * origin_z + plane.n.j * origin_y + plane.n.i * origin_x - plane.d;
 			}
 			if (side > 0.0f) results[key].normal = plane.n;
 			else valid = false;

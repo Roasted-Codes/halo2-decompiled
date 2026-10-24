@@ -312,6 +312,9 @@ PRIVATE __forceinline void function_94151(s_type_f7e40b *reply, const s_session_
     reply->reason = reason;
 }
 
+// score 12 (was 12): the leave reason is computed without a branch (neg/sbb/add) where
+// retail tests the leave result and moves 8 or 9; the shorter body also moves every
+// branch displacement and the padding at the end.
 // @retail 0x94150
 void network_message_handler_handle_leave_request(c_class_938e0 *handler, long address, const s_session_id *message)
 {

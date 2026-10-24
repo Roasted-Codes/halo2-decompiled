@@ -356,7 +356,6 @@ long __stdcall async_copy_position_callback(s_async_task *task)
 	long finished = false;
 	s_copy_position_task *copy = &task->copy_position;
 	dword size = g_46e488;
-	DWORD transferred_out = 0;
 
 	if (g_46e48c <= size)
 		size = g_46e48c;
@@ -365,26 +364,28 @@ long __stdcall async_copy_position_callback(s_async_task *task)
 
 	if (!copy->writing)
 	{
+		DWORD bytes_read = 0;
+
 		if (file_set_position_inline(copy->source.handle, copy->source_offset, 0))
 		{
-			if (!ReadFile(copy->source.handle, (byte *)copy->buffer + copy->bytes_copied, size, &transferred_out, NULL))
-				transferred_out = 0;
-			copy->source_offset += transferred_out;
+			bytes_read = ReadFile(copy->source.handle, (byte *)copy->buffer + copy->bytes_copied, size, &bytes_read, NULL) ? bytes_read : 0;
+			copy->source_offset += bytes_read;
 		}
-		if (transferred_out < size)
+		if (bytes_read < size)
 			finished = true;
 		copy->writing = true;
 	}
 	else
 	{
+		DWORD bytes_written = 0;
+
 		if (file_set_position_inline(copy->destination.handle, copy->destination_offset, 0))
 		{
-			if (!WriteFile(copy->destination.handle, (byte *)copy->buffer + copy->bytes_copied, size, &transferred_out, NULL))
-				transferred_out = 0;
-			copy->bytes_copied += transferred_out;
-			copy->destination_offset += transferred_out;
+			bytes_written = WriteFile(copy->destination.handle, (byte *)copy->buffer + copy->bytes_copied, size, &bytes_written, NULL) ? bytes_written : 0;
+			copy->bytes_copied += bytes_written;
+			copy->destination_offset += bytes_written;
 		}
-		if (copy->size == copy->bytes_copied || transferred_out < size)
+		if (copy->size == copy->bytes_copied || bytes_written < size)
 			finished = true;
 		copy->writing = false;
 	}

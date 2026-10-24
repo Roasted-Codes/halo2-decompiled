@@ -501,7 +501,7 @@ void __stdcall function_2919e0(s_ai_scene *scene, s_ai_scene_assignment *assignm
 
 /* starts a scene (by name) with the actors the ai indices name when its
    trigger conditions hold */
-// score 83 (was 83): the score loop and the final stores pick other
+// score 83 (was 79): the score loop and the final stores pick other
 // registers, and the branches into the shared helpers land elsewhere.
 // @retail 0x291b40
 bool function_291b40(long name, short command_script_index, long ai_index, long ai_index2, long ai_index3)

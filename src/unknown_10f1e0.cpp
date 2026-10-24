@@ -387,8 +387,6 @@ bool function_1d9320(s_1d9240 *slot);
 void function_1d90e0(long render_model_index, long node_index, transform4x3f *nodes, transform4x3f const *marker_matrix,
 	transform4x3f const *target_matrix, real weight, long node_count);
 
-// score 46 (was 46): the global is loaded into EBX and the stack slot into ESI; retail loads them
-// in the opposite order.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
@@ -405,6 +403,8 @@ void __stdcall function_113980(long object_index, long target_index, bool altern
 			s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(object_index);
 			s_unit_animation_definition *definition = (s_unit_animation_definition *)TAG_BYTES(unit->definition_index);
 			byte *model = TAG_BYTES(definition->model_tag_index);
+			s_object_marker marker;
+			s_object_marker target;
 			dword visited[8];
 			memset(visited, 0, ((state->node_count() + 31) >> 5) * sizeof(dword));
 			for (;;)
@@ -428,8 +428,6 @@ void __stdcall function_113980(long object_index, long target_index, bool altern
 					break;
 				if (iterator->b != NONE && iterator->b && iterator->a != NONE && iterator->a)
 				{
-					s_object_marker marker;
-					s_object_marker target;
 					if (function_b8d30(object_index, iterator->a, &marker, 1, false) &&
 						!(visited[marker.node_index >> 5] & (1 << (marker.node_index & 31))) &&
 						function_b8d30(target_index, iterator->b, &target, 1, false))
@@ -1235,8 +1233,7 @@ bool __stdcall function_110ab0(long unit_index)
 	if (controlling != NONE)
 	{
 		long first = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x212));
-		if (first != NONE)
-			depleted = *(short *)((byte *)UNIT_ANIMATION_OBJECT(first) + 0x17c) <= 0;
+		depleted = first != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(first) + 0x17c) <= 0;
 		long second = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x213));
 		if (second != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(second) + 0x17c) > 0)
 			depleted = false;

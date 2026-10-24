@@ -7,6 +7,7 @@
 #include <math.h>
 #include <string.h>
 #include "sound_sources.h"
+#include "vector_angles.h"
 
 /* the result of the speed effects: the type, the amount and the shake */
 struct s_speed_result
@@ -331,8 +332,6 @@ void function_154310(long index, s_speed_result *result)
 	}
 }
 
-// score 63 (was 63): the float temporaries live in different xmm registers, the spill slots are [esp+8] and
-// [esp+4] instead of retail's, and retail computes an address with lea where ours uses add.
 // @retail 0x1544e0
 void function_1544e0(transform4x3f *matrix, real distance, real angle)
 {
@@ -347,26 +346,27 @@ void function_1544e0(transform4x3f *matrix, real distance, real angle)
 		real s = (real)sin(angle);
 		real c = (real)cos(angle);
 		real ii = axis.i * axis.i;
-		real kk = axis.k * axis.k;
-		real ks = axis.k * s;
 		real jj = axis.j * axis.j;
+		real kk = axis.k * axis.k;
+		vector3f sine_axis;
+		sine_axis.i = axis.i * s;
+		sine_axis.j = axis.j * s;
+		sine_axis.k = axis.k * s;
 		matrix->scale = 1.0f;
-		real is = axis.i * s;
 		matrix->forward.i = (1.0f - ii) * c + ii;
 		real t = 1.0f - c;
-		real js = axis.j * s;
-		real tij = t * axis.i * axis.j;
-		matrix->forward.j = tij + ks;
-		matrix->left.i = tij - ks;
+		real tij = (t * axis.i) * axis.j;
+		matrix->left.i = tij - sine_axis.k;
+		matrix->forward.j = tij + sine_axis.k;
 		matrix->left.j = (1.0f - jj) * c + jj;
 		real tk = t * axis.k;
 		real tki = tk * axis.i;
-		matrix->forward.k = tki - js;
-		matrix->up.i = tki + js;
+		matrix->up.i = tki + sine_axis.j;
+		matrix->forward.k = tki - sine_axis.j;
 		matrix->up.k = (1.0f - kk) * c + kk;
 		real tkj = tk * axis.j;
-		matrix->up.j = tkj - is;
-		matrix->left.k = tkj + is;
+		matrix->up.j = tkj - sine_axis.i;
+		matrix->left.k = tkj + sine_axis.i;
 		matrix->position.z = 0.0f;
 		matrix->position.y = 0.0f;
 		matrix->position.x = 0.0f;
@@ -420,9 +420,7 @@ void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vec
 		s_unknown_185ab0_entry *view = g_4ed284->entries + index;
 		s_view_angles angles = view->angles;
 
-		double horizontal = cos(angles.pitch);
-		w.i = (real)(cos(angles.yaw) * horizontal);
-		w.j = (real)(sin(angles.yaw) * horizontal);
+		direction_from_angles(&w, angles.yaw, angles.pitch);
 		w.k = 0.0f;
 		function_30bf0(&w);
 
@@ -453,13 +451,12 @@ void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vec
 
 			real scale = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, slot->bounds.lower, slot->bounds.upper);
 			real rotation = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, 0.0f, 6.2831855f);
-			vector3f *up = g_4687b0;
 			vector3f *e = &slot->forward;
 			vector3f *u = &slot->vector;
 
-			real ck = e->i * up->j - e->j * up->i;
-			real cj = up->i * e->k - up->k * e->i;
-			real ci = up->k * e->j - up->j * e->k;
+			real ck = e->i * g_4687b0->j - e->j * g_4687b0->i;
+			real cj = g_4687b0->i * e->k - g_4687b0->k * e->i;
+			real ci = g_4687b0->k * e->j - g_4687b0->j * e->k;
 			u->i = ci;
 			u->j = cj;
 			u->k = ck;
@@ -763,22 +760,24 @@ void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
             real x = axis.i, y = axis.j, z = axis.k;
             real yy = y * y, zz = z * z, xx = x * x;
             transform4x3f transform;
+            matrix3x3 rotation;
             transform.scale = 1.0f;
             real zs = z * sine;
             real xs = x * sine;
             real ys = y * sine;
-            transform.forward.i = (1.0f - xx) * cosine + xx;
+            rotation.forward.i = (1.0f - xx) * cosine + xx;
             real xy = (1.0f - cosine) * y * x;
-            transform.left.i = xy - zs;
-            transform.forward.j = xy + zs;
-            transform.left.j = (1.0f - yy) * cosine + yy;
+            rotation.left.i = xy - zs;
+            rotation.forward.j = xy + zs;
+            rotation.left.j = (1.0f - yy) * cosine + yy;
             real xz = (1.0f - cosine) * z * x;
-            transform.up.i = xz + ys;
-            transform.forward.k = xz - ys;
-            transform.up.k = (1.0f - zz) * cosine + zz;
+            rotation.up.i = xz + ys;
+            rotation.forward.k = xz - ys;
+            rotation.up.k = (1.0f - zz) * cosine + zz;
             real yz = (1.0f - cosine) * z * y;
-            transform.up.j = yz - xs;
-            transform.left.k = yz + xs;
+            rotation.up.j = yz - xs;
+            rotation.left.k = yz + xs;
+            transform.rotation = rotation;
             real distance = slot->bounds.unknown04[2] * amount;
             vector3f offset;
             offset.i = slot->forward.i * distance;
