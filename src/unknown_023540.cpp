@@ -1158,7 +1158,12 @@ void __cdecl function_24970(s_histogram_state *state)
 
 // score 17 (was 17): the two float temporaries sit in the other registers,
 // ours keeps the zero in xmm2 and the scale in xmm1 while retail keeps the
-// zero in xmm1 and the scale in xmm2
+// zero in xmm1 and the scale in xmm2. The pair follows where the zero's last
+// use in case 3 sits: without the out[3] store, or with it before out[2],
+// the registers are retail's (37: store order). Tried: one subtraction
+// (globals on both sides) 66; begin declared first 17; a span local 17;
+// the scale read plainly in case 4 17; ~70 harness forms of the clamp,
+// declarations, scopes and the top test, all 17
 // @retail 0x27520
 bool __stdcall function_27520(long mode, real const *bounds, real const *t, real *out, long unused)
 {
@@ -1867,7 +1872,11 @@ struct s_filter_rows
 
 // score 17 (was 17): the second argument of the call near the end is read
 // with an add of the offset and then a load of the field, ours folds the
-// offset into the load's displacement
+// offset into the load's displacement. Tried: function_1cc30(12) 28 (stays
+// out of line); a slot pointer local 17; an index local 17; a slot row
+// pointer 17; with `inline` on 0x1cc30's definition it is inlined but its
+// constant index still folds, 17. BLOCKED-BY 0x1cc30: the unfolded add needs
+// a helper from another file, taking the slot pointer, inlined at link time
 // @retail 0x26880
 bool __stdcall function_26880(void *context)
 {
@@ -3174,18 +3183,22 @@ failure:
 
 dword g_4b8424;
 void function_27aa0();
-// score 16 (was 16): the dot product's third term multiplies the direction's
-// component by the position's, retail multiplies the position's by the
-// direction's, and the third constant of the first group is built from a copy
-// of the scale rather than from the direction's component
+// score 5 (was 16): retail adds the dot product's terms z, y, x and loads the
+// position's x before the direction's; here x, y, z with the direction's x
+// first. Tried: the terms z, y, x 16 (the k products then copy the scale);
+// y, x, z 7; x, z, y 20; y, z, x 20; z, x, y 18; one expression in any order,
+// dot3f either way round or partial sums 105-106; n[] subscripts 16; scale
+// first in the products 16; vector3f_scale for the rows 101-105; position as
+// the first parameter (with the caller) gives retail's dot with z, y, x but
+// the j products then load the component first, 14 (654 bytes)
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {
     real constants[24];
     real const *settings = (real const *)state;
-    real dot = position->z * direction->k;
+    real dot = position->x * direction->i;
     dot += position->y * direction->j;
-    dot += position->x * direction->i;
+    dot += position->z * direction->k;
     real span = settings[12] - settings[11];
     real first = 1.0f / (0.0001f > span ? 0.0001f : span);
     span = settings[18] - settings[17];
