@@ -559,6 +559,7 @@ struct s_item_collision_bsp
 // score 249 (was 253): plane-index width, plane-join registers and spin stores differ;
 // seed before square root 249; fallback input copy 364; up pointer 253;
 // plane input scalars 254; angular output initializer 253.
+// Shared input/output scaling 249; transform value 350; linear/angular loops 249/249; normal-row loop 250.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
