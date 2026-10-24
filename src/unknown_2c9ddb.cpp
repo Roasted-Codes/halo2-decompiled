@@ -58,6 +58,9 @@ extern long g_55c154;
 // score 61 (was 61): biased 0x250 frame agrees; creation classification spill
 // and expanded string copy remain. File-type result 61; word classification 69;
 // direct source argument 61; unsigned saved handle 61; result plus word 69.
+// creation classification spill and copy inline boundary;
+// inline depths zero 88, one 61; shared request 90; integer classification 71;
+// separate load inputs with shared publication 178.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {
