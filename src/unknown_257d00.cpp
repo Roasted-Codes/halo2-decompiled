@@ -1979,6 +1979,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
+// score 502 (was 502): frame 28 agrees; actor/state registers and first point home still differ.
+// Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;
+// deferred completion else block 505 (unchanged reduced preview 505).
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

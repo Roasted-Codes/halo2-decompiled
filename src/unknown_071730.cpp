@@ -64,6 +64,9 @@ bool balance_teams(long arg_0, long arg_1, bool arg_2, long arg_3, long arg_4,
 void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 	const s_match_player_list *arg_2, const long *arg_3);
 
+// score 449 (was 449): frame 1000 versus 996, result byte home and second state/getter handling differ.
+// Refreshed first balance inputs 454; fallback balance inputs 466; both phases 513;
+// native state-value getter 449; final transition-result union 449.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {
