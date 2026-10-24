@@ -189,6 +189,7 @@ bool __stdcall function_25dd30(long a, long b)
 	return a == b;
 }
 
+// score 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

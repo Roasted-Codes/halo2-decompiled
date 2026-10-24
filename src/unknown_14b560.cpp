@@ -1032,7 +1032,13 @@ bool function_14ed80(void)
 
 
 // score 8 (was 8): the global is kept in EDX here and in ESI in retail, which
-// also moves the push of ESI in front of the add.
+// also moves the push of ESI in front of the add. Also tried: one declaration
+// for both outputs 8, the outputs declared between the player and the
+// globals 8 or after the index 8, the globals declared first and assigned
+// after the player 8, the outputs assigned after their declarations 8 (third
+// first 9), the representation pointer declared at the top 8, const views 8,
+// dword outputs 8. The globals pointer always takes the register the player
+// lookup frees.
 // @retail 0x14f040
 void player_get_representation(long player_index, long *field_b4, long *third_person)
 {
