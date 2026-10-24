@@ -489,6 +489,9 @@ bool sound_driver_voice_create_buffer(
 // Descriptor input first 105; flags before clear 105; spatial byte 105; unsigned result 105;
 // pair clear plus direct loop 185; input mixbin snapshot 105; real voice reference 98 (plain);
 // pair clear plus descriptor input first 183.
+// First/second/both pair aggregates 125/132/160; scoped mixbin aggregates 120;
+// complete descriptor aggregates 229; reused descriptor 171; direct count increment 98;
+// success-path result assignments 110 (caller differs).
 // @retail 0x220b90
 short sound_driver_voice_new(
 	dword flags,

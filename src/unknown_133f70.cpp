@@ -62,6 +62,10 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 	bool arg_16, bool arg_17, bool arg_18, real arg_19, real arg_20,
 	real arg_21, byte arg_22, point3f const *arg_23, real arg_24);
 
+// score 162 (was 162): frame agrees; source/count cursors and feature-byte homes differ.
+// Shared byte/word feature results 216/210; independent bytes 193; Boolean bitwise AND 208;
+// shared bytes plus source cursor 215; ordinary source pointer 232 (caller differs);
+// bitwise predicates plus aggregate copy 210 (caller differs); unsigned handle 162.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
