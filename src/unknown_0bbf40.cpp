@@ -822,6 +822,7 @@ struct s_object_flags12c_ab
 
 // score 49 (was 101): retail saves ESI only after the early return for a unit with a player,
 // so that return gets its own epilogue; ours saves ESI in the prologue and shares it.
+// Tried: returning early with `if (result) return result;` after the parent walk (118).
 // @retail 0xbeb30
 bool __stdcall function_beb30(long object_index)
 {
