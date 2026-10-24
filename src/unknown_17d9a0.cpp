@@ -466,10 +466,9 @@ PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh
 PRIVATE __forceinline real decal_normal_angle_17fd20(vector3f const *a, vector3f const *b)
 {
 	vector3f first_vector = *a;
-	vector3f second_vector = *b;
-	if (!memcmp(&first_vector, &second_vector, sizeof(first_vector)))
+	if (!memcmp(&first_vector, b, sizeof(first_vector)))
 		return 0.0f;
-	real cosine = first_vector.i * second_vector.i + first_vector.k * second_vector.k + first_vector.j * second_vector.j;
+	real cosine = first_vector.i * b->i + first_vector.k * b->k + first_vector.j * b->j;
 	cosine = cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
 	return (real)acos(cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine);
 }
@@ -484,6 +483,8 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
+// score 774 (was 890): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
+// Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
@@ -515,15 +516,15 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 		short remaining = secondary_count;
 		do
 		{
-			long group_count = 0;
-			for (short i = 0; i < secondary_count && !(short)group_count; ++i)
+			short group_count = 0;
+			for (short i = 0; i < secondary_count && !group_count; ++i)
 			{
 				long first_face = secondary[i];
 				if (first_face == NONE)
 					continue;
 				plane3f first_plane;
 				decal_face_plane_17fd20(mesh, first_face, &first_plane);
-				faces[(short)group_count++] = first_face;
+				faces[group_count++] = first_face;
 				secondary[i] = NONE;
 				for (short j = i + 1; j < secondary_count; ++j)
 				{
@@ -536,7 +537,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 							projection->radius * 0.05f > function_17d900(mesh, face, &first_plane) &&
 							projection->radius * 0.05f > function_17d900(mesh, first_face, &plane))
 						{
-							faces[(short)group_count++] = face;
+							faces[group_count++] = face;
 							secondary[j] = NONE;
 						}
 					}
@@ -545,7 +546,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 				real selected_minimum, selected_maximum;
 				point3f start, end;
 				plane3f selected_plane;
-				for (short j = 0; j < (short)group_count; ++j)
+				for (short j = 0; j < group_count; ++j)
 				{
 					long face = faces[j];
 					long edge_index = mesh->faces[face].first_edge;
@@ -638,12 +639,12 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 				}
 				else
 					quad = projection->quad;
-				for (short j = 0; j < (short)group_count; ++j)
+				for (short j = 0; j < group_count; ++j)
 				{
 					function_17dd80(mesh, &quad, output, faces[j], false, projection->radius,
 						mode, 0, 0, 0, 0);
 				}
-				remaining -= (short)group_count;
+				remaining -= group_count;
 			}
 		} while (remaining > 0);
 	}

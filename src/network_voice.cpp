@@ -1280,6 +1280,9 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 	queue->count = kept;
 }
 
+// score 134 (was 134): player input is EDI rather than EAX; mask and length
+// homes differ. Five coordinated register-input orders 134; shared invalid
+// exit 169; entry size as unsigned word 188 or byte 170. Original kept.
 // @retail 0x55c40
 long function_55c40(s_voice_queue *queue, long player, byte *cursor, byte *output, long capacity, bool include_mask)
 {
@@ -1401,6 +1404,8 @@ dword function_56c60(s_voice_player_settings *settings, long player);
 
 static __forceinline bool function_57d63(long arg_0, long arg_1);
 
+// score 94 (was 94): frame 0x14 vs 0x18, bit spill and flag-query boundary differ;
+// word outer/target induction 118/106; word active 97; mask names 94; skip cleared inactive entries 110.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {
@@ -2538,6 +2543,9 @@ PRIVATE __forceinline byte *function_54592(void *arg_0, const s_network_session_
  return (byte *)arg_0;
 }
 
+// score 179 (was 193): mask/empty homes and grouped source cursor differ;
+// empty-word order 193; third-index groups 193; both 193; word groups 179
+// signed or unsigned. The bounded unsigned-word group index is kept.
 // @retail 0x54590
 void function_54590(void)
 {
@@ -2565,7 +2573,7 @@ void function_54590(void)
   voice_sprintf(reason, "player identifier change");
  }
  g_4c9878.unknown20 = mask;
- for (long i = 0; i < 16; i += 4)
+ for (unsigned short i = 0; i < 16; i += 4)
  {
   byte *local_0 = function_54592(&g_4c9878.unknown24[i * 3], players, mask, i, empty);
   function_54592(local_0 + 0xc, players, mask, i + 1, empty);
