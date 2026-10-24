@@ -81,7 +81,8 @@ solver_result_31a0d0 const *motion_31a0d0::function_31a0d0(float const *step, fl
 // score 5 (was 10): EDI is restored after the final vector subtraction/store;
 // retail restores it before those instructions. The scalar schedule and both
 // point homes agree. A local duration product scores 5; shortening the angular
-// temporary's lifetime scores 3, as does scoping both rotation temporaries.
+// temporary's lifetime scores 3, as does scoping both rotation temporaries
+// (not kept: lifetime blocks only, without a match).
 // Earlier single-argument form:
 // previous score 10 (was 37): retail multiplies the length of the saved velocity by
 // the field's factor and only then by the length, ours multiplies by the
