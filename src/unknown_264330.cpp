@@ -713,6 +713,9 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 
+// score 370 (was 370): actor/view registers and pointer/flag homes; ordinary
+// path first 373; maximum result 372 (plain 370); wide other priorities 376;
+// visible-view arm first 376; tracking-handle snapshot 373.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
