@@ -994,7 +994,17 @@ long __stdcall function_1e0850(long character_index, long squad_index, s_203780 
 		{
 			short mode = *(short *)(data + 0x3e);
 			byte request[0x20];
-			if (mode == 1)
+			if (mode == 2)
+			{
+				byte *movement = (byte *)function_1e4a50(*(long *)(actor + 0x54));
+				if (movement && (*movement & 0x20))
+				{
+					*(long *)request = 0x2c;
+					request[4] = true;
+					function_e6900(unit, (s_unit_request *)request);
+				}
+			}
+			else if (mode == 1)
 			{
 				vector3f forward;
 				function_b9fc0(unit, &forward, NULL);
@@ -1006,16 +1016,6 @@ long __stdcall function_1e0850(long character_index, long squad_index, s_203780 
 					*(real *)(request + 0x10) = -forward.i;
 					*(real *)(request + 0x14) = -forward.j;
 					request[0x18] = true;
-					function_e6900(unit, (s_unit_request *)request);
-				}
-			}
-			else if (mode == 2)
-			{
-				byte *movement = (byte *)function_1e4a50(*(long *)(actor + 0x54));
-				if (movement && (*movement & 0x20))
-				{
-					*(long *)request = 0x2c;
-					request[4] = true;
 					function_e6900(unit, (s_unit_request *)request);
 				}
 			}
