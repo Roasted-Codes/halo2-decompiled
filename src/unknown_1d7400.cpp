@@ -90,7 +90,7 @@ c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, re
    __m128 local_7[16];
    c_extent_shape *local_8 = arg_0->child(local_6, local_7);
    if (local_8->shape_kind() == 0x11)
-    local_4[local_5++] = local_8;
+    local_4[local_5] = local_8;
    else if (local_8->shape_kind() == 0x15)
    {
     /* retail calls the shape test here */
@@ -100,12 +100,11 @@ c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, re
     if (local_25)
     {
      c_havok_reference_counted *local_10 = (c_havok_reference_counted *)function_1d7390((long)((s_1d7401 *)local_8)->field_c, arg_1, local_2);
-     c_child_transform *local_18 = (c_child_transform *)((c_1d7390 *)g_480118)->function_1d7390(0x50, 0x22);
-     if (local_18)
-      new (local_18) c_child_transform(local_10);
-     local_18->transform = ((s_1d7401 *)local_8)->field_10;
+     void *local_18 = ((c_1d7390 *)g_480118)->function_1d7390(0x50, 0x22);
+     c_child_transform *local_23 = local_18 ? new (local_18) c_child_transform(local_10) : NULL;
+     local_23->transform = ((s_1d7401 *)local_8)->field_10;
      havok_reference_remove(local_10);
-     local_4[local_5++] = (c_extent_shape *)local_18;
+     local_4[local_5] = (c_extent_shape *)local_23;
     }
     else
     {
@@ -114,7 +113,7 @@ c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, re
      c_child_transform *local_20 = local_19 ? new (local_19) c_child_transform(local_11) : NULL;
      local_20->transform = ((s_1d7401 *)local_8)->field_10;
      havok_reference_remove(local_11);
-     local_4[local_5++] = (c_extent_shape *)local_20;
+     local_4[local_5] = (c_extent_shape *)local_20;
     }
    }
    else
@@ -123,10 +122,11 @@ c_extent_shape *s_1d7400::function_1d7400(c_extent_shape *arg_0, void *arg_1, re
     bool local_26 = function_182180((hkShape *)local_8);
 #pragma inline_depth()
     if (local_26)
-     local_4[local_5++] = (c_extent_shape *)function_1d7390((long)local_8, arg_1, local_2);
+     local_4[local_5] = (c_extent_shape *)function_1d7390((long)local_8, arg_1, local_2);
     else
-     local_4[local_5++] = function_1d7400(local_8, arg_1, arg_2);
+     local_4[local_5] = function_1d7400(local_8, arg_1, arg_2);
    }
+   local_5++;
   }
   void *local_12 = ((c_1d7390 *)g_480118)->function_1d7390(0x38, 0x22);
   ((c_havok_reference_counted *)local_12)->allocation_size = 0x38;
