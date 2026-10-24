@@ -61,6 +61,9 @@ extern long g_55c154;
 // creation classification spill and copy inline boundary;
 // inline depths zero 88, one 61; shared request 90; integer classification 71;
 // separate load inputs with shared publication 178.
+// native entry bitfield 61; source-origin comparison/load-result/native view 79/79/79;
+// loaded-name pointer before default/at copy 88/88 (copy becomes a call);
+// origin plus name/native-origin-name 94/94. Creation split and copy boundary remain.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {
