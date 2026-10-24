@@ -604,6 +604,10 @@ bool function_1eff40(s_lookup *lookup, long flags, point3f const *point,
 	vector3f const *direction, s_lookup_ray_result *result);
 short *function_d8ae0(long object_index, long region_index, short *material);
 
+// score 12 (was 26): the material local sits at esp+0x18 where retail has
+// esp+0x1a, and the material store is scheduled after the hit copies; tried
+// the local declared first, between found and lookup, in the inner block and
+// as a one-element array, all 12.
 // @retail 0x169510
 bool __stdcall function_169510(long object_index, bool a, dword flags, dword test_flags, point3f const *point,
 	vector3f const *vector, long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *result)
