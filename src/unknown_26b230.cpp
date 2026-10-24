@@ -1795,6 +1795,9 @@ void function_2689d0(void)
 	}
 }
 
+// score 5 (was 5): node next is at stack +0x1c instead of +0x18; prop next is at +0x14 instead of +0x1c.
+// Member for-loop 204; prop for-loop 222; both for-loops 316; disjoint traversal scopes 5.
+// Scopes/member for-loop 204; scopes/prop for-loop 222; scopes/both for-loops 316; setup record references 5.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {

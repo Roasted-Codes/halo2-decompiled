@@ -212,6 +212,9 @@ short function_b8d30(long object_index, long marker_name, s_object_marker *marke
 
 // Preserve the activation call boundary while inlining the component lookup.
 __declspec(noinline) void __stdcall function_b9b90(long object_index, bool disable);
+// score 4 (was 4): component data loads into eax after index scaling, retail ecx before it.
+// Signed bitset 11; unsigned bitset 11; external object reference 4; object reference/bitset 11.
+// External header reference 18; header reference/bitset 20; type read first 4; bitset before object reference 11.
 // @retail 0xb9b90
 void __stdcall function_b9b90(long object_index, bool disable)
 {
@@ -1499,6 +1502,11 @@ void havok_component_rigid_body_linear_velocity_get(s_havok_component *component
 void havok_component_rigid_body_angular_velocity_get(s_havok_component *component, long body, vector3f *velocity);
 void function_1d96d0(long index);
 
+// score 13 (was 13): final flag update is branchless, retail uses constant set/clear arms and separate exits.
+// Byte result 13; signed-byte result 13; word result 126; long result 124; guarded parent reference 13.
+// Byte result/parent reference 13; byte result/constant stores 20. A byte-wide store of the flag through a
+// local overlay of the object scored 7 (not kept: a cast to a made-up layout); the view's flag bits at
+// +0xc0 declared as byte bit fields (same bits) are the form to try.
 // @retail 0xbc5e0
 void __stdcall function_bc5e0(long index)
 {

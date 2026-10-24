@@ -753,6 +753,9 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 	return local_2;
 }
 
+// score 31 (was 31): object/prop scratch registers, state receiver and exit displacements differ.
+// External tag reference 32 fast; actor reference 32; node reference 32; tag/actor 32; tag/node 32.
+// Node/actor references 32; tag/node/actor 32; state reference 32. Unchanged fast preview is also 32.
 // @retail 0x1a9ec0
 short __stdcall function_1a9ec0(long arg_0)
 {
