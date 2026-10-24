@@ -392,6 +392,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
+// score 203 (was 203): frame 0x14 agrees; request/count registers and cross scheduling differ.
+// Word component handle 207; unsigned selection 203; final scale helper 203;
+// reversed independent dot order 203; stepping snapshot 303.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -490,6 +493,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
 // Direct state dot loads still cost six bytes; cross before trig 247; late limited snapshot 190;
 // cosine first 183; shared cosine scale 241; native settings mask 303.
+// Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
+// rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -815,6 +820,8 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
 // Ordinary gravity with shared normalization 622; cached mode 648; limited-first 625;
 // request bitfields 621; global optimization off 2562; direct scalar lifetimes 623; bitfields plus scalars 626.
+// Request-record snapshot 625; inline depth two 621; ordinary gravity on native flags 621;
+// shared direct/general delta 621; complete horizontal point copies 630.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -932,6 +939,8 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // inline depth one 489; existing snapshot cross helper 488.
 // Byte flag helper 471; shared adjustment join 437; final contact cursor 595;
 // accepted-count pass bound 492; result publication 431.
+// Ordinary count with search cursor 525; candidate countdown 474; fixed-pass do loop 427;
+// snapshot projection helper 428; native relative-velocity subtraction 642.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)

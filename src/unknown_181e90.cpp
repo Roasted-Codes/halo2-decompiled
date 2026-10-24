@@ -127,6 +127,10 @@ bool function_355e0(long tag, long index, real *first, real *second);
 // score 29 (was 29): retail loads the three components of the first vector
 // and then the third of the second, ours loads the first of the second and the
 // first of the first, and ours reloads the result pointer from the stack.
+// BLOCKED-BY 0x1d87b0: its `_mm_setzero_ps()` store keeps the result pointer
+// off ebx; with that store made through an inline function (measured), this
+// matches with the volatile read dropped, first negated and scaled into a
+// vector a, then second into b, and result->i = b.i + a.i (69 while blocked).
 // @retail 0x181db0
 bool function_181db0(long index, vector3f *result)
 {

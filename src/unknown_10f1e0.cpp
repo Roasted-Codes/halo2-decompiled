@@ -1221,6 +1221,10 @@ bool function_c70b0(long unit_index);
 // score 347 (was 347): overlay/frame and depletion/interruptibility homes differ;
 // direct parameter plus word/native interruptibility 376/378, second depletion 337
 // (plain: thirteen caller matches lost), native result 382, held helper inline 358.
+// score 194 (was 347): frame 8 and depleted BL recovered; object/header/state registers
+// and count-result materialization differ. Second predicate 194; native interruptible 341;
+// status names 347; size policy 602; overlay-first exits 415; conditional first 336;
+// conditional first with native interruptible 335.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1240,8 +1244,7 @@ bool __stdcall function_110ab0(long unit_index)
 		long first = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x212));
 		depleted = first != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(first) + 0x17c) <= 0;
 		long second = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x213));
-		if (second != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(second) + 0x17c) > 0)
-			depleted = false;
+		depleted = depleted && (second == NONE || *(short *)((byte *)UNIT_ANIMATION_OBJECT(second) + 0x17c) <= 0);
 		if (*(byte *)((byte *)state + 0x14) & 0x10)
 			interruptible = true;
 	}
@@ -1346,6 +1349,10 @@ bool __stdcall function_110ab0(long unit_index)
 // score 453 (was 478): frame 8 versus 12 and requested/state registers still differ.
 // Predicate names 478; byte result 538; byte depleted/overlay 453; global optimization off 1195;
 // merged interruptible cases 473; byte depleted alone 458; byte overlay alone 477; merged cases with bytes 456.
+// score 451 (was 451): frame 8 versus 12 and requested/state homes remain.
+// Byte-context word/native interruptible 456/453; named channel words 453;
+// size policy 827; common requested override 754 (unchanged fast preview 453).
+// Second depletion accumulation 468; bitwise depletion 482.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1568,6 +1575,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
+// seat-weight branches 874, overlay pointer countdown 863, refreshed object 833,
+// direct bounds fallback 859, size preference 1557, object pointer name 833,
+// control-first declaration 833.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2168,6 +2178,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // score 679 (was 707): frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
 // requested-name snapshots 709; inline plus native final/validity 696/707.
+// score 679 (was 679): ordinary-helper Boolean transition 712; native helper result 706;
+// explicit helper result 679; size policy 1026; byte validity 679. Request/control
+// homes and the second stack argument remain unresolved.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

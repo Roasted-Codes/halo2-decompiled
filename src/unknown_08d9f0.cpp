@@ -120,6 +120,8 @@ void function_8dd70(void);
 // session construction loop 352; separate session results 231; list/direct observer result 248.
 // readiness homes, repeated pointer loads and out-of-line calls differ;
 // short readiness 232; unsigned readiness 234; session-list value initialization 231; long observer result 250; long session prerequisite 243.
+// Signed byte link/observer/session/all readiness 232/231/234/235;
+// signed byte entry predicate 230; original short carriers and clear retained.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

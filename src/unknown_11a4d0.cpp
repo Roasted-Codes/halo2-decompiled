@@ -575,7 +575,9 @@ void function_11af90(long unit_index, short mode)
 /* puts the units of an object list into the free seats (passing a filter) of
    the vehicle; returns how many got in */
 // score 2 (was 2): the two copies are made in the opposite order: retail copies esi into eax first and ebx
-// into ecx, ours does it the other way round.
+// into ecx, ours does it the other way round. Nested seat guards 2; unit lifetime 2; seat lifetime 2;
+// const unit pointer 2; const seat pointer 2; unsigned word seat index 2; const scalar parameters 2;
+// scoped favor-size 313.
 // @retail 0x11b0c0
 short function_11b0c0(long vehicle_index, long filter_range, long volatile list_index)
 {

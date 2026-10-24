@@ -18,6 +18,13 @@
 // twice)
 // public bases declared before the polymorphic base: four prefix-first forms 14,
 // four forms with both preceding it 11; each used body or initializer stores.
+// further trials: public input/handle bases 13; reference prefix 13;
+// full payload base 18; handle tail initialized together 18; zero word
+// assigned with the handle 18; prefix/input base 13, initializers 11;
+// reference/input base 14. Public bases delay the final vtable store.
+// member input record 4; member input and handle records 0, but existing
+// descendants require direct object/placement/id fields and list.field_0;
+// base input record with the original exposed fields 12
 // @retail 0x30b340
 class_30b340::class_30b340(referenced_2d88a0 *object_, long value)
 	: field_8(0), object(object_), field_10(-1), field_14(0), field_18(0), field_1c(0), field_20(0), field_24(value)

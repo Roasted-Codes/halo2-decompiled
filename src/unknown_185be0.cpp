@@ -150,6 +150,8 @@ union s_185be7
 // Whole-output reset 1082; output clear first 1056; inactive input clear 1047;
 // common flag store 1042; action byte 1044; chained index reset 1023;
 // common flag store with indexed mask 1013.
+// Shared curve inputs 1043; late input buffers 1074; active-branch pointers 1075;
+// native clear mask 1023; retained response predicate 1023.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
