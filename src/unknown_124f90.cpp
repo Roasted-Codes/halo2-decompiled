@@ -3049,7 +3049,7 @@ static inline long decibels_sum(long const &a, long const &b)
 }
 vector3f *function_1427f0(transform4x3f const *arg_0, vector3f const *arg_1, vector3f *arg_2);
 
-// score 190 (was 310): the listener-space position and velocity are one s_sound_position (frame 0x48 now);
+// score 134 (was 310): the listener-space position and velocity are one s_sound_position (frame 0x48 now);
 // function_221810 is inlined here (retail calls it); flag byte registers and a gain temporary's slot differ.
 // Depth zero 417, depth one 310, fade scope 310, shared attenuation 334, callback table 311.
 // @retail 0x129aa0
@@ -3123,7 +3123,7 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 	long local_20;
 	if (!local_0->unknown0b)
 	{
-		*local_12 = 0;
+		*(long *)local_0->unknown14 = 0;
 		local_2->field_8 = *((local_0->unknown0a & 1) ? &g_440c48 : &g_440c4c);
 		long local_19;
 		local_20 = *((local_0->unknown0a & 2) ? (local_19 = function_2197f0(local_2->field_18), &local_19) : &g_440c4c);
