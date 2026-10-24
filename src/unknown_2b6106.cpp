@@ -575,9 +575,13 @@ void c_y_menu_player_selected_screen::update_friend_status(XONLINE_FRIEND const 
     suffix[0] = 0;
     bool joinable = (bool)((online_friend_get_flags(friend_) >> 3) & 1);
     function_2b635f(friend_, (c_widget *)this);
-    if (session->type == 1)
+    /* volatile: retail keeps session on the stack and reads it from there
+       after the calls, which leaves edi to this; a plain read makes LTCG
+       pass session in edi instead */
+    s_friend_session_2b642e *current = *(s_friend_session_2b642e * const volatile *)&session;
+    if (current->type == 1)
     {
-        if (session->state)
+        if (current->state)
         {
             ((c_widget *)this)->function_230134(0x11000253, message);
             goto activity;
@@ -585,12 +589,12 @@ void c_y_menu_player_selected_screen::update_friend_status(XONLINE_FRIEND const 
         ((c_widget *)this)->function_230134(0xe000258, message);
         goto default_suffix;
     }
-    else if (session->type == 5)
+    else if (current->type == 5)
     {
         ((c_widget *)this)->function_230134(0x17000259, message);
         goto default_suffix;
     }
-    else if (session->activity == 1)
+    else if (current->activity == 1)
     {
         ((c_widget *)this)->function_230134(0x1900025a, message);
     activity:
@@ -604,7 +608,7 @@ void c_y_menu_player_selected_screen::update_friend_status(XONLINE_FRIEND const 
             break;
         }
     }
-    else if (session->activity == 2 || session->activity == 3)
+    else if (current->activity == 2 || current->activity == 3)
     {
         ((c_widget *)this)->function_230134(0x1500025b, message);
     default_suffix:
