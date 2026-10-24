@@ -2367,19 +2367,18 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     if (!g_4b99b0[1] && alternate_target) return;
     real default_source[4];
     real default_destination[4];
-    real width = 1.0f, height = 1.0f;
-    if (tag != NONE)
+    real width;
+    real height;
+    byte *definition = tag != NONE ? g_4e3b44[tag & 0xffff].bytes : NULL;
+    if (tag != NONE && bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
     {
-        byte *definition = g_4e3b44[tag & 0xffff].bytes;
-        if (bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
-        {
-            byte *bitmap = *(byte **)(definition + 0x48) + bitmap_index * 0x74;
-            real w = (real)*(short *)(bitmap + 4);
-            width = 1.0f > w ? 1.0f : w;
-            real h = (real)*(short *)(bitmap + 6);
-            height = 1.0f > h ? 1.0f : h;
-        }
+        byte *bitmap = *(byte **)(definition + 0x48) + bitmap_index * 0x74;
+        real w = (real)*(short *)(bitmap + 4);
+        width = 1.0f > w ? 1.0f : w;
+        real h = (real)*(short *)(bitmap + 6);
+        height = 1.0f > h ? 1.0f : h;
     }
+    else width = height = 1.0f;
     if (alternate_target) function_14bc0(*(short *)(g_4b99b0 + 0x38), 0, false);
     else if (screen_target) function_14bc0(0, 0, false);
     else function_14bc0(*(short *)(g_4b99b0 + 0x34), 0, false);
