@@ -208,6 +208,10 @@ struct s_physics_component_walk : s_havok_component
         char *output, long *output_count, void *other_context, dword *visited, bool *active);
 };
 
+// score 275 (was 275): frame 0x1c versus 0x18; current/entry roles and group spill differ.
+// Shared sections 357; next path first 276; replacement bool names 275;
+// frame pointer 325; size preference 446; shared sections with in-loop store 352;
+// availability last 298. Original kept.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

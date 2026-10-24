@@ -766,6 +766,8 @@ done:
 // result plus entries 214; selection role names 176. Natural while scans 174;
 // common output exit 227; exhausted-entry return 228; frame pointer 221;
 // global optimization off 533.
+// Conditional next publication 218; definition mode first 211; current-field result 223;
+// size preference 285; zero inline depth 232. Original kept.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -2555,6 +2557,8 @@ static __forceinline long real_to_long(real value);
 // score 227 (was 227): frame 0x30 agrees; active/pool reloads and zero-result joins differ.
 // Role names 227; native squad iterator 227; squad result local 227; short timers 227;
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
+// Single-result squad step 298; zero inline depth 584; global optimization off 439;
+// frame pointer 258; size preference 633. Original kept.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -2705,6 +2709,8 @@ void function_2011f0(long arg_0);
 // workspace role names 387; one shared native request 399. Pool-first lookup
 // on low-word inputs 387; scalar masks 387; countdown while 388; zero inline
 // depth 387; frame pointer 481.
+// Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
+// repeated signed category 387; function-scope workspaces 387; case two first 387.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

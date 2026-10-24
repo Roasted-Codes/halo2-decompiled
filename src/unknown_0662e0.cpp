@@ -512,6 +512,8 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // score 363 (was 363): constant-five lifetime and first-table induction differ;
 // initial real stores first 363; outer word index 469 signed or unsigned;
 // column word index 464; both signed-word indices 512. Original kept.
+// Zero inline depth 610; depth one 363; frame pointer 487;
+// global optimization off 1180; size preference 538. Original kept.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {
