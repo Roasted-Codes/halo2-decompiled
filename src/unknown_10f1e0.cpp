@@ -2465,6 +2465,8 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // score 152 (was 162): frame 60 versus 56; action-output and seat-query argument registers still differ.
 // Native channel workspace 139; copy return to play 152; accumulated channel failure 177;
 // unsigned word result 173; short table index 188.
+// Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
+// repeated table index 152; mode after animation 157.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
