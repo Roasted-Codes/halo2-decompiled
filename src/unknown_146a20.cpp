@@ -60,6 +60,12 @@ bool g_47f05b;
 
 // score 34 (was 34): the vtable slot at [eax] is never filled in, so the two stores that follow
 // start one field too late; retail stores the vtable there first.
+// Retail keeps the abstract allocator's vtable store only here (0x146b80, 0x146e30 and 0x22c3e0
+// drop it), as if something read memory between the two vtable stores; that also keeps 1 in edx.
+// Without `block` (g_479888 read at both placements) the reload sits on the constructed arm as in
+// retail but the 1 becomes immediates: 38. Tried: the pool placed at `block + 0x15040` 40; the
+// buffer argument through g_479888 38; `(c_havok_fixed_memory *)g_479888 + 1` 38; a typed
+// `fixed` pointer local with `fixed + 1` 34.
 // @retail 0x146a20
 void function_146a20(void)
 {
@@ -253,6 +259,10 @@ void function_146de0(void)
 	}
 }
 
+// score 143 (was 143): frame 0x18 versus 0x14 and shared update expansion remain.
+// Constructed allocator result 164; conditional usable capacity 140/frame 0x14 (three-point gain dropped);
+// conditional padding 141; block/padding outer scopes 143; current block-first homes 143;
+// construction scope 143; zero-first padding 143 at 377 bytes.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {

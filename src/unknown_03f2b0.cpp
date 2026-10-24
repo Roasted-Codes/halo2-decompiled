@@ -453,6 +453,9 @@ void function_1cf50(void);
 
 #pragma inline_depth(0)
 // score 100 (was 100): the record index is scaled by 0x40 in retail and by 0x4 here, and the table retail reads is not the one this tree reads
+// Current stride agrees; the hoisted zero, callee convention and color/draw
+// scheduling differ. Record view, byte-channel locals, material/color results,
+// block-pool/byte-offset lifetimes and typed-record for 100; byte bitmap 98.
 // @retail 0x44040
 void __stdcall function_44040(long cell, short mask)
 {

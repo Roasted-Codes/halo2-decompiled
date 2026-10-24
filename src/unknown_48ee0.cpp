@@ -20,6 +20,8 @@ extern real g_4c9798[36];
 
 // score 311 (was 311): frame 0x20 versus 0x28; input registers and rounding-call scalar reloads differ.
 // Branch-defined extent 321; two-vector copy loop 311; frame pointer 372; size policy 497; inline depth one 311.
+// Global optimization off 1009; expansion depth zero 349; late mode 350;
+// near normal first 309; height clamp first 311; sample y/z first 313, plus normal first 311.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {
