@@ -3039,9 +3039,18 @@ struct s_type_12a1b0_spatial
 };
 
 vector3f *vector3d_decompress(dword arg_0, vector3f *arg_1);
+
+/* decibels_add on the values in place: retail reads both operands where they are */
+static inline long decibels_sum(long const &a, long const &b)
+{
+	real result = *(real const *)&a + *(real const *)&b;
+
+	return *(long *)&result;
+}
 vector3f *function_1427f0(transform4x3f const *arg_0, vector3f const *arg_1, vector3f *arg_2);
 
-// score 310 (was 310): frame 0x54 versus 0x48; callback copy does not reuse vector homes.
+// score 308 (was 310): the listener-space position and velocity are one s_sound_position (frame 0x48 now);
+// function_221810 is inlined here (retail calls it); listener pointer, gain stores and flag registers differ.
 // Depth zero 417, depth one 310, fade scope 310, shared attenuation 334, callback table 311.
 // @retail 0x129aa0
 void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization *arg_2)
@@ -3057,14 +3066,13 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 	case 2:
 		{
 			s_sound_listener *local_3 = &SOUND_SYSTEM->listeners[local_1->listener_index];
-			point3f local_5;
+			s_sound_position local_5;
 			vector3f local_4 = *g_4687a4;
-			vector3f local_6;
 			if (local_1->location.audible == 1)
 			{
 				transform4x3f const *local_18 = (transform4x3f const *)&local_3->velocity_scale;
-				sound_source_get_position((s_sound_location_source const *)&local_1->location, local_1->listener_index, &local_5);
-				function_142700(local_18, &local_5, &local_5);
+				sound_source_get_position((s_sound_location_source const *)&local_1->location, local_1->listener_index, &local_5.position);
+				function_142700(local_18, &local_5.position, &local_5.position);
 				if ((byte)function_125060((s_sound const *)&local_1->location, local_1->definition_index))
 				{
 					vector3f *local_7 = vector3d_decompress(local_1->location.spatial.compressed_forward, &local_4);
@@ -3075,34 +3083,37 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 					local_4.j = local_18->left.k * local_10 + local_18->left.j * local_9 + local_18->left.i * local_8;
 					local_4.k = local_18->up.k * local_10 + local_18->up.j * local_9 + local_18->up.i * local_8;
 				}
-				function_1427f0(local_18, &local_1->location.spatial.velocity, &local_6);
+				function_1427f0(local_18, &local_1->location.spatial.velocity, &local_5.velocity);
 			}
 			else
 			{
-				local_5 = local_1->location.spatial.position;
+				local_5.position = local_1->location.spatial.position;
 				if ((byte)function_125060((s_sound const *)&local_1->location, local_1->definition_index))
 					vector3d_decompress(local_1->location.spatial.compressed_forward, &local_4);
-				local_6 = local_1->location.spatial.velocity;
+				local_5.velocity = local_1->location.spatial.velocity;
 			}
 			if (local_1->priority & 2)
 			{
-				local_2->field_18 = function_12ad30((s_sound const *)&local_1->location, (vector3f const *)&local_5, local_1->definition_index, &local_4);
+				local_2->field_18 = function_12ad30((s_sound const *)&local_1->location, (vector3f const *)&local_5.position, local_1->definition_index, &local_4);
 				local_0->unknown0a |= 2;
 			}
 			else
 			{
-				local_2->field_18 = function_12ad30((s_sound const *)&local_1->location, (vector3f const *)&local_5, local_1->definition_index, &local_4);
-				*arg_1 = decibels_add(*arg_1, function_2197f0(local_2->field_18));
+				local_2->field_18 = function_12ad30((s_sound const *)&local_1->location, (vector3f const *)&local_5.position, local_1->definition_index, &local_4);
+				*arg_1 = decibels_sum(*arg_1, function_2197f0(local_2->field_18));
 				local_0->unknown0a |= 1;
 			}
 			if (SOUND_FLAG(local_1->location.flags, 11))
 				local_0->unknown0a |= 1;
-			local_2->field_1c = *(vector3f *)&local_5;
+			local_2->field_1c = *(vector3f *)&local_5.position;
 		}
 		break;
 	case 0:
 		local_0->unknown0a |= 1;
-		local_2->field_18 = SOUND_FLAG(local_1->location.flags, 8) ? 0.0f : 1.0f;
+		if (SOUND_FLAG(local_1->location.flags, 8))
+			local_2->field_18 = 0.0f;
+		else
+			local_2->field_18 = 1.0f;
 		local_2->field_1c = *(vector3f *)g_468788;
 		break;
 	}
@@ -3112,8 +3123,9 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 	if (!local_0->unknown0b)
 	{
 		*local_12 = 0;
-		local_2->field_8 = (local_0->unknown0a & 1) ? g_440c48 : g_440c4c;
-		local_2->field_4 = (local_0->unknown0a & 2) ? function_2197f0(local_2->field_18) : g_440c4c;
+		local_2->field_8 = *((local_0->unknown0a & 1) ? &g_440c48 : &g_440c4c);
+		long local_19;
+		local_2->field_4 = *((local_0->unknown0a & 2) ? (local_19 = function_2197f0(local_2->field_18), &local_19) : &g_440c4c);
 	}
 	else
 	{
@@ -3136,13 +3148,13 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 		local_2->field_14 = function_2195f0(*(real *)&local_16);
 		local_0->unknown0b = local_0->unknown0a;
 		local_2->field_8 = *((local_0->unknown0a & 1) ? &local_13 : &local_14);
-		local_2->field_4 = decibels_add(*((local_0->unknown0a & 2) ? &local_13 : &local_14), function_2197f0(local_2->field_18));
+		local_2->field_4 = decibels_sum(*((local_0->unknown0a & 2) ? &local_13 : &local_14), function_2197f0(local_2->field_18));
 	}
 	local_2->field_0 = local_0->unknown0a;
 	local_2->field_c = 0;
 	local_2->field_10 = 0;
 	if (SOUND_FLAG(local_1->location.flags, 11))
-		local_2->field_8 = decibels_add(*(long *)((byte *)function_221810(sound_definition_get(local_1->definition_index)->promotion_index) + 0x14), local_2->field_8);
+		local_2->field_8 = decibels_sum(*(long *)((byte *)function_221810(sound_definition_get(local_1->definition_index)->promotion_index) + 0x14), local_2->field_8);
 	if (!TEST_FIELD_BIT(local_1->source_updated) && local_1->source && local_1->source->spatialize)
 	{
 		s_type_12a1b0_spatial local_17 = *local_2;
