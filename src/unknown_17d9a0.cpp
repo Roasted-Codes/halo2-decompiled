@@ -461,9 +461,11 @@ PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh
 
 PRIVATE __forceinline real decal_normal_angle_17fd20(vector3f const *a, vector3f const *b)
 {
-	if (!memcmp(a, b, sizeof(*a)))
+	vector3f first_vector = *a;
+	vector3f second_vector = *b;
+	if (!memcmp(&first_vector, &second_vector, sizeof(first_vector)))
 		return 0.0f;
-	real cosine = a->i * b->i + a->k * b->k + a->j * b->j;
+	real cosine = first_vector.i * second_vector.i + first_vector.k * second_vector.k + first_vector.j * second_vector.j;
 	cosine = cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
 	return (real)acos(cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine);
 }
