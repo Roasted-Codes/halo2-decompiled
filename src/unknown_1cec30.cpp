@@ -790,6 +790,10 @@ void havok_component_rigid_body_linear_velocity_set(long rigid_body_index, s_hav
 	}
 }
 
+// score 29 (was 29): retail keeps the slot address in eax, tests the fixed flag through edx/dl and reads the
+// rigid body again after the vector's stores; ours reads it once into esi. Tried: the Havok vector declared
+// at the top, in the outer block, with the body read at its use, with every local at the top, or with the
+// body in a named local for the test: 46 each (retail's reload, but the flag byte goes to bl: push ebx).
 // @retail 0x1d0e50
 void havok_component_rigid_body_angular_velocity_set(long rigid_body_index, s_havok_component *component, vector3f const *velocity)
 {
@@ -2786,6 +2790,11 @@ struct s_1cf531
  word field_2 : 4;
 };
 
+// score 27 (was 27): the friction magnitude takes another dead slot (retail shares the friction pointer's
+// spill slot), the rigid-body element is formed offset-first in retail (data + offset, ours offset + data),
+// retail loads the vector's y early and stores it after z, and the scratch registers rotate from there.
+// Tried: the element through the array's operator[] 27; the vector through _mm_setr_ps or _mm_set_ps 104;
+// the magnitude in a second local for the finiteness result 27; the bits read as long 27.
 // @retail 0x1cf520
 void function_1cf520(s_1cf520 *arg_1, c_1cf520 *arg_0, bool arg_2, bool arg_3, long arg_4, long arg_5)
 {
