@@ -82,6 +82,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // frame/entry agree; logarithm width, reset and restore scheduling differ.
 // Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
 // logarithm width/reset schedule and restore/final pointer allocation;
+// Logarithm width and reset/restore scheduling remain;
+// rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
+// record reload after render call 192; raw global-first unions 167.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

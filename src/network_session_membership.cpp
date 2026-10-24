@@ -725,6 +725,9 @@ union s_60403
 // retained-player do 214; emitted-player do 214. Frame 0x94 still agrees.
 // mask lifetime after mapping 176; byte discriminator 231; absent-prior continue 214;
 // new-member continue 214; identity predicate before map 389.
+// Current/previous registers and map/discriminator homes remain;
+// mapping stores reversed 178; identity grid transposed 405; map clears reversed 178;
+// transposed grid and reversed stores 405; equal discriminator arm first 176.
 // @retail 0x60400
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update)
 {

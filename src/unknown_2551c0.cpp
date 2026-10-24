@@ -509,6 +509,9 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // score 200 (was 205): first length, extent and radius homes still differ;
 // fallback timing initialized before query 200; later heading vector 219;
 // later object lookup 223; shared reverse scale 223; entry vector homes 205.
+// Frame and first-length/radius homes still differ;
+// exhaustive timing branches 205; trace distances after location 213; first length in guard 200;
+// completed direction reused 200; timing and trace lifetimes 206.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {
