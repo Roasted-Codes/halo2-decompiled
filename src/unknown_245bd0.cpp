@@ -701,31 +701,26 @@ struct s_frame_2477b0
 };
 
 PRIVATE __forceinline vector3f *function_2477b1(
-	vector3f const *arg_0, matrix3x3 const *arg_1, vector3f *arg_2)
+	matrix3x3 const *matrix, vector3f const *vector, vector3f *out)
 {
-	vector3f local_0;
-	if (arg_0 == arg_2)
+	vector3f copy;
+	if (vector == out)
 	{
-		local_0 = *arg_0;
-		arg_0 = &local_0;
+		copy = *vector;
+		vector = &copy;
 	}
-	real local_1 = arg_1->left.i * arg_0->j;
-	local_1 += arg_1->up.i * arg_0->k;
-	local_1 += arg_1->forward.i * arg_0->i;
-	arg_2->i = local_1;
-	real local_2 = arg_1->left.j * arg_0->j;
-	local_2 += arg_1->forward.j * arg_0->i;
-	local_2 += arg_1->up.j * arg_0->k;
-	arg_2->j = local_2;
-	real local_3 = arg_1->left.k * arg_0->j;
-	local_3 += arg_1->forward.k * arg_0->i;
-	local_3 += arg_1->up.k * arg_0->k;
-	arg_2->k = local_3;
-	return arg_2;
+	out->i = matrix->left.i * vector->j + matrix->up.i * vector->k + matrix->forward.i * vector->i;
+	real j = matrix->left.j * vector->j;
+	j += matrix->forward.j * vector->i;
+	j += matrix->up.j * vector->k;
+	out->j = j;
+	real k = matrix->left.k * vector->j;
+	k += matrix->forward.k * vector->i;
+	k += matrix->up.k * vector->k;
+	out->k = k;
+	return out;
 }
 
-// score 27 (was 27): ours is twelve bytes longer and the float is added into the accumulator with
-// addss; retail adds the value from the record into the accumulator.
 // @retail 0x2477b0
 void function_2477b0(
 	s_object_2470e0 *object,
@@ -734,23 +729,21 @@ void function_2477b0(
 {
 	if (source)
 	{
+		real const *angles = function_2470f0(object);
 		frame->rotation.forward = source->forward;
 		frame->rotation.left = source->left;
 		frame->rotation.up = source->up;
 		frame->position = source->position;
 		vector3f offset;
-		function_2477b1(&object->vector9c, &frame->rotation, &offset);
-		if (!(fabs(object->unknownac) < k_real_epsilon) || !(fabs(object->unknowna8) < k_real_epsilon))
+		function_2477b1(&frame->rotation, function_2470e0(object), &offset);
+		if (!(fabs(angles[1]) < k_real_epsilon) || !(fabs(angles[0]) < k_real_epsilon))
 		{
 			matrix3x3 rotation;
-			function_142da0(object->unknowna8, object->unknownac, 0.f, &rotation);
+			function_142da0(angles[0], angles[1], 0.f, &rotation);
 			function_142eb0(&frame->rotation, &rotation, &frame->rotation);
 		}
-		real local_0 = offset.i + frame->position.x;
-		real local_1 = offset.j + frame->position.y;
-		real local_2 = offset.k + frame->position.z;
-		frame->position.x = local_0;
-		frame->position.y = local_1;
-		frame->position.z = local_2;
+		frame->position.x += offset.i;
+		frame->position.y += offset.j;
+		frame->position.z += offset.k;
 	}
 }

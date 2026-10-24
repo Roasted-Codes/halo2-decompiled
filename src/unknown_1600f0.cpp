@@ -1211,6 +1211,8 @@ PRIVATE inline long score_string_list_1608e0()
 // short player walk 835; short outer team walk 818; short rank search 810.
 // explicit scroll clamp 810; title workspace scope 810; bounds-field arithmetic 810;
 // global optimization off 2237; size optimization 1348.
+// viewer pointer name 810; viewer lookup at first scroll use 848; short displayed-row number 811;
+// short row rank 810; direct team activity predicate 826.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
