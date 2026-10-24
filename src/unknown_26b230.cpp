@@ -120,6 +120,10 @@ void function_268840()
 	function_268c90();
 }
 
+// score 296 (was 296): frame 0x48 versus 0x50; iterator result/exhaustion and
+// player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
+// scoped bool keep 320; entry point scratch 314; entry player pool 297
+// (the latter four use the current-datum iterator). All body forms restored.
 // @retail 0x268c90
 void function_268c90()
 {

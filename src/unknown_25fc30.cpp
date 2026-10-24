@@ -1716,6 +1716,10 @@ struct s_collision_result_25f7b0
 	byte unknown26[0x5c - 0x26];
 };
 
+// score 14 (was 14): frame/length agree; collision byte +0x13 versus +0x10,
+// product loads, word-mode comparison and allow-store timing differ.
+// Byte collision flag 14; byte allow flag 43; long initial mode 34;
+// short collision flag 247; scoped ray setup/result 14 (plain). Body restored.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {
