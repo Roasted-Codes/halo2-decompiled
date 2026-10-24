@@ -3782,6 +3782,8 @@ static __forceinline long nonnegative_15ce70(long value)
 	return value < 0 ? 0 : value;
 }
 
+// score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
+// tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -5024,6 +5026,9 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
+// score 175 (was 175): frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
+// reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
+// nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
