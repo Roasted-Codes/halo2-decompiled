@@ -753,6 +753,11 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 	return local_2;
 }
 
+// score 31 (was 31): native frame agrees; stack-input scratch and object/prop
+// receivers differ. Fast: native result enum 32; lookup declarations 32;
+// immutable actor binding 32; read-only entry 32; inner facing 32;
+// complete state memory view 32, with inner facing 32; callback
+// noinline declaration 32. Original fast 32, plain 31; time getter kept.
 // @retail 0x1a9ec0
 short __stdcall function_1a9ec0(long arg_0)
 {

@@ -2446,10 +2446,13 @@ void function_56790(long *capacity, dword *remaining, dword allowed, word *selec
 	}
 }
 
-// @retail 0x53b00
 // score 4 (was 4): retail calls function_56380 with the output pointer in eax and
 // the channels, player and capacity on the stack; our callee takes them in another
 // order, so the call and its two pushes differ.
+// Guarded return 20; fully assigned result arms 23; conditional count 23;
+// enabled-query lifetime 21; scoped count 23; packet lifetime 4; available-byte
+// lifetime 4; immutable input bindings 4. The original call tuple remains.
+// @retail 0x53b00
 long __stdcall function_53b00(long player, byte *output, long capacity)
 {
  long result = 0;

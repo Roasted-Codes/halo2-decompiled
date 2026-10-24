@@ -247,6 +247,10 @@ struct s_input_9c610
 // function_e4a20's own body (BLOCKED-BY 0xe4a20). Tried: the flags store first
 // of the second copy group 23 (kept); before the vector copy 67; first of all
 // 67; before field_3c 27.
+// Shared absolute lookup inline 23, out of line 122; shared index
+// reconstruction 107; both shared inline operations 114; point local at
+// notification 23, before guard 23, across dispatch 23; shared lookup
+// with point lifetime 23. Native frame/report copies still agree.
 // @retail 0x9c610
 bool c_damage_aftermath_event_definition::v11(long arg_0, long const *arg_1, long arg_2, void const *arg_3)
 {
