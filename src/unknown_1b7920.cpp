@@ -100,6 +100,9 @@ bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 // score 75 (was 75): retail pushes EBP first and keeps the character in EBP,
 // and calls function_25d740 out of line; our build inlines that helper and
 // keeps the character in EBX.
+// Read-only character/actor/view 75/75/75; distance limit snapshot 84;
+//  delay/start snapshots 75/75; early object input 79; selective getter outlining 68/201.
+//  The getter expansion and early EBP save still differ; outlining dropped.
 // @retail 0x1b7b90
 short __stdcall function_1b7b90(long actor_index, s_slot *slot, bool active)
 {

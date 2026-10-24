@@ -171,6 +171,10 @@ static __forceinline bool structure_bsp_collision_available()
         *(long const *)((byte const *)g_4e0344->bsp + 4) == *(long const *)((byte const *)g_4e0348 + 8);
 }
 
+// score 68 (was 68): Exclusion BL and source-slot join still differ. Read-only object 68;
+// unsigned object handle 68; word query buffer 68; native collision record 71;
+// external triangle reference 68; source publication 68; byte result merge 68;
+// query workspace names 68. Native record retested with byte result storage.
 // @retail 0x14b120
 bool function_14b120(s_surface_query_source source, void *surface)
 {
