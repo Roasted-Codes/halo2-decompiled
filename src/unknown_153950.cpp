@@ -748,8 +748,8 @@ void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
     s_game_speed *speed = g_510c5c;
     if (speed->flags & 1)
     {
-        transform4x3f transform = *g_4687d0;
         real amount = *(real *)&speed->value20;
+        transform4x3f transform = *g_4687d0;
         if (speed->timer24 > 0)
         {
             if (speed->flags & 2)
