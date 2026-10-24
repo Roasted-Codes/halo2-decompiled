@@ -1293,6 +1293,9 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
+// score 175 (was 175): frame 0x84 agrees; early ESI save/computed return byte
+// and actor/motion homes differ; scratch at entry 175; pointer/index names 175;
+// byte update result 232; byte readiness 182; byte behavior result 182.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

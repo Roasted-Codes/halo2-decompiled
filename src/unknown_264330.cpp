@@ -391,6 +391,9 @@ void *function_1e5240(long actor_index);
 real function_2683f0(long actor_index, long node_index, short type);
 void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *sample, s_2640c0 *motion);
 
+// score 426 (was 426): frame 0xa4 versus 0xa0, actor stacked versus EAX/EBX;
+// initial update predicate 441 (frame 0xa0); counter word snapshot 426;
+// prior-state word 426; case-one tracking scope 426; separate final guards 426.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -713,9 +716,11 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 
-// score 370 (was 370): actor/view registers and pointer/flag homes; ordinary
+// score 358 (was 370): actor/view registers and pointer/flag homes; ordinary
 // path first 373; maximum result 372 (plain 370); wide other priorities 376;
 // visible-view arm first 376; tracking-handle snapshot 373.
+// ordinary current scope 375; suppression scope 366 (plain 373); object/unit
+// scope 371; all ordinary captures scoped 363 (plain 358); active single exit 373.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
@@ -739,10 +744,6 @@ void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *
 		view = NULL;
 	byte *prop = (byte *)prop_get(reference->prop_index);
 	long time = g_510c54->game_time;
-	byte *object = *(byte **)(g_4e0300->data + (reference->object_index & 0xffff) * 12 + 8);
-	bool suppressed = (squad && (squad[2] & 1)) || *(short *)(actor + 0x84) == 1 || actor[0x228];
-	bool current = *(long *)(actor + 0x338) == prop_ref_index;
-	bool is_unit = object[0xaa] == 0;
 	if (*(short *)(actor + 4) == 15 && *(long *)(actor + 0x26c) != NONE)
 	{
 		byte *parent = *(byte **)(g_4e0300->data + (*(long *)(actor + 0x26c) & 0xffff) * 12 + 8);
@@ -793,6 +794,10 @@ void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *
 	}
 	else
 	{
+		byte *object = *(byte **)(g_4e0300->data + (reference->object_index & 0xffff) * 12 + 8);
+		bool suppressed = (squad && (squad[2] & 1)) || *(short *)(actor + 0x84) == 1 || actor[0x228];
+		bool current = *(long *)(actor + 0x338) == prop_ref_index;
+		bool is_unit = object[0xaa] == 0;
 		long root = function_baf40(is_unit && *(long *)(object + 0x14) != NONE ? *(long *)(object + 0x14) : reference->object_index);
 		long mode = prop[0x25] && prop[0x23] ? 2 : 0;
 		short sight = function_1c8df0(root, &motion->field_0, *(short *)((byte *)motion + 0x28),
