@@ -1043,25 +1043,26 @@ static inline void query_stat_set(XONLINE_STAT *stat, word id, long value)
 	stat->lValue = value;
 }
 
-static inline void query_conditional_set(XONLINE_STAT_PROC *&cursor, const XUID *xuid,
+static inline long query_conditional_add(XONLINE_STAT_PROC *procedures, long &count, const XUID *xuid,
 	dword leaderboard, byte comparison, const XONLINE_STAT *stat)
 {
-	XONLINE_STAT_PROC *procedure = cursor++;
+	XONLINE_STAT_PROC *procedure = &procedures[count++];
 	procedure->wProcedureID = XONLINE_STAT_PROCID_CONDITIONAL;
 	procedure->Conditional.xuid = *xuid;
 	procedure->Conditional.dwLeaderBoardID = leaderboard;
 	procedure->Conditional.bComparisonType = comparison;
 	procedure->Conditional.StatToCompare = *stat;
+	return count;
 }
 
-static inline void query_update_set(XONLINE_STAT_PROC *&cursor, word procedure_id, const XUID *xuid,
+static inline void query_update_add(XONLINE_STAT_PROC *procedures, long &count, word procedure_id, const XUID *xuid,
 	dword leaderboard, dword conditional_index, dword stat_count, XONLINE_STAT *stats)
 {
-	XONLINE_STAT_PROC *procedure = cursor++;
+	XONLINE_STAT_PROC *procedure = &procedures[count++];
 	procedure->wProcedureID = procedure_id;
-	procedure->Update.xuid = *xuid;
 	procedure->Update.dwLeaderBoardID = leaderboard;
 	procedure->Update.dwConditionalIndex = conditional_index;
+	procedure->Update.xuid = *xuid;
 	procedure->Update.dwNumStats = stat_count;
 	procedure->Update.pStats = stats;
 }
@@ -1096,26 +1097,25 @@ void function_73e00(long lower, s_query_batch *batch, const XUID *xuid, long val
 	query_stat_set(upper_first, 2, upper);
 	XONLINE_STAT *upper_second = &batch->attributes[attribute_count++];
 	query_stat_set(upper_second, 3, upper);
-	XONLINE_STAT_PROC *procedure = &batch->operations[operation_count];
 	for (long i = 0; i < count; i++)
 	{
 		long leaderboard = leaderboards[i];
 		if (leaderboard != NONE)
 		{
-			query_conditional_set(procedure, xuid, leaderboard, XONLINE_STAT_COMPTYPE_NOT_EXISTS, first);
-			long first_reference = ++operation_count;
-			query_conditional_set(procedure, xuid, leaderboard, XONLINE_STAT_COMPTYPE_EXISTS, upper_first);
-			long second_reference = ++operation_count;
-			query_conditional_set(procedure, xuid, leaderboard, XONLINE_STAT_COMPTYPE_LESS, upper_second);
-			long third_reference = ++operation_count;
-			query_update_set(procedure, XONLINE_STAT_PROCID_UPDATE_REPLACE, xuid, leaderboard, first_reference, 7, first);
-			operation_count++;
-			query_update_set(procedure, XONLINE_STAT_PROCID_UPDATE_REPLACE, xuid, leaderboard, second_reference, 1, upper_first);
-			operation_count++;
-			query_update_set(procedure, XONLINE_STAT_PROCID_UPDATE_REPLACE, xuid, leaderboard, third_reference, 1, upper_second);
-			operation_count++;
-			query_update_set(procedure, XONLINE_STAT_PROCID_UPDATE_INCREMENT, xuid, leaderboard, second_reference, 5, second);
-			operation_count++;
+			long first_reference = query_conditional_add(batch->operations, operation_count, xuid, leaderboard,
+				XONLINE_STAT_COMPTYPE_NOT_EXISTS, first);
+			long second_reference = query_conditional_add(batch->operations, operation_count, xuid, leaderboard,
+				XONLINE_STAT_COMPTYPE_EXISTS, upper_first);
+			long third_reference = query_conditional_add(batch->operations, operation_count, xuid, leaderboard,
+				XONLINE_STAT_COMPTYPE_LESS, upper_second);
+			query_update_add(batch->operations, operation_count, XONLINE_STAT_PROCID_UPDATE_REPLACE, xuid, leaderboard,
+				first_reference, 7, first);
+			query_update_add(batch->operations, operation_count, XONLINE_STAT_PROCID_UPDATE_REPLACE, xuid, leaderboard,
+				second_reference, 1, upper_first);
+			query_update_add(batch->operations, operation_count, XONLINE_STAT_PROCID_UPDATE_REPLACE, xuid, leaderboard,
+				third_reference, 1, upper_second);
+			query_update_add(batch->operations, operation_count, XONLINE_STAT_PROCID_UPDATE_INCREMENT, xuid, leaderboard,
+				second_reference, 5, second);
 		}
 	}
 	batch->operation_count = operation_count;
