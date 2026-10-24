@@ -13,7 +13,7 @@ __declspec(align(16)) const dword g_4124a0[4] = {0x80000000, 0x80000000, 0x80000
 // phase's statements 14-22 (compile-only); the y product as local_7[1] * local_3 13;
 // that with local_2 + local_5 16, or with local_2 * local_3 16; the centre read
 // through local_8 13; the x product as local_7[0] * local_4 51.
-// @retail 0x1ce210
+// @retail 0x1ce210 standard
 // retail's prologue self-aligns the frame and retail's callers
 // (0x1cfb90, 0x1ef040 and 0x2fd8a0) push every argument, so the function keeps the
 // standard stack convention; the first block now computes the 0x55 shuffle in a
