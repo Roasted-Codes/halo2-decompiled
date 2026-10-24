@@ -17,12 +17,6 @@ struct ray_2f97e0
 	__m128 direction;
 };
 
-struct surface_2f97e0
-{
-	__m128 point;
-	__m128 direction;
-};
-
 struct limits_2f97e0;
 
 // a vector copied as a whole
@@ -30,11 +24,22 @@ struct vector_2fa0d0
 {
 	__m128 value;
 
+	vector_2fa0d0() {}
+	vector_2fa0d0(vector_2fa0d0 const &other) : value(other.value) {}
+
 	vector_2fa0d0 &operator=(vector_2fa0d0 const &other)
 	{
 		value = other.value;
 		return *this;
 	}
+};
+
+struct surface_2f97e0
+{
+	vector_2fa0d0 point;
+	vector_2fa0d0 direction;
+
+	surface_2f97e0() {}
 };
 
 struct entry_2fa0d0
@@ -65,10 +70,15 @@ public:
 	int function_2fa0d0(ray_2f97e0 const *ray, entries_2fa0d0 *entries, int first, int end, limits_2f97e0 const *limits);
 };
 
-// score 144 (was 144): retail's frame is 0xb4 and it keeps the entries' array
-// in esi with the entry's offset in edi; ours has a 0x94 frame and keeps the
-// array in ebx, so both loops differ in their registers
 // returns the range's new end
+// score 24 (was 144): the 0xb4 frame and memberwise copies now agree;
+// the two index shifts and some vector/word copy scheduling still differ.
+// Original field types with copy construction 252; generic exchange 511;
+// vector copies and nested surface with generic exchange 511; direct nested
+// copy 223; early template instantiation 511, cdecl 508, forced copies 508;
+// concrete exchange 22 (restored); direct element references 24; internal
+// generic exchange 514, constructor assignment 514, static member 508;
+// copy name 24, reversed reference declarations 22 (restored), forced copies 24.
 // @retail 0x2fa0d0
 int ray_test_2f97e0::function_2fa0d0(ray_2f97e0 const *ray, entries_2fa0d0 *entries, int first, int end, limits_2f97e0 const *limits)
 {
@@ -77,10 +87,11 @@ int ray_test_2f97e0::function_2fa0d0(ray_2f97e0 const *ray, entries_2fa0d0 *entr
 		entry_2fa0d0 *data = entries->data;
 		if (data[i].state == 1 && !function_2f97e0(ray, &data[i].surface, limits).value)
 		{
-			entry_2fa0d0 kept;
-			kept = data[i];
-			data[i] = data[end - 1];
-			data[end - 1] = kept;
+			entry_2fa0d0 &current = data[i];
+			entry_2fa0d0 &last = data[end - 1];
+			entry_2fa0d0 kept(current);
+			current = last;
+			last = kept;
 			end--;
 		}
 		else
