@@ -245,11 +245,13 @@ void function_10de40(s_vibration_curve_set *set, s_vibration_output *output, rea
 			memset(output->values, 0, sizeof(output->values));
 
 			long channel_count = curves->channel_count;
-			s_vibration_channel *channel = curves->channels;
-			s_vibration_key *keys_base = (s_vibration_key *)(channel + channel_count);
+			s_vibration_channel *channels = curves->channels;
+			s_vibration_key *keys_base = (s_vibration_key *)(channels + channel_count);
 			real t_first, v_first, t_last, v_last, t_key, t0, v0, t1, v1;
-			real *prior = previous;
-			for (long c = 0; c < channel_count; c++, channel++, prior++)
+			s_vibration_channel *channel;
+			real *prior;
+			long c;
+			for (c = 0, channel = channels, prior = previous; c < channel_count; c++, channel++, prior++)
 			{
 				s_vibration_key *keys = keys_base + channel->key_offset;
 				real result = 0.0f;
