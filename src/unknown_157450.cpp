@@ -1381,6 +1381,10 @@ struct s_item_collection
 };
 
 // score 5 (was 5): the tick count is sign extended into eax here and into edx in retail.
+// Full record expressions with arm conversions 5; with short ticks 34;
+// record and fallback field references 20; spawn reread with arm conversions 30;
+// spawn reread with early fallback widening 6; full expressions and long spawn 34;
+// arm conversions with long fallback 19; both duration fields reread 5.
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -1662,6 +1666,11 @@ void function_15e460(long object_index, long value)
 	game_engine_get()->p24(object_index, value);
 }
 
+// score 26 (was 26): retail keeps one in EDX and saves ESI/EDI; ours keeps
+// false in BL and one in EAX. False result after both guards 29, after engine
+// guard 27, after player guard 28; narrowed scope with options record reference
+// 29, mode field reference 29, flags field reference 29, final option reference
+// 29, both record and final option references 29.
 // @retail 0x15eb20
 bool function_15eb20(long player_index)
 {

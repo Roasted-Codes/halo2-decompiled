@@ -154,6 +154,11 @@ void *c_game_havok_memory::allocate16(long size, long memory_class)
 	return result;
 }
 
+// score 36 (was 36): first upper-bound branch pair is missing and bound
+// registers differ. Typed pool bounds 36; typed bounds and pool dispatch 73;
+// direct pool fields 36; typed bounds with delayed fixed receiver 43; fixed
+// object size 36; physical object reference 36; pool object reference 36;
+// typed fixed receiver 36.
 // @retail 0x147320
 void c_game_havok_memory::deallocate16(void *address, long size, long memory_class)
 {
