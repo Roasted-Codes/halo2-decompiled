@@ -317,7 +317,11 @@ static inline short heading_unit_get_state(s_heading_unit *unit)
 
 /* where the actor's unit (a biped) is heading: backwards out of its current
    animation, or toward the actor's target point */
-// score 11 (was 11): state is sign-extended and spilled as a dword; retail
+// score 11 (was 11): the state is loaded with movsx and spilled as a dword;
+// retail loads it into cx and keeps it in a word on the stack. Tried: the
+// state through function_e70b0's out parameter 124; this helper with an out
+// parameter and a short state 90.
+// state is sign-extended and spilled as a dword; retail
 // loads and spills a word. State 7 first 13; state before movement 86;
 // animation first 19; promoted accessor return 11; unsigned accessor 11;
 // indexed forward 11; indexed target 11; immutable long state 11.
