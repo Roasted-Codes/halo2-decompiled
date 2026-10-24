@@ -17,6 +17,9 @@ static __forceinline long real_to_long(real value);
 // initializer forms tie and scale loops regress; tried first native output vector 373; second native output
 // vector 373; native side scale loop 382; native timed scale loop 382; native side vector 373; both native
 // output vectors 373; native side first output 373; all native motion vectors 373.
+// score 373 (was 373): frame 0x4c versus 0x48 and settings/random-state homes still differ.
+// Immutable third input/actor/state/seed 373 each; signed seed 417;
+// immutable bounds/trig results/point receiver 373 each.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

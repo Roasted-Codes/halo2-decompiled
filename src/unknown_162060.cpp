@@ -138,6 +138,9 @@ static inline bool engine_team_is_playing(long team)
 // world activation before store 2; world activation after store 200; world reference 2;
 // world predicate inputs 2; long authority 2; long playing 2; world and native results 2;
 // complete creation arms 2.
+// score 2 (was 2): post-activation engine/world reload order still reversed;
+// activation output reference 2; read-only world 2; immutable identifiers/table 2/2;
+// dead teams scratch removed 2; unsigned slot 3; direct slot index 247; output-first reference 2.
 // @retail 0x162060
 void __stdcall function_162060(void *engine)
 {
