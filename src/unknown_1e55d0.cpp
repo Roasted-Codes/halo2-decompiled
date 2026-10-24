@@ -53,6 +53,7 @@ bool function_1c5210(transform4x3f const *matrix, void *shape, long component, l
 
 static __forceinline long real_to_long(real value);
 
+// score 348 (was 348): frame 0x8c versus aligned 0x94; global optimization off 988, inline depth 2 348, no reference truth test 348, shape flag result 352, combined 352.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {
