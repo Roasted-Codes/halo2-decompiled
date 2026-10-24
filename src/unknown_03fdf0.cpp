@@ -159,6 +159,8 @@ void function_402b0(long cache_index, long mode)
 // score 183 (was 222): frame 0x84/0x88, callee registers and render-state expansion differ;
 // dword selection 183; word setup flags 234; combined mask 222;
 // brightness component loop 238; redundant bit-clear removal 217.
+// Word selection 238; byte setup flags 189; joined parent cursor 183;
+// zero inline depth on dword selection 367; raw selection masks 198 (plain).
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
