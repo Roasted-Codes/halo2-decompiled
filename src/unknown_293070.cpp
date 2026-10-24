@@ -533,6 +533,8 @@ PRIVATE __forceinline s_flock *function_295321(s_active_flock_iterator *arg_0, b
 
 // score 99 (was 99): the walk over the active flocks is built with another
 // iterator shape, so the register choices and the instruction order differ.
+// State-pointer input, external activity reference, step input order, ordinary
+// inline, generic pointer result, inline depths two/three and walk name 99.
 // Boolean step 99; outer scenario entry 99; outer radius 99; zero iterator 110;
 // point memcpy 99; point value copy 103; const entry 99; byte activity 99.
 // Original iterator and private step retained.

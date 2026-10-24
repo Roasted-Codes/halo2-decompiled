@@ -1071,7 +1071,7 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // frame 0xd4 versus 0xb4; session entry and lookup differ.
 // Reduced preview 864 (754 code); ID phase 864; phased dword histogram 885;
 // histogram phase 934; bound snapshots 936; split guards 864; capacity inline 920.
-// score 842 (was 842): frame/session/lookup still differ; reduced preview 864.
+// score 830 (was 842): frame/session/lookup still differ; reduced preview 864.
 // Early team scalars 896; early party scalars 922; group observation 865;
 // member-rating observation 864; allowed-imbalance observation 956; all restored.
 // @retail 0x7e210
@@ -1086,7 +1086,7 @@ bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 		summary = (const s_ratings_summary *)session->data4a00;
 	long capacity = 16;
 	if (local_0 > 2 && local_0 <= 8) capacity = session->value4994;
-	volatile bool result = true;
+	bool result = true;
 	memset(out, 0, sizeof(*out));
 	if (!summary || summary->player_count > capacity || !variant ||
 		capacity > ratings_variant_capacity(variant) || capacity < function_1932c0(variant))

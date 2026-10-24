@@ -799,7 +799,10 @@ static inline real unit_clamp_176a0(real value)
     return value;
 }
 
-// score 124 (was 124): frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
+// score 124 (was 124): frame 0x2c agrees; cursor EDI versus EBP and clamp
+// result publication differ. Indexed entry walk 186; alpha-first clamps with
+// body entry step 122; frame pointer 229; global optimization off 385; size 301.
+// frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
 // Entry step in body 122; indexed clamp loop 151; short/byte entry counter 122/133; inline depth one 122.
 // @retail 0x176a0
 void function_176a0(byte *state, s_packed_shader_range const *range)
@@ -982,6 +985,14 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
     }
 }
 
+// score 90 (was 90): Frame 0x18 agrees; rounded alpha shifts in a register instead of its conversion slot.
+// Signed rounding result, alpha before switch/loop 90; low-mask OR 259;
+// high-mask XOR 91; clear/OR state update 259; shared scalar rounding result 90;
+// cases 0/2/1 90; unsigned return from existing alpha helper 90.
+// rounded alpha shifts in a register instead of its stack slot; branch offsets differ.
+// byte alpha 89; word alpha 89; integer alpha raw 90.
+// raw alpha integer 90; shared previous state 90; float consistency 90.
+// frame pointer 742; size preference 730.
 // @retail 0x17b60
 void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 {
@@ -1092,6 +1103,15 @@ void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 
 // score 54 (was 54): the two arguments land in different registers (retail uses ebp for the
 // second and ecx for the first) and the bit-field extraction order differs.
+// Frame 0x10 agrees; state/range and evaluator component registers still differ.
+// Unsigned range accessors 54; output/mask/both bank predicates 54;
+// byte component 51 (193 bytes), byte kind 73, both byte inputs 60; output fields 54.
+// state stays in EBX and range in EBP; retail keeps state in EBP
+// and reloads range. The evaluator component is stacked instead of EDI;
+// packed-field extraction order still differs.
+// const pointer tables 54; vector bank elements 54; packed record fields 54.
+// byte record fields 75; frame pointer 71; global optimization 153.
+// size preference 77; float consistency 54.
 // @retail 0x19be0 standard
 void __stdcall function_19be0(byte *state, word const *range)
 {
@@ -1177,7 +1197,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 // score 246 (was 246): sampler convention and captured descriptor versus dirty-store rereads;
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
-// pack result at store 344; existing clamp calls 318.
+// pack result at store 344; existing clamp calls 318. Frame pointer 365;
+// zero inline depth 652; global optimization off 1687; size 517; native
+// ternary clamp loops 359.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

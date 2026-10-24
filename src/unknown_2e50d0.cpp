@@ -171,6 +171,10 @@ void sweep_batches_2e50d0::function_2e50d0(owners_2e50d0 const *owners, bounds_a
 // size lifetimes 162; reused owner with entry reference 162; explicit cell
 // address 173 (not exact, discarded). Keep the twice-used owner value and
 // original direct remap; slot cursor advances in the body.
+// Fresh scalar read 172; pointer local 171; while cursor steps 169; direct
+// test 67; head cursor 214; short snapshot 56; entry pointer 67;
+// postincrement store 56; wider scope, rename and narrower scope 56/56/56;
+// indexed read 224; direct store 169; early reference 161. New bodies restored.
 // @retail 0x2e5590
 void sweep_batches_2e50d0::function_2e5590(owners_2e50d0 const *owners, pairs_2e1090 *pairs)
 {

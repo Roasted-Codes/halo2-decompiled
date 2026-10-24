@@ -788,6 +788,12 @@ struct s_object_activity_flags
 	word unused : 13;
 };
 
+// score 79 (was 79): initial input register, early actor null and exit saves
+// differ; explicit actor arms, unsigned selected handles, bonus snapshots and
+// actor-bonus result 79; split first selection 114; fallback formal read 82.
+// entry input is EAX versus EDX; nullable actor and save timing still differ.
+// Entry/all header helpers 79/79; external object reference 79; const object/actor/settings views 79/79/79.
+// Combined const views 79; header helper with const object 79; existing scalar qualifier and original body restored.
 // @retail 0x267370
 real function_267370(long volatile object_index)
 {
@@ -1064,11 +1070,14 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 	return result;
 }
 
-// score 142 (was 142): clock/compare schedule and vector homes differ; ordinary
+// score 119 (was 142): clock/compare schedule and vector homes differ; ordinary
 // pooled/clock reads with memset zero 178; projected-point loop 297; wide query
 // results 318; named maximum 146; target-copy loop 141 (one-count gain rejected).
 // ordinary-access common tick conversion 400; native point setter 146;
 // activity lifetime 344; iterator rejection continue 146; elapsed interval 293.
+// Per-use prop lookup 119; shared dot/length/both 146/146/146 (grouping rejected);
+// query output initialization omitted 347; prop read first 326; native fields 146;
+// false-byte array memset 206. All eight use ordinary pooled/clock reads.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
@@ -1102,11 +1111,11 @@ void function_267c50(long actor_index)
 		else *(real *)(data + 0x3d4) = 0.0f;
 	}
 	long ticks;
-	if (*(volatile real *)(data + 0x3d4) > *(volatile real *)(data + 0x3d8))
-		ticks = round_tick_count((real)*(volatile short *)&g_510c54->field_2_3 * 0.25f);
+	if (*(real *)(data + 0x3d4) > *(real *)(data + 0x3d8))
+		ticks = round_tick_count((real)g_510c54->field_2_3 * 0.25f);
 	else
-		ticks = round_tick_count((real)*(volatile short *)&g_510c54->field_2_3);
-	real difference = *(volatile real *)(data + 0x3d4) - *(volatile real *)(data + 0x3d8);
+		ticks = round_tick_count((real)g_510c54->field_2_3);
+	real difference = *(real *)(data + 0x3d4) - *(real *)(data + 0x3d8);
 	volatile real decay = expf(-0.6931471824645996f / ticks);
 	real blend = 1.0f - decay;
 	*(real *)(data + 0x3d8) += difference * blend;
@@ -1131,9 +1140,9 @@ void function_267c50(long actor_index)
 			while ((node = (s_prop_datum *)function_26be30(&iterator)) != NULL)
 			{
 				s_type_5cfb45 *state = function_25d690(node);
-				s_type_76cf92 *prop = prop_get(node->prop_index);
-				if (!prop->unknown23 && !function_25d690(node)->unknown5e && !prop->unknown22 &&
-					(prop->unknown25 || state->unknown3c == NONE))
+				if (!prop_get(node->prop_index)->unknown23 && !function_25d690(node)->unknown5e &&
+					!prop_get(node->prop_index)->unknown22 &&
+					(prop_get(node->prop_index)->unknown25 || state->unknown3c == NONE))
 				{
 					vector3f direction;
 					if (function_267840(*actor_reference, iterator.index, &direction))
