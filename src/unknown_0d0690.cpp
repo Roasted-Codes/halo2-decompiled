@@ -1141,6 +1141,10 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
     return 0.0f;
 }
 
+// score 539 (was 539): frame 0x2c versus 0x28, stored result and block/query registers differ.
+// Late success return 577; short result 585; direct primary output 598; early square 579;
+// negate normal before copy 546; late return plus parameter order 577; ordered countdown
+// traversal 560 (retail length); countdown with tested result 566.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1220,6 +1224,10 @@ real function_30bf0(vector3f *vector);
 // score 364 (was 429): frame 0x4c versus 0x40 and normal/color scheduling still differ;
 // copied limited color kept; early squared length 428, decoded-color names 429,
 // in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
+// Base clamped in place 444; outer limited-color lifetime 364; copied color plus
+// in-place rotation 435 (retail length); scales at first use 381; shared surface clamp 481;
+// shared axis view 515, with in-place rotation 463, with in-place base clamp 542
+// (all three axis views lose the matched caller). Original helper and bodies restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1576,6 +1584,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
 // metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
 // lifetime 825; depth one 835; material noinline 870/866.
+// Dynamic validity long 863; base validity short 819; accumulated sampled color 828;
+// weighted normal loop 892; both lengths before scaling 837; one broad sample scope
+// with the other two narrowed (first/second/third) 831/831/831.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
