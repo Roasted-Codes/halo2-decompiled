@@ -2644,9 +2644,10 @@ void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     long node_a = pair->node_a;
     long index_a = node_a == NONE ? mapping->fallback : mapping->bodies[node_a];
     s_havok_component_rigid_body *body = &component->rigid_bodies.data[index_a];
+    long node_count = body->node_count;
     s_component_node_body_link *first = &owner->physics->bodies[body->nodes[0]];
     long child = 0;
-    for (; child < body->node_count; child++)
+    for (; child < node_count; child++)
     {
         if (owner->physics->bodies[body->nodes[child]].node == pair->node_a)
             break;
@@ -2667,9 +2668,10 @@ void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
         (index_b = node_b == NONE ? mapping->fallback : mapping->bodies[node_b]) != NONE)
     {
         s_havok_component_rigid_body *other = &component->rigid_bodies.data[index_b];
+        long other_node_count = other->node_count;
         s_component_node_body_link *other_first = &owner->physics->bodies[other->nodes[0]];
         long other_child = 0;
-        for (; other_child < other->node_count; other_child++)
+        for (; other_child < other_node_count; other_child++)
         {
             if (owner->physics->bodies[other->nodes[other_child]].node == pair->node_b)
                 break;
