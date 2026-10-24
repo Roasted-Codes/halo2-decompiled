@@ -2717,7 +2717,7 @@ bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *a
 	s_weapon *weapon = WEAPON_GET(weapon_index);
 	s_weapon_definition *definition = WEAPON_DEFINITION(weapon);
 	real result = 0.0f;
-	long index;
+	short index;
 	switch (name)
 	{
 	case 0x03000577: result = weapon->heat; break;
