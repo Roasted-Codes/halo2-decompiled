@@ -95,6 +95,8 @@ PRIVATE __forceinline double function_11f0d1(real arg_0)
 	return acos(arg_0 < -1.0f ? -1.0f : arg_0 > 1.0f ? 1.0f : arg_0);
 }
 
+// score 2 (was 2): one product of the cross product has its factors in the opposite order:
+// ours keeps the forward vector's k field in the register, retail the target's i field.
 // @retail 0x11f0d0
 void function_11f0d0(
 	vector3f *position,
