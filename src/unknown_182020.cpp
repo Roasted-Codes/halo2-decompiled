@@ -133,6 +133,10 @@ static inline short shape_material_index_get(c_material_shape *shape)
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
+// score 1 (was 1): second lookup short is at esp+0xc rather than +0xe.
+// Caller buffers through helper 1; shared buffer 164; helper output 1;
+// returned destination 1; helper size 1; helper frame pointer 1;
+// helper global optimization off 183; helper nested depth zero 1.
 // @retail 0x182b90
 void function_182b90(c_material_shape *shape, hkEntity const *entity,
 	real *friction, real *restitution, short *material)
