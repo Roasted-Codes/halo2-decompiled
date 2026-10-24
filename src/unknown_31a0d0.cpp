@@ -100,6 +100,10 @@ solver_result_31a0d0 const *motion_31a0d0::function_31a0d0(float const *step, fl
 // direct final lane assignment 17/594.
 // object names separately/together 10; distinct duration name 10;
 // grouped product with renamed offset or all renamed objects 23
+// score 5 (was 5): the last receiver uses esp+0x20 instead of esp+0x40,
+// followed by a late EDI pop. Final-value input 5; with a shorter spin scope 3;
+// named vector result 5, with that scope 3; both output changes 5; immutable
+// duration product 5; later quaternion declaration 5; scalar result 5.
 // @retail 0x31a2b0
 void motion_31a2b0::function_31a2b0(float time, float step_length)
 {

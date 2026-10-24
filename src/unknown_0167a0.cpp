@@ -77,9 +77,10 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 167 (was 167): logarithm width/reset schedule and restore/final pointer allocation;
 // final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
 // promoted inverse 248; float consistency 306; coordinated texture inputs 167.
+// Typed numeric state fields 167; typed pointer fields 181; full state view 181;
+// force-inline material lookup 167; global-first mask unions on full view 181.
 // frame/entry agree; logarithm width, reset and restore scheduling differ.
 // Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
-// frame/entry agree; logarithm width, reset and restore scheduling differ.
 // logarithm width/reset schedule and restore/final pointer allocation;
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
@@ -795,6 +796,8 @@ static inline real unit_clamp_176a0(real value)
     return value;
 }
 
+// score 124 (was 124): frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
+// Entry step in body 122; indexed clamp loop 151; short/byte entry counter 122/133; inline depth one 122.
 // @retail 0x176a0
 void function_176a0(byte *state, s_packed_shader_range const *range)
 {
@@ -1036,6 +1039,9 @@ void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 // score 51 (was 51): the switch on the procedure id is compiled to a different table: retail
 // reads the entry with movzx ecx from a table at another base, ours uses
 // esi and another table.
+// Frame 0x10 agrees; table pointer and alpha memory shift still differ.
+// Short counter 51; word counter 220; unsigned counter 210; byte alpha 50;
+// word alpha 50; scalar memcpy 322; color-input pointer 51; const entry 51.
 // @retail 0x1ab50
 void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 {
@@ -1105,6 +1111,9 @@ void __stdcall function_19be0(byte *state, word const *range)
 // score 39 (was 39): the jump table's targets and the shifts around it differ: retail shifts
 // the word at esp+0x18 and keeps the index in ecx, ours keeps it in esi
 // and shifts later.
+// Frame 0x18 agrees; alpha still shifts in a register.
+// Byte alpha 38; word alpha 38; short counter 250; unsigned counter 251;
+// rounding-result name 39; scale name 39; result first 41; integer case first 39.
 // @retail 0x18560
 void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 {

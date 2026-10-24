@@ -388,6 +388,10 @@ PRIVATE inline long polygon_round_19f(real value)
     return result;
 }
 
+// score 393 (was 393): frame 0x40 versus 0x30; qword loop spills and callee
+// convention/expansion differ. Real radius-range lifetime 397; type-pointer
+// step in the body 393; explicit closing index 393; shared bottom-point setter
+// 393; inline depth one 393.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,
