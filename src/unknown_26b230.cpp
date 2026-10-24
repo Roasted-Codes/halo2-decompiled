@@ -1459,8 +1459,6 @@ long function_26bc60(long clump_index)
 	return 2;
 }
 
-// score 95 (was 127): result now EBX; frame 0x18 versus 0x20, wide timestamp comparison, iterator exhaustion and center copy differ.
-// Frame pointer 127; depth zero 160; global optimization off 183; signed-wide timestamp 95 plain; failed allocation exit 141; ordinary wide timestamp 132.
 // @retail 0x269040
 long function_269040(point3f const *center, short team)
 {
@@ -1474,7 +1472,7 @@ long function_269040(point3f const *center, short team)
 			iterator.pool.index = NONE;
 		}
 		bool active = g_4f55d0->active;
-  __int64 volatile oldest_time = 0x7fffffff;
+  long volatile oldest_time = 0x7fffffff;
 		long volatile oldest = NONE;
 		for (;;)
 		{
