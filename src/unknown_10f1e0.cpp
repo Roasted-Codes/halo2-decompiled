@@ -1602,8 +1602,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 		if (*(real *)((byte *)unit + 0x208) > 0.0f &&
 			*(short *)((byte *)UNIT_ANIMATION_CONTROL(UNIT_ANIMATION_OBJECT(unit_index)) + 0x36) == NONE)
 		{
-			c_type_709360 id;
-			state->current_animation_get(&id);
+			c_type_709360 id = state->overlay_default_get();
 			if (id.index != NONE && state->channel_play(&channel, id, 0))
 				channel.sample(*(real *)((byte *)unit + 0x208), node_mask, node_count, transforms);
 		}
