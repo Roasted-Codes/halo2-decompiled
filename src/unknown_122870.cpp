@@ -385,9 +385,10 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 	{
 		*output = 1.0f;
 	}
-	else if (location == 2 && map_names_equal(g_55bd21, name))
+	else if (location == 2)
 	{
-		function_2148b0((long)output);
+		if (map_names_equal(g_55bd21, name))
+			function_2148b0((long)output);
 	}
 	else
 	{
@@ -395,6 +396,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 	}
 }
 
+// score 74 (was 78): frame 0x24 versus 0x18; independent query homes still differ.
+// Output-first helper 80; ordinary inline 80; depth one 80; not-loaded arm first 128;
+// guarded stages 126; nested name guard 76 fast, 74 plain.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {

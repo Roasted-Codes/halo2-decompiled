@@ -382,16 +382,10 @@ struct s_listener_environment_bsp
 
 PRIVATE inline long sound_first_listener()
 {
-	long result = NONE;
-	for (long i = 0; i < 4; ++i)
-	{
-		if (g_4e8c20->entries[i] != NONE)
-		{
-			result = i;
-			break;
-		}
-	}
-	return result;
+	long i = 0;
+	for (; i < 4; ++i)
+		if (g_4e8c20->entries[i] != NONE) break;
+	return i < 4 ? i : NONE;
 }
 
 PRIVATE __forceinline void sound_environment_play_cue(long tag)
@@ -411,8 +405,10 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 	function_189fe0(&request, tag);
 }
 
-// score 235 (was 264): frame 0x14c versus 0x148; BSP/camera lifetimes and query/output homes still differ.
+// score 223 (was 264): frame 0x14c versus 0x148; BSP/camera lifetimes and query/output homes still differ.
 // Transition result 235; unsigned listener 264; byte listener 319; angle lifetime 264; separate request indices 264.
+// Request transition field 263; bounded listener result 223 plain; separate fill guard 255;
+// depth one 235; size optimization 441; direct search returns 254.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

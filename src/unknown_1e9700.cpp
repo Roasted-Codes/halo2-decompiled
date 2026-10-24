@@ -122,6 +122,8 @@ void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte
 void function_196dd0(long player_index, long counter, long arg_1f407d_2, long delta);
 void function_1ea880(long first_player, long player_index, s_object_values *table);
 
+// score 421 (was 421): frame 0x48 versus 0x50; victim/result homes and rounding calls differ.
+// Assist cursor 464; damage snapshot 466; early hostility 463; hostile arm first 421; size optimization 713.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {
