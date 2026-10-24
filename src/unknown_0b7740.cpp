@@ -327,10 +327,9 @@ static __forceinline long object_cluster_next_ab(s_record_pool *array, s_object_
 }
 
 // @retail 0xb8940
-long function_b8940(short cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
+long function_b8940(long cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
 {
-	short const *cluster_reference = &cluster_index;
-	iterator->next = ((long *)g_4de2e0)[*cluster_reference];
+	iterator->next = ((long *)g_4de2e0)[(short)cluster_index];
 	return object_cluster_next_ab((s_record_pool *)g_4de2e4, iterator, record);
 }
 
@@ -341,10 +340,9 @@ long function_b89b0(s_object_cluster_reference **record, s_object_cluster_iterat
 }
 
 // @retail 0xb8a10
-long function_b8a10(short cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
+long function_b8a10(long cluster_index, s_object_cluster_reference **record, s_object_cluster_iterator *iterator)
 {
-	short const *cluster_reference = &cluster_index;
-	iterator->next = ((long *)g_4de2d4)[*cluster_reference];
+	iterator->next = ((long *)g_4de2d4)[(short)cluster_index];
 	return object_cluster_next_ab((s_record_pool *)g_4de2d8, iterator, record);
 }
 
@@ -596,16 +594,23 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
         if (g_4de300[index] != g_4de2fc)
         {
             g_4de300[index] = g_4de2fc;
-            real z = record->center.z - position->z;
-            real y = record->center.y - position->y;
-            real x = record->center.x - position->x;
             real combined = record->radius + radius;
-            return combined * combined >= z * z + y * y + x * x;
+            real dx = record->center.x - position->x;
+            real dy = record->center.y - position->y;
+            real dz = record->center.z - position->z;
+            return dz * dz + dy * dy + dx * dx <= combined * combined;
         }
     }
     return false;
 }
 
+// score 24 (was 204): the g_4e7414 increment goes through esi and is stored
+// after the pushes (retail: ecx, stored at once); the record/iterator reloads
+// after each first-object call are swapped; the second inlined distance test
+// computes dz, dx, dy in retail (dz, dy, dx here). Tried: second inline copy
+// with dz,dx,dy or dy,dx,dz or a vector3f delta (no gain); count = 0 just
+// before the loop (205); a goto to a shared exit instead of the early returns
+// (196: count lived in esi and the empty exit got its own epilogue).
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
@@ -633,7 +638,7 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
     }
     ++g_4de2fc;
     g_4de2f8 = true;
-    for (long i = 0; i < cluster_count; ++i)
+    for (short i = 0; i < cluster_count; ++i)
     {
         short cluster = clusters[i];
         struct search_slots { s_object_cluster_reference *record; s_object_cluster_iterator second, first; } search;
@@ -646,7 +651,11 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             {
                 if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
                 {
-                    if (count >= maximum_count) goto done;
+                    if (count >= maximum_count)
+                    {
+                        g_4de2f8 = false;
+                        return count;
+                    }
                     objects[count] = object;
                     ++count;
                 }
@@ -661,14 +670,17 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             {
                 if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
                 {
-                    if (count >= maximum_count) goto done;
+                    if (count >= maximum_count)
+                    {
+                        g_4de2f8 = false;
+                        return count;
+                    }
                     objects[count] = object;
                     ++count;
                 }
             }
         }
     }
-done:
     g_4de2f8 = false;
     return count;
 }
