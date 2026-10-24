@@ -391,6 +391,11 @@ void *function_1e5240(long actor_index);
 real function_2683f0(long actor_index, long node_index, short type);
 void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *sample, s_2640c0 *motion);
 
+// score 426 (was 426): frame 0xa4 versus 0xa0; actor input and workspaces differ.
+// Wide prior state and byte sampling flags 426; byte sampled-one 426;
+// native for traversal 436; later update init 427; later flag inits 426;
+// for plus wide update/sample/both 439/437/429; release noinline with
+// for/original traversal 475/456.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
