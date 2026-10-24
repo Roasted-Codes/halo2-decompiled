@@ -92,9 +92,9 @@ void function_24f0fc(s_marker_list const *list, s_24ecae_placement const *placem
 	points[3].y = rect.y1;
 	function_22a664((s_widget_quad_2b11 const *)points, (s_float_rect const *)&bounds,
 		kind->border_bitmap, 0, kind->shader_index);
+	points[0].x = rect.x0;
 	real edge = rect.y1 + 2.0f;
 	real split = center.x - placement->scale * 16.0f + 1.0f;
-	points[0].x = rect.x0;
 	points[0].y = edge;
 	points[1].x = split;
 	points[1].y = edge;
