@@ -771,14 +771,18 @@ void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
         amount = 0.0f > amount ? 0.0f : (amount > 1.0f ? 1.0f : amount);
         s_random_globals *random = g_4e7408;
         g_502120->value228 = amount;
-        function_141ce0(
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->angles[0] * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->angles[1] * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->angles[2] * amount, &transform);
-        point_set_1546f0(&transform.position,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->point.y * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->point.x * amount,
-            (random_real_1546f0(&random->seed) * 2.0f - 1.0f) * speed->point.z * amount);
+        /* retail advances the seed three times and then reads it once for all three axes
+           (0x1547cc-0x154806, again at 0x154888-0x1548d0): the third draw scales every axis */
+        random_real_1546f0(&random->seed);
+        random_real_1546f0(&random->seed);
+        real shake = random_real_1546f0(&random->seed) * 2.0f - 1.0f;
+        function_141ce0(shake * speed->angles[0] * amount, shake * speed->angles[1] * amount,
+            shake * speed->angles[2] * amount, &transform);
+        random_real_1546f0(&random->seed);
+        random_real_1546f0(&random->seed);
+        shake = random_real_1546f0(&random->seed) * 2.0f - 1.0f;
+        point_set_1546f0(&transform.position, shake * speed->point.y * amount, shake * speed->point.x * amount,
+            shake * speed->point.z * amount);
         function_142a60(matrix, &transform, matrix);
     }
     else
