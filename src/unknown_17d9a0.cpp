@@ -474,9 +474,11 @@ PRIVATE __forceinline real decal_normal_angle_17fd20(vector3f const *a, vector3f
 PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, vector3f const *left,
 	vector3f const *up, vector3f const *in, vector3f *out)
 {
-	out->i = up->i * in->k + left->i * in->j + forward->i * in->i;
-	out->j = up->j * in->k + left->j * in->j + forward->j * in->i;
-	out->k = up->k * in->k + left->k * in->j + forward->k * in->i;
+	vector3f rotated;
+	rotated.i = up->i * in->k + left->i * in->j + forward->i * in->i;
+	rotated.j = up->j * in->k + left->j * in->j + forward->j * in->i;
+	rotated.k = up->k * in->k + left->k * in->j + forward->k * in->i;
+	*out = rotated;
 }
 
 // @retail 0x17fd20
