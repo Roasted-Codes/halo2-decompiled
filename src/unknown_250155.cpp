@@ -1388,7 +1388,8 @@ void c_matchmaking_list::v3()
 				indices[index_count++] = i;
 			}
 		}
-		memset(indices + index_count, 0xff, (16 - index_count) * sizeof(long));
+		for (long *empty = indices + index_count; empty != indices + 16; ++empty)
+			*empty = NONE;
 	}
 	else
 	{
@@ -1400,7 +1401,8 @@ void c_matchmaking_list::v3()
 				indices[index_count++] = i;
 			}
 		}
-		memset(indices + index_count, 0xff, (16 - index_count) * sizeof(long));
+		for (long *empty = indices + index_count; empty != indices + 16; ++empty)
+			*empty = NONE;
 		if (mode == 1)
 		{
 			long count = 0;
@@ -1413,21 +1415,13 @@ void c_matchmaking_list::v3()
 			item_count = player_count;
 			if (mode == 3)
 			{
+				int (__cdecl *compare)(void const *, void const *) = NULL;
 				if (teams)
-				{
-					if (values)
-					{
-						qsort(indices, index_count, sizeof(long), matchmaking_compare_team_and_value);
-					}
-					else
-					{
-						qsort(indices, index_count, sizeof(long), matchmaking_compare_value);
-					}
-				}
+					compare = values ? matchmaking_compare_team_and_value : matchmaking_compare_value;
 				else if (values)
-				{
-					qsort(indices, index_count, sizeof(long), matchmaking_compare_team);
-				}
+					compare = matchmaking_compare_team;
+				if (compare)
+					qsort(indices, index_count, sizeof(long), compare);
 			}
 		}
 	}
