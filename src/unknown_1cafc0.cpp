@@ -1533,7 +1533,7 @@ bool s_animation_state::channel_refresh(c_animation_channel *channel, long weapo
 }
 
 // @retail 0x1cb9d0
-c_type_709360 s_animation_state::overlay_find(long set, long weapon_class, long weapon_type)
+c_type_709360 s_animation_state::overlay_find_for_class(long weapon_class, long weapon_type, long set)
 {
 	c_type_709360 none;
 
@@ -1562,7 +1562,7 @@ c_type_709360 s_animation_state::overlay_or_animation_get(long weapon_class, lon
 	{
 		weapon_type = unknown78;
 	}
-	animation_id = overlay_find(set, weapon_class, weapon_type);
+	animation_id = overlay_find_for_class(weapon_class, weapon_type, set);
 	if (animation_id.index == NONE)
 	{
 		animation_id = animation_get(set, weapon_class, weapon_type);

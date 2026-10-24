@@ -1800,8 +1800,6 @@ bool function_101490(long weapon_index, long magazine_index)
 }
 /* finds a weapon's animation (its overlay, else the animation) in the graph
    for its holder's character, and makes it the weapon's current one */
-// score 4 (was 4): the graph index is kept in ecx where retail keeps it in edx,
-// and the two values that are read out of the frame are read in the other order.
 // @retail 0x105c20
 bool __stdcall function_105c20(long weapon_index, long animation_name)
 {
@@ -1834,8 +1832,8 @@ bool __stdcall function_105c20(long weapon_index, long animation_name)
 						{
 							long graph_index = player_animation->graph_index;
 
-							weapon->animation_254 = animation_id;
 							weapon->value250 = graph_index;
+							weapon->animation_254 = animation_id;
 							weapon->value258 = 0.0f;
 							function_b7360(weapon_index);
 							result = true;
@@ -2510,7 +2508,11 @@ long __stdcall function_fda00(long weapon_index, s_scenario_weapon_view *placeme
 }
 
 // score 3 (was 3): the word is stored at +0x254 where retail stores it at +0x256, so the two
-// stores are in the wrong order.
+// stores are in the wrong order. That is `pop esi`: ours pops it right after edi, before the
+// inlined reset's two word stores; retail after them. Tried: the reset storing value250 before
+// value258 3 (0x105be0 2); the reset's animation as one default object 18; 0x105be0 defined
+// after this function 3; one short index for all three loops 3; the definition read after the
+// field resets 110.
 // @retail 0xfdad0
 bool __stdcall function_fdad0(long weapon_index, void *placement, bool *flag)
 {
