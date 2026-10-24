@@ -988,28 +988,35 @@ struct s_block_layout
 };
 
 /* dot product of two 3x3 blocks stored as nine reals */
-#define DOT_PRODUCT9(result, a, b) \
-	__asm mov ecx, a \
-	__asm mov edx, b \
-	__asm movlps xmm0, qword ptr [ecx] \
-	__asm movlps xmm1, qword ptr [edx] \
-	__asm movlps xmm2, qword ptr [ecx + 0x10] \
-	__asm movlps xmm3, qword ptr [edx + 0x10] \
-	__asm movhps xmm0, qword ptr [ecx + 8] \
-	__asm movhps xmm1, qword ptr [edx + 8] \
-	__asm movhps xmm2, qword ptr [ecx + 0x18] \
-	__asm movhps xmm3, qword ptr [edx + 0x18] \
-	__asm mulps xmm0, xmm1 \
-	__asm mulps xmm2, xmm3 \
-	__asm addps xmm0, xmm2 \
-	__asm movss xmm1, dword ptr [ecx + 0x20] \
-	__asm movhlps xmm2, xmm0 \
-	__asm mulss xmm1, dword ptr [edx + 0x20] \
-	__asm addps xmm0, xmm2 \
-	__asm addss xmm1, xmm0 \
-	__asm shufps xmm0, xmm0, 0x55 \
-	__asm addss xmm0, xmm1 \
-	__asm movss result, xmm0
+static __forceinline real block_dot_product9(real const *a, real const *b)
+{
+	real result;
+	__asm
+	{
+		mov ecx, a
+		mov edx, b
+		movlps xmm0, qword ptr [ecx]
+		movlps xmm1, qword ptr [edx]
+		movlps xmm2, qword ptr [ecx + 0x10]
+		movlps xmm3, qword ptr [edx + 0x10]
+		movhps xmm0, qword ptr [ecx + 8]
+		movhps xmm1, qword ptr [edx + 8]
+		movhps xmm2, qword ptr [ecx + 0x18]
+		movhps xmm3, qword ptr [edx + 0x18]
+		mulps xmm0, xmm1
+		mulps xmm2, xmm3
+		addps xmm0, xmm2
+		movss xmm1, dword ptr [ecx + 0x20]
+		movhlps xmm2, xmm0
+		mulss xmm1, dword ptr [edx + 0x20]
+		addps xmm0, xmm2
+		addss xmm1, xmm0
+		shufps xmm0, xmm0, 0x55
+		addss xmm0, xmm1
+		movss result, xmm0
+	}
+	return result;
+}
 
 // @retail 0x23ca0
 void function_023ca0(
@@ -1025,32 +1032,18 @@ void function_023ca0(
 	long stride = (layout->columns + 1) * group_size;
 	for (long i = 0; i < layout->groups; i++)
 	{
-		real const *block;
-		real dot0;
-		real dot1;
-		real dot2;
-		block = data + stride * i;
-		DOT_PRODUCT9(dot0, block, vector0);
-		block = data + stride * i + block_size;
-		DOT_PRODUCT9(dot1, block, vector1);
-		block = data + stride * i + block_size * 2;
-		DOT_PRODUCT9(dot2, block, vector2);
+		real dot0 = block_dot_product9(data + stride * i, vector0);
+		real dot1 = block_dot_product9(data + stride * i + block_size, vector1);
+		real dot2 = block_dot_product9(data + stride * i + block_size * 2, vector2);
 		out[(layout->columns * 3 + 4) * i] = dot0;
 		out[(layout->columns * 3 + 4) * i + 1] = dot1;
 		out[(layout->columns * 3 + 4) * i + 2] = dot2;
 		real *row = out + (layout->columns * 3 + 4) * i + 4;
 		for (long j = 0; j < layout->columns; j++)
 		{
-			real const *cell_block;
-			real cell_dot0;
-			real cell_dot1;
-			real cell_dot2;
-			cell_block = data + stride * i + group_size * (j + 1);
-			DOT_PRODUCT9(cell_dot0, cell_block, vector0);
-			cell_block = data + stride * i + group_size * (j + 1) + block_size;
-			DOT_PRODUCT9(cell_dot1, cell_block, vector1);
-			cell_block = data + stride * i + group_size * (j + 1) + block_size * 2;
-			DOT_PRODUCT9(cell_dot2, cell_block, vector2);
+			real cell_dot0 = block_dot_product9(data + stride * i + group_size * (j + 1), vector0);
+			real cell_dot1 = block_dot_product9(data + stride * i + group_size * (j + 1) + block_size, vector1);
+			real cell_dot2 = block_dot_product9(data + stride * i + group_size * (j + 1) + block_size * 2, vector2);
 			row[j] = cell_dot0;
 			row[layout->columns + j] = cell_dot1;
 			row[layout->columns * 2 + j] = cell_dot2;
