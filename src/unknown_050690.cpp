@@ -155,8 +155,9 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 	return result;
 }
 
-// score 661 (was 734): ESP realignment and mode convention still differ; native pair results improve length.
-// Midpoint pair 718; first-phase pair 709; fused output walk 754; sample pointers 735; accumulated pair 702; three pair results 661.
+// score 693 (was 734): ESP realignment and mode convention still differ; native pair results improve length.
+// Midpoint pair 718; first-phase pair 709; fused output walk 754; sample pointers 735; accumulated pair 702;
+// sample and midpoint pairs 693; all three pairs 661 (not kept: the running sum's pair is a one-use copy).
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,
