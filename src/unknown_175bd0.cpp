@@ -1015,6 +1015,8 @@ void function_178240(point3f const *origin, vector3f const *direction, s_effect_
 }
 
 // score 38 (was 38): the branches that reject the value jump to a different place and the table pointer is loaded into edx instead of ecx
+// tried upper-only bound 84; output-field reference 38; read-only records 38;
+// tried index before flag 38; time before index 38; array lifetime 59; float consistency 38; size policy 114.
 // @retail 0x1782a0
 void function_1782a0(long effect_index, short event_index)
 {
@@ -1905,6 +1907,9 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
+// score 163 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
+// tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
+// shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2679,7 +2684,9 @@ void __stdcall function_17a380(s_effect_datum *effect)
 	}
 }
 
-// score 109 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// score 96 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// tried transform name 109; query results, particle cursor and colors at entry 109; read-only settings 109;
+// immutable mode once 96 (kept); size policy 146; inline depth zero 109.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {
@@ -2695,6 +2702,7 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 		dword color_a = effect->color_a;
 		dword color_b = effect->color_b;
 		s_effect_location_datum *location;
+		word location_mode = definition->location_mode;
 
 		{
 			c_type_4e7709 *particle_definition = function_137bd0(particle_system->function_1751d0()->tag_index);
@@ -2703,7 +2711,7 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 
 			function_175a80(tinted, color_a, color_b, particle_system, multiplied);
 		}
-		while ((location = effect_location_next(effect, &location_index, definition->location_mode)) != 0)
+		while ((location = effect_location_next(effect, &location_index, location_mode)) != 0)
 		{
 			transform4x3f matrix;
 			transform4x3f *location_matrix = function_178bc0(location, effect, &matrix, true);
