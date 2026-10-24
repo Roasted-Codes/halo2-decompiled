@@ -524,14 +524,13 @@ void __stdcall function_1ddea0(s_1de2c0 *arg_0, long arg_1)
   else if (local_2 != NONE) _mm_prefetch((char const *)&local_0->field_14[local_2 & 0x7fffff], _MM_HINT_NTA);
   if (!(local_3 & 0x800000)) _mm_prefetch((char const *)&local_0->field_4[local_3], _MM_HINT_NTA);
   else if (local_3 != NONE) _mm_prefetch((char const *)&local_0->field_14[local_3 & 0x7fffff], _MM_HINT_NTA);
-  long local_4 = local_1->field_0;
-  plane3f const *local_5 = &local_0->field_c[local_4];
+  plane3f const *local_5 = &local_0->field_c[local_1->field_0];
   real local_6 = local_5->k * arg_0->field_c->z + local_5->j * arg_0->field_c->y + local_5->i * arg_0->field_c->x - local_5->d;
   bool local_7 = local_6 < arg_0->field_10;
   bool local_8 = local_6 > 0.0f - arg_0->field_10;
   if (local_8 && local_7)
   {
-   arg_0->field_1c[arg_0->field_18++] = local_4 | 0xffff8000;
+   arg_0->field_1c[arg_0->field_18++] = local_1->field_0 | 0xffff8000;
    function_1ddea0(arg_0, local_2);
    if (arg_0->field_21f && arg_0->field_14->field_c0c.field_0 > 0) return;
    --arg_0->field_18;
