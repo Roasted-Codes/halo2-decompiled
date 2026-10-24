@@ -1000,6 +1000,9 @@ PRIVATE __forceinline bool territory_holder_matches_player(long holder, long pla
     return players[holder & 0xffff].team == players[player_index & 0xffff].team;
 }
 
+// score 88 (was 88): holder/marker carriers and predicate join differ;
+// inline depths one/two, state per use, early team-array lifetime, invalid
+// marker continue, point memcpy and nested holder test 88; marker-first 90.
 // @retail 0x2bf740
 void c_game_engine_45c948::v32(long player_index, long list_pointer)
 {
