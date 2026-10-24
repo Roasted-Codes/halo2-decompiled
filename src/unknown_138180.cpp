@@ -28,15 +28,29 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
-// score 187 (was 187): frame 0x18 agrees; index/options/mask registers differ.
+// score 185 (was 187): frame 0x18 agrees. Retail compares i and count signed
+// (long), stores count = 0 before the first loop and counts a player before
+// its uniqueness test. Registers still rotate: retail has options in edi
+// (reloaded after the inner loop), i in ebp, mask in esi with home [esp+0x1c];
+// we have options in esi, i in edi (spilled), mask in ebp.
+// Retail's tail (one shared local_machine_valid test ending in mov al, 1, and
+// a separate false return after count <= 2) comes out exactly with
+// memcmp(&players[i].machine, &machines[m], ...) and a switch of
+// ok = ok && count > 1 && count <= 2 (12c) / ok = ok && count == 1, then
+// local_1 = ok && options->local_machine_valid; case 2/3 as one && each;
+// but that scores 199: the m loop tests the mask in memory (one instruction
+// where retail loads it into ecx) so the tail sits one line off.
+// Tried: count declared at the top (201), i per loop (202 with the switch form), direct returns in
+// case 1 (238), else branch first (208), machine_mask read directly or
+// mask & (1 << m) (no change), ?: or if for local_machine_valid (193, 298).
 // Long validation result 275; long player uniqueness 270; byte uniqueness 187;
-// short membership result 190; word active count 195. Body restored.
+// short membership result 190; word active count 195.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
 	bool local_1 = false;
 	{
-		dword i = 0;
+		long i = 0;
 		if (options->type < 0 || options->type >= 6)
 		{
 			local_1 = false;
@@ -63,6 +77,7 @@ bool __stdcall function_138180(const s_session_options *options)
 			goto local_2;
 		}
 
+		long count = 0;
 		dword mask = options->machine_mask;
 		bool ok = (mask & 0xffff0000) == 0;
 		for (; i < MAXIMUM_PLAYERS_PER_SESSION; i++)
@@ -79,13 +94,12 @@ bool __stdcall function_138180(const s_session_options *options)
 			}
 		}
 
-		dword count = 0;
 		for (i = 0; i < MAXIMUM_PLAYERS_PER_SESSION; i++)
 		{
 			if (options->players[i].active)
 			{
-				bool unique = ok && options->players[i].index >= 0 && options->players[i].index < MAXIMUM_CONTROLLERS && memcmp(&options->players[i].id, g_440070, sizeof(options->players[i].id)) != 0;
 				count++;
+				bool unique = ok && options->players[i].index >= 0 && options->players[i].index < MAXIMUM_CONTROLLERS && memcmp(&options->players[i].id, g_440070, sizeof(options->players[i].id)) != 0;
 				for (long j = i + 1; j < MAXIMUM_PLAYERS_PER_SESSION; j++)
 				{
 					if (options->players[j].active)
