@@ -115,6 +115,8 @@ void pending_messages_reset(void);
 void function_53210(void);
 void function_8dd70(void);
 
+// score 234 (was 234): readiness homes, repeated pointer loads and out-of-line calls differ;
+// short readiness 232; unsigned readiness 234; session-list value initialization 231; long observer result 250; long session prerequisite 243.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

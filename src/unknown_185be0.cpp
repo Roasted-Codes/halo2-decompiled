@@ -140,6 +140,9 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
+// score 1059 (was 1082): frame 0xe8 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// Counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
+// Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
@@ -284,9 +287,8 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         word local_8 = local_1->field_e & local_1->field_c;
         if (local_8)
         {
-            long local_9 = 0;
             dword mask = 1;
-            do
+            for (long local_9 = 0; local_9 < 16; ++local_9)
             {
                 if ((local_8 & mask) && !local_2.field_0[local_9])
                 {
@@ -294,7 +296,7 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
                     local_1->field_e &= ~mask;
                 }
                 mask <<= 1;
-            } while (++local_9 < 16);
+            }
         }
         local_8 = local_1->field_c;
         for (long local_24 = 0; local_24 < 16; local_24++)

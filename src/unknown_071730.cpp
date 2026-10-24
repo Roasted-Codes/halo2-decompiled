@@ -64,6 +64,9 @@ bool balance_teams(long arg_0, long arg_1, bool arg_2, long arg_3, long arg_4,
 void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 	const s_match_player_list *arg_2, const long *arg_3);
 
+// score 449 (was 449): frame 0x3e8 versus 0x3e4, result-byte home and getter boundary differ;
+// output-scalar lifetime 449; type/first-state/second-state scopes 449; inline depth one 449; the five
+// settings read into one-use locals first 443 (not kept: the locals only fix the argument order).
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {
@@ -160,7 +163,7 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 			if (function_1934b0(local_8))
 			{
 				long local_24;
-				long local_25 = false;
+				short local_25 = false;
 				if (balance_teams_by_count(local_16.field_c, local_16.field_194,
 					function_193440(local_8), function_193370(local_8), function_1934d0(local_8),
 					function_1933d0(local_8), function_1933a0(local_8), true, &local_24) &&
