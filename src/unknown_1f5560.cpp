@@ -441,7 +441,9 @@ static inline real heading_distance3d(point3f const *a, point3f const *b)
 /* while the actor's target point (+0x638) is fresh: faces it, and once
    within half a world unit of it asks the unit to stop there (request 0x2d) */
 // score 66 (was 66): retail saves ESI in the prologue, ours does not, and
-// ours is ten bytes longer than retail.
+// ours is ten bytes longer than retail. Inline depths one/two 66, zero 197;
+// size preference 221; frame pointer 133; global optimization off 177;
+// explicit availability outcomes 64/421 bytes; force-inline distance 66.
 // @retail 0x1f58c0
 bool function_1f58c0(long actor_index, vector3f *facing, short *unknown)
 {
