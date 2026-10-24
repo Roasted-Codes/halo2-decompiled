@@ -127,6 +127,8 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // j91: frame 0x48 versus 0x50 and victim/selection/count homes remain; isolated early killer recovers 0x50 at 454 but regresses.
 // early killer result 454; early assist threshold 440; early attribution results 463; shared tick frequency
 // 421; attribution shared frequency 460
+// Frame pointer 530; long selection index 451; short assist counts 421 (1549 bytes);
+// long consideration result 426; long hostility result 430.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

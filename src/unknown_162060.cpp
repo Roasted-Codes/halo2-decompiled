@@ -130,6 +130,9 @@ static inline bool engine_team_is_playing(long team)
 	return result;
 }
 
+// score 37 (was 37): post-activation reload order and team-predicate byte registers differ;
+// long/byte teams result 97/94; long playing result 89; both long/byte results 116/94;
+// activation input orders and type-first creation inputs 37/37/37.
 // @retail 0x162060
 void __stdcall function_162060(void *engine)
 {

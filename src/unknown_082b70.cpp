@@ -82,6 +82,8 @@ static __forceinline long object_query_weapon(long unit_index, short slot)
 
 // score 65 (was 65): the value at [edx+0x10] is compared in a different register: retail
 // loads it into edx and keeps eax for the index, ours loads it into eax.
+// Shared object getter 65; shared header getter 65; output references 65; child reference 65; association
+// result 65; byte slots 65; shared/output 65; reference/result 65.
 // @retail 0x82c10
 void __stdcall function_82c10(long object_index, long *weapons)
 {

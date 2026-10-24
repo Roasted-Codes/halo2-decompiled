@@ -1061,6 +1061,9 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 	return result;
 }
 
+// score 142 (was 142): clock/compare schedule and vector homes differ; ordinary
+// pooled/clock reads with memset zero 178; projected-point loop 297; wide query
+// results 318; named maximum 146; target-copy loop 141 (one-count gain rejected).
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {

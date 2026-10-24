@@ -116,6 +116,9 @@ struct s_24e9c7_bounds
 
 /* Draws one marker's sprite at its placement; returns the sprite's height. */
 // score 125 (was 135): scalar homes, sprite-copy source and SSE scheduling remain; table read at each use 125 plain (743/743), real half width 135f, direct height 135f, sprite pointer 133f, global optimization off 716f.
+// Truncation helper at height 194, width 167, both 198; side before upper 139;
+// both sides before upper 138; direct alpha stores 125; const metadata 125;
+// native sprite rectangle 125. Result/kind/bitmap homes and sprite-source staging remain.
 // Round 280: plain quad passes 198; faded alpha first 125; lookup scope ended 125; shared bounds value 125; x then y coordinates 130.
 // Upper components 125; side components 125; reverse components 133; all components 133;
 // earlier upper displacement 123 plain (two points, dropped), with components 123; direct reverse uses 167.
