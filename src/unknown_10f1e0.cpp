@@ -1167,7 +1167,9 @@ bool function_111490(long unit_index)
 
 
 // score 1 (was 1): the argument is copied into EAX where retail passes it in ECX, because the
-// callee at 0xc7070 keeps its parameter in ECX.
+// callee at 0xc7070 keeps its parameter in ECX. Split pointer declarations 1; read-only pointees 1;
+// const pointer homes 1; an argument-address read 1; unsigned state selector 5;
+// default-first channel/state switches 1 each; scoped favor-speed-off 114.
 // @retail 0x1112f0
 bool function_1112f0(long unit_index)
 {
