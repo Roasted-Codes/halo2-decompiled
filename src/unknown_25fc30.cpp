@@ -1097,13 +1097,13 @@ void __stdcall function_25f290(
 				if (context->unknown61c > weapon->unknown0c)
 				{
 					weight = (1.f - (context->unknown61c - weapon->unknown0c) * weapon->unknown0c * 2.f) * weight;
-					if (!(weight > 4.f))
-					{
-						weight = 4.f;
-					}
 				}
 			}
 			else
+			{
+				weight = 4.f;
+			}
+			if (!(weight > 4.f))
 			{
 				weight = 4.f;
 			}
