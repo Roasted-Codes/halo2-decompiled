@@ -1596,6 +1596,9 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
+// score 186 (was 186): frame 0x10 agrees; object register, geometry-call convention and result/angle exits differ.
+// Axis name 186; result first 220; query result 195; first-bit assignment 186; size optimization 348.
+// Depth zero 386; depth one 186; success return 203; clamped input on current frame 216; word result 227.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,

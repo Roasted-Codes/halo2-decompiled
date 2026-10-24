@@ -851,6 +851,8 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
     return (node->flags & 1) && (!(node->flags & 2) || !function_1fa6b0(node, data));
 }
 
+// score 401 (was 405): frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
+// Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -859,7 +861,7 @@ bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real
     volatile long first_vertex = NONE;
     for (;;)
     {
-        s_pathfinding_edge const *volatile edge = &data->edges[edge_index];
+        s_pathfinding_edge const *edge = &data->edges[edge_index];
         bool first_open = path_node_open_2c(data, edge_node_2c(edge, 0));
         long node_index = edge_node_2c(edge, !first_open);
         if (!path_node_open_2c(data, node_index))
