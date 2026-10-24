@@ -1225,6 +1225,9 @@ bool function_c70b0(long unit_index);
 // and count-result materialization differ. Second predicate 194; native interruptible 341;
 // status names 347; size policy 602; overlay-first exits 415; conditional first 336;
 // conditional first with native interruptible 335.
+// score 164 (was 194): retail length recovered; object/header/state registers and count joins differ.
+// Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
+// byte result 164; unsigned identifiers 218.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1236,7 +1239,7 @@ bool __stdcall function_110ab0(long unit_index)
 	long overlay = control->channel_9c.unknown08;
 	long name = state->unknown7c;
 	long controlling = unit->field_13c;
-	bool result = false;
+	byte result = false;
 	bool depleted = false;
 	bool interruptible = false;
 	if (controlling != NONE)
@@ -1578,6 +1581,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // seat-weight branches 874, overlay pointer countdown 863, refreshed object 833,
 // direct bounds fallback 859, size preference 1557, object pointer name 833,
 // control-first declaration 833.
+// score 833 (was 833): unit/state homes and first angle expansion remain. Primary direction
+// snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
+// centered predicate after channel preparation 871.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

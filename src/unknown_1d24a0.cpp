@@ -106,6 +106,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  return function_30bf0(arg_3);
 }
 
+// score 1218 (was 1259): frame agrees; early EBX save, array/entry allocation and delta reloads differ.
+// Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
+// inline depth one 1259; counted angular residual 1218, kept after plain check.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
@@ -290,9 +293,8 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
      local_68.j = local_29.j - local_68.j;
      local_68.k = local_29.k - local_68.k;
      function_a75d0(&local_68, g_510c54->rate * local_12->field_58);
-     local_59.i = local_68.i * -1.0f + local_59.i;
-     local_59.j = local_68.j * -1.0f + local_59.j;
-     local_59.k = local_68.k * -1.0f + local_59.k;
+     for (long component = 0; component < 3; ++component)
+      local_59.n[component] = local_68.n[component] * -1.0f + local_59.n[component];
      if (!(local_3 > local_66)) local_3 = local_66;
      local_2 = true;
     }

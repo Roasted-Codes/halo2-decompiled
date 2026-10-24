@@ -2935,6 +2935,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // score 978 (was 978): frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
 // eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
+// score 971 (was 978): frame 0x2c agrees; saved registers, mode flags and state expansion differ.
+// Inner depth pairs removed 1212; direct texture API 983; dispatch defaults 1224;
+// normalization after dispatch 984; four-use alpha snapshot 971.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
@@ -3085,10 +3088,11 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     else if (mode == 1)
     {
         color4f first, second;
-        first.alpha = clamp_filter_unit(*(real const *)(configuration + 0x28));
-        first.red = clamp_filter_unit(*(real const *)(configuration + 0x1c) * *(real const *)(configuration + 0x28));
-        first.green = clamp_filter_unit(*(real const *)(configuration + 0x20) * *(real const *)(configuration + 0x28));
-        first.blue = clamp_filter_unit(*(real const *)(configuration + 0x24) * *(real const *)(configuration + 0x28));
+        real alpha = *(real const *)(configuration + 0x28);
+        first.alpha = clamp_filter_unit(alpha);
+        first.red = clamp_filter_unit(*(real const *)(configuration + 0x1c) * alpha);
+        first.green = clamp_filter_unit(*(real const *)(configuration + 0x20) * alpha);
+        first.blue = clamp_filter_unit(*(real const *)(configuration + 0x24) * alpha);
         second.alpha = clamp_filter_unit(*(real const *)(configuration + 0x68));
         second.red = clamp_filter_unit(*(real const *)(configuration + 0x5c));
         second.green = clamp_filter_unit(*(real const *)(configuration + 0x60));
