@@ -49,6 +49,10 @@ static __forceinline long floor_to_long_inline(real value)
 	}
 }
 
+// score 80 (was 80): packed-word load order, intensity spill and final word home.
+// Separate allocation increment, entry reference, position memcpy and early
+// group-pointer scope 80; object-tag result first 97; object-index guard first
+// 175; separate inline floor results 80; missing-geometry guard first 276.
 // @retail 0x2cbf0
 short function_2cbf0(long geometry, long category, short instance, dword flags,
     long tag, dword key, long material, byte *object, short mask, byte mode,

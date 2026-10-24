@@ -224,6 +224,10 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // score 408 (was 408): exact 0xb0 frame; late EBP save, random stores/getter expansion differ.
 // Interpolation remainder 415; child-duration default 411; failed-child continue 408;
 // overwritten placement default removed 409; definition reads at use 449.
+// frame 0xb0 agrees; EBP is saved after the early exits,
+// random scratch stores and interpolation/collision homes differ. Entry scalar
+// blend components 417; branch-scoped components 417; native kind snapshot 408;
+// inline depth one 408; independent random outputs 435.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

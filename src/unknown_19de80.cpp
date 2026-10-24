@@ -311,6 +311,11 @@ static inline bool teams_enabled_19e1c0()
 // score 443 (was 443): frame/result register and separate copy tails still differ.
 // Depth one with plain result 709; depth one with original result 443; unsigned mode 443;
 // opponent eligibility continue 443; opponent text initialized after scan 459; all restored.
+// frame 0x208 versus 0x204; result and copy tails differ.
+// Plain result with global optimisation off 1225; size mode 863; comparison-fed
+// terminators 413 (discarded); size mode with existing result 834; global
+// optimisation off with existing result 1225; comparison-fed plain result 709;
+// first-name comparison terminator 444; score-text comparison terminator 443.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

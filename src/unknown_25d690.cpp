@@ -1089,6 +1089,9 @@ s_ai_player *ai_player_get(long player_index);
    seat */
 // score 76 (was 76): the prologue: retail loads the global g_4f55f0 and its
 // data pointer before reserving the frame, ours reserves the frame first.
+// Const actor with store lookup 86; saved scalar names and entry homes 76;
+// named acceptance and failed-request exit 76; reversed dispatch 77;
+// shared tick 78; player lifetime across acceptance 76.
 // @retail 0x25c050
 void function_25c050(long player_index, long actor_index)
 {

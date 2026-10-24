@@ -320,6 +320,8 @@ void function_89a20(s_handle_peers *peers)
 
 // score 66 (was 66): the prologue and the first store differ: retail saves ebx/ebp/esi/edi
 // and stores the sender pointer into the table, ours uses edx and ecx.
+// Peer reference 66; table reference 66; index-first handle 66; sequence-first handle 66; mask condition 66;
+// membership result 66; short cursor 96; owner value 66.
 // @retail 0x898c0
 void replication_table_attach_sender(s_handle_peers *peers, long index, c_handle_table_450cd0 *sender)
 {
