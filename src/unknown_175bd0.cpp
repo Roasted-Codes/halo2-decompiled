@@ -2396,9 +2396,7 @@ void function_179fb0(s_effect_datum *effect)
 					object->owner_unknown4 = effect->owner.unknown4;
 					object->owner_unknown0 = effect->owner.unknown0;
 					object->owner_unknown8 = effect->owner.unknown8;
-					direction.i *= magnitude;
-					direction.j *= magnitude;
-					direction.k *= magnitude;
+					vector3f_scale(&direction, magnitude, &direction);
 					function_b7880(effect->object_index, NONE, &point, &direction, NULL);
 				}
 			}
