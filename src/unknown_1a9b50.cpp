@@ -765,6 +765,9 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 // immutable actor binding 32; read-only entry 32; inner facing 32;
 // complete state memory view 32, with inner facing 32; callback
 // noinline declaration 32. Original fast 32, plain 31; time getter kept.
+// object/prop scratch registers, state receiver and exit displacements differ.
+// External tag reference 32 fast; actor reference 32; node reference 32; tag/actor 32; tag/node 32.
+// Node/actor references 32; tag/node/actor 32; state reference 32. Unchanged fast preview is also 32.
 // @retail 0x1a9ec0
 short __stdcall function_1a9ec0(long arg_0)
 {

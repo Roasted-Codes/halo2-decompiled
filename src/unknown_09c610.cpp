@@ -254,6 +254,8 @@ struct s_input_9c610
 // final validity predicate 129; byte success result 23; unsigned reconstructed handle 23;
 // signed-byte material 46; bool presence field 23; named validated tag result 23; source-width
 // pool index 112; unsigned salt word 24.
+// Byte notification read 46; byte tail read 23; both byte reads 46; word notification read 46.
+// Word tail read 23; both word reads 46; signed-byte tail read 23; byte notification/signed tail 46.
 // @retail 0x9c610
 bool c_damage_aftermath_event_definition::v11(long arg_0, long const *arg_1, long arg_2, void const *arg_3)
 {
