@@ -73,6 +73,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 	return result;
 }
 
+// score 196 (was 196): early EBP save, teams byte home and local-slot spill differ;
+// unsigned count 242; short count 249; byte team 248; shared crowded with word slot 248; indexed fade with word slot 196.
 // @retail 0x15c150
 void function_15c150()
 {

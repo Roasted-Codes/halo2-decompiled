@@ -1171,6 +1171,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 	function_10cf80(&velocity, object_index, false);
 }
 
+// score 182 (was 182): release-byte RMW, impulse sharing and event-point homes differ;
+// scale-first 204; shared release with current carriers 182; shared damping 182; both scales 183;
+// detached arm first 199; expiry guard first 181; event point function scope 184.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
