@@ -70,6 +70,10 @@ void face_30aac0::function_30a9d0()
 // score 28 (was 81): retail keeps the face in esi and the edge counter in edi
 // and the done flag in an aligned byte slot at [esp+0x18], ours keeps the face
 // in edi, the counter in esi and the flag in the padding at [esp+0x1b]
+// A converting byte flag fixes the slot but scores 25 (bool, char and
+// unsigned char storage, constructor-body assignment, indexed edges, scalar
+// scratch first and placement after the clearing callee); flag declared
+// before the entered edge 80. All restored.
 // @retail 0x30aac0
 face_30aac0 *class_30a810::function_30aac0(face_30aac0 *start)
 {

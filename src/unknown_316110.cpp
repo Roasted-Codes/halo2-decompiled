@@ -148,7 +148,13 @@ inline void end_agent_316110(agent_316110 *agent)
 	}
 }
 
-// score 167 (was 185): the second collidable is now taken up front, so the
+// score 87 (was 185): the first cleanup call still swaps eax/edx vtable
+// registers, and the second handle is cached before the first scan.
+// Separate scan blocks with early handle snapshots 87 (from 167); fresh
+// pair reads 141, as did a late second handle, end snapshot, early return,
+// record base, force-inline cleanup, array pointers, split copy steps and
+// pair/order references. Original merge prefix plus separate scans 87.
+// At 167, the second collidable was taken up front, so the
 // pair dies in edx as retail's does; retail still reloads the pair from its
 // slot inside the loop and keeps the array pointer in esi, ours keeps the
 // second in the slot and the pointer in edx, and the two virtual calls swap
@@ -177,46 +183,49 @@ void cache_316110::function_316110(pair_316110 const *pair)
 	}
 	collidable_316110 *first = pair->first;
 	collidable_316110 *second = pair->second;
-	pairs_316110 *pairs = &island_of_316110(first)->pairs;
-	int i;
-	for (i = 0; i < pairs->size; i++)
 	{
-		if (pairs->data[i].first->id == first->id && pairs->data[i].second->id == second->id)
+		pairs_316110 &pairs = island_of_316110(first)->pairs;
+		for (int i = 0; i < pairs.size; i++)
 		{
-			goto remove;
+			if (pairs.data[i].first->id == first->id && pairs.data[i].second->id == second->id)
+			{
+				pairs.size--;
+				pairs.data[i] = pairs.data[pairs.size];
+				return;
+			}
 		}
 	}
 	{
-		pairs = &island_of_316110(second)->pairs;
-		for (i = 0; i < pairs->size; i++)
+		pairs_316110 &pairs = island_of_316110(second)->pairs;
+		for (int i = 0; i < pairs.size; i++)
 		{
-			if (pairs->data[i].first->id == first->id && pairs->data[i].second->id == second->id)
+			if (pairs.data[i].first->id == first->id && pairs.data[i].second->id == second->id)
 			{
-				goto remove;
+				pairs.size--;
+				pairs.data[i] = pairs.data[pairs.size];
+				return;
 			}
 		}
+	}
+	{
 		island_316110 *island = island_of_316110(first);
 		if (island == static_cast<island_316110 *>(this))
 		{
 			island = island_of_316110(second);
 		}
-		records_316110 *records = &island->records;
-		for (int j = 0; j < records->size; j++)
+		records_316110 &records = island->records;
+		for (int j = 0; j < records.size; j++)
 		{
-			if (records->data[j].first->id == first->id && records->data[j].second->id == second->id)
+			if (records.data[j].first->id == first->id && records.data[j].second->id == second->id)
 			{
-				end_agent_316110(records->data[j].agent);
-				records->size--;
-				for (int k = j; k < records->size; k++)
+				end_agent_316110(records.data[j].agent);
+				records.size--;
+				for (int k = j; k < records.size; k++)
 				{
-					records->data[k] = records->data[k + 1];
+					records.data[k] = records.data[k + 1];
 				}
 				return;
 			}
 		}
-		return;
 	}
-remove:
-	pairs->size--;
-	pairs->data[i] = pairs->data[pairs->size];
 }
