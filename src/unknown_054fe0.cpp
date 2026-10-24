@@ -284,6 +284,10 @@ long __stdcall function_64610(dword *xuid)
 
 /* how far a local user has got into the session: 0 none, 1 the session is
    not live, 2/3 no player yet, 4 no slot, 5 player out of date, 6 up to date */
+// score 48 (was 48): missing separate players base and shared state tails;
+// const session/player 48/48, players-array reference 48, unsigned player
+// handle 48, unsigned user ordinal 48, reversed property comparison 48,
+// member-index array reference 48, array reference with unsigned handle 48.
 // @retail 0x646b0
 long network_session_interface_get_user_state(c_class_58d20 *session, long user_index)
 {
@@ -713,7 +717,7 @@ static inline long session_get_maximum_player_count(c_class_58d20 *session)
 	return result;
 }
 
-static inline short session_get_value_5dd0_inline(c_class_58d20 *session)
+static __forceinline short session_get_value_5dd0_inline(c_class_58d20 *session)
 {
 	short result = NONE;
 	if (SESSION_STATE_IS_LIVE(session->state))
@@ -721,31 +725,16 @@ static inline short session_get_value_5dd0_inline(c_class_58d20 *session)
 	return result;
 }
 
-// score 32 (was 32): retail keeps the three temporary values (value498c, the
-// maximum player count and the global state) in eax, ours keeps them in esi
-// and saves esi around the body; the checks and the exits match.
 // @retail 0x63e00
 bool network_session_interface_can_add_player(void)
 {
 	bool result = false;
-	c_class_58d20 *session = network_session_get_live();
-	if (!session)
-		goto done;
-	if (session_get_value_498c(session) != 0)
-		goto done;
-	if (session->player_count >= session_get_maximum_player_count(session))
-		goto done;
-	if (g_527330.state == 6 || g_527330.state == 7 || g_527330.state == 8 || g_527330.state == 9)
-		goto done;
-	{
-		short local_0 = NONE;
-		if (SESSION_STATE_IS_LIVE(session->state))
-			local_0 = session->value5dd0;
-		if (local_0 != NONE)
-			goto done;
-	}
-	result = true;
-done:
+	c_class_58d20 *session;
+	if (network_session_get_current_if_valid(&session) && session_state_is_live(session))
+		result = session_get_value_498c(session) == 0 &&
+			session->player_count < session_get_maximum_player_count(session) &&
+			g_527330.state != 6 && g_527330.state != 7 && g_527330.state != 8 && g_527330.state != 9 &&
+			session_get_value_5dd0_inline(session) == NONE;
 	return result;
 }
 
@@ -1259,6 +1248,9 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
+// score 199 (was 199): frame 0xe4 agrees; owner/count registers and requested cursor differ.
+// Fast control 224; owner after getter 243; collected-name end pointer 236;
+// byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

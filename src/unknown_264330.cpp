@@ -255,6 +255,8 @@ void function_264940(long actor_index, long prop_ref_index)
 	}
 }
 
+// score 358 (was 358): frame 0x24 versus 0x20; object/view allocation and cached object index differ.
+// Full-width unit mask 439; sampled-time reuse 380; deferred tracking view 431; fallback state default 358; inline depth one 358.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -391,6 +393,14 @@ void *function_1e5240(long actor_index);
 real function_2683f0(long actor_index, long node_index, short type);
 void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *sample, s_2640c0 *motion);
 
+// score 426 (was 426): frame 0xa4 versus 0xa0; actor input and workspaces differ.
+// Wide prior state and byte sampling flags 426; byte sampled-one 426;
+// native for traversal 436; later update init 427; later flag inits 426;
+// for plus wide update/sample/both 439/437/429; release noinline with
+// for/original traversal 475/456.
+// frame 0xa4 versus 0xa0, actor stacked versus EAX/EBX;
+// initial update predicate 441 (frame 0xa0); counter word snapshot 426;
+// prior-state word 426; case-one tracking scope 426; separate final guards 426.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -713,6 +723,16 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 
+// score 358 (was 370): actor/view registers and pointer/flag homes; ordinary
+// path first 373; maximum result 372 (plain 370); wide other priorities 376;
+// visible-view arm first 376; tracking-handle snapshot 373.
+// ordinary current scope 375; suppression scope 366 (plain 373); object/unit
+// scope 371; all ordinary captures scoped 363 (plain 358); active single exit 373.
+// Prop pointer scoped to ordinary arm 369; prop/squad scopes 371; Boolean
+// mode snapshots 378; branch-assigned two-priority maximum 363; single final
+// priority store 367 (fast control 363, full baseline 358); all restored.
+// saved actor in ordinary arm 371 (plain 367); native actor fields 363;
+// both 371; timestamp name 363; inline depth one 363 (preview 363).
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
@@ -736,10 +756,6 @@ void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *
 		view = NULL;
 	byte *prop = (byte *)prop_get(reference->prop_index);
 	long time = g_510c54->game_time;
-	byte *object = *(byte **)(g_4e0300->data + (reference->object_index & 0xffff) * 12 + 8);
-	bool suppressed = (squad && (squad[2] & 1)) || *(short *)(actor + 0x84) == 1 || actor[0x228];
-	bool current = *(long *)(actor + 0x338) == prop_ref_index;
-	bool is_unit = object[0xaa] == 0;
 	if (*(short *)(actor + 4) == 15 && *(long *)(actor + 0x26c) != NONE)
 	{
 		byte *parent = *(byte **)(g_4e0300->data + (*(long *)(actor + 0x26c) & 0xffff) * 12 + 8);
@@ -790,6 +806,10 @@ void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *
 	}
 	else
 	{
+		byte *object = *(byte **)(g_4e0300->data + (reference->object_index & 0xffff) * 12 + 8);
+		bool suppressed = (squad && (squad[2] & 1)) || *(short *)(actor + 0x84) == 1 || actor[0x228];
+		bool current = *(long *)(actor + 0x338) == prop_ref_index;
+		bool is_unit = object[0xaa] == 0;
 		long root = function_baf40(is_unit && *(long *)(object + 0x14) != NONE ? *(long *)(object + 0x14) : reference->object_index);
 		long mode = prop[0x25] && prop[0x23] ? 2 : 0;
 		short sight = function_1c8df0(root, &motion->field_0, *(short *)((byte *)motion + 0x28),

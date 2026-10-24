@@ -82,6 +82,8 @@ static __forceinline long object_query_weapon(long unit_index, short slot)
 
 // score 65 (was 65): the value at [edx+0x10] is compared in a different register: retail
 // loads it into edx and keeps eax for the index, ours loads it into eax.
+// Shared object getter 65; shared header getter 65; output references 65; child reference 65; association
+// result 65; byte slots 65; shared/output 65; reference/result 65.
 // @retail 0x82c10
 void __stdcall function_82c10(long object_index, long *weapons)
 {
@@ -210,6 +212,9 @@ struct s_weapon_definition_view
  byte *barrels;
 };
 
+// score 149 (was 149): frame 0x20 versus 0x1c; weapon-table CSE and
+// sentinel/trigger homes differ; invalid weapon initialization 149; flat
+// fallbacks 149; unsigned hand 149; typed trigger state 149; state at use 149.
 // @retail 0x82d20
 void function_82d20(long object_index, s_object_relevance_source *source, s_weapon_activity_result *result)
 {

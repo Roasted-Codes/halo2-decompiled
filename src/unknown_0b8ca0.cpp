@@ -626,6 +626,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
     return (*(short *)(data->data + data->size * absolute) << 16) | absolute;
 }
 
+// score 231 (was 231): caller-dependent frame alignment and scalar homes differ;
+// direct double with ancestry for-loop 235; first offset loop 235; second offset
+// loop 235; marker-position loop 235; initial radius snapshot 235.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -793,7 +796,7 @@ bool __stdcall function_bdef0(long object_index)
         delta.i = center.x - *(real *)(object + 0x40);
         delta.j = center.y - *(real *)(object + 0x44);
         delta.k = center.z - *(real *)(object + 0x48);
-        if (delta.k * delta.k + delta.i * delta.i + delta.j * delta.j > 0.01f ||
+        if (delta.k * delta.k + delta.i * delta.i + delta.j * delta.j > 0.1f * 0.1f ||
             radius != *(real *)(object + 0x4c))
             function_b87b0(object_index);
         else
@@ -1577,6 +1580,9 @@ void function_b8840(long index);
 long function_baf80(long index);
 void function_bba20(long index);
 
+// score 319 (was 319): pool/permission registers and transform scheduling differ;
+// native point snapshot 385; native orientation snapshots 341; all snapshots 362;
+// inverse workspace scope 319; spatial workspace names 319.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

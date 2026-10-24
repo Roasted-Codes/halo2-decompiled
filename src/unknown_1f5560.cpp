@@ -317,6 +317,14 @@ static inline short heading_unit_get_state(s_heading_unit *unit)
 
 /* where the actor's unit (a biped) is heading: backwards out of its current
    animation, or toward the actor's target point */
+// score 11 (was 11): the state is loaded with movsx and spilled as a dword;
+// retail loads it into cx and keeps it in a word on the stack. Tried: the
+// state through function_e70b0's out parameter 124; this helper with an out
+// parameter and a short state 90.
+// state is sign-extended and spilled as a dword; retail
+// loads and spills a word. State 7 first 13; state before movement 86;
+// animation first 19; promoted accessor return 11; unsigned accessor 11;
+// indexed forward 11; indexed target 11; immutable long state 11.
 // @retail 0x1f55e0
 bool function_1f55e0(long actor_index, point3f *point, vector3f *direction)
 {
@@ -437,7 +445,9 @@ static inline real heading_distance3d(point3f const *a, point3f const *b)
 /* while the actor's target point (+0x638) is fresh: faces it, and once
    within half a world unit of it asks the unit to stop there (request 0x2d) */
 // score 66 (was 66): retail saves ESI in the prologue, ours does not, and
-// ours is ten bytes longer than retail.
+// ours is ten bytes longer than retail. Inline depths one/two 66, zero 197;
+// size preference 221; frame pointer 133; global optimization off 177;
+// explicit availability outcomes 64/421 bytes; force-inline distance 66.
 // @retail 0x1f58c0
 bool function_1f58c0(long actor_index, vector3f *facing, short *unknown)
 {
@@ -726,6 +736,13 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 
 real normalize2d(point2f *v);
 
+// score 172 (was 191): fast-byte initialization and trajectory call convention;
+// search then selection 172; unsigned scan 178; fixed do/while 191;
+// types arm first 191; fallback setters 195; split plus unsigned scan 223.
+// signed-long search 192; signed-byte search 188; exact exhaustion 210;
+// named first normalization result 172; global optimization off 542.
+// low-bit presence guard 228; native type clamp 236; branch-defined chosen speed 220;
+// target snapshot 234; inline depth zero 231. Frame 0x48 still agrees.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -753,21 +770,20 @@ bool function_1f8160(long actor_index, signed char const *types, point3f const *
             }
             else
             {
-                for (short i = 0; i < 6; i++)
+                short i = 0;
+                while (i < 6 && !(*types & (1 << i)))
+                    ++i;
+                if (i < 6)
                 {
-                    if (*types & (1 << i))
-                    {
-                        if (i <= selected_type)
-                            selected_type = i;
-                        real selected_speed = 0.0f;
-                        byte *globals = (byte *)g_4e034c;
-                        if (selected_type >= 0 && selected_type < 6 && globals && *(long *)(globals + 0xc8) > 0)
-                            selected_speed = *(real *)(*(byte **)(globals + 0xcc) + 0x80 + selected_type * 4);
-                        speed = selected_speed;
-                        first_type = i == 0;
-                        valid = true;
-                        break;
-                    }
+                    if (i <= selected_type)
+                        selected_type = i;
+                    real selected_speed = 0.0f;
+                    byte *globals = (byte *)g_4e034c;
+                    if (selected_type >= 0 && selected_type < 6 && globals && *(long *)(globals + 0xc8) > 0)
+                        selected_speed = *(real *)(*(byte **)(globals + 0xcc) + 0x80 + selected_type * 4);
+                    speed = selected_speed;
+                    first_type = i == 0;
+                    valid = true;
                 }
             }
         }
@@ -960,6 +976,8 @@ done:
         *movement_out = movement;
 }
 
+// score 307 (was 307): frame 0x18 versus 0x1c; actor/object roles and factor homes differ.
+// Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1232,6 +1250,8 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
     return 0.0f;
 }
 
+// score 294 (was 294): frame 0x3c agrees; radius/result homes and initial direction materialization differ.
+// With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

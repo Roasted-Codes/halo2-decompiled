@@ -9,6 +9,7 @@
 #include "loop_allocator.h"
 #include "unknown_1cafc0.h"
 #include "object_queries.h"
+#include "bit_vector.h"
 #include <string.h>
 
 #define FLAG(bit) (1 << (bit))
@@ -645,8 +646,11 @@ struct s_object_identifier_bbf40
 	char source;
 };
 
-// score 37 (was 41): the byte field is read into DL and the stack byte into CL; retail reads the
+// score 9 (was 41): the byte field is read into DL and the stack byte into CL; retail reads the
 // byte at +0xaa into DL and the stack byte into CL.
+// Type/source/id equality order still differs. Byte differences 156;
+// mismatch count 144; match count 146; boolean product 59; byte-pair
+// memcmp 139; id memcmp 136; eager origin 34; const candidate 9.
 // @retail 0xbf760
 long function_bf760(long const *unique_id)
 {
@@ -812,17 +816,24 @@ static __forceinline byte *object_bytes_ab(long index)
     return (byte *)((s_object_header_0bbf40 *)g_4e0300->data)[index & 0xffff].object;
 }
 
-// score 101 (was 101): ours is thirteen bytes shorter and pushes EBP and ESI where retail pushes EBX
-// and EBP, so the saved registers differ.
+struct s_object_flags12c_ab
+{
+    word : 3;
+    word flag3 : 1;
+    word : 12;
+};
+
+// score 49 (was 101): retail saves ESI only after the early return for a unit with a player,
+// so that return gets its own epilogue; ours saves ESI in the prologue and shares it.
+// Tried: returning early with `if (result) return result;` after the parent walk (118).
 // @retail 0xbeb30
 bool __stdcall function_beb30(long object_index)
 {
-    byte *volatile object = object_bytes_ab(object_index);
+    byte *object = object_bytes_ab(object_index);
     byte *unit = (byte *)function_badc0(object_index, 3);
     long player = NONE;
     if (unit) player = *(long *)(unit + 0x13c);
-    byte &result = *(byte *)&object_index;
-    result = player != NONE;
+    bool result = player != NONE;
     if (!result)
     {
         long index = *(long *)(object + 0x10);
@@ -836,15 +847,11 @@ bool __stdcall function_beb30(long object_index)
         while (index != NONE)
         {
             byte *parent = object_bytes_ab(index);
-            byte *header = datum_get_inlined(g_4e0300, index);
-            if (header && ((1 << header[3]) & 3))
-            {
-                byte *parent_unit = *(byte **)(header + 8);
-                if (parent_unit && *(long *)(parent_unit + 0x13c) != NONE) return true;
-            }
+            byte *parent_unit = (byte *)function_badc0(index, 3);
+            if (parent_unit && *(long *)(parent_unit + 0x13c) != NONE) return true;
             index = *(long *)(parent + 0x14);
         }
-        if (((1 << object[0xaa]) & 0x1c) && (bool)(((dword)object[0x12c] >> 3) & 1))
+        if (((1 << object[0xaa]) & 0x1c) && TEST_FIELD_BIT(((s_object_flags12c_ab *)(object + 0x12c))->flag3))
             return true;
     }
     return result;
@@ -1070,46 +1077,37 @@ void __stdcall function_c3260(long light_index, bool clear_object_flag);
 bool function_177610(long effect_index);
 void contrail_update(long contrail_index, bool detach, real dt);
 
-// score 2 (was 2): the flag bit is cleared after the store; retail clears it before the store.
 // @retail 0xbee60
 dword function_bee60(long object_index)
 {
-    byte *object = (byte *)((s_object_header_0bbf40 *)g_4e0300->data)[object_index & 0xffff].object;
-    long count = (dword)(long)*(short *)(object + 0x11c) / sizeof(s_object_attachment_ab);
-    s_object_attachment_ab *attachment = (s_object_attachment_ab *)(object + *(volatile short *)(object + 0x11e));
-    if (count > 0)
+    s_object_0bbf40 *object = object_get_0bbf40(object_index);
+    long count = (dword)(long)*(short *)((byte *)object + 0x11c) / sizeof(s_object_attachment_ab);
+    s_object_attachment_ab *attachments = (s_object_attachment_ab *)((byte *)object + *(short *)((byte *)object + 0x11e));
+    for (long i = 0; i < count; i++)
     {
-        long *index = &attachment->index;
-        volatile long remaining = count;
-        do
+        if (attachments[i].kind != NONE && attachments[i].index != NONE)
         {
-            if (*(char *)(index - 1) != NONE && *index != NONE)
+            switch (attachments[i].kind)
             {
-                switch (*(char *)(index - 1))
-                {
-                case 0:
-                    function_c3260(*index, true);
-                    break;
-                case 1:
-                    record_pool_release(g_4ed28c, *index);
-                    break;
-                case 2:
-                    function_177610(*index);
-                    break;
-                case 3:
-                    function_bd090(object_index);
-                    contrail_update(*index, true, 0.0f);
-                    break;
-                }
+            case 0:
+                function_c3260(attachments[i].index, true);
+                break;
+            case 1:
+                record_pool_release(g_4ed28c, attachments[i].index);
+                break;
+            case 2:
+                function_177610(attachments[i].index);
+                break;
+            case 3:
+                function_bd090(object_index);
+                contrail_update(attachments[i].index, true, 0.0f);
+                break;
             }
-            *(char *)(index - 1) = (char)0xff;
-            *index = NONE;
-            index += 2;
-        } while (--remaining);
+        }
+        attachments[i].kind = NONE;
+        attachments[i].index = NONE;
     }
-    dword flags = *(dword *)(object + 4) & ~0x10;
-    dword final_flags = flags & ~0x20;
-    *(volatile dword *)(object + 4) = flags;
-    *(dword *)(object + 4) = final_flags;
-    return final_flags;
+    bit_vector_set(&object->flags, 4, false);
+    bit_vector_set(&object->flags, 5, false);
+    return object->flags;
 }

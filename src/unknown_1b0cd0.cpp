@@ -70,25 +70,6 @@ __forceinline point2f *point_get(long reference)
 
 vector2f *g_468778;
 
-inline real magnitude2d(vector2f const *v)
-{
-	return (real)sqrt(v->i * v->i + v->j * v->j);
-}
-
-inline real normalize2d_fast(vector2f *v)
-{
-	real magnitude = magnitude2d(v);
-
-	if (fabs(magnitude) < 0.0001f)
-		return 0.0f;
-
-	real scale = 1.0f / magnitude;
-
-	v->i *= scale;
-	v->j *= scale;
-	return magnitude;
-}
-
 static inline real distance2d(point2f const *a, point2f const *b)
 {
 	real dx = a->x - b->x;
@@ -418,6 +399,10 @@ bool function_1b1970(long actor_index, short mode, vector2f const *forward,
 	return result;
 }
 
+// score 19 (was 19): origin/forward setup and native index/mode arguments differ;
+// origin pointer 19; origin reference 19; external index reference 79.
+// external mode reference 46; no target vector setter 65; native index type 19.
+// alias analysis 19; size preference 321; external field pair 78.
 // @retail 0x1b1a90
 void __stdcall function_1b1a90(long actor_index, s_slot *slot, s_slot_target_list *list)
 {

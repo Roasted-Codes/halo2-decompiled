@@ -780,6 +780,12 @@ void function_25aba0(long actor_index);
 
 
 
+// score 69 (was 143): frame 0x4c agrees; ESI/EDI, state-one decrement and zero-fill differ.
+// Native workspace initializer 69; owner lifetime 266; level lifetime 320;
+// entry pointer walk 261; full-width choice 150; full-width type 338.
+// Two-word initializer 68; full member initializer 287; retained ordinal 244;
+// shared final exit 69; frame pointer on native initializer 334.
+// Round 280: outer workspace 143; short copy counter 69; long level 173; retained handler reads 69; ordinary dispatch first 131.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -869,8 +875,7 @@ void __stdcall function_1a7cc0(long actor_index)
 			continue;
 		}
 
-		s_slot data;
-		memset(&data, 0, sizeof(data));
+		s_slot data = {0};
 		short choice = ((short (__stdcall *)(long, short, s_slot *))((s_slot_handler_1 *)handler)->choose)(actor_index, level, &data);
 
 		if (choice == g_46fbe4)
@@ -1142,6 +1147,13 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
     arg_2->k = arg_0->k * arg_1;
 }
 
+// score 18 (was 18): point argument is rematerialized instead of copied;
+// the frame and projection agree. Sampling name 18; vector names 18;
+// vectors declared first 18; const unit 18; saved body count 124;
+// workspace memcpy 18; indexed output 23; const component 18.
+// Support handle 18; nullable component 110; body read first 30;
+// valid body interval 85; entry workspace 18; unit-scope workspace 18;
+// const support 18; unsigned object handle 18.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {
@@ -1172,15 +1184,11 @@ void function_1a68a0(long object_index, vector3f *velocity)
 			}
 			function_ba1d0(object_index, velocity, NULL);
 			vector3f relative;
-			relative.i = velocity->i - local_3.field_0.i;
-			relative.j = velocity->j - local_3.field_0.j;
-			relative.k = velocity->k - local_3.field_0.k;
-			real along_i = unit->normal.i * relative.i;
-			real along_k = unit->normal.k * relative.k;
-			real along_j = unit->normal.j * relative.j;
-			real projection = (along_i + along_k) + along_j;
+			vector3d_from_points3d((point3f const *)&local_3.field_0, (point3f const *)velocity, &relative);
+			vector3f const *normal = &unit->normal;
+			real projection = dot3f(normal, &relative);
 			vector3f projected;
-			function_1a68a2(&unit->normal, projection, &projected);
+			function_1a68a2(normal, projection, &projected);
 			velocity->i -= projected.i;
 			velocity->j -= projected.j;
 			velocity->k -= projected.k;
@@ -1478,16 +1486,17 @@ struct s_target_link_definition
 bool function_1a59f0(long object_index, long excluded_index, short team, bool *has_hostile);
 bool function_1a5b00(long object_index, short team, bool *has_hostile);
 
-// score 32 (was 32): the helper is called with a different register and the return value is built
-// with a different order of the pops.
 // @retail 0x1a5910
 bool __stdcall function_1a5910(long object_index, long excluded_index, short team, bool *has_hostile)
 {
 	bool result;
 	*has_hostile = false;
 	if (object_index != excluded_index)
-	{
 		result = true;
+	else
+		result = false;
+	if (result)
+	{
 		s_object_header *header = OBJECT_HEADER(object_index);
 		if ((1 << header->type) & 3)
 		{
@@ -1506,8 +1515,6 @@ bool __stdcall function_1a5910(long object_index, long excluded_index, short tea
 			}
 		}
 	}
-	else
-		result = false;
 	return result;
 }
 
@@ -1601,6 +1608,13 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
+// score 42 (was 186): frame/length agree; geometry-call convention, flag branches and angle tails differ.
+// Axis name 186; result first 220; query result 195; first-bit assignment 186; size optimization 348.
+// Depth zero 386; depth one 186; success return 203; clamped input on current frame 216; word result 227.
+// object register, geometry-call convention and failure/angle tails differ;
+// axis name 186; result first 220; geometry result guard 195; masked first bit 186; size optimization 348.
+// Failure to common exit 98; signed byte result 196; second-bit results 178; angle result 201; radius snapshot 209.
+// Exit plus second-bit results 199; exit plus scalar clamp 42.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1617,7 +1631,7 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 		if ((1 << object->type) & 1)
 		{
 			if (!function_1a62e0(object_index, origin, direction, &candidate->point))
-				return false;
+				goto done;
 			s_candidate_unit_definition *definition = (s_candidate_unit_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 			if (definition->flags & 1)
 				candidate->flags |= 1;
@@ -1664,11 +1678,10 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 		candidate->distance = function_30bf0(&candidate->direction);
 		candidate->alternate = alternate;
 		real cosine = dot3f(&candidate->direction, direction);
-		if (-1.0f > cosine)
-			candidate->angle = function_50650(-1.0f);
-		else
-			candidate->angle = function_50650(cosine > 1.0f ? 1.0f : cosine);
+		cosine = -1.0f > cosine ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
+		candidate->angle = function_50650(cosine);
 	}
+done:
 	return result;
 }
 
@@ -1745,26 +1758,27 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 	return (s_target_link_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 }
 
+// score 113 (was 131): call argument setup, marker-loop homes and terminal epilogues still differ.
+// Direct count increment 121; native short query 129; shared exit 131; direct optional transform 115.
+// Positive marker count 129; combined increment/transform 113; combined short query 114; direct count cleanup 113.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
 {
-	long &local_0 = count;
 	s_target_link_view *object = (s_target_link_view *)OBJECT_HEADER(object_index)->object;
 	byte *definition = g_4e3b44[object->definition_index & 0xffff].bytes;
 	real scale = 1.0f;
 	if (((1 << object->field_aa) & 3) &&
 		(bool)((function_1a5c01(object_index)->field_bc >> 19) & 1))
 		scale = ((s_candidate_scale_globals *)g_4e034c)->field_f4->field_8;
-	if (local_0 < 64 && function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
-		origin, direction, &candidates[local_0]) && function_1a60f0(&candidates[local_0], weights, scale))
-		local_0++;
+	if (count < 64 && function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
+		origin, direction, &candidates[count]) && function_1a60f0(&candidates[count], weights, scale))
+		count++;
 	long marker_tag = *(long *)(definition + 0x38);
 	if (marker_tag != NONE)
 	{
 		s_target_marker_table *table = (s_target_marker_table *)g_4e3b44[marker_tag & 0xffff].bytes;
-		s_sort_candidate_view *candidate = &candidates[local_0];
-		long volatile &local_1 = count;
+		s_sort_candidate_view *candidate = &candidates[count];
 		for (long marker_index = 0; marker_index < table->count; marker_index++)
 		{
 			s_target_marker *marker = &table->markers[marker_index];
@@ -1772,19 +1786,18 @@ long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool 
 			long marker_count = function_b8d30(object_index, marker->name, markers, 2, false);
 			if (marker_count != 0)
 			{
-				s_object_marker *second = marker_count == 2 ? &markers[1] : NULL;
-				if (local_1 < 64 && function_1a5e40(object_index, alternate, marker_index, marker,
-					&markers[0].matrix, second ? &second->matrix : NULL,
+				if (count < 64 && function_1a5e40(object_index, alternate, marker_index, marker,
+					&markers[0].matrix, marker_count == 2 ? &markers[1].matrix : NULL,
 					origin, direction, candidate) &&
 					function_1a60f0(candidate, weights, marker->field_10 * scale))
 				{
-					local_1++;
+					count++;
 					candidate++;
 				}
 			}
 		}
 	}
-	return local_0;
+	return count;
 }
 
 struct s_1a56c0
@@ -2067,6 +2080,12 @@ long function_cb6d0(long unit_index);
 bool function_cb810(long unit_index, vector3f *vector);
 long function_baf40(long object_index);
 
+// score 177 (was 177): frame 0xb4 versus 0xb8; output record uses stack/EBP, retail EBX.
+// Full-width selector 203; later player view 200; wide secondary selector 177;
+// native vector/workspace role names 177; outer return guard 177.
+// Reversed velocity lexical homes 177; x/y/z scalar names 177; combined 177;
+// geometry-only scope 177; target frame pointer 264.
+// Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225; candidate score tests 186; retained direction unit index 210.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {

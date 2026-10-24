@@ -39,6 +39,9 @@ PRIVATE __forceinline long sky_surface_tag(short index)
 
 real function_30bf0(vector3f *vector);
 
+// score 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
+// and pending trigonometric components differ. Native sky fields 213; native
+// light/value fields 213; both views 213; frame pointer 296; status enum 213.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -978,6 +981,10 @@ PRIVATE __forceinline bool surface_status_failed(long status)
     return status == 1 || status == 2 || status == 3;
 }
 
+// score 44 (was 44): early object-flag register and pointer/flags homes
+// differ, followed by tag-bit extraction. Zero then OR 148; const tag 44;
+// byte tag bitfield 135; dword object bitfield 44; named query failure 44;
+// explicit final exits 181; inverse failure result 44; retry flag update 44.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
@@ -1137,6 +1144,14 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
     return 0.0f;
 }
 
+// score 539 (was 539): frame 0x2c versus 0x28, stored result and block/query registers differ.
+// Late success return 577; short result 585; direct primary output 598; early square 579;
+// negate normal before copy 546; late return plus parameter order 577; ordered countdown
+// traversal 560 (retail length); countdown with tested result 566.
+// score 529 (was 539): second scale starts at its application; retail length, extra frame word remains.
+// Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
+// early final fade 529/2196; second scale at use 529/2189 kept.
+// Final fade with late second scale 541/2175 (restored).
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1193,10 +1208,10 @@ bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color
 		real luminance = 2.0f * (0.11f * lightmap->blue + 0.59f * lightmap->green + 0.3f * lightmap->red);
 		record->value1c = lighting_function(&parameters->value1c, lighting_pin(luminance, 0.0f, 1.0f));
 		real scale1 = lighting_function(&parameters->scale1, length);
-		real scale2 = lighting_function(&parameters->scale2, length);
 		record->color1.red *= scale1;
 		record->color1.green *= scale1;
 		record->color1.blue *= scale1;
+		real scale2 = lighting_function(&parameters->scale2, length);
 		record->color2.red *= scale2;
 		record->color2.green *= scale2;
 		record->color2.blue *= scale2;
@@ -1213,6 +1228,16 @@ real g_467484 = 15.0f;
 real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
+// score 364 (was 429): frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// copied limited color kept; early squared length 428, decoded-color names 429,
+// in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
+// Base clamped in place 444; outer limited-color lifetime 364; copied color plus
+// in-place rotation 435 (retail length); scales at first use 381; shared surface clamp 481;
+// shared axis view 515, with in-place rotation 463, with in-place base clamp 542
+// (all three axis views lose the matched caller). Original helper and bodies restored.
+// score 364 (was 364): rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
+// shared negate then native output 460; scoped turned vector 364; single-result normalizer 380;
+// ordinary rotation inline 364.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1239,10 +1264,10 @@ void function_d4080(long type, s_effect_color_query const *query, s_lighting_rec
 		record->color1 = lightmap;
 		function_117c80(&normal, &record->direction1, g_467484);
 		lighting_negate(&record->direction1);
-		color3f limited;
-		limited.red = base.red < 0.25 ? 0.25 : base.red > 0.75 ? 0.75 : base.red;
-		limited.green = base.green < 0.25 ? 0.25 : base.green > 0.75 ? 0.75 : base.green;
-		limited.blue = base.blue < 0.25 ? 0.25 : base.blue > 0.75 ? 0.75 : base.blue;
+		color3f limited = base;
+		limited.red = limited.red < 0.25 ? 0.25 : limited.red > 0.75 ? 0.75 : limited.red;
+		limited.green = limited.green < 0.25 ? 0.25 : limited.green > 0.75 ? 0.75 : limited.green;
+		limited.blue = limited.blue < 0.25 ? 0.25 : limited.blue > 0.75 ? 0.75 : limited.blue;
 		record->color2.red = lighting_pin((lightmap.red * limited.red) * 2.0f, 0.0f, 1.0f);
 		record->color2.green = lighting_pin((lightmap.green * limited.green) * 2.0f, 0.0f, 1.0f);
 		record->color2.blue = lighting_pin((lightmap.blue * limited.blue) * 2.0f, 0.0f, 1.0f);
@@ -1564,6 +1589,16 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
+// score 819 (was 835): the long per-vertex flag and the sample points declared at the top of
+// their scope; mesh, UV and color homes and helper expansion still differ (frame 0xa8 versus 0x90).
+// Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
+// metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
+// lifetime 825; depth one 835; material noinline 870/866.
+// shared cross-path normal 820; shared cross-path base color 825; native scale helper 853;
+// texture carrier name 819; first sample lexical position 819.
+// Dynamic validity long 863; base validity short 819; accumulated sampled color 828;
+// weighted normal loop 892; both lengths before scaling 837; one broad sample scope
+// with the other two narrowed (first/second/third) 831/831/831.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
@@ -1593,7 +1628,7 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
             real base_u = 0.0f, base_v = 0.0f;
             long bitmap_index = NONE;
             long palette_index = NONE;
-            bool per_vertex = index != NONE &&
+            long per_vertex = index != NONE &&
                 *(word *)(*(byte **)((byte *)g_4e0348 + 0x144) + index * 0x58 + 0x56) != 0;
             if (!per_vertex)
             {
@@ -1643,6 +1678,9 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
         byte *definition = g_4e3b44[*(long const *)(record + 0xc) & 0xffff].bytes;
         s_mesh *mesh = *(s_mesh **)(*(byte **)(definition + 0x28) + section_index * 0x5c + 0x34);
         word const *vertices = (word const *)((byte *)mesh->triangles + triangle->part_offset * 2);
+        s_sample_point point_a;
+        s_sample_point point_b;
+        s_sample_point point_c;
         bool dynamic_valid = false;
         color3f dynamic_color;
         vector3f dynamic_normal;
@@ -1653,22 +1691,19 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
             if (block)
             {
                 byte *data = *(byte **)(block + 0xc) + *(long *)(block + 4);
-                s_sample_point point_a;
-                s_sample_point point_b;
-                s_sample_point point_c;
                 s_sample_point const *a, *b, *c;
-                if (block[0] == 0x39)
+                if (block[0] != 0x39)
+                {
+                    a = (s_sample_point *)(data + vertices[0] * 20);
+                    b = (s_sample_point *)(data + vertices[1] * 20);
+                    c = (s_sample_point *)(data + vertices[2] * 20);
+                }
+                else
                 {
                     surface_sample_unpack((short *)(data + vertices[0] * 10), &point_a);
                     surface_sample_unpack((short *)(data + vertices[1] * 10), &point_b);
                     surface_sample_unpack((short *)(data + vertices[2] * 10), &point_c);
                     a = &point_a; b = &point_b; c = &point_c;
-                }
-                else
-                {
-                    a = (s_sample_point *)(data + vertices[0] * 20);
-                    b = (s_sample_point *)(data + vertices[1] * 20);
-                    c = (s_sample_point *)(data + vertices[2] * 20);
                 }
                 dynamic_valid = function_0241c0(*(long const *)(record + 8), *(long const *)triangle->unknown2c,
                     &dynamic_normal, *(long const *)(record + 0x1c), a, b, c, triangle->u, triangle->v,

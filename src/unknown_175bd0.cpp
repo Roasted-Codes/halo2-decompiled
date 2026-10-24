@@ -2083,10 +2083,12 @@ long function_179190(s_effect_datum *effect)
 			event_index++;
 		if (event_index >= definition->event_count)
 			break;
-		if (!(definition->events[event_index].skip_chance > 0.0f))
+		real skip_chance = definition->events[event_index].skip_chance;
+		if (!(skip_chance > 0.0f))
 			break;
 		dword *seed = TEST_FIELD_BIT(TAG_GET(s_effect_definition, effect->tag_index)->flag2) ? &g_4e7408->unknown0 : &g_4e7408->seed;
-		if (!(definition->events[event_index].skip_chance > function_x82e52f(seed, __FILE__, __LINE__)))
+		real skip_roll = function_x82e52f(seed, __FILE__, __LINE__);
+		if (!(skip_roll < definition->events[event_index].skip_chance))
 			break;
 	}
 	return event_index;
@@ -2515,7 +2517,8 @@ void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f 
 			vector3f velocity;
 
 			function_177d10(effect, &random->seed, forward, &direction, &velocity, part->velocity_lower, part->velocity_upper, part->velocity_cone_angle, part->a_scales, part->b_scales);
-			function_17e670(g_510c78, point, part->tag_index, &velocity, function_259d0(&random->seed, __FILE__, __LINE__, part->radius_lower, part->radius_upper), 0, NONE, 0);
+			real radius = function_259d0(&random->seed, __FILE__, __LINE__, part->radius_lower, part->radius_upper);
+			function_17e670(g_510c78, point, part->tag_index, &velocity, radius, 0, NONE, 0);
 		}
 		break;
 	}
@@ -2551,7 +2554,7 @@ void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f 
 	case 'ligh':
 		if (effect->object_index != NONE && !detached)
 		{
-			long node_index = location->node_index == NONE ? NONE : location->node_index & 0x7fff;
+			short node_index = location->node_index == NONE ? NONE : location->node_index & 0x7fff;
 
 			function_c0350(part->tag_index, effect->object_index, node_index, &location->matrix.up, &location->matrix.forward, &location->matrix.position, scale);
 		}

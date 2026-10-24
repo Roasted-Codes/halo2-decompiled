@@ -1267,6 +1267,9 @@ extern bool g_4ed39d;
    the change is pending, then shows the dialog or the menu that follows it.
    Retail passes all three arguments on the stack: reading the screen id
    through its address keeps it there */
+// score 184 (was 184): game/main byte homes and dialog joins differ;
+// branch loader scope 184; lobby byte 184; main byte 184; word dialog ID 190;
+// signed user flags 184.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
@@ -2168,6 +2171,11 @@ bool function_19a902(void)
 	return result;
 }
 /* the interface state for each network session state */
+// score 32 (was 32): repeated-constant registers, zero-store order and folded default differ;
+// enum keys 32; enum values 32; enum pairs 32.
+// enum array 32; enum fallback 32; const enum array 32.
+// table member search 67; const member search 67; forceinline member 32.
+// const forceinline member 32.
 // @retail 0x19a5fd
 long function_19a5fd(long state)
 {

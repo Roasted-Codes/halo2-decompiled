@@ -515,7 +515,8 @@ struct s_sound_send_parameters
 		struct
 		{
 			dword flag0 : 1;
-			dword : 3;
+			dword : 2;
+			dword flag3 : 1;
 			dword flag4 : 1;
 			dword : 27;
 		};
@@ -567,6 +568,13 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
+// score 578 (was 583): frame 0xd8 versus 0x94; constant conversions still coalesce.
+// First-buffer input 578; late workspaces 583; muted-send loop 576;
+// native rear predicate 584; workspace role names 583; input plus loop 565
+// (not kept: the loop's index formula only reproduces 6, 8, 7, 9).
+// score 552 (was 578): frame 0xd8 versus 0x94; repeated constant conversions still coalesce.
+// Native settings copy 574; last-two scopes 616; direct routing table 552; pair table 553;
+// constant append helper 552; variable append helper 552; last workspace scope 552.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -578,35 +586,34 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 	m_settings = *settings;
 
 	sound_mixbins_initialize(&mixbins);
-	sound_stream_append_mixbin(&mixbins, 6, m_settings.level00);
+	c_sound_effects::add_send(6, 0, m_settings.level00, &mixbins);
 	if (rear)
-		sound_stream_append_mixbin(&mixbins, 8, m_settings.level04);
+		c_sound_effects::add_send(8, 0, m_settings.level04, &mixbins);
 	else
-		sound_stream_append_mixbin(&mixbins, 8, -64.0f);
-	sound_stream_append_mixbin(&mixbins, 7, -64.0f);
-	sound_stream_append_mixbin(&mixbins, 9, -64.0f);
-	IDirectSoundBuffer_SetMixBinVolumes(m_buffers->buffer0c, &mixbins.mixbins);
+		c_sound_effects::add_send(8, 0, -64.0f, &mixbins);
+	c_sound_effects::add_send(7, 0, -64.0f, &mixbins);
+	c_sound_effects::add_send(9, 0, -64.0f, &mixbins);
+	IDirectSoundBuffer_SetMixBinVolumes(buffers->buffer0c, &mixbins.mixbins);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer0c, 0);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer18, -6400);
 
 	sound_mixbins_initialize(&second);
-	sound_stream_append_mixbin(&second, 6, -64.0f);
-	sound_stream_append_mixbin(&second, 8, -64.0f);
-	sound_stream_append_mixbin(&second, 7, m_settings.level00);
+	c_sound_effects::add_send(6, 0, -64.0f, &second);
+	c_sound_effects::add_send(8, 0, -64.0f, &second);
+	c_sound_effects::add_send(7, 0, m_settings.level00, &second);
 	if (rear)
-		sound_stream_append_mixbin(&second, 9, m_settings.level04);
+		c_sound_effects::add_send(9, 0, m_settings.level04, &second);
 	else
-		sound_stream_append_mixbin(&second, 9, -64.0f);
+		c_sound_effects::add_send(9, 0, -64.0f, &second);
 	IDirectSoundBuffer_SetMixBinVolumes(m_buffers->buffer10, &second.mixbins);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer10, 0);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer1c, -6400);
 
 	sound_mixbins_initialize(&third);
-	sound_stream_append_mixbin(&third, 6, -64.0f);
-	sound_stream_append_mixbin(&third, 8, -64.0f);
-	sound_stream_append_mixbin(&third, 7, -64.0f);
-	sound_stream_append_mixbin(&third, 9, -64.0f);
-	sound_stream_append_mixbin(&third, 10, 0.0f);
+	static long const muted_mixbins[4] = {6, 8, 7, 9};
+	for (long mixbin_index = 0; mixbin_index < 4; ++mixbin_index)
+		c_sound_effects::add_send(muted_mixbins[mixbin_index], 0, -64.0f, &third);
+	c_sound_effects::add_send(10, 0, 0.0f, &third);
 	IDirectSoundBuffer_SetMixBinVolumes(m_buffers->buffer20, &third.mixbins);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer20, 0);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer14, -6400);
@@ -618,6 +625,14 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 	return mode == 1 ? (TEST_FLAG(parameters->flags, 6) ? g_44f70c : effects->m_settings.level2c) : effects->m_settings.level10;
 }
 
+// score 527 (was 532): frame 4 versus 12; gain spills still differ.
+// Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
+// completed-path return 532; offset reads 554; retail-order base 514;
+// base/bin snapshots 484; base/primary snapshots 504 (caller losses).
+// global optimization off 364 (caller lost); inline depth one 532.
+// short destinations 531; boolean routing extraction 527.
+// scalar home names 532; selector bitfield 527 (split 276).
+// both named flag fields 524 (+3; split 276); routing bitfield 527.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -637,7 +652,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	{
 		real send_level = sound_effects_send_level(this, parameters, mode);
 		real offset = parameters->level_offset + parameters->level;
-		if (!TEST_FLAG(parameters->flags, 3))
+		if (!TEST_FIELD_BIT(parameters->flag3))
 		{
 			sound_stream_append_mixbin(mixbins, m_buffers->mixbin00, parameters->gain0c + (send_level + parameters->level));
 			sound_stream_append_mixbin(mixbins, m_buffers->mixbin04, parameters->gain10 + (parameters->level + send_level));
@@ -679,16 +694,22 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
+// score 274 (was 283): frame 0x1c versus 0x18; mode occupies EBP.
+// Front pair loop 308; rear pair loop 323; both 363; all short/word
+// selectors 274; byte selectors 275; only spilled short/word selectors 280.
+// score 274 (was 274): frame 0x1c versus 0x18 and input-level/mode homes remain.
+// Shared append front 392, rear 394, tail 430 (dispatcher lost in all three);
+// whole-function depth zero 673 (dispatcher lost), depth one 274.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
 	real send_level = sound_effects_send_level(this, parameters, mode);
 	real offset = parameters->level_offset;
 	bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
-	long left = alternate ? 0 : 6;
-	volatile long right = alternate ? 1 : 7;
-	volatile long rear_left = alternate ? 4 : 8;
-	volatile long rear_right = alternate ? 5 : 9;
+	word left = alternate ? 0 : 6;
+	volatile word right = alternate ? 1 : 7;
+	volatile word rear_left = alternate ? 4 : 8;
+	volatile word rear_right = alternate ? 5 : 9;
 	real level = parameters->level;
 
 	if (m_settings.level08 > -64.0f)
@@ -772,6 +793,14 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 	}
 }
 
+// score 213 (was 213): frame 4 versus retail's 8; retail computes the
+// attenuation at run time and dispatches the speaker modes through a jump
+// table. Two-pass channel loops that pick the bin with a ternary 145 (not
+// kept: they only lengthen the code toward retail's size); loops over
+// left + channel 245; word mode 208.
+// score 166 (was 213): frame four versus eight; zero gain folds and mode dispatch differs.
+// Direct bin loops: mode one 172, mode two 174, attenuation 200, fixed pair 214, all 166;
+// dynamic pairs only 166, modes one/two 171, mode one/attenuation 169.
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -787,8 +816,8 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	{
 		if (remaining >= 2)
 		{
-			sound_mixbins_add(mixbins, left, gain);
-			sound_mixbins_add(mixbins, right, gain);
+			for (long mixbin = left; mixbin <= right; ++mixbin)
+				sound_mixbins_add(mixbins, mixbin, gain);
 		}
 	}
 	else if (source->speaker_mode == 2)
@@ -797,13 +826,13 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 		{
 			if (rear)
 			{
-				sound_mixbins_add(mixbins, rear_left, gain);
-				sound_mixbins_add(mixbins, rear_right, gain);
+				for (long mixbin = rear_left; mixbin <= rear_right; ++mixbin)
+					sound_mixbins_add(mixbins, mixbin, gain);
 			}
 			else
 			{
-				sound_mixbins_add(mixbins, left, gain);
-				sound_mixbins_add(mixbins, right, gain);
+				for (long mixbin = left; mixbin <= right; ++mixbin)
+					sound_mixbins_add(mixbins, mixbin, gain);
 			}
 		}
 	}
@@ -819,10 +848,11 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 		}
 		else if (remaining >= 4)
 		{
-			sound_mixbins_add(mixbins, left, gain - 6.0206f);
-			sound_mixbins_add(mixbins, left, g_44f710);
-			sound_mixbins_add(mixbins, right, gain - 6.0206f);
-			sound_mixbins_add(mixbins, right, g_44f710);
+			for (long mixbin = left; mixbin <= right; ++mixbin)
+			{
+				sound_mixbins_add(mixbins, mixbin, gain - 6.0206f);
+				sound_mixbins_add(mixbins, mixbin, g_44f710);
+			}
 		}
 	}
 
@@ -832,6 +862,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	}
 }
 
+// score 208 (was 208): eight-byte frame and inherited x87 send sums differ.
+// Levels before flag 208; scalar names 208; depth one 208;
+// size preference 449; shared gain loop 384.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

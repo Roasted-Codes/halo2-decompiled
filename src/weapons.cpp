@@ -1800,8 +1800,6 @@ bool function_101490(long weapon_index, long magazine_index)
 }
 /* finds a weapon's animation (its overlay, else the animation) in the graph
    for its holder's character, and makes it the weapon's current one */
-// score 4 (was 4): the graph index is kept in ecx where retail keeps it in edx,
-// and the two values that are read out of the frame are read in the other order.
 // @retail 0x105c20
 bool __stdcall function_105c20(long weapon_index, long animation_name)
 {
@@ -1834,8 +1832,8 @@ bool __stdcall function_105c20(long weapon_index, long animation_name)
 						{
 							long graph_index = player_animation->graph_index;
 
-							weapon->animation_254 = animation_id;
 							weapon->value250 = graph_index;
+							weapon->animation_254 = animation_id;
 							weapon->value258 = 0.0f;
 							function_b7360(weapon_index);
 							result = true;
@@ -1927,6 +1925,8 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 }
 /* takes rounds from a weapon's reserve for a magazine: first its own, then
    the reserves of the holder's other weapons of the same kind */
+// score 124 (was 124): frame eight bytes agrees; magazine, available and taken registers and pool reloads differ
+// tried all lookups pool value 124; needed result first 171; positive take continue 124; availability before update 124; first reserve field reference 123.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2384,6 +2384,8 @@ struct s_weapon_target_model
 
 bool function_106280(long object_index, long *out_index, byte *out_entry);
 
+// score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
+// tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
@@ -2510,7 +2512,11 @@ long __stdcall function_fda00(long weapon_index, s_scenario_weapon_view *placeme
 }
 
 // score 3 (was 3): the word is stored at +0x254 where retail stores it at +0x256, so the two
-// stores are in the wrong order.
+// stores are in the wrong order. That is `pop esi`: ours pops it right after edi, before the
+// inlined reset's two word stores; retail after them. Tried: the reset storing value250 before
+// value258 3 (0x105be0 2); the reset's animation as one default object 18; 0x105be0 defined
+// after this function 3; one short index for all three loops 3; the definition read after the
+// field resets 110.
 // @retail 0xfdad0
 bool __stdcall function_fdad0(long weapon_index, void *placement, bool *flag)
 {
@@ -2710,6 +2716,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 	return result > value ? result : value;
 }
 
+// score 407 (was 407): frame 8 versus 4; activity/dispatch registers and tag spill differ.
+// direct barrel maximum 413; helper maximum branches 409; independent loop indices 407;
+// final accumulated maximum 409; size optimization 672.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -2927,6 +2936,8 @@ struct s_ammo_conversion_entry
     long definition_index;
 };
 
+// score 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
+// Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3038,6 +3049,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
     return unit ? unit->player_index : NONE;
 }
 
+// score 565 (was 565): frame 0x1c64 vs 0x1c60; weapon/barrel roles and unit/definition homes differ.
+// Plain single-store unit 637; later effect locals 659; long marker count 607;
+// CRT marker copies 565; long fired 582.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3047,7 +3061,9 @@ void __stdcall function_102fb0(long weapon_index, short barrel_index)
     s_weapon_definition *definition = WEAPON_DEFINITION(weapon);
     s_weapon_barrel_definition *barrel_definition = &definition->barrels[*barrel_reference];
     s_weapon_barrel *barrel = &weapon->barrels[*barrel_reference];
-    volatile long  unit_index = TEST_FIELD_BIT(weapon->in_inventory) ? weapon->unit_index : NONE;
+    volatile long unit_index;
+    if (TEST_FIELD_BIT(weapon->in_inventory)) unit_index = weapon->unit_index;
+    else unit_index = NONE;
     long tag_index = NONE, unit_tag_index = NONE;
     real scale_a = 0.0f, scale_b = 0.0f;
     bool fired = false, failure = false;
@@ -3268,6 +3284,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
+// score 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
+// Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
+// combined blocked/down/up 1470 plain (fast 1500).
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
@@ -3386,7 +3405,7 @@ bool __stdcall function_fdfb0(long weapon_index)
     bool pressed[3] = { (weapon->value_16e & 2) != 0, (weapon->value_16e & 4) != 0, (weapon->value_16e & 0x100) != 0 };
     bool released[3] = { (weapon->value_16e & 8) != 0, (weapon->value_16e & 0x10) != 0, false };
     s_weapon *updated = WEAPON_GET(weapon_index);
-    bool blocked = (updated->value_16e & 0x20) || updated->state_ticks > 0 || (WEAPON_BYTE_AT(updated, 0x16c) & 2);
+    long blocked = (updated->value_16e & 0x20) || updated->state_ticks > 0 || (WEAPON_BYTE_AT(updated, 0x16c) & 2);
     if (blocked) { weapon->value_174 = 0; result = true; }
     for (short i = 0; i < definition->magazine_count; ++i) result = result | function_fdd50(weapon_index, i);
     for (short i = 0; i < definition->trigger_count; ++i)
@@ -3395,8 +3414,8 @@ bool __stdcall function_fdfb0(long weapon_index)
         s_weapon_trigger_definition *trigger_entry = &definition->triggers[i];
         if (trigger->timer > 0) { --trigger->timer; result = true; }
         short input = WEAPON_SHORT_AT(trigger_entry, 4);
-        bool down = !blocked && (pressed[input] || (signed char)WEAPON_BYTE_AT(trigger, 4) < 0);
-        bool up = !blocked && released[input];
+        long down = !blocked && (pressed[input] || (signed char)WEAPON_BYTE_AT(trigger, 4) < 0);
+        long up = !blocked && released[input];
         short primary = WEAPON_SHORT_AT(trigger_entry, 8), secondary = WEAPON_SHORT_AT(trigger_entry, 0xa);
         long target;
         byte target_entry;
@@ -3519,17 +3538,6 @@ bool __stdcall function_fdfb0(long weapon_index)
                 trigger->flag6 = false;
             }
             break;
-        case 3:
-        case 7:
-            if (down || blocked)
-            { if (function_106280(weapon_index, &target, &target_entry)) function_103c40(weapon_index, i); }
-            else
-            {
-                if (trigger->state != 7 && primary != NONE && function_102540(weapon_index, primary, false))
-                { weapon_request_barrel(weapon_index, primary, false); trigger->flag0 = false; }
-                weapon_clear_trigger(weapon_index, i);
-            }
-            break;
         case 4: break;
         case 5:
             if (down || blocked)
@@ -3557,6 +3565,17 @@ bool __stdcall function_fdfb0(long weapon_index)
                 long owner = weapon_get_owner_unit_index(weapon_index);
                 if (function_1061c0(owner, &target, &target_entry) && weapon->object_index_194 == target) function_103bd0(weapon_index, i);
                 if (!trigger->timer && player_index != NONE) function_103b70(weapon_index, i);
+            }
+            break;
+        case 3:
+        case 7:
+            if (down || blocked)
+            { if (function_106280(weapon_index, &target, &target_entry)) function_103c40(weapon_index, i); }
+            else
+            {
+                if (trigger->state != 7 && primary != NONE && function_102540(weapon_index, primary, false))
+                { weapon_request_barrel(weapon_index, primary, false); trigger->flag0 = false; }
+                weapon_clear_trigger(weapon_index, i);
             }
             break;
         }
@@ -3907,12 +3926,14 @@ void __stdcall function_104150(long weapon_index, short barrel_index)
             *(point3f *)(creation + 0x1c) = origin;
             *(vector3f *)(creation + 0x28) = direction;
             if (player_controlled) WEAPON_LONG_AT(creation, 0x18) |= 4;
-            bool tracer = WEAPON_REAL_AT(barrel, 0x10) != 0.0f;
+            /* retail: a barrel whose +0x10 is zero always fires a tracer; otherwise the
+               signed shot counter at +0xe counts up to the definition's +0x2e */
+            bool tracer = WEAPON_REAL_AT(barrel, 0x10) == 0.0f;
             if (!tracer)
             {
-                word previous = (word)WEAPON_SHORT_AT(barrel, 0xe);
+                short previous = WEAPON_SHORT_AT(barrel, 0xe);
                 WEAPON_SHORT_AT(barrel, 0xe) = (short)(previous + 1);
-                if (previous >= (word)WEAPON_SHORT_AT(barrel_definition, 0x2e)) tracer = true;
+                if (previous >= WEAPON_SHORT_AT(barrel_definition, 0x2e)) tracer = true;
             }
             if (tracer) WEAPON_SHORT_AT(barrel, 0xe) = 0;
             vector3f *shot_direction = (vector3f *)(creation + 0x28);

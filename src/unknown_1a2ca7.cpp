@@ -900,6 +900,9 @@ static inline XUID *message_entry_get_xuid(s_entry *entry)
 
 /* adds the senders of the player's messages (at most 20) to the players
    list, except those given and those already on it */
+// score 81 (was 81): count/sender homes +0x6c/+0x68 remain reversed; nullable getter and exclusion cursor differ.
+// Exclusion pointer at use 82; native exclusion result 132; enumeration-count lifetime 82; format buffers swapped 81; getter force-inline declaration 81.
+// Byte added count 103; signed/unsigned word exclusion result 128/128; cumulative conditional 113; rejection guards 81.
 // @retail 0x1a4441
 long players_list_add_message_senders(XUID const *excluded, long excluded_count)
 {
@@ -1404,6 +1407,9 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 
 /* copies the presence task's results into the friends and team members
    lists */
+// score 159 (was 159): frame agrees; count homes, early zero and flag reloads differ. Global optimization
+// off 1206; bounded friend search 230; bounded member search 219; both 211; indexed merge-record pointer
+// 162.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {

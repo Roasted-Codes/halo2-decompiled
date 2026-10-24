@@ -432,6 +432,8 @@ bool c_simulation_view::handle_player_update(bool failed, long a, long b, dword 
 	return result;
 }
 
+// score 30 (was 30): early false result and iterator table/database registers differ; database reference 30; native handle 30; wide result 51; fixed database receiver 30;
+// alias analysis off 30; inline depth zero 30; size preference 41; database role name 30.
 // @retail 0x86ad0
 bool c_simulation_view::has_pending_entity(void)
 {
@@ -862,6 +864,9 @@ static __forceinline byte *view_allocate_buffer(long size, long owner, long rele
 
 // score 22 (was 22): the dword local is written before the byte local; retail writes the byte
 // first and then the dword into the structure.
+// score 22 (was 22): ours hoists the time stamp's volatile low store and the header memset's
+// low store, and packs start's spill apart from the volatile. Tried: the volatile and start
+// renamed 22; used zeroed before start 22; the header declared before the view stores 22.
 // @retail 0x862e0
 bool function_862e0(c_simulation_view *view)
 {

@@ -156,6 +156,9 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
+// score 183 (was 222): frame 0x84/0x88, callee registers and render-state expansion differ;
+// dword selection 183; word setup flags 234; combined mask 222;
+// brightness component loop 238; redundant bit-clear removal 217.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -181,7 +184,7 @@ bool function_404b0(long mode)
         if (g_485950.i > 0.0f || g_485950.j > 0.0f || g_485950.k > 0.0f) flags |= 2;
         else flags &= ~2UL;
         g_4ba014 = flags & ~0x3cUL;
-        bool selected = (bool)((g_4c1a48[1].flags >> 11) & 1);
+        long selected = (bool)((g_4c1a48[1].flags >> 11) & 1);
         if (selected)
         {
             g_467130 = 11; g_467134 = (void *)1; g_467138 = &g_4c1a48[1];
@@ -236,6 +239,9 @@ bool function_404b0(long mode)
     return true;
 }
 
+// score 250 (was 250): weight/material scheduling and pass-call boundaries differ;
+// word material index 298; unsigned weight 309; typed geometry header 250;
+// entry observations reordered 326; native local names 250 (fast).
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

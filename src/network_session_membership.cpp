@@ -718,6 +718,11 @@ union s_60403
  long field_00;
 };
 
+// score 214 (was 214): current/previous registers and map-loop homes differ;
+// retained-player word index 348; emitted-player word index 248; both 359;
+// explicit append indices 324; advancing retained bit 411. Original kept.
+// nested map-index names 214; shared member emission 621; nested player emission 214;
+// retained-player do 214; emitted-player do 214. Frame 0x94 still agrees.
 // @retail 0x60400
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update)
 {

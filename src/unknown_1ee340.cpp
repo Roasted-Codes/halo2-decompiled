@@ -5,6 +5,7 @@
 #include <new>
 #include "unknown_1eb350.h"
 #include "havok_reference.h"
+#include "shape_2de750.h"
 
 struct c_transformed_point
 {
@@ -64,16 +65,8 @@ struct s_shape_ray_result
 	real fraction;
 };
 
-struct c_vertex_reference
+struct c_vertex_shape : radius_shape_2de750
 {
-	word allocation_size;
-	word references;
-};
-
-struct c_vertex_shape : c_vertex_reference
-{
-	long user;
-	real radius;
 	long surface_index;
 	long vertex_count;
 	short material;
@@ -108,17 +101,19 @@ PRIVATE inline void shape_transform_point(const transform4x3f *matrix, const poi
 	result->z = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x + matrix->position.z;
 }
 
+// score 6 (was 6): radius/index loads swap; vertex x uses the completed
+// address before its store. Derived count/kind/value initializers 33; all
+// member initializers 6; index/count/kind initializers 6; const source 6;
+// point memcpy 120; point value with in-place transform 128; word edge
+// cursors 97; full-width side 97.
 // @retail 0x1edd00
 c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, long index,
-	long user_data, const transform4x3f *matrix)
+	long user_data, const transform4x3f *matrix) : radius_shape_2de750(0.01f)
 {
-	user = 0;
 	vertex_count = 0;
 	kind = type;
 	surface_index = index;
 	value = data;
-	references = 1;
-	radius = 0.01f;
 	s_shape_surface *surface = &source->surfaces[index];
 	long edge_index = surface->edge;
 	long first_edge = edge_index;
@@ -142,12 +137,15 @@ c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, lon
 	} while (edge_index != first_edge);
 	material = surface->material;
 	flags = surface->flags;
-	user = user_data;
+	user_value = user_data;
 }
 
 short function_120850(const vector3f *vector);
 bool function_23a220(const point2f *point, short count, const point2f *points, real epsilon);
 
+// score 250 (was 250): frame 0x78 versus 0x90, normal/ray homes and polygon input registers differ.
+// Hit point setter 250; component normalization loop 250; short projection side 255;
+// direct hit result 251; ray before origin with float setters 251.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
@@ -636,6 +634,9 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
  }
 }
 
+// score 19 (was 66): frame/length agree; child-query vtable load, ordinal spill and remap entry differ.
+// Radius before transform 140; scoped instance index 80; later ordinal correction 19;
+// key/owner continues 66/102; remap/removal/both while loops 66.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)
@@ -665,8 +666,8 @@ void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_ins
      long first = keys->count;
      __m128 local = center.value;
      ((real *)&local)[3] = ((const real *)sphere)[3];
-     --i;
      ((c_instance_surface_query *)(shape + 0x50))->query_sphere(&local, keys);
+     --i;
      query_remap_keys(&owner->object, keys, first, instance_index);
     }
    }

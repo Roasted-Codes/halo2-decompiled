@@ -93,6 +93,11 @@ void function_220790(s_sound_listener const *listener);
 bool sound_driver_voice_create_buffer(long voice_index);
 void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 
+// score 165 (was 169): success/type registers and first-channel spill;
+// byte allocation result 165; early byte result 280; listener aggregate 328;
+// aggregate with early result 357; early result with count cursor 300.
+// failure arm first 168; direct result exits 364; byte category index 311;
+// headroom do 167; flat eight-entry submix scan 258. Frame 0x80 still agrees.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
@@ -129,7 +134,7 @@ bool function_21e4b0(s_sound_driver_counts const *counts)
 				g_47f0d0.field04 = 0;
 				g_47f0d0.field14 = NULL;
 				g_47f0d0.field10 = 0x10000;
-				bool buffers_created = true;
+				byte buffers_created = true;
 				for (long type = 0; type < 3; type++)
 				{
 					long first = SOUND_DRIVER_GLOBALS->channel_count;

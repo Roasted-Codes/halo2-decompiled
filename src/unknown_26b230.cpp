@@ -36,6 +36,10 @@ __declspec(noinline) void function_268840();
 
 static __forceinline long real_to_long(real value);
 
+// score 144 (was 144): frame 0x18 versus 0x20; first-pass pointer/datum homes and slice-call interface differ.
+// Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
+// Depth one 144; unsigned maximum 146; word update state 155; first datum API 272; calling scan 208.
+// Activity-controlled first/slice/both loops 158/156/168; signed byte update with short/long maximum 146/152.
 // @retail 0x268510
 void function_268510()
 {
@@ -67,7 +71,7 @@ void function_268510()
 		}
 		for (;;)
 		{
-			byte *clump = g_4f55d0->active ? data_iterator_next_inlined(&iterator) : NULL;
+			byte *clump = g_4f55d0->active ? record_pool_iterator_step(&iterator) : NULL;
 			if (!clump) break;
 			if (clump[0x1c])
 			{
@@ -81,7 +85,7 @@ void function_268510()
 				}
 				else
 				{
-					short count = ++*(short *)(clump + 0x1e);
+					long count = ++*(short *)(clump + 0x1e);
 					if (count > maximum) maximum = count;
 				}
 			}
@@ -95,6 +99,9 @@ void function_268510()
 // frame and pushes the registers, and it keeps the pool pointer in ebx and the index in edi;
 // ours reserves the frame first and holds the global in ebp, so the prologue and the loop
 // head differ.
+// Entry guard 90; inactive return 86; outer current 81; zero initialization 53
+// (extra entry stores, restored); byte activity 81; calling scanner 120;
+// shared datum iterator 158; inactive continue 81. Original body retained.
 // @retail 0x268840
 void function_268840()
 {
@@ -120,6 +127,13 @@ void function_268840()
 	function_268c90();
 }
 
+// score 296 (was 296): frame 0x48 versus 0x50; iterator result/exhaustion and
+// player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
+// scoped bool keep 320; entry point scratch 314; entry player pool 297
+// (the latter four use the current-datum iterator). All body forms restored.
+// frame 0x48 versus 0x50; iterator result and pool homes differ;
+// outer while 296; player while 296; actor for-loop 331; native handle parts 327;
+// proxy-before-unit loads 296. Original body retained.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -437,6 +451,8 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // score 68 (was 68): retail sign-extends the first team argument and passes the second one
 // narrow, and its frame is four bytes larger than ours, so the stack offsets and the register
 // that holds the clump pointer differ as well.
+// Shared datum iterator 174; wide side 68; unsigned side 68; initial done 68; complete iterator 115; current
+// initialized 68; prop type snapshot 93; prop reference 68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1448,6 +1464,8 @@ long function_26bc60(long clump_index)
 	return 2;
 }
 
+// score 127 (was 127): frame 0x1c versus 0x20; result register, iterator null join and center copy differ.
+// Plain oldest-time/index storage separately 136/126; byte activity 127; native pool step 160; activity while 136.
 // @retail 0x269040
 long function_269040(point3f const *center, short team)
 {
@@ -1609,6 +1627,9 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 	return function_26a780(clump, &candidate);
 }
 
+// score 128 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
+// Round 280: remaining-count traversal 128 plain; current-child handle 164; collection write cursor 172; array scope 167; early active flag 199.
+// Child/countdown 125; short remaining 125; unsigned remaining 125 (each only three below the retained countdown).
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1617,7 +1638,7 @@ void function_269580(long destination_index, long source_index)
 	s_clump_activity_view *source = (s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view));
 	g_4de2f8 = true;
 	s_iterator iterator;
-	iterator.next = destination->first_prop;
+	iterator.next = ((s_clump_activity_view *)(g_502420->data + (destination_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	s_type_76cf92 *prop;
 	while ((prop = clump_next_prop(&iterator)) != NULL)
 	{
@@ -1650,12 +1671,14 @@ void function_269580(long destination_index, long source_index)
 			g_4de300[object_index & 0xffff] = g_4de2fc;
 	}
 	long indices[50];
-	long count = 0;
+	short count = 0;
 	iterator.next = ((s_clump_activity_view *)(g_502420->data + (source_index & 0xffff) * sizeof(s_clump_activity_view)))->first_prop;
 	while (clump_next_prop(&iterator)) indices[count++] = iterator.index;
-	for (short i = 0; i < count; i++)
+	long *cursor = indices;
+	for (long remaining = count; remaining > 0; --remaining)
 	{
-		long index = indices[i];
+		long index = *cursor;
+		++cursor;
 		if (index == NONE || (index & 0xffff) >= g_50241c->high_water_index) continue;
 		s_prop_copy_view *copy = (s_prop_copy_view *)(g_50241c->data + g_50241c->size * (index & 0xffff));
 		if (!copy->salt || copy->salt != (index >> 16)) continue;
@@ -1718,6 +1741,8 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
+// score 134 (was 134): frame 0x38 versus 0x3c; pool register and common null-current join differ.
+// Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
 // @retail 0x2689d0
 void function_2689d0(void)
 {
@@ -1779,6 +1804,8 @@ void function_2689d0(void)
 	}
 }
 
+// score 5 (was 5): node/prop next homes 0x1c/0x14 versus 0x18/0x1c; setup scope 5; typed prop 5; both 5;
+// link references 5; array views 5; prop names 5; record references 5; joint declarations 5.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {
@@ -1853,6 +1880,11 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
+// score 189 (was 189): frame 0x1c versus 0x24; current/replacement/object homes and iterator exit differ.
+// Byte type 195; membership result earlier 189; existing group lookup 189; removal arm first 189; guarded pointer-result loop 194.
+// Complete workspace scope 189; depth zero 391; member-link result first 222; replacement-result loop 206; promoted category 195.
+// Depth one 189; outer datum API 290; word unit 218; word group 192; calling scan 237.
+// Direct pool step 254; activity-controlled loop 194; existing prop lookup 189; short/signed byte change 244/189; cached-bound scan 189.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
@@ -1892,8 +1924,8 @@ void function_26ae30(long object_index)
 			}
 		}
 	}
-	else if ((1 << type) & 3)
-		unit = true;
+	else
+		unit = ((1 << type) & 3) != 0;
 	s_clump_pool_iterator groups;
 	if (g_4f55d0->active)
 	{
@@ -1949,11 +1981,10 @@ void function_26ae30(long object_index)
 	}
 	if (object->type == 1)
 	{
-		long index = NONE;
-		for (;;)
+		for (long index = data_next_absolute_index_inlined(g_502414, 0);
+			index != NONE;
+			index = data_next_absolute_index_inlined(g_502414, index + 1))
 		{
-			index = data_next_absolute_index_inlined(g_502414, index + 1);
-			if (index == NONE) break;
 			byte *tracking = g_502414->data + g_502414->size * index;
 			if (!tracking) break;
 			if (*(long *)(tracking + 0x40) == object_index)
@@ -1989,6 +2020,8 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
+// score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
+// Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
@@ -2082,9 +2115,9 @@ void function_269870(long clump_index)
     }
     g_4de2f8 = false;
     qsort(candidates, count, sizeof(*candidates), function_269da0);
+    s_prop_candidate_view *candidate = candidates;
     while (cursor < count)
     {
-        s_prop_candidate_view *candidate = &candidates[cursor];
         if (candidate->priority < 3 && selected >= 20)
             break;
         if (candidate->prop_index == NONE)
@@ -2144,15 +2177,17 @@ void function_269870(long clump_index)
             }
         }
         ++cursor;
+        ++candidate;
         if (selected >= 50)
             break;
     }
     while (cursor < count)
     {
-        long index = candidates[cursor].prop_index;
+        long index = candidate->prop_index;
         if (index != NONE && datum_get_inlined(g_50241c, index))
             function_26aaf0((s_clump *)clump, index);
         ++cursor;
+        ++candidate;
     }
 }
 

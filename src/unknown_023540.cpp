@@ -371,6 +371,11 @@ extern real g_4b8940[9], g_4b8964[9], g_4b8988[9];
 void function_022750(real const *a, long size, real const *b, real *out, real t);
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result);
 
+// score 252 (was 258): frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
+// Sample cursor 258; sine-scaled axis 259; diagonals first 288; elapsed snapshot 258; size optimization 397.
+// frame 0x7c versus 0x68; axis/trigonometric homes and rotation-call layout differ.
+// Complement at use 264; reused axis squares 252; coefficient countdown 273;
+// contiguous payload reset 286; conditional phase clamp 258.
 // @retail 0x22850
 void function_22850(void)
 {
@@ -398,20 +403,23 @@ void function_22850(void)
         {
             vector3f axis = *(vector3f *)(sample + 0x94);
             real sine = (real)sin(angle), cosine = (real)cos(angle), complement = 1.0f - cosine;
+            real square_i = axis.i * axis.i;
+            real square_j = axis.j * axis.j;
+            real square_k = axis.k * axis.k;
             real rotation[9];
-            rotation[0] = (1.0f - axis.i * axis.i) * cosine + axis.i * axis.i;
+            rotation[0] = (1.0f - square_i) * cosine + square_i;
             rotation[1] = axis.j * complement * axis.i + axis.k * sine;
             rotation[2] = axis.k * complement * axis.i - axis.j * sine;
             rotation[3] = axis.j * complement * axis.i - axis.k * sine;
-            rotation[4] = (1.0f - axis.j * axis.j) * cosine + axis.j * axis.j;
+            rotation[4] = (1.0f - square_j) * cosine + square_j;
             rotation[5] = axis.j * axis.k * complement + axis.i * sine;
             rotation[6] = axis.k * complement * axis.i + axis.j * sine;
             rotation[7] = axis.j * axis.k * complement - axis.i * sine;
-            rotation[8] = (1.0f - axis.k * axis.k) * cosine + axis.k * axis.k;
-            for (long color = 0; color < 3; ++color)
+            rotation[8] = (1.0f - square_k) * cosine + square_k;
+            for (real *coefficients = (real *)(sample + 0xc);
+                coefficients != (real *)(sample + 0x78); coefficients += 9)
             {
                 real result[9];
-                real *coefficients = (real *)(sample + 0xc + color * 0x24);
                 function_143600(rotation, 3, coefficients, result);
                 memcpy(coefficients, result, sizeof(result));
             }
@@ -1158,7 +1166,12 @@ void __cdecl function_24970(s_histogram_state *state)
 
 // score 17 (was 17): the two float temporaries sit in the other registers,
 // ours keeps the zero in xmm2 and the scale in xmm1 while retail keeps the
-// zero in xmm1 and the scale in xmm2
+// zero in xmm1 and the scale in xmm2. The pair follows where the zero's last
+// use in case 3 sits: without the out[3] store, or with it before out[2],
+// the registers are retail's (37: store order). Tried: one subtraction
+// (globals on both sides) 66; begin declared first 17; a span local 17;
+// the scale read plainly in case 4 17; ~70 harness forms of the clamp,
+// declarations, scopes and the top test, all 17
 // @retail 0x27520
 bool __stdcall function_27520(long mode, real const *bounds, real const *t, real *out, long unused)
 {
@@ -1867,7 +1880,11 @@ struct s_filter_rows
 
 // score 17 (was 17): the second argument of the call near the end is read
 // with an add of the offset and then a load of the field, ours folds the
-// offset into the load's displacement
+// offset into the load's displacement. Tried: function_1cc30(12) 28 (stays
+// out of line); a slot pointer local 17; an index local 17; a slot row
+// pointer 17; with `inline` on 0x1cc30's definition it is inlined but its
+// constant index still folds, 17. BLOCKED-BY 0x1cc30: the unfolded add needs
+// a helper from another file, taking the slot pointer, inlined at link time
 // @retail 0x26880
 bool __stdcall function_26880(void *context)
 {
@@ -2355,6 +2372,9 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
+// score 424 (was 424): frame 0x24 versus 0x28, early saves and float-call setup differ;
+// fast control 427; direct inverse 427; selected destination/source pointer 427/427;
+// distinct final alpha 427; separate clamped strength 428. Original body restored.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2368,19 +2388,18 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     if (!g_4b99b0[1] && alternate_target) return;
     real default_source[4];
     real default_destination[4];
-    real width = 1.0f, height = 1.0f;
-    if (tag != NONE)
+    real width;
+    real height;
+    byte *definition = tag != NONE ? g_4e3b44[tag & 0xffff].bytes : NULL;
+    if (tag != NONE && bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
     {
-        byte *definition = g_4e3b44[tag & 0xffff].bytes;
-        if (bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
-        {
-            byte *bitmap = *(byte **)(definition + 0x48) + bitmap_index * 0x74;
-            real w = (real)*(short *)(bitmap + 4);
-            width = 1.0f > w ? 1.0f : w;
-            real h = (real)*(short *)(bitmap + 6);
-            height = 1.0f > h ? 1.0f : h;
-        }
+        byte *bitmap = *(byte **)(definition + 0x48) + bitmap_index * 0x74;
+        real w = (real)*(short *)(bitmap + 4);
+        width = 1.0f > w ? 1.0f : w;
+        real h = (real)*(short *)(bitmap + 6);
+        height = 1.0f > h ? 1.0f : h;
     }
+    else width = height = 1.0f;
     if (alternate_target) function_14bc0(*(short *)(g_4b99b0 + 0x38), 0, false);
     else if (screen_target) function_14bc0(0, 0, false);
     else function_14bc0(*(short *)(g_4b99b0 + 0x34), 0, false);
@@ -2503,11 +2522,19 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
 
+// score 575 (was 575): frame 0x208 versus 0x200; coefficient homes and shared sample paths differ.
+// Full-width order 578; byte sample 575; bucket cursor 580; bucket rotation scope 575;
+// found-index search 572; long found-index 603.
+// Native cache cursor 590; bounded sample while 575; bounded bucket while 575;
+// per-bucket transformed buffers 575; inclusive level cap 575.
+// score 570 (was 575): frame 0x214 versus 0x200; coefficient homes and sample paths differ.
+// Long result 570 kept; outer rotated buffers 575; accumulated search 573; word sample count 576;
+// depth one 575; long result/search 575; short result 570; byte result 596.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
 {
-    bool result = true;
+    long result = true;
     {
         bool found = false;
         for (short i = 0; i < g_5093e8; ++i)
@@ -2544,12 +2571,12 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         for (long bucket = 0; bucket < count; ++bucket)
         {
             byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-            long available = *(word const *)(pair + 2);
-            if (!available) continue;
+            long samples = *(word const *)(pair + 2);
+            if (!samples) continue;
             real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
             transform4x3f matrix;
             function_0235a0(source, &matrix);
-            long samples = available > 1 ? 2 : 1;
+            if (samples > 2) samples = 2;
             for (short sample = 0; sample < samples; ++sample)
             {
                 if (sample) function_0235a0(source + 12, &matrix);
@@ -2595,6 +2622,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
+// score 348 (was 374): frame 0x58 agrees; stage-call convention and constants differ.
+// Byte stage 617; distinct second trig scalars 374; separate texture scales 348
+// (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -2655,31 +2685,33 @@ void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     function_1c590((s_shader_cache *)g_51f0f0,
         *(long *)(*(byte **)(g_485a80 + 0x5c) + 0x64), 0);
     function_1c710(g_51f0f0);
-    real scale = first_scale > second_scale ? first_scale : second_scale;
+    real first_texture_scale = first_scale;
+    real second_texture_scale = second_scale;
+    real scale = first_texture_scale > second_texture_scale ? first_texture_scale : second_texture_scale;
     if (scale > 0.0f)
     {
         real inverse_scale = 1.0f / scale;
-        first_scale *= inverse_scale;
-        second_scale *= inverse_scale;
+        first_texture_scale *= inverse_scale;
+        second_texture_scale *= inverse_scale;
     }
     real bounds[4];
     bounds[0] = 320.0f - scale * width * 0.5f;
     bounds[1] = 320.0f + scale * width * 0.5f;
     bounds[2] = 240.0f - scale * height * 0.5f;
     bounds[3] = 240.0f + scale * height * 0.5f;
-    if (first_scale == 0.0f) first_scale = 1.0f;
-    if (second_scale == 0.0f) second_scale = 1.0f;
+    if (first_texture_scale == 0.0f) first_texture_scale = 1.0f;
+    if (second_texture_scale == 0.0f) second_texture_scale = 1.0f;
     real first_coordinates[8], second_coordinates[8];
     real cosine = (real)cos(first_angle), sine = (real)sin(first_angle);
-    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, first_scale, &first_coordinates[0]);
-    texture_corner_rotate(1.0f, -1.0f, cosine, sine, first_scale, &first_coordinates[2]);
-    texture_corner_rotate(1.0f, 1.0f, cosine, sine, first_scale, &first_coordinates[4]);
-    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, first_scale, &first_coordinates[6]);
+    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, first_texture_scale, &first_coordinates[0]);
+    texture_corner_rotate(1.0f, -1.0f, cosine, sine, first_texture_scale, &first_coordinates[2]);
+    texture_corner_rotate(1.0f, 1.0f, cosine, sine, first_texture_scale, &first_coordinates[4]);
+    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, first_texture_scale, &first_coordinates[6]);
     cosine = (real)cos(second_angle); sine = (real)sin(second_angle);
-    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, second_scale, &second_coordinates[0]);
-    texture_corner_rotate(1.0f, -1.0f, cosine, sine, second_scale, &second_coordinates[2]);
-    texture_corner_rotate(1.0f, 1.0f, cosine, sine, second_scale, &second_coordinates[4]);
-    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, second_scale, &second_coordinates[6]);
+    texture_corner_rotate(-1.0f, -1.0f, cosine, sine, second_texture_scale, &second_coordinates[0]);
+    texture_corner_rotate(1.0f, -1.0f, cosine, sine, second_texture_scale, &second_coordinates[2]);
+    texture_corner_rotate(1.0f, 1.0f, cosine, sine, second_texture_scale, &second_coordinates[4]);
+    texture_corner_rotate(-1.0f, 1.0f, cosine, sine, second_texture_scale, &second_coordinates[6]);
 #pragma inline_depth(0)
     D3DDevice_Begin(D3DPT_TRIANGLEFAN);
     D3DDevice_SetVertexData2f(1, first_coordinates[0], first_coordinates[1]);
@@ -2903,6 +2935,14 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
+// score 978 (was 978): frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
+// Short capability flags 1195; short rescale state 1204; color homes renamed 978;
+// eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
+// score 971 (was 978): frame 0x2c agrees; saved registers, mode flags and state expansion differ.
+// Inner depth pairs removed 1212; direct texture API 983; dispatch defaults 1224;
+// normalization after dispatch 984; four-use alpha snapshot 971.
+// Byte capabilities 1086; rescale-state name 978; case three first 978;
+// short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
@@ -2910,8 +2950,8 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     bool result = false;
     real offset = 0.0f;
     bool small = false;
-    bool allow_small = false;
-    bool allow_negative = false;
+    long allow_small = false;
+    long allow_negative = false;
     real maximum = 1.0f;
     real inverse_distance = 1.0f / g_48565c;
     low *= inverse_distance;
@@ -3053,10 +3093,11 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     else if (mode == 1)
     {
         color4f first, second;
-        first.alpha = clamp_filter_unit(*(real const *)(configuration + 0x28));
-        first.red = clamp_filter_unit(*(real const *)(configuration + 0x1c) * *(real const *)(configuration + 0x28));
-        first.green = clamp_filter_unit(*(real const *)(configuration + 0x20) * *(real const *)(configuration + 0x28));
-        first.blue = clamp_filter_unit(*(real const *)(configuration + 0x24) * *(real const *)(configuration + 0x28));
+        real alpha = *(real const *)(configuration + 0x28);
+        first.alpha = clamp_filter_unit(alpha);
+        first.red = clamp_filter_unit(*(real const *)(configuration + 0x1c) * alpha);
+        first.green = clamp_filter_unit(*(real const *)(configuration + 0x20) * alpha);
+        first.blue = clamp_filter_unit(*(real const *)(configuration + 0x24) * alpha);
         second.alpha = clamp_filter_unit(*(real const *)(configuration + 0x68));
         second.red = clamp_filter_unit(*(real const *)(configuration + 0x5c));
         second.green = clamp_filter_unit(*(real const *)(configuration + 0x60));
@@ -3174,18 +3215,25 @@ failure:
 
 dword g_4b8424;
 void function_27aa0();
-// score 16 (was 16): the dot product's third term multiplies the direction's
-// component by the position's, retail multiplies the position's by the
-// direction's, and the third constant of the first group is built from a copy
-// of the scale rather than from the direction's component
+// score 5 (was 16): retail adds the dot product's terms z, y, x and loads the
+// position's x before the direction's; here x, y, z with the direction's x
+// first. Tried: the terms z, y, x 16 (the k products then copy the scale);
+// y, x, z 7; x, z, y 20; y, z, x 20; z, x, y 18; one expression in any order,
+// dot3f either way round or partial sums 105-106; n[] subscripts 16; scale
+// first in the products 16; vector3f_scale for the rows 101-105; position as
+// the first parameter (with the caller) gives retail's dot with z, y, x but
+// the j products then load the component first, 14 (654 bytes)
+// New trials at 5: zero-initialized buffer 160; cleared buffer 160;
+// cleared trailing triple 105; first/third/second row component loops
+// 242/242/242; coefficient loop 242; first reciprocal divided in place 104.
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {
     real constants[24];
     real const *settings = (real const *)state;
-    real dot = position->z * direction->k;
+    real dot = position->x * direction->i;
     dot += position->y * direction->j;
-    dot += position->x * direction->i;
+    dot += position->z * direction->k;
     real span = settings[12] - settings[11];
     real first = 1.0f / (0.0001f > span ? 0.0001f : span);
     span = settings[18] - settings[17];

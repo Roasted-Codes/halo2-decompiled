@@ -47,6 +47,11 @@ real function_2008fc(s_interface_pulse const *arg_0, bool arg_1);
 void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
     long arg_2, long arg_3, long arg_4);
 
+// score 103 (was 103): frame 0x50 agrees; first-pass table/index registers,
+// pulse-base setup and row-X scheduling differ; aggregate quad 103;
+// half-height first 103; signed mask 103; shared ordinal word 229, byte 229.
+// shared resolved result 103; shared tag 103; shared pulse receiver 103;
+// all three shared 103; positive first-pass validity block 103.
 // @retail 0x200462
 void function_200462(long arg_0)
 {
