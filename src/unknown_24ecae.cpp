@@ -104,7 +104,9 @@ long __stdcall function_24ecae(s_marker_list const *list, s_24ecae_placement con
 				else
 					origin = center;
 				real width = (real)bitmap->width * placement->scale;
-				real height = (real)bitmap->height * placement->scale;
+				// volatile: retail stores the scaled height to its own stack slot once and reloads
+				// it for every corner, while the scaled width stays in a register
+				real volatile height = (real)bitmap->height * placement->scale;
 				point2f points[4];
 				for (long vertex = 0; vertex < 4; ++vertex)
 				{
