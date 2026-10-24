@@ -995,6 +995,8 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // score 342 (was 342): frame 0x3c versus 0x34 and angular/planar homes differ.
 // Zero-first length guard 342; cross before angle 413; direct angle selection 403;
 // frame pointer 458; shared side dot products 384.
+// Nested expansion zero 1163, one 342; global optimization off 2011; size policy 518;
+// ordinary signed-angle inline 342.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
