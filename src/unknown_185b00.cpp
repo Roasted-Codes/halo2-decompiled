@@ -698,8 +698,24 @@ PRIVATE inline real control_pitch_pin(real value, real minimum, real maximum)
 	return minimum > value ? minimum : (value > maximum ? maximum : value);
 }
 
-// score 272 (was 272): pitch-bound/settings/direction homes differ within frame 0xa8;
-// interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280; isolated range scope 272.
+PRIVATE inline void control_direction_from_angles(vector3f *direction, real yaw, real pitch)
+{
+	direction->i = (real)(cos(yaw) * cos(pitch));
+	direction->j = (real)(sin(yaw) * cos(pitch));
+	direction->k = (real)sin(pitch);
+}
+
+/* moves the value toward the target by at most one step */
+PRIVATE inline void control_pitch_approach(real *value, real target)
+{
+	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
+}
+
+// score 260 (was 272): pitch-bound/settings/direction/turn-difference homes differ within
+// frame 0xa8 (retail: maximum 4, minimum 8, direction 0x10, settings 0x1c); retail keeps the
+// full turn in xmm3 and spills the range; the step pins get other registers.
+// Tried: interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280;
+// isolated range scope 272.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
@@ -719,8 +735,8 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 			s_object_marker marker;
 			function_b8d30(camera.unit_index, seat->field_8, &marker, 1, false);
 			real yaw = (real)atan2(marker.matrix.forward.j, marker.matrix.forward.i);
-			real upper = seat->maximum + yaw;
 			real lower = seat->minimum + yaw;
+			real upper = seat->maximum + yaw;
 			real range = control_turn_difference(upper, lower);
 			real to_upper = control_turn_difference(upper, entry->facing.yaw);
 			real from_lower = control_turn_difference(entry->facing.yaw, lower);
@@ -729,7 +745,7 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 			if (!(to_upper >= 0.0f && positive_range > to_upper) &&
 				!(from_lower >= 0.0f && positive_range > from_lower))
 			{
-				if (fabs(to_upper) > fabs(from_lower))
+				if (fabs(from_lower) < fabs(to_upper))
 					entry->facing.yaw = lower;
 				else
 					entry->facing.yaw = upper;
@@ -750,10 +766,8 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 			if (camera.seat_index != NONE && unit->field_7c.k > 0.2f)
 			{
 				vector3f direction;
-				direction.i = (real)(cos(entry->facing.yaw) * cos(0.0));
-				direction.j = (real)(sin(entry->facing.yaw) * cos(0.0));
-				direction.k = (real)sin(0.0);
-				real angle = 1.5707964f - function_11ce20(&unit->field_7c, &direction);
+				control_direction_from_angles(&direction, entry->facing.yaw, 0.0f);
+				real angle = 1.5707964f - function_11ce20(&direction, &unit->field_7c);
 				minimum -= angle;
 				maximum -= angle;
 				target -= angle;
@@ -770,8 +784,9 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 			entry->facing.pitch += control_pitch_pin(delta, -rate, rate);
 		}
 	}
-	entry->minimum_pitch += control_pitch_pin(minimum - entry->minimum_pitch, -0.012271847f, 0.012271847f);
-	entry->maximum_pitch += control_pitch_pin(maximum - entry->maximum_pitch, -0.012271847f, 0.012271847f);
+	control_pitch_approach(&entry->minimum_pitch, minimum);
+	control_pitch_approach(&entry->maximum_pitch, maximum);
 	entry->facing.pitch += pitch_delta;
-	entry->facing.pitch = control_pitch_pin(entry->facing.pitch, entry->minimum_pitch, entry->maximum_pitch);
+	entry->facing.pitch = entry->minimum_pitch > entry->facing.pitch ? entry->minimum_pitch :
+		(entry->facing.pitch > entry->maximum_pitch ? entry->maximum_pitch : entry->facing.pitch);
 }
