@@ -1083,7 +1083,7 @@ bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 		summary = (const s_ratings_summary *)session->data4a00;
 	long capacity = 16;
 	if (local_0 > 2 && local_0 <= 8) capacity = session->value4994;
-	volatile bool result = true;
+	bool result = true;
 	memset(out, 0, sizeof(*out));
 	if (!summary || summary->player_count > capacity || !variant ||
 		capacity > ratings_variant_capacity(variant) || capacity < function_1932c0(variant))
