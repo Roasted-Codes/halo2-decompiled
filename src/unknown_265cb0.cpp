@@ -1498,6 +1498,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Conditional facing 731; wide best level 701; direct parameter 701; shared difference 705;
 // wide retention 704; live relative inputs 695; native velocity copy 695; early defaults 755;
 // phase defaults 752.
+// Round 156: depth zero 937; depth one 695; shared player lookup 702;
+// retained actor lookup 723; separate missing-view guard 696 (plain scores).
 // @retail 0x266640
 void function_266640(long actor_index)
 {

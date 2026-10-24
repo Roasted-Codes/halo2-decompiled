@@ -134,6 +134,8 @@ void function_268840()
 // frame 0x48 versus 0x50; iterator result and pool homes differ;
 // outer while 296; player while 296; actor for-loop 331; native handle parts 327;
 // proxy-before-unit loads 296. Original body retained.
+// Round 156: depth zero 426; depth one 296; target size 546; byte retention 317;
+// iterator role names 296. Original frame and child traversal retained.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2025,6 +2027,8 @@ void *actor_get_character_situation_entry(long actor_index);
 
 // score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
+// Round 156, caller context: depth zero 505; depth one 322; target size 517;
+// wide cluster selectors 356; retained generation slot 322. Original body retained.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
