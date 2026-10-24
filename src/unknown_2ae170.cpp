@@ -567,6 +567,10 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
+// score 578 (was 583): frame 0xd8 versus 0x94; constant conversions still coalesce.
+// First-buffer input 578; late workspaces 583; muted-send loop 576;
+// native rear predicate 584; workspace role names 583; input plus loop 565
+// (not kept: the loop's index formula only reproduces 6, 8, 7, 9).
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -585,7 +589,7 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 		c_sound_effects::add_send(8, 0, -64.0f, &mixbins);
 	c_sound_effects::add_send(7, 0, -64.0f, &mixbins);
 	c_sound_effects::add_send(9, 0, -64.0f, &mixbins);
-	IDirectSoundBuffer_SetMixBinVolumes(m_buffers->buffer0c, &mixbins.mixbins);
+	IDirectSoundBuffer_SetMixBinVolumes(buffers->buffer0c, &mixbins.mixbins);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer0c, 0);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer18, -6400);
 
@@ -844,6 +848,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	}
 }
 
+// score 208 (was 208): eight-byte frame and inherited x87 send sums differ.
+// Levels before flag 208; scalar names 208; depth one 208;
+// size preference 449; shared gain loop 384.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
