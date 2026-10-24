@@ -262,6 +262,11 @@ void __stdcall function_1e9fa0(void *engine_globals, long object_index, long rep
 // score 13 (was 13): retail reads the field argument into EDX before the
 // prologue pushes and adds it there; here the load happens after the pushes
 // and goes into ECX, which forces the counter to be moved out first.
+// The first engine test also takes EAX/ECX where retail takes ECX/EAX.
+// Tried: a plain field read 85 (folded into the add); an inline entry
+// accessor 85; game_engine_get() and function_x340af0() for the tests 13;
+// local names 13; an old-value local 16 (engine test then EDX/EAX); a word
+// or dword index 44-61 (convention changes)
 // @retail 0x1e9ce0
 void function_1e9ce0(long player_index, long counter, s_statborg *statistics,
 	long field, long volatile delta, bool by_team)

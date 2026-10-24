@@ -107,6 +107,10 @@ public:
 // comparing it, ours compares the member in place; retail compares the found
 // index as a full word, ours as a sixteen bit value, so ours sign extends it
 // when it indexes the bodies
+// Ordered full-width while 106; array base/ref fill 106; size/index accessors
+// 106; byte accessor 161; pair reference 161; bool storage 161; separate
+// counter scopes 128; stored byte object 128; scan-only accessor 161;
+// plain bool accessor 106. Bottom joint tests already reload the member.
 // @retail 0x317d90
 void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 {

@@ -23,6 +23,9 @@ real function_30bf0(vector3f *v);
 real magnitude3d(vector3f const *v);
 extern vector3f *g_4687bc;
 
+// score 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
+// Word category 225; native clear state 170; direct origin 172; distance category 175; side workspace 175.
+// Native clear with direct origin 171, word category 234, short return result 178.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)
@@ -47,7 +50,7 @@ short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, s
    local_4 |= 0x8000000;
   if (arg_7)
    local_4 &= ~0x20;
-  bool local_7;
+  long local_7;
   {
    vector3f local_5;
    vector3d_from_points3d(local_3, arg_4, &local_5);

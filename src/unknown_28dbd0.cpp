@@ -70,7 +70,8 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 	return local_1;
 }
 
-// score 213 (was 213): frame 0x11c versus 0x118 and rotation cross homes;
+// score 213 (was 213): 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
+// frame 0x11c versus 0x118 and rotation cross homes;
 // named request word 213; complete creation-stage scope 213; random arm first
 // 284; shared rotation output setter 226; size optimization 563.
 // @retail 0x28dbd0
