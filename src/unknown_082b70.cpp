@@ -219,6 +219,10 @@ struct s_weapon_definition_view
 // selector inside positive guard 159; native mode 149; read-only tag 149;
 // read-only trigger 149; active interval 150; shared false stores 155;
 // selector declared before receiver 149.
+// score 149 (was 149): Frame 0x20 versus 0x1c, initial sentinel and second-slot pool load still
+// differ. Separate bounded result 149; direct native bounds 188; flag field at store 149; direct
+// mode-two result 178; shared mode-one stores 149; trigger fields at use 175; native weapon
+// receiver 149; handle workspace name 149.
 // @retail 0x82d20
 void function_82d20(long object_index, s_object_relevance_source *source, s_weapon_activity_result *result)
 {
