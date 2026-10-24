@@ -182,8 +182,6 @@ void function_21fa80(long channel_index, s_looping_channel_properties const *pro
 			if(sends.flags&2) channel_effects()->add_send(31,mode,sends.field_14,&settings);
 			if(sends.flags&0x20) channel_effects()->add_sends(&sends,SOUND_DRIVER_GLOBALS->surround,mode,&settings);
 			channel_effects()->add_source_mixbins(input,SOUND_DRIVER_GLOBALS->surround,mode,&settings);
-			s_mixbin_settings unused;
-			sound_mixbins_initialize(&unused);
 			stream->stream->SetMixBins(&settings.mixbins);
 		}
 	}

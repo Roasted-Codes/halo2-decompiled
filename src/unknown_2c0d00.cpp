@@ -215,6 +215,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
     s_path_settings const *settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
     point3f const *position, real radius, vector3f const *direction, long unit_index, long ignore_index);
 
+// score 866 (was 866): frame 0x2cb8 versus 0x2cac; actor/unit and workspace homes differ.
+// Classification order 898; common center 887; common offset 867; marker count 866; inline depth two 866;
+// paired object centers 907; first/sphere centers 907; vehicle-check/sphere centers 907.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,

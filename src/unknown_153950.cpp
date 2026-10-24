@@ -708,6 +708,40 @@ static inline void cross_product3d_1546f0(vector3f const *a, vector3f const *b, 
 	result->k = a->i * b->j - a->j * b->i;
 }
 
+/* the rotation by the angle about the unit axis, with no translation */
+static __forceinline void rotation_from_axis_1546f0(transform4x3f *matrix, vector3f const *axis, real angle)
+{
+    real s = (real)sin(angle);
+    real c = (real)cos(angle);
+    real ii = axis->i * axis->i;
+    real jj = axis->j * axis->j;
+    real kk = axis->k * axis->k;
+    vector3f sine_axis;
+    sine_axis.i = axis->i * s;
+    sine_axis.j = axis->j * s;
+    sine_axis.k = axis->k * s;
+    matrix->scale = 1.0f;
+    real forward_i = (1.0f - ii) * c + ii;
+    real t = 1.0f - c;
+    real tij = (t * axis->j) * axis->i;
+    real left_i = tij - sine_axis.k;
+    real forward_j = tij + sine_axis.k;
+    real left_j = (1.0f - jj) * c + jj;
+    real tk = t * axis->k;
+    real tki = tk * axis->i;
+    real up_i = tki + sine_axis.j;
+    real forward_k = tki - sine_axis.j;
+    real up_k = (1.0f - kk) * c + kk;
+    real tkj = tk * axis->j;
+    real up_j = tkj - sine_axis.i;
+    real left_k = tkj + sine_axis.i;
+    matrix3x3 rotation = {{forward_i, forward_j, forward_k}, {left_i, left_j, left_k}, {up_i, up_j, up_k}};
+    matrix->rotation = rotation;
+    matrix->position.z = 0.0f;
+    matrix->position.y = 0.0f;
+    matrix->position.x = 0.0f;
+}
+
 // @retail 0x1546f0
 void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
 {
@@ -716,8 +750,8 @@ void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
     s_game_speed *speed = g_510c5c;
     if (speed->flags & 1)
     {
-        transform4x3f transform = *g_4687d0;
         real amount = *(real *)&speed->value20;
+        transform4x3f transform = *g_4687d0;
         if (speed->timer24 > 0)
         {
             if (speed->flags & 2)
@@ -753,31 +787,10 @@ void __stdcall function_1546f0(long local_index, transform4x3f *matrix)
                 real priority = slot->priority9c;
                 amount = priority * function_17ca10(1.0f - elapsed, *(short *)&slot->bounds.unknown04[0]);
             }
-            real angle = amount * slot->bounds.unknown04[1];
-            real sine = (real)sin(angle), cosine = (real)cos(angle);
+            transform4x3f transform;
             vector3f axis;
             cross_product3d_1546f0(g_4687b0, &slot->forward, &axis);
-            real x = axis.i, y = axis.j, z = axis.k;
-            real yy = y * y, zz = z * z, xx = x * x;
-            transform4x3f transform;
-            matrix3x3 rotation;
-            transform.scale = 1.0f;
-            real zs = z * sine;
-            real xs = x * sine;
-            real ys = y * sine;
-            rotation.forward.i = (1.0f - xx) * cosine + xx;
-            real xy = (1.0f - cosine) * y * x;
-            rotation.left.i = xy - zs;
-            rotation.forward.j = xy + zs;
-            rotation.left.j = (1.0f - yy) * cosine + yy;
-            real xz = (1.0f - cosine) * z * x;
-            rotation.up.i = xz + ys;
-            rotation.forward.k = xz - ys;
-            rotation.up.k = (1.0f - zz) * cosine + zz;
-            real yz = (1.0f - cosine) * z * y;
-            rotation.up.j = yz - xs;
-            rotation.left.k = yz + xs;
-            transform.rotation = rotation;
+            rotation_from_axis_1546f0(&transform, &axis, amount * slot->bounds.unknown04[1]);
             real distance = slot->bounds.unknown04[2] * amount;
             vector3f offset;
             offset.i = slot->forward.i * distance;

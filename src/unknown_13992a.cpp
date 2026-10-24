@@ -97,7 +97,7 @@ void function_13992a(byte *arg_1, long arg_2)
         {
             byte const *local_3 = function_13992b(*(long *)(local_2 + 0x2c));
             s_unit_weapon_hands local_4;
-            long local_5 = false;
+            bool local_5 = false;
             function_cb430(*(long *)(local_2 + 0x2c), &local_4);
             arg_1[0x1c] = true;
             *(long *)(arg_1 + 0x20) = *(long *)(local_3 + 0x1e4);
@@ -108,14 +108,13 @@ void function_13992a(byte *arg_1, long arg_2)
             *(short *)(arg_1 + 0x34) = function_cdff0(*(long *)(local_2 + 0x2c), function_ce020(*(long *)(local_2 + 0x2c)));
             arg_1[0x30] = local_4.one;
             arg_1[0x31] = local_4.two;
-            short local_6 = function_c8860(*(long *)(local_2 + 0x2c));
-            *(short *)(arg_1 + 0x3c) = local_6;
+            *(short *)(arg_1 + 0x3c) = function_c8860(*(long *)(local_2 + 0x2c));
             arg_1[0x32] = local_4.seat_allows;
             *(short *)(arg_1 + 0x38) = function_cdff0(*(long *)(local_2 + 0x2c), 0);
             *(short *)(arg_1 + 0x3a) = function_cdff0(*(long *)(local_2 + 0x2c), 1);
             *(short *)(arg_1 + 0x1e) = *(short *)(local_3 + 0x10a);
             arg_1[0x3e] = false;
-            if (local_6 != NONE && function_cbd50(*(long *)(local_2 + 0x2c),
+            if (*(short *)(arg_1 + 0x3c) != NONE && function_cbd50(*(long *)(local_2 + 0x2c),
                 (short)*(signed char *)(function_13992b(*(long *)(local_2 + 0x2c)) + 0x212)) != NONE)
             {
                 if (!function_100f70(function_cbd50(*(long *)(local_2 + 0x2c),
