@@ -141,6 +141,12 @@ public:
 // matches retail's size, but retail keeps this in ebx and the object in esi
 // while ours keeps this in edi and the object in ebx, and retail builds the
 // flag in the argument slot where ours copies it there
+// Implicit true 207; direct collidable 207; list names 207; reference
+// indexers 190; byte-result conversion 190; named result 200; per-iteration
+// collidable 200; shared append slot 192; size accessors 190; force-inline
+// append 190; default result constructor 190; after array helpers 190.
+// Implicit true plus indexers fixes the entry registers, but pair-loop
+// register ownership and instruction scheduling still regress overall.
 // @retail 0x30dce0
 void world_30dce0::function_30dce0(object_30dce0 *object, flag_30dce0 notify)
 {
