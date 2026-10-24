@@ -101,6 +101,10 @@ public:
 // forwards, the spheres' pointer is read before the frame, the
 // radius is taken from the sphere first and the scaled normal is written
 // without a local of its own.
+// The count load still precedes the corners loop. Counted transforms 146;
+// output-first arguments 66; late snapshot 197; cursor locals 72;
+// pointer/count/shape names and transform/input references 66; axis order 66.
+// All restored; original-loop direct count loads 66, indexed contacts 143.
 // @retail 0x2f7f10
 void class_2f7f10::function_2f7f10(void const *a, void const *b, void const *input, void *collector)
 {
