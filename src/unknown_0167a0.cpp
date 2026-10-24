@@ -74,6 +74,8 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
+// score 167 (was 167): frame/entry agree; logarithm width, reset and restore scheduling differ.
+// Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
