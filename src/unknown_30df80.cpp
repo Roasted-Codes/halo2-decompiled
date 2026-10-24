@@ -82,6 +82,11 @@ public:
 // an external object reference with direct array reads 15; inherited array
 // storage 15; early pointer declarations with either form 15; a count saved
 // before the branch 131, with an inline float argument 134; inline depth one 15.
+// Further trials: common pair type 17; that type with the motion read
+// through the embedded record 35; shared shape/transform types 17, with that
+// motion read 35; a count sampled after the handler store 17; an external
+// reference for restoration 17; a receiver base of its own type 17, with that motion
+// read 35. The original body remains; frame 0x68 and length 442 agree.
 // further trials: bounds first 17; pending data/count through the group 19;
 // listener conversion 17, before the handler 24; tolerance argument 34;
 // member group directly 36; pending member receiver 19; empty-pair guard 17.

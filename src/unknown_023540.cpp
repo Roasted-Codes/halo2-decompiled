@@ -2527,11 +2527,14 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // found-index search 572; long found-index 603.
 // Native cache cursor 590; bounded sample while 575; bounded bucket while 575;
 // per-bucket transformed buffers 575; inclusive level cap 575.
+// score 570 (was 575): frame 0x214 versus 0x200; coefficient homes and sample paths differ.
+// Long result 570 kept; outer rotated buffers 575; accumulated search 573; word sample count 576;
+// depth one 575; long result/search 575; short result 570; byte result 596.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
 {
-    bool result = true;
+    long result = true;
     {
         bool found = false;
         for (short i = 0; i < g_5093e8; ++i)
@@ -2938,6 +2941,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // score 971 (was 978): frame 0x2c agrees; saved registers, mode flags and state expansion differ.
 // Inner depth pairs removed 1212; direct texture API 983; dispatch defaults 1224;
 // normalization after dispatch 984; four-use alpha snapshot 971.
+// Byte capabilities 1086; rescale-state name 978; case three first 978;
+// short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
