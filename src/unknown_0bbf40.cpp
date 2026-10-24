@@ -813,17 +813,23 @@ static __forceinline byte *object_bytes_ab(long index)
     return (byte *)((s_object_header_0bbf40 *)g_4e0300->data)[index & 0xffff].object;
 }
 
-// score 101 (was 101): ours is thirteen bytes shorter and pushes EBP and ESI where retail pushes EBX
-// and EBP, so the saved registers differ.
+struct s_object_flags12c_ab
+{
+    word : 3;
+    word flag3 : 1;
+    word : 12;
+};
+
+// score 49 (was 101): retail saves ESI only after the early return for a unit with a player,
+// so that return gets its own epilogue; ours saves ESI in the prologue and shares it.
 // @retail 0xbeb30
 bool __stdcall function_beb30(long object_index)
 {
-    byte *volatile object = object_bytes_ab(object_index);
+    byte *object = object_bytes_ab(object_index);
     byte *unit = (byte *)function_badc0(object_index, 3);
     long player = NONE;
     if (unit) player = *(long *)(unit + 0x13c);
-    byte &result = *(byte *)&object_index;
-    result = player != NONE;
+    bool result = player != NONE;
     if (!result)
     {
         long index = *(long *)(object + 0x10);
@@ -837,15 +843,11 @@ bool __stdcall function_beb30(long object_index)
         while (index != NONE)
         {
             byte *parent = object_bytes_ab(index);
-            byte *header = datum_get_inlined(g_4e0300, index);
-            if (header && ((1 << header[3]) & 3))
-            {
-                byte *parent_unit = *(byte **)(header + 8);
-                if (parent_unit && *(long *)(parent_unit + 0x13c) != NONE) return true;
-            }
+            byte *parent_unit = (byte *)function_badc0(index, 3);
+            if (parent_unit && *(long *)(parent_unit + 0x13c) != NONE) return true;
             index = *(long *)(parent + 0x14);
         }
-        if (((1 << object[0xaa]) & 0x1c) && (bool)(((dword)object[0x12c] >> 3) & 1))
+        if (((1 << object[0xaa]) & 0x1c) && TEST_FIELD_BIT(((s_object_flags12c_ab *)(object + 0x12c))->flag3))
             return true;
     }
     return result;
