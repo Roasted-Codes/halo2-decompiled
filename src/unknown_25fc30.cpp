@@ -1181,6 +1181,7 @@ void __stdcall function_25f290(
 		for (i = 0; i < count; i++)
 		{
 			s_type_b36ac5 *position = &positions[i];
+			point3f *point = &position->position;
 			short behind_cover = 0;
 			short exposed = 0;
 			short moving = 0;
@@ -1199,7 +1200,7 @@ void __stdcall function_25f290(
 
 				if (type == 0 || type == 1)
 				{
-					short result = function_267a80(&distance, &context->lines[j].point, &context->lines[j].direction, &position->position, 0);
+					short result = function_267a80(&distance, &context->lines[j].point, &context->lines[j].direction, point, 0);
 
 					if (nearest > distance)
 					{
@@ -1222,7 +1223,7 @@ void __stdcall function_25f290(
 
 					if (result == 0 && context->unknown55)
 					{
-						result = function_267a80(NULL, &context->lines[j].point, &position->unknown40, &position->position, 0);
+						result = function_267a80(NULL, &context->lines[j].point, &position->unknown40, point, 0);
 						if (moving <= result)
 						{
 							moving = result;
