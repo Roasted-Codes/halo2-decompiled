@@ -221,6 +221,8 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // frame 0x2cb8 versus 0x2cac and actor/unit retention;
 // point workspace names 866; initial actor value 869; query index value 916;
 // conditional self-unit 911; wide initial predicates 1011; native location copy 911.
+// Frame pointer 1207; size preference 1436; native object fields 866;
+// direct restricted predicate 911; direct device predicate 912.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -986,6 +988,9 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
     return angle;
 }
 
+// score 342 (was 342): frame 0x3c versus 0x34 and angular/planar homes differ.
+// Zero-first length guard 342; cross before angle 413; direct angle selection 403;
+// frame pointer 458; shared side dot products 384.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
