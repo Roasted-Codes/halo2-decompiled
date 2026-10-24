@@ -2471,6 +2471,9 @@ static inline real sound_vector_normalize(vector3f *v)
    world units a second, the frequency ratio between 1/8 and 4 */
 // score 122 (was 122): direction j/k versus i register/memory split and length scheduling differ.
 // Shared length helper 122; early source speed 143; projection order 133; cached direction 125; void normalizer 122.
+// Closest form (129, ratio 0.96): normalize written in the body (not a helper) on the struct, if-body order j, k, i,
+// and an inline copy of 0x142640's body (x/y/z copies, matrix->scale) for the velocity; only retail's j/k loads
+// hoisted above the branch (no else block) still differ. Scalar j/k copies 170; scalars before the length 161.
 // @retail 0x12a9d0
 real function_12a9d0(long listener_index, s_sound_position const *position)
 {
@@ -2499,7 +2502,7 @@ real function_12a9d0(long listener_index, s_sound_position const *position)
 	listener_speed = 0.0f - (listener_velocity.k * direction.k + listener_velocity.j * direction.j + listener_velocity.i * direction.i);
 	source_speed = position->velocity.k * direction.k + position->velocity.j * direction.j + position->velocity.i * direction.i + 111.548553f;
 	ratio = (111.548553f - listener_speed) / (source_speed > 0.001f ? source_speed : 0.001f);
-	return (real)(log(PIN(ratio, 0.125, 4.0f)) * 1731.234f);
+	return (real)log(PIN(ratio, 0.125, 4.0f)) * 1731.234f;
 }
 
 void looping_sound_controllers_synchronize(bool initial_playback);
