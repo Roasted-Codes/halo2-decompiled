@@ -37,6 +37,9 @@ PRIVATE __forceinline real function_1a8fa1(vector3f const *arg_0)
 }
 #pragma optimize("", on)
 
+// score 53 (was 53): Final distance-call registers and the output-exit displacement differ.
+// Read-only actor/target 53/53; full-width segment/actor/point results
+// 78/86/66; named segment/sample distances 53/53; delayed segment default 139.
 // @retail 0x1a8fa0
 void function_1a8fa0(long actor_index, real distance, bool *near_point, bool *near_actor, bool *near_segment)
 {
