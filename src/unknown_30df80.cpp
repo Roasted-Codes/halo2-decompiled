@@ -79,6 +79,9 @@ public:
 // retail's ebx and edi hold the member and the collidable as retail has them;
 // the dispatcher and the pair's data still swap registers, and the motion is
 // still read through the member instead of the collidable
+// an external object reference with direct array reads 15; inherited array
+// storage 15; early pointer declarations with either form 15; a count saved
+// before the branch 131, with an inline float argument 134; inline depth one 15.
 // further trials: bounds first 17; pending data/count through the group 19;
 // listener conversion 17, before the handler 24; tolerance argument 34;
 // member group directly 36; pending member receiver 19; empty-pair guard 17.

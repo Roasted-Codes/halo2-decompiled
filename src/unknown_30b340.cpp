@@ -16,6 +16,8 @@
 // ahead of the fields), the list's fields assigned in the body as well (44: the
 // list's constructor's stores are not eliminated as dead, so they appear
 // twice)
+// public bases declared before the polymorphic base: four prefix-first forms 14,
+// four forms with both preceding it 11; each used body or initializer stores.
 // further trials: public input/handle bases 13; reference prefix 13;
 // full payload base 18; handle tail initialized together 18; zero word
 // assigned with the handle 18; prefix/input base 13, initializers 11;
