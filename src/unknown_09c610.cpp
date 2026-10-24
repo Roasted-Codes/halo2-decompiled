@@ -251,6 +251,9 @@ struct s_input_9c610
 // reconstruction 107; both shared inline operations 114; point local at
 // notification 23, before guard 23, across dispatch 23; shared lookup
 // with point lifetime 23. Native frame/report copies still agree.
+// final validity predicate 129; byte success result 23; unsigned reconstructed handle 23;
+// signed-byte material 46; bool presence field 23; named validated tag result 23; source-width
+// pool index 112; unsigned salt word 24.
 // @retail 0x9c610
 bool c_damage_aftermath_event_definition::v11(long arg_0, long const *arg_1, long arg_2, void const *arg_3)
 {

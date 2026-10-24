@@ -110,6 +110,10 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 	out->up.k = inertia.m_col2(2);
 }
 
+// score 184 (was 184): Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
+// double cap parameter 249; read-only motion input 184; read-only step view 184; read-only
+// component view 184; native contact receiver 184; complete contact mask result 304; separate
+// braking result 274; linear brake used after its cap 223.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
