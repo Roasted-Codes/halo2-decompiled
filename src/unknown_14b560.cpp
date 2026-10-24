@@ -2250,9 +2250,9 @@ void __stdcall function_14f820(long player_index, long unit_index, byte *input)
     if (*(long *)(unit + 0x14) == NONE && g_4e6948->state != 2)
     {
         byte *settings = *(byte **)((byte *)g_4e034c + 0xf4);
-        real tick_rate = (real)g_510c54->field_2_3;
-        long first = player_round_ticks(tick_rate * *(real *)(settings + 0x20));
-        long second = player_round_ticks(tick_rate * *(real *)(settings + 0x24));
+        real tick_scale = (real)g_510c54->field_2_3;
+        long first = player_round_ticks(tick_scale * *(real *)(settings + 0x20));
+        long second = player_round_ticks(tick_scale * *(real *)(settings + 0x24));
         real decay = *(real *)(settings + 0x28);
         weapon = player_current_weapon(unit_index, 0);
         bool local_85417d = weapon != NONE && function_101340(weapon);
