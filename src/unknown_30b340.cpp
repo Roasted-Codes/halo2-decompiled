@@ -16,6 +16,10 @@
 // ahead of the fields), the list's fields assigned in the body as well (44: the
 // list's constructor's stores are not eliminated as dead, so they appear
 // twice)
+// Further trials: staged public bases 5; a separate zero-word base 5;
+// that reset after the type store 5; outer tail setup 5; a two-word reset 5;
+// outer world store 5; base constructors with no body 5; chained clears 8. These
+// setup helpers are rejected; the original constructor and layout remain.
 // @retail 0x30b340
 class_30b340::class_30b340(referenced_2d88a0 *object_, long value)
 	: field_8(0), object(object_), field_10(-1), field_14(0), field_18(0), field_1c(0), field_20(0), field_24(value)

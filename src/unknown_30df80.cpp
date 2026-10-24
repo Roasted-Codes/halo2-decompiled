@@ -79,6 +79,11 @@ public:
 // retail's ebx and edi hold the member and the collidable as retail has them;
 // the dispatcher and the pair's data still swap registers, and the motion is
 // still read through the member instead of the collidable
+// Further trials: common pair type 17; that type with the motion read
+// through the embedded record 35; shared shape/transform types 17, with that
+// motion read 35; a count sampled after the handler store 17; an external
+// reference for restoration 17; a receiver base of its own type 17, with that motion
+// read 35. The original body remains; frame 0x68 and length 442 agree.
 // @retail 0x30df80
 void owner_30c8e0::function_30df80(member_30c8e0 *member)
 {
