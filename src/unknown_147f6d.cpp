@@ -1417,7 +1417,10 @@ extern dword g_54e7fc;
 void player_slots_initialize();
 
 // score 19 (was 19): the globals are cleared in the other order, ours writes
-// the byte flags after the blocks it fills while retail writes them before
+// the byte flags after the blocks it fills while retail writes them before.
+// Peer value-init 119; first-member peer clear 19; indexed/derived tail clear 19;
+// noinline player-slot call 19; inline depth zero 19; global optimization off 247;
+// manager-byte clear 23.
 // @retail 0x1476c7
 void function_1476c7()
 {
