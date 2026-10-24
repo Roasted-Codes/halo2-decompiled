@@ -124,6 +124,9 @@ void function_268840()
 // player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
 // (the latter four use the current-datum iterator). All body forms restored.
+// frame 0x48 versus 0x50; iterator result and pool homes differ;
+// outer while 296; player while 296; actor for-loop 331; native handle parts 327;
+// proxy-before-unit loads 296. Original body retained.
 // @retail 0x268c90
 void function_268c90()
 {
