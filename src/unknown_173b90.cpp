@@ -1093,6 +1093,9 @@ long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
 // @retail 0x174220
+// score 106 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
+// availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag
+// in al, and it tests the definition's bit 9 as a byte instead of a shifted word.
 void __stdcall function_174220(bool view_pass)
 {
     s_record_pool *systems = g_510c74;

@@ -936,6 +936,8 @@ void device_motion_start(s_device_motion *motion, real target, real duration, re
 
 /* starts a device's power motion (if the device takes power changes) */
 // @retail 0x108600
+// score 31 (was 31): retail passes the initial velocity to 0x107ab0 in xmm6 with five
+// stack floats; our 0x107ab0 takes it on the stack, so its call pushes one argument more.
 void function_108600(long device_index, real target, real duration, real ramp_up_time, real ramp_down_time,
 	bool keep_velocity)
 {
