@@ -253,6 +253,10 @@ void function_146de0(void)
 	}
 }
 
+// score 143 (was 143): frame 0x18 versus 0x14 and shared update expansion remain.
+// Constructed allocator result 164; conditional usable capacity 140/frame 0x14 (three-point gain dropped);
+// conditional padding 141; block/padding outer scopes 143; current block-first homes 143;
+// construction scope 143; zero-first padding 143 at 377 bytes.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
