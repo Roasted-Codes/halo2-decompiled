@@ -604,16 +604,13 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
     return false;
 }
 
-// score 196 (was 204; 188 before 0xb8940/0xb8a10 took a long cluster index,
-// whose sign extension retail pushes, the rise is alignment): count stays in
-// esi (a second zero register) until the loop, so the empty-cluster exit gets
-// its own epilogue (mov ax, si); the g_4e7414 increment goes through ebp and is
-// stored after the pushes (retail: ecx, stored at once); the record/iterator
-// reloads after each first-object call are swapped; retail aligns the second
-// object loop (jmp; lea ecx, [ecx]); the second inlined distance test computes
-// dz, dx, dy in retail (dz, dy, dx here). Tried: second inline copy with
-// dz,dx,dy or dy,dx,dz or a vector3f delta (no change); count = 0 just before
-// the loop (205).
+// score 24 (was 204): the g_4e7414 increment goes through esi and is stored
+// after the pushes (retail: ecx, stored at once); the record/iterator reloads
+// after each first-object call are swapped; the second inlined distance test
+// computes dz, dx, dy in retail (dz, dy, dx here). Tried: second inline copy
+// with dz,dx,dy or dy,dx,dz or a vector3f delta (no gain); count = 0 just
+// before the loop (205); a goto to a shared exit instead of the early returns
+// (196: count lived in esi and the empty exit got its own epilogue).
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
@@ -654,7 +651,11 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             {
                 if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
                 {
-                    if (count >= maximum_count) goto done;
+                    if (count >= maximum_count)
+                    {
+                        g_4de2f8 = false;
+                        return count;
+                    }
                     objects[count] = object;
                     ++count;
                 }
@@ -669,14 +670,17 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             {
                 if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
                 {
-                    if (count >= maximum_count) goto done;
+                    if (count >= maximum_count)
+                    {
+                        g_4de2f8 = false;
+                        return count;
+                    }
                     objects[count] = object;
                     ++count;
                 }
             }
         }
     }
-done:
     g_4de2f8 = false;
     return count;
 }
