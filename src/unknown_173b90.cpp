@@ -797,6 +797,9 @@ public:
 	virtual long const *names() = 0;
 };
 
+// score 355 (was 355): frame agrees; byte flag clear, child carriers and selective inlining differ.
+// Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
+// perpendicular call 394; inline depth one 394, zero 517.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -977,6 +980,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
     result->k = a->i * b->j - a->j * b->i;
 }
 
+// score 213 (was 213): frame and length agree; early EDI and tag carriers differ. Native draw 354; native
+// membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {
