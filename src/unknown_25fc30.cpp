@@ -406,6 +406,9 @@ void __stdcall function_25dd50(
 	}
 }
 
+// score 38 (was 38): Face base/index, definition setup, cover registers and failed-facing placement differ;
+// face pointer arithmetic 38; validated edge 38; definition receiver 191; cover reference 38;
+// target setter 38; target initializer 38; lateral component loop 38; output point setter 166.
 // @retail 0x25e430
 void __stdcall function_25e430(
 	long actor_index,

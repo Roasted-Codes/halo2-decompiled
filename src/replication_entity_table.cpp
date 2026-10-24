@@ -320,6 +320,10 @@ void function_89a20(s_handle_peers *peers)
 
 // score 66 (was 66): the prologue and the first store differ: retail saves ebx/ebp/esi/edi
 // and stores the sender pointer into the table, ours uses edx and ecx.
+// Native flag fields 66; indexed peer reads 66; unsigned word ordinal 96;
+//  pointer-derived ordinal 91; signed pending mask 66; unequal ordinal end 66;
+//  inactive before ready 66; read-only record 66. Entry convention still differs.
+// Retail holds peers in unsaved EBX; our mask call consumes EBX.
 // Peer reference 66; table reference 66; index-first handle 66; sequence-first handle 66; mask condition 66;
 // membership result 66; short cursor 96; owner value 66.
 // @retail 0x898c0

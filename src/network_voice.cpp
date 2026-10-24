@@ -1408,6 +1408,9 @@ static __forceinline bool function_57d63(long arg_0, long arg_1);
 // word outer/target induction 118/106; word active 97; mask names 94; skip cleared inactive entries 110.
 // caller depth 0/1/2 241/94/94; wide bit with depth 1/2 118/118;
 // complete mask/policy/both assignments 108/104/110.
+// Rejected set 100; rejected set with wide bit 168; indexed rejection bit 99;
+// allowed result 107; signed allowed result 107; allowed result with wide bit 130;
+// candidate snapshot 97; candidate snapshot with wide bit 119. Frame/spill and flag-query expansion remain.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {

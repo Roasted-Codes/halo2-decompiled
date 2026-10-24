@@ -171,7 +171,11 @@ static __forceinline bool structure_bsp_collision_available()
         *(long const *)((byte const *)g_4e0344->bsp + 4) == *(long const *)((byte const *)g_4e0348 + 8);
 }
 
-// score 68 (was 68): BL exclusion and source-slot reload remain; model inline 68; model noinline 68; state inline 68; both contracts 68; probe result 68; model result 68; final found result 111; triangle inline 68.
+// score 68 (was 68): Exclusion BL and source-slot join still differ. Read-only object 68;
+// unsigned object handle 68; word query buffer 68; native collision record 71;
+// external triangle reference 68; source publication 68; byte result merge 68;
+// query workspace names 68. Native record retested with byte result storage.
+// BL exclusion and source-slot reload remain; model inline 68; model noinline 68; state inline 68; both contracts 68; probe result 68; model result 68; final found result 111; triangle inline 68.
 // @retail 0x14b120
 bool function_14b120(s_surface_query_source source, void *surface)
 {
