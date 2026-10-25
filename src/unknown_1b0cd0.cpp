@@ -399,6 +399,11 @@ bool function_1b1970(long actor_index, short mode, vector2f const *forward,
 	return result;
 }
 
+// score 19 (was 19): the 0x1b0e40 call sets the origin first (retail last), and in
+// the >= 7 block retail reads the index as a word (xor widening) and the mode late
+// through the list in ebx; index and mode read in the call 66; short index with the
+// mode in the call 66; short index before the mode local 79, after it 79; short index
+// with the mode local inside the branch 42; short index and a bool result stored once 95.
 // @retail 0x1b1a90
 void __stdcall function_1b1a90(long actor_index, s_slot *slot, s_slot_target_list *list)
 {
