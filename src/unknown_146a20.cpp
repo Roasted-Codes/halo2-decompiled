@@ -286,6 +286,10 @@ void function_146de0(void)
 // Capacity/timestamp homes and update expansion remain; wrapped/full boundary
 // distances 164/149; direct consumption 164; counted distance 153; remainder update 140; byte padding
 // 144; unsigned capacity/native allocation 139/139.
+// score 129 (was 129): frame 0x14 agrees; update expansion and capacity/timestamp homes remain.
+// Short-padding failure/body, counted and capacity loops 129/131/129; zero-default/select padding
+// 134/129; allocator result 129; full short distance 135; success-only padding consumption
+// 120 (held: the guard repeats the loop's own test).
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {

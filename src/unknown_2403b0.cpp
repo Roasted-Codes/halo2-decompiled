@@ -53,6 +53,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // permission result 190; fallback permission scope 190; present-unit scope 190
 // eligible-weapon scope 190; present-slot scope 190; present-marker scope 190
 // unit/weapon scopes 190; option once 190.
+// score 190 (was 190): frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
+// Negative-three addition 190; default-NONE/explicit-arm team results 191/190; reversed completion
+// bit order 190; in-place limit 190; two-use stored-short ticks 190; limit plus stored ticks 190;
+// default-NONE team plus negative-three addition 191. Opening body and existing helper restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
