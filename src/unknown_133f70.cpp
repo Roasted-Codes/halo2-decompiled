@@ -101,6 +101,10 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Existing word query 155; combined category/query gate 155; both features before selector with query/native tag 210/210;
 // first/second feature early 206/206; features before optional-index result 201; query with while ordinal 155;
 // conditional Boolean query 195. Original body, word cursor and both inherited local qualifiers retained.
+// score 155 (was 155): early source/count and feature-result homes remain.
+// Entry active-record workspace 155; entry current-source workspace 155; packed-only
+// source snapshot 155; memcpy-return selection 155; first/second conditional feature
+// results 154/154; both conditional results 153; complete feature branches 217.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

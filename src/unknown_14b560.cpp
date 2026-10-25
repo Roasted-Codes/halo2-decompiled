@@ -2695,6 +2695,10 @@ struct s_unit_flags_14d8b0
 // score 128 (was 128): iterator/tick scheduling, damage transport and trigger registers remain.
 // Native trigger record ordinary/const 128/128; each with native point member 128/128;
 // native first-word flag with those four interfaces 126/126/126/126. Two-point forms dropped.
+// score 128 (was 128): iterator/tick schedule, damage transport and trigger homes remain.
+// Existing Boolean datum API 128; iteration receiver scope 128; input-only iterator
+// initialization 128; called datum API 395; existing parent query 197; both APIs 197;
+// Boolean iterator with native first flag 126; parent query with native first flag 195.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

@@ -39,6 +39,12 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 	return false;
 }
 
+// score 101 (was 101): frame 0x618 agrees; cursor/result initialization, delta XMM
+// homes and extra fraction copies remain. X-first deltas 109; full denominator 103;
+// scales before stores 101; first input record 207; Boolean helper result 101;
+// aggregate intersection 152; capacity-first gate 108; native input count 153;
+// intersection role names 101; output-first helper 101; count-result helper 101;
+// x-first deltas with full denominator 107.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)
@@ -128,6 +134,11 @@ short function_239e50(short count, point2f const *points, short *indices);
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
 // score 42 (was 42): Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
 // normalizer input vector 126; compound scales 42; factor-first scales 42; positive normalizer scope 42; long point index 101; count-first guard 99; long state 86; plane/point names 42; forced normalizer 42; forced dot 42; both forced 42.
+// score 42 (was 42): state/index/point and normalization XMM homes remain.
+// Single-result normalizer 42; squared-length expression 42; staged scales 42;
+// reverse scale publication 42; length workspace 56; signed-distance expression 42;
+// native first-point components 63; accumulated dot result 46.
+// Repeated j input 42; repeated i input 42; both scalar inputs 126.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {
