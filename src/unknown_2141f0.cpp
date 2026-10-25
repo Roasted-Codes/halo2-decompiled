@@ -81,6 +81,8 @@ void __stdcall cache_copy_record_use(char const *map_name);
 
 // score 433 (was 471): Frame 0x110 agrees; request-copy homes and by-value write-option setup still differ.
 // Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion states 433.
+// Signed-word dependency index 446; unsigned index 446; explicit existing write flags 453;
+// terminal snapshot assignment 433; adjacent write-header cases 434.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {

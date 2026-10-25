@@ -733,6 +733,8 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // score 204 (was 204): frame 0x98 agrees; decoded-kind width, scalar homes and callback setup differ.
 // Native kind 211; role-named scalars 204; shared callback arm 222;
 // library descriptor/payload copies 204; pretested item while 220.
+// Unsigned native item total 204; joint count/error item guard 220; direct local output cursor 211;
+// pair-pointer cleanup 206; payload-before-info declaration 204.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
