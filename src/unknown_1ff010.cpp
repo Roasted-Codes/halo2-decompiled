@@ -487,7 +487,7 @@ bool function_1fef40(s_type_c3b527 const *target, long actor_index);
 extern vector3f *g_4687b0;
 void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real cosine); /* forced inline in src/unknown_1eb8a0.cpp */
 
-// score 142 (was 153): horizontal homes and initial copy registers recovered; planar/turn schedules and
+// score 136 (was 153): horizontal homes and initial copy registers recovered; planar/turn schedules and
 // output length still differ; tried planar scale loop 153; direction branch update 204; horizontal native
 // copy 142; rotation native copy 153; real signed sine 170; horizontal shared facing base 195; horizontal
 // facing rotation copy 195; horizontal native vector copy 142; horizontal rotation copy 142.
@@ -506,6 +506,12 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // and output length still differ. Forced rotation declaration 142; inline declaration 142; planar
 // facing snapshot 220; named dot 142; named determinant 142; combined planar result lifetimes 142;
 // planar scale operand order 142; planar completion copy 146.
+// Frame 0x20 agrees; horizontal square/copy order, rotation schedule and output length still
+// differ. native turn initializer 152; turn before side 136; initialized turn before side
+// 151; output product input order 142; shared double output 137; shared double direct output
+// 167; horizontal copy observation 144; native input observations 154; existing length
+// inline 142; earlier turn length result 136; earlier turn product input order 136; earlier
+// turn shared result scale 136; earlier turn shared direct scale 160.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {
@@ -535,8 +541,8 @@ long function_1ff360(long actor_index, point3f const *target, vector3f *velocity
 		real magnitude = normalize2d_fast((vector2f *)&horizontal);
 		if (magnitude > 0.0f && actor->unknown290.j * horizontal.y + actor->unknown290.i * horizontal.x < 0.0f)
 		{
-			bool left = actor->unknown290.i * horizontal.y - actor->unknown290.j * horizontal.x > 0.0f;
 			vector3f turned = actor->unknown290;
+			bool left = actor->unknown290.i * horizontal.y - actor->unknown290.j * horizontal.x > 0.0f;
 			real sine = (left ? 1 : -1) * 0.5f;
 			rotate_direction(&turned, g_4687b0, sine, 0.0f);
 			if (normalize2d((point2f *)&turned) > 0.0f)

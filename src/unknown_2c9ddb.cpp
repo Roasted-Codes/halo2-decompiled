@@ -63,6 +63,10 @@ extern long g_55c154;
 // separate load inputs with shared publication 178.
 // byte classification 61; signed-byte classification 61; initialized variant 170; initialized request 155;
 // frame pointer 98; global optimization disabled 518; controller-index snapshot 61; speed preference 466.
+// Biased 0x250 frame agrees; shared-load classification spill and string-copy expansion
+// still differ. source default override 62; source existing override 61; source handle
+// lifetime 76; separate current selection 61; name generation result 61; saved handle
+// workspace 61; native generated name 61; native name source override 62.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {
