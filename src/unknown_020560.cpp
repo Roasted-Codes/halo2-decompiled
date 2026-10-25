@@ -223,16 +223,16 @@ void function_16f60(byte *state, word const *range)
     }
 }
 
-// score 103 (was 117): frameless BX entry agrees; dispatch span and selective setter expansion differ.
+// score 93 (was 93): frameless BX entry agrees; dispatch span and selective setter expansion differ.
 // Complete case orders 0/12/34/6/5 114; 0/12/5/34/6 119; 0/12/6/34/5 103 kept;
 // 0/34/12/5/6 158; 0/5/12/34/6 151; 0/6/12/34/5 167;
-// 0/34/5/6/12 224; 0/6/5/34/12 165. Code rows 91 to 80; 780/772 bytes.
-// score 93 (was 103): dispatch span and selective setter expansion still differ.
+// 0/34/5/6/12 224; 0/6/5/34/12 165. Earlier code rows 91 to 80; 780/772 bytes.
 // Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison 103/103;
 // early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
-// score 93 (was 93): dispatch span and selective setter expansion remain.
 // Reference-call branches first/second mode 144/145; paired-label orders 93/93/93;
 // complete group orders 0/12/34/5/6, 0/12/5/6/34, 0/34/6/12/5 105/106/197.
+// Shared keep-pass group/conditional comparison/mask-call branches 282/270/207;
+// shared first one/two/three calls 188/235/292; first one/three with group 313/368.
 // @retail 0x15370
 void function_15370(short mode)
 {
