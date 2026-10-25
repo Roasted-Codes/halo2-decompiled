@@ -1291,7 +1291,10 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 // Entry/packet mode observations 134/134; entry size before written count 107 plain
 // (454/449 bytes); shared scan ordinal 134; entry cursor / with mode 133/133;
 // capacity result join 134; written count after header reservation 160.
-// score 107 (was 107): player input, retained-mask and completed-length homes remain;
+// score 107 (was 107): EDI input and mask/count/size/length homes remain. Written before
+// mask/size 133; mask after size/count 173; retail initialization order 162;
+// completed length after compaction 172; signed-word written count 141 (fast).
+// player input, retained-mask and completed-length homes remain;
 // recipient bit at use 107; entry-size stride 164; shared header stride 184;
 // serialized-span length 144; invalid result first/with stride 180/182;
 // early result on size-first frame 141; serialized span with stride 199.
@@ -2574,7 +2577,10 @@ PRIVATE __forceinline byte *function_54592(void *arg_0, const s_network_session_
 // previous mask 179; ordinary empty/mask-empty 208/208; active memcpy 174;
 // selected input 172; selected/ordinary 204; selected/memcpy 157;
 // mask-selected/mask-memcpy 172/174; typed output/selected/ordinary 179/172/208.
-// score 157 (was 157): mask/player homes, zero carrier and grouped cursors remain;
+// score 157 (was 157): player/mask homes, separate zero and selected-pointer tests remain.
+// Active-Boolean copy contract 174; const empty 157; byte group 157; word compare 195;
+// source-local name 157; grouped source cursor 181 (fast). Original kept.
+// mask/player homes, zero carrier and grouped cursors remain;
 // mask/reason/empty declared first 157/157/157; chained empty values 157;
 // native selected-copy output 157; empty arm first 162; void copy result 157;
 // native output with empty arm first 162.

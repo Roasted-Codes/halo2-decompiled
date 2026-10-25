@@ -386,6 +386,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // j92: camera/points saved registers remain exchanged; corner order and diagnostic/lifetime forms do not improve the frameless entry.
 // corners in index order 426; diagnostic result chain 423; plane tests result 671; camera plane predicate 669;
 // far depth snapshot 646.
+// score 423 (was 423): Camera/points saved registers and initial store schedule remain.
+// corner point setters 622; rectangle CRT copy 423; plane array receiver 761;
+// native plane return 700; late right/top products 682 (fast).
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

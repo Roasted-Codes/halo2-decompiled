@@ -112,7 +112,11 @@ struct s_handler_slot
 // Tried (all 67): pointer-to-field locals (s_gateway_slot **), static dispose helpers,
 // inline member dispose() on both slots, static detach helpers taking T **, reading the
 // globals again inside the tests; volatile initialized/back-pointer fields 65 (other shape).
-// score 47 (was 67): session clear schedule, field-address carriers and final link load differ;
+// score 47 (was 67): Handler/gateway field carriers and post-clear link load still differ.
+// byte release ordinal 112; short session ordinal 125; byte session ordinal 125; shared index
+// scope 67; session reference 67; session array receiver 67; link reference 67; handler/gateway
+// references 67.
+// session clear schedule, field-address carriers and final link load differ;
 // handler/gateway/both native clears 58/59/54; session 71; handler/session 68;
 // gateway/session 67; all three 47 plain; full pointer ranges 57.
 // @retail 0x8dd70

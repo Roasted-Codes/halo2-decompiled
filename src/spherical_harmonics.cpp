@@ -30,6 +30,12 @@
 // first +0x50 x87/SSE schedule and retained sqrt(2) still differ.
 // Isotropic result lifetime, band-two normalization, Z-square and cubic-axis/polynomial accumulators 59;
 // repaired-XZ plus cubic-Y chain 137; external direction reference and both double root chains 59.
+// score 59 (was 59): +0x50 scheduling, cubic homes and sqrt(2) retention remain.
+// Repaired-prefix per-use common root 59; per-use mixed/both roots 78/78; completed cubic X,
+// Y and paired results 59/59/59; paired results with per-use root 59; complete mixed result 59.
+// x87/SSE scheduling and retained common root still differ.
+// First Y store before isotropic 59; linear factor after isotropic 143; quadratic root
+// after squares 138; axis-root scope 59; depth/edge/axis/joint scalar homes 59/59/59/59.
 // @retail 0x143360
 void spherical_harmonics_evaluate_direction(vector3f const *direction, dword order, real *result)
 {

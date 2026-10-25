@@ -696,10 +696,21 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
  return a->k * b->k + a->j * b->j + a->i * b->i;
 }
 
-// score 155 (was 155): movement slot and rotation/output allocation still differ.
+// score 155 (was 155): movement/rotation homes and cross/result lifetimes still differ.
+// early side products 249f; single turn cross 249f.
+// rotation cross as old 155f; rotation cross as new 153f.
+// one rotation cross for both 245f; saved forward reads 220f.
+// saved forward plus shared cross 232f; indexed equal rotation rows 181f.
+// movement/original stack homes and rotation scheduling remain; forward scalar
+// inputs early/late 201/216; shared cross/forward/both scales 206/190/190; projected axis 214;
+// projected axis plus cross scale 212; common forward vector result 234.
+// movement slot and rotation/output allocation still differ.
 // Existing velocity scale 185; scale from field 186; first dot products commuted 155;
 // side projection values 166; rotated alignment value 166; axis field reference 155;
 // output record reference 155; scale plus dot flow 185. Opening body retained.
+// Complementary cosine 166; guarded early alignment 205; early moved-away result 231;
+// completed side product 169; complement with early result 231; indexed velocity scale 220;
+// actual animation reference 155; actual forward-field reference 248. Movement/rotation homes remain.
 // score 155 (was 155): sampled-vector slot and rotation/exit schedule still differ.
 // Cross before projection 201; late axis 185; split axis projection 166; goal snapshot 247;
 // direct selection tests 204; turn-first guard 156; scalar final writes 192; library copies 155.

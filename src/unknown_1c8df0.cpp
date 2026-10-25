@@ -50,6 +50,11 @@ extern vector3f *g_4687bc;
 // direct primary miss 207; entry fraction zero 185; early probe bit 181; arithmetic clear bit 288;
 // early bit with shared probe and Boolean/native clear 44/85 (not matched);
 // shared probe with entry fraction/direct primary miss 44/71 (not matched).
+// Separate copied probe output for all/quarter/triple/both arms 428/498/468/397;
+// same output scopes with Boolean primary clear 422/492/462/391. Output copies grow frames.
+// Staged byte-flow positive/negative/both point names 5/5/5; native positive/
+// negative component arrays 5/5; existing shared scale for positive/both points
+// 276/210; direct quarter constant 5. All unmatched added-byte forms restored.
 // score 170 (was 170): Frame 0x8c/0x94 and secondary-result tail remain; byte-flow quarter-point
 // XZY/YXZ/YZX/ZXY/ZYX completion 12/23/20/21/18; XYZ products then XYZ/ZXY centers 36/37; ZYX
 // products then XYZ centers 47. All added-byte forms restored without a match.

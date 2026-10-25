@@ -67,7 +67,13 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // score 70 (was 70): pulse/table entry schedule and draw-pass carriers remain;
 // pulse/image/sprite reads at use 224/155/137; pulse guard first 78;
 // first sequence count once 209; positive draw arm 70; occupied width first 70; exhaustive bitmap result 148.
-// score 39 (was 70): pulse/table setup, row X and query/width scheduling remain.
+// score 70 (was 70): pulse/table setup and draw-pass register scheduling still differ.
+// selected-entry scope 81; live draw sequence 70; live first sequence 70; both sequence bindings 70
+// native first entry 70; native draw entry 70; both entry references 70; native dimension inputs 70.
+// score 70 (was 70): pulse/table setup, draw-pass carriers and running-X scheduling remain.
+// Complete first index 209; absent-index guard 70; both 209; bit after query 70;
+// first/draw/both image field bindings 70/70/70; complete first index with both fields 209.
+// pulse/table setup, row X and query/width scheduling remain.
 // Half-height after center advance 39; chained quad stores 86; center scalar/point 134/190;
 // completed bounds 133; bounds with late half-height 62; center and bounds 137; center through draw 134.
 // score 39 (was 39): table/pulse setup, row-X carrier and query/width schedule remain;
