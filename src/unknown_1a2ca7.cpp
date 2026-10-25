@@ -1417,6 +1417,9 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // Completed friend/member/both flag results 159/218/218; signed friend/member results
 // 159/218; complete friend flag accumulation 229; both results with friend-first count 219;
 // merged field result 164. Count homes, early zero and post-call flags still differ.
+// Native session library copies member/friend/both 162/159/162; complete friend/member/both iterator
+// initializers 231/227/211; native friend/member presence values 256/239. Count homes, early zero and post-
+// call flag reloads remain.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {

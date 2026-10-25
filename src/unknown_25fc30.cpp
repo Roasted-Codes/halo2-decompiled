@@ -1732,6 +1732,9 @@ struct s_collision_result_25f7b0
 // product loads, word-mode comparison and allow-store timing differ.
 // Byte collision flag 14; byte allow flag 43; long initial mode 34;
 // short collision flag 247; scoped ray setup/result 14 (plain). Body restored.
+// Guarded collision fraction 14 plain; hit distance 14; native collision output 228; ray endpoint 232;
+// distance endpoint 201; both endpoints 266; final query point 111; horizontal normalization value 177.
+// Collision byte home, product loads, formal mode width and allow-store timing remain.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {
