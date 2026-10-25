@@ -31,6 +31,10 @@ static inline long unit_get_current_weapon(long unit_index)
 // score 22 (was 22): primary link compare/reread and fallback handle transfer differ.
 // Ordinary primary reads 37; ordinary guard/lookup alone 22/22; conditional primary 28;
 // direct fallback output 49; primary success output 45; success before fallback 34; integer result 22.
+// score 22 (was 22): primary observation and fallback register transfer remain.
+// Inner result first with ordinary/original reads 39/22; native/unsigned
+// inner result 37/37; wide slot 47; inner both arms/selection 47/47;
+// inner entry result with direct fallback 45.
 // @retail 0x1e1f20
 long function_1e1f20(long actor_index)
 {
@@ -63,6 +67,9 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 // Inner entry result/both-arm assignment 20/20; absent slot return 19;
 // inner slot selection 20; inner sentinel early exit 19; readonly unit 20;
 // two result lifetimes 24; absent unit input return 22.
+// score 20 (was 20): base folding and separate outer sentinel remain.
+// Actor/object/both query force-inline 20/20/20; separate secondary call 66;
+// native outer/inner result 20/20; unsigned inner/outer result 20/20.
 // @retail 0x1e1fd0
 long function_1e1fd0(long actor_index)
 {

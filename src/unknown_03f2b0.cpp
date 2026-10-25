@@ -1294,6 +1294,10 @@ long function_4c450(long object_index, real distance, real const *definition, re
 short function_4bcc0(byte *output, long object_index, real distance, long override,
     bool *cached, bool force, signed char *level);
 
+// score 43 (was 43): early EDI save, count/current/wanted homes and default stores remain.
+// Pointer order/role name, entry result, count first/library clear, signed workspace all 43;
+// direct level 83; unused formal addresses 43; count/variant names 43/43;
+// twice-used source count 43; source count with direct level 83.
 // @retail 0x4c190
 bool function_4c190(long *count, long object_index, bool defaults, long tag,
     short *level, signed char fallback_level, signed char *sections, bool *fallback)
