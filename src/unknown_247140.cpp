@@ -257,6 +257,8 @@ public:
 // Frame 0x1c versus 0x20 and final selector call still differ. Shared squared length 194;
 // full bounds aggregate 202; entry displacement workspace 194; scoped emitter counter 194;
 // successor while traversal 194.
+// Selector inline declaration 170 (matched sibling becomes 292); displacement aggregate,
+// squared distance before/after selector, retained center and branched range maximum 194 each.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
