@@ -712,6 +712,9 @@ struct s_85650
 // Child ordinary inline 112; aggregate result 112; child result 112;
 // five child formal orders 112; wide active with both-arm count 100;
 // wide active with both-arm count and fresh sender 124.
+// score 100 (was 100): Frame 0x24 versus 0x28 and owner/child/callback homes still differ.
+// Child slot before total/count 106/142; request/tail/both sender clears 139/139/143;
+// world-state value 100; short child ordinal 125; child slot plus clears 143.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
