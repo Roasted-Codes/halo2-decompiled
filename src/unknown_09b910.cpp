@@ -1262,6 +1262,12 @@ bool c_weapon_reload_event::v11(long a, long const *entities, long c, void const
     return result;
 }
 
+// score 32 (was 32): +0x12 device/unit EDI/EBP roles differ; the second
+// type mask lacks the saved EBX temporary and header-base copy. Earlier guard,
+// declaration/result lifetime, header/table and unsigned-mask forms gave 32-54.
+// Tried: named device mask 32; named unit mask 32; both masks 32; byte suppression
+// bitfields 35; byte flags view 35; byte bitfields with masks 35; combined header
+// predicates 39; byte flags with masks 35. Opening executable body restored.
 // @retail 0xa4540
 bool c_device_touch_event::v11(long a, long const *entities, long c, void const *data)
 {
