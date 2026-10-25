@@ -966,6 +966,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // one 196; size preference 243.
 // Inline declarations on query, acknowledgment, update and reconnect handlers,
 // singly and paired, all 196 fast; combined session handlers 198 plain, no gain.
+// Direct/full if ladders 278/241; link snapshot 215; unsigned connection handle 196;
+// typed session payload 196; session cases before lookup cases 210; reversed direct
+// cases 195; adjacent lookup range after direct phase 205 (fast control 196).
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

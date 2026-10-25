@@ -158,6 +158,9 @@ real function_1e3920(long actor_index);
 // Early invalid copy 168; early mode copy 140; both copies 140 (nonmatches dropped);
 // unsigned actor handle 168; byte permission 195; reference receiver order 170;
 // request mode first 168; permission first 168; shared active mode 168/635.
+// score 164 (was 168): early ESI slot load, scalar homes and cold reference arms still differ.
+// Native request byte 168; earlier scratch 164; result before scratch 168; both 167 (dropped);
+// permission success/failure arms 183/183; reference-test result 168; request byte/scratch 164.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
@@ -197,10 +200,10 @@ bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
             request.type = 4;
             request.unknown015 = true;
             request.unknown69a = *(short *)state->unknown0e;
+            byte *scratch = ai_scratch_buffer_get();
             request.unknown698 = true;
             request.unknown69c = allowed;
             *((byte *)&request + 0x59) = true;
-            byte *scratch = ai_scratch_buffer_get();
             bool unknown = false;
             s_reference reference = actor->unknown418;
             if (state->unknown0c)

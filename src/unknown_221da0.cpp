@@ -178,7 +178,10 @@ struct s_effect_inputs
 dword function_191660(long string_handle, long index);
 
 /* fills the data block of one component of a sound effect */
-// score 169 (was 169): frame 0x24 versus 0x28; full parameter-pointer spill
+// score 169 (was 169): frame 0x24 versus 0x28; full parameter spill and BP/BX selector allocation differ.
+// Parameter record reference 200; both native selectors 188; named gains 169; size policy 400;
+// floating consistency 169; natural while 215; source count after header 186; native header copy 169.
+// frame 0x24 versus 0x28; full parameter-pointer spill
 // and input-selector registers differ. Parameter record 200; early bounds 223;
 // type ladders 177; speaker presence 207; bound values 220; fallback default 227;
 // output mode 169; parameter record with ladders 208. Selected-record copy 206
@@ -769,6 +772,8 @@ real function_18cac0(long arg_0);
 // unsigned-word door index 236; unsigned-word cluster index 540; both 523;
 // signed-byte side 246; one door-cluster table 233; selected mask pointer 254;
 // both word indices/signed side 534; mask pointer/native camera index 254.
+// inner count snapshot 225; Boolean side 246; native door cluster 236;
+// absent-door-bit continue 225; final batch count snapshot 237.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

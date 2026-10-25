@@ -285,6 +285,9 @@ void function_236299(long sound);
 // tried next object reference 148; previous object reference 142; both object references 154; native moved 140;
 // native blocked 125; byte moved 84; byte blocked 84; paired timer stores 84; unsigned old datum 84; unsigned
 // next datum 84; final datum guard 86.
+// the loaded neighbour's virtual receiver stays in eax
+// where retail keeps it in ecx, and retail pushes the selected neighbour
+// straight from memory instead of through a register copy.
 // @retail 0x24c1c5
 void function_24c1c5(c_widget *widget, char direction)
 {

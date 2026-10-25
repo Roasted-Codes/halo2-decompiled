@@ -1374,6 +1374,12 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // extra query frame dword, count homes and scalar tail fills remain.
 // Row-total lexical rank 116; independent query storage and renamed combination 160;
 // actual row reference, short row result and native index array 116; native predicates and query-success local 136.
+// score 116 (was 116): Extra query dword, count homes and scalar tail fills remain. Branch
+// player/selection/both initialization 130/164/164f; first/second/row while loops 116f; retained row pool
+// 143f; shared checked row accessor 118f. Branch selection restores frame 0x54 but regresses.
+// score 116 (was 116): query/count homes and scalar tail fills still differ.
+// First/second/both maximum equality 116/116/116; values-first comparator 115 (dropped);
+// comparator branches/storage 116/116; factored mode 160; pre-allocation row value 136.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {

@@ -170,6 +170,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // score 613 (was 656): frame/type agree; state/player/unit allocation remains.
 // Direct state receiver 656; unsigned unit carrier 656; early blocked local 656;
 // multi-use magazine view 656; seat-before-parent acquisition 656; all restored.
+// score 658 (was 649): Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

@@ -64,8 +64,15 @@ extern long g_55c154;
 // native entry bitfield 61; source-origin comparison/load-result/native view 79/79/79;
 // loaded-name pointer before default/at copy 88/88 (copy becomes a call);
 // origin plus name/native-origin-name 94/94. Creation split and copy boundary remain.
+// request-mode classification 161; immutable classification 61; explicit live source 62;
+// entry reference 61; creation output 99; immutable output 99; shared mode request 88;
+// failed-creation join 61. Classification spill and copy expansion still differ.
 // byte classification 61; signed-byte classification 61; initialized variant 170; initialized request 155;
 // frame pointer 98; global optimization disabled 518; controller-index snapshot 61; speed preference 466.
+// score 61 (was 61): classification spill and selective copy expansion remain;
+// destination name after/before default 88/88; destination record late/early 88/88;
+// record/name receivers 88; publication order 174; named second load 61;
+// common name receiver 88; split loads plus common/default name receiver 199/199.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {

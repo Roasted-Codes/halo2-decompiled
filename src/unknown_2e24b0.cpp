@@ -245,6 +245,9 @@ void class_2e1090::function_2e24b0(long *owner, bounds_2e0020 const *bounds, pai
 // pair or input constness 312, inequality 312, count/index renames 312,
 // ordinal plus cursor 338, uncached count 362. Count and array-address slots now agree; the
 // index and saved receiver slots, later scan and final loop still differ.
+// On 312: scan-input rename, list/cell references, int lookup result,
+// unsigned-int count and scan-local renames 312; array reference 452;
+// direct array-data inputs 325. Original code restored.
 // @retail 0x2e29b0
 void class_2e1090::function_2e29b0(long *owner, pairs_2e1090 *pairs)
 {

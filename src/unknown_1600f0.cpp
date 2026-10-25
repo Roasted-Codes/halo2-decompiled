@@ -1011,6 +1011,12 @@ struct s_game_engine_globals_connections_view
 // Test-derived glyph 182 fast/plain (two-point gain rejected); separately gated query 204;
 // query Boolean 205; hidden-first with test/query values 229/249;
 // column observations 184; columns with test/query values 182/204.
+// Direct icon zero default 192; initializer zero default 208; separate place/icon/name
+// rectangles 184/229/222; place and icon rectangles 184; scoped numeric buffers 225;
+// scoped numeric buffers plus direct icon default 188 (all plain).
+// score 184 (was 184): deferred icon tail and time/connection registers remain;
+// arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
+// receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "unknown_123b30.h"
 #include "kill_volumes.h"
+#include "normalize3d.h"
 #include <math.h>
 #include <string.h>
 
@@ -194,6 +195,9 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // score 660 (was 660): vector argument homes still differ; selected velocity pointer 685;
 // activation velocity snapshot 786 (caller lost); contiguous velocity scale 660;
 // fast-byte observations 660; integer remaining-tick test 699.
+// Ordinary counter conversion on guarded-coefficient body 710; indexed activation displacement 667;
+// interleaved displacement/sample loop 696; target-coordinate loop 699; impulse-coordinate loop 661.
+// Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
@@ -784,6 +788,13 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // score 88 (was 88): attached object/node roles and scan setup remain; current-handle bits 88;
 // node-transform input pointer 88; full-width definition bits 90; shared object handle,
 // shared receiver and both lifetimes 88; live input flags 88; native contact count 88.
+// score 78 (was 88): Own-object/node roles, dot scheduling and scan setup remain. Shared component
+// lookup, native owner/table/count/all fields, native component receiver and external contact array each
+// 88f; long found result 411f.
+// own-object/node roles and contact-scan setup still differ.
+// Node byte/data offset and immutable handle 88; shared projection scale 90;
+// scale plus in-place difference 78; nested/best-first scan 88/98; detached dot 88;
+// independent forward output on the scaled flow 437. Input values and grouping retained.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {
@@ -809,9 +820,9 @@ void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
    if (state->field_0c)
    {
     real projection = dot3f(&matrix.forward, &matrix.up);
-    matrix.forward.i -= matrix.up.i * projection;
-    matrix.forward.j -= matrix.up.j * projection;
-    matrix.forward.k -= matrix.up.k * projection;
+    vector3f projected_up;
+    vector3f_scale(&matrix.up, projection, &projected_up);
+    vector3d_from_points3d((point3f *)&projected_up, (point3f *)&matrix.forward, &matrix.forward);
     if (function_30bf0(&matrix.up) == 0.0f) matrix.up = *g_4687b0;
     if (function_30bf0(&matrix.forward) != 0.0f)
     {

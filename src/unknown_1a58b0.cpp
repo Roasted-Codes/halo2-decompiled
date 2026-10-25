@@ -729,7 +729,10 @@ dword function_1a7ad0(long owner_index)
 	return (1 << owner->unknown086_byte) | ((1 << (byte)shift) << 10);
 }
 
-// score 96 (was 96): owner/output register ranks, fallback-base LEA and intersection setup differ.
+// score 96 (was 96): Owner/output register ranks, fallback base and intersection schedule still differ;
+// aggregate selection 119; initial/default bitset values 190/167; shared intersection 109;
+// aggregate plus shared intersection 144; common return, fallback handle, phased table 96 each.
+// owner/output register ranks, fallback-base LEA and intersection setup differ.
 // Nullable definition 81 (adds a null branch); typed fallback 96; both 81;
 // const owner, definition, source, tags and object/element views 96 each;
 // ordinary shared source copy 143; shared copy with owner tag 143.
@@ -1154,12 +1157,16 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
     arg_2->k = arg_0->k * arg_1;
 }
 
-// score 18 (was 18): point argument is rematerialized instead of copied;
-// the frame and projection agree. Sampling name 18; vector names 18;
-// vectors declared first 18; const unit 18; saved body count 124;
-// workspace memcpy 18; indexed output 23; const component 18.
+// score 2 (was 18): the returned point is copied from EAX before the body load;
+// retail loads the body and then copies the point from ESI. The frame and projection agree.
+// Sampling name 18; vector names 18; vectors declared first 18; const unit 18;
+// saved body count 124; workspace memcpy 18; indexed output 23; const component 18.
 // Support handle 18; nullable component 110; body read first 30;
 // valid body interval 85; entry workspace 18; unit-scope workspace 18;
+// const support 18; unsigned object handle 18. Position query noinline 18;
+// returned point with body index 2; reassigned point pointer 128; output pointer 18;
+// file-scope workspace 18; direct body reads 121; support lookup noinline 18;
+// returned point with output pointer 2; target noinline with returned point 2.
 // const support 18; unsigned object handle 18.
 // Round 109: ordinary scale inline 18; scale pointer result 18; three scale formal orders 18;
 // scale input reference 18; point-query noinline 18; velocity-query noinline 18.
@@ -1186,8 +1193,7 @@ void function_1a68a0(long object_index, vector3f *velocity)
 					long clamped = body_index < 0 ? 0 : body_index > component->body_count - 1 ? component->body_count - 1 : body_index;
 					if (clamped == body_index)
 					{
-						function_b9dd0(object_index, &local_3.field_c);
-						havok_component_rigid_body_point_velocity_get(unit->body_index, (s_havok_component *)component, &local_3.field_c, &local_3.field_18);
+						havok_component_rigid_body_point_velocity_get(body_index, (s_havok_component *)component, function_b9dd0(object_index, &local_3.field_c), &local_3.field_18);
 					}
 				}
 			}
@@ -1617,13 +1623,15 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
-// score 42 (was 186): frame/length agree; geometry-call convention, flag branches and angle tails differ.
+// score 36 (was 186): frame/length agree; geometry-call convention and angle/failure tails differ.
 // Axis name 186; result first 220; query result 195; first-bit assignment 186; size optimization 348.
 // Depth zero 386; depth one 186; success return 203; clamped input on current frame 216; word result 227.
 // object register, geometry-call convention and failure/angle tails differ;
 // axis name 186; result first 220; geometry result guard 195; masked first bit 186; size optimization 348.
 // Failure to common exit 98; signed byte result 196; second-bit results 178; angle result 201; radius snapshot 209.
 // Exit plus second-bit results 199; exit plus scalar clamp 42.
+// Clearing cases first 36; one source flag read 108; alternate before normalization 45;
+// shared dot operands reversed 42; global optimization off 361.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1646,10 +1654,10 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 				candidate->flags |= 1;
 			else
 				candidate->flags &= ~1;
-			if (definition->flags & 6)
-				candidate->flags |= 2;
-			else
+			if (!(definition->flags & 6))
 				candidate->flags &= ~2;
+			else
+				candidate->flags |= 2;
 			candidate->maximum_distance = definition->maximum_distance;
 			candidate->radius = object->radius;
 			candidate->maximum_facing_angle = 0.0f;
@@ -1670,10 +1678,10 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 			candidate->flags |= 1;
 		else
 			candidate->flags &= ~1;
-		if (marker->flags & 0x12)
-			candidate->flags |= 2;
-		else
+		if (!(marker->flags & 0x12))
 			candidate->flags &= ~2;
+		else
+			candidate->flags |= 2;
 		candidate->maximum_distance = marker->maximum_distance;
 		candidate->radius = marker->radius;
 		candidate->maximum_facing_angle = marker->maximum_facing_angle;
@@ -1767,12 +1775,18 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 	return (s_target_link_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 }
 
-// score 113 (was 131): call argument setup, marker-loop homes and terminal epilogues still differ.
+// score 98 (was 113): call argument setup, marker-loop homes and terminal epilogues still differ.
+// Kept: the first candidate named inside the count test (98); with a repeated positive-count guard
+// around the marker loop 93 (not kept: a test the loop already makes).
 // Direct count increment 121; native short query 129; shared exit 131; direct optional transform 115.
 // Positive marker count 129; combined increment/transform 113; combined short query 114; direct count cleanup 113.
 // Two-phase candidate cursor 125; marker/table/both records 113 each; cursor with marker record 125;
 // cursor with native query 129; cursor with positive table 126; separate count result 169.
 // Existing helper argument setup, marker-loop homes and terminal exits still differ.
+// Initial candidate lifetime 98; marker presence 113; weighting value 120; optional matrix value 173;
+// readonly tag/capacity value/scalar names 113 each; initialized marker output 209.
+// Initial candidate plus positive table 93 kept; initial candidate plus weighting 109.
+// Initial helper setup now agrees through +0x102; marker call setup and exits still differ.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
@@ -1783,9 +1797,13 @@ long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool 
 	if (((1 << object->field_aa) & 3) &&
 		(bool)((function_1a5c01(object_index)->field_bc >> 19) & 1))
 		scale = ((s_candidate_scale_globals *)g_4e034c)->field_f4->field_8;
-	if (count < 64 && function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
-		origin, direction, &candidates[count]) && function_1a60f0(&candidates[count], weights, scale))
-		count++;
+	if (count < 64)
+	{
+		s_sort_candidate_view *first_candidate = &candidates[count];
+		if (function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
+			origin, direction, first_candidate) && function_1a60f0(first_candidate, weights, scale))
+			count++;
+	}
 	long marker_tag = *(long *)(definition + 0x38);
 	if (marker_tag != NONE)
 	{
@@ -2101,6 +2119,8 @@ long function_baf40(long object_index);
 // Reversed velocity lexical homes 177; x/y/z scalar names 177; combined 177;
 // geometry-only scope 177; target frame pointer 264.
 // Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225; candidate score tests 186; retained direction unit index 210.
+// Depth zero 280; target size 280; global optimization off 672;
+// record defaults before vector zeroing 179; planar length before velocity differences 181.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {
@@ -2229,6 +2249,9 @@ struct s_1a4c01
 // Controlled/selected/both handle names 36 each; target declaration beside controlled handle 36;
 // blend in target/forward workspace 66/87; result copied from forward/target 170/353.
 // Handle homes, interpolation coefficient allocation and closing publication registers still differ.
+// Packed controlled/selected/both handles 36 each; returned result before stores 34 (only -2);
+// acceptance-first test 65; squared component values, aggregate blend and angle snapshot 36 each.
+// The two handle homes, coefficient allocation and final stores still differ; original body restored.
 // @retail 0x1a4c00
 bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector3f *direction, point3f *point)
 {

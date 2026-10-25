@@ -122,6 +122,9 @@ struct s_24e9c7_bounds
 // Round 280: plain quad passes 198; faded alpha first 125; lookup scope ended 125; shared bounds value 125; x then y coordinates 130.
 // Upper components 125; side components 125; reverse components 133; all components 133;
 // earlier upper displacement 123 plain (two points, dropped), with components 123; direct reverse uses 167.
+// Scalar homes, sprite source and geometric spills remain; shader snapshot 174;
+// sequence count snapshot 160; sequence field at use 125; unscaled height/width/both 125;
+// shared forward values 161; external bitmap reference 125.
 // score 125 (was 125): scalar homes and across/dimension scheduling remain;
 // upper/side/reverse/all value initialization 125; origin/sequence references 125;
 // speed policy 279; frame omission 125.
@@ -132,6 +135,8 @@ struct s_24e9c7_bounds
 // Origin / upper-copy / upper / positive-side passes 188/220/240/204;
 // origin-upper 195; origin-side 206; upper-side 214; lower-copy pass 193.
 // Scalar homes and sprite-source/SSE scheduling remain; original quad retained.
+// Scalar origin x/y/both 194/194/194; scaled height/width/both accumulation 125/125/125;
+// side-product updates 125; y capture with side updates 194. Original scalar homes and spills remain.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {

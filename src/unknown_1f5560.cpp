@@ -743,6 +743,10 @@ real normalize2d(point2f *v);
 // named first normalization result 172; global optimization off 542.
 // low-bit presence guard 228; native type clamp 236; branch-defined chosen speed 220;
 // target snapshot 234; inline depth zero 231. Frame 0x48 still agrees.
+// Bounded for search 172; unsigned byte scan 233; chosen speed after query 190;
+// planar component stores 265; native masks/metadata snapshot 172 each;
+// retry requirement 196; first type from bits 277. Fast-byte zero and trajectory convention
+// still differ; original body restored.
 // score 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
 // result homes differ. Validity initialized in typed arm 241; first type initialized by branch
 // 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
@@ -987,6 +991,7 @@ done:
 
 // score 307 (was 307): frame 0x18 versus 0x1c; actor/object roles and factor homes differ.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
+// Scalar velocity 309; approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1261,6 +1266,7 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 
 // score 294 (was 294): frame 0x3c agrees; radius/result homes and initial direction materialization differ.
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
+// Ordinary lifetimes: facing value 307; scalar side 309; scalar center 306; origin constructed first 306; reused negative radius 329.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

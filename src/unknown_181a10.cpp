@@ -512,6 +512,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // score 314 (was 319): frame 0x48 versus 0x44 and plane/output homes;
 // normal component loop 319; material-output scope 319; direct validity 351;
 // key-clamp result arms 319; optional entity result 319.
+// j92: frame 0x48 versus 0x44 and node/plane/output homes remain; delayed reads and native rotation copy regress; coordinate names and positive root guard tie.
+// hit snapshot after test 353; first node after root 352; origin coordinate homes 319; hit coordinate homes
+// 319; native rotation copy 442; root positive body 319.
 // Shape-input classifier with field equality 314 plain (1250/1243 bytes); root entity 319;
 // native plane input 354; rotation/translation/both bases 319/319/319; final normal value 356;
 // native plane output 348; shape-input sampled equality 319; ordinary inline classifier 356.
