@@ -60,6 +60,9 @@ PRIVATE __forceinline void function_1c9291(point3f const *arg_0, vector3f const 
 // score 6 (was 6): horizontal/square schedule persists; native point accumulation
 // 111, scaled-output accumulation 116, delayed-arc versions 115/116; actual
 // point/velocity/input/all-object reference contracts 6/6/6/6.
+// score 6 (was 6): horizontal products and self-square still differ; complete
+// vertical return 6, arc return 6, loop point return 175, separate arc output 16;
+// late vertical/point return 18/177; native component pointers/array references 6/6.
 // @retail 0x1c9290
 bool function_1c9290(long arg_0, point3f const *arg_1, vector3f const *arg_2,
  real arg_3, real arg_4, long arg_5, bool arg_6)

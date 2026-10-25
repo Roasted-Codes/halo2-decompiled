@@ -26,6 +26,13 @@ long function_249e20(s_structure_bsp_view *bsp, long index)
 	return result;
 }
 
+// score 9 (was 9): audibility load before saved-register/index setup remains;
+// tried entry row first 31f; entry row after result 31f; second category default 29f; explicit absence results 42f;
+// complete category selection 37f; native row domain 9f; native stride domain 9f; read only word table 9f;
+// direct table fields 44f; direct row expressions 38f.
+// entry saves/index load and audibility EDI allocation differ;
+// shared bit test/read-only bits 9/9; second-arm cursor 44; category loops
+// indexed/shared test/cursor/mask 58/58/46/45; final result selection 37.
 // @retail 0x249e60
 long function_249e60(long cluster_index, s_structure_bsp_view *bsp, long index)
 {
@@ -165,6 +172,9 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 
 /* the distance sound travels between two clusters */
 #pragma optimize("s", on)
+// score 82 (was 88): 165/182 bytes; default float loads and merged exits differ.
+// Maximum sentinel first 88; interior interval first 82 kept; integer sample 88; read-only audibility 88;
+// ordered cluster parameters 91; named pair index/range 88/88; direct fallback 84; both boundaries 82.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {
@@ -177,11 +187,7 @@ real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 		long low = cluster_minimum(cluster_a, cluster_b);
 		long high = cluster_maximum(cluster_a, cluster_b);
 		byte value = audibility->cluster_pair_distances[cluster_pair_index(low, high, bsp->cluster_count)];
-		if (!value)
-			local_0 = 0.0f;
-		else if (value == 0xff)
-			local_0 = 256.0f;
-		else
+		if (value > 0 && value < 0xff)
 		{
 			real local_1 = audibility->distance_lower;
 			real local_2 = audibility->distance_upper;
@@ -190,6 +196,8 @@ real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 			local_0 *= local_2;
 			local_0 += local_1;
 		}
+		else
+			local_0 = value ? 256.0f : 0.0f;
 	}
 	else
 		local_0 = (real)(function_249ed0((short)cluster_a, (short)cluster_b, bsp) & ~0x80) * (256.0f / 127.0f);

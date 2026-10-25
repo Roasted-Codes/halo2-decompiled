@@ -199,6 +199,10 @@ bool __stdcall function_25dd30(long a, long b)
 // score 175 (was 175): initial offset schedule and protected geometry carriers remain;
 // read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
 // 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
+// score 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
+// signed sphere ordinal 1031; unsigned sphere ordinal 1031; count snapshot 175; snapshot with signed
+// ordinal 1031; snapshot with unsigned ordinal 1031; final unit cap 352; final cap with signed ordinal
+// 1023; final cap with count snapshot 352. All restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -939,6 +943,12 @@ void __stdcall function_25edd0(
 // projected workspace first 50; unsigned line ordinal 145. Iterator setup and bonus tests remain.
 // Selected-arm staged scales 72; upper-first staged 66; half by division 50;
 // selected margin carrier 186; near/far or separate bonus names 50; staged/name pairs 66.
+// score 50 (was 50): the range bonus in retail is a two-test select (over 2 first,
+// then over 0) with two multiplies (halve, then times ten); that exact form scores 66
+// (997 bytes) because the line loop's xmm homes rotate — the allocation cascade from the
+// protected iterator setup defeats it. Nested select 83; staged halves with the new
+// order 66; new order with folded multiply 58; old order with two multiplies 72;
+// squared-length local 186; closest product order 66; margin initialized 66.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,
@@ -1776,6 +1786,13 @@ struct s_collision_result_25f7b0
 // declaration orders, bool declared after the first query call, local_22
 // uninitialized-early, byte-typed local_4: all tie at 7. local_22 initialized before the
 // mode selection 113; the entry type copy reused in the allow test 260.
+// score 7 (was 7): collision byte +0x13/+0x10, product loads and allow-store schedule remain;
+// tried immutable distance 7p; guarded classification 210p; nested hit classification 199p; classification enum 7p;
+// projection first 7p; allow from second type 6p; allow from first type 8p; native query flag 123p.
+// collision byte home, distance product loads and allow store remain;
+// early short result 7; entry short result 7; unsigned short result 7; early unsigned result 7;
+// early distance 7; entry distance 7; shared candidate field pointer 7; early definition pointer
+// 7.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {

@@ -1651,6 +1651,11 @@ struct s_candidate_unit_definition
 // Frame and length agree; geometry argument register and clamp/failure tails
 // remain. Trials: byte result 101; lower test operands 36; separate lower angle 92; native facing
 // copy 36; geometry success guard 218; first clearing cases 42.
+// score 11 (was 18): geometry-call convention remains; type rejection to the shared exit 11 kept.
+// Query result exit 219; type result 253; branch result lifetime 220; output initialization schedule 22; zero order 20; common success 199; object role name 18; flat type rejection 11; query false return 216.
+// geometry-call convention and exchanged failure exits remain; native
+// flag/limit/adjacent clears 216/152/199; direction memcpy 18; clear plus copy 216/152/199;
+// branch-zero clear 199.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1664,24 +1669,23 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 	candidate->flags = 0;
 	if (marker_index == NONE)
 	{
-		if ((1 << object->type) & 1)
-		{
-			if (!function_1a62e0(object_index, origin, direction, &candidate->point))
-				goto done;
-			s_candidate_unit_definition *definition = (s_candidate_unit_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
-			if (definition->flags & 1)
-				candidate->flags |= 1;
-			else
-				candidate->flags &= ~1;
-			if (!(definition->flags & 6))
-				candidate->flags &= ~2;
-			else
-				candidate->flags |= 2;
-			candidate->maximum_distance = definition->maximum_distance;
-			candidate->radius = object->radius;
-			candidate->maximum_facing_angle = 0.0f;
-			result = true;
-		}
+		if (!((1 << object->type) & 1))
+			goto done;
+		if (!function_1a62e0(object_index, origin, direction, &candidate->point))
+			goto done;
+		s_candidate_unit_definition *definition = (s_candidate_unit_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
+		if (definition->flags & 1)
+			candidate->flags |= 1;
+		else
+			candidate->flags &= ~1;
+		if (!(definition->flags & 6))
+			candidate->flags &= ~2;
+		else
+			candidate->flags |= 2;
+		candidate->maximum_distance = definition->maximum_distance;
+		candidate->radius = object->radius;
+		candidate->maximum_facing_angle = 0.0f;
+		result = true;
 	}
 	else
 	{
@@ -1812,6 +1816,9 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // Round 277: nullable second-marker base 13 at retail length; branches/before presence 80/80;
 // native query count 73; index name/shared marker buffer 13/13; weight result 67; combined eligibility 80.
 // Accepted-count snapshot after/before query 13/13; query name first/with count 12/12; selectors require a match.
+// score 85 (was 85): frame 0xf0 agrees; query carriers and optional matrix conversion remain;
+// native marker value before/after query 100/110; library copies 100/110; native query width
+// 126/128; shared descriptor 100; late copy with shared outputs 110.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)

@@ -306,6 +306,12 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 }
 #pragma optimize("", on)
 
+// score 61 (was 61): first range FADDP remains fused; frame and tick-conversion tail agree.
+// Existing rounding boundary for delay/duration/both, shared short/real clock, first output before
+// duration, early output with rounding and shared clock with rounding 68, 65, 71, 75, 75, 79, 100, 89.
+// score 61 (was 61): first range still fuses; frame and later tick conversion agree.
+// In-place delay/duration/both products 61/61/61; delay/duration/both operand orders 61/61/61;
+// entry failure guard 85; earlier state initialization 61.
 // @retail 0x1aded0
 bool __stdcall function_1aded0(long actor_index, s_slot *slot)
 {
@@ -496,6 +502,9 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // score 15 (was 15): saved-register pair persists; native const/mutable clock
 // records 91/91; interval accumulators on those records 95/95; named elapsed
 // phase 91/91; elapsed plus interval accumulation 95/95.
+// score 15 (was 15): saved sentinel/clock and settings registers still swap;
+// callback failure returns at actor/prop/unit/settings/cooldown/reaction phases
+// 15/106/106/106/106/106; combined actor-settings/all phases 39/39.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {

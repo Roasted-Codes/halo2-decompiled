@@ -150,6 +150,12 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
+// score 194 (was 229): frame 0x40c versus 0x408; string zero, cursor and
+// counter allocation remain. Shared output cursor 221; native array cursors 229;
+// independent string counters 221; direct countdown points copy 226;
+// shared cursor, independent counters and countdown copy 194.
+// Separate points input cursor 228; direct string countdowns 194; both 228;
+// independent countdown output cursors 228; shared remaining-string counter 228.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -167,18 +173,20 @@ void function_1936e0(long type, s_built_variant *variant, dword field_8, long de
 	{
 		long string_list_index = strings->string_list_index;
 
-		char *name = variant->names[0];
-		char *description = variant->descriptions[0];
+		char *output = variant->names[0];
 
-		for (i = 0; i < 9; i++, name += sizeof(variant->names[0]))
+		for (long name_index = 0; name_index < 9; ++name_index)
 		{
 			variant_string_get(string_list_index, name_string, text);
-			utf16_string_to_utf8_string(text, name, sizeof(variant->names[0]));
+			utf16_string_to_utf8_string(text, output, sizeof(variant->names[0]));
+			output += sizeof(variant->names[0]);
 		}
-		for (i = 0; i < 9; i++, description += sizeof(variant->descriptions[0]))
+		output = variant->descriptions[0];
+		for (long description_index = 0; description_index < 9; ++description_index)
 		{
 			variant_string_get(string_list_index, description_string, text);
-			utf16_string_to_utf8_string(text, description, sizeof(variant->descriptions[0]));
+			utf16_string_to_utf8_string(text, output, sizeof(variant->descriptions[0]));
+			output += sizeof(variant->descriptions[0]);
 		}
 	}
 	for (i = 0; i <= 5; i++)
@@ -195,8 +203,13 @@ void function_1936e0(long type, s_built_variant *variant, dword field_8, long de
 		variant->field_51c[i] = PIN(i + 10, i, 127);
 	variant->field_59c = field_59c;
 	variant->field_5a0 = field_5a0;
-	for (i = 0; i < 16; i++)
-		variant->points[i] = points[i];
+	long *point_output = variant->points;
+	for (i = 16; i > 0; --i)
+	{
+		*point_output = *points;
+		++point_output;
+		++points;
+	}
 }
 
 void matchmaking_hopper_build_player_start_delays(long scale, long first, long last, long *points);
@@ -225,6 +238,15 @@ void function_193b30(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills a variant of type 1, or of type 2 when flag is set */
+// score 34 (was 34): scale now enters EAX and is saved in EBX as in retail; (held: the 24 wrote the type as 2 - !flag, six bytes long, and moved the unmatched caller 0x193c70 from 203 to 208)
+// mode selection and settings-copy scheduling still differ (98/92 bytes).
+// Fast: settings memcpy 34; memmove 15 (extra call, reverted); settings before
+// initializer 34, before delays 34; inline 34; noinline 34; Boolean mode 37;
+// disabled mode 24; disabled conditional 34; decrement mode 33; increment mode 33;
+// bool disabled part 34; integer disabled part 24; byte option 34; signed byte option 34.
+// scale arrives in EBX rather than EAX saved to EBX;
+// inline/noinline declarations 34; settings memcpy/field stores 34;
+// numeric type after/before delays 37; delay-table rename/scope 34.
 // @retail 0x193ba0
 void function_193ba0(long scale, bool flag, s_built_variant *variant, long name_string, long description_string, dword field_8, s_variant_place_settings const *settings, long field_59c)
 {
@@ -247,6 +269,10 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
+// score 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
+// adds a save and shifts settings homes; constant argument pushes also differ.
+// Native zero initialization 199; complete aggregate values 307; grouped
+// place cases 204; case returns 203; zero initialization and grouping 206.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
@@ -264,9 +290,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 1:
 	{
-		s_variant_type4_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type4_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 3;
 		settings.last_team = 4;
@@ -291,9 +315,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 3:
 	{
-		s_variant_type4_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type4_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 5;
 		settings.last_team = 8;
@@ -309,9 +331,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 4:
 	{
-		s_variant_type5_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type5_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 3;
 		settings.last_team = 4;
@@ -321,9 +341,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 5:
 	{
-		s_variant_type5_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type5_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 6;
 		settings.last_team = 8;
@@ -333,9 +351,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 6:
 	{
-		s_variant_team_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_team_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 2;
 		settings.last_team = 4;

@@ -407,6 +407,10 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // mask; back-edge reload order and the 0x1d90e0/second-lookup staging registers still differ.
 // Shared bit-vector setter 42; iterator stores before the graph 99; graph_tag_get 42; call results > 0 38;
 // iterator a before b 41; arms swapped 40; markers in the loop 41; visited declared first 37.
+// score 37 (was 37): Frame agrees; the shift test versus retail mask, state/table reload order and
+// second lookup/transform staging still differ; shifted word expression 37; clear before object
+// chain 191; shift and clear order 191; entry marker workspaces 37; entry markers and shift 37;
+// entry markers and clear 191; complete workspace boundaries 191; model after clear 191.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
@@ -2547,6 +2551,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
 // Round 277: language-char result 147; unsigned-word force 164; signed-byte/word animated result 147/156;
 // base success test 153; success/force/both initialized before selection 187 each.
+// score 147 (was 147): frame 0x3c versus 0x38 and action/availability conventions remain; separate
+// copy-return boundaries 142 (exact-only, discarded); base-channel entry/selection 147/147;
+// animation-result home 147; receiver/workspace copy split 162/162, with base channel 162/162.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

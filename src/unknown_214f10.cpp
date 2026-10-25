@@ -52,6 +52,9 @@ PRIVATE __forceinline long function_214f83(char const *arg_0, s_file_handle *arg
     return function_120ba0(6, &local_0, 8, function_1a08f0, arg_2);
 }
 
+// score 42 (was 55): handle register, success-byte reload and resize/wait scheduling differ.
+// Full-width open result 42; first/second/both waits and shared opener/combined helpers 55;
+// branched success 50; local role names 55; native/early/named result and late success 42.
 // @retail 0x214f80
 void game_state_cache_files_open(void)
 {
@@ -72,8 +75,9 @@ void game_state_cache_files_open(void)
 		}
 		s_file_handle file = g_5020f8[i];
 
-		success = file.handle != INVALID_HANDLE_VALUE;
-		if (success)
+		long opened = file.handle != INVALID_HANDLE_VALUE;
+		success = opened != 0;
+		if (opened)
 		{
 			function_1a1310(file, 0x40b000, 8, 6, &success, &done);
 			if (!done)

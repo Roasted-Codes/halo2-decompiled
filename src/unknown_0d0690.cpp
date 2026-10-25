@@ -926,8 +926,8 @@ struct s_surface_query_source
 
 bool function_14b120(s_surface_query_source source, void *surface);
 
-PRIVATE vector3f const g_4406e4 = { 0.0f, 0.0f, -10.0f };
-PRIVATE vector3f const g_4406f0[5] =
+extern vector3f const g_4406e4 = { 0.0f, 0.0f, -10.0f };
+extern vector3f const g_4406f0[5] =
 {
     { -10.0f, 0.0f, 0.0f }, { 10.0f, 0.0f, 0.0f },
     { 0.0f, -10.0f, 0.0f }, { 0.0f, 10.0f, 0.0f }, { 0.0f, 0.0f, -40.0f }
@@ -1002,6 +1002,12 @@ PRIVATE __forceinline bool surface_status_failed(long status)
 // |= 1 twice) 2: retry flags snapshot 2; `flags &= ~1` before the retry 2; retry flags in
 // a local 2; dword flags 2; flags declared before the tag pointer 4; point declared first 24;
 // failed set after the retry 104.
+// Current bitfield forms (fast): nonzero retry 85; exact retry flag 131; word flags 117;
+// short flags 117; bool option 115; first failure workspace 120; combined bits 147;
+// initial object option 140. Retry AND/push scheduling remains.
+// score 2 (was 2): retry AND still follows the object-index push. XOR 2; subtract 18; clear
+// extracted bit 2; subtract extracted bit 133; retry status scope 2; one failure store 98; long
+// failure 83; entry status 2.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
