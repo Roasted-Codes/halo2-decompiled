@@ -239,6 +239,9 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // Existing element helper out of line 189; type query, geometry test, value callback,
 // value update and context reset noinline declarations 140 each; unsigned extent 140;
 // native int ordinal 140. All temporary helper contracts and declarations restored.
+// score 140 (was 140): retained table register and unfused lookups still differ.
+// Typed count/address helper pointer/reference, unsigned ordinal/extent, byte result,
+// ordinary inline and two typed formal orders all 140; original helper restored.
 // @retail 0x224db0
 void __stdcall function_224db0(s_interface_definition *arg_0, long arg_1, long arg_2,
 	long arg_3, long arg_4)

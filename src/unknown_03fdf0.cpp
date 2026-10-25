@@ -175,6 +175,9 @@ void function_402b0(long cache_index, long mode)
 // fourth pass result arms 195; all pass result arms 219; native cache record binding 183; native
 // setup field updates 183; cache inline contract 183; signed setup word 183; native table
 // traversal 266.
+// frame 0x84/0x88, helper conventions and API expansion remain;
+// independent final-pass byte 199; with first/second/third byte 209/208/202;
+// with first-second/first-third/second-third bytes 218/214/213; final-pass short 200 (plain).
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

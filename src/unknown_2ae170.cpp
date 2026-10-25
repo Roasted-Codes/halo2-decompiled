@@ -913,6 +913,10 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // score 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
 // Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
 // samples 208/212/206/202; all samples with early send sum 215.
+// score 200 (was 200): frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// sum after rear pair 212; accumulated sum 212; read-only input contract 200; rear reads reversed
+// 200; rear before levels 201; signed-byte selector 200; unsigned-word selector 197 (three-point
+// gain dropped).
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
