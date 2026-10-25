@@ -353,12 +353,6 @@ static __forceinline long float_to_int_nearest(real value)
 }
 
 #pragma inline_depth(0)
-// score 21 (was 21): tag/sound/promotion saved-register rotation remains.
-// existing promotion/rounding/both queries 79/60/89; shared admission/failure exit 89/89;
-// out-of-line dispatch 21; inline/out-of-line class query 21/21.
-// tag/sound/promotion use EBX/EDI/ESI versus EDI/ESI/EBX.
-// Read-only tag 21; wide promotion selector 62; conditional promotion 22; complete eligibility guard 21;
-// separate promotion failures 21; set after rounding 72; named rounding homes 21; read-only set 21.
 // @retail 0x18c720
 void function_18c720(long tag_index, long object_index, long set_index, long permutation_index, real scale)
 {
@@ -372,8 +366,7 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 			promotion = &((s_sound_globals_promotion_view *)g_51ebd4)->promotions[local_0];
 		if (promotion && (function_12de70(&promotion->block, 2) || promotion->count > 0))
 		{
-			s_sound_globals_promotion_view *globals = (s_sound_globals_promotion_view *)g_51ebd4;
-			s_sound_permutation_set *set = &globals->sets[sound->permutation_base + set_index];
+			s_sound_permutation_set *set = &((s_sound_globals_promotion_view *)g_51ebd4)->sets[sound->permutation_base + set_index];
 
 			real local_1 = scale * 30.0f;
 			long local_2;
@@ -383,20 +376,12 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 				fistp local_2
 			}
 			function_18c9b0(object_index, function_218e50(tag_index, (short)set_index, (short)permutation_index, (short)local_2));
-			function_18ca20(object_index, tag_index, &globals->permutations[set->first_permutation + permutation_index], scale);
+			function_18ca20(object_index, tag_index, &((s_sound_globals_promotion_view *)g_51ebd4)->permutations[set->first_permutation + permutation_index], scale);
 		}
 	}
 }
 #pragma inline_depth(255)
 
-// score 12 (was 12): object/tag entry registers differ with the dispatch tag convention; inline
-// existing dispatch callee 12; out of line dispatch declaration 12; readonly tag input 12; readonly
-// set input 12; readonly first permutation 12; selected permutation two consumers 12; selected
-// input guard first 17; typed permutation readonly range 12.
-// object/tag entry registers still follow the dispatch
-// convention. Nested validation 12; object query receiver 12; validation from
-// tests 43; globals after tag query 38; direct set/first element 12/12;
-// absolute set part 12; relative permutation index 26.
 // @retail 0x18c6a0
 void __stdcall function_18c6a0(long object_index, long unused, long tag_index, long set_index, long permutation, long scale)
 {
@@ -414,8 +399,6 @@ real sound_permutation_reference_duration(long definition_index, s_sound_permuta
 
 /* replays the impulse sounds in the slots of g_4ed288 on their objects and
    frees the slots whose sounds are over or whose objects are gone */
-// score 58 (was 58): BLOCKED-BY 0x18c720: it takes the tag in ebx (retail edi), which adds a push
-// ebx here and shifts both float spills by four; aligned, nothing else differs.
 #pragma inline_depth(0)
 // @retail 0x18bf90
 void function_18bf90(void)

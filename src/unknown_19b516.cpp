@@ -137,6 +137,10 @@ void c_widget::v15(c_widget *widget)
 // Initial result arms 20; both result arms 21; entry reverse lifetime 20; scoped widget 26;
 // scoped result arms 21; scoped reverse lifetimes 26; selected-widget success tail 47;
 // initial result arms with success tail 47.
+// Copy before the loop and at its tail 20; for-walks to the first sibling 20/20 (one candidate);
+// forceinline next-or-first helper in a for loop 42 (out of line 72); helper with the head copy 42;
+// one cursor stepped at the loop top 64; separate entry/step results 42, with for-walks 42 (the loop
+// body then matches retail; the entry result still joins the widget in ESI and the test is copied).
 // @retail 0x22ebc3
 void c_widget::v16()
 {

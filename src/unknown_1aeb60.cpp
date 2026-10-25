@@ -339,6 +339,10 @@ static __forceinline long real_to_long(real value);
 
 // score 114 (was 114): the argument is read into ECX and the other value into EDX; retail reads them
 // in the opposite order.
+// score 79 (was 110): ecx and edx are swapped through the whole body (retail: index edx, actor ecx);
+// retail also keeps the random scale and the range as two fmuls. Slot view first 79; one actor
+// pointer for the last test 138; marker local in the last block 80; `--timer == 0` 79; prop index
+// local 79.
 // @retail 0x1afb30
 void __stdcall function_1afb30(long actor_index, s_slot *slot)
 {
@@ -351,9 +355,8 @@ void __stdcall function_1afb30(long actor_index, s_slot *slot)
 		if (!state->timer && actor->unknown227 && !actor->unknown229)
 			function_1f86a0(actor_index);
 	}
-	short remaining = state->ticks - 1;
-	state->ticks = remaining;
-	if (remaining <= 0)
+	state->ticks--;
+	if (state->ticks <= 0)
 	{
 		if (actor->prop_index != NONE)
 		{

@@ -2629,6 +2629,10 @@ static inline short sound_voice_find_available_channel(char type)
 // score 113 (was 113): frame 12 and saved result byte remain; failure flag 130, entry failure
 // 130, complemented status 132, long channel 147, driver-first/late-system commits 130/130,
 // status plus driver-first 132, requested buffer first 130.
+// score 113 (was 113): `return true` on the success path gives retail's 8-byte frame and both
+// exits (139, 415 bytes); with `~status & DSBSTATUS_PLAYING` 131 (430 bytes); with driver_index
+// set before the channel test too 135 (430 bytes, aligned 101 of 124: channel spilled where retail
+// spills buffer_index); result declared first 139; failure/success as one if/else 126.
 // @retail 0x1295e0
 bool __stdcall function_1295e0(short voice_index)
 {
@@ -3653,7 +3657,9 @@ void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1);
 
 // score 108 (was 108): aligned frame 0x174c versus 0x1744; promoted voice limit 108; entry system
 // 108; direct elapsed 108; pending byte 108; frame input 108; short player cursor 122; short
-// next-player result 115; both player values 122.
+// next-player result 115; both player values 122; const element arrays 108; `= {}` arrays 121;
+// `!= 0` flag argument 128; flag argument through local_0 108; long restart cursor 134 (gives
+// retail's movsx/inc/cmp loop; only the loop padding jump moves with the longer prologue).
 // @retail 0x125b40
 void function_125b40(void)
 {
