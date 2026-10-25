@@ -347,10 +347,6 @@ bool function_2461a0(
 	return result;
 }
 
-// score 106 (was 106): frame agrees; opening axis/direction product XMM allocation differs.
-// Opening axis object 257; opening direction object 234; both objects 274; immutable coefficients 106;
-// radius-square lifetime 208; reciprocal before root 106; coefficient storage names 106;
-// contact initializer 106; output normal reference 212.
 // @retail 0x246360
 bool function_246360(
 	vector3f const *direction,

@@ -41,6 +41,11 @@ void __stdcall swarm_delete(long arg_0);
 // source rewrites (the declaration order, the result split from the
 // allocation, the comparison against the variable, the goto, the width of the
 // limit) all scored 53 or worse.
+// score 44 (was 44): Tag/sentinel register roles and spilled loop limit
+// remain. Native requested count 74; replace nonpositive bound 97; explicit
+// bound arms 44; sampled object flags 44; guarded tag-field reference 97;
+// immutable record receiver 44; native completed count 51; immutable receiver
+// and bound 44.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {
