@@ -5110,6 +5110,9 @@ void __stdcall function_d6bc0(long object_index);
 // score 167 (was 175): frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
 // type result before engine 167f/plain; engine consumer scope 167f;
 // timer reference / read-only object / scheduling handle / entry-test result / distance results / combined 175/175/175/175/175/175f.
+// Round 173 on the retained query-result order: external entry reference 221; mode if dispatch
+// 164 (three-point gain rejected); conditional reset counter 195; long modifier 184; byte kind 168.
+// Frame 0x14 versus 0x18 and timer/base homes remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

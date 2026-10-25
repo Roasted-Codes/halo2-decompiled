@@ -1379,15 +1379,13 @@ bool __stdcall function_110ab0(long unit_index)
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
 // score 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
-// score 443 (was 450): Frame 8 versus 12 and requested/state homes remain;
+// score 430 (was 453): Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
+// Frame 8 versus 12 and requested/state homes remain;
 // byte result 506; byte interruptibility 453; separate overlay result 508;
 // direct inner membership 486; held-index names 451 (fast control 451). Opening body retained.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
-	// Retail keeps this argument on the stack.
-	long const *unit_reference = &unit_index;
-	unit_index = *unit_reference;
 	s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(unit_index);
 	s_unit_animation_control *control = UNIT_ANIMATION_CONTROL(unit);
 	s_animation_state *state = UNIT_ANIMATION_STATE(unit);
@@ -1437,7 +1435,9 @@ bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 		case 0xe00002a:
 		case 0xe0000c3:
 		case 0x1000006c:
-			result = requested != 0x600008c ? interruptible : true;
+			result = interruptible;
+			if (requested == 0x600008c)
+				result = true;
 			break;
 		case 0x500000a:
 		case 0x5000024:

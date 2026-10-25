@@ -2132,7 +2132,8 @@ long function_baf40(long object_index);
 // Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225; candidate score tests 186; retained direction unit index 210.
 // Depth zero 280; target size 280; global optimization off 672;
 // record defaults before vector zeroing 179; planar length before velocity differences 181.
-// score 177 (was 177): Frame 0xb4 versus 0xb8; output record and relative-scalar homes differ.
+// score 177 (was 177): Frame 0xb4 versus 0xb8 and record convention remain; controlled-unit snapshot 209; persistent score pair 186; weight/candidate guards 177/177; nested selection 185.
+// Frame 0xb4 versus 0xb8; output record and relative-scalar homes differ.
 // Trials: selector interval 181; chained sentinels 177; chained score zero 177; component order
 // 177; native score clear 201.
 // score 177 (was 177): Frame 0xb4 versus 0xb8 and the output-record convention remain. Output

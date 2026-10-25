@@ -345,6 +345,7 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // score 249 (was 249): frame 0xb8/0xb4 and scalar/vector/cache homes remain;
 // independent delta/previous 281; independent change/previous 293; all vectors independent 303;
 // property-array field reference 324; complete cache zero aggregate 410 (fast).
+// Frame 0xb8 versus 0xb4 and cache/scratch homes remain; hoisted origin pointer 249; previous library copy 249; change library clear 297; both serial additions 286; both additions plus library copy 286.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
