@@ -149,6 +149,7 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // score 250 (was 250): frame 0x78 versus 0x90, normal/ray homes and polygon input registers differ.
 // Hit point setter 250; component normalization loop 250; short projection side 255;
 // direct hit result 251; ray before origin with float setters 251.
+// Early offset 259; late ray direction 264; squared-normal value 250; descending projection 358; offset/direction combination 264.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

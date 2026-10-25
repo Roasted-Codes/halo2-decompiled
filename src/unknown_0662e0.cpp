@@ -509,7 +509,13 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 	}
 }
 
-// score 363 (was 363): register allocation differs from the first loop on. Retail keeps i
+// score 363 (was 363): constant-five lifetime and first-table induction differ;
+// initial real stores first 363; outer word index 469 signed or unsigned;
+// column word index 464; both signed-word indices 512. Original kept.
+// first-table result names 363; loop-scope steps 363; initialized steps 363;
+// first regular table tail loop 531; second tail loop 530.
+// register allocation differs from the first loop on. Retail keeps i
+// register allocation differs from the first loop on. Retail keeps i
 // in ebp and walks a pointer in esi over value84 (value40 at [esi - 0x44]), comparing it
 // with &value84[1] and &value84[4]; the inlined levels loops walk pointers the same way.
 // Ours keeps i in esi with scaled addressing and holds 0 (ebp) and 1 (edx) in registers,

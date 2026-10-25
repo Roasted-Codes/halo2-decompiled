@@ -1234,6 +1234,8 @@ bool function_c70b0(long unit_index);
 // score 164 (was 194): retail length recovered; object/header/state registers and count joins differ.
 // Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
 // byte result 164; unsigned identifiers 218.
+// score 164 (was 164): entry receiver/count joins remain; byte interruptible 164;
+// signed-byte depletion 164; state-first receiver 164; direct interruptibility 348; query result first 332.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1592,6 +1594,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): unit/state homes and first angle expansion remain. Primary direction
 // snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
 // centered predicate after channel preparation 871.
+// score 875 (was 879): frame 0xc4 versus 0xd4 and angle expansion remain; partial j/k inputs 919;
+// partial i input 899; early screen pointers 934; named state predicate 873; unsigned counter 879;
+// direct eligibility accumulation 875 kept; state-guard accumulation 892.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -1678,8 +1683,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 						if (screen_a) bounds_112070(screen_a, (real *)control->unknown04);
 						else if (screen_b) bounds_112070(screen_b, (real *)control->unknown04);
 						active = function_111590(unit_index, 4);
-						if ((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state))
-							active = false;
+						active &= !((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state));
 						bool centered = fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f;
 						if (control->slots[4].unknown1)
 						{

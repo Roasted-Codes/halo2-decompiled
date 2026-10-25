@@ -1074,6 +1074,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // score 830 (was 842): frame/session/lookup still differ; reduced preview 864.
 // Early team scalars 896; early party scalars 922; group observation 865;
 // member-rating observation 864; allowed-imbalance observation 956; all restored.
+// score 821 (was 829): word histogram initialized at declaration; frame 0xd4 versus 0xb4 remains.
+// Fast long result 873; byte result 868; later group decision 884; word initialization 848;
+// final spread 873. Code-plus-extent 804/798/806/777/792 versus preview 788.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {
@@ -1173,8 +1176,7 @@ bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 		if (!out->rated_counts) out->averages[i] = NONE;
 		else out->averages[i] /= out->rated_counts[i];
 	}
-	word histogram[16];
-	memset(histogram, 0, sizeof(histogram));
+	word histogram[16] = {0};
 	for (long i = 0; i < out->group_count; i++) histogram[out->total_counts[i] - 1]++;
 	long last = NONE;
 	long first = NONE;
