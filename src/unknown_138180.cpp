@@ -45,7 +45,7 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // mask & (1 << m) (no change), ?: or if for local_machine_valid (193, 298).
 // Long validation result 275; long player uniqueness 270; byte uniqueness 187;
 // short membership result 190; word active count 195.
-// score 175 (was 185): Frame 0x14 versus 0x18 and index/options/mask homes still differ.
+// score 174 (was 185): Frame 0x14 versus 0x18 and index/options/mask homes still differ.
 // Membership arm first 226; final validity merged 185; uniqueness merged 185; both merged 185;
 // success-only stores 300; mask range 230; signed-byte found index 175 kept; membership first plus
 // shared uniqueness 226. With byte index, role name 175; long uniqueness 238; count bounds 173

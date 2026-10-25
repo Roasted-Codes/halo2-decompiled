@@ -174,6 +174,8 @@ struct s_block_candidate
 // tail and keeps page offset in EBX. Limit-first guard 385; oldest timestamp
 // initialised 381; enclosing inner-next scope 370; short ring endpoints 392;
 // candidate copy through memcpy 370.
+// Bounded ring masks 387; unsigned-word endpoints 392; frame pointer 475;
+// zero inline depth 418; size preference 643 (fast).
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

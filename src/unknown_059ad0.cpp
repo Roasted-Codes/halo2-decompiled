@@ -3690,7 +3690,9 @@ struct s_network_session_list;
 c_class_58d20 *network_session_manager_find_session(s_network_session_list *manager, const s_session_id *id);
 bool function_07ab10(long key_index, s_type_99af70 *address, long local, word port, const XNADDR *xnaddr);
 
-// score 136 (was 136): host/session homes, cleanup placement and clock expansion differ;
+// score 136 (was 136): host/session staging, clock boundary and cleanup placement differ;
+// size preference 233; gated identity 142; long result 160; failure-path result 192; address name 136.
+// host/session homes, cleanup placement and clock expansion differ;
 // isolated failure-first 159, identifier assignment 136, delayed ready flag 136,
 // redundant false removed from one-exit flow 165, inline depth zero 136.
 // @retail 0x59e50

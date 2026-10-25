@@ -30,6 +30,11 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 	return !(table->flags[team] & 1);
 }
 
+// score 190 (was 190): frame 0x3c agrees; object-pool reload, completion
+// flag stores and final predicate layout differ. Scoring team word 187
+// (three-point gain rejected), long 214; blocked long/byte 190/190; existing
+// flag helper force-inline 190; returned point 199; marker bits 190; option
+// scope 190. Original body and helper declaration retained.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
