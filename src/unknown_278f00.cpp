@@ -52,6 +52,9 @@ void __stdcall function_b8890(long arg_0);
 // frame agrees; list/index/count homes and cleanup induction differ;
 // existing component-delete helper 341; existing detach helper 464; inline declarations
 // 341/464; category byte comparisons 266; signed-byte category 212, membership 212, both 212.
+// score 212 (was 212): list selection/count homes and cleanup schedule remain.
+// Outer selector byte/short/word/dword 219/266/266/212; byte/short with branched
+// selection 245/291; byte/short with indexed cleanup 226/269. Original restored.
 // @retail 0x278f00
 void function_278f00()
 {

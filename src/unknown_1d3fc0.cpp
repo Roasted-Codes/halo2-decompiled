@@ -45,6 +45,9 @@ PRIVATE __forceinline void function_1d3fc1(vector3f *arg_0)
 // score 149 (was 149): magnitude order, reciprocal/SSE carriers and projection schedule remain.
 // Normalized i/j/k products 149/149/149f; ij/ik/jk products 149/149/149f;
 // all products and k/j/i product evaluation 149/149f; j-square retained.
+// score 149 (was 149): magnitude and reciprocal carriers still differ. Native n-array
+// normalization 149; array receiver 149; scalar-array helper 149; array scale loop 149;
+// each array form with indexed projection 149/149/149; indexed projection alone 149.
 // @retail 0x1d3fc0
 void __stdcall function_1d3fc0(long arg_0, s_havok_component *arg_1)
 {

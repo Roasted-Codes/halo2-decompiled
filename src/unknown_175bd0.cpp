@@ -1923,6 +1923,9 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // Type query, color update, matrix query and spawn update noinline declarations 163 each;
 // existing tint/multiplication result byte carriers 146/159, both 142 kept;
 // placement result byte carrier 163. No new result copy or field read.
+// score 128 (was 171): frame 0x40 versus 0x44; color/cursor homes and zone-base carriers remain.
+// Round 173: tint bool 165; multiply bool 137; both bool 128 kept plain; direct multiply
+// with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -1938,8 +1941,8 @@ void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum
 	spawn.location_index = particle_system->location_index;
 	{
 		c_type_4e7709 *particle_definition = function_137bd0(particle_system->function_1751d0()->tag_index);
-		signed char tinted = particle_definition->tinted();
-		signed char multiplied = particle_definition->multiplied();
+		bool tinted = particle_definition->tinted();
+		bool multiplied = particle_definition->multiplied();
 
 		function_175a80(tinted, effect->color_a, effect->color_b, particle_system, multiplied);
 	}
@@ -2657,6 +2660,11 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // score 166 (was 166): radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
+// Round 173: part-scope radius 166; radius product 166; product with lower bound 352;
+// full-width location index 352; positive mode scope 166. Scalar homes and flag/random lifetimes remain.
+// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
+// Two-use lower 163 (three-point gain dropped); span/lower plus span 167/349;
+// entry cursor/event record/read-only tag 166/166/166; cursor plus lower 163; event plus span 167.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {

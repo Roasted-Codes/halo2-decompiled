@@ -1365,6 +1365,10 @@ struct s_133f70;
 // score 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
 // Native reuse 330; native level change 291; short entry index 352; late success 262; short builder
 // result 216.
+// score 213 (was 213): distance staging, nullable entry and cache/result schedule remain.
+// Plain signed-byte/short/word success 213/265/265; short/word reuse 370/370;
+// signed-byte level change 213; unsigned failures 213; word entry ordinal 352.
+// All eight also checked plain because the reduced frame differs; original restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

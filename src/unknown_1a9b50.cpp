@@ -423,6 +423,9 @@ extern point2f *g_468778;
 // score 379 (was 379): Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
 // result 379; unit field pointer 379; external state byte reference 390; position pointer 387;
 // velocity pointer 424.
+// Round 173: external actor / guarded slot / combined references 379/379/379;
+// external facing reference 379; prediction-path velocity reference 395. Frame 0x40 agrees;
+// early actor/settings/prop carriers remain. Original body retained.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

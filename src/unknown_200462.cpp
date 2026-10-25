@@ -79,6 +79,8 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // score 39 (was 39): table/pulse setup, row-X carrier and query/width schedule remain;
 // query before sprite 39; horizontal/vertical/both coordinate spans 39/39/39;
 // direct query product right/left 39/39; query with spans 39; spans/direct query 39.
+// Round 277: draw-shared quad/rectangle/both and pre-center quad/rectangle/both 39 each;
+// signed-word selection mask 169; read-only computed draw scalars 39.
 // @retail 0x200462
 void function_200462(long arg_0)
 {

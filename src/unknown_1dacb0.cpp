@@ -1092,6 +1092,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Named-entry latch 828; direct result with entry latch 1000; iterator mode/class keys 1016;
 // iterator mode/type keys 837; entry latch with native initialization 826 (two-point gain rejected);
 // combined continuation while 828.
+// frame 0x2c agrees; result/output homes and initial ECX/EDX remain. Existing complete
+// helper for original request 2287; resolved request 2208; both 3530; immutable requested mode/type 828/828.
+// Shared iterator and helper bodies unchanged.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1160,6 +1163,9 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // score 828 (was 828): class/NONE registers, result/output/candidate homes and later zero carrier differ.
 // Named-entry latch 828; direct result with entry latch 1000; iterator mode/class keys 1016;
 // iterator mode/type keys 837; combined continuation while 828.
+// frame 0x2c agrees; result/output homes and initial ECX/EDX remain. Existing complete
+// helper for original request 2287; resolved request 2208; both 3530; immutable requested mode/type 828/828.
+// Shared iterator and helper bodies unchanged.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
