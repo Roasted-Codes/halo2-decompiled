@@ -1022,7 +1022,12 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection registers remain;
 // arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
 // receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
-// score 184 (was 184): icon tail and time/connection register schedule still differ.
+// score 184 (was 184): Deferred icon tail and time/connection coordinate registers remain. place
+// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
+// rectangle aggregates 320; trailing rectangle aggregates 306.
+// icon tail and time/connection register schedule still differ.
+// icon tail and time/connection register schedule still differ.
 // entry icon zero 261f; outer icon scope 184f.
 // zero before icon init 205f; zero before place format 248f.
 // signed word result 184f; unsigned native result 184f.

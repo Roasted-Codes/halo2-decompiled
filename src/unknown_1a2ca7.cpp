@@ -1438,6 +1438,9 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // score 117 (was 117): count homes, early count retention and membership flag reloads remain.
 // On the recovered comparison carriers: outer/inner/both merge cursors 231/117/231;
 // friend/member/both search cursors 186/219/222; outer-plus-friend 236, inner-plus-member 217.
+// Count homes, early saved-count lifetime and memory flag updates remain. friend field binding 120; member
+// field binding 117; both field bindings 120; native count results 117; merge ordinal scope 117; friend
+// count arms 117; member count arms 117; both count arms 117.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {
