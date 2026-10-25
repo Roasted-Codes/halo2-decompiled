@@ -1291,6 +1291,9 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 // Entry/packet mode observations 134/134; entry size before written count 107 plain
 // (454/449 bytes); shared scan ordinal 134; entry cursor / with mode 133/133;
 // capacity result join 134; written count after header reservation 160.
+// score 107 (was 107): EDI input and mask/count/size/length homes remain. Written before
+// mask/size 133; mask after size/count 173; retail initialization order 162;
+// completed length after compaction 172; signed-word written count 141 (fast).
 // @retail 0x55c40
 long function_55c40(s_voice_queue *queue, long player, byte *cursor, byte *output, long capacity, bool include_mask)
 {
@@ -2570,6 +2573,9 @@ PRIVATE __forceinline byte *function_54592(void *arg_0, const s_network_session_
 // previous mask 179; ordinary empty/mask-empty 208/208; active memcpy 174;
 // selected input 172; selected/ordinary 204; selected/memcpy 157;
 // mask-selected/mask-memcpy 172/174; typed output/selected/ordinary 179/172/208.
+// score 157 (was 157): player/mask homes, separate zero and selected-pointer tests remain.
+// Active-Boolean copy contract 174; const empty 157; byte group 157; word compare 195;
+// source-local name 157; grouped source cursor 181 (fast). Original kept.
 // @retail 0x54590
 void function_54590(void)
 {

@@ -503,6 +503,10 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
+// score 182 (was 182): Frame 0x28 and state/output registers agree; six direct-dot displacement
+// bytes and rotation scheduling remain. Ground memcpy 182; limited memcpy 182; separate real
+// components 182; cosine complement 180 (two-point gain dropped); separate cross workspaces 182;
+// cosine/complement before sine 181; explicit alignment with complement 182 (fast).
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -834,7 +838,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Native enabled test 626; byte flag view 619; low-normal first 618; current-velocity snapshot 625;
 // repeated damping 624; native enabled/byte view 629; gravity first 616; byte view/low-normal 616;
 // gravity/low-normal 614 kept; gravity/byte view 618.
-// score 614 (was 614): frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
+// score 614 (was 614): Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
+// direct 626; damping 619; gravity 619; all predicates 627; later input magnitude 619 (fast).
+// frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
 // Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
 // general distance result 614; masked final gravity word 634.
 // @retail 0x1f0870

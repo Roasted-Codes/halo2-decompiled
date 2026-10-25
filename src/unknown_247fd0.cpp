@@ -251,6 +251,8 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // position scale loop 418; position-add loop 408; byte guard 408.
 // separate trace point 408; separate direction 408; scoped flag 408;
 // nonzero kind first 415; final scalar draw 399; last two 409; last three 389.
+// Entry record declaration 389; final getter field at use 389; external record
+// reference 389; late placement default 389; child enable last 389.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)
