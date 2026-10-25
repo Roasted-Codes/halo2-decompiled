@@ -247,6 +247,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // score 185 (was 185): BSP/section carriers and range/plane homes remain;
 // external section source 191; active section reference 185; surface table before walk 205;
 // source and table 244; plane reads at use 225; collision record reference 185; long success/validity 192/185.
+// score 185 (was 185): BSP/section carriers and range/plane homes remain.
+// Fast: native range 211; native reference 225; native section 216; native BSP 272;
+// native collision 256; range and reference 218; section and range 227; collision and reference 248.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

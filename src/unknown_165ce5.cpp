@@ -1195,6 +1195,9 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // separate node-base addition and ECX/EDX roles remain.
 // Parent/root/query-result names 36/36/36; outer query result 36; retained-field
 // plus root/parent object references 36/36; animation/interface references 36/36.
+// score 30 (was 36): early graph load, node-base addition/register roles and overlay setup remain.
+// Plain: arms array 159; weapon array 44; both arrays 159; channel reference 36;
+// graph object 40; model input 82; graph input 30; interface value 230.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1229,14 +1232,15 @@ void __stdcall function_167e86(long user_index, long field_x11c898)
 			if (interface_index >= 0 && interface_index < definition->interface_count)
 			{
 				s_first_person_interface *interface = &definition->interfaces[interface_index];
+				long animation_graph_index = interface->animation_graph_index;
 
-				if (interface->render_model_index != NONE && interface->animation_graph_index != NONE)
+				if (interface->render_model_index != NONE && animation_graph_index != NONE)
 				{
 					s_animation_state *state;
 
 					first_person_bits_reset(&user->unknown202c);
 					state = &weapon->animation;
-					state->initialize(interface->animation_graph_index, NONE, false);
+					state->initialize(animation_graph_index, NONE, false);
 					if (field_x11c898 == 0)
 					{
 						user->unknown2094 = state->node_find(0xe0000e0);

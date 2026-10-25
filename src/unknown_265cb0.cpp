@@ -1097,6 +1097,9 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // j93: Frame 0x60 agrees; clock hoisting, conversion copy and three vector homes remain; typed offset output recovers movement/offset homes.
 // wide event results 371; wide target result 374; state per use 433; state eligibility snapshot 338; typed
 // offset output 99; offset outer direction 99; offset blend before delta 99; offset outer query homes 99.
+// score 99 (was 99): clock/compare schedule, conversion copy and geometry homes remain.
+// Fast: smoothed field 99; desired field 99; both fields 99; native position 393;
+// native origin 383; both geometry inputs 431; prop record 99; field and geometry 431.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
