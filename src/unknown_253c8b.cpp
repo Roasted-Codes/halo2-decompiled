@@ -170,6 +170,11 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 	return result;
 }
 
+// score 37 (was 100): native short height restores retail length; extra height
+// sign extension and two-axis XMM/store scheduling remain. Real screen offsets
+// x/y/both/early 103/103/102/114; short width/height/both 40/37/119;
+// short dimensions with offsets 118; long height/width 100/104;
+// short-height vertical origin/near-first/vertical-first 38/40/39.
 // @retail 0x253ea8
 void c_class_19b8b1::v4(long screen_rect_address)
 {
@@ -200,7 +205,7 @@ void c_class_19b8b1::v4(long screen_rect_address)
         }
         s_float_rect from, to;
         real width = element->width;
-        real height = element->height;
+        short height = element->height;
         from.x0 = from.y0 = 0.0f;
         from.x1 = width;
         from.y1 = height;

@@ -62,6 +62,9 @@ struct s_spawn_scenario_23aea0
 // score 105 (was 105): input receiver and integer destination offset still differ;
 // actual batch/type ranges 139/227; inner type ordinal 139; direct twelve types 254;
 // source records with direct/batch/read-only ranges 257/227/227; complete override 140.
+// score 105 (was 105): integer destination induction and input receiver still differ.
+// Word/byte batch ordinals 141/141; word/byte entry ordinals 242/242;
+// both word/byte 253/253; early table publication and later scenario receiver 105/105.
 // @retail 0x23aea0
 void function_23aea0()
 {

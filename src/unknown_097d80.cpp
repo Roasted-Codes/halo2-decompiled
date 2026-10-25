@@ -58,6 +58,10 @@ struct c_aggregate : c_child
 // 133, with range 153; collection rejection 116; read-only range 99; range-array bound
 // 92; child-array bound 139; read-only range bound 92; repaired-entry completion,
 // release and both output names 92/92/92.
+// score 92 (was 92): call-output homes and dispatch/release allocation remain different.
+// Completion/information/both output lifetimes 105/99/110; cleanup block/item cursors
+// in the boundary-array context 92/92; actual dispatch block range 103; nested error
+// scope and early error/total results 92/92.
 // @retail 0x97d80
 long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 {

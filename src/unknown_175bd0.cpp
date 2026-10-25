@@ -1774,6 +1774,10 @@ long function_1785c0(s_effect_object_marker const *marker, s_effect_datum *effec
 // score 94 (was 94): Frame agrees; node/matrix and marker receivers, early normalization loads still differ.
 // Shared difference 187; shared scale 94; both helpers 186; separate point workspace 125;
 // normalized workspace 164; scale snapshot 185; marker vector snapshot 184; point setters 227.
+// score 77 (was 77): node/matrix entry order and direction/up XMM homes remain.
+// Cartesian scalar names, ordered direction/point accumulation, displacement scalars,
+// output-matrix receiver, early direction inputs and immutable accumulation 77 each;
+// existing inverse-point call 417.
 // @retail 0x1786f0
 void function_1786f0(s_effect_object_marker *out, s_effect_marker_source const *source, short marker_index)
 {
