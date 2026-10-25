@@ -1485,6 +1485,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
     }
 }
 
+// score 219 (was 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation
+// remain. Persistent row cursors: team background 305; player background 257; team text 219 (plain kept);
+// player text 246; both backgrounds 304; both text passes 249 (fast).
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {
@@ -1537,12 +1540,14 @@ score_background_161420(data + 0x270, 0x60);
 score_text_161420(data + 0x144, 0x60);
 score_text_161420(data + 0x1a8, 0x60);
 score_text_161420(data + 0x20c, 0x60);
+    s_game_engine_score_row const *team_row = panel.teams;
     for (long team = 0; team < panel.team_count; ++team)
     {
-        score_text_161420((byte const *)&panel.teams[team].place, 0x44);
-        score_text_161420((byte const *)&panel.teams[team].name, 0x60);
-        score_text_161420((byte const *)&panel.teams[team].score, 0x44);
-        score_text_161420((byte const *)&panel.teams[team].time, 0x44);
+        score_text_161420((byte const *)&team_row->place, 0x44);
+        score_text_161420((byte const *)&team_row->name, 0x60);
+        score_text_161420((byte const *)&team_row->score, 0x44);
+        score_text_161420((byte const *)&team_row->time, 0x44);
+        ++team_row;
     }
     for (long player = 0; player < panel.player_count; ++player)
     {

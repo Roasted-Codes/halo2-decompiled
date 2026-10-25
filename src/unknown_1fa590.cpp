@@ -552,6 +552,9 @@ PRIVATE __forceinline void motion_cross(vector3f const &a, vector3f const &b, ve
 // active rotation scope 235; idle sine after scaling 235.
 // active/idle/both real trig 233/235/233; shared weighted axis 214 plain kept;
 // weighted cross 218; both weights 258; output cosine scale 235; real trig plus axis 226.
+// score 214 (was 214): Frame 0x28 agrees; angle/trig homes and projection scheduling remain. Active angle
+// name 214; external up reference 212; forward reference 216; both output references
+// 178 (held: reference aliases of the two parameters); external velocity reference 214.
 // @retail 0x1faa20
 void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *ticks)
 {
