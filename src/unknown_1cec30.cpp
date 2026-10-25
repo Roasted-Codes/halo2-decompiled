@@ -916,6 +916,9 @@ void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_com
 // score 38 (was 38): Frame and component-in-EBX convention still differ; zero transform/translation/both 64/61/84;
 // rotation workspace/initialized workspace/initialized transform with workspace 78/106/107;
 // position input value 77; rotation input values 143. Original body restored.
+// score 38 (was 38): frame and component register still differ; external matrix/component records 38/38;
+// complete frame set/initialization/library copy 81/71/71; translation memcpy 70;
+// aligned forward/up column values 49/49. Original body retained.
 // @retail 0x1d0c20
 void havok_component_rigid_body_matrix_set(long rigid_body_index, s_havok_component *component, transform4x3f const *matrix)
 {
@@ -1378,6 +1381,9 @@ PRIVATE __forceinline real const &component_time_step()
 // negative-target guard 50; stopping branch first 106; step predicate first 26 (kept, plain 26);
 // negative guard with step predicate 32; independent/eager stop decisions 129/124;
 // explicit fraction branches 43; velocity input/output lifetime 219.
+// score 26 (was 26): acceleration/timestep registers and stop scheduling remain; direct stopping decision 106;
+// conditional/stopping-first results, stopping ticks, squared speed, limit magnitude, normalized speed
+// and captured step decision 26 each. Original body retained.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)

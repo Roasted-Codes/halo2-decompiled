@@ -715,6 +715,8 @@ struct s_85650
 // score 100 (was 100): Frame 0x24 versus 0x28 and owner/child/callback homes still differ.
 // Child slot before total/count 106/142; request/tail/both sender clears 139/139/143;
 // world-state value 100; short child ordinal 125; child slot plus clears 143.
+// score 100 (was 100): frame and owner/child/callback homes remain; published child/total/count field references 142 each;
+// ordinal field reference 100; initialized type/client/both arrays 133/133/150; active byte 99 (below gate).
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
