@@ -385,16 +385,14 @@ bool __stdcall function_110ab0(long unit_index);
 /* asks the actor's unit to move to the point facing the given way (request
    0x25), once it is within half a world unit of it; when asked, only while
    it faces within 45 degrees of its prop */
-// score 100 (was 100): retail's prologue saves ESI as well and pushes the
-// registers in the order EBP, EBX, ESI, EDI; here only EBX, EBP and EDI are
-// saved, so every stack slot after the prologue sits at another offset.
 // @retail 0x1f4f40
 bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_type_c3b527 const *point, bool face_prop)
 {
 	s_actor_moving *actor = actor_moving_get(actor_index);
-	byte result = 0;
+	bool result = false;
 
-	if (!function_110ab0(actor->unit_index))
+	long unit_index = actor->unit_index;
+	if (!function_110ab0(unit_index))
 	{
 		point3f target;
 		vector3f offset;
@@ -405,14 +403,13 @@ bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_
 		{
 			if (face_prop)
 			{
-				s_type_5cfb45 *state = function_25d690(prop_ref_get(actor->prop_index));
+				point3f const *prop_position = &function_25d690(prop_ref_get(actor->prop_index))->position;
 				vector3f direction;
 
-				direction.i = state->position.x - actor->position.x;
-				direction.j = state->position.y - actor->position.y;
+				vector3d_from_points3d(&actor->position, prop_position, &direction);
 				direction.k = 0.0f;
 				if (!(function_30bf0(&direction) > 0.0f) || dot3f(facing, &direction) < 0.70710677f)
-					return result;
+					goto done;
 			}
 
 			{
@@ -427,6 +424,7 @@ bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_
 		}
 	}
 
+done:
 	return result;
 }
 
@@ -444,17 +442,14 @@ static inline real heading_distance3d(point3f const *a, point3f const *b)
 
 /* while the actor's target point (+0x638) is fresh: faces it, and once
    within half a world unit of it asks the unit to stop there (request 0x2d) */
-// score 66 (was 66): retail saves ESI in the prologue, ours does not, and
-// ours is ten bytes longer than retail. Inline depths one/two 66, zero 197;
-// size preference 221; frame pointer 133; global optimization off 177;
-// explicit availability outcomes 64/421 bytes; force-inline distance 66.
 // @retail 0x1f58c0
 bool function_1f58c0(long actor_index, vector3f *facing, short *unknown)
 {
 	s_actor_moving *actor = actor_moving_get(actor_index);
 	bool result = false;
 
-	if (!function_110ab0(actor->unit_index) && g_510c54->game_time < actor->unknown634)
+	long unit_index = actor->unit_index;
+	if (!function_110ab0(unit_index) && g_510c54->game_time < actor->unknown634)
 	{
 		point3f target;
 		vector3f direction;
@@ -760,6 +755,16 @@ real normalize2d(point2f *v);
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
+// score 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
+// retry/movement/both threshold products 172/172/172; clamped upward result
+// 172, with both products 172; retry/movement/both eligibility results 172/172/172.
+// frame 0x48 agrees; fast-byte zero and trajectory convention remain.
+// Validation after query 220; with late minimum 220; early query output 171;
+// minimum first 174; early output/minimum 170; first-type first 172;
+// shared Boolean initialization 173; early output with late validation 218.
+// Fast-byte memset 172; actual actor/requested-type/maximum-type references 172 each;
+// actual destination/origin references 172 each; read-only unit view 172;
+// native two-component normalization workspace 206. Zero source and trajectory convention remain.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -996,6 +1001,7 @@ done:
 // score 307 (was 307): frame 0x18 versus 0x1c; actor/object roles and factor homes differ.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
 // Scalar velocity 309; approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast).
+// score 307 (was 307): Frame 0x18 versus 0x1c and actor/object/factor homes remain; object receiver first 309; approach component scopes 308; following component scope 308; shared minimum scalar 308; library velocity copy 309 (fast control 308).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1271,6 +1277,7 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // score 294 (was 294): frame 0x3c agrees; radius/result homes and initial direction materialization differ.
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
 // Ordinary lifetimes: facing value 307; scalar side 309; scalar center 306; origin constructed first 306; reused negative radius 329.
+// score 294 (was 294): Frame 0x3c agrees; direction materialization and radius/result homes remain. Ordinary input/side lifetimes: point pair plus arc helper 344; pair plus direction output 299; origin/facing values 292 (plain 292, two-point gain rejected); target/facing values 306; three point values 328.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

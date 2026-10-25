@@ -960,6 +960,13 @@ real function_21f650(long channel_index, long mode);
 
 /* moves a voice on to its queued chunk once its stream has played the
    current one, and advances its play time */
+// score 42 (was 42): function_219290's two arguments load group-first (retail index-first; its
+// parameters swapped would fix it, but contributor caller 0x21c400 calls the present order), one
+// store sits after the permutation copy, the second release hoists the chunk-table load, and the
+// last block swaps ecx/edx with the post-call SOUND_SYSTEM load in edx (retail eax). Tried: a
+// function-wide channel_index local 113; the last block's locals folded into one expression 42;
+// elapsed_time read into a local before the rate call 42; a stream pointer for the last state
+// test 42; the table pointer declared at the outer scope 42.
 // @retail 0x12a450
 void sound_voice_update_chunks(short voice_index)
 {
@@ -1903,7 +1910,14 @@ static inline void approach_126660(real *value, real delta, real lower, real upp
 /* advances the sound system's clock and the ambience fades, and fades the
    master gain out while the game asks for it (after its delay) and back in
    once nothing is busy */
-// score 30 (was 30): conversion and clamp registers, elapsed reload differ; shared quotient 30;
+// score 30 (was 30): retail reloads elapsed_time after function_12be90 (ours keeps it in xmm0;
+// BLOCKED-BY 0x12be90, whose file another lane holds), so the fade-in clamp and every jump
+// after it differ; the fade-out clamp's two subtractions sit in swapped registers. Tried:
+// elapsed_time stored before seconds 28 (top then exact); the products' * and / swapped 30;
+// fade-out through PIN_126660 74, as PIN_126660 + fade 68, fade + PIN_126660 68, via SOUND_SYSTEM
+// 68; a change local before the step 77; fade-in without the elapsed local 44. Every value-first
+// fade-out merges retail's two return tails.
+// conversion and clamp registers, elapsed reload differ; shared quotient 30;
 // shared elapsed 79; both time values 79; shared change 74; quotient/change 74; shared lower bound
 // 74; quotient/lower bound 74; all clamp values 74.
 // @retail 0x1269f0
@@ -2607,6 +2621,9 @@ static inline short sound_voice_find_available_channel(char type)
 // score 113 (was 113): frame 12 versus 8 and saved true byte; validity result 135; assigned result
 // 135; playback handle 113; const playback 113; long buffer index 117; entry status 113;
 // allocation-scope status 113; status name 113; allocation success result 122.
+// score 113 (was 113): frame 12 and saved result byte remain; failure flag 130, entry failure
+// 130, complemented status 132, long channel 147, driver-first/late-system commits 130/130,
+// status plus driver-first 132, requested buffer first 130.
 // @retail 0x1295e0
 bool __stdcall function_1295e0(short voice_index)
 {
@@ -3232,6 +3249,15 @@ void __stdcall function_1264c0(dword arg_0);
 // Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
 // pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.
 // Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
+// score 87 (was 102): reconstruction calls, clock conversion and wait layout remain;
+// reconstruction force/plain inline 102/102; with shared fade 87 plain; with flag/gain/deadline/reset
+// 102/102/102/102 fast; ordinary inline plus fade 107 fast; shared fade without declaration 87 plain.
+// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// shared inline reconstruction both/first/next 123/120/108; calling iterator with fade 101;
+// expanded tick names/lexical homes/wait/fill 123/123/123/124.
+// score 87 (was 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// native/full-inline/Boolean iterators 113/112/118; native integer tick 113; iterator workspace
+// before clock inline/Boolean 111/118; early real tick native/inline 113/113.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
@@ -3244,12 +3270,7 @@ void function_1257b0(void)
 		{
 			do
 			{
-				s_sound_playback *local_3 = (s_sound_playback *)local_1->data + (local_2 & 0xffff);
-				local_3->fade_gain = function_12a810(local_2);
-				local_3->fade_curve = 0;
-				local_3->fade_start_time = 300;
-				local_3->fade_end_time = NONE;
-				local_3->fading = true;
+				function_126df0(NONE, local_2, 0, 0.3f);
 				local_2 = index_to_datum_index(local_1, function_16bc00(local_1, (local_2 & 0xffff) + 1));
 			} while (local_2 != NONE);
 			real local_4 = (real)local_0;

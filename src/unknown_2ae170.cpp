@@ -579,6 +579,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // front level table 613; back level table 566; both level tables 635; shared level table 635; shared routing
 // workspace 647
 // score 463 (was 552): Frame 0xdc versus 0x94 and conversion reuse remain; first/second/both rear calls 579/532/583, first/second table pairs 542/509, second pair with call 491, both pairs 480, both pairs with call 463 (plain).
+// score 463 (was 463): first/third scopes reach frame 0x94 but score 490; pointer traversal 463;
+// byte table 462; byte counters 458 (instruction sequence worsens); common counter 463;
+// recovered-frame front/rear snapshots 546. Original loops and native workspaces kept.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -640,6 +643,9 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // score 507 (was 515): frame four versus twelve and gain spill/SSE homes remain;
 // per-use primary selection 467 (dispatcher lost); byte destinations 507;
 // reversed mode cases 515; named special gains 515; conditional mode arms 532.
+// score 460 (was 507): frame twelve agrees; selected-level and gain SSE spills still differ.
+// ordinary gain snapshots 460; late secondary setting 517; native send copy 522 (dispatcher lost);
+// alternate ordinary route first 507; special input snapshot 464; combined snapshots 455 (dispatcher lost).
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -659,10 +665,12 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	{
 		real send_level = sound_effects_send_level(this, parameters, mode);
 		real offset = parameters->level_offset + parameters->level;
+		real left_gain = parameters->gain0c;
+		real right_gain = parameters->gain10;
 		if (!TEST_FIELD_BIT(parameters->flag3))
 		{
-			sound_stream_append_mixbin(mixbins, m_buffers->mixbin00, parameters->gain0c + (send_level + parameters->level));
-			sound_stream_append_mixbin(mixbins, m_buffers->mixbin04, parameters->gain10 + (parameters->level + send_level));
+			sound_stream_append_mixbin(mixbins, m_buffers->mixbin00, left_gain + (send_level + parameters->level));
+			sound_stream_append_mixbin(mixbins, m_buffers->mixbin04, right_gain + (parameters->level + send_level));
 			long mixbin08 = m_buffers->mixbin08;
 			switch (mode)
 			{
@@ -680,16 +688,16 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 			real front_level = m_settings.level00;
 			if (front_level > -64.0f)
 			{
-				sound_mixbins_add(mixbins, 0, parameters->gain0c + (front_level + (parameters->level + send_level)));
-				sound_mixbins_add(mixbins, 1, parameters->gain10 + (front_level + (parameters->level + send_level)));
+				sound_mixbins_add(mixbins, 0, left_gain + (front_level + (parameters->level + send_level)));
+				sound_mixbins_add(mixbins, 1, right_gain + (front_level + (parameters->level + send_level)));
 			}
 			if (rear)
 			{
 				real rear_level = m_settings.level04;
 				if (rear_level > -64.0f)
 				{
-					sound_mixbins_add(mixbins, 4, parameters->gain0c + (parameters->level + send_level + rear_level));
-					sound_mixbins_add(mixbins, 5, parameters->gain10 + (parameters->level + send_level + rear_level));
+					sound_mixbins_add(mixbins, 4, left_gain + (parameters->level + send_level + rear_level));
+					sound_mixbins_add(mixbins, 5, right_gain + (parameters->level + send_level + rear_level));
 				}
 			}
 			switch (mode)
@@ -698,8 +706,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 				sound_mixbins_add(mixbins, 10, offset);
 				break;
 			case 1:
-				sound_mixbins_add(mixbins, 10, parameters->gain0c + offset);
-				sound_mixbins_add(mixbins, 10, parameters->gain10 + offset);
+				sound_mixbins_add(mixbins, 10, left_gain + offset);
+				sound_mixbins_add(mixbins, 10, right_gain + offset);
 				break;
 			}
 		}
@@ -718,6 +726,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // score 264 (was 270): frame 0x1c versus 0x18 and input-level/mode homes remain;
 // word routing predicate 264; named routing reads 270; native-word home names 270;
 // front field reference 267 and both field references 267 (three-point gains rejected).
+// score 264 (was 264): frame 0x1c/0x18 and input-level/mode homes remain.
+// Primary routing 272; signed word route 264; direct left 275; external output
+// and live settings records 264/264; primary-output pair 272; full left 275; settings-direct pair 271.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -784,7 +795,15 @@ void c_sound_effects::set_i3dl2(s_sound_i3dl2_parameters *parameters, long unuse
 // score 55 (was 55): our body is 12 bytes shorter: retail adds the gain with
 // SSE (the gain's bits copied through ebx into a stack temp) while our
 // union pun makes MSVC use x87; five more rewrites of the pun scored 55 or
+// worse. Settings gain copied into a local before each send (one-use copies,
+// reverted in review) 44: retail's SSE sums and length; with operands swapped
+// 44; the helper's level by reference 55; the sum written into the union 55;
+// the bit copy before the switch 44.
 // worse.
+// score 55 (was 55): retail inlines the existing out-of-line mix bin append (its
+// count++ is reused by the second send), ours the local copy. The existing
+// append called directly stays out of line 252, 238; plain sums 102; one
+// adjusted level 167; the gain parameter adjusted in place 167.
 // @retail 0x2af800
 __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, s_mixbin_settings *mixbins)
 {
@@ -823,6 +842,11 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 // score 156 (was 166): frame eight agrees; zero gain folding and mode dispatch remain;
 // frame pointer 166; word counters 157; common counter 166; exclusive end bins 165;
 // pair/quad capacity predicates 156.
+// score 137 (was 156): Frame eight agrees; runtime zero attenuation and mode dispatch remain. Shared modes 168; adjacent endpoints 193; all byte endpoints 142; byte capacity 156; unsigned counters 156; combined shared modes 161; rear bytes 170; front bytes 137 (plain, exact length).
+// score 137 (was 137): entry receivers, runtime zero attenuation and mode dispatch remain.
+// All/front/rear byte bin counters; native source/destination/both records;
+// mode field binding and promoted mode on the retained front-byte endpoints
+// Fast scores 152/149/147/137/137/137/137/137; original body retained.
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -831,8 +855,8 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	bool pair_available = remaining >= 2;
 	bool quad_available = remaining >= 4;
 	real gain = 0.0f;
-	long left = alternate ? 0 : 6;
-	long right = alternate ? 1 : 7;
+	unsigned char left = alternate ? 0 : 6;
+	unsigned char right = alternate ? 1 : 7;
 	long rear_left = alternate ? 4 : 8;
 	long rear_right = alternate ? 5 : 9;
 
@@ -896,6 +920,10 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // score 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
 // Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
 // samples 208/212/206/202; all samples with early send sum 215.
+// score 200 (was 200): frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// sum after rear pair 212; accumulated sum 212; read-only input contract 200; rear reads reversed
+// 200; rear before levels 201; signed-byte selector 200; unsigned-word selector 197 (three-point
+// gain dropped).
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

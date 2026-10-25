@@ -474,7 +474,16 @@ void function_c7840(vector3f const *desired, vector3f *current, transform4x3f co
 
 // score 4 (was 8): the dot product's last term still loads the facing component into
 // the register where retail loads the forward one, and the call to 0xc7840 sets up its
+// null frame argument before the address of the desired vector where retail does it after.
+// the last-term operand swap, a const facing parameter, a desired-address pointer local,
+// a named alignment local, a named idle bool and a mutable settings pointer all compile
+// to the same bytes; the != branch swap 28; the nested-if duplicated else 317/996;
+// the forward const reference 202; the settings/object declaration swap 6. The call-setup
+// order follows the unmatched contributor callee 0xc7840's register binding.
 // null frame argument before the address of the desired vector where retail does it after
+// score 4 (was 4): final alignment product and null-frame/address setup remain; desired default 84;
+// forward/facing values 255/232; facing plus default 227; forward plus default 253;
+// const limits 4; control value 237; control plus default 240.
 // @retail 0x1faf80
 bool function_1faf80(vector3f *facing, long object_index, void const *settings_pointer,
     vector3f const *control, real threshold, real *turn)

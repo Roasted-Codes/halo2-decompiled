@@ -2115,6 +2115,8 @@ static __forceinline long player_round_ticks(real value)
 // direct permission result 707; combined native fields and direct result 707.
 // Native unit view 701; candidate reference 701; request at dispatch 701;
 // native activity results 707; native permission 701. Original body kept.
+// Cooldown scalar names 701; rest-first clamp stores 706; gated idle cap 705;
+// separate melee button tests 709; target-age store before test 701.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
@@ -2671,6 +2673,14 @@ struct s_unit_flags_14d8b0
 // score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
 // Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
 // incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
+// score 155 (was 155): iterator/tick scheduling and damage transport remain;
+// shared event send 155; existing initializer 304f; both event APIs 283f;
+// event/damage/both workspace scopes 155/155/155; scopes with send 207f;
+// both APIs with typed first flag 281f. Original body retained.
+// Iterator publication, tick/rate schedule, damage call and trigger registers
+// remain. current record consumer 155; successful current publication 155; explicit iterator
+// initialization 155; defined current at advance 155; saturating source expression 254; saturate
+// before increment 224; native flag boolean 264; publication with native results 300.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

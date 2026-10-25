@@ -286,6 +286,9 @@ PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_reco
 // Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
 // typed parent lookup 78; retained handle lookup 78; root predicate 57;
 // sentinel cursor with typed parent 65. Null-result lifetime still differs.
+// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
+// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
+// actual parent-field reference 57; actual record reference 57. Null-result join remains.
 // @retail 0x202370
 void function_202370(void)
 {
@@ -311,6 +314,12 @@ void function_202370(void)
 // Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
 // typed parent lookup 78; retained handle lookup 78; root predicate 57;
 // sentinel cursor with typed parent 65. Null-result lifetime still differs.
+// score 57 (was 57): nullable search result and pool/mask register lifetimes remain.
+// Guarded zero/native/member/library initialization 63/82/82/63;
+// inactive early return with each initialization 63/82/82/63.
+// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
+// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
+// actual parent-field reference 57; actual record reference 57. Null-result join remains.
 // @retail 0x2024c0
 void function_2024c0(void)
 {
@@ -780,6 +789,7 @@ done:
 // global optimization off 533.
 // Conditional next publication 218; definition mode first 211; current-field result 223;
 // size preference 285; zero inline depth 232. Original kept.
+// score 176 (was 176): round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -890,9 +900,13 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// @retail 0x201b70
 // score 69 (was 69): the record's field is read into SI where retail reads it into BP, so the two
 // values are exchanged and the compare uses the other register.
+// score 69 (was 69): merged index and fallback short/promoted pair still differ.
+// Multi-use promoted index 73; helper failure guards 69; native short selection
+// 69; input-default result 75; read-only table 69; signed bounded length 70;
+// promotion/input-default result 119; read-only promotion/signed length 75.
+// @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
 	(void)&actor_index;
@@ -1426,6 +1440,7 @@ void function_2036c0(long definition_index, short mode, bool *enabled, bool *for
 bool function_1df560(short team_a, short team_b);
 bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
+// score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1445,12 +1460,13 @@ real function_204950(long actor_index, long squad_index, short mode)
             point3f const *point = (point3f const *)(entry + 0x24);
             point3f transformed;
             real squared;
+            real y;
             if (*(short *)(entry + 0x30) == NONE)
             {
                 real x = *(real *)(actor + 0x238) - point->x;
                 real z = *(real *)(actor + 0x240) - point->z;
-                real y = *(real *)(actor + 0x23c) - point->y;
-                squared = x * x + z * z + y * y;
+                y = *(real *)(actor + 0x23c) - point->y;
+                squared = x * x + z * z;
             }
             else
             {
@@ -1458,13 +1474,18 @@ real function_204950(long actor_index, long squad_index, short mode)
                     transformed = *point;
                 real z = *(real *)(actor + 0x240) - transformed.z;
                 real x = *(real *)(actor + 0x238) - transformed.x;
-                real y = *(real *)(actor + 0x23c) - transformed.y;
-                squared = z * z + x * x + y * y;
+                y = *(real *)(actor + 0x23c) - transformed.y;
+                squared = z * z + x * x;
             }
+            squared += y * y;
             real distance = (real)sqrt(squared) - *(real *)(entry + 0x34);
-            real clamped = distance > 0.0f ? distance : 0.0f;
-            if (clamped < result)
-                result = clamped;
+            if (distance > 0.0f)
+            {
+                if (distance < result)
+                    result = distance;
+            }
+            else
+                result = 0.0f;
         }
     }
     return result;
@@ -1684,6 +1705,13 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // score 344 (was 344): frame 0x30 versus 0x3c; packed references and entry-index schedules differ.
 // Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
 // native reference indices 350; entry fields at use 344; inline distance call 678.
+// score 305 (was 344): Frame 0x3c agrees; stack homes, entry loads and packed reference tests
+// differ. Native player iterator 305; native entry cursor 316; word validation 305; matching-area
+// result 315; distance home names 305; field-initialized best 357; area-entry name 305;
+// player-record name 305.
+// score 305 (was 305): Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
+// Pooled reference 323; entry-block reuse 323; delta workspace 305; shared scan cursor 305; valid
+// actor continue 305.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -1694,12 +1722,12 @@ void function_204450(long definition_index, long squad_index)
     if (definition[0x24] & 0x10)
     {
         long target = NONE;
-        long index = NONE;
-        while ((index = data_next_absolute_index_inlined(g_4e8c24, index + 1)) != NONE)
+        s_record_pool_iterator players;
+        players.data = g_4e8c24;
+        players.index = NONE;
+        byte *player;
+        while ((player = data_iterator_next_inlined(&players)) != NULL)
         {
-            byte *player = g_4e8c24->data + index * g_4e8c24->size;
-            if (!player)
-                break;
             long unit_index = *(long *)(player + 0x2c);
             if (unit_index != NONE)
             {
@@ -1803,6 +1831,9 @@ bool function_1e11b0(long actor_index, bool active);
 // Iterator current handle 64; scalar next handle 64; zero iterator 76;
 // invalid iterator 80; tick snapshot 62; initial flags 64; current handle
 // with tick 62; scalar cursor with tick 62. Two-point gains rejected.
+// Actual squad/actor/both record references 64/64/64;
+// result from update 79; retained Boolean guard/result 70; proven success exit 79;
+// update result with squad reference 79; Boolean result with actor reference 70.
 // @retail 0x203bf0
 bool function_203bf0(long squad_index)
 {
@@ -1844,6 +1875,12 @@ bool function_1df5d0(short team_a, short team_b);
 // walks 348; unsigned full-width count 242; delayed flag clear 242. Shared
 // iterator helpers 242; marked iterator calls 350; branch-assigned count 179;
 // frame pointer 218; global optimization off 472; branch-assigned word 183.
+// score 179 (was 179): Frame 0x14 agrees; next-index memory home, contribution register and entry
+// flag clear differ. Word hostility 233; separate position iterator 235; branch-assigned health
+// 179; position component loop 221; scale component loop 218.
+// score 179 (was 179): Frame 0x14 agrees; next-cursor storage, contribution register and flag
+// clear remain. Long hostility 179; contribution from test 241; absent-tracking continue 179;
+// early centroid pointer 179; unit count before health 179.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2595,6 +2632,12 @@ static __forceinline long real_to_long(real value);
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // Single-result squad step 298; zero inline depth 584; global optimization off 439;
 // frame pointer 258; size preference 633. Original kept.
+// score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
+// squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
+// positive-timer continues 227.
+// score 227 (was 227): Frame 0x30 agrees; active/pool observations and zero-result joins remain.
+// Native zero initialization 255; timer addresses 227; final group for 289; final squad for 329;
+// first squad-phase lifetime 227.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -2747,21 +2790,18 @@ void function_2011f0(long arg_0);
 // depth 387; frame pointer 481.
 // Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
 // repeated signed category 387; function-scope workspaces 387; case two first 387.
+// score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
-    word const *local_0 = (word const *)&arg_1;
-    long const *local_1 = &arg_2;
-    long const *local_2 = &arg_3;
-    long const *local_3 = &arg_4;
     if (!g_4f55d0->active)
         return;
     byte *local_4 = (byte *)g_4e0350;
-    byte *local_5 = *(byte **)(local_4 + 0x164) + *local_0 * 0x74;
-    byte *local_6 = g_51e9d8->data + *local_0 * 0x98;
+    byte *local_5 = *(byte **)(local_4 + 0x164) + ((word)arg_1) * 0x74;
+    byte *local_6 = g_51e9d8->data + ((word)arg_1) * 0x98;
     long local_7 = NONE;
     bool local_8 = false;
-    if ((short)*local_1 != NONE)
+    if ((short)arg_2 != NONE)
         arg_0 = 1;
     byte *local_9 = NULL;
     if (*(short *)(local_6 + 0x2a) != NONE)
@@ -2781,18 +2821,18 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
     dword local_12[1];
     memset(local_11, 0xff, ((*(long *)(local_5 + 0x48) + 31) >> 5) * sizeof(dword));
     local_12[0] = 0;
-    if ((short)*local_1 == NONE)
-        function_201460(*local_0, local_12);
-    else if (!(byte)*local_2 && !function_201400(*local_0, (short)*local_1))
+    if ((short)arg_2 == NONE)
+        function_201460(((word)arg_1), local_12);
+    else if (!(byte)arg_3 && !function_201400(((word)arg_1), (short)arg_2))
         arg_0 = 0;
     if (arg_0 > 0)
     {
         long local_13 = (word)arg_0;
         do
         {
-            short local_14 = (short)*local_1;
+            short local_14 = (short)arg_2;
             if (local_14 == NONE)
-                local_14 = function_2039d0((short)*local_0, local_11, local_12);
+                local_14 = function_2039d0((short)((word)arg_1), local_11, local_12);
             if (local_14 >= 0 && local_14 < *(long *)(local_5 + 0x48))
             {
                 byte *local_15 = *(byte **)(local_5 + 0x4c) + local_14 * 0x64;
@@ -2801,11 +2841,11 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                 if (local_17 != (word)NONE)
                 {
                     local_16 = function_201330((short)local_17);
-                    if (!(byte)*local_2 && local_16 != NONE)
+                    if (!(byte)arg_3 && local_16 != NONE)
                     {
                         s_unit_request local_18;
                         local_18.type = 0x32;
-                        *(word *)local_18.arguments = *local_0;
+                        *(word *)local_18.arguments = ((word)arg_1);
                         *(short *)(local_18.arguments + 2) = local_14;
                         if (function_e6900(local_16, &local_18))
                             local_8 = true;
@@ -2813,7 +2853,7 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                 }
                 if (!local_8)
                 {
-                    long local_19 = *(short *)(local_15 + 0x28);
+                    short local_19 = *(short *)(local_15 + 0x28);
                     if (local_19 == NONE)
                         local_19 = *(short *)(local_5 + 0x34);
                     long local_20 = NONE;
@@ -2838,7 +2878,7 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                             if (local_20 != NONE)
                             {
                                 byte *local_25 = *(byte **)(g_4e0300->data + (local_20 & 0xffff) * 12 + 8);
-                                *(long *)(local_25 + 0x3a0) = *local_0;
+                                *(long *)(local_25 + 0x3a0) = ((word)arg_1);
                                 *(long *)(local_25 + 0x3a4) = local_7;
                                 *(long *)(local_25 + 0x3a8) = *(long *)local_15;
                                 local_7 = local_20;
@@ -2869,7 +2909,7 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                     }
                     if (local_22 != 6)
                     {
-                        long local_30 = function_203780(local_16, local_14, (short)*local_0, (bool)*local_3);
+                        long local_30 = function_203780(local_16, local_14, (short)((word)arg_1), (bool)arg_4);
                         if (local_30 != NONE)
                         {
                             ++*(short *)(local_6 + 0x24);
@@ -2890,7 +2930,7 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                                     *(short *)(local_33 + 0x138) = *(short *)(local_31 + 0x24);
                                 }
                             }
-                            function_201b70(*local_0, local_14, local_30);
+                            function_201b70(((word)arg_1), local_14, local_30);
                         }
                     }
                 }
@@ -2909,5 +2949,5 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
         if (local_8)
             return;
     }
-    function_2011f0(*local_0);
+    function_2011f0(((word)arg_1));
 }

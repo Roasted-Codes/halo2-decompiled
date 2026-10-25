@@ -210,6 +210,20 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // common sphere radius 227; bound center at use 203.
 // bound radius before node query 204; unsigned node cache 196.
 // radius plus geometry guard 227; list field initialization 194.
+// score 190 (was 190): entry/index spill and sphere/position homes still differ.
+// Aligned split center, both points or bound alone 199/199/199; aligned bound with
+// the original query 197; ordinary query with aligned center 199; complete native
+// query with aligned center, bound or both 205/205/205.
+// entry/index and sphere/position homes still differ.
+// Small geometry first 230; visible guard 190; absent-bound guard 190; both 190;
+// live bound count 190; read-only nodes 190; bound-index field 224; live visibility word 190.
+// Entry/index and sphere/position homes remain; node-count branch/entry homes
+// 190/190; both list entry lifetimes 191; bound reference 198; completed distance/radius/both
+// squares 190/190/190; count/cache boundary 190.
+// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and point homes remain.
+// Both buffer pointers first 194; second pointer first 194; capacities/counts before pointers 188
+// (two-point gain rejected); counts/pointers/capacities 192; large radius first 193; native query
+// alignment 190; direct object-index field 190; read-only bound source 190. Opening body restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

@@ -230,6 +230,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Native category on retained homes 910 (frame 0x2cb4); direct query
 // members 911; current priority long 894; relationship results long 893;
 // sphere flag byte 917 (frame 0x2cb4). Original body kept.
+// score 866 (was 866): frame 0x2cb8 versus 0x2cac and actor/unit homes remain. Plain direct sphere differences
+// 881; direct object differences 866; both 881; shared raised-point setter 866; ordered sphere-filter join
+// 866. Fast scores 927/916/927/916/916; full control 866.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -1013,6 +1016,10 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // frame pointer 458; shared side dot products 384.
 // Nested expansion zero 1163, one 342; global optimization off 2011; size policy 518;
 // ordinary signed-angle inline 342.
+// score 342 (was 342): Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
+// score 342 (was 342): frame 0x3c versus 0x34 and angular homes remain;
+// early endpoint wrap 365; target-angles first 387; endpoint direction reuse angular 374,
+// distance 360, both 376; angular reuse with direction or projection names each 374 (fast).
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1099,6 +1106,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // frame 0x104 versus 0x10c; radius and emitted-index homes differ.
 // Short outer index with original qualifiers 513; broader trace outputs 478; native copied-last 504;
 // native found-step 494; current-step fallback first 478.
+// Round 310: terminal fallback return 526; double rounded radius 489; long next 519;
+// unsigned edge 478; shared point setters 478. Double radius recovers 0x10c but worsens scalar homes.
+// score 478 (was 478): frame 0x104 versus 0x10c and radius/index homes differ; trace continues 478;
+// unsigned output word 478; byte attempt 495; distinct trace-origin name 478; outer world endpoints
+// 478.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

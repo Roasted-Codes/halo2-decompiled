@@ -522,6 +522,18 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // 167; horizontal copy observation 144; native input observations 154; existing length
 // inline 142; earlier turn length result 136; earlier turn product input order 136; earlier
 // turn shared result scale 136; earlier turn shared direct scale 160.
+// score 136 (was 136): Horizontal store/square, rotation and final publication schedules still differ.
+// Y/X horizontal initialization 161f; factor entry lifetime 136f; native output loop 137f; turn
+// input before normalization 171f; turn workspace at entry 136f; output after target update 136f;
+// normalization failure first 131p; Y/X input with output loop 157f.
+// Failure-first branch worsens aligned instruction order; original branch retained.
+// horizontal square/copy order, rotation schedule and output length remain.
+// Native horizontal on early turn copy 136; axis reference/snapshot 152/190;
+// native horizontal with either axis form 152/190; vertical input 171, with native horizontal 171, with axis snapshot 214.
+// score 136 (was 136): horizontal square/copy order, rotation and output scheduling remain;
+// direct planar commit 182; planar memcpy 152; original horizontal fallback 162; fallback plus
+// planar copy 157; native turn plus fallback 162; normalized point 237; both points 253;
+// normalized point plus direct commit 166.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {

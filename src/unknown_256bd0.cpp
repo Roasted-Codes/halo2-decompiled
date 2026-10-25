@@ -59,6 +59,11 @@ struct s_object_flags_256bd0
 // marker position workspace 235; placement position reads 253; in-place velocity 212;
 // marker/placement 225; marker/velocity 235; placement/velocity 253; all three 225;
 // angle field before sign adjustment 230.
+// Helper state pointer in two orders 211/211; state reference 211/211;
+// activity value 211/211; external activity reference 211/211. Cached byte/frame remain.
+// score 211 (was 211): frame 0x114 versus 0x110 and cached activity byte remain.
+// Actual datum cursor with separate index output: pointer in both orders, void result
+// in both orders, read-only result in both orders, reference output in both orders all 211.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

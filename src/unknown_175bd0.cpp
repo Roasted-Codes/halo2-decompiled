@@ -1919,6 +1919,13 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // score 160 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
+// score 171 (was 163): frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
+// Type query, color update, matrix query and spawn update noinline declarations 163 each;
+// existing tint/multiplication result byte carriers 146/159, both 142 kept;
+// placement result byte carrier 163. No new result copy or field read.
+// score 128 (was 171): frame 0x40 versus 0x44; color/cursor homes and zone-base carriers remain.
+// Round 173: tint bool 165; multiply bool 137; both bool 128 kept plain; direct multiply
+// with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2200,6 +2207,10 @@ event_done:
 // frame agrees; object-index caching and visibility block order differ.
 // Const tag/root 109/109; external datum reference 109; visibility result tests 189;
 // inline depth one/two 109/109; global optimization off 550; frame pointer 200.
+// Four-byte frame agrees; cached object index across validity query and visibility/destruction
+// joins differ. external tag record 109; external root record 109; wide visibility result 144;
+// byte visibility result 109; unsigned color handle 109; root velocity address 109; root location
+// address 109; origin output lifetime 247.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2381,6 +2392,11 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // score 83 (was 181): frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
 // Existing snapshot-normal helper 177; direction lifetime 181; point lifetime 181; returned-record for 346;
 // saved short marker 182; existing point plus snapshot-normal helpers 83 kept.
+// score 83 (was 83): normalization component retention and the final scale register still differ.
+// Common normalizer 33 and header normalizer 81 (changed grouping, exact-only);
+// early magnitude 259; scale before owner stores 83; both 259; force-inline normalization 83;
+// impulse name 83; point/axis homes 83; common normalizer with separate output 251,
+// with direct scale-result consumption 33. Original body retained.
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2510,6 +2526,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup still differ.
 // Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
 // sound aggregate 313; direct radius on the seed-pointer body 344 (frame 0x100).
+// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility differ. Shared direction output 313;
+// owner/location CRT copies 313; sound stores before compression 313; detached arms first 318; early damage
+// scale 313.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2641,6 +2660,11 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // score 166 (was 166): radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
+// Round 173: part-scope radius 166; radius product 166; product with lower bound 352;
+// full-width location index 352; positive mode scope 166. Scalar homes and flag/random lifetimes remain.
+// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
+// Two-use lower 163 (three-point gain dropped); span/lower plus span 167/349;
+// entry cursor/event record/read-only tag 166/166/166; cursor plus lower 163; event plus span 167.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2717,13 +2741,21 @@ void __stdcall function_17a380(s_effect_datum *effect)
 	}
 }
 
-// score 96 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// score 96 (was 96): the frame is eight bytes smaller and the two globals are loaded into the other registers
 // tried transform name 109; query results, particle cursor and colors at entry 109; read-only settings 109;
 // immutable mode once 96 (kept); size policy 146; inline depth zero 109.
 // the frame is eight bytes smaller and the two globals are loaded into the other registers
 // Deferred particle cursor 125; active-only effect cursor 125; particle-location
 // record 109; system/definition/type/effect records 109 each; exhausted-particle
 // continue 109. Frame remains eight bytes small; pool/register and cursor homes differ.
+// score 96 (was 96): frame 0x4c versus 0x54, pool/settings homes and color staging remain.
+// Type query, color update, matrix query and location update noinline declarations 96 each;
+// signed-byte flag 108; word flag 106; unsigned successor 96; read-only transform result 96.
+// score 96 (was 96): unsigned-byte location flag 108; frame and color staging still differ.
+// Frame remains eight bytes small; pool/system allocation, query/color carriers and cursor homes
+// differ. mode after color 112; late signed mode 112; late effect cursor home 112; late particle
+// cursor home 112; early mode traversal transform 96; early mode node observation 96; early mode
+// transform home 96; early mode query scope 96.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {
@@ -2769,6 +2801,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // score 176 (was 189): frame 0x50 agrees; early false-result and player-pool registers differ.
 // Persistent effect pool 194; persistent player pool 189; outer for 189;
 // squared distance compared first 176; player slot/unit names 189.
+// score 176 (was 176): frame 0x50 agrees; early BL result and player-pool/count registers differ. Unit-skip
+// guard 176; vector walk lifetime 176; retained radius 275; location for 390; shared point-transform call
+// 392.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
@@ -2849,6 +2884,9 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
+// score 112 (was 287): frame 0x94 agrees; event/flare registers and point/call setup differ. Vector walk
+// lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
+// initialization 112.
 // @retail 0x179880
 void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 {
@@ -2874,9 +2912,7 @@ void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 				vector3f forward = location->matrix.forward;
 				vector3f up = location->matrix.up;
 				color3f color = *(color3f *)&g_4686cc->red;
-				real scale = 1.0f;
-				if (part->a_scales & 0x20)
-					scale = effect->scale_a;
+				real scale = (part->a_scales & 0x20) ? effect->scale_a : 1.0f;
 				if (part->b_scales & 0x20)
 					scale *= effect->scale_b;
 				if (location->node_index != NONE)

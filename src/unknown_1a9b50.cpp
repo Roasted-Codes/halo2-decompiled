@@ -411,8 +411,18 @@ extern point2f *g_468778;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
+// score 379 (was 379): Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
+// 408; integer clock 413; conditional threshold 389; aggregate request 379; branch-derived
+// prediction weight 385 (fast).
 // Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
 // inner threshold 388; entry planar workspace 379. Actor/settings/prop carriers still differ.
+// Round 310: eligibility result 432; double clock 413; prop handle snapshot 379;
+// read-only prop payload 379; weight after magnitude 379. Early actor/settings/prop homes remain.
+// score 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
+// validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
+// Round 173: external actor / guarded slot / combined references 379/379/379;
+// external facing reference 379; prediction-path velocity reference 395. Frame 0x40 agrees;
+// early actor/settings/prop carriers remain. Original body retained.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -588,6 +598,9 @@ static __forceinline long real_to_long(real value);
 // 476; direction length by arm 482; facing position view 471; facing prediction seconds 472; facing planar
 // copy 466; facing direction length 473; planar speed homes 466; planar position view 464; planar position
 // speed homes 464; planar position late 466.
+// score 410 (was 466): Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// late object receiver 470; trajectory planar view 466; direct request view 466;
+// test-derived readiness 410; conditional approach factor 466 (fast).
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
@@ -696,12 +709,11 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 				}
 				else if (local_0->field_2e)
 				{
-					if (local_0->field_34 > local_17 || (0.0f > local_17 &&
-						(local_8->field_1c.k - local_13->velocity.k) * local_11.k + (local_8->field_1c.j - local_13->velocity.j) * local_11.j + (local_8->field_1c.i - local_13->velocity.i) * local_11.i > 0.7f))
-						local_10 = true;
+					local_10 = local_0->field_34 > local_17 || (0.0f > local_17 &&
+						(local_8->field_1c.k - local_13->velocity.k) * local_11.k + (local_8->field_1c.j - local_13->velocity.j) * local_11.j + (local_8->field_1c.i - local_13->velocity.i) * local_11.i > 0.7f);
 				}
-				else if (0.5f > local_17 - (local_13->velocity.k * local_11.k + local_13->velocity.j * local_11.j + local_11.i * local_13->velocity.i) * local_15 * g_510c54->rate)
-					local_10 = true;
+				else
+					local_10 = 0.5f > local_17 - (local_13->velocity.k * local_11.k + local_13->velocity.j * local_11.j + local_11.i * local_13->velocity.i) * local_15 * g_510c54->rate;
 			}
 		local_18:
 			if (local_0->field_18 || (local_10 && !local_0->field_2e))

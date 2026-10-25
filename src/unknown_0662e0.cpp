@@ -538,6 +538,13 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // frame pointer 487; global optimization off 1180; size preference 538.
 // Zero-prefix split 461; column traversal 446; triangular pairs 497;
 // default-first matrix score 646; redundant first-table clear removed 454.
+// score 363 (was 363): round 312: constant-five/induction/flag gaps remain; branch-local table publication 478; signed-byte flags 363; first-table short counter 445; single grid publication 639; short matrix score 457.
+// first-table induction and default/flag scheduling remain.
+// Unsigned table outputs 363; unsigned steps 363; byte outer ordinal 478;
+// shared five-derived observation 460; shared capacity observation 461 (fast).
+// score 363 (was 363): constant-five lifetime and first-table induction remain;
+// byte matrix row 475; byte column 464; both byte ordinals 498;
+// native-word flag array 432; native-long flag array 455 (fast).
 // @retail 0x66330
 void network_configuration_set_defaults()
 {

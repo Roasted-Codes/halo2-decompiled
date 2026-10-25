@@ -71,10 +71,25 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Shared byte/word feature results 216/210; independent bytes 193; Boolean bitwise AND 208;
 // shared bytes plus source cursor 215; ordinary source pointer 232 (caller differs);
 // bitwise predicates plus aggregate copy 210 (caller differs); unsigned handle 162.
-// score 162 (was 162): frame 0x214 agrees; early source ESI retention and count/cursor homes still differ.
+// score 162 (was 162): delayed ESI/source/count cursors and feature homes remain.
+// Fast: native feature bits 206; common bit gate 211; packed bits 162; packed and independent 206;
+// packed and common 211; byte bit results 216; bitwise bits 214; packed and bitwise 214.
+// frame 0x214 agrees; early source ESI retention and count/cursor homes still differ.
 // Source/index initialization swapped 162; ordinal initialized inside guard 163; offset
 // declarations reversed 162; filter input captured 162; override query result 162;
 // existing object getter 162; entry order plus getter/query result 162/162.
+// score 155 (was 162): Early source retention, count/cursor and feature-byte homes still differ.
+// selection-row cursor 162f; word-row cursor 155p; both input cursors 155f; outer feature
+// lifetimes 162f; outer decoded index 162f; outer encoded byte 162f; mask entry lifetime 162f;
+// shared argument lifetimes 162f; cursor values name 155f; outer ordinal name 155f; inner ordinal
+// name 155f; source pointer name 155f; cursor and ordinal role names 155f.
+// early source retention, count cursors and feature homes remain.
+// Actual source-array binding 191; repeated count-field binding 163; feature-word binding 162;
+// present-first selected result 162; conditional selected result 162; source/count bindings 200;
+// feature binding plus present-first result 162; actual selected-byte binding 162 (fast scores).
+// early source retention, count cursor and feature homes remain;
+// formal source/original record reference 191/191 (caller differs); selected copy source 210;
+// category/object-category values 162/162; chained sentinel/disabled fields 162/162; inherited mask value 197.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
@@ -115,6 +130,7 @@ void function_133f70(s_133f70 const *arg_1, bool arg_2)
 				dword local_7 = ((local_2->field_170 & 4) << 13) | ((local_2->field_170 & 0x40) << 7)
 					| (local_2->field_70[local_1] ? 0x800 : 0) | (local_2->field_16c ? 0x400 : 0)
 					| local_2->field_1ac | local_2->field_1b0;
+				word const *entry_cursor = (word const *)((byte const *)local_2 + 0xc6 + local_15);
 				for (long local_8 = 0; local_8 < *(long const *)((byte const *)local_2 + local_13); local_8++)
 				{
 					byte selected = *((byte const *)local_2 + 0x75 + local_14 + local_8);
@@ -131,7 +147,8 @@ void function_133f70(s_133f70 const *arg_1, bool arg_2)
 						NULL, local_2->field_1d0, local_2->field_1b4, local_2->field_1c0,
 						local_2->field_1c4, local_10, local_11, local_2->field_1d4,
 						local_2->field_1d8, local_2->field_1dc, local_2->field_1e0,
-						(byte)*(word const *)((byte const *)local_2 + 0xc6 + local_15 + local_8 * 2), &local_2->field_194, local_2->field_1a0);
+						(byte)*entry_cursor, &local_2->field_194, local_2->field_1a0);
+					++entry_cursor;
 				}
 
 			}

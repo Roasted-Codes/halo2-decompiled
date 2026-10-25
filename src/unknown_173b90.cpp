@@ -11,6 +11,7 @@
 #include "globals.h"
 #include "data_array.h"
 #include "effects.h"
+#include "normalize3d.h"
 #include <xtl.h>
 #include "unknown_246cd0.h"
 
@@ -477,6 +478,10 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // Captured position/late output 353; captured velocity/late output 357; both 437;
 // translation component loop 56; inner cache member 56; derived mask at use 198;
 // scale initialized at property selection 273; translation value 160.
+// score 56 (was 56): the definitions indexed (index++) put the offset's zero store after the
+// list test and fix the three reload pairs (with scale declared first, all but the rotation
+// blocks match), but turn the rotations' products around and add 10 bytes: indexed 119,
+// indexed with scale first 117; plus split += rows 116; plus a matrix pointer local 123.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {
@@ -741,16 +746,12 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 	spawn->location_index = particle_location->next_index;
 }
 
-// score 41 (was 29): each path now stores the colour itself, as retail does, which gives
-// retail's convention (tinted in AL, colours in ECX/EDI, the system in ESI, multiplied on
-// the stack; callers 0x178c80 164 -> 131, 0x174a30 329 -> 338). The score counts the shift
-// from one missing instruction: retail lays out the halving path first but ends it at the
-// real epilogue (the untinted exit jumps there short) and copies `mov ecx, eax / push ecx`
-// for pack's argument; ours keeps the real epilogue after the color_a store (near je) and
-// pushes EAX. Writing the multiplied paths first gives retail's halving block exactly but
-// lays them out first (45). Tried: one store after a shared `packed` local 29/63 (system on
-// the stack); halving through unpack's returned pointer 47; a scale helper 41; shared locals
-// 41; early or explicit returns in either branch 41/43; `multiplied == true` 47.
+// score 17 (was 29): the untinted half-path exit is a long jump to the last
+// epilogue where retail's short jump joins the half path's own; the half path
+// reads the unpacked color through the returned pointer where retail reads the
+// buffer and pushes the returned pointer. Store per path (retail's entry
+// registers) 41; returned pointer packed only 41; one shared buffer 17;
+// early untinted return 17; tinted tested first 37.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
@@ -759,12 +760,9 @@ void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_syste
 		if (tinted)
 		{
 			color3f color;
-			color3f *halved = unpack_color3f(color_b, &color);
 
-			color.red *= 0.5f;
-			color.green *= 0.5f;
-			color.blue *= 0.5f;
-			particle_system->color = pack_color3f(halved);
+			vector3f_scale((vector3f *)unpack_color3f(color_b, &color), 0.5f, (vector3f *)&color);
+			particle_system->color = pack_color3f(&color);
 		}
 	}
 	else if (tinted)

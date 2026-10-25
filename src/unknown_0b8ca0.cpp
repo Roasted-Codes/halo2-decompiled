@@ -635,6 +635,7 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // loop 235; marker-position loop 235; initial radius snapshot 235.
 // direct radius with double magnitude 231; real radius 239; both widths 231;
 // byte result with real radius 270; word result with double magnitude 237.
+// score 231 (was 231): Caller-dependent eight-byte alignment and angle homes remain. Direct marker position 262; displacement initializer 235; scaled range 235; successive square sum 235; unsigned model handle 235 (ordinary radius in all).
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1418,17 +1419,25 @@ done:
     return result;
 }
 
-// score 26 (was 26): the name index parameter is read as a dword (address taken by the volatile reload), retail reads it
+// score 17 (was 26): the name index parameter is read as a dword (address taken by the volatile reload), retail reads it
 // as a word both at entry and after function_bf090; the tail's registers differ (retail: type ecx, palette ebx, size eax
 // sign-extended at its load, datums esi then ebp). Tried: no volatile (name index stays in ebp, result spilled) 76;
 // function_bb760 call for the lookup, same 76; result declared after the force block 81; long/inline definition
 // fields with a block local 43, 34; long size only 38.
+// the placement tail: retail keeps the type in ecx and loads the
+// definition into eax, copying it to esi for the size and datums reads (palette offset first);
+// ours keeps the type in esi and reads the definition through eax/ecx.
+// Copy + volatile name reload 26; result declared before the lookup 83; no result variable 78;
+// result declared in the tail 85; long size 27; long offsets + palette at the call + datum local 27;
+// the 0xb7300 placement-block helpers (both orders, both product orders) 23; lookup via 0xbb760 17.
+// score 17 (was 17): entry agrees; tail type/base/palette/stride allocation differs.
+// Canonical descriptor fields through mutable/const pointers and references all 17;
+// the same four contracts with a promoted stride all 27 (236 bytes).
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {
-    short remaining_name_index = name_index;
-    long result = NONE;
     long existing = name_index >= 0 && name_index < 0x280 ? g_4de2d0[name_index] : NONE;
+    long result = NONE;
     if (force && existing != NONE)
     {
         s_object_header_view *header = OBJECT_HEADER_GET(existing);
@@ -1441,12 +1450,11 @@ long __stdcall function_bb670(short name_index, bool force)
         object[0xab] = 2;
         *(short *)(object + 0xa8) = NONE;
         *(long *)(object + 0xa4) = *(long *)((byte *)g_4de2f4 + 0x18);
-        remaining_name_index = *(short volatile const *)&name_index;
         object[0xb0] = 0;
     }
     else if (existing != NONE) return result;
     byte *scenario = (byte *)g_4e0350;
-    byte *name = *(byte **)(scenario + 0x4c) + remaining_name_index * 0x24;
+    byte *name = *(byte **)(scenario + 0x4c) + name_index * 0x24;
     short placement_index = *(short *)(name + 0x22);
     if (placement_index != NONE)
     {
@@ -1473,6 +1481,10 @@ long __stdcall function_bb670(short name_index, bool force)
 // Valid-path stride before/after scenario 106/106; offset references 31; offset references plus
 // valid stride 106; direct guards with valid stride 106; word valid stride 106; one-use creation index copy 27 (reverted in review);
 // creation index with valid stride 106.
+// score 31 (was 31): Metadata/sentinel saves and final input staging remain. metadata result arms
+// 108; placement result arms 94; palette result start 89; palette result arms 104; input index
+// entry binding 31; tag index field binding 31; stride field binding 93; native promoted metadata
+// 31; shared input index binding 31.
 // @retail 0xa73b0
 long __stdcall function_a73b0(s_entity_info *info)
 {
@@ -1605,6 +1617,10 @@ void function_bba20(long index);
 // inverse workspace scope 319; spatial workspace names 319.
 // byte permission 319; byte activity 319; both byte carriers 319;
 // vector transforms before point 385; byte permission with vectors first 385.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward 319; direct node array 323.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
+// scheduling remain. Unsigned header offset 319; short permission 320; native location fields 330;
+// pooled root reference 319; guarded native cluster 319.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

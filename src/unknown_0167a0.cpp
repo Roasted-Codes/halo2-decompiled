@@ -85,9 +85,15 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Logarithm width and reset/restore scheduling remain;
 // rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
 // record reload after render call 192; raw global-first unions 167.
-// score 167 (was 167): logarithm width and reset/restore scheduling remain;
+// score 167 (was 167): Frame and entry agree; logarithm operand width/reset and restore allocation
+// differ. Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
+// record 167; conditional reciprocal 167 (fast).
+// logarithm width and reset/restore scheduling remain;
 // early dirty mask, update byte or late counter pair each 296; first published range 167;
 // second published range 187.
+// score 162 (was 167): logarithm width/reset and restore allocation remain;
+// final consumers read the actual published record field. Entry-only read 169; pass-only read 167;
+// early saved-tag predicate 298; published-record field reference 162 (plain); equality arms 167.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -165,12 +171,12 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
     if (changed || different_tag || (*(dword *)(state + 0x58) & *(dword *)(state + 0x54)))
         function_17170(state, (word const *)(*(byte **)(state + 0x1c) + 2));
     function_174d0(state, first, second, third, fourth);
-    record = *(byte **)(state + 0x24);
-    function_18a90(state, (word const *)record);
-    function_19be0(state, (word const *)(record + 0x124));
-    function_19ca0(state, (word const *)(record + 0x122));
-    function_1a170(state, (s_packed_shader_range const *)(record + 0x11e));
-    function_1ab50(state, (s_packed_shader_range const *)(record + 0x120));
+    byte *const &shader_record = *(byte **)(state + 0x24);
+    function_18a90(state, (word const *)shader_record);
+    function_19be0(state, (word const *)(shader_record + 0x124));
+    function_19ca0(state, (word const *)(shader_record + 0x122));
+    function_1a170(state, (s_packed_shader_range const *)(shader_record + 0x11e));
+    function_1ab50(state, (s_packed_shader_range const *)(shader_record + 0x120));
     function_17420(state, first, second, third, fourth);
     function_18d70((s_18d70_state *)state);
     function_18e80((s_shader_constant_state *)state);
@@ -763,6 +769,11 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // frame 0xc versus 0x10; table/entry homes and selector rereads differ.
 // Ordinary writer inline 513; packed/index formal domains 189/181; shared complement 214;
 // global optimization off 621; frame pointer 207; branch table lifetimes 184; inline depth two 157.
+// score 157 (was 157): selector observation and table/entry frame homes still differ.
+// selector-storage writer 177f; writer offset input 188f.
+// selector-use output indices 230f; signed byte cursors 163f.
+// byte cursors 190f; byte mapping slot 189f.
+// word source-kind 157f; special-slot result 180f.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -1193,6 +1204,15 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native
 // ternary clamp loops 359.
+// score 246 (was 246): Frame 0x28 agrees; sampler convention and descriptor rereads differ.
+// Unsigned counters 325; rescale pointer traversal 354; remapping-source address 268; separate
+// clamp passes 358; shared native color workspace 246 (fast).
+// score 246 (was 246): sampler convention and dirty-store descriptor rereads remain.
+// Existing packed-range accessors 325; post-clamp mask capture 275; positive filter
+// with full-width descriptors 269; alpha-first color 250; alpha-first clamps 270 (fast).
+// score 246 (was 246): sampler convention and descriptor rereads remain;
+// sample-array name order 246; branch-local sample arrays 250; mapped-field reference 268;
+// shared sampler selector 246; descending component rescale 262 (fast).
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

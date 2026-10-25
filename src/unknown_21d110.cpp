@@ -317,6 +317,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // record getter at each store 208 plain kept; kind/sound publication orders and class predicate 220.
 // score 208 (was 220): frame/start/delete expansion remains; allocator reuse/const class/request reference/tested result/combined 220/220/220/236/220f;
 // global/size/depth-two policies 246/359/220f.
+// score 208 (was 208): frame and opposite start/delete expansion remain.
+// External published record 220; native effect handle 215; immutable playback/result 208;
+// query/attach/both call boundaries 208/208/208; record plus native handle 221; native boundaries 215.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
@@ -655,6 +658,12 @@ PRIVATE long const g_44a20c[] = { 0, 1, 2, 2 };
 // @retail 0x21d630
 // score 60 (was 60): the local variables sit in stack slots that are four bytes apart from retail's,
 // so every load and store of a local uses a different offset.
+// Round 43: the lone bool loop_alternate always takes a byte slot below the dwords; retail gives it
+// a dword slot just above repeat_state. Holding the two in one 8-byte record gives retail's frame
+// exactly (32 at 823 bytes; not kept: a record that only groups locals). The 'lsnd' case still
+// holds the entry flags in eax and the tag base in ecx (retail the reverse). Tried: the tag lookup
+// before the entry flags 78 (fast; baseline fast 67); alternate as an if/else-if chain 133; state
+// before alternate in the looping arm 67; the group switch as if/else-if 114.
 void __stdcall function_21d630(long effect_index, long mode)
 {
 	s_sound_effect *effect = sound_effect_get(effect_index);

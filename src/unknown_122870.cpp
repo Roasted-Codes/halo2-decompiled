@@ -396,7 +396,7 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 	}
 }
 
-// score 74 (was 75): frame 0x24 versus 0x18; independent query homes still differ.
+// score 68 (was 74): frame 0x24 versus 0x18; independent query homes still differ.
 // Output-first helper 80; ordinary inline 80; depth one 80; not-loaded arm first 128;
 // guarded stages 126; nested name guard 76 fast, 74 plain.
 // Later-three scratch 194; menu/shared scratch 180; final-pair scratch 109;
@@ -408,6 +408,14 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // Current independent-output trials: loaded/readback names 76/76; delayed accumulation 256;
 // delayed map weight 224; delayed accumulation plus names 256; completion selections 76;
 // final result selection 76; query declarations together 76.
+// Return-by-value helper 211; one shared scratch local 194; scoped same-name scratch 194;
+// scoped distinct scratch 208 (a shared temp lets the compiler store 1.0f/0.0f straight to
+// the homes and skip the scratch reload on the non-call paths, breaking the per-query block
+// order retail shows with its reused incoming-slot scratch); param address reads removed 76;
+// mode==0 divide arm first 67 KEPT; case-2 break 69; accumulate form 69.
+// score 68 (was 68): frame/output-home reuse remains; existing helper output plus
+// scalar return for menu/shared/campaign 68/68/68, each pair 68/68/68,
+// all later or all four return consumers 68/68. Original helper and readbacks retained.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {
@@ -462,15 +470,15 @@ real __stdcall function_122dd0(byte *map_name, long mode, long type)
 			goto done;
 		}
 	}
-	if (mode != 0)
-	{
-		progress = weight - progress;
-	}
-	else
+	if (mode == 0)
 	{
 		progress /= weight;
 		if (progress < 0.0f) progress = 0.0f;
 		else if (progress > 1.0f) progress = 1.0f;
+	}
+	else
+	{
+		progress = weight - progress;
 	}
 done:
 	if (location == 4) progress = 0.0f;

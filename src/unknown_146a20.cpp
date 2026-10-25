@@ -276,6 +276,23 @@ void function_146de0(void)
 // j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
 // byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
 // guard 143; post retry capacity 143.
+// score 129 (was 139): capacity/timestamp homes and update expansion remain.
+// Constructor mask 139; repaired native construction result with/without mask 164/164;
+// entry capacity plus mask 141; native buffer/address/padding-scope plus mask 139/139/139;
+// actual masked-capacity local 138 (one-point gain dropped).
+// capacity/timestamp homes and selective update expansion remain.
+// Final rounded/low-bit/conditional/word padding 149/152/143/145; signed-word
+// per-attempt padding 129 plain kept; capacity/allocation/joint home names 139/139/139.
+// score 129 (was 129): capacity/timestamp homes and selective update expansion remain.
+// Signed-short delta 139; attempt/final short scope 129/129; short remainder consumption 136;
+// entry capacity 131; unsigned capacity/native handle/separate usable with short padding 129/129/129.
+// Capacity/timestamp homes and update expansion remain; wrapped/full boundary
+// distances 164/149; direct consumption 164; counted distance 153; remainder update 140; byte padding
+// 144; unsigned capacity/native allocation 139/139.
+// score 129 (was 129): frame 0x14 agrees; update expansion and capacity/timestamp homes remain.
+// Short-padding failure/body, counted and capacity loops 129/131/129; zero-default/select padding
+// 134/129; allocator result 129; full short distance 135; success-only padding consumption
+// 120 (held: the guard repeats the loop's own test).
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
@@ -283,7 +300,7 @@ c_havok_abstract_allocator *function_146e30(void)
 	{
 		long size = 0x800000;
 		byte *block;
-		long adjustment;
+		short adjustment;
 
 		do
 		{

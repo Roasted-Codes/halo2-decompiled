@@ -518,8 +518,19 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // score 151 (was 151): frame 0x58 versus 0x54; first-length/radius homes remain.
 // Early-declared exhaustive interval 205; entry first length 151; trace/location names 151;
 // pre-normalization interval 149; byte side 220. Original body retained.
+// score 143 (was 151): frame 0x58/0x54 and first-length/radius homes remain.
+// Actor/target/both references 151/151/151; unit handle/radius values 245/232;
+// actor/target point values 240/249; heading-length result/reduced guard 143/143, latter retained.
 // Interval role name 151; entry interval lifetime 168; reversed aggregate 151;
 // first/second planar memcpy 151/151.
+// score 143 (was 143): Frame and scalar homes remain; normalized direction/heading/both
+// 243/243/269; immutable first length 143; total reach 145; combined range guard 143; separate
+// original/adjusted projection 151; with normalized direction 245.
+// score 143 (was 143): frame and scalar homes remain; interval shares first timing output
+// early-initialized/declared/conditional/late 142/205/142/205; second output 205/205/205/205.
+// score 143 (was 143): frame 0x58/0x54 and first-length/radius homes remain;
+// direction/heading/side/reverse vector names 143 each; location/request names 143/143;
+// combined vector/all workspace names 143/143.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {
@@ -534,7 +545,10 @@ short __stdcall function_255740(long arg_0, s_slot *arg_1)
 		vector3f local_4 = local_0->unknown290;
 		local_4.k = 0.f;
 		real local_5 = function_30bf0(&local_3);
-		if (local_5 > 0.f && function_30bf0(&local_4) > 0.f)
+		real heading_length = 0.f;
+		if (local_5 > 0.f)
+			heading_length = function_30bf0(&local_4);
+		if (heading_length > 0.f)
 		{
 			real local_23 = 0.4f;
 			real local_6 = *(real *)((byte *)function_1e4a50(local_0->unknown054) + 4);
