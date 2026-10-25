@@ -2132,6 +2132,9 @@ long function_baf40(long object_index);
 // score 177 (was 177): Frame 0xb4 versus 0xb8; output record and relative-scalar homes differ.
 // Trials: selector interval 181; chained sentinels 177; chained score zero 177; component order
 // 177; native score clear 201.
+// score 177 (was 177): Frame 0xb4 versus 0xb8 and the output-record convention remain. Output
+// record reference 177; selected-object snapshot 177; native offset copy 242; guarded relative
+// components 211; empty planar path first 194. Contributor callees unchanged.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {

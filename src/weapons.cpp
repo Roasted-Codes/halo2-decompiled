@@ -2995,6 +2995,9 @@ struct s_ammo_conversion_entry
 // score 203 (was 203): frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
 // direct retention predicate 213; loaded value clamp 203. Original body restored.
+// score 203 (was 203): Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
+// Conversion ordinal 203; same-definition carrier 224; destination object reference 203; magazine
+// reference 203; source sum order 203; native conversion fields 203.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3115,6 +3118,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel roles, scalar homes and effect
 // copy differ. Trials: word fired 627; word failure 648; native original index 641; native interval
 // bounds 623; word selected marker 565; later fired lifetime 573.
+// score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain. Native
+// effect entry 565; byte fired 565; byte failure 565; unsigned selected marker 565; barrel element
+// reference 565. Existing call inputs and random sequence retained.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3361,6 +3367,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // packed bits/tag arms 1438; packed bool result 1477; packed word result 1436.
 // score 1436 (was 1475): barrel/input setup still differs. Coefficient lifetime trials: before
 // magazines 1446; before barrels 1447; per barrel 1447; before blend 1447.
+// score 1436 (was 1436): Frame 0x3c versus 0x38 and pool/offset roles remain. Native trigger input
+// 1447; native barrel selectors 1630; word input tables 1439; call-free blend tick sample 1440;
+// weapon object reference 1436.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
