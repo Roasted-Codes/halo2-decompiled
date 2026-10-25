@@ -51,6 +51,9 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 	return result;
 }
 
+// score 20 (was 20): actor-base folding and merged sentinel exits remain; result after
+// actor 24; unit-seeded result 28; caller noinline/inline 20/20; word/short query slot 21/21;
+// unsigned query datum 20; ordinary query contract 20.
 // @retail 0x1e1fd0
 long function_1e1fd0(long actor_index)
 {

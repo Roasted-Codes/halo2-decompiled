@@ -170,6 +170,8 @@ void c_widget::v16()
 // native object type and direct method boundaries do not recover the delayed save; native
 // traversal 20; native entry scan 42; native repeat scan 20; native next cursors 20; native
 // candidate 20; direct existing methods 20; native selected lifetime 26; native success tail 47.
+// Eligibility used for admission and focus: bool/byte/short/long at iteration 20/20/42/40;
+// the same carriers at entry 20/20/42/40. Delayed ESI save still differs.
 // @retail 0x22ec1b
 void c_widget::v17()
 {
