@@ -165,6 +165,8 @@ bool function_01dd60(long index, long *width, long *height)
 // score 21 (was 21): width stack/height ESI differ from ESI/EDI inputs; packed gate differs.
 // width/height/both unit subtraction before shifts 25/28/30; native packed words 30;
 // row-byte part 30; selected/masked new packed word 27/28; early dimensions 30.
+// width/height input registers and byte-gate normalization differ.
+// Byte storage 33; direct byte input 25; byte mask 35/27; byte selection 25/23; gated packing 30/24.
 // width remains stacked and height/register saves differ; retail masks the packed fields.
 // Direct width 24; byte pitch expression 24; field store schedule 22; zero flag branch 25; Boolean mask 25; flag result selection 25; complete height field 28; packed role names 24; direct input and mask 22.
 // Width remains on the stack and height in saved ESI instead of retail ESI/EDI

@@ -738,7 +738,9 @@ short ai_player_index_get(long player_index);
 void function_10e9f0(long object_index, short channel, real value, real time);
 bool function_1a8220(long index, short a, short b, long unknown, short c, short d, short e);
 
-// score 32 (was 32): actor base construction at +0x1bc and child traversal registers remain;
+// score 32 (was 32): actor-base LEA and child scratch allocation differ; amount admission 239;
+// independent refresh 32; combined admission 239; child receiver 32/32; timestamp result 234; first-definition capture 32; refresh/timestamp 234.
+// actor base construction at +0x1bc and child traversal registers remain;
 // typed actor 32; earlier actor workspace 32; both 32; native tick interval 36;
 // shared rounding helper 215; typed child cursor 32; attachment scalar homes 66;
 // complete optional view selection 186.

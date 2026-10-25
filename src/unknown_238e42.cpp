@@ -353,7 +353,10 @@ extern long g_51ec0c;
 
 /* joins the friend's game (mode 1 to 4: how a squad already formed comes
    along) */
-// score 80 (was 80): matching 0x14 frame; cold state/mode block placement still differs,
+// score 80 (was 80): Cold state/mode blocks precede the main join block; body remains twelve bytes short.
+// state ranges 125; cold range first 99; availability gate 126; common switch exits 80;
+// later join-type lifetime 155; timestamp workspace 80; gate/common exits 126; ranges/lifetime 137.
+// matching 0x14 frame; cold state/mode block placement still differs,
 // with twelve missing bytes. Earlier join-mode widths and session-record forms excluded;
 // tried cold cases first 80; state nine first 80; entry join result 96; shared player gate 104;
 // leave from join result 123; positive title gate 101; zero-time initializer 80;

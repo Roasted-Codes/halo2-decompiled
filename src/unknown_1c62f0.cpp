@@ -78,6 +78,9 @@ void c_animation_channel::clear()
 
 // score 36 (was 41): Early frame-position store keeps 36 at retail length; input save and later store order still differ.
 // sentinel chain 41; word clear chain 41; byte clear chain 43; two-byte memset 43; stored flags 41; early frame 36 plain; stored-ID result 76; renamed late graph 42; dword flags plus early frame 36; long flags plus early frame 37.
+// score 36 (was 36): Incoming graph save and later store schedule still differ.
+// paired defaults 42; identifier memcpy 36; metadata before resets 42; trailing defaults 41;
+// redundant byte clear removed 36; early derived state 38; explicit state bit 35; defaults plus memcpy 42.
 // graph ECX needs an ESI save and a late store;
 // validity-result 43; animation guard first 44; inline/noinline declarations 41;
 // existing reset 43; state memset 51; high-bit predicate 41; ID word copies 50.

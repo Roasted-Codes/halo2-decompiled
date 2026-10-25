@@ -1426,6 +1426,9 @@ void looping_sound_controller_release(long index);
 
 /* deletes a playing sound, letting go of its looping sound's controller */
 #pragma inline_depth(0)
+// score 5 (was 5): playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
+// Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
+// scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
 // @retail 0x127390
 void sound_playback_delete(long sound_index)
 {
@@ -2788,6 +2791,10 @@ void function_129380(vector3f const *const *voice_values, vector3f const *const 
 	}
 }
 
+// score 3 (was 3): frame 0xc and length agree; fade-call EDI/EAX/EBX setup order differs.
+// Clear helper/listener declaration/query test 3 each; accepted listener first 34;
+// shared playback flags/direct location flags 3 each; fading field 8; fading helper 3;
+// shared next-index helper 3; shared slot index 176.
 // @retail 0x128020
 void function_128020(void)
 {
