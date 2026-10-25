@@ -2392,6 +2392,9 @@ bool function_106280(long object_index, long *out_index, byte *out_entry);
 
 // score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
 // tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
+// score 130 (was 130): frame 0x88/current-object spill remains. Settings-record reference, query-result
+// and elapsed-fraction locals 130; native output initialization 218; promoted target state 128 (rejected);
+// true-default active result alone/with settings reference 194; settings reference plus final receiver 130.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {

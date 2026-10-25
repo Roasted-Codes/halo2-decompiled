@@ -24,6 +24,9 @@
 // XZ product chain 59 plain kept; second cubic root chain, coefficient 8/12/9/5/6 chains
 // and root/edge combination 113; repaired XZ plus early coefficient 15 147/148,
 // cubic X chain 139, first cubic root chain 59.
+// score 59 (was 59): first +0x50 x87/SSE schedule and retained sqrt(2) still differ.
+// Isotropic result lifetime, band-two normalization, Z-square and cubic-axis/polynomial accumulators 59;
+// repaired-XZ plus cubic-Y chain 137; external direction reference and both double root chains 59.
 // @retail 0x143360
 void spherical_harmonics_evaluate_direction(vector3f const *direction, dword order, real *result)
 {
