@@ -49,6 +49,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // null-result timing and actor-successor residency remain. Inactive early exit
 // 164; native flag mask 164; successful inner-update continue 164; pointer-result
 // for loop 275; early-exit/mask/continue combination 164.
+// Initialized iterator 164; direct iterator index 164; unsigned squad index
+// 164; wider inner actor-pointer scope 164; timestamp before active clear 165.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

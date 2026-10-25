@@ -80,6 +80,9 @@ long g_4ba134;
 // Direct radius 193; paired horizontal viewport observations 195; interleaved
 // first viewport observation 203; guarded second coordinates 193; invalid-depth
 // arms first 182. These forms retain the delayed second tangent calculations.
+// Direct-radius failed-discriminant arms first 185; behind-plane arm first
+// 213; named tangent quotients 193; ratio before root 193; earlier radius
+// square 193; shared root products 212.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
@@ -229,6 +232,10 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // remain. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
+// Later second inverse 259; later first inverse 271; later second output
+// declaration 195; native displaced-point copy 315; direct predicate 195.
+// Direction-first x/z and origin-first y sums together, x/z alone, y alone
+// 195 each; inverse-depth names 195; native displaced-point aggregate 195.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

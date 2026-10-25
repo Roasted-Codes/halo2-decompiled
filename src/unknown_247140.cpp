@@ -252,6 +252,10 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
+// score 194 (was 194): frame 0x1c versus 0x20, input registers and final
+// selector expansion differ. Per-iteration definition 196; conditional
+// accumulation 194; flag-first cleanup 196; lower-first bounds 202;
+// upper range first 194.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

@@ -1157,6 +1157,10 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
+// score 172 (was 172): frame 0x1144 agrees; file-displacement register,
+// task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
+// completion scope 172; output scopes 172; slot equality 393;
+// equal-size arm first 209.
 // @retail 0x213970
 void function_213970(void)
 {
