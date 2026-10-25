@@ -2195,8 +2195,9 @@ void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_ind
     real speed_sum = 0.0f;
     for (long i = 0; i < material_count; ++i)
     {
-        vector3f local_c7c2ff = *g_4687a4;
-        function_181db0(materials[i], &local_c7c2ff);
+        vector3f local_c7c2ff;
+        if (!function_181db0(materials[i], &local_c7c2ff))
+            local_c7c2ff = *g_4687a4;
         velocity.i = local_c7c2ff.i + velocity.i;
         velocity.j = local_c7c2ff.j + velocity.j;
         velocity.k = local_c7c2ff.k + velocity.k;
