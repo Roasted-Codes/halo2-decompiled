@@ -1968,6 +1968,11 @@ struct s_player_creation_record
 // Caller depth 1/2 33/33; size preference 335; common reset 55;
 // auto-inline off 33; global optimization off 395; depth 0 305;
 // common reset with size preference 343.
+// Retail looks like function_14f270(index, record->value04) inlined one level
+// (its NONE arm inline, its recursive NONE call kept), as 0x152f80 also
+// shows; our build does not inline that call (267, also with
+// inline_recursion(on) around this function). Written in function_14f270's
+// arm order, the NONE call in the other arm inlines instead (49).
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {
