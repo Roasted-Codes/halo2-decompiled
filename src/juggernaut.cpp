@@ -197,7 +197,9 @@ void juggernaut_set(long player_index, bool juggernaut)
 // registers than retail (count in ebp, the pointer in ebx); the instruction order is the same.
 // Tried: count declared first (20), the store and increment as two statements (21), count != 0
 // (21), the waiting test inside the if (20), a local copy of g_510c9c in the loop (20), a for loop
-// (20), the bit index cast to word (74), the mask tested by shifting (60).
+// (20), the bit index cast to word (74), the mask tested by shifting (60), count as dword (19,
+// but wrong: the modulo becomes an unsigned div and the count test jbe where retail has
+// cdq/idiv and jle).
 // @retail 0x192a30
 void function_192a30(long excluded_player_index)
 {

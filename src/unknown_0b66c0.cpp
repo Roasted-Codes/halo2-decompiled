@@ -363,9 +363,9 @@ void transport_register_transition_functions(transport_transition_function start
 
 /* constructs a connection and registers its close (function_b6180) as a transport shutdown
    function; retail expands transport_register_transition_functions (src/transport.cpp) here */
-// score 28 (was 20): the body matches when its caller is built with LTCG. Retail's only caller is
-// the dynamic initializer 0x376bf0 (it constructs the connection at 0x546a8c and passes it in edi),
-// which the inventory lists as library code, so the build takes this function's address and it
+// score 28 (was 20): the body matches when its caller is built with LTCG. Retail's only caller,
+// 0x376bf0, constructs the connection at 0x546a8c (passing it in edi) and clears 0x54760c-0x547624;
+// the inventory lists it as library code, so the build takes this function's address and it
 // keeps the standard convention: the connection arrives in ecx and is saved in edi, and the count
 // increment is scheduled differently. With 0x376bf0's owner set to game locally this is a MATCH.
 // Tried: the endpoint cleared with two dword stores (21), the shutdown table written out by hand (20).
