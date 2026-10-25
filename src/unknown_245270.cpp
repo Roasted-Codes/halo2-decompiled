@@ -289,6 +289,9 @@ void function_245400(s_source_245400 const *source, long index,
 // score 204 (was 204): frame, source register and separate side-byte homes still differ.
 // Live first material/matrix/plane table/material table/index 204/204/204/204/204;
 // material plus matrix records 208; both table fields 204; records with table fields 204.
+// score 204 (was 204): frame 0x24/0x2c, source receiver and side-byte homes remain.
+// First/second/both live vertex records 204/204/204; native signed/unsigned low-word code 204/204;
+// current matrix scale 207; native code plus scale 207; vertex records plus scale 207.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

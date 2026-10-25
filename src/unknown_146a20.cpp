@@ -279,6 +279,9 @@ void function_146de0(void)
 // score 129 (was 139): capacity/timestamp homes and selective update expansion remain.
 // Final rounded/low-bit/conditional/word padding 149/152/143/145; signed-word
 // per-attempt padding 129 plain kept; capacity/allocation/joint home names 139/139/139.
+// score 129 (was 129): capacity/timestamp homes and selective update expansion remain.
+// Signed-short delta 139; attempt/final short scope 129/129; short remainder consumption 136;
+// entry capacity 131; unsigned capacity/native handle/separate usable with short padding 129/129/129.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {

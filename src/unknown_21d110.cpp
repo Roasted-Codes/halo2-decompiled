@@ -317,6 +317,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // record getter at each store 208 plain kept; kind/sound publication orders and class predicate 220.
 // score 208 (was 220): frame/start/delete expansion remains; allocator reuse/const class/request reference/tested result/combined 220/220/220/236/220f;
 // global/size/depth-two policies 246/359/220f.
+// score 208 (was 208): frame and opposite start/delete expansion remain.
+// External published record 220; native effect handle 215; immutable playback/result 208;
+// query/attach/both call boundaries 208/208/208; record plus native handle 221; native boundaries 215.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

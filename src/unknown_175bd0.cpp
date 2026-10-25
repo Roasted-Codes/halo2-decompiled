@@ -2641,6 +2641,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // score 166 (was 166): radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
+// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
+// Two-use lower 163 (three-point gain dropped); span/lower plus span 167/349;
+// entry cursor/event record/read-only tag 166/166/166; cursor plus lower 163; event plus span 167.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
