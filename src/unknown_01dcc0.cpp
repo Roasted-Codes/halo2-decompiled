@@ -162,6 +162,8 @@ bool function_01dd60(long index, long *width, long *height)
 	return result;
 }
 
+// score 21 (was 21): width remains stacked and height/register saves differ; retail masks the packed fields.
+// Direct width 24; byte pitch expression 24; field store schedule 22; zero flag branch 25; Boolean mask 25; flag result selection 25; complete height field 28; packed role names 24; direct input and mask 22.
 // @retail 0x1ddd0
 void function_01ddd0(long index, dword width, dword height)
 {

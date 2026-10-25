@@ -1646,6 +1646,8 @@ struct s_candidate_unit_definition
 // Frame and length agree; geometry argument register and clamp/failure tails
 // remain. Trials: byte result 101; lower test operands 36; separate lower angle 92; native facing
 // copy 36; geometry success guard 218; first clearing cases 42.
+// score 11 (was 18): geometry-call convention remains; type rejection to the shared exit 11 kept.
+// Query result exit 219; type result 253; branch result lifetime 220; output initialization schedule 22; zero order 20; common success 199; object role name 18; flat type rejection 11; query false return 216.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1659,24 +1661,23 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 	candidate->flags = 0;
 	if (marker_index == NONE)
 	{
-		if ((1 << object->type) & 1)
-		{
-			if (!function_1a62e0(object_index, origin, direction, &candidate->point))
-				goto done;
-			s_candidate_unit_definition *definition = (s_candidate_unit_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
-			if (definition->flags & 1)
-				candidate->flags |= 1;
-			else
-				candidate->flags &= ~1;
-			if (!(definition->flags & 6))
-				candidate->flags &= ~2;
-			else
-				candidate->flags |= 2;
-			candidate->maximum_distance = definition->maximum_distance;
-			candidate->radius = object->radius;
-			candidate->maximum_facing_angle = 0.0f;
-			result = true;
-		}
+		if (!((1 << object->type) & 1))
+			goto done;
+		if (!function_1a62e0(object_index, origin, direction, &candidate->point))
+			goto done;
+		s_candidate_unit_definition *definition = (s_candidate_unit_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
+		if (definition->flags & 1)
+			candidate->flags |= 1;
+		else
+			candidate->flags &= ~1;
+		if (!(definition->flags & 6))
+			candidate->flags &= ~2;
+		else
+			candidate->flags |= 2;
+		candidate->maximum_distance = definition->maximum_distance;
+		candidate->radius = object->radius;
+		candidate->maximum_facing_angle = 0.0f;
+		result = true;
 	}
 	else
 	{
