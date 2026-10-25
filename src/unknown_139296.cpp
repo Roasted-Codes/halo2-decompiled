@@ -337,6 +337,8 @@ bool function_22acb4(long player_index);
 // score 232 (was 232): extra second-mask slot and retained constant registers differ;
 // third/second/fourth phases 265; fourth/second/third 261; third/fourth/second 246;
 // shared item guard 241; descending selection cases 232. Original body retained.
+// score 232 (was 232): extra second-mask slot/constant registers remain;
+// set-only all masks 529; first 381; second 293; third 262; fourth 294.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
