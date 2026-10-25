@@ -110,9 +110,9 @@ bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 }
 
 #pragma inline_depth(0)
-/* the slot's status: g_46fbe8 while the delay runs, or once it is over while
-   the prop's point is within the character's distance of the prop's object;
-   g_46fbe4 otherwise. Retail calls function_25d740 out of line here, so
+/* the slot's status: continue (g_46fbe8) while the delay runs, or once it is
+   over while the prop's point is within the character's distance of the
+   prop's object; finished (g_46fbe4) otherwise. Retail calls function_25d740 out of line here, so
    inlining is off for this function and the actor and prop node lookups are
    written out; the result is one local, as retail reloads g_46fbe8 for it
    after the calls. */
