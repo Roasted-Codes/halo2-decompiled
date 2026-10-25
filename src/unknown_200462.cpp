@@ -88,7 +88,13 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // score 29 (was 29): table/pulse setup, rectangle source and occupied/height registers remain;
 // rectangle memcpy 29; native zero rectangle 132; both 132; occupied result 70; copy/result 70;
 // zero/result 156; all boundaries and native quad 156/156.
-// score 29 (was 29): Frame and query schedule agree; pulse/table acquisition, draw-copy ADD versus
+// score 14 (was 29): the prologue now matches (per-player record base with the
+// pulses at +0x2c); the draw pass's bounds source (ADD/LEA) and the advance/half-height
+// XMM3/XMM4 roles remain. Bounds record pointer local 12 (once-used, not kept);
+// query-first advance 12; half-height first 24; named advance 53; advance as
+// product + x 12; quad declared first 12; dimension names 12; half-height declared
+// first 12; halving as division 12; a 600 s permuter run, none below 12.
+// Frame and query schedule agree; pulse/table acquisition, draw-copy ADD versus
 // LEA and occupied-width/height SSE roles remain different; native draw bounds 29; native width
 // bounds 29; native bounds records 29; complete native quad 29; quad and draw bounds 29; quad and
 // width bounds 29; complete native boundaries 29; vertical corner order 32.
@@ -98,13 +104,13 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // @retail 0x200462
 void function_200462(long arg_0)
 {
-    s_interface_pulse *local_0 = (s_interface_pulse *)((byte *)g_510c4c + arg_0 * 0x6c + 0x2c);
+    byte *local_0 = (byte *)g_510c4c + arg_0 * 0x6c;
     real local_2 = 0.0f;
     dword local_3 = 0;
     long entry_index;
     for (entry_index = 0; entry_index < 9; entry_index++)
     {
-        s_interface_pulse *local_6 = &local_0[entry_index];
+        s_interface_pulse *local_6 = (s_interface_pulse *)(local_0 + 0x2c) + entry_index;
         byte *local_5 = *(byte **)((byte *)g_510c94 + 0x404) + entry_index * 0x1c;
         if (*(long *)(local_5 + 4) == NONE || *(long *)(local_5 + 0xc) == NONE ||
             (!local_6->delay && !local_6->ticks))
@@ -157,7 +163,7 @@ void function_200462(long arg_0)
         if (bitmap_index == NONE)
             continue;
         byte *local_21 = *(byte **)(local_17 + 0x48) + bitmap_index * 0x74;
-        s_interface_pulse *local_22 = &local_0[entry_index];
+        s_interface_pulse *local_22 = (s_interface_pulse *)(local_0 + 0x2c) + entry_index;
         real local_23 = function_2008fc(local_22, true);
         real local_24 = (local_19.x1 - local_19.x0) * (real)*(short *)(local_21 + 4) * 0.5f;
         real local_25 = (local_19.y1 - local_19.y0) * (real)*(short *)(local_21 + 6) * 0.5f;

@@ -970,7 +970,10 @@ struct s_item_flags_view_10b850
 // Normal value copy 882 (frame 0x15c); point value copy 852; marker
 // matrix memcpy 819; settled result long 844; position decision long 887.
 // Original body and helper operands kept.
-// score 858 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
+// score 821 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
+// Direct byte saturation 878; fixed before vector copies 858; matrix assignment 858;
+// flow-side assignment 858; support test before slow 821; reversed rotation input copies 858;
+// ordinary cross inline 970; float absolute alone 873; support test plus float absolute 837.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1019,7 +1022,7 @@ void __stdcall function_10b850(long object_index)
                 surface = ((1 << header->type) & 0x3c0) != 0;
                 if (!surface) surface = (g_4e3b44[header->item->definition_index & 0xffff].bytes[2] & 0x40) != 0;
             }
-            if (slow && ((surface && floor) || item->value_13a >= 4) && !(collision.value_58 & 0x20))
+            if (((surface && floor) || item->value_13a >= 4) && slow && !(collision.value_58 & 0x20))
             {
                 position = point;
                 item->value_13a = 0;
@@ -1219,7 +1222,10 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Scalar/component factor orders, eight forms 154; direct output 207; native
 // point value 176; owner/origin/position/pair/all library copies 154; direct
 // output with library copies 207. Retained origin reuse and initializer unchanged.
-// score 154 (was 154): release-byte RMW/tail and event/location homes remain;
+// score 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
+// Surface and parent queries inline/noinline 154 each; contact noinline 154;
+// event initializer inline/noinline 154 each; final update noinline 154.
+// release-byte RMW/tail and event/location homes remain;
 // signed/word update results 155/188; release-byte reference/pointer 200/200;
 // native category 154, with byte reference/signed result 200/155; unsigned attachment 154.
 // @retail 0x10b4d0

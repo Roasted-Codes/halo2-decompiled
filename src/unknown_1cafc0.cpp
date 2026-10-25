@@ -1474,8 +1474,8 @@ c_type_709360 s_animation_state::overlay_kind_get(long kind)
 }
 
 // @retail 0x1cb520
-bool s_animation_state::overlay_play(c_animation_channel *channel, dword channel_flags, long set, long weapon_class,
-	long weapon_type)
+bool s_animation_state::overlay_play_for_class(c_animation_channel *channel, dword channel_flags, long weapon_class,
+	long weapon_type, long set)
 {
 	bool result = false;
 
@@ -1580,7 +1580,7 @@ c_type_709360 s_animation_state::overlay_find_for_class(long weapon_class, long 
 	{
 		c_animation_channel channel;
 
-		if (overlay_play(&channel, 0, set, weapon_class, weapon_type))
+		if (overlay_play_for_class(&channel, 0, weapon_class, weapon_type, set))
 		{
 			none = channel.animation_id;
 		}

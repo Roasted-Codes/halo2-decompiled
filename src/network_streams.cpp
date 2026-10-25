@@ -636,6 +636,9 @@ void c_network_reliable_stream::mark_received(long sequence)
 // score 81 (was 81): bit-index setup and current/message/type registers remain.
 // Native message-bit predicate/publication/both 117/113/80; native repeated-bit type
 // alone/with predicate/with publication/all 119/127/119/123; arithmetic native type 119.
+// the bit-index start and current/message saved registers remain;
+// acknowledged/undelivered/both skips, fallback exit and ordinary while 81; iteration-bit value
+// alone/with skips 105/105/105.
 // @retail 0x96910
 long c_network_reliable_stream::function_96910(long sequence, long bit_count, dword const *bits, bool complete)
 {

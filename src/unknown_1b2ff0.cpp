@@ -186,6 +186,14 @@ real function_1f8940(long actor_index);
 // score 44 (was 44): actor-data load and early selected-reference transfer still differ.
 // late selected value 44; late value/native result 97; native/short/byte result
 // 97/94/134; sentinel operands 44; active-test result 122; native request fields 44.
+// the active test reads through the getter, as the other actor
+// updates do, which gives retail's actor-data load (EDX, LEA ESI) and request
+// schedule; the found reference still enters EBX right after the selection call,
+// where retail keeps it in EAX until just before the follow call. Calling the
+// state-2 getter 120 (stays a call); actor declared inside the active block 50;
+// reference declared then assigned 27; a selected copy in the found branch 27;
+// reference as a scalar 27 (diagnostic); direct release and exit on the not-found
+// path 51; reference declared at function scope 27.
 // actor-table load/add and the early selected-reference EBX copy differ.
 // Actor object reference/const view 44/44; candidate/flag/index/joint names 44/44/44/44;
 // result from reference validity 116; successful-selection arm first 71.
@@ -198,7 +206,7 @@ bool __stdcall function_1b3380(long actor_index, s_slot *slot)
 {
     bool result = true;
     s_actor_view *actor = actor_get(actor_index);
-    if (actor->unknown040)
+    if (actor_get(actor_index)->unknown040)
     {
         if (!REFERENCE_EQUAL(actor->unknown418, g_470fa0) &&
             (actor->unknown504 == 2 || function_1f8940(actor_index) < 0.6f))

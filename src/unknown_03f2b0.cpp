@@ -456,6 +456,8 @@ void function_1cf50(void);
 // Current stride agrees; the hoisted zero, callee convention and color/draw
 // scheduling differ. Record view, byte-channel locals, material/color results,
 // block-pool/byte-offset lifetimes and typed-record for 100; byte bitmap 98.
+// score 100 (was 100): BLOCKED-BY 0x144f0, which retail calls with the tag, stage and index in
+// EAX/ECX/EBX and three pushes (ours four pushes and the priority in XMM2, zero held in EBX).
 // @retail 0x44040
 void __stdcall function_44040(long cell, short mask)
 {

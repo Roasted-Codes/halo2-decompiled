@@ -237,6 +237,16 @@ struct s_item_object_2bc1
 // Standard marker with direct input 97; with the conditional tick clamp 93 (not kept: the marker
 // needs a matched body); absent holder 98/94; native timer forms 110/108/111/109; direct second
 // lookup/test and native/constant team index 93 each.
+// team/entry registers and timer/tally schedule remain; conditional tick
+// publication 93 (plain 93, rejected: inherited self-address input); publication arms 147;
+// direct timer 108; inactive/absent-holder/unexpired exits 97/98/97; split tick increment 97;
+// conditional ticks with direct input 156.
+// EBP/EDI team-entry roles and timer/tally scheduling differ;
+// direct formal 156; entry name 97; object/limit names 97; distinct events 97;
+// shared event 97; separate timer values 110; early tally pointer 97; combined 156.
+// score 97 (was 97): team/entry saved-register roles and timer/tally allocation remain.
+// Separate entry declaration 97; independent/complete failure guards 97/97; multi-use team value 156;
+// timer field reference 110; published timer result 97; tally reference/array 97/97; signed ceiling 97; scoring-state lifetime 97.
 // @retail 0x2bc990
 void __stdcall function_2bc990(long team)
 {

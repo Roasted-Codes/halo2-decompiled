@@ -738,7 +738,9 @@ short ai_player_index_get(long player_index);
 void function_10e9f0(long object_index, short channel, real value, real time);
 bool function_1a8220(long index, short a, short b, long unknown, short c, short d, short e);
 
-// score 32 (was 32): actor-base LEA and child lookup scratch remain; native timestamp/amount/interval/all
+// score 32 (was 32): actor-base LEA and child scratch allocation differ; amount admission 239;
+// independent refresh 32; combined admission 239; child receiver 32/32; timestamp result 234; first-definition capture 32; refresh/timestamp 234.
+// actor-base LEA and child lookup scratch remain; native timestamp/amount/interval/all
 // fields 32/32/32/32; clock object 32; count/limit/first-child homes 32/32/32.
 // actor base construction at +0x1bc and child traversal registers remain;
 // typed actor 32; earlier actor workspace 32; both 32; native tick interval 36;
@@ -859,9 +861,15 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 #include "unknown_1fb7e0.h"
 // Round 36: the corrected forwarding call keeps 0x1ca260 matched; this body remains 48 differences.
 // Retail 0x1e18f0
-// score 44 (was 44): entry pool saves and actor/old-weapon registers still differ.
+// score 44 (was 44): no frame gap; actor/old-weapon registers and early player address differ.
+// Inline/noinline 44/44; direct player/replacement only 82/55; replacement-first 86;
+// late replacement zero 44; old-greater first 47; early unit observation 91.
+// entry pool saves and actor/old-weapon registers still differ.
 // Shared object lookup 44; direct tag reads 43; early player with shared lookup 75;
 // direct parameters 82; conditional values 81; shared target 79; eligibility tests 45; value homes 44.
+// score 44 (was 44): The entry actor/old-weapon registers and early player address still differ
+// without a frame gap. Old/new default arms 45/44; shared player lookup late/entry 44/81; event
+// inline/noinline 44/44; late actor receiver 44; word event result 123.
 // @retail 0x1e18f0
 void __fastcall function_1e18f0(long actor_index, long old_weapon, long player_index, long new_weapon)
 {

@@ -323,6 +323,10 @@ struct s_2f6b0_point
 // score 94 (was 94): frame 0x1c versus 0x18; position/output argument homes and rectangle loads differ.
 // Rectangle/origin names 94/94; horizontal/vertical/both origins in place 100/92/115; native step initializer 94;
 // shared output assignment 94; workspace names plus short origin 113; native frame with scalar steps 118, short origin 91.
+// score 29 (was 94): frame 0x18 and incoming/output contract recovered; initial rectangle loads
+// and origin/step allocation still differ. Direct horizontal/vertical/both origins 99/29/102; output readback/native 94/94.
+// Both direct origins with readback/native/late full 102/102/102; on vertical-direct,
+// rectangles swapped/late full/global vertical value/global horizontal value 101/102/67/101.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)
@@ -336,11 +340,10 @@ void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	step.x = (bounds.v3 - bounds.v1) / grid->x;
 	step.y = (bounds.v2 - bounds.v0) / grid->y;
 	long x = bounds.v1;
-	short y = bounds.v0;
 	bounds.v1 = x + (word)position->x * step.x;
 	bounds.v3 = x + (word)(span->x + position->x) * step.x;
-	bounds.v0 = y + (word)position->y * step.y;
-	bounds.v2 = y + (word)(span->y + position->y) * step.y;
+	bounds.v0 = g_485a8a.b.v0 + (word)position->y * step.y;
+	bounds.v2 = g_485a8a.b.v0 + (word)(span->y + position->y) * step.y;
 	*outer = bounds;
 	*inner = bounds;
 	if (position->x == 0)
@@ -565,6 +568,9 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 // score 68 (was 130): frame 0x3c agrees; zero/scale/trigonometric register allocation differs.
 // Zero-angle defaults on their own branch 68; shared rounded angle 166;
 // basis before translation 168; role-named workspaces 130; value-initialized matrix 133.
+// score 68 (was 68): frame agrees; zero/scale and trig live ranges still differ.
+// Small-angle first 69; cosine first 68; trig declarations first 68; late matrix clear 75;
+// late scales 172; shared cosine complement 68; scales at use 135; shared Y scale 73.
 // @retail 0x1b790
 bool function_1b790(byte const *state, long index, real *out, long mode)
 {
@@ -886,6 +892,9 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
 // dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
 // both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
 // shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
+// score 2 (was 2): Final zero-store pair remains reversed. Isolated width chain 6; shared width
+// chain 25; shared width/height cases 21/27; mixed-pair clear 85; width clear/loop 74/95; height
+// clear 61; zero-family clear 93.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {

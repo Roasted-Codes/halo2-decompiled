@@ -1878,6 +1878,10 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // score 48 (was 48): readiness input and failure/timer join persist. Duration pending 91;
 // shared/early countdown seconds 97/107; clock value 90; timed/five arm order
 // with integer pending 117/118; word completion 146; early duration pending 137.
+// BLOCKED-BY 0x6e720 (retail passes the session to it in EBX, ours
+// in ESI, so EBX holds the pending flag here). Bool ready 90; ready with the failure
+// arm first 90; pending set in each arm 52; clamp as an if 129; the clamp as a
+// ternary gives the same bytes as the mask form it replaces.
 // readiness input and failure/timer join persist.
 // Native int pending, pending/completion/millisecond names and outer pending declaration 48;
 // positive-duration test, full-width pending with failure first and nested preparation 48.
@@ -1906,7 +1910,7 @@ bool c_session_state_start_match::update()
                 if (!unknown18)
                     unknown18 = function_75870();
                 long remaining_raw = 10000 - function_75890(unknown18);
-                long remaining = ((long)(remaining_raw < 0) - 1) & remaining_raw;
+                long remaining = remaining_raw < 0 ? 0 : remaining_raw;
                 network_session_host_become_leader(b);
                 network_session_start_countdown(b, true, (remaining + 999) / 1000, 0, NULL);
                 pending = remaining != 0;
