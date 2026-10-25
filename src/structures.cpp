@@ -378,6 +378,10 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Region base at each use 268; surface lookup name 236; local point name 236; triangle vertex name
 // 236; node/corner scalar names 236; node count at uses 236; native part-bound locals 236;
 // section field at early uses 236.
+// score 236 (was 236): region scheduling and model/range/vertex homes remain. Fast trials: separate
+// NONE result 269; separate count result 262; unsigned candidate and NONE result 269; unsigned
+// candidate and count result 262; entry NONE-result lifetime 269; entry count-result lifetime 262;
+// node pointer search 270; bounded mismatch scan 236. All restored.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

@@ -88,6 +88,11 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // independent normalization order 411, with widened output 415 (control 389).
 // First-return widening loses the matched sibling to 45; all helper contracts
 // and normalization order restored. Early J and magnitude/yaw homes remain.
+// score 389 (was 389): early J preload and shared magnitude/yaw home remain. Fast trials: vector
+// input/output split 389; first external vector input 441; second external vector input 410; both
+// external vector inputs 452; point input/output split 389; both normalizer splits 389; both splits
+// and first external input 441; both splits and both external inputs 452. All restored.
+// External first-input forms lose the matched sibling in the reduced image; all contracts restored.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)
