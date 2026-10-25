@@ -539,6 +539,9 @@ real function_267370(long volatile object_index);
 // score 273 (was 273): frame 0x8c versus 0x90; early NONE and held-bit byte home differ;
 // frame pointer 468; inline depth zero 608; index-clear schedule fast 376/plain 272;
 // direct plane result 418; named held-direction result 371 (fast control 371).
+// score 273 (was 273): frame and held-direction byte home remain.
+// Field-zero chains 272; sentinel chains 273; signed mode range 343;
+// native seat index 322; early holder output 350 (all plain scores).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -925,6 +928,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // count reads 350; both 352; selected-character local 380; outer creation buffer 348;
 // base read plus Boolean predicate 365, shifted Boolean 364, combined loop guard 438,
 // or full-width shifted predicate 350.
+// score 320 (was 345): frame 0x118 agrees; sentinel and later register homes differ.
+// Base reads with explicit success/cleanup 320; positive flags guard 342;
+// complete equipment arms 346; squad-mode word 342; guarded long predicate 350.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -971,76 +977,77 @@ long __stdcall function_1e0850(long character_index, long squad_index, s_203780 
 			short primary_index = *(short *)(data + 0x22);
 			if (primary_index == NONE && squad) primary_index = *(short *)(squad + 0x3c);
 			long count = *(long *)((byte *)g_4e0350 + 0x98);
-			byte *entries = *(byte **)((byte *)g_4e0350 + 0x9c);
-			if (primary_index != NONE && primary_index >= 0 && primary_index < count) primary = *(long *)(entries + primary_index * 0x28 + 4);
+			if (primary_index != NONE && primary_index >= 0 && primary_index < count) primary = *(long *)(*(byte **)((byte *)g_4e0350 + 0x9c) + primary_index * 0x28 + 4);
 			short secondary_index = *(short *)(data + 0x24);
 			if (secondary_index == NONE && squad) secondary_index = *(short *)(squad + 0x3e);
-			if (secondary_index != NONE && secondary_index >= 0 && secondary_index < count) secondary = *(long *)(entries + secondary_index * 0x28 + 4);
+			if (secondary_index != NONE && secondary_index >= 0 && secondary_index < count) secondary = *(long *)(*(byte **)((byte *)g_4e0350 + 0x9c) + secondary_index * 0x28 + 4);
 			short grenade_index = *(short *)(data + 0x2c);
 			if ((short)(grenade_index - 1) != NONE) grenade = grenade_index - 1;
 			else if (squad && (short)(*(short *)(squad + 0x40) - 1) != NONE) grenade = (word)*(short *)(squad + 0x40) - 1;
 			function_1e04a0(primary, character_index, unit_index, secondary, (short)grenade);
 			actor_index = function_1e0160(squad_index, character_index, unit_index, flag);
 		}
-		if (actor_index == NONE)
+		if (actor_index != NONE)
+		{
+			byte *actor = (byte *)actor_get(actor_index);
+			if (data[0x1c] & 1) *(short *)(actor + 0x86) = 0;
+			if (*(real *)(data + 0x38) > 0.0f)
+			{
+				point3f position;
+				function_210850((s_type_c3b527 const *)(data + 4), &position);
+				vector3f direction;
+				direction.i = (real)(cos(*(real *)(data + 0x14)) * cos(*(real *)(data + 0x18)));
+				direction.j = (real)(sin(*(real *)(data + 0x14)) * cos(*(real *)(data + 0x18)));
+				direction.k = (real)sin(*(real *)(data + 0x18));
+				function_1f34b0(actor_index, &position, &direction, *(real *)(data + 0x38), NONE);
+			}
+			long unit = *(long *)(actor + 0x18);
+			if (unit != NONE)
+			{
+				short mode = *(short *)(data + 0x3e);
+				byte request[0x20];
+				if (mode == 2)
+				{
+					byte *movement = (byte *)function_1e4a50(*(long *)(actor + 0x54));
+					if (movement && (*movement & 0x20))
+					{
+						*(long *)request = 0x2c;
+						request[4] = true;
+						function_e6900(unit, (s_unit_request *)request);
+					}
+				}
+				else if (mode == 1)
+				{
+					vector3f forward;
+					function_b9fc0(unit, &forward, NULL);
+					forward.k = 0.0f;
+					if (function_30bf0(&forward) > 0.0f)
+					{
+						*(long *)request = 0x22;
+						function_b9dd0(unit, (point3f *)(request + 4));
+						*(real *)(request + 0x10) = forward.i * -1.0f;
+						*(real *)(request + 0x14) = forward.j * -1.0f;
+						request[0x18] = true;
+						function_e6900(unit, (s_unit_request *)request);
+					}
+				}
+				byte *object = *(byte **)(g_4e0300->data + (unit & 0xffff) * 12 + 8);
+				long weapon = function_cbd50(unit, (char)object[0x212]);
+				if (weapon != NONE)
+				{
+					byte *weapon_object = *(byte **)(g_4e0300->data + (weapon & 0xffff) * 12 + 8);
+					byte *local_67e06b_3 = g_4e3b44[*(long *)weapon_object & 0xffff].bytes;
+					if (*(long *)(local_67e06b_3 + 0x2f4) != NONE) actor[0x22a] = true;
+				}
+				if (data[0x1c] & 0x10) function_b9c60(unit, true);
+			}
+			function_a7b30(unit_index);
+		}
+		else
 		{
 			if (unit_index != NONE) function_b8540(unit_index);
 			else if (perception_index != NONE) swarm_delete(perception_index);
-			goto done;
 		}
-		byte *actor = (byte *)actor_get(actor_index);
-		if (data[0x1c] & 1) *(short *)(actor + 0x86) = 0;
-		if (*(real *)(data + 0x38) > 0.0f)
-		{
-			point3f position;
-			function_210850((s_type_c3b527 const *)(data + 4), &position);
-			vector3f direction;
-			direction.i = (real)(cos(*(real *)(data + 0x14)) * cos(*(real *)(data + 0x18)));
-			direction.j = (real)(sin(*(real *)(data + 0x14)) * cos(*(real *)(data + 0x18)));
-			direction.k = (real)sin(*(real *)(data + 0x18));
-			function_1f34b0(actor_index, &position, &direction, *(real *)(data + 0x38), NONE);
-		}
-		long unit = *(long *)(actor + 0x18);
-		if (unit != NONE)
-		{
-			short mode = *(short *)(data + 0x3e);
-			byte request[0x20];
-			if (mode == 2)
-			{
-				byte *movement = (byte *)function_1e4a50(*(long *)(actor + 0x54));
-				if (movement && (*movement & 0x20))
-				{
-					*(long *)request = 0x2c;
-					request[4] = true;
-					function_e6900(unit, (s_unit_request *)request);
-				}
-			}
-			else if (mode == 1)
-			{
-				vector3f forward;
-				function_b9fc0(unit, &forward, NULL);
-				forward.k = 0.0f;
-				if (function_30bf0(&forward) > 0.0f)
-				{
-					*(long *)request = 0x22;
-					function_b9dd0(unit, (point3f *)(request + 4));
-					*(real *)(request + 0x10) = forward.i * -1.0f;
-					*(real *)(request + 0x14) = forward.j * -1.0f;
-					request[0x18] = true;
-					function_e6900(unit, (s_unit_request *)request);
-				}
-			}
-			byte *object = *(byte **)(g_4e0300->data + (unit & 0xffff) * 12 + 8);
-			long weapon = function_cbd50(unit, (char)object[0x212]);
-			if (weapon != NONE)
-			{
-				byte *weapon_object = *(byte **)(g_4e0300->data + (weapon & 0xffff) * 12 + 8);
-				byte *local_67e06b_3 = g_4e3b44[*(long *)weapon_object & 0xffff].bytes;
-				if (*(long *)(local_67e06b_3 + 0x2f4) != NONE) actor[0x22a] = true;
-			}
-			if (data[0x1c] & 0x10) function_b9c60(unit, true);
-		}
-		function_a7b30(unit_index);
 	}
 done:
 	return actor_index;

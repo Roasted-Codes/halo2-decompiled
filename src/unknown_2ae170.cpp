@@ -639,14 +639,17 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // score 515 (was 527): frame four versus twelve and scalar/SSE homes remain;
 // frame pointer 559 (dispatcher lost); ordinary route first 532; repeated-send loop 541;
 // front setting snapshot 521; rear setting snapshot 520; both 515.
+// score 507 (was 515): frame four versus twelve and gain spill/SSE homes remain;
+// per-use primary selection 467 (dispatcher lost); byte destinations 507;
+// reversed mode cases 515; named special gains 515; conditional mode arms 532.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
 	if ((bool)((parameters->flags >> 2) & 1))
 	{
 		bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
-		long left = alternate ? 0 : 6;
-		long right = alternate ? 1 : 7;
+		byte left = alternate ? 0 : 6;
+		byte right = alternate ? 1 : 7;
 		real const &level = rear ? m_settings.level1c : m_settings.level24;
 		real level2 = rear ? m_settings.level20 : m_settings.level28;
 		sound_stream_append_mixbin(mixbins, left, level + parameters->level);
@@ -714,12 +717,15 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // score 270 (was 274): frame and input-level/mode homes remain;
 // front setting snapshot 270; rear 279; both 275; frame pointer 312;
 // global optimization off 281 (dispatcher lost).
+// score 264 (was 270): frame 0x1c versus 0x18 and input-level/mode homes remain;
+// word routing predicate 264; named routing reads 270; native-word home names 270;
+// front field reference 267 and both field references 267 (three-point gains rejected).
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
 	real send_level = sound_effects_send_level(this, parameters, mode);
 	real offset = parameters->level_offset;
-	bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
+	word alternate = TEST_FLAG(parameters->flags, 3) != 0;
 	word left = alternate ? 0 : 6;
 	volatile word right = alternate ? 1 : 7;
 	volatile word rear_left = alternate ? 4 : 8;
