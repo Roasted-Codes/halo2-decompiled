@@ -531,13 +531,15 @@ PRIVATE __forceinline void motion_cross(vector3f const &a, vector3f const &b, ve
     result->k = a.i * b.j - a.j * b.i;
 }
 
-// score 235 (was 251): frame 0x28 agrees; trig homes and projection registers differ;
+// score 214 (was 251): frame 0x28 agrees; trig homes and projection registers differ;
 // shared trig scope 254; sine declared first 251; forward projection loop 235;
 // rotation loop 246; idle base loop 235; projection plus base loops 235; all loops 246.
 // pointer scale loop 239; fixed do scale 237; idle reconstruction loop 235;
 // two-component idle projection loop 235; native bounds pair 235.
 // global optimization off 721; size optimization 409; inline depth zero 362;
 // active rotation scope 235; idle sine after scaling 235.
+// active/idle/both real trig 233/235/233; shared weighted axis 214 plain kept;
+// weighted cross 218; both weights 258; output cosine scale 235; real trig plus axis 226.
 // @retail 0x1faa20
 void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *ticks)
 {
@@ -557,9 +559,10 @@ void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *t
         real dot = (up->j * axis.j + up->k * axis.k + up->i * axis.i) * (1.0f - cosine);
         vector3f cross;
         motion_cross(*up, axis, &cross);
-        up->i = up->i * cosine + axis.i * dot - cross.i * sine;
-        up->j = up->j * cosine + axis.j * dot - cross.j * sine;
-        up->k = up->k * cosine + axis.k * dot - cross.k * sine;
+        vector3f_scale(&axis, dot, &axis);
+        up->i = up->i * cosine + axis.i - cross.i * sine;
+        up->j = up->j * cosine + axis.j - cross.j * sine;
+        up->k = up->k * cosine + axis.k - cross.k * sine;
         real projection = up->k * forward->k + up->j * forward->j + forward->i * up->i;
         forward->i -= up->i * projection;
         forward->j -= up->j * projection;

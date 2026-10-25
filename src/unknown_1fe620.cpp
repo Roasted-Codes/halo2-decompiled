@@ -17,6 +17,8 @@ static __forceinline long real_to_long(real value);
 // initializer forms tie and scale loops regress; tried first native output vector 373; second native output
 // vector 373; native side scale loop 382; native timed scale loop 382; native side vector 373; both native
 // output vectors 373; native side first output 373; all native motion vectors 373.
+// first cosine/sine/pair and second cosine/sine/pair through real trig APIs 378;
+// both real trig pairs 373; native side-negation loop 382; all restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {
