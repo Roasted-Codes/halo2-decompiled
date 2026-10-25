@@ -207,6 +207,9 @@ dword function_191660(long string_handle, long index);
 // External header/input/override records 215/165/165; live bound fields 165;
 // source count after special header 183; sampled values at loop scope 165;
 // named rounded results 165; header plus live bounds 215.
+// score 5 (was 5): remainder stores still precede parameter/speaker reloads.
+// Primary/range/both selector fields 5/7/7; primary/range/both sample names 5/5/5;
+// independent range sample first 117; speaker-index name 5. Original body retained.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)

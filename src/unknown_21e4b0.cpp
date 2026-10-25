@@ -132,6 +132,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // listener consumer scope 165; with reset/earlier byte state 280/283; submix scope 165;
 // both scopes 165; both with reset state 280; listener/reset with pointer-first bins 280;
 // all consumer boundaries 280. Original short-circuit loops retained.
+// score 165 (was 165): saved success/category/first-channel allocation remains.
+// Word input/output/both tables; byte input/output/both tables;
+// both word/byte tables with creation state spanning reset
+// Fast scores 283/336/292/288/378/310/271/311; original body retained.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
