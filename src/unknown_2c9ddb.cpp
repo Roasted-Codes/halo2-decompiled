@@ -283,6 +283,10 @@ void c_class_2c9e69::select_last_variant()
 }
 
 /* shows the item's variant name */
+// score 23 (was 23): nonempty text receiver tested in stack home then reloaded; retail holds EBX;
+// widget names 23; named variant first 30; entry reference 23; indexed base 23;
+// text destination local 23; icon absence return 23; reversed dispatch with receiver copy 38;
+// reversed dispatch/copy renamed 38; base-widget receiver 36; base receiver renamed 36.
 // @retail 0x2c9ff4
 void c_class_2c9e69::v20(c_class_1a2c81 *item, long unused)
 {

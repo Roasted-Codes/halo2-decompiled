@@ -422,6 +422,9 @@ PRIVATE byte const g_saved_game_image[4096] =
 
 /* writes the save image into a game variant's saved game directory; the
    other types have none */
+// score 26 (was 26): write size precedes buffer; full-width returns add a success epilogue, first +0xbb;
+// create/open/write test-result carriers 58/55/78; each operation supplies result 60;
+// clamp decision joins create/open/write carriers 75/75/124; clamp plus serial operation results 102.
 // @retail 0x216f80
 bool saved_game_file_write_save_image(long type, s_saved_game_file_location *location)
 {

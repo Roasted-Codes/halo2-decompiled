@@ -926,6 +926,9 @@ bool __stdcall game_variants_received(s_pending_message_header *header)
 	return result;
 }
 
+// score 3 (was 3): first tick zero store precedes EDI save and false-result store;
+// timer before buffer 3; success rename 3; buffer rename 3; timestamp rename 3;
+// pointer declared first 3; retries before timer 17; write result assigned 53; long result 103.
 // @retail 0x194160
 bool __stdcall game_variants_retry(s_pending_message_header *header)
 {

@@ -421,6 +421,9 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 	if (handle != NONE)
 		function_82a40(handle, (s_relevance_observers const *)a2, a3, a4);
 }
+// score 13 (was 13): table and masked index exchange ECX/EDX from +0x4;
+// wide flags 17; short index 31; word index 17; active result first 24;
+// selected result first 22; slot-array base 13; independent failure guards 27; identity result first 25.
 // @retail 0x979f0
 bool function_979f0(s_world_450cb8 *world, long handle)
 {
