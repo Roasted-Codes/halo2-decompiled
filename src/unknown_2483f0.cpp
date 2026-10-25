@@ -136,6 +136,11 @@ static inline void particle_cross_product3d(vector3f const *a, vector3f const *b
 
 /* the rotation and position a particle system is drawn at: its own, or
    moved by the first person offset */
+// score 52 (was 52): matching 0x30 frame; cross-product schedule, left-vector XMM homes
+// and point-coordinate loads still differ, with four extra bytes. Earlier operand/sum/helper
+// forms excluded; tried scalar point coordinates 98; paired cross products 55; six cross
+// products 52; compound cross components 52; cross value result 140; frame-mode return 104;
+// offset at construction 52; shared point setter 78.
 // @retail 0x248450
 void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f *position, matrix3x3 const **rotation_result, point3f const **position_result, bool field_b4)
 {

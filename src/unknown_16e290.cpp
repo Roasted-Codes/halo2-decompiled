@@ -1035,22 +1035,22 @@ void function_16e330(long tag_index, long section_index)
 			g_468d24 = tag_index;
 			for (material_index = 0; material_index < definition->material_count; material_index++)
 			{
-				long shader_tag_index = definition->materials[material_index].shader_tag_index;
+				s_16e330_material *material = &definition->materials[material_index];
 
-				if (shader_tag_index != NONE)
+				if (material->shader_tag_index != NONE)
 				{
-					s_16e330_shader *shader = (s_16e330_shader *)g_4e3b44[shader_tag_index & 0xffff].bytes;
+					s_16e330_shader *shader = (s_16e330_shader *)g_4e3b44[material->shader_tag_index & 0xffff].bytes;
 					s_16e330_shader_bitmaps *bitmaps = shader->bitmaps;
 					long reference_index;
 
 					for (reference_index = 0; reference_index < bitmaps->count; reference_index++)
 					{
-						long bitmap_tag_index = bitmaps->references[reference_index].bitmap_tag_index;
+						s_16e330_bitmap_reference *reference = &bitmaps->references[reference_index];
 
-						if (bitmap_tag_index != NONE)
+						if (reference->bitmap_tag_index != NONE)
 						{
 							s_16e330_bitmap_group *group =
-								(s_16e330_bitmap_group *)g_4e3b44[bitmap_tag_index & 0xffff].bytes;
+								(s_16e330_bitmap_group *)g_4e3b44[reference->bitmap_tag_index & 0xffff].bytes;
 							long bitmap_index;
 
 							for (bitmap_index = 0; bitmap_index < group->bitmap_count; bitmap_index++)
