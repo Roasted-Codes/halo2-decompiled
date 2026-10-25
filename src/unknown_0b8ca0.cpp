@@ -1433,6 +1433,10 @@ done:
 // score 17 (was 17): entry agrees; tail type/base/palette/stride allocation differs.
 // Canonical descriptor fields through mutable/const pointers and references all 17;
 // the same four contracts with a promoted stride all 27 (236 bytes).
+// score 17 (was 17): entry agrees; tail type/descriptor/stride ownership still differs.
+// Shared type home 17; promoted placement index 28; both 28; shared type plus stride 27;
+// promoted index/stride 36; shared type/index/stride 36; shared type with call-use palette 37;
+// shared type/index with call-use palette 26.
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {

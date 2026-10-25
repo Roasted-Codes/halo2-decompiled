@@ -136,6 +136,9 @@ struct s_placement_2bc1
 	byte field_28[0xc4 - 0x28];
 };
 
+// score 16 (was 16): placement argument EAX/ECX transfer and event-store scheduling differ from +0x6d.
+// Existing initializer 89; initializer result 89; initializer before mode 88; paired helpers 88;
+// event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90.
 // @retail 0x2bc1f0
 void function_2bc1f0(long team)
 {

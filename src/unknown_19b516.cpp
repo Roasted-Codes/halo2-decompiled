@@ -125,6 +125,10 @@ void c_widget::v15(c_widget *widget)
 	}
 }
 
+// score 20 (was 20): candidate uses ESI before the first scan; retail delays ESI and uses EAX.
+// Initial result arms 20; both result arms 21; entry reverse lifetime 20; scoped widget 26;
+// scoped result arms 21; scoped reverse lifetimes 26; selected-widget success tail 47;
+// initial result arms with success tail 47.
 // @retail 0x22ebc3
 void c_widget::v16()
 {
