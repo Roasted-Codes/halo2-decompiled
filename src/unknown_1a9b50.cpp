@@ -411,6 +411,9 @@ extern point2f *g_468778;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
+// score 379 (was 379): Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
+// 408; integer clock 413; conditional threshold 389; aggregate request 379; branch-derived
+// prediction weight 385 (fast).
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

@@ -1221,6 +1221,9 @@ bool function_0b6760(s_index_pair const *pair);
 // channel guard helper 382; ordinary result 355; shared previous/ordinary result 351 kept.
 // Round 290: ordinary index with shared previous 408; shared previous and header index 408; header index
 // and ordinary tag pointer 384; group path first 392; byte direction predicate 351.
+// score 347 (was 351): Frame 0x1c versus 0x20; index/header and state/result homes differ. In-place
+// power output 377; isolated rate position 371; speed first 352; integration-only direction 383;
+// conditional activity-bit publication 347 kept (plain).
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
@@ -1271,10 +1274,8 @@ bool __stdcall function_106790(long volatile device_index)
 			real speed = *(real const *)(saved_definition + 0xc8) * device->position +
 				*(real const *)(saved_definition + 0xd0) * (1.0f - device->position);
 			bool increasing = device->power_velocity > 0.0f;
-			if (acceleration > 0.0f && speed > 0.0f)
-				device->flags |= 0x100;
-			else
-				device->flags &= ~0x100;
+			device->flags = acceleration > 0.0f && speed > 0.0f ?
+				device->flags | 0x100 : device->flags & ~0x100;
 			if (!((real)device->delay_ticks * g_510c54->rate >= *(real const *)(saved_definition + 0x10c)) &&
 				device->power == 0.0f && !(device->power > group->value))
 			{
