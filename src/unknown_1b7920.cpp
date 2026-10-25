@@ -109,46 +109,47 @@ bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 	return result;
 }
 
-// score 75 (was 75): retail pushes EBP first and keeps the character in EBP,
-// and calls function_25d740 out of line; our build inlines that helper and
-// keeps the character in EBX.
-// Read-only character/actor/view 75/75/75; distance limit snapshot 84;
-//  delay/start snapshots 75/75; early object input 79; selective getter outlining 68/201.
-//  The getter expansion and early EBP save still differ; outlining dropped.
-// keeps the character in EBX. Wrapper depths one/two 75; global optimization
-// off 75/223 bytes; size preference 129; point-getter result 80; direct view
-// getter with point result 80; point result/depth zero 120; point result
-// with explicit outcome arms 77.
+#pragma inline_depth(0)
+/* the slot's status: g_46fbe8 while the delay runs, or once it is over while
+   the prop's point is within the character's distance of the prop's object;
+   g_46fbe4 otherwise. Retail calls function_25d740 out of line here, so
+   inlining is off for this function and the actor and prop node lookups are
+   written out; the result is one local, as retail reloads g_46fbe8 for it
+   after the calls. */
 // @retail 0x1b7b90
 short __stdcall function_1b7b90(long actor_index, s_slot *slot, bool active)
 {
-	s_actor_view *actor = actor_get(actor_index);
+	s_actor_view *actor = (s_actor_view *)(g_4f55f0->data + (actor_index & 0xffff) * sizeof(s_actor_view));
 	s_character_e50 *character = (s_character_e50 *)function_1e4e50(actor_index);
+	short result = g_46fbe4;
 
 	if (character && actor->prop_index != NONE)
 	{
 		s_slot_1e *state = (s_slot_1e *)slot;
-		short result = g_46fbe8;
 
+		result = g_46fbe8;
 		if (g_510c54->game_time - state->start_time > state->delay)
 		{
-			s_prop_node_view *node = prop_node_get(actor->prop_index);
-			s_prop_view_fields *view = prop_node_view(node);
+			s_prop_node_view *node = (s_prop_node_view *)(g_502418->data + (actor->prop_index & 0xffff) * sizeof(s_prop_node_view));
+			s_prop_view_fields *view = (s_prop_view_fields *)function_25d740((s_prop_node *)node);
 
 			if (view)
 			{
 				point3f position;
 
 				function_b9dd0(node->object_index, &position);
-				if (!(function_210ac0(&view->unknown18, &position) > character->distance))
-					return g_46fbe8;
+				if (function_210ac0(&view->unknown18, &position) > character->distance)
+					result = g_46fbe4;
 			}
-			return g_46fbe4;
+			else
+			{
+				result = g_46fbe4;
+			}
 		}
-		return result;
 	}
-	return g_46fbe4;
+	return result;
 }
+#pragma inline_depth()
 
 // @retail 0x1b7c70
 void __stdcall function_1b7c70(long actor_index, s_slot *slot)
