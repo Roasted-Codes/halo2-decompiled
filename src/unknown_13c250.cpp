@@ -89,6 +89,11 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // native carried view 171; read-only view 171; dword workspace 171;
 // unsigned tags 171; selected position 182; unsigned ranks 172;
 // word rank 172; unsigned ranking position 171.
+// score 144 (was 171): receiver reloads, append counts and ranking dispatch remain;
+// pointer ranking 144; append cursor 273; cursor/count snapshot 267;
+// plain count/cursor 232; output/ranking cursors 294; completed cursor 303;
+// rank-one first 171; lower-rank first 174; pointer/native case 176;
+// pointer/count snapshot 181.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {
@@ -183,10 +188,10 @@ void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
         }
         long local_23 = NONE;
         long local_24 = 0x7fffffff;
-        long local_25 = 0;
-        while (local_25 < local_2)
+        long const *candidate = local_3;
+        while (candidate < local_3 + local_2)
         {
-            long local_26 = local_3[local_25];
+            long local_26 = *candidate;
             long local_27 = *(long *)((byte *)g_4e3b44[local_26 & 0xffff].bytes + 0x288);
             long local_28;
             if (local_27 == 0x5000720)
@@ -216,7 +221,7 @@ void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
                 local_24 = local_28;
                 local_23 = local_26;
             }
-            ++local_25;
+            ++candidate;
         }
 local_29:
         if (local_23 != NONE)

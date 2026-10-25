@@ -536,7 +536,11 @@ void function_118e80(long object_index, vector3f *forward);
 real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
-// score 273 (was 273): frame 0x8c versus 0x90; early NONE and held-bit byte home differ;
+// score 273 (was 273): frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
+// Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
+// direct actor receiver 371; forward scalar names 371; sampled radius 371;
+// word/native plane key 308/308; plain word 385, early result 379, native key 385.
+// frame 0x8c versus 0x90; early NONE and held-bit byte home differ;
 // frame pointer 468; inline depth zero 608; index-clear schedule fast 376/plain 272;
 // direct plane result 418; named held-direction result 371 (fast control 371).
 // score 273 (was 273): frame and held-direction byte home remain.
@@ -924,6 +928,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // guarded Boolean 384; typed actor fields 364.
 // frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
 // Byte creation predicate 383; word predicate 361; short grenade 377; depth one 364; grenade first 364; word pair 375.
+// Round 156: depth zero 348; target size 504; table-base reads with complete
+// equipment results 346, entry cleanup outputs 342, substitution output order 342.
+// Three-point gains rejected; original frame and body retained.
 // Equipment base read at use 342 (frame 0x118; three-point gain rejected);
 // count reads 350; both 352; selected-character local 380; outer creation buffer 348;
 // base read plus Boolean predicate 365, shifted Boolean 364, combined loop guard 438,
@@ -931,6 +938,7 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // score 320 (was 345): frame 0x118 agrees; sentinel and later register homes differ.
 // Base reads with explicit success/cleanup 320; positive flags guard 342;
 // complete equipment arms 346; squad-mode word 342; guarded long predicate 350.
+// Frame 0x11c versus 0x118 and missing-index homes remain; repaired frame with vertical-first, second-horizontal-first, vector initializer, word creation or word request each 342; three-point gains rejected.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -1055,7 +1063,10 @@ done:
 
 // score 38 (was 38): retail keeps the new index in ESI where ours keeps it in
 // EDI, and the branch that follows goes to another place, so the calls after
-// it land at different offsets.
+// it land at different offsets. The seed store and count addition also differ.
+// Shared random-index 48; implicit count conversion 38; shared random-index with
+// implicit conversion 48; full-width upper 59; split/reversed bounds 38;
+// inline depth zero 60; global optimization off 684.
 // @retail 0x1e04a0
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type)
 {

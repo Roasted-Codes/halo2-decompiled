@@ -743,10 +743,19 @@ real normalize2d(point2f *v);
 // named first normalization result 172; global optimization off 542.
 // low-bit presence guard 228; native type clamp 236; branch-defined chosen speed 220;
 // target snapshot 234; inline depth zero 231. Frame 0x48 still agrees.
+// Bounded for search 172; unsigned byte scan 233; chosen speed after query 190;
+// planar component stores 265; native masks/metadata snapshot 172 each;
+// retry requirement 196; first type from bits 277. Fast-byte zero and trajectory convention
+// still differ; original body restored.
 // score 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
 // result homes differ. Validity initialized in typed arm 241; first type initialized by branch
 // 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
 // movement flag stores 174; retry speed first 172; native planar output copies 172.
+// score 172 (was 172): Frame 0x48 agrees; fast-byte zero, trajectory arguments and retry/result homes differ.
+// separate retry force 196; long first-type result 235.
+// minimum after speed query 228; first type after speed query 175.
+// shared movement destination 172; native request copy 172.
+// earlier result declaration 172; minimum and retry force 227.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

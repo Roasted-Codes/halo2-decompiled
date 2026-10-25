@@ -49,6 +49,12 @@ void __stdcall function_82240(s_simulation_definition_registry *registry,
 // a global, kept only as evidence of what retail does); the registry loaded from g_4cf784
 // after the three stores, with the -1 stores and memsets through it (30, or 42 with the
 // locals uninitialised).
+// another source file, so this difference is out of reach here.
+// The cause is that retail treats g_4cf77c, g_4cf780 and g_4cf784 as address-taken:
+// with all three in one struct global (and the existing &g_4cf77c read elsewhere) the
+// registry cleared through the pointer read from g_4cf784, with uninitialised counts,
+// matches in an LTCG harness. In this tree: that clear 42; passing the pointer 42;
+// every access through g_4cf784 42; a &g_546974 local 42; the clears first 48.
 // @retail 0x67e30
 void function_67e30(void)
 {

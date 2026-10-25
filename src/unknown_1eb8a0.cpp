@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "unknown_123b30.h"
 #include "kill_volumes.h"
+#include "normalize3d.h"
 #include <math.h>
 #include <string.h>
 
@@ -778,12 +779,22 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // Unsigned attached handle 157; const contacts 157; unsigned selection 157;
 // initialized found 364; forward workspace 482; shared difference 237; const objects 157.
 // On per-use scan: direct count 88; direct table 356; both 356; found first 87 (one-point addition dropped).
+// score 88 (was 88): own-object/node registers and contact-table setup still differ.
+// Native flags/parent/both 88/88/88; attachment/position/input-field references 88/88/88;
+// frame pointer 563; global analysis off 1220.
 // Validated attached handle 88; detached selection lifetime 396; outer found 88;
 // state reference 88; output flag reference 88; post-validation selection 106;
 // selected contact reference 88; direct output test result 104. Attached object/node and scan setup still differ.
 // score 88 (was 88): attached object/node roles and scan setup remain; current-handle bits 88;
 // node-transform input pointer 88; full-width definition bits 90; shared object handle,
 // shared receiver and both lifetimes 88; live input flags 88; native contact count 88.
+// score 78 (was 88): Own-object/node roles, dot scheduling and scan setup remain. Shared component
+// lookup, native owner/table/count/all fields, native component receiver and external contact array each
+// 88f; long found result 411f.
+// own-object/node roles and contact-scan setup still differ.
+// Node byte/data offset and immutable handle 88; shared projection scale 90;
+// scale plus in-place difference 78; nested/best-first scan 88/98; detached dot 88;
+// independent forward output on the scaled flow 437. Input values and grouping retained.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {
@@ -809,9 +820,9 @@ void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
    if (state->field_0c)
    {
     real projection = dot3f(&matrix.forward, &matrix.up);
-    matrix.forward.i -= matrix.up.i * projection;
-    matrix.forward.j -= matrix.up.j * projection;
-    matrix.forward.k -= matrix.up.k * projection;
+    vector3f projected_up;
+    vector3f_scale(&matrix.up, projection, &projected_up);
+    vector3d_from_points3d((point3f *)&projected_up, (point3f *)&matrix.forward, &matrix.forward);
     if (function_30bf0(&matrix.up) == 0.0f) matrix.up = *g_4687b0;
     if (function_30bf0(&matrix.forward) != 0.0f)
     {

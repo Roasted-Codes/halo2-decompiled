@@ -76,9 +76,19 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // cached-pointer compare and in-loop lookup differ;
 // metadata read order 142; direct child getter 160; early result declaration
 // 142; word flag update 244; reciprocal default first 142.
+// score 142 (was 142): cached-pointer compare and selective lookup expansion remain;
+// cache slot/early flags/both/cache reference 142; reciprocal input 143;
+// global optimization off 433; frame pointer 314; depth two 142.
 // read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
 // child datum accessor 146; both datum accessors 298; native child ordinal 142; immutable
 // creation inputs 142; reciprocal before child link 143.
+// score 142 (was 142): Cached-pointer comparison and loop lookup remain. Common pointer/flags/both stores
+// 159/140/158f; conditional mask 282f; immutable allocated handle/settings 142f; common current-record
+// stores and combined immutable bindings 158f; common flags with current receiver 158f. Two-point gain
+// discarded.
+// External parent / allocated record / settings / child references 142/142/142/142;
+// parent with record / settings, record with child, all four references 142/142/142/142.
+// Cached-pointer comparison and selective loop lookup expansion remain.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)
