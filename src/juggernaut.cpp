@@ -194,7 +194,10 @@ void juggernaut_set(long player_index, bool juggernaut)
 }
 
 // score 20 (was 20): the loop counter and the g_510c9c pointer sit in the other two callee-saved
-// registers than retail; the instruction order is the same.
+// registers than retail (count in ebp, the pointer in ebx); the instruction order is the same.
+// Tried: count declared first (20), the store and increment as two statements (21), count != 0
+// (21), the waiting test inside the if (20), a local copy of g_510c9c in the loop (20), a for loop
+// (20), the bit index cast to word (74), the mask tested by shifting (60).
 // @retail 0x192a30
 void function_192a30(long excluded_player_index)
 {
