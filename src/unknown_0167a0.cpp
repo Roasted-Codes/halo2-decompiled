@@ -556,6 +556,9 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 	}
 }
 
+// score 68 (was 130): frame 0x3c agrees; zero/scale/trigonometric register allocation differs.
+// Zero-angle defaults on their own branch 68; shared rounded angle 166;
+// basis before translation 168; role-named workspaces 130; value-initialized matrix 133.
 // @retail 0x1b790
 bool function_1b790(byte const *state, long index, real *out, long mode)
 {
@@ -563,13 +566,18 @@ bool function_1b790(byte const *state, long index, real *out, long mode)
     real sx = values[7];
     real sy = values[8];
     transform4x3f matrix;
-    real sine = 0.0f;
-    real cosine = 1.0f;
+    real sine;
+    real cosine;
     memset(&matrix, 0, sizeof(matrix));
     if (!(fabs(values[13]) < 0.0001f))
     {
         sine = sinf(values[13] * 6.2831854820251465f);
         cosine = cosf(values[13] * 6.2831854820251465f);
+    }
+    else
+    {
+        sine = 0.0f;
+        cosine = 1.0f;
     }
     matrix.forward.j = 0.0f - sx * sine;
     matrix.position.x = (1.0f - cosine + sine) * sx * 0.5f + values[10];

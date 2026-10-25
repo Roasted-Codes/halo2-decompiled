@@ -1438,6 +1438,8 @@ struct s_camera_clip_reference_16ebf0
 // score 234 (was 234): frame 0x9c versus 0x98 and vector/state homes differ;
 // shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
 // aggregate copies with shared cross product 249, role names 249, combined scope 249.
+// Frame 0x9c versus 0x98; vector-copy homes and narrow/fraction convention differ.
+// Direct view call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode branch 240.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
@@ -1514,9 +1516,8 @@ void function_16ebf0(long user_index)
 					&((s_camera_clip_reference_16ebf0 *)geometry->references)[reference & 0x7f];
 				if (entry->index != NONE)
 				{
-					if (!(reference & 0x80) ||
-						entry->plane.j * point.y + entry->plane.k * point.z + entry->plane.i * point.x - entry->plane.d < 0.0f)
-						narrow = true;
+					narrow = !(reference & 0x80) ||
+						entry->plane.j * point.y + entry->plane.k * point.z + entry->plane.i * point.x - entry->plane.d < 0.0f;
 				}
 			}
 		}

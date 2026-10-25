@@ -229,6 +229,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // remain. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
+// frame 0x30 versus 0x2c and projected-point/factor homes differ;
+// role-named points 195; displaced transform first 250; orthographic defaults first 261;
+// shared point initializer 195; single result 280.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

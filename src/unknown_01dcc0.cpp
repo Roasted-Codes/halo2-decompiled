@@ -193,16 +193,14 @@ bool function_01de20(long index)
 dword function_1d6f0(bool linear, bool alternate, dword format, long width, long height);
 long g_55e6c0;
 
+// score 122 (was 131): Incoming data home, delayed saves and header bias still differ.
+// Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
+// score 115 (was 122): incoming data home, saved-register timing and level-header bias remain.
+// Shared primary header 161; walking level pointer 135; Boolean packed-word product 152;
+// byte-count expression in the level loop 115; delayed clamped-count publication 148.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {
-    (void)&kind;
-    (void)&width;
-    (void)&height;
-    (void)&alternate;
-    (void)&linear;
-    (void)&count;
-    (void)&data;
     if (data)
     {
         s_unknown_01dcc0 *entry = &g_4b4b58[index];
@@ -226,11 +224,9 @@ bool function_1df20(long index, long kind, long width, long height, bool alterna
         entry->sub_header[3] = function_1d6f0(linear, alternate, count, width, height);
         D3DResource_Register((D3DResource *)entry->sub_header, data);
         long offset = 0;
-        long shift = 0;
-        long size = ((width + 63) & ~63) * height * 4;
-        for (long i = 0; i < entry->element_count; ++i, shift += 2)
+        for (long i = 0; i < entry->element_count; ++i)
         {
-            long bytes = size >> shift;
+            long bytes = (((width + 63) & ~63) * height * 4) >> (i * 2);
             long *element = entry->elements[i];
             element[0] = 0x50001;
             element[1] = entry->sub_header[1] + offset;

@@ -425,29 +425,31 @@ bool function_80660(void)
 	return valid;
 }
 
+struct s_profile_record;
+void function_1537f0(s_profile_record *record);
+
+// score 129 (was 133): Frame 0x98 vs 0xa0; identity slots and initialization homes still differ.
+// Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
+// Existing record initializer with zero tail 130; short/word counters 133/133;
+// counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
 // @retail 0x7f930
 void function_7f930(void)
 {
-	g_4cf970 = 8;
 	g_4cf974 = 0;
 	g_4cf978 = 0;
+	g_4cf970 = 8;
 	g_4cf980 = NONE;
 	g_4cf97c = NONE;
 	g_4cf984 = NONE;
 	g_4cf988 = NONE;
-	for (long i = 0; i < 350; i++)
+	for (dword i = 0; i < 350; i++)
 	{
 		s_cached_player_identity identity;
 		memset(&identity, 0, sizeof(identity));
 		s_cached_player_source source;
-		memset(&source, 0, sizeof(source));
-		source.field40 = 0;
-		source.field44_47 = 0;
-		source.field48 = 0;
-		source.field70 = 0;
-		source.field74 = 0;
-		source.field78 = 0;
-		source.field7f = 0xff;
+		function_1537f0((s_profile_record *)&source);
+		memset(source.unknown7c, 0, sizeof(source.unknown7c));
+		memset(source.unknown80, 0, sizeof(source.unknown80));
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
 		function_7f8b0((s_cached_player_view *)&entry->player, &identity, &source, NULL);
 		entry->next = entry->next_other = entry->unknown58 = entry->previous_other = NONE;
