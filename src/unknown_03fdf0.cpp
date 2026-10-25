@@ -175,6 +175,13 @@ void function_402b0(long cache_index, long mode)
 // fourth pass result arms 195; all pass result arms 219; native cache record binding 183; native
 // setup field updates 183; cache inline contract 183; signed setup word 183; native table
 // traversal 266.
+// score 183 (was 183): Frame is four bytes small; callee transport and graphics expansion remain. shared first pass 315; shared
+// second pass 377; shared third pass 364; shared final pass 370; shared all passes 785; forced shared all
+// passes 785; forced shared boolean results 785; forced shared byte results 785; constant table shared all
+// passes 749; constant table forced shared all passes 749; constant table forced shared boolean results
+// 749; constant table forced shared byte results 749; typed constant table shared all passes 280; typed
+// constant table forced shared all passes 280; typed constant table forced shared boolean results 280;
+// typed constant table forced shared byte results 280.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -260,6 +267,10 @@ bool function_404b0(long mode)
 // entry observations reordered 326; native local names 250 (fast).
 // Early weight with context-first material 226; depth zero 250, one 250;
 // size policy 462; shared tail-pass loop 476.
+// score 226 (was 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
+// first multipass 269; shared second multipass 281; shared conditional pass 273; shared twentieth pass 269;
+// shared seventh pass 269; shared all passes 291; forced shared all passes 291; shared final result two
+// consumers 291; native final result two consumers 291.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {
