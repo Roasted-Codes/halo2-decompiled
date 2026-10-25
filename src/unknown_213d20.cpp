@@ -171,7 +171,10 @@ void cache_copy_forget(char const *map_name)
 	}
 }
 
-// score 6 (was 6): post-normalization lookup reuses EBX; retail forms the path address again.
+// score 6 (was 6): post-path EBX reuse remains. selected index 76; oldest timestamp 40;
+// selected-record arms 6; age operands 9; entry selection 6; short index 45;
+// whole-path destination 6; no-selection exit 6.
+// post-normalization lookup reuses EBX; retail forms the path address again.
 // Fast: empty path value 59; normalizer-owned path 49; record-pointer iterator 56;
 // signed record index 56; older record before empty 14; retained-record continue 6;
 // state reset before copy 8; guaranteed selected record 37.
@@ -340,7 +343,10 @@ long cache_copy_priority(char const *map_name)
 	return result;
 }
 
-// score 7 (was 7): post-normalization open lookup reuses EBX; retail forms the path address again.
+// score 7 (was 7): post-path EBX reuse remains. shared completion 7; state value 7;
+// entry-result single exit 57; short result 55; inline query 7;
+// outlined inline query 7; inline completion 7; open success last 37.
+// post-normalization open lookup reuses EBX; retail forms the path address again.
 // Fast: empty path value 67; normalizer-owned path 47; open-path scope 7; nested copy state 7;
 // copy at first use 7; queued result domain 21; open-index observation 7;
 // active-priority observation 7.

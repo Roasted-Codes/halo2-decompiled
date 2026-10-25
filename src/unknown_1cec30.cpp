@@ -1397,7 +1397,11 @@ PRIVATE __forceinline real const &component_time_step()
 // acceleration register, memory timestep multiply and stop-test schedule differ.
 // Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
 // completed clamp before ratio 82; accelerated candidate default 114.
-// score 26 (was 26): acceleration/timestep allocation and stopping schedule remain.
+// score 26 (was 26): the time step is still loaded before its product; retail multiplies from memory
+// and keeps the step's address. Step on the left of both products 26; direct field reads 26;
+// one-expression step 26; address-taken target 26; step pointer first 142; direct reads with the
+// stopping test first 43; product inside the scale helper 26; per-arm mass step 135.
+// acceleration/timestep allocation and stopping schedule remain.
 // Combined forced/stopping step-first, distance-first, eager distance, conditional result,
 // named decision and stopping guard 106 each; merged default/return scaling 140/110.
 // score 26 (was 26): isolated mass return 113; threshold-first return 121; returned
