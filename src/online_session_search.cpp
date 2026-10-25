@@ -676,10 +676,16 @@ done:
 	return result;
 }
 
-// score 128 (was 128): frame 0x10 agrees; initial results observation,
+// score 128 (was 128): results observation, details cursor base and kind/count homes differ.
+// Initial results snapshot 183; scalar/cursor role names 128; exact end-pointer test 128;
+// repeated-use computed distance 128; shared maximum bonus 128; persistent details cursor 154.
+// frame 0x10 agrees; initial results observation,
 // details/score cursor base and input/score homes remain. Native score fields
 // 213; complete count-clamp arms 213; named interpolation fraction 213; indexed
 // result loop 214; single total-score accumulator 229.
+// Initial snapshot plus persistent details cursor 190; with invalid-entry continue 199;
+// early details-state observation 196; count/value/kind read order 128;
+// ordinary-field defaults before details 173. Original body retained.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

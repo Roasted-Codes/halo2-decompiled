@@ -1225,6 +1225,14 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 	return result;
 }
 
+// score 281 (was 281): sixteen-step rolled loop versus four-by-four unrolling;
+// expanded loop changes the entry convention and loses the matched caller.
+// Direct getter comparison 281; split header/payload adds 281; arithmetic width 329;
+// counted direct comparison 112; counted split adds 112; counted arithmetic width 161;
+// direct indexed counted accesses 120, with arithmetic width 133. Original body retained.
+// Early channel-array base with counted traversal 111; base after validation 111;
+// early base with pointer traversal 301; signed-word ordinal 296;
+// early base with validation returns 113. All lose the matched caller; original retained.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2494,6 +2502,11 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
 // score 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
 // Capacity named slots 124; native long preserve 144; final preferred-bit recomputation 161;
 // non-preservation-first finish 131; separate entry guards 124.
+// Preserve declared before capacity 124; complete output fill 146; later preferred-bit lifetime 124;
+// direct deferred-mask expression 124; combined skip predicate 124. Original body retained.
+// Boolean role names 124; entry-scope workspaces 124; guarded preferred/mode values 154;
+// shared final selected bit 189; direct blocked assignment 165.
+// Capacity/preserve and preferred-bit homes remain; original body retained.
 // @retail 0x565c0
 void __stdcall function_565c0(s_voice_routing *routing, dword remaining, s_voice_route *output)
 {
@@ -2798,6 +2811,12 @@ struct s_voice_route_choice
 // score 394 (was 400): frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
 // byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
+// Scalar role names 394; rejected-mode first 394; signed while traversal 394;
+// descriptor before pairs 394; existing mixer helper 461; byte radio with direct reads 411;
+// combined headset clear/set 519. Original body retained.
+// Boolean radio with unsigned nearest index 411; three mixer pairs 394;
+// conditional headset assignment 394; split initial/replacement nearest 412;
+// repeated player-field reads 472. Frame and route homes still differ; original retained.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

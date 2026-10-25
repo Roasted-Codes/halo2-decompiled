@@ -103,6 +103,8 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
    0x12b690 match; without it they don't. The body itself doesn't match yet. */
 // score 541 (was 564): Frame 0x38 versus 0x40; angle homes and snap-work lifetimes still differ.
 // Role names 564; four-controller bound 541; ordinary snap inline 1438; short quadrant 564; shared default 548; combined 562.
+// Iteration-wide axes 541; direct double-angle helper 541; offset before magnitude 556;
+// shared axis signs 735; reverse layout-case order 541.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {

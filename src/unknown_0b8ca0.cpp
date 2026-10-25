@@ -1642,6 +1642,8 @@ void function_bba20(long index);
 // scheduling remain. Positive acceptance scope 358; sibling-first sentinels 319; hidden Boolean
 // shift 318; connection Boolean shift 318; unsigned masks 319; both Boolean shifts 323.
 // Frame 0x64 agrees; pool/permission homes and parent/SIMD lifetimes remain. Dead parent lookup removed 319; header-data base 336; node before link 319; separate output phases 319; bitset indexing 319 (fast).
+// Offset before pool 322; pool at use 325; computed type mask 330;
+// six-byte sentinel fill 318; isolated byte-bit-six test 319; pool at use with unsigned offset 325.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

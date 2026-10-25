@@ -1443,6 +1443,11 @@ struct s_camera_clip_reference_16ebf0
 // score 223 (was 229): frame 0x9c versus 0x98 and vector/state homes remain; existing point setter recovers retail length.
 // State first 253; early native declarations 229; split input/output vectors 229; scalar position 223;
 // full-width narrow 231 (frame 0x98); point setter 223; setter with wide predicate 253; combined native copies 287.
+// Scalar-workspace role names 229; scale assigned after copies 229; later position pointer 226;
+// no inner position alias 229; directions published first 229; scalar vector aggregates 229;
+// later position pointer with native direction copies 237. Three-point gain rejected.
+// Complete direction memcpy 237; direct input cross with late workspaces 244;
+// later up pointer 253; native point carried through composition 229; matrix-axis cross with late workspaces 241.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

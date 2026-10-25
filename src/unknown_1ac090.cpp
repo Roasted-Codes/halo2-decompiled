@@ -9,6 +9,7 @@
 #include "unit_requests.h"
 #include "unknown_2605d0.h"
 #include "unknown_2626b0.h"
+#include "vector_products.h"
 
 /* the state of the slots of types 0x2c and 0x2b */
 struct s_slot_2c
@@ -716,6 +717,11 @@ void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
 
+// score 174 (was 181): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
+// Result first 203; request outer scope 187; role names 181; shared point differences 179;
+// failure result before release 207; shared cross product 174.
+// Count name with shared cross 174; request-output declarations first 174;
+// outer vector workspaces 174; separate direction vectors 171; request defaults with overrides 186.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -790,9 +796,11 @@ bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 					local_18 += local_15.i * local_17.i;
 					if (local_18 > 0.707106769f)
 					{
-						real local_20 = (local_16.i * local_15.j - local_16.j * local_15.i) * local_17.k;
-						local_20 += (local_16.k * local_15.i - local_16.i * local_15.k) * local_17.j;
-						local_20 += (local_16.j * local_15.k - local_16.k * local_15.j) * local_17.i;
+						vector3f side;
+						cross3f(&local_16, &local_15, &side);
+						real local_20 = side.k * local_17.k;
+						local_20 += side.j * local_17.j;
+						local_20 += side.i * local_17.i;
 						local_20 *= local_19;
 						if (local_20 > 1.0f)
 							function_f47d0(local_14, 1);

@@ -54,6 +54,10 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Frame 0x28 agrees; separate pool homes and iterator/actor lifetimes differ.
 // Native record iterator 222; long partition index 163; full actor view 164; outer actor workspace 164; ineligible-first branch 171.
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive continue 164; direct datum 164; unsigned successor 164.
+// Actor-next call alone 234; unsigned-word squad index 230; iterator index initialized first 164;
+// active count before timestamp 166; nested source-squad validation 164; per-squad pool observation 231.
+// Ordinary private next 281; private next out of line 281; separate reacquired actor 164;
+// closed initial-actor scope 164; ordinary private next/separate reacquired actor 281.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
