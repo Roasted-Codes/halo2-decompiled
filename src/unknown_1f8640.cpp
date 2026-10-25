@@ -378,6 +378,9 @@ struct s_1f8a70_actor
 // Native active flag 411; native reset member 411; native mode member 411; native source metadata
 // 411; native point source 411; all native actor members 411; paired metadata null guards 410
 // (plain 413); case order two/six/three/seven/four/five 438. Reduced control 411; full baseline 414.
+// score 408 (was 408): reference/query case layout still differs at the shared route tail.
+// Destination orders 234675 437; 235674 440; 452367 419; 243567 418;
+// 234657 412; 235746 453; 456723 415; 246357 433. Opening case order retained.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

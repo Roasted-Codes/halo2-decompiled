@@ -389,6 +389,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // score 423 (was 423): Camera/points saved registers and initial store schedule remain.
 // corner point setters 622; rectangle CRT copy 423; plane array receiver 761;
 // native plane return 700; late right/top products 682 (fast).
+// score 423 (was 423): camera/point homes and plane input/product residency remain.
+// Scaled distance 469; normal inputs KJI 433; normal names 423; helper order 422;
+// scaled distance/KJI 474; first slope before constants 478; all side slopes 618; last corner XYZ 424.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
