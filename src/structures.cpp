@@ -242,6 +242,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // BSP/section registers and range/plane homes remain;
 // reference table before traversal 221; instance case first 232; byte success result 185;
 // result-controlled traversal 205; reference table and result traversal 216.
+// score 185 (was 185): BSP/section residency, range/plane homes and vertex-result joins remain.
+// Index-first/output-first fetch contracts 185/185; filled-point return 185; native span inputs 238;
+// actual validity publication 185; triangle query into result 217; validity-byte name 185; read-only section 185.
 // byte vertex validity 185; range index at use 199; cached range end 183
 // (below gate); later plane 211; native strip start 220.
 // score 185 (was 185): BSP/section carriers and range/plane homes remain;
