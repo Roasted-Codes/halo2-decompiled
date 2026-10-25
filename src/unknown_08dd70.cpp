@@ -112,6 +112,9 @@ struct s_handler_slot
 // Tried (all 67): pointer-to-field locals (s_gateway_slot **), static dispose helpers,
 // inline member dispose() on both slots, static detach helpers taking T **, reading the
 // globals again inside the tests; volatile initialized/back-pointer fields 65 (other shape).
+// score 47 (was 67): session clear schedule, field-address carriers and final link load differ;
+// handler/gateway/both native clears 58/59/54; session 71; handler/session 68;
+// gateway/session 67; all three 47 plain; full pointer ranges 57.
 // @retail 0x8dd70
 void function_8dd70(void)
 {
@@ -147,8 +150,7 @@ void function_8dd70(void)
 			session->state = NONE;
 			session->value18 = NONE;
 			session->value14 = 0;
-			session->unknown04 = 0;
-			session->observer = 0;
+			memset(&session->unknown04, 0, sizeof(session->unknown04) + sizeof(session->observer));
 		}
 		network_observer_dispose_channels(g_510570);
 		function_81f80();
@@ -161,8 +163,7 @@ void function_8dd70(void)
 				handler->gateway = 0;
 			}
 			handler->unknown14 = 0;
-			handler->messages = 0;
-			handler->link = 0;
+			memset(&handler->link, 0, sizeof(handler->link) + sizeof(handler->messages));
 			handler->initialized = false;
 		}
 		s_gateway_slot *gateway = (s_gateway_slot *)g_510568;
@@ -173,8 +174,7 @@ void function_8dd70(void)
 				gateway->link->out_of_band_consumer = 0;
 				gateway->link = 0;
 			}
-			gateway->handler = 0;
-			gateway->messages = 0;
+			memset(&gateway->messages, 0, sizeof(gateway->messages) + sizeof(gateway->handler));
 			gateway->initialized = false;
 		}
 		memset(g_510564, 0, 0x5a0);
