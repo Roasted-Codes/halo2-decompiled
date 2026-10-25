@@ -1002,6 +1002,9 @@ PRIVATE __forceinline bool surface_status_failed(long status)
 // |= 1 twice) 2: retry flags snapshot 2; `flags &= ~1` before the retry 2; retry flags in
 // a local 2; dword flags 2; flags declared before the tag pointer 4; point declared first 24;
 // failed set after the retry 104.
+// score 2 (was 2): retry AND still follows the object-index push. XOR 2; subtract 18; clear
+// extracted bit 2; subtract extracted bit 133; retry status scope 2; one failure store 98; long
+// failure 83; entry status 2.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
