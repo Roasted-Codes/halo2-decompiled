@@ -396,6 +396,14 @@ struct s_contact_dispatch_output
 	bool forced;
 };
 
+// score 26 (was 29): case 6 placed before cases 4-5 gives retail's block order.
+// Retail takes the output in esi and the state in ecx and reads *state after the
+// flag test; ours takes the output in ecx and the state in esi. The registers
+// follow the caller 0x1e55d0 (score 353): with its capsule made an aligned local
+// (frame aligned like retail's, caller 326), the lazy read below moved the contact
+// onto the stack (56). Tried: *state read inside the else 35, a `type` local there
+// 35, early return 35, branches swapped 34, state + 0x10 hoisted 35, every
+// parameter order 35, cases 4-5 merged 35.
 // @retail 0x1e5b50
 void function_1e5b50(const byte *contact, s_contact_dispatch_output *output, const byte *state)
 {
