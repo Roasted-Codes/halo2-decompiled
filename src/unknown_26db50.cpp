@@ -498,6 +498,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // direct radius with trace scalar 239; sector eligibility result 120.
 // Separated object before record/sector and early native radius 120/120/120;
 // direction/world library copies 120/120; conditional sector/pathfinding 154/234; separate count advance 120.
+// frame 0xd8 agrees; entry-table scheduling, ring conversion and rotation homes differ.
+// Early object/record-pool producers 123/123 (exact-only); real ring/spoke 273/195;
+// short remaining count 125; unsigned/double ring 248/261; real ring and spoke 201.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

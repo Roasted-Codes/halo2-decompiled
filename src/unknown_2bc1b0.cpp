@@ -233,7 +233,11 @@ struct s_item_object_2bc1
 /* updates a team's item each tick: how long it has been away from home, its
    return home once it has waited too long, and the points of the player
    holding it */
-// score 97 (was 97): EBP/EDI team-entry roles and timer/tally scheduling differ;
+// score 97 (was 97): team/entry registers and timer/tally schedule remain; conditional tick
+// publication 93 (plain 93, rejected: inherited self-address input); publication arms 147;
+// direct timer 108; inactive/absent-holder/unexpired exits 97/98/97; split tick increment 97;
+// conditional ticks with direct input 156.
+// EBP/EDI team-entry roles and timer/tally scheduling differ;
 // direct formal 156; entry name 97; object/limit names 97; distinct events 97;
 // shared event 97; separate timer values 110; early tally pointer 97; combined 156.
 // score 97 (was 97): team/entry saved-register roles and timer/tally allocation remain.

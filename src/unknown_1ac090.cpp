@@ -9,6 +9,7 @@
 #include "unit_requests.h"
 #include "unknown_2605d0.h"
 #include "unknown_2626b0.h"
+#include "vector_products.h"
 
 /* the state of the slots of types 0x2c and 0x2b */
 struct s_slot_2c
@@ -291,6 +292,8 @@ short __stdcall function_1ac3f0(long actor_index)
 // first duration multiply pops scale early and reset stores cross the scale
 // addition. Duration-seconds name 43; ticks name 43; both names 43; both timer names 43; product
 // update 43; duration scope 43; entry delay 43; early rate 37/333 (one-use field copy, rejected).
+// Scale-first product update 47; duration-owned product 43; first output/input guard scope
+// 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -422,7 +425,10 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
-// score 24 (was 24): early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
+// score 24 (was 24): early pool-data load, mode registers and restore order differ;
+// timer names 24; timer declarations 24; request before mode 24; type after point 34;
+// reverse word declarations 24; mode after vector 44; request result 26; failure first 48.
+// early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
 // frame 0x28 agrees; pool-data load and mode-lookup registers still differ;
 // tried full width mode 39; mode tests reversed 27; inactive state branch first 168;
 // missing prop early return 24; alignment product operands 30; unsigned short mode 24;
@@ -620,6 +626,9 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // score 58 (was 58): default reload and saved-register roles differ. Branch-assigned defaults,
 // valid object first: short result with entry/scoped state 76/76, long result 73/73; invalid
 // object first: short 80/80, long 77/77.
+// Separate continuation, word/native with arms/conditional: branch 55/58/56/59; entry
+// 55/58/56/59 (three-point gain rejected). Tag/prop/state inline and noinline declarations,
+// singly and together, 58 each. Independent default reload and saved roles still differ.
 // @retail 0x1ad5b0
 short __stdcall function_1ad5b0(long actor_index, s_slot *slot, bool active)
 {
@@ -720,6 +729,11 @@ void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
 
+// score 174 (was 181): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
+// Result first 203; request outer scope 187; role names 181; shared point differences 179;
+// failure result before release 207; shared cross product 174.
+// Count name with shared cross 174; request-output declarations first 174;
+// outer vector workspaces 174; separate direction vectors 171; request defaults with overrides 186.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -794,9 +808,11 @@ bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 					local_18 += local_15.i * local_17.i;
 					if (local_18 > 0.707106769f)
 					{
-						real local_20 = (local_16.i * local_15.j - local_16.j * local_15.i) * local_17.k;
-						local_20 += (local_16.k * local_15.i - local_16.i * local_15.k) * local_17.j;
-						local_20 += (local_16.j * local_15.k - local_16.k * local_15.j) * local_17.i;
+						vector3f side;
+						cross3f(&local_16, &local_15, &side);
+						real local_20 = side.k * local_17.k;
+						local_20 += side.j * local_17.j;
+						local_20 += side.i * local_17.i;
 						local_20 *= local_19;
 						if (local_20 > 1.0f)
 							function_f47d0(local_14, 1);
@@ -851,7 +867,10 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
-// score 29 (was 29): actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
+// score 29 (was 29): actor offset/candidate registers and two spill homes differ;
+// separate cleanup receiver 29; success return 74; shared displacement 29; scan scope 44;
+// unsigned candidate counter 227; unsigned marker counter 153; const source/marker 29/29.
+// actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
 // frame 0x8c agrees; EBP/EDI, two spill homes and product/address scheduling still differ;
 // tried result declared first 30; best index named before actor home 29;
 // source actor named after index home 29; best index and source actor named homes 29;
@@ -995,6 +1014,9 @@ struct s_1ac9e1
 // immediate completion store and tail join differ. Literal query returns 63; native history points
 // 60; both 63; common result exit 48; native points and common exit 48; workspace names 60;
 // literal returns and names 63; ordinary completion local 75.
+// Native/byte common result 121/110; ordinary common completion 60; result initializes
+// completion 48; result clears history 48; both phases 48; completion entry scope 48;
+// completion from unblocked query 58. Count/initialization scheduling still differs.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)

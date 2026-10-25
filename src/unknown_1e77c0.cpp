@@ -500,6 +500,10 @@ struct s_request_profile
 // Default profile 164; early memset 150; unsigned version 143; aligned byte prefix 180;
 // unsigned local index 143; aligned dword prefix 180; common bits 370; separate tick reset 335.
 // All use ordinary player data and native loops; original profile and body retained.
+// A plain 32-entry loop of `ticks = 0; state = function_1e7a10(local_index, i) ? 5 : 0;` gives retail's
+// per-element flag reloads and bool select but stays rolled (337, 357 bytes): with if/else, a
+// pointer local, a bool local, short/int/unsigned/do/while counters, an inline transition helper,
+// inline/forceinline on 0x1e7a10 alike; noinline 373; the four-way body calling it 154.
 // @retail 0x1e73b0
 void function_1e73b0()
 {

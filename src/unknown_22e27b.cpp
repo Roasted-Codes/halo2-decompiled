@@ -166,9 +166,16 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
-// score 205 (was 205): Frame 0xc versus 0x10; next time stays in EBX instead of its retail stack home.
+// score 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.
+// Next time before elapsed 206; fraction after delta 106 kept (plain); on that frame,
+// frame index outer scope 106, wrap case first 106, type-first disposal 272.
+// Fraction just before delta 204; explicit interval divisor 106; duration-first next-time sum 106; outer delta scope 106; direction-first short sum 106; opening 106 restored.
+// Frame 0xc versus 0x10; next time stays in EBX instead of its retail stack home.
 // Entry disposal 205; shared boundaries 251; shared hold cases 238; final branch order 210; interpolation helper 210; native restart 227.
 // Flags snapshot 205; initial frame count 205; unsigned duration 214; key pointers 222; disposal exit 223.
+// score 106 (was 106): frame 0x10 agrees; division setup, quotient and frame/index registers differ.
+// Short interval count 215; stepped next-time accumulator 106; shared high-boundary reversals 193;
+// wide lookahead with short wrapping 248; conditional elapsed clamp 106; opening body restored.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
@@ -309,9 +316,9 @@ void c_class_1a2c81::update(dword time)
 			{
 				elapsed = 1;
 			}
-			t = (real)elapsed / (real)frame_time;
 			keys = (s_widget_animation_key *)animation.target;
 			vector3d_from_points3d(&keys[animation.valuea].offset, &keys[next].offset, &delta);
+			t = (real)elapsed / (real)frame_time;
 			function_x697631(&keys[animation.valuea].offset, &delta, t, &animation.offset);
 			keys = (s_widget_animation_key *)animation.target;
 			animation.scale = (keys[next].scale - keys[animation.valuea].scale) * t + keys[animation.valuea].scale;

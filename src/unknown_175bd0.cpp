@@ -2534,6 +2534,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility differ. Shared direction output 313;
 // owner/location CRT copies 313; sound stores before compression 313; detached arms first 318; early damage
 // scale 313.
+// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility remain.
+// Shared damage direction 313; retained light object 313; retained sound object 313;
+// object-case random record 313; full-width sound node 313.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2670,6 +2673,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
 // Two-use lower 163 (three-point gain dropped); span/lower plus span 167/349;
 // entry cursor/event record/read-only tag 166/166/166; cursor plus lower 163; event plus span 167.
+// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
+// Full-width explicitly wrapping counter 361; per-part point 179; direct creation predicate 166;
+// early suppressed-part guard 166; per-part forward 166.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2761,6 +2767,9 @@ void __stdcall function_17a380(s_effect_datum *effect)
 // differ. mode after color 112; late signed mode 112; late effect cursor home 112; late particle
 // cursor home 112; early mode traversal transform 96; early mode node observation 96; early mode
 // transform home 96; early mode query scope 96.
+// score 96 (was 96): current frame 0x50 versus 0x54, system/cursor homes and color staging remain;
+// native mode 96; entry word/native mode 108/109; unsigned particle cursor alone/with native mode 96/96;
+// node predicate at use 109, with native mode 110; late native mode 106. Opening body restored.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {
@@ -2809,6 +2818,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // score 176 (was 176): frame 0x50 agrees; early BL result and player-pool/count registers differ. Unit-skip
 // guard 176; vector walk lifetime 176; retained radius 275; location for 390; shared point-transform call
 // 392.
+// score 176 (was 176): early BL result and player-pool/count carriers remain.
+// Full-width result 176; per-unit matrix 176; named squared radius 176;
+// absent-node point memcpy 176; nested eligibility tests 176.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

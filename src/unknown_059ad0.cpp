@@ -2878,7 +2878,14 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 
 /* a channel of a member connected (a peer tells the host it is there) or
    closed */
-// score 31 (was 31): cold state-clear arm still precedes the mask tail; dead-state, state-value, search and combined local names 31; repeated field reads 31; connected state snapshot 31; shared state snapshot and renamed shared snapshot 51.
+// score 31 (was 31): state-clear arm remains before the common mask tail;
+// direct session/clear/connected/both member fields 31/43/39/48; session
+// and clear fields direct 43; shared member receiver 86; message at entry 31;
+// shared member and entry message 86.
+// state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
+// Dead snapshot omitted 38; entry/disconnect snapshot scope 31/31; entry snapshot/message orders 31/31;
+// shared lookup without snapshot 38, with entry snapshot 31, with entry message/snapshot 31; all restored.
+// cold state-clear arm still precedes the mask tail; dead-state, state-value, search and combined local names 31; repeated field reads 31; connected state snapshot 31; shared state snapshot and renamed shared snapshot 51.
 // state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
@@ -3640,9 +3647,11 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 120 (was 120): frame agrees; timeout owner spill and identity load order differ;
+// score 115 (was 120): frame agrees; timeout owner spill and identity load order differ;
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
+// Direct leave predicate 115; retained host-query result 137; narrower host-result
+// scope 125; flags before identifier 120; early nonpeer return 123.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -3673,8 +3682,7 @@ bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *addr
     memcpy(&message.identity, session->members[member].words, sizeof(message.identity));
     network_session_send_to_members(session, 0, 0x13, sizeof(message), &message);
     was_host = true;
-    if (session->state == 7 && *(byte *)&session->value7420)
-     leave = true;
+    leave = session->state == 7 && *(byte *)&session->value7420;
    }
    session->member_index = member;
    session->value44 = NONE;
@@ -4318,9 +4326,11 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 407 (was 434): frame agrees; sender/identity homes and acknowledgement placement differ;
+// score 396 (was 434): frame and sender/identity homes agree; Boolean homes and acknowledgement placement differ;
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
+// Member pointers before received copy 396; host workspaces swapped 413;
+// isolated sender rename 407; preference results first 407; old version first 407.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4392,9 +4402,9 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  }
  {
   byte received[0xc0];
-  memcpy(received, (const byte *)message + 8, sizeof(received));
   s_session_member_header *remote = (s_session_member_header *)&session->members[sender];
   s_session_member_header *local = (s_session_member_header *)&session->members[session->current_member];
+  memcpy(received, (const byte *)message + 8, sizeof(received));
   s_session_peer_transition *transition = (s_session_peer_transition *)&session->value7420;
   s_session_peer_map *map = (s_session_peer_map *)transition->map;
   bool better = false;
