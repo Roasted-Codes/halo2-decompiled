@@ -964,6 +964,7 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Ordinary count with search cursor 525; candidate countdown 474; fixed-pass do loop 427;
 // snapshot projection helper 428; native relative-velocity subtraction 642.
 // Frame pointer 692; depth zero 967; size preference 1011; moving arm first 449; native component subtraction loops 427 (one-point gain rejected).
+// score 428 (was 428): Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1126,6 +1127,7 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // score 230 (was 230): double-width zero load, reset/selection homes and second material-call expansion still differ.
 // Combined eligibility 240; per-contact body-velocity snapshot 346; highest reduction after selection 258;
 // approach at use 351; surface output at entry 230.
+// score 230 (was 230): Frame 0x28 agrees; zero width, reset/selection homes and material-call expansion remain. Preservation arm first 288; entry score storage 230; shared squared length with double comparison 230; byte current flag 240; byte current supported 239 (fast).
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

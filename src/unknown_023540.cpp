@@ -2540,6 +2540,7 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // depth one 575; long result/search 575; short result 570; byte result 596.
 // score 570 (was 570): Frame 0x214 versus 0x200; order, coefficient and sample homes remain. Indexed matrix copies 758; structure reload 588; long eligibility 572; layout-order sample 589; long cache-hit result 570 (fast).
 // score 561 (was 570): Frame 0x214 versus 0x200; coefficient homes, stack order and sample paths remain. Cache index 575; in-place inverse 584; capped short sample count 561 kept (plain); delayed default coefficients 576; failure-first result 589 (fast).
+// score 554 (was 561): Frame 0x214 versus 0x200, stack order and coefficient/sample homes remain. Shared cache helper 718; explicit eligibility 560; entry matrix 561; short bounded sample loop 606; post-metadata defaults 554 (plain).
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2558,12 +2559,6 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
             *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
             *(long const *)(*(byte const **)(structure + 0x84) + 4) == *(long const *)((byte *)g_4e0348 + 8);
         real red[16], green[16], blue[16];
-        if (!use_samples)
-        {
-            vector3f direction = { 0.0f, 0.0f, -1.0f };
-            spherical_harmonics_evaluate_directional_light(&direction, layout->order,
-                1.0f, 1.0f, 1.0f, red, green, blue);
-        }
         long level = 5 - order;
         if (level > layout->level_count - 1) level = layout->level_count - 1;
         real const *data = layout->data + layout->levels[level].offset;
@@ -2571,6 +2566,12 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         s_bucket_source const *buckets = (s_bucket_source const *)vertices;
         long total = function_023540((short)count, buckets, entry, stride);
         long bytes = total * stride * sizeof(real);
+        if (!use_samples)
+        {
+            vector3f direction = { 0.0f, 0.0f, -1.0f };
+            spherical_harmonics_evaluate_directional_light(&direction, layout->order,
+                1.0f, 1.0f, 1.0f, red, green, blue);
+        }
         if (!bytes) goto done;
         long next = g_487b18.size + bytes;
         if (next > 0x27000) { result = false; goto done; }

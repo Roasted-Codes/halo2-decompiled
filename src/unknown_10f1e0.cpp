@@ -1243,6 +1243,7 @@ bool function_c70b0(long unit_index);
 // score 164 (was 164): entry pool/state and count joins remain; direct-parameter forms:
 // signed-byte result 322; short result 355; entry held outputs 322; state-switch default 370;
 // branch-local status defaults 253. Opening argument handling restored.
+// score 164 (was 164): Frame eight agrees; entry pool/state registers and count joins remain. Entry byte result 164; valid first count 328; guarded second clear 328; signed-byte result 164; state identifier before overlay 164 (fast).
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {

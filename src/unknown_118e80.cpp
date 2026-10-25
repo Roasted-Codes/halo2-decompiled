@@ -700,6 +700,7 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // Word-flag/handle registers and call Boolean roles still differ.
 // absent-component exit 99; signed flags with early Boolean 99; long state with early Boolean 135;
 // counter reset before increment 103; threshold default and override 99.
+// score 95 (was 95): Frame agrees; word/Boolean carriers and final state width remain. Snapshot after word 95; earlier threshold 129; unsigned saturation 97; unsupported counter first 106; valid byte last 96 (fast).
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
