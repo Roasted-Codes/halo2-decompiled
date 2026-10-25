@@ -196,6 +196,9 @@ const char *function_99820()
 	return "slayer-engine-globals";
 }
 
+/* the next live handle after `handle` (NONE starts at the first), or NONE;
+   retail keeps it out of line in has_pending_entity, which otherwise inlines it */
+#pragma auto_inline(off)
 // @retail 0x98480
 long function_98480(long handle, c_handle_table_450cd0 *self)
 {
@@ -207,15 +210,15 @@ long function_98480(long handle, c_handle_table_450cd0 *self)
 	long result = NONE;
 	for (; i < 0x400; i++)
 	{
-		s_handle_entry *entry = &self->entries[i];
-		if (entry->state == 1 || entry->state == 2)
+		if (self->entries[i].state == 1 || self->entries[i].state == 2)
 		{
-			result = entry->handle;
+			result = self->entries[i].handle;
 			break;
 		}
 	}
 	return result;
 }
+#pragma auto_inline(on)
 __declspec(noinline) bool function_99640(c_handle_table_450cd0 *self, long handle);
 
 // @retail 0x99640
