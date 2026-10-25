@@ -736,6 +736,11 @@ dword function_1a7ad0(long owner_index)
 // Nullable definition 81 (adds a null branch); typed fallback 96; both 81;
 // const owner, definition, source, tags and object/element views 96 each;
 // ordinary shared source copy 143; shared copy with owner tag 143.
+// score 96 (was 96): BLOCKED-BY 0x1c2330 (its parameter order sets the first intersect call's set-up);
+// the two tail-merged copies swap the owner/result registers and the squad element is one lea.
+// Owner definition read once 94 (390 bytes); squad arm and default arm swapped 101; copies without
+// the source local 153; nullable definition pointer tested 123; source/definition declarations
+// swapped 96; both declared before the owner 96.
 // @retail 0x1a7b30
 void function_1a7b30(s_flag_bits *result, long owner_index)
 {

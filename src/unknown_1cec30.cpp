@@ -1397,6 +1397,10 @@ PRIVATE __forceinline real const &component_time_step()
 // acceleration register, memory timestep multiply and stop-test schedule differ.
 // Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
 // completed clamp before ratio 82; accelerated candidate default 114.
+// score 26 (was 26): the time step is still loaded before its product; retail multiplies from memory
+// and keeps the step's address. Step on the left of both products 26; direct field reads 26;
+// one-expression step 26; address-taken target 26; step pointer first 142; direct reads with the
+// stopping test first 43; product inside the scale helper 26; per-arm mass step 135.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)

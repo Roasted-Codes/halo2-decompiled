@@ -907,6 +907,10 @@ static inline XUID *message_entry_get_xuid(s_entry *entry)
 // read-only sender 81; read-only sender plus plain getter 145; native string buffer 75
 // (458 bytes, plain; rejected single-array wrapper); buffer plus plain getter 141;
 // loop-scoped index 81; indexed cumulative exclusions 81.
+// score 81 (was 81): retail keeps the sender in a stack slot (set by a branch, later reused for the
+// player) and keeps the getter's null test; without the qualified read the test is folded away.
+// Plain message read 145; that with an if-set exclusion 150; if-set exclusion alone 113; the count
+// renamed result/sender_count/added 81 each; a message pointer stepped at the body's end 157.
 // @retail 0x1a4441
 long players_list_add_message_senders(XUID const *excluded, long excluded_count)
 {
