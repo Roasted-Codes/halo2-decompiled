@@ -1232,7 +1232,9 @@ static inline long render_memory_allocate(long bytes)
 }
 
 // score 1 (was 1): the permutation pointer arrives in eax, retail passes it in ecx; the register is fixed by the caller function_4c690, which is not retail's yet
-// frame pointer 27; alias analysis off 1; global expressions off 62; inline depths one/zero 1/89; native result/count 1/1; input role names 1.
+// frame pointer 27; alias analysis off 1; global expressions off 62; inline depths one/zero 1/89; native result/count 1/1; input role names 1;
+// the permutations last or first (old order kept for the caller by a forwarding overload) 1/1; a const member of a 16-byte permutation type 1;
+// extra_bytes read once through its address 1; (void)&node_count 1.
 // @retail 0x3e380
 long function_3e380(long model_index, byte lod, transform4x3f const *nodes,
     byte const *permutations, long *node_count, long extra_bytes)
@@ -1360,6 +1362,9 @@ struct s_133f70;
 
 // score 219 (was 219): distance load, nullable-entry address and cache/level scheduling differ;
 // distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
+// score 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
+// Native reuse 330; native level change 291; short entry index 352; late success 262; short builder
+// result 216.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

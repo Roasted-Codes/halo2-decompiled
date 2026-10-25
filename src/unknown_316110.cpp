@@ -168,6 +168,9 @@ inline void end_agent_316110(agent_316110 *agent)
 // Isolated end/flag forms 87; delayed second handle and first-id per-use
 // 141; cleanup receiver reference and caller null guards 87; first id once
 // 240; shared equality predicate 87. Original body and inline functions retained.
+// Cleanup as an agent method 6; entity and owner locals 6; an else arm,
+// post-increment copy and member end on 6: 6. Cleanup as a record method 54,
+// with an agent sample 6; record input 6; immutable callback receiver 6.
 // @retail 0x316110
 void cache_316110::function_316110(pair_316110 const *pair)
 {

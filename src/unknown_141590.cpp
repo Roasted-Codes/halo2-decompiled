@@ -128,6 +128,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 }
 
 /* the rotation that takes one unit vector to another */
+// score 237 (was 237): frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
+// quaternion scale loop 302; shared axis scale loop 294.
+// shared rotation cross 241; shared cross scale loop 294.
+// shared cross both phases 281; identity library copy 237.
+// per component scale ratio 290; scaled axis before stores 289.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,
@@ -494,6 +499,10 @@ static __forceinline void function_x7a3668(plane3f const *plane, transform4x3f *
 // score 51 (was 51): the three components are squared and summed in a different order, the scaled
 // component is kept in a different register, and the cross product holds its operands in swapped
 // registers.
+// The first difference is an extra early load of the first component (retail
+// loads only the second before the magnitude test). Second component scaled first
+// 52; first scaled as component * inverse 51; third stored first 53; first and
+// third read into locals 51; third scaled as k * inverse 51 (fast).
 // @retail 0x142390
 void function_142390(
 	plane3f const *plane,

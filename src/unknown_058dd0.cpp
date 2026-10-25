@@ -742,7 +742,7 @@ void c_session_client::function_06dbc0()
 	function_06dc60(this, 3);
 }
 
-// score 43 (was 43): this stays in edx where retail copies it to ebx at entry, so
+// score 44 (was 43): this stays in edx where retail copies it to ebx at entry, so
 // the mode and member index take esi; separate case 7 and 8 labels (retail's direct
 // table) with an inline compare-and-update helper 47, an inline id-compare helper 48,
 // a member-index local 47, an id copy 47, the mode in a local 47.
@@ -1129,6 +1129,10 @@ long __stdcall function_063190(void *summary, long user);
 // EBP frame has three words versus one session spill; aggregate registers differ.
 // Session per-use 169, mode-scoped 115; word ordinal 134; absent/user continues 115/116;
 // ready-first 112; sum-first 118; rating-data reference 115.
+// score 110 (was 110): session spill and aggregate allocation still differ.
+// Indexed aggregate 129; aggregate field reference 110; availability count 156;
+// early summary result 110; rank element pointer 110; absent-rank continue 110;
+// count before extrema 113; active-session spill name 110. Opening body retained.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
@@ -1841,6 +1845,10 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // Shared type/all failure commands 144/128; combined mode-readiness 90 (426 bytes);
 // preparation failure first 90; raw-time readiness 94; unsigned saturated time 90;
 // completion before mode call 90; shared failures with combined gate 129.
+// score 59 (was 90): readiness/session registers and failure/timer join still differ.
+// Integer readiness 59 kept; entry readiness 134; entry integer readiness 135;
+// timed type range 107; four/five/timed arm order 111; completion from readiness 136;
+// test-assigned preparation 90; active predicate value 166.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {
@@ -1857,7 +1865,7 @@ bool c_session_state_start_match::update()
         }
         else if (b->type == 2 || b->type == 3)
         {
-            bool ready = false;
+            long ready = false;
             if (function_06e720(b) && function_06e6b0(b, &unknown14))
             {
                 if (!unknown18)

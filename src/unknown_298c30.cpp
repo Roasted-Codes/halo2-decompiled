@@ -100,6 +100,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // angle result from branches 408; separate evaluation scratches 425; general arm first 441.
 // Signed byte candidate/endpoint/both 408/408/408; quarter-turn table loop 481;
 // short facing result 430. Entry loads and 0x18 versus 0x1c return cleanup remain.
+// Helper-owned/returned evaluation 425/425; native endpoint result 443; endpoint value 455;
+// ratio value result 408; consuming angle cursor 416; side before distance 408; angle pair initialization 414.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -266,6 +268,8 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Shared endpoint setters 767; center CRT copy 767; step CRT copies 767;
 // obstacle-radius observation 813; requested-angle observation 796; all restored.
 // Trace-field forward sector 772, reverse 776, both 774; settings radius rereads 812; short-index obstacle cursor 814.
+// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Early settings radius 800; const center 767; early selector 847; final-angle selection first 798; reverse component assignments 767 (fast).
+// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. One sector sample 809; cosine first 767; signed step branches 848; normalization result 839; maximum rejection guard 767 (fast).
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,
