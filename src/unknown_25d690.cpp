@@ -1312,6 +1312,9 @@ bool function_1e1de0(long arg_0);
 // early ESI save, literal return byte and motion-copy registers differ.
 // Native behavior/activity levels and activity/location/target/root result receivers 175 each;
 // three actor receivers together 175; all six observations 175.
+// score 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Current defaults with literal/shared/entry-tested result 252/248/257; signed update byte/word
+// 238/270; return-home name 165; literal/shared result with Boolean activity 241/250.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
