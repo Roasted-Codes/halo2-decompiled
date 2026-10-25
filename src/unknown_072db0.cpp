@@ -1529,15 +1529,18 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 }
 #pragma optimize("", on)
 
-// score 770 (was 770): user-cursor and identity-word homes differ;
+// score 770 (was 770): Frame 0xc0 agrees; user cursor, identity word and request homes remain.
+// user-cursor and identity-word homes differ;
 // long validity 770; pending read guard first 786; timestamp before
 // counts 770; unsigned property initializer 770; unsigned user group 781.
-// score 770 (was 770): Frame 0xc0 agrees; user cursor and identity homes remain. Const user 770; const identity 770; byte group 781; byte accepted count 821; byte descriptor initializer 853 (fast).
-// score 770 (was 770): User/identity and request homes remain; direct identity-helper
+// Frame 0xc0 agrees; user cursor and identity homes remain. Const user 770; const identity 770; byte group 781; byte accepted count 821; byte descriptor initializer 853 (fast).
+// User/identity and request homes remain; direct identity-helper
 // return 791; duplicate cursor equality 773; byte team/failure results 770/770;
 // incomplete-property arm first 785 (fast). Opening body and helpers retained.
 // Frame 0xc0 agrees; user/identity and request homes remain. Terminal record reuse 787; native identifier field 770; clamp-value lifetime 770; type-first duplicate filter 794; request-player cursor 804 (fast).
-// score 770 (was 770): Frame 0xc0 agrees; user/identity and request homes remain; native identity flags 770; repeated flag snapshot 770; identity after property copy 772; property value after lookup 786; received-record cursor 770 (fast).
+// Frame 0xc0 agrees; user/identity and request homes remain; native identity flags 770; repeated flag snapshot 770; identity after property copy 772; property value after lookup 786; received-record cursor 770 (fast).
+// Existing identity snapshot as copy source 770; cache comparison order 797; request header first 771;
+// word request-player index 809; one-based descriptor IDs 770 (fast). Original body retained.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

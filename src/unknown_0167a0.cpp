@@ -777,18 +777,21 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
+// score 157 (was 157): Frame 0xc versus 0x10 and deferred descriptor rereads remain.
+// frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
 // alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
 // frame 0xc versus 0x10; table/entry homes and selector rereads differ.
 // Ordinary writer inline 513; packed/index formal domains 189/181; shared complement 214;
 // global optimization off 621; frame pointer 207; branch table lifetimes 184; inline depth two 157.
-// score 157 (was 157): selector observation and table/entry frame homes still differ.
+// selector observation and table/entry frame homes still differ.
 // selector-storage writer 177f; writer offset input 188f.
 // selector-use output indices 230f; signed byte cursors 163f.
 // byte cursors 190f; byte mapping slot 189f.
 // word source-kind 157f; special-slot result 180f.
-// score 157 (was 157): Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
+// Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
+// Branch entry lifetimes 234; actual remapping-field reference 161; direct completion 155;
+// early mapped index 206; signed value table 155 (fast, with body entry steps). Two-point gains dropped.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -1229,20 +1232,19 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 246 (was 246): sampler convention and captured descriptor versus dirty-store rereads;
+// score 269 (was 311): Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native
 // ternary clamp loops 359.
-// score 246 (was 246): Frame 0x28 agrees; sampler convention and descriptor rereads differ.
 // Unsigned counters 325; rescale pointer traversal 354; remapping-source address 268; separate
 // clamp passes 358; shared native color workspace 246 (fast).
-// score 246 (was 246): sampler convention and dirty-store descriptor rereads remain.
 // Existing packed-range accessors 325; post-clamp mask capture 275; positive filter
 // with full-width descriptors 269; alpha-first color 250; alpha-first clamps 270 (fast).
-// score 246 (was 246): sampler convention and descriptor rereads remain;
 // sample-array name order 246; branch-local sample arrays 250; mapped-field reference 268;
 // shared sampler selector 246; descending component rescale 262 (fast).
+// Recovered sampler with early component mask 269 (plain); interleaved color fields 332;
+// combined component processing 268 (one-point addition dropped); conditional stores/shared counter 269/269.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
@@ -1255,6 +1257,7 @@ void function_19ca0(byte *state, word const *range)
         for (long i = 0; i < (*range >> 9); ++i)
         {
             long component = entry[2] & 7;
+            dword mask = g_467068[component];
             function_1b2c0(state, entry[3], entry[2] & 7, 0, (entry[2] >> 3) & 7, values);
             if (*(word const *)entry & 0x800)
                 for (long j = 0; j < 4; ++j) values[j] = (values[j] + 1.0f) * 0.5f;
@@ -1265,7 +1268,6 @@ void function_19ca0(byte *state, word const *range)
             color4f color;
             color.red = values[0]; color.green = values[1]; color.blue = values[2]; color.alpha = values[3];
             dword value = pack_color4f(&color);
-            dword mask = g_467068[component];
             dword packed = *(word const *)entry;
             store_shader_mask(state, packed, (packed >> 6) & 15, mask, value);
             entry += 4;
@@ -1285,6 +1287,7 @@ void function_19ca0(byte *state, word const *range)
                 continue;
             }
             long component = entry[2] & 7;
+            dword mask = g_467068[component];
             function_1b2c0(state, entry[3], entry[2] & 7, 0, (entry[2] >> 3) & 7, values);
             if (*(word const *)entry & 0x800)
                 for (long j = 0; j < 4; ++j) values[j] = (values[j] + 1.0f) * 0.5f;
@@ -1295,7 +1298,6 @@ void function_19ca0(byte *state, word const *range)
             color4f color;
             color.red = values[0]; color.green = values[1]; color.blue = values[2]; color.alpha = values[3];
             dword value = pack_color4f(&color);
-            dword mask = g_467068[component];
             packed = *(word const *)entry;
             long index = (packed >> 6) & 15;
             if ((packed & 0x3c0) != 0x200) index += *(signed char *)(state + 0x1520 + (packed & 7));
