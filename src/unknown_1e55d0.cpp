@@ -62,6 +62,10 @@ static __forceinline long real_to_long(real value);
 // entry matrix lifetime 357; both entry workspaces 357.
 // immutable margin 357; immutable shape 357.
 // immutable component 357; native point initializer 357.
+// score 353 (was 353): plain 0x8c frame versus aligned 0x94 and saved-register roles remain.
+// Native stack allocation 362 (1148 bytes); shared component/body/both lookups 353/353/353;
+// base-position reference 353; shared object lookups 353; named height offset 353;
+// distinct current-shape lifetime 353. Seven tying forms share the preview instruction prefix.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {
