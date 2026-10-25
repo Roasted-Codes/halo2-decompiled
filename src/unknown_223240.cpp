@@ -74,6 +74,9 @@ void function_2232a0(void)
 	function_2c8a0((byte const *)function_2232a1(&g_47f0f8[0]));
 }
 
+// score 151 (was 151): count-one join, slot predicate and terminal/callee registers differ;
+// byte count 169; layout enum 151; completed ordinal at terminal/dispatch/both 151/158/158;
+// direct terminal initializer 151; layout refinement 151; world-layout result 151.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

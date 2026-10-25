@@ -102,6 +102,9 @@ struct s_handler_slot
 
 // score 68 (was 67): retail keeps the node pointer in eax and adds 0xc to it before the
 // compare, ours copies it into ecx and reads [eax+0xc] instead.
+// score 67 (was 67): field-address carriers and post-clear link load still differ;
+// typed handler/gateway/both members 67/67/67; gateway/handler/both byte flags 67/67/67;
+// initialization values 67; inactive return 67.
 // @retail 0x8dd70
 void function_8dd70(void)
 {

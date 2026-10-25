@@ -31,6 +31,9 @@ struct s_motion_adjustment_result
 	vector3f velocity;
 };
 
+// score 86 (was 86): product schedule, raw-copy registers and early normalization J/K loads differ;
+// left/up/both accumulation loops 86/86/86; target/combined/both scale receivers 131/86/131;
+// float square root 86; float absolute value 86.
 // @retail 0x1fa810
 void __stdcall function_1fa810(long *ticks, s_motion_adjustment_result *out, s_motion_adjustment const *state)
 {
