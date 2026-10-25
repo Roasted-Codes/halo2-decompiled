@@ -2,6 +2,76 @@
 
 The newest entry comes first.
 
+## 2026-10-25: 9598 functions match
+
+```
+matched 9598 of 11321 game functions (1527927 of 2784283 bytes, 54.88%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+1 new matches, none lost:
+- @coldspear's #806: `0x1b7b90` match.
+
+## 2026-10-25: 9597 functions match
+
+```
+matched 9597 of 11321 game functions (1527704 of 2784283 bytes, 54.87%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+5 new matches, none lost:
+- @coldspear's #800, @coldspear's #801, @coldspear's #802, @marioag0412's #803: `0x6c360`, `0x828b0`, `0xa1f70`, `0x1332f0` and `0x1c9a00` match.
+
+## 2026-10-25: 9592 functions match
+
+```
+matched 9592 of 11321 game functions (1526347 of 2784283 bytes, 54.82%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+9 new matches, none lost:
+- Machine 3's batch 121 (#804): `0x65530`, `0x8e240`, `0xb6c50`, `0x12e210`, `0x1a8fa0`, `0x1e5b50`, `0x1efca0`, `0x1ff200` and `0x2bf960` match.
+
+## 2026-10-25: 9583 functions match
+
+```
+matched 9583 of 11321 game functions (1522767 of 2784283 bytes, 54.69%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+4 new matches, none lost:
+- @coldspear's #797, #798, #799: `0xb5cd0`, `0x11e6f0`, `0x181db0` and `0x2773d0` match.
+
+## 2026-10-25: 9579 functions match
+
+```
+matched 9579 of 11321 game functions (1521678 of 2784283 bytes, 54.65%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+1 new matches, none lost:
+- @coldspear's #790: `0x11c470` match.
+
+## 2026-10-25: 9578 functions match
+
+```
+matched 9578 of 11321 game functions (1521360 of 2784283 bytes, 54.64%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+11 new matches, none lost:
+- Machine 3's batch 120 (#796): `0x17b60`, `0x18560`, `0x1a170`, `0x1ab50`, `0xbf760`, `0x109e00`, `0x14ee20`, `0x19a5fd`, `0x1cd6c0`, `0x244980` and `0x28f0e0` match.
+
+## 2026-10-24: 9567 functions match
+
+```
+matched 9567 of 11321 game functions (1511987 of 2784283 bytes, 54.30%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+2 new matches, none lost:
+- @coldspear's #789: `0x2b0565` and `0x2b2b40` match.
+
 ## 2026-10-24: 9565 functions match
 
 ```

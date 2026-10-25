@@ -455,13 +455,32 @@ hsv3f *function_1318d0(color3f const *rgb, hsv3f *hsv);
 color3f *function_131a00(hsv3f const *hsv, color3f *rgb);
 void function_3dd10(long object_index, bool force);
 
-// score 134 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// score 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
+// Native blend remainder/immediate and delayed rounding 148/161; paired native remainders 196;
+// variant read at uses 136; shared color interpolation alone/with remainder 376/374;
+// initialized HSV outputs 158; separate RGB output 156. Second remainder publication, signed scan
+// exits and one reload still differ; original arithmetic and scans restored.
+// Selected choice result 134; selected ordinal 155; late variant key 229;
+// variant between seed and remainder 122; late scan outputs 256;
+// HSV output role names 134; immutable blend 134; immutable selection 134.
 // native position pointer 137; position value snapshot 295; blend declaration first 134; variant
 // declaration first 134; unsigned mask bits 134; unsigned last ordinal 134; component clamp loop
 // 136; non-hue component blend loop 134.
+// Variant between native remainder and rounding 213; variant assigned at metadata test 134;
+// immutable early variant 122; output element reference 131; metadata entry reference 122;
+// twice-used choice key 131; late mixed HSV workspace 122; selected choice reference 122.
+// score 122 (was 122): Saved output/count roles and second-remainder
+// publication still differ. Early variant field binding 149; live count 122;
+// both 149; early presence predicate 131; default/supplied/final color
+// memcpy 213/213/213; base-color name 122; model-first guard 150; shared
+// model handle with that guard 232. Original copies and observations retained.
+// score 122 (was 122): variant/remainder publication, saved roles and scan exits differ.
+// Live choice count 122; choice-count field reference 213; signed weight bound 630;
+// unequal-end for 122; inverse blend at uses 168; eligibility equality first 122;
+// eligibility predicate value 213; actual object variant field 122. Opening body retained.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
@@ -489,9 +508,9 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                 real seed = (real)fabs((*(real *)(object + 0x6c) * 744.1241455078125f + *(real *)(object + 0x64) * 315.89312744140625f + index * 431.1289367675781f) + *(real *)(object + 0x68) * 587.1294555664062f);
                 real selection = (real)fmod((double)seed, 1.0);
                 seed = (real)fabs(index * 0.7121099829673767f + *(real *)(object + 0x68));
+                char variant_index = *(char *)(object + 0xb1);
                 real blend = (real)fmod((double)seed, 1.0);
 
-                char variant_index = *(char *)(object + 0xb1);
                 if (variant_index != NONE && *(long *)(definition + 0x38) != NONE)
                 {
                     byte *model = g_4e3b44[*(long *)(definition + 0x38) & 0xffff].bytes;

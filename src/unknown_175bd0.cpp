@@ -1015,6 +1015,8 @@ void function_178240(point3f const *origin, vector3f const *direction, s_effect_
 }
 
 // score 38 (was 38): the branches that reject the value jump to a different place and the table pointer is loaded into edx instead of ecx
+// tried upper-only bound 84; output-field reference 38; read-only records 38;
+// tried index before flag 38; time before index 38; array lifetime 59; float consistency 38; size policy 114.
 // Stored event selection 38; definition per use 86; initialized delay destination 54;
 // delay readback 55; event record 59; definition record 38; explicit seed lifetime 82;
 // stored event with completed delay 82. Tag retention and bound-load sharing still differ.
@@ -1911,6 +1913,9 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
+// score 160 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
+// tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
+// shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2183,6 +2188,15 @@ event_done:
 
 #pragma inline_depth()
 
+// score 109 (was 109): Object-index reload and visibility joins still differ. Update word 109; response
+// word 119; both words 119; native missing location 204; root location value 194; root velocity value 198;
+// both root values 218; origin value 109.
+// object index remains cached across the validity call; visibility blocks differ.
+// Native velocity/location/origin/all copies 109; native color record 109;
+// default visibility 109; short origin index 109; shared destruction call 122.
+// frame agrees; object-index caching and visibility block order differ.
+// Const tag/root 109/109; external datum reference 109; visibility result tests 189;
+// inline depth one/two 109/109; global optimization off 550; frame pointer 200.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2358,6 +2372,12 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
+// score 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
+// Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
+// early missing-object return 181; separate impulse buffer 251.
+// score 83 (was 181): frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
+// Existing snapshot-normal helper 177; direction lifetime 181; point lifetime 181; returned-record for 346;
+// saved short marker 182; existing point plus snapshot-normal helpers 83 kept.
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2387,8 +2407,8 @@ void function_179fb0(s_effect_datum *effect)
 						transform4x3f matrix;
 
 						function_17aec0(location->node_index, effect, &matrix);
-						transform_point_179fb0(&matrix, &location->matrix.position, &point);
-						effect_matrix_transform_normal(&matrix, &location->matrix.forward, &forward);
+						effect_matrix_transform_point(&matrix, &location->matrix.position, &point);
+						effect_matrix_transform_normal_179880(&matrix, &location->matrix.forward, &forward);
 					}
 					else
 					{
@@ -2481,6 +2501,12 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
+// score 313 (was 345): frame 0x104 versus 0x100; point/up argument eligibility and record copies differ.
+// Placement name 345; request name 345; retained decal seed pointer 313;
+// direct case returns 345; failed-placement guard 345.
+// score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup still differ.
+// Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
+// sound aggregate 313; direct radius on the seed-pointer body 344 (frame 0x100).
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2515,15 +2541,15 @@ void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f 
 	}
 	case 'deca':
 	{
-		s_random_globals *random = g_4e7408;
+		dword *seed = &g_4e7408->seed;
 
-		if (TEST_FIELD_BIT(part->flag4) || function_172750(1, point, 20.0f) || function_259a0(&random->seed) < 0.25f)
+		if (TEST_FIELD_BIT(part->flag4) || function_172750(1, point, 20.0f) || function_259a0(seed) < 0.25f)
 		{
 			vector3f direction;
 			vector3f velocity;
 
-			function_177d10(effect, &random->seed, forward, &direction, &velocity, part->velocity_lower, part->velocity_upper, part->velocity_cone_angle, part->a_scales, part->b_scales);
-			real radius = function_259d0(&random->seed, __FILE__, __LINE__, part->radius_lower, part->radius_upper);
+			function_177d10(effect, seed, forward, &direction, &velocity, part->velocity_lower, part->velocity_upper, part->velocity_cone_angle, part->a_scales, part->b_scales);
+			real radius = function_259d0(seed, __FILE__, __LINE__, part->radius_lower, part->radius_upper);
 			function_17e670(g_510c78, point, part->tag_index, &velocity, radius, 0, NONE, 0);
 		}
 		break;
@@ -2609,6 +2635,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
+// score 166 (was 166): radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
+// Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
+// Part-table cursor 340 rejected for short-counter wraparound.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2685,7 +2714,10 @@ void __stdcall function_17a380(s_effect_datum *effect)
 	}
 }
 
-// score 109 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// score 96 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// tried transform name 109; query results, particle cursor and colors at entry 109; read-only settings 109;
+// immutable mode once 96 (kept); size policy 146; inline depth zero 109.
+// the frame is eight bytes smaller and the two globals are loaded into the other registers
 // Deferred particle cursor 125; active-only effect cursor 125; particle-location
 // record 109; system/definition/type/effect records 109 each; exhausted-particle
 // continue 109. Frame remains eight bytes small; pool/register and cursor homes differ.
@@ -2704,6 +2736,7 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 		dword color_a = effect->color_a;
 		dword color_b = effect->color_b;
 		s_effect_location_datum *location;
+		word location_mode = definition->location_mode;
 
 		{
 			c_type_4e7709 *particle_definition = function_137bd0(particle_system->function_1751d0()->tag_index);
@@ -2712,7 +2745,7 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 
 			function_175a80(tinted, color_a, color_b, particle_system, multiplied);
 		}
-		while ((location = effect_location_next(effect, &location_index, definition->location_mode)) != 0)
+		while ((location = effect_location_next(effect, &location_index, location_mode)) != 0)
 		{
 			transform4x3f matrix;
 			transform4x3f *location_matrix = function_178bc0(location, effect, &matrix, true);
@@ -2730,6 +2763,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 	return next_index;
 }
 
+// score 176 (was 189): frame 0x50 agrees; early false-result and player-pool registers differ.
+// Persistent effect pool 194; persistent player pool 189; outer for 189;
+// squared distance compared first 176; player slot/unit names 189.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
@@ -2783,7 +2819,7 @@ bool function_1778d0(void)
 
 						real radius = unit->field_xc9d3f8 + definition->unknown08;
 
-						if (radius * radius >= length_sq3f(&delta))
+						if (length_sq3f(&delta) <= radius * radius)
 							return true;
 					}
 				}

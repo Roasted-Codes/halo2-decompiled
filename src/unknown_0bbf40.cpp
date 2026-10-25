@@ -727,7 +727,10 @@ void __stdcall function_bc300(long object_index)
 }
 
 // score 42 (was 42): the mask is applied to the index before the record pointer is loaded; retail
-// loads the pointer first.
+// loads the pointer first. Tried: a shared absolute index 42; the header reused for the refreshed
+// lookup 68; a function-scope block pointer 42; allocator noinline 42; old size read before allocation
+// 81; size optimization 107; global optimization off 151; shared index, block scope and allocator
+// noinline together 42.
 // @retail 0xbc380
 bool function_bc380(long object_index, long block_offset, long size, long alignment_bits)
 {

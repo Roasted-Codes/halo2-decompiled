@@ -393,6 +393,10 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // score 42 (was 42): frame 0x104 agrees; visited update still loads, ORs and stores.
 // Branch-local graph 42; saved mode 74; const model 42; visited base 42;
 // iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
+// score 42 (was 42): model member and external model/unit/definition references 42;
+// shared entry count 42; entry graph query 42; all graph queries 42; typed model plus graph queries 42.
+// Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
+// value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
@@ -1234,6 +1238,11 @@ bool function_c70b0(long unit_index);
 // score 164 (was 194): retail length recovered; object/header/state registers and count joins differ.
 // Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
 // byte result 164; unsigned identifiers 218.
+// score 164 (was 164): entry receiver/count joins remain; byte interruptible 164;
+// signed-byte depletion 164; state-first receiver 164; direct interruptibility 348; query result first 332.
+// score 164 (was 164): entry pool/state and count joins remain; direct-parameter forms:
+// signed-byte result 322; short result 355; entry held outputs 322; state-switch default 370;
+// branch-local status defaults 253. Opening argument handling restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1362,6 +1371,7 @@ bool __stdcall function_110ab0(long unit_index)
 // Byte-context word/native interruptible 456/453; named channel words 453;
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
+// score 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1592,6 +1602,12 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): unit/state homes and first angle expansion remain. Primary direction
 // snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
 // centered predicate after channel preparation 871.
+// score 875 (was 879): frame 0xc4 versus 0xd4 and angle expansion remain; partial j/k inputs 919;
+// partial i input 899; early screen pointers 934; named state predicate 873; unsigned counter 879;
+// direct eligibility accumulation 875 kept; state-guard accumulation 892.
+// score 841 (was 875): frame and first angle expansion remain; entry blend channels 1057;
+// yaw/pitch values 875; centered tests at use 866; early blend products 853;
+// whole projection output 880; centered tests plus early products 841.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -1678,13 +1694,13 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 						if (screen_a) bounds_112070(screen_a, (real *)control->unknown04);
 						else if (screen_b) bounds_112070(screen_b, (real *)control->unknown04);
 						active = function_111590(unit_index, 4);
-						if ((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state))
-							active = false;
-						bool centered = fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f;
+						active &= !((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state));
 						if (control->slots[4].unknown1)
 						{
 							real weight = function_1d9370((s_1d9240 *)&control->slots[4]);
 							real blend = function_1d9370((s_1d9240 *)&control->slots[2]);
+							real wa = (1.0f - blend) * weight;
+							real wb = blend * weight;
 							c_animation_channel a, b;
 							state->channel_play(&a, first, 0);
 							state->channel_play(&b, second, 0);
@@ -1692,13 +1708,11 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 							{
 								if (screen_a && screen_b)
 								{
-									real wa = (1.0f - blend) * weight;
-									real wb = blend * weight;
 									if (0.0001f > wa) wb = 1.0f;
 									else
 									{
 										if (0.0001f > wb) { wa = 1.0f; wb = 0.0f; }
-										if (wa > 0.0001f && (wa < 0.9999f || !centered))
+										if (wa > 0.0001f && (wa < 0.9999f || !(fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f)))
 											a.sample_aiming(angles.i, angles.j, wa, node_mask, node_count, transforms);
 									}
 									if (wb > 0.0001f)
@@ -1706,7 +1720,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 								}
 								else if (screen_a)
 								{
-									if (weight < 0.9999f || !centered)
+									if (weight < 0.9999f || !(fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f))
 										a.sample_aiming(angles.i, angles.j, weight, node_mask, node_count, transforms);
 								}
 								else if (screen_b)
@@ -1831,6 +1845,11 @@ struct s_request_114b60
 
 __declspec(noinline) bool unit_submit_entry_request(short fallback_index, short entry_index, long unit_index, long priority, void const *extra);
 
+// score 16 (was 16): only the callee-saved roles differ (ours index ebx,
+// NONE ebp, request priority esi; retail esi, ebx, ebp). Tried: the default
+// extra fill as a shared inline helper 16; other parameter orders 16; the
+// 0x114520 result in a named bool returned once 95; the fallback test joined
+// to the 0x114520 test 22; a success flag set after the fallback block 96.
 // @retail 0x114b60
 bool unit_submit_entry_request(short fallback_index, short entry_index, long unit_index, long priority, void const *extra)
 {
@@ -2194,6 +2213,10 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // score 679 (was 679): ordinary-helper Boolean transition 712; native helper result 706;
 // explicit helper result 679; size policy 1026; byte validity 679. Request/control
 // homes and the second stack argument remain unresolved.
+// score 674 (was 679): request/control homes and second stack argument remain;
+// force decision at use 723; late validity 677; final activity values 676;
+// entry output scalars 679; early-invalid helper 710; late validity plus activity values 674.
+// Request/control homes and second stack argument remain; native node selector 704, node ordinal 679, separate transformed point 686, completion cases first 679, early data construction 679.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2369,12 +2392,12 @@ bool __stdcall function_111650(long arg_0, long *arg_1)
             }
         }
     }
-    bool local_28 = function_111651(&local_2->channels[0]);
     bool local_29 = false;
     if (local_4 != local_2->unknown70 && local_4 != 0x7000101)
         local_29 = true;
     if (local_5 != local_2->unknown7c && local_5 != 0x7000101)
         local_29 = true;
+    bool local_28 = function_111651(&local_2->channels[0]);
     bool local_30 = local_6 || !local_28;
     if ((local_29 && (local_7 || function_1103a0(arg_0, local_5, local_8))) || local_30)
     {
@@ -2466,9 +2489,9 @@ bool __stdcall function_111650(long arg_0, long *arg_1)
                 local_10 = true;
         }
     }
-    local_10 |= function_10dc70(arg_0);
-    local_10 |= function_10eaf0(arg_0);
-    return local_10;
+    bool vibration_active = function_10dc70(arg_0);
+    bool blend_active = function_10eaf0(arg_0);
+    return local_10 | vibration_active | blend_active;
 }
 
 void function_e70b0(long unit_index, short *value);
@@ -2493,6 +2516,12 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // unsigned word result 173; short table index 188.
 // Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
 // repeated table index 152; mode after animation 157.
+// score 147 (was 152): action/result packing and action/seat helper conventions remain.
+// Direct action decision 163; actual overlay-bit result 224; converged play operations 152;
+// control/tag/table role names 152/152/152; selected-overlay initialization 178; word play flags 150.
+// frame 60 versus 56 and protected action/seat argument registers remain.
+// Signed success/force/both bytes 147/152/147; word channel backing 152;
+// mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
@@ -2507,7 +2536,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
     long lookup = g_4408f8[type];
     long animation = NONE;
     if (lookup != NONE) animation = g_46fc30[lookup];
-    bool result = false;
+    signed char result = false;
     bool force_overlay = false;
     short action;
     c_animation_channel *overlay;
