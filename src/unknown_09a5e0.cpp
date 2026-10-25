@@ -2104,6 +2104,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // header/object homes and low-mask allocation remain.
 // Clamp source/result names and source-first declarations 184/184/184;
 // tail fractions, child fraction, mask names and both scratch-home combinations 184 each.
+// score 184 (was 184): object/offset homes and low-mask allocation remain;
+// forced/ordinary/compiler-selected getter and clamp inline contracts, all eight
+// alternatives 184 each. Both original helper contracts and bodies retained.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

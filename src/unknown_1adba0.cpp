@@ -493,6 +493,9 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // cooldown, reaction and combined test results 15/15/15/15; immutable cooldown
 // inputs 15; read-only two-use clock 91; complete actor/timestamp record and
 // its read-only receiver 15/15.
+// score 15 (was 15): saved-register pair persists; native const/mutable clock
+// records 91/91; interval accumulators on those records 95/95; named elapsed
+// phase 91/91; elapsed plus interval accumulation 95/95.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {

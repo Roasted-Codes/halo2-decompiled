@@ -1209,6 +1209,10 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // Plain: graph inside model guard 188; both metadata values 191; graph guard first 31;
 // conditional graph result 193; graph-field binding 36; model-field binding 30;
 // read-only interface 30; shared root/parent receiver 30.
+// score 30 (was 30): early graph load, node-base addition/register roles and overlay setup remain.
+// Conditional query, root-first result publication, unit value/field, read-only tag,
+// model-validity result, combined animation flags and conditional/root-first query
+// Plain scores 30/35/30/30/30/30/118/35; original body retained.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1413,6 +1417,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
+// score 250 (was 250): frame 0x28/0x2c and unit/mode/look homes remain.
+// External user/unit/weapon records and user-unit pair 252 each; native dword
+// index/mode, callback at update, and unit-weapon-index combination 252 each (fast base 252).
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

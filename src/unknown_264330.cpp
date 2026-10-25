@@ -266,6 +266,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // j92: frame 0x24 versus 0x20 and object/view homes remain; real object/header types and selection inline declarations tie; expiry snapshot regresses.
 // typed object view 358; typed header lookup 358; typed object header 358; tracking expiry snapshot 385;
 // selection inline declarations 358.
+// score 358 (was 358): frame 0x24 versus 0x20 and object/view homes remain.
+// Shared state/related/both distances 358/359/359; native actor/datum/origin references
+// 358/358/358; shared direction setter 358; reused byte approach category 370.
 // Round 310: state word snapshot 358; long state snapshot 365; long update 434;
 // entry vector workspaces 358; speed category result 358. Frame 0x24/0x20 and object/view homes remain.
 // @retail 0x264330
@@ -755,6 +758,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // 366/375/371; false-default suppression on those pairs 366/375/371;
 // optional unit pointer on first two pairs 370/373 (fast control 363).
 // Object/current pair plain 373 versus 358; actor ESI and saved-pointer/flag homes remain.
+// score 358 (was 358): frame 0x20 agrees; actor ESI versus EBX and saved-actor/flag homes remain.
+// Native prop/datum/sample/motion references 363f/363f/363f/363f; direct alternate
+// sight result 363f; child/guarded-parent handles 363f/363f; adjacent priority memmove
+// 377f (preview 363f); all original bodies and call arguments restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
