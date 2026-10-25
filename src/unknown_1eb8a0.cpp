@@ -198,6 +198,7 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Ordinary counter conversion on guarded-coefficient body 710; indexed activation displacement 667;
 // interleaved displacement/sample loop 696; target-coordinate loop 699; impulse-coordinate loop 661.
 // Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain.
+// score 660 (was 660): Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain. Shared output scale 660; shared sample scale 680; capped-length initializer 660; shared limit predicate 690; conditional flag store 674 (fast).
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
@@ -810,6 +811,12 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // score 78 (was 78): owner/node registers and contact-table setup remain.
 // Early best 78; best before selected 88; scalar contact copy 300; library copies 78;
 // third dot inputs commuted 78; selected guard first 83; byte counter return 415; ordinary inline counter 78.
+// score 78 (was 78): attached esi/ebp roles; from the contact scan on, scratch registers rotate one step
+// because the table is loaded before the unroll test. count before table 78; found before the
+// attached flag 77; table read per iteration via an element pointer 337; table indexed per iteration
+// 346 (retail's scan and everything after it, shifted one byte by a loop-alignment nop while the
+// attached roles stay swapped; aligned 49 -> 19); on that: dot inputs swapped, function-scope handle,
+// release flag, named up pointer 346 each.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {

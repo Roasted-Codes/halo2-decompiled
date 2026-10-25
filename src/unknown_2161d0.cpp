@@ -56,6 +56,10 @@ bool function_2161d0(long file_index, void *buffer, long size)
 	return result;
 }
 
+// score 10 (was 10): path address reuse and cached-completion pop order differ;
+// bounded copy 10; append result local/expression 27/27;
+// bounded copy plus append result 27/27; location result 53;
+// copy result with original/returned read path 85/85.
 // @retail 0x2162b0
 bool function_2162b0(long file_index, void *buffer, long size, s_saved_game_file_task *task)
 {

@@ -71,6 +71,10 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
+// score 209 (was 209): frame 0x34 agrees; first horizontal XMM0/XMM1
+// allocation, coefficient/viewport/tangent homes and tail placement remain.
+// Coefficient names 209; viewport names 209; vertical coordinate first 211;
+// tangent names 209; shared root/ratio/tangent workspaces 209.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {

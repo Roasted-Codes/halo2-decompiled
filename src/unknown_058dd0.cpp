@@ -1142,6 +1142,10 @@ long __stdcall function_063190(void *summary, long user);
 // score 110 (was 110): three-word frame/session spill and aggregate allocation remain.
 // Mode field 115; selection snapshot 131; property/player records 110/110;
 // source rank/value/both field bindings 110/110/110; live selection field 110.
+// score 110 (was 110): Three-word frame/session spill and aggregate allocation remain. byte missing count 110; signed byte
+// missing count 110; byte player ordinal 129; both byte counters 129; native signed counters 110; aggregate
+// function scope 110; native member property storage 110; fixed player end test 110; sse after rank binding
+// 111.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
