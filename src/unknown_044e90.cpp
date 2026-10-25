@@ -2,7 +2,7 @@
 #include "unknown_044e90.h"
 #include "normalize3d.h"
 
-// score 438 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and new field/copy forms do not improve.
+// score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
@@ -10,28 +10,31 @@
 // score 438 (was 438): entry/table registers and plane/list homes differ; plane ordinal word 438;
 // view ordinal word 438; frustum ordinal word 437; byte parts predicate 438; early containment byte
 // 436 (plain).
+// Entry-data cursor 438; selection flags 434; query count 438; inverse per frustum 525;
+// captured frustum/view bounds 481/483; entry data plus inverse 525; complete matrix value 527.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {
     s_visibility_query_workspace workspace;
     s_44940_entry *entry = &g_4ba138[entry_index];
+    dword flags = entry->flags;
     byte *geometry;
     if (entry->tag != NONE)
     {
         byte *definition = g_4e3b44[entry->tag & 0xffff].bytes;
         byte *sections = *(byte **)(definition + 0x28);
-        geometry = *(byte **)(sections + ((entry->flags >> 9) & 0x1ff) * 0x5c + 0x34);
+        geometry = *(byte **)(sections + ((flags >> 9) & 0x1ff) * 0x5c + 0x34);
     }
     else
     {
         byte *structure = (byte *)g_4e0348;
         byte *section;
         if (!((entry->unknown00 >> 12) & 1))
-            section = *(byte **)(structure + 0xa0) + ((entry->flags >> 9) & 0x1ff) * 0xb0;
+            section = *(byte **)(structure + 0xa0) + ((flags >> 9) & 0x1ff) * 0xb0;
         else
         {
             byte *instances = *(byte **)(structure + 0x144);
-            short index = *(short *)(instances + ((entry->flags >> 18) & 0x7ff) * 0x58 + 0x34);
+            short index = *(short *)(instances + ((flags >> 18) & 0x7ff) * 0x58 + 0x34);
             section = *(byte **)(structure + 0x13c) + index * 0xc8;
         }
         geometry = *(byte **)(section + 0x50);
