@@ -1413,6 +1413,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
+// score 250 (was 250): Frame 0x28 versus 0x2c and unit/mode/look homes remain.
+// Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407; all
+// receivers/direct velocity 617/617 (fast preview 252).
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

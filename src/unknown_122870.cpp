@@ -413,6 +413,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // the homes and skip the scratch reload on the non-call paths, breaking the per-query block
 // order retail shows with its reused incoming-slot scratch); param address reads removed 76;
 // mode==0 divide arm first 67 KEPT; case-2 break 69; accumulate form 69.
+// score 68 (was 68): Frame 0x24 versus 0x18 remains. Initial bool/long/short state 258/287/73; private
+// helper publication 206; private bool/long state 242/262; private late weight 258; private predicate and
+// late weight 228 (fast).
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {

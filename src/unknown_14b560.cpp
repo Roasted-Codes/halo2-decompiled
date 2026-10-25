@@ -2673,6 +2673,10 @@ struct s_unit_flags_14d8b0
 // score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
 // Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
 // incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
+// score 128 (was 155): native root-bit observation recovers SHR/TEST; iterator and tick scheduling remain.
+// Wide user/table entry/both 157/158/162; wide/entry/both with first flag 155/156/160;
+// root with both 129, plus first flag 127; root alone 128 plain; root with wide/entry 125/132.
+// Three-point wide-user addition dropped; only the root-bit expression retained.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
@@ -2777,7 +2781,7 @@ void function_14d8b0(void)
         {
             long root = unit;
             for (long current = unit; current != NONE; current = *(long *)(object_get_unchecked(current) + 0x14)) root = current;
-            if (!(*(dword *)(object_get_unchecked(root) + 4) & (1 << 18)))
+            if (!(bool)((*(dword *)(object_get_unchecked(root) + 4) >> 18) & 1))
             {
                 byte *scenario = (byte *)g_4e0350;
                 for (short trigger = 0; trigger < *(long *)(scenario + 0x130); ++trigger)
