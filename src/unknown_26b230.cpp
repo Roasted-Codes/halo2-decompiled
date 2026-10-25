@@ -473,6 +473,9 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // initialized 68; prop type snapshot 93; prop reference 68.
 // Both-arm step result/stored-current result/native step result/activity input/member step 68 each.
 // Node query/prop query/both separate noinline declarations 68/68/68.
+// score 68 (was 68): Frame and nullable-current lifetime remain; current datum 68;
+// success-controlled loop 68; selected datum 132; node/prop inline 68/68; forced node/prop
+// expansion 246/158; datum plus success loop 68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1924,6 +1927,9 @@ void function_269250(long clump_index, long actor_index)
 // final tracking guard 189; complete unit arms 193; unsigned replacement 189; word category mask 192.
 // Read-only object/external object reference/read-only member/extensions 189/189/189/189.
 // Ordinary prop/node/both iterator inline and separate removal noinline 189/189/189/189.
+// score 189 (was 189): Frame/current/object/replacement homes remain; unchanged result 189;
+// changed-reference count 246; category at uses 195; member header getter 189; removal
+// inline/forced expansion 189/460; complete unit predicate 243; count plus removal boundary 246.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

@@ -1205,6 +1205,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // integrated expiry 181; owner entry/impulse output lifetimes 182/182. Origin publication copy retained.
 // Known-set XOR removals on flag 5/6/both 182/182/182; subtractive removals
 // on flag 5/6/both 182/182/182; XOR/subtract mixed both ways 182/182.
+// score 154 (was 163): Release RMW/tail and event homes remain; idle/count results 166/169;
+// earlier damage key 185; event-first/key plus event-first 196/196; early complete point/origin
+// publication 198/157; initializer-owned sentinel 154 kept, combined origin 176.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
@@ -1276,7 +1279,6 @@ bool __stdcall function_10b4d0(long object_index)
                 {
                     point3f position;
                     s_type_1e6529 data;
-                    data.unknown7c = NONE;
                     point3f *event_point = function_b9dd0(object_index, &position);
                     function_d6660(&data, damage_index);
                     data.owner = owner;
