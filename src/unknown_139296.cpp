@@ -552,6 +552,10 @@ bool g_4f55e2;
 // score 7 (was 7): ours masks the byte with an and against a memory constant and negates it, retail masks a
 // dword in memory and tests the low byte; a four-byte global read into a char local already gives retail's
 // dword and, so what is left is the end: retail branches on the mask, ours negates it and pops esi early.
+// Tried: return !local_1 (11), local_1 + 1 (11), ?: false : true, if (!local_1) return true; return false,
+// char/long local (7); one shared bool result (30, 32); the whole test as one && chain, as a return or
+// with if (!local_1) return true falling to one return false (19: test byte ptr, xor eax/inc eax).
+// 0x165f16 shows the same dword and on this flag (0x4f55e2 sits between the bools at 0x4f55e0/e4).
 // @retail 0x13939b
 bool function_13939b()
 {
