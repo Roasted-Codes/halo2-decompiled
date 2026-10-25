@@ -58,6 +58,12 @@ PRIVATE __forceinline long function_214f83(char const *arg_0, s_file_handle *arg
 // score 42 (was 42): handle/status publication and the second wait still differ.
 // Opener void/native result 42/42; ordinary inline 229; task aggregate 84;
 // const/early file 42/42; unsigned/word status 42/42.
+// typed open outcome 42; typed success update/complete outcomes 44/42;
+// early outcome home 42; positive outcome/byte admission 43/55;
+// initialized success output/byte declaration order 83/42.
+// score 42 (was 42): Handle ECX and success-byte reload remain unresolved. Long ordinal 111;
+// word/byte ordinals 42/42; path/status lifetimes 42/42; long ordinal with all
+// workspaces/failure continue 111/111; short endpoint equality 42.
 // @retail 0x214f80
 void game_state_cache_files_open(void)
 {

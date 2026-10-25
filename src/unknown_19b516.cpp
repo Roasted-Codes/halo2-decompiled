@@ -131,10 +131,16 @@ void c_widget::v15(c_widget *widget)
 // inline/noinline eligibility declarations 44/20; focus declarations 20/20;
 // single search cursor 41; proven initial candidate do-while 37;
 // eligibility in loop admission 47; named eligibility result 20.
+// shared success exit/current for 20/20; selection/reverse role names 20/20;
+// separate entry result and entry-for 42/42; failure continue 20; for plus break 20.
 // candidate uses ESI before the first scan; retail delays ESI and uses EAX.
 // Initial result arms 20; both result arms 21; entry reverse lifetime 20; scoped widget 26;
 // scoped result arms 21; scoped reverse lifetimes 26; selected-widget success tail 47;
 // initial result arms with success tail 47.
+// Copy before the loop and at its tail 20; for-walks to the first sibling 20/20 (one candidate);
+// forceinline next-or-first helper in a for loop 42 (out of line 72); helper with the head copy 42;
+// one cursor stepped at the loop top 64; separate entry/step results 42, with for-walks 42 (the loop
+// body then matches retail; the entry result still joins the widget in ESI and the test is copied).
 // @retail 0x22ebc3
 void c_widget::v16()
 {
@@ -180,6 +186,8 @@ void c_widget::v16()
 // native object type and direct method boundaries do not recover the delayed save; native
 // traversal 20; native entry scan 42; native repeat scan 20; native next cursors 20; native
 // candidate 20; direct existing methods 20; native selected lifetime 26; native success tail 47.
+// Eligibility used for admission and focus: bool/byte/short/long at iteration 20/20/42/40;
+// the same carriers at entry 20/20/42/40. Delayed ESI save still differs.
 // @retail 0x22ec1b
 void c_widget::v17()
 {

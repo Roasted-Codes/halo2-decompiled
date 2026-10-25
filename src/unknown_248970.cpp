@@ -56,6 +56,11 @@ public:
 // allocation failure first 256; maximum branches 257; direct input/early activation 253;
 // delayed child handle 252 kept; one initialized/link record pointer 300.
 // frame, boolean convention and child-loop homes differ. Tried shared position field base 256; child record byte stride 258; direct location input 265; distance through radius 256; reuse selected influence 259; active branch first 253; stored activation gate 256; activation influence default 284.
+// Later child count 282; viewer while 252; conditional viewer 282; allocation/link pool scope 252;
+// entry child ordinal 252; native position member 252; later child handle 285;
+// later child count/handle 280; published gate across getter 254; direct bitfield conditional 271.
+// Shared point setter 287; complete position value 282; persistent override influence 289;
+// viewer-row cursor 281; library position copy 252.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

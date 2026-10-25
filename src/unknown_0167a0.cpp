@@ -97,6 +97,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 162 (was 162): logarithm/reset schedule and restore/final allocation remain.
 // Record-field pointer 162; signed entry/pass/both carriers 163/163/164;
 // negated equalities 162; saved tag at both tests 246; dirty-mask cursor 161; both cursors 161 (one-point gains dropped).
+// score 153 (was 162): dirty-word library clear recovers numeric/reset scheduling;
+// logarithm width and restore allocation remain. Native entry/chain/both descriptors,
+// const record and signed change forms 162; update/counter/all/reset-last clears 287/258/307/157.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -121,7 +124,7 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
     else inverse = 100000.0f;
     *(real *)(state + 0x28) = inverse;
     *(real *)(state + 0x2c) = (real)(log((double)inverse) * 0.6931471824645996f);
-    *(dword *)(state + 0x58) = 0;
+    memset(state + 0x58, 0, sizeof(dword));
     state[0x1514] = false;
     *(dword *)(state + 0x1518) = 0;
     *(dword *)(state + 0x151c) = 0;
@@ -571,6 +574,9 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 // score 68 (was 68): zero/scale/trigonometric allocation remains.
 // Sine/cosine default alone 69/70; defaults after clear/split phases 131/131;
 // Y-scale first 69; clear before scales 68; planar/complete output rows first 99/150.
+// frame agrees; zero/scale and trig live ranges still differ.
+// Small-angle first 69; cosine first 68; trig declarations first 68; late matrix clear 75;
+// late scales 172; shared cosine complement 68; scales at use 135; shared Y scale 73.
 // @retail 0x1b790
 bool function_1b790(byte const *state, long index, real *out, long mode)
 {
@@ -892,6 +898,9 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
 // dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
 // both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
 // shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
+// score 2 (was 2): Final zero-store pair remains reversed. Isolated width chain 6; shared width
+// chain 25; shared width/height cases 21/27; mixed-pair clear 85; width clear/loop 74/95; height
+// clear 61; zero-family clear 93.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {

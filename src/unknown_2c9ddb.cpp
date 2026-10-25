@@ -301,6 +301,9 @@ void c_class_2c9e69::select_last_variant()
 // returned name buffer 21 fast/plain, rejected. Opening body restored.
 // nonempty receiver stays in its stack home instead of EBX.
 // This round: returned-buffer expression 29; retained named receiver 27; shared text admission 36; named arm first 30; icon tail admission 29; entry reference 29; typed child lookups 29; entry table base 29.
+// Without the receiver qualifier one reload of the text is hoisted into EDI ahead of both arms
+// (retail reloads it per arm, EDI and EBX): plain receiver 36; text used directly in both arms 36;
+// per-arm receiver locals 36; named arm first 38; icon declared first 36. 600 s permuter run, none below 23.
 // @retail 0x2c9ff4
 void c_class_2c9e69::v20(c_class_1a2c81 *item, long unused)
 {

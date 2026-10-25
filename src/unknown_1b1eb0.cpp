@@ -65,7 +65,14 @@ short __stdcall function_1b1f30(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 32 (was 32): +0x29 default target moves with the four-byte length gap;
+// score 32 (was 32): node-pool/state-two register reuse and four-byte extent excess remain.
+// Paired mode result short/long 62/63; flags before paired state short/long 81/82;
+// guarded mode result short/long 46/45; view rejection first 32; conditional view acceptance 32.
+// node-pool base uses EDI instead of retail ESI, which
+// retail reuses for state two; four-byte extent gap. State/mode destination
+// pointers 32/32; both destinations 32; default flag destinations 33; readonly
+// view 32; readonly view with state/mode/both destinations 32/32/32.
+// +0x29 default target moves with the four-byte length gap;
 // retail reuses ESI for the node base and constant 2, ours uses EDI and immediates.
 // Earlier separate exits 28/233; node reference, paired stores, reversed paths
 // and nested view forms tied; unsigned range 55/231. Ordinary trials: short
@@ -205,6 +212,9 @@ real function_1e3920(long actor_index);
 // Signed permission byte/short 197/200; entry mode shared by two tests 193;
 // rejection-first fallback 164; failure-first acceptance 169; request eligibility exit 164;
 // eligibility/fallback 164; short permission with failure-first acceptance 200.
+// score 164 (was 164): delayed slot ESI, scalar homes and cold reference arms remain;
+// explicit mode assignments 164; native reference initializer 220; library reference copy 164;
+// reference/actor/scratch/selection noinline contracts 164 each; mode/reference initializers 220.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

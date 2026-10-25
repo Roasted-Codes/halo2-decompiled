@@ -165,6 +165,12 @@ void function_44720(void)
 // score 107 (was 107): retail keeps the entry index in eax and the table base
 // in ebp with a frame four bytes smaller, ours puts the index in ebp and the
 // frame four bytes larger, so every local sits four bytes higher
+// score 107 (was 107): level != 31 at the call (no cached byte) gives retail's 0x40 frame
+// and call setup, 135 (487 bytes, aligned 42 against 59); retail also re-reads the flags
+// word in the inlined geometry lookup where ours keeps it. On that form: short transform
+// 141; material index read first 135; transform first 136; the lookup given
+// &g_4ba138[(short)index] 136 (503 bytes, flags re-read, but the scenario structure
+// pointer hoisted into ebx).
 void __stdcall function_44c90(long group, dword selection_mask, long level,
     dword and_mask, dword or_mask, dword fallback_and_mask, dword fallback_or_mask, bool force)
 {
@@ -225,6 +231,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // (two-point gain rejected); counts/pointers/capacities 192; large radius first 193; native query
 // alignment 190; direct object-index field 190; read-only bound source 190. Opening body restored.
 // score 190 (was 190): entry/index spill and sphere/position homes remain.
+// Native bound sphere with branch/entry count homes 196/196; aligned bound 203/203.
+// Native bound with split center/query 197 for both count homes and either bound alignment.
+// All native sphere copies restored; no field observation or float grouping retained.
 // Shared point setter at initial/query/bound producers 245/190/204; initial+query/initial+bound/query+bound 245/246/204.
 // All three point setters 246; native bound-point initializer 204.
 // @retail 0x45560

@@ -487,6 +487,13 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // score 125 (was 125): entry-table/ring conversion and rotation allocation remain.
 // Native direction value with output first/last, sine/cosine first 276/276/276/276;
 // both vector values 328/328; rotated-vector return 281/281. Original rotation contract retained.
+// score 120 (was 125): entry-table load, ring conversion and rotation XMM allocation remain.
+// Native radius member 125; shared ring with/without native radius 123/123; three-use trace distance 120 plain;
+// shared trace displacement 225; elevation vector 245; collision point setter 125; collision-offset vector 189;
+// trace distance with shared ring 120. Keep the smaller trace-distance form; frame 0xd8, 1090/1089 bytes.
+// frame 0xd8 agrees; entry-table scheduling, ring conversion and rotation homes differ.
+// Early object/record-pool producers 123/123 (exact-only); real ring/spoke 273/195;
+// short remaining count 125; unsigned/double ring 248/261; real ring and spoke 201.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
@@ -518,10 +525,11 @@ long function_26d570(long object_index)
 				if (!function_26c590(pathfinding, origin, sector_index, NONE, &direction, distance, NULL,
 					(s_path_trace_result *)&trace) && !trace.blocked)
 				{
+					real trace_distance = trace.distance;
 					point3f point;
-					point.x = direction.i * trace.distance + origin->x;
-					point.y = direction.j * trace.distance + origin->y;
-					point.z = direction.k * trace.distance + origin->z;
+					point.x = direction.i * trace_distance + origin->x;
+					point.y = direction.j * trace_distance + origin->y;
+					point.z = direction.k * trace_distance + origin->z;
 					point.x += g_4687b0->i * 0.5f;
 					point.y += g_4687b0->j * 0.5f;
 					point.z += g_4687b0->k * 0.5f;
