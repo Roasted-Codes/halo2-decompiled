@@ -2401,6 +2401,9 @@ void function_1e9ce0(long player_index, long counter, s_statborg *statistics, lo
 // Final aggregate acceptance 106; final rejection 106; old-score retention 215;
 // old-score-first result 51; post-event winner guard 44; retained result/winner guard 215;
 // acceptance with immutable receiver 106; old-score-first acceptance 105.
+// statistics setup, event scratch rotation and cached options remain;
+// statistics reference/narrow delta 44/44; event-only delta 116; event-mode snapshot 44;
+// combined selection 78; aggregate if arms 50 (retail length); shared index initialization 44; improvement value 57.
 // @retail 0x15b650
 void __stdcall function_15b650(long team, long delta)
 {

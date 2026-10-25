@@ -75,6 +75,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // duplicate identifier 177f; local machine 176f; membership 173f/175p;
 // machine and membership 173f; player comparisons 178f; all comparisons 176f.
 // Two-point plain membership gain rejected; original comparison inputs retained.
+// frame 0x14/0x18 and options/index/mask homes remain;
+// session type/option kind/limit/index values 175/175/175/175; name length 175;
+// local-machine validity value 263; uniqueness/found entry lifetimes 175/175.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

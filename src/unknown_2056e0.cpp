@@ -132,6 +132,10 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // frame overlap and motion/reciprocal, product and brake allocation remain.
 // Separate transpose output via returned/completed output 222/195; with first product 201/240;
 // with final product 243/240; with both products 201/240. Opening matrices and helpers retained.
+// aligned frame overlap, motion/reciprocal and brake allocation remain.
+// Query workspace in caller alone/with broad rotation 234/234; live rotation input 232;
+// first-product output pointer 224; pointer with separate transpose 236; native square-root
+// result, limiter output pointer and both 184/184/184. All helper contracts restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

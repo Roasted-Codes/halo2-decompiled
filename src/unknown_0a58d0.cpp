@@ -865,6 +865,9 @@ PRIVATE inline bool z_state_real_valid(real value)
 // direct result-byte SETNE and scalar zero remain. Scalar code input,
 // scale/all code lifetimes, field reference/pointer outputs, code with reference/pointer output,
 // code with default lower result 146/146/146/146/146/146/146/295.
+// direct byte SETNE and scalar-zero reloads remain.
+// Native code/word code/byte code 440/301/291; word endpoint limit 146;
+// word code with limit 301; native weights 146; endpoint products 227; unsigned code with weights 440.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {

@@ -283,6 +283,9 @@ void function_146de0(void)
 // capacity/timestamp homes and selective update expansion remain.
 // Final rounded/low-bit/conditional/word padding 149/152/143/145; signed-word
 // per-attempt padding 129 plain kept; capacity/allocation/joint home names 139/139/139.
+// Capacity/timestamp homes and update expansion remain; wrapped/full boundary
+// distances 164/149; direct consumption 164; counted distance 153; remainder update 140; byte padding
+// 144; unsigned capacity/native allocation 139/139.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
