@@ -477,6 +477,10 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // remain. Shared real ring 182; ring plus phase 195; record-first 163 kept; with real ring 161
 // rejected for two extra points; double base with ring/phase 182/195; axis value 317;
 // record/ring/spoke values 163.
+// score 125 (was 163): entry-table/ring conversion and rotation allocation remain.
+// Assigned sector word/short 161/161; default sector word 125 kept, short 128;
+// missing-sector continue, sentinel-between-direction and sentinel-first 163 each;
+// assigned short sector with interleaved publication 162.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
@@ -530,9 +534,11 @@ long function_26d570(long object_index)
 					point.y = g_4687b0->j * 0.1f + collision.point.y;
 					point.z = g_4687b0->k * 0.1f + collision.point.z;
 					long sector = function_14a280((s_bsp3d *)g_4e0340, 0, &point);
+					word selected_sector = entry->sector;
 					if (sector != NONE)
-						entry->sector = ((s_record_sector_map *)g_4e0348)->entries[sector].sector;
-					if (entry->sector != (word)NONE)
+						selected_sector = ((s_record_sector_map *)g_4e0348)->entries[sector].sector;
+					entry->sector = selected_sector;
+					if (selected_sector != (word)NONE)
 					{
 						entry->flags |= 0x40;
 						entry->direction.i = 0.0f;

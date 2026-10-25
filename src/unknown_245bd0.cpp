@@ -245,6 +245,10 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // score 61 (was 61): separate normal workspace 397; default normal workspace 397;
 // displacement in output normal 181; radius-square local 61; component-square lifetimes 61;
 // immutable distance 61; sphere reference 61; point reference 61. Sphere XMM homes still differ.
+// score 57 (was 57): sphere displacement/normal homes and reciprocal-one hoisting remain.
+// Shared scaled difference 57; original-grouping squared-distance accumulator and paired
+// difference 61/61; normal memset and accumulator/reset 176/180; plain component scale
+// loop and shared-difference loop 57/57; normal reset with scale loop 175.
 // @retail 0x245ef0
 bool function_245ef0(s_shapes const *shapes, point3f const *point, s_shape_result *result)
 {
