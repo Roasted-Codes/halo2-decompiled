@@ -56,6 +56,9 @@ extern short const g_44aee8[20] =
 // score 82 (was 82): word mask/RMW and sentinel/array-base registers remain.
 // Late next-link/word/long sentinel subsets 82,82,82,82,82,82,82;
 // native-short five-handle counter 99. Initializer body restored.
+// score 82 (was 82): narrow mask/RMW and sentinel/base registers remain.
+// Boolean first/second/both bits 107/88/112; conditional second bit 88;
+// library clear with first/both bits 124/127; counted pointer fill 82, with Boolean bits 112.
 // @retail 0x200c20
 void function_200c20(byte const *definition)
 {
@@ -1463,6 +1466,9 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
 // score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
 // score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
+// score 120 (was 120): extra frame dword and x87 shared tail remain.
+// Unused mode address removed/read-only mode 120/120; in-place transform 123;
+// noinline, staged subtraction and fallback memcpy each 120; nonpositive-first 119; failure exits 118.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {

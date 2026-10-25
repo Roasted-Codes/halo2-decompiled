@@ -119,6 +119,9 @@ short function_1a77a0(long actor_index, long a, short level);
 // Native result value 72; entry result lifetime 72; shared result exit 90; native shared
 // result 90; native node pool value 122; existing record queries 181; return-tested entry
 // loop 72; stable object query key 89.
+// score 72 (was 72): actor-pool save and distinct zero exits remain.
+// Native iterator after/before type gate 74/76; fieldwise before gate 76;
+// entry iterator 121; read-only actor/view 72/72; seeded scan 85; combined native inputs 74.
 // @retail 0x1b4680
 short __stdcall function_1b4680(long actor_index)
 {
