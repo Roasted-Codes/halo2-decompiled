@@ -1497,7 +1497,9 @@ short function_15cca0(long player_index, byte code)
 }
 
 // score 24 (was 24): the datum index and the record count are kept in swapped registers through
-// the whole lookup.
+// the whole lookup. Receiver and other pointer 37; const other pointer 37; target noinline 24;
+// absolute lookup forceinline 24; mark code 24; mark identifier 24; late absolute index 67;
+// counter declared first 24; existing team helper 50; team helper forceinline 50.
 // @retail 0x15cd90
 void function_15cd90(long player_index, short identifier, long other_player_index)
 {
