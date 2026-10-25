@@ -106,6 +106,10 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // Read-only forward 144f; alignment snapshot 414f; named alignment 144f;
 // marker failure break 185f; in-place contribution 204f; scale result 149f;
 // aggregate sum 210f; shared retreat scale 144f.
+// score 119 (was 136): alignment product, facing dot, clear join and contribution schedules remain;
+// named target distance 119 plain / 122 fast; motion memcpy 142f;
+// point-getter result in case four/five/both 281/195/287f; failure-first arm 179f;
+// output reuse 192f; scale force-inline 142f; distance names / placement capture 122/122f.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {
@@ -186,7 +190,8 @@ void __stdcall function_28e770(long arg_0, long arg_1)
 				if (local_11)
 				{
 					function_28e774(&local_8, &local_3->field_14, &local_13);
-					if (function_30bf0(&local_13) > 0.0f && !local_3->field_57 && !(bool)local_12->field_12c)
+					real target_distance = function_30bf0(&local_13);
+					if (target_distance > 0.0f && !local_3->field_57 && !(bool)local_12->field_12c)
 					{
 						if (local_3->field_4c > 0)
 							goto local_21;

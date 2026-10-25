@@ -104,6 +104,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // score 165 (was 165): success/type carriers and first-channel spill remain;
 // native startup/create/buffer calls 209/201/165; two-row input table 165;
 // absolute channel index 283; state before codec stores 165; failure state 163; early failure state 286.
+// score 165 (was 165): success/type carriers and first-channel spill remain;
+// result from startup tests 424; tested-state transfer 424; result at first test 424;
+// final result after reset completion 303; before effects 303; before submix 262;
+// before impulse cleanup 174; before volume stores 165.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
