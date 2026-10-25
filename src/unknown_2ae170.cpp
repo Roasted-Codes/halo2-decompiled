@@ -823,6 +823,7 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 // score 156 (was 166): frame eight agrees; zero gain folding and mode dispatch remain;
 // frame pointer 166; word counters 157; common counter 166; exclusive end bins 165;
 // pair/quad capacity predicates 156.
+// score 137 (was 156): Frame eight agrees; runtime zero attenuation and mode dispatch remain. Shared modes 168; adjacent endpoints 193; all byte endpoints 142; byte capacity 156; unsigned counters 156; combined shared modes 161; rear bytes 170; front bytes 137 (plain, exact length).
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -831,8 +832,8 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	bool pair_available = remaining >= 2;
 	bool quad_available = remaining >= 4;
 	real gain = 0.0f;
-	long left = alternate ? 0 : 6;
-	long right = alternate ? 1 : 7;
+	unsigned char left = alternate ? 0 : 6;
+	unsigned char right = alternate ? 1 : 7;
 	long rear_left = alternate ? 4 : 8;
 	long rear_right = alternate ? 5 : 9;
 

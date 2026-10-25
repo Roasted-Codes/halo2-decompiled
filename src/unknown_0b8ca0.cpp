@@ -635,6 +635,7 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // loop 235; marker-position loop 235; initial radius snapshot 235.
 // direct radius with double magnitude 231; real radius 239; both widths 231;
 // byte result with real radius 270; word result with double magnitude 237.
+// score 231 (was 231): Caller-dependent eight-byte alignment and angle homes remain. Direct marker position 262; displacement initializer 235; scaled range 235; successive square sum 235; unsigned model handle 235 (ordinary radius in all).
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1602,6 +1603,7 @@ void function_bba20(long index);
 // inverse workspace scope 319; spatial workspace names 319.
 // byte permission 319; byte activity 319; both byte carriers 319;
 // vector transforms before point 385; byte permission with vectors first 385.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward 319; direct node array 323.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {
