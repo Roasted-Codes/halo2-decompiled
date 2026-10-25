@@ -384,6 +384,17 @@ bool function_dc310(long object_index);
 
 /* whether every actor an ai index names (or every object of the perception of
    one without a unit) is dead */
+// score 15: the code is the same instruction for instruction; only ECX and
+// EDX trade places in the swarm loop. Retail keeps the object data base (and
+// the object function_dc310 reads) in EDX and the creature in ECX; ours does
+// the reverse. 0x273200 shows the same swap in the same loop. Needs the
+// callers and 0xdc310 in a fast check. Tried (all 15 unless noted): the
+// returned object kept in a local; if (!(result = ...)); a separate bool;
+// the iterator's fields set in the other order; the iterator declared at the
+// top; result declared last; while ((actor = next) != NULL); a local copy of
+// the creature iterator (also with the ternary form); index set before the
+// object get 118; while (result && ...) loops 71 (inner) and 155 (both); a
+// for loop 167; the unit test inverted 112.
 // @retail 0x2732e0
 bool function_2732e0(long ai_index)
 {
