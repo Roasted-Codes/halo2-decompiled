@@ -3333,7 +3333,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // score 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
-// score 1450 (was 1500): frame 0x38 agrees; pool/index roles and scalar homes remain.
+// score 1475 (was 1500): frame 0x38 agrees; pool/index roles and scalar homes remain.
 // Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
 // input-array names 1507; barrel completion case order 1507. Full-width result kept.
 // Own plain 1476; later table relocation 1450 with identical normalized code.

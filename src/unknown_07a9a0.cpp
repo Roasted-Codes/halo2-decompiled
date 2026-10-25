@@ -1074,7 +1074,7 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // score 830 (was 842): frame/session/lookup still differ; reduced preview 864.
 // Early team scalars 896; early party scalars 922; group observation 865;
 // member-rating observation 864; allowed-imbalance observation 956; all restored.
-// score 821 (was 829): word histogram initialized at declaration; frame 0xd4 versus 0xb4 remains.
+// score 828 (was 829): word histogram initialized at declaration; frame 0xd4 versus 0xb4 remains.
 // Fast long result 873; byte result 868; later group decision 884; word initialization 848;
 // final spread 873. Code-plus-extent 804/798/806/777/792 versus preview 788.
 // @retail 0x7e210

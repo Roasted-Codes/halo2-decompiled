@@ -989,17 +989,6 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
     }
 }
 
-// score 90 (was 90): frame 0x18 agrees; rounded alpha still shifts after its load.
-// Shared helper packing 90; no conversion initializer 287; unsigned result storage 90;
-// result declared first 92; ordinary alpha/integer inline 90/618; inline depth one/two 90/90.
-// Frame 0x18 agrees; rounded alpha shifts in a register instead of its conversion slot.
-// Signed rounding result, alpha before switch/loop 90; low-mask OR 259;
-// high-mask XOR 91; clear/OR state update 259; shared scalar rounding result 90;
-// cases 0/2/1 90; unsigned return from existing alpha helper 90.
-// rounded alpha shifts in a register instead of its stack slot; branch offsets differ.
-// byte alpha 89; word alpha 89; integer alpha raw 90.
-// raw alpha integer 90; shared previous state 90; float consistency 90.
-// frame pointer 742; size preference 730.
 // @retail 0x17b60
 void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
 {

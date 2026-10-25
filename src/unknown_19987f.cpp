@@ -2174,11 +2174,6 @@ bool function_19a902(void)
 	return result;
 }
 /* the interface state for each network session state */
-// score 32 (was 32): repeated-constant registers, zero-store order and folded default differ;
-// enum keys 32; enum values 32; enum pairs 32.
-// enum array 32; enum fallback 32; const enum array 32.
-// table member search 67; const member search 67; forceinline member 32.
-// const forceinline member 32.
 // @retail 0x19a5fd
 long function_19a5fd(long state)
 {
