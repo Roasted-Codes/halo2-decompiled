@@ -283,7 +283,7 @@ short __stdcall function_1ac3f0(long actor_index)
 	return result;
 }
 
-// score 43 (was 43): frame four agrees; scale is popped at the first timer multiply and stores differ;
+// score 35 (was 43): frame four agrees; scale is popped at the first timer multiply and stores differ;
 // tried first timer shared conversion direct 114; first timer shared conversion named seconds 103;
 // second timer shared conversion 49; both timers shared conversion 121; integral tick rate 47;
 // shared timer homes at entry 49; scale first timer product 43; chained boolean resets 46;
@@ -291,6 +291,8 @@ short __stdcall function_1ac3f0(long actor_index)
 // first duration multiply pops scale early and reset stores cross the scale
 // addition. Duration-seconds name 43; ticks name 43; both names 43; both timer names 43; product
 // update 43; duration scope 43; entry delay 43; early rate 37/333 (one-use field copy, rejected).
+// Scale draw after resets 0d/12/10/25/3a/0c/22/3b: 37/35/36/37/37/39/39/40;
+// after 12 kept at 317 bytes; seed reload and non-popping multiply still differ.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -300,10 +302,10 @@ bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 	if (!state->unknown0c)
 	{
 		real delay = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, character->lower, character->upper);
-		real scale = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 1.0f, 3.0f);
 
 		state->unknown0d = true;
 		state->unknown12 = false;
+		real scale = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 1.0f, 3.0f);
 		state->unknown10 = false;
 		state->unknown25 = false;
 		state->unknown3a = false;
@@ -615,6 +617,8 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // score 58 (was 58): default reload and saved-register roles differ. Branch-assigned defaults,
 // valid object first: short result with entry/scoped state 76/76, long result 73/73; invalid
 // object first: short 80/80, long 77/77.
+// Object index once 58; element-first 58; property once 58; element-first 57; both
+// indices once 58; element-first 57; original reads element-first 58; tick receiver 55 (below gate).
 // @retail 0x1ad5b0
 short __stdcall function_1ad5b0(long actor_index, s_slot *slot, bool active)
 {
@@ -985,6 +989,8 @@ struct s_1ac9e1
 // immediate completion store and tail join differ. Literal query returns 63; native history points
 // 60; both 63; common result exit 48; native points and common exit 48; workspace names 60;
 // literal returns and names 63; ordinary completion local 75.
+// Post-location count char/short/long 52/48/51; shared direction 48; count plus direction
+// 52/48/51; declared previous endpoint 48; reference-success completion/single result 63/63.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)

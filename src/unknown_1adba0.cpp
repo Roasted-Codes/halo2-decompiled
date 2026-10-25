@@ -651,6 +651,8 @@ bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void cons
 // point/valid/both with common result 230/112/230; both plus native source 230.
 // Source/query/both publication orders 102/111/101; query-only one-point gain rejected.
 // Native source alone/with source order/with both orders 114/104/103.
+// Library source/query/published copies and all combinations 102 (seven forms);
+// existing conversion return as copy source 218. ESI save and query carriers remain.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {
