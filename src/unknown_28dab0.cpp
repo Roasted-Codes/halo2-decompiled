@@ -41,6 +41,9 @@ void __stdcall swarm_delete(long arg_0);
 // source rewrites (the declaration order, the result split from the
 // allocation, the comparison against the variable, the goto, the width of the
 // limit) all scored 53 or worse.
+// score 44 (was 44): the same register split. Retail store order with the
+// count read once 53; tag pointer declared before the result 44; flag byte
+// in a local 44; nested tag test 44; locals declared at the top 53.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {

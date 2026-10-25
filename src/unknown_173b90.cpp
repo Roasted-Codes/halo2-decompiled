@@ -11,6 +11,7 @@
 #include "globals.h"
 #include "data_array.h"
 #include "effects.h"
+#include "normalize3d.h"
 #include <xtl.h>
 #include "unknown_246cd0.h"
 
@@ -735,23 +736,24 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 	spawn->location_index = particle_location->next_index;
 }
 
+// score 17 (was 29): the untinted half-path exit is a long jump to the last
+// epilogue where retail's short jump joins the half path's own; the half path
+// reads the unpacked color through the returned pointer where retail reads the
+// buffer and pushes the returned pointer. Store per path (retail's entry
+// registers) 41; returned pointer packed only 41; one shared buffer 17;
+// early untinted return 17; tinted tested first 37.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
-	dword packed = color_a;
 	if (!multiplied)
 	{
 		if (tinted)
 		{
 			color3f color;
 
-			unpack_color3f(color_b, &color);
-			color.red *= 0.5f;
-			color.green *= 0.5f;
-			color.blue *= 0.5f;
-			packed = pack_color3f(&color);
+			vector3f_scale((vector3f *)unpack_color3f(color_b, &color), 0.5f, (vector3f *)&color);
+			particle_system->color = pack_color3f(&color);
 		}
-		else return;
 	}
 	else if (tinted)
 	{
@@ -763,9 +765,12 @@ void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_syste
 		color.red *= other.red;
 		color.green *= other.green;
 		color.blue *= other.blue;
-		packed = pack_color3f(&color);
+		particle_system->color = pack_color3f(&color);
 	}
-	particle_system->color = packed;
+	else
+	{
+		particle_system->color = color_a;
+	}
 }
 
 extern vector3f *g_4687bc;
