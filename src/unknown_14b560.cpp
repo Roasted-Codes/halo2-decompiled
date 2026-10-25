@@ -1959,6 +1959,10 @@ struct s_player_creation_record
 
 // score 33 (was 33): the value that is handed to the call is read into EDI
 // here and into EDX in retail, so the register that carries the argument
+// differs; the rest of the call is the same. Retail inlines 0x14f270 for the
+// variable controller here (only the inner NONE reset stays a call). Tried: a
+// plain call with an inline declaration of 0x14f270 267; with
+// inline_recursion pragmas or a reworded 0x14f270 the call is still kept.
 // differs; the rest of the call is the same.
 // Frame 0x10 agrees; the controller reset expands on the opposite arm.
 // Caller depth 1/2 33/33; size preference 335; common reset 55;

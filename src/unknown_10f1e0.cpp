@@ -1838,6 +1838,11 @@ struct s_request_114b60
 
 __declspec(noinline) bool unit_submit_entry_request(short fallback_index, short entry_index, long unit_index, long priority, void const *extra);
 
+// score 16 (was 16): only the callee-saved roles differ (ours index ebx,
+// NONE ebp, request priority esi; retail esi, ebx, ebp). Tried: the default
+// extra fill as a shared inline helper 16; other parameter orders 16; the
+// 0x114520 result in a named bool returned once 95; the fallback test joined
+// to the 0x114520 test 22; a success flag set after the fallback block 96.
 // @retail 0x114b60
 bool unit_submit_entry_request(short fallback_index, short entry_index, long unit_index, long priority, void const *extra)
 {

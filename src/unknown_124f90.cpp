@@ -2273,6 +2273,13 @@ bool function_126c30(s_sound_play_state *state, long tag_index, long *listener_i
 /* starts a sound from a play state: a new sound with the state's location,
    gain, pitch and source, at a pitch range and permutation; NONE if it would
    be too quiet or none is free */
+// score 23 (was 23): the two set-chunk calls narrow their indices to char
+// (byte loads, a sign-extended range index) where retail passes words, and
+// the delayed start sets flag0 before storing the start time. BLOCKED-BY
+// 0x1286b0 (its two index parameters are short in retail: 0x128ca0 widens
+// char fields to 16 bits for them) and 0x219070 (short set index). With both,
+// a flags pointer for flag0 and the 0x219070 result in a named short, it
+// matches. Tried here: that named short alone 21; the flags pointer alone 19.
 // @retail 0x126000
 long function_126000(long tag_index, long listener_index, s_sound_play_state *state, long rate_limit_stage)
 {
