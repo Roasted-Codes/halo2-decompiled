@@ -276,7 +276,8 @@ void __stdcall function_1e9fa0(void *engine_globals, long object_index, long rep
 // field parameter, nested row structs, values[0][field + index * 14] and
 // other flat spellings, delta + old, the indirection without volatile; the
 // array re-indexed at each use (also with inline get/set helpers) 80 (the
-// delta read is then the one hoisted into EDX).
+// delta read is then the one hoisted into EDX). The clamp as one ternary or
+// into a short local 13 (the engine test swap stays).
 // @retail 0x1e9ce0
 void function_1e9ce0(long player_index, long counter, s_statborg *statistics,
 	long field, long volatile delta, bool by_team)
