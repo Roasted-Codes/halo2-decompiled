@@ -28,35 +28,39 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
         local_1 = arg_0 * local_1;
         local_2 = arg_0 * local_2;
     }
-    arg_2->i = g_4b9e14.forward.i * local_2 + g_4b9e14.up.i * local_1 + g_4b9e14.right.i * local_0;
-    arg_2->j = g_4b9e14.forward.j * local_2 + g_4b9e14.up.j * local_1 + g_4b9e14.right.j * local_0;
-    arg_2->k = g_4b9e14.forward.k * local_2 + g_4b9e14.up.k * local_1 + g_4b9e14.right.k * local_0;
+    for (long component = 0; component < 3; ++component)
+        arg_2->n[component] = g_4b9e14.forward.n[component] * local_2 + g_4b9e14.up.n[component] * local_1 + g_4b9e14.right.n[component] * local_0;
 }
 
 // score 255 (was 255): frame 0x20 versus 0x14 and transform coefficient/result registers differ.
 // Global optimization off 961; depth zero 555; frame pointer 300;
 // input-first products 255; k/j/i transform output 272.
+// score 227 (was 255): frame 0x18 versus 0x14; coefficient/result registers and tail differ.
+// Offset/transform/blend loops 315/291/255; paired loops 237; depth bounds 237; both 227.
+// Paired loops with blend/unsigned/in-place 236/237/287;
+// scoped bounds 230; literal zero 227; bound scalar homes 227 (plain).
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {
     real local_14 = 0.f;
     vector3f local_0;
-    local_0.i = arg_0[0].field_0.x - g_4b9da0.x;
-    local_0.j = arg_0[0].field_0.y - g_4b9da0.y;
-    local_0.k = arg_0[0].field_0.z - g_4b9da0.z;
     vector3f local_1;
-    local_1.i = arg_0[1].field_0.x - g_4b9da0.x;
-    local_1.j = arg_0[1].field_0.y - g_4b9da0.y;
-    local_1.k = arg_0[1].field_0.z - g_4b9da0.z;
+    for (long component = 0; component < 3; ++component)
+    {
+        local_0.n[component] = arg_0[0].field_0.n[component] - g_4b9da0.n[component];
+        local_1.n[component] = arg_0[1].field_0.n[component] - g_4b9da0.n[component];
+    }
     vector3f local_2;
     vector3f local_3;
     world_vector_to_view(g_4b9e14.scale, &local_0, &local_2);
     world_vector_to_view(g_4b9e14.scale, &local_1, &local_3);
+    real first_depth_limit = local_2.k * local_2.k * 4.f;
+    real second_depth_limit = local_3.k * local_3.k * 4.f;
     if (local_2.k < 0.f && local_3.k < 0.f &&
-        local_2.k * local_2.k * 4.f > local_2.i * local_2.i &&
-        local_2.k * local_2.k * 4.f > local_2.j * local_2.j &&
-        local_3.k * local_3.k * 4.f > local_3.i * local_3.i &&
-        local_3.k * local_3.k * 4.f > local_3.j * local_3.j)
+        first_depth_limit > local_2.i * local_2.i &&
+        first_depth_limit > local_2.j * local_2.j &&
+        second_depth_limit > local_3.i * local_3.i &&
+        second_depth_limit > local_3.j * local_3.j)
     {
         real local_4 = local_14 - local_2.k;
         real local_5 = local_14 - local_3.k;

@@ -413,6 +413,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // the homes and skip the scratch reload on the non-call paths, breaking the per-query block
 // order retail shows with its reused incoming-slot scratch); param address reads removed 76;
 // mode==0 divide arm first 67 KEPT; case-2 break 69; accumulate form 69.
+// score 68 (was 68): frame/output-home reuse remains; existing helper output plus
+// scalar return for menu/shared/campaign 68/68/68, each pair 68/68/68,
+// all later or all four return consumers 68/68. Original helper and readbacks retained.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {

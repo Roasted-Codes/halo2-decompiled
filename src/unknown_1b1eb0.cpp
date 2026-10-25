@@ -188,6 +188,9 @@ real function_1e3920(long actor_index);
 // score 164 (was 164): early slot ESI, scalar homes and cold reference arms remain.
 // Mixed pre-scratch request enable/permission/both/byte/enable-byte/permission-byte
 // stores 165/168/165/166/165/165; outer actor join 166; inactive return 164.
+// early ESI slot, scalar homes and cold reference arms remain;
+// branch-only reference on earlier scratch 211; with read-only actor / slot reference 211/211;
+// common release / request scope / late handle / early permission / release plus late handle 181/211/207/211/178.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

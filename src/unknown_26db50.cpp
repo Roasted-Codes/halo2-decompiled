@@ -481,6 +481,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Assigned sector word/short 161/161; default sector word 125 kept, short 128;
 // missing-sector continue, sentinel-between-direction and sentinel-first 163 each;
 // assigned short sector with interleaved publication 162.
+// frame 0xd8 agrees; entry/ring conversion, rotation XMM and sector registers remain.
+// Rotation output/axis/both object references 163/163/163; each with output last 163/163/163;
+// cosine-first output/axis reference contracts 163/163. Original helper and body restored.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

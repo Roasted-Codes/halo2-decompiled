@@ -64,9 +64,8 @@ PRIVATE __forceinline real function_1d24a6(vector3f const *arg_0, vector3f const
 }
 PRIVATE __forceinline vector3f *function_1d24a2(vector3f const *arg_0, real arg_1, vector3f *arg_2)
 {
- arg_2->i = arg_0->i * arg_1;
- arg_2->j = arg_0->j * arg_1;
- arg_2->k = arg_0->k * arg_1;
+ for (long component = 0; component < 3; ++component)
+  arg_2->n[component] = arg_0->n[component] * arg_1;
  return arg_2;
 }
 PRIVATE __forceinline void function_1d24a3(vector3f *arg_0, vector3f const *arg_1)
@@ -115,6 +114,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // score 1207 (was 1214): frame 0x1d4 restored; early EBX, entry homes and vector reloads remain.
 // Record-scope angular residual 1214; function-scope angular change 1214; early angular axis 1214;
 // native removed-slot element 1214; one record option-word read for all four flags 1207, kept.
+// score 1016 (was 1207): frame 0x1e8 versus 0x1d4; early EBX, entry homes and vector reloads remain. Plain
+// scale helper loop 1016 kept; add loop 1233; subtract loop 1126; all three 1328; shared planar difference
+// 1207; scale/subtract 1123; scale/add 1261; add/subtract 1201.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
