@@ -411,10 +411,15 @@ extern point2f *g_468778;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
+// score 379 (was 379): Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
+// 408; integer clock 413; conditional threshold 389; aggregate request 379; branch-derived
+// prediction weight 385 (fast).
 // Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
 // inner threshold 388; entry planar workspace 379. Actor/settings/prop carriers still differ.
 // Round 310: eligibility result 432; double clock 413; prop handle snapshot 379;
 // read-only prop payload 379; weight after magnitude 379. Early actor/settings/prop homes remain.
+// score 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
+// validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

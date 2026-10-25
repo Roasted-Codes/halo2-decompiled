@@ -2115,6 +2115,8 @@ static __forceinline long player_round_ticks(real value)
 // direct permission result 707; combined native fields and direct result 707.
 // Native unit view 701; candidate reference 701; request at dispatch 701;
 // native activity results 707; native permission 701. Original body kept.
+// Cooldown scalar names 701; rest-first clamp stores 706; gated idle cap 705;
+// separate melee button tests 709; target-age store before test 701.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {

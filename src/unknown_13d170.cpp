@@ -176,6 +176,8 @@ struct s_block_candidate
 // candidate copy through memcpy 370.
 // Bounded ring masks 387; unsigned-word endpoints 392; frame pointer 475;
 // zero inline depth 418; size preference 643 (fast).
+// Native busy result 370; native selection result 373; gap endpoint snapshot 370;
+// page cursor published first 372; byte ring tail 432 (fast).
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

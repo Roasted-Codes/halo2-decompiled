@@ -667,6 +667,9 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // dispatch timing, ordinal/context homes and remap entry remain; entry ordinal 19; int
 // ordinal 19; immutable append boundary/shape 19/19; component sphere 158; SSE sphere 84; combined ordinal
 // lifetimes 19; component sphere plus early correction 114.
+// score 19 (was 19): Child dispatch/ordinal/context homes remain; distinct inverse output/scope
+// 106/106; mutation cursor 161; removal count/reference 19/19; transform ordinary inline 309;
+// transform output/remap array references 19/19.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)

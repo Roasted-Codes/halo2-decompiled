@@ -2966,6 +2966,12 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
 // score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
 // score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Initial state helper 1179; normalized bounds 985; split zero defaults 942 discarded; dispatch lifetimes 971; branched depth result 971; shared cutoff default 1055 (fast).
+// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Shared mode-
+// two/three tail 1153; redundant case defaults removed 1193; common exponent outputs 1365; second
+// packed color shared 1101; byte fraction 971 (fast).
+// Frame 0x2c agrees; capability/save roles, state expansion and
+// color/quantizer homes differ. Word success 1194; unsigned exponent 1197; mode decision chain
+// 1084; word color input 971; word alpha input 1181 at retail length.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

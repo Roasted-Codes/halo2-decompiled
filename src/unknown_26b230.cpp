@@ -52,6 +52,10 @@ static __forceinline long real_to_long(real value);
 // Real counter/global/both members 144/144/144; native member word comparison 149;
 // direct budget members 144; per-record threshold 144; inactive-record continue 144;
 // budget initialized after cursor 155. Body and member declarations restored.
+// score 144 (was 144): frame 0x18/0x20 and current/datum homes remain.
+// Shared record result 144; with separate native/long budget 146/152;
+// member initialization 144; direct modulo clock 144; shared result/clock 144;
+// native counter snapshot 149; update-state-first count path 149.
 // @retail 0x268510
 void function_268510()
 {
@@ -464,7 +468,13 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 	return result != NULL;
 }
 
-// score 68 (was 68): retail sign-extends the first team argument and passes the second one
+// score 68 (was 68): with a fifth word in the clump iterator (shared with 0x26bc60 and 0x269040;
+// reverted in review, two points) the frame agrees at 66; retail sign-extends the
+// first team argument (`movsx eax` after the clump address add, pushes after it) and zeroes the
+// current-clump register (edi) at the loop top for the exhausted path, where ours zeroes ecx there.
+// Round 80: `long team` local 92; current stored first in the step helper 92 (292 bytes);
+// pointer-returning step 66; result set in both activity arms 66; iterator declared first 66.
+// Earlier: retail sign-extends the first team argument and passes the second one
 // narrow, and its frame is four bytes larger than ours, so the stack offsets and the register
 // that holds the clump pointer differ as well.
 // Pointer result/reference/both 68/68/68; current field first/pointer/reference 94/94/94.
@@ -473,6 +483,9 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // initialized 68; prop type snapshot 93; prop reference 68.
 // Both-arm step result/stored-current result/native step result/activity input/member step 68 each.
 // Node query/prop query/both separate noinline declarations 68/68/68.
+// score 68 (was 68): Frame and nullable-current lifetime remain; current datum 68;
+// success-controlled loop 68; selected datum 132; node/prop inline 68/68; forced node/prop
+// expansion 246/158; datum plus success loop 68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1653,6 +1666,9 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // Frame pointer 198; depth zero 313; later generation increment 130; native source slot 175; size preference 360; first-walk generation snapshot 178.
 // generation after destination 221; generation after head 126; read-only source 128; source reference 128.
 // read-only copy 128; read-only first walk 128; ordinary prop inline 128; separate copy noinline 128.
+// Entry group helper 128; fresh-head group helper 128; native prop field 128;
+// prop handle at use 128; child extension at use 128; owner extension at use 130;
+// native entry slots 219; direct populated-array index 160.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1924,6 +1940,9 @@ void function_269250(long clump_index, long actor_index)
 // final tracking guard 189; complete unit arms 193; unsigned replacement 189; word category mask 192.
 // Read-only object/external object reference/read-only member/extensions 189/189/189/189.
 // Ordinary prop/node/both iterator inline and separate removal noinline 189/189/189/189.
+// score 189 (was 189): Frame/current/object/replacement homes remain; unchanged result 189;
+// changed-reference count 246; category at uses 195; member header getter 189; removal
+// inline/forced expansion 189/460; complete unit predicate 243; count plus removal boundary 246.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
