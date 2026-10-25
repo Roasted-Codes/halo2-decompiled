@@ -584,6 +584,11 @@ static inline bool session_set_machine_limit(c_class_58d20 *session, long value)
 // Countdown native object copy 55; native address copy 55; machine object reference 55;
 // machine value copy 55; short machine alias 55; immutable member count 55;
 // machine counter names 55; top-tested countdown 114.
+// the code is retail's apart from the colours: retail takes the session in
+// EBX (its callers copy it there) and gives the loop temporaries ESI/EDI; ours keeps the session
+// in ESI. Member count read before the clears 129; summary set after the clears 129; machine
+// pointer before the clears 55; zero initialisers for the two buffers 151; summary as a
+// conditional 131.
 // @retail 0x6e720
 bool function_06e720(c_class_58d20 *session)
 {

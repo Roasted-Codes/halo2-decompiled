@@ -31,7 +31,10 @@ struct s_motion_adjustment_result
 	vector3f velocity;
 };
 
-// score 86 (was 86): frame 0x24 agrees; product scheduling, raw-copy registers, early J/K loads and tick clamp
+// score 86 (was 86): product schedule, raw-copy registers and early normalization J/K loads differ;
+// left/up/both accumulation loops 86/86/86; target/combined/both scale receivers 131/86/131;
+// float square root 86; float absolute value 86.
+// frame 0x24 agrees; product scheduling, raw-copy registers, early J/K loads and tick clamp
 // differ; tried offset aggregate 86; squared length value 96; adjustment rate value 109; tick rate value 120;
 // current position value 106; basis input value 128; offset component loop 103; normalization component loop
 // 96.

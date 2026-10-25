@@ -221,6 +221,9 @@ struct s_physics_component_walk : s_havok_component
 // Shared sections 357; next path first 276; replacement bool names 275;
 // frame pointer 325; size preference 446; shared sections with in-loop store 352;
 // availability last 298. Original kept.
+// Body-byte cursor 323; edge-group array 275; separate body rejections 275;
+// native section result 275; native replacement policy 307 (frame 0x18,
+// 898 bytes); policy and cursor 300 (930 bytes). Original body kept.
 // score 275 (was 275): extra frame word and current/entry/group homes remain.
 // Combined status mask 307; direct body fields 320; section callback guards 275;
 // entry eligibility guards 275; next-count snapshot 301. Original body restored.

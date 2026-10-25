@@ -316,6 +316,9 @@ static inline bool teams_enabled_19e1c0()
 // terminators 413 (discarded); size mode with existing result 834; global
 // optimisation off with existing result 1225; comparison-fed plain result 709;
 // first-name comparison terminator 444; score-text comparison terminator 443.
+// score 433 (was 443): frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
+// iterator 433 kept; explicit modes 443; native local team 457; native eligibility 443; shared
+// player dispatch 593; word iterator plus modes/local team/eligibility 440/451/433.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {
@@ -375,7 +378,7 @@ long function_19e1c0(s_event *event, long token_length, word const *token, word 
 	else if (!wcsncmp(L"#cause_team_opponent_score", token, token_length) && teams_enabled_19e1c0())
 	{
 		long best_score;
-		long team;
+		short team;
 		long mode;
 
 		text[0] = 0;

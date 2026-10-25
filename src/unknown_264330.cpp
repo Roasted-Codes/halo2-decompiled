@@ -194,7 +194,13 @@ owner_selected:
 }
 
 // score 67 (was 67): retail loads the array base into esi and copies the three fields in a different order, ours
-// uses ecx.
+// uses ecx. The cause is one choice: retail keeps the object array base live in esi across the two calls and
+// fetches the object again from ebx in the else branch, while ours keeps the first object pointer in esi and
+// reuses it there (LTCG treats function_30bf0 and function_264260 as leaving the table alone). Tried: the else
+// branch reading g_4e0300->data afresh (96, both loads folded); both reads written through g_4e0300->data with
+// or without an object local (96); the facing as a const reference (99); a volatile load of the second object
+// pointer (103; 102 without the object local: it keeps the element address in esi instead); no object local
+// (67); the two ifs folded to if / else if (66); direction.i computed before the facing (67).
 // @retail 0x264940
 void function_264940(long actor_index, long prop_ref_index)
 {
@@ -404,11 +410,15 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // frame 0xa4 versus 0xa0, actor stacked versus EAX/EBX;
 // initial update predicate 441 (frame 0xa0); counter word snapshot 426;
 // prior-state word 426; case-one tracking scope 426; separate final guards 426.
+// score 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
+// kept; word update/sample/sampled count 430/449/449; native view 426; later view lifetime 426;
+// word maximum plus native view/later view/update 420/420/424.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
 	byte *actor = (byte *)actor_get(actor_index);
-	dword volatile maximum = 1;
+	/* volatile keeps maximum in its stack word, as retail does: 420, against 426 as a plain word (see the note) */
+	word volatile maximum = 1;
 	bool sampled_one = false;
 	if (actor[0x44]) function_263210(actor_index);
 	function_265680(actor_index);
