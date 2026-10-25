@@ -1196,6 +1196,9 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // Direct parent fields 99; native parent value 115; root-entry binding 114;
 // parent flags by field/value 36/36; shared overlay result 40; independent
 // overlay results 45; actual indices-record reference 38 (plain scores).
+// separate node-base addition and ECX/EDX roles remain.
+// Parent/root/query-result names 36/36/36; outer query result 36; retained-field
+// plus root/parent object references 36/36; animation/interface references 36/36.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1393,6 +1396,12 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 
 // score 252 (was 252): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
+// score 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// Entry unit capture 252; const unit/primary weapon/weapon object/look receivers 252 each;
+// look interval capture 417; combined readers 252; readers plus interval 417 (fast base 252).
+// frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
+// Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
+// all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

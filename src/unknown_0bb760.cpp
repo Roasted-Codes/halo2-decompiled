@@ -459,6 +459,10 @@ void function_3dd10(long object_index, bool force);
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
+// Native blend remainder/immediate and delayed rounding 148/161; paired native remainders 196;
+// variant read at uses 136; shared color interpolation alone/with remainder 376/374;
+// initialized HSV outputs 158; separate RGB output 156. Second remainder publication, signed scan
+// exits and one reload still differ; original arithmetic and scans restored.
 // Selected choice result 134; selected ordinal 155; late variant key 229;
 // variant between seed and remainder 122; late scan outputs 256;
 // HSV output role names 134; immutable blend 134; immutable selection 134.

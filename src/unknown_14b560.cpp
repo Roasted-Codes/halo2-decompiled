@@ -1261,6 +1261,10 @@ static inline s_players_globals *players_globals_14f2e0()
 
 /* gives a player its unit (the unit kept for it, the unit waiting to be
    reused, or a new unit at a starting location) and resets its spawn state */
+// score 114 (was 114): Player/tag/globals/unit register lifetimes and success BL still differ.
+// Shared direction helper for reuse/create/both 251/201/276; creation/colors/both entry scopes
+// 152/114/152; native/byte success 174/177; sentinel clears 114;
+// representation inline/out-of-line declarations 114/114.
 // @retail 0x14f2e0
 bool __stdcall function_14f2e0(long player_index)
 {
@@ -1955,6 +1959,10 @@ struct s_player_creation_record
 
 // score 33 (was 33): the value that is handed to the call is read into EDI
 // here and into EDX in retail, so the register that carries the argument
+// differs; the rest of the call is the same. Retail inlines 0x14f270 for the
+// variable controller here (only the inner NONE reset stays a call). Tried: a
+// plain call with an inline declaration of 0x14f270 267; with
+// inline_recursion pragmas or a reworded 0x14f270 the call is still kept.
 // differs; the rest of the call is the same.
 // Frame 0x10 agrees; the controller reset expands on the opposite arm.
 // Caller depth 1/2 33/33; size preference 335; common reset 55;

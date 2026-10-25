@@ -1506,7 +1506,9 @@ short function_15cca0(long player_index, byte code)
 }
 
 // score 24 (was 24): the datum index and the record count are kept in swapped registers through
-// the whole lookup.
+// the whole lookup. Receiver and other pointer 37; const other pointer 37; target noinline 24;
+// absolute lookup forceinline 24; mark code 24; mark identifier 24; late absolute index 67;
+// counter declared first 24; existing team helper 50; team helper forceinline 50.
 // @retail 0x15cd90
 void function_15cd90(long player_index, short identifier, long other_player_index)
 {
@@ -2663,7 +2665,10 @@ void function_158090(long player_index, short old_team)
 }
 
 // score 12 (was 12): the player index and the player table base are kept in swapped registers, and
-// the peer lookup after it reloads them the other way round.
+// the peer lookup after it reloads them the other way round. Tried: an unsigned index parameter 12;
+// the table read before the peer call 31; a const table pointer 12; the existing dirty-slot helper 12;
+// the existing cause setter forced inline 69; inline depth one 12; the existing initializer forced
+// inline 73; global optimization off 120.
 // @retail 0x157de0
 void function_157de0(long player_index)
 {
@@ -2938,7 +2943,10 @@ void function_15ba20(void)
 }
 
 // score 16 (was 16): the event fields are stored in a different order than retail, and the player
-// lookup keeps the index in a different register.
+// lookup keeps the index in a different register. Tried: an unsigned index parameter 16; the shared
+// input-counter helper 16; the force-inline input-counter helper 16; the table read before the peer
+// call 68; the existing cause setter forced inline 70; the existing initializer forced inline 79;
+// size optimization 125; global optimization off 86.
 // @retail 0x157ed0
 void function_157ed0(long player_index)
 {

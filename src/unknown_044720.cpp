@@ -201,6 +201,11 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
+// score 196 (was 196): Frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
+// external entry reference 196; read-only geometry 196.
+// common sphere radius 227; bound center at use 203.
+// bound radius before node query 204; unsigned node cache 196.
+// radius plus geometry guard 227; list field initialization 194.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

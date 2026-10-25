@@ -46,6 +46,12 @@ void __stdcall swarm_delete(long arg_0);
 // bound arms 44; sampled object flags 44; guarded tag-field reference 97;
 // immutable record receiver 44; native completed count 51; immutable receiver
 // and bound 44.
+// tag/sentinel roles and the spilled loop bound remain.
+// Existing point setters first/second/both 83/88/92; tag/placement references 44/44;
+// plain while 44; equality termination 45; completed-count field reference 44.
+// the fresh-record field stores now match retail's order, but
+// the tag pointer is still in esi where retail keeps it in edi, and retail keeps
+// the loop limit in ebx with a cmov where ours keeps it in a stack slot.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {

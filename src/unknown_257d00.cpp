@@ -1987,11 +1987,14 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
-// score 502 (was 502): frame 28 agrees; actor/state registers and first point home still differ.
+// score 480 (was 502): frame 28 agrees; actor/state registers and first point home still differ.
 // Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;
 // deferred completion else block 505 (unchanged reduced preview 505).
 // actor/state registers and the first point home differ;
 // signed completion 502; direct point result 628; captured unit 503; direct state access 502; inline depth one 502; staged alignment 503; staged squared distance 502.
+// Unsigned result 502; completion-test result 712; native unit predicate 490; iterator initializer 490;
+// first/facing countdown values 636/621; planar memcpy 502; facing vector value 483;
+// unit plus iterator 490; facing plus unit 486; facing plus iterator 486.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2060,9 +2063,10 @@ short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long 
 			function_b9dd0(arg_1, &local_7);
 			vector3f displacement;
 			vector3d_from_points3d(&local_2->field_18, &local_7, &displacement);
-			local_3 = local_2->field_c.k * displacement.k +
-				local_2->field_c.j * displacement.j +
-				displacement.i * local_2->field_c.i > local_1->unknown08;
+			vector3f facing = local_2->field_c;
+			local_3 = facing.k * displacement.k +
+				facing.j * displacement.j +
+				displacement.i * facing.i > local_1->unknown08;
 		}
 		break;
 	case 7: case 8:
