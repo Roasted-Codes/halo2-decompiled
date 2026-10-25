@@ -536,6 +536,10 @@ bool function_7fb50(void)
 	return local_0;
 }
 
+// score 132 (was 132): Frame 0x1c agrees; records/buffers register contract and cursor/count
+// scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
+// 132; per record totals 150; entry pointer walk 132; three properties do loop 132; frame role
+// names 132.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,

@@ -643,6 +643,7 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // root scope 239; unsigned root handles 239; compact cluster search 239; far-range arm first 239;
 // squared-bound names/order 239 (direct radius operand, both callers included in all).
 // Caller-dependent eight-byte alignment and angle homes remain. Player for-loop 235; cluster for-loop 235; squared zoom 235; position library copy 235; direct unit receiver 234 (fast, ordinary radius in all).
+// score 231 (was 231): Caller-dependent eight-byte alignment and scalar/angle homes remain. Narrow marker lifetime 251; shared root bit reader 275; cluster reader 239; native tag fields 239; long-result success breaks 239; direct unit guard 239 (all without the inherited radius alias and snapshot).
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
