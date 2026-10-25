@@ -1173,6 +1173,8 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
 // const support 18; unsigned object handle 18.
 // Round 109: ordinary scale inline 18; scale pointer result 18; three scale formal orders 18;
 // scale input reference 18; point-query noinline 18; velocity-query noinline 18.
+// Round 277: unit before type 5; eligibility phases, separate support/component guards 2 each;
+// exhaustive clamp 2; body-first clamp 9; body-home names and read-only body values 2 each.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {
@@ -1635,6 +1637,9 @@ struct s_candidate_unit_definition
 // Exit plus second-bit results 199; exit plus scalar clamp 42.
 // Clearing cases first 36; one source flag read 108; alternate before normalization 45;
 // shared dot operands reversed 42; global optimization off 361.
+// score 18 (was 36): geometry-call convention and exchanged failure exits remain.
+// Cosine declared early 36; clamp argument 18 kept; callee-only clamp 76; shared direction/point/flags 67/102/41;
+// alternate after angle 88; default-success result 240.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1698,8 +1703,7 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 		candidate->distance = function_30bf0(&candidate->direction);
 		candidate->alternate = alternate;
 		real cosine = dot3f(&candidate->direction, direction);
-		cosine = -1.0f > cosine ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
-		candidate->angle = function_50650(cosine);
+		candidate->angle = function_50650(-1.0f > cosine ? -1.0f : cosine > 1.0f ? 1.0f : cosine);
 	}
 done:
 	return result;
@@ -1794,6 +1798,9 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // Candidate indexed by accepted count 85 plain kept; post-query candidate 85; native query there 86;
 // existing tag helper 161; first candidate record 98; post-query marker record/workspace 85 each;
 // tag helper plus post-query candidate 161.
+// Round 277: nullable second-marker base 13 at retail length; branches/before presence 80/80;
+// native query count 73; index name/shared marker buffer 13/13; weight result 67; combined eligibility 80.
+// Accepted-count snapshot after/before query 13/13; query name first/with count 12/12; selectors require a match.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
