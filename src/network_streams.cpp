@@ -829,8 +829,16 @@ bool c_network_reliable_stream::get_next_send(long *type, long *sequence, long *
 	return result;
 }
 
-// score 60 (was 60): retail pushes ebp and esi before the loop and counts
-// down in esi, ours counts in ecx and pushes only esi.
+// score 60 (was 60): ours strength-reduces next - oldest - 1 into esi (next in
+// ecx) and compares next with the cached newest; retail keeps next in esi,
+// recomputes the offset and re-reads window->newest each step (as 0x94df0 does).
+// Passing &m_message_window to sequence_window_index (or declaring window inside
+// the loop) gives retail's loop body, but oldest is then reloaded instead of
+// reused from the count and time is cached in ebp (89, 221 bytes); the bound
+// read in the condition with window kept (63). Tried every mix of window /
+// &m_message_window for the count, the bound (local, window->newest or
+// m_message_window.newest in the condition) and the index: 60, 63, 80, 88-91;
+// a const window (60); reliable_stream_get_message (a call, 165).
 // @retail 0x965e0
 long c_network_reliable_stream::function_965e0(long *sequence, long *size, long *time)
 {
