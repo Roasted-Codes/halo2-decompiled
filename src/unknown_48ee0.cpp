@@ -23,6 +23,9 @@ extern real g_4c9798[36];
 // Global optimization off 1009; expansion depth zero 349; late mode 350;
 // near normal first 309; height clamp first 311; sample y/z first 313, plus normal first 311.
 // score 295 (was 311): Frame 0x20 versus 0x28 and input/rounding homes remain. Near normal input 313; far normal copy 295 kept (plain, retail length); integer maximum reuse 311; far point before scale 313; height rounding first 311 (fast).
+// score 295 (was 295): Frame 0x20 versus 0x28, input registers and rounding reloads remain. Tried texture row
+// memset 300; whole table memcpy 361; two vector memcpy calls 295; row clear and whole copy 366; row clear and
+// vector copies 300; near normal memcpy 295; far normal memcpy 295; both normal memcpy calls 295.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {
