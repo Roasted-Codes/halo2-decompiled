@@ -120,6 +120,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // score 165 (was 165): success/type carriers and first-channel spill remain;
 // voice/both compound states 312/329; channel/voice/both call-first 266/286/274;
 // channel/voice/both conditional states 282/282/301. Original guarded updates retained.
+// score 165 (was 165): saved success/category/first-channel homes still differ;
+// final byte 167; final byte with wide state 301; final byte cross-reset 288;
+// final byte with bool state 167, cross-reset 288; scoped wide state 302;
+// wide state across reset/listener 293/294. Original byte state retained.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

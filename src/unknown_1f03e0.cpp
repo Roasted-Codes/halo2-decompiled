@@ -503,6 +503,10 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
+// score 182 (was 182): direct state dot loads and rotation carriers remain;
+// initial j/k/i products 179/180/179; first-plane subtotal 180; rotation
+// k/j/i products 242/183/237; turn alignment 180; paired jk/ki/ji/all
+// initial products 186/186/187/186. Three-point best rejected.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
