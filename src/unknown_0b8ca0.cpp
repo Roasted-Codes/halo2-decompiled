@@ -1430,6 +1430,9 @@ done:
 // Copy + volatile name reload 26; result declared before the lookup 83; no result variable 78;
 // result declared in the tail 85; long size 27; long offsets + palette at the call + datum local 27;
 // the 0xb7300 placement-block helpers (both orders, both product orders) 23; lookup via 0xbb760 17.
+// score 17 (was 17): entry agrees; tail type/base/palette/stride allocation differs.
+// Canonical descriptor fields through mutable/const pointers and references all 17;
+// the same four contracts with a promoted stride all 27 (236 bytes).
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {
