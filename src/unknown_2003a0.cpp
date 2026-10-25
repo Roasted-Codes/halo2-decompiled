@@ -1092,14 +1092,19 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
-// score 43 (was 43): frame and first two passes agree; later parent loads lose the record address.
-// Const current group 43; unsigned squad parent 43; unsigned group parent 63;
-// unsigned sibling 43; full-width final index 63; parent-field view 43;
-// parent view in both passes 82; append noinline declaration 43.
-// score 43 (was 43): const group/squad/both pool descriptors 43; definition reference 43;
-// global optimization off 258; inline depth one/two 43/43; size optimization 146.
-// Current/parent/both record references 43; short child 60; readonly definition 43;
-// parent reference with short child 60; force parent accessor 43; force with current reference 43.
+// score 31 (was 43): frame and first two passes agree. In the third and fourth passes retail loads the
+// parent field into ECX through [eax+edx+offset] and still forms the record pointer (add eax,edx) before
+// the compare, then copies the value to EAX; ours forms the pointer first and loads through it into EAX.
+// Tried: const current group 43; unsigned squad parent 43; unsigned group parent 63; unsigned sibling 43;
+// full-width final index 63; parent-field view 43; parent view in both passes 82; append noinline
+// declaration 43; const group/squad/both pool descriptors 43; definition reference 43; global
+// optimization off 258; inline depth one/two 43/43; size optimization 146; current/parent/both record
+// references 43; short child 60; readonly definition 43; parent reference with short child 60; force
+// parent accessor 43; force with current reference 43. Fourth pass: a long parent local 43; the field
+// read twice by index 43; a long pointer to the field 32; the squad pointer at function scope 31; a
+// parent local beside the double read 31; no inline_depth pragma 175 (0x205280 inlines). Third pass: a
+// long parent_index local 63; the field read twice by index 63; one child variable reused for the
+// parent index 60 (as an assignment in the condition 60).
 // @retail 0x2009d0
 void function_2009d0(void)
 {
@@ -1144,11 +1149,11 @@ void function_2009d0(void)
 	}
 	for (i = 0; i < definition->squad_count; i++)
 	{
-		long parent = *(long *)(&((s_squad_datum *)squads->data)[(word)i])->unknown6c;
-		if (parent != NONE)
+		s_squad_datum *squad = squad_get(i);
+		if (*(long *)squad->unknown6c != NONE)
 		{
 			#pragma inline_depth(0)
-			function_205280(parent, i);
+			function_205280(*(long *)squad->unknown6c, i);
 			#pragma inline_depth()
 		}
 	}
@@ -1234,9 +1239,16 @@ void __stdcall function_205320(long group_index)
 	}
 }
 
+// score 18 (was 18): same instructions as retail, only registers differ after the first call: retail
+// loads the squad pool into EAX, builds the index in EDX and forms the squad with lea eax,[edx+ecx] (so the
+// test of the index can sit before it), then uses EDX/ECX for the object reload and EDX for the new index;
+// ours builds the index in EAX (add eax,ecx) and swaps ECX/EDX after it.
+// Tried: squad_get 18; array address 18; index times size plus data 18; index local 18; or operands swapped
+// 18; early return 18; squad declared at the top 18; object reload into a local first 18; field through a
+// long pointer 18; first vehicle saved before the store 19; inverted test 24; squad lookup at each use 33;
+// squad computed before the NONE test 38 (at the top 42); ternary 45; one store after the test 47;
+// index local updated in place 56/57.
 // @retail 0x201ad0
-// score 18 (was 18): the record pool's pointer is loaded into EAX where retail keeps it in ECX, so the
-// index and the pointer take the other two registers.
 void function_201ad0(long squad_index, long object_index)
 {
 	s_squad_vehicle_view *object = ((s_squad_vehicle_header *)g_4e0300->data)[object_index & 0xffff].object;
