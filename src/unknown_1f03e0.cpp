@@ -299,6 +299,11 @@ extern real g_47f05c;
 // Unraised origin copy 265; height view with body reloads 275; selection/result names 202;
 // native point copy, enclosing point, entry displacement and read-only records 202 each;
 // size policy 357; existing magnitude boundary 204 (sum-order form not matched).
+// score 202 (was 202): frame 0xc8 versus 0xd4, folded displacement and shape/entry homes remain.
+// Existing ground record 204; world matrix declared at entry 202; inverse/relative in place 244/241;
+// normal value with shape reads 233; selected-entry result 272; best comparison first 201;
+// selected index assigned before alignment 202. One-count comparison gain rejected.
+
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)

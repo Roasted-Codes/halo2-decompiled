@@ -456,6 +456,11 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
+// score 196 (was 196): entry flags/object/record registers and attachment-call inputs differ.
+// Primary word flags 241; explicit missing-player guard 252; shifted primary bool 227;
+// both bit extractions 252; byte slot 196; direct missing-parent slot 241;
+// primary word plus byte slot 241; word two-byte-copy ordinal 197 (828 bytes).
+
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {
