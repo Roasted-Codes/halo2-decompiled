@@ -1022,6 +1022,10 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection registers remain;
 // arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
 // receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
+// score 184 (was 184): deferred icon tail and time/connection homes still differ.
+// Positive place visibility 318; horizontal/vertical/both live origin fields 184/184/184;
+// completed color alpha 184; visibility with origins 318; horizontal/both origins
+// with completed color alpha 184/184. Widget-root control equals the full baseline.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

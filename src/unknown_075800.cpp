@@ -973,6 +973,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Direct/full if ladders 278/241; link snapshot 215; unsigned connection handle 196;
 // typed session payload 196; session cases before lookup cases 210; reversed direct
 // cases 195; adjacent lookup range after direct phase 205 (fast control 196).
+// score 198 (was 198): incoming selector/message/address allocation remains.
+// Six separate noinline handler declarations and query/ack or peer/session groups
+// all 195 in the reduced image, tying its unchanged 195 preview. All declarations restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
