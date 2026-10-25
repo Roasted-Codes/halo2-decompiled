@@ -166,6 +166,9 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
+// score 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.
+// Next time before elapsed 206; fraction after delta 106 kept (plain); on that frame,
+// frame index outer scope 106, wrap case first 106, type-first disposal 272.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
@@ -306,9 +309,9 @@ void c_class_1a2c81::update(dword time)
 			{
 				elapsed = 1;
 			}
-			t = (real)elapsed / (real)frame_time;
 			keys = (s_widget_animation_key *)animation.target;
 			vector3d_from_points3d(&keys[animation.valuea].offset, &keys[next].offset, &delta);
+			t = (real)elapsed / (real)frame_time;
 			function_x697631(&keys[animation.valuea].offset, &delta, t, &animation.offset);
 			keys = (s_widget_animation_key *)animation.target;
 			animation.scale = (keys[next].scale - keys[animation.valuea].scale) * t + keys[animation.valuea].scale;
