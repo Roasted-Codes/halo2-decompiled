@@ -481,6 +481,10 @@ void function_3dd10(long object_index, bool force);
 // Live choice count 122; choice-count field reference 213; signed weight bound 630;
 // unequal-end for 122; inverse blend at uses 168; eligibility equality first 122;
 // eligibility predicate value 213; actual object variant field 122. Opening body retained.
+// score 122 (was 122): output/delta roles, variant timing, scan exits and one reload differ.
+// Full-width variant 273; eligibility first 122; early choice weight 131; complete clamp value
+// with output reload/direct dual publication 341/341; separate wrapped hue 218; unsigned choice
+// token declaration and receiver 122; weighted upper-channel scalar values 134.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {

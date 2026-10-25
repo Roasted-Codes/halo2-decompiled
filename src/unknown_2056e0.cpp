@@ -120,6 +120,10 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // score 184 (was 184): rotation memcpy 184; complete limiter input 351; both 351;
 // broad rotation plus limiter input 366; norm accumulation 184; capped stores reversed 184;
 // separate integration loops 182 (dropped); torque coordinate loop 286. Frame gap remains.
+// score 184 (was 184): aligned frame overlap, motion/reciprocal and brake allocation remain.
+// Query workspace in caller alone/with broad rotation 234/234; live rotation input 232;
+// first-product output pointer 224; pointer with separate transpose 236; native square-root
+// result, limiter output pointer and both 184/184/184. All helper contracts restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
