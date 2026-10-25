@@ -71,6 +71,12 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 }
 
 /* kind 3: creation of an entity and the entities linked to it */
+// score 22 (was 22): callback setup, post-call index reload/status stores and rollback setup differ.
+// Earlier callback adapter 73; member dispatch 78; parallel cursors 92; status assignment 102;
+// field references 52; no counter self-read 97; grouped arrays 39; byte status 22; failure first 57;
+// common rollback 88; element pointers 22; argument record 46. Array role names 22; early release
+// declaration 22; append increment 22; cleanup counter 22; array initialization 90; unsigned count 25;
+// callback index name 22; status declaration order 24.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {
