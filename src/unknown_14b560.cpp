@@ -2117,6 +2117,7 @@ static __forceinline long player_round_ticks(real value)
 // native activity results 707; native permission 701. Original body kept.
 // Cooldown scalar names 701; rest-first clamp stores 706; gated idle cap 705;
 // separate melee button tests 709; target-age store before test 701.
+// score 701 (was 701): Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
