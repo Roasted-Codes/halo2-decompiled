@@ -297,6 +297,7 @@ struct s_http_connection_ab
     long response_length;
     long attempt_count;
     long state;
+    s_http_connection_ab();
     bool connect(long address, word port, char const *path, bool flag);
     bool receive(bool *complete);
     bool send();
@@ -361,25 +362,19 @@ bool __stdcall function_b6180(void *block)
 
 void transport_register_transition_functions(transport_transition_function startup, transport_transition_function shutdown, transport_transition_function reset, void *context);
 
-/* constructs a connection and registers its close (function_b6180) as a transport shutdown
-   function; retail expands transport_register_transition_functions (src/transport.cpp) here */
-// score 28 (was 20): the body matches when its caller is built with LTCG. Retail's only caller,
-// 0x376bf0, constructs the connection at 0x546a8c (passing it in edi) and clears 0x54760c-0x547624;
-// the inventory lists it as library code, so the build takes this function's address and it
-// keeps the standard convention: the connection arrives in ecx and is saved in edi, and the count
-// increment is scheduled differently. With 0x376bf0's owner set to game locally this is a MATCH.
-// Tried: the endpoint cleared with two dword stores (21), the shutdown table written out by hand (20).
+/* an idle connection, with its close (function_b6180) registered as a transport shutdown
+   function; retail expands transport_register_transition_functions (src/transport.cpp) here.
+   Retail's only caller is the dynamic initializer of the upload connection g_546a8c
+   (src/unknown_0b3d30.cpp), 0x376bf0, which passes the connection in edi */
 // @retail 0xb5cd0
-s_http_connection_ab *function_b5cd0(s_http_connection_ab *connection)
+s_http_connection_ab::s_http_connection_ab()
 {
-    connection->hostname[0] = 0;
-    function_b62b0((s_upload_ab *)((byte *)connection + 0x30));
-    s_transport_endpoint *endpoint = &connection->internal_endpoint;
-    memset(endpoint, 0, sizeof(*endpoint));
-    connection->endpoint = endpoint;
-    connection->state = 0;
-    transport_register_transition_functions(0, (transport_transition_function)function_b6180, 0, connection);
-    return connection;
+    hostname[0] = 0;
+    function_b62b0((s_upload_ab *)((byte *)this + 0x30));
+    memset(&internal_endpoint, 0, sizeof(internal_endpoint));
+    endpoint = &internal_endpoint;
+    state = 0;
+    transport_register_transition_functions(0, (transport_transition_function)function_b6180, 0, this);
 }
 
 short function_b4fa0(s_transport_endpoint *endpoint, void *buffer, short length);
