@@ -133,6 +133,7 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // shared rotation cross 241; shared cross scale loop 294.
 // shared cross both phases 281; identity library copy 237.
 // per component scale ratio 290; scaled axis before stores 289.
+// score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross spills remain; construction scope 237; vector-first helper 240; output-middle helper 290; cross i/k/j 284, j/i/k 235 (only -2), k/i/j 284. Both helpers restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

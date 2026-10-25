@@ -342,6 +342,7 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // component loops: velocity plus change 248; velocity plus previous 288;
 // attraction addition 280; change scale 269; maximum-change scale 269.
 // Shared inverse 249; shared squared length 277; both carriers 276; unsigned handle 249; attraction scale loop 269.
+// score 249 (was 249): Frame 0xb8 versus 0xb4 and cache/scratch homes remain; hoisted origin pointer 249; previous library copy 249; change library clear 297; both serial additions 286; both additions plus library copy 286.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

@@ -379,6 +379,7 @@ real *function_143600(real const *rotation, unsigned long order, real const *coe
 // score 243 (was 252): frame, axis/trigonometric homes and rotation-call layout remain;
 // native coefficient array 258; payload clears first 257; late axis squares 258;
 // reused mixed-axis products 243; entry result buffer 252; source pointer before reset 250.
+// score 243 (was 243): Frame 0x7c versus 0x68 and axis/trig/call homes remain; on reused square/mixed products: direct axis 300; direct angle 264; both 284; native coefficient index 257; geometry scalar scope 243. Reduced callee caveat; no keeper.
 // @retail 0x22850
 void function_22850(void)
 {
