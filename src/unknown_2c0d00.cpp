@@ -227,6 +227,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // inline depth zero 1008; global optimization off 3195;
 // long blocking 912; long classification 949; long enabled 906 (plain);
 // fast control 916, trials 1008/3199/910/947/916.
+// Native category on retained homes 910 (frame 0x2cb4); direct query
+// members 911; current priority long 894; relationship results long 893;
+// sphere flag byte 917 (frame 0x2cb4). Original body kept.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,

@@ -800,6 +800,10 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // both scale lifetimes 78f; shared cross on scale flow 78f.
 // signed-byte found 78f; signed-byte disabled 78f.
 // both byte results 78f; scale output plus byte found 78f.
+// own-object/node registers and contact scan setup still differ.
+// Own handle bits 78; attached counter field reference 78; selected-index success 398;
+// orientation test result 78; detached shared difference 166; detached shared cross 78;
+// both detached helpers 78; contact height field reference 78. Opening body retained.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {

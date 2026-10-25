@@ -25,6 +25,11 @@ PRIVATE __forceinline void direction_face_point(s_direction_face const *face, ve
 // k), so our zero is materialised after the multiplies where retail keeps it
 // in xmm3 from the top of the function; the low six bits also come from a
 // byte move here instead of retail's full copy of the index.
+// Retail builds the zero before the first product (as in 0x194d30); a zero
+// local first, later or in the scaled form never moves it. Vector cleared
+// before the coordinates 43 (242 bytes); third product read from the point 19;
+// assigned scale products 19; zero local declared first 19; full-width x with
+// the zero stored first 50.
 // @retail 0x24f6b0
 real __fastcall function_24f6b0(dword index, vector3f *direction)
 {

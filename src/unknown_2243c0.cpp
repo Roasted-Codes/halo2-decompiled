@@ -220,7 +220,10 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // Unsigned root/leaf handles 149/149; signed masked indices 149; const input 149;
 // cache-tail memset 150; callback seed initializer 160; mapping element 149;
 // native block-helper return type 149. Early mask read and matched wrapper retained.
-// score 149 (was 149): table stays in ECX; saved-register and lookup order still differ.
+// score 149 (was 149): ECX table hoist, lookup roles and word-load materialization remain.
+// Native root entry value/binding 194/149; native input field 149, plus entry value 194;
+// unmasked first/second/both words and native-input combination 149/149/149/149.
+// table stays in ECX; saved-register and lookup order still differ.
 // Cache initialization in success/entry 150/164; early callback input 162; both lifetimes 162;
 // cached marker count, geometry result and missing-mask result 149; delayed cache/count 150.
 // score 140 (was 149): table ownership and lookup schedule still differ.
@@ -229,6 +232,9 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // byte helper stride 149f; root handle at use 140f.
 // direct pass value 149f; nested ordinals 149f.
 // root/direct pass 140f; root/nested ordinals 140f.
+// tag table stays in ECX; saved-register and lookup order still differ.
+// Existing input/render fields and both 149; ordinary block inline 149; group snapshot 163;
+// shared pointer zeros 148 (dropped); callback search field 150; validation failure return 149.
 // @retail 0x224db0
 void __stdcall function_224db0(s_interface_definition *arg_0, long arg_1, long arg_2,
 	long arg_3, long arg_4)

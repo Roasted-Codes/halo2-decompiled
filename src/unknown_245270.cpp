@@ -279,6 +279,11 @@ void function_245400(s_source_245400 const *source, long index,
 // combined views 204; native side bitfields 207; indexed vector scaling 205.
 // source reference 204; surface reference 204; vertex table snapshot 204; plane references 204.
 // transform forceinline 204; const transform result 204; separate emitter noinline 204; both call boundaries 204.
+// score 204 (was 204): frame 0x24 versus 0x2c, source register and independent side-byte homes remain;
+// narrow sides 207; early narrow sides 207.
+// direct narrow codes 239; material snapshot 206.
+// shared rotation 204; shared dot 204.
+// both shared products 204; snapshot with early sides 209.
 // Signed-byte side carriers first/second/both 238/238/204; native-long carriers
 // first/second/both 228/228/222; mixed signed-byte/native-long both ways 228/228.
 // @retail 0x245540

@@ -50,7 +50,12 @@ struct s_object_flags_256bd0
 	word bit6 : 1;
 };
 
-// score 211 (was 211): frame 0x114 versus 0x110, activity caching and saved homes remain;
+// score 211 (was 211): frame 0x114 versus 0x110 and hoisted active byte remain;
+// native placement fields 213; actor getter 212.
+// slot reference 211; native fields with getter 214.
+// const entry result 211; condition-local entry 211.
+// candidate skip 211; placement scope 211.
+// frame 0x114 versus 0x110, activity caching and saved homes remain;
 // marker position workspace 235; placement position reads 253; in-place velocity 212;
 // marker/placement 225; marker/velocity 235; placement/velocity 253; all three 225;
 // angle field before sign adjustment 230.

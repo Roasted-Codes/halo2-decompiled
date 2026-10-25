@@ -55,6 +55,9 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // Fresh first-pass entry base 70; indexed user 103; user before table 215;
 // shared entry/sequence/user combination 103/103/103; extent values 103;
 // late accepted mask 229. Pulse-base setup and second-pass homes still differ.
+// First-pass coordinate value 250; coordinate library copy 250; first entry value 239; draw entry value
+// 164; both entries 243; horizontal real array 203; width sprite value 189; draw sprite value 174. Pulse
+// setup, draw carriers and running-X allocation remain.
 // score 70 (was 70): native pulse row, first/draw/both pulse receivers, occupied-width
 // accumulation and half-width/half-height/both product chains all 70. Pulse-base setup,
 // draw tag/sequence homes and running-X scheduling remain different.
