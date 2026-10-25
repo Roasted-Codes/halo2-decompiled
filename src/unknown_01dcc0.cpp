@@ -162,6 +162,8 @@ bool function_01dd60(long index, long *width, long *height)
 	return result;
 }
 
+// score 21 (was 21): width/height input registers and byte-gate normalization differ.
+// Byte storage 33; direct byte input 25; byte mask 35/27; byte selection 25/23; gated packing 30/24.
 // @retail 0x1ddd0
 void function_01ddd0(long index, dword width, dword height)
 {
