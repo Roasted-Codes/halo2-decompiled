@@ -170,6 +170,9 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 	return result;
 }
 
+// score 100 (was 100): bitmap rectangle scheduling and three-byte extent gap remain;
+// source width/height/both 104/103/105; aggregate source 107; source width,
+// height, both and aggregate with staged far edges 104/103/105/107. Opening body restored.
 // @retail 0x253ea8
 void c_class_19b8b1::v4(long screen_rect_address)
 {

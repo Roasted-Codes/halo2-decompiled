@@ -126,6 +126,9 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
+// score 42 (was 42): coupled state/index/XMM homes and normalized Y load remain;
+// local/formal point cursor with short ordinal 94/93; short remaining count
+// 94/93; long ordinal 97/97; long remaining count 94/93. Opening body restored.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {

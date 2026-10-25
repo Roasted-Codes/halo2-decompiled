@@ -122,6 +122,9 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 // vector names 30; vectors before switch 30; shared point difference 184; named
 // projections 83; projection operands exchanged 30; cross factors exchanged 30;
 // both operand exchanges 30. Opening executable body restored.
+// score 30 (was 30): complete displacement staging in 12/13/both 39/208/208;
+// destructive projected components in 12/13/both 99/212/218; staged 13 with
+// component products 212; staged 12 with both product sets 218. Load order remains.
 // @retail 0x248df0
 real function_248df0(long arg_0, void *arg_1, void *arg_2, void const *arg_3)
 {
