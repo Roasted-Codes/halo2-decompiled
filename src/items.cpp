@@ -963,6 +963,9 @@ struct s_item_flags_view_10b850
 // copies 885; shared native rotation 886
 // Frame pointer 1103; inline depth one 819; trigonometric snapshots 891;
 // flow output in dead motion workspace 818 (frame 0x148); cross scalars first 820.
+// Normal value copy 882 (frame 0x15c); point value copy 852; marker
+// matrix memcpy 819; settled result long 844; position decision long 887.
+// Original body and helper operands kept.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
