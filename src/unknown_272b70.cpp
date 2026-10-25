@@ -2678,7 +2678,7 @@ void function_2773d0(long point_reference, long facing_point_reference)
 			}
 			else
 			{
-				local_0.field_4.k = g_45dbd8;
+				local_0.field_4.k = 0.0f;
 				if (normalize2d((point2f *)&local_0.field_4) == 0.0f)
 				{
 					function_118e80(unit_index, &local_0.field_4);
