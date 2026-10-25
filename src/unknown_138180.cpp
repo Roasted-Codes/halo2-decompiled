@@ -50,6 +50,11 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // success-only stores 300; mask range 230; signed-byte found index 175 kept; membership first plus
 // shared uniqueness 226. With byte index, role name 175; long uniqueness 238; count bounds 173
 // dropped for only two further points.
+// score 174 (was 174): Frame 0x14/0x18 and options/index/mask registers still differ.
+// shared duplicate index 175; shared candidate index 175.
+// short duplicate indices 308; byte duplicate indices 294.
+// short membership index 234; byte membership index 234.
+// long final result 220; short final result 235.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

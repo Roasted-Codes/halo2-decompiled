@@ -1732,6 +1732,11 @@ struct s_collision_result_25f7b0
 // product loads, word-mode comparison and allow-store timing differ.
 // Byte collision flag 14; byte allow flag 43; long initial mode 34;
 // short collision flag 247; scoped ray setup/result 14 (plain). Body restored.
+// score 14 (was 14): Frame 0x80 agrees; attachment byte 0x13/0x10, product loads, mode width and allow-store timing remain.
+// parent index 251; early collision mask 255.
+// unattached decision 15; mask bit clear 14.
+// index plus bit clear 251; unattached mask bit 17.
+// shared parent index 249; shared attachment decision 53.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {

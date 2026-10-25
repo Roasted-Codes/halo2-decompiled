@@ -747,6 +747,11 @@ real normalize2d(point2f *v);
 // result homes differ. Validity initialized in typed arm 241; first type initialized by branch
 // 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
 // movement flag stores 174; retry speed first 172; native planar output copies 172.
+// score 172 (was 172): Frame 0x48 agrees; fast-byte zero, trajectory arguments and retry/result homes differ.
+// separate retry force 196; long first-type result 235.
+// minimum after speed query 228; first type after speed query 175.
+// shared movement destination 172; native request copy 172.
+// earlier result declaration 172; minimum and retry force 227.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
