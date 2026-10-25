@@ -2216,6 +2216,10 @@ static __forceinline long real_to_long(real value);
 // timing stack homes, trigger spill and released-output registers differ.
 // Trigger/settings references, rate snapshot and threshold input 89; double duration 134;
 // bounded age increment 167; byte conditional clamp 162.
+// score 89 (was 89): slots ticks/trigger/duration and the age/delta/release registers still differ;
+// retail's clamp is a byte moved from edi (no cmov). Local names 89 (slots unchanged); trigger pointer
+// declared later 133-140; long/short clamp 100 (cmov); clamp ternaries 159; char clamp 87; duration
+// passed straight to the conversion 89; waiting declared first 89; threshold operands swapped 89.
 // @retail 0x1027b0
 void function_1027b0(long weapon_index, long trigger_index, bool *pressed, bool *held, bool *released)
 {

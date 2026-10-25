@@ -256,6 +256,12 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // score 57 (was 57): sphere displacement/normal coalescing and reciprocal-one hoisting remain.
 // Containment-test return, successful plane/depth pointer returns, normal-first projection,
 // projection value, existing reverse dot in either input order and test/projection result all 57.
+// score 57 (was 57): the normal's x and z products go in place only when the sum's first reads of
+// the difference's x and z are memory reads and y's is not; a pointer local to the difference read
+// for x and z in a statement sum x, z, y, with the dot product's inputs swapped and the unit-z
+// zeros stored separately, matches. Unit-z arm first 62; double reciprocal 397; reciprocal in the
+// call 57; regrouped sums 57-61; direct statement sums in each order 61; dot swap 57; zero stores
+// 61; difference in the plane normal 177; squared-length/self-dot helpers with both fixes 152.
 // @retail 0x245ef0
 bool function_245ef0(s_shapes const *shapes, point3f const *point, s_shape_result *result)
 {
