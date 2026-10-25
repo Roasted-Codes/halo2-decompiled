@@ -81,6 +81,9 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // score 196 (was 196): early EBP save, team-byte home and local-slot spill remain.
 // Shared iterator 196; typed pooled player 196; native team bitfield 196; all three 196;
 // direct four-slot traversal 351; with shared types 351; with native bitfield 351; all 351.
+// score 196 (was 196): delayed EBP save, team-byte home and word local-slot spill remain.
+// Per-use first-loop datum 196; short/byte/word teams predicates 196/196/196; datum plus short teams 196;
+// shared entry/callback getters 196/196; both getters with per-use datum 196, all plain-confirmed.
 // @retail 0x15c150
 void function_15c150()
 {

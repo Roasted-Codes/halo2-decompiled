@@ -141,6 +141,9 @@ static inline bool engine_team_is_playing(long team)
 // score 2 (was 2): post-activation engine/world reload order still reversed;
 // activation output reference 2; read-only world 2; immutable identifiers/table 2/2;
 // dead teams scratch removed 2; unsigned slot 3; direct slot index 247; output-first reference 2.
+// score 2 (was 2): the two post-activation engine/world reloads remain reversed;
+// actual table pointer/reference 2/2; unsigned handle 2; short kind 2; rejected-state guard 2;
+// database receiver 171; per-use authority/playing 2/2; remaining pointer-input orders 2/2/2.
 // @retail 0x162060
 void __stdcall function_162060(void *engine)
 {

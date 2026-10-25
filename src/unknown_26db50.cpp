@@ -464,6 +464,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // signed-byte spoke 213; size optimization 395.
 // rotation spill keeps frame 0xdc versus 0xd8; radius copy and sector-test registers differ.
 // Current-allocation plain radius 209; scalar cross lifetimes 195; dot lifetime 195; unsigned-word spoke 195; depth one 195.
+// score 184 (was 195): frame 0xd8 now agrees; radius setup, rotation schedule and sector-test registers remain.
+// Cosine first 197; shared direction/axis/both scales 210/213/261; cosine-first inputs 195;
+// angle product lifetime 196; per-use ring phase 184 kept, 1087/1089 bytes; angle-result names 195.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
@@ -479,11 +482,10 @@ long function_26d570(long object_index)
 		do
 		{
 			real distance = (real)((double)radius * 1.2 + (real)ring * radius);
-			real phase = (real)ring * 0.39269909262657166f;
 			for (short spoke = 0; spoke < 8; spoke++)
 			{
 				vector3f direction = *g_4687a8;
-				real angle = (real)spoke * 0.7853981852531433f + phase;
+				real angle = (real)spoke * 0.7853981852531433f + (real)ring * 0.39269909262657166f;
 				real sine = (real)sin(angle);
 				real cosine = (real)cos(angle);
 				record_rotate_vector(&direction, g_4687b0, sine, cosine);
