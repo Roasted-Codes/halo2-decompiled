@@ -220,25 +220,21 @@ done:
 	}
 }
 
-// score 48 (was 48): the index is kept in ESI where retail keeps it in EAX, so the two halves of the
-// split value and the jump table's index take the other registers: retail keeps the raw argument in
-// esi for the external bit and masks the slot from the sign-extended index (movsx eax, ax; mov ecx,
-// eax; and ecx, 0x7fff), ours masks the slot from the raw argument. Tried: slot = index & 0x7fff 189
-// (merged with the runtime index), slot = global_index & 0x7fff in each statement order 232-251
-// (retail's masking, other registers; with the slot first the argument moves to ecx and the callers
-// 0x208070 and 0x2095e0 change), a short, word or dword slot 250-251.
+/* writes a global's runtime value back to its external storage, then marks
+   the objects an object-valued global names */
 // @retail 0x20a490
 void function_20a490(short global_index)
 {
-	long slot = (word)global_index & 0x7fff;
 	word external = global_index & 0x8000;
+	short type = external
+		? g_473468[global_index & 0x7fff]->type
+		: *(short *)(*(byte **)((byte *)g_4e0350 + 0x1c4) + (global_index & 0x7fff) * 0x28 + 0x20);
 	long index = global_index;
-	short type = external ? g_473468[slot]->type : *(short *)(*(byte **)((byte *)g_4e0350 + 0x1c4) + slot * 0x28 + 0x20);
 	long runtime_index = (index & 0x8000) ? (index & 0x7fff) : (index & 0x7fff) + 0x41d;
 	s_hs_global_value *value = &((s_hs_global_value *)g_4f9380->data)[runtime_index];
 	if (external)
 	{
-		s_hs_external_global *global = g_473468[slot];
+		s_hs_external_global *global = g_473468[global_index & 0x7fff];
 		switch (type)
 		{
 		case 5:
