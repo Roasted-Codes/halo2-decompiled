@@ -416,6 +416,8 @@ extern point2f *g_468778;
 // prediction weight 385 (fast).
 // Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
 // inner threshold 388; entry planar workspace 379. Actor/settings/prop carriers still differ.
+// score 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
+// validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

@@ -705,6 +705,9 @@ void function_143250(
 // [4,5] 2286, [6,7] 2329.
 // score 2265 (was 2265): Frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
 // Independent snapshots [1,5,6] 2302; [0,2,7] 2309; [3,4] 2286; [0,4,5] 2286; [3,5,7] 2276 (plain).
+// score 2265 (was 2265): frame 0x300 agrees; rotation admission and matrix homes differ.
+// Independent basis pairs [0,5] 2275; [1,6] 2320; [2,4] 2325; [3,6] 2317; subset [0,2,4,6] 2367
+// (plain).
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
