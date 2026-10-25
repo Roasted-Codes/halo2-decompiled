@@ -1523,6 +1523,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // score 770 (was 770): user-cursor and identity-word homes differ;
 // long validity 770; pending read guard first 786; timestamp before
 // counts 770; unsigned property initializer 770; unsigned user group 781.
+// score 770 (was 770): Frame 0xc0 agrees; user cursor and identity homes remain. Const user 770; const identity 770; byte group 781; byte accepted count 821; byte descriptor initializer 853 (fast).
 // @retail 0x74aa0
 void function_074aa0(void)
 {

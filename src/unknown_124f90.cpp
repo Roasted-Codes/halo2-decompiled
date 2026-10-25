@@ -3215,6 +3215,7 @@ void function_125d60(void)
 
 void __stdcall function_1264c0(dword arg_0);
 
+// score 139 (was 139): Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
 // @retail 0x1257b0
 void function_1257b0(void)
 {

@@ -514,6 +514,8 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // column word index 464; both signed-word indices 512. Original kept.
 // first-table result names 363; loop-scope steps 363; initialized steps 363;
 // first regular table tail loop 531; second tail loop 530.
+// Zero inline depth 610; depth one 363; frame pointer 487;
+// global optimization off 1180; size preference 538. Original kept.
 // register allocation differs from the first loop on. Retail keeps i
 // register allocation differs from the first loop on. Retail keeps i
 // in ebp and walks a pointer in esi over value84 (value40 at [esi - 0x44]), comparing it

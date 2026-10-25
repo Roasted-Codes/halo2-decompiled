@@ -2748,6 +2748,7 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // score 407 (was 407): frame 8 versus 4; activity/dispatch registers and tag spill differ.
 // direct barrel maximum 413; helper maximum branches 409; independent loop indices 407;
 // final accumulated maximum 409; size optimization 672.
+// score 407 (was 407): Frame 8 versus 4 and activity/dispatch homes remain. Helper input order 407; bool selector 408; tag-only helper lookup 407; object/tag homes 407; barrel bound sample 407 (fast).
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {

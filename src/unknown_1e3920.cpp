@@ -924,6 +924,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // guarded Boolean 384; typed actor fields 364.
 // frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
 // Byte creation predicate 383; word predicate 361; short grenade 377; depth one 364; grenade first 364; word pair 375.
+// Round 156: depth zero 348; target size 504; table-base reads with complete
+// equipment results 346, entry cleanup outputs 342, substitution output order 342.
+// Three-point gains rejected; original frame and body retained.
 // Equipment base read at use 342 (frame 0x118; three-point gain rejected);
 // count reads 350; both 352; selected-character local 380; outer creation buffer 348;
 // base read plus Boolean predicate 365, shifted Boolean 364, combined loop guard 438,
@@ -931,6 +934,7 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // score 320 (was 345): frame 0x118 agrees; sentinel and later register homes differ.
 // Base reads with explicit success/cleanup 320; positive flags guard 342;
 // complete equipment arms 346; squad-mode word 342; guarded long predicate 350.
+// Frame 0x11c versus 0x118 and missing-index homes remain; repaired frame with vertical-first, second-horizontal-first, vector initializer, word creation or word request each 342; three-point gains rejected.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
