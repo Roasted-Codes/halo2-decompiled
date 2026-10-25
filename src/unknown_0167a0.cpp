@@ -97,6 +97,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 162 (was 162): logarithm/reset schedule and restore/final allocation remain.
 // Record-field pointer 162; signed entry/pass/both carriers 163/163/164;
 // negated equalities 162; saved tag at both tests 246; dirty-mask cursor 161; both cursors 161 (one-point gains dropped).
+// score 153 (was 162): dirty-word library clear recovers numeric/reset scheduling;
+// logarithm width and restore allocation remain. Native entry/chain/both descriptors,
+// const record and signed change forms 162; update/counter/all/reset-last clears 287/258/307/157.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -121,7 +124,7 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
     else inverse = 100000.0f;
     *(real *)(state + 0x28) = inverse;
     *(real *)(state + 0x2c) = (real)(log((double)inverse) * 0.6931471824645996f);
-    *(dword *)(state + 0x58) = 0;
+    memset(state + 0x58, 0, sizeof(dword));
     state[0x1514] = false;
     *(dword *)(state + 0x1518) = 0;
     *(dword *)(state + 0x151c) = 0;

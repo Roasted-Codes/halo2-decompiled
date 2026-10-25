@@ -97,6 +97,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // score 155 (was 155): early source retention and source/count/feature homes remain.
 // With the word cursor, native count/argument-5/argument-6/argument-8 arrays 195/161/160/161;
 // count plus argument 5 186; arguments 6/8 193; all four arrays 187; native selection array 219.
+// score 155 (was 155): early source retention and count/cursor/feature homes remain;
+// entry-source count 196 and original filter 165 (caller differs); first-group ordinal 195;
+// filter enabled first 206; signed feature bytes 195; integer group/record/both masks 195/201/205.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
