@@ -209,6 +209,9 @@ void c_session_state_pre_game::enter(long a, long b, long c)
 
 /* ---- start-game ---- */
 
+// score 65 (was 65): the result lives in bl where retail keeps it in a stack
+// byte, because retail's 0x6e720 takes the session in ebx (this function saves
+// ebx around that call) and ours takes it in esi; see the note there.
 // @retail 0x6e500
 bool c_session_state_start_game::update()
 {
