@@ -148,6 +148,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // orientation 438; existing planar product inline 435; late first unsigned count 435.
 // frame 0x5c versus 0x64; normal, result/first/hit homes and exit tails differ.
 // Count byte 451; first word 443; success declared first 435; previous edge split 440; hit byte 435.
+// Hit at producer 435; sector history storage 435; orientation word 434; planar scalar/value inputs 435/538;
+// magnitude value input 556; unsigned success 435; normal length result 435.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

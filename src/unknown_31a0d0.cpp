@@ -110,6 +110,10 @@ solver_result_31a0d0 const *motion_31a0d0::function_31a0d0(float const *step, fl
 // followed by a late EDI pop. Final-value input 5; with a shorter spin scope 3;
 // named vector result 5, with that scope 3; both output changes 5; immutable
 // duration product 5; later quaternion declaration 5; scalar result 5.
+// score 5 (was 5): last stack slot and EDI pop remain different.
+// Shared add/mask 5/5; scalar store accessor 46; saved-vector copy 47;
+// current-value copy 151; duration *= fraction 51; separate _mm_mul_ps 5;
+// delayed field write 10; SSE write 5; SSE write with shorter spin 3.
 // @retail 0x31a2b0
 void motion_31a2b0::function_31a2b0(float time, float step_length)
 {

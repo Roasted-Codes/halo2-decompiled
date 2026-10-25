@@ -62,6 +62,19 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 	bool arg_16, bool arg_17, bool arg_18, real arg_19, real arg_20,
 	real arg_21, byte arg_22, point3f const *arg_23, real arg_24);
 
+// score 162 (was 162): Frame 0x214 agrees; delayed ESI save, source/count cursor and feature-byte homes differ.
+// entry word count 162; entry native count 162.
+// entry inner ordinal 162; repeated count location 162.
+// selected-index default 187; conditional mask updates 163.
+// first feature branch 197; second feature branch 195.
+// frame agrees; source/count cursors and feature-byte homes differ.
+// Shared byte/word feature results 216/210; independent bytes 193; Boolean bitwise AND 208;
+// shared bytes plus source cursor 215; ordinary source pointer 232 (caller differs);
+// bitwise predicates plus aggregate copy 210 (caller differs); unsigned handle 162.
+// score 162 (was 162): frame 0x214 agrees; early source ESI retention and count/cursor homes still differ.
+// Source/index initialization swapped 162; ordinal initialized inside guard 163; offset
+// declarations reversed 162; filter input captured 162; override query result 162;
+// existing object getter 162; entry order plus getter/query result 162/162.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

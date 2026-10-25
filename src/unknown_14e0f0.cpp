@@ -108,10 +108,6 @@ static inline byte *attachment_object(long index)
     return *(byte **)(g_4e0300->data + (index & 0xffff) * 12 + 8);
 }
 
-// score 47 (was 47): previous-unit store is early, second object lookup and
-// spilled receiver registers differ; unit view 47, const unit 47, unsigned
-// lookup handle 47, intrinsic flag clear 47, state view 47, parent value 47,
-// unsigned unit handle 47, captured player pool 60.
 // @retail 0x14ee20
 void function_14ee20(long player_index, long target_index)
 {
@@ -119,8 +115,10 @@ void function_14ee20(long player_index, long target_index)
     long unit_index = *(long *)(player + 0x2c);
     if (unit_index != NONE)
     {
-        *(long *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c + 0x30) = unit_index;
         byte *unit = attachment_object(unit_index);
+        /* the unit becomes the player's previous one (+0x30) before it is detached */
+        byte *record = g_4e8c24->data + (player_index & 0xffff) * 0x21c;
+        *(long *)(record + 0x30) = *(long *)(record + 0x2c);
         function_14cad0(player_index, NONE);
         function_152340();
         function_b7300(unit_index);
