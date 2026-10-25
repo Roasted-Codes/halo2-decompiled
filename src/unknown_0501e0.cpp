@@ -28,8 +28,12 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
         local_1 = arg_0 * local_1;
         local_2 = arg_0 * local_2;
     }
+    real *output = arg_2->n;
     for (long component = 0; component < 3; ++component)
-        arg_2->n[component] = g_4b9e14.forward.n[component] * local_2 + g_4b9e14.up.n[component] * local_1 + g_4b9e14.right.n[component] * local_0;
+    {
+        *output = g_4b9e14.forward.n[component] * local_2 + g_4b9e14.up.n[component] * local_1 + g_4b9e14.right.n[component] * local_0;
+        ++output;
+    }
 }
 
 // score 255 (was 255): frame 0x20 versus 0x14 and transform coefficient/result registers differ.
@@ -39,6 +43,10 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Offset/transform/blend loops 315/291/255; paired loops 237; depth bounds 237; both 227.
 // Paired loops with blend/unsigned/in-place 236/237/287;
 // scoped bounds 230; literal zero 227; bound scalar homes 227 (plain).
+// score 221 (was 227): frame 0x18 versus 0x14 and coefficient/result/tail homes still differ.
+// Separate offset loops 226; output cursor 225; short transform index 405;
+// first/second bound at uses 225/236; bound declaration order 227;
+// separate offsets with output cursor 221 plain (1145/1136 bytes); short index/first bound 397.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {
@@ -46,10 +54,9 @@ void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
     vector3f local_0;
     vector3f local_1;
     for (long component = 0; component < 3; ++component)
-    {
         local_0.n[component] = arg_0[0].field_0.n[component] - g_4b9da0.n[component];
-        local_1.n[component] = arg_0[1].field_0.n[component] - g_4b9da0.n[component];
-    }
+    for (long second_component = 0; second_component < 3; ++second_component)
+        local_1.n[second_component] = arg_0[1].field_0.n[second_component] - g_4b9da0.n[second_component];
     vector3f local_2;
     vector3f local_3;
     world_vector_to_view(g_4b9e14.scale, &local_0, &local_2);
