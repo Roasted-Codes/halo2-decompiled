@@ -218,6 +218,9 @@ struct s_physics_component_walk : s_havok_component
 // Shared sections 357; next path first 276; replacement bool names 275;
 // frame pointer 325; size preference 446; shared sections with in-loop store 352;
 // availability last 298. Original kept.
+// score 275 (was 275): extra frame word and current/entry/group homes remain.
+// Combined status mask 307; direct body fields 320; section callback guards 275;
+// entry eligibility guards 275; next-count snapshot 301. Original body restored.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

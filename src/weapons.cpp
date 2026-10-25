@@ -2946,6 +2946,9 @@ struct s_ammo_conversion_entry
 
 // score 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
+// score 203 (was 203): frame agrees; destination/tag and search carriers remain.
+// Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
+// direct retention predicate 213; loaded value clamp 203. Original body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3060,6 +3063,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // score 565 (was 565): frame 0x1c64 vs 0x1c60; weapon/barrel roles and unit/definition homes differ.
 // Plain single-store unit 637; later effect locals 659; long marker count 607;
 // CRT marker copies 565; long fired 582.
+// score 565 (was 565): extra frame word and weapon/barrel roles remain.
+// Owner getter 563; scale names 565; direct barrel uses 641; const barrel tag 565;
+// effect cursor before snapshot 565 (all plain). Original body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3295,6 +3301,10 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // score 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
+// score 1450 (was 1500): frame 0x38 agrees; pool/index roles and scalar homes remain.
+// Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
+// input-array names 1507; barrel completion case order 1507. Full-width result kept.
+// Own plain 1476; later table relocation 1450 with identical normalized code.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
@@ -3307,7 +3317,7 @@ bool __stdcall function_fdfb0(long weapon_index)
     long owner_index = function_101fb0(weapon_index);
     long player_index = owner_index != NONE ? WEAPON_LONG_AT(WEAPON_GET(owner_index), 0x13c) : NONE;
     if (weapon->object_index_194 != NONE && !function_badc0(weapon->object_index_194, NONE)) weapon->object_index_194 = NONE;
-    bool result = function_105e80(weapon_index);
+    long result = function_105e80(weapon_index);
     if (WEAPON_GET(weapon_index)->animation_state_offset != NONE)
     {
         byte *state = (byte *)weapon + weapon->animation_state_offset;
