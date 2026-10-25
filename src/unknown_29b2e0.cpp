@@ -83,6 +83,11 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // score 389 (was 389): frame 0x2c agrees; early J load and magnitude/angle homes still differ.
 // Complete input for length 497; input for normalization 496; point input 419; both inputs 513;
 // immutable one/both magnitudes 389/389; earlier length publication 396; immutable rotation outputs 389.
+// Widened first/point/both numeric returns 407/410/412; widened optional
+// magnitude output 404, with first/both widened returns 423/430;
+// independent normalization order 411, with widened output 415 (control 389).
+// First-return widening loses the matched sibling to 45; all helper contracts
+// and normalization order restored. Early J and magnitude/yaw homes remain.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

@@ -22,6 +22,10 @@ static __forceinline long real_to_long(real value);
 // score 373 (was 373): frame 0x4c versus 0x48 and settings/random-state homes still differ.
 // Immutable third input/actor/state/seed 373 each; signed seed 417;
 // immutable bounds/trig results/point receiver 373 each.
+// Shared first/second/both planar zero products 373/373/373; shared vertical
+// zero product and all repeated zero products 373/373; shared normalization
+// boundaries 378/378; shared displacement magnitude 388 (fast control 373).
+// Frame 0x4c and early third-input/random-state allocation remain; all restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

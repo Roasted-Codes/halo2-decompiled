@@ -751,6 +751,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // object/current/suppression alone at entry 367/368/368; group/prop/reference
 // pointer names 363; shared squad getter 363; entry pointer declarations 363
 // (fast control 363, full baseline 358); all restored.
+// Pairwise object/current, object/suppression, suppression/current entry captures
+// 366/375/371; false-default suppression on those pairs 366/375/371;
+// optional unit pointer on first two pairs 370/373 (fast control 363).
+// Object/current pair plain 373 versus 358; actor ESI and saved-pointer/flag homes remain.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
