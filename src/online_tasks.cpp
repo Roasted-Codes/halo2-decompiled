@@ -87,23 +87,9 @@ static inline void online_task_iterator_new(s_record_pool_iterator *iterator)
 	iterator->datum_index = NONE;
 }
 
-// @retail 0x6b800
-long online_task_find(long type, long controller_index)
-{
-	s_record_pool_iterator iterator;
-	s_type_9df9da *task;
-
-	online_task_iterator_new(&iterator);
-	while ((task = (s_type_9df9da *)data_iterator_next_inlined(&iterator)) != 0)
-	{
-		if (task->type == type && (task->controller_index == controller_index || controller_index == NONE || controller_index == 0xff))
-			return iterator.datum_index;
-	}
-	return NONE;
-}
-
-/* counts the matching tasks, but stops at the first (callers compare the
-   count with 2) */
+/* the data iterator as the task lookups (0x6b800, 0x6b890) inline it: retail
+   reads the pool's high water index again on every step of the bitmap scan
+   (`mov reg, [data + 0x38]` inside the loop), hence the volatile read */
 PRIVATE __forceinline long function_6b892(s_record_pool *arg_0, long arg_1)
 {
  long local_0 = NONE;
@@ -138,6 +124,29 @@ PRIVATE __forceinline byte *function_6b891(s_record_pool_iterator *arg_0)
  return local_2;
 }
 
+/* the datum index of the first task of a type for a controller (NONE or
+   0xff match any controller), or NONE */
+// @retail 0x6b800
+long online_task_find(long type, long controller_index)
+{
+	s_record_pool_iterator iterator;
+	s_type_9df9da *task;
+	long result = NONE;
+
+	online_task_iterator_new(&iterator);
+	while ((task = (s_type_9df9da *)function_6b891(&iterator)) != 0)
+	{
+		if (task->type == type && (task->controller_index == controller_index || controller_index == NONE || controller_index == 0xff))
+		{
+			result = iterator.datum_index;
+			break;
+		}
+	}
+	return result;
+}
+
+/* counts the matching tasks, but stops at the first (callers compare the
+   count with 2) */
 // @retail 0x6b890
 long online_task_exists(long type, long controller_index)
 {
