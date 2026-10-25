@@ -498,6 +498,14 @@ bool sound_driver_voice_create_buffer(
 // score 98 (was 98): early saves and descriptor zero/input scheduling remain;
 // voice before modes/result after count/next count word/spatial signed byte 98 each;
 // spatial word 151; play signed byte 98; spatial word with play byte 151; play long 101.
+// score 98 (was 98): this body sets the second buffer's flags to 0x180010 when play is set;
+// retail computes play ? DSBCAPS_FXIN2 : DSBCAPS_FXIN (0x100010). The 98 allocation needs
+// 0x100000 used twice (first buffer and the select): the correct select 183, or
+// (play ? FXIN : 0) + FXIN 183. With the correct select: index returned directly 155 (pushes
+// sink as retail's, mov ax return, but flags arrive in eax), no result 155, long result 155,
+// result set after the count 159, voice_index = NONE in an else 169, failure through the
+// final return 173, the plain-locals body 197, select then |= CTRL3D 175, if/else select 189,
+// parameters reordered (flags last) no change.
 // @retail 0x220b90
 short sound_driver_voice_new(
 	dword flags,

@@ -538,6 +538,10 @@ PRIVATE __forceinline s_flock *function_295321(s_active_flock_iterator *arg_0, b
 // Boolean step 99; outer scenario entry 99; outer radius 99; zero iterator 110;
 // point memcpy 99; point value copy 103; const entry 99; byte activity 99.
 // Original iterator and private step retained.
+// score 99 (was 99): the shared step's not-found arm stores NULL, so the walk's test is
+// threaded to the exit (retail joins it). flock_iterator_next as the step 125; scenario
+// view local in the body 99; ticks without its local 99; radius as a ternary 107; a flock
+// pointer local 99.
 // @retail 0x295320
 void function_295320(point3f const *point)
 {
