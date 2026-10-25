@@ -58,6 +58,9 @@ PRIVATE __forceinline long function_214f83(char const *arg_0, s_file_handle *arg
 // typed open outcome 42; typed success update/complete outcomes 44/42;
 // early outcome home 42; positive outcome/byte admission 43/55;
 // initialized success output/byte declaration order 83/42.
+// score 42 (was 42): Handle ECX and success-byte reload remain unresolved. Long ordinal 111;
+// word/byte ordinals 42/42; path/status lifetimes 42/42; long ordinal with all
+// workspaces/failure continue 111/111; short endpoint equality 42.
 // @retail 0x214f80
 void game_state_cache_files_open(void)
 {

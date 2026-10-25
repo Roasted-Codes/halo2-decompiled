@@ -171,7 +171,15 @@ void function_194fa0(s_bitstream *stream, word *buffer, long count)
 	}
 }
 
-// score 38 (was 38): frame is 8 bytes versus 4; lower product precedes upper log;
+// score 38 (was 38): retail computes both logarithms before either product, keeps
+// the upper one on the x87 stack until the division (FILD n + FDIVP) and stores the
+// integer weights in the dead lo/hi argument slots (PUSH ECX frame); ours multiplies
+// the lower product first, divides with FIDIV and needs a second slot. Implicit
+// integer weights 43 (FIMUL); one expression with the log calls 43; named exponent
+// with inline conversions 43; weights before the logs 38; named exponent 38; double
+// intrinsics 41; the blend as an inline helper taking the logs 38 (diagnostic only);
+// n declared after the logs 38.
+// frame is 8 bytes versus 4; lower product precedes upper log;
 // upper-first logs, real weighted sum/exponent, entry log homes and reader declarations 38;
 // explicit log/weight locals with one result 64; positive interior admission 49.
 // Extra four-byte stack slot and endpoint-log scheduling remain.

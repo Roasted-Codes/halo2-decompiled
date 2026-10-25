@@ -1440,6 +1440,14 @@ struct s_camera_clip_reference_16ebf0
 // aggregate copies with shared cross product 249, role names 249, combined scope 249.
 // Frame 0x9c versus 0x98; vector-copy homes and narrow/fraction convention differ.
 // Direct view call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode branch 240.
+// score 223 (was 229): frame 0x9c versus 0x98 and vector/state homes remain; existing point setter recovers retail length.
+// State first 253; early native declarations 229; split input/output vectors 229; scalar position 223;
+// full-width narrow 231 (frame 0x98); point setter 223; setter with wide predicate 253; combined native copies 287.
+// Scalar-workspace role names 229; scale assigned after copies 229; later position pointer 226;
+// no inner position alias 229; directions published first 229; scalar vector aggregates 229;
+// later position pointer with native direction copies 237. Three-point gain rejected.
+// Complete direction memcpy 237; direct input cross with late workspaces 244;
+// later up pointer 253; native point carried through composition 229; matrix-axis cross with late workspaces 241.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
@@ -1483,7 +1491,7 @@ void function_16ebf0(long user_index)
 	matrix.scale = 1.0f;
 	matrix.forward = *original_forward;
 	matrix.up = *original_up;
-	matrix.position = *original_position;
+	real_point3d_set(&matrix.position, original_position->x, original_position->y, original_position->z);
 	matrix.left.i = forward.k * up.j - up.k * forward.j;
 	matrix.left.j = up.k * forward.i - forward.k * up.i;
 	matrix.left.k = forward.j * up.i - up.j * forward.i;

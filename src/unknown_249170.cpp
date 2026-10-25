@@ -76,7 +76,10 @@ PRIVATE __forceinline vector3f *function_249171(real arg_0, vector3f *arg_1)
 	return arg_1;
 }
 
-// score 82 (was 82): matching 0x1c frame; case conversion/angle stack homes and
+// score 82 (was 82): case conversion/angle homes and normalization scheduling still differ;
+// whole input vector 167, staged output 152, component loop 546, compound loop 546,
+// input snapshot/reverse stores 167, scaled components 106, aggregate output 152, snapshot loop 586.
+// matching 0x1c frame; case conversion/angle stack homes and
 // normalization multiply scheduling differ. Earlier per-case expression forms excluded;
 // all trials used unqualified scale inputs: ordinary inputs 106; existing scale helper 106;
 // shared squared length 106; shared azimuth 99; shared polar 329; shared shape scalars 416;
@@ -84,6 +87,10 @@ PRIVATE __forceinline vector3f *function_249171(real arg_0, vector3f *arg_1)
 // score 82 (was 82): case conversion/angle and seed homes still differ. Unqualified inputs throughout:
 // lifetime clamp 106; property inline/noinline 106/106; random-vector inline/noinline 106/106;
 // ordinary inverse inline 136; native side test 359; shared side sign 345.
+// case scalar/seed homes and normalization scheduling remain.
+// Ring/sphere/both shared position producers 94/84/96; cone/disk point setters 84/95;
+// shared/named direction workspace 380/82; all position helpers 111;
+// direction/seed/reverse case orders 319/575/518. Opening body restored.
 // @retail 0x249170
 void function_249170(real const *values, s_particle_spawn_state *particle, s_particle_spawn_definition const *definition, s_particle_system_datum const *system)
 {

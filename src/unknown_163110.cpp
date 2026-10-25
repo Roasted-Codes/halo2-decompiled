@@ -637,6 +637,9 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 // score 115 (was 115): Normal/zero XMM roles, classification and projection homes remain; offset
 // accumulator 269; shared segment count 468; count result 459; projected/intersection values 402/323;
 // bool/second endpoint values 259/362; completed cursor 196.
+// The locals as plane3f 115; plane_distance_to_point for the classification 265, plus the
+// intersection distance 269, plus dot3f for the denominator 216; the distance alone 117;
+// dot3f for the first plane's d 278 (either argument order), for both planes' d 155.
 // @retail 0x1652e0
 bool function_1652e0(s_view *view, real margin, const point3f *points, long point_count, point3f *projected_points, short *projected_count, s_bounds3d *bounds, bool use_plane0, bool use_plane1)
 {

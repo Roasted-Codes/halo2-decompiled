@@ -407,7 +407,12 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // mask; back-edge reload order and the 0x1d90e0/second-lookup staging registers still differ.
 // Shared bit-vector setter 42; iterator stores before the graph 99; graph_tag_get 42; call results > 0 38;
 // iterator a before b 41; arms swapped 40; markers in the loop 41; visited declared first 37.
-// score 37 (was 37): Frame agrees; the shift test versus retail mask, state/table reload order and
+// score 37 (was 37): the mask/shift test, back-edge reloads and later call staging differ.
+// Marker/transform/both inline declarations 37; shared exit 37; exit plus each/both declarations 37; iterator inline declarations 37.
+// shift test, back-edge reload order and second-call/transform staging remain.
+// State pair helper 148; all state graph queries 37; both 148; entry state query 37;
+// mode/graph/class 105, graph/class/mode 44, class/graph/mode 106, class/mode/graph 110.
+// Frame agrees; the shift test versus retail mask, state/table reload order and
 // second lookup/transform staging still differ; shifted word expression 37; clear before object
 // chain 191; shift and clear order 191; entry marker workspaces 37; entry markers and shift 37;
 // entry markers and clear 191; complete workspace boundaries 191; model after clear 191.
@@ -1261,6 +1266,9 @@ bool function_c70b0(long unit_index);
 // score 164 (was 164): entry pool/state registers, count joins and result normalization remain.
 // Shared held query at both/first/second sites 164 each; signed-byte/native helper slot 169/327;
 // helper result selection 363; selection with byte/native slot 357/348.
+// entry pool/state and signed-count result joins remain;
+// native first/second/both slots 164 each; native first/second/both counts 164 each;
+// combined native fields 164; existing channel-state member 164.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -2557,6 +2565,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // score 147 (was 147): frame 0x3c versus 0x38 and action/availability conventions remain; separate
 // copy-return boundaries 142 (exact-only, discarded); base-channel entry/selection 147/147;
 // animation-result home 147; receiver/workspace copy split 162/162, with base channel 162/162.
+// score 147 (was 147): frame 0x3c versus 0x38 and action-output convention remain;
+// success/force/both role names 147/147/147; unsigned lookup/animation/mode 147 each;
+// action-result assignment/positive completion 161/161; direct success return 154.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

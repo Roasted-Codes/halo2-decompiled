@@ -313,6 +313,9 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 // is spilled instead (207). Tried: memcmp sized by info.count (179), state read into a local (115),
 // loop counter by index without pointers (207), function_991d0 called directly (143), helper
 // reading [0] first (134) or no helper locals (137), pointer locals or increments reordered (115).
+// Tried additionally: call-first logical accumulation 191, compound accumulation 197, conditional
+// accumulation 215, failure result 124, named cursors 115, named cursors/logical accumulation 191,
+// named helper inputs 115, named cursors/failure result 124; original body restored at 115.
 // @retail 0x98fb0
 void c_handle_table_450cd0::v6(s_request_450cd0 *a1)
 {

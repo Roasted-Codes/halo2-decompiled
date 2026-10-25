@@ -62,6 +62,9 @@ struct c_aggregate : c_child
 // Completion/information/both output lifetimes 105/99/110; cleanup block/item cursors
 // in the boundary-array context 92/92; actual dispatch block range 103; nested error
 // scope and early error/total results 92/92.
+// request/cursor registers and produced/release scratch homes differ;
+// count name 104; release-output name 104; both names 104; result-first 104;
+// arrays swapped 104; collection cursor 105; indexed dispatch 104; allocator capture 115.
 // @retail 0x97d80
 long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 {
