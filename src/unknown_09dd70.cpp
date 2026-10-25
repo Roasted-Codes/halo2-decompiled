@@ -456,6 +456,10 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
+// score 196 (was 196): flags/packet/object registers and attachment call conventions differ.
+// External packet/attachment/both references 196/224/224; shared shift ordinal 238;
+// named parent-kind mask 196; parent-validity predicate 196; packet plus ordinal 238;
+// attachment reference, ordinal and parent predicate 226.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

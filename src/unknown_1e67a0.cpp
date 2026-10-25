@@ -717,6 +717,10 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // score 155 (was 155): sampled-vector slot and rotation/exit schedule still differ.
 // Cross before projection 201; late axis 185; split axis projection 166; goal snapshot 247;
 // direct selection tests 204; turn-first guard 156; scalar final writes 192; library copies 155.
+// score 155 (was 155): sampled-vector slot and scalar/rotation/output scheduling remain.
+// Native cross/rotation/both coordinate initializers; immutable original, cross,
+// rotation, both computed vectors and all three vector values
+// Fast scores 155/155/155/155/155/155/155/155; original body retained.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,
