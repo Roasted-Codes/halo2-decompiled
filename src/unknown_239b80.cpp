@@ -319,6 +319,7 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 	result->j = a->y - b->y;
 }
 
+// score 50 (was 50): entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {

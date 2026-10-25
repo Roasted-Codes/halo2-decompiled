@@ -114,6 +114,14 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 	return local_0;
 }
 
+// score 30 (was 30): +0x191 projection loads reverse stack/global operands;
+// cross-product SSE allocation and scheduling also differ. Earlier fraction,
+// case-tail, helper-parameter and case-order forms reached 121 before later fixes.
+// Tried: forward snapshot 151; ordinary cross output 212; shared cross helper
+// with axis snapshots 264; axis snapshots with existing stores 174; descriptive
+// vector names 30; vectors before switch 30; shared point difference 184; named
+// projections 83; projection operands exchanged 30; cross factors exchanged 30;
+// both operand exchanges 30. Opening executable body restored.
 // @retail 0x248df0
 real function_248df0(long arg_0, void *arg_1, void *arg_2, void const *arg_3)
 {

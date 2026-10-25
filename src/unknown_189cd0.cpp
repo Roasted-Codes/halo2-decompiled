@@ -31,6 +31,15 @@ long function_18d5b0(long label);
 long function_189fe0(s_sound_request const *request, long tag_index);
 long function_189340(long object_index, long tag_index, long audible, s_sound_marker const *marker, s_sound_source_callbacks const *source, real scale, long platform_playback, char const *variant);
 
+// score 35 (was 35): frame 0xa0 agrees; +0x115 consumes the slot pointer
+// for the variant, then reloads it; object playback setup and source-result
+// allocation also differ. Earlier pointer/result scopes tied at 38; standalone
+// argument playback gave 83/523. Ordinary trials: indexed final store 156/537;
+// descriptive homes 35; shared source mode 97/521; slot reference 35; argument
+// playback with early request variant 81/523; argument playback with indexed
+// final store 148/539; failed-duration tail 35; early variant and argument
+// playback with descriptive homes 81/523; object retained during argument
+// evaluation 85/523. Opening executable body restored.
 // @retail 0x189cd0 standard
 void __stdcall function_189cd0(long tag_index, long object_index, real scale, long a, long b, long label, long duration_address)
 {

@@ -75,6 +75,11 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 // unsigned handle storage 22; unsigned index 25; status role name 22; nested success admission 52; loop
 // proven callback status 121; completion status invariant 77; inline rollback declaration 22; noinline
 // rollback declaration 22.
+// callback argument setup, index reload and rollback order differ;
+// masked entry index 22; constant member dispatch 78; actual entry pointer 22;
+// admitted mask/owner snapshots 52/52; peer receiver refresh 24;
+// direct initial receiver 22; mask plus member dispatch 101;
+// persistent entry-array base 91; separate callback handle 22. Body restored.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {

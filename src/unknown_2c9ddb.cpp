@@ -292,6 +292,10 @@ void c_class_2c9e69::select_last_variant()
 // widget names 23; named variant first 30; entry reference 23; indexed base 23;
 // text destination local 23; icon absence return 23; reversed dispatch with receiver copy 38;
 // reversed dispatch/copy renamed 38; base-widget receiver 36; base receiver renamed 36.
+// nonempty receiver stack test/reload differs from EBX lifetime;
+// text/bitmap/both child helpers 23/23/23; helpers plus named receiver 36;
+// helpers plus nonempty-first/text admission 30/38; parameter text home 49;
+// returned name buffer 21 fast/plain, rejected. Opening body restored.
 // @retail 0x2c9ff4
 void c_class_2c9e69::v20(c_class_1a2c81 *item, long unused)
 {

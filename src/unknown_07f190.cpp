@@ -216,6 +216,7 @@ void function_7f070(void)
 		function_7f2a0();
 }
 
+// score 37 (was 37): measured-byte, level and observer suffix registers still differ; five independent estimate/flag/level publication orders 37 each; measured name, level name and both result names 37 each.
 // @retail 0x7f410
 void function_7f410(void)
 {
