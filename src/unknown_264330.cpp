@@ -266,6 +266,8 @@ void function_264940(long actor_index, long prop_ref_index)
 // j92: frame 0x24 versus 0x20 and object/view homes remain; real object/header types and selection inline declarations tie; expiry snapshot regresses.
 // typed object view 358; typed header lookup 358; typed object header 358; tracking expiry snapshot 385;
 // selection inline declarations 358.
+// Round 310: state word snapshot 358; long state snapshot 365; long update 434;
+// entry vector workspaces 358; speed category result 358. Frame 0x24/0x20 and object/view homes remain.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)

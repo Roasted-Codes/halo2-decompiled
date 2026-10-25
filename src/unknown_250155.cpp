@@ -1383,9 +1383,17 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // score 116 (was 116): query/count homes and scalar tail fills still differ.
 // First/second/both maximum equality 116/116/116; values-first comparator 115 (dropped);
 // comparator branches/storage 116/116; factored mode 160; pre-allocation row value 136.
-// score 116 (was 116): extra query home, selected-count homes and scalar tail fills remain.
+// score 116 (was 116): query/count homes and tail-fill schedule still differ.
+// first word scan 164f; second word scan 135f.
+// both word scans 155f; byte scans 155f.
+// signed byte scans 155f; early comparator 164f.
+// early comparator/word scans 166f; early comparator/byte scans 166f.
+// extra query home, selected-count homes and scalar tail fills remain.
 // Completed first/second/both query totals 145/138/159; rejected first/second/both scans 116;
 // open-row default 115 (dropped); completed totals with open-row default 158.
+// score 116 (was 116): query/count homes and scalar tail fills still differ.
+// Branch-shared session count 138; with library/range tails 201/160;
+// selection initialization 162; completed total 134; word scans 160; comparator/open-row forms 139/137.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {

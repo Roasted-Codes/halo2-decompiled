@@ -538,6 +538,9 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // frame pointer 487; global optimization off 1180; size preference 538.
 // Zero-prefix split 461; column traversal 446; triangular pairs 497;
 // default-first matrix score 646; redundant first-table clear removed 454.
+// score 363 (was 363): first-table induction and default/flag scheduling remain.
+// Unsigned table outputs 363; unsigned steps 363; byte outer ordinal 478;
+// shared five-derived observation 460; shared capacity observation 461 (fast).
 // @retail 0x66330
 void network_configuration_set_defaults()
 {

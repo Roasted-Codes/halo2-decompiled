@@ -226,6 +226,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // normalized forward shared 265; basis scratch roles reused 269; velocity/basis scratch shared 252;
 // shared forward and scoped velocity 257; early position snapshot 263.
 // score 226 (was 235): Frame 0x78 versus 0x6c; basis/position homes remain. Shared speed scale 226 kept; left/velocity scratch 252; zero-source memcpy 235; angle-limit lifetime 233; accepted-up first 255 (plain).
+// score 220 (was 226): Frame 0x78 versus 0x6c; basis/position homes remain. Speed-arm scalars 270;
+// acceleration first 226; scalar names 226; early turn-velocity capture 226; zero velocity after
+// world-up 220 kept (plain).
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -256,9 +259,9 @@ void function_1197b0(long object_index)
 		turn_velocity = object->turn_velocity;
 		function_11f0d0(&turn_velocity, &forward, &object->requested_forward, g_510c54->rate, max_angle, acceleration);
 	}
-	vector3f temporary_velocity = *g_4687a4;
 	vector3f up;
 	world_up_1197b0(object_index, &up);
+	vector3f temporary_velocity = *g_4687a4;
 	vector3f new_forward, target_up, left, forward2;
 	function_11d180(&forward, &object->requested_up, &new_forward, &left, &target_up);
 	function_11d180(&forward, &up, &forward2, &left, &up);
@@ -704,6 +707,11 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // Word-flag/handle registers and call Boolean roles still differ.
 // absent-component exit 99; signed flags with early Boolean 99; long state with early Boolean 135;
 // counter reset before increment 103; threshold default and override 99.
+// score 95 (was 95): Frame agrees; word/Boolean carriers and final state width remain. Snapshot after word 95; earlier threshold 129; unsigned saturation 97; unsupported counter first 106; valid byte last 96 (fast).
+// flag-word/handle registers and final flag-store width still differ.
+// native word field 95; native counters 95; both native fields 95; returned position 144
+// active-query result 95; native source receiver 95; definition subrecord at use 95
+// inactive-body exit 95.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -835,6 +843,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // targeted sweep name 278; sweep/impact names exchanged 278; completed normal reused 285; candidate
 // countdown 284; header flag at use 278.
 // score 159 (was 159): Frame 0x124 agrees; quotient spill and sweep/impact homes remain. Native collision result 159; later best fraction 161; later quotient 281; candidate cursor 393; bool return 159 (fast).
+// score 151 (was 159): Frame 0x124 agrees; quotient/sweep/impact homes and owner-call setup remain.
+// Long saved identifiers first 152, second 152, third 151 kept (plain); all three 154; early
+// fraction 161; first/third 157; second/third 157; first/second 158 (fast).
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -857,7 +868,7 @@ long function_119c10(long arg_0)
         local_6.k = local_2.k * local_5;
         short local_10;
         short local_11;
-        short local_12;
+        long local_12;
         point3f local_13;
         vector3f local_14;
         s_location local_15;

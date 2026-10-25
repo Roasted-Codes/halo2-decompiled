@@ -727,6 +727,9 @@ struct s_85650
 // frame and owner/child/callback homes still differ.
 // Child count-first 128; completed total 128; aggregate/child references 100/100;
 // storage/sender references 100/100; connection/owner references 100/100.
+// score 100 (was 100): Frame 24/28 and child/distribution/callback homes remain; count predicate/empty
+// arm 100/100; sender/baseline zero chains 100/100; array-wise clears 104; sequence value 100; sender
+// scope/owner boundary 100/100.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {

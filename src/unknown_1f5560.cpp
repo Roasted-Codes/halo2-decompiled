@@ -764,6 +764,13 @@ real normalize2d(point2f *v);
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
+// score 172 (was 172): frame 0x48 agrees; fast-byte zero and trajectory convention remain.
+// Validation after query 220; with late minimum 220; early query output 171;
+// minimum first 174; early output/minimum 170; first-type first 172;
+// shared Boolean initialization 173; early output with late validation 218.
+// Fast-byte memset 172; actual actor/requested-type/maximum-type references 172 each;
+// actual destination/origin references 172 each; read-only unit view 172;
+// native two-component normalization workspace 206. Zero source and trajectory convention remain.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -1000,6 +1007,7 @@ done:
 // score 307 (was 307): frame 0x18 versus 0x1c; actor/object roles and factor homes differ.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
 // Scalar velocity 309; approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast).
+// score 307 (was 307): Frame 0x18 versus 0x1c and actor/object/factor homes remain; object receiver first 309; approach component scopes 308; following component scope 308; shared minimum scalar 308; library velocity copy 309 (fast control 308).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1275,6 +1283,7 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // score 294 (was 294): frame 0x3c agrees; radius/result homes and initial direction materialization differ.
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
 // Ordinary lifetimes: facing value 307; scalar side 309; scalar center 306; origin constructed first 306; reused negative radius 329.
+// score 294 (was 294): Frame 0x3c agrees; direction materialization and radius/result homes remain. Ordinary input/side lifetimes: point pair plus arc helper 344; pair plus direction output 299; origin/facing values 292 (plain 292, two-point gain rejected); target/facing values 306; three point values 328.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

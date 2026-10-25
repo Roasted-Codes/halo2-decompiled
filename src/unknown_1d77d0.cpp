@@ -401,7 +401,7 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 	return constraint;
 }
 
-// score 32 (was 32): with the entry's object and physics model indices read into one-use
+// score 29 (was 32): with the entry's object and physics model indices read into one-use
 // locals (reverted in review) the count is 25 and only the final `|= 0x400` differs (split into load/or/store around the
 // pops): retail's zero-size loop guard jumps to the found path's epilogue, ours to the
 // exhausted loop's, so the found block holds a copy of the epilogue.
