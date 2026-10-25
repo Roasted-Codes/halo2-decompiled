@@ -72,7 +72,9 @@ struct s_engine_player
 	short local_index;
 	byte unknown2a[2];
 	long unit_index;
-	byte unknown30[0xc0 - 0x30];
+	byte unknown30[0x88 - 0x30];
+	char appearance;
+	byte unknown89[0xc0 - 0x89];
 	char team;
 	char value_c1;
 	byte unknownc2[0x164 - 0xc2];
@@ -1381,6 +1383,10 @@ struct s_item_collection
 };
 
 // score 5 (was 5): the tick count is sign extended into eax here and into edx in retail.
+// Full record expressions with arm conversions 5; with short ticks 34;
+// record and fallback field references 20; spawn reread with arm conversions 30;
+// spawn reread with early fallback widening 6; full expressions and long spawn 34;
+// arm conversions with long fallback 19; both duration fields reread 5.
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -1664,6 +1670,11 @@ void function_15e460(long object_index, long value)
 	game_engine_get()->p24(object_index, value);
 }
 
+// score 26 (was 26): retail keeps one in EDX and saves ESI/EDI; ours keeps
+// false in BL and one in EAX. False result after both guards 29, after engine
+// guard 27, after player guard 28; narrowed scope with options record reference
+// 29, mode field reference 29, flags field reference 29, final option reference
+// 29, both record and final option references 29.
 // @retail 0x15eb20
 bool function_15eb20(long player_index)
 {
@@ -2371,6 +2382,9 @@ void function_15b980(bool skip_event)
 void function_1e9df0(long field, long counter, long team, s_statborg *statistics, short delta);
 void function_1e9ce0(long player_index, long counter, s_statborg *statistics, long field, long delta, bool by_team);
 
+// score 44 (was 44): frame 0x10 agrees; statistics-call setup, event scratch registers and options reload remain.
+// value-initialized iterator 102; shared iterator record 44; immutable mode/old score 44;
+// current-score lifetime 44; frame pointer 118; global optimization disabled 219; size preference 191; record reference 44.
 // @retail 0x15b650
 void __stdcall function_15b650(long team, long delta)
 {
@@ -4491,9 +4505,6 @@ public:
 PRIVATE color3f const score_text_color = { 0.4588235318660736f, 0.729411780834198f, 1.0f };
 PRIVATE color3f const alternate_score_text_color = { 0.8078431487083435f, 0.5607843399047852f, 0.8705882430076599f };
 
-// score 41 (was 41): zero uses EBP vs EBX; player lookup folds its base before the byte read.
-// Fast CRT color copies 41; unsigned font index 41; horizontal bounds before y 70;
-// branch font selector 137; scoped size optimization 233.
 // @retail 0x15e530
 void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *point)
 {
@@ -4509,8 +4520,9 @@ void __stdcall function_15e530(c_1fa50 const *text, real alpha, point2f const *p
         long player_index = g_4e8c20->entries[g_4b9ed8];
         if (player_index != NONE)
         {
-            char appearance = *((char *)engine_player_get(player_index) + 0x88);
-            if (appearance == 1 || appearance == 3)
+            s_engine_player const *player = engine_player_get(player_index);
+            char appearance = player->appearance;
+            if (player->appearance == 1 || appearance == 3)
                 rgb = &alternate_score_text_color;
         }
     }
@@ -4962,6 +4974,9 @@ void function_36580(void);
 void function_36880(color4f const *color, s_short_rectangle const *rectangle);
 void function_161420(long player_index, real alpha);
 
+// score 24 (was 24): state/user EDI/EBP swap and final x87 argument scheduling remain.
+// value-initialized iterator 158; entry workspaces 42; draw dimensions 24; immutable user 24;
+// frame pointer 173; global optimization disabled 242; float consistency 42; force-inline fraction 24.
 // @retail 0x159880
 void function_159880(void)
 {

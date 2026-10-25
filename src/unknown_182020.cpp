@@ -133,7 +133,11 @@ static inline short shape_material_index_get(c_material_shape *shape)
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
-// score 1 (was 1): second lookup short at esp+0xc, retail +0xe;
+// score 1 (was 1): second lookup short is at esp+0xc rather than +0xe.
+// Caller buffers through helper 1; shared buffer 164; helper output 1;
+// returned destination 1; helper size 1; helper frame pointer 1;
+// helper global optimization off 183; helper nested depth zero 1.
+// second lookup short at esp+0xc, retail +0xe;
 // shared entry/component bool 1/1, component/entry byte 1/1, component long 22;
 // initialized lookup short 164, output memcpy 1, output memmove 139.
 // @retail 0x182b90

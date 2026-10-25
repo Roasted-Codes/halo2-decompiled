@@ -729,6 +729,10 @@ dword function_1a7ad0(long owner_index)
 	return (1 << owner->unknown086_byte) | ((1 << (byte)shift) << 10);
 }
 
+// score 96 (was 96): owner/output register ranks, fallback-base LEA and intersection setup differ.
+// Nullable definition 81 (adds a null branch); typed fallback 96; both 81;
+// const owner, definition, source, tags and object/element views 96 each;
+// ordinary shared source copy 143; shared copy with owner tag 143.
 // @retail 0x1a7b30
 void function_1a7b30(s_flag_bits *result, long owner_index)
 {
@@ -786,6 +790,9 @@ void function_25aba0(long actor_index);
 // Two-word initializer 68; full member initializer 287; retained ordinal 244;
 // shared final exit 69; frame pointer on native initializer 334.
 // Round 280: outer workspace 143; short copy counter 69; long level 173; retained handler reads 69; ordinary dispatch first 131.
+// Empty native initializer 143; value/assigned-value initialization 249 each; empty initializer with early state pop 146;
+// owner/handler records 69 each; current-level snapshot 69; level snapshot with empty initializer 143.
+// Actor/result ESI/EDI, state-one decrement, zero-fill and insertion setup still differ.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -1157,6 +1164,9 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
 // returned point with body index 2; reassigned point pointer 128; output pointer 18;
 // file-scope workspace 18; direct body reads 121; support lookup noinline 18;
 // returned point with output pointer 2; target noinline with returned point 2.
+// const support 18; unsigned object handle 18.
+// Round 109: ordinary scale inline 18; scale pointer result 18; three scale formal orders 18;
+// scale input reference 18; point-query noinline 18; velocity-query noinline 18.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {
@@ -1763,6 +1773,9 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // score 113 (was 131): call argument setup, marker-loop homes and terminal epilogues still differ.
 // Direct count increment 121; native short query 129; shared exit 131; direct optional transform 115.
 // Positive marker count 129; combined increment/transform 113; combined short query 114; direct count cleanup 113.
+// Two-phase candidate cursor 125; marker/table/both records 113 each; cursor with marker record 125;
+// cursor with native query 129; cursor with positive table 126; separate count result 169.
+// Existing helper argument setup, marker-loop homes and terminal exits still differ.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
@@ -2216,6 +2229,9 @@ struct s_1a4c01
 // score 36 (was 116): the target index and the unit index sit in each other's stack slots, the
 // interpolation loads forward.i where retail copies 1 - fraction, and the closing stores use
 // other registers.
+// Controlled/selected/both handle names 36 each; target declaration beside controlled handle 36;
+// blend in target/forward workspace 66/87; result copied from forward/target 170/353.
+// Handle homes, interpolation coefficient allocation and closing publication registers still differ.
 // @retail 0x1a4c00
 bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector3f *direction, point3f *point)
 {

@@ -468,6 +468,9 @@ real function_3eb70(void);
 typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_particle_value_cache *, point3f const *, vector3f const *, real, color4f const *, void *);
 
 
+// score 56 (was 56): Offset initialization, scalar initializer order, property reloads and rotation scheduling differ.
+// Combined entry decisions 53; entry decisions with shared cache 53; scale/alpha/both result locals 119/56/119;
+// saved successor 217; particle cache with scale result 119; combined entry/property/cache 116.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {
@@ -1103,6 +1106,9 @@ bool function_17afd0(long effect_index, long value);
 // Next-slot assignments 107; word absolute slot 158; separate scan result 107;
 // shared datum conversion 199; long attachment 120; short same-view 145; byte draw 107;
 // long camera-relative 144 (fast preview 107, full 106). Original body retained.
+// Round 109: unavailable predicate 148; other-view predicate 146; detached predicate 108;
+// fixed-camera result 148; external system reference 107; nullable effect view 149;
+// const definition 107; packed effect handle 107 (fast preview 107, full 106).
 // @retail 0x174220
 // score 106 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
 // availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag

@@ -708,6 +708,10 @@ struct s_85650
 // score 112 (was 116): the frame is four bytes smaller than retail's
 // (sub esp,0x24 against sub esp,0x28), so every stack slot sits at another
 // offset and the record pointer is kept in EBP here and in EDX in retail.
+// score 100 (was 112): frame 0x24 and owner/child/callback homes still differ.
+// Child ordinary inline 112; aggregate result 112; child result 112;
+// five child formal orders 112; wide active with both-arm count 100;
+// wide active with both-arm count and fresh sender 124.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
@@ -774,7 +778,7 @@ void function_85650(c_simulation_view *view, s_network_observer *observer, const
  }
  else
   count = 0;
- bool active = view->world->state != 3 && view->world->state != 5;
+ long active = view->world->state != 3 && view->world->state != 5;
  s_connection_callback *callback = (s_connection_callback *)view->unknown44;
  link_connection_callback_initialize(callback, clients, view,
   (void (__stdcall *)(void *))function_68550, count, types, active);
@@ -810,6 +814,9 @@ bool function_1995a0(const byte *source, dword source_size, byte *destination, l
 // score 90 (was 90): ours is seven bytes longer: the running total is zeroed
 // in a stack slot here and in a register in retail, and the two stack slots
 // that hold the count and the flag are at other offsets.
+// Round 109: direct view plus writer forceinline 93; unsigned writer result 93;
+// writer reference 93; native count 93; unsigned offset 93; word kind 93;
+// named packet record 93; moving payload pointer 144.
 // @retail 0x86800
 bool function_86800(dword capacity, c_simulation_view *view, dword source_size, byte *destination)
 {
