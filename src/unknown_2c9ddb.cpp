@@ -77,6 +77,16 @@ extern long g_55c154;
 // destination name after/before default 88/88; destination record late/early 88/88;
 // record/name receivers 88; publication order 174; named second load 61;
 // common name receiver 88; split loads plus common/default name receiver 199/199.
+// score 61 (was 61): classification spill and copy expansion remain;
+// external controller-slot / item-handle / list-receiver references 61/61/61;
+// controller-item / controller-list / item-list / all references 61/61/61/61;
+// all references with live type-field binding 61. Original inputs and body restored.
+// classification spill and selective copy expansion remain;
+// default-first enum/source arms/override/exclusive consumer 71/71/72/176;
+// selected-first enum/source arms/override/exclusive consumer 175/175/175/175.
+// creation classification spill and selective copy expansion remain;
+// live entry-handle/edit-mode/type fields 61/61/61; handle-mode/handle-type/mode-type
+// field pairs 61/61/61; three live fields and external record combination 61/61.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {

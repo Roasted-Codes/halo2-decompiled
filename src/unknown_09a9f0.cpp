@@ -530,9 +530,14 @@ bool c_projectile_type::v8(long a, long b)
  return result;
 }
 
-// score 5 (was 5): retail masks the 16-bit index with and eax, 0xffff, ours
-// truncates it with movzx eax, ax; masking explicitly gives the right
-// instruction but re-schedules the whole prologue
+// score 5 (was 5): retail masks the 16-bit group index with and eax, 0xffff,
+// ours truncates it with movzx eax, ax. Writing (index & 0xffff) gives the and
+// but swaps the object (esi) and flags (edi) registers (12). Tried with the
+// mask: flags declared first / long / b used directly (12), early returns
+// (47), real pointer into the group (15), a 12 byte group struct indexed (12),
+// one (flags & 0x800) && group != NONE test (24, 12), unsigned index (12),
+// 0x9d450's object address form (12); (dword)(word)index is unchanged (5).
+// Dropping the volatile this copy loses retail's push ecx/[esp] store (55).
 // @retail 0xa3df0
 long c_device_type::v27(long a, long b, long c, long d)
 {

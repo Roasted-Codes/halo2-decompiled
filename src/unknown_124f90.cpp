@@ -2621,6 +2621,9 @@ static inline short sound_voice_find_available_channel(char type)
 // score 113 (was 113): frame 12 versus 8 and saved true byte; validity result 135; assigned result
 // 135; playback handle 113; const playback 113; long buffer index 117; entry status 113;
 // allocation-scope status 113; status name 113; allocation success result 122.
+// score 113 (was 113): frame 12 and saved result byte remain; failure flag 130, entry failure
+// 130, complemented status 132, long channel 147, driver-first/late-system commits 130/130,
+// status plus driver-first 132, requested buffer first 130.
 // @retail 0x1295e0
 bool __stdcall function_1295e0(short voice_index)
 {
@@ -3246,6 +3249,9 @@ void __stdcall function_1264c0(dword arg_0);
 // Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
 // pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.
 // Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
+// score 87 (was 102): reconstruction calls, clock conversion and wait layout remain;
+// reconstruction force/plain inline 102/102; with shared fade 87 plain; with flag/gain/deadline/reset
+// 102/102/102/102 fast; ordinary inline plus fade 107 fast; shared fade without declaration 87 plain.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
@@ -3258,12 +3264,7 @@ void function_1257b0(void)
 		{
 			do
 			{
-				s_sound_playback *local_3 = (s_sound_playback *)local_1->data + (local_2 & 0xffff);
-				local_3->fade_gain = function_12a810(local_2);
-				local_3->fade_curve = 0;
-				local_3->fade_start_time = 300;
-				local_3->fade_end_time = NONE;
-				local_3->fading = true;
+				function_126df0(NONE, local_2, 0, 0.3f);
 				local_2 = index_to_datum_index(local_1, function_16bc00(local_1, (local_2 & 0xffff) + 1));
 			} while (local_2 != NONE);
 			real local_4 = (real)local_0;

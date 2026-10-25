@@ -171,6 +171,16 @@ inline void end_agent_316110(agent_316110 *agent)
 // Cleanup as an agent method 6; entity and owner locals 6; an else arm,
 // post-increment copy and member end on 6: 6. Cleanup as a record method 54,
 // with an agent sample 6; record input 6; immutable callback receiver 6.
+// Agent-pointer reference 200; record argument with a member reference 200;
+// cleanup on the callback receiver with pointer or reference argument 6;
+// explicit cdecl 6; pair-member reference lookup 227; collidable
+// member lookup 6; equality template, inline or force-inline, 186; first
+// array pointer 6; owner-pointer member reference 6; order-helper result 6;
+// const record cleanup 54.
+// Direct record pointer or reference cleanup 54; pair base with const
+// cleanup 54; const record cleanup with an element reference 67; external
+// pair-reference argument 6; pair base with agent-value cleanup 6. A single
+// worker search of 474 variants found none below 6.
 // @retail 0x316110
 void cache_316110::function_316110(pair_316110 const *pair)
 {
