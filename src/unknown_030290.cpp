@@ -3,6 +3,8 @@
 #include "unknown_030290.h"
 #include "globals.h"
 #include <math.h>
+#include "normalize3d.h"
+#include "vector_products.h"
 
 // @flags /O2 /Ob1 /Gr /arch:SSE
 #include "flags_storage.h"
@@ -411,37 +413,22 @@ void function_30e30(long key, long value, bool add, real x)
 
 real function_30bf0(vector3f *v);
 
-PRIVATE __forceinline void normalize_cross_vector(vector3f *v)
-{
-	real squared_length = v->k * v->k + v->j * v->j + v->i * v->i;
-	real length = (real)sqrt(squared_length);
-	if (!(fabs(length) < k_real_epsilon))
-	{
-		real inverse = 1.0f / length;
-		for (long component = 0; component < 3; ++component)
-			v->n[component] *= inverse;
-	}
-}
-
-static __forceinline void cross_product_31b40(vector3f const *a, vector3f const *b, vector3f *out)
-{
-	out->i = a->j * b->k - b->j * a->k;
-	out->j = b->i * a->k - a->i * b->k;
-	out->k = b->j * a->i - a->j * b->i;
-}
-
-// score 47 (was 47): first x87 product loads and second-product SSE roles
-// differ. First input by value 138; second 173; both 240; vector return 209;
+// score 42 (was 47): the first product's x87 operand order and the SSE
+// registers of the normalization and second product differ. Shared cross3f and
+// normalize3d 42; a local copy of axis gives retail's x87 order (35) but is
+// not kept; normalize_inline 53 (harness); result declared first, length kept,
+// direct stores or a struct copy of the result: no gain.
+// Earlier: first input by value 138; second 173; both 240; vector return 209;
 // scalar input groups 112; coordinate pairs 112; scalar first stage 94;
 // scalar second stage 78. Original squared-length result and loop restored.
 // @retail 0x31b40
 real function_31b40(vector3f *vector, vector3f const *axis)
 {
 	vector3f cross;
-	cross_product_31b40(vector, axis, &cross);
-	normalize_cross_vector(&cross);
+	cross3f(vector, axis, &cross);
+	normalize3d(&cross);
 	vector3f result;
-	cross_product_31b40(axis, &cross, &result);
+	cross3f(axis, &cross, &result);
 	vector->i = result.i;
 	vector->j = result.j;
 	vector->k = result.k;

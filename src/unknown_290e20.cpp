@@ -400,17 +400,19 @@ struct s_ai_scene_assignment
 	short variant_indices[10];
 };
 
-// score 56 (was 56): the maximum count is kept in a 32 bit register here
-// and in a 16 bit one in retail, and the calls set their arguments up with
-// other registers.
+// score 56 (was 56): retail keeps the maximum count in esi through the loop
+// and reloads the role index at each use; ours keeps the role index in esi.
+// The choice follows the role index's uses (dropping its recursion or call use
+// flips it) and the iterator callees' file being linked in. Parameters used
+// directly (address forms removed) 56; next role as a long local 61 (347 bytes);
+// `while (next && count < maximum)` 56; pre-increment test 56; flipped compares 56;
+// outputs/score declared outside the loop 56; local_0 recomputed each pass worse.
 // @retail 0x2919e0
 void __stdcall function_2919e0(s_ai_scene *arg_0, s_ai_scene_assignment *arg_1, short *arg_2, short arg_3,
 	short arg_4, short arg_5, long arg_6, long arg_7, long arg_8)
 {
-	s_ai_scene *const *local_8 = &arg_0;
-	s_ai_scene_assignment *const *local_9 = &arg_1;
-		s_ai_scene_assignment *local_0 = &(*local_9)[*arg_2];
-	s_291800 *local_1 = &((s_291800 *)(*local_8)->roles)[arg_4];
+	s_ai_scene_assignment *local_0 = &arg_1[*arg_2];
+	s_291800 *local_1 = &((s_291800 *)arg_0->roles)[arg_4];
 	bool local_2 = arg_4 + 1 >= arg_5;
 	long local_3;
 	switch (*(short *)((byte *)local_1 + 4))
@@ -442,13 +444,13 @@ void __stdcall function_2919e0(s_ai_scene *arg_0, s_ai_scene_assignment *arg_1, 
 				++*arg_2;
 				if (*arg_2 >= arg_3)
 					break;
-				local_0 = &(*local_9)[*arg_2];
+				local_0 = &arg_1[*arg_2];
 				*local_0 = *(local_0 - 1);
 			}
 			else
 			{
-				function_2919e0(*local_8, *local_9, arg_2, arg_3, arg_4 + 1, arg_5, arg_6, arg_7, arg_8);
-				local_0 = &(*local_9)[*arg_2];
+				function_2919e0(arg_0, arg_1, arg_2, arg_3, arg_4 + 1, arg_5, arg_6, arg_7, arg_8);
+				local_0 = &arg_1[*arg_2];
 			}
 		}
 	}

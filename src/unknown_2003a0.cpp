@@ -1055,7 +1055,7 @@ void function_203fb0(long actor_index)
 	}
 }
 
-void function_205280(long group_index, long squad_index);
+__declspec(noinline) void function_205280(long group_index, long squad_index);
 
 struct s_squad_tree_group_definition
 {
@@ -1080,7 +1080,12 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
-// score 43 (was 43): frame and first two passes agree; later parent loads lose the record address.
+// score 31 (was 43): the third pass still merges its two parent reads before register allocation,
+// where retail loads the parent into ECX and keeps the record address (an unused second read there gives
+// retail's code but swaps the pool and index registers). Fourth-pass parent read at both uses 31;
+// squad_get at both uses 42; getter for one use 27 (two loads); one shared group index 63;
+// third-pass parent by direct index, first child read at each use, child via a second getter: no gain.
+// Earlier: frame and first two passes agree; later parent loads lose the record address.
 // Const current group 43; unsigned squad parent 43; unsigned group parent 63;
 // unsigned sibling 43; full-width final index 63; parent-field view 43;
 // parent view in both passes 82; append noinline declaration 43.
@@ -1130,13 +1135,9 @@ void function_2009d0(void)
 	}
 	for (i = 0; i < definition->squad_count; i++)
 	{
-		long parent = *(long *)(&((s_squad_datum *)squads->data)[(word)i])->unknown6c;
-		if (parent != NONE)
-		{
-			#pragma inline_depth(0)
-			function_205280(parent, i);
-			#pragma inline_depth()
-		}
+		s_squad_datum *squad = &((s_squad_datum *)squads->data)[(word)i];
+		if (*(long *)squad->unknown6c != NONE)
+			function_205280(*(long *)squad->unknown6c, i);
 	}
 }
 
