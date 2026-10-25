@@ -245,7 +245,10 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // score 136 (was 140): saved table register and unfused lookup addresses still differ;
 // group reads at use 156; cache/mask/pointer zeros before final lookup 141/156/159;
 // callback input before lookup 141; group reads with cache/mask/pointer zeros 157/136/136.
-// score 136 (was 136): saved table ownership and native lookup addresses remain.
+// score 136 (was 136): saved table ownership and unfused element addresses remain.
+// Byte/word element-reference results 136/136; element-type pointer/reference templates 187/187;
+// each with full root snapshot 144/144/197/197. Original helper and group/mask lifetimes retained.
+// saved table ownership and native lookup addresses remain.
 // Forced stride template 167; with root/word ordinals/root and words 171/167/171;
 // with const input/direct ordinal/late mask/root and late mask 167/167/165/165.
 // @retail 0x224db0

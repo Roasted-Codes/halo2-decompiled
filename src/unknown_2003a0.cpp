@@ -49,6 +49,13 @@ extern short const g_44aee8[20] =
 	3, 7, 3, 3, 3, 3, 1, 2, 2, 4, 4, 4, 5, 5, -1, 3, 7, 7, 7, 4
 };
 
+// score 82 (was 82): 16-bit mask, split flag RMW, sentinel/base allocation remain.
+// Real flag word/byte views 82; word-only flags 105; multi-use source flags 86;
+// real handle array index/library/pointer fills 82/90/101; flag aliases with
+// indexed/library fills 82/90. Original record and complete body retained.
+// score 82 (was 82): word mask/RMW and sentinel/array-base registers remain.
+// Late next-link/word/long sentinel subsets 82,82,82,82,82,82,82;
+// native-short five-handle counter 99. Initializer body restored.
 // @retail 0x200c20
 void function_200c20(byte const *definition)
 {
@@ -320,6 +327,9 @@ void function_202370(void)
 // Native cursor copy 84; two-use active initializer 83; split active cursor 61;
 // cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
 // actual parent-field reference 57; actual record reference 57. Null-result join remains.
+// score 57 (was 57): null-result join and pool/index/mask allocation remain.
+// Direct native cursor, zero/member/ready/conditional initialization with ternary
+// tests 97/97/117/97; conjunction tests 80/100/99/95. Original wrapper retained.
 // @retail 0x2024c0
 void function_2024c0(void)
 {
@@ -451,7 +461,8 @@ struct s_squad_iterator
 	s_squad_definition_entry *definition;
 };
 
-// score 92 (was 92): no frame; squad/definition EAX/ECX and zero/count homes differ.
+// score 92 (was 92): squad/definition registers and persistent zero/count homes remain; shared lookup 92; parent while 148; read-only squad 92; unused formal addresses removed 92; definition scope 92; cached entries 87 (one-use pointer excluded); direct mode flags 94; early index 92; native count/entries block 90.
+// no frame; squad/definition EAX/ECX and zero/count homes differ.
 // Common scan exit 94; direct count 92; alternate reads 92; fallback-first flags 102;
 // search condition 92; exit/direct count 94; exit/alternate reads 94; definition result 92.
 // @retail 0x204ec0
@@ -909,6 +920,13 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 // Multi-use promoted index 73; helper failure guards 69; native short selection
 // 69; input-default result 75; read-only table 69; signed bounded length 70;
 // promotion/input-default result 119; read-only promotion/signed length 75.
+// score 69 (was 69): merged short and fallback native/promoted allocation remain.
+// Actual shared script fields: native snapshot 109; direct fields 70; NONE/input
+// results 141/115; descriptor first 109; const table 109; long result/ordinal 119/108.
+// score 69 (was 69): input/result merge and fallback pair remain.
+// Existing bounded-length call 69; native candidate invalidation 75;
+// invalidation plus bounded call 75; negated success 75/75;
+// candidate selection 75/75 (manual/shared length); signed count 76.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
@@ -1444,6 +1462,7 @@ bool function_1df560(short team_a, short team_b);
 bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
 // score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
+// score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -2453,7 +2472,8 @@ short function_290cd0(short arg_0, long arg_1, long arg_2, short *arg_3, short *
 bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
-// score 152 (was 152): frame 0x1c agrees; task zeroing/retest, optional-output width and iterator head differ.
+// score 152 (was 152): frame 0x1c agrees; task zeroing/retest and iterator head remain; optional producer scope, delay scope, both scopes, native trigger entry, signed entry index, threshold selection, iterator name and native entry with producer scopes each 152.
+// frame 0x1c agrees; task zeroing/retest, optional-output width and iterator head differ.
 // Test-produced task 152; short output 152; wide task 154; both widths 154; direct inputs
 // on test-produced task 152; short trigger count 152; wide threshold 152; pending store first 152.
 // @retail 0x202be0

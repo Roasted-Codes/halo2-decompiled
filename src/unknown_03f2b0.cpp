@@ -1365,7 +1365,10 @@ struct s_133f70;
 // score 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
 // Native reuse 330; native level change 291; short entry index 352; late success 262; short builder
 // result 216.
-// score 213 (was 213): distance input, nullable-entry address and cache/result scheduling remain.
+// score 213 (was 213): distance staging, nullable entry and cache/result homes remain.
+// Direct successful-output slot, entry lifetime: long/long 379, long/short 371,
+// short/long 354, short/short 350; loop lifetime 360,372,374,375.
+// distance input, nullable-entry address and cache/result scheduling remain.
 // Shared level result 378; direct reuse result 316; both 343; builder-first rejection 216;
 // observed object for cache/cache-pool calls 224/332; direct cache publication 218;
 // direct cache with shared level/reuse results 352. All measured in the full image.
