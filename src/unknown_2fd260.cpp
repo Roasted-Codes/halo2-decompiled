@@ -147,6 +147,9 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 }
 
 // the vertices for a list of indices
+// score 2 (was 2): the second unrolled third-coordinate store and saved receiver reload remain exchanged.
+// input reference 2; input pointer 2; long input 2; remainder lane 178; quotient block 174;
+// quotient and remainder 242; source field bindings 2; output return 2.
 // @retail 0x2fd430
 void convex_vertices_2fd260::function_2fd430(unsigned short const *indices, int count, __m128 *vertices) const
 {
