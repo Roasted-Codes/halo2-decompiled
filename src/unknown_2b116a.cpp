@@ -4630,7 +4630,6 @@ void c_friends_options_list::handle_item(s_controller_reference **controller, lo
 			s_screen_parameters parameters;
 			s_list_item_iterator iterator;
 			long count;
-			long entry_offset;
 			parameters.field_c = 0;
 			if (source && source->actual_count > 0)
 			{
@@ -4642,25 +4641,21 @@ void c_friends_options_list::handle_item(s_controller_reference **controller, lo
 				iterator.iterator.index = NONE;
 				iterator.iterator.datum_index = NONE;
 				count = 0;
-				if (count < entry_count)
+				while (count < entry_count)
 				{
-					entry_offset = 0;
-					do
-					{
-						s_online_member *member;
+					s_online_member *member;
 
-						if (!function_2b2327(&iterator))
-						{
-							break;
-						}
-						member = (s_online_member *)iterator.item;
-						if (member->recipient.xuid && !function_19acc6((_XUID const *)&member->recipient.xuid) && !(member->flags & 0x30) && (member->flags & 1))
-						{
-							++count;
-							*(s_message_recipient *)((byte *)entries + entry_offset) = member->recipient;
-							entry_offset += sizeof(s_message_recipient);
-						}
-					} while (count < entry_count);
+					if (!function_2b2327(&iterator))
+					{
+						break;
+					}
+					member = (s_online_member *)iterator.item;
+					if (member->recipient.xuid && !function_19acc6((_XUID const *)&member->recipient.xuid) && !(member->flags & 0x30) && (member->flags & 1))
+					{
+						s_message_recipient *recipient = &((s_message_recipient *)entries)[count];
+						++count;
+						*recipient = member->recipient;
+					}
 				}
 				if (count > 0)
 				{
@@ -4676,10 +4671,16 @@ void c_friends_options_list::handle_item(s_controller_reference **controller, lo
 						screen->recipients = recipients;
 						screen->recipient_count = count;
 					}
-					break;
+				}
+				else
+				{
+					function_236299(2);
 				}
 			}
-			function_236299(2);
+			else
+			{
+				function_236299(2);
+			}
 			break;
 		}
 		case 1:
@@ -4687,14 +4688,12 @@ void c_friends_options_list::handle_item(s_controller_reference **controller, lo
 			s_screen_parameters parameters;
 			s_list_item_iterator iterator;
 			long count;
-			long entry_offset;
 			parameters.field_c = 0;
 			if (source && source->actual_count > 0)
 			{
 				iterator.iterator.index = NONE;
 				iterator.iterator.datum_index = NONE;
 				count = 0;
-				entry_offset = 0;
 				iterator.iterator.data = source;
 				while (count < entry_count)
 				{
@@ -4707,9 +4706,9 @@ void c_friends_options_list::handle_item(s_controller_reference **controller, lo
 					member = (s_online_member *)iterator.item;
 					if (member->recipient.xuid && !(member->flags & 0x30))
 					{
+						s_message_recipient *recipient = &((s_message_recipient *)entries)[count];
 						++count;
-						*(s_message_recipient *)((byte *)entries + entry_offset) = member->recipient;
-						entry_offset += sizeof(s_message_recipient);
+						*recipient = member->recipient;
 					}
 				}
 				if (count > 0)
@@ -4727,9 +4726,11 @@ void c_friends_options_list::handle_item(s_controller_reference **controller, lo
 						screen->recipient_count = count;
 					}
 				}
-				break;
 			}
-			function_236299(2);
+			else
+			{
+				function_236299(2);
+			}
 			break;
 		}
 		case 3:
