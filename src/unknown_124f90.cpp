@@ -1424,6 +1424,9 @@ void looping_sound_controller_release(long index);
 
 /* deletes a playing sound, letting go of its looping sound's controller */
 #pragma inline_depth(0)
+// score 5 (was 5): Pool save remains EBP versus EBX; void tail result 5, inline release declaration 5,
+// noinline declaration 5, controller workspace first 5, byte count workspace 5, complete decrement
+// predicate 5, signed count view 5, indexed controller 5.
 // @retail 0x127390
 void sound_playback_delete(long sound_index)
 {
@@ -2786,6 +2789,9 @@ void function_129380(vector3f const *const *voice_values, vector3f const *const 
 	}
 }
 
+// score 3 (was 3): Fade-call EDI/EAX/EBX setup remains; pool scope 3, metadata scope 3, fixed receiver
+// 3, direct pool 3, listener home names 3, stored location reference 3, distance outcomes 23, index
+// workspace first 3.
 // @retail 0x128020
 void function_128020(void)
 {
