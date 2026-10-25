@@ -58,6 +58,12 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // score 70 (was 70): native pulse row, first/draw/both pulse receivers, occupied-width
 // accumulation and half-width/half-height/both product chains all 70. Pulse-base setup,
 // draw tag/sequence homes and running-X scheduling remain different.
+// pulse-base setup and draw-pass row/sequence homes remain;
+// scalar row X/Y/both 89/87/89; native rectangle library copy 70;
+// pulse array after user base/base before row offset/named row offset 70/70/70; sequence count once 161.
+// score 70 (was 70): pulse/table entry schedule and draw-pass carriers remain;
+// pulse/image/sprite reads at use 224/155/137; pulse guard first 78;
+// first sequence count once 209; positive draw arm 70; occupied width first 70; exhaustive bitmap result 148.
 // @retail 0x200462
 void function_200462(long arg_0)
 {

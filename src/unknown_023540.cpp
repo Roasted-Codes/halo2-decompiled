@@ -3233,6 +3233,9 @@ void function_27aa0();
 // after reciprocal one/two/three 38/151/149; y and z after first reciprocal
 // 51; split projection 59; fourth reciprocal at use 140; third reciprocal at
 // use 136; fade clamped in its output slot 63.
+// opening projection loads remain x/y/z rather than z/y/x.
+// Six-by-four buffer 5; branched reciprocal 72; full buffer initializer 155;
+// direction/scalar/tail/third-row ordering 100/148/143/75; shared span carrier 144.
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {

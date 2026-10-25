@@ -893,16 +893,21 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // steer the compiler) the frame is four bytes and the late level sum remains.
 // Native channel bit 208; const samples 208; immutable input 208; bit/input 208;
 // scoped precision pragma 173; global optimization off 229; frame pointer 225; precision/early sum 224.
+// score 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
+// Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
+// samples 208/212/206/202; all samples with early send sum 215.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
 	bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
 	real level_offset = parameters->level_offset;
 	real base_level = parameters->level;
+	real rear_left_gain = parameters->rear_left_gain;
+	real rear_right_gain = parameters->rear_right_gain;
 
 	sound_stream_append_mixbin(mixbins, alternate ? 0 : 6, parameters->left_gain);
 	sound_stream_append_mixbin(mixbins, alternate ? 1 : 7, parameters->right_gain);
-	sound_stream_append_mixbin(mixbins, alternate ? 4 : 8, parameters->rear_left_gain);
-	sound_stream_append_mixbin(mixbins, alternate ? 5 : 9, parameters->rear_right_gain);
+	sound_stream_append_mixbin(mixbins, alternate ? 4 : 8, rear_left_gain);
+	sound_stream_append_mixbin(mixbins, alternate ? 5 : 9, rear_right_gain);
 	c_sound_effects::add_send(10, mode, level_offset + base_level, mixbins);
 }

@@ -190,6 +190,12 @@ bool __stdcall function_25dd30(long a, long b)
 }
 
 // score 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
+// score 175 (was 175): first vector schedule, geometry registers and score adds remain;
+// shared displacement/geometry displacement/bonus result 310/310/313;
+// geometry/sphere/cone score observations 337/310/310; all score observations 337; actual view reference 310.
+// score 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
+// shared component difference at offset/segment/both/fallback 334/343/343/343;
+// sphere/cone/all displacements 368/277/392; existing magnitude helper 175.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -918,6 +924,9 @@ void __stdcall function_25edd0(
 // iterator setup, bonus tests/multiplies and query load scheduling differ.
 // Upper-margin-first 58; range once/limit once/range before root 155; full-width mode 258;
 // reversed style cases 50; forward position countdown 255; nearest conditional 50.
+// score 50 (was 50): vector workspace entry offset/closest/both 50/50/50;
+// in-place offset 50; component projection 95; in-place component projection 155;
+// projected workspace first 50; unsigned line ordinal 145. Iterator setup and bonus tests remain.
 // Selected-arm staged scales 72; upper-first staged 66; half by division 50;
 // selected margin carrier 186; near/far or separate bonus names 50; staged/name pairs 66.
 // @retail 0x25eea0

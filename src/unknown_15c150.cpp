@@ -84,6 +84,9 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // score 196 (was 196): delayed EBP save, team-byte home and word local-slot spill remain.
 // Per-use first-loop datum 196; short/byte/word teams predicates 196/196/196; datum plus short teams 196;
 // shared entry/callback getters 196/196; both getters with per-use datum 196, all plain-confirmed.
+// early EBP save, team-byte home and local-slot spill differ.
+// Complete iterator/cursor clear 263/263; word/byte population 250/245;
+// live pool ordinal 241; unsigned datum 196; complete iterator with ordinal 264; plus byte population 244.
 // @retail 0x15c150
 void function_15c150()
 {

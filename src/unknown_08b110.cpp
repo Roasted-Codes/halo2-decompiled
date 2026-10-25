@@ -101,6 +101,9 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 // allocation/handler/size 25/25/25; shared allocator receiver 29; indexed
 // output 34; output element reference 25; signed-word error 41; direct failure
 // result on the nested-index body 40.
+// allocation error 2 still precedes the cleanup return.
+// Reused size output 80; signed output 25; initialized output 45; globals/count/handler
+// references 25/25/25; native item-size local 25; result after release 41.
 // @retail 0x8b110
 long c_vtable_450cb8::v0(long index, long a2, long a3, long *count, s_item_450cb8 *items, void *a6)
 {

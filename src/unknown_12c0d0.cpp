@@ -357,6 +357,9 @@ byte __stdcall texture_cache_entry_state(long datum_index)
 // result 29; native protection 36; outer eligibility 10; reused format value
 // 13; native flags 13; nonresidency result 30; residency with compound idle
 // test 13; immutable receiver 10.
+// the false return still follows the GPU query.
+// Proven first/second/both result predicates 29/10/29; format/residency/resource
+// field references 10/10/10; native idle predicate 10; assigned outcome result 11.
 // @retail 0x12d1a0
 bool __stdcall texture_cache_entry_busy(long datum_index)
 {
