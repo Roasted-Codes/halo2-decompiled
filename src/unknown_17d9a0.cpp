@@ -142,6 +142,10 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 // Shared projection operation 334; native plane result 237; row-selector local 152;
 // bounds-first/vertical-first helper contracts 140/140; pointer-input point initializer 152;
 // vertical result snapshot 170; first-edge squared length 138; corrected contract/length combinations 146/146.
+// score 138 (was 138): plane-store base, selector/output scheduling and inverse registers remain.
+// Distance-only plane scope 143; second-edge squared result 146; both 147; external basis
+// references 152; first/all bound-first products 138/138; basis plus lengths 154; completed
+// Y/X projected values plus lengths 158.
 // @retail 0x17d9a0
 void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_quad_17d9a0 *quad)
 {
