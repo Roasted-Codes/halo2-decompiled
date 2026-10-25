@@ -175,6 +175,9 @@ real function_1e3920(long actor_index);
 // copied initial reference 139 (dropped); target reference 162; request permission 165;
 // short-circuit/mode-first 166; both reference copies 143 (dropped);
 // declared-field equality 196; actual pooled-field reference 164.
+// score 164 (was 164): delayed ESI slot, scalar homes and cold reference arms remain.
+// Common scratch release 162f; later selection flag / acceptance / request predicates 164f;
+// release combinations and release with late output index 162f (two-point gain dropped).
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

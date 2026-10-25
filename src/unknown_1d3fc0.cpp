@@ -42,6 +42,9 @@ PRIVATE __forceinline void function_1d3fc1(vector3f *arg_0)
 // Paired i/j and j/k squares 152/153; first-plane subtotal 149;
 // sequential squared length 152; paired squares with subtotal 152/149;
 // separate reciprocal division 149; paired squares with scaled components 153.
+// score 149 (was 149): magnitude order, reciprocal/SSE carriers and projection schedule remain.
+// Normalized i/j/k products 149/149/149f; ij/ik/jk products 149/149/149f;
+// all products and k/j/i product evaluation 149/149f; j-square retained.
 // @retail 0x1d3fc0
 void __stdcall function_1d3fc0(long arg_0, s_havok_component *arg_1)
 {

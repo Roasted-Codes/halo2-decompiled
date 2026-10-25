@@ -118,6 +118,9 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // In-place direction scale 124f; contribution-first adds 124f; both 124f;
 // separation/combined length results 124/124f; both 124f; drift distance 124f;
 // normalization results with in-place scale 124f; preview 124f, all 103 code differences.
+// score 119 (was 119): alignment/facing products, clear join and contribution schedule remain.
+// Genuine alignment i/j/k products 125/129/125f; ij/ik/jk products 129/125/125f;
+// all products and products with complete result 125/125f; preview 125f.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {

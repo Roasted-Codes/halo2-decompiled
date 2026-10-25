@@ -102,6 +102,9 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // Consuming qualified/plain count 179/212; separate remaining count 174;
 // candidate-distance bound with qualified/plain count 178/243;
 // consuming count with native preferred case 182/211; post-decrement remaining count 174.
+// score 144 (was 144): receiver/count reloads and ranking dispatch remain.
+// Getter pool reference / typed entry input / handle-first / both contracts 144f;
+// first/second conditional handle selection 193/193f; both with pool reference 207f.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {

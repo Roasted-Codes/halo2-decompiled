@@ -173,6 +173,9 @@ PRIVATE void render_clamp_156b60(real *value)
 // Attributes before alpha 154; transform before alpha 154; both 154; attributes before clamps 45;
 // transform before clamps 140; scalar/library/full fallback 160/155/167; named width offset 38;
 // offset and extent 38; split buffers 155, before clamps 45.
+// score 38 (was 38): horizontal-offset and clamp/attribute scheduling remain.
+// Offset declared with width 38f; offset after alpha/red/green 155/155/155f;
+// offset product operands 38f; value clamp early/result 159/131f; in-place clamp result 38f.
 // @retail 0x157020
 void __stdcall function_157020(byte *definition, point3f const *position, vector3f const *forward,
 	real value, long row, long column, long element, long entry)
