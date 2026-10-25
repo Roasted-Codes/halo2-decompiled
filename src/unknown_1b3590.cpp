@@ -401,6 +401,9 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 63 (was 63): seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
+// Shared rounding 66; direct scaled rounding 74; separate scaled timer 63; result-first rounding 66;
+// range/fraction/both force-inline declarations 63/63/63; both with shared rounding 66.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
