@@ -1410,6 +1410,9 @@ static __forceinline bool function_57d63(long arg_0, long arg_1);
 // word outer/target induction 118/106; word active 97; mask names 94; skip cleared inactive entries 110.
 // caller depth 0/1/2 241/94/94; wide bit with depth 1/2 118/118;
 // complete mask/policy/both assignments 108/104/110.
+// Rejected set 100; rejected set with wide bit 168; indexed rejection bit 99;
+// allowed result 107; signed allowed result 107; allowed result with wide bit 130;
+// candidate snapshot 97; candidate snapshot with wide bit 119. Frame/spill and flag-query expansion remain.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {
@@ -2453,6 +2456,9 @@ void function_56790(long *capacity, dword *remaining, dword allowed, word *selec
 // score 4 (was 4): retail calls function_56380 with the output pointer in eax and
 // the channels, player and capacity on the stack; our callee takes them in another
 // order, so the call and its two pushes differ.
+// Guarded return 20; fully assigned result arms 23; conditional count 23;
+// enabled-query lifetime 21; scoped count 23; packet lifetime 4; available-byte
+// lifetime 4; immutable input bindings 4. The original call tuple remains.
 // Separate packet-call / gate / both declarations 4; assigned result with noinline 23;
 // numeric query result with forceinline / both 19; guarded single exit with either boundary 4.
 // @retail 0x53b00
@@ -2947,7 +2953,9 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
  return count;
 }
 
-// score 139 (was 139): frame and extent agree; channel/cursor/count registers and route homes differ.
+// score 139 (was 139): channel/cursor/count registers and route homes differ;
+// frame pointer 188; short stride 163; short index 139; recipient-bit reuse 161; route name 139.
+// frame and extent agree; channel/cursor/count registers and route homes differ.
 // Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
 // entry route lifetime 139; ordinary delivery arm first 162.
 // @retail 0x55e10

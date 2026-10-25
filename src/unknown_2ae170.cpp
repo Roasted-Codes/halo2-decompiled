@@ -575,6 +575,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // score 552 (was 578): frame 0xd8 versus 0x94; repeated constant conversions still coalesce.
 // Native settings copy 574; last-two scopes 616; direct routing table 552; pair table 553;
 // constant append helper 552; variable append helper 552; last workspace scope 552.
+// j91: frame 0xd8 versus 0x94 and repeated constant conversions remain; shared routing storage reaches 0xa4 but loses.
+// front level table 613; back level table 566; both level tables 635; shared level table 635; shared routing
+// workspace 647
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {

@@ -79,7 +79,7 @@ void function_2234e0(void)
 {
 	long local_1 = NONE;
 	long local_2;
-	volatile long local_3;
+	long local_3;
 	if (g_4e6470 > 0)
 		--g_4e6470;
 	if (g_4e64a0 > 0)

@@ -1000,7 +1000,10 @@ PRIVATE __forceinline bool territory_holder_matches_player(long holder, long pla
     return players[holder & 0xffff].team == players[player_index & 0xffff].team;
 }
 
-// score 88 (was 88): holder and marker registers plus append carriers remain; append output last 88; point last 88; full-list guard 88; short ordinal 153; word ordinal 151; player team first 88; team failure exit 92; short ordinal with output last 153.
+// score 88 (was 88): holder/marker carriers and predicate join differ;
+// inline depths one/two, state per use, early team-array lifetime, invalid
+// marker continue, point memcpy and nested holder test 88; marker-first 90.
+// holder and marker registers plus append carriers remain; append output last 88; point last 88; full-list guard 88; short ordinal 153; word ordinal 151; player team first 88; team failure exit 92; short ordinal with output last 153.
 // @retail 0x2bf740
 void c_game_engine_45c948::v32(long player_index, long list_pointer)
 {

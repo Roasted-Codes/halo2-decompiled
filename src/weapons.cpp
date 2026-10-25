@@ -1607,6 +1607,9 @@ static inline bool weapon_state_replaceable(long current, long state)
 // wide predicate and case flags 128.
 // nested retry 69; animation failure-first 76; nested inventory gates 69; direct predicate returns 69;
 // role-based selection names 69; short animation offset 129; complete mask arms 117; shared case pairs 129.
+// success-byte scheduling and final call argument registers still differ.
+// Byte outcome 67; short/word outcomes 87; actual object references and nested scope 69;
+// signed-word mask 83; owner-first test 68.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {
@@ -2197,6 +2200,9 @@ static __forceinline long real_to_long(real value);
 // complete byte clamp 162; output chain 89; threshold mask 133; release and conversion scope 89.
 // shared object/header getters 89/89; delta after age store 152; equality-first 106; rising-first 119;
 // shared held clear 118; redundant release test removed 110; immutable receivers 89.
+// timing stack homes, trigger spill and released-output registers differ.
+// Trigger/settings references, rate snapshot and threshold input 89; double duration 134;
+// bounded age increment 167; byte conditional clamp 162.
 // @retail 0x1027b0
 void function_1027b0(long weapon_index, long trigger_index, bool *pressed, bool *held, bool *released)
 {
@@ -2906,6 +2912,8 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // late magazine tag 127; late const tag 127; saved query selector 107; failure-first 52;
 // exemption-first 76; distinct stop ordinals 52; immutable selector/barrel 52/52;
 // shared object/header getters 52/52.
+// Ordinary inline 468; automatic inline 468; barrel reference 52; magazine-tag reference 52;
+// magazine reference 52; combined references 52; empty-first tests 88; query result first 140.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
