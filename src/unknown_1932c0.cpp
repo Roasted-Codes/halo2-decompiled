@@ -902,6 +902,9 @@ static inline short pending_request_last_result(s_pending_message_header const *
 }
 
 // score 2 (was 2): initial counter zero/save order remains; inline counter 2; forceinline counter 2; counter name 2; timing names 2; payload names 2; output-size lifetime 50; result from tests 25; sample before result 2.
+// score 2 (was 2): initial counter zero/save order remains; shared allocation loop 2; split allocation 2;
+// direct allocation 2; immutable allocation pointer 2; allocation in condition 2;
+// function-scope allocation 2; immutable payload size 2; split payload pointer 2.
 // @retail 0x194260
 bool __stdcall game_variants_received(s_pending_message_header *header)
 {
