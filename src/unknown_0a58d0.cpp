@@ -858,6 +858,9 @@ PRIVATE inline bool z_state_real_valid(real value)
 // field bindings 146/146/146; decode-array element binding 146; combined scalar fields 146.
 // score 146 (was 146): direct result-byte SETNE and scalar-zero reloads remain.
 // Wide sticky validity 352; byte sticky validity 146; decoder exits/lower-first 146/295; finite classifier 243; exponent extraction 146; decoded region count/state 146/146.
+// score 146 (was 146): direct byte SETNE and scalar-zero reloads remain.
+// Native code/word code/byte code 440/301/291; word endpoint limit 146;
+// word code with limit 301; native weights 146; endpoint products 227; unsigned code with weights 440.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {

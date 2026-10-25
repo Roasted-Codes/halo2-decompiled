@@ -2089,6 +2089,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // score 184 (was 184): getter guard/exhaustive result 200; complete output receiver 184;
 // exhaustive child metadata/count/all results 234/299/311; ordered clamp results
 // and bound returns 191. Object/offset homes and low-mask allocation still differ.
+// score 184 (was 184): header/object homes and low-mask allocation remain.
+// Clamp source/result names and source-first declarations 184/184/184;
+// tail fractions, child fraction, mask names and both scratch-home combinations 184 each.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

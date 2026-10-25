@@ -1386,6 +1386,9 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // score 116 (was 116): extra query home, selected-count homes and scalar tail fills remain.
 // Completed first/second/both query totals 145/138/159; rejected first/second/both scans 116;
 // open-row default 115 (dropped); completed totals with open-row default 158.
+// score 116 (was 116): query/count homes and scalar tail fills still differ.
+// Branch-shared session count 138; with library/range tails 201/160;
+// selection initialization 162; completed total 134; word scans 160; comparator/open-row forms 139/137.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {
