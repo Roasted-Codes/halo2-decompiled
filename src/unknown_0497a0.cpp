@@ -367,6 +367,7 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // 620; color factor result 626; shared cross products 615; shared direction difference 620; native vector
 // role homes 620; native point initialization 623; loop vertex store order 620; shared geometry helpers 615;
 // shared cross position setters 617; shared cross zero color 622.
+// score 615 (was 615): round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

@@ -804,6 +804,7 @@ done:
 // Conditional next publication 218; definition mode first 211; current-field result 223;
 // size preference 285; zero inline depth 232. Original kept.
 // score 176 (was 176): round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
+// score 176 (was 176): round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -1734,6 +1735,7 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // score 305 (was 305): Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // Pooled reference 323; entry-block reuse 323; delta workspace 305; shared scan cursor 305; valid
 // actor continue 305.
+// score 264 (was 305): round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -1768,7 +1770,7 @@ void function_204450(long definition_index, long squad_index)
         real nearest = 3.402823466e+38F;
         squad[0x30] = 0;
         function_b9dd0(*(long *)(squad + 0x80), &point);
-        byte *entries = definition + (squad[0x60] ? 0x5c : 0x54);
+        byte *entries = squad[0x60] ? definition + 0x5c : definition + 0x54;
         if (*(long *)entries > 0)
         {
             for (short i = 0; i < *(long *)entries && (signed char)squad[0x30] < 10; i++)
@@ -2817,6 +2819,7 @@ void function_2011f0(long arg_0);
 // Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
 // repeated signed category 387; function-scope workspaces 387; case two first 387.
 // score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
+// score 383 (was 383): round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
