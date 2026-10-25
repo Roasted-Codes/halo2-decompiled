@@ -795,6 +795,10 @@ void c_sound_effects::set_i3dl2(s_sound_i3dl2_parameters *parameters, long unuse
 // score 55 (was 55): our body is 12 bytes shorter: retail adds the gain with
 // SSE (the gain's bits copied through ebx into a stack temp) while our
 // union pun makes MSVC use x87; five more rewrites of the pun scored 55 or
+// worse. Settings gain copied into a local before each send (one-use copies,
+// reverted in review) 44: retail's SSE sums and length; with operands swapped
+// 44; the helper's level by reference 55; the sum written into the union 55;
+// the bit copy before the switch 44.
 // worse.
 // score 55 (was 55): retail inlines the existing out-of-line mix bin append (its
 // count++ is reused by the second send), ours the local copy. The existing
@@ -839,6 +843,10 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 // frame pointer 166; word counters 157; common counter 166; exclusive end bins 165;
 // pair/quad capacity predicates 156.
 // score 137 (was 156): Frame eight agrees; runtime zero attenuation and mode dispatch remain. Shared modes 168; adjacent endpoints 193; all byte endpoints 142; byte capacity 156; unsigned counters 156; combined shared modes 161; rear bytes 170; front bytes 137 (plain, exact length).
+// score 137 (was 137): entry receivers, runtime zero attenuation and mode dispatch remain.
+// All/front/rear byte bin counters; native source/destination/both records;
+// mode field binding and promoted mode on the retained front-byte endpoints
+// Fast scores 152/149/147/137/137/137/137/137; original body retained.
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -912,6 +920,10 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // score 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
 // Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
 // samples 208/212/206/202; all samples with early send sum 215.
+// score 200 (was 200): frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// sum after rear pair 212; accumulated sum 212; read-only input contract 200; rear reads reversed
+// 200; rear before levels 201; signed-byte selector 200; unsigned-word selector 197 (three-point
+// gain dropped).
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

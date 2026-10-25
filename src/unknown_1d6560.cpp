@@ -227,6 +227,9 @@ struct s_physics_component_walk : s_havok_component
 // score 275 (was 275): extra frame word and current/entry/group homes remain.
 // Combined status mask 307; direct body fields 320; section callback guards 275;
 // entry eligibility guards 275; next-count snapshot 301. Original body restored.
+// score 275 (was 275): frame 0x1c versus 0x18 and status/group homes remain.
+// Byte availability/application/pair 275/275/275; body/entry references 275/275;
+// ordinary body while scan 275 (plain).
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

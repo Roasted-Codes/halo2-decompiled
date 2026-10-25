@@ -299,7 +299,11 @@ extern real g_47f05c;
 // Unraised origin copy 265; height view with body reloads 275; selection/result names 202;
 // native point copy, enclosing point, entry displacement and read-only records 202 each;
 // size policy 357; existing magnitude boundary 204 (sum-order form not matched).
-// score 202 (was 202): frame 0xc8 versus 0xd4, folded displacement and shape/entry homes remain.
+// score 202 (was 202): frame 0xc8 versus 0xd4; displacement folding and shape/entry homes remain;
+// separate displacement scalars, reversed scalar order, coordinate names, partial squared sum,
+// squared-distance result and outer scalar scope 202 each; actual point receiver with scalars 311;
+// separate squared components 204.
+// frame 0xc8 versus 0xd4, folded displacement and shape/entry homes remain.
 // Existing ground record 204; world matrix declared at entry 202; inverse/relative in place 244/241;
 // normal value with shape reads 233; selected-entry result 272; best comparison first 201;
 // selected index assigned before alignment 202. One-count comparison gain rejected.
@@ -410,6 +414,10 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // score 198 (was 203): frame 0x14 agrees; request/count/table homes and cross stores remain.
 // Cases 3/1/2 226; second normal first 246; average ikj/jik/jki/kij/kji
 // 201/200/198/203/203; native masked handle 203. Average j/k/i kept after full check.
+// frame agrees; request/count/table registers and cross-result stores remain;
+// selected normal from existing pair 233; direct pair cross inputs 209; first normal reference 203;
+// second normal reference 203; both normal references 203; output record reference 226; lower
+// height bound first 211; complete average initializer 203.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -511,7 +519,11 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
-// score 182 (was 182): Frame 0x28 and state/output registers agree; six direct-dot displacement
+// score 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
+// scaled cross 264; scaled limited input 241; scaled axis projection 267;
+// full component rotation 239; accumulated alignment 245; normalization decision 183;
+// scaled-cross scalars 186; projected-plus-cosine sums 186.
+// Frame 0x28 and state/output registers agree; six direct-dot displacement
 // bytes and rotation scheduling remain. Ground memcpy 182; limited memcpy 182; separate real
 // components 182; cosine complement 180 (two-point gain dropped); separate cross workspaces 182;
 // cosine/complement before sine 181; explicit alignment with complement 182 (fast).

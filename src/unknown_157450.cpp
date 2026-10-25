@@ -3838,7 +3838,10 @@ static __forceinline long nonnegative_15ce70(long value)
 // score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // score 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
-// score 480 (was 480): Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
+// score 480 (was 480): frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
+// scope 480; decoding before lookup 481; different-player arm first 490; override selection 480; shared
+// message formulas 575.
+// Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4072,7 +4075,10 @@ struct s_score_zone_view
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // score 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
-// score 472 (was 477): Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
+// score 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
+// differ. Individual palette lifetime 472; exact format mode set 480; common zone maximum scan 886; byte
+// weapon slot 476; early weapon lifetime 689.
+// Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -5104,6 +5110,9 @@ void __stdcall function_d6bc0(long object_index);
 // score 167 (was 175): frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
 // type result before engine 167f/plain; engine consumer scope 167f;
 // timer reference / read-only object / scheduling handle / entry-test result / distance results / combined 175/175/175/175/175/175f.
+// Round 173 on the retained query-result order: external entry reference 221; mode if dispatch
+// 164 (three-point gain rejected); conditional reset counter 195; long modifier 184; byte kind 168.
+// Frame 0x14 versus 0x18 and timer/base homes remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
