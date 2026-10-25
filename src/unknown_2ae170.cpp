@@ -726,6 +726,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // score 264 (was 270): frame 0x1c versus 0x18 and input-level/mode homes remain;
 // word routing predicate 264; named routing reads 270; native-word home names 270;
 // front field reference 267 and both field references 267 (three-point gains rejected).
+// score 264 (was 264): frame 0x1c/0x18 and input-level/mode homes remain.
+// Primary routing 272; signed word route 264; direct left 275; external output
+// and live settings records 264/264; primary-output pair 272; full left 275; settings-direct pair 271.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

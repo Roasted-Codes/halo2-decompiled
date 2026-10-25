@@ -2662,6 +2662,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Part-table cursor 340 rejected for short-counter wraparound.
 // Round 173: part-scope radius 166; radius product 166; product with lower bound 352;
 // full-width location index 352; positive mode scope 166. Scalar homes and flag/random lifetimes remain.
+// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
+// Two-use lower 163 (three-point gain dropped); span/lower plus span 167/349;
+// entry cursor/event record/read-only tag 166/166/166; cursor plus lower 163; event plus span 167.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
