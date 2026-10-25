@@ -83,6 +83,9 @@ long function_14de70(long arg_1);
 // child test order 141f; wider selection scope 131f; cached zone count 145f (control 131f).
 // Native output sentinel/flag/scalar/pairs/full/scoped views 131f (control 131f);
 // the original prefix stores and all protected query interfaces are retained.
+// score 113 (was 113): Mask/player roles and parent/tag scheduling remain. First/second/both adjacent
+// field copies 113/113/113p; paired hands bytes and prefix copies 465p; checked player accessor / first
+// copy / all copies 519/519/518p.
 // @retail 0x13992a
 void function_13992a(byte *arg_1, long arg_2)
 {
