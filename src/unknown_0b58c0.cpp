@@ -339,7 +339,8 @@ void __stdcall function_b5a70(long player_index, long type, long count, long obj
 // Tried: a for loop (101); a for loop without player_slot (101, retail's registers apart
 // from setne); both locals dropped (122; 119 with a for loop: LTCG then passes the count
 // in ebx and the player on the stack); only has_player dropped (90, same flip); a local
-// copy of the player (119).
+// copy of the player (119); both dropped with the count read through its address as in
+// 0xb5a70 (113: the player still goes on the stack).
 // @retail 0xb5ba0
 void __stdcall function_b5ba0(long player_index, long type, long count, long object_indices,
     long size, void const *data, long timeout)

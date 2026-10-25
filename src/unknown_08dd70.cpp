@@ -100,7 +100,7 @@ struct s_handler_slot
 	void *unknown14;
 };
 
-// score 67: everything before the handler block matches. In the handler and gateway
+// score 67 (was 67): everything before the handler block matches. In the handler and gateway
 // blocks retail keeps the tested-and-cleared fields as pointers (handler copied to edx,
 // eax += 0xc for &handler->gateway; gateway copied to esi, lea edx [eax+4] for
 // &gateway->initialized, eax += 8 for &gateway->link); ours stores through [eax+N].
