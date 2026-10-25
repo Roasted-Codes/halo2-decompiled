@@ -3126,6 +3126,7 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 	{
 		*(long *)local_0->unknown14 = 0;
 		local_2->field_8 = *((local_0->unknown0a & 1) ? &g_440c48 : &g_440c4c);
+		/* retail selects the gain's address, calling only when the bit is set */
 		long local_19;
 		local_2->field_4 = *((local_0->unknown0a & 2) ? (local_19 = function_2197f0(local_2->field_18), &local_19) : &g_440c4c);
 	}
