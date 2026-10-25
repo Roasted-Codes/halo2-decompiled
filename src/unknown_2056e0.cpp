@@ -114,6 +114,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // double cap parameter 249; read-only motion input 184; read-only step view 184; read-only
 // component view 184; native contact receiver 184; complete contact mask result 304; separate
 // braking result 274; linear brake used after its cap 223.
+// Output reference 184; motion reference 184; both references 184; limiter reference 184; both helper
+// contracts 184; native column values 382; column library copies 220; copies with output reference 220.
+// Frame overlap, motion/reciprocal and brake allocation remain.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

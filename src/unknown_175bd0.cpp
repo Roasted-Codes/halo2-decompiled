@@ -2183,6 +2183,9 @@ event_done:
 
 #pragma inline_depth()
 
+// score 109 (was 109): Object-index reload and visibility joins still differ. Update word 109; response
+// word 119; both words 119; native missing location 204; root location value 194; root velocity value 198;
+// both root values 218; origin value 109.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
