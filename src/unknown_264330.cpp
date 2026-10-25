@@ -411,6 +411,7 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 void function_262ba0(long actor_index)
 {
 	byte *actor = (byte *)actor_get(actor_index);
+	/* volatile keeps maximum in its stack word, as retail does: 420, against 426 as a plain word (see the note) */
 	word volatile maximum = 1;
 	bool sampled_one = false;
 	if (actor[0x44]) function_263210(actor_index);
