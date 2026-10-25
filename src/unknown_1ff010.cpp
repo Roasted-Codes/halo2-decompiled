@@ -497,7 +497,11 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // score 142 (was 142): with the native horizontal copy, direct final products 154;
 // shared direct scale 154; depth one 142; size policy 366; shared output-vector
 // scale 142; native turn side 145. Planar copy/rotation scheduling still differs.
-// score 142 (was 142): turn completion copy 142; output memcpy 142;
+// score 142 (was 142): horizontal/rotation and final output scheduling still differ.
+// Length in predicate 142; adjustment test result 142; direct side expression 142;
+// turn-test result 139; original direction object 185; shared output in place 206;
+// native output in place 206; facing object reference 153.
+// turn completion copy 142; output memcpy 142;
 // named turn length 139; result declared first 142; native motion view 142;
 // read-only actor 142; both completion copies 142; word side 146;
 // named length with word side 143, direct output 146, shared scale 146.

@@ -395,6 +395,8 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
 // score 42 (was 42): model member and external model/unit/definition references 42;
 // shared entry count 42; entry graph query 42; all graph queries 42; typed model plus graph queries 42.
+// Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
+// value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
@@ -1236,6 +1238,8 @@ bool function_c70b0(long unit_index);
 // score 164 (was 194): retail length recovered; object/header/state registers and count joins differ.
 // Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
 // byte result 164; unsigned identifiers 218.
+// score 164 (was 164): entry receiver/count joins remain; byte interruptible 164;
+// signed-byte depletion 164; state-first receiver 164; direct interruptibility 348; query result first 332.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1364,6 +1368,7 @@ bool __stdcall function_110ab0(long unit_index)
 // Byte-context word/native interruptible 456/453; named channel words 453;
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
+// score 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1594,6 +1599,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 833 (was 833): unit/state homes and first angle expansion remain. Primary direction
 // snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
 // centered predicate after channel preparation 871.
+// score 875 (was 879): frame 0xc4 versus 0xd4 and angle expansion remain; partial j/k inputs 919;
+// partial i input 899; early screen pointers 934; named state predicate 873; unsigned counter 879;
+// direct eligibility accumulation 875 kept; state-guard accumulation 892.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -1680,8 +1688,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 						if (screen_a) bounds_112070(screen_a, (real *)control->unknown04);
 						else if (screen_b) bounds_112070(screen_b, (real *)control->unknown04);
 						active = function_111590(unit_index, 4);
-						if ((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state))
-							active = false;
+						active &= !((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state));
 						bool centered = fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f;
 						if (control->slots[4].unknown1)
 						{
@@ -1833,6 +1840,11 @@ struct s_request_114b60
 
 __declspec(noinline) bool unit_submit_entry_request(short fallback_index, short entry_index, long unit_index, long priority, void const *extra);
 
+// score 16 (was 16): only the callee-saved roles differ (ours index ebx,
+// NONE ebp, request priority esi; retail esi, ebx, ebp). Tried: the default
+// extra fill as a shared inline helper 16; other parameter orders 16; the
+// 0x114520 result in a named bool returned once 95; the fallback test joined
+// to the 0x114520 test 22; a success flag set after the fallback block 96.
 // @retail 0x114b60
 bool unit_submit_entry_request(short fallback_index, short entry_index, long unit_index, long priority, void const *extra)
 {
@@ -2196,6 +2208,7 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // score 679 (was 679): ordinary-helper Boolean transition 712; native helper result 706;
 // explicit helper result 679; size policy 1026; byte validity 679. Request/control
 // homes and the second stack argument remain unresolved.
+// score 679 (was 679): Request/control homes and second stack argument remain; native node selector 704, node ordinal 679, separate transformed point 686, completion cases first 679, early data construction 679.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

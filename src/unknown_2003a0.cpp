@@ -1090,6 +1090,8 @@ struct s_squad_tree_definition
 // Const current group 43; unsigned squad parent 43; unsigned group parent 63;
 // unsigned sibling 43; full-width final index 63; parent-field view 43;
 // parent view in both passes 82; append noinline declaration 43.
+// score 43 (was 43): const group/squad/both pool descriptors 43; definition reference 43;
+// global optimization off 258; inline depth one/two 43/43; size optimization 146.
 // Current/parent/both record references 43; short child 60; readonly definition 43;
 // parent reference with short child 60; force parent accessor 43; force with current reference 43.
 // @retail 0x2009d0

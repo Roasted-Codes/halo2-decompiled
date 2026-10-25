@@ -715,6 +715,16 @@ struct s_85650
 // score 100 (was 100): frame 0x24 versus 0x28 and owner/child/callback homes remain.
 // Owner mask value 100; peers address 100; distribution/channel references 100/100;
 // entry type value 100; callback address at publication 100; mask plus peers 100; mask plus fresh child 124.
+// Frame 0x24 versus 0x28 and owner/child/callback homes still differ.
+// Child slot before total/count 106/142; request/tail/both sender clears 139/139/143;
+// world-state value 100; short child ordinal 125; child slot plus clears 143.
+// frame 24 versus 28 and child/distribution/callback homes remain; first aggregate
+// storage 145; storage plus fresh child 115; published-child query 100; immutable child count 100;
+// explicit total sum 100; combined contiguous clear 148; count return 100; storage plus published-child
+// query 145.
+// frame and owner/child/callback homes still differ.
+// Child count-first 128; completed total 128; aggregate/child references 100/100;
+// storage/sender references 100/100; connection/owner references 100/100.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {

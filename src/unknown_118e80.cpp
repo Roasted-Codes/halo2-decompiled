@@ -217,7 +217,12 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 	}
 }
 
-// score 235 (was 235): Frame and basis/position homes still differ.
+// score 235 (was 235): frame 0x78 versus 0x6c; early ESI save and position home differ.
+// Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
+// shared-left output with one exit 233 (two-point gain dropped).
+// Branch-scoped velocity 248; scalar point setter 255; parent-transform first 237;
+// entry flag mask 278; active-angle first 235.
+// Frame and basis/position homes still differ.
 // normalized forward shared 265; basis scratch roles reused 269; velocity/basis scratch shared 252;
 // shared forward and scoped velocity 257; early position snapshot 263.
 // @retail 0x1197b0
@@ -687,7 +692,10 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
 
-// score 99 (was 99): Word-flag/handle registers and call Boolean roles still differ.
+// score 95 (was 99): frame 0x6c agrees; flag/handle carriers and final state stores differ.
+// Target size 225; global optimization off 639; saturation before increment 139;
+// shared output-bit branch 95; direct final state result 101.
+// Word-flag/handle registers and call Boolean roles still differ.
 // absent-component exit 99; signed flags with early Boolean 99; long state with early Boolean 135;
 // counter reset before increment 103; threshold default and override 99.
 // @retail 0x118b80
@@ -745,13 +753,15 @@ void __stdcall function_118b80(long arg_0)
                 *((byte *)local_1 + 0x131) = (byte)local_15;
             }
             if (local_11.field_4 & 1)
+            {
                 *((byte *)local_1 + 0x12d) |= 1;
-            else
-                *((byte *)local_1 + 0x12d) &= ~1;
-            if (local_11.field_4 & 1)
                 *((byte *)local_1 + 0x12c) |= 0x80;
+            }
             else
+            {
+                *((byte *)local_1 + 0x12d) &= ~1;
                 *((byte *)local_1 + 0x12c) &= ~0x80;
+            }
             real threshold_scale = (*(dword *)local_12 & 8) ? 3.0f : 1.0f;
             if (TEST_FIELD_BIT(local_1->flags.flag5))
             {
@@ -810,7 +820,12 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 
-// score 278 (was 278): Sweep/impact homes and store scheduling still differ.
+// score 159 (was 278): frame 0x124 agrees; query/sweep timing and owner-call setup differ.
+// Complete request type 278; scale at each use 278; aggregate sweep 278;
+// point/normal/location copies first 278; target size optimization 536.
+// Query before sweep 159; distinct later-up output 288; double best fraction 255;
+// named radius field 278; const sweep with distinct later-up output 288.
+// Sweep/impact homes and store scheduling still differ.
 // targeted sweep name 278; sweep/impact names exchanged 278; completed normal reused 285; candidate
 // countdown 284; header flag at use 278.
 // @retail 0x119c10
@@ -826,13 +841,13 @@ long function_119c10(long arg_0)
     {
         real local_4 = *(real *)((byte *)local_0 + 0x3c) + 0.1f;
         real local_5 = local_4 / local_3;
+        real local_7 = 3.402823466e+38f;
+        long local_8[16];
+        long local_9 = function_bb050(1, 3, (byte *)local_0 + 0x28, &local_0->center, local_4, local_8, 16);
         vector3f local_6;
         local_6.i = local_5 * local_2.i;
         local_6.j = local_2.j * local_5;
         local_6.k = local_2.k * local_5;
-        real local_7 = 3.402823466e+38f;
-        long local_8[16];
-        long local_9 = function_bb050(1, 3, (byte *)local_0 + 0x28, &local_0->center, local_4, local_8, 16);
         short local_10;
         short local_11;
         short local_12;
@@ -967,7 +982,10 @@ void function_1e6120(s_biped_physics_output *arg_0, void *arg_1, real arg_2, boo
     bool arg_5, real arg_6);
 void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped_physics_output *arg_2);
 
-// score 98 (was 98): Frame 0x1f0 agrees; call setup, flag merge, component loads and final result
+// score 98 (was 98): MOV/LEA call setup, movement flag merge, force argument and activity register still differ;
+// stationary/byte/word movement result 107/98/111; complete flag value 98;
+// initial-state/parent/update/countdown activity values 265/119/98/101. Original body restored.
+// Frame 0x1f0 agrees; call setup, flag merge, component loads and final result
 // homes differ. Branch flag store 131; long force 130; native velocity copy 131; long activity
 // 164; reversed result OR 131; parent result earlier 123; update/countdown result earlier 131.
 // With original flag store, early parent result 109; long force 101; both 110.

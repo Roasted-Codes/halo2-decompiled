@@ -728,6 +728,8 @@ union s_60403
 // Current/previous registers and map/discriminator homes remain;
 // mapping stores reversed 178; identity grid transposed 405; map clears reversed 178;
 // transposed grid and reversed stores 405; equal discriminator arm first 176.
+// Mapping equality reversed 178; member equality reversed 176; player equalities reversed 184;
+// previous count across mapping/removal 248; shared emitted-player bit 176. Frame 0x94 agrees.
 // @retail 0x60400
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update)
 {

@@ -1913,7 +1913,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
-// score 163 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
+// score 160 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
 // @retail 0x178c80
@@ -2188,6 +2188,9 @@ event_done:
 
 #pragma inline_depth()
 
+// score 109 (was 109): frame agrees; object-index caching and visibility block order differ.
+// Const tag/root 109/109; external datum reference 109; visibility result tests 189;
+// inline depth one/two 109/109; global optimization off 550; frame pointer 200.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2363,6 +2366,9 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
+// score 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
+// Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
+// early missing-object return 181; separate impulse buffer 251.
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2486,6 +2492,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
+// score 313 (was 345): frame 0x104 versus 0x100; point/up argument eligibility and record copies differ.
+// Placement name 345; request name 345; retained decal seed pointer 313;
+// direct case returns 345; failed-placement guard 345.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2520,15 +2529,15 @@ void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f 
 	}
 	case 'deca':
 	{
-		s_random_globals *random = g_4e7408;
+		dword *seed = &g_4e7408->seed;
 
-		if (TEST_FIELD_BIT(part->flag4) || function_172750(1, point, 20.0f) || function_259a0(&random->seed) < 0.25f)
+		if (TEST_FIELD_BIT(part->flag4) || function_172750(1, point, 20.0f) || function_259a0(seed) < 0.25f)
 		{
 			vector3f direction;
 			vector3f velocity;
 
-			function_177d10(effect, &random->seed, forward, &direction, &velocity, part->velocity_lower, part->velocity_upper, part->velocity_cone_angle, part->a_scales, part->b_scales);
-			real radius = function_259d0(&random->seed, __FILE__, __LINE__, part->radius_lower, part->radius_upper);
+			function_177d10(effect, seed, forward, &direction, &velocity, part->velocity_lower, part->velocity_upper, part->velocity_cone_angle, part->a_scales, part->b_scales);
+			real radius = function_259d0(seed, __FILE__, __LINE__, part->radius_lower, part->radius_upper);
 			function_17e670(g_510c78, point, part->tag_index, &velocity, radius, 0, NONE, 0);
 		}
 		break;
@@ -2739,6 +2748,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 	return next_index;
 }
 
+// score 176 (was 189): frame 0x50 agrees; early false-result and player-pool registers differ.
+// Persistent effect pool 194; persistent player pool 189; outer for 189;
+// squared distance compared first 176; player slot/unit names 189.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
@@ -2792,7 +2804,7 @@ bool function_1778d0(void)
 
 						real radius = unit->field_xc9d3f8 + definition->unknown08;
 
-						if (radius * radius >= length_sq3f(&delta))
+						if (length_sq3f(&delta) <= radius * radius)
 							return true;
 					}
 				}

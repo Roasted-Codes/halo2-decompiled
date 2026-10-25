@@ -2375,6 +2375,7 @@ dword __cdecl function_131fc0(real alpha);
 // score 424 (was 424): frame 0x24 versus 0x28, early saves and float-call setup differ;
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
+// score 424 (was 424): Frame 0x24 versus 0x28 and dimension homes remain. Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2530,6 +2531,7 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // score 570 (was 575): frame 0x214 versus 0x200; coefficient homes and sample paths differ.
 // Long result 570 kept; outer rotated buffers 575; accumulated search 573; word sample count 576;
 // depth one 575; long result/search 575; short result 570; byte result 596.
+// score 570 (was 570): Frame 0x214 versus 0x200; order, coefficient and sample homes remain. Indexed matrix copies 758; structure reload 588; long eligibility 572; layout-order sample 589; long cache-hit result 570 (fast).
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2943,6 +2945,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // normalization after dispatch 984; four-use alpha snapshot 971.
 // Byte capabilities 1086; rescale-state name 978; case three first 978;
 // short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
+// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
@@ -3226,6 +3229,13 @@ void function_27aa0();
 // New trials at 5: zero-initialized buffer 160; cleared buffer 160;
 // cleared trailing triple 105; first/third/second row component loops
 // 242/242/242; coefficient loop 242; first reciprocal divided in place 104.
+// score 5 (was 5): Opening projection loads x before z. Last projection term
+// after reciprocal one/two/three 38/151/149; y and z after first reciprocal
+// 51; split projection 59; fourth reciprocal at use 140; third reciprocal at
+// use 136; fade clamped in its output slot 63.
+// opening projection loads remain x/y/z rather than z/y/x.
+// Six-by-four buffer 5; branched reciprocal 72; full buffer initializer 155;
+// direction/scalar/tail/third-row ordering 100/148/143/75; shared span carrier 144.
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {
@@ -3556,7 +3566,9 @@ void function_2fd90(s_2f800_view const *view, box2f const *clip, byte *out);
 
 // score 34 (was 34): the two globals are written in the other order, a byte
 // is loaded where retail loads a whole word, and the calls at the end are in
-// a different order with their arguments set up differently
+// a different order with their arguments set up differently. The tail is
+// 0x13680's convention (retail passes the flag in bl; BLOCKED-BY 0x13680);
+// the flag passed from the frame's copy 34.
 // @retail 0x2ba10
 void function_2ba10(s_2f970_view const *view, long cluster, long player,
     byte const *camera, bool enabled, long leaf, bool invalid, vector3f const *sky_color,

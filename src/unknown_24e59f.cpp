@@ -59,6 +59,10 @@ static __forceinline long marker_viewer_unit(void)
 // native vertical half extent 215f; value initialized placement 263f.
 // viewer index read once 123f; explicit viewer selector 123f.
 // viewer result at query 123f; byte result native placement 263f.
+// projection-status store, coordinate registers and helper scheduling remain.
+// Failure predicate 280; sequential word normalization 222; named ellipse predicate 123;
+// outside-first ellipse arms 123; failure/sequential 249; named/sequential 222;
+// outside-first/sequential 222; failure/outside-first/sequential 249.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {

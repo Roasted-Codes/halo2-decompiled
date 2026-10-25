@@ -32,6 +32,14 @@ extern vector3f *g_4687bc;
 // score 170 (was 170): frame 0x8c versus 0x94; raw secondary-result home and common probe tail still differ.
 // Early clear/blocked/triple test results 221/173/179; all early test results 241;
 // shared preliminary predicate 186; floating consistency 415; size policy 402; target pointer 187.
+// frame 0x8c versus 0x94; secondary byte and quarter-point scheduling remain.
+// Shared byte plus product-first X/Z/XZ/XYZ/Y 241 each; native point 241;
+// axis-wise points 250; offset vector 244; original-arm publication 26 (not matched);
+// native category with publication 28; probe/result names 26/26 (not matched).
+// frame 0x8c versus 0x94 and secondary-result tail remain;
+// direct primary miss 207; entry fraction zero 185; early probe bit 181; arithmetic clear bit 288;
+// early bit with shared probe and Boolean/native clear 44/85 (not matched);
+// shared probe with entry fraction/direct primary miss 44/71 (not matched).
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

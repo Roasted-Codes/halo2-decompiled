@@ -1127,8 +1127,11 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
-// score 215 (was 215): retained oldest/false registers and copy-loop entry differ;
+// score 211 (was 215): retained oldest/false registers and copy-loop entry differ;
 // scan getter 302; copy getter 325; both getters 361; unsigned byte progress 215; decode buffer first 213; forced-inline getters 223.
+// readonly decode records 215; native stream value initialization 254; native copy size bits 215; native
+// fragment result selection 213; frame pointer 289; global optimization 297; size preference 571; existing
+// window helper boundary 215; fragment result buffer publication 211.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {
@@ -1141,9 +1144,7 @@ bool __stdcall function_095840(s_network_stream_header *header, long *message_ty
 		for (long sequence = first; sequence <= self->m_fragment_window.newest; sequence++)
 		{
 			long index = sequence_window_index(&self->m_fragment_window, sequence);
-			s_stream_fragment *fragment = 0;
-			if (index != NONE)
-				fragment = &self->m_fragments[index];
+			s_stream_fragment *fragment = index != NONE ? &self->m_fragments[index] : NULL;
 			if (!fragment || !(fragment->flags & 1))
 				break;
 			if (fragment->flags & 2)
@@ -1169,9 +1170,7 @@ bool __stdcall function_095840(s_network_stream_header *header, long *message_ty
 			for (long sequence = first; sequence <= self->m_fragment_window.newest; sequence++)
 			{
 				long index = sequence_window_index(&self->m_fragment_window, sequence);
-				s_stream_fragment *fragment = 0;
-				if (index != NONE)
-					fragment = &self->m_fragments[index];
+				s_stream_fragment *fragment = index != NONE ? &self->m_fragments[index] : NULL;
 				long size;
 				if (fragment->flags & 2)
 				{
@@ -1193,8 +1192,8 @@ bool __stdcall function_095840(s_network_stream_header *header, long *message_ty
 			function_163ba0(&payload.crc, &payload, bytes);
 			if (expected == payload.crc)
 			{
-				stream.size_in_bytes = bytes - 4;
 				stream.data = payload.data;
+				stream.size_in_bytes = bytes - 4;
 				stream.mode = 3;
 				stream_begin_payload(&stream);
 				c_type_659ceb *types = (c_type_659ceb *)self->m_unknown0c;

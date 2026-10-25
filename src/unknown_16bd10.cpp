@@ -775,11 +775,14 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // native pan point 290; separate final state pointer 245 (unchanged reduced preview 245).
 // frame 0x48 agrees; direction preload and length/zero XMM roles, flag RMWs and interpolation differ.
 // Entry flag result 459; depth one 245; native plane construction 248; matrix return 326; point-category conditionals 272.
-// score 246 (was 246): direction preload, length/zero registers and flag stores still differ.
+// score 244 (was 246): direction preload, length/zero registers and flag stores still differ.
 // native point state 401p; native pan state 246p.
 // final result local scope 246p; reuse clamped pan fraction 312p.
 // single default flag store 425p; native time record 246p.
 // point state default flags 425p; pan state clamped fraction 312p.
+// direction preload, length/zero XMM roles, flag stores and timer differ.
+// Forced dot/plane/tick expansion 247 each; each pair and all three 247;
+// all three plus immutable command pointer and scale 253 (fast base 247).
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {
