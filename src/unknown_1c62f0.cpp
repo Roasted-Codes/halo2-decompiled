@@ -648,6 +648,9 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 // score 97 (was 97): adjacent flag load/byte clear and callback reload still differ; direct parameters
 // 139; direct channel/state/user 113, with word events 113; word/short events 97/97; separate bit clears
 // 126; clears spanning clamp 136, with word events 136. Original body and parameter accesses restored.
+// adjacent word-load/byte-clear order and callback reload remain.
+// Native state bit clears/chained clears/publication/both 126/126/97/126;
+// dispatcher word flags 122; with separate/chained/all native state writes 137/137/137.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)

@@ -1222,6 +1222,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // score 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
 // Surface and parent queries inline/noinline 154 each; contact noinline 154;
 // event initializer inline/noinline 154 each; final update noinline 154.
+// release-byte RMW/tail and event/location homes remain;
+// signed/word update results 155/188; release-byte reference/pointer 200/200;
+// native category 154, with byte reference/signed result 200/155; unsigned attachment 154.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

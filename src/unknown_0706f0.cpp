@@ -40,6 +40,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // owner plus primary references 182; primary reference with native dispatch / low-bit return 183/185.
 // score 182 (was 182): primary-session ESI joins remain; actual search-status member cursor
 // at its two consumers / at entry 182/182. Original byte-result body restored.
+// score 182 (was 182): primary session join registers and result normalization remain; cleanup
+// interval/exception-first/nested gate 202/234/202; initial/final/both state orders 186/182/186; native ready
+// byte 182; secondary half-open range 182.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

@@ -1140,6 +1140,9 @@ bool function_17afd0(long effect_index, long value);
 // score 101 (was 101): NONE/owner coalescing, BL availability and Boolean homes remain.
 // View-query inline/noinline, attachment noinline, draw inline/noinline,
 // scan inline/noinline and paired predicate boundaries all 102 fast, tying preview.
+// NONE/owner sharing and availability/Boolean homes remain.
+// Next-used helper entry/advance/both 200/202/244; native draw/query+draw bits 101/128;
+// native bits with entry/advance helper 195/198; inline/outline-inline query 101/101.
 // @retail 0x174220
 // score 101 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
 // availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag

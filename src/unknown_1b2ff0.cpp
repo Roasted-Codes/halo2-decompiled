@@ -183,7 +183,10 @@ bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 
 real function_1f8940(long actor_index);
 
-// score 44 (was 44): actor-table load/add and the early selected-reference EBX copy differ.
+// score 44 (was 44): actor-data load and early selected-reference transfer still differ.
+// late selected value 44; late value/native result 97; native/short/byte result
+// 97/94/134; sentinel operands 44; active-test result 122; native request fields 44.
+// actor-table load/add and the early selected-reference EBX copy differ.
 // Actor object reference/const view 44/44; candidate/flag/index/joint names 44/44/44/44;
 // result from reference validity 116; successful-selection arm first 71.
 // score 44 (was 44): actor-data load and selected-reference transfer still differ.

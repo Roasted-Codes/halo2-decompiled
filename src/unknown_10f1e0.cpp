@@ -1263,6 +1263,9 @@ bool function_c70b0(long unit_index);
 // score 164 (was 164): entry pool/state registers, count joins and result normalization remain.
 // Shared held query at both/first/second sites 164 each; signed-byte/native helper slot 169/327;
 // helper result selection 363; selection with byte/native slot 357/348.
+// entry pool/state and signed-count result joins remain;
+// native first/second/both slots 164 each; native first/second/both counts 164 each;
+// combined native fields 164; existing channel-state member 164.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -2559,6 +2562,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // score 147 (was 147): frame 0x3c versus 0x38 and action/availability conventions remain; separate
 // copy-return boundaries 142 (exact-only, discarded); base-channel entry/selection 147/147;
 // animation-result home 147; receiver/workspace copy split 162/162, with base channel 162/162.
+// score 147 (was 147): frame 0x3c versus 0x38 and action-output convention remain;
+// success/force/both role names 147/147/147; unsigned lookup/animation/mode 147 each;
+// action-result assignment/positive completion 161/161; direct success return 154.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

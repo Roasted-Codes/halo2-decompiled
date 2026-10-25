@@ -889,6 +889,9 @@ bool __stdcall function_2399da(long controller_index)
 // score 90 (was 90): identity/rank registers and the extra move before removal remain; selection guard,
 // permission guard and both 90 each; update-first branch with neither/either/both guards 92 each;
 // requested-rank lifetime 90. Frame and all call arguments preserved on restore.
+// selected identity ECX/rank EAX and extra remove-call copy remain.
+// Producer pointer scope/name, parameter-only rank name/both names 90/90/90/90;
+// own-rank/task lifetime, immutable pointer and native Boolean homes 90/90/90/90.
 // @retail 0x2393ae
 void __stdcall function_2393ae(long controller_index, long rank)
 {
