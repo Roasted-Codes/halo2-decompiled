@@ -154,6 +154,9 @@ void function_268840()
 // proxy-before-unit loads 296. Original body retained.
 // Round 156: depth zero 426; depth one 296; target size 546; byte retention 317;
 // iterator role names 296. Original frame and child traversal retained.
+// Round 173: long expiry result 315; long child-step result 295 (one-point gain rejected);
+// retention if/else 302; existing typed actor fields 296; external player-pool reference 296.
+// Frame 0x48 versus 0x50 and current/exhaustion/player homes remain; child-call carriers differ.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2082,6 +2085,7 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
 // Round 156, caller context: depth zero 505; depth one 322; target size 517;
 // wide cluster selectors 356; retained generation slot 322. Original body retained.
+// score 322 (was 322): round 312: reset/cursor allocation remains; selected byte 332; generation publication first 338; short visibility count 355; cluster-count snapshot 374; shared iterator initializer 322.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
