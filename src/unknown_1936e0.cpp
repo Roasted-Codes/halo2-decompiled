@@ -150,6 +150,10 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
+// score 194 (was 229): frame 0x40c versus 0x408; string zero, cursor and
+// counter allocation remain. Shared output cursor 221; native array cursors 229;
+// independent string counters 221; direct countdown points copy 226;
+// shared cursor, independent counters and countdown copy 194.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -167,18 +171,20 @@ void function_1936e0(long type, s_built_variant *variant, dword field_8, long de
 	{
 		long string_list_index = strings->string_list_index;
 
-		char *name = variant->names[0];
-		char *description = variant->descriptions[0];
+		char *output = variant->names[0];
 
-		for (i = 0; i < 9; i++, name += sizeof(variant->names[0]))
+		for (long name_index = 0; name_index < 9; ++name_index)
 		{
 			variant_string_get(string_list_index, name_string, text);
-			utf16_string_to_utf8_string(text, name, sizeof(variant->names[0]));
+			utf16_string_to_utf8_string(text, output, sizeof(variant->names[0]));
+			output += sizeof(variant->names[0]);
 		}
-		for (i = 0; i < 9; i++, description += sizeof(variant->descriptions[0]))
+		output = variant->descriptions[0];
+		for (long description_index = 0; description_index < 9; ++description_index)
 		{
 			variant_string_get(string_list_index, description_string, text);
-			utf16_string_to_utf8_string(text, description, sizeof(variant->descriptions[0]));
+			utf16_string_to_utf8_string(text, output, sizeof(variant->descriptions[0]));
+			output += sizeof(variant->descriptions[0]);
 		}
 	}
 	for (i = 0; i <= 5; i++)
@@ -195,8 +201,13 @@ void function_1936e0(long type, s_built_variant *variant, dword field_8, long de
 		variant->field_51c[i] = PIN(i + 10, i, 127);
 	variant->field_59c = field_59c;
 	variant->field_5a0 = field_5a0;
-	for (i = 0; i < 16; i++)
-		variant->points[i] = points[i];
+	long *point_output = variant->points;
+	for (i = 16; i > 0; --i)
+	{
+		*point_output = *points;
+		++point_output;
+		++points;
+	}
 }
 
 void matchmaking_hopper_build_player_start_delays(long scale, long first, long last, long *points);

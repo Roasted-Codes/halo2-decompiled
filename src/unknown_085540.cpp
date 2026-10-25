@@ -833,6 +833,12 @@ bool function_1995a0(const byte *source, dword source_size, byte *destination, l
 // Round 109: direct view plus writer forceinline 93; unsigned writer result 93;
 // writer reference 93; native count 93; unsigned offset 93; word kind 93;
 // named packet record 93; moving payload pointer 144.
+// score 90 (was 90): with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
+// count in a `remaining` local (compressed size scoped to the compressor call, copied when it
+// succeeds), no gotos and the last write tested for success first, only four single instructions
+// differ (20, aligned 4): flag 130; plus remaining 58; scoped 51; copy on success 38; failures
+// returned 63; single-exit breaks 38; success first 20; then element address 20; offset first 20;
+// header = { 1 } 22; flag before the header 125; count before cursors 24; all of it without the flag 128.
 // @retail 0x86800
 bool function_86800(dword capacity, c_simulation_view *view, dword source_size, byte *destination)
 {

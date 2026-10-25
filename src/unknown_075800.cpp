@@ -991,6 +991,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // keep 2,4,0,3 at plain 193, retail length. Lookup orders 7,5,6 / 6,7,5 give 196/195;
 // acknowledgment first in residual phase 196; unified observed order 218. All call inputs preserved.
 
+// score 193 (was 193): selector/message/address allocation and dispatch root remain.
+// Direct orders 0,4,2,3 / 0,4,3,2 / 2,0,4,3 / 2,3,0,4 give 193/196/193/195 fast;
+// 2,3,4,0 / 3,0,2,4 / 4,0,2,3 / 4,2,0,3 give 194/193/193/191 fast.
+// Last order is 193 plain, tying baseline; fast control 191. All rejected.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

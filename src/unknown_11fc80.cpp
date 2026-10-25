@@ -70,6 +70,9 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // computed before delta, without the span local. In the 4x unrolled body the copies' current-distance
 // sums differ: retail copy 1 i*x + k*z + y*j, copy 2 i*x + y*j + z*k; ours copy 1 i*x + k*z + j*y,
 // copy 2 i*x + z*k + y*j.
+// score 65 (was 65): distance/delta XMM homes and final Z-product destination remain.
+// Existing interpolation inputs by vector/point/both values 709/498/872; native component
+// array 65; shared scale stage 353; point-value return 519; early Z product 307; vector/early Z 709.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,
