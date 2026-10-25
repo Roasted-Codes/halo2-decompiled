@@ -128,6 +128,13 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 /* slot type 0x24's update: moves the actor to its prop (to the point the
    prop names, or along its direction) and flags the slot when it is there
    or cannot get there (always returns true) */
+// score 584 (was 620): visibility query expansion adds frame storage; actor/view and trace homes differ.
+// Tried native type width 611; common success exit 595 (multi-goto form discarded); lookups after actor
+// guards 616; tracked type first 619; bounded trace distance 620; visibility result 620; single exit native
+// category 584 (multi-goto form discarded); successful move guard 584 (multi-goto form discarded); supported
+// category guard 588 (multi-goto form discarded); near target arm first 586 (multi-goto form discarded);
+// structured actor gates 584; native supported category guard 621; native near target first 617; structured
+// supported categories 588.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
@@ -136,106 +143,106 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 	s_prop_view_fields *view = prop_node_view(node);
 	s_slot_24 *state = (s_slot_24 *)slot;
 	s_type_c3b527 target;
-	short type;
+	long type;
 	bool result;
 
 	if (actor->unknown504 == 2)
 	{
 		state->unknown0c = true;
-		return true;
 	}
-	if (!actor->unknown040)
-		return true;
-	state->unknown0c = false;
-	if (view->unknown70 == 1)
+	else if (actor->unknown040)
 	{
-		if (function_210b60(&view->unknown78, &actor->position) > 4.0f)
+		state->unknown0c = false;
+		if (view->unknown70 == 1)
 		{
-			state->unknown0c = false;
-		}
-		else if (function_1f86f0(actor_index))
-		{
-			state->unknown0c = true;
-			function_1f4280(actor_index);
-			return true;
-		}
-		else
-		{
-			point3f point;
-			point3f position;
-			short cluster;
-
-			function_210850(&view->unknown78, &point);
-			function_1e3b00(actor->unknown018, 1, &point, NULL, NULL, &position);
-			cluster = view->unknown78.output_index == NONE ?
-				*(short *)((byte *)view + 0x72) : function_272af0(g_4e0348, &point);
-			state->unknown0c = function_1c8df0(NONE, &position, cluster, *(short *)((byte *)actor + 0x254),
-				(byte *)actor + 0x22c, 0, false, actor->unknown26c != NONE, true, NULL) == 0;
-			if (state->unknown0c)
+			if (function_210b60(&view->unknown78, &actor->position) > 4.0f)
 			{
+				state->unknown0c = false;
+			}
+			else if (function_1f86f0(actor_index))
+			{
+				state->unknown0c = true;
 				function_1f4280(actor_index);
 				return true;
 			}
+			else
+			{
+				point3f point;
+				point3f position;
+				short cluster;
+
+				function_210850(&view->unknown78, &point);
+				function_1e3b00(actor->unknown018, 1, &point, NULL, NULL, &position);
+				cluster = view->unknown78.output_index == NONE ?
+					*(short *)((byte *)view + 0x72) : function_272af0(g_4e0348, &point);
+				state->unknown0c = function_1c8df0(NONE, &position, cluster, *(short *)((byte *)actor + 0x254),
+					(byte *)actor + 0x22c, 0, false, actor->unknown26c != NONE, true, NULL) == 0;
+				if (state->unknown0c)
+				{
+					function_1f4280(actor_index);
+					return true;
+				}
+			}
 		}
-	}
-	type = view->unknown70;
-	if (type == 0)
-	{
-		s_prop_state_view *prop_entry = prop_node_state(node);
-		vector3f *direction = (vector3f *)((byte *)view + 0x94);
-		s_sector_trace_result trace;
-
-		if ((real)sqrt(direction->i * direction->i + direction->j * direction->j + direction->k * direction->k) > 0.0f &&
-			(function_26c590((s_pathfinding_data const *)function_1fa7f0(), &prop_entry->unknown48.point,
-				*(long *)((byte *)prop_entry + 0x44), NONE, direction, 1.8f, NULL, (s_path_trace_result *)&trace),
-				!trace.blocked || trace.distance > 0.3f))
+		type = view->unknown70;
+		if (type == 0)
 		{
-			real distance = trace.distance;
+			s_prop_state_view *prop_entry = prop_node_state(node);
+			vector3f *direction = (vector3f *)((byte *)view + 0x94);
+			s_sector_trace_result trace;
 
-			if (distance > 1.5f)
-				distance = 1.5f;
-			distance -= 0.3f;
-			target.point.x = direction->i * distance + prop_entry->unknown48.point.x;
-			target.point.y = direction->j * distance + prop_entry->unknown48.point.y;
-			target.point.z = direction->k * distance + prop_entry->unknown48.point.z;
-			target.output_index = prop_entry->unknown48.output_index;
-			result = function_1f4460(actor_index, &target, trace.sector_index, NONE, false);
+			if ((real)sqrt(direction->i * direction->i + direction->j * direction->j + direction->k * direction->k) > 0.0f &&
+				(function_26c590((s_pathfinding_data const *)function_1fa7f0(), &prop_entry->unknown48.point,
+					*(long *)((byte *)prop_entry + 0x44), NONE, direction, 1.8f, NULL, (s_path_trace_result *)&trace),
+					!trace.blocked || trace.distance > 0.3f))
+			{
+				real distance = trace.distance;
+
+				if (distance > 1.5f)
+					distance = 1.5f;
+				distance -= 0.3f;
+				target.point.x = direction->i * distance + prop_entry->unknown48.point.x;
+				target.point.y = direction->j * distance + prop_entry->unknown48.point.y;
+				target.point.z = direction->k * distance + prop_entry->unknown48.point.z;
+				target.output_index = prop_entry->unknown48.output_index;
+				result = function_1f4460(actor_index, &target, trace.sector_index, NONE, false);
+			}
+			else
+			{
+				result = function_1f4810(actor_index, actor->prop_index, 0.7f, false);
+				target = prop_entry->unknown48;
+			}
+			actor->unknown4cc = 0.7f;
+		}
+		else if (type == 1)
+		{
+			function_2628f0(actor_index, g_470fa0);
+			result = function_1f4460(actor_index, &view->unknown78, *(long *)((byte *)view + 0x74), NONE, false);
+			target = view->unknown78;
 		}
 		else
 		{
-			result = function_1f4810(actor_index, actor->prop_index, 0.7f, false);
-			target = prop_entry->unknown48;
-		}
-		actor->unknown4cc = 0.7f;
-	}
-	else if (type == 1)
-	{
-		function_2628f0(actor_index, g_470fa0);
-		result = function_1f4460(actor_index, &view->unknown78, *(long *)((byte *)view + 0x74), NONE, false);
-		target = view->unknown78;
-	}
-	else
-	{
-		function_1f4280(actor_index);
-		return true;
-	}
-	if (!result)
-	{
-		point3f point;
-		vector3f v;
-
-		function_210850(&target, &point);
-		vector3d_from_points3d(&point, &actor->position, &v);
-		if ((v.j * v.j + v.k * v.k) + v.i * v.i < 1.0f)
-		{
 			function_1f4280(actor_index);
-			state->unknown0c = true;
+			return true;
 		}
-		else if (actor->unknown229 || actor->unknown5b4 >= (actor->unknown26c == NONE ? 32 : 3))
+		if (!result)
 		{
-			if (view->unknown70 == 0)
-				function_25d420(actor->prop_index, 3, actor_index);
-			state->unknown0c = true;
+			point3f point;
+			vector3f v;
+
+			function_210850(&target, &point);
+			vector3d_from_points3d(&point, &actor->position, &v);
+			if ((v.j * v.j + v.k * v.k) + v.i * v.i < 1.0f)
+			{
+				function_1f4280(actor_index);
+				state->unknown0c = true;
+			}
+			else if (actor->unknown229 || actor->unknown5b4 >= (actor->unknown26c == NONE ? 32 : 3))
+			{
+				if (view->unknown70 == 0)
+					function_25d420(actor->prop_index, 3, actor_index);
+				state->unknown0c = true;
+			}
 		}
 	}
 	return true;

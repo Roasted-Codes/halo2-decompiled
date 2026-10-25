@@ -2756,6 +2756,11 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 	item->value5c = team;
 }
 
+// score 156 (was 237): item-loop screen reload, bitmap case placement and row/animation register homes still
+// differ. Tried category descending 237; title default first 244; bitmap index long 237; title widget scopes
+// 237; separate player row counters 237; existing widget lookups 175; native animation bit 233; widget
+// lookups animation bit 179; map text lookup 237; text lookup helpers 156; bitmap lookup helpers 164; native
+// widget query indices 180; heading widget lookups 237; text helper query indices 164.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {
@@ -2791,7 +2796,7 @@ void c_network_squad_browser_screen::v3()
 		function_22f042(NULL, this, 0);
 	}
 
-	text = find_child(6, 2, false);
+	text = find_text(2);
 	bitmap = find_child(8, 4, false);
 	if (text)
 	{
@@ -2895,7 +2900,7 @@ void c_network_squad_browser_screen::v3()
 		function_2b0a14((s_widget_view_2b0a *)bitmap, index);
 	}
 
-	text = find_child(6, 3, false);
+	text = find_text(3);
 	bitmap = find_child(8, 1, false);
 	if (text)
 	{
@@ -2965,7 +2970,7 @@ void c_network_squad_browser_screen::v3()
 bitmap_shown:
 	for (i = 0; i < sizeof(squad->player_names) / sizeof(squad->player_names[0]); i++)
 	{
-		text = find_child(6, (short)(i + 4), false);
+		text = find_text((short)(i + 4));
 		bitmap = find_child(8, (short)(i + 5), false);
 		if (text)
 		{
