@@ -230,6 +230,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Native category on retained homes 910 (frame 0x2cb4); direct query
 // members 911; current priority long 894; relationship results long 893;
 // sphere flag byte 917 (frame 0x2cb4). Original body kept.
+// score 866 (was 866): Frame 0x2cb8 versus 0x2cac; actor/unit and query/marker homes remain.
+// category switch 948; shared marker workspace 914; object matrix across iterations 866; sphere radius
+// before transform 878; flags at ordinary insertion 910; motion enabled guard 866.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,

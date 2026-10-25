@@ -229,6 +229,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // score 220 (was 226): Frame 0x78 versus 0x6c; basis/position homes remain. Speed-arm scalars 270;
 // acceleration first 226; scalar names 226; early turn-velocity capture 226; zero velocity after
 // world-up 220 kept (plain).
+// score 220 (was 220): Frame 0x78 versus 0x6c; velocity/basis/position homes remain.
+// zero after first basis 240; zero after second basis 240; turn velocity before guard 274; basis role
+// reuse with scale 260; turn zero before guard 220.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -842,6 +845,10 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // score 151 (was 159): Frame 0x124 agrees; quotient/sweep/impact homes and owner-call setup remain.
 // Long saved identifiers first 152, second 152, third 151 kept (plain); all three 154; early
 // fraction 161; first/third 157; second/third 157; first/second 158 (fast).
+// score 151 (was 151): Frame 0x124 agrees; quotient/sweep/location homes and word loads remain.
+// second identifier first 149; location home name 151; native request after lifetime gains 151; distinct
+// up after lifetime gains 180; location before identifiers 218; long first with second first 154; long
+// second with second first 154; both long with second first 150.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
