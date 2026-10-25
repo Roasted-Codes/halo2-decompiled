@@ -97,6 +97,10 @@ public:
 // the block offset in edx and blocks in eax and switches on eax, ours the
 // reverse (the planes branch now matches, with planes_wanted read into a local
 // for the allocation). Other forms of the block address do not move it.
+// Further trials: descending or high cases first 31; direct indexed inputs
+// 29; a full block value 214; coordinate-array block 31; direct array
+// inputs 29; existing output index helper 31; direct inputs with index helper 29.
+// The early base load and EAX/EDX ownership still differ.
 // @retail 0x2fd8d0
 void blocked_convex_2fd8d0::function_2fd8d0(description_2fd8d0 *out) const
 {
