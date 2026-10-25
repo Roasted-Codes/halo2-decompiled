@@ -878,7 +878,7 @@ void function_267700(long actor_index, s_prop_datum *node, s_type_76cf92 *prop, 
 }
 
 // @retail 0x267a80
-short function_267a80(real *distance, point3f const *point, vector3f const *direction, point3f const *position, long unknown)
+short function_267a80(real *distance, point3f const *point, vector3f const *direction, point3f const *position, vector3f *unknown)
 {
 	long result = 0;
 	vector3f *offset = (vector3f *)unknown;
@@ -1086,7 +1086,7 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 	return result;
 }
 
-// score 119 (was 142): clock/compare schedule and vector homes differ; ordinary
+// score 99 (was 142): clock/compare schedule and vector homes differ; ordinary
 // pooled/clock reads with memset zero 178; projected-point loop 297; wide query
 // results 318; named maximum 146; target-copy loop 141 (one-count gain rejected).
 // ordinary-access common tick conversion 400; native point setter 146;
@@ -1094,6 +1094,9 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // Per-use prop lookup 119; shared dot/length/both 146/146/146 (grouping rejected);
 // query output initialization omitted 347; prop read first 326; native fields 146;
 // false-byte array memset 206. All eight use ordinary pooled/clock reads.
+// j93: Frame 0x60 agrees; clock hoisting, conversion copy and three vector homes remain; typed offset output recovers movement/offset homes.
+// wide event results 371; wide target result 374; state per use 433; state eligibility snapshot 338; typed
+// offset output 99; offset outer direction 99; offset blend before delta 99; offset outer query homes 99.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
@@ -1166,7 +1169,7 @@ void function_267c50(long actor_index)
 						bool active = false;
 						vector3f offset = {0.0f, 0.0f, 0.0f};
 						short proximity = function_267a80(NULL, &state->position, &direction,
-							(point3f *)(data + 0x238), (long)&offset);
+							(point3f *)(data + 0x238), &offset);
 						if (proximity >= 1)
 						{
 							*(bool *)(data + 0x3de) = true;
@@ -1532,6 +1535,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 // retained actor lookup 723; separate missing-view guard 696 (plain scores).
 // word threshold 712; byte conditions 712; both 712; geometry names 712 (reduced);
 // direct transformed output 700 reduced, 715 plain; entry cursor advance 708 reduced, 726 plain.
+// j93: Frame 0x7c/0x80, saved-link homes and conversion expansion remain; helper declaration restored.
+// shared tracking view 695; shared player lookup 724; very close result 719; native player search indices 702;
+// notification counter view 695; level helper inline 717.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

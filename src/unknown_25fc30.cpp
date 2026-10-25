@@ -70,7 +70,7 @@ bool function_1b6070(long index, short unknown0, short unknown2);
 bool function_262890(long actor_index, s_reference reference);
 void *function_272a00(long actor_index);
 void *function_1e5240(long actor_index);
-short function_267a80(real *distance, point3f const *point, vector3f const *direction, point3f const *position, long unknown);
+short function_267a80(real *distance, point3f const *point, vector3f const *direction, point3f const *position, vector3f *unknown);
 void function_1b0710(long object_index, long actor_index, real *distance_squared, real *maximum_distance_squared);
 
 /* the squads (g_51e9d8, 0x98 bytes): the zone they hold and their leader */

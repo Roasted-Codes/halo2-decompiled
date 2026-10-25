@@ -266,6 +266,9 @@ void function_146de0(void)
 // score 139 (was 143): frame 0x14 now agrees; update expansion and saved registers differ.
 // Per-attempt padding after/before publication 149/149; consumed padding 139/151;
 // guarded consumption 145; rounded padding/consumption 163/162; bounded search 149.
+// j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
+// byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
+// guard 143; post retry capacity 143.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
