@@ -1157,12 +1157,16 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
     arg_2->k = arg_0->k * arg_1;
 }
 
-// score 18 (was 18): point argument is rematerialized instead of copied;
-// the frame and projection agree. Sampling name 18; vector names 18;
-// vectors declared first 18; const unit 18; saved body count 124;
-// workspace memcpy 18; indexed output 23; const component 18.
+// score 2 (was 18): the returned point is copied from EAX before the body load;
+// retail loads the body and then copies the point from ESI. The frame and projection agree.
+// Sampling name 18; vector names 18; vectors declared first 18; const unit 18;
+// saved body count 124; workspace memcpy 18; indexed output 23; const component 18.
 // Support handle 18; nullable component 110; body read first 30;
 // valid body interval 85; entry workspace 18; unit-scope workspace 18;
+// const support 18; unsigned object handle 18. Position query noinline 18;
+// returned point with body index 2; reassigned point pointer 128; output pointer 18;
+// file-scope workspace 18; direct body reads 121; support lookup noinline 18;
+// returned point with output pointer 2; target noinline with returned point 2.
 // const support 18; unsigned object handle 18.
 // Round 109: ordinary scale inline 18; scale pointer result 18; three scale formal orders 18;
 // scale input reference 18; point-query noinline 18; velocity-query noinline 18.
@@ -1189,8 +1193,7 @@ void function_1a68a0(long object_index, vector3f *velocity)
 					long clamped = body_index < 0 ? 0 : body_index > component->body_count - 1 ? component->body_count - 1 : body_index;
 					if (clamped == body_index)
 					{
-						function_b9dd0(object_index, &local_3.field_c);
-						havok_component_rigid_body_point_velocity_get(unit->body_index, (s_havok_component *)component, &local_3.field_c, &local_3.field_18);
+						havok_component_rigid_body_point_velocity_get(body_index, (s_havok_component *)component, function_b9dd0(object_index, &local_3.field_c), &local_3.field_18);
 					}
 				}
 			}

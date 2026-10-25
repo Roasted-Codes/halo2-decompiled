@@ -194,7 +194,9 @@ void juggernaut_set(long player_index, bool juggernaut)
 }
 
 // score 20 (was 20): the loop counter and the g_510c9c pointer sit in the other two callee-saved
-// registers than retail; the instruction order is the same.
+// registers than retail; the instruction order is the same. Register-preferred count 20;
+// indexed membership 20; membership field pointer/reference 20; noinline set/wait calls 20;
+// force-inline respawn check 20; inline depth one 20.
 // @retail 0x192a30
 void function_192a30(long excluded_player_index)
 {
