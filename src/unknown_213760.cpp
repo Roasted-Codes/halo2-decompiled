@@ -1157,6 +1157,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
+// score 172 (was 172): Frame 0x1144 agrees; file/task scheduling and by-value I/O argument setup still differ.
+// Constructed write/read/both headers 172/172/172; zero request initializer 192; role names 172; shared acquired handle 188.
 // @retail 0x213970
 void function_213970(void)
 {

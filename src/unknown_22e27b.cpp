@@ -166,6 +166,8 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
+// score 205 (was 205): Frame 0xc versus 0x10; next time stays in EBX instead of its retail stack home.
+// Entry disposal 205; shared boundaries 251; shared hold cases 238; final branch order 210; interpolation helper 210; native restart 227.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
