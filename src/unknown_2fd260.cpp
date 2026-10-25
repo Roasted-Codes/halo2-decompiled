@@ -147,6 +147,9 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 }
 
 // the vertices for a list of indices
+// score 2 (was 2): second unrolled z-store/receiver-reload order remains.
+// Explicit source object first/last 2/2; two-stage block cursor 2; direct lane
+// index 50; unsigned index 7; earlier/later fetch definition 2/2; ordinal name 2.
 // @retail 0x2fd430
 void convex_vertices_2fd260::function_2fd430(unsigned short const *indices, int count, __m128 *vertices) const
 {
