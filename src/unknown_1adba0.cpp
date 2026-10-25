@@ -306,6 +306,9 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 }
 #pragma optimize("", on)
 
+// score 61 (was 61): first range still fuses its x87 add; native interval fields 61;
+// interval by value/reference/pointer 94/84/84; value with result 94; reference/pointer
+// input copies 64/64; value with named sample 95. All interval and helper forms restored.
 // @retail 0x1aded0
 bool __stdcall function_1aded0(long actor_index, s_slot *slot)
 {
