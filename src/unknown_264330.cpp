@@ -754,6 +754,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // object/current/suppression alone at entry 367/368/368; group/prop/reference
 // pointer names 363; shared squad getter 363; entry pointer declarations 363
 // (fast control 363, full baseline 358); all restored.
+// Pairwise object/current, object/suppression, suppression/current entry captures
+// 366/375/371; false-default suppression on those pairs 366/375/371;
+// optional unit pointer on first two pairs 370/373 (fast control 363).
+// Object/current pair plain 373 versus 358; actor ESI and saved-pointer/flag homes remain.
 // score 358 (was 358): frame 0x20 agrees; actor ESI versus EBX and saved-actor/flag homes remain.
 // Native prop/datum/sample/motion references 363f/363f/363f/363f; direct alternate
 // sight result 363f; child/guarded-parent handles 363f/363f; adjacent priority memmove

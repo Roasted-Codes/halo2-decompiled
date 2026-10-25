@@ -886,6 +886,10 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // split crossing phases 399; late second workspace 399; split phases/ordinary previous history 397;
 // Boolean ring direction 399; vertex words/ordinary previous, first, both history 414,415,415;
 // vertex words/Boolean ring direction 408. Retained code 1307/1312, checker extent 1312/1312.
+// score 385 (was 397): frame 0x28 and length agree; zero register,
+// edge/history homes and indexed node loads differ. Later first/second/both
+// differences in place 397/397/397; one displacement 397; one radial offset
+// 385; offset with shared displacement 385; phase scopes 397; offset/scopes 385.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -919,19 +923,19 @@ bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real
         vector2d_from_points2d(start, end, &direction);
         point2f normal = { direction.y, 0.0f - direction.x };
         normalize_offset_direction_2c(&normal);
-        point2f positive, negative;
-        scale_offset_direction_2c(radius, &normal, &positive);
-        positive.x = origin->x + positive.x;
-        positive.y = origin->y + positive.y;
-        scale_offset_direction_2c(0.0f - radius, &normal, &negative);
-        negative.x = origin->x + negative.x;
-        negative.y = origin->y + negative.y;
+        point2f offset;
+        scale_offset_direction_2c(radius, &normal, &offset);
+        offset.x = origin->x + offset.x;
+        offset.y = origin->y + offset.y;
         point2f first;
-        vector2d_from_points2d(&positive, start, &first);
+        vector2d_from_points2d(&offset, start, &first);
         bool first_crossing = (first.y * direction.y + first.x * direction.x < 0.0f ? 1 : 0) == side &&
             first.x * direction.y - first.y * direction.x < 0.0f;
+        scale_offset_direction_2c(0.0f - radius, &normal, &offset);
+        offset.x = origin->x + offset.x;
+        offset.y = origin->y + offset.y;
         point2f second;
-        vector2d_from_points2d(&negative, start, &second);
+        vector2d_from_points2d(&offset, start, &second);
         bool second_crossing = second.x * direction.y - second.y * direction.x < 0.0f;
         bool crossing = first_crossing || second_crossing || first_vertex == NONE;
         long vertex = ((crossing != first_open) == side) ? vertex1 : vertex0;

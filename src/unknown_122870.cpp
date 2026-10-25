@@ -416,6 +416,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // score 68 (was 68): frame/output-home reuse remains; existing helper output plus
 // scalar return for menu/shared/campaign 68/68/68, each pair 68/68/68,
 // all later or all four return consumers 68/68. Original helper and readbacks retained.
+// score 68 (was 68): frame/output homes and high-clamp exit still differ.
+// Separate final result: entry-one clamps 268/268; uninitialized 68/78;
+// dispatch-one 92/93; normalized result 102/101 (lower/upper first).
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {

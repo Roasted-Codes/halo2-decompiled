@@ -1214,6 +1214,10 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // score 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
 // Native byte clears 5/6/both 154/154/154; native guard/clear 5/6/both 192/167/207;
 // all native guards/clears 216; native guards with original byte stores 216.
+// release-byte RMW/tail and event-point homes remain.
+// Scalar/component factor orders, eight forms 154; direct output 207; native
+// point value 176; owner/origin/position/pair/all library copies 154; direct
+// output with library copies 207. Retained origin reuse and initializer unchanged.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
