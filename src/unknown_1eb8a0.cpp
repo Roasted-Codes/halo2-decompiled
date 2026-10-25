@@ -784,6 +784,9 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // score 88 (was 88): attached object/node roles and scan setup remain; current-handle bits 88;
 // node-transform input pointer 88; full-width definition bits 90; shared object handle,
 // shared receiver and both lifetimes 88; live input flags 88; native contact count 88.
+// score 88 (was 88): Own-object/node roles, dot scheduling and scan setup remain. Shared component
+// lookup, native owner/table/count/all fields, native component receiver and external contact array each
+// 88f; long found result 411f.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {

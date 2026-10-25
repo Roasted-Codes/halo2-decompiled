@@ -54,6 +54,11 @@ static __forceinline long marker_viewer_unit(void)
 // final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
 // projected endpoints 123; word centers 225; final endpoints 123; native direction 264; distance lifetime 141.
 // Branch status with word/native extents 218/212 (match-only, reverted); numerator lifetimes 123; viewer exits 123; earlier extent product 213.
+// score 123 (was 123): projection-result store, coordinate homes and helper scheduling still differ.
+// native byte projection result 123f; native horizontal half extent 216f.
+// native vertical half extent 215f; value initialized placement 263f.
+// viewer index read once 123f; explicit viewer selector 123f.
+// viewer result at query 123f; byte result native placement 263f.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
