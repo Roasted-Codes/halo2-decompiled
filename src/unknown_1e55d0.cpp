@@ -62,6 +62,8 @@ static __forceinline long real_to_long(real value);
 // entry matrix lifetime 357; both entry workspaces 357.
 // immutable margin 357; immutable shape 357.
 // immutable component 357; native point initializer 357.
+// Lead (@coldspear, #801): with the capsule made an aligned local instead of the placement-new
+// buffer, the frame becomes retail's aligned one (and esp, -16) and the count falls to 326.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {
