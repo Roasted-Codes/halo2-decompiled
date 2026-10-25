@@ -117,6 +117,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // result from startup tests 424; tested-state transfer 424; result at first test 424;
 // final result after reset completion 303; before effects 303; before submix 262;
 // before impulse cleanup 174; before volume stores 165.
+// score 165 (was 165): allocation/type carriers and first-channel spill remain;
+// cross-reset channel / voice / both bitwise accumulation 307/306/328;
+// both Boolean accumulations late / across reset 332/331; listener / table scopes
+// with cross-reset accumulations 328/328; native submix record initializers 328.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

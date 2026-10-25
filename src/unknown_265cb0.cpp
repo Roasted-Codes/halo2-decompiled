@@ -1102,6 +1102,9 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // score 99 (was 99): clock/compare schedule, conversion copy and geometry homes remain.
 // Fast: smoothed field 99; desired field 99; both fields 99; native position 393;
 // native origin 383; both geometry inputs 431; prop record 99; field and geometry 431.
+// score 99 (was 99): clock conversion, interpolation registers and three geometry homes remain;
+// interpolation product inputs 99; direct delta 99; direct blend 99; delta-first addition 99;
+// direct pair 414; direct delta/addition 99; direct blend/addition 99; direct pair/addition 414.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {

@@ -77,6 +77,10 @@ extern long g_55c154;
 // destination name after/before default 88/88; destination record late/early 88/88;
 // record/name receivers 88; publication order 174; named second load 61;
 // common name receiver 88; split loads plus common/default name receiver 199/199.
+// score 61 (was 61): classification spill and copy expansion remain;
+// external controller-slot / item-handle / list-receiver references 61/61/61;
+// controller-item / controller-list / item-list / all references 61/61/61/61;
+// all references with live type-field binding 61. Original inputs and body restored.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {
