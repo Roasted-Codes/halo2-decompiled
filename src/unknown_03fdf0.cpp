@@ -97,6 +97,10 @@ void function_4a1e0(s_view_source *source, s_view_camera *camera, long resource_
 
 // score 54 (was 54): retail multiplies the index into edx and clears the globals before the
 // loop, ours computes the index in eax and stores the table pointer later.
+// The block indexed at each use (no block pointer) takes the index in edx
+// and lines up the loop slots, but keeps the entries in esi rather than edx
+// and drops two moves: 144 (492 bytes); entries indexed by the counter 164;
+// separate cursor pointer 54; block pointer declared inside the count test 151.
 // score 54 (was 54): without the block pointer (count and entries indexed at each
 // use) the head is retail's (scaled index in edx, spilled), but count lands in
 // edx and first in eax, and the inner loop reloads the cursor on every path; 144

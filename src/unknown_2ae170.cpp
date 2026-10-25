@@ -795,6 +795,10 @@ void c_sound_effects::set_i3dl2(s_sound_i3dl2_parameters *parameters, long unuse
 // score 55 (was 55): our body is 12 bytes shorter: retail adds the gain with
 // SSE (the gain's bits copied through ebx into a stack temp) while our
 // union pun makes MSVC use x87; five more rewrites of the pun scored 55 or
+// worse. Settings gain copied into a local before each send (one-use copies,
+// reverted in review) 44: retail's SSE sums and length; with operands swapped
+// 44; the helper's level by reference 55; the sum written into the union 55;
+// the bit copy before the switch 44.
 // worse.
 // score 55 (was 55): retail inlines the existing out-of-line mix bin append (its
 // count++ is reused by the second send), ours the local copy. The existing
