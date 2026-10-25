@@ -192,6 +192,21 @@ dword function_191660(long string_handle, long index);
 // shared range selector 220; period plus range 238; function plus range 220;
 // curve record 202; primary field plus range 220; source plus period 164
 // (739 bytes, rejected); source plus function 165. Source reference kept.
+// score 5 (was 165): frame and parameter/selector homes agree; remainder-result
+// stores versus pointer/speaker reload scheduling remain. Direction receiver 211;
+// early parameter 201; both 201; range bit at use 218; function-scope samples
+// 165/165/165; early parameter plus range bit 5 plain. Corrected-frame primary,
+// range, paired and shared phase results 5 each; common period 175; implicit
+// remainder-result conversion 5.
+// full parameter-pointer spill and primary/range selector registers still differ.
+// parameter count once 165; override mask once 260; parameter cursor 215
+// primary remainder result 165; range remainder result 165; primary quotient 165
+// range quotient 165; cursor/count/mask 235.
+// Count snapshot restores frame 0x28 at 727 bytes and +0x65; its count home replaces no parameter spill.
+// score 5 (was 165): full parameter spill and BP/BX selector homes still differ.
+// External header/input/override records 215/165/165; live bound fields 165;
+// source count after special header 183; sampled values at loop scope 165;
+// named rounded results 165; header plus live bounds 215.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)
@@ -220,7 +235,8 @@ void function_2222c0(s_effect_component const *component, s_effect_component_ove
 	for (i = 0; i < component->parameter_count; i++)
 	{
 		s_effect_parameter const *parameters = component->parameters;
-		real value = parameters[i].default_value;
+		s_effect_parameter const *parameter = &parameters[i];
+		real value = parameter->default_value;
 
 		if (overrides && (overrides->parameter_mask & (1 << i)))
 		{
@@ -230,9 +246,8 @@ void function_2222c0(s_effect_component const *component, s_effect_component_ove
 			{
 				s_effect_function const *function = &overrides->functions[source >> 1];
 				short input = function->input;
-				bool ranged = TEST_FIELD_BIT(function->function.address[1] & 1);
 				real x = inputs->values[input];
-				real y = ranged ? inputs->values[function->range_input] : 0.0f;
+				real y = TEST_FIELD_BIT(function->function.address[1] & 1) ? inputs->values[function->range_input] : 0.0f;
 
 				if (input == 1)
 				{
@@ -242,7 +257,7 @@ void function_2222c0(s_effect_component const *component, s_effect_component_ove
 				{
 					x *= function_222250(&inputs->direction, speaker);
 				}
-				if (ranged)
+				if (TEST_FIELD_BIT(function->function.address[1] & 1))
 				{
 					short range_input = function->range_input;
 
@@ -264,7 +279,6 @@ void function_2222c0(s_effect_component const *component, s_effect_component_ove
 			source_index++;
 		}
 
-		s_effect_parameter const *parameter = &parameters[i];
 		value = PIN(value, parameter->minimum, parameter->maximum);
 		if (component->header.flags & 1)
 		{

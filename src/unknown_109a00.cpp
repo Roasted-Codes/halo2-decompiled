@@ -149,6 +149,10 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // (the second call's block is now retail's). Left: the first call's block
 // (into a local) loads angular.i twice where retail folds it, and its
 // subtraction order; the non-rotate branch's scaled differences.
+// score 164 (was 164): first point-velocity input schedule and nonrotating scale/add schedule remain.
+// Nonrotating shared point difference 165; shared scale 164; difference plus scale 166;
+// shared scaled difference 169; final delta scale 164; both scale boundaries 164;
+// actual motion-field bindings 166; object-velocity field reference 164 (fast scores).
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

@@ -101,6 +101,12 @@ void function_4a1e0(s_view_source *source, s_view_camera *camera, long resource_
 // and lines up the loop slots, but keeps the entries in esi rather than edx
 // and drops two moves: 144 (492 bytes); entries indexed by the counter 164;
 // separate cursor pointer 54; block pointer declared inside the count test 151.
+// score 54 (was 54): without the block pointer (count and entries indexed at each
+// use) the head is retail's (scaled index in edx, spilled), but count lands in
+// edx and first in eax, and the inner loop reloads the cursor on every path; 144
+// (count through the metadata view or the block, 492 bytes); with the current
+// stored first 140; block pointer declared inside the if 151; index head with the
+// block pointer only for the loop 155.
 // @retail 0x402b0
 void function_402b0(long cache_index, long mode)
 {

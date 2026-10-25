@@ -209,6 +209,11 @@ void function_1fc660(s_tracked_point *tracked, s_tracking_state const *state, s_
 // last product moves late, one instruction long: rate local with long ticks 64;
 // with the tick scale through local_scale3d 64; tick product and delta per
 // component 64; ticks read first 64; the limit test as !(limit * limit > ...) 56.
+// `long ticks` and a `rate` local give retail's first 21
+// instructions (rate in xmm3, movsx edi, components loaded first) but the tick
+// products go to new registers where retail scales in place 64 (369 bytes);
+// limit from the rate local 68; real ticks at the top 103; real ticks after the
+// rate 104; the same without the parameter reference 80.
 // @retail 0x1fc4b0
 void function_1fc4b0(s_tracked_point *tracked, s_tracking_state const *state, s_tracking_output *output)
 {
