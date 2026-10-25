@@ -642,6 +642,7 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // score 231 (was 231): Caller-dependent eight-byte alignment and scalar homes remain. Positive
 // root scope 239; unsigned root handles 239; compact cluster search 239; far-range arm first 239;
 // squared-bound names/order 239 (direct radius operand, both callers included in all).
+// Caller-dependent eight-byte alignment and angle homes remain. Player for-loop 235; cluster for-loop 235; squared zoom 235; position library copy 235; direct unit receiver 234 (fast, ordinary radius in all).
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1436,7 +1437,10 @@ done:
 // Copy + volatile name reload 26; result declared before the lookup 83; no result variable 78;
 // result declared in the tail 85; long size 27; long offsets + palette at the call + datum local 27;
 // the 0xb7300 placement-block helpers (both orders, both product orders) 23; lookup via 0xbb760 17.
-// score 17 (was 17): entry agrees; tail type/base/palette/stride allocation differs.
+// score 17 (was 17): type/descriptor/palette/stride allocation at the tail remains.
+// Test-produced result 78; with wide stride/call-use palette/both 76/44/42;
+// with direct offsets/type name/read-only descriptor/read-only wide 78/78/78/76.
+// entry agrees; tail type/base/palette/stride allocation differs.
 // Canonical descriptor fields through mutable/const pointers and references all 17;
 // the same four contracts with a promoted stride all 27 (236 bytes).
 // @retail 0xbb670
@@ -1633,6 +1637,7 @@ void function_bba20(long index);
 // score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
 // scheduling remain. Positive acceptance scope 358; sibling-first sentinels 319; hidden Boolean
 // shift 318; connection Boolean shift 318; unsigned masks 319; both Boolean shifts 323.
+// Frame 0x64 agrees; pool/permission homes and parent/SIMD lifetimes remain. Dead parent lookup removed 319; header-data base 336; node before link 319; separate output phases 319; bitset indexing 319 (fast).
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

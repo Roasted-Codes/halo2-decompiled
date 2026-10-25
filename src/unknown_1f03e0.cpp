@@ -411,7 +411,10 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // score 203 (was 203): frame 0x14 agrees; request/count/table registers and cross-result stores still differ.
 // Shape pointer 329 (not matched); read-only scan and natural while 203/203; desired copy 271;
 // double height comparison 309; size policy 374; floating consistency 314; native default copies 203.
-// score 203 (was 203): frame agrees; request/count/table registers and cross-result stores remain;
+// score 198 (was 203): frame 0x14 agrees; request/count/table homes and cross stores remain.
+// Cases 3/1/2 226; second normal first 246; average ikj/jik/jki/kij/kji
+// 201/200/198/203/203; native masked handle 203. Average j/k/i kept after full check.
+// frame agrees; request/count/table registers and cross-result stores remain;
 // selected normal from existing pair 233; direct pair cross inputs 209; first normal reference 203;
 // second normal reference 203; both normal references 203; output record reference 226; lower
 // height bound first 211; complete average initializer 203.
@@ -458,9 +461,9 @@ void function_1f2a80(byte const *request, bool moving,
             else
             {
                 vector3f average;
-                average.i = b->i + a->i;
                 average.j = b->j + a->j;
                 average.k = b->k + a->k;
+                average.i = b->i + a->i;
                 function_30bf0(&average);
                 real dot_a = a->i * desired->i + desired->k * a->k + a->j * desired->j;
                 real dot_average = desired->i * average.i + desired->k * average.k + desired->j * average.j;
@@ -531,6 +534,10 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Frame 0x28 and state/output registers agree; direct dot displacement bytes
 // and rotation scheduling differ. Word rotation decision 182; long rotation decision 182; shared
 // entry cross 182; all shared crosses 182; vector home names on recovered state base 182.
+// Frame 0x28 and state/output homes agree; state-dot displacement and rotation schedule remain.
+// Rotation publication ijk/ikj/jik/jki/kji 242/241/244/247/244; cross between trig 247;
+// accepted-up library copy 182; deferred k/i results 247; native state/workspace/both
+// array views 182/182/182. Original scalar expressions, shared helpers and outputs restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {

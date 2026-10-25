@@ -812,7 +812,7 @@ void function_06f4b0(c_session_state_joining *self)
   if (!qos_is_complete(state->unknownf4))
    return;
   s_qos_result result;
-  if (qos_target_result(state->unknownf4, &result, 0))
+  if (qos_target_result(state->unknownf4, 0, &result))
   {
    struct { s_session_description description; byte remaining[0x714 - sizeof(s_session_description)]; } buffer;
    s_session_description *description = &buffer.description;

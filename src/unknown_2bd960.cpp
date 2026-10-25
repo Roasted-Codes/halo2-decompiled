@@ -441,7 +441,10 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // shared point count 326; height plus count 345 (plain).
 // score 130 (was 134): protected control/sampling calls and scan induction remain;
 // center/radius/both/height/all endpoint scans 375/475/716/378/950f; frame/size/global 237/276/1164f.
-// score 130 (was 130): Protected control/sampling conventions and scan induction still differ.
+// score 130 (was 130): Protected control/sampling conventions and scan induction remain. external center binding 130; external
+// radius binding 131; center radius bindings 131; external height bindings 151; native scan ordinal 130;
+// center library initialization 137; marker library input 130; independent point ordinals 158.
+// Protected control/sampling conventions and scan induction still differ.
 // shared edge magnitude 158p; native radius displacement 130p; center component loop 138p; scale
 // component loop 130p; marker position reference 133p; marker array cursor 165p; perimeter vertex
 // references 130p; edge magnitude with radius value 158p.
@@ -449,6 +452,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // bounds 143; shared center height 143; count snapshot 274, with center height 274; selections 143;
 // minimum/maximum alone 140/135; main plus marker bounds 171; initialized bounds 133;
 // initialized bounds with direct height reads 128 (two-point gain rejected). All plain.
+// Frame 0x110 and protected helper conventions remain; independent center publication
+// xzy/yxz/yzx/zxy/zyx 134/134/134/134/134; center scale xzy/yxz/zyx 130/130/130
+// (all plain). Original arithmetic, scans and helper calls restored.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

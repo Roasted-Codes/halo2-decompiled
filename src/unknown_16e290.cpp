@@ -1391,6 +1391,9 @@ void function_1701f0(long player_index);
 void function_1703f0(long player_index);
 void function_170630(long player_index);
 
+// score 7 (was 7): command/base registers and channel address setup differ;
+// three channel-pointer orders 7/7/7; delta pointer early/late 7/7;
+// command pointer 7; guard return 7; motion-channel view 7.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {

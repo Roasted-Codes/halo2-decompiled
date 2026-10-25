@@ -604,6 +604,10 @@ static __forceinline long real_to_long(real value);
 // score 410 (was 466): Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
 // late object receiver 470; trajectory planar view 466; direct request view 466;
 // test-derived readiness 410; conditional approach factor 466 (fast).
+// score 410 (was 410): frame 0x54 versus 0x58, early rejection and query homes remain.
+// Separate query in/out scalar 494; wider output scope 410; wider trajectory scope 410;
+// scalar/output and scalar/trajectory scopes 494 each; output/trajectory scopes 410;
+// all query homes 494; all homes with earlier query-scalar declaration 494.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

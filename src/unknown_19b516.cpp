@@ -312,6 +312,11 @@ void c_widget::v21()
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 
+// score 89 (was 89): both draw blocks add the left edge to the width in a fresh register before
+// x + left (retail adds it into the width's register afterwards), and the two coordinate homes are
+// swapped (retail converts y first). y before x in the second block only 89 (homes right);
+// in both blocks 93; width + left operand order 89; height before width 91; right edge re-derived
+// from the placement after the left offset 108.
 // @retail 0x24bda2
 void c_widget::v12(long a)
 {
