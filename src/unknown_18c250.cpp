@@ -350,6 +350,9 @@ static __forceinline long float_to_int_nearest(real value)
 }
 
 #pragma inline_depth(0)
+// score 21 (was 21): tag/sound/promotion use EBX/EDI/ESI versus EDI/ESI/EBX.
+// Read-only tag 21; wide promotion selector 62; conditional promotion 22; complete eligibility guard 21;
+// separate promotion failures 21; set after rounding 72; named rounding homes 21; read-only set 21.
 // @retail 0x18c720
 void function_18c720(long tag_index, long object_index, long set_index, long permutation_index, real scale)
 {
@@ -384,6 +387,10 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 // existing dispatch callee 12; out of line dispatch declaration 12; readonly tag input 12; readonly
 // set input 12; readonly first permutation 12; selected permutation two consumers 12; selected
 // input guard first 17; typed permutation readonly range 12.
+// object/tag entry registers still follow the dispatch
+// convention. Nested validation 12; object query receiver 12; validation from
+// tests 43; globals after tag query 38; direct set/first element 12/12;
+// absolute set part 12; relative permutation index 26.
 // @retail 0x18c6a0
 void __stdcall function_18c6a0(long object_index, long unused, long tag_index, long set_index, long permutation, long scale)
 {

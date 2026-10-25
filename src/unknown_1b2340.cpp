@@ -302,6 +302,9 @@ done:
 bool function_2601f0(long actor_index, s_type_c3b527 const *point, long sector, real radius, real path_distance);
 void function_1f86a0(long actor_index);
 
+// score 144 (was 144): frame eight agrees; pool-load order, slot EBP and view spill differ.
+// Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
+// word duration ticks 144; ordinary result 203.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {

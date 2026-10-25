@@ -1878,6 +1878,12 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // score 48 (was 48): readiness input and failure/timer join persist. Duration pending 91;
 // shared/early countdown seconds 97/107; clock value 90; timed/five arm order
 // with integer pending 117/118; word completion 146; early duration pending 137.
+// readiness input and failure/timer join persist.
+// Native int pending, pending/completion/millisecond names and outer pending declaration 48;
+// positive-duration test, full-width pending with failure first and nested preparation 48.
+// score 48 (was 48): readiness input and failure/timer join remain different.
+// Unsigned pending/const captured pointers 48; quotient/remainder ceiling 93;
+// separate inline/noinline readiness/preparation declarations 48 each; pending conjunction 92.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {
