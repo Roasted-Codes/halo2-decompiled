@@ -1441,6 +1441,10 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // Count homes, early saved-count lifetime and memory flag updates remain. friend field binding 120; member
 // field binding 117; both field bindings 120; native count results 117; merge ordinal scope 117; friend
 // count arms 117; member count arms 117; both count arms 117.
+// On the recovered row/zero context: early count storage 117; matched member pointer/reference
+// 151/151; existing member-bit/friend-byte/both eligibility 186/117/189; independent
+// merge/friend ordinals 117; immutable count storage 117. Count homes, delayed count loads
+// and memory flag updates still differ.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {

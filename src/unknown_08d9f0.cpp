@@ -137,6 +137,9 @@ void function_8dd70(void);
 // Shared setup link/message/gateway inputs 232/230/229; all three 233;
 // retained observer 230; session-list publication 230; existing gateway reverse
 // receiver 255; shared inputs with that receiver 251.
+// entry normalization, helper expansion and pointer reloads remain.
+// Nine-callback automatic/const/static/byte-index tables 252/252/328/253;
+// last-two automatic/static tables 272/288; last-three automatic/static tables 273/285 (fast).
 // predicate normalization, helper expansion and reloads remain;
 // gateway input/consumer order 230; gateway flag first 230; handler flag first 230;
 // handler input order 230; shared integer zero assignment 230; short stage names 230;
