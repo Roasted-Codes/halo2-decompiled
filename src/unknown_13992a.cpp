@@ -79,6 +79,9 @@ long function_14de70(long arg_1);
 // short suppression 173; cached seat selector 152; missing-player return 134 (plain).
 // caller depth 1/2/0 134/134/651; global optimization off 1911; const lookup 134;
 // typed lookup through getter / directly / depth one 134/113/134 (plain).
+// Mask/player ranks and parent/tag scheduling remain; initial parent value 113;
+// seat value 421; parent plus seat 131; direct queried flag 426; display presence 151;
+// target query value and primary/both color copies 113 each (plain).
 // @retail 0x13992a
 void function_13992a(byte *arg_1, long arg_2)
 {
