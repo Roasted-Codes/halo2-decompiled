@@ -45,6 +45,10 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 
+// score 164 (was 164): frame 0x28 agrees; separate pool/iterator homes,
+// null-result timing and actor-successor residency remain. Inactive early exit
+// 164; native flag mask 164; successful inner-update continue 164; pointer-result
+// for loop 275; early-exit/mask/continue combination 164.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

@@ -77,6 +77,9 @@ long g_4ba134;
 // tangent names 209; shared root/ratio/tangent workspaces 209.
 // In-place displacements 257; depth-radius product 233; deferred second
 // tangents 164; near-plane early exit 240; shared depth square 209.
+// Direct radius 193; paired horizontal viewport observations 195; interleaved
+// first viewport observation 203; guarded second coordinates 193; invalid-depth
+// arms first 182. These forms retain the delayed second tangent calculations.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
@@ -222,6 +225,10 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
+// score 195 (was 195): frame 0x30 versus 0x2c and inverse-depth/point homes
+// remain. In-place displaced transform 263; later displaced input 270;
+// perspective-only inverse locals 261; zero-factor early exit 195; both
+// displaced transforms in place 263.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

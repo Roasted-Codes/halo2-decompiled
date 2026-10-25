@@ -663,6 +663,10 @@ done:
 	return result;
 }
 
+// score 128 (was 128): frame 0x10 agrees; initial results observation,
+// details/score cursor base and input/score homes remain. Native score fields
+// 213; complete count-clamp arms 213; named interpolation fraction 213; indexed
+// result loop 214; single total-score accumulator 229.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {
