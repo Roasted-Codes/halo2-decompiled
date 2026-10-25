@@ -2506,6 +2506,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // unsigned word result 173; short table index 188.
 // Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
 // repeated table index 152; mode after animation 157.
+// score 147 (was 152): frame 60 versus 56 and protected action/seat argument registers remain.
+// Signed success/force/both bytes 147/152/147; word channel backing 152;
+// mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
@@ -2520,7 +2523,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
     long lookup = g_4408f8[type];
     long animation = NONE;
     if (lookup != NONE) animation = g_46fc30[lookup];
-    bool result = false;
+    signed char result = false;
     bool force_overlay = false;
     short action;
     c_animation_channel *overlay;

@@ -1332,6 +1332,9 @@ void s_animation_state::movement_rate_get(long object_index, vector3f *vector, r
 // comparisons retail uses, so the branch layout matches; the inlined channel
 // multiply of the second component still loads its value from memory where
 // retail copies the scale into a register.
+// score 5 (was 5): inlined fallback middle-component load/multiply still differs.
+// Completed delta/velocity/both values 113/84/145; logical/failure/initial success 85/89/92;
+// shared fraction helper 175; helper with completed output vectors 241.
 // @retail 0x1cdcd0
 bool s_animation_state::velocity_get(vector3f *delta, vector3f *velocity)
 {

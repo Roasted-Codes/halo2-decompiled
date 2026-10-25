@@ -1378,6 +1378,9 @@ PRIVATE __forceinline real const &component_time_step()
 // negative-target guard 50; stopping branch first 106; step predicate first 26 (kept, plain 26);
 // negative guard with step predicate 32; independent/eager stop decisions 129/124;
 // explicit fraction branches 43; velocity input/output lifetime 219.
+// score 26 (was 26): acceleration register, memory timestep multiply and stop-test schedule differ.
+// Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
+// completed clamp before ratio 82; accelerated candidate default 114.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)
