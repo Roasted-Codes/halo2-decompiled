@@ -1430,6 +1430,9 @@ done:
 // Copy + volatile name reload 26; result declared before the lookup 83; no result variable 78;
 // result declared in the tail 85; long size 27; long offsets + palette at the call + datum local 27;
 // the 0xb7300 placement-block helpers (both orders, both product orders) 23; lookup via 0xbb760 17.
+// score 17 (was 17): entry agrees; tail type/base/palette/stride allocation differs.
+// Canonical descriptor fields through mutable/const pointers and references all 17;
+// the same four contracts with a promoted stride all 27 (236 bytes).
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {
@@ -1615,6 +1618,9 @@ void function_bba20(long index);
 // byte permission 319; byte activity 319; both byte carriers 319;
 // vector transforms before point 385; byte permission with vectors first 385.
 // score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward 319; direct node array 323.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
+// scheduling remain. Unsigned header offset 319; short permission 320; native location fields 330;
+// pooled root reference 319; guarded native cluster 319.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

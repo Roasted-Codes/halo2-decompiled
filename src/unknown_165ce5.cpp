@@ -1209,6 +1209,10 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // Plain: graph inside model guard 188; both metadata values 191; graph guard first 31;
 // conditional graph result 193; graph-field binding 36; model-field binding 30;
 // read-only interface 30; shared root/parent receiver 30.
+// score 30 (was 30): early graph load, node-base addition/register roles and overlay setup remain.
+// Conditional query, root-first result publication, unit value/field, read-only tag,
+// model-validity result, combined animation flags and conditional/root-first query
+// Plain scores 30/35/30/30/30/30/118/35; original body retained.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1413,6 +1417,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
+// score 250 (was 250): frame 0x28/0x2c and unit/mode/look homes remain.
+// External user/unit/weapon records and user-unit pair 252 each; native dword
+// index/mode, callback at update, and unit-weapon-index combination 252 each (fast base 252).
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -2006,7 +2013,9 @@ void function_1dd7a0(long *reference);
 
 /* attaches the arms to the weapon's markers while the unit's aiming blends */
 // score 9 (was 9): the object pointer and the entry index are kept in swapped registers in the
-// second lookup.
+// second lookup (retail builds the arms marker group in the index's register, ecx; ours in the base's,
+// edx). The arguments arrive as in retail (eax and two stack words, ret 8), so the caller is not the
+// cause. Tried: a weapon definition local like the arms one (9), the group as index + pointer (9).
 // @retail 0x168644
 void function_168644(long user_index, s_first_person_model *arms, s_first_person_model *arg_2f82bc)
 {
@@ -2085,6 +2094,12 @@ extern bool g_4f55e2;
    active weapon and the unit's own body; returns how many */
 // score 20 (was 20): the game state check is tested as a byte here and and-ed with the flag mask
 // in retail, and the second condition is combined with it as a word here and as a byte in retail.
+// Retail's `active` is a byte that starts as the masked flag itself (al, no zeroing): writing
+// `bool active = state == 1 ? g_4f55e2 : false;` and testing `!active` builds that loop exactly, but
+// the and becomes `and al, byte ptr` without retail's `and eax, dword ptr` + `test al, al`, so the
+// function is 2 bytes short (236). Tried: bool active = false (23, an extra xor al, al); the reused
+// local as char/byte, with `: 0`, with a (long) cast (all 236); `!= 0` of a long ternary (249); a
+// nodes local in the second loop (20).
 // @retail 0x165f16
 long __stdcall first_person_weapons_get_models(long user_index, long unit_index, long maximum_count,
 	s_first_person_model *models)

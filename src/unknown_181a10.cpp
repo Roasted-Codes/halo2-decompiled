@@ -521,6 +521,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // score 321 (was 321): Frame and plane/output homes remain. classifier bound result first 329; native classifier signed domain
 // 321; classifier direct bounds 345; existing entity query boundary 321; native destination record 388;
 // native output index values 321; validity after index defaults 321; readonly first node input 321.
+// frame 0x48 versus 0x44 and classifier/plane homes remain.
+// Plane normal setter 334; native matrix reference 321; entry/surface/both words
+// 324/323/326; staged plane distance 321; origin field base 323; shape field reference 321.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

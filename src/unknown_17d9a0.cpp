@@ -145,6 +145,10 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 // score 138 (was 138): Plane-distance base, projection selectors/stores and inverse scheduling remain. external output record
 // 146; external corner array 138; output and corner array 146; external normal receiver 166; external
 // bounds record 146; matrix memcpy 138; bounds memcpy 152; normal memcpy current length 152.
+// Plane-distance base, projection publication and inverse scheduling still differ.
+// corner input references 144f; origin corner value 172f; first edge value 156f; second edge
+// value 166f; both edge values 183f; first eligibility result 146f; indexed bounds contract 142f;
+// indexed bounds with origin value 174f.
 // plane-distance store base, selector publication and edge/zero schedule remain.
 // Actual table-element bindings both/horizontal/vertical 188/138/188; both plus Y-first 191;
 // distance-field binding 146; metadata object reference 138; native row reference 138;
