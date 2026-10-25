@@ -109,6 +109,10 @@ PRIVATE inline void shape_transform_point(const transform4x3f *matrix, const poi
 // Source-surface reference 6; source-edge reference 6; cached edge table 120;
 // cached vertex table 125; output ordinal snapshot 101; outer transform workspace 6;
 // short side 97; external geometry reference 6. Radius/index and x-store order remain.
+// Also tried: tag stored through (long *)vertices_raw or vertices() 6; vertex
+// as vertices_raw + n, an x local, surfaces[surface_index], surface_index set
+// first 6; w stored by member index 38; offset local 68; separate x/y/z
+// stores 10/106; point struct copy 120; __m128 vertex pointer 6.
 // @retail 0x1edd00
 c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, long index,
 	long user_data, const transform4x3f *matrix) : radius_shape_2de750(0.01f)

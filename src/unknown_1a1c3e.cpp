@@ -296,7 +296,9 @@ void motion_sensor_blip_set_position(point2f const *point, s_motion_sensor_blip 
 // follows rider selection. Selected header reference 26; object reference 26;
 // player reference 26; full-width absolute slot 26; word slot 35; header pointer
 // 26; conditional pool refresh with header reference 24, with absolute slot 24.
-// the sensor table pointer is kept in ECX, retail keeps it in EAX.
+// the sensor table pointer is kept in ECX, retail keeps it in EAX. Tried (r27b): the
+// mask written inline at each test 26; the friendly-team test as `!= NONE && call` with
+// the rider branch in the else 26.
 // @retail 0x1a1e49
 char motion_sensor_object_type(long local_player_index, long object_index)
 {
@@ -389,6 +391,9 @@ __forceinline short function_1a1fb0(short height)
 }
 
 // score 9 (was 9): retail loads the global after the store of the height, ours loads it before.
+// The volatile view keeps the blip on the stack, reread at each use, as retail. Tried (r27b): the
+// plain form 78 (the blip travels in ebx); a `const` reference to the blip without volatile 51
+// (on the stack but kept in ebx).
 // @retail 0x1a1faf
 void motion_sensor_blip_set_type(long local_player_index, long object_index, s_motion_sensor_blip *blip)
 {
