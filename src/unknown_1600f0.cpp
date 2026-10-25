@@ -1013,6 +1013,9 @@ struct s_game_engine_globals_connections_view
 // input-color reference 184; color snapshot 309.
 // channel samples 323; direct right edges 306.
 // trailing right edges 297; row reference with trailing edges 297.
+// Test-derived glyph 182 fast/plain (two-point gain rejected); separately gated query 204;
+// query Boolean 205; hidden-first with test/query values 229/249;
+// column observations 184; columns with test/query values 182/204.
 // Direct icon zero default 192; initializer zero default 208; separate place/icon/name
 // rectangles 184/229/222; place and icon rectangles 184; scoped numeric buffers 225;
 // scoped numeric buffers plus direct icon default 188 (all plain).

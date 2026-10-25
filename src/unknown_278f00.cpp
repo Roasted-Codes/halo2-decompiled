@@ -49,6 +49,9 @@ void __stdcall function_b8890(long arg_0);
 // body reference 212; header reference 212.
 // unsigned object handle 212; list and island references 212.
 // first standard search 244; second standard search 282.
+// frame agrees; list/index/count homes and cleanup induction differ;
+// existing component-delete helper 341; existing detach helper 464; inline declarations
+// 341/464; category byte comparisons 266; signed-byte category 212, membership 212, both 212.
 // @retail 0x278f00
 void function_278f00()
 {

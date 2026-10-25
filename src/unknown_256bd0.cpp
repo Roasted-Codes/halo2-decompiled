@@ -55,6 +55,10 @@ struct s_object_flags_256bd0
 // slot reference 211; native fields with getter 214.
 // const entry result 211; condition-local entry 211.
 // candidate skip 211; placement scope 211.
+// frame 0x114 versus 0x110, activity caching and saved homes remain;
+// marker position workspace 235; placement position reads 253; in-place velocity 212;
+// marker/placement 225; marker/velocity 235; placement/velocity 253; all three 225;
+// angle field before sign adjustment 230.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

@@ -284,6 +284,8 @@ void function_245400(s_source_245400 const *source, long index,
 // direct narrow codes 239; material snapshot 206.
 // shared rotation 204; shared dot 204.
 // both shared products 204; snapshot with early sides 209.
+// Signed-byte side carriers first/second/both 238/238/204; native-long carriers
+// first/second/both 228/228/222; mixed signed-byte/native-long both ways 228/228.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
