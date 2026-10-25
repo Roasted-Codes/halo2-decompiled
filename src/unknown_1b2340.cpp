@@ -128,22 +128,21 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 /* slot type 0x24's update: moves the actor to its prop (to the point the
    prop names, or along its direction) and flags the slot when it is there
    or cannot get there (always returns true) */
-// score 584 (was 620): visibility query expansion adds frame storage; actor/view and trace homes differ.
-// Tried native type width 611; common success exit 595 (multi-goto form discarded); lookups after actor
-// guards 616; tracked type first 619; bounded trace distance 620; visibility result 620; single exit native
-// category 584 (multi-goto form discarded); successful move guard 584 (multi-goto form discarded); supported
-// category guard 588 (multi-goto form discarded); near target arm first 586 (multi-goto form discarded);
-// structured actor gates 584; native supported category guard 621; native near target first 617; structured
-// supported categories 588.
-// frame 0x48 recovered; entry registers, trace-point
-// arithmetic homes and branch placement remain. Caller noinline declaration 620;
-// callee noinline declaration 236; shared magnitude 236; shared point 236;
-// destination name 236; long result 233; point/name/magnitude together 236.
-// score 232 (was 336): Frame 0x48 agrees; actor/view registers, trace carriers and
-// movement/failure block placement remain. Tried category short outlined query 338; completion
-// early return 232; category short completion 236; movement result first 232; movement workspace
-// scope 232; probe frame names 232; existing point setter 232; far failure arm first 232;
-// movement success return 232.
+// score 232 (was 232): Frame 0x48 agrees; actor/view registers, trace carriers and
+// movement/failure block placement remain. Native type width 611; common success exit 595
+// (multiple-goto form discarded); lookups after actor guards 616; tracked type first 619;
+// bounded trace distance 620; visibility result 620; single exit native category 584
+// (multiple-goto form discarded); successful move guard 584 (multiple-goto form discarded);
+// supported category guard 588 (multiple-goto form discarded); near target arm first 586
+// (multiple-goto form discarded); structured actor gates 584; native supported category
+// guard 621; native near target first 617; structured supported categories 588.
+// Caller noinline declaration 620; callee noinline declaration 236; shared magnitude 236;
+// shared point 236; destination name 236; long result 233; point/name/magnitude together 236.
+// Category short outlined query 338; completion early return 232; category short completion 236;
+// movement result first 232; movement workspace scope 232; probe frame names 232;
+// existing point setter 232; far failure arm first 232; movement success return 232.
+// Outer trace lifetime 232; direct native categories 236; plain coordinate loop 232;
+// cluster result arms 232; probe declarations reversed 232; inactive actor return 232.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
