@@ -1792,6 +1792,7 @@ void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary
 }
 
 /* drops every weapon the unit holds (mode 1: deletes them) */
+#pragma inline_depth(0)
 // @retail 0xccf20
 void function_ccf20(long unit_index)
 {
@@ -1805,14 +1806,12 @@ void function_ccf20(long unit_index)
 			long weapon_index = unit->weapon_object_indices[(short)i];
 
 			unit->weapon_object_indices[(short)i] = NONE;
-			/* retail calls 0xce470 out of line here */
-#pragma inline_depth(0)
 			function_ce470(1, unit_index, weapon_index);
-#pragma inline_depth()
 			unit_weapon_slot_changed(unit_index, (short)i);
 		}
 	}
 }
+#pragma inline_depth()
 
 /* counts down the unit's timers: +0x2e8 (clearing +0x2e4), +0x2ca (then
    runs 0x1c9c80 with +0x2c8..+0x2d0) and +0x1f4 (then 0xcffc0); whether
@@ -2148,43 +2147,52 @@ struct s_unit_motion
 
 /* advances a position and velocity along the motion for a time; whether
    time remains after its last phase */
+// #515's rewrite of this body scored 28 (was 104) but moved 0x1e5af0's argument into a register (42), so this body stays.
 // @retail 0xc7750
 bool function_c7750(s_unit_motion const *motion, real position, real velocity, real time, real *out_velocity,
 	real *out_position)
 {
 	bool result = motion->done;
-	real moved_position = position;
-	real moved_velocity = velocity;
 
 	if (!result && time > 0.0f)
 	{
-		if (motion->field_10_4 > 0.0f)
-		{
-			real step = time > motion->field_10_4 ? motion->field_10_4 : time;
-			real change = motion->acceleration * step;
+		real step = motion->field_10_4;
 
-			moved_position = (change * 0.5f + moved_velocity) * step + moved_position;
-			moved_velocity = change + moved_velocity;
+		if (step > 0.0f)
+		{
+			if (time <= step)
+			{
+				step = time;
+			}
+			real change = motion->acceleration * step;
+			position = (change * 0.5f + velocity) * step + position;
+			velocity = change + velocity;
 			time -= step;
 		}
 		if (time > 0.0f)
 		{
-			if (motion->coast_time > 0.0f)
+			step = motion->coast_time;
+			if (step > 0.0f)
 			{
-				real step = time > motion->coast_time ? motion->coast_time : time;
-
-				moved_position = step * moved_velocity + moved_position;
+				if (time <= step)
+				{
+					step = time;
+				}
+				position = step * velocity + position;
 				time -= step;
 			}
 			if (time > 0.0f)
 			{
-				if (motion->s_type_8c87de > 0.0f)
+				step = motion->s_type_8c87de;
+				if (step > 0.0f)
 				{
-					real step = time > motion->s_type_8c87de ? motion->s_type_8c87de : time;
+					if (time <= step)
+					{
+						step = time;
+					}
 					real change = motion->deceleration * step;
-
-					moved_position = (change * 0.5f + moved_velocity) * step + moved_position;
-					moved_velocity = change + moved_velocity;
+					position = (change * 0.5f + velocity) * step + position;
+					velocity = change + velocity;
 					time -= step;
 				}
 				if (time > 0.0f)
@@ -2194,8 +2202,8 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 			}
 		}
 	}
-	*out_position = moved_position;
-	*out_velocity = moved_velocity;
+	*out_position = position;
+	*out_velocity = velocity;
 	return result;
 }
 
@@ -3011,6 +3019,9 @@ void function_c6810(long unit_index)
 /* drops a weapon of the unit: from its first hand by request 9, from its
    second hand by request 0x13 (both through 0xe6900), else from its slot
    (0xce920) */
+// score 150 (was 150): #516's body matched only with an in-body inline_depth pragma around the 0xe6900 call and
+// #515's 0xc7750 rewrite, which moves 0x1e5af0 to a register convention; without the pragma it scores 179, with
+// file-scope inline_depth 259, with a noinline 0xe6900 declaration 179, so this body stays.
 // @retail 0xce520
 void function_ce520(long weapon_index, long unit_index, bool flag)
 {
@@ -3032,7 +3043,23 @@ void function_ce520(long weapon_index, long unit_index, bool flag)
 		memset(&request, 0, sizeof(request));
 		request.type = 9;
 		request.type17.unknown4 = !flag;
-		function_e6900(unit_index, &request);
+		function_b7360(unit_index);
+		bool result = g_4677c8[9]->perform(unit_index, &request);
+		if (unit_index != NONE)
+		{
+			long player_index = UNIT_GET(unit_index)->unknown13c;
+
+			if (player_index != NONE)
+			{
+				short controller = *(short *)((byte *)g_4e8c24->data + (player_index & 0xffff) * 0x21c + 0x28);
+
+				if (controller != NONE)
+				{
+					function_1e6980((s_time_entry *)((byte *)g_51e9c0 + controller * 0x1b0 + 0x150),
+						(short)request.type, result);
+				}
+			}
+		}
 	}
 	else if (slot == unit->next_weapon_index)
 	{
@@ -3041,10 +3068,7 @@ void function_ce520(long weapon_index, long unit_index, bool flag)
 		memset(&request, 0, sizeof(request));
 		request.type = 0x13;
 		request.type17.unknown4 = !flag;
-		/* retail calls 0xe6900 out of line here */
-#pragma inline_depth(0)
 		function_e6900(unit_index, &request);
-#pragma inline_depth()
 	}
 	else
 	{
@@ -6667,10 +6691,8 @@ void function_c7840(vector3f const *desired, vector3f *current, transform4x3f co
 	function_c7300(yaw_offset, yaw_speed, max_speed, acceleration, &yaw_motion);
 	function_c7300(pitch_offset, pitch_speed, max_speed, acceleration, &pitch_motion);
 	function_c75d0(&yaw_motion, &pitch_motion, acceleration);
-#pragma inline_depth(0)
 	bool yaw_done = function_c7750(&yaw_motion, yaw_offset, yaw_speed, rate, &yaw_speed, &yaw_offset);
 	bool pitch_done = function_c7750(&pitch_motion, pitch_offset, pitch_speed, rate, &pitch_speed, &pitch_offset);
-#pragma inline_depth()
 	if (yaw_done && pitch_done)
 	{
 		*current = target;
