@@ -144,7 +144,7 @@ struct s_shape_side
 };
 
 // @retail 0x1f1930
-void function_1f1930(s_shape_contact const *contact, s_shape_side *side)
+void function_1f1930(s_shape_side *side, s_shape_contact const *contact)
 {
 	if (contact->normal.i != 0.0f || contact->normal.j != 0.0f || contact->normal.k != 0.0f)
 	{

@@ -384,7 +384,7 @@ void function_1e6120(s_biped_physics_output *output, void *physics, real rate,
 		state->speed = 3.4028234663852886e+38f;
 }
 
-void function_1f1930(const s_shape_contact *contact, s_shape_side *side);
+void function_1f1930(s_shape_side *side, const s_shape_contact *contact);
 void function_1faeb0(const s_contact *contact, s_contact_result *result);
 void function_1fc620(s_tracking_result *result, const s_tracking_source *source, const s_tracking_target *target);
 void function_1ec3f0(s_unknown_object *object, s_unknown_output *output);
@@ -399,7 +399,6 @@ struct s_contact_dispatch_output
 // @retail 0x1e5b50
 void function_1e5b50(const byte *contact, s_contact_dispatch_output *output, const byte *state)
 {
-	byte selector = *state;
 	if (contact[0x14] & 0x20)
 	{
 		output->direction = 1;
@@ -407,14 +406,14 @@ void function_1e5b50(const byte *contact, s_contact_dispatch_output *output, con
 	}
 	else
 	{
-		switch (selector)
+		switch (*state)
 		{
-		case 1: function_1f1930((const s_shape_contact *)contact, (s_shape_side *)output); break;
+		case 1: function_1f1930((s_shape_side *)output, (const s_shape_contact *)contact); break;
 		case 2: function_1faeb0((const s_contact *)contact, (s_contact_result *)output); break;
 		case 3: break;
+		case 6: function_1ec3f0((s_unknown_object *)contact, (s_unknown_output *)output); break;
 		case 4: function_1fc620((s_tracking_result *)output, (const s_tracking_source *)(state + 0x10), (const s_tracking_target *)contact); break;
 		case 5: function_1fc620((s_tracking_result *)output, (const s_tracking_source *)(state + 0x10), (const s_tracking_target *)contact); break;
-		case 6: function_1ec3f0((s_unknown_object *)contact, (s_unknown_output *)output); break;
 		default: __assume(0);
 		}
 	}
