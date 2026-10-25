@@ -65,6 +65,7 @@ short __stdcall function_1b1f30(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 32 (was 32): node-base/constant register ownership and extent still differ; index/direct pointer lookup 109/32; shared handle 109/42; entry-scope view with index/native lookup 109/32; entry view and shared handle 109/42 (all plain).
 // @retail 0x1b21f0
 void __stdcall function_1b21f0(long actor_index, s_slot *slot)
 {

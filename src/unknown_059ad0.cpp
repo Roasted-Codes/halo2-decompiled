@@ -2451,6 +2451,7 @@ bool network_session_handle_session_disband(c_class_58d20 *session, const s_type
 	return result;
 }
 
+// score 10 (was 10): byte zero/result exits still differ; full-state nonzero/equality 39/40; joined state 39/40; scalar-state boundary 39/40; accepted-state equality 55/36.
 // @retail 0x5e1a0
 bool network_session_handle_session_boot(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -2873,6 +2874,7 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 
 /* a channel of a member connected (a peer tells the host it is there) or
    closed */
+// score 31 (was 31): state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
 {

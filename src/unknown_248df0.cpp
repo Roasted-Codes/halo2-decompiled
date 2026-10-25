@@ -114,6 +114,7 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 	return local_0;
 }
 
+// score 30 (was 30): projection stack/global operands and cross-product XMM roles remain; partial projection sums 30/30/30, both sums 214; cross component orders 34/34/31/31/34; cross before displacement/after normalization 45/42; returned direction at three uses 77/74.
 // @retail 0x248df0
 real function_248df0(long arg_0, void *arg_1, void *arg_2, void const *arg_3)
 {
