@@ -235,6 +235,10 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // tag table stays in ECX; saved-register and lookup order still differ.
 // Existing input/render fields and both 149; ordinary block inline 149; group snapshot 163;
 // shared pointer zeros 148 (dropped); callback search field 150; validation failure return 149.
+// score 140 (was 140): table still enters ECX before the frame rather than saved EDI.
+// Existing element helper out of line 189; type query, geometry test, value callback,
+// value update and context reset noinline declarations 140 each; unsigned extent 140;
+// native int ordinal 140. All temporary helper contracts and declarations restored.
 // @retail 0x224db0
 void __stdcall function_224db0(s_interface_definition *arg_0, long arg_1, long arg_2,
 	long arg_3, long arg_4)
