@@ -416,6 +416,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // score 68 (was 68): Frame 0x24 versus 0x18 remains. Initial bool/long/short state 258/287/73; private
 // helper publication 206; private bool/long state 242/262; private late weight 258; private predicate and
 // late weight 228 (fast).
+// frame/output-home reuse remains; existing helper output plus
+// scalar return for menu/shared/campaign 68/68/68, each pair 68/68/68,
+// all later or all four return consumers 68/68. Original helper and readbacks retained.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {

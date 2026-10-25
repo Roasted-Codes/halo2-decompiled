@@ -303,6 +303,11 @@ extern real g_47f05c;
 // separate displacement scalars, reversed scalar order, coordinate names, partial squared sum,
 // squared-distance result and outer scalar scope 202 each; actual point receiver with scalars 311;
 // separate squared components 204.
+// frame 0xc8 versus 0xd4, folded displacement and shape/entry homes remain.
+// Existing ground record 204; world matrix declared at entry 202; inverse/relative in place 244/241;
+// normal value with shape reads 233; selected-entry result 272; best comparison first 201;
+// selected index assigned before alignment 202. One-count comparison gain rejected.
+
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -511,7 +516,11 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
-// score 182 (was 182): Frame 0x28 and state/output registers agree; six direct-dot displacement
+// score 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
+// scaled cross 264; scaled limited input 241; scaled axis projection 267;
+// full component rotation 239; accumulated alignment 245; normalization decision 183;
+// scaled-cross scalars 186; projected-plus-cosine sums 186.
+// Frame 0x28 and state/output registers agree; six direct-dot displacement
 // bytes and rotation scheduling remain. Ground memcpy 182; limited memcpy 182; separate real
 // components 182; cosine complement 180 (two-point gain dropped); separate cross workspaces 182;
 // cosine/complement before sine 181; explicit alignment with complement 182 (fast).
