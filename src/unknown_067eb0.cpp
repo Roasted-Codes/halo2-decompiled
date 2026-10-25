@@ -46,7 +46,9 @@ void __stdcall function_82240(s_simulation_definition_registry *registry,
 // retail has them (42); g_4cf784 as a struct member (30); taking g_4cf784's address in
 // another function (37: keeps the -1 stores and the reload after the call only); reading
 // it through *(long volatile *)& at both uses (15, all but the store order; not allowed on
-// a global, kept only as evidence of what retail does).
+// a global, kept only as evidence of what retail does); the registry loaded from g_4cf784
+// after the three stores, with the -1 stores and memsets through it (30, or 42 with the
+// locals uninitialised).
 // @retail 0x67e30
 void function_67e30(void)
 {
