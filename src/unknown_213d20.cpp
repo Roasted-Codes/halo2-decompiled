@@ -271,6 +271,9 @@ void cache_copy_buffer_resize(long size)
 	}
 }
 
+// score 5 (was 5): the second buffer address is reused instead of recomputed after the call.
+// Inline declaration 5; noinline declaration 5; byte memset 5; both clears first 25; selected result 24;
+// later result 13; both buffers initialized 81; priority-first result 31.
 // @retail 0x213e30
 long cache_copy_current_priority(char const *map_name)
 {
@@ -289,6 +292,9 @@ long cache_copy_current_priority(char const *map_name)
 	return result;
 }
 
+// score 5 (was 5): the second buffer address is reused instead of recomputed after the call.
+// Inline declaration 5; noinline declaration 5; byte memset 5; both clears first 25;
+// selected result 24; later result 13; both buffers initialized 81; priority-first result 31.
 // @retail 0x213e90
 long cache_copy_queued_priority(char const *map_name)
 {
@@ -346,6 +352,9 @@ long map_location_get(char const *map_name)
 	return cache_copy_queued_priority(map_name) != NONE;
 }
 
+// score 3 (was 3): the second buffer address is reused instead of recomputed after the call.
+// Noinline declaration 3; inline declaration 3; first buffer initialized 65; second initialized 68;
+// byte memset 3; empty strncpy 81; both buffers initialized 94; shared byte clear 5.
 // @retail 0x214e40
 bool map_names_equal(char const *map_name, char const *other_map_name)
 {

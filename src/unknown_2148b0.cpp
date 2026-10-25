@@ -20,6 +20,9 @@ extern s_cache_copy_request g_55be24[2];
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
+// score 2 (was 2): the numerator conversion follows the denominator reload. Plain total 37;
+// double fraction 86; double operands 3; branch-assigned fraction 27; fraction first 2;
+// state snapshot 2; range selection 42; high range first 43; mixed precision division 2.
 // @retail 0x2148b0
 bool function_2148b0(long progress)
 {
