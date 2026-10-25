@@ -359,37 +359,26 @@ bool __stdcall function_b6180(void *block)
     return function_b5e40(block);
 }
 
-struct s_http_callbacks_ab
-{
-    long count;
-    long values[8];
-    bool (__stdcall *callbacks[8])(void *);
-    long stages[8];
-    void *blocks[8];
-};
+void transport_register_transition_functions(transport_transition_function startup, transport_transition_function shutdown, transport_transition_function reset, void *context);
 
-s_http_callbacks_ab g_4d8b1c;
-
-// score 20 (was 20): the two zeroed endpoint words are written through a register here and through
-// memory in retail, the registry entry stores the state field instead of zero, and the count is
-// incremented in place instead of being read, incremented and written back.
+/* constructs a connection and registers its close (function_b6180) as a transport shutdown
+   function; retail expands transport_register_transition_functions (src/transport.cpp) here */
+// score 28 (was 20): the body matches when its caller is built with LTCG. Retail's only caller is
+// the dynamic initializer 0x376bf0 (it constructs the connection at 0x546a8c and passes it in edi),
+// which the inventory lists as library code, so the build takes this function's address and it
+// keeps the standard convention: the connection arrives in ecx and is saved in edi, and the count
+// increment is scheduled differently. With 0x376bf0's owner set to game locally this is a MATCH.
+// Tried: the endpoint cleared with two dword stores (21), the shutdown table written out by hand (20).
 // @retail 0xb5cd0
 s_http_connection_ab *function_b5cd0(s_http_connection_ab *connection)
 {
     connection->hostname[0] = 0;
     function_b62b0((s_upload_ab *)((byte *)connection + 0x30));
     s_transport_endpoint *endpoint = &connection->internal_endpoint;
-    ((dword *)endpoint)[0] = 0;
-    ((dword *)endpoint)[1] = 0;
+    memset(endpoint, 0, sizeof(*endpoint));
     connection->endpoint = endpoint;
-    long *state = &connection->state;
-    *state = 0;
-    g_4d8b1c.values[g_4d8b1c.count] = *state;
-    g_4d8b1c.callbacks[g_4d8b1c.count] = function_b6180;
-    g_4d8b1c.stages[g_4d8b1c.count] = *state;
-    g_4d8b1c.blocks[g_4d8b1c.count] = connection;
-    // Keep the final registry count read at its later use.
-    g_4d8b1c.count = *(long const *)&g_4d8b1c.count + 1;
+    connection->state = 0;
+    transport_register_transition_functions(0, (transport_transition_function)function_b6180, 0, connection);
     return connection;
 }
 
