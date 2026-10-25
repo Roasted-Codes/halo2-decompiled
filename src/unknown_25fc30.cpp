@@ -196,6 +196,9 @@ bool __stdcall function_25dd30(long a, long b)
 // score 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
 // shared component difference at offset/segment/both/fallback 334/343/343/343;
 // sphere/cone/all displacements 368/277/392; existing magnitude helper 175.
+// score 175 (was 175): initial offset schedule and protected geometry carriers remain;
+// read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
+// 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -418,6 +421,10 @@ void __stdcall function_25dd50(
 // Native trace 38; facing guard 37 (plain 37); cover index before/after base 38/38;
 // shared inset/lateral/both scale 131/106/138; native trace plus guard 37;
 // trace-block definition receiver 104; receiver plus guard 101. One-point gain dropped.
+// Frame and trace prefix agree; face base/index, definition setup, cover carriers and failed-
+// facing placement differ. native direction initializer 38; native lateral initializer 38; native
+// lateral target copy 177; completed point workspace 80; symmetric facing inputs 38; readonly
+// cover input 38; native cover normal value 38; side output initializer 203.
 // score 38 (was 38): face/definition and cover register ownership, normal y product and cold block remain.
 // Candidate-record reference 38; reference-flags binding 67; normal input copy 42;
 // point/normal/both output copies 42/42/42; facing scalar 38; published-side switch 59.
