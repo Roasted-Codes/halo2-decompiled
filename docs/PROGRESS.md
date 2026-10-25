@@ -2,6 +2,16 @@
 
 The newest entry comes first.
 
+## 2026-10-25: 9579 functions match
+
+```
+matched 9579 of 11321 game functions (1521678 of 2784283 bytes, 54.65%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+1 new matches, none lost:
+- @coldspear's #790: `0x11c470` match.
+
 ## 2026-10-25: 9578 functions match
 
 ```
