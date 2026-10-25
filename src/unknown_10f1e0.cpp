@@ -397,6 +397,9 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // shared entry count 42; entry graph query 42; all graph queries 42; typed model plus graph queries 42.
 // Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
 // value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
+// Round 127: shared visited-word address 105; unsigned-int words 42; both 105;
+// class iterator noinline 42; mode iterator noinline 42; both noinline 42;
+// marker query noinline 42; transform noinline 42.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)

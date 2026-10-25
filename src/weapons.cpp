@@ -1946,6 +1946,9 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 // score 124 (was 124): magazine/available/taken registers and pool reloads remain; original getter,
 // per-slot getters, all object getters and header getters 124 each; first/other/both magazine references
 // 124 each; unit reference 124.
+// Round 127: single unavailable-reserve exit 124; signed-byte result 200;
+// signed/unsigned halfword results 204/204; int slot index 124;
+// state query, reserve notification and transfer noinline 124 each.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2422,6 +2425,9 @@ bool function_106280(long object_index, long *out_index, byte *out_entry);
 // score 130 (was 130): frame 88 versus 84 and current-object spill remain; object/header getters 130/130;
 // entry weapon/tag references 130/130; output magazine reference 219; byte/long active carriers 192/194;
 // target-model reference 130.
+// score 130 (was 130): frame 0x88 versus 0x84 and current-object spill remain;
+// one-use marker identifier local 125 (reverted in review). Halfword active 169; signed-byte active 192;
+// loaded/total/both capacity values 130/130/130; target query/status noinline 130/130.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
@@ -2941,6 +2947,9 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // score 52 (was 52): barrel/magazine and selector registers remain reversed; weapon/tag/both receiver
 // inputs 52/52/52; barrel input 131; weapon+barrel/tag+barrel/all inputs 52/52/52; direct success with
 // weapon input 111.
+// Round 127: short selector with barrel input 133; with weapon/barrel 52;
+// with tag/barrel 52; with all receivers 52; with external record references 52;
+// reserve query, reload notification and barrel stop noinline 52 each.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
