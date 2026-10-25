@@ -210,6 +210,8 @@ extern "C" void _ReadWriteBarrier(void);
 // bound result homes declared together 50; task result used for store and test 50;
 // explicit clock selection 53; direct zero initialized request 87;
 // current snapshot inside active guard 50; both bounds declared before current 50. Restored.
+// score 50 (was 50): shared bound workspace 50; default score first 98; invalid score inputs first 50;
+// named progress 50; lower/upper/both output clamps 105/104/98; inactive current first 58.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {

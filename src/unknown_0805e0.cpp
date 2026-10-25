@@ -54,6 +54,8 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
    with a name; iterator starts at the first entry and ends at NONE */
 // score 43 (was 43): Early index save, next-index register, loop rotation and hoisted mask still differ.
 // existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
+// score 43 (was 43): iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;
+// result-terminated loop 52; iterator result termination 44; output outcomes 68; native termination 47.
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {

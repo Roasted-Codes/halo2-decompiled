@@ -180,6 +180,8 @@ PRIVATE __forceinline void vertex_decode_23ac30(short x, short y, short z,
 // decode agrees. Shared point constructor 228; aggregate point 62; range stages 62; range
 // decoder/producer inline 62/537; buffer fields at use 190; ordinary scalar index 62; packed cases
 // together 111.
+// score 62 (was 62): node/plain/both point memcpy 62/62/62; node/packed/both record references
+// 62/62/62; native coordinate loop 62; native range and coordinate loops 62. Restored.
 // @retail 0x23ac30
 void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 	s_vertex_bounds_23ac30 const *bounds, point3f *point, long *node)

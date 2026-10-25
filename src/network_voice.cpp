@@ -2026,17 +2026,22 @@ long voice_players_share_team(long other, long player)
 // Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
 // team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
 // bit addition 59; signed result 55; initial guard 121; conditional/late mask 46/46; direct outputs 141/144.
+// score 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
+// Mode with complete mask 46; shared team/all-peer modes 148/148; team acceptance first 46;
+// mask before mode 34; equality with other/selected validity 117/118; unsigned peer ordinal 130.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
 	dword result = 0;
 	if (settings->initialized && voice_available())
 	{
-		if (g_4c9878.mode == 2 || g_4c9878.mode == 3)
+		dword mask = 0;
+		long mode = g_4c9878.mode;
+		if (mode == 2 || mode == 3)
 		{
-			long mode = g_4c9878.mode;
 			byte *membership = (byte *)voice_get_membership();
-			dword mask = membership ? *(dword *)(membership + 0x10d0) : 0;
+			if (membership)
+				mask = *(dword *)(membership + 0x10d0);
 			if (mode == 3)
 			{
 				s_network_session_player *players = (s_network_session_player *)voice_get_players();
