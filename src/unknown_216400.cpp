@@ -97,6 +97,9 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
     return result;
 }
 
+// score 51 (was 51): diagnostic arguments, append count/result and enumeration registers differ.
+// File path/directory/both receivers 51/51/51; conditional character store 69;
+// capacity first 54; capacity nonzero 51; short type index 189; no parameter address 51.
 // @retail 0x2164c0
 void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
 {

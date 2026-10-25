@@ -136,6 +136,9 @@ static inline void particle_cross_product3d(vector3f const *a, vector3f const *b
 
 /* the rotation and position a particle system is drawn at: its own, or
    moved by the first person offset */
+// score 52 (was 52): cross-product schedule and retained left-axis/point XMM homes differ.
+// Matrix inline/noinline 52/52; cross force-inline 52; matrix aggregate 107;
+// left-axis construction 140; point first/renamed 52/52; consumed matrix output 54.
 // @retail 0x248450
 void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f *position, matrix3x3 const **rotation_result, point3f const **position_result, bool field_b4)
 {

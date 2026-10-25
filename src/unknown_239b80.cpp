@@ -319,6 +319,9 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 	result->j = a->y - b->y;
 }
 
+// score 50 (was 50): initial count load, wrap-bound ownership and XMM allocation remain.
+// Edge first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50;
+// nested predicates 50; entry success 51; predicate result 51. Two-point gain rejected.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {
