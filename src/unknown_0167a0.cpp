@@ -88,6 +88,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 167 (was 167): Frame and entry agree; logarithm operand width/reset and restore allocation
 // differ. Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
 // record 167; conditional reciprocal 167 (fast).
+// logarithm width and reset/restore scheduling remain;
+// early dirty mask, update byte or late counter pair each 296; first published range 167;
+// second published range 187.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -757,7 +760,10 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): frame 0xc versus 0x10; table/entry homes and selector rereads differ.
+// score 157 (was 157): frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
+// Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
+// alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
+// frame 0xc versus 0x10; table/entry homes and selector rereads differ.
 // Ordinary writer inline 513; packed/index formal domains 189/181; shared complement 214;
 // global optimization off 621; frame pointer 207; branch table lifetimes 184; inline depth two 157.
 // @retail 0x17170

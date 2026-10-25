@@ -69,6 +69,10 @@ extern long g_55c154;
 // failed-creation join 61. Classification spill and copy expansion still differ.
 // byte classification 61; signed-byte classification 61; initialized variant 170; initialized request 155;
 // frame pointer 98; global optimization disabled 518; controller-index snapshot 61; speed preference 466.
+// Biased 0x250 frame agrees; shared-load classification spill and string-copy expansion
+// still differ. source default override 62; source existing override 61; source handle
+// lifetime 76; separate current selection 61; name generation result 61; saved handle
+// workspace 61; native generated name 61; native name source override 62.
 // score 61 (was 61): classification spill and selective copy expansion remain;
 // destination name after/before default 88/88; destination record late/early 88/88;
 // record/name receivers 88; publication order 174; named second load 61;

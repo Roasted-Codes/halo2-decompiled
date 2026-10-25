@@ -1224,6 +1224,9 @@ bool function_0b6760(s_index_pair const *pair);
 // score 347 (was 351): Frame 0x1c versus 0x20; index/header and state/result homes differ. In-place
 // power output 377; isolated rate position 371; speed first 352; integration-only direction 383;
 // conditional activity-bit publication 347 kept (plain).
+// Round 303: entry position output 351; previous-value name 351; early previous velocity 373;
+// changing-power arm first 351; early activity result 418. Frame/index/state homes still differ.
+// Ordinary saved pointer with shared previous 381 at retail length; original qualifiers kept.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

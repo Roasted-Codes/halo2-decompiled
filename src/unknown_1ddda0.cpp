@@ -373,7 +373,10 @@ PRIVATE __forceinline real function_1de2c2(point3f const *arg_0, point3f const *
 
 // score 44 (was 44): the loads after the first loop are in the other order
 // and the byte load uses mov cl where retail uses movzx ecx, so the table
-// address that follows is off.
+// address that follows is off. Tried: the projection helper for both edge
+// points without the volatiles 109; the volatiles removed 98; the side flag
+// declared first 44; the insertion helper's parameters swapped 44; the first
+// loop's exit test as an if/break 44.
 // @retail 0x1de2c0
 void function_1de2c0(s_1de2c0 *arg_0, long arg_1)
 {

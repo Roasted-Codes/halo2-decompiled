@@ -479,6 +479,11 @@ static inline void input_counter_set_inlined(long c, long a, long b, long value)
 // score 32 (was 32): the old team mask is kept as a 32 bit value here and as a 16 bit one in
 // retail; the comparison and the update of the two masks use different registers, and the input
 // counter loop uses different ones too.
+// Team-bit carrier 29 (the loop then matches; below the keep threshold); carrier with the
+// engine lookup hoisted 29; carrier with the mask compare swapped 29 (the mask load leads
+// the compare but is still not shared with the update); two-width union view of the mask 90;
+// union with a named wide copy 90; word local with a promoted copy 134; updated mask
+// computed before the branch 133; union plus carrier 91.
 // @retail 0x158140
 void function_158140(void)
 {
