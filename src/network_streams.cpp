@@ -623,7 +623,8 @@ void c_network_reliable_stream::mark_received(long sequence)
 	}
 }
 
-// score 81 (was 94): the getter inlined (0x966d0 marked inline) and previous set
+// score 81 (was 81): frame 0x14 agrees; derived bit start, current/message/type homes and zero-extension remain.
+// the getter inlined (0x966d0 marked inline) and previous set
 // in an if/else fix the head; retail computes the bit index's start as
 // (acknowledged - 1) - acknowledged, ours stores -1, and keeps current in edi and
 // the message in ebx (ours swapped). Bit index derived from current in four
@@ -631,11 +632,13 @@ void c_network_reliable_stream::mark_received(long sequence)
 // registers then as retail, but no movzx and the first lookup in eax); bit as the
 // loop variable 144; loop over the sequence parameter 174; type after the flag
 // store 120; message variable reused in the loop 81.
-// score 94 (was 94): the slot address is kept in EAX here and in EDX in
+// Earlier at 94, the slot address is kept in EAX here and in EDX in
 // retail, and ours zeroes EAX before the range test, so the loop head differs.
-// score 81 (was 81): the bit-index start and current/message saved registers remain;
+// the bit-index start and current/message saved registers remain;
 // acknowledged/undelivered/both skips, fallback exit and ordinary while 81; iteration-bit value
 // alone/with skips 105/105/105.
+// Actual time operand 142; two-use elapsed 84; later type with actual time/reused elapsed 148/121;
+// original flag type alone/with time 113/143; native type byte with time 142; direct publication/time 143.
 // @retail 0x96910
 long c_network_reliable_stream::function_96910(long sequence, long bit_count, dword const *bits, bool complete)
 {
