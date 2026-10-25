@@ -291,6 +291,13 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 	return function_991d0(arg_0, local_1, local_0, arg_2);
 }
 
+// score 115 (was 116): the case 1/3 loop still differs in registers: retail keeps the items
+// pointer in eax and the data pointer in edx and enters the loop past the items reload; ours uses
+// ecx for data and moves the handle into edx. The count == 1 branch now loads and spills like retail.
+// The volatile reads keep the loop pointers on the stack as retail does; without them the handle
+// is spilled instead (207). Tried: memcmp sized by info.count (179), state read into a local (115),
+// loop counter by index without pointers (207), function_991d0 called directly (143), helper
+// reading [0] first (134) or no helper locals (137), pointer locals or increments reordered (115).
 // @retail 0x98fb0
 void c_handle_table_450cd0::v6(s_request_450cd0 *a1)
 {
@@ -329,9 +336,9 @@ local_3:
 			return;
 		if (local_0->info.count == 1)
 		{
-			long local_17 = local_0->info.c[0];
-			long local_18 = local_0->info.b[0];
 			long local_19 = local_0->count;
+			long local_18 = local_0->info.b[0];
+			long local_17 = local_0->info.c[0];
 			s_handle_peers *local_14 = table;
 			local_14->peers[local_2].flags = 1;
 			local_14->peers[local_2].unknown01 = (byte)((dword)local_1 >> 28);
@@ -360,7 +367,7 @@ local_4:
 			{
 				long local_8[4];
 				long local_9 = replication_table_get_chain(table, local_1, local_8);
-				if (local_9 == local_0->info.count && memcmp(local_0->info.items, local_8, local_9 * sizeof(long)) == 0)
+				if (local_0->info.count == local_9 && memcmp(local_0->info.items, local_8, local_9 * sizeof(long)) == 0)
 				{
 					for (long local_7 = 0; local_7 < local_0->info.count; local_7++)
 						function_99690(this, local_0->info.items[local_7], 0);

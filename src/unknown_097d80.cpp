@@ -208,21 +208,14 @@ void c_handle_table_450cd0::function_97fe0()
 // @retail 0x980d0
 void c_handle_table_450cd0::function_980d0(long handle, dword mask)
 {
-	s_handle_entry *entry = &entries[handle & 0x3ff];
+	long index = handle & 0x3ff;
+	s_handle_entry *entry = &entries[index];
 	if (entry->state == 3)
 	{
-		word item_mask = table->peers[handle & 0x3ff].mask;
-		dword value = entry->unknown04;
-		if (!((1 << shift) & item_mask))
-		{
-			if (value == 0)
-				unknown5034++;
-			value = entry->unknown04;
-		}
-		entry->unknown04 = value | mask;
+		if (!((1 << shift) & table->peers[index].mask) && entry->unknown04 == 0)
+			unknown5034++;
 	}
-	else
-		entry->unknown04 |= mask;
+	entry->unknown04 |= mask;
 }
 
 // @retail 0x98120
