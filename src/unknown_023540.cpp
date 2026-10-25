@@ -376,6 +376,9 @@ real *function_143600(real const *rotation, unsigned long order, real const *coe
 // frame 0x7c versus 0x68; axis/trigonometric homes and rotation-call layout differ.
 // Complement at use 264; reused axis squares 252; coefficient countdown 273;
 // contiguous payload reset 286; conditional phase clamp 258.
+// score 243 (was 252): frame, axis/trigonometric homes and rotation-call layout remain;
+// native coefficient array 258; payload clears first 257; late axis squares 258;
+// reused mixed-axis products 243; entry result buffer 252; source pointer before reset 250.
 // @retail 0x22850
 void function_22850(void)
 {
@@ -406,15 +409,18 @@ void function_22850(void)
             real square_i = axis.i * axis.i;
             real square_j = axis.j * axis.j;
             real square_k = axis.k * axis.k;
+            real cross_ji = axis.j * complement * axis.i;
+            real cross_ki = axis.k * complement * axis.i;
+            real cross_jk = axis.j * axis.k * complement;
             real rotation[9];
             rotation[0] = (1.0f - square_i) * cosine + square_i;
-            rotation[1] = axis.j * complement * axis.i + axis.k * sine;
-            rotation[2] = axis.k * complement * axis.i - axis.j * sine;
-            rotation[3] = axis.j * complement * axis.i - axis.k * sine;
+            rotation[1] = cross_ji + axis.k * sine;
+            rotation[2] = cross_ki - axis.j * sine;
+            rotation[3] = cross_ji - axis.k * sine;
             rotation[4] = (1.0f - square_j) * cosine + square_j;
-            rotation[5] = axis.j * axis.k * complement + axis.i * sine;
-            rotation[6] = axis.k * complement * axis.i + axis.j * sine;
-            rotation[7] = axis.j * axis.k * complement - axis.i * sine;
+            rotation[5] = cross_jk + axis.i * sine;
+            rotation[6] = cross_ki + axis.j * sine;
+            rotation[7] = cross_jk - axis.i * sine;
             rotation[8] = (1.0f - square_k) * cosine + square_k;
             for (real *coefficients = (real *)(sample + 0xc);
                 coefficients != (real *)(sample + 0x78); coefficients += 9)
