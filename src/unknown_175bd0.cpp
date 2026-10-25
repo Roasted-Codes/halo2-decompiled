@@ -2194,6 +2194,10 @@ event_done:
 // frame agrees; object-index caching and visibility block order differ.
 // Const tag/root 109/109; external datum reference 109; visibility result tests 189;
 // inline depth one/two 109/109; global optimization off 550; frame pointer 200.
+// Four-byte frame agrees; cached object index across validity query and visibility/destruction
+// joins differ. external tag record 109; external root record 109; wide visibility result 144;
+// byte visibility result 109; unsigned color handle 109; root velocity address 109; root location
+// address 109; origin output lifetime 247.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2702,13 +2706,17 @@ void __stdcall function_17a380(s_effect_datum *effect)
 	}
 }
 
-// score 96 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// score 96 (was 96): the frame is eight bytes smaller and the two globals are loaded into the other registers
 // tried transform name 109; query results, particle cursor and colors at entry 109; read-only settings 109;
 // immutable mode once 96 (kept); size policy 146; inline depth zero 109.
 // the frame is eight bytes smaller and the two globals are loaded into the other registers
 // Deferred particle cursor 125; active-only effect cursor 125; particle-location
 // record 109; system/definition/type/effect records 109 each; exhausted-particle
 // continue 109. Frame remains eight bytes small; pool/register and cursor homes differ.
+// Frame remains eight bytes small; pool/system allocation, query/color carriers and cursor homes
+// differ. mode after color 112; late signed mode 112; late effect cursor home 112; late particle
+// cursor home 112; early mode traversal transform 96; early mode node observation 96; early mode
+// transform home 96; early mode query scope 96.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {

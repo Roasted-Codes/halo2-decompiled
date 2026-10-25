@@ -78,6 +78,10 @@ void function_2232a0(void)
 // slot-predicate materialization and final initializer residences differ.
 // Mode/options receivers, mode result, external count/slot references, typed selected
 // record, terminal record reference and both record receivers each 151 (575 bytes).
+// One-dword frame agrees; count-one paths bypass the shared count/layout join, with slot and reset
+// allocation gaps. unsigned selected slot 151; word selected slot 157; word view ordinal 201; byte
+// view ordinal 167; exact scan bound 175; existing initializer inline 151; completed search result
+// 180; word scan and ordinal 157; byte selected slot 164.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
