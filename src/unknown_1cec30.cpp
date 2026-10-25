@@ -2660,6 +2660,7 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // body stride/base registers and transform call differ;
 // count names 206; search names 206; transformed name 206; entry phase
 // transforms 301; equal-node arm first 248.
+// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

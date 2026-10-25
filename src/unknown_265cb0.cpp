@@ -380,6 +380,7 @@ real function_30bf0(vector3f *vector);
 // and `secondary < a` compares (no change).
 // Tried at 226 (lane): qualified long result 226; qualified byte result 232; long seat count 240;
 // long seat index 226; shared seat-element pointer 226.
+// score 195 (was 195): Frame/result and inverse SIMD homes remain. Ordinary short result 250; ordinary long result 250; delta initializer 221; motion initializer 221; plane scope 221 (fast, each with the seat increment in the body).
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
