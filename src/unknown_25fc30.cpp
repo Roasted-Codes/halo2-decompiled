@@ -193,6 +193,9 @@ bool __stdcall function_25dd30(long a, long b)
 // score 175 (was 175): first vector schedule, geometry registers and score adds remain;
 // shared displacement/geometry displacement/bonus result 310/310/313;
 // geometry/sphere/cone score observations 337/310/310; all score observations 337; actual view reference 310.
+// score 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
+// shared component difference at offset/segment/both/fallback 334/343/343/343;
+// sphere/cone/all displacements 368/277/392; existing magnitude helper 175.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

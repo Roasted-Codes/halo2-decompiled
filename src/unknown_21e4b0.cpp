@@ -101,6 +101,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // returned byte 313; returned byte/count cursor 341; serial HRESULT 169; descriptor prefixes 323;
 // complete listener value 468; frame pointer 443; global optimization disabled 1166; size preference 645;
 // separate final-call result 302; result transfer before reset 294.
+// score 165 (was 165): success/type carriers and first-channel spill remain;
+// native startup/create/buffer calls 209/201/165; two-row input table 165;
+// absolute channel index 283; state before codec stores 165; failure state 163; early failure state 286.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

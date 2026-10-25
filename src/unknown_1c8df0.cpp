@@ -29,6 +29,10 @@ extern vector3f *g_4687bc;
 // score 170 (was 170): frame 0x8c versus 0x94; secondary-result home and probe tail differ.
 // Native clear with byte probe result 74 (not matched); fraction/index names 170/170;
 // earlier native clear declaration 170; short clear state 237; short clear with byte result 240 (not matched).
+// score 170 (was 170): frame 0x8c versus 0x94 and secondary-result tail remain;
+// direct primary miss 207; entry fraction zero 185; early probe bit 181; arithmetic clear bit 288;
+// early bit with shared probe and Boolean/native clear 44/85 (not matched);
+// shared probe with entry fraction/direct primary miss 44/71 (not matched).
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)
