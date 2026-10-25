@@ -220,6 +220,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // score 235 (was 235): frame 0x78 versus 0x6c; early ESI save and position home differ.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
 // shared-left output with one exit 233 (two-point gain dropped).
+// Branch-scoped velocity 248; scalar point setter 255; parent-transform first 237;
+// entry flag mask 278; active-angle first 235.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -812,9 +814,11 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 
-// score 278 (was 278): frame 0x124 agrees; sweep/point homes and store timing differ.
+// score 159 (was 278): frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // Complete request type 278; scale at each use 278; aggregate sweep 278;
 // point/normal/location copies first 278; target size optimization 536.
+// Query before sweep 159; distinct later-up output 288; double best fraction 255;
+// named radius field 278; const sweep with distinct later-up output 288.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -828,13 +832,13 @@ long function_119c10(long arg_0)
     {
         real local_4 = *(real *)((byte *)local_0 + 0x3c) + 0.1f;
         real local_5 = local_4 / local_3;
+        real local_7 = 3.402823466e+38f;
+        long local_8[16];
+        long local_9 = function_bb050(1, 3, (byte *)local_0 + 0x28, &local_0->center, local_4, local_8, 16);
         vector3f local_6;
         local_6.i = local_5 * local_2.i;
         local_6.j = local_2.j * local_5;
         local_6.k = local_2.k * local_5;
-        real local_7 = 3.402823466e+38f;
-        long local_8[16];
-        long local_9 = function_bb050(1, 3, (byte *)local_0 + 0x28, &local_0->center, local_4, local_8, 16);
         short local_10;
         short local_11;
         short local_12;
