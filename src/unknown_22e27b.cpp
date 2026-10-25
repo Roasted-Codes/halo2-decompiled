@@ -173,6 +173,9 @@ static inline real interpolate_linear(real a, real b, real t)
 // Frame 0xc versus 0x10; next time stays in EBX instead of its retail stack home.
 // Entry disposal 205; shared boundaries 251; shared hold cases 238; final branch order 210; interpolation helper 210; native restart 227.
 // Flags snapshot 205; initial frame count 205; unsigned duration 214; key pointers 222; disposal exit 223.
+// score 106 (was 106): frame 0x10 agrees; division setup, quotient and frame/index registers differ.
+// Short interval count 215; stepped next-time accumulator 106; shared high-boundary reversals 193;
+// wide lookahead with short wrapping 248; conditional elapsed clamp 106; opening body restored.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
