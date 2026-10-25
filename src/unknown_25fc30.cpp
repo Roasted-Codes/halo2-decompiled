@@ -199,6 +199,10 @@ bool __stdcall function_25dd30(long a, long b)
 // score 175 (was 175): initial offset schedule and protected geometry carriers remain;
 // read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
 // 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
+// score 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
+// signed sphere ordinal 1031; unsigned sphere ordinal 1031; count snapshot 175; snapshot with signed
+// ordinal 1031; snapshot with unsigned ordinal 1031; final unit cap 352; final cap with signed ordinal
+// 1023; final cap with count snapshot 352. All restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -939,6 +943,12 @@ void __stdcall function_25edd0(
 // projected workspace first 50; unsigned line ordinal 145. Iterator setup and bonus tests remain.
 // Selected-arm staged scales 72; upper-first staged 66; half by division 50;
 // selected margin carrier 186; near/far or separate bonus names 50; staged/name pairs 66.
+// score 50 (was 50): the range bonus in retail is a two-test select (over 2 first,
+// then over 0) with two multiplies (halve, then times ten); that exact form scores 66
+// (997 bytes) because the line loop's xmm homes rotate — the allocation cascade from the
+// protected iterator setup defeats it. Nested select 83; staged halves with the new
+// order 66; new order with folded multiply 58; old order with two multiplies 72;
+// squared-length local 186; closest product order 66; margin initialized 66.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,

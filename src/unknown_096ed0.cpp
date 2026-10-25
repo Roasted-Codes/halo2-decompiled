@@ -13,6 +13,10 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
+// score 217 (was 217): frame 0x48 agrees; receiver EDI/EBP and count,
+// priority, size and blocked homes remain. Both redundant count guards removed
+// 249; separate native arrays 249; distinct counter names 249; result-home names
+// 249; arrays and counter names 249; pending-only guard 242; active-only 220.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

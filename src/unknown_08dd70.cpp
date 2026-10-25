@@ -119,6 +119,9 @@ struct s_handler_slot
 // session clear schedule, field-address carriers and final link load differ;
 // handler/gateway/both native clears 58/59/54; session 71; handler/session 68;
 // gateway/session 67; all three 47 plain; full pointer ranges 57.
+// score 47 (was 47): session schedule, field addresses and late link observation remain; native
+// handler/gateway reciprocal clears 47/59, both 59; gateway/handler byte clears 72/47; separate
+// session clears 59; trailing pointer 47; all scalar clears 72.
 // @retail 0x8dd70
 void function_8dd70(void)
 {
