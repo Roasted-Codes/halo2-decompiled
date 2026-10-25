@@ -89,7 +89,9 @@ long function_14de70(long arg_1);
 // child test order 141f; wider selection scope 131f; cached zone count 145f (control 131f).
 // Native output sentinel/flag/scalar/pairs/full/scoped views 131f (control 131f);
 // the original prefix stores and all protected query interfaces are retained.
-// score 113 (was 113): Mask/player roles and parent/tag scheduling remain. First/second/both adjacent
+// score 113 (was 113): mask/player roles and tag scheduling remain; current/parent/both tag values 113 each;
+// parent mode char 113; initialized display 274; native current/parent-child/all selectors 113/113/113 (plain).
+// Mask/player roles and parent/tag scheduling remain. First/second/both adjacent
 // field copies 113/113/113p; paired hands bytes and prefix copies 465p; checked player accessor / first
 // copy / all copies 519/519/518p.
 // Seat-word observation, native parent/child links, ordinary child for, combined links,

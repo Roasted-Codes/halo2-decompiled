@@ -456,6 +456,11 @@ bool function_246360(
 // score 53 (was 53): plane object reference 210; origin reference 57; direction reference 53;
 // projected-start initializer 53; projected-direction initializer 53; paired initializers 55;
 // vertex-end traversal 66; quotient update 53. Projection operands and edge allocation still differ.
+// operand text order of the six products is canonicalised (each flip 53);
+// the negated distance computed at entry 164; both projected points through one inline
+// point-plus-scaled-normal helper 83, though it gives retail's three plane-first loads for the
+// start point and the last two direction products (only the first direction product and the
+// edge loop's registers still differ).
 // @retail 0x2466b0
 bool function_2466b0(
 	point3f const *start,

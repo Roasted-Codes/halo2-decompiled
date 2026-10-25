@@ -50,7 +50,11 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // success-only stores 300; mask range 230; signed-byte found index 175 kept; membership first plus
 // shared uniqueness 226. With byte index, role name 175; long uniqueness 238; count bounds 173
 // dropped for only two further points.
-// score 174 (was 174): frame and options/index/mask homes still differ.
+// score 174 (was 174): frame 0x14 versus 0x18; options/index/mask homes still differ.
+// Machine/duplicate/both bit cursors 270/285/312; membership bit 245; outer plus
+// membership bits 235; all bit cursors 295; case orders 2,1,3 and 3,1,2 198/224.
+// First bit cursor recovers frame/options register but loses entry zero and adds 12 bytes.
+// frame and options/index/mask homes still differ.
 // native membership cursor 233f; byte membership cursor 269f.
 // machine array base 175f; player array base 242f.
 // native array bases 242f; external options record 175f.

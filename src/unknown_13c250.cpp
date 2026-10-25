@@ -94,6 +94,10 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // plain count/cursor 232; output/ranking cursors 294; completed cursor 303;
 // rank-one first 171; lower-rank first 174; pointer/native case 176;
 // pointer/count snapshot 181.
+// score 144 (was 144): receiver/count reloads and ranking handoff remain;
+// cursor read-step/end equality/for/preferred break 144/144/144/144;
+// pointer default rank 189; rank-three first 144; empty selection exit 144;
+// read-step with default rank 190.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {

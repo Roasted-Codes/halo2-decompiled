@@ -751,7 +751,11 @@ real normalize2d(point2f *v);
 // result homes differ. Validity initialized in typed arm 241; first type initialized by branch
 // 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
 // movement flag stores 174; retry speed first 172; native planar output copies 172.
-// score 172 (was 172): Frame 0x48 agrees; fast-byte zero, trajectory arguments and retry/result homes differ.
+// score 172 (was 172): frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
+// first-type state 172/208; decisions after query 177; both byte decisions 172.
+// Word validity reaches 935 bytes but gains only two points and is restored.
+// Frame 0x48 agrees; fast-byte zero, trajectory arguments and retry/result homes differ.
 // separate retry force 196; long first-type result 235.
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.

@@ -142,6 +142,10 @@ struct s_082b70_player
 
 // score 48 (was 48): retail reads another global for the record pointer and keeps it in edx,
 // ours reads a different global and keeps the pointer in eax.
+// The flag lives in dl (retail cl, rematerialised as xor al, al after the first exit), so the parent
+// takes esi and edi is pushed early; tried the parent test as an if/else setting unit_index to NONE 50
+// (either polarity), unit_index read before the test 64, return false on the parent, NONE and
+// mapping failures 81, on the parent failure only 80, on the parent and mapping failures 82
 // @retail 0x828b0
 bool function_828b0(long player_index, s_player_object_motion *result)
 {
