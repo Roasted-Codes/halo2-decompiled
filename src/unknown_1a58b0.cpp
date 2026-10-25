@@ -1656,6 +1656,10 @@ struct s_candidate_unit_definition
 // geometry-call convention and exchanged failure exits remain; native
 // flag/limit/adjacent clears 216/152/199; direction memcpy 18; clear plus copy 216/152/199;
 // branch-zero clear 199.
+// score 11 (was 11): frame 0x10 and length agree; geometry query takes a stacked object instead of ECX.
+// Query noinline 11; combined rejection/acceptance 18 each; output/marker references 11 each;
+// named type mask 11; result after initialization 16; direction producer home 196;
+// unconditional successful tail 11. Experimental declaration and receiver aliases restored.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,

@@ -428,6 +428,10 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 // missing prop early return 24; alignment product operands 30; unsigned short mode 24;
 // timer homes at entry 24; request home in active state scope 24;
 // low word actor slot used by both lookups 155. Restored.
+// score 24 (was 24): frame 0x28 agrees; early pool load, mode registers and restore schedule remain.
+// Receiver names/separate initialization/constant receivers/nested facing test 24 each;
+// facing eligibility value 26; direct direction-bit snapshots 39; request memset 195;
+// request aggregate initialization 190. All executable forms restored.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -849,6 +853,10 @@ struct s_1ac612
 // source actor named after index home 29; best index and source actor named homes 29;
 // candidate difference shared helper 29; marker difference shared helper 29;
 // forward product shared helper 135; up product shared helper 41. Restored.
+// score 29 (was 29): frame 0x8c agrees; EBP/EDI and offset/selection spill homes remain exchanged.
+// Native source location 58; query outputs at loop/entry and source receiver at entry 29 each;
+// marker reference/readonly candidate tag/distance predicate/aligned up-product scope 29 each.
+// All executable forms and the experimental include restored.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)
