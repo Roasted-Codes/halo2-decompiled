@@ -361,6 +361,9 @@ extern long g_51ec0c;
 // tried cold cases first 80; state nine first 80; entry join result 96; shared player gate 104;
 // leave from join result 123; positive title gate 101; zero-time initializer 80;
 // query declarations first 80.
+// score 80 (was 80): native/numeric mode switches 116/116; mode-one rejection first 81;
+// leave/screen mode first 79/112; screen-first mode switch 116; non-three state outcome first 95;
+// invitation test outcome 103. One-point leave-first gain rejected; body restored.
 // @retail 0x2395dc
 void __stdcall function_2395dc(XONLINE_FRIEND *friend_, long controller_index, long mode)
 {

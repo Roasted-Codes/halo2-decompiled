@@ -491,6 +491,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Native radius member 125; shared ring with/without native radius 123/123; three-use trace distance 120 plain;
 // shared trace displacement 225; elevation vector 245; collision point setter 125; collision-offset vector 189;
 // trace distance with shared ring 120. Keep the smaller trace-distance form; frame 0xd8, 1090/1089 bytes.
+// frame 0xd8 agrees; entry-table scheduling, ring conversion and rotation homes differ.
+// Early object/record-pool producers 123/123 (exact-only); real ring/spoke 273/195;
+// short remaining count 125; unsigned/double ring 248/261; real ring and spoke 201.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

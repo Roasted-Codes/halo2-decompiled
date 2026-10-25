@@ -115,7 +115,13 @@ void *function_1e4e50(long actor_index);
 short function_1a77a0(long actor_index, long a, short level);
 
 #pragma inline_depth(0)
-// score 72 (was 72): early actor-pool register/save, zero-result path and target equality loads remain.
+// score 72 (was 72): early actor-pool ESI lifetime, separate zero exits and native success remain;
+// actor pool/data workspaces 72/72; isolated actor query 136; positive guards 72; absent-prop exit 72;
+// found predicate 133; target equality read order 70 (two-point gain dropped); combined predicate/order 133.
+// score 72 (was 72): early actor-pool ESI, distinct zero exits and native success still differ;
+// typed actor/node/joint arrays 72/72/72; initial guard result 72; direct found returns 85;
+// localized short/native found result 95/95; typed actor with guard result 72.
+// early actor-pool register/save, zero-result path and target equality loads remain.
 // Native result value 72; entry result lifetime 72; shared result exit 90; native shared
 // result 90; native node pool value 122; existing record queries 181; return-tested entry
 // loop 72; stable object query key 89.

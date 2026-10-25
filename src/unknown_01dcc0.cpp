@@ -212,6 +212,9 @@ long g_55e6c0;
 // score 115 (was 122): incoming data home, saved-register timing and level-header bias remain.
 // Shared primary header 161; walking level pointer 135; Boolean packed-word product 152;
 // byte-count expression in the level loop 115; delayed clamped-count publication 148.
+// score 115 (was 115): incoming data home, delayed saves and level-header bias remain.
+// Inline/noinline format declarations 115/115; published byte total 192; level/offset names 115;
+// size after format 190; named aligned width 115; element before size 123; linear size branches 174.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {

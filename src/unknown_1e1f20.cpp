@@ -57,7 +57,10 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 	return result;
 }
 
-// score 20 (was 20): actor-base folding and merged outer/inner sentinel exits remain; separate
+// score 20 (was 20): actor-base folding and merged sentinel exits remain; result after
+// actor 24; unit-seeded result 28; caller noinline/inline 20/20; word/short query slot 21/21;
+// unsigned query datum 20; ordinary query contract 20.
+// actor-base folding and merged outer/inner sentinel exits remain; separate
 // outer failure return 22; result lifetime from entry 24; native unit index 20; readonly actor
 // input 20; existing weapon slot helper 20; shared query separate outer exit 22; shared query
 // result from entry 24; result assigned from both arms 21; existing query forceinline declaration
