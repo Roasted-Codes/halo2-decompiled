@@ -2396,6 +2396,9 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // early magnitude 259; scale before owner stores 83; both 259; force-inline normalization 83;
 // impulse name 83; point/axis homes 83; common normalizer with separate output 251,
 // with direct scale-result consumption 33. Original body retained.
+// score 83 (was 83): normalization component retention and final scale copy remain.
+// Fast control 120; object before normalize 259; magnitude at scale 119; normalize after owner 260;
+// owner memory order/read-only acceleration/read-only object tag/location continue 120 each; shared iterator 120.
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {

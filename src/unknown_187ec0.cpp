@@ -138,17 +138,17 @@ public:
 	short m_index;
 };
 
+// score 33 (was 42): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
+// Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
+// pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {
-	for (long i = 0; i < globals->count; i++)
-	{
-		if (key == globals->elements[i].key)
-		{
-			return c_block_index((short)i);
-		}
-	}
-	return c_block_index(NONE);
+	long count = globals->count;
+	long index = 0;
+	while (index < count && key != globals->elements[index].key)
+		++index;
+	return c_block_index(index < count ? (short)index : NONE);
 }
 
 static inline s_globals_element *globals_element_get(s_globals_element_block_view const *globals, short index)

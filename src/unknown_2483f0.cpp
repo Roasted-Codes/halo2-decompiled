@@ -183,6 +183,9 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 // tried native record receiver 14f; shared position setter 45f; shared vector setter 47f; both shared setters 49f;
 // scalars before copies 33f; links reverse order 14f; allocation failure return 48f; origin value 61f;
 // immutable allocation index 14f; seed input lifetime 14f.
+// link-store base formation and seed/constant scheduling remain;
+// link assignment chain 13; forward link chain 13; native link fill 50; shared origin pointer
+// 13; position memcpy 13; vector memcpy 13; both copies 13; native fill and both copies 50.
 // @retail 0x248620
 long function_248620()
 {
