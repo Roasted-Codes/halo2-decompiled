@@ -432,6 +432,10 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // cue sentinel order 222; cue pointer order 223; cue byte-first zeros 223;
 // cue integer-zero/scale order 223; direct transition conditional 253;
 // exact listener bound 223; query-index cursor 248; Boolean fallback scale 237.
+// score 223 (was 223): frame, BSP/camera/query homes and duration spill remain.
+// Environment-table lifetime 273; direct duration source 223; cue location subobject 250;
+// shared caller cue workspace 229; unsigned query index 223; table/direct duration 273;
+// shared workspace/location 233; table/workspace 254 (fast). Shared cue workspace gives frame 0xf4, not retail 0x148.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

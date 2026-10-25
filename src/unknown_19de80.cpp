@@ -319,6 +319,10 @@ static inline bool teams_enabled_19e1c0()
 // score 433 (was 443): frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
 // iterator 433 kept; explicit modes 443; native local team 457; native eligibility 443; shared
 // player dispatch 593; word iterator plus modes/local team/eligibility 440/451/433.
+// score 433 (was 433): frame 0x208 versus 0x204 and result/copy tails remain.
+// Team-test byte/short/long locals with bool returns 433/483/483; native
+// byte/short/long returns 433/430/432; unsigned-word/byte opponent counters 433/433.
+// Ordinary short/long return forms 430/432; both small gains discarded.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

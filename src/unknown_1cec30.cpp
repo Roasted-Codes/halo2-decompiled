@@ -1397,6 +1397,15 @@ PRIVATE __forceinline real const &component_time_step()
 // acceleration register, memory timestep multiply and stop-test schedule differ.
 // Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
 // completed clamp before ratio 82; accelerated candidate default 114.
+// score 26 (was 26): acceleration/timestep allocation and stopping schedule remain.
+// Combined forced/stopping step-first, distance-first, eager distance, conditional result,
+// named decision and stopping guard 106 each; merged default/return scaling 140/110.
+// score 26 (was 26): isolated mass return 113; threshold-first return 121; returned
+// selection/nested return/power selection 113 each; direct/default/assigned magnitude
+// results with mass return 113/127/113. XMM0 prefix improves; memory timestep still differs.
+// score 26 (was 26): acceleration/timestep allocation and stopping order remain.
+// Mass eligibility early scale/mass-first 164/166, late 26/120; selected divisor early/late 143/114;
+// early eligibility with selected normalization scale/mass-first 164/166. Original helper retained.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)
@@ -2712,6 +2721,7 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 303: first mapped byte 299; second mapped byte 213; first node at use 338;
 // second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
 // score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
+// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

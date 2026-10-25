@@ -135,6 +135,10 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 // category guard 588 (multi-goto form discarded); near target arm first 586 (multi-goto form discarded);
 // structured actor gates 584; native supported category guard 621; native near target first 617; structured
 // supported categories 588.
+// frame 0x48 recovered; entry registers, trace-point
+// arithmetic homes and branch placement remain. Caller noinline declaration 620;
+// callee noinline declaration 236; shared magnitude 236; shared point 236;
+// destination name 236; long result 233; point/name/magnitude together 236.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
