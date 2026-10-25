@@ -528,6 +528,9 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // original/adjusted projection 151; with normalized direction 245.
 // score 143 (was 143): frame and scalar homes remain; interval shares first timing output
 // early-initialized/declared/conditional/late 142/205/142/205; second output 205/205/205/205.
+// score 143 (was 143): frame 0x58/0x54 and first-length/radius homes remain;
+// direction/heading/side/reverse vector names 143 each; location/request names 143/143;
+// combined vector/all workspace names 143/143.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {

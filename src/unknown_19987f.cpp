@@ -1296,6 +1296,9 @@ extern bool g_4ed39d;
 // dialog-ID choice 202f; direct ID-selected callback tuples 238f; callbacks
 // after selection/at consumer 237f/190f; with ordinary game result
 // ID-only/direct/late/consumer 233f/257f/242f/235f. Original flow retained.
+// score 184 (was 184): game/main byte homes and dialog joins remain; signed-byte
+// game/lobby/main/handled and combined results 184 each; signed-word game/lobby/main
+// 177/181/186. Word game worsens normalized sequence edits 69 to 97; restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
