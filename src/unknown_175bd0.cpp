@@ -12,6 +12,7 @@
 #include "sound_sources.h"
 #include <string.h>
 #include "normalize3d.h"
+#include "vector_products.h"
 
 s_record_pool *g_51ec8c;
 s_record_pool *g_51ec88;
@@ -1014,12 +1015,7 @@ void function_178240(point3f const *origin, vector3f const *direction, s_effect_
 	}
 }
 
-// score 38 (was 38): the branches that reject the value jump to a different place and the table pointer is loaded into edx instead of ecx
-// tried upper-only bound 84; output-field reference 38; read-only records 38;
-// tried index before flag 38; time before index 38; array lifetime 59; float consistency 38; size policy 114.
-// Stored event selection 38; definition per use 86; initialized delay destination 54;
-// delay readback 55; event record 59; definition record 38; explicit seed lifetime 82;
-// stored event with completed delay 82. Tag retention and bound-load sharing still differ.
+/* starts the effect's event: clears flag 0 and draws the event's delay */
 // @retail 0x1782a0
 void function_1782a0(long effect_index, short event_index)
 {
@@ -1031,12 +1027,12 @@ void function_1782a0(long effect_index, short event_index)
 
 		if (event_index >= 0 && event_index < definition->event_count)
 		{
-			s_effect_event *event;
+			s_effect_event *event = &definition->events[event_index];
+			word *flags = &effect->flags;
 
-			effect->flag0 = false;
+			*flags &= ~1;
 			effect->event_index = event_index;
 			effect->unknown60 = 0.0f;
-			event = &definition->events[event_index];
 			if (event->delay_lower == event->delay_upper)
 				effect->event_delay = event->delay_lower;
 			else
@@ -1769,6 +1765,12 @@ long function_1785c0(s_effect_object_marker const *marker, s_effect_datum *effec
 	return index;
 }
 
+// score 77 (was 94): the point computed into position, normalize3d and cross3f give retail's
+// early up.j/up.k loads; left: node index read after the matrix (retail first), the forward
+// and up components in other xmm registers (retail forward i/j/k xmm4/2/3, up i/j xmm5/1).
+// Node index first 107 (marker index sign extension hoisted); forward without locals 132;
+// locals k,j,i 80, j,k,i 81; dot3f for forward 132, for position 82; written cross 119;
+// marker pointer in the else branch 198.
 // score 94 (was 94): Frame agrees; node/matrix and marker receivers, early normalization loads still differ.
 // Shared difference 187; shared scale 94; both helpers 186; separate point workspace 125;
 // normalized workspace 164; scale snapshot 185; marker vector snapshot 184; point setters 227.
@@ -1800,17 +1802,16 @@ void function_1786f0(s_effect_object_marker *out, s_effect_marker_source const *
 				offset.j = inverse * offset.j;
 				offset.k = inverse * offset.k;
 			}
-			up.i = matrix->forward.k * offset.k + matrix->forward.j * offset.j + matrix->forward.i * offset.i;
-			up.j = matrix->left.k * offset.k + matrix->left.j * offset.j + matrix->left.i * offset.i;
-			up.k = matrix->up.k * offset.k + matrix->up.j * offset.j + matrix->up.i * offset.i;
+			position.x = matrix->forward.k * offset.k + matrix->forward.j * offset.j + matrix->forward.i * offset.i;
+			position.y = matrix->left.k * offset.k + matrix->left.j * offset.j + matrix->left.i * offset.i;
+			position.z = matrix->up.k * offset.k + matrix->up.j * offset.j + matrix->up.i * offset.i;
 		}
 		else
 		{
-			up.i = 0.0f;
-			up.j = 0.0f;
-			up.k = 0.0f;
+			position.x = 0.0f;
+			position.y = 0.0f;
+			position.z = 0.0f;
 		}
-		position = *(point3f const *)&up;
 		real i = marker->forward.i;
 		real j = marker->forward.j;
 		real k = marker->forward.k;
@@ -1825,12 +1826,10 @@ void function_1786f0(s_effect_object_marker *out, s_effect_marker_source const *
 		forward = source->markers[marker_index].forward;
 	}
 	function_11d000(&forward, &up);
-	effect_normalize(&up);
+	normalize3d(&up);
 	out->matrix.scale = 1.0f;
 	out->matrix.forward = forward;
-	out->matrix.left.i = up.j * forward.k - up.k * forward.j;
-	out->matrix.left.j = up.k * forward.i - forward.k * up.i;
-	out->matrix.left.k = forward.j * up.i - up.j * forward.i;
+	cross3f(&up, &forward, &out->matrix.left);
 	out->matrix.up = up;
 	point3f *out_position = &out->matrix.position;
 
