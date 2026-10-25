@@ -453,7 +453,13 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 	return result != NULL;
 }
 
-// score 68 (was 68): retail sign-extends the first team argument and passes the second one
+// score 68 (was 68): with a fifth word in the clump iterator (shared with 0x26bc60 and 0x269040;
+// reverted in review, two points) the frame agrees at 66; retail sign-extends the
+// first team argument (`movsx eax` after the clump address add, pushes after it) and zeroes the
+// current-clump register (edi) at the loop top for the exhausted path, where ours zeroes ecx there.
+// Round 80: `long team` local 92; current stored first in the step helper 92 (292 bytes);
+// pointer-returning step 66; result set in both activity arms 66; iterator declared first 66.
+// Earlier: retail sign-extends the first team argument and passes the second one
 // narrow, and its frame is four bytes larger than ours, so the stack offsets and the register
 // that holds the clump pointer differ as well.
 // Pointer result/reference/both 68/68/68; current field first/pointer/reference 94/94/94.
