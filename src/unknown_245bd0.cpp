@@ -450,6 +450,11 @@ bool function_246360(
 
 // score 53 (was 53): the multiplier is kept in XMM1 and multiplied into XMM0; retail loads the
 // multiplier into XMM0 and multiplies by XMM1.
+// score 53 (was 53): operand text order of the six products is canonicalised (each flip 53);
+// the negated distance computed at entry 164; both projected points through one inline
+// point-plus-scaled-normal helper 83, though it gives retail's three plane-first loads for the
+// start point and the last two direction products (only the first direction product and the
+// edge loop's registers still differ).
 // @retail 0x2466b0
 bool function_2466b0(
 	point3f const *start,
