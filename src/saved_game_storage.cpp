@@ -422,6 +422,8 @@ PRIVATE byte const g_saved_game_image[4096] =
 
 /* writes the save image into a game variant's saved game directory; the
    other types have none */
+// score 26 (was 26): shared byte-result exits and buffer/size scheduling still differ.
+// This round: signed admission 72; unsigned ordinal 87; signed valid scope 72; unsigned valid scope 82; upper-clamp result 79; signed-range result 85; ordinal result 88; assigned upper clamp result 79.
 // @retail 0x216f80
 bool saved_game_file_write_save_image(long type, s_saved_game_file_location *location)
 {

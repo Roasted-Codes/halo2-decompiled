@@ -114,6 +114,8 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 	return local_0;
 }
 
+// score 30 (was 30): projection operand loads and cross-product SSE ownership still differ.
+// This round: direct definition 119; cross-first lexical homes 119; direction-first lexical homes 119; cross declared first 119; pointer fractions with existing boundary 30; pointer fraction in first projection 119; pointer fraction in second projection 119; pointer fractions in both 119.
 // @retail 0x248df0
 real function_248df0(long arg_0, void *arg_1, void *arg_2, void const *arg_3)
 {

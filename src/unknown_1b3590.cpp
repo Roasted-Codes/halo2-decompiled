@@ -362,6 +362,8 @@ short __stdcall function_1b3ea0(long actor_index)
 	return result;
 }
 
+// score 26 (was 26): input-index, pool and zero registers plus reset-store schedule still differ.
+// This round: Boolean after reset 26; both slots after reset 46; Boolean after activation 25; both slots after activation 53; sentinel after activation 34; actor after reset 34; actor after slots 34; direct slots after reset 46.
 // @retail 0x1b3ee0
 bool __stdcall function_1b3ee0(long actor_index, s_slot *slot)
 {
