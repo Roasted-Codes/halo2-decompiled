@@ -2066,6 +2066,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
     return result;
 }
 
+// score 275 (was 275): Frame 0x48 versus 0x54, iterator/point homes and intersection spill remain; original body and declarations restored.
+// Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
+// unsigned current handle 275; declared word bitfield 294.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2671,12 +2674,14 @@ static __forceinline long real_to_long(real value);
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // Single-result squad step 298; zero inline depth 584; global optimization off 439;
 // frame pointer 258; size preference 633. Original kept.
-// score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
+// Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
 // squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
 // positive-timer continues 227.
-// score 227 (was 227): Frame 0x30 agrees; active/pool observations and zero-result joins remain.
+// Frame 0x30 agrees; active/pool observations and zero-result joins remain.
 // Native zero initialization 255; timer addresses 227; final group for 289; final squad for 329;
 // first squad-phase lifetime 227.
+// Native group both/first/root 250/272/282; native squads 258; both native walks 256; group
+// workspace lexical order 250; both workspace lexical order 256.
 // @retail 0x202720
 void function_202720(void)
 {

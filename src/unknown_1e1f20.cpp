@@ -635,10 +635,12 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 290 (was 329): frame 0x20 agrees; actor-offset storage, cleanup counter and slot reloads differ.
+// score 290 (was 290): frame 0x20 agrees; actor-offset storage, cleanup counter and slot reloads differ.
 // Ordinary actor/iterator locals 330; direct parameters 330; guarded callback 324; fresh memory lookup 291;
 // live memory-slot reads 326; slot reuse at lookups 301; callback plus fresh lookup 290; direct combined
 // parameters 290.
+// Fresh-lookup live slots 300; unsigned cleanup index 290; iterator local home 290; Boolean bit
+// test 290; native masked slot 308.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
