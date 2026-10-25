@@ -1724,6 +1724,11 @@ struct s_collision_result_25f7b0
 // product loads, word-mode comparison and allow-store timing differ.
 // Byte collision flag 14; byte allow flag 43; long initial mode 34;
 // short collision flag 247; scoped ray setup/result 14 (plain). Body restored.
+// score 14 (was 14): collision byte, product loads and word-mode comparison still differ.
+// reuse ray displacement 14p; existing dot helper 14p.
+// squared length lifetime 14p; normalization result lifetime 14p.
+// shared projection output 25p; shared displacement workspace 60p.
+// sibling byte home name 14p; native projection mode 14p.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {
