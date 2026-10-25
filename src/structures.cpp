@@ -242,6 +242,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // BSP/section registers and range/plane homes remain;
 // reference table before traversal 221; instance case first 232; byte success result 185;
 // result-controlled traversal 205; reference table and result traversal 216.
+// Shared residency 203; first-fetch validity 185; strip-input cursor 221;
+// residency/first 203; residency/cursor 208; first/cursor 221; all three 208;
+// both invariant geometry tables on the byte-result body 241.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

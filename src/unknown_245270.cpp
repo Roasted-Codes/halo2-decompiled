@@ -279,6 +279,8 @@ void function_245400(s_source_245400 const *source, long index,
 // combined views 204; native side bitfields 207; indexed vector scaling 205.
 // source reference 204; surface reference 204; vertex table snapshot 204; plane references 204.
 // transform forceinline 204; const transform result 204; separate emitter noinline 204; both call boundaries 204.
+// Signed-byte side carriers first/second/both 238/238/204; native-long carriers
+// first/second/both 228/228/222; mixed signed-byte/native-long both ways 228/228.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

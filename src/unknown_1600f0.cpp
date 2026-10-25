@@ -1008,6 +1008,9 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection register schedule;
 // default-zero byte icon 230, native integer 184; parsed-name scope 184;
 // separate connection rectangle 206; both name buffers scoped 184.
+// Test-derived glyph 182 fast/plain (two-point gain rejected); separately gated query 204;
+// query Boolean 205; hidden-first with test/query values 229/249;
+// column observations 184; columns with test/query values 182/204.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

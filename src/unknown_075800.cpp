@@ -964,6 +964,8 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // score 198 (was 198): selector/message/address convention differs; full baseline 198, fast preview 196.
 // Unified switch 208; retail-order switch with lookup exits 218; missing-connection exits 196; inline depth
 // one 196; size preference 243.
+// Inline declarations on query, acknowledgment, update and reconnect handlers,
+// singly and paired, all 196 fast; combined session handlers 198 plain, no gain.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
