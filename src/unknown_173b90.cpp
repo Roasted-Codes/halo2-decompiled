@@ -751,6 +751,11 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 // lays them out first (45). Tried: one store after a shared `packed` local 29/63 (system on
 // the stack); halving through unpack's returned pointer 47; a scale helper 41; shared locals
 // 41; early or explicit returns in either branch 41/43; `multiplied == true` 47.
+// the single store leaves the system pointer on the stack and
+// multiplied in bl; retail has three stores, system in esi, multiplied on the stack.
+// Per-branch stores give retail's registers but the untinted exit still jumps to
+// the last epilogue and the half path pushes eax (retail copies it to ecx) 41;
+// multiplied tested first 45; early returns 42; returned color pointers 41, 46.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {

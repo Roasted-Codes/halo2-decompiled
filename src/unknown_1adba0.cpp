@@ -485,6 +485,14 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // score 15 (was 15): sentinel/clock and settings still exchange EBX/EBP.
 // Elapsed-seconds ready/arms/wait/nested results 15/15/15/15;
 // each with the weighted probability product separated 65/65/65/65.
+// Sentinel/clock and returned-settings EBX/EBP homes remain swapped.
+// actor reference 15; immutable actor 15; actor/node references 15; settings reference 15;
+// timestamp reference 15; interval reference 15; settings/timestamp references 15;
+// actor/coefficient references 15.
+// saved EBX/EBP pair still reversed; whole eligibility,
+// cooldown, reaction and combined test results 15/15/15/15; immutable cooldown
+// inputs 15; read-only two-use clock 91; complete actor/timestamp record and
+// its read-only receiver 15/15.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {

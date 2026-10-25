@@ -117,7 +117,11 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // result from startup tests 424; tested-state transfer 424; result at first test 424;
 // final result after reset completion 303; before effects 303; before submix 262;
 // before impulse cleanup 174; before volume stores 165.
-// score 165 (was 165): success/type carriers and first-channel spill remain;
+// score 165 (was 165): allocation/type carriers and first-channel spill remain;
+// cross-reset channel / voice / both bitwise accumulation 307/306/328;
+// both Boolean accumulations late / across reset 332/331; listener / table scopes
+// with cross-reset accumulations 328/328; native submix record initializers 328.
+// success/type carriers and first-channel spill remain;
 // voice/both compound states 312/329; channel/voice/both call-first 266/286/274;
 // channel/voice/both conditional states 282/282/301. Original guarded updates retained.
 // score 165 (was 165): saved success/category/first-channel homes still differ;
@@ -127,6 +131,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // score 165 (was 165): success/category and first-channel homes still differ;
 // per-category bool/byte/long outcome 322/323/322; bool/byte across reset 295/293;
 // category outcome with native first 310, across reset 335, retained count 325.
+// saved success/type/first-channel allocation remains;
+// listener consumer scope 165; with reset/earlier byte state 280/283; submix scope 165;
+// both scopes 165; both with reset state 280; listener/reset with pointer-first bins 280;
+// all consumer boundaries 280. Original short-circuit loops retained.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

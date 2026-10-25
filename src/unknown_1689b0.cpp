@@ -1419,9 +1419,17 @@ PRIVATE __forceinline long shape_cluster_next(long *next)
 // integer query result 251f; paired world mask 205 plain; leaf step at read 222 plain;
 // unsigned leaf/handle/count views and normal iterator inline 251f; direct count returns 249f
 // (unchanged fast control 251; full 170).
+// score 170 (was 170): world-mask width and pool/cluster allocation still differ.
+// saved instance predicate 297f; saved object predicate 298f.
+// both predicates 318f; saved collection mask 293f.
+// word hit ordinal 172f; full-width instance mask 291f.
+// full-width object mask 291f; collection mask plus word ordinal 300f.
 // External position/collection records 170/170; read-only pool/link views
 // 170/170; native pool reference 170; word link slot 180; slot with read-only
 // pool or external call receivers 180/180 (complete fast control 170).
+// frame 0x1018 agrees; world mask and pool/cluster homes differ.
+// BSP/cluster/count/list/both field views 170/170/170/170/170 plain;
+// list reload 177; list/count cached and reloaded after each call 166 (hand reload, reverted in review); paired record views 170.
 // @retail 0x16a440
 bool __stdcall function_16a440(dword flags, point3f const *position, real extent, real height,
     real radius, long ignore_object, long ignore_parent, s_shapes *shapes)

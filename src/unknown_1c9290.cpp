@@ -50,6 +50,13 @@ PRIVATE __forceinline void function_1c9291(point3f const *arg_0, vector3f const 
 // score 6 (was 6): horizontal products and the duration square still exchange order.
 // Endpoint local/input subtraction 6/138; complete advance endpoint/scalar 120/120;
 // advance with point/velocity/both snapshots 116/141/158; endpoint with both 158.
+// Horizontal products still follow the arc square; copied-step operand differs.
+// Helper orders (P point, V velocity, D step, G gravity, O output):
+// OPVDG/PVODG/PDVGO/PVGDO/DPVGO/DGPVO/POVDG/PDGVO all 6.
+// horizontal/square schedule remains; square/weighted producer
+// split across output loop 6/6; split accumulators 6/6; delayed
+// vertical consumers 6/6; split unsigned ordinal 6; shared step on
+// component/sentinel form 72.
 // @retail 0x1c9290
 bool function_1c9290(long arg_0, point3f const *arg_1, vector3f const *arg_2,
  real arg_3, real arg_4, long arg_5, bool arg_6)

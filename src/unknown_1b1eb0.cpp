@@ -166,7 +166,11 @@ real function_1e3920(long actor_index);
 // score 164 (was 168): early ESI slot load, scalar homes and cold reference arms still differ.
 // Native request byte 168; earlier scratch 164; result before scratch 168; both 167 (dropped);
 // permission success/failure arms 183/183; reference-test result 168; request byte/scratch 164.
-// score 164 (was 164): early slot receiver, scalar homes and reference arms remain;
+// score 164 (was 164): early slot load, scalar homes and cold reference joins remain.
+// slot reference 164; actor reference 164; both references 164;
+// const actor pointer 164; declared request byte 164; slot/request byte 164;
+// actor/request byte 164; both/request byte 164.
+// early slot receiver, scalar homes and reference arms remain;
 // reference before request/index/guard 203/203/201; late output index 163;
 // selection flag before clear 168; scratch before fields/clear 164/181;
 // early reference/scratch with late index 204.
@@ -178,6 +182,9 @@ real function_1e3920(long actor_index);
 // score 164 (was 164): delayed ESI slot, scalar homes and cold reference arms remain.
 // Common scratch release 162f; later selection flag / acceptance / request predicates 164f;
 // release combinations and release with late output index 162f (two-point gain dropped).
+// early ESI slot, scalar homes and fallback arms remain;
+// shared defaults / native mode with defaults / native mode 168/168/164f on earlier scratch;
+// consumed request scope / scope with defaults / unsigned output handle / fallback result / combined 164/168/164/164/168f.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

@@ -166,7 +166,11 @@ PRIVATE void render_clamp_156b60(real *value)
 // alpha result merges in XMM0; retail duplicates the interpolation tail.
 // Native RGB after alpha/alpha clamp 189/175; independent RGB clamps 216; separate channels 172;
 // RGB assignment 197; packed result 154 (dropped), with RGB 188; early drawing attributes 259.
-// score 155 (was 155): alpha result merge and duplicated interpolation remain;
+// score 155 (was 155): alpha result merge and duplicated interpolation remain.
+// alpha metadata 136 (exact-only copy); RGB metadata 152 (dropped); width metadata 242;
+// length metadata 192; both dimension records 272; RGB/alpha records 211;
+// all curve records 316; entry alpha record 220.
+// alpha result merge and duplicated interpolation remain;
 // single RGB retirement 159/159/159; paired RGB retirement 154/154/154;
 // red/green retirement with alpha committed last 159/159 (all 1068 bytes).
 // score 38 (was 155): alpha mapping agrees; horizontal-offset and clamp/attribute schedule remain.

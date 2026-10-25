@@ -696,7 +696,12 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
  return a->k * b->k + a->j * b->j + a->i * b->i;
 }
 
-// score 155 (was 155): movement/original stack homes and rotation scheduling remain; forward scalar
+// score 155 (was 155): movement/rotation homes and cross/result lifetimes still differ.
+// early side products 249f; single turn cross 249f.
+// rotation cross as old 155f; rotation cross as new 153f.
+// one rotation cross for both 245f; saved forward reads 220f.
+// saved forward plus shared cross 232f; indexed equal rotation rows 181f.
+// movement/original stack homes and rotation scheduling remain; forward scalar
 // inputs early/late 201/216; shared cross/forward/both scales 206/190/190; projected axis 214;
 // projected axis plus cross scale 212; common forward vector result 234.
 // movement slot and rotation/output allocation still differ.
@@ -706,6 +711,12 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // score 155 (was 155): movement/rotation homes and scalar scheduling remain;
 // i/j/k/all cosine terms 168/177/192/208;
 // i/j/k/all axis projection terms 186/168/168/218. Opening body retained.
+// Complementary cosine 166; guarded early alignment 205; early moved-away result 231;
+// completed side product 169; complement with early result 231; indexed velocity scale 220;
+// actual animation reference 155; actual forward-field reference 248. Movement/rotation homes remain.
+// score 155 (was 155): sampled-vector slot and rotation/exit schedule still differ.
+// Cross before projection 201; late axis 185; split axis projection 166; goal snapshot 247;
+// direct selection tests 204; turn-first guard 156; scalar final writes 192; library copies 155.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

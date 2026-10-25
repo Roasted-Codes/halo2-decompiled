@@ -94,7 +94,11 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // plain count/cursor 232; output/ranking cursors 294; completed cursor 303;
 // rank-one first 171; lower-rank first 174; pointer/native case 176;
 // pointer/count snapshot 181.
-// score 144 (was 144): receiver/count reloads and ranking handoff remain;
+// score 144 (was 144): receiver reloads, append counts and ranking handoff remain.
+// pointer/plain count 281; pointer/known first appends 189; pointer/single count reads 188;
+// pointer/both append forms 206; pointer/rank predicates 144; pointer/rank interval 144;
+// pointer/unsigned rank 144; pointer/word rank 178.
+// receiver/count reloads and ranking handoff remain;
 // cursor read-step/end equality/for/preferred break 144/144/144/144;
 // pointer default rank 189; rank-three first 144; empty selection exit 144;
 // read-step with default rank 190.
@@ -105,6 +109,9 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // score 144 (was 144): receiver/count reloads and ranking dispatch remain.
 // Getter pool reference / typed entry input / handle-first / both contracts 144f;
 // first/second conditional handle selection 193/193f; both with pool reference 207f.
+// carried receiver/count reloads and ranking handoff remain;
+// declared payload / read-only result / read-only pool / handle domain 144/144/144/144f;
+// native payload slots 176f; distinct typed receivers / priority enum / payload with enum 144/144/144f.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {

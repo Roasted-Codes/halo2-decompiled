@@ -397,6 +397,9 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // shared entry count 42; entry graph query 42; all graph queries 42; typed model plus graph queries 42.
 // Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
 // value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
+// Round 127: shared visited-word address 105; unsigned-int words 42; both 105;
+// class iterator noinline 42; mode iterator noinline 42; both noinline 42;
+// marker query noinline 42; transform noinline 42.
 // score 42 (was 42): address-first memory OR and second-call staging remain; mask-first assignment 42;
 // source/target/both Boolean lookup results 42; shared node mask 118; shared word index 109;
 // source/target Boolean results with mask-first assignment 42.
@@ -1246,6 +1249,7 @@ bool function_c70b0(long unit_index);
 // score 164 (was 164): entry pool/state and count joins remain; direct-parameter forms:
 // signed-byte result 322; short result 355; entry held outputs 322; state-switch default 370;
 // branch-local status defaults 253. Opening argument handling restored.
+// score 164 (was 164): Frame eight agrees; entry pool/state registers and count joins remain. Entry byte result 164; valid first count 328; guarded second clear 328; signed-byte result 164; state identifier before overlay 164 (fast).
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1375,6 +1379,9 @@ bool __stdcall function_110ab0(long unit_index)
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
 // score 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
+// score 443 (was 450): Frame 8 versus 12 and requested/state homes remain;
+// byte result 506; byte interruptibility 453; separate overlay result 508;
+// direct inner membership 486; held-index names 451 (fast control 451). Opening body retained.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1611,6 +1618,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // score 841 (was 875): frame and first angle expansion remain; entry blend channels 1057;
 // yaw/pitch values 875; centered tests at use 866; early blend products 853;
 // whole projection output 880; centered tests plus early products 841.
+// score 841 (was 841): Frame and first angle expansion remain; native projection return 889
+// (frame 0xd4); float bound fields 841; byte overlay ordinal 841; joined bound receiver 912;
+// named blend scalars 841. Opening body and both helpers retained.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2220,6 +2230,12 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // force decision at use 723; late validity 677; final activity values 676;
 // entry output scalars 679; early-invalid helper 710; late validity plus activity values 674.
 // Request/control homes and second stack argument remain; native node selector 704, node ordinal 679, separate transformed point 686, completion cases first 679, early data construction 679.
+// score 674 (was 674): Request/control homes and the second stack argument remain;
+// indexed three-channel completion 743; position field receiver 704; byte transition 711;
+// direct eligibility 705; byte request flags 705. Opening body retained.
+// Frame 0x80 agrees; request/control carriers and ret 4 versus ret 8 remain.
+// Unsigned requested names 674; short held-slot count 674; word activity result 690; transition
+// cases first 674; internal validity linkage 674. Original helper declaration restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
