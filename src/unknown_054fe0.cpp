@@ -208,6 +208,8 @@ bool __stdcall function_64060(s_game_variant *variant)
 	return result;
 }
 
+inline long network_session_interface_get_value_49c8(void);
+
 // @retail 0x641f0
 long network_session_interface_get_value_49c8(void)
 {
@@ -1248,9 +1250,15 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
-// score 199 (was 199): frame 0xe4 agrees; owner/count registers and requested cursor differ.
+// score 184 (was 199): frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
+// Session-root control 199; owner at use 239; empty name table 222; first name unit 240; requested name
+// length 199; native requested/current/both records 264/212/293; direct requested fields 184 plain, 926/916
+// bytes. Name-count spill, zero lifetime and requested cursor still differ.
+// Requested/current/both property references 199/199/199; name/update bits at use 228/224;
+// packed initialization word 238; contiguous payload copy 284; contiguous tail copies 263
+// (all plain). Owner/count allocation and the requested cursor remain unchanged.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
@@ -1279,7 +1287,6 @@ void network_session_interface_update_player_properties(c_class_58d20 *session)
 	{
 		if (session->player_mask & (1 << i))
 		{
-			const s_player_properties *requested = (const s_player_properties *)session->players[i].properties18;
 			const s_player_properties *current = (const s_player_properties *)session->players[i].propertiesa8;
 			s_player_properties properties;
 
@@ -1300,21 +1307,21 @@ void network_session_interface_update_player_properties(c_class_58d20 *session)
 			properties.unknown8a = NONE;
 			properties.unknown8c = NONE;
 
-			if (wcslen(requested->name) > 0 && wcslen(current->name) == 0)
+			if (wcslen(((const s_player_properties *)session->players[i].properties18)->name) > 0 && wcslen(current->name) == 0)
 			{
-				function_07f660(properties.name, 32, requested->name, name_count, names);
+				function_07f660(properties.name, 32, ((const s_player_properties *)session->players[i].properties18)->name, name_count, names);
 			}
 			else
 			{
 				wcsncpy(properties.name, current->name, 31);
 				properties.name[31] = 0;
 			}
-			memcpy(properties.unknown40, requested->unknown40, sizeof(properties.unknown40));
-			memcpy(properties.unknown70, requested->unknown70, sizeof(properties.unknown70));
-			memcpy(properties.unknown50, requested->unknown50, sizeof(properties.unknown50));
+			memcpy(properties.unknown40, ((const s_player_properties *)session->players[i].properties18)->unknown40, sizeof(properties.unknown40));
+			memcpy(properties.unknown70, ((const s_player_properties *)session->players[i].properties18)->unknown70, sizeof(properties.unknown70));
+			memcpy(properties.unknown50, ((const s_player_properties *)session->players[i].properties18)->unknown50, sizeof(properties.unknown50));
 			if (session->value14 == 1)
 			{
-				char team = requested->team;
+				char team = ((const s_player_properties *)session->players[i].properties18)->team;
 				if (team == NONE)
 					properties.team = team;
 				else if (parameters[0x48] & 1)
@@ -1328,10 +1335,10 @@ void network_session_interface_update_player_properties(c_class_58d20 *session)
 				}
 				else
 					properties.team = (char)i;
-				properties.unknown84 = requested->unknown84;
-				properties.unknown8c = requested->unknown8c;
-				properties.unknown8a = requested->unknown8a;
-				properties.unknown88 = requested->unknown88;
+				properties.unknown84 = ((const s_player_properties *)session->players[i].properties18)->unknown84;
+				properties.unknown8c = ((const s_player_properties *)session->players[i].properties18)->unknown8c;
+				properties.unknown8a = ((const s_player_properties *)session->players[i].properties18)->unknown8a;
+				properties.unknown88 = ((const s_player_properties *)session->players[i].properties18)->unknown88;
 			}
 			else
 			{
@@ -1341,11 +1348,11 @@ void network_session_interface_update_player_properties(c_class_58d20 *session)
 				properties.unknown8a = current->unknown8a;
 				properties.unknown88 = current->unknown88;
 			}
-			properties.unknown7f = requested->unknown7f;
-			properties.unknown7e = requested->unknown7e;
-			properties.unknown7d = requested->unknown7d;
-			properties.unknown81 = requested->unknown81;
-			properties.unknown80 = requested->unknown80;
+			properties.unknown7f = ((const s_player_properties *)session->players[i].properties18)->unknown7f;
+			properties.unknown7e = ((const s_player_properties *)session->players[i].properties18)->unknown7e;
+			properties.unknown7d = ((const s_player_properties *)session->players[i].properties18)->unknown7d;
+			properties.unknown81 = ((const s_player_properties *)session->players[i].properties18)->unknown81;
+			properties.unknown80 = ((const s_player_properties *)session->players[i].properties18)->unknown80;
 			if (memcmp(current, &properties, sizeof(properties)) != 0)
 				network_session_host_set_player_properties(session, i, (const byte *)&properties);
 		}
@@ -1479,9 +1486,6 @@ struct s_cached_player_source;
 void function_80490(const s_cached_player_identity *identity, const s_cached_player_source *source,
  bool local, bool recent);
 
-// score 45 (was 45): the user struct is reached through a pointer, so ours adds the
-// base of the global to the scaled index; retail leaves the whole offset in the
-// displacement of the store.
 // @retail 0x65530
 void __stdcall function_65530(long user_index)
 {
@@ -1508,34 +1512,30 @@ void __stdcall function_65530(long user_index)
    }
   }
  }
- s_session_interface_user *user = &g_4cd868.users[user_index];
- user->properties[0x7f] = (byte)maximum;
+ g_4cd868.users[user_index].properties[0x7f] = (byte)maximum;
  if (g_4cd868.unknown98 >= 0 && g_4cd868.unknown98 < 16)
-  user->properties[0x7e] = (byte)levels[g_4cd868.unknown98];
+  g_4cd868.users[user_index].properties[0x7e] = (byte)levels[g_4cd868.unknown98];
  else
-  user->properties[0x7e] = 0xff;
- c_class_58d20 *session = network_session_get_live();
- long variant = NONE;
- if (session && SESSION_STATE_IS_LIVE(session->state))
-  variant = session->value49c8;
+  g_4cd868.users[user_index].properties[0x7e] = 0xff;
+ long variant = network_session_interface_get_value_49c8();
  long value, level;
  if (variant != NONE && function_73a10(variant, user_index, 0, &value) &&
   function_73a10(variant, user_index, 1, &level))
  {
-  *(long *)&user->properties[0x84] = variant;
-  *(long *)&user->properties[0x8c] = value;
-  *(short *)&user->properties[0x8a] = (short)level;
+  *(long *)&g_4cd868.users[user_index].properties[0x84] = variant;
+  *(long *)&g_4cd868.users[user_index].properties[0x8c] = value;
+  *(short *)&g_4cd868.users[user_index].properties[0x8a] = (short)level;
  }
  else
  {
-  *(long *)&user->properties[0x84] = NONE;
-  *(long *)&user->properties[0x8c] = NONE;
-  *(short *)&user->properties[0x8a] = NONE;
+  *(long *)&g_4cd868.users[user_index].properties[0x84] = NONE;
+  *(long *)&g_4cd868.users[user_index].properties[0x8c] = NONE;
+  *(short *)&g_4cd868.users[user_index].properties[0x8a] = NONE;
  }
- *(word *)&user->properties[0x88] = 0xffff;
- if (!(user->xuid.dwUserFlags & 3) && user->xuid.dwUserFlags != 0xbad00000)
-  function_80490((const s_cached_player_identity *)&user->xuid,
-   (const s_cached_player_source *)user->properties, true, false);
+ *(word *)&g_4cd868.users[user_index].properties[0x88] = 0xffff;
+ if (!(g_4cd868.users[user_index].xuid.dwUserFlags & 3) && g_4cd868.users[user_index].xuid.dwUserFlags != 0xbad00000)
+  function_80490((const s_cached_player_identity *)&g_4cd868.users[user_index].xuid,
+   (const s_cached_player_source *)g_4cd868.users[user_index].properties, true, false);
 }
 
 bool game_loop_running(void);

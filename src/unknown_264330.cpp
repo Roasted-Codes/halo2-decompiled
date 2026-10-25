@@ -257,6 +257,9 @@ void function_264940(long actor_index, long prop_ref_index)
 
 // score 358 (was 358): frame 0x24 versus 0x20; object/view allocation and cached object index differ.
 // Full-width unit mask 439; sampled-time reuse 380; deferred tracking view 431; fallback state default 358; inline depth one 358.
+// j92: frame 0x24 versus 0x20 and object/view homes remain; real object/header types and selection inline declarations tie; expiry snapshot regresses.
+// typed object view 358; typed header lookup 358; typed object header 358; tracking expiry snapshot 385;
+// selection inline declarations 358.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -401,11 +404,15 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // frame 0xa4 versus 0xa0, actor stacked versus EAX/EBX;
 // initial update predicate 441 (frame 0xa0); counter word snapshot 426;
 // prior-state word 426; case-one tracking scope 426; separate final guards 426.
+// score 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
+// kept; word update/sample/sampled count 430/449/449; native view 426; later view lifetime 426;
+// word maximum plus native view/later view/update 420/420/424.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
 	byte *actor = (byte *)actor_get(actor_index);
-	dword volatile maximum = 1;
+	/* volatile keeps maximum in its stack word, as retail does: 420, against 426 as a plain word (see the note) */
+	word volatile maximum = 1;
 	bool sampled_one = false;
 	if (actor[0x44]) function_263210(actor_index);
 	function_265680(actor_index);
@@ -733,6 +740,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // priority store 367 (fast control 363, full baseline 358); all restored.
 // saved actor in ordinary arm 371 (plain 367); native actor fields 363;
 // both 371; timestamp name 363; inline depth one 363 (preview 363).
+// object/current/suppression alone at entry 367/368/368; group/prop/reference
+// pointer names 363; shared squad getter 363; entry pointer declarations 363
+// (fast control 363, full baseline 358); all restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

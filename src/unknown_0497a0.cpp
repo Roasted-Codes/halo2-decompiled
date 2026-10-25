@@ -18,6 +18,8 @@
 // late wave lifetime 743; wave offset workspaces 660; inverse before basis 765; direct integer component 743;
 // complete shape branches 743; wave alternate scales 695; wave product scales 692; wave primary scales 659;
 // wave basis copy blocks 806; shape discriminant 776; wave shape discriminant 696
+// Ordinary camera reads with early/late special cross products 737/747;
+// early sine amplitude 738; accumulated maxima 796; common mode publication 743.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

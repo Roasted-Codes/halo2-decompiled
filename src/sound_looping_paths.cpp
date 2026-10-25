@@ -415,6 +415,13 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Default-first sampled duration 259; default-first field reload 267 (frame 0x148);
 // bounded pointer search 225; bounded while search 223; equality exhaustion 255.
 // Original body/helper retained; fast preview 223.
+// Short helper-search index 289; first-listener result 223; missing-slot store order 223;
+// fallback angle value 298; early local tag observation 314; radius value 223;
+// portal-side result 223; complete request publication 272.
+// native duration 226; read-only position 223.
+// position memcpy 223; tag aggregate initializer 270.
+// cue sentinel chain 222; cue nibble chain 223.
+// both cue chains 222; prior tag on bounded search 223.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
