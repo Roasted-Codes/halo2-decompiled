@@ -518,6 +518,8 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // score 151 (was 151): frame 0x58 versus 0x54; first-length/radius homes remain.
 // Early-declared exhaustive interval 205; entry first length 151; trace/location names 151;
 // pre-normalization interval 149; byte side 220. Original body retained.
+// Interval role name 151; entry interval lifetime 168; reversed aggregate 151;
+// first/second planar memcpy 151/151.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {

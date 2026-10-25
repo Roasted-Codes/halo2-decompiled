@@ -411,6 +411,8 @@ extern point2f *g_468778;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
+// Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
+// inner threshold 388; entry planar workspace 379. Actor/settings/prop carriers still differ.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -774,6 +776,9 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 // object/prop scratch registers, state receiver and exit displacements differ.
 // External tag reference 32 fast; actor reference 32; node reference 32; tag/actor 32; tag/node 32.
 // Node/actor references 32; tag/node/actor 32; state reference 32. Unchanged fast preview is also 32.
+// The first register difference is the 0x110ab0 push (ECX, retail EAX); the later lookups follow it.
+// Object header getter 32; named unit index 124; declarations before assignments 32; result set
+// before the test 32; explicit NULL test 32 (fast).
 // @retail 0x1a9ec0
 short __stdcall function_1a9ec0(long arg_0)
 {

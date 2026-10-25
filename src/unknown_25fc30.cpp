@@ -418,6 +418,9 @@ void __stdcall function_25dd50(
 // Native trace 38; facing guard 37 (plain 37); cover index before/after base 38/38;
 // shared inset/lateral/both scale 131/106/138; native trace plus guard 37;
 // trace-block definition receiver 104; receiver plus guard 101. One-point gain dropped.
+// score 38 (was 38): face/definition and cover register ownership, normal y product and cold block remain.
+// Candidate-record reference 38; reference-flags binding 67; normal input copy 42;
+// point/normal/both output copies 42/42/42; facing scalar 38; published-side switch 59.
 // @retail 0x25e430
 void __stdcall function_25e430(
 	long actor_index,
@@ -1744,6 +1747,9 @@ struct s_collision_result_25f7b0
 // product loads, word-mode comparison and allow-store timing differ.
 // Byte collision flag 14; byte allow flag 43; long initial mode 34;
 // short collision flag 247; scoped ray setup/result 14 (plain). Body restored.
+// Guarded collision fraction 14 plain; hit distance 14; native collision output 228; ray endpoint 232;
+// distance endpoint 201; both endpoints 266; final query point 111; horizontal normalization value 177.
+// Collision byte home, product loads, formal mode width and allow-store timing remain.
 // score 14 (was 14): collision byte, product loads and word-mode comparison still differ.
 // reuse ray displacement 14p; existing dot helper 14p.
 // squared length lifetime 14p; normalization result lifetime 14p.

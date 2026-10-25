@@ -627,6 +627,9 @@ bool function_aa970(long index)
 
 // score 37 (was 37): the float is added into the accumulator and stored back; retail loads it into
 // a separate register, adds and stores that.
+// BLOCKED-BY 0xd0620 (its iterator in ebx); also tried the accumulator from header->object 37, a masked
+// child index local 37, an index-first byte offset 37, the accumulator declared before the displacement 37,
+// a position pointer local 57
 // @retail 0xaa9e0
 void function_aa9e0(long index, point3f const *previous_position, vector3f const *velocity)
 {
@@ -850,6 +853,11 @@ PRIVATE inline bool z_state_real_valid(real value)
 // score 146 (was 154): mask-width field reference 146; initial result store and scalar zero remain.
 // Native external record 154; record/plain result and plain sticky predicates 289;
 // external flags reference 154; decoder/classifier noinline declarations 465/349; unsigned ordinal 154.
+// score 146 (was 146): initial direct byte SETNE, scalar zero and output-vector roles remain.
+// Actual position/first-vector/second-vector bindings 146/146/146; scale and two scalar
+// field bindings 146/146/146; decode-array element binding 146; combined scalar fields 146.
+// score 146 (was 146): direct result-byte SETNE and scalar-zero reloads remain.
+// Wide sticky validity 352; byte sticky validity 146; decoder exits/lower-first 146/295; finite classifier 243; exponent extraction 146; decoded region count/state 146/146.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {

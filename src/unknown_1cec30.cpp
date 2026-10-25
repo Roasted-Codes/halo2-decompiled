@@ -1386,6 +1386,9 @@ PRIVATE __forceinline real const &component_time_step()
 // and captured step decision 26 each. Original body retained.
 // score 26 (was 26): acceleration/timestep allocation remains; assigned correction and positive clamp 26;
 // nonpositive/all assigned clamps 45; shared velocity clamp 148; shared bounds 148 (449/450 bytes).
+// acceleration register, memory timestep multiply and stop-test schedule differ.
+// Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
+// completed clamp before ratio 82; accelerated candidate default 114.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)
@@ -2691,6 +2694,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // transforms 301; equal-node arm first 248.
 // second selector word 226; promoted first nodes 290; entry matrix 206;
 // entry relative transform 206; fallback first 206 (plain scores).
+// Round 303: first mapped byte 299; second mapped byte 213; first node at use 338;
+// second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
 // score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,

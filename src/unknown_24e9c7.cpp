@@ -132,6 +132,12 @@ struct s_24e9c7_bounds
 // early basis / scale / basis with spans 125/125/125 (fast).
 // Basis i/j/both product input orders 125; upper or side inputs 125;
 // basis with upper / side / both input orders 125. Original products retained.
+// Point origin library copies 252; native bitmap/placement/sequence values 215/176/205; bitmap plus
+// sequence 230; placement plus copies 176; opacity snapshot 139; placement plus bitmap 183. Scalar homes,
+// sprite-source setup and SSE scheduling remain.
+// Origin / upper-copy / upper / positive-side passes 188/220/240/204;
+// origin-upper 195; origin-side 206; upper-side 214; lower-copy pass 193.
+// Scalar homes and sprite-source/SSE scheduling remain; original quad retained.
 // Scalar origin x/y/both 194/194/194; scaled height/width/both accumulation 125/125/125;
 // side-product updates 125; y capture with side updates 194. Original scalar homes and spills remain.
 // score 125 (was 125): scalar homes and basis spills remain; selected bitmap word 153;

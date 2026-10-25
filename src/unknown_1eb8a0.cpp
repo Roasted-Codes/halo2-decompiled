@@ -798,6 +798,10 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // score 78 (was 78): owner/node roles and late contact setup remain; per-use/external-reference owner
 // fields 376/385; conditional/guarded existing counter results 437/437;
 // per-use/reference owner plus conditional 453/450; plus guarded 453/450.
+// own-object/node registers and contact scan setup still differ.
+// Own handle bits 78; attached counter field reference 78; selected-index success 398;
+// orientation test result 78; detached shared difference 166; detached shared cross 78;
+// both detached helpers 78; contact height field reference 78. Opening body retained.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {

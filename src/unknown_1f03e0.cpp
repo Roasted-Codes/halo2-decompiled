@@ -144,7 +144,7 @@ struct s_shape_side
 };
 
 // @retail 0x1f1930
-void function_1f1930(s_shape_contact const *contact, s_shape_side *side)
+void function_1f1930(s_shape_side *side, s_shape_contact const *contact)
 {
 	if (contact->normal.i != 0.0f || contact->normal.j != 0.0f || contact->normal.k != 0.0f)
 	{
@@ -834,6 +834,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Native enabled test 626; byte flag view 619; low-normal first 618; current-velocity snapshot 625;
 // repeated damping 624; native enabled/byte view 629; gravity first 616; byte view/low-normal 616;
 // gravity/low-normal 614 kept; gravity/byte view 618.
+// score 614 (was 614): frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
+// Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
+// general distance result 614; masked final gravity word 634.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1120,6 +1123,9 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // score 230 (was 230): zero-load width, reset/selection lifetimes and material-call expansion;
 // float consistency 392; native normal 368; current supported long 261; current flag long 361;
 // unsupported-first with original magnitude 258; native movement input 284.
+// score 230 (was 230): double-width zero load, reset/selection homes and second material-call expansion still differ.
+// Combined eligibility 240; per-contact body-velocity snapshot 346; highest reduction after selection 258;
+// approach at use 351; surface output at entry 230.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

@@ -85,6 +85,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Logarithm width and reset/restore scheduling remain;
 // rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
 // record reload after render call 192; raw global-first unions 167.
+// score 167 (was 167): logarithm width and reset/restore scheduling remain;
+// early dirty mask, update byte or late counter pair each 296; first published range 167;
+// second published range 187.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

@@ -2082,6 +2082,10 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // frame 0x1c agrees; object/offset homes and slot mask differ.
 // Frame pointer 291; scalar clamp input 184; sample-first clamp result 189;
 // indexed snapshot records 230; native-word ordinary tail flags 192.
+// Frame 0x1c agrees; indexed lookup, object/offset homes and slot-mask allocation still
+// differ. offset receiver home 183; offset snapshot home 183; offset object home 183; offset
+// result home 183; receiver store lifetime 201; offset positive count 183; tail result mask
+// 208; offset tail result mask 207.
 // score 184 (was 184): getter guard/exhaustive result 200; complete output receiver 184;
 // exhaustive child metadata/count/all results 234/299/311; ordered clamp results
 // and bound returns 191. Object/offset homes and low-mask allocation still differ.

@@ -475,6 +475,15 @@ void function_3dd10(long object_index, bool force);
 // score 122 (was 122): output/delta roles, second remainder publication and fallback one reload remain;
 // input/output/both conversion inline declarations 122/122/122; actual lower/upper/both HSV
 // returns 200/199/243; both returns plus input/both declarations 243/243.
+// Saved output/count roles and second-remainder
+// publication still differ. Early variant field binding 149; live count 122;
+// both 149; early presence predicate 131; default/supplied/final color
+// memcpy 213/213/213; base-color name 122; model-first guard 150; shared
+// model handle with that guard 232. Original copies and observations retained.
+// score 122 (was 122): variant/remainder publication, saved roles and scan exits differ.
+// Live choice count 122; choice-count field reference 213; signed weight bound 630;
+// unequal-end for 122; inverse blend at uses 168; eligibility equality first 122;
+// eligibility predicate value 213; actual object variant field 122. Opening body retained.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {

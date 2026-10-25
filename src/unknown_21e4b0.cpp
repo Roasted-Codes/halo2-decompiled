@@ -107,10 +107,13 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // returned byte 313; returned byte/count cursor 341; serial HRESULT 169; descriptor prefixes 323;
 // complete listener value 468; frame pointer 443; global optimization disabled 1166; size preference 645;
 // separate final-call result 302; result transfer before reset 294.
+// Frame 0x80 agrees; allocation byte, category and first-channel spill still differ.
+// published first channel 165; count from first channel 283; count before range publication
+// 298; published first count 294; native mixbin identifiers 165; input table row traversal
+// 232; output table traversal 268; both native table traversals 274.
 // score 165 (was 165): success/type carriers and first-channel spill remain;
 // native startup/create/buffer calls 209/201/165; two-row input table 165;
 // absolute channel index 283; state before codec stores 165; failure state 163; early failure state 286.
-// score 165 (was 165): success/type carriers and first-channel spill remain;
 // result from startup tests 424; tested-state transfer 424; result at first test 424;
 // final result after reset completion 303; before effects 303; before submix 262;
 // before impulse cleanup 174; before volume stores 165.

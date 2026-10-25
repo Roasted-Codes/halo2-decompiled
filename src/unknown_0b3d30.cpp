@@ -354,7 +354,7 @@ done:
 }
 
 // @retail 0xb4670
-long function_b4670(long kind, long controller, struct _XUID owner, wchar_t const *filename, char const *directory, long *task_out)
+long function_b4670(long controller, long kind, struct _XUID owner, wchar_t const *filename, char const *directory, long *task_out)
 {
     (void)&controller;
     *task_out = NONE;
