@@ -42,6 +42,9 @@ real function_30bf0(vector3f *vector);
 // score 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
 // light/value fields 213; both views 213; frame pointer 296; status enum 213.
+// selector complete validation 213; selector result join 213; collision value initialization 238; direct
+// component lifetimes 231; component lifetimes ordinary count 225; native contribution vector 246; size
+// preference 380; float consistency 302.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
