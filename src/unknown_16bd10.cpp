@@ -206,6 +206,16 @@ bool camera_velocity_profile_new(s_camera_velocity_profile *profile, real total_
 	return result;
 }
 
+// score 49 (was 49): retail keeps both arrays in its frame (sub esp, 0x1c)
+// and reads rates[1], rates[2] and accelerations[0] back from it; ours keeps
+// only rates[2] there, so the sum takes other registers, the b * b term
+// moves up (the compiler reorders the sum: the source order of the terms
+// does not matter) and the two clamp exits are not merged. Retail also
+// tests ticks against the acceleration ticks before choosing ticks (an
+// if/else-if/else gives that, 96). Tried: other term orders 49, squares in
+// locals 49, b * (b * accelerations[1]) 99, a loop over the three segments
+// 59-65 (unrolled, factored), aggregate initializers 49, accelerations
+// zero-initialized 101, the arrays filled or declared in another order 49-50.
 // @retail 0x16be50
 real camera_velocity_profile_evaluate(s_camera_velocity_profile const *profile, long ticks)
 {
