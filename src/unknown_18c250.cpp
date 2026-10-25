@@ -376,6 +376,10 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 }
 #pragma inline_depth(255)
 
+// score 12 (was 12): object/tag entry registers still follow the dispatch
+// convention. Nested validation 12; object query receiver 12; validation from
+// tests 43; globals after tag query 38; direct set/first element 12/12;
+// absolute set part 12; relative permutation index 26.
 // @retail 0x18c6a0
 void __stdcall function_18c6a0(long object_index, long unused, long tag_index, long set_index, long permutation, long scale)
 {
