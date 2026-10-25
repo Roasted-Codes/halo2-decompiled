@@ -79,10 +79,13 @@ void cache_copy_forget(char const *map_name);
 bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
-// score 433 (was 471): Frame 0x110 agrees; request-copy homes and by-value write-option setup still differ.
+// score 374 (was 471): Frame 0x110 agrees; request-copy homes and by-value write-option setup still differ.
 // Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion states 433.
 // Signed-word dependency index 446; unsigned index 446; explicit existing write flags 453;
 // terminal snapshot assignment 433; adjacent write-header cases 434.
+// Completed-request/result names 433; direct selected-file calls 440; direct size predicate 374;
+// header-result branches 413; terminal disposition tests 434; adjacent state clears 439;
+// direct size predicate plus header-result branches 382.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
@@ -148,9 +151,7 @@ bool function_2141f0(void)
 		break;
 	case 6:
 		{
-			bool size_known = g_55bcf8.total != (dword)NONE;
-
-			success = size_known && g_55bcf8.total > 0x800;
+			success = g_55bcf8.total != (dword)NONE && g_55bcf8.total > 0x800;
 		}
 		g_55c02c = 0;
 		state = 7;

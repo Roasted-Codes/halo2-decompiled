@@ -192,6 +192,8 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // complete descriptor value initialization 619; parallel alpha-byte packing 342.
 // Coordinates before inlined begin 376; scale-parameter half-span 342; function-scope coordinates 342;
 // shared resource pointer 511; dword alpha carrier 276.
+// First coordinate C entry 373; folded half-span with inline reservations 276;
+// delayed lower coordinate 387; delayed upper coordinate 384; lower initialized first 359.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
