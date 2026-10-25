@@ -826,7 +826,11 @@ bool __stdcall function_168f40(long flags, s_vehicle_ray const *ray,
 // score 25 (was 25): plane k/j product operands at +0x314, late i/y
 // products and success-result reload differ; single plane k/j snapshots
 // 340/357; start z/y 124/124; movement j 56; plane k+j 390;
-// correction movement i 56; start z+y 157.
+// correction movement i 56; start z+y 157; the found path's `result = true;` dropped 92
+// (retail's single result-reload exit, but the reload is hoisted onto two inner paths);
+// `return true;` there 25; point/vector read directly in the plane distances 124; the k/j
+// plane terms through `instanced_plane->plane` 177 (both k products then load the plane
+// first, as retail; j does not, and the stepping block grows); the j operands swapped 25.
 // @retail 0x1697c0
 bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const *vector,
 	long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *collision)
@@ -1538,6 +1542,9 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // face classification from normal selection 553.
 // frame 0xb964 agrees; sum/counter homes and EBX/ESI zero carrier still differ.
 // Result-first edge cap 625; long inside 600; long normal selection 552; projected entry lifetime 552; independent sums with word counters 594; shared initial point 553.
+// score 552 (was 552): frame 0xb964 agrees; sum homes and query zero register differ. Signed
+// accepted counts 552; selected endpoint pointer 653; vertex cursor 628; shared inverse 552; early
+// opposite radius 647; word-count shared reconstruction and early successor 686.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

@@ -1261,6 +1261,10 @@ static inline s_players_globals *players_globals_14f2e0()
 
 /* gives a player its unit (the unit kept for it, the unit waiting to be
    reused, or a new unit at a starting location) and resets its spawn state */
+// score 114 (was 114): Player/tag/globals/unit register lifetimes and success BL still differ.
+// Shared direction helper for reuse/create/both 251/201/276; creation/colors/both entry scopes
+// 152/114/152; native/byte success 174/177; sentinel clears 114;
+// representation inline/out-of-line declarations 114/114.
 // @retail 0x14f2e0
 bool __stdcall function_14f2e0(long player_index)
 {
@@ -1964,6 +1968,11 @@ struct s_player_creation_record
 // Caller depth 1/2 33/33; size preference 335; common reset 55;
 // auto-inline off 33; global optimization off 395; depth 0 305;
 // common reset with size preference 343.
+// Retail looks like function_14f270(index, record->value04) inlined one level
+// (its NONE arm inline, its recursive NONE call kept), as 0x152f80 also
+// shows; our build does not inline that call (267, also with
+// inline_recursion(on) around this function). Written in function_14f270's
+// arm order, the NONE call in the other arm inlines instead (49).
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {
@@ -2104,6 +2113,8 @@ static __forceinline long player_round_ticks(real value)
 // score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
 // Frame pointer 816; native input fields 701; native player cooldown fields 701;
 // direct permission result 707; combined native fields and direct result 707.
+// Native unit view 701; candidate reference 701; request at dispatch 701;
+// native activity results 707; native permission 701. Original body kept.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
@@ -2654,6 +2665,12 @@ struct s_unit_flags_14d8b0
 // score 155 (was 155): iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
 // low-time arm first 179; inline depth one 155. Damage call convention differs.
+// Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
+// native reset timer 155; both native long/short fields 155; signed native countdowns 155;
+// all native countdown fields 155; full native current-player record 153.
+// score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
+// Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
+// incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

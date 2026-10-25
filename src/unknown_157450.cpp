@@ -479,6 +479,11 @@ static inline void input_counter_set_inlined(long c, long a, long b, long value)
 // score 32 (was 32): the old team mask is kept as a 32 bit value here and as a 16 bit one in
 // retail; the comparison and the update of the two masks use different registers, and the input
 // counter loop uses different ones too.
+// Team-bit carrier 29 (the loop then matches; below the keep threshold); carrier with the
+// engine lookup hoisted 29; carrier with the mask compare swapped 29 (the mask load leads
+// the compare but is still not shared with the update); two-width union view of the mask 90;
+// union with a named wide copy 90; word local with a promoted copy 134; updated mask
+// computed before the branch 133; union plus carrier 91.
 // @retail 0x158140
 void function_158140(void)
 {
@@ -1383,6 +1388,9 @@ struct s_item_collection
 };
 
 // score 5 (was 5): the tick count is sign extended into eax here and into edx in retail.
+// collection object reference 5; positive fallback 5; selection scope 5;
+// nested positive groups 5; object plus scope 5; valid-selection result 25;
+// native-short valid selection 29; object plus positive fallback 5. Integer join still differs.
 // Full record expressions with arm conversions 5; with short ticks 34;
 // record and fallback field references 20; spawn reread with arm conversions 30;
 // spawn reread with early fallback widening 6; full expressions and long spawn 34;
@@ -1503,7 +1511,9 @@ short function_15cca0(long player_index, byte code)
 }
 
 // score 24 (was 24): the datum index and the record count are kept in swapped registers through
-// the whole lookup.
+// the whole lookup. Receiver and other pointer 37; const other pointer 37; target noinline 24;
+// absolute lookup forceinline 24; mark code 24; mark identifier 24; late absolute index 67;
+// counter declared first 24; existing team helper 50; team helper forceinline 50.
 // @retail 0x15cd90
 void function_15cd90(long player_index, short identifier, long other_player_index)
 {
@@ -2660,7 +2670,10 @@ void function_158090(long player_index, short old_team)
 }
 
 // score 12 (was 12): the player index and the player table base are kept in swapped registers, and
-// the peer lookup after it reloads them the other way round.
+// the peer lookup after it reloads them the other way round. Tried: an unsigned index parameter 12;
+// the table read before the peer call 31; a const table pointer 12; the existing dirty-slot helper 12;
+// the existing cause setter forced inline 69; inline depth one 12; the existing initializer forced
+// inline 73; global optimization off 120.
 // @retail 0x157de0
 void function_157de0(long player_index)
 {
@@ -2935,7 +2948,10 @@ void function_15ba20(void)
 }
 
 // score 16 (was 16): the event fields are stored in a different order than retail, and the player
-// lookup keeps the index in a different register.
+// lookup keeps the index in a different register. Tried: an unsigned index parameter 16; the shared
+// input-counter helper 16; the force-inline input-counter helper 16; the table read before the peer
+// call 68; the existing cause setter forced inline 70; the existing initializer forced inline 79;
+// size optimization 125; global optimization off 86.
 // @retail 0x157ed0
 void function_157ed0(long player_index)
 {
@@ -3798,6 +3814,7 @@ static __forceinline long nonnegative_15ce70(long value)
 
 // score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
+// score 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4030,6 +4047,7 @@ struct s_score_zone_view
 // score 481 (was 544): scalar homes now agree; text-workspace and later call/store allocation differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
+// score 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4414,6 +4432,9 @@ bool function_158eb0()
 // mode in ecx and the index in edx, ours the other way round. Ours evaluates the index argument
 // first (right to left, the mode is 0x23f260's first parameter); retail behaves as if the mode were
 // last. Tried: `(long)(flag != 0)` 5; `!!flag` 5; a byte flag 5; `> 1` for `/ 2 > 0` 35.
+// actual mode reference 38; options record reference 5; complete iterator 46;
+// iterator scope 5; byte result 69; wide result 59; byte plus mode reference 66;
+// direct final count rejection 23. Scratch index/mode allocation still differs.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -5044,6 +5065,7 @@ void __stdcall function_d6bc0(long object_index);
 // score 175 (was 175): frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
 // reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
 // nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
+// score 175 (was 175): Frame 0x14 versus 0x18; timer/base homes and scheduling joins remain. Native placement record 175; named time slice 175; mode case order 175; explicit real defaults 175; positive slice guard 175 (fast).
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

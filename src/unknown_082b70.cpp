@@ -140,8 +140,8 @@ struct s_082b70_player
 	byte unknown030[0x21c - 0x30];
 };
 
-// score 48 (was 48): retail reads another global for the record pointer and keeps it in edx,
-// ours reads a different global and keeps the pointer in eax.
+/* fills a player's object motion from the unit it controls, or from the
+   vehicle the unit is attached to when the unit occupies it */
 // @retail 0x828b0
 bool function_828b0(long player_index, s_player_object_motion *result)
 {
@@ -150,13 +150,13 @@ bool function_828b0(long player_index, s_player_object_motion *result)
 	if (player->unit_index != NONE)
 	{
 		long unit_index = player->unit_index;
-		long parent = object_get_082b70(unit_index)->parent;
-		if (parent != NONE)
+		s_082b70_object *unit = object_get_082b70(unit_index);
+		if (unit->parent != NONE)
 		{
-			s_082b70_object *object = object_get_082b70(parent);
-			if (!((1 << object->type) & 3) || object->occupant != unit_index)
+			s_082b70_object *object = object_get_082b70(unit->parent);
+			if (!((1 << object->type) & 3) || unit_index != object->occupant)
 				goto local_0;
-			unit_index = parent;
+			unit_index = unit->parent;
 		}
 		if (unit_index != NONE)
 		{

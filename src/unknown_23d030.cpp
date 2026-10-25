@@ -139,6 +139,8 @@ struct s_free_state_23d260
 // spill forward.k to a parameter slot), the transforms as __forceinline helpers (322), fresh names for the
 // scaled point (373), movement operands swapped (282), the roll if/else inverted
 // (279), a cross vector in the turn about forward (277), declaration order (same)
+// score 118 (was 118): zero XMM3 versus XMM1 and normalization/side-vector allocation remain.
+// Roll-input snapshot 324; live yaw/pitch/roll fields 275/121/121; live forward/up/both fields 295/154/157; normalization result 319.
 // @retail 0x23d260
 void __stdcall function_23d260(void *state, void *input, void *output)
 {
