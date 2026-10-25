@@ -1466,6 +1466,12 @@ long __stdcall function_bb670(short name_index, bool force)
 // score 31 (was 84): the early metadata reads, saved-register order and final argument staging differ.
 // Offset references 84; const metadata 84; long offsets 95; separate metadata 84;
 // direct success 117; input reference 84; index-field reference 31; palette-field reference 84.
+// score 31 (was 31): metadata reads and saved-register order remain; final creation arguments agree.
+// With the index-field reference: late stride 93; word stride 48; independent clamps 31;
+// creation return 113; native datum 31; later result 31; common metadata exit 41; long palette 82.
+// Valid-path stride before/after scenario 106/106; offset references 31; offset references plus
+// valid stride 106; direct guards with valid stride 106; word valid stride 106; one-use creation index copy 27 (reverted in review);
+// creation index with valid stride 106.
 // @retail 0xa73b0
 long __stdcall function_a73b0(s_entity_info *info)
 {
