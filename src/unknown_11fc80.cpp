@@ -48,7 +48,16 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 	arg_0->z = arg_3 + arg_1->z;
 }
 
-// score 79 (was 79): current distance uses xmm3 instead of xmm2, then
+// score 65 (was 79): the distances go through plane_distance_to_point, which gives retail's
+// sum order in every unrolled copy; the current distance still takes xmm3 for retail's xmm2,
+// with delta y/z in xmm4/xmm2 for xmm3/xmm4 (z subtracted first) and the z interpolation
+// multiplied into delta.z's register where retail multiplies into t's. Round 81: explicit
+// (x + y) + z in the loop 73; on top of the helper form, t before delta (with or without the
+// span local, or passed inline), delta before the loop and the in-place z steps all 65; the
+// z step as one expression 92-101 (307 in the real build); delta written out per component
+// 332 (1316 bytes); previous_inside != inside 70; the helper as point + vector * t for all three
+// components 309.
+// Earlier (score 79): current distance uses xmm3 instead of xmm2, then
 // delta y/z use xmm4/2 instead of xmm3/4 through the unroll and remainder.
 // Per-use indexed current 356; unsigned ordinal 82; accepted memcpy 79;
 // interpolation output/previous references 79/79; complete result value
@@ -77,22 +86,14 @@ long function_11fc80(
 	{
 		real offset = keep_inside ? tolerance : 0.f - tolerance;
 		point3f const *previous = &points[point_count - 1];
-		// retail evaluates the distances in SSE single precision: every product and sum is rounded to float
-		real previous_z = plane->k * previous->z;
-		real previous_y = plane->j * previous->y;
-		real previous_distance = previous_z + previous_y;
-		real previous_x = plane->i * previous->x;
-		previous_distance += previous_x;
-		previous_distance -= plane->d;
+		real previous_distance = plane_distance_to_point(plane, previous);
 		previous_distance -= offset;
 		bool previous_inside = previous_distance >= 0.f;
 
 		for (long i = 0; i < point_count; i++)
 		{
 			point3f const *current = &points[i];
-			real distance = (plane->i * current->x + plane->k * current->z) + plane->j * current->y;
-			distance -= plane->d;
-			distance -= offset;
+			real distance = plane_distance_to_point(plane, current) - offset;
 			bool inside = distance >= 0.f;
 
 			if (inside != previous_inside)
