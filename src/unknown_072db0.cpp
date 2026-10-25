@@ -548,7 +548,9 @@ struct s_match_player_rating_collection
 };
 
 // score 16 (was 22): retail holds the entry skill sign-extended in ESI (movsx at the load, mov ebx,esi for the call); a 32-bit local gives that movsx but MSVC then picks EBX for it and moves the team-mode byte to CL, so the whole frame shifts.
-// Also tried with a 32-bit skill: the call reading the field instead 24 (the compare narrows back to 16 bits); the local at the loop top 104; team mode declared first 113; a const team mode 113; locals renamed 113; an unsigned 32-bit skill 113.
+// Also tried with a 32-bit skill: the call reading the field instead 24 (the compare narrows back to 16 bits); the local at the loop top 104; team mode declared first 113; a const team mode 113; locals renamed 113; an unsigned 32-bit skill 113;
+// declared at function scope 113; team mode as byte or char 113; team mode read from the collection in the loop 113 (in both places 105); the compare reading the field 99; declared inside the condition's block 103;
+// loads and tests in one condition 104; the tests as continues 113; the key and active tests split from the rest 113; the selected skill read from the entry at the call 103; the key read from the collection 117.
 // @retail 0x74800
 long __stdcall function_74800(const s_match_player_rating_collection *collection, long selected)
 {
@@ -1524,6 +1526,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // long validity 770; pending read guard first 786; timestamp before
 // counts 770; unsigned property initializer 770; unsigned user group 781.
 // score 770 (was 770): Frame 0xc0 agrees; user cursor and identity homes remain. Const user 770; const identity 770; byte group 781; byte accepted count 821; byte descriptor initializer 853 (fast).
+// score 770 (was 770): Frame 0xc0 agrees; user/identity and request homes remain. Terminal record reuse 787; native identifier field 770; clamp-value lifetime 770; type-first duplicate filter 794; request-player cursor 804 (fast).
 // @retail 0x74aa0
 void function_074aa0(void)
 {

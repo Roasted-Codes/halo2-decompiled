@@ -100,7 +100,12 @@ struct s_handler_slot
 	void *unknown14;
 };
 
-// score 67 (was 67): everything before the handler block matches. In the handler and gateway
+// score 68 (was 67): retail keeps the node pointer in eax and adds 0xc to it before the
+// compare, ours copies it into ecx and reads [eax+0xc] instead.
+// score 67 (was 67): field-address carriers and post-clear link load still differ;
+// typed handler/gateway/both members 67/67/67; gateway/handler/both byte flags 67/67/67;
+// initialization values 67; inactive return 67.
+// everything before the handler block matches. In the handler and gateway
 // blocks retail keeps the tested-and-cleared fields as pointers (handler copied to edx,
 // eax += 0xc for &handler->gateway; gateway copied to esi, lea edx [eax+4] for
 // &gateway->initialized, eax += 8 for &gateway->link); ours stores through [eax+N].

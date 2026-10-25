@@ -57,6 +57,10 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // complete previous distance 79; both complete producers 77 (two-point gain dropped);
 // unadjusted distance/projection lifetimes 79/79; indexed accepted input 79;
 // current Y/X/XY product orders 79/79/79. SSE distance/delta allocation still differs.
+// Also 79: delta declared before the loop; t = previous_distance / (previous_distance - distance)
+// computed before delta, without the span local. In the 4x unrolled body the copies' current-distance
+// sums differ: retail copy 1 i*x + k*z + y*j, copy 2 i*x + y*j + z*k; ours copy 1 i*x + k*z + j*y,
+// copy 2 i*x + z*k + y*j.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,
@@ -142,6 +146,8 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 // (50; k-j-i, k-i-j and i-k-j give 26), or with each product's operands
 // swapped (26); new_mid.x as root_forward->i * mid_root (26); the node axes
 // written as root->forward etc. without the pointer locals (59).
+// score 26 (was 26): frame 0x30 agrees; cross-product operand loads and the extra midpoint MOVSS byte remain.
+// Six product values 28; cross accumulators 34; first/second/both input copies 512/565/741; returned cross value 462; cross reference parameters 26; local interpolation helper 28.
 // @retail 0x120220
 void function_120220(
 	transform4x3f *target,

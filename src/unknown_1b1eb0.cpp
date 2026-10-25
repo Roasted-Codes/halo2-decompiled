@@ -34,7 +34,12 @@ PRIVATE __forceinline void function_1b1eb2(long arg_0)
 }
 
 // score 14 (was 14): ours keeps the scaled actor index in ECX and the actor pointer in EAX,
-// retail keeps the index in EAX and the pointer in ECX.
+// retail keeps the index in EAX and the pointer in ECX (so ours also spends a byte on
+// `and ecx, 0xffff`). Tried: actor_reset_state for the helper 18 (pops move); actor
+// before the state 14; helper taking the actor pointer 14; actor_get spelled out,
+// index first, or as an array element (first get, second, or both) 14; the flag read
+// into a local first 14; if/else form 14; the reference in a local first 28; actor_get
+// after the if 25; no actor local 34.
 // @retail 0x1b1eb0
 bool __stdcall function_1b1eb0(long actor_index, s_slot *slot)
 {
@@ -161,6 +166,10 @@ real function_1e3920(long actor_index);
 // score 164 (was 168): early ESI slot load, scalar homes and cold reference arms still differ.
 // Native request byte 168; earlier scratch 164; result before scratch 168; both 167 (dropped);
 // permission success/failure arms 183/183; reference-test result 168; request byte/scratch 164.
+// score 164 (was 164): early slot receiver, scalar homes and reference arms remain;
+// reference before request/index/guard 203/203/201; late output index 163;
+// selection flag before clear 168; scratch before fields/clear 164/181;
+// early reference/scratch with late index 204.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
