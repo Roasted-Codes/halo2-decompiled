@@ -32,10 +32,10 @@ bool function_7af40(s_type_99af70 const *address);
 // score 26 (was 55): retail ends with "if (!(byte)output) result = true;" (test cl, cl; jne;
 // mov al, 1), but that form moves the address parameter from ecx to edx (score 14 here, and
 // callers 0x784a0 and 0x7ab60 stop matching), so the sete form keeps the callers' convention.
-// Tried: an outer if (address) with a short length local (inlines into 0x7acc0), "address &&"
-// before the call (calls 0x7af40, 86), byte_swap_long() helper (16), a value local (16),
-// nested ifs / sizeof(dword) / (long) cast / reference before result (all 14), early
-// return true (48), "result = true; if ((byte)*ipv4_address) result = false;" (23, but the
+// Tried (with the if-form tail): an outer if (address) with a short length local (inlines
+// into 0x7acc0), "address &&" before the call (calls 0x7af40, 86), byte_swap_long() helper
+// (16), a value local (16), nested ifs / sizeof(dword) / (long) cast / reference before
+// result (all 14), early return true (48), "result = true; if ((byte)*ipv4_address) result = false;" (23, but the
 // tail is mov al, 1 / je / xor al, al), (output & 0xff) == 0 (28), swapped parameter order (14).
 // @retail 0x7aec0
 bool function_07aec0(s_type_99af70 const *address, dword *ipv4_address)
