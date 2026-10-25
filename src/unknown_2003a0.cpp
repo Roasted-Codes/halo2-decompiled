@@ -49,6 +49,10 @@ extern short const g_44aee8[20] =
 	3, 7, 3, 3, 3, 3, 1, 2, 2, 4, 4, 4, 5, 5, -1, 3, 7, 7, 7, 4
 };
 
+// score 82 (was 82): 16-bit mask, split flag RMW, sentinel/base allocation remain.
+// Real flag word/byte views 82; word-only flags 105; multi-use source flags 86;
+// real handle array index/library/pointer fills 82/90/101; flag aliases with
+// indexed/library fills 82/90. Original record and complete body retained.
 // @retail 0x200c20
 void function_200c20(byte const *definition)
 {
@@ -320,6 +324,9 @@ void function_202370(void)
 // Native cursor copy 84; two-use active initializer 83; split active cursor 61;
 // cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
 // actual parent-field reference 57; actual record reference 57. Null-result join remains.
+// score 57 (was 57): null-result join and pool/index/mask allocation remain.
+// Direct native cursor, zero/member/ready/conditional initialization with ternary
+// tests 97/97/117/97; conjunction tests 80/100/99/95. Original wrapper retained.
 // @retail 0x2024c0
 void function_2024c0(void)
 {
@@ -905,6 +912,9 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 // Multi-use promoted index 73; helper failure guards 69; native short selection
 // 69; input-default result 75; read-only table 69; signed bounded length 70;
 // promotion/input-default result 119; read-only promotion/signed length 75.
+// score 69 (was 69): merged short and fallback native/promoted allocation remain.
+// Actual shared script fields: native snapshot 109; direct fields 70; NONE/input
+// results 141/115; descriptor first 109; const table 109; long result/ordinal 119/108.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {

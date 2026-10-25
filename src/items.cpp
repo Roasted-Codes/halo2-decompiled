@@ -1208,6 +1208,10 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // score 154 (was 163): Release RMW/tail and event homes remain; idle/count results 166/169;
 // earlier damage key 185; event-first/key plus event-first 196/196; early complete point/origin
 // publication 198/157; initializer-owned sentinel 154 kept, combined origin 176.
+// score 154 (was 154): release-byte RMW/tail and event-point homes remain.
+// Scalar/component factor orders, eight forms 154; direct output 207; native
+// point value 176; owner/origin/position/pair/all library copies 154; direct
+// output with library copies 207. Retained origin reuse and initializer unchanged.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
