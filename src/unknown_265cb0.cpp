@@ -1036,7 +1036,9 @@ struct s_equipped_object_view
 // the held object with no store or call in between; every form without the
 // volatile pool view shares the first load (28): the held index through
 // function_cbd50 28 (6 with the view kept), the held object through
-// object_get 28 or object_header_get 28.
+// object_get 28 or object_header_get 28. Tried (r27b): the comparison through a
+// real local 12; the tag index through a long local 12; `if (...) result = true`
+// 14. 0xee8a0 (matched) needs the same volatile view for its weapon lookup.
 // @retail 0x2675f0
 bool function_2675f0(long object_index)
 {
