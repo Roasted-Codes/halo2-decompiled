@@ -269,6 +269,9 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // obstacle-radius observation 813; requested-angle observation 796; all restored.
 // Trace-field forward sector 772, reverse 776, both 774; settings radius rereads 812; short-index obstacle cursor 814.
 // score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Early settings radius 800; const center 767; early selector 847; final-angle selection first 798; reverse component assignments 767 (fast).
+// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain.
+// native endpoint return 947; native rotated-point return 961; endpoint input order 767;
+// two-coordinate pivot 767; side transform first 822 (fast).
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

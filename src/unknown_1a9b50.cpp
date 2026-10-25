@@ -588,6 +588,9 @@ static __forceinline long real_to_long(real value);
 // 476; direction length by arm 482; facing position view 471; facing prediction seconds 472; facing planar
 // copy 466; facing direction length 473; planar speed homes 466; planar position view 464; planar position
 // speed homes 464; planar position late 466.
+// score 410 (was 466): Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// late object receiver 470; trajectory planar view 466; direct request view 466;
+// test-derived readiness 410; conditional approach factor 466 (fast).
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
@@ -696,12 +699,11 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 				}
 				else if (local_0->field_2e)
 				{
-					if (local_0->field_34 > local_17 || (0.0f > local_17 &&
-						(local_8->field_1c.k - local_13->velocity.k) * local_11.k + (local_8->field_1c.j - local_13->velocity.j) * local_11.j + (local_8->field_1c.i - local_13->velocity.i) * local_11.i > 0.7f))
-						local_10 = true;
+					local_10 = local_0->field_34 > local_17 || (0.0f > local_17 &&
+						(local_8->field_1c.k - local_13->velocity.k) * local_11.k + (local_8->field_1c.j - local_13->velocity.j) * local_11.j + (local_8->field_1c.i - local_13->velocity.i) * local_11.i > 0.7f);
 				}
-				else if (0.5f > local_17 - (local_13->velocity.k * local_11.k + local_13->velocity.j * local_11.j + local_11.i * local_13->velocity.i) * local_15 * g_510c54->rate)
-					local_10 = true;
+				else
+					local_10 = 0.5f > local_17 - (local_13->velocity.k * local_11.k + local_13->velocity.j * local_11.j + local_11.i * local_13->velocity.i) * local_15 * g_510c54->rate;
 			}
 		local_18:
 			if (local_0->field_18 || (local_10 && !local_0->field_2e))
