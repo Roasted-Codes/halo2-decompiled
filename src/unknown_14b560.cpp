@@ -2108,6 +2108,8 @@ static __forceinline long player_round_ticks(real value)
 // score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
 // Frame pointer 816; native input fields 701; native player cooldown fields 701;
 // direct permission result 707; combined native fields and direct result 707.
+// Native unit view 701; candidate reference 701; request at dispatch 701;
+// native activity results 707; native permission 701. Original body kept.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {

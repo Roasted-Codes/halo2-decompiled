@@ -799,6 +799,12 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 	}
 }
 
+// score 251 (was 273): frame 0x38 agrees; ID slots, result/loop byte homes,
+// blend reloads and the frame clamp differ. Success after setup 251; loop
+// state width 283; channel state width 314; name aggregate 322; flag mask 353
+// (six match losses). On 251: logical channel 287; logical offset 248 (gain
+// three, dropped); loop expression 345; success after query 274; before
+// overlay 255; previous-loop home name 251.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
@@ -875,7 +881,6 @@ bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_
 			{
 				bool unflagged;
 
-				result = true;
 				unflagged = channels[0].is_unflagged0() & loops;
 				if (transition_id.index != NONE && graph_tag_index != NONE)
 				{
@@ -916,6 +921,7 @@ bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_
 					}
 				}
 				flags &= ~1;
+				result = true;
 				goto names_store;
 			}
 		}

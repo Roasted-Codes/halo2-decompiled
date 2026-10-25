@@ -404,11 +404,14 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // frame 0xa4 versus 0xa0, actor stacked versus EAX/EBX;
 // initial update predicate 441 (frame 0xa0); counter word snapshot 426;
 // prior-state word 426; case-one tracking scope 426; separate final guards 426.
+// score 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
+// kept; word update/sample/sampled count 430/449/449; native view 426; later view lifetime 426;
+// word maximum plus native view/later view/update 420/420/424.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
 	byte *actor = (byte *)actor_get(actor_index);
-	dword volatile maximum = 1;
+	word volatile maximum = 1;
 	bool sampled_one = false;
 	if (actor[0x44]) function_263210(actor_index);
 	function_265680(actor_index);
