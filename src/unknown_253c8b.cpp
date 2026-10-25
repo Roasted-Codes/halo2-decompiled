@@ -170,6 +170,9 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 	return result;
 }
 
+// score 100 (was 100): axis calculation/store scheduling differs after bounds;
+// both origins first 104; vertical origin first 106; corner stores 104; vertical/corners 105;
+// all edges first 104; vertical edges first 105; named far edges 104; vertical far edge first 105.
 // @retail 0x253ea8
 void c_class_19b8b1::v4(long screen_rect_address)
 {

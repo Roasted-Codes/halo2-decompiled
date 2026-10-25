@@ -52,6 +52,9 @@ struct c_aggregate : c_child
 };
 
 
+// score 104 (was 104): request/cursor registers and produced/release scratch homes differ;
+// count name 104; release-output name 104; both names 104; result-first 104;
+// arrays swapped 104; collection cursor 105; indexed dispatch 104; allocator capture 115.
 // @retail 0x97d80
 long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 {

@@ -59,6 +59,9 @@ struct s_spawn_scenario_23aea0
 	s_spawn_settings_23aea0 *settings;
 };
 
+// score 105 (was 105): destination pointer replaces the retail integer table offset;
+// flat index 254; zero-based batches 139; typed records 137; flat typed records 121;
+// unsigned indices 141; batch steps 139; const records 137; full source table 139.
 // @retail 0x23aea0
 void function_23aea0()
 {

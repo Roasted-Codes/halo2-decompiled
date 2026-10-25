@@ -561,6 +561,10 @@ void __stdcall function_1889d0(dword flags)
 	}
 }
 
+// score 62 (was 110): raw flags load and tag/late-global registers still differ;
+// flags/tag names 110; positive/rejection tests 110; direct parameter 160; early flag 42 (restored);
+// inline query 110; shifted word/dword/byte 128/129/120; direct masks 154; first/second mask 132/151;
+// multi-use word mask 62; full-width mask 147.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {
@@ -579,7 +583,7 @@ void __stdcall function_188ac0(dword flags)
 			record_pool_release(array, datum);
 		else
 		{
-			register word flags5 = *(word const *)&element->flags;
+			word flags5 = *(word const *)&element->flags & 0x60;
 			if ((bool)((flags5 >> 5) & 1))
 			{
 				long value = element->value;

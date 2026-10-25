@@ -230,6 +230,9 @@ struct s_item_object_2bc1
 /* updates a team's item each tick: how long it has been away from home, its
    return home once it has waited too long, and the points of the player
    holding it */
+// score 97 (was 97): EBP/EDI team-entry roles and timer/tally scheduling differ;
+// direct formal 156; entry name 97; object/limit names 97; distinct events 97;
+// shared event 97; separate timer values 110; early tally pointer 97; combined 156.
 // @retail 0x2bc990
 void __stdcall function_2bc990(long team)
 {
