@@ -560,6 +560,9 @@ struct s_item_collision_bsp
 // seed before square root 249; fallback input copy 364; up pointer 253;
 // plane input scalars 254; angular output initializer 253.
 // Shared input/output scaling 249; transform value 350; linear/angular loops 249/249; normal-row loop 250.
+// score 249 (was 249): plane-index width, plane-join homes and spin stores remain.
+// Item/transform references 249/249; surface selector 250;
+// speed-role names 249; current-spin reference 249 (plain).
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
