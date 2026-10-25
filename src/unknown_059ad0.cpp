@@ -2877,6 +2877,7 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 
 /* a channel of a member connected (a peer tells the host it is there) or
    closed */
+// score 31 (was 31): cold state-clear arm still precedes the mask tail; dead-state, state-value, search and combined local names 31; repeated field reads 31; connected state snapshot 31; shared state snapshot and renamed shared snapshot 51.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
 {
