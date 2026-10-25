@@ -1240,6 +1240,12 @@ static __forceinline long function_72458(s_surface_description *arg_0)
 }
 #pragma inline_depth(255)
 
+// score 9 (was 9): retail tests the variant type as cmp 5/je, cmp 3/je, cmp 4/jne default,
+// ours turns the 3/4 cases into a jl/jg range; the session member travels in eax (ours ecx)
+// and the reloaded type in edx (ours eax). Every goto-free form lays the default block out
+// first: one 5 || 3 || 4 test or its negation (100), case 5/3/4 in one switch (108), cases
+// 1-2 and 3-5 with __assume(0) (134); separate case 3 and case 4 (103); 5 || 3 then a case 4
+// switch (100); a negated && test before the special block (100).
 // @retail 0x72330
 void function_72330(c_session_state_matchmaking *state)
 {
