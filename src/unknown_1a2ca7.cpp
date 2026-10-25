@@ -1435,6 +1435,10 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // differ. immutable count snapshots 124; native list record references 124; original count name
 // 124; original count observation order 117; original count names and order 117; row pair without
 // initial merge 219.
+// On the recovered row/zero context: early count storage 117; matched member pointer/reference
+// 151/151; existing member-bit/friend-byte/both eligibility 186/117/189; independent
+// merge/friend ordinals 117; immutable count storage 117. Count homes, delayed count loads
+// and memory flag updates still differ.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {
