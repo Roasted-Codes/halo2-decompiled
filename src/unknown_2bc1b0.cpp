@@ -298,7 +298,7 @@ void __stdcall function_2bc990(long team)
 						s_event event;
 
 						game_engine_event_initialize_inline(&event, 4, 5);
-						game_engine_event_set_cause_player(&event, entry->player_index);
+						game_engine_event_set_cause_player(entry->player_index, &event);
 						function_19eb90(&event);
 					}
 				}

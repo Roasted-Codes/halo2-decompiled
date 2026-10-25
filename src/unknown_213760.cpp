@@ -88,6 +88,9 @@ long function_213760(dword location, long size, void *buffer, dword *bytes_read,
 void map_file_path_get(char const *map_name, char *path);
 bool cache_header_verify(s_cache_header const *header);
 
+// score 4 (was 4): Frame agrees; the file path address reuses EBX instead of being formed again from ESP.
+// Tried result addressability 4; read count first 4; read count outer 4; result after path 70; result after
+// open 72; test derived result 44; nested read tests 4; invalid handle exit 33.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {
