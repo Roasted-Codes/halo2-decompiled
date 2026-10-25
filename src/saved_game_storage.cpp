@@ -425,6 +425,9 @@ PRIVATE byte const g_saved_game_image[4096] =
 // score 26 (was 26): write size precedes buffer; full-width returns add a success epilogue, first +0xbb;
 // create/open/write test-result carriers 58/55/78; each operation supplies result 60;
 // clamp decision joins create/open/write carriers 75/75/124; clamp plus serial operation results 102.
+// shared byte-result exits and buffer/size scheduling still differ.
+// This round: signed admission 72; unsigned ordinal 87; signed valid scope 72; unsigned valid scope 82; upper-clamp result 79; signed-range result 85; ordinal result 88; assigned upper clamp result 79.
+// failure spans, buffer/size setup and shared byte exits remain; shared reference initializer 26; earlier reference/error workspaces 26/26; initializer return consumed directly 26; zero reference/path aggregates 28/93; header aggregate 62; all workspaces before path 26.
 // @retail 0x216f80
 bool saved_game_file_write_save_image(long type, s_saved_game_file_location *location)
 {

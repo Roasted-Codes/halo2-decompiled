@@ -31,6 +31,9 @@ static inline long unit_get_current_weapon(long unit_index)
 // score 22 (was 22): primary compare/load sharing and fallback handle transfer differ.
 // ordinary shared weapon query/nested gate 37/37; primary expression/index 36/37;
 // fallback index/direct exit 37/45; force-inline private query/read-only actor 37/37.
+// primary link compare/reread and fallback handle transfer differ.
+// Ordinary primary reads 37; ordinary guard/lookup alone 22/22; conditional primary 28;
+// direct fallback output 49; primary success output 45; success before fallback 34; integer result 22.
 // @retail 0x1e1f20
 long function_1e1f20(long actor_index)
 {
@@ -54,6 +57,15 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 	return result;
 }
 
+// score 20 (was 20): actor-base folding and merged outer/inner sentinel exits remain; separate
+// outer failure return 22; result lifetime from entry 24; native unit index 20; readonly actor
+// input 20; existing weapon slot helper 20; shared query separate outer exit 22; shared query
+// result from entry 24; result assigned from both arms 21; existing query forceinline declaration
+// 20.
+// actor-base load folding and merged sentinel exits remain.
+// Inner entry result/both-arm assignment 20/20; absent slot return 19;
+// inner slot selection 20; inner sentinel early exit 19; readonly unit 20;
+// two result lifetimes 24; absent unit input return 22.
 // @retail 0x1e1fd0
 long function_1e1fd0(long actor_index)
 {
@@ -459,6 +471,9 @@ PRIVATE inline s_prop_node_view *prop_list_take_next(long *prop_index)
 // shared slot/condition callback/at-use callback 10/10/10; nullable slot
 // before lookup/after test 10/10; handler local/slot reference 10/10;
 // direct slot expressions 7.
+// slot cursor/cursor callback at use 115/115; signed slot type 7;
+// direct actor index 7; inclusive current count 99; empty callback continue 7;
+// counter lifetime from entry 30; callback declared before slot 7.
 // @retail 0x1e23c0
 void function_1e23c0(long actor_index)
 {

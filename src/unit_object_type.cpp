@@ -3333,6 +3333,9 @@ long __stdcall function_c7160(long unit_index, short seat_index, long a, long ve
 
 /* throws away all the unit's grenades: outside mode 4 each one becomes a
    grenade object that is dropped (0xce470) */
+// score 364 (was 364): Frame 0xc8 versus 0xd8; drop helper stays out of line.
+// Inline drop 364; forced drop 148 loses exact callers; pointer body step 364; indexed counts 364;
+// entry placement 364; forced split count base 148; forced body step 148.
 // @retail 0xceb30
 void __stdcall function_ceb30(long unit_index)
 {
@@ -5751,7 +5754,7 @@ void function_c98a0(point2f const *direction, long unit_index, long type, short 
 
 /* sends a unit request straight to its handler and tells the player's
    controller how it went (as 0xce520 does for request 9) */
-static void unit_perform_request(long unit_index, long type)
+static __forceinline void unit_perform_request(long unit_index, long type)
 {
 	s_unit_request request;
 
@@ -5779,6 +5782,8 @@ static void unit_perform_request(long unit_index, long type)
 /* the unit dies: the biped's death (0xe4a20), its player and actor let
    go, its weapons and grenades dropped, it leaves its seat, its requests
    end (unless a ragdoll timer runs, when forced) and its actions stop */
+// score 323 (was 628): Frame 0x24 agrees; unit entry, callback loads and request-result homes differ.
+// Inline request helper 628; forced expansion 323; two-hand do/while 323; entry request workspace 324; zero aggregate 327.
 // @retail 0xcaa60
 void __stdcall function_caa60(long unit_index, long object_index, point3f const *point, bool knocked, bool force)
 {

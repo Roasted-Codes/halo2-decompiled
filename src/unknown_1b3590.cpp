@@ -365,6 +365,12 @@ short __stdcall function_1b3ea0(long actor_index)
 	return result;
 }
 
+// score 26 (was 26): actor-index/pool load order and zero register differ;
+// native word ordinal 32; sentinel-first stores 26; actor after/between slot stores 52/27;
+// actor after reset/direct final getter 35/34; published-bit return 31;
+// sentinel after reset 36; activation before reset 25, rejected. Body restored.
+// input-index, pool and zero registers plus reset-store schedule still differ.
+// This round: Boolean after reset 26; both slots after reset 46; Boolean after activation 25; both slots after activation 53; sentinel after activation 34; actor after reset 34; actor after slots 34; direct slots after reset 46.
 // @retail 0x1b3ee0
 bool __stdcall function_1b3ee0(long actor_index, s_slot *slot)
 {
@@ -583,6 +589,9 @@ long function_1e4a50(long index);
 void function_26c180(long actor_index);
 short actor_behavior_find_level(long owner_index, short type);
 
+// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch homes differ;
+// source store order 145, movement result 142, positive membership scope 161,
+// role names 144, native zero initialization 144, combined setup/result 141.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

@@ -81,6 +81,17 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 // score 22 (was 22): virtual receiver/argument, index reload and rollback order persist;
 // cleanup inline/noinline 22/22; mask-release inline/noinline 22/22; writer inline/noinline
 // 22/22; encoded count before checkpoint 49, after checkpoint 45.
+// callback argument setup, index reload and rollback order differ;
+// masked entry index 22; constant member dispatch 78; actual entry pointer 22;
+// admitted mask/owner snapshots 52/52; peer receiver refresh 24;
+// direct initial receiver 22; mask plus member dispatch 101;
+// persistent entry-array base 91; separate callback handle 22. Body restored.
+// callback setup, post-call index reload/status stores and rollback setup differ.
+// Earlier callback adapter 73; member dispatch 78; parallel cursors 92; status assignment 102;
+// field references 52; no counter self-read 97; grouped arrays 39; byte status 22; failure first 57;
+// common rollback 88; element pointers 22; argument record 46. Array role names 22; early release
+// declaration 22; append increment 22; cleanup counter 22; array initialization 90; unsigned count 25;
+// callback index name 22; status declaration order 24.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {

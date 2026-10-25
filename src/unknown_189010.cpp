@@ -148,6 +148,10 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
+// score 182 (was 182): first class lookup expands; flag and result homes differ;
+// priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
+// base-first flags 178 (caller losses), role names 182, source snapshot 178,
+// object snapshot 183, priority after flags 192.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -516,6 +520,9 @@ long function_1891d0(long object_index, long marker_name, s_sound_label_play con
 	return function_1890c0(play, object_index, marker.node_index, &marker.node_matrix.position, &marker.node_matrix.forward);
 }
 
+// score 51 (was 51): frame agrees; saved registers, root-location contract and stacked play differ.
+// Plain workspace order 51; workspace names 51; zero initialization 99; aggregate construction 64;
+// native point copy 51; compression first 52; velocity first 49; separate location output 73.
 // @retail 0x189210
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play)
 {

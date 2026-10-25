@@ -190,6 +190,14 @@ step:
 // 20; earlier entry edge lifetime 20; widget edge iteration 20; nested eligibility 20.
 // separate eligibility inline 46, noinline 20; focus inline/noinline 20; success break 20;
 // entry origin result 45; focus after search 49; complete eligibility 20.
+// entry ESI save and wrapping result registers differ;
+// both wrapped helpers 54; helper search for 45; helper cursor while 45;
+// edge-field walk 47; common-return edge walk 44; scoped edge iterator 45;
+// ordinary inline helper 54; helper selection-first search 42. Body restored.
+// initial traversal uses esi and saves it early; retail uses eax then saves esi.
+// Earlier owner snapshot and tail update 20; step helper shared return 40, same-parameter cursor 28,
+// assigned-result links and predicate 21. Link for walks 20; repeated-step helper 49; search for 43;
+// eligibility loop 43; selected result 20; rejection continue 20; local names 20; entry scope 43.
 // @retail 0x2c8f56
 void c_button_widget_45d5d0::v8()
 {
@@ -232,6 +240,14 @@ void c_button_widget_45d5d0::v8()
 // 20; earlier entry edge lifetime 20; widget edge iteration 20; nested eligibility 20.
 // separate eligibility inline 46, noinline 20; focus inline/noinline 20; success break 20;
 // entry origin result 45; focus after search 49; complete eligibility 20.
+// entry ESI save and wrapping result registers differ;
+// both wrapped helpers 54; helper search for 45; helper cursor while 45;
+// edge-field walk 47; common-return edge walk 44; scoped edge iterator 45;
+// ordinary inline helper 54; helper selection-first search 42. Body restored.
+// initial traversal uses esi and saves it early; retail uses eax then saves esi.
+// Earlier owner snapshot and tail update 20; step helper shared return 40, same-parameter cursor 28,
+// assigned-result links and predicate 21. Link for walks 20; repeated-step helper 49; search for 43;
+// eligibility loop 43; selected result 20; rejection continue 20; local names 20; entry scope 43.
 // @retail 0x2c8fb4
 void c_button_widget_45d5d0::v9()
 {
