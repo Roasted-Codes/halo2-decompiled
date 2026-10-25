@@ -1276,10 +1276,22 @@ extern bool g_4ed39d;
 // score 184 (was 184): initialized message before menu results 183; later mode 184;
 // results before user query 193; late dialog ID 184; full-width dialog flags 189;
 // recovery middle/high groups first 184/184; qualified pending/gate exits 184.
-// score 184 (was 184): game/main byte homes and dialog joins remain;
+// score 184 (was 184): game/main byte homes and dialog joins remain.
+// Plain: direct dialog callbacks 202; callbacks after mode 199; callbacks at display 192;
+// direct callbacks/plain game result 242; late callbacks/plain result 233; display callbacks/plain result 237;
+// direct callbacks/scalar error 245; direct callbacks/both plain 268.
+// game/main byte homes and dialog joins remain;
 // lobby recovery result 213; with connection/all recovery results 213/222;
 // dialog high/middle cases first 184/184; scoped default-dialog query,
 // dialog-presence and alternate-menu results 184/184/184.
+// score 184 (was 184): game/main byte homes and dialog joins remain.
+// Direct disconnect game/lobby/main results 177/208/189; paired game-lobby,
+// game-main and lobby-main results 225/217/216; all results 220; ordinary game result 216.
+// Direct game result adds comparisons/stores: aligned changes 78 versus 69; dropped.
+// score 184 (was 184): game/main byte homes and dialog joins remain;
+// dialog-ID choice 202f; direct ID-selected callback tuples 238f; callbacks
+// after selection/at consumer 237f/190f; with ordinary game result
+// ID-only/direct/late/consumer 233f/257f/242f/235f. Original flow retained.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

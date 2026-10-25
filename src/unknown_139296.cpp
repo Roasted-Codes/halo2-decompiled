@@ -552,6 +552,10 @@ bool g_4f55e2;
 // score 7 (was 7): ours masks the byte with an and against a memory constant and negates it, retail masks a
 // dword in memory and tests the low byte; a four-byte global read into a char local already gives retail's
 // dword and, so what is left is the end: retail branches on the mask, ours negates it and pops esi early.
+// Tried: return !local_1 (11), local_1 + 1 (11), ?: false : true, if (!local_1) return true; return false,
+// char/long local (7); one shared bool result (30, 32); the whole test as one && chain, as a return or
+// with if (!local_1) return true falling to one return false (19: test byte ptr, xor eax/inc eax).
+// 0x165f16 shows the same dword and on this flag (0x4f55e2 sits between the bools at 0x4f55e0/e4).
 // @retail 0x13939b
 bool function_13939b()
 {
@@ -1044,6 +1048,14 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // score 38 (was 83): retail keeps a success byte (set to 1 up front, overwritten with the
 // call's result on failure) and returns that byte directly; ours keeps the failure flag, so the
 // store and the negated return differ and the function is eight bytes longer.
+// score 38 (was 38): Failure-byte initialization, stores and inverted return still differ.
+// descriptor reference 38; immutable descriptor 38; single count reads 38; byte failure 38;
+// signed-byte failure 38; wide failure 70; immutable callback results 38; shared callback-result
+// home 38.
+// native success still extends zero lifetime. Shared
+// mask-zero producer with direct result 122; output-only masks 116; first,
+// second, third or fourth default omitted 102/103/98/104; shared zeros with
+// true or explicit false comparison 87/122. Original failure byte retained.
 // @retail 0x13a3c6
 bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
 {

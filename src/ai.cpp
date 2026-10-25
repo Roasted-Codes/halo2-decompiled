@@ -1568,6 +1568,8 @@ bool function_1c8d20(long actor_index, point3f const *origin, long excluded_obje
 bool function_1df5d0(short team_a, short team_b);
 real __stdcall function_265d30(long actor_index, long prop_index);
 
+/* for each active actor's props: copies the object's team into the prop
+   target, refreshes the target's two team tests and the view's 0x3c value */
 // @retail 0x1c9a00
 void function_1c9a00(void)
 {

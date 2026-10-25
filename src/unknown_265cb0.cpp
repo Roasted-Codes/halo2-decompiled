@@ -1038,7 +1038,9 @@ struct s_equipped_object_view
 // the held object with no store or call in between; every form without the
 // volatile pool view shares the first load (28): the held index through
 // function_cbd50 28 (6 with the view kept), the held object through
-// object_get 28 or object_header_get 28.
+// object_get 28 or object_header_get 28. Tried (r27b): the comparison through a
+// real local 12; the tag index through a long local 12; `if (...) result = true`
+// 14. 0xee8a0 (matched) needs the same volatile view for its weapon lookup.
 // @retail 0x2675f0
 bool function_2675f0(long object_index)
 {
@@ -1099,6 +1101,12 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // j93: Frame 0x60 agrees; clock hoisting, conversion copy and three vector homes remain; typed offset output recovers movement/offset homes.
 // wide event results 371; wide target result 374; state per use 433; state eligibility snapshot 338; typed
 // offset output 99; offset outer direction 99; offset blend before delta 99; offset outer query homes 99.
+// score 99 (was 99): clock/compare schedule, conversion copy and geometry homes remain.
+// Fast: smoothed field 99; desired field 99; both fields 99; native position 393;
+// native origin 383; both geometry inputs 431; prop record 99; field and geometry 431.
+// score 99 (was 99): clock conversion, interpolation registers and three geometry homes remain;
+// interpolation product inputs 99; direct delta 99; direct blend 99; delta-first addition 99;
+// direct pair 414; direct delta/addition 99; direct blend/addition 99; direct pair/addition 414.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
@@ -1540,16 +1548,20 @@ real function_2683f0(long actor_index, long node_index, short type)
 // j93: Frame 0x7c/0x80, saved-link homes and conversion expansion remain; helper declaration restored.
 // shared tracking view 695; shared player lookup 724; very close result 719; native player search indices 702;
 // notification counter view 695; level helper inline 717.
+// score 684 (was 695): Frame, saved-link homes and expanded tick conversions remain.
+// selection names 695; cached state test 707; post-clear results 684;
+// direct score result 695; direct retention result 705 (plain).
+// score 684 (was 684): Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
 // @retail 0x266640
 void function_266640(long actor_index)
 {
 	long const *actor_reference = &actor_index;
 	s_actor_view *actor = actor_get(actor_index);
 	byte *data = (byte *)actor;
+	memset(data + 0x324, 0, 0x10);
 	long best_node = NONE, strongest_node = NONE;
 	long best_level = 0;
 	real strongest = 0.0f;
-	memset(data + 0x324, 0, 0x10);
 	long next;
 	for (long index = actor_get(actor_index)->first_prop_index; index != NONE; index = next)
 	{

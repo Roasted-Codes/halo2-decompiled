@@ -421,6 +421,11 @@ real function_30bf0(vector3f *v);
 // Earlier: first input by value 138; second 173; both 240; vector return 209;
 // scalar input groups 112; coordinate pairs 112; scalar first stage 94;
 // scalar second stage 78. Original squared-length result and loop restored.
+// Retail's x87 products follow this source's operand order; ours reverses five
+// of the six whatever the source order (swapped operands 47, n[] indexing 47).
+// Second product written into vector directly 46 (stores interleaved, retail
+// stores all three at the end); second product's components computed k, j, i
+// into locals 74, into the result 74.
 // @retail 0x31b40
 real function_31b40(vector3f *vector, vector3f const *axis)
 {
