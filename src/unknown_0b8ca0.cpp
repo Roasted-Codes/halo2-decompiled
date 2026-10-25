@@ -639,6 +639,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // score 231 (was 231): Caller-dependent eight-byte alignment and scalar homes remain. Native root
 // fields 235; radius field pointer 235; unit slot pointer 247; long cluster 246; early centre
 // address 235 (ordinary radius in all).
+// score 231 (was 231): Caller-dependent eight-byte alignment and scalar homes remain. Positive
+// root scope 239; unsigned root handles 239; compact cluster search 239; far-range arm first 239;
+// squared-bound names/order 239 (direct radius operand, both callers included in all).
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1627,6 +1630,9 @@ void function_bba20(long index);
 // score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Native
 // child 319; native parent 319; both native views 319; header flag pointer 402; object flag pointer
 // 330.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
+// scheduling remain. Positive acceptance scope 358; sibling-first sentinels 319; hidden Boolean
+// shift 318; connection Boolean shift 318; unsigned masks 319; both Boolean shifts 323.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {
