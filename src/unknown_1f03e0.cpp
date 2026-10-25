@@ -503,7 +503,15 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
-// score 182 (was 182): Frame 0x28 and state/output registers agree; direct dot displacement bytes
+// score 182 (was 182): Frame 0x28 and state/output registers agree; six direct-dot displacement
+// bytes and rotation scheduling remain. Ground memcpy 182; limited memcpy 182; separate real
+// components 182; cosine complement 180 (two-point gain dropped); separate cross workspaces 182;
+// cosine/complement before sine 181; explicit alignment with complement 182 (fast).
+// direct state dot loads and rotation carriers remain;
+// initial j/k/i products 179/180/179; first-plane subtotal 180; rotation
+// k/j/i products 242/183/237; turn alignment 180; paired jk/ki/ji/all
+// initial products 186/186/187/186. Three-point best rejected.
+// Frame 0x28 and state/output registers agree; direct dot displacement bytes
 // and rotation scheduling differ. Word rotation decision 182; long rotation decision 182; shared
 // entry cross 182; all shared crosses 182; vector home names on recovered state base 182.
 // @retail 0x1f1460
@@ -837,7 +845,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Native enabled test 626; byte flag view 619; low-normal first 618; current-velocity snapshot 625;
 // repeated damping 624; native enabled/byte view 629; gravity first 616; byte view/low-normal 616;
 // gravity/low-normal 614 kept; gravity/byte view 618.
-// score 614 (was 614): frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
+// score 614 (was 614): Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
+// direct 626; damping 619; gravity 619; all predicates 627; later input magnitude 619 (fast).
+// frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
 // Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
 // general distance result 614; masked final gravity word 634.
 // @retail 0x1f0870
@@ -967,6 +977,7 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Ordinary count with search cursor 525; candidate countdown 474; fixed-pass do loop 427;
 // snapshot projection helper 428; native relative-velocity subtraction 642.
 // Frame pointer 692; depth zero 967; size preference 1011; moving arm first 449; native component subtraction loops 427 (one-point gain rejected).
+// score 428 (was 428): Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1129,6 +1140,7 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // score 230 (was 230): double-width zero load, reset/selection homes and second material-call expansion still differ.
 // Combined eligibility 240; per-contact body-velocity snapshot 346; highest reduction after selection 258;
 // approach at use 351; surface output at entry 230.
+// score 230 (was 230): Frame 0x28 agrees; zero width, reset/selection homes and material-call expansion remain. Preservation arm first 288; entry score storage 230; shared squared length with double comparison 230; byte current flag 240; byte current supported 239 (fast).
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

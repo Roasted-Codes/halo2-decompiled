@@ -212,8 +212,7 @@ PRIVATE inline bool shape_sphere_point(s_sphere const *sphere, point3f const *po
 		}
 		else
 		{
-			plane->i = 0.f;
-			plane->j = 0.f;
+			plane->i = plane->j = 0.f;
 			plane->k = 1.f;
 		}
 		plane->d = dot3f((vector3f const *)&sphere->center, &plane->n) + sphere->radius;
@@ -233,7 +232,14 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 	out->unknown0e = source->unknown0e;
 }
 
-// score 61 (was 61): the first float of the pair is loaded into XMM2 here and
+// score 57 (was 61): the sphere test's normal: retail multiplies the x and z
+// differences in place (normal x/y/z in xmm1/xmm3/xmm2) and loads 1.0 in each arm;
+// ours multiplies copies of the scale and hoists 1.0 into xmm0 before the fsqrt.
+// The unit-z arm's zero stores chained (y first, then x) 57 (each order with y or z
+// first 57, x first 61); depth before plane->d 61-65; distance-squared order i,k,j 61,
+// k,i,j 59; the scale helper's statement orders 61-158, operand orders 57;
+// scale declared first 61; the difference vector by fields 61; in-place scale + copy 397.
+// the first float of the pair is loaded into XMM2 here and
 // into XMM1 in retail, so the registers of the following subtractions are
 // swapped as well.
 // score 61 (was 61): separate normal workspace 397; default normal workspace 397;

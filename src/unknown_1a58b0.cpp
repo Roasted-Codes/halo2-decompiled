@@ -1173,6 +1173,9 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
 // const support 18; unsigned object handle 18.
 // Round 109: ordinary scale inline 18; scale pointer result 18; three scale formal orders 18;
 // scale input reference 18; point-query noinline 18; velocity-query noinline 18.
+// Round 127: validated query index 99; sampled-point result 128; both 136;
+// enclosing point lifetime 128; branch-local last body 2; last body with query index 99;
+// named validation 2; validation with query index 99.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {

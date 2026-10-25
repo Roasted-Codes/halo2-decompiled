@@ -132,6 +132,10 @@ struct new_faces_30ae70
 // Further forms: pointer after array construction 23; pointer, array and
 // element-reference renames 4 each; early pointer declaration 4; field
 // reference 5; unsigned ordinal and input-pointer copy 4.
+// More forms: separate mutable/const pointers 3; their aligned store 3;
+// base header 4; member header 4; base with split pointers 3;
+// indexed vector write 46; indexed edge clear 51; unaligned read 61;
+// edge-first split pointers 11; memcpy 73. Opening body retained.
 // @retail 0x30ae70
 int class_30a810::function_30ae70(long count, edge_30aac0 *horizon, __m128 const *position)
 {

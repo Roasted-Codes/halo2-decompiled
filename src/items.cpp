@@ -1203,8 +1203,14 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // immutable release scale 182; angular input value 191.
 // rate input snapshot 182; gain input snapshot 182; both input snapshots 182; direction input 204.
 // external direction reference input 204; rate input formal 182; scale input formal 204; separate impulse noinline 182.
+// score 163 (was 182): frame 0xac agrees; release RMW/tail, event-point homes and location-output call setup remain.
+// Event-point value 174; origin/position publication copies 163/163; item/angular references 182/182;
+// integrated expiry 181; owner entry/impulse output lifetimes 182/182. Origin publication copy retained.
 // Known-set XOR removals on flag 5/6/both 182/182/182; subtractive removals
 // on flag 5/6/both 182/182/182; XOR/subtract mixed both ways 182/182.
+// score 154 (was 163): Release RMW/tail and event homes remain; idle/count results 166/169;
+// earlier damage key 185; event-first/key plus event-first 196/196; early complete point/origin
+// publication 198/157; initializer-owned sentinel 154 kept, combined origin 176.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
@@ -1276,7 +1282,6 @@ bool __stdcall function_10b4d0(long object_index)
                 {
                     point3f position;
                     s_type_1e6529 data;
-                    data.unknown7c = NONE;
                     point3f *event_point = function_b9dd0(object_index, &position);
                     function_d6660(&data, damage_index);
                     data.owner = owner;
@@ -1284,7 +1289,7 @@ bool __stdcall function_10b4d0(long object_index)
                     data.unknown54 = 1.0f;
                     object_get_root_location(object_index, (s_location *)&data.unknown1c);
                     data.origin = *event_point;
-                    data.position = *event_point;
+                    data.position = data.origin;
                     function_d6c80(&data, NONE);
                 }
                 function_176780(object_index, (s_effect_owner const *)&owner, 0.0f, *(long *)(definition + 0x128), 0.0f, NULL, NULL);

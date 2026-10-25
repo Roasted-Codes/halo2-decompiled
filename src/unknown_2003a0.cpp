@@ -286,6 +286,9 @@ PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_reco
 // Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
 // typed parent lookup 78; retained handle lookup 78; root predicate 57;
 // sentinel cursor with typed parent 65. Null-result lifetime still differs.
+// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
+// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
+// actual parent-field reference 57; actual record reference 57. Null-result join remains.
 // @retail 0x202370
 void function_202370(void)
 {
@@ -311,6 +314,9 @@ void function_202370(void)
 // Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
 // typed parent lookup 78; retained handle lookup 78; root predicate 57;
 // sentinel cursor with typed parent 65. Null-result lifetime still differs.
+// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
+// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
+// actual parent-field reference 57; actual record reference 57. Null-result join remains.
 // @retail 0x2024c0
 void function_2024c0(void)
 {
@@ -890,9 +896,13 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// @retail 0x201b70
 // score 69 (was 69): the record's field is read into SI where retail reads it into BP, so the two
 // values are exchanged and the compare uses the other register.
+// score 69 (was 69): merged index and fallback short/promoted pair still differ.
+// Multi-use promoted index 73; helper failure guards 69; native short selection
+// 69; input-default result 75; read-only table 69; signed bounded length 70;
+// promotion/input-default result 119; read-only promotion/signed length 75.
+// @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
 	(void)&actor_index;
@@ -1807,6 +1817,9 @@ bool function_1e11b0(long actor_index, bool active);
 // Iterator current handle 64; scalar next handle 64; zero iterator 76;
 // invalid iterator 80; tick snapshot 62; initial flags 64; current handle
 // with tick 62; scalar cursor with tick 62. Two-point gains rejected.
+// Actual squad/actor/both record references 64/64/64;
+// result from update 79; retained Boolean guard/result 70; proven success exit 79;
+// update result with squad reference 79; Boolean result with actor reference 70.
 // @retail 0x203bf0
 bool function_203bf0(long squad_index)
 {
