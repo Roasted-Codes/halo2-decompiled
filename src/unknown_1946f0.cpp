@@ -78,6 +78,7 @@ static __forceinline void decode_direction_194d30(long index, vector3f *directio
 	direction->k = z * face->axes[2].k + y * face->axes[1].k + x * face->axes[0].k + face->origin.k;
 }
 
+// score 62 (was 62): decoder zero/scale schedule and final x87 component forwarding differ; shared face/grid scales 96, initialized grid 133, shared scale value 96; complete output aggregate/memcpy 155; default memcpy and direct angle 62 (round 117).
 // @retail 0x194d30
 void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *forward)
 {

@@ -204,6 +204,7 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
+// score 50 (was 50): current/bound registers and request fill differ; explicit helper current 103, total 51, both 51; standard lower/upper/both clamps 50; combined 51; field current 50 (round 117).
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -576,6 +577,7 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 }
 
 // score 21 (was 21): shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
+// score 21 (was 21): shared true exit remains late; reversed signed operands at primary 25, latency 21, tertiary 21, key pairs 21/25, all keys 25 (round 117).
 // @retail 0x90f10
 bool __stdcall session_search_result_precedes(void const *a, void const *b, void const *context)
 {

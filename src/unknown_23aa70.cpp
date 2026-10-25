@@ -169,6 +169,7 @@ PRIVATE __forceinline void vertex_decode_23ac30(short x, short y, short z,
 	vertex_decode_ranges_23ac30(x, y, z, bounds, &range, point);
 }
 
+// score 62 (was 62): format-3 offset register and format-4 base/index differ; indexed format 4 or both packed arrays 175, format 2 62, format 3 60; node formats/ordinary index/range producer 175 (round 117).
 // @retail 0x23ac30
 void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 	s_vertex_bounds_23ac30 const *bounds, point3f *point, long *node)
