@@ -542,6 +542,9 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // first-table induction and default/flag scheduling remain.
 // Unsigned table outputs 363; unsigned steps 363; byte outer ordinal 478;
 // shared five-derived observation 460; shared capacity observation 461 (fast).
+// score 363 (was 363): constant-five lifetime and first-table induction remain;
+// byte matrix row 475; byte column 464; both byte ordinals 498;
+// native-word flag array 432; native-long flag array 455 (fast).
 // @retail 0x66330
 void network_configuration_set_defaults()
 {
