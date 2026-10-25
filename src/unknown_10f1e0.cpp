@@ -2543,6 +2543,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
 // Round 277: language-char result 147; unsigned-word force 164; signed-byte/word animated result 147/156;
 // base success test 153; success/force/both initialized before selection 187 each.
+// score 147 (was 147): frame 0x3c versus 0x38 and action/availability conventions remain; separate
+// copy-return boundaries 142 (exact-only, discarded); base-channel entry/selection 147/147;
+// animation-result home 147; receiver/workspace copy split 162/162, with base channel 162/162.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

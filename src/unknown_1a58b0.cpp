@@ -1646,6 +1646,9 @@ struct s_candidate_unit_definition
 // Frame and length agree; geometry argument register and clamp/failure tails
 // remain. Trials: byte result 101; lower test operands 36; separate lower angle 92; native facing
 // copy 36; geometry success guard 218; first clearing cases 42.
+// score 18 (was 18): geometry-call convention and exchanged failure exits remain; native
+// flag/limit/adjacent clears 216/152/199; direction memcpy 18; clear plus copy 216/152/199;
+// branch-zero clear 199.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1807,6 +1810,9 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // Round 277: nullable second-marker base 13 at retail length; branches/before presence 80/80;
 // native query count 73; index name/shared marker buffer 13/13; weight result 67; combined eligibility 80.
 // Accepted-count snapshot after/before query 13/13; query name first/with count 12/12; selectors require a match.
+// score 85 (was 85): frame 0xf0 agrees; query carriers and optional matrix conversion remain;
+// native marker value before/after query 100/110; library copies 100/110; native query width
+// 126/128; shared descriptor 100; late copy with shared outputs 110.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
