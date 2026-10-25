@@ -38,72 +38,80 @@ struct s_11c1b0
 // xor/mov, but the early return gets its own epilogue); return local_1 there 114
 // (draft) / 131 (one variable); the body inside if (arg_0 == NONE || in range) 99
 // (draft) / 116 (one variable).
+// score 50 (was 99): result false from entry (al) and the success in bl now match
+// retail, and local_7 shares arg_0's slot, but the zero goes in ebx and local_0 in edi
+// (retail: local_0 ebx, zero edi), and local_7's store comes after the range test
+// (retail: at entry). One variable with result + local_1 128 (retail's registers, but
+// its own slot: push ecx); local_7 = local_0 after the loop 87; local_0 read after the
+// range test 58; result declared first 120 (100 one variable); local_1 declared at the
+// block top 50; local_7 after the true test 50; local_7 in the NONE test 50; local_1 &&
+// local_7 != arg_0 for the goto 50 (same code); a 600 s permuter run, none below 50.
 // @retail 0x11c1b0 standard
 bool __stdcall function_11c1b0(short arg_0, bool arg_1)
 {
     short local_0 = g_4e6948->index;
-    bool local_1 = false;
-    short local_7;
-    if (arg_0 != NONE && (arg_0 < 0 || arg_0 >= *(long *)((byte *)g_4e0350 + 0x210)))
-        goto finish;
-    if (g_4686c4 == arg_0 && local_0 == arg_0)
-        return true;
-    for (dword local_2 = 0; local_2 < 68; local_2++)
+    bool result = false;
+    if (arg_0 == NONE || (arg_0 >= 0 && arg_0 < *(long *)((byte *)g_4e0350 + 0x210)))
     {
-        if (g_440df0[local_2].field_0)
-            g_440df0[local_2].field_0(arg_0);
-    }
-    local_7 = local_0;
-    if (local_0 != NONE && local_0 != arg_0)
-    {
-        function_137da0();
-        local_7 = g_4e6948->index;
-    }
-    if (g_4686c4 != NONE && g_4686c4 != arg_0)
-    {
-        if (arg_1)
+        short local_7 = local_0;
+        if (g_4686c4 == arg_0 && local_0 == arg_0)
+            return true;
+        for (dword local_2 = 0; local_2 < 68; local_2++)
         {
-            byte *local_3 = *(byte **)((byte *)g_4e0350 + 0x214) + g_4686c4 * 0x44;
-            cache_files_unload_structure_bsp((s_structure_bsp_reference *)local_3);
+            if (g_440df0[local_2].field_0)
+                g_440df0[local_2].field_0(arg_0);
         }
-        g_4686c4 = NONE;
-        g_4e0348 = NULL;
-        g_4e0344 = NULL;
-        g_4e0340 = NULL;
-        g_4e033c = NULL;
-    }
-    local_1 = true;
-    if (g_4686c4 != arg_0)
-    {
-        byte *local_4 = *(byte **)((byte *)g_4e0350 + 0x214) + arg_0 * 0x44;
-        g_4e0348 = NULL;
-        g_4e0344 = NULL;
-        g_4e0340 = NULL;
-        g_4e033c = NULL;
-        g_4686c4 = arg_0;
-        if (cache_files_load_structure_bsp((s_structure_bsp_reference *)local_4))
+        if (local_0 != NONE && local_0 != arg_0)
         {
-            function_16e2c0(*(long *)(local_4 + 0x14));
-            long local_6 = *(long *)(local_4 + 0x1c);
-            if (local_6 != NONE)
-                g_4e0344 = (s_structure_bsp_globals *)g_4e3b44[local_6 & 0xffff].bytes;
-            else
-                g_4e0344 = NULL;
-            g_4e0348 = (s_match_globals *)g_4e3b44[*(long *)(local_4 + 0x14) & 0xffff].bytes;
-            g_4e0340 = *(s_slot_entry_list **)((byte *)g_4e0348 + 0x18);
-            g_4e033c = (s_bsp3d *)g_4e0340;
+            function_137da0();
+            local_7 = g_4e6948->index;
         }
-        else
+        if (g_4686c4 != NONE && g_4686c4 != arg_0)
         {
+            if (arg_1)
+            {
+                byte *local_3 = *(byte **)((byte *)g_4e0350 + 0x214) + g_4686c4 * 0x44;
+                cache_files_unload_structure_bsp((s_structure_bsp_reference *)local_3);
+            }
             g_4686c4 = NONE;
-            local_1 = false;
-            goto local_5;
+            g_4e0348 = NULL;
+            g_4e0344 = NULL;
+            g_4e0340 = NULL;
+            g_4e033c = NULL;
         }
+        bool local_1 = true;
+        if (g_4686c4 != arg_0)
+        {
+            byte *local_4 = *(byte **)((byte *)g_4e0350 + 0x214) + arg_0 * 0x44;
+            g_4e0348 = NULL;
+            g_4e0344 = NULL;
+            g_4e0340 = NULL;
+            g_4e033c = NULL;
+            g_4686c4 = arg_0;
+            if (cache_files_load_structure_bsp((s_structure_bsp_reference *)local_4))
+            {
+                function_16e2c0(*(long *)(local_4 + 0x14));
+                long local_6 = *(long *)(local_4 + 0x1c);
+                if (local_6 != NONE)
+                    g_4e0344 = (s_structure_bsp_globals *)g_4e3b44[local_6 & 0xffff].bytes;
+                else
+                    g_4e0344 = NULL;
+                g_4e0348 = (s_match_globals *)g_4e3b44[*(long *)(local_4 + 0x14) & 0xffff].bytes;
+                g_4e0340 = *(s_slot_entry_list **)((byte *)g_4e0348 + 0x18);
+                g_4e033c = (s_bsp3d *)g_4e0340;
+            }
+            else
+            {
+                g_4686c4 = NONE;
+                local_1 = false;
+                goto local_5;
+            }
+        }
+        if (local_7 != arg_0)
+            function_137d40();
+    local_5:
+        g_4e6398 = g_485ab0;
+        result = local_1;
     }
-    if (local_7 != arg_0)
-        function_137d40();
-local_5:
-    g_4e6398 = g_485ab0;
-finish:
-    return local_1;
+    return result;
 }

@@ -52,8 +52,16 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 
 /* the next recent player after the iterator's: a valid, online, known player
    with a name; iterator starts at the first entry and ends at NONE */
-// score 43 (was 43): Early index save, next-index register, loop rotation and hoisted mask still differ.
+// score 43 (was 43): early ESI save, EBX successor, mask hoist and loop exit differ;
+// native successor 51; persistent entry while/for 57; complete admission 43; identity predicate 53;
+// native player assignment 43; native successor with identity 57; admission result 59.
+// successor register, exclusion mask and loop rotation still differ; 127/127 bytes.
+// Native identity OR/logical OR 83/78; each with native name 83/78; native name alone 43;
+// shared player receiver 43, with native OR/name 83, with native logical OR/name 78; all restored.
+// Early index save, next-index register, loop rotation and hoisted mask still differ.
 // existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
+// score 43 (was 43): iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;
+// result-terminated loop 52; iterator result termination 44; output outcomes 68; native termination 47.
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {
@@ -536,6 +544,10 @@ bool function_7fb50(void)
 
 // score 111 (was 132): frame 0x1c agrees; records/properties registers, counter homes and ret 0x18 versus 0x1c remain.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
+// Frame 0x1c agrees; records/buffers register contract and cursor/count
+// scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
+// 132; per record totals 150; entry pointer walk 132; three properties do loop 132; frame role
+// names 132.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -729,10 +741,13 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 300 (was 368): frame 0x0c agrees; removed-index registers, upper
+// score 243 (was 368): frame 0x0c agrees; removed-index registers, upper
 // bound selection and copy-loop induction remain. Paired range arms 373;
 // native FILETIME 314; short adjustment 300; unsigned repair counter 364;
 // range/time/short combination 375; native time and short adjustment 357.
+// Three relative-position cases 243; early bounds 377; explicit upper bound 361;
+// forward destination index 366; reverse destination index 360; widened
+// global-index adjustment 358.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
@@ -748,13 +763,22 @@ long function_7fe90(const s_cached_player_identity *identity, long position, con
 	bool downward = false;
 	if (removed != NONE)
 	{
-		lower = removed > position ? position : removed;
-		upper = removed > position ? removed : position;
-		if (removed < position)
+		if (removed > position)
 		{
-			upper--;
+			lower = position;
+			upper = removed;
+		}
+		else if (removed < position)
+		{
+			lower = removed;
+			upper = position - 1;
 			position--;
 			downward = true;
+		}
+		else
+		{
+			lower = position;
+			upper = position;
 		}
 	}
 	else if (position < g_4cf978)

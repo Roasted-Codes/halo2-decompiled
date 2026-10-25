@@ -2034,17 +2034,22 @@ long voice_players_share_team(long other, long player)
 // Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
 // team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
 // bit addition 59; signed result 55; initial guard 121; conditional/late mask 46/46; direct outputs 141/144.
+// score 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
+// Mode with complete mask 46; shared team/all-peer modes 148/148; team acceptance first 46;
+// mask before mode 34; equality with other/selected validity 117/118; unsigned peer ordinal 130.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
 	dword result = 0;
 	if (settings->initialized && voice_available())
 	{
-		if (g_4c9878.mode == 2 || g_4c9878.mode == 3)
+		dword mask = 0;
+		long mode = g_4c9878.mode;
+		if (mode == 2 || mode == 3)
 		{
-			long mode = g_4c9878.mode;
 			byte *membership = (byte *)voice_get_membership();
-			dword mask = membership ? *(dword *)(membership + 0x10d0) : 0;
+			if (membership)
+				mask = *(dword *)(membership + 0x10d0);
 			if (mode == 3)
 			{
 				s_network_session_player *players = (s_network_session_player *)voice_get_players();
@@ -2906,33 +2911,38 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 }
 #pragma function(_ReadWriteBarrier)
 
+// score 56 (was 95): mode load and output cursor/store scheduling differ; direct formal 95;
+// unsigned index 95; short/byte 107; early choices 95; early unsigned/short 95/107; direct unsigned 95.
+// mode load and record-store scheduling differ; real record
+// receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
+// outer route 95; actual count 96; conditional mode-result combinations all 92;
+// direct talker parameter with early player 56.
 // @retail 0x56df0
 void __stdcall function_56df0(s_voice_player_settings *settings, long talker, long mode)
 {
-	// The retail entry reads the talker from its stack argument slot.
-	long const *talker_reference = &talker;
 	bool active = false;
 	if (settings->initialized && voice_available())
 		active = g_4c9878.mode == 1;
-	if (active && voice_xhv_has_remote_talker(&g_476fc8, *talker_reference))
+	if (active && voice_xhv_has_remote_talker(&g_476fc8, talker))
 	{
 		dword local = voice_get_local_player_mask();
 		bool valid = function_54df0(talker);
 		s_voice_route_choice choices[16] = {0};
 		for (long player = 0; player < 16; player++)
 		{
+			s_voice_route_choice *choice = &choices[player];
+			choice->player = player;
 			long route = 0;
 			if ((local & (1 << player)) && function_54df0(player) && valid)
 			{
 				long requested = function_57c20(settings, player, talker, mode);
 				long result = function_57d60(requested, player, talker);
 				if (requested == 1) settings->unknown148[talker] = g_510c54->game_time;
-				if (result == 3) choices[player].distance = function_57a80(player, talker);
+				if (result == 3) choice->distance = function_57a80(player, talker);
 				route = result;
 				if (route) settings->unknownc4 |= 1 << talker;
 			}
-			choices[player].mode = route;
-			choices[player].player = player;
+			choice->mode = route;
 		}
 		function_57eb0(settings, talker, choices, 16);
 	}

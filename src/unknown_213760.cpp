@@ -1164,7 +1164,12 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 165 (was 172): Frame 0x1144 agrees; file/task scheduling and by-value I/O argument setup still differ.
+// score 165 (was 172): frame 0x1144 agrees; file-displacement register,
+// task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
+// completion scope 172; output scopes 172; slot equality 393;
+// equal-size arm first 209.
+// Frame 0x1144 agrees; file/task scheduling and by-value I/O argument setup still differ.
+// Frame 0x1144 agrees; file/task scheduling and by-value I/O argument setup still differ.
 // Constructed write/read/both headers 172/172/172; zero request initializer 192; role names 172; shared acquired handle 188.
 // Early validity result 172; validity-byte aggregate 262; persistent path/request/completion 172;
 // output-handle pointer first 177; reversed invalidation cases 172.

@@ -292,6 +292,8 @@ short __stdcall function_1ac3f0(long actor_index)
 // first duration multiply pops scale early and reset stores cross the scale
 // addition. Duration-seconds name 43; ticks name 43; both names 43; both timer names 43; product
 // update 43; duration scope 43; entry delay 43; early rate 37/333 (one-use field copy, rejected).
+// Scale-first product update 47; duration-owned product 43; first output/input guard scope
+// 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -423,12 +425,19 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
-// score 24 (was 24): early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
+// score 24 (was 24): early pool-data load, mode registers and restore order differ;
+// timer names 24; timer declarations 24; request before mode 24; type after point 34;
+// reverse word declarations 24; mode after vector 44; request result 26; failure first 48.
+// early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
 // frame 0x28 agrees; pool-data load and mode-lookup registers still differ;
 // tried full width mode 39; mode tests reversed 27; inactive state branch first 168;
 // missing prop early return 24; alignment product operands 30; unsigned short mode 24;
 // timer homes at entry 24; request home in active state scope 24;
 // low word actor slot used by both lookups 155. Restored.
+// score 24 (was 24): frame 0x28 agrees; early pool load, mode registers and restore schedule remain.
+// Receiver names/separate initialization/constant receivers/nested facing test 24 each;
+// facing eligibility value 26; direct direction-bit snapshots 39; request memset 195;
+// request aggregate initialization 190. All executable forms restored.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -613,6 +622,9 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // score 58 (was 58): default reload and saved-register roles differ. Branch-assigned defaults,
 // valid object first: short result with entry/scoped state 76/76, long result 73/73; invalid
 // object first: short 80/80, long 77/77.
+// Separate continuation, word/native with arms/conditional: branch 55/58/56/59; entry
+// 55/58/56/59 (three-point gain rejected). Tag/prop/state inline and noinline declarations,
+// singly and together, 58 each. Independent default reload and saved roles still differ.
 // @retail 0x1ad5b0
 short __stdcall function_1ad5b0(long actor_index, s_slot *slot, bool active)
 {
@@ -851,12 +863,19 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
-// score 29 (was 29): actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
+// score 29 (was 29): actor offset/candidate registers and two spill homes differ;
+// separate cleanup receiver 29; success return 74; shared displacement 29; scan scope 44;
+// unsigned candidate counter 227; unsigned marker counter 153; const source/marker 29/29.
+// actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
 // frame 0x8c agrees; EBP/EDI, two spill homes and product/address scheduling still differ;
 // tried result declared first 30; best index named before actor home 29;
 // source actor named after index home 29; best index and source actor named homes 29;
 // candidate difference shared helper 29; marker difference shared helper 29;
 // forward product shared helper 135; up product shared helper 41. Restored.
+// score 29 (was 29): frame 0x8c agrees; EBP/EDI and offset/selection spill homes remain exchanged.
+// Native source location 58; query outputs at loop/entry and source receiver at entry 29 each;
+// marker reference/readonly candidate tag/distance predicate/aligned up-product scope 29 each.
+// All executable forms and the experimental include restored.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)
@@ -987,6 +1006,9 @@ struct s_1ac9e1
 // immediate completion store and tail join differ. Literal query returns 63; native history points
 // 60; both 63; common result exit 48; native points and common exit 48; workspace names 60;
 // literal returns and names 63; ordinary completion local 75.
+// Native/byte common result 121/110; ordinary common completion 60; result initializes
+// completion 48; result clears history 48; both phases 48; completion entry scope 48;
+// completion from unblocked query 58. Count/initialization scheduling still differs.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)

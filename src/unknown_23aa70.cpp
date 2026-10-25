@@ -172,10 +172,20 @@ PRIVATE __forceinline void vertex_decode_23ac30(short x, short y, short z,
 	vertex_decode_ranges_23ac30(x, y, z, bounds, &range, point);
 }
 
-// score 62 (was 62): format 3 offset register and format 4 base/index lifetime remain.
+// score 62 (was 62): format-3 offset register and format-4 base/index differ; indexed format 4 or both packed arrays 175, format 2 62, format 3 60; node formats/ordinary index/range producer 175 (round 117).
+// Format-3 offset register and format-4 base/index lifetime still differ.
+// concrete packed pointer 62; concrete reference 62; native value 173; coordinate-array pointer 62;
+// coordinate-array reference 62; returned point 62; native input/output 62; concrete indexed input 175.
+// format 3 offset register and format 4 base/index lifetime remain.
 // Indexed native decoder 582; ordinary index 582; native input reference/value 578/549;
 // native axis bounds 62; range value input 267; range output reference 62; natural format
 // case order 127; static indexed/input templates 582/578.
+// score 62 (was 62): Format 3 offset and format 4 base/index lifetimes still differ; the first packed
+// decode agrees. Shared point constructor 228; aggregate point 62; range stages 62; range
+// decoder/producer inline 62/537; buffer fields at use 190; ordinary scalar index 62; packed cases
+// together 111.
+// score 62 (was 62): node/plain/both point memcpy 62/62/62; node/packed/both record references
+// 62/62/62; native coordinate loop 62; native range and coordinate loops 62. Restored.
 // @retail 0x23ac30
 void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 	s_vertex_bounds_23ac30 const *bounds, point3f *point, long *node)

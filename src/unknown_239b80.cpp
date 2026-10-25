@@ -39,6 +39,12 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 	return false;
 }
 
+// score 101 (was 101): frame 0x618 agrees; cursor/result initialization, delta XMM
+// homes and extra fraction copies remain. X-first deltas 109; full denominator 103;
+// scales before stores 101; first input record 207; Boolean helper result 101;
+// aggregate intersection 152; capacity-first gate 108; native input count 153;
+// intersection role names 101; output-first helper 101; count-result helper 101;
+// x-first deltas with full denominator 107.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)
@@ -126,8 +132,19 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
-// score 42 (was 42): Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
+// score 42 (was 42): coupled state/index/XMM homes and normalized Y load remain;
+// local/formal point cursor with short ordinal 94/93; short remaining count
+// 94/93; long ordinal 97/97; long remaining count 94/93. Opening body restored.
+// zero/one SSE homes, state/index/point registers and normalized Y load remain;
+// byte state 91; unsigned word ordinal 85; state increments 76; terminal equality 43;
+// first point before scan 85; normalizer reference 42; point-first dot 42; success normalizer 102.
+// Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
 // normalizer input vector 126; compound scales 42; factor-first scales 42; positive normalizer scope 42; long point index 101; count-first guard 99; long state 86; plane/point names 42; forced normalizer 42; forced dot 42; both forced 42.
+// score 42 (was 42): state/index/point and normalization XMM homes remain.
+// Single-result normalizer 42; squared-length expression 42; staged scales 42;
+// reverse scale publication 42; length workspace 56; signed-distance expression 42;
+// native first-point components 63; accumulated dot result 46.
+// Repeated j input 42; repeated i input 42; both scalar inputs 126.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {
@@ -316,6 +333,13 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 }
 
 // score 50 (was 50): entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
+// score 50 (was 50): The initial count load, widened loop tail and XMM edge/offset homes still
+// differ. Byte/short/native result 102/104/102; unsigned-short induction 50; early cross 58; distance
+// limit scalar 50; cross square scalar 50; both squared parts 50.
+// initial count load, wrap-bound ownership and XMM allocation remain.
+// Edge first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50;
+// nested predicates 50; entry success 51; predicate result 51. Two-point gain rejected.
+// entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {
@@ -342,6 +366,9 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 	return result;
 }
 
+// score 31 (was 31): The induction is carried at native width; point and wrap-register homes still
+// differ. Direct rejection 45; short/native result 68/66; rejection result 80; short next 43;
+// unsigned-short induction 31; negative threshold 38; result from cross test 39.
 // @retail 0x23a220
 bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
 {
