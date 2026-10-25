@@ -595,6 +595,9 @@ short actor_behavior_find_level(long owner_index, short type);
 // score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
 // Double best distance 214; failure-default active result 172; inactive success exit 188;
 // ordered member rejection 144; native point memcpy 144.
+// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
+// Full-width result 157; setup-scope best distance 155; early native workspaces 144;
+// initialized query distance 167; shared member iterator 160 (frame 0x88).
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {
