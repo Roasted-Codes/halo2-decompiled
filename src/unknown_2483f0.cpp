@@ -170,6 +170,9 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
+// score 13 (was 13): link-store base formation and seed/constant scheduling remain;
+// link assignment chain 13; forward link chain 13; native link fill 50; shared origin pointer
+// 13; position memcpy 13; vector memcpy 13; both copies 13; native fill and both copies 50.
 // @retail 0x248620
 long function_248620()
 {

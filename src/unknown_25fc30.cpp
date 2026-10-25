@@ -1776,6 +1776,10 @@ struct s_collision_result_25f7b0
 // declaration orders, bool declared after the first query call, local_22
 // uninitialized-early, byte-typed local_4: all tie at 7. local_22 initialized before the
 // mode selection 113; the entry type copy reused in the allow test 260.
+// score 7 (was 7): collision byte home, distance product loads and allow store remain;
+// early short result 7; entry short result 7; unsigned short result 7; early unsigned result 7;
+// early distance 7; entry distance 7; shared candidate field pointer 7; early definition pointer
+// 7.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {

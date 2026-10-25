@@ -116,6 +116,11 @@ void __stdcall function_1ada70(long actor_index, s_slot *slot);
 
 /* ---- slot type 0x2c ---- */
 
+// score 12 (was 12): integer conversion spills use the rounding slot rather than the parameter home;
+// existing rounding helper 29; named tick value with helper 29; later state with helper 29;
+// direct state fields with helper 29; unit range with helper 29; native range with helper 29;
+// unit range with parameter home 12; shared range with parameter home 12; existing time
+// conversion 29; time conversion and later state 29; unit range and time conversion 29.
 // @retail 0x1ac090
 bool __stdcall function_1ac090(long actor_index, s_slot *slot)
 {

@@ -344,6 +344,10 @@ void c_class_19b8b1::v3()
 	c_class_1a2c81::v3();
 }
 
+// score 14 (was 14): the shared sound tail follows both action tails rather than separating them;
+// default sound 51; shared action groups 43; reversed action groups 45; shared actions and
+// default sound 65; sound selection result 16; single result exit 14; shared event type 50;
+// shared direction flags 40.
 // @retail 0x2540e8
 bool c_class_19b8b1::v10(s_widget_event *event)
 {
