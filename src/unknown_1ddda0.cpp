@@ -67,7 +67,17 @@ struct s_1debd0
 };
 
 // score 12 (was 12): the cross product keeps the other operand order, and
-// every swap of the factors leaves this code unchanged.
+// every swap of the factors leaves this code unchanged. Only the XMM numbers
+// differ: retail multiplies into (point.y - p.y) for the second product, ours
+// into (q.x - p.x). Tried: `0.0f <` 12; `!(... <= 0)` 13; the negated cross
+// with `< 0` 12; `-(b) + a` 12; products in locals (either order) 12; a
+// cross-product helper (either argument order) 12; member-wise stores (x or y
+// first) 12; q's difference inline in the product 12; q projected before
+// point - p 12; projected and differences declared x/y interleaved 43-44;
+// all-scalar locals 22; one inline expression with no difference locals 22;
+// q - p straight from the 3D point 15; a cached g_440b94 row 99; the
+// projections through 0x120810 104; a result flag with break 79; leaving
+// on `local_5 == local_4` 72; comparing the products 50.
 // @retail 0x1debd0
 bool function_1debd0(dword const *arg_1, s_bsp3d const *arg_0, short arg_2, long arg_3,
  short arg_4, bool arg_5, point2f const *arg_6)

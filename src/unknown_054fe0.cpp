@@ -1259,6 +1259,10 @@ struct s_player_properties
 // Requested/current/both property references 199/199/199; name/update bits at use 228/224;
 // packed initialization word 238; contiguous payload copy 284; contiguous tail copies 263
 // (all plain). Owner/count allocation and the requested cursor remain unchanged.
+// score 184 (was 184): owner/name-count/zero allocation and requested induction remain.
+// On the direct-requested-field base: counted first/second/both default arrays 240/240/235;
+// chained defaults 184; shared actual three-element prefixes 198; selective first/second
+// reset calls 240/240; both reset calls 235.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

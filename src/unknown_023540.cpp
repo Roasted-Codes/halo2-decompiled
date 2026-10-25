@@ -1222,11 +1222,18 @@ scaled:
     }
 }
 
-
+// score 12 fast (was 16 fast, 13 full): only the mode 1 exit differs: retail
+// tests `jne` to the shared false exit and falls into its own `mov al, 1`
+// return, ours jumps back to case 0's identical return and falls into the false
+// exit. The fraction multiplies last only when it is written first (g*s*f and
+// s*g*f compile as g*f*s, 16). Tried: a result flag for the whole switch 154;
+// `if (mode == 1) return true` 16; `return mode == 1` 20; break to a return
+// false after the switch 18; one shared `return true` after the strength block
+// 16; the fraction inlined 73 or declared before the strength 26. The old
+// `(void)&` parameter line changed nothing (the marker keeps them on the stack).
 // @retail 0x298f0 standard
 bool __stdcall function_298f0(long mode, real const *bounds, real const *t, real *out, long unused)
 {
-    (void)&mode; (void)&bounds; (void)&t; (void)&out; (void)&unused;
     if (g_509400 <= 0.0f)
         g_509400 = g_485ae0;
     switch (mode)
@@ -1262,8 +1269,8 @@ bool __stdcall function_298f0(long mode, real const *bounds, real const *t, real
             if (strength != 0.0f)
             {
                 real fraction = (5 - mode) * 0.25f;
-                real x = *(real *)(g_4b99b0 + 0x1c) * strength * fraction + 1.0f;
-                real y = *(real *)(g_4b99b0 + 0x20) * strength * fraction + 1.0f;
+                real x = fraction * (*(real *)(g_4b99b0 + 0x1c) * strength) + 1.0f;
+                real y = fraction * (*(real *)(g_4b99b0 + 0x20) * strength) + 1.0f;
                 real inverse_x = x > 0.0f ? 1.0f / x : 0.0f;
                 real inverse_y = y > 0.0f ? 1.0f / y : 0.0f;
                 out[0] = (bounds[1] - bounds[0]) * (1.0f - inverse_x) * 0.5f + out[0] * inverse_x;
@@ -2383,6 +2390,7 @@ dword __cdecl function_131fc0(real alpha);
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // score 424 (was 424): Frame 0x24 versus 0x28 and dimension homes remain. Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
 // score 424 (was 424): Frame 0x24 versus 0x28; dimension homes and early saves remain. Fast control 427; early fallback rectangles 438; early source rectangle 442; early reciprocals 439; blend-operation snapshot 438; late strength clamp removed 461 (fast).
+// score 424 (was 424): Frame 0x24 versus 0x28, early saves and dimension homes remain. Fast control 427; long pixel dimensions 433; short dimensions 456; simple combiner first 427; immutable bitmap views 427; explicit bitmap validity 432.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2540,6 +2548,8 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // depth one 575; long result/search 575; short result 570; byte result 596.
 // score 570 (was 570): Frame 0x214 versus 0x200; order, coefficient and sample homes remain. Indexed matrix copies 758; structure reload 588; long eligibility 572; layout-order sample 589; long cache-hit result 570 (fast).
 // score 561 (was 570): Frame 0x214 versus 0x200; coefficient homes, stack order and sample paths remain. Cache index 575; in-place inverse 584; capped short sample count 561 kept (plain); delayed default coefficients 576; failure-first result 589 (fast).
+// score 554 (was 561): Frame 0x214 versus 0x200, stack order and coefficient/sample homes remain. Shared cache helper 718; explicit eligibility 560; entry matrix 561; short bounded sample loop 606; post-metadata defaults 554 (plain).
+// score 554 (was 554): Frame 0x214 versus 0x200, stack order and coefficient/sample homes remain. Native sample arrays 554; byte output cursor 554; exact determinant tree 554; unsigned byte size 554; signed-byte success 563 (fast).
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2558,12 +2568,6 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
             *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
             *(long const *)(*(byte const **)(structure + 0x84) + 4) == *(long const *)((byte *)g_4e0348 + 8);
         real red[16], green[16], blue[16];
-        if (!use_samples)
-        {
-            vector3f direction = { 0.0f, 0.0f, -1.0f };
-            spherical_harmonics_evaluate_directional_light(&direction, layout->order,
-                1.0f, 1.0f, 1.0f, red, green, blue);
-        }
         long level = 5 - order;
         if (level > layout->level_count - 1) level = layout->level_count - 1;
         real const *data = layout->data + layout->levels[level].offset;
@@ -2571,6 +2575,12 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         s_bucket_source const *buckets = (s_bucket_source const *)vertices;
         long total = function_023540((short)count, buckets, entry, stride);
         long bytes = total * stride * sizeof(real);
+        if (!use_samples)
+        {
+            vector3f direction = { 0.0f, 0.0f, -1.0f };
+            spherical_harmonics_evaluate_directional_light(&direction, layout->order,
+                1.0f, 1.0f, 1.0f, red, green, blue);
+        }
         if (!bytes) goto done;
         long next = g_487b18.size + bytes;
         if (next > 0x27000) { result = false; goto done; }
@@ -2635,6 +2645,7 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // score 348 (was 374): frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
+// score 348 (was 348): Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -2955,6 +2966,12 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
 // score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
 // score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Initial state helper 1179; normalized bounds 985; split zero defaults 942 discarded; dispatch lifetimes 971; branched depth result 971; shared cutoff default 1055 (fast).
+// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Shared mode-
+// two/three tail 1153; redundant case defaults removed 1193; common exponent outputs 1365; second
+// packed color shared 1101; byte fraction 971 (fast).
+// Frame 0x2c agrees; capability/save roles, state expansion and
+// color/quantizer homes differ. Word success 1194; unsigned exponent 1197; mode decision chain
+// 1084; word color input 971; word alpha input 1181 at retail length.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

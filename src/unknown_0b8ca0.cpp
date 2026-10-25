@@ -635,6 +635,7 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // loop 235; marker-position loop 235; initial radius snapshot 235.
 // direct radius with double magnitude 231; real radius 239; both widths 231;
 // byte result with real radius 270; word result with double magnitude 237.
+// score 231 (was 231): Caller-dependent eight-byte alignment and angle homes remain. Direct marker position 262; displacement initializer 235; scaled range 235; successive square sum 235; unsigned model handle 235 (ordinary radius in all).
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1028,15 +1029,12 @@ static __forceinline void b98e0_basis(transform4x3f *out, vector3f const *forwar
 {
     out->scale = 1.0f;
     out->forward = *forward;
-    vector3f left;
-    left.k = up->i * forward->j;
-    left.k -= up->j * forward->i;
-    left.j = up->k * forward->i - up->i * forward->k;
-    left.i = up->j * forward->k;
-    left.i -= up->k * forward->j;
-    out->left.k = left.k;
-    out->left.j = left.j;
-    out->left.i = left.i;
+    real k = up->i * forward->j - up->j * forward->i;
+    real j = up->k * forward->i - up->i * forward->k;
+    real i = up->j * forward->k - up->k * forward->j;
+    out->left.k = k;
+    out->left.j = j;
+    out->left.i = i;
     out->up = *up;
     out->position.x = 0.0f;
     out->position.y = 0.0f;
@@ -1058,17 +1056,19 @@ static __forceinline void b98e0_translation(transform4x3f *out, point3f const *p
     out->position = *position;
 }
 
-// score 69 (was 69): the zero float is set up before the table load in ours, retail loads the table first and the float after it
+// score 65 (was 69): scheduling only. Ours hoists the cross product's loads above the translation's stores and sinks
+// the translation's zero stores after the orientation; retail builds the translation (ones, zeros, position) first,
+// then the orientation in order (xorps is its first instruction). Tried: the matched 0x1416c0 and 0x141710 called
+// instead (not inlined, 319); plain inline helpers 69; orientation built first 98, declared first 71; components
+// stored i, j, k 66; 0x141710's operand order 66; the translation's ones stored before its zeros 65.
 // @retail 0xb98e0
 void __stdcall function_b98e0(long object_index, transform4x3f const *matrix)
 {
     s_object_view *object = OBJECT_GET(object_index);
     transform4x3f translation;
     b98e0_translation(&translation, (point3f *)((byte *)object + 0x64));
-    vector3f const *forward = (vector3f *)((byte *)object + 0x70);
-    vector3f const *up = (vector3f *)((byte *)object + 0x7c);
     transform4x3f orientation;
-    b98e0_basis(&orientation, forward, up);
+    b98e0_basis(&orientation, (vector3f *)((byte *)object + 0x70), (vector3f *)((byte *)object + 0x7c));
     transform4x3f result;
     function_142a60(matrix, &translation, &result);
     function_142a60(&result, &orientation, &result);
@@ -1419,7 +1419,12 @@ done:
     return result;
 }
 
-// score 17 (was 26): the placement tail: retail keeps the type in ecx and loads the
+// score 17 (was 26): the name index parameter is read as a dword (address taken by the volatile reload), retail reads it
+// as a word both at entry and after function_bf090; the tail's registers differ (retail: type ecx, palette ebx, size eax
+// sign-extended at its load, datums esi then ebp). Tried: no volatile (name index stays in ebp, result spilled) 76;
+// function_bb760 call for the lookup, same 76; result declared after the force block 81; long/inline definition
+// fields with a block local 43, 34; long size only 38.
+// the placement tail: retail keeps the type in ecx and loads the
 // definition into eax, copying it to esi for the size and datums reads (palette offset first);
 // ours keeps the type in esi and reads the definition through eax/ecx.
 // Copy + volatile name reload 26; result declared before the lookup 83; no result variable 78;
@@ -1605,6 +1610,7 @@ void function_bba20(long index);
 // inverse workspace scope 319; spatial workspace names 319.
 // byte permission 319; byte activity 319; both byte carriers 319;
 // vector transforms before point 385; byte permission with vectors first 385.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward 319; direct node array 323.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

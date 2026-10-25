@@ -65,7 +65,8 @@ bool g_47f05b;
 // Without `block` (g_479888 read at both placements) the reload sits on the constructed arm as in
 // retail but the 1 becomes immediates: 38. Tried: the pool placed at `block + 0x15040` 40; the
 // buffer argument through g_479888 38; `(c_havok_fixed_memory *)g_479888 + 1` 38; a typed
-// `fixed` pointer local with `fixed + 1` 34.
+// `fixed` pointer local with `fixed + 1` 34; `block` read after the three global stores 34; the
+// fixed buffer in a local before storing g_479894 38; `block` reassigned from g_479888 for the pool 34.
 // @retail 0x146a20
 void function_146a20(void)
 {
@@ -275,6 +276,16 @@ void function_146de0(void)
 // j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
 // byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
 // guard 143; post retry capacity 143.
+// score 129 (was 139): capacity/timestamp homes and update expansion remain.
+// Constructor mask 139; repaired native construction result with/without mask 164/164;
+// entry capacity plus mask 141; native buffer/address/padding-scope plus mask 139/139/139;
+// actual masked-capacity local 138 (one-point gain dropped).
+// capacity/timestamp homes and selective update expansion remain.
+// Final rounded/low-bit/conditional/word padding 149/152/143/145; signed-word
+// per-attempt padding 129 plain kept; capacity/allocation/joint home names 139/139/139.
+// Capacity/timestamp homes and update expansion remain; wrapped/full boundary
+// distances 164/149; direct consumption 164; counted distance 153; remainder update 140; byte padding
+// 144; unsigned capacity/native allocation 139/139.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
@@ -282,7 +293,7 @@ c_havok_abstract_allocator *function_146e30(void)
 	{
 		long size = 0x800000;
 		byte *block;
-		long adjustment;
+		short adjustment;
 
 		do
 		{
