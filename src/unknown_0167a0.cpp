@@ -757,7 +757,10 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): frame 0xc versus 0x10; table/entry homes and selector rereads differ.
+// score 157 (was 157): frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
+// Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
+// alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
+// frame 0xc versus 0x10; table/entry homes and selector rereads differ.
 // Ordinary writer inline 513; packed/index formal domains 189/181; shared complement 214;
 // global optimization off 621; frame pointer 207; branch table lifetimes 184; inline depth two 157.
 // @retail 0x17170

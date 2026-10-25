@@ -712,9 +712,14 @@ struct s_85650
 // Child ordinary inline 112; aggregate result 112; child result 112;
 // five child formal orders 112; wide active with both-arm count 100;
 // wide active with both-arm count and fresh sender 124.
-// score 100 (was 100): Frame 0x24 versus 0x28 and owner/child/callback homes still differ.
+// score 100 (was 100): frame 0x24 versus 0x28 and owner/child/callback homes remain.
+// Owner mask value 100; peers address 100; distribution/channel references 100/100;
+// entry type value 100; callback address at publication 100; mask plus peers 100; mask plus fresh child 124.
+// Frame 0x24 versus 0x28 and owner/child/callback homes still differ.
 // Child slot before total/count 106/142; request/tail/both sender clears 139/139/143;
 // world-state value 100; short child ordinal 125; child slot plus clears 143.
+// score 100 (was 100): frame and owner/child/callback homes remain; published child/total/count field references 142 each;
+// ordinal field reference 100; initialized type/client/both arrays 133/133/150; active byte 99 (below gate).
 // frame 24 versus 28 and child/distribution/callback homes remain; first aggregate
 // storage 145; storage plus fresh child 115; published-child query 100; immutable child count 100;
 // explicit total sum 100; combined contiguous clear 148; count return 100; storage plus published-child

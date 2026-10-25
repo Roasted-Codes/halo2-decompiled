@@ -2382,6 +2382,7 @@ dword __cdecl function_131fc0(real alpha);
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // score 424 (was 424): Frame 0x24 versus 0x28 and dimension homes remain. Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
+// score 424 (was 424): Frame 0x24 versus 0x28; dimension homes and early saves remain. Fast control 427; early fallback rectangles 438; early source rectangle 442; early reciprocals 439; blend-operation snapshot 438; late strength clamp removed 461 (fast).
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2538,6 +2539,7 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Long result 570 kept; outer rotated buffers 575; accumulated search 573; word sample count 576;
 // depth one 575; long result/search 575; short result 570; byte result 596.
 // score 570 (was 570): Frame 0x214 versus 0x200; order, coefficient and sample homes remain. Indexed matrix copies 758; structure reload 588; long eligibility 572; layout-order sample 589; long cache-hit result 570 (fast).
+// score 561 (was 570): Frame 0x214 versus 0x200; coefficient homes, stack order and sample paths remain. Cache index 575; in-place inverse 584; capped short sample count 561 kept (plain); delayed default coefficients 576; failure-first result 589 (fast).
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2579,12 +2581,12 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         for (long bucket = 0; bucket < count; ++bucket)
         {
             byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-            long samples = *(word const *)(pair + 2);
+            word available_samples = *(word const *)(pair + 2);
+            short samples = available_samples > 2 ? 2 : available_samples;
             if (!samples) continue;
             real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
             transform4x3f matrix;
             function_0235a0(source, &matrix);
-            if (samples > 2) samples = 2;
             for (short sample = 0; sample < samples; ++sample)
             {
                 if (sample) function_0235a0(source + 12, &matrix);
@@ -2952,6 +2954,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Byte capabilities 1086; rescale-state name 978; case three first 978;
 // short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
 // score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
+// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Initial state helper 1179; normalized bounds 985; split zero defaults 942 discarded; dispatch lifetimes 971; branched depth result 971; shared cutoff default 1055 (fast).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

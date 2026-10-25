@@ -82,7 +82,13 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
 // child datum accessor 146; both datum accessors 298; native child ordinal 142; immutable
 // creation inputs 142; reciprocal before child link 143.
-// score 142 (was 142): Cached-pointer comparison and loop lookup remain. Common pointer/flags/both stores
+// score 142 (was 142): cached-pointer compare, child-input spills and loop lookup remain.
+// Native cache pointer 142; changed-record predicate 142; actual head field 142;
+// unsigned child handle 142; shared bounded selector 142; word flags 142;
+// word flags with bounded selector 142; child zero-age before enable 142.
+// score 142 (was 142): cached-pointer memory compare, child pushes and in-loop lookup remain.
+// Cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime field 142; mask/lifetime fields 142.
+// Cached-pointer comparison and loop lookup remain. Common pointer/flags/both stores
 // 159/140/158f; conditional mask 282f; immutable allocated handle/settings 142f; common current-record
 // stores and combined immutable bindings 158f; common flags with current receiver 158f. Two-point gain
 // discarded.

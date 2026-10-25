@@ -471,6 +471,9 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // score 56 (was 56): Offset initialization, scalar initializer order, property reloads and rotation scheduling differ.
 // Combined entry decisions 53; entry decisions with shared cache 53; scale/alpha/both result locals 119/56/119;
 // saved successor 217; particle cache with scale result 119; combined entry/property/cache 116.
+// score 56 (was 56): entry branch, property reload pairs and rotation scheduling differ;
+// forward/left/up/all axis receivers 118/55/55/118; forward/left/up/first-pair values 182/167/181/289;
+// left/up receivers with empty-list return and scale-first initialization 52/52, but the return only repeats the loop test (reverted in review).
 // Captured position/late output 353; captured velocity/late output 357; both 437;
 // translation component loop 56; inner cache member 56; derived mask at use 198;
 // scale initialized at property selection 273; translation value 160.

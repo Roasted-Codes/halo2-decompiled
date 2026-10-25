@@ -393,6 +393,8 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // score 42 (was 42): frame 0x104 agrees; visited update still loads, ORs and stores.
 // Branch-local graph 42; saved mode 74; const model 42; visited base 42;
 // iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
+// score 42 (was 42): model member and external model/unit/definition references 42;
+// shared entry count 42; entry graph query 42; all graph queries 42; typed model plus graph queries 42.
 // Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
 // value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
 // @retail 0x113980
@@ -2523,6 +2525,12 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // unsigned word result 173; short table index 188.
 // Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
 // repeated table index 152; mode after animation 157.
+// score 147 (was 152): action/result packing and action/seat helper conventions remain.
+// Direct action decision 163; actual overlay-bit result 224; converged play operations 152;
+// control/tag/table role names 152/152/152; selected-overlay initialization 178; word play flags 150.
+// frame 60 versus 56 and protected action/seat argument registers remain.
+// Signed success/force/both bytes 147/152/147; word channel backing 152;
+// mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
@@ -2537,7 +2545,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
     long lookup = g_4408f8[type];
     long animation = NONE;
     if (lookup != NONE) animation = g_46fc30[lookup];
-    bool result = false;
+    signed char result = false;
     bool force_overlay = false;
     short action;
     c_animation_channel *overlay;
