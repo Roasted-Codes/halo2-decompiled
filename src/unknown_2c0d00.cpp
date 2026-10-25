@@ -230,6 +230,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Native category on retained homes 910 (frame 0x2cb4); direct query
 // members 911; current priority long 894; relationship results long 893;
 // sphere flag byte 917 (frame 0x2cb4). Original body kept.
+// score 866 (was 866): frame 0x2cb8 versus 0x2cac and actor/unit homes remain. Plain direct sphere differences
+// 881; direct object differences 866; both 881; shared raised-point setter 866; ordered sphere-filter join
+// 866. Fast scores 927/916/927/916/916; full control 866.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
