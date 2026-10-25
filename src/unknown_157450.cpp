@@ -1680,6 +1680,14 @@ void function_15e460(long object_index, long value)
 // guard 27, after player guard 28; narrowed scope with options record reference
 // 29, mode field reference 29, flags field reference 29, final option reference
 // 29, both record and final option references 29.
+// True-first if/else with the compare in the else arm reproduces retail's branch
+// skeleton (compare block out of line, setne al) 30; the same with no assignment
+// on the special arm enregisters the one (shared by the shift and the compare)
+// but in EAX with the options in EDX 32; the options record read before the
+// guard moves the engine lookup to ESI/EDI (retail's) yet keeps one in EAX 29;
+// that plus the assignment on the special arm 29; the special arm as an early
+// return 30; a single || chain return 31. A permutation run's cold scratch
+// build outran its timeout before searching.
 // @retail 0x15eb20
 bool function_15eb20(long player_index)
 {
@@ -2189,6 +2197,10 @@ static __forceinline void add_clamped_score(short *score, short delta)
 
 // score 5 (was 5): the two operands of the clamped score are sign extended into swapped registers,
 // and the peer lookup keeps them in different ones.
+// Helper parameter order swapped 5; helper taking long delta with the cast inside 5; single
+// expression sum 5; score-first sum 5; value returned and stored by the callers 5; dword index 5;
+// nested index28 test 5; player declared before index 5; score address as base plus index 99;
+// branch order swapped with the tests merged 111.
 // @retail 0x15b7c0
 bool function_15b7c0(long delta, long player_index)
 {
