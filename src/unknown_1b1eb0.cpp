@@ -165,6 +165,9 @@ real function_1e3920(long actor_index);
 // reference before request/index/guard 203/203/201; late output index 163;
 // selection flag before clear 168; scratch before fields/clear 164/181;
 // early reference/scratch with late index 204.
+// score 164 (was 164): early ESI slot, scalar homes and fallback arms remain;
+// shared defaults / native mode with defaults / native mode 168/168/164f on earlier scratch;
+// consumed request scope / scope with defaults / unsigned output handle / fallback result / combined 164/168/164/164/168f.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

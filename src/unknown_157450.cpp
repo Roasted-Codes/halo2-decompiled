@@ -5074,6 +5074,9 @@ void __stdcall function_d6bc0(long object_index);
 // reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
 // nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
 // score 175 (was 175): Frame 0x14 versus 0x18; timer/base homes and scheduling joins remain. Native placement record 175; named time slice 175; mode case order 175; explicit real defaults 175; positive slice guard 175 (fast).
+// score 167 (was 175): frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
+// type result before engine 167f/plain; engine consumer scope 167f;
+// timer reference / read-only object / scheduling handle / entry-test result / distance results / combined 175/175/175/175/175/175f.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5087,8 +5090,8 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
         byte *placement = *(byte **)(scenario + 0x124) + i * 0x90;
         if (i % arg_642c39 != g_510c54->game_time % arg_642c39) continue;
         short *timer = &entries[i].value04;
-        c_engine_peer *engine = game_engine_get();
         long type = NONE;
+        c_engine_peer *engine = game_engine_get();
         if (engine)
             type = engine->p0();
         if (function_15a090(type, 4, (short *)(placement + 4)) == NONE) continue;

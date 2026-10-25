@@ -98,6 +98,9 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // cursor read-step/end equality/for/preferred break 144/144/144/144;
 // pointer default rank 189; rank-three first 144; empty selection exit 144;
 // read-step with default rank 190.
+// score 144 (was 144): carried receiver/count reloads and ranking handoff remain;
+// declared payload / read-only result / read-only pool / handle domain 144/144/144/144f;
+// native payload slots 176f; distinct typed receivers / priority enum / payload with enum 144/144/144f.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {

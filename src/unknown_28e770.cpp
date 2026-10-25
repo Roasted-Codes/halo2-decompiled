@@ -114,6 +114,9 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // long marker count 206f; case-assigned short/long count 129/206f;
 // prior motion across scale 203f; elapsed fraction 129f; clamped elapsed 141f;
 // mode/all inputs assigned by arms 536/552f; unchanged preview 129f.
+// score 119 (was 119): alignment operands, marker-clear join and contribution schedule remain;
+// byte busy result / elapsed consumer / factor accumulator / contribution-first sums / combined 124/124/124/124/124f;
+// marker comparison result 124f; terminal marker case / comparison 206/206f.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {
