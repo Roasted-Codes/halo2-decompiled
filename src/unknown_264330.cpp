@@ -269,6 +269,8 @@ void function_264940(long actor_index, long prop_ref_index)
 // score 358 (was 358): frame 0x24 versus 0x20 and object/view homes remain.
 // Shared state/related/both distances 358/359/359; native actor/datum/origin references
 // 358/358/358; shared direction setter 358; reused byte approach category 370.
+// Round 310: state word snapshot 358; long state snapshot 365; long update 434;
+// entry vector workspaces 358; speed category result 358. Frame 0x24/0x20 and object/view homes remain.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)

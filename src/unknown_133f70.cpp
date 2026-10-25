@@ -82,6 +82,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Actual source-array binding 191; repeated count-field binding 163; feature-word binding 162;
 // present-first selected result 162; conditional selected result 162; source/count bindings 200;
 // feature binding plus present-first result 162; actual selected-byte binding 162 (fast scores).
+// early source retention, count cursor and feature homes remain;
+// formal source/original record reference 191/191 (caller differs); selected copy source 210;
+// category/object-category values 162/162; chained sentinel/disabled fields 162/162; inherited mask value 197.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

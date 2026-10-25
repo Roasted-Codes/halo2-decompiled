@@ -1048,6 +1048,14 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // score 38 (was 83): retail keeps a success byte (set to 1 up front, overwritten with the
 // call's result on failure) and returns that byte directly; ours keeps the failure flag, so the
 // store and the negated return differ and the function is eight bytes longer.
+// score 38 (was 38): Failure-byte initialization, stores and inverted return still differ.
+// descriptor reference 38; immutable descriptor 38; single count reads 38; byte failure 38;
+// signed-byte failure 38; wide failure 70; immutable callback results 38; shared callback-result
+// home 38.
+// native success still extends zero lifetime. Shared
+// mask-zero producer with direct result 122; output-only masks 116; first,
+// second, third or fourth default omitted 102/103/98/104; shared zeros with
+// true or explicit false comparison 87/122. Original failure byte retained.
 // @retail 0x13a3c6
 bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
 {
