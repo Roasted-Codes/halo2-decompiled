@@ -850,6 +850,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
 // Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
 // general distance result 614; masked final gravity word 634.
+// score 614 (was 614): frame 0x34 versus 0x30; direct-mode carrier and vector homes remain.
+// Basis capture on current join 631; desired/delta scope 614; scale/subtract value helpers 681;
+// later history maximum 614; shared lateral workspace 616.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -978,6 +981,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // snapshot projection helper 428; native relative-velocity subtraction 642.
 // Frame pointer 692; depth zero 967; size preference 1011; moving arm first 449; native component subtraction loops 427 (one-point gain rejected).
 // score 428 (was 428): Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
+// score 428 (was 428): persistent zero and accepted-count/component homes still differ.
+// Entry count/result interaction 528; contact-base field reference 428; count-field references 428;
+// entry count/result plus base reference 528; entry count/result plus count references 528.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1141,6 +1147,9 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // Combined eligibility 240; per-contact body-velocity snapshot 346; highest reduction after selection 258;
 // approach at use 351; surface output at entry 230.
 // score 230 (was 230): Frame 0x28 agrees; zero width, reset/selection homes and material-call expansion remain. Preservation arm first 288; entry score storage 230; shared squared length with double comparison 230; byte current flag 240; byte current supported 239 (fast).
+// score 230 (was 230): zero-load width, reset/selection homes and second material-call expansion remain.
+// Library history resets 238; contact-base field reference 235; unsigned selected ordinal 230;
+// native saved predicates at original magnitude 298; preservation predicate at dispatch 382.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {
