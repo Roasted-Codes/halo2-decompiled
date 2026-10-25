@@ -478,6 +478,10 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // Captured position/late output 353; captured velocity/late output 357; both 437;
 // translation component loop 56; inner cache member 56; derived mask at use 198;
 // scale initialized at property selection 273; translation value 160.
+// score 56 (was 56): the definitions indexed (index++) put the offset's zero store after the
+// list test and fix the three reload pairs (with scale declared first, all but the rotation
+// blocks match), but turn the rotations' products around and add 10 bytes: indexed 119,
+// indexed with scale first 117; plus split += rows 116; plus a matrix pointer local 123.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {

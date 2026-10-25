@@ -420,6 +420,9 @@ extern point2f *g_468778;
 // read-only prop payload 379; weight after magnitude 379. Early actor/settings/prop homes remain.
 // score 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
 // validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
+// Round 173: external actor / guarded slot / combined references 379/379/379;
+// external facing reference 379; prediction-path velocity reference 395. Frame 0x40 agrees;
+// early actor/settings/prop carriers remain. Original body retained.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

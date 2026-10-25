@@ -174,6 +174,14 @@ void function_402b0(long cache_index, long mode)
 // j93: Frame 0x84/0x88 and helper conventions/expansion remain; original API values preserved.
 // first pass byte 202; second pass byte 201; third pass byte 195; typed parent lookup 183; direct tag lookup
 // 226.
+// score 183 (was 183): Frame is four bytes small; cache/draw contracts and render expansion
+// remain. first pass result arms 205; second pass result arms 196; third pass result arms 195;
+// fourth pass result arms 195; all pass result arms 219; native cache record binding 183; native
+// setup field updates 183; cache inline contract 183; signed setup word 183; native table
+// traversal 266.
+// frame 0x84/0x88, helper conventions and API expansion remain;
+// independent final-pass byte 199; with first/second/third byte 209/208/202;
+// with first-second/first-third/second-third bytes 218/214/213; final-pass short 200 (plain).
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

@@ -245,6 +245,10 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // score 61 (was 61): separate normal workspace 397; default normal workspace 397;
 // displacement in output normal 181; radius-square local 61; component-square lifetimes 61;
 // immutable distance 61; sphere reference 61; point reference 61. Sphere XMM homes still differ.
+// score 57 (was 57): sphere displacement XMM homes and the early reciprocal-one load remain.
+// Shared squared length/self product 152/152; outside-sphere exit 57; root declared first 57;
+// default output before normalization 174; center/sphere value copies 397/396; center plus squared helper 397.
+
 // @retail 0x245ef0
 bool function_245ef0(s_shapes const *shapes, point3f const *point, s_shape_result *result)
 {

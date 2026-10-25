@@ -477,6 +477,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // remain. Shared real ring 182; ring plus phase 195; record-first 163 kept; with real ring 161
 // rejected for two extra points; double base with ring/phase 182/195; axis value 317;
 // record/ring/spoke values 163.
+// score 163 (was 163): frame 0xd8 agrees; entry/ring conversion, rotation XMM and sector registers remain.
+// Rotation output/axis/both object references 163/163/163; each with output last 163/163/163;
+// cosine-first output/axis reference contracts 163/163. Original helper and body restored.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
