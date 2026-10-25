@@ -111,8 +111,8 @@ short __stdcall function_272af0(s_match_globals *structure, point3f const *point
 
 // score 2 (was 80): retail reloads the spilled view before it loads the
 // choice from the entry; ours loads the choice first. Retail passes the
-// reference's own slot for function_2605d0's other index (0x18 for both,
-// a separate local made the frame 8 bytes bigger); the high bit test of
+// reference's own slot for function_2605d0's other index (0x18 for both;
+// a separate other_index local makes the frame 8 bytes bigger, 38); the high bit test of
 // unknown2 is retail's load and test ah; type is NONE before the call.
 // Tried: choice read after the first view store 140; result set first 118;
 // result cleared before the test 131; branches swapped, a view alias, const
@@ -157,6 +157,8 @@ bool __stdcall function_1b69e0(long actor_index, long prop_index)
         }
         *(real *)((byte *)&request + 0x1c) = 20.0f;
         byte *scratch = ai_scratch_buffer_get();
+        /* the other index the callee writes lands in the reference's own slot,
+           which its result then overwrites, as in retail */
         s_reference reference = function_2605d0(actor_index, &request, (long)&entry, (long)&reference, scratch, &unknown);
         if (!REFERENCE_EQUAL(reference, g_470fa0) && !(reference.unknown2 & 0x8000))
         {
