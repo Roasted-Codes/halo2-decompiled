@@ -1022,7 +1022,12 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection registers remain;
 // arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
 // receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
-// score 184 (was 184): icon tail and time/connection register schedule still differ.
+// score 184 (was 184): Deferred icon tail and time/connection coordinate registers remain. place
+// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
+// rectangle aggregates 320; trailing rectangle aggregates 306.
+// icon tail and time/connection register schedule still differ.
+// icon tail and time/connection register schedule still differ.
 // entry icon zero 261f; outer icon scope 184f.
 // zero before icon init 205f; zero before place format 248f.
 // signed word result 184f; unsigned native result 184f.
@@ -1031,6 +1036,14 @@ struct s_game_engine_globals_connections_view
 // Positive place visibility 318; horizontal/vertical/both live origin fields 184/184/184;
 // completed color alpha 184; visibility with origins 318; horizontal/both origins
 // with completed color alpha 184/184. Widget-root control equals the full baseline.
+// score 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain.
+// Dim-default glyph 183 (one-point gain rejected); glyph-last/icon-alpha-first metadata 184/184;
+// connection alpha first 185; two-use numeric width 281; time/connection bottom first 184/184;
+// dim default plus numeric width 281. Opening body restored.
+// Deferred icon tail and time/connection coordinate registers remain. place
+// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
+// rectangle aggregates 320; trailing rectangle aggregates 306.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1236,6 +1249,7 @@ PRIVATE inline long score_string_list_1608e0()
 // global optimization off 2237; size optimization 1348.
 // viewer pointer name 810; viewer lookup at first scroll use 848; short displayed-row number 811;
 // short row rank 810; direct team activity predicate 826.
+// score 805 (was 810): frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1414,7 +1428,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		long place = display.player_ranks[player_row] / 2 + 1;
 		bool has_engine = game_engine_get() != NULL;
 		bool teams = has_engine && g_4e6948->flags184.bit0;
-		char team = *(char *)(player + 0xc0);
+		char const &team = *(char *)(player + 0xc0);
 		if (teams && team != NONE)
 		{
 			for (short team_row = 0; team_row < display.team_count; ++team_row)
@@ -1485,6 +1499,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
     }
 }
 
+// score 219 (was 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation
+// remain. Persistent row cursors: team background 305; player background 257; team text 219 (plain kept);
+// player text 246; both backgrounds 304; both text passes 249 (fast).
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {
@@ -1537,12 +1554,14 @@ score_background_161420(data + 0x270, 0x60);
 score_text_161420(data + 0x144, 0x60);
 score_text_161420(data + 0x1a8, 0x60);
 score_text_161420(data + 0x20c, 0x60);
+    s_game_engine_score_row const *team_row = panel.teams;
     for (long team = 0; team < panel.team_count; ++team)
     {
-        score_text_161420((byte const *)&panel.teams[team].place, 0x44);
-        score_text_161420((byte const *)&panel.teams[team].name, 0x60);
-        score_text_161420((byte const *)&panel.teams[team].score, 0x44);
-        score_text_161420((byte const *)&panel.teams[team].time, 0x44);
+        score_text_161420((byte const *)&team_row->place, 0x44);
+        score_text_161420((byte const *)&team_row->name, 0x60);
+        score_text_161420((byte const *)&team_row->score, 0x44);
+        score_text_161420((byte const *)&team_row->time, 0x44);
+        ++team_row;
     }
     for (long player = 0; player < panel.player_count; ++player)
     {

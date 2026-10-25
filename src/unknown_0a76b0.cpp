@@ -2495,7 +2495,7 @@ void function_d12b0(long vehicle_index, long seat_index, bool a, bool b);
 bool function_b9d20(long object_index);
 void __stdcall function_bef30(long object_index, long a, long b, long c, bool d);
 void function_b8b70(long object_index);
-short __stdcall function_cdeb0(long unit_index, long state_name, long a, long b);
+short __stdcall function_cdeb0(long unit_index, long state_name, short slot, short direction);
 bool __stdcall function_ee460(long unit_index, long state_name, long action_name);
 void function_e0070(long unit_index, long vehicle_index);
 void function_1bba70(long actor_index, long vehicle_index, long seat_index);
@@ -4600,10 +4600,14 @@ long function_1039a0(long object_index, long tag_index, long effect_index, real 
 short first_person_weapon_animation_ticks(long weapon_index, long animation_name, short type);
 bool function_1058b0(long weapon_index, long state, bool force);
 
-// @retail 0xfff40
 // score 70 (was 70): the first difference is inside the body of function_1058b0,
 // which is inlined here but lives in src/weapons.cpp, so the object lookup and
-// the tag table are read through different registers than retail
+// the tag table are read through different registers than retail. The 12 extra bytes are the
+// inlined 0xc9d00 (contributor code) loading and spilling the second hand's weapon index, which
+// retail's inlined copy drops: BLOCKED-BY 0xc9d00. Tried at the 0xc9d00 call in 0x1058b0: the
+// owner index in a local 70; result set first 70; a fresh weapon pointer 70; the two tests
+// swapped 73; here, the rest under the state change's result 70.
+// @retail 0xfff40
 void __stdcall function_fff40(long weapon_index, bool silent, bool immediate)
 {
     byte *object = *(byte **)(g_4e0300->data + (weapon_index & 0xffff) * 12 + 8);
