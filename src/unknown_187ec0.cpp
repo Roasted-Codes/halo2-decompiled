@@ -325,6 +325,12 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 
 // score 22 (was 22): initial word load, requested-index/table register ownership and lookup schedule still differ.
 // This round: success before parent 28; native carry with alias 30; initial negative guard 73; signed loop admission 79; walking formal 38; direct native carry 35; complete per-tag result 56; success inside tag arm 28.
+// initial short load and global-table/entry-index register lifetimes differ.
+// Earlier requested-index snapshot 22; parent snapshot 28; explicit lookup 22; found return 22;
+// word carry 22; result first 22; one-element array 21; for parent walk 71; parameter walk 22;
+// entry local, null break, shared return and memcpy copy 22. Direct short carry 33; native carry 31;
+// result loop guard 22; tag workspace lifetime 22; ancestor local names 22; complete result 30;
+// native carry with stack input 23; existing entry lookup 105.
 // @retail 0x1882d0
 s_seat_animation_entry *function_1882d0(long type, short element_index, long index, short entry_element_index)
 {

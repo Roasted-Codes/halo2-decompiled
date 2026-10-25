@@ -62,6 +62,10 @@ bool __stdcall function_215f40(long type, byte *buffer)
 // type input 20; direct api status result 21; function scope drive root 20; role named buffer homes
 // 20; explicit library path clear 58; byte status result 54; drive before status lifetime 20; query
 // failure returns 63.
+// formatted-name address reuse still shortens the branch.
+// Long success result 52; initialized name/root arrays 67/64; path after
+// name success 23; function scope buffers 35; drive root result 29;
+// format failure single exit 20; nested validation 20.
 // @retail 0x216120
 bool function_216120(word *string, long type)
 {
@@ -144,6 +148,9 @@ dword function_217b70(word const *text);
 // unsigned measured length 5;
 // completed-name return 5;
 // completed-name return with short ordinal and unsigned length 84;
+// shared both/initial/suffix bounded copies 5/5/5; append result span 5;
+// initialized prefix array 119; language before id query 13;
+// named prefix comparison 5; unmatched prefix continue 5.
 // @retail 0x216e50
 void __stdcall function_216e50(word const *display_name, long type, char *language, word *name)
 {

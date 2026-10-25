@@ -168,6 +168,8 @@ void c_widget::v16()
 	}
 }
 
+// score 20 (was 20): entry scan saves ESI early and carries its candidate there; retail uses EAX/EDX before the save.
+// Link for scans 20; transient entry scope 42; eligibility condition 44; rejection arm 20; previous branch 21; one search cursor 21; traversal role names 20; fallback declaration order 20.
 // @retail 0x22ec1b
 void c_widget::v17()
 {

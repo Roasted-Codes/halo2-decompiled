@@ -344,6 +344,10 @@ void c_class_19b8b1::v3()
 	c_class_1a2c81::v3();
 }
 
+// score 14 (was 14): common sound tail sits after both direction tails;
+// tried guarded event arms 16f; primary owned fallback 50f; guards and primary fallback 50f;
+// local failure returns 22f; boolean sound 33f; byte sound 33f; sound before actions 39f;
+// guarded boolean sound 33f.
 // @retail 0x2540e8
 bool c_class_19b8b1::v10(s_widget_event *event)
 {

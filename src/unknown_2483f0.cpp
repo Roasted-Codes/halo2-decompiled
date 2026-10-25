@@ -140,6 +140,11 @@ static inline void particle_cross_product3d(vector3f const *a, vector3f const *b
 // Shared cross product 55; rotation memcpy/const point/point memcpy 52;
 // indexed rotation 92, accumulated components 95, indexed translation 85;
 // position output first 54; existing axis-matrix helper 73.
+// matching 0x30 frame; cross-product schedule, left-vector XMM homes
+// and point-coordinate loads still differ, with four extra bytes. Earlier operand/sum/helper
+// forms excluded; tried scalar point coordinates 98; paired cross products 55; six cross
+// products 52; compound cross components 52; cross value result 140; frame-mode return 104;
+// offset at construction 52; shared point setter 78.
 // @retail 0x248450
 void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f *position, matrix3x3 const **rotation_result, point3f const **position_result, bool field_b4)
 {
@@ -174,6 +179,10 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
+// score 13 (was 13): link-store effective address and late seed/constant schedule remain;
+// tried native record receiver 14f; shared position setter 45f; shared vector setter 47f; both shared setters 49f;
+// scalars before copies 33f; links reverse order 14f; allocation failure return 48f; origin value 61f;
+// immutable allocation index 14f; seed input lifetime 14f.
 // @retail 0x248620
 long function_248620()
 {

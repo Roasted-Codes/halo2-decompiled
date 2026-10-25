@@ -513,13 +513,7 @@ bool function_7fb50(void)
 {
 	bool local_0 = false;
 	s_type_acf665 local_1;
-	memset(&local_1, 0, sizeof(local_1));
-	local_1.signature = FILE_REFERENCE_SIGNATURE;
-	local_1.location = NONE;
-	if (local_1.flags & 1)
-		function_1373c0(local_1.path);
-	function_137320(local_1.path, g_450c68);
-	local_1.flags |= 1;
+	file_ref_create(&local_1, false, g_450c68);
 	if (g_467264.handle == INVALID_HANDLE_VALUE)
 	{
 		async_create_file_blocking((file_reference_data const *)&local_1, 2, 4, 4, 2, &g_467264);
@@ -533,7 +527,7 @@ bool function_7fb50(void)
 		function_163ba0((dword *)&g_4cf974, &g_4cf978, 0x8e44);
 		g_4cf970 = 8;
 		function_120d50(&g_467260, false);
-		function_1a1050(g_467264, &g_4cf970, 0x8e4c, 0, 0, 2, 6, NULL, &g_467260);
+		function_1a1050(g_467264, &g_4cf970, 0x8e4c, 0, s_file_write_flags(0), 2, 6, NULL, &g_467260);
 		local_0 = true;
 	}
 	return local_0;
