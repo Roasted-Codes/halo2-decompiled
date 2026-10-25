@@ -37,6 +37,10 @@ public:
 
 // the vertex furthest along a direction, with its index in the fourth term
 // tagged with the bits of 0.5
+// score 7 (was 7): x/z transfers and final coordinate/tag schedule remain.
+// Scalar loads 159; direct/shared vector shuffles 157/157; dot accumulator 7;
+// wide selected scalar 7; output vector 86; coordinate-array loop 4; indexed blocks 166;
+// coordinate loop with scalar-value/shared broadcasts 4/4.
 // @retail 0x2fd260
 void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *support) const
 {

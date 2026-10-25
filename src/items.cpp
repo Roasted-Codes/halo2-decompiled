@@ -1219,6 +1219,10 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Scalar/component factor orders, eight forms 154; direct output 207; native
 // point value 176; owner/origin/position/pair/all library copies 154; direct
 // output with library copies 207. Retained origin reuse and initializer unchanged.
+// score 154 (was 154): release-byte RMW/tail and event homes remain.
+// Returned vector/output buffer 274/274; output with shared scaler 200;
+// native attachment handle/node plus point/all fields 154/154/154;
+// all fields with output buffer/returned vector 274/274.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
