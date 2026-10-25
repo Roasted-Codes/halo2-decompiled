@@ -85,6 +85,11 @@ static __forceinline void decode_direction_194d30(long index, vector3f *directio
 // decode zero/scale schedule and final-component x87 forwarding remain;
 // workspace names, formatter scope, unsigned index, complete bounds, shared rounding, shared/existing
 // decoded normalization, completed decode output and decoder pointer/vector results 62, 62, 62, 122, 72, 62, 62, 88, 62, 155.
+// score 62 (was 62): the decoded k is kept on x87 (fst) and squared first; retail pops it and sums
+// j, k, then i from memory. A block boundary before the normalization (diagnostic branch) makes ours
+// reload in retail's order with an `i*i + (j*j + k*k)` sum, so retail's store and normalization
+// were not in one block. Sum orders j+k+i, i+(j+k), k+j+i, i+k+j 62 each; decoder stores through
+// the n[] view 62 (with i+(j+k) 62); zero declared first in the decoder 84.
 // @retail 0x194d30
 void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *forward)
 {
