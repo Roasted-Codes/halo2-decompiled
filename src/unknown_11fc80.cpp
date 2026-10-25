@@ -57,6 +57,10 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // complete previous distance 79; both complete producers 77 (two-point gain dropped);
 // unadjusted distance/projection lifetimes 79/79; indexed accepted input 79;
 // current Y/X/XY product orders 79/79/79. SSE distance/delta allocation still differs.
+// Also 79: delta declared before the loop; t = previous_distance / (previous_distance - distance)
+// computed before delta, without the span local. In the 4x unrolled body the copies' current-distance
+// sums differ: retail copy 1 i*x + k*z + y*j, copy 2 i*x + y*j + z*k; ours copy 1 i*x + k*z + j*y,
+// copy 2 i*x + z*k + y*j.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,
