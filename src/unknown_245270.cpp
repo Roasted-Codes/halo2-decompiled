@@ -282,6 +282,13 @@ void function_245400(s_source_245400 const *source, long index,
 // score 204 (was 204): Frame 0x24/0x2c, source and side homes remain; first/second/both normal
 // values 230/208/248; first/second/both endpoint values 235/205/244; cross scope/late side values
 // 204/204.
+// frame 0x24 versus 0x2c, source register and independent side-byte homes remain;
+// narrow sides 207; early narrow sides 207.
+// direct narrow codes 239; material snapshot 206.
+// shared rotation 204; shared dot 204.
+// both shared products 204; snapshot with early sides 209.
+// Signed-byte side carriers first/second/both 238/238/204; native-long carriers
+// first/second/both 228/228/222; mixed signed-byte/native-long both ways 228/228.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

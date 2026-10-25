@@ -169,6 +169,9 @@ void *c_game_havok_memory::allocate16(long size, long memory_class)
 // direct pool fields 36; typed bounds with delayed fixed receiver 43; fixed
 // object size 36; physical object reference 36; pool object reference 36;
 // typed fixed receiver 36.
+// Shared inclusive begin/end helper 43; begin/size helper 44; helper with the fixed
+// receiver 36; begin/size helper with early returns 44; size-first end 43. Retail's
+// jge/jne pair and EAX ends come only from a second (equality) test of each end.
 // @retail 0x147320
 void c_game_havok_memory::deallocate16(void *address, long size, long memory_class)
 {

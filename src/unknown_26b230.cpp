@@ -1836,6 +1836,11 @@ void function_2689d0(void)
 // Member/prop ordinary inline 5/5; every plain whole-program trial preserves all baseline matches.
 // node/prop next homes 0x1c/0x14 versus 0x18/0x1c; setup scope 5; typed prop 5; both 5;
 // link references 5; array views 5; prop names 5; record references 5; joint declarations 5.
+// Prop iterator declared before the node iterator 5; both iterators in one array 69 (frame 0x14);
+// node iterator renamed to sort after props 5; prop iterator initialized before the node loop 125;
+// prop init through the clump view 174 (the clump-offset spill vanishes); helper definitions
+// swapped 5; both iterators brace-initialized 5; prop init by array indexing 5; an early dead
+// store into the prop iterator 5. The two homes do not move for any source-level reordering.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {

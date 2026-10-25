@@ -269,6 +269,9 @@ void function_146de0(void)
 // score 139 (was 143): frame 0x14 now agrees; update expansion and saved registers differ.
 // Per-attempt padding after/before publication 149/149; consumed padding 139/151;
 // guarded consumption 145; rounded padding/consumption 163/162; bounded search 149.
+// score 139 (was 139): selective update expansion and request/timestamp homes remain.
+// Update defining-source inline/force-inline declarations 139/139; separate request/usable capacity 139;
+// per-attempt request 139; split capacity plus inline/force-inline update 139/139; request plus inline 139; native handle plus split capacity 139.
 // j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
 // byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
 // guard 143; post retry capacity 143.

@@ -138,6 +138,10 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 // transform workspace name 158f; native output first contract 168f.
 // native matrix reference 158f; copied normal receiver 161f.
 // nested edge validation 158f; conditional inverse publication 152p.
+// score 138 (was 152): plane-distance base, projection selectors/stores and inverse schedule remain.
+// Shared projection operation 334; native plane result 237; row-selector local 152;
+// bounds-first/vertical-first helper contracts 140/140; pointer-input point initializer 152;
+// vertical result snapshot 170; first-edge squared length 138; corrected contract/length combinations 146/146.
 // @retail 0x17d9a0
 void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_quad_17d9a0 *quad)
 {
@@ -156,8 +160,9 @@ void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_qu
 	quad->edges[0].j = corners[1].y - corners[0].y;
 	quad->edges[1].i = corners[3].x - corners[0].x;
 	quad->edges[1].j = corners[3].y - corners[0].y;
+	real first_edge_squared = quad->edges[0].i * quad->edges[0].i + quad->edges[0].j * quad->edges[0].j;
 	quad->inverse_determinant =
-		quad->edges[0].i * quad->edges[0].i + quad->edges[0].j * quad->edges[0].j > 0.0001f &&
+		first_edge_squared > 0.0001f &&
 		quad->edges[1].i * quad->edges[1].i + quad->edges[1].j * quad->edges[1].j > 0.0001f
 		? 1.0f / (quad->edges[1].j * quad->edges[0].i - quad->edges[0].j * quad->edges[1].i) : 0.0f;
 }

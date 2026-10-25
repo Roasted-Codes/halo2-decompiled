@@ -38,6 +38,13 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // score 190 (was 190): pool reload and separate completion stores remain;
 // read-only unit/type result 190/190; scoring team at call 226; completion event prepared first 193;
 // marker/slot entry lifetimes 190/190; success-result predicate 193; type result plus event preparation 193.
+// Read-only helper input 190; table reference 190; native team parameter 190; result-first predicate 192;
+// flag byte sample 190; direct capped result 190; cap and table reference 190; option guard order 190. Pool
+// reload and separate completion stores remain.
+// score 190 (was 190): Cached pool base and merged completion stores remain.
+// Native player record 190; scoring-team field binding 190; both 190;
+// increment counter binding 202; decrement binding 190; both counters 202;
+// marker-team value 194; native player with both counters 202.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

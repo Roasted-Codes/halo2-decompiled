@@ -1221,6 +1221,9 @@ bool function_0b6760(s_index_pair const *pair);
 // channel guard helper 382; ordinary result 355; shared previous/ordinary result 351 kept.
 // Round 290: ordinary index with shared previous 408; shared previous and header index 408; header index
 // and ordinary tag pointer 384; group path first 392; byte direction predicate 351.
+// Round 303: entry position output 351; previous-value name 351; early previous velocity 373;
+// changing-power arm first 351; early activity result 418. Frame/index/state homes still differ.
+// Ordinary saved pointer with shared previous 381 at retail length; original qualifiers kept.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

@@ -521,6 +521,8 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // score 143 (was 151): frame 0x58/0x54 and first-length/radius homes remain.
 // Actor/target/both references 151/151/151; unit handle/radius values 245/232;
 // actor/target point values 240/249; heading-length result/reduced guard 143/143, latter retained.
+// Interval role name 151; entry interval lifetime 168; reversed aggregate 151;
+// first/second planar memcpy 151/151.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {
