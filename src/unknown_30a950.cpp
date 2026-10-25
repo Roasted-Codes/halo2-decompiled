@@ -123,6 +123,9 @@ struct new_faces_30ae70
 // direct counter 48; split increment 3; long index 3; 100 permutations, best 3.
 // Call-only apex forms at 3 removed; apex edge write 5; reference from apex 4;
 // that reference with edge first 14; constructor zero first 4.
+// With the multi-use pointer: aligned load 61; load plus store 61; array
+// between writes 28; split count 4; outer result 4; member initializers 4;
+// external base reference 4; long index 4.
 // Const pointer, input reference and captured array base 4; intrinsic
 // write on this reference 5; input reference with pointer writes 46; array
 // before pointer 24; named result and unsigned flags 4. Body retained.

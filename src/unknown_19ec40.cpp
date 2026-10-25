@@ -10,7 +10,12 @@
 
 real distance_sq3f(point3f const *a, point3f const *b);
 
-// score 65 (was 65): preheader key and entry registers remain; distance inline 65; force-inline 65; count global at use 65; count and inline 65; entry position copy 64; entry copy and force-inline 64; capacity lifetime 65; vertical difference 65.
+// score 65 (was 65): key preheader and global/point/index/entry registers still differ.
+// Unsigned key bits (a word key compared with each field cast to word) plus entry position 61,
+// not kept: the casts only steer the compares; entry position alone 112; separate keys 61; read-only globals 61;
+// function-scope position 61; wrapped index 105; direct count 61;
+// explicit append 61; height input 61. Existing point handling retained.
+// preheader key and entry registers remain; distance inline 65; force-inline 65; count global at use 65; count and inline 65; entry position copy 64; entry copy and force-inline 64; capacity lifetime 65; vertical difference 65.
 // @retail 0x19ec40
 long function_19ec40(
 	point3f const *point,

@@ -152,6 +152,9 @@ static inline void transform_offset_point(transform4x3f const *frame, real scale
     point->z = frame->up.k * z + frame->left.k * y + frame->forward.k * x + frame->position.z;
 }
 
+// score 17 (was 17): trigger index/position carrier, pitch operands and result load differ.
+// Unqualified separate workspaces: frame pointer 593; zero inline depth 682;
+// global optimization off 1135; size preference 748; word phase 138 (fast).
 // @retail 0x14e200
 bool __stdcall function_14e200(long player_index, long target_index, point3f const *position, bool detach)
 {
