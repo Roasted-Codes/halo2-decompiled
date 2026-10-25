@@ -157,6 +157,10 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // native-result component loop 157f; forced native addition result 195f; forced change-input sum
 // 235f; forced result loop 201f.
 // Returned addition result 157p adds a call absent from retail; original helper retained.
+// first point-velocity input schedule and nonrotating scale/add schedule remain.
+// Nonrotating shared point difference 165; shared scale 164; difference plus scale 166;
+// shared scaled difference 169; final delta scale 164; both scale boundaries 164;
+// actual motion-field bindings 166; object-velocity field reference 164 (fast scores).
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {
