@@ -326,6 +326,8 @@ void function_89a20(s_handle_peers *peers)
 // Retail holds peers in unsaved EBX; our mask call consumes EBX.
 // Peer reference 66; table reference 66; index-first handle 66; sequence-first handle 66; mask condition 66;
 // membership result 66; short cursor 96; owner value 66.
+// BLOCKED-BY 0x980d0 (a contributor's file): its body takes this/handle/mask in edi/eax/ebx
+// (retail edx/ecx/esi), so this caller must free ebx and moves peers to the stack (ret 8).
 // @retail 0x898c0
 void replication_table_attach_sender(s_handle_peers *peers, long index, c_handle_table_450cd0 *sender)
 {
