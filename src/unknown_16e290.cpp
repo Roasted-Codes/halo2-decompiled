@@ -1435,7 +1435,7 @@ struct s_camera_clip_reference_16ebf0
 	byte field_14[4];
 };
 
-// score 234 (was 234): frame 0x9c versus 0x98 and vector/state homes differ;
+// score 229 (was 234): frame 0x9c versus 0x98 and vector/state homes differ;
 // shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
 // aggregate copies with shared cross product 249, role names 249, combined scope 249.
 // Frame 0x9c versus 0x98; vector-copy homes and narrow/fraction convention differ.

@@ -200,11 +200,6 @@ void c_handle_table_450cd0::function_97fe0()
 	unknown5024 = NONE;
 }
 
-// score 22 (was 22): incoming receiver/handle/mask registers differ; retail edx/ecx/esi, ours edi/eax/ebx.
-// Earlier inline, explicit receiver, state phase, entry reference 22; early return 26; handle reference 27;
-// mask reference 30; unsigned slot 21; shared store 26; consistent parameter reorder unchanged.
-// Peer bit extraction 30; value before membership 22; value lifetime 25; consumed handle 21;
-// full-width peer mask 22; named membership mask 22; counter from zero test 39; direct fields 34.
 // @retail 0x980d0
 void c_handle_table_450cd0::function_980d0(long handle, dword mask)
 {
