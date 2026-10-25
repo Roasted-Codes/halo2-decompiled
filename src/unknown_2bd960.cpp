@@ -439,6 +439,8 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // Control/sampling calls and scan induction remain; center/radius/both values 171/169/185;
 // vertex memcpy 190; edge-length values 139; main height value 130 plain kept;
 // shared point count 326; height plus count 345 (plain).
+// score 130 (was 134): protected control/sampling calls and scan induction remain;
+// center/radius/both/height/all endpoint scans 375/475/716/378/950f; frame/size/global 237/276/1164f.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

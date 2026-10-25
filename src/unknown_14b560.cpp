@@ -1959,6 +1959,10 @@ struct s_player_creation_record
 
 // score 33 (was 33): the value that is handed to the call is read into EDI
 // here and into EDX in retail, so the register that carries the argument
+// differs; the rest of the call is the same. Retail inlines 0x14f270 for the
+// variable controller here (only the inner NONE reset stays a call). Tried: a
+// plain call with an inline declaration of 0x14f270 267; with
+// inline_recursion pragmas or a reworded 0x14f270 the call is still kept.
 // differs; the rest of the call is the same.
 // Frame 0x10 agrees; the controller reset expands on the opposite arm.
 // Caller depth 1/2 33/33; size preference 335; common reset 55;
@@ -2654,6 +2658,9 @@ struct s_unit_flags_14d8b0
 // score 155 (was 155): iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
 // low-time arm first 179; inline depth one 155. Damage call convention differs.
+// Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
+// native reset timer 155; both native long/short fields 155; signed native countdowns 155;
+// all native countdown fields 155; full native current-player record 153.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

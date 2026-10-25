@@ -1157,12 +1157,16 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
     arg_2->k = arg_0->k * arg_1;
 }
 
-// score 18 (was 18): point argument is rematerialized instead of copied;
-// the frame and projection agree. Sampling name 18; vector names 18;
-// vectors declared first 18; const unit 18; saved body count 124;
-// workspace memcpy 18; indexed output 23; const component 18.
+// score 2 (was 18): the returned point is copied from EAX before the body load;
+// retail loads the body and then copies the point from ESI. The frame and projection agree.
+// Sampling name 18; vector names 18; vectors declared first 18; const unit 18;
+// saved body count 124; workspace memcpy 18; indexed output 23; const component 18.
 // Support handle 18; nullable component 110; body read first 30;
 // valid body interval 85; entry workspace 18; unit-scope workspace 18;
+// const support 18; unsigned object handle 18. Position query noinline 18;
+// returned point with body index 2; reassigned point pointer 128; output pointer 18;
+// file-scope workspace 18; direct body reads 121; support lookup noinline 18;
+// returned point with output pointer 2; target noinline with returned point 2.
 // const support 18; unsigned object handle 18.
 // Round 109: ordinary scale inline 18; scale pointer result 18; three scale formal orders 18;
 // scale input reference 18; point-query noinline 18; velocity-query noinline 18.
@@ -1189,8 +1193,7 @@ void function_1a68a0(long object_index, vector3f *velocity)
 					long clamped = body_index < 0 ? 0 : body_index > component->body_count - 1 ? component->body_count - 1 : body_index;
 					if (clamped == body_index)
 					{
-						function_b9dd0(object_index, &local_3.field_c);
-						havok_component_rigid_body_point_velocity_get(unit->body_index, (s_havok_component *)component, &local_3.field_c, &local_3.field_18);
+						havok_component_rigid_body_point_velocity_get(body_index, (s_havok_component *)component, function_b9dd0(object_index, &local_3.field_c), &local_3.field_18);
 					}
 				}
 			}
@@ -1620,13 +1623,15 @@ struct s_candidate_unit_definition
 	real maximum_distance;
 };
 
-// score 42 (was 186): frame/length agree; geometry-call convention, flag branches and angle tails differ.
+// score 36 (was 186): frame/length agree; geometry-call convention and angle/failure tails differ.
 // Axis name 186; result first 220; query result 195; first-bit assignment 186; size optimization 348.
 // Depth zero 386; depth one 186; success return 203; clamped input on current frame 216; word result 227.
 // object register, geometry-call convention and failure/angle tails differ;
 // axis name 186; result first 220; geometry result guard 195; masked first bit 186; size optimization 348.
 // Failure to common exit 98; signed byte result 196; second-bit results 178; angle result 201; radius snapshot 209.
 // Exit plus second-bit results 199; exit plus scalar clamp 42.
+// Clearing cases first 36; one source flag read 108; alternate before normalization 45;
+// shared dot operands reversed 42; global optimization off 361.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1649,10 +1654,10 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 				candidate->flags |= 1;
 			else
 				candidate->flags &= ~1;
-			if (definition->flags & 6)
-				candidate->flags |= 2;
-			else
+			if (!(definition->flags & 6))
 				candidate->flags &= ~2;
+			else
+				candidate->flags |= 2;
 			candidate->maximum_distance = definition->maximum_distance;
 			candidate->radius = object->radius;
 			candidate->maximum_facing_angle = 0.0f;
@@ -1673,10 +1678,10 @@ bool function_1a5e40(long object_index, bool alternate, long marker_index, s_tar
 			candidate->flags |= 1;
 		else
 			candidate->flags &= ~1;
-		if (marker->flags & 0x12)
-			candidate->flags |= 2;
-		else
+		if (!(marker->flags & 0x12))
 			candidate->flags &= ~2;
+		else
+			candidate->flags |= 2;
 		candidate->maximum_distance = marker->maximum_distance;
 		candidate->radius = marker->radius;
 		candidate->maximum_facing_angle = marker->maximum_facing_angle;
@@ -2116,6 +2121,8 @@ long function_baf40(long object_index);
 // Reversed velocity lexical homes 177; x/y/z scalar names 177; combined 177;
 // geometry-only scope 177; target frame pointer 264.
 // Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225; candidate score tests 186; retained direction unit index 210.
+// Depth zero 280; target size 280; global optimization off 672;
+// record defaults before vector zeroing 179; planar length before velocity differences 181.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {

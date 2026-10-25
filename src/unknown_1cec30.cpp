@@ -2130,6 +2130,9 @@ PRIVATE __forceinline void component_surface_property_set(hkEntity *entity, long
     entity->entity_property_put(HAVOK_PROPERTY_2003, s_havok_property_word(value));
 }
 
+// score 206 (was 211): Frame 0x34 agrees; normal XMM roles, sample output convention and early velocity loads remain.
+// native vector zero 329; memory vector zero 324; retained entity 447; native material search index 444;
+// sample default before call 206; default shared copy 206; default speed flag 216.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {
@@ -2190,9 +2193,8 @@ void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_ind
     real speed_sum = 0.0f;
     for (long i = 0; i < material_count; ++i)
     {
-        vector3f local_c7c2ff;
-        if (!function_181db0(materials[i], &local_c7c2ff))
-            local_c7c2ff = *g_4687a4;
+        vector3f local_c7c2ff = *g_4687a4;
+        function_181db0(materials[i], &local_c7c2ff);
         velocity.i = local_c7c2ff.i + velocity.i;
         velocity.j = local_c7c2ff.j + velocity.j;
         velocity.k = local_c7c2ff.k + velocity.k;
@@ -2676,6 +2678,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // body stride/base registers and transform call differ;
 // count names 206; search names 206; transformed name 206; entry phase
 // transforms 301; equal-node arm first 248.
+// second selector word 226; promoted first nodes 290; entry matrix 206;
+// entry relative transform 206; fallback first 206 (plain scores).
+// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

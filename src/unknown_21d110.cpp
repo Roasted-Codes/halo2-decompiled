@@ -315,6 +315,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Frame and start/delete expansion still differ; uninitialized definition 236;
 // scoped definition and query-result value 220; pre-start receiver 208 (lost caller matches);
 // record getter at each store 208 plain kept; kind/sound publication orders and class predicate 220.
+// score 208 (was 220): frame/start/delete expansion remains; allocator reuse/const class/request reference/tested result/combined 220/220/220/236/220f;
+// global/size/depth-two policies 246/359/220f.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

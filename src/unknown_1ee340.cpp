@@ -149,6 +149,7 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // score 250 (was 250): frame 0x78 versus 0x90, normal/ray homes and polygon input registers differ.
 // Hit point setter 250; component normalization loop 250; short projection side 255;
 // direct hit result 251; ray before origin with float setters 251.
+// Early offset 259; late ray direction 264; squared-normal value 250; descending projection 358; offset/direction combination 264.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
@@ -640,6 +641,9 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // score 19 (was 66): frame/length agree; child-query vtable load, ordinal spill and remap entry differ.
 // Radius before transform 140; scoped instance index 80; later ordinal correction 19;
 // key/owner continues 66/102; remap/removal/both while loops 66.
+// score 19 (was 19): dispatch scheduling, ordinal/context homes and remap entry differ.
+// Complete center 19; local/radius/input memcpy 100/75/142; table/key references 19/137;
+// expansion entry return 19; size preference 200.
 // Actual query reference 102; owner/instance/both record references 19;
 // correction after remap 142; early input sphere 130;
 // normal remap inline 176 (498 bytes); normal removal inline 19.
@@ -653,6 +657,9 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // score 19 (was 19): child dispatch and ordinal/context/remap homes remain; native radius lane 19;
 // initialized transform 187; successful remap advancement 56; source-index removal 140;
 // remap parameter cursor/validation result/key type shift 19 each; invalid result first 60.
+// dispatch timing, ordinal/context homes and remap entry remain; entry ordinal 19; int
+// ordinal 19; immutable append boundary/shape 19/19; component sphere 158; SSE sphere 84; combined ordinal
+// lifetimes 19; component sphere plus early correction 114.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)

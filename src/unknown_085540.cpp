@@ -717,6 +717,13 @@ struct s_85650
 // world-state value 100; short child ordinal 125; child slot plus clears 143.
 // score 100 (was 100): frame and owner/child/callback homes remain; published child/total/count field references 142 each;
 // ordinal field reference 100; initialized type/client/both arrays 133/133/150; active byte 99 (below gate).
+// frame 24 versus 28 and child/distribution/callback homes remain; first aggregate
+// storage 145; storage plus fresh child 115; published-child query 100; immutable child count 100;
+// explicit total sum 100; combined contiguous clear 148; count return 100; storage plus published-child
+// query 145.
+// frame and owner/child/callback homes still differ.
+// Child count-first 128; completed total 128; aggregate/child references 100/100;
+// storage/sender references 100/100; connection/owner references 100/100.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {

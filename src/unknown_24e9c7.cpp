@@ -125,6 +125,9 @@ struct s_24e9c7_bounds
 // Scalar homes, sprite source and geometric spills remain; shader snapshot 174;
 // sequence count snapshot 160; sequence field at use 125; unscaled height/width/both 125;
 // shared forward values 161; external bitmap reference 125.
+// score 125 (was 125): scalar homes and across/dimension scheduling remain;
+// upper/side/reverse/all value initialization 125; origin/sequence references 125;
+// speed policy 279; frame omission 125.
 // Native input direction/center/both 125/125/125; direct quad array 125; span locals 125;
 // early basis / scale / basis with spans 125/125/125 (fast).
 // Basis i/j/both product input orders 125; upper or side inputs 125;
