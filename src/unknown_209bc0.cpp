@@ -220,9 +220,14 @@ done:
 	}
 }
 
-// @retail 0x20a490
 // score 48 (was 48): the index is kept in ESI where retail keeps it in EAX, so the two halves of the
-// split value and the jump table's index take the other registers.
+// split value and the jump table's index take the other registers: retail keeps the raw argument in
+// esi for the external bit and masks the slot from the sign-extended index (movsx eax, ax; mov ecx,
+// eax; and ecx, 0x7fff), ours masks the slot from the raw argument. Tried: slot = index & 0x7fff 189
+// (merged with the runtime index), slot = global_index & 0x7fff in each statement order 232-251
+// (retail's masking, other registers; with the slot first the argument moves to ecx and the callers
+// 0x208070 and 0x2095e0 change), a short, word or dword slot 250-251.
+// @retail 0x20a490
 void function_20a490(short global_index)
 {
 	long slot = (word)global_index & 0x7fff;
