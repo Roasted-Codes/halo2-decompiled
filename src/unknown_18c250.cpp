@@ -346,6 +346,9 @@ static __forceinline long float_to_int_nearest(real value)
 }
 
 #pragma inline_depth(0)
+// score 21 (was 21): tag/sound/promotion use EBX/EDI/ESI versus EDI/ESI/EBX.
+// Read-only tag 21; wide promotion selector 62; conditional promotion 22; complete eligibility guard 21;
+// separate promotion failures 21; set after rounding 72; named rounding homes 21; read-only set 21.
 // @retail 0x18c720
 void function_18c720(long tag_index, long object_index, long set_index, long permutation_index, real scale)
 {

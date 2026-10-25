@@ -317,6 +317,9 @@ struct s_2f6b0_point
 	short x, y;
 };
 
+// score 94 (was 94): frame 0x1c versus 0x18; position/output argument homes and rectangle loads differ.
+// Rectangle/origin names 94/94; horizontal/vertical/both origins in place 100/92/115; native step initializer 94;
+// shared output assignment 94; workspace names plus short origin 113; native frame with scalar steps 118, short origin 91.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)

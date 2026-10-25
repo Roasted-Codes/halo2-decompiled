@@ -28,6 +28,9 @@ static inline long unit_get_current_weapon(long unit_index)
 	return result;
 }
 
+// score 22 (was 22): primary link compare/reread and fallback handle transfer differ.
+// Ordinary primary reads 37; ordinary guard/lookup alone 22/22; conditional primary 28;
+// direct fallback output 49; primary success output 45; success before fallback 34; integer result 22.
 // @retail 0x1e1f20
 long function_1e1f20(long actor_index)
 {
