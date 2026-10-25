@@ -795,6 +795,11 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // Node byte/data offset and immutable handle 88; shared projection scale 90;
 // scale plus in-place difference 78; nested/best-first scan 88/98; detached dot 88;
 // independent forward output on the scaled flow 437. Input values and grouping retained.
+// score 78 (was 78): own-object/node roles and contact-scan setup still differ.
+// outer projected-up lifetime 78f; scale-output pointer consumed 78f.
+// both scale lifetimes 78f; shared cross on scale flow 78f.
+// signed-byte found 78f; signed-byte disabled 78f.
+// both byte results 78f; scale output plus byte found 78f.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {
