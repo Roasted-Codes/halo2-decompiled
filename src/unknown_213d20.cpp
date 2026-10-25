@@ -354,6 +354,10 @@ long map_location_get(char const *map_name)
 	return cache_copy_queued_priority(map_name) != NONE;
 }
 
+// score 3 (was 3): Frame agrees; the second path address reuses EBX instead of being formed again from ESP.
+// Tried buffer declarations 3; first buffer name 3; second buffer name 3; result lifetime 3; second clear
+// lifetime 7; test result 36; two result paths 36; integral result 52; path helper reverse 5; path helper
+// cdecl 5; path helper stdcall 3.
 // @retail 0x214e40
 bool map_names_equal(char const *map_name, char const *other_map_name)
 {

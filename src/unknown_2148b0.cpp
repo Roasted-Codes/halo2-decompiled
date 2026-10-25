@@ -20,6 +20,9 @@ extern s_cache_copy_request g_55be24[2];
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
+// score 2 (was 2): Frame agrees; numerator conversion follows the denominator reload instead of preceding it.
+// Tried accumulate fraction 29; real numerator 29; integer numerator 40; extended numerator 29; converted
+// operands 32; integral and real 32; fraction and total 32; integral operands 28.
 // @retail 0x2148b0
 bool function_2148b0(long progress)
 {

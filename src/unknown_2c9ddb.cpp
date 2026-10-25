@@ -296,6 +296,8 @@ void c_class_2c9e69::select_last_variant()
 // text/bitmap/both child helpers 23/23/23; helpers plus named receiver 36;
 // helpers plus nonempty-first/text admission 30/38; parameter text home 49;
 // returned name buffer 21 fast/plain, rejected. Opening body restored.
+// nonempty receiver stays in its stack home instead of EBX.
+// This round: returned-buffer expression 29; retained named receiver 27; shared text admission 36; named arm first 30; icon tail admission 29; entry reference 29; typed child lookups 29; entry table base 29.
 // @retail 0x2c9ff4
 void c_class_2c9e69::v20(c_class_1a2c81 *item, long unused)
 {

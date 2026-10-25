@@ -1268,6 +1268,8 @@ bool c_weapon_reload_event::v11(long a, long const *entities, long c, void const
 // Tried: named device mask 32; named unit mask 32; both masks 32; byte suppression
 // bitfields 35; byte flags view 35; byte bitfields with masks 35; combined header
 // predicates 39; byte flags with masks 35. Opening executable body restored.
+// Device/unit saved registers and the second mask temporary differ.
+// constant indices 32; unsigned indices 32; index names 32; early unit offset 39; word slots 53; byte mask 35; typed word slots 69; shifted membership masks 38.
 // @retail 0xa4540
 bool c_device_touch_event::v11(long a, long const *entities, long c, void const *data)
 {

@@ -2820,7 +2820,7 @@ void function_15e7f0(long unit_index, long vehicle_index)
 		{
 			s_event event;
 			game_engine_event_initialize_inline(&event, 0, 44);
-			game_engine_event_set_cause_player(&event, unit->player_index);
+			game_engine_event_set_cause_player(unit->player_index, &event);
 			function_19eb90(&event);
 			function_1970a0(unit->player_index & 0xffff, 11, 1);
 		}
@@ -4004,7 +4004,7 @@ void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte
         {
             s_event event;
             game_engine_event_initialize_inline(&event, 1, message);
-            game_engine_event_set_cause_player(&event, attacker_index);
+            game_engine_event_set_cause_player(attacker_index, &event);
             game_engine_event_set_effect_player(&event, victim_index);
             function_19eb90(&event);
         }
