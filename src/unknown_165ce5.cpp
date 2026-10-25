@@ -1202,6 +1202,13 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // separate node-base addition and ECX/EDX roles remain.
 // Parent/root/query-result names 36/36/36; outer query result 36; retained-field
 // plus root/parent object references 36/36; animation/interface references 36/36.
+// score 30 (was 36): early graph load, node-base addition/register roles and overlay setup remain.
+// Plain: arms array 159; weapon array 44; both arrays 159; channel reference 36;
+// graph object 40; model input 82; graph input 30; interface value 230.
+// score 30 (was 30): graph-load timing, node-base addition/register roles and overlay setup remain.
+// Plain: graph inside model guard 188; both metadata values 191; graph guard first 31;
+// conditional graph result 193; graph-field binding 36; model-field binding 30;
+// read-only interface 30; shared root/parent receiver 30.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1236,14 +1243,15 @@ void __stdcall function_167e86(long user_index, long field_x11c898)
 			if (interface_index >= 0 && interface_index < definition->interface_count)
 			{
 				s_first_person_interface *interface = &definition->interfaces[interface_index];
+				long animation_graph_index = interface->animation_graph_index;
 
-				if (interface->render_model_index != NONE && interface->animation_graph_index != NONE)
+				if (interface->render_model_index != NONE && animation_graph_index != NONE)
 				{
 					s_animation_state *state;
 
 					first_person_bits_reset(&user->unknown202c);
 					state = &weapon->animation;
-					state->initialize(interface->animation_graph_index, NONE, false);
+					state->initialize(animation_graph_index, NONE, false);
 					if (field_x11c898 == 0)
 					{
 						user->unknown2094 = state->node_find(0xe0000e0);
@@ -1763,6 +1771,10 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
 // read first 478; ammo channel before lookups 526; ammo channel before state view 470
 // score 455 (was 455): Frame 0x58 versus 0x78; root/channel overlap and copy/sway allocation remain. Model count snapshot 556; vector adjustment helper 471; negative sway first 465; ammo-count boundary 459; early magazine maximum 462 (plain).
+// score 455 (was 455): Frame 0x58 versus 0x78 and copy/sway homes remain. Zero-initialized root 602 (frame 0x78); direct blend time 455; conditional weight 497; adjustment index 464; native orientation copy 455 (plain).
+// root/channel overlap leaves frame 0x58 versus 0x78; channel after initial
+// sample 525; root before state bit 455; transform memcpy 455; node count before root 455;
+// conditional ammo cap 455 (plain).
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

@@ -397,6 +397,7 @@ PRIVATE inline long polygon_round_19f(real value)
 // 400/400; center squares 409; both square accumulators 400; radial plus texture
 // 314; rounded-count reuse 407; separate target inline/noinline 314/314.
 // All restored: the matched caller differs by 2 without the original parameter home.
+// score 393 (was 393): Frame 0x40/0x30 and qword spills remain; ordinary variant/body step with vertex sqrt result 400, top aggregate 430, word table offsets 400, material result 373 (plain; caller loses 2), direct-reference arm first 400.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

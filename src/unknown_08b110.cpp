@@ -111,7 +111,10 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 // allocation error 2 still precedes the cleanup return.
 // Reused size output 80; signed output 25; initialized output 45; globals/count/handler
 // references 25/25/25; native item-size local 25; result after release 41.
-// score 25 (was 25): cold error-2 arm still precedes release. Two-use allocation
+// score 25 (was 25): Cold allocation error still precedes cleanup.
+// record value 106; ordinal then record 104; field-filled record 106; owned cleanup 40; failure
+// scope 40; absence-first ownership 69; byte error 41; unsigned result 25.
+// cold error-2 arm still precedes release. Two-use allocation
 // presence 76; complete index predicate 25; native pointer advancement 25;
 // immutable post-info release owner 25; presence/owner 76; separated error
 // enum 25; enum/presence 76; validation/publication/owner 25.

@@ -286,6 +286,9 @@ PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_reco
 // Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
 // typed parent lookup 78; retained handle lookup 78; root predicate 57;
 // sentinel cursor with typed parent 65. Null-result lifetime still differs.
+// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
+// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
+// actual parent-field reference 57; actual record reference 57. Null-result join remains.
 // @retail 0x202370
 void function_202370(void)
 {
@@ -311,6 +314,9 @@ void function_202370(void)
 // Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
 // typed parent lookup 78; retained handle lookup 78; root predicate 57;
 // sentinel cursor with typed parent 65. Null-result lifetime still differs.
+// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
+// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
+// actual parent-field reference 57; actual record reference 57. Null-result join remains.
 // @retail 0x2024c0
 void function_2024c0(void)
 {
@@ -1688,6 +1694,10 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // score 344 (was 344): frame 0x30 versus 0x3c; packed references and entry-index schedules differ.
 // Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
 // native reference indices 350; entry fields at use 344; inline distance call 678.
+// score 305 (was 344): Frame 0x3c agrees; stack homes, entry loads and packed reference tests
+// differ. Native player iterator 305; native entry cursor 316; word validation 305; matching-area
+// result 315; distance home names 305; field-initialized best 357; area-entry name 305;
+// player-record name 305.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -1698,12 +1708,12 @@ void function_204450(long definition_index, long squad_index)
     if (definition[0x24] & 0x10)
     {
         long target = NONE;
-        long index = NONE;
-        while ((index = data_next_absolute_index_inlined(g_4e8c24, index + 1)) != NONE)
+        s_record_pool_iterator players;
+        players.data = g_4e8c24;
+        players.index = NONE;
+        byte *player;
+        while ((player = data_iterator_next_inlined(&players)) != NULL)
         {
-            byte *player = g_4e8c24->data + index * g_4e8c24->size;
-            if (!player)
-                break;
             long unit_index = *(long *)(player + 0x2c);
             if (unit_index != NONE)
             {
@@ -1807,6 +1817,9 @@ bool function_1e11b0(long actor_index, bool active);
 // Iterator current handle 64; scalar next handle 64; zero iterator 76;
 // invalid iterator 80; tick snapshot 62; initial flags 64; current handle
 // with tick 62; scalar cursor with tick 62. Two-point gains rejected.
+// Actual squad/actor/both record references 64/64/64;
+// result from update 79; retained Boolean guard/result 70; proven success exit 79;
+// update result with squad reference 79; Boolean result with actor reference 70.
 // @retail 0x203bf0
 bool function_203bf0(long squad_index)
 {
@@ -1848,6 +1861,9 @@ bool function_1df5d0(short team_a, short team_b);
 // walks 348; unsigned full-width count 242; delayed flag clear 242. Shared
 // iterator helpers 242; marked iterator calls 350; branch-assigned count 179;
 // frame pointer 218; global optimization off 472; branch-assigned word 183.
+// score 179 (was 179): Frame 0x14 agrees; next-index memory home, contribution register and entry
+// flag clear differ. Word hostility 233; separate position iterator 235; branch-assigned health
+// 179; position component loop 221; scale component loop 218.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2599,6 +2615,9 @@ static __forceinline long real_to_long(real value);
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // Single-result squad step 298; zero inline depth 584; global optimization off 439;
 // frame pointer 258; size preference 633. Original kept.
+// score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
+// squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
+// positive-timer continues 227.
 // @retail 0x202720
 void function_202720(void)
 {

@@ -87,6 +87,14 @@ void function_2232a0(void)
 // score 151 (was 151): common count/layout join, slot predicate and terminal registers remain.
 // Total before layout/scan 172/152; total scan bound 162; two-use mode 151;
 // conditional slot result 157; separate scan/result 158; mode/total 162; scan-result/total 156.
+// the common count/layout join, slot predicate and terminal reset still differ.
+// First/second/both conditional countdown expressions 169/161/167;
+// signed-byte/unsigned-word layout 189/174; unsigned-word output ordinal 201;
+// signed-byte selection 164; dispatch noinline declaration 151. Original body retained.
+// One-dword frame agrees; count-one paths bypass the shared count/layout join, with slot and reset
+// allocation gaps. unsigned selected slot 151; word selected slot 157; word view ordinal 201; byte
+// view ordinal 167; exact scan bound 175; existing initializer inline 151; completed search result
+// 180; word scan and ordinal 157; byte selected slot 164.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
