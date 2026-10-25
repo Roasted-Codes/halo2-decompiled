@@ -198,6 +198,9 @@ dword function_191660(long string_handle, long index);
 // 165/165/165; early parameter plus range bit 5 plain. Corrected-frame primary,
 // range, paired and shared phase results 5 each; common period 175; implicit
 // remainder-result conversion 5.
+// score 5 (was 5): remainder stores versus parameter/speaker reloads remain;
+// conditional primary/range/both remainder results 5/5/5; primary/range/both
+// gain results 5/5/5; paired primary/range remainder-and-gain results 5/5.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)

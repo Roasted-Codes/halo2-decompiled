@@ -2092,6 +2092,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // score 184 (was 184): object/offset homes and low-mask allocation remain;
 // getter byte slot 200; table/full identifier, object, table/decoded index 184;
 // header/object/table with byte slot 200; table word object slot plus byte slot 287.
+// score 184 (was 184): object/offset homes and low-mask allocation remain;
+// reversed getter with short/byte/long slot 184/200/208; unsigned handle
+// combination 184/200/208; reversed short/long with scalar clamp 184/208.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

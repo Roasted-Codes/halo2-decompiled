@@ -760,6 +760,9 @@ real normalize2d(point2f *v);
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
+// score 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
+// retry/movement/both threshold products 172/172/172; clamped upward result
+// 172, with both products 172; retry/movement/both eligibility results 172/172/172.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

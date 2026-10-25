@@ -703,6 +703,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Existing velocity scale 185; scale from field 186; first dot products commuted 155;
 // side projection values 166; rotated alignment value 166; axis field reference 155;
 // output record reference 155; scale plus dot flow 185. Opening body retained.
+// score 155 (was 155): movement/rotation homes and scalar scheduling remain;
+// i/j/k/all cosine terms 168/177/192/208;
+// i/j/k/all axis projection terms 186/168/168/218. Opening body retained.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,
