@@ -129,6 +129,9 @@ struct s_24e9c7_bounds
 // early basis / scale / basis with spans 125/125/125 (fast).
 // Basis i/j/both product input orders 125; upper or side inputs 125;
 // basis with upper / side / both input orders 125. Original products retained.
+// Origin / upper-copy / upper / positive-side passes 188/220/240/204;
+// origin-upper 195; origin-side 206; upper-side 214; lower-copy pass 193.
+// Scalar homes and sprite-source/SSE scheduling remain; original quad retained.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {

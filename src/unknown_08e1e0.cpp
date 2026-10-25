@@ -233,6 +233,9 @@ struct s_pending_transfer_definition
 };
 const long g_4402a4[2] = { 1, 1 };
 
+// score 2 (was 2): frame and stack homes agree; EAX-kind/ECX-controller setup
+// moves are reversed. Per-use upload controller/kind/both scalars/filename/
+// definition fields/owner 2/142/142/100/142/2; upload owner/scalar values 2/2.
 // @retail 0x8e240
 void function_8e240(void)
 {
