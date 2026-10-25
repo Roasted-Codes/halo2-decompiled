@@ -58,6 +58,7 @@ long g_485a78[2];
 extern byte *g_4858c4;
 extern byte g_485a76;
 #include "texture_stage_storage.h"
+#include "sampler_state.h"
 struct s_type_7ba8e9;
 s_type_7ba8e9 *function_137550(long tag, short bitmap);
 bool function_14390(short stage, s_type_7ba8e9 *bitmap, real priority);
@@ -140,60 +141,62 @@ void __stdcall function_46230(short target, real const *bounds)
     function_14bc0((short)g_4858b8, 0, true);
 }
 
-// score 127 (was 127): the block after the first call is laid out the other way round: retail
-// jumps forward when the call succeeds and falls through to the rest, ours jumps to the exit
-// when it fails; the register that is cleared is EBX in retail and EBP in ours.
+// score 52 (was 127): the failure branch jumps to an exit next to it instead of the one at the
+// end of the function, and the two render state calls are inlined here while retail calls
+// 0x222d0 out of line.
 // @retail 0x32ac0
 bool function_32ac0(void)
 {
-    byte result = 0;
-    if (function_14480(*(long *)(g_485a80 + 0x34), 0, 0))
-        return result;
-    g_4670bc = true;
-    function_16b10((s_render_reset_state *)g_485b48);
-    D3DDevice_SetTextureStageState(0, D3DTSS_ADDRESSU, 3);
-    D3DDevice_SetTextureStageState(0, D3DTSS_ADDRESSV, 3);
-    D3DDevice_SetTextureStageState(0, D3DTSS_MAGFILTER, 2);
-    D3DDevice_SetTextureStageState(0, D3DTSS_MINFILTER, 2);
-    D3DDevice_SetTextureStageState(0, D3DTSS_MIPFILTER, 2);
-    D3DDevice_SetTextureStageState(0, D3DTSS_MAXANISOTROPY, 0);
-    D3DDevice_SetTextureStageState(0, D3DTSS_MIPMAPLODBIAS, 0);
-    D3DDevice_SetTextureStageState(0, D3DTSS_MAXMIPLEVEL, 0);
-    D3DDevice_SetTextureStageState(0, D3DTSS_COLORSIGN, 0);
-    D3DDevice_SetTextureStageState(0, D3DTSS_ALPHAKILL, 0);
-    function_1cf50();
-    function_14bc0((short)g_4858b8, 0, true);
-    memset(&g_484f68, 0, sizeof(g_484f68));
-    g_484f68.PSTextureModes = 1;
-    g_484f68.PSCombinerCount = 0x11001;
-    g_484f68.PSAlphaInputs[0] = 0x18140000;
-    g_484f68.PSAlphaOutputs[0] = 0xc0;
-    g_484f68.PSFinalCombinerInputsEFG = 0x1c00;
-    D3DDevice_SetPixelShaderProgram(&g_484f68);
-    g_4b8448 = 0;
-    D3DDevice_SetRenderState(D3DRS_CULLMODE, 0);
-    g_4b8308 = 0x1010101;
-    D3DDevice_SetRenderState(D3DRS_COLORWRITEENABLE, 0x1010101);
-    g_4b82e0 = D3DCMP_LESSEQUAL;
-    D3DDevice_SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-    g_4b8438 = 2;
-    D3DDevice_SetRenderState(D3DRS_ZENABLE, 2);
-    g_4b8450 = 0;
-    D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
-    g_4b82fc = 0;
-    D3DDevice_SetRenderState(D3DRS_ZWRITEENABLE, 0);
-    g_4b843c = 0;
-    D3DDevice_SetRenderState(D3DRS_STENCILENABLE, 0);
-    g_4b82e8 = 1;
-    D3DDevice_SetRenderState(D3DRS_ALPHABLENDENABLE, 1);
-    g_4b82ec = 0;
-    D3DDevice_SetRenderState(D3DRS_ALPHATESTENABLE, 0);
-    g_4b82f4 = 0;
-    D3DDevice_SetRenderState(D3DRS_SRCBLEND, 0);
-    function_0222d0(D3DRS_DESTBLEND, 0x303);
-    function_0222d0(D3DRS_BLENDOP, 0x8006);
-    function_1cc30(23);
-    return true;
+    bool result = false;
+    if (!function_14480(*(long *)(g_485a80 + 0x34), 0, 0))
+    {
+        g_4670bc = true;
+        function_16b10((s_render_reset_state *)g_485b48);
+        sampler_state_write(0, D3DTSS_ADDRESSU, 3);
+        sampler_state_write(0, D3DTSS_ADDRESSV, 3);
+        sampler_state_write(0, D3DTSS_MAGFILTER, 2);
+        sampler_state_write(0, D3DTSS_MINFILTER, 2);
+        sampler_state_write(0, D3DTSS_MIPFILTER, 2);
+        sampler_state_write(0, D3DTSS_MAXANISOTROPY, 0);
+        sampler_state_write(0, D3DTSS_MIPMAPLODBIAS, 0);
+        sampler_state_write(0, D3DTSS_MAXMIPLEVEL, 0);
+        sampler_state_write(0, D3DTSS_COLORSIGN, 0);
+        sampler_state_write(0, D3DTSS_ALPHAKILL, 0);
+        function_1cf50();
+        function_14bc0((short)g_4858b8, 0, true);
+        memset(&g_484f68, 0, sizeof(g_484f68));
+        g_484f68.PSTextureModes = 1;
+        g_484f68.PSCombinerCount = 0x11001;
+        g_484f68.PSAlphaInputs[0] = 0x18140000;
+        g_484f68.PSAlphaOutputs[0] = 0xc0;
+        g_484f68.PSFinalCombinerInputsEFG = 0x1c00;
+        D3DDevice_SetPixelShaderProgram(&g_484f68);
+        g_4b8448 = 0;
+        D3DDevice_SetRenderState(D3DRS_CULLMODE, 0);
+        g_4b8308 = 0x1010101;
+        D3DDevice_SetRenderState(D3DRS_COLORWRITEENABLE, 0x1010101);
+        g_4b82e0 = D3DCMP_LESSEQUAL;
+        D3DDevice_SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+        g_4b8438 = 2;
+        D3DDevice_SetRenderState(D3DRS_ZENABLE, 2);
+        g_4b8450 = 0;
+        D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
+        g_4b82fc = 0;
+        D3DDevice_SetRenderState(D3DRS_ZWRITEENABLE, 0);
+        g_4b843c = 0;
+        D3DDevice_SetRenderState(D3DRS_STENCILENABLE, 0);
+        g_4b82e8 = 1;
+        D3DDevice_SetRenderState(D3DRS_ALPHABLENDENABLE, 1);
+        g_4b82ec = 0;
+        D3DDevice_SetRenderState(D3DRS_ALPHATESTENABLE, 0);
+        g_4b82f4 = 0;
+        D3DDevice_SetRenderState(D3DRS_SRCBLEND, 0);
+        function_0222d0(D3DRS_DESTBLEND, 0x303);
+        function_0222d0(D3DRS_BLENDOP, 0x8006);
+        function_1cc30(23);
+        result = true;
+    }
+    return result;
 }
 
 bool function_48b00(point3f const *point, real radius, real *screen, real *extent);
@@ -2496,6 +2499,9 @@ PRIVATE __forceinline real maximum_25ca0(real first, real second)
     return result;
 }
 
+// score 26 (was 26): the comparison of 0.0001f against g_4b9fa4 has its operands in the other
+// order and copies the other register, the divisor makes a round trip through the stack, and
+// both branches share one call setup where retail repeats the setup in each of them.
 // @retail 0x25ca0
 void function_25ca0(bool enabled)
 {
@@ -2569,6 +2575,8 @@ struct s_queued_material_payload
 	byte data[1];
 };
 
+// score 2 (was 2): the count of the payload is handed to 0x4b220 in eax, retail hands it over
+// in ecx.
 // @retail 0x35b00
 void __stdcall function_35b00(void *payload)
 {
@@ -4903,6 +4911,9 @@ void function_2d140(long tag, real const *weights, long columns, long rows, s_fi
     g_485a78[0] = g_485a78[1] = NONE;
 }
 
+// score 62 (was 62): the second argument arrives in eax where retail takes it in ecx, and the
+// arguments behind it sit one stack slot lower than retail's; the callers of this function are
+// in other files, so the calling convention cannot be changed from here.
 // @retail 0x4b2d0
 void function_4b2d0(long tag, long first, long second, long third, long fourth)
 {

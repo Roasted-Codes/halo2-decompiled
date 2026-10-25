@@ -3228,7 +3228,10 @@ void function_125d60(void)
 
 void __stdcall function_1264c0(dword arg_0);
 
-// score 139 (was 139): Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
+// score 102 (was 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
+// pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.
+// Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
@@ -3236,7 +3239,7 @@ void function_1257b0(void)
 	{
 		long local_0 = GetTickCount();
 		s_record_pool *local_1 = g_4e637c;
-		long local_2 = data_datum_index(local_1, function_16bc00(local_1, 0));
+		long local_2 = index_to_datum_index(local_1, function_16bc00(local_1, 0));
 		if (local_2 != NONE)
 		{
 			do
@@ -3247,7 +3250,7 @@ void function_1257b0(void)
 				local_3->fade_start_time = 300;
 				local_3->fade_end_time = NONE;
 				local_3->fading = true;
-				local_2 = data_datum_index(local_1, function_16bc00(local_1, (local_2 & 0xffff) + 1));
+				local_2 = index_to_datum_index(local_1, function_16bc00(local_1, (local_2 & 0xffff) + 1));
 			} while (local_2 != NONE);
 			real local_4 = (real)local_0;
 			local_4 += 300.0f;
