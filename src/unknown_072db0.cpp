@@ -1312,6 +1312,11 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
+// score 225 (was 231): key/statistic homes, statistic cursor and grouped team dispatch differ.
+// existing converter 371; converter inline boundary 367; native summary fields 231; native skill snapshot 302;
+// immutable query inputs 231; native counter bits 231; native session fields 231; frame pointer 412; team value
+// snapshots 225; team promoted skill snapshot 239; native player statistics array 231; native statistics arrays
+// 231.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1417,17 +1422,21 @@ void __stdcall function_741f0(s_match_player_rating_collection *collection, s_qu
                 break;
             const s_match_rating_entry *team = (const s_match_rating_entry *)(local_2 - 4);
             const XUID *identity = (const XUID *)team->unknown0c;
-            if (team->active && memcmp(identity, g_440070, 12) != 0 &&
-                team->skill != NONE && team->value != NONE)
+            if (team->active && memcmp(identity, g_440070, 12) != 0)
             {
-                long change = function_74720((const s_match_rating_collection *)collection, i);
-                long value = team->value + change;
-                long level = function_74970(value, team->skill);
-                long lower = value >= 0 ? function_74970(value, 0) : 0;
-                const byte *stats = local_3;
-                function_73e00(lower, batch, identity, change,
-                    *(const word *)stats & 0x7fff, *(const word *)(stats + 6) & 0x7fff,
-                    *(const word *)(stats + 8) & 0x7fff, level, 3, players);
+                short skill = team->skill;
+                long value = team->value;
+                if (skill != NONE && value != NONE)
+                {
+                    long change = function_74720((const s_match_rating_collection *)collection, i);
+                    value += change;
+                    long level = function_74970(value, skill);
+                    long lower = value >= 0 ? function_74970(value, 0) : 0;
+                    const byte *stats = local_3;
+                    function_73e00(lower, batch, identity, change,
+                        *(const word *)stats & 0x7fff, *(const word *)(stats + 6) & 0x7fff,
+                        *(const word *)(stats + 8) & 0x7fff, level, 3, players);
+                }
             }
         }
     }
@@ -1514,6 +1523,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // score 770 (was 770): user-cursor and identity-word homes differ;
 // long validity 770; pending read guard first 786; timestamp before
 // counts 770; unsigned property initializer 770; unsigned user group 781.
+// score 770 (was 770): Frame 0xc0 agrees; user cursor and identity homes remain. Const user 770; const identity 770; byte group 781; byte accepted count 821; byte descriptor initializer 853 (fast).
+// score 770 (was 770): Frame 0xc0 agrees; user/identity and request homes remain. Terminal record reuse 787; native identifier field 770; clamp-value lifetime 770; type-first duplicate filter 794; request-player cursor 804 (fast).
 // @retail 0x74aa0
 void function_074aa0(void)
 {

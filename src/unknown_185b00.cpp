@@ -717,6 +717,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Tried: interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280;
 // isolated range scope 272; maximum declared first 243 (shifts the prologue); direction,
 // target or marker-before-camera at the top 244; upper/lower declared apart from assignment.
+// forced turn difference 244; forced direction 244.
+// forced pitch pin 244; forced bound approach 244.
+// all four forced expansions 244; immutable wrapped range 244.
+// read-only settings 244; native pitch trig input 248.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

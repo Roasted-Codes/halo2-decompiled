@@ -72,6 +72,11 @@ static __forceinline long real_to_long(real value);
 
 // score 216 (was 216): actor/reference registers, result/node homes and random factors differ;
 // unsigned allocation 216; index-first publication 216; paired sentinels 216; shared dot 231; entry scope with separated allocation 216.
+// actor/reference registers and node/result homes differ despite the correct 0x10 frame;
+// actor object 216; state object 216.
+// node object 216; joint object 216.
+// actor and node 216; actor and state 216.
+// state and joint 216; actual objects 216.
 // @retail 0x1b6120
 long __stdcall function_1b6120(long actor_index, s_slot *slot)
 {

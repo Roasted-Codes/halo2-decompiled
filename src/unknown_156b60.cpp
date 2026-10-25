@@ -160,6 +160,15 @@ PRIVATE void render_clamp_156b60(real *value)
 	else if (*value > 1.0f) *value = 1.0f;
 }
 
+// score 155 (was 155): alpha result coalesces into XMM0; duplicated interpolation tail absent.
+// Standard alpha/RGB/all bounds 207/253/300; sampled pixel 155 and bound combinations
+// 207/253/300; sampled pixel with alpha clamped last 155; full color aggregate/library initialization 186/182.
+// alpha result merges in XMM0; retail duplicates the interpolation tail.
+// Native RGB after alpha/alpha clamp 189/175; independent RGB clamps 216; separate channels 172;
+// RGB assignment 197; packed result 154 (dropped), with RGB 188; early drawing attributes 259.
+// score 155 (was 155): alpha result merge and duplicated interpolation remain;
+// single RGB retirement 159/159/159; paired RGB retirement 154/154/154;
+// red/green retirement with alpha committed last 159/159 (all 1068 bytes).
 // @retail 0x157020
 void __stdcall function_157020(byte *definition, point3f const *position, vector3f const *forward,
 	real value, long row, long column, long element, long entry)

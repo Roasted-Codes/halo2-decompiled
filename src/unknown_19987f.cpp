@@ -1270,6 +1270,16 @@ extern bool g_4ed39d;
 // score 184 (was 184): game/main byte homes and dialog joins differ;
 // branch loader scope 184; lobby byte 184; main byte 184; word dialog ID 190;
 // signed user flags 184.
+// Dialog-choice name 184; recovery-result name 184; both names 184; qualified loader if/else 184; dialog-
+// only signed flags 184; loader read at use 184; game result byte 184; choice byte 184. Menu-byte homes and
+// dialog joins remain.
+// score 184 (was 184): initialized message before menu results 183; later mode 184;
+// results before user query 193; late dialog ID 184; full-width dialog flags 189;
+// recovery middle/high groups first 184/184; qualified pending/gate exits 184.
+// score 184 (was 184): game/main byte homes and dialog joins remain;
+// lobby recovery result 213; with connection/all recovery results 213/222;
+// dialog high/middle cases first 184/184; scoped default-dialog query,
+// dialog-presence and alternate-menu results 184/184/184.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
@@ -2171,11 +2181,6 @@ bool function_19a902(void)
 	return result;
 }
 /* the interface state for each network session state */
-// score 32 (was 32): repeated-constant registers, zero-store order and folded default differ;
-// enum keys 32; enum values 32; enum pairs 32.
-// enum array 32; enum fallback 32; const enum array 32.
-// table member search 67; const member search 67; forceinline member 32.
-// const forceinline member 32.
 // @retail 0x19a5fd
 long function_19a5fd(long state)
 {
@@ -2199,7 +2204,6 @@ long function_19a5fd(long state)
 		{ 0xe, 0x18 },
 		{ 0xf, 0x19 },
 	};
-
 	for (dword i = 0; i < 16; i++)
 	{
 		if (table[i][0] == state)
