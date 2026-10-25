@@ -311,6 +311,9 @@ void function_202370(void)
 // Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
 // typed parent lookup 78; retained handle lookup 78; root predicate 57;
 // sentinel cursor with typed parent 65. Null-result lifetime still differs.
+// score 57 (was 57): nullable search result and pool/mask register lifetimes remain.
+// Guarded zero/native/member/library initialization 63/82/82/63;
+// inactive early return with each initialization 63/82/82/63.
 // @retail 0x2024c0
 void function_2024c0(void)
 {

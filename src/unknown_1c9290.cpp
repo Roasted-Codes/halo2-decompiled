@@ -47,6 +47,9 @@ PRIVATE __forceinline void function_1c9291(point3f const *arg_0, vector3f const 
 // after the component loop 18; the two-point ray test (0x16a040) called instead
 // of the vector and 0x1697c0 16; horizontal loop then arc then vertical 45;
 // one named step for both uses 72; plain inline 6.
+// score 6 (was 6): horizontal products and the duration square still exchange order.
+// Endpoint local/input subtraction 6/138; complete advance endpoint/scalar 120/120;
+// advance with point/velocity/both snapshots 116/141/158; endpoint with both 158.
 // @retail 0x1c9290
 bool function_1c9290(long arg_0, point3f const *arg_1, vector3f const *arg_2,
  real arg_3, real arg_4, long arg_5, bool arg_6)

@@ -482,6 +482,9 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // was: retail keeps the -1 sentinel in EBP and pushes the arguments in the
 // other order, where ours uses EBX for the sentinel, so the prologue and the
 // calls that follow differ.
+// score 15 (was 15): sentinel/clock and settings still exchange EBX/EBP.
+// Elapsed-seconds ready/arms/wait/nested results 15/15/15/15;
+// each with the weighted probability product separated 65/65/65/65.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {
