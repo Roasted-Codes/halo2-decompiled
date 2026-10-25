@@ -795,6 +795,9 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // Node byte/data offset and immutable handle 88; shared projection scale 90;
 // scale plus in-place difference 78; nested/best-first scan 88/98; detached dot 88;
 // independent forward output on the scaled flow 437. Input values and grouping retained.
+// score 78 (was 78): owner/node roles and late contact setup remain; per-use/external-reference owner
+// fields 376/385; conditional/guarded existing counter results 437/437;
+// per-use/reference owner plus conditional 453/450; plus guarded 453/450.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {

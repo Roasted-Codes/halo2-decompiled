@@ -395,6 +395,9 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
 // Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
 // value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
+// score 42 (was 42): address-first memory OR and second-call staging remain; mask-first assignment 42;
+// source/target/both Boolean lookup results 42; shared node mask 118; shared word index 109;
+// source/target Boolean results with mask-first assignment 42.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)

@@ -697,6 +697,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
  return a->k * b->k + a->j * b->j + a->i * b->i;
 }
 
+// score 155 (was 155): movement/original stack homes and rotation scheduling remain; forward scalar
+// inputs early/late 201/216; shared cross/forward/both scales 206/190/190; projected axis 214;
+// projected axis plus cross scale 212; common forward vector result 234.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

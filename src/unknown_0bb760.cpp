@@ -472,6 +472,9 @@ void function_3dd10(long object_index, bool force);
 // Variant between native remainder and rounding 213; variant assigned at metadata test 134;
 // immutable early variant 122; output element reference 131; metadata entry reference 122;
 // twice-used choice key 131; late mixed HSV workspace 122; selected choice reference 122.
+// score 122 (was 122): output/delta roles, second remainder publication and fallback one reload remain;
+// input/output/both conversion inline declarations 122/122/122; actual lower/upper/both HSV
+// returns 200/199/243; both returns plus input/both declarations 243/243.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {

@@ -1384,6 +1384,8 @@ PRIVATE __forceinline real const &component_time_step()
 // score 26 (was 26): acceleration/timestep registers and stop scheduling remain; direct stopping decision 106;
 // conditional/stopping-first results, stopping ticks, squared speed, limit magnitude, normalized speed
 // and captured step decision 26 each. Original body retained.
+// score 26 (was 26): acceleration/timestep allocation remains; assigned correction and positive clamp 26;
+// nonpositive/all assigned clamps 45; shared velocity clamp 148; shared bounds 148 (449/450 bytes).
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)
