@@ -110,6 +110,10 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // named target distance 119 plain / 122 fast; motion memcpy 142f;
 // point-getter result in case four/five/both 281/195/287f; failure-first arm 179f;
 // output reuse 192f; scale force-inline 142f; distance names / placement capture 122/122f.
+// score 121 (was 121): alignment/facing products, marker-clear join and contribution schedule remain.
+// Fast: motion reference 125; forward reference 125; both vector references 125;
+// perception reference 125; limits reference 157; perception/motion references 125;
+// limits/motion references 157; object reference 125.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {

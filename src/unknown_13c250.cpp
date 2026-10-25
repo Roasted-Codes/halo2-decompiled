@@ -94,6 +94,10 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // plain count/cursor 232; output/ranking cursors 294; completed cursor 303;
 // rank-one first 171; lower-rank first 174; pointer/native case 176;
 // pointer/count snapshot 181.
+// score 144 (was 144): receiver reloads, append counts and ranking handoff remain.
+// pointer/plain count 281; pointer/known first appends 189; pointer/single count reads 188;
+// pointer/both append forms 206; pointer/rank predicates 144; pointer/rank interval 144;
+// pointer/unsigned rank 144; pointer/word rank 178.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {
