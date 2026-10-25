@@ -633,6 +633,9 @@ void c_network_reliable_stream::mark_received(long sequence)
 // store 120; message variable reused in the loop 81.
 // score 94 (was 94): the slot address is kept in EAX here and in EDX in
 // retail, and ours zeroes EAX before the range test, so the loop head differs.
+// score 81 (was 81): bit-index setup and current/message/type registers remain.
+// Native message-bit predicate/publication/both 117/113/80; native repeated-bit type
+// alone/with predicate/with publication/all 119/127/119/123; arithmetic native type 119.
 // @retail 0x96910
 long c_network_reliable_stream::function_96910(long sequence, long bit_count, dword const *bits, bool complete)
 {

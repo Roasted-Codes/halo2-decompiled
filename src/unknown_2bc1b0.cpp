@@ -233,6 +233,10 @@ struct s_item_object_2bc1
 /* updates a team's item each tick: how long it has been away from home, its
    return home once it has waited too long, and the points of the player
    holding it */
+// score 97 (was 97): team/entry saved registers, timer decrement and tally address remain.
+// Standard marker with direct input 97; with the conditional tick clamp 93 (not kept: the marker
+// needs a matched body); absent holder 98/94; native timer forms 110/108/111/109; direct second
+// lookup/test and native/constant team index 93 each.
 // @retail 0x2bc990
 void __stdcall function_2bc990(long team)
 {
