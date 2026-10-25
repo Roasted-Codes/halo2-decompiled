@@ -75,6 +75,12 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 // unsigned handle storage 22; unsigned index 25; status role name 22; nested success admission 52; loop
 // proven callback status 121; completion status invariant 77; inline rollback declaration 22; noinline
 // rollback declaration 22.
+// identifier writer inline/noinline 22; index before outcome stores 106; index before admission 25;
+// pretested callback with separate rollback tails 106; completed handle lifetime 22; status returns 83;
+// final room-failure guard 22.
+// score 22 (was 22): virtual receiver/argument, index reload and rollback order persist;
+// cleanup inline/noinline 22/22; mask-release inline/noinline 22/22; writer inline/noinline
+// 22/22; encoded count before checkpoint 49, after checkpoint 45.
 // callback argument setup, index reload and rollback order differ;
 // masked entry index 22; constant member dispatch 78; actual entry pointer 22;
 // admitted mask/owner snapshots 52/52; peer receiver refresh 24;

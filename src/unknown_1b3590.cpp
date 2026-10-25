@@ -278,12 +278,16 @@ short __stdcall function_1b39e0(long actor_index)
 	return (short)result;
 }
 
-// score 36 (was 36): object-flag byte register and shared tail zero still differ.
+// score 1 (was 36): literal target differs (1.5 versus 1.0); one result 1;
+// result supplies flags 1; byte expression 36; flags after unit 35; unit before copy 46;
+// clear return receiver 63; first/second shared timer rounding 86/63.
+// object-flag byte register and shared tail zero still differ.
 // Chained flags 36; direct object flag 93; const property state 36; flags before link 37;
 // flag-pair memset 61; target memcpy 36; duration names 36; accepted state scope 115.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
+    bool result = false;
     s_1b36e0 *local_0 = (s_1b36e0 *)((byte *)slot + 0xc);
     long local_1 = actor_get(actor_index)->first_prop_index;
     long local_2 = NONE;
@@ -334,9 +338,9 @@ bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
         long local_8 = actor_get(actor_index)->unknown018;
         if (local_8 != NONE)
             function_20ba60(0x62, local_8, local_3->object_index, NONE, NONE, NULL);
-        return true;
+        result = true;
     }
-    return false;
+    return result;
 }
 
 
@@ -365,7 +369,10 @@ short __stdcall function_1b3ea0(long actor_index)
 	return result;
 }
 
-// score 26 (was 26): actor-index/pool load order and zero register differ;
+// score 26 (was 26): offset/pool setup and zero register differ;
+// compound bit 26; word mask 26; slot sentinel result 36; slot Boolean result 38;
+// joint slot result 43; reset mode result 38; reset owner result 39; active slot result 43.
+// actor-index/pool load order and zero register differ;
 // native word ordinal 32; sentinel-first stores 26; actor after/between slot stores 52/27;
 // actor after reset/direct final getter 35/34; published-bit return 31;
 // sentinel after reset 36; activation before reset 25, rejected. Body restored.
@@ -595,6 +602,12 @@ short actor_behavior_find_level(long owner_index, short type);
 // score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch homes differ;
 // source store order 145, movement result 142, positive membership scope 161,
 // role names 144, native zero initialization 144, combined setup/result 141.
+// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
+// Double best distance 214; failure-default active result 172; inactive success exit 188;
+// ordered member rejection 144; native point memcpy 144.
+// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
+// Full-width result 157; setup-scope best distance 155; early native workspaces 144;
+// initialized query distance 167; shared member iterator 160 (frame 0x88).
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

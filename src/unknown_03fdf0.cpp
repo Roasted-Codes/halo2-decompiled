@@ -189,6 +189,9 @@ void function_402b0(long cache_index, long mode)
 // frame 0x84/0x88, helper conventions and API expansion remain;
 // independent final-pass byte 199; with first/second/third byte 209/208/202;
 // with first-second/first-third/second-third bytes 218/214/213; final-pass short 200 (plain).
+// score 183 (was 183): frame 0x84/0x88 and helper/API contracts remain; independent
+// first/second/third/final/all native pass results 202f each; signed native setup flags, unsigned native
+// selection and both 202f each; unchanged reduced preview 202f, full 183.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

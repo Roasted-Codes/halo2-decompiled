@@ -104,6 +104,9 @@ static inline s_actor_view *clump_actor_iterator_advance_1b57f0(s_clump_iterator
 // score 111 (was 111): first iterator spill, save staging and key homes remain.
 // Local forceinline 111; negative/positive iterator results 111/111; iterator reference 111;
 // direct current index 111; entry selection state 154; source key/guard plus key 135/135.
+// late EBP save and first-entry/backedge homes remain.
+// Shared iterator, native state, late selection, denominator, compound weight,
+// key-first selection and forceinline shared iterator each 111; source-key-first 108 (rejected).
 // @retail 0x1b57f0
 short __stdcall function_1b57f0(long actor_index, s_slot *slot)
 {

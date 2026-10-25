@@ -114,7 +114,11 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 	return local_0;
 }
 
-// score 30 (was 30): +0x191 projection loads reverse stack/global operands;
+// score 30 (was 30): projection operand loads and cross-product scheduling
+// differ; separate i/j/k product pairs 30/30/30; all product pairs 30;
+// positive/negative products first 30/30; scoped negative products 30;
+// cross-vector initializer 31.
+// +0x191 projection loads reverse stack/global operands;
 // cross-product SSE allocation and scheduling also differ. Earlier fraction,
 // case-tail, helper-parameter and case-order forms reached 121 before later fixes.
 // Tried: forward snapshot 151; ordinary cross output 212; shared cross helper

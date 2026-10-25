@@ -96,7 +96,8 @@ struct s_animation_state
 	bool blend_counters_update();
 	bool update(animation_event_callback callback, long user, long node_count, s_blend_orientation *orientations,
 		s_blend_orientation const *targets);
-	bool overlay_play(c_animation_channel *channel, dword channel_flags, long set, long weapon_class, long weapon_type);
+	bool overlay_play_for_class(c_animation_channel *channel, dword channel_flags, long weapon_class, long weapon_type,
+		long set);
 	c_type_709360 overlay_find_for_class(long weapon_class, long weapon_type, long set);
 };
 
@@ -1183,39 +1184,6 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 /* rebuilds a weapon of a user from the unit's current weapon in that slot:
    its animation state, the node maps of the weapon and the arms, the
    overlays it plays */
-// score 231 (was 50): the stack frame is four bytes smaller than retail's, so every stack offset
-// inside the function is shifted.
-// score 36 (was 46): the 0x20 frame agrees; node-address registers and one byte still differ.
-// Field reference with calls in both arms 36; wide parent 117; unsigned root 115;
-// root reference 115; parent reference 115; predicate 46; signed mask 47; unsigned mask 46.
-// score 36 (was 36): parent address LEA/base-index roles and overlay setup remain.
-// Native root/parent/both node values 140/141/153; native result field, unsigned result,
-// arms entry binding/update and mapping outcome 36; parent word/index and late index 115/115.
-// The node-base addition and ECX/EDX roles still differ.
-// Shared node array 36; read-only nodes 36; mutable parent-field binding 36;
-// root read before graph 38; immutable active 36; earlier animation receiver
-// 188; immutable mode 36; arms-map entry reference 36 (plain scores).
-// score 36 (was 36): Parent observations and overlay homes remain different.
-// Direct parent fields 99; native parent value 115; root-entry binding 114;
-// parent flags by field/value 36/36; shared overlay result 40; independent
-// overlay results 45; actual indices-record reference 38 (plain scores).
-// separate node-base addition and ECX/EDX roles remain.
-// Parent/root/query-result names 36/36/36; outer query result 36; retained-field
-// plus root/parent object references 36/36; animation/interface references 36/36.
-// score 30 (was 36): early graph load, node-base addition/register roles and overlay setup remain.
-// Plain: arms array 159; weapon array 44; both arrays 159; channel reference 36;
-// graph object 40; model input 82; graph input 30; interface value 230.
-// score 30 (was 30): graph-load timing, node-base addition/register roles and overlay setup remain.
-// Plain: graph inside model guard 188; both metadata values 191; graph guard first 31;
-// conditional graph result 193; graph-field binding 36; model-field binding 30;
-// read-only interface 30; shared root/parent receiver 30.
-// score 30 (was 30): early graph observation, parent-base addition/registers
-// and overlay setup remain; separate force-inline reset declarations for
-// bits/identity/indices/pair and four combined forms all 30 in plain checks.
-// early graph load, node-base addition/register roles and overlay setup remain.
-// Conditional query, root-first result publication, unit value/field, read-only tag,
-// model-validity result, combined animation flags and conditional/root-first query
-// Plain scores 30/35/30/30/30/30/118/35; original body retained.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {
@@ -1250,15 +1218,13 @@ void __stdcall function_167e86(long user_index, long field_x11c898)
 			if (interface_index >= 0 && interface_index < definition->interface_count)
 			{
 				s_first_person_interface *interface = &definition->interfaces[interface_index];
-				long animation_graph_index = interface->animation_graph_index;
-
-				if (interface->render_model_index != NONE && animation_graph_index != NONE)
+				if (interface->render_model_index != NONE && interface->animation_graph_index != NONE)
 				{
 					s_animation_state *state;
 
 					first_person_bits_reset(&user->unknown202c);
 					state = &weapon->animation;
-					state->initialize(animation_graph_index, NONE, false);
+					state->initialize(interface->animation_graph_index, NONE, false);
 					if (field_x11c898 == 0)
 					{
 						user->unknown2094 = state->node_find(0xe0000e0);
@@ -1295,13 +1261,13 @@ void __stdcall function_167e86(long user_index, long field_x11c898)
 
 							if (root_node_index != NONE)
 							{
-								short const &parent_index = graph->nodes[root_node_index].parent_index;
+								s_graph_node const *root_node = &graph->nodes[root_node_index];
 
-								if (parent_index != NONE)
+								if (root_node->parent_index != NONE)
 								{
 									short node_index;
 
-									if (graph->nodes[parent_index].flags & 8)
+									if (graph->nodes[root_node->parent_index].flags & 8)
 									{
 										node_index = (short)function_1dd490(graph, 0x10);
 									}
@@ -1335,7 +1301,7 @@ void __stdcall function_167e86(long user_index, long field_x11c898)
 						weapon->channelb8.clear();
 						weapon->channel98.clear();
 						first_person_indices_reset(&weapon->indices);
-						state->overlay_play(&weapon->channelb8, 0x803f, 0x12000068, mode, 0x7000101);
+						state->overlay_play_for_class(&weapon->channelb8, 0x803f, mode, 0x7000101, 0x12000068);
 						*(c_type_709360 *)&weapon->indices.unknown4 = state->overlay_find_for_class(mode, 0x7000101, 0x8000061);
 						*(c_type_709360 *)&weapon->indices.unknown8 = state->overlay_find_for_class(mode, 0x7000101, 0xa000069);
 						*(c_type_709360 *)&weapon->indices.unknown0 = state->overlay_find_for_class(mode, 0x7000101, 0xe0000de);
@@ -1588,7 +1554,7 @@ void __stdcall function_166d75(long user_index)
 						channel_flags = 0x803f;
 						set = 0x6000060;
 					}
-					weapon->animation.overlay_play(channel, channel_flags, set, mode, 0x7000101);
+					weapon->animation.overlay_play_for_class(channel, channel_flags, mode, 0x7000101, set);
 					first_person_weapon_save_orientations(user_index, field_x11c898, 0.1335f);
 				}
 overlay:
@@ -1599,7 +1565,7 @@ overlay:
 					{
 						real frame;
 
-						weapon->animation.overlay_play(&weapon->channelb8, 0x803f, 0x12000068, mode, 0x7000101);
+						weapon->animation.overlay_play_for_class(&weapon->channelb8, 0x803f, mode, 0x7000101, 0x12000068);
 						frame = (weapon_object->unknown188 + 1.0f) * g_510c54->rate * 2.0f +
 							weapon->channelb8.frame_position * (1.0f / 30.0f);
 						weapon->channelb8.set_frame_position((real)fmod(frame, weapon->channelb8.get_duration()) * 30.0f);

@@ -175,6 +175,12 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // score 82 (was 88): 165/182 bytes; default float loads and merged exits differ.
 // Maximum sentinel first 88; interior interval first 82 kept; integer sample 88; read-only audibility 88;
 // ordered cluster parameters 91; named pair index/range 88/88; direct fallback 84; both boundaries 82.
+// score 82 (was 82): entry float values, saved-register ownership and merged exits remain.
+// Existing minimum/maximum/both/index force-inline declarations 82/82/82/82;
+// fallback inline/noinline 82/82; extrema before receiver 81 (below gate); high before low 82.
+// default float loads, saved registers and merged exits remain.
+// Named fraction/span-first/bounds-after-sample/bounds-before-table 82/82/82/82;
+// full/final interpolation expressions 82/82; native endpoint tests with/without fraction 85/85.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {

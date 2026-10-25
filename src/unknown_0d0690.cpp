@@ -45,6 +45,8 @@ real function_30bf0(vector3f *vector);
 // selector complete validation 213; selector result join 213; collision value initialization 238; direct
 // component lifetimes 231; component lifetimes ordinary count 225; native contribution vector 246; size
 // preference 380; float consistency 302.
+// Selector failing-range returns 213; explicit selector context 213; direct collision predicate 213;
+// ordinary while light traversal 213; independent blend bounds 213; constant output first 213.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
