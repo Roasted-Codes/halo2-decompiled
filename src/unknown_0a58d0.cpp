@@ -287,6 +287,11 @@ struct s_z_state_world
 
 // score 11 (was 11): the entity pointer is materialised in EAX and the record is read through it;
 // retail folds the address into the load itself.
+// The fold is the scheduler's rewrite of `lea; mov cl, [eax+6]`; ours can't do it because the
+// database pointer is in ecx (retail edx) and the active byte goes to cl. Tried: inline active
+// test, record getter or dispatch helper 11; world local in the inner block 11; state through the
+// re-read 11; database local 11; active read before the pointer (72 spellings) 14-21; renames 11;
+// a 600 s permuter run, none below 11.
 // @retail 0xa9820
 bool function_a9820(long *block, long index)
 {
@@ -845,6 +850,9 @@ PRIVATE inline bool z_state_real_valid(real value)
 // score 154 (was 154): initial byte-result store and scalar-zero lifetime differ.
 // Scoped inline depth zero 610; scoped global optimization off 368; decode cursor 161;
 // decode countdown cursor 161; final native acceptance result 155.
+// score 146 (was 154): mask-width field reference 146; initial result store and scalar zero remain.
+// Native external record 154; record/plain result and plain sticky predicates 289;
+// external flags reference 154; decoder/classifier noinline declarations 465/349; unsigned ordinal 154.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {
@@ -916,11 +924,12 @@ bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
  if (stream_read_bit(stream))
  {
   state[0x61] = (byte)function_1959c0(stream, 5);
-  if (result && (state[0x61] <= 16)) result = true; else result = false;
-  if (state[0x61] > 0)
+  byte const &mask_bits = state[0x61];
+  if (result && (mask_bits <= 16)) result = true; else result = false;
+  if (mask_bits > 0)
   {
-   *(word *)(state + 0x62) = (word)function_1959c0(stream, state[0x61]);
-   *(word *)(state + 0x64) = (word)function_1959c0(stream, state[0x61]);
+   *(word *)(state + 0x62) = (word)function_1959c0(stream, mask_bits);
+   *(word *)(state + 0x64) = (word)function_1959c0(stream, mask_bits);
   }
   *flags |= 0x200;
  }

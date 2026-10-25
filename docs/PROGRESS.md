@@ -2,6 +2,76 @@
 
 The newest entry comes first.
 
+## 2026-10-24: 9565 functions match
+
+```
+matched 9565 of 11321 game functions (1510777 of 2784283 bytes, 54.26%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+2 new matches, none lost:
+- @coldspear's #787, #788: `0x6b800` and `0x20a490` match.
+
+## 2026-10-24: 9563 functions match
+
+```
+matched 9563 of 11321 game functions (1510036 of 2784283 bytes, 54.23%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @coldspear's #786: closer scores and notes, no new match.
+
+## 2026-10-24: 9563 functions match
+
+```
+matched 9563 of 11321 game functions (1510036 of 2784283 bytes, 54.23%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+3 new matches, none lost:
+- @andrewnakas's #566, @RWayne93's #567, @andrewnakas's #610, @andrewnakas's #611: `0xd9490`, `0x119280` and `0x28fc50` match.
+
+## 2026-10-24: 9560 functions match
+
+```
+matched 9560 of 11321 game functions (1509191 of 2784283 bytes, 54.20%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @marioag0412's #785: closer scores and notes, no new match.
+
+## 2026-10-24: 9560 functions match
+
+```
+matched 9560 of 11321 game functions (1509191 of 2784283 bytes, 54.20%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @coldspear's #782: closer scores and notes, no new match.
+
+## 2026-10-24: 9560 functions match
+
+```
+matched 9560 of 11321 game functions (1509191 of 2784283 bytes, 54.20%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+8 new matches, none lost:
+- Machine 3's batch 119 (#781): `0x21360`, `0x10ab80`, `0x11a4d0`, `0x1358e0`, `0x15e530`, `0x21ee80`, `0x224080` and `0x2b6e55` match.
+
+## 2026-10-24: 9552 functions match
+
+```
+matched 9552 of 11321 game functions (1505562 of 2784283 bytes, 54.07%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+1 new matches, none lost:
+- @coldspear's #779, #780: `0x132b80` match.
+
 ## 2026-10-24: 9551 functions match
 
 ```

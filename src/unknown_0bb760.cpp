@@ -459,6 +459,9 @@ void function_3dd10(long object_index, bool force);
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
+// native position pointer 137; position value snapshot 295; blend declaration first 134; variant
+// declaration first 134; unsigned mask bits 134; unsigned last ordinal 134; component clamp loop
+// 136; non-hue component blend loop 134.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {

@@ -278,9 +278,12 @@ PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_reco
 	return iterator->group = g_4f55d0->active ? (s_squad_group_datum *)data_iterator_next_inlined(&iterator->records) : NULL;
 }
 
-// @retail 0x202370
-// score 62 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
+// score 57 (was 57): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
 // count and the bit mask take the other two registers.
+// const record 57; existing bool iterator 126; existing search boundary 123.
+// bool iterator size 147; one inline level 57; frame pointer 64.
+// global optimization 102; size preference 145.
+// @retail 0x202370
 void function_202370(void)
 {
 	s_group_record_iterator iterator = {0};
@@ -297,12 +300,15 @@ void function_202370(void)
 	}
 }
 
-// @retail 0x2024c0
-// score 62 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
+// score 57 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
 // count and the bit mask take the other two registers.
+// const record 62; existing bool iterator 154; existing search boundary 134.
+// value initializer 57; zero initialization call 60; frame pointer 55.
+// global optimization 124; size preference 158.
+// @retail 0x2024c0
 void function_2024c0(void)
 {
-	s_group_record_iterator iterator;
+	s_group_record_iterator iterator = {0};
 	if (g_4f55d0->active)
 	{
 		iterator.records.data = g_51e9dc;
@@ -763,7 +769,11 @@ done:
 
 // score 176 (was 176): frame 8 agrees; next stays in CX and the sentinel takes EBX.
 // Full-width result 211; full-width entries 214; full-width palettes 186;
-// result plus entries 214; selection role names 176.
+// result plus entries 214; selection role names 176. Natural while scans 174;
+// common output exit 227; exhausted-entry return 228; frame pointer 221;
+// global optimization off 533.
+// Conditional next publication 218; definition mode first 211; current-field result 223;
+// size preference 285; zero inline depth 232. Original kept.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -1074,6 +1084,8 @@ struct s_squad_tree_definition
 // Const current group 43; unsigned squad parent 43; unsigned group parent 63;
 // unsigned sibling 43; full-width final index 63; parent-field view 43;
 // parent view in both passes 82; append noinline declaration 43.
+// Current/parent/both record references 43; short child 60; readonly definition 43;
+// parent reference with short child 60; force parent accessor 43; force with current reference 43.
 // @retail 0x2009d0
 void function_2009d0(void)
 {
@@ -1761,9 +1773,14 @@ void function_204450(long definition_index, long squad_index)
 bool function_1e11b0(long actor_index, bool active);
 
 #pragma inline_depth(0)
+// score 64 (was 64): frame 0xc agrees; the squad address stays in EBX instead of
+// retail's spilled ESI pointer and EBP handle. The common loop head and
+// full-width return mask still differ.
+// byte record 64; native absolute index 64 (caller loss); record field types 64.
+// record flag bitfield 64; existing actor step 100 (caller loss); existing actor getter 84.
+// frame pointer 74; size preference 82; native index stdcall 69.
+// byte record stdcall 64; record fields stdcall 64; record bit stdcall 64.
 // @retail 0x203bf0
-// score 64 (was 64): the record's address is computed from the index in EBX where retail keeps the
-// index in EAX, so the flag byte is read into AL instead of into CL.
 bool function_203bf0(long squad_index)
 {
     (void)&squad_index;
@@ -1799,9 +1816,11 @@ extern s_record_pool *g_5044c8;
 bool function_1e1de0(long actor_index);
 bool function_1df5d0(short team_a, short team_b);
 
-// score 242 (was 242): frame 0x14 agrees; iterator index is cached and the flag clear splits.
+// score 179 (was 242): frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // Earlier iterator declaration 242; iterator/count role names 242; natural for
-// walks 348; unsigned full-width count 242; delayed flag clear 242.
+// walks 348; unsigned full-width count 242; delayed flag clear 242. Shared
+// iterator helpers 242; marked iterator calls 350; branch-assigned count 179;
+// frame pointer 218; global optimization off 472; branch-assigned word 183.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -1820,7 +1839,7 @@ void function_203360(long squad_index)
     while ((actor = squad_actor_next_inline(&iterator)) != NULL)
     {
         real health = 0.0f;
-        long count = 0;
+        long count;
         if (actor->unit_index != NONE)
         {
             health = *(real *)(squad_transfer_object(actor->unit_index) + 0xec);
@@ -1832,6 +1851,8 @@ void function_203360(long squad_index)
             count = *(word *)(perception + 0x14);
             health = (real)(short)count / (real)*(short *)(perception + 0x16);
         }
+        else
+            count = 0;
         *(short *)(squad + 0xa) += count;
         *(real *)(squad + 0x10) += health;
         *(short *)(squad + 0xc) += *((byte *)actor + 7) * count;
@@ -2549,6 +2570,8 @@ static __forceinline long real_to_long(real value);
 // score 227 (was 227): frame 0x30 agrees; active/pool reloads and zero-result joins differ.
 // Role names 227; native squad iterator 227; squad result local 227; short timers 227;
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
+// Single-result squad step 298; zero inline depth 584; global optimization off 439;
+// frame pointer 258; size preference 633. Original kept.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -2696,7 +2719,11 @@ void function_2011f0(long arg_0);
 
 // score 387 (was 387): frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
 // Direct low-word index 387; other direct parameters 387; all direct reads 387;
-// workspace role names 387; one shared native request 399.
+// workspace role names 387; one shared native request 399. Pool-first lookup
+// on low-word inputs 387; scalar masks 387; countdown while 388; zero inline
+// depth 387; frame pointer 481.
+// Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
+// repeated signed category 387; function-scope workspaces 387; case two first 387.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
