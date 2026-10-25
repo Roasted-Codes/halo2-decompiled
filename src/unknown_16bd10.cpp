@@ -791,6 +791,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // direction preload, length/zero XMM roles, flag stores and timer differ.
 // Forced dot/plane/tick expansion 247 each; each pair and all three 247;
 // all three plus immutable command pointer and scale 253 (fast base 247).
+// score 245 (was 245): frame 0x48 agrees; direction preload, XMM roles and flag updates remain.
+// Existing line helpers 368p/371p; fraction-home and output-record combinations 368p/367p/367p.
+// External command record 236p (one executable row); pan/view fraction homes 245/245.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {
