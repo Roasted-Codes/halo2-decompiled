@@ -1099,6 +1099,8 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // frame 0x104 versus 0x10c; radius and emitted-index homes differ.
 // Short outer index with original qualifiers 513; broader trace outputs 478; native copied-last 504;
 // native found-step 494; current-step fallback first 478.
+// Round 310: terminal fallback return 526; double rounded radius 489; long next 519;
+// unsigned edge 478; shared point setters 478. Double radius recovers 0x10c but worsens scalar homes.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

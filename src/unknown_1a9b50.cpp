@@ -413,6 +413,8 @@ extern point2f *g_468778;
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
 // Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
 // inner threshold 388; entry planar workspace 379. Actor/settings/prop carriers still differ.
+// Round 310: eligibility result 432; double clock 413; prop handle snapshot 379;
+// read-only prop payload 379; weight after magnitude 379. Early actor/settings/prop homes remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
