@@ -233,6 +233,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Angular/basis scope 220; angular-only scope 220; scoped angular/position names 220;
 // scoped branch zero 242; basis copies 220; angular copies 220; common exit 218;
 // scoped point setter 242 (plain); two-point gain dropped.
+// Frame 0x78 versus 0x6c; velocity/basis/position homes remain.
+// zero after first basis 240; zero after second basis 240; turn velocity before guard 274; basis role
+// reuse with scale 260; turn zero before guard 220.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -856,6 +859,10 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // score 151 (was 151): Quotient spill, sweep/impact homes and owner-call setup remain.
 // Sweep components before query i/j/k/ij/ik/jk each 159; all components 293;
 // aggregate sweep before query 293, with retained long third saved identifier.
+// Frame 0x124 agrees; quotient/sweep/location homes and word loads remain.
+// second identifier first 149; location home name 151; native request after lifetime gains 151; distinct
+// up after lifetime gains 180; location before identifiers 218; long first with second first 154; long
+// second with second first 154; both long with second first 150.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
