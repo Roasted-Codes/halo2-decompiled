@@ -979,6 +979,9 @@ struct s_bitmap_texture_view
 
 // score 3 (was 3): the masked level address is loaded into EDX, retail reuses the base register,
 // which is dead after that load.
+// Entry data declaration 3; level-index local 3; reversed subscript 3; 28-bit field view 3;
+// shift mask 3; modulus mask 3; signed addresses 3; destination OR 3; initialized entry data 3;
+// bitmap-view alias 3.
 // @retail 0x12d6d0
 void __stdcall function_12d6d0(s_bitmap_texture_view const *bitmap, long level, D3DTexture *texture)
 {
