@@ -156,6 +156,7 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // shared cursor, independent counters and countdown copy 194.
 // Separate points input cursor 228; direct string countdowns 194; both 228;
 // independent countdown output cursors 228; shared remaining-string counter 228.
+// Simultaneous output cursors 226; native string-array end bounds 263; shared increasing counter 194; score-array cursor 210; points-array end bound 191; shared counter/end bound 191; simultaneous cursors/end bound 222.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

@@ -428,10 +428,11 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 129 (was 133): Frame 0x98 vs 0xa0; identity slots and initialization homes still differ.
+// score 122 (was 129): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // Existing record initializer with zero tail 130; short/word counters 133/133;
 // counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
+// Array-end bound 129; workspace names 129; native identity zero 129; signed induction 122; array-end/native zero 129; signed/native zero 122; signed identity-array fill 122.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -442,7 +443,7 @@ void function_7f930(void)
 	g_4cf97c = NONE;
 	g_4cf984 = NONE;
 	g_4cf988 = NONE;
-	for (dword i = 0; i < 350; i++)
+	for (long i = 0; i < 350; i++)
 	{
 		s_cached_player_identity identity;
 		memset(&identity, 0, sizeof(identity));
@@ -533,6 +534,8 @@ bool function_7fb50(void)
 	return local_0;
 }
 
+// score 111 (was 132): frame 0x1c agrees; records/properties registers, counter homes and ret 0x18 versus 0x1c remain.
+// Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -557,20 +560,21 @@ void function_80bf0(long record_capacity, s_cache_property_record *records,
 			records++;
 			record_capacity--;
 			records_used++;
-			memcpy(buffers, (byte *)&entry->player + 0xc, 0x40);
+			memcpy(buffers + 0x40 * buffers_used, (byte *)&entry->player + 0xc, 0x40);
 			*(short *)&properties->unknown00 = -3;
 			properties->type = 4;
-			properties->unknown08 = (long)buffers;
+			properties->unknown08 = (long)(buffers + 0x40 * buffers_used);
 			properties++;
 			property_capacity--;
 			properties_used++;
-			buffers += 0x40;
 			buffers_used++;
-			for (long j = 0; j < 3; j++)
+			long const *value = values;
+			for (short j = 0; j < 3; j++)
 			{
 				*(short *)&properties[j].unknown00 = (short)(j + 2);
 				properties[j].type = 1;
-				properties[j].unknown08 = values[j];
+				properties[j].unknown08 = *value;
+				++value;
 			}
 			properties += 3;
 			property_capacity -= 3;
