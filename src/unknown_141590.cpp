@@ -704,6 +704,8 @@ void function_143250(
 // score 2265 (was 2265): frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
 // Frame pointer 3182; separate adjacent basis pairs [0,1] 2278, [2,3] 2320,
 // [4,5] 2286, [6,7] 2329.
+// Round 310: second-band product trees 2265; second-band full trees 2265; third-band
+// products 2272; third-band full trees 2273; both full trees 2273 (plain). Input and matrix homes remain.
 // score 2265 (was 2265): Frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
 // Independent snapshots [1,5,6] 2302; [0,2,7] 2309; [3,4] 2286; [0,4,5] 2286; [3,5,7] 2276 (plain).
 // score 2265 (was 2265): frame 0x300 agrees; rotation admission and matrix homes differ.

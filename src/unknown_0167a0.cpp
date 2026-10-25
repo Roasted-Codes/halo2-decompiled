@@ -766,6 +766,11 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // frame 0xc versus 0x10; table/entry homes and selector rereads differ.
 // Ordinary writer inline 513; packed/index formal domains 189/181; shared complement 214;
 // global optimization off 621; frame pointer 207; branch table lifetimes 184; inline depth two 157.
+// score 157 (was 157): selector observation and table/entry frame homes still differ.
+// selector-storage writer 177f; writer offset input 188f.
+// selector-use output indices 230f; signed byte cursors 163f.
+// byte cursors 190f; byte mapping slot 189f.
+// word source-kind 157f; special-slot result 180f.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

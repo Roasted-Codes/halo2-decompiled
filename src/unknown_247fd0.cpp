@@ -95,6 +95,12 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // External parent / allocated record / settings / child references 142/142/142/142;
 // parent with record / settings, record with child, all four references 142/142/142/142.
 // Cached-pointer comparison and selective loop lookup expansion remain.
+// score 142 (was 142): cached-pointer compare, creation pushes and loop lookup remain.
+// Parent/settings/both metadata fields, first/last/both list fields, metadata with list fields,
+// metadata with cache slot 161/160/167/142/142/142/167/167.
+// cached-pointer comparison, child pushes and selective lookup expansion remain.
+// Declared sample array/loop 142/435; immutable record/spawn/both 142/142/142;
+// child identity order 142; earlier enable 142; earlier age 143.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)

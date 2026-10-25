@@ -1103,6 +1103,8 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // frame 0x104 versus 0x10c; radius and emitted-index homes differ.
 // Short outer index with original qualifiers 513; broader trace outputs 478; native copied-last 504;
 // native found-step 494; current-step fallback first 478.
+// Round 310: terminal fallback return 526; double rounded radius 489; long next 519;
+// unsigned edge 478; shared point setters 478. Double radius recovers 0x10c but worsens scalar homes.
 // score 478 (was 478): frame 0x104 versus 0x10c and radius/index homes differ; trace continues 478;
 // unsigned output word 478; byte attempt 495; distinct trace-origin name 478; outer world endpoints
 // 478.
