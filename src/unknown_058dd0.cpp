@@ -1132,6 +1132,9 @@ long __stdcall function_063190(void *summary, long user);
 // score 110 (was 110): session spill and aggregate registers remain different.
 // Count/member/scan failure exits 124/121/115; complete-rating/property skips 110/110;
 // empty-aggregate rejection 112; live count field 110; distinct traversal roles 110.
+// score 110 (was 110): three-word frame/session spill and aggregate allocation remain.
+// Mode field 115; selection snapshot 131; property/player records 110/110;
+// source rank/value/both field bindings 110/110/110; live selection field 110.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
@@ -1848,6 +1851,9 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // Integer readiness 59 kept; entry readiness 134; entry integer readiness 135;
 // timed type range 107; four/five/timed arm order 111; completion from readiness 136;
 // test-assigned preparation 90; active predicate value 166.
+// score 48 (was 59): readiness callee input and failure/timer join still differ.
+// Live timer/mode/both fields 59/59/59; integer pending 48 kept;
+// byte/word pending 90/59; common-tail guard 59; pending with live timer 48.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {
@@ -1864,7 +1870,7 @@ bool c_session_state_start_match::update()
         }
         else if (b->type == 2 || b->type == 3)
         {
-            long ready = false;
+            long pending = true;
             if (function_06e720(b) && function_06e6b0(b, &unknown14))
             {
                 if (!unknown18)
@@ -1873,13 +1879,13 @@ bool c_session_state_start_match::update()
                 long remaining = ((long)(remaining_raw < 0) - 1) & remaining_raw;
                 network_session_host_become_leader(b);
                 network_session_start_countdown(b, true, (remaining + 999) / 1000, 0, NULL);
-                ready = remaining == 0;
+                pending = remaining != 0;
             }
             else
                 unknown18 = 0;
             if (mode == 3)
             {
-                if (ready)
+                if (!pending)
                 {
                     network_session_set_mode(b, 4);
                     result = true;
