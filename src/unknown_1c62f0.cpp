@@ -76,7 +76,9 @@ void c_animation_channel::clear()
 	unknown0e = NONE;
 }
 
-// score 41 (was 41): graph ECX needs an ESI save and a late store;
+// score 36 (was 41): Early frame-position store keeps 36 at retail length; input save and later store order still differ.
+// sentinel chain 41; word clear chain 41; byte clear chain 43; two-byte memset 43; stored flags 41; early frame 36 plain; stored-ID result 76; renamed late graph 42; dword flags plus early frame 36; long flags plus early frame 37.
+// graph ECX needs an ESI save and a late store;
 // validity-result 43; animation guard first 44; inline/noinline declarations 41;
 // existing reset 43; state memset 51; high-bit predicate 41; ID word copies 50.
 // @retail 0x1c6470
@@ -85,6 +87,7 @@ bool c_animation_channel::set(long graph_tag_index, word flags, c_type_709360 an
 {
 	if (graph_tag_index != NONE && animation_id.index != NONE)
 	{
+		this->frame_position = 0.0f;
 		this->graph_tag_index = graph_tag_index;
 		this->animation_id.graph_index = NONE;
 		this->animation_id.index = NONE;
@@ -99,7 +102,6 @@ bool c_animation_channel::set(long graph_tag_index, word flags, c_type_709360 an
 		this->flags = flags;
 		this->unknown0d = unknown0d;
 		this->unknown0e = unknown0e;
-		this->frame_position = 0.0f;
 		this->rate = 1.0f;
 		this->animation_id = animation_id;
 		this->unknown10 = (flags >> 14) & 2;

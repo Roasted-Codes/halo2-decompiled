@@ -77,6 +77,10 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // direction-output-point-fraction 65; point-output-direction-fraction 65; direction-point-fraction-output 65;
 // point-direction-output-fraction 65; products before stores 65; equality bound 1280;
 // emission-count scope 194; complete XY before publication 124.
+// current-distance/delta XMM homes and final Z-product destination remain.
+// Complete endpoint consumer 297; distance-input consumer 332; complete edge consumer 297;
+// difference input reference 65; complete plane input 392; current/prior classifications
+// at use 1268/455; retained-side classifications 469.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,

@@ -306,6 +306,9 @@ void function_1f86a0(long actor_index);
 // initial pool order, slot/view homes and nine-byte deficit remain. Shared range 131;
 // chained ticks 144; both 131; state query noinline 144; early short/long defaults 147/179;
 // native duration fields 144; native fields with shared range 131.
+// frame eight agrees; pool-load order, slot EBP and view spill differ.
+// Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
+// word duration ticks 144; ordinary result 203.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {

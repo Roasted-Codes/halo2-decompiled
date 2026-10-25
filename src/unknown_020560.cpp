@@ -54,7 +54,11 @@ PRIVATE __forceinline long texture_floor(real value)
     }
 }
 
-// score 4 (was 4): the final bit-clear mask uses EDX instead of EAX. Lowest-bit clear 19;
+// score 4 (was 4): Frame agrees; the final slot-bit clear uses EDX instead of EAX. Tried unsigned slot bit 4;
+// signed traversal mask 4; unsigned slot index 4; toggle selected bit 14; subtract selected bit 16; assign
+// remaining mask 4; pending slots name 4; for mask traversal 4; named slot bit 4; bias declaration first 4;
+// slot index name 4; texture frame name 4.
+// the final bit-clear mask uses EDX instead of EAX. Lowest-bit clear 19;
 // early clear 111; entry lifetime 4; scan-index lifetime 4; level lifetime 4; integral
 // level clamp 86; short bitmap 4; typed texture entry 4.
 // @retail 0x1b0a0

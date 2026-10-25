@@ -101,10 +101,12 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
    self-aligning functions showed this). Retail holds no reference to its
    address, and its caller 0x12b450 is LTCG code. With the marker 0x12b450 and
    0x12b690 match; without it they don't. The body itself doesn't match yet. */
+// score 541 (was 564): Frame 0x38 versus 0x40; angle homes and snap-work lifetimes still differ.
+// Role names 564; four-controller bound 541; ordinary snap inline 1438; short quadrant 564; shared default 548; combined 562.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {
-    for (long local_0 = 0; local_0 != NONE; )
+    for (long local_0 = 0; local_0 < 4; local_0++)
     {
         s_input_state *local_1 = NULL;
         if (g_4e61cc[(short)local_0])
@@ -214,9 +216,5 @@ void function_217c40(void)
         }
         else
             g_51ebcc[local_0] = false;
-        long local_29 = NONE;
-        if (local_0 >= 0 && local_0 < 3)
-            local_29 = local_0 + 1;
-        local_0 = local_29;
     }
 }

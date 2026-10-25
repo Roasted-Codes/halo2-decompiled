@@ -216,7 +216,8 @@ void function_7f070(void)
 		function_7f2a0();
 }
 
-// score 37 (was 37): final observer/flag registers differ after +0x11b;
+// score 37 (was 37): measured-byte, level and observer suffix registers still differ; five independent estimate/flag/level publication orders 37 each; measured name, level name and both result names 37 each.
+// final observer/flag registers differ after +0x11b;
 // flag declared first 39; observer before publication 37; shared reset tail 37;
 // global observer stores 36 (421 bytes); flag rename/direct minimum 37;
 // shared observer values 67; branch-local observer 37.

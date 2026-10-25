@@ -93,7 +93,7 @@ void __stdcall function_2403b0(long player_index)
 			if (g_51ec80->e[slot] == NONE)
 			{
 				game_engine_event_initialize_inline(&event, 10, 14);
-				game_engine_event_set_cause_player(&event, player_index);
+				game_engine_event_set_cause_player(player_index, &event);
 				function_19eb90(&event);
 			}
 			long limit = (short)*(short *)((byte *)g_4e6948 + 0x244) * g_510c54->field_2_3;
@@ -106,7 +106,7 @@ void __stdcall function_2403b0(long player_index)
 				g_51ec80->flags[slot] |= 8;
 				g_51ec80->flags[slot] |= 1;
 				game_engine_event_initialize_inline(&event, 10, 15);
-				game_engine_event_set_cause_player(&event, player_index);
+				game_engine_event_set_cause_player(player_index, &event);
 				function_19eb90(&event);
 				function_a7810(0x200);
 				function_a7810(0x100);

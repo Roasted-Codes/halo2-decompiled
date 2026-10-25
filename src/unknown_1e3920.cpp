@@ -860,6 +860,9 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 // score 44 (was 44): no frame gap; actor/old-weapon registers and early player address differ.
 // Inline/noinline 44/44; direct player/replacement only 82/55; replacement-first 86;
 // late replacement zero 44; old-greater first 47; early unit observation 91.
+// entry pool saves and actor/old-weapon registers still differ.
+// Shared object lookup 44; direct tag reads 43; early player with shared lookup 75;
+// direct parameters 82; conditional values 81; shared target 79; eligibility tests 45; value homes 44.
 // @retail 0x1e18f0
 void __fastcall function_1e18f0(long actor_index, long old_weapon, long player_index, long new_weapon)
 {
@@ -1516,6 +1519,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
+// score 308 (was 314): actor/object-pool registers and scalar/ammo homes differ. Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1583,10 +1587,8 @@ void function_1e2a90(long actor_index)
 				{
 					if (*(real *)(weapon_options + 0x8c) > 0.0f || *(real *)(weapon_options + 0x90) > 0.0f)
 					{
-						real lower = *(real *)(weapon_options + 0x8c);
-						real upper = *(real *)(weapon_options + 0x90);
-						real fraction = lower + (upper - lower) *
-							function_x82e52f(&g_4e7408->unknown0, NULL, 0);
+						real fraction = function_259d0(&g_4e7408->unknown0, NULL, 0,
+							*(real *)(weapon_options + 0x8c), *(real *)(weapon_options + 0x90));
 						if (g_4e6948->state == 1 && g_4f55e0)
 							fraction *= 0.5f;
 						function_101a10(weapons[i], fraction);

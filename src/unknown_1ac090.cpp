@@ -116,6 +116,12 @@ void __stdcall function_1ada70(long actor_index, s_slot *slot);
 
 /* ---- slot type 0x2c ---- */
 
+// score 12 (was 12): conversion spills still use the rounding slot; timer-setting boundary 29, 29, 29, 33; output first 12, output scope 12, byte before rounding 19, native int output 12 (round 115).
+// integer conversion spills use the rounding slot rather than the parameter home;
+// existing rounding helper 29; named tick value with helper 29; later state with helper 29;
+// direct state fields with helper 29; unit range with helper 29; native range with helper 29;
+// unit range with parameter home 12; shared range with parameter home 12; existing time
+// conversion 29; time conversion and later state 29; unit range and time conversion 29.
 // @retail 0x1ac090
 bool __stdcall function_1ac090(long actor_index, s_slot *slot)
 {
@@ -277,7 +283,12 @@ short __stdcall function_1ac3f0(long actor_index)
 	return result;
 }
 
-// score 43 (was 43): first duration multiply pops scale early and reset stores cross the scale
+// score 43 (was 43): frame four agrees; scale is popped at the first timer multiply and stores differ;
+// tried first timer shared conversion direct 114; first timer shared conversion named seconds 103;
+// second timer shared conversion 49; both timers shared conversion 121; integral tick rate 47;
+// shared timer homes at entry 49; scale first timer product 43; chained boolean resets 46;
+// existing timer writer for first timer 47; double tick rate 43. Restored.
+// first duration multiply pops scale early and reset stores cross the scale
 // addition. Duration-seconds name 43; ticks name 43; both names 43; both timer names 43; product
 // update 43; duration scope 43; entry delay 43; early rate 37/333 (one-use field copy, rejected).
 // Scale-first product update 47; duration-owned product 43; first output/input guard scope
@@ -413,6 +424,12 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
+// score 24 (was 24): early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
+// frame 0x28 agrees; pool-data load and mode-lookup registers still differ;
+// tried full width mode 39; mode tests reversed 27; inactive state branch first 168;
+// missing prop early return 24; alignment product operands 30; unsigned short mode 24;
+// timer homes at entry 24; request home in active state scope 24;
+// low word actor slot used by both lookups 155. Restored.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -831,6 +848,12 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
+// score 29 (was 29): actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
+// frame 0x8c agrees; EBP/EDI, two spill homes and product/address scheduling still differ;
+// tried result declared first 30; best index named before actor home 29;
+// source actor named after index home 29; best index and source actor named homes 29;
+// candidate difference shared helper 29; marker difference shared helper 29;
+// forward product shared helper 135; up product shared helper 41. Restored.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)
