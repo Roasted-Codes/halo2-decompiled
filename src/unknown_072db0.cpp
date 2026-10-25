@@ -1534,6 +1534,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // return 791; duplicate cursor equality 773; byte team/failure results 770/770;
 // incomplete-property arm first 785 (fast). Opening body and helpers retained.
 // Frame 0xc0 agrees; user/identity and request homes remain. Terminal record reuse 787; native identifier field 770; clamp-value lifetime 770; type-first duplicate filter 794; request-player cursor 804 (fast).
+// score 770 (was 770): Frame 0xc0 agrees; user/identity and request homes remain; native identity flags 770; repeated flag snapshot 770; identity after property copy 772; property value after lookup 786; received-record cursor 770 (fast).
 // @retail 0x74aa0
 void function_074aa0(void)
 {

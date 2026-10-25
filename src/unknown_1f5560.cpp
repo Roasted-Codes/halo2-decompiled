@@ -1003,6 +1003,9 @@ done:
 // Scalar velocity 309; approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast).
 // score 307 (was 307): Frame 0x18 versus 0x1c and actor/object/factor homes remain; object receiver first 309; approach component scopes 308; following component scope 308; shared minimum scalar 308; library velocity copy 309 (fast control 308).
 // score 307 (was 307): Frame 0x18 versus 0x1c remains; conditional-body factor names 308; velocity field pointer 308; goal field pointer 308; speed field pointer 308; radius field pointer 308 (fast control 308).
+// Frame 0x18 versus 0x1c and receiver/factor homes remain; entry velocity workspace
+// 307; native actor fields 307; external object reference 307; branch-assigned approach 352; native actor
+// plus entry velocity 307 (plain).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1280,6 +1283,9 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // Ordinary lifetimes: facing value 307; scalar side 309; scalar center 306; origin constructed first 306; reused negative radius 329.
 // score 294 (was 294): Frame 0x3c agrees; direction materialization and radius/result homes remain. Ordinary input/side lifetimes: point pair plus arc helper 344; pair plus direction output 299; origin/facing values 292 (plain 292, two-point gain rejected); target/facing values 306; three point values 328.
 // score 294 (was 294): Frame 0x3c and initial direction/result-home differences remain; ordinary inputs/side with early 3D origin 291; entry trace 306; reused threshold 306; separate centers 306; early origin plus centers 291 (fast).
+// Frame 0x3c agrees; input convention, direction materialization and radius/result
+// homes remain. Ordinary input/side lifetimes: external origin reference 311; target reference 306; facing
+// reference 306; all three references 305; full-width side state 301 (fast).
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

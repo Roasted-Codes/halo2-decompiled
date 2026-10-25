@@ -1077,6 +1077,7 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // score 828 (was 829): word histogram initialized at declaration; frame 0xd4 versus 0xb4 remains.
 // Fast long result 873; byte result 868; later group decision 884; word initialization 848;
 // final spread 873. Code-plus-extent 804/798/806/777/792 versus preview 788.
+// score 777 (was 777): Frame 0xd4 versus 0xb4 and session/lookup homes remain; scalar machine ID copy 840; player identity memmove 855; chained initial extrema 777; shared limited predicate 928; shared team-mode predicate 786 (fast).
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

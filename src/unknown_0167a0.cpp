@@ -774,6 +774,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // selector-use output indices 230f; signed byte cursors 163f.
 // byte cursors 190f; byte mapping slot 189f.
 // word source-kind 157f; special-slot result 180f.
+// score 157 (was 157): Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
