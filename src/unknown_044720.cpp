@@ -234,6 +234,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Native bound sphere with branch/entry count homes 196/196; aligned bound 203/203.
 // Native bound with split center/query 197 for both count homes and either bound alignment.
 // All native sphere copies restored; no field observation or float grouping retained.
+// Shared point setter at initial/query/bound producers 245/190/204; initial+query/initial+bound/query+bound 245/246/204.
+// All three point setters 246; native bound-point initializer 204.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

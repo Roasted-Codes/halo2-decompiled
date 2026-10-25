@@ -55,6 +55,9 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 // score 43 (was 43): early ESI save, EBX successor, mask hoist and loop exit differ;
 // native successor 51; persistent entry while/for 57; complete admission 43; identity predicate 53;
 // native player assignment 43; native successor with identity 57; admission result 59.
+// successor register, exclusion mask and loop rotation still differ; 127/127 bytes.
+// Native identity OR/logical OR 83/78; each with native name 83/78; native name alone 43;
+// shared player receiver 43, with native OR/name 83, with native logical OR/name 78; all restored.
 // Early index save, next-index register, loop rotation and hoisted mask still differ.
 // existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
 // score 43 (was 43): iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;

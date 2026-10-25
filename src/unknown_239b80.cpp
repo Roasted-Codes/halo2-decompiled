@@ -335,6 +335,10 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 // score 50 (was 50): The initial count load, widened loop tail and XMM edge/offset homes still
 // differ. Byte/short/native result 102/104/102; unsigned-short induction 50; early cross 58; distance
 // limit scalar 50; cross square scalar 50; both squared parts 50.
+// initial count load, wrap-bound ownership and XMM allocation remain.
+// Edge first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50;
+// nested predicates 50; entry success 51; predicate result 51. Two-point gain rejected.
+// entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {

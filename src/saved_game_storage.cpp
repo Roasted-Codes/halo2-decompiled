@@ -425,6 +425,9 @@ PRIVATE byte const g_saved_game_image[4096] =
 // score 19 (was 26): byte success/failure exits and writer setup differ; consistent
 // writer orders 24/27/26/26/27; direct close 17, test result 45, common result 72;
 // original-interface direct close 19 (250/249 bytes).
+// failure spans, buffer/size setup and shared byte exits remain; shared reference initializer 26; earlier reference/error workspaces 26/26; initializer return consumed directly 26; zero reference/path aggregates 28/93; header aggregate 62; all workspaces before path 26.
+// score 26 (was 26): positioned-write helper stays out of line; existing writer/shared reference/early error/path names 46/46/46/46;
+// positioned close output 32; negative failures 46; comparison result 86; shared reference with close output 32.
 // write size precedes buffer; full-width returns add a success epilogue, first +0xbb;
 // create/open/write test-result carriers 58/55/78; each operation supplies result 60;
 // clamp decision joins create/open/write carriers 75/75/124; clamp plus serial operation results 102.

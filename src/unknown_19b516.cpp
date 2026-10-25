@@ -178,7 +178,9 @@ void c_widget::v16()
 	}
 }
 
-// score 20 (was 20): entry scan saves ESI early and carries its candidate there; retail uses EAX/EDX before the save.
+// score 20 (was 20): entry candidate still uses ESI before its save; entry/repeat/both link cursors 20/20/20;
+// entry/repeat/both last-widget results 20/20/20; link for scans 20; selected declaration first with link scans 20.
+// entry scan saves ESI early and carries its candidate there; retail uses EAX/EDX before the save.
 // Link for scans 20; transient entry scope 42; eligibility condition 44; rejection arm 20; previous branch 21; one search cursor 21; traversal role names 20; fallback declaration order 20.
 // Entry candidate still occupies ESI before the fallback scan; the existing
 // native object type and direct method boundaries do not recover the delayed save; native

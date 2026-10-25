@@ -998,6 +998,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // score 193 (was 193): incoming selector/message/address allocation remains.
 // Connection refusal/establishment/closure inline and noinline declarations,
 // individually and as a group, all 191 fast, tying preview. All restored.
+// selector/message/address convention and dispatch root remain.
+// Residual session/peer/numeric/session-reverse/24-first/23-first orders 189/189/191/191/189/191 fast;
+// lookup orders 6,5,7 and 5,7,6 191/191; session-ordinal order 193 plain, tying baseline.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

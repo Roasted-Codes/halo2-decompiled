@@ -288,7 +288,10 @@ void c_class_2c9e69::select_last_variant()
 }
 
 /* shows the item's variant name */
-// score 23 (was 23): nonempty text receiver tested in stack home then reloaded; retail holds EBX;
+// score 23 (was 23): nonempty receiver is reloaded after the name call instead of retained in EBX;
+// branch name workspace before receiver, immutable receiver, receiver names 36/36/36; common completion 36;
+// completion with immutable receiver or receiver before name 36/36; ordinary pointer with scoped/common completion 36/36.
+// nonempty text receiver tested in stack home then reloaded; retail holds EBX;
 // widget names 23; named variant first 30; entry reference 23; indexed base 23;
 // text destination local 23; icon absence return 23; reversed dispatch with receiver copy 38;
 // reversed dispatch/copy renamed 38; base-widget receiver 36; base receiver renamed 36.

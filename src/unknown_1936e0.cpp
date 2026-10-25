@@ -247,6 +247,9 @@ void function_193b30(s_built_variant *variant, long name_string, long descriptio
 // score 34 (was 34): scale still enters EBX rather than EAX; typed mode enum 34;
 // entry enum value 34; enum success update 33; complete enum outcomes 34; entry enum outcomes 32;
 // enum member publication 34; enum last member first 34; enum complete settings value 13 (one-use copy rejected).
+// mode production and settings-copy schedule still differ; 98/92 bytes. (held: the 23 wrote the type as 2 >> !flag, an arithmetic stand-in for the conditional, like round M139's 2 - !flag)
+// Left/right shift and XOR complement at call 33/23/32; same values produced before delay 33/23/32;
+// full delay-workspace initialization 66, with XOR mode 68. Right shift retained after plain whole-image check.
 // scale now enters EAX and is saved in EBX as in retail; (held: the 24 wrote the type as 2 - !flag, six bytes long, and moved the unmatched caller 0x193c70 from 203 to 208)
 // mode selection and settings-copy scheduling still differ (98/92 bytes).
 // Fast: settings memcpy 34; memmove 15 (extra call, reverted); settings before

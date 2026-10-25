@@ -268,6 +268,9 @@ done:
 // score 49 (was 49): Extra EBX buffer cache and tag/selector schedule remain. Native buffer
 // object 49; seven adjacent case-pair layouts 48/49/51/51/51/51/50. Best executable reduction is
 // one row.
+// extra EBX buffer cache and selector/tag scheduling remain.
+// Translator inline/noinline 49/49; native copy inline/noinline 49/49; both inline 49;
+// selected parameter 49; even-priority cases 56; low/high pairs 51.
 // @retail 0x22d456
 void __stdcall parse_gametype(long string_handle, word *buffer)
 {
