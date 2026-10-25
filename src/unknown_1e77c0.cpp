@@ -379,6 +379,10 @@ void function_1e6b00(long player_index, s_request_source *source)
 // pair 77, both through the state array 77-80, mask local / term order /
 // `21 == index` / limit or next locals / swapped arms 51-52.
 // Earlier: retail saves the pointer argument in EBX and shifts the mask in EBP.
+// score 51 (was 51): index/mask registers and the repeated output load remain.
+// Declared paired-word view with mixed/pair/array/mirrored reads 51/77/80/77;
+// paired snapshot before/after pointer lifetime and low-first snapshot 115/115/115;
+// paired snapshot with one shifted mask 85.
 // @retail 0x1e8d80
 bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_entry_420 *entry, s_request_transition *output)
 {

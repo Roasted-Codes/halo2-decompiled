@@ -1465,6 +1465,10 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
+// score 46 (was 46): entry lookup scheduling and full-width return tails differ.
+// Other identifier retained 44; both identifiers 44; normalized slots with other identifier 44;
+// this priority first 87; direct comparison results 107; short priorities 45;
+// integer result 123; this definition read at its priority use 94.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
@@ -3258,6 +3262,8 @@ void __stdcall function_1264c0(dword arg_0);
 // score 87 (was 87): reconstruction expansion and signed-clock wait remain; shared fade with
 // native/full-inline/Boolean iterators 113/112/118; native integer tick 113; iterator workspace
 // before clock inline/Boolean 111/118; early real tick native/inline 113/113.
+// Masked slot copied before the fade call 83 at retail length (a one-use copy, not kept);
+// next slot 86; with both inline lookups 111/117, initial inline lookup 90/96, next inline lookup 101/104.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
