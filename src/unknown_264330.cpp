@@ -418,6 +418,12 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // score 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
 // kept; word update/sample/sampled count 430/449/449; native view 426; later view lifetime 426;
 // word maximum plus native view/later view/update 420/420/424.
+// score 420 (was 420): frame 0xa4 versus 0xa0, actor input and workspace homes remain.
+// Native signed maximum 420; signed maximum/original loads 420; later maximum/signed
+// maximum 422/422; signed counter/original and signed maximum 420/420;
+// later counter/original and signed maximum 422/422. Each fast and plain.
+// Existing sampling-helper automatic, inline and force-inline boundaries 486 each;
+// all declarations restored after the force-inline form lost a checked caller.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
