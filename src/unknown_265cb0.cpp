@@ -812,6 +812,11 @@ struct s_object_activity_flags
 // entry input is EAX versus EDX; nullable actor and save timing still differ.
 // Entry/all header helpers 79/79; external object reference 79; const object/actor/settings views 79/79/79.
 // Combined const views 79; header helper with const object 79; existing scalar qualifier and original body restored.
+// score 79 (was 79): retail's second-call re-read looks like a plain spill reload of the parameter
+// (all four saved registers busy); without the qualifier ours keeps the index in ebp and spills the
+// actor instead. NULL actor then conditional lookup re-measured 113 (index eax, header/first edi/ebx);
+// on it: settings as one conditional 170; header getter 113; plain parameter used directly 140;
+// actor declared before the object 113. Settings conditional on the opening body 114.
 // @retail 0x267370
 real function_267370(long volatile object_index)
 {
