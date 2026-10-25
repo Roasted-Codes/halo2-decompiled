@@ -3815,6 +3815,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // score 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
+// score 480 (was 480): frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
+// scope 480; decoding before lookup 481; different-player arm first 490; override selection 480; shared
+// message formulas 575.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4048,6 +4051,9 @@ struct s_score_zone_view
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // score 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
+// score 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
+// differ. Individual palette lifetime 472; exact format mode set 480; common zone maximum scan 886; byte
+// weapon slot 476; early weapon lifetime 689.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
