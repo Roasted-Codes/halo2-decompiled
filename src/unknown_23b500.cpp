@@ -59,6 +59,9 @@ struct s_spawn_scenario_23aea0
 	s_spawn_settings_23aea0 *settings;
 };
 
+// score 105 (was 105): integer destination offset and definition register remain; adjacent
+// component loop/word table 242/242; record cursor/batch cursor 240/240; actual batch bases 239;
+// direct twelve types 254; unsigned component/native records 242/242.
 // @retail 0x23aea0
 void function_23aea0()
 {

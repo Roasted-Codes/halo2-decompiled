@@ -233,6 +233,10 @@ struct s_item_object_2bc1
 /* updates a team's item each tick: how long it has been away from home, its
    return home once it has waited too long, and the points of the player
    holding it */
+// score 97 (was 97): team/entry registers and timer/tally schedule remain; conditional tick
+// publication 93 (plain 93, rejected: inherited self-address input); publication arms 147;
+// direct timer 108; inactive/absent-holder/unexpired exits 97/98/97; split tick increment 97;
+// conditional ticks with direct input 156.
 // @retail 0x2bc990
 void __stdcall function_2bc990(long team)
 {
