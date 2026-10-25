@@ -110,7 +110,7 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // named target distance 119 plain / 122 fast; motion memcpy 142f;
 // point-getter result in case four/five/both 281/195/287f; failure-first arm 179f;
 // output reuse 192f; scale force-inline 142f; distance names / placement capture 122/122f.
-// score 118 (was 118): alignment operands, marker clear join and contribution schedule remain;
+// score 119 (was 118): alignment operands, marker clear join and contribution schedule remain;
 // long marker count 206f; case-assigned short/long count 129/206f;
 // prior motion across scale 203f; elapsed fraction 129f; clamped elapsed 141f;
 // mode/all inputs assigned by arms 536/552f; unchanged preview 129f.
