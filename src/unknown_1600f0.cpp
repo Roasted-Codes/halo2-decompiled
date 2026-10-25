@@ -1017,6 +1017,11 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection registers remain;
 // arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
 // receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
+// score 184 (was 184): icon tail and time/connection register schedule still differ.
+// entry icon zero 261f; outer icon scope 184f.
+// zero before icon init 205f; zero before place format 248f.
+// signed word result 184f; unsigned native result 184f.
+// signed result before icon init 205f; native result before icon init 205f.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
