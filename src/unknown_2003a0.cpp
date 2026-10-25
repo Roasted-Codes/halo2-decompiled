@@ -53,6 +53,9 @@ extern short const g_44aee8[20] =
 // Real flag word/byte views 82; word-only flags 105; multi-use source flags 86;
 // real handle array index/library/pointer fills 82/90/101; flag aliases with
 // indexed/library fills 82/90. Original record and complete body retained.
+// score 82 (was 82): word mask/RMW and sentinel/array-base registers remain.
+// Late next-link/word/long sentinel subsets 82,82,82,82,82,82,82;
+// native-short five-handle counter 99. Initializer body restored.
 // @retail 0x200c20
 void function_200c20(byte const *definition)
 {
@@ -915,6 +918,10 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 // score 69 (was 69): merged short and fallback native/promoted allocation remain.
 // Actual shared script fields: native snapshot 109; direct fields 70; NONE/input
 // results 141/115; descriptor first 109; const table 109; long result/ordinal 119/108.
+// score 69 (was 69): input/result merge and fallback pair remain.
+// Existing bounded-length call 69; native candidate invalidation 75;
+// invalidation plus bounded call 75; negated success 75/75;
+// candidate selection 75/75 (manual/shared length); signed count 76.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {

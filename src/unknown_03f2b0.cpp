@@ -1365,6 +1365,9 @@ struct s_133f70;
 // score 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
 // Native reuse 330; native level change 291; short entry index 352; late success 262; short builder
 // result 216.
+// score 213 (was 213): distance staging, nullable entry and cache/result homes remain.
+// Direct successful-output slot, entry lifetime: long/long 379, long/short 371,
+// short/long 354, short/short 350; loop lifetime 360,372,374,375.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
