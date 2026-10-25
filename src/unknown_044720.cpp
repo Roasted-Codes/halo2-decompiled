@@ -205,6 +205,11 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Transform inline/noinline declarations separately and together 196; chained counts
 // or capacities 194/194; indexed geometry input 229; memory bound/center copies 196/196;
 // radius before displacements 196; both list initialization chains 190.
+// Frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
+// external entry reference 196; read-only geometry 196.
+// common sphere radius 227; bound center at use 203.
+// bound radius before node query 204; unsigned node cache 196.
+// radius plus geometry guard 227; list field initialization 194.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

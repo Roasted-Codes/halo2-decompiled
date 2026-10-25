@@ -77,6 +77,10 @@ void function_2232a0(void)
 // score 151 (was 151): count-one join, slot predicate and terminal/callee registers differ;
 // byte count 169; layout enum 151; completed ordinal at terminal/dispatch/both 151/158/158;
 // direct terminal initializer 151; layout refinement 151; world-layout result 151.
+// count-one paths skip the common count/layout join;
+// slot-predicate materialization and final initializer residences differ.
+// Mode/options receivers, mode result, external count/slot references, typed selected
+// record, terminal record reference and both record receivers each 151 (575 bytes).
 // @retail 0x2234e0
 void function_2234e0(void)
 {

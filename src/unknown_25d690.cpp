@@ -1302,7 +1302,10 @@ bool function_1e1de0(long arg_0);
 // early ESI save, update-result byte and motion-copy registers differ;
 // native observed-state width 187; activity word 178; level word 194; readiness word 174
 // (only one lower, rejected); old-state-first conjunction 179 (fast).
-// score 175 (was 175): early ESI save, literal return byte and motion-copy registers differ.
+// score 175 (was 175): early ESI save/return byte and motion-copy registers remain.
+// Typed observed point, facing, anchor and location 175 each; combined fields 175;
+// combined with const motion 257, literal success 232, guarded single exit 249.
+// early ESI save, literal return byte and motion-copy registers differ.
 // Native behavior/activity levels and activity/location/target/root result receivers 175 each;
 // three actor receivers together 175; all six observations 175.
 // @retail 0x25ccd0

@@ -122,6 +122,9 @@ void function_8dd70(void);
 // short readiness 232; unsigned readiness 234; session-list value initialization 231; long observer result 250; long session prerequisite 243.
 // Signed byte link/observer/session/all readiness 232/231/234/235;
 // signed byte entry predicate 230; original short carriers and clear retained.
+// score 230 (was 230): entry predicate, out-of-line calls and global reloads still differ.
+// Native gateway initialized/zero and handler initialized byte fields 230/230/230;
+// consumer/gateway/both receiver fields 230/230/230; all byte fields and all native fields 230/230.
 // entry normalization, helper boundaries and global-pointer reloads differ;
 // unsigned word link 230; unsigned word observer 230.
 // unsigned word sessions 230; unsigned word all 230.

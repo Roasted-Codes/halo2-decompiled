@@ -489,6 +489,9 @@ bool sound_driver_voice_create_buffer(
 // Descriptor input first 105; flags before clear 105; spatial byte 105; unsigned result 105;
 // pair clear plus direct loop 185; input mixbin snapshot 105; real voice reference 98 (plain);
 // pair clear plus descriptor input first 183.
+// score 98 (was 98): Early saves and descriptor zero/input scheduling still differ.
+// Spatial-table/both plain loops 98/98; first/second/both complete pair copies
+// 230/186/264; native first/second/both descriptors 136/112/136.
 // First/second/both pair aggregates 125/132/160; scoped mixbin aggregates 120;
 // complete descriptor aggregates 229; reused descriptor 171; direct count increment 98;
 // success-path result assignments 110 (caller differs).

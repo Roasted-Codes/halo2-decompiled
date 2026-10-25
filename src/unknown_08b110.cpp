@@ -97,7 +97,11 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 // before the release block. Was: the error codes folded into the release test
 // (32); the error set in an if/else with `result = error` before the release, the
 // index test nested: 25.
-// score 25 (was 25): allocation error 2 still precedes the cleanup return.
+// score 25 (was 25): Allocation failure remains before cleanup. Immutable
+// allocation/handler/size 25/25/25; shared allocator receiver 29; indexed
+// output 34; output element reference 25; signed-word error 41; direct failure
+// result on the nested-index body 40.
+// allocation error 2 still precedes the cleanup return.
 // Reused size output 80; signed output 25; initialized output 45; globals/count/handler
 // references 25/25/25; native item-size local 25; result after release 41.
 // @retail 0x8b110

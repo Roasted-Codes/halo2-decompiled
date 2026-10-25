@@ -106,7 +106,7 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // Read-only forward 144f; alignment snapshot 414f; named alignment 144f;
 // marker failure break 185f; in-place contribution 204f; scale result 149f;
 // aggregate sum 210f; shared retreat scale 144f.
-// score 119 (was 136): alignment product, facing dot, clear join and contribution schedules remain;
+// score 118 (was 136): alignment product, facing dot, clear join and contribution schedules remain;
 // named target distance 119 plain / 122 fast; motion memcpy 142f;
 // point-getter result in case four/five/both 281/195/287f; failure-first arm 179f;
 // output reuse 192f; scale force-inline 142f; distance names / placement capture 122/122f.
