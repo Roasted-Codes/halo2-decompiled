@@ -414,6 +414,9 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 63 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
+// duration and timer names, ticks first, timer scope, named ticks first, named
+// timer scope, direct slot and named direct slot each 63. Opening body restored.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
@@ -605,6 +608,12 @@ short actor_behavior_find_level(long owner_index, short type);
 // score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch homes differ;
 // source store order 145, movement result 142, positive membership scope 161,
 // role names 144, native zero initialization 144, combined setup/result 141.
+// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
+// Double best distance 214; failure-default active result 172; inactive success exit 188;
+// ordered member rejection 144; native point memcpy 144.
+// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
+// Full-width result 157; setup-scope best distance 155; early native workspaces 144;
+// initialized query distance 167; shared member iterator 160 (frame 0x88).
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

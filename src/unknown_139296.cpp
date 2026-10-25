@@ -357,6 +357,9 @@ bool function_22acb4(long player_index);
 // NONE/one/zero 197; native fourth on current enums 299; signed third/fourth/both 271/299/285.
 // Fourth-mask code/side/flag-a/flag-b/flag-c observations once: 190/260/209/209/209;
 // all five/code plus flag-a/flag-b plus flag-c: 271/209/287. Second-mask spill remains.
+// score 190 (was 190): second-mask spill and persistent constant homes remain.
+// Individual redundant clears removed: first16 284; second16 281; both16 290;
+// first2/4/8 286/286/290; first2+16 301; initial third128 249. All restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
@@ -1072,10 +1075,15 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // offset before setup 20; original count observations with early offsets 125/121;
 // guard-assigned count 20; offset-produced mask zeros 125. Native-result 12 remains
 // unmatched: first count takes EBX and offset spills; match-only result form restored.
+// score 12 (was 38): the success byte is retail's (set, cleared after a failed draw, returned);
+// the first loop's count takes EBX and its offset spills, where retail keeps the offset in EBX.
+// Indexed loops over captured counts 118; their call result stored 118; first loop count declared
+// before its offset 42; first offset alone outside the guard 118; one shared offset/count 41;
+// first loop indexed 118; every count captured before its guard 20.
 // @retail 0x13a3c6
 bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
 {
-	bool condition_failed = false;
+	bool success = true;
 	s_13a532 const *local_2 = (s_13a532 const *)g_4e3b44[arg_1 & 0xffff].bytes;
     word local_3 = 0;
     word local_4 = 0;
@@ -1083,24 +1091,23 @@ bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
     word local_6 = 0;
     s_13ad48_item const *local_7;
     function_13a050(arg_3, arg_2, arg_4, &local_7, &local_3, &local_4, &local_5, &local_6);
-    if (local_2->field_20 > 0)
+    long offset = 0;
+    long count = local_2->field_20;
+    if (count > 0)
     {
-        long local_8 = 0;
-        long local_11 = local_2->field_20;
         do
         {
-            byte const *local_9 = local_2->field_24 + local_8;
+            byte const *local_9 = local_2->field_24 + offset;
             if (function_13ac87((s_condition_masks const *)(local_9 + 8), local_3, local_4,
                 local_6, (s_condition_subject const *)local_7, local_5))
             {
                 real local_10[4];
                 function_13ad48(arg_2, local_9 + 4, local_10, arg_3, local_7);
-                bool local_12 = function_22b7dd(local_9, arg_2);
-                if (!local_12) condition_failed = true;
+                if (!function_22b7dd(local_9, arg_2)) success = false;
             }
-            local_8 += 0x50;
+            offset += 0x50;
         }
-        while (--local_11);
+        while (--count);
     }
     if (local_2->field_8 > 0)
     {
@@ -1114,8 +1121,7 @@ bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
             {
                 real local_10[4];
                 function_13ad48(arg_2, local_9 + 4, local_10, arg_3, local_7);
-                bool local_12 = function_22af8d(arg_2, arg_3, (s_bitmap_widget_22ae21 const *)local_9);
-                if (!local_12) condition_failed = true;
+                if (!function_22af8d(arg_2, arg_3, (s_bitmap_widget_22ae21 const *)local_9)) success = false;
             }
             local_8 += 0x64;
         }
@@ -1133,14 +1139,15 @@ bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
             {
                 real local_10[4];
                 function_13ad48(arg_2, local_9 + 4, local_10, arg_3, local_7);
-                bool local_12 = function_22a9bc((s_text_widget const *)local_9, arg_2, (s_text_widget_state const *)arg_3, (color4f const *)local_10);
-                if (!local_12) condition_failed = true;
+                if (!function_22a9bc((s_text_widget const *)local_9, arg_2, (s_text_widget_state const *)arg_3,
+                    (color4f const *)local_10))
+                    success = false;
             }
             local_8 += 0x54;
         }
         while (--local_11);
     }
-	return !condition_failed;
+	return success;
 }
 
 // @retail 0x13a532

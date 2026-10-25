@@ -353,11 +353,17 @@ extern long g_51ec0c;
 
 /* joins the friend's game (mode 1 to 4: how a squad already formed comes
    along) */
-// score 80 (was 80): matching 0x14 frame; cold state/mode block placement still differs,
+// score 80 (was 80): Cold state/mode blocks precede the main join block; body remains twelve bytes short.
+// state ranges 125; cold range first 99; availability gate 126; common switch exits 80;
+// later join-type lifetime 155; timestamp workspace 80; gate/common exits 126; ranges/lifetime 137.
+// matching 0x14 frame; cold state/mode block placement still differs,
 // with twelve missing bytes. Earlier join-mode widths and session-record forms excluded;
 // tried cold cases first 80; state nine first 80; entry join result 96; shared player gate 104;
 // leave from join result 123; positive title gate 101; zero-time initializer 80;
 // query declarations first 80.
+// score 80 (was 80): native/numeric mode switches 116/116; mode-one rejection first 81;
+// leave/screen mode first 79/112; screen-first mode switch 116; non-three state outcome first 95;
+// invitation test outcome 103. One-point leave-first gain rejected; body restored.
 // @retail 0x2395dc
 void __stdcall function_2395dc(XONLINE_FRIEND *friend_, long controller_index, long mode)
 {
@@ -883,6 +889,12 @@ bool __stdcall function_2399da(long controller_index)
 }
 
 /* sets the selected player's rank in the clan (NONE removes them) */
+// score 90 (was 90): identity/rank registers and the extra move before removal remain; selection guard,
+// permission guard and both 90 each; update-first branch with neither/either/both guards 92 each;
+// requested-rank lifetime 90. Frame and all call arguments preserved on restore.
+// selected identity ECX/rank EAX and extra remove-call copy remain.
+// Producer pointer scope/name, parameter-only rank name/both names 90/90/90/90;
+// own-rank/task lifetime, immutable pointer and native Boolean homes 90/90/90/90.
 // @retail 0x2393ae
 void __stdcall function_2393ae(long controller_index, long rank)
 {

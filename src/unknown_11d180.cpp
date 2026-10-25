@@ -153,11 +153,13 @@ void function_11d610(quaternionf *q)
 // order 20; products written straight into out 32; cross3f into a local 24, into out
 // then scaled 74; branches swapped (s < 0.001f) 38; square root in its own local,
 // clamp as a ternary, sqrtf, i or k terms with swapped operands 11 each.
+// score 11 (was 15): output before inputs in the parameter list recovers the call setup and dot product;
+// the cross-product multiply and reciprocal reload schedule still differs. Arithmetic body unchanged.
 // @retail 0x11d6a0
 void function_11d6a0(
+	quaternionf *out,
 	vector3f const *a,
-	vector3f const *b,
-	quaternionf *out)
+	vector3f const *b)
 {
 	real s = (dot3f(a, b) + 1.f) * 2.f;
 	if (!(s > 0.f))

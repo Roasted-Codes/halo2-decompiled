@@ -802,7 +802,7 @@ PRIVATE __forceinline bool device_channel_play(long name, long device_index, sho
 
 		result = state->channel_play_named(channel, name, 0x40);
 		if (!result)
-			result = state->overlay_play(channel, 0x40, name, 0x7000101, 0x7000101);
+			result = state->overlay_play_for_class(channel, 0x40, 0x7000101, 0x7000101, name);
 		function_b7360(device_index);
 	}
 	return result;

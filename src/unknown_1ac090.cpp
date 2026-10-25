@@ -9,6 +9,7 @@
 #include "unit_requests.h"
 #include "unknown_2605d0.h"
 #include "unknown_2626b0.h"
+#include "vector_products.h"
 
 /* the state of the slots of types 0x2c and 0x2b */
 struct s_slot_2c
@@ -293,6 +294,8 @@ short __stdcall function_1ac3f0(long actor_index)
 // update 43; duration scope 43; entry delay 43; early rate 37/333 (one-use field copy, rejected).
 // Scale draw after resets 0d/12/10/25/3a/0c/22/3b: 37/35/36/37/37/39/39/40;
 // after 12 kept at 317 bytes; seed reload and non-popping multiply still differ.
+// Scale-first product update 47; duration-owned product 43; first output/input guard scope
+// 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -433,6 +436,10 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 // missing prop early return 24; alignment product operands 30; unsigned short mode 24;
 // timer homes at entry 24; request home in active state scope 24;
 // low word actor slot used by both lookups 155. Restored.
+// score 24 (was 24): frame 0x28 agrees; early pool load, mode registers and restore schedule remain.
+// Receiver names/separate initialization/constant receivers/nested facing test 24 each;
+// facing eligibility value 26; direct direction-bit snapshots 39; request memset 195;
+// request aggregate initialization 190. All executable forms restored.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -619,6 +626,9 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // object first: short 80/80, long 77/77.
 // Object index once 58; element-first 58; property once 58; element-first 57; both
 // indices once 58; element-first 57; original reads element-first 58; tick receiver 55 (below gate).
+// Separate continuation, word/native with arms/conditional: branch 55/58/56/59; entry
+// 55/58/56/59 (three-point gain rejected). Tag/prop/state inline and noinline declarations,
+// singly and together, 58 each. Independent default reload and saved roles still differ.
 // @retail 0x1ad5b0
 short __stdcall function_1ad5b0(long actor_index, s_slot *slot, bool active)
 {
@@ -719,6 +729,11 @@ void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
 
+// score 174 (was 181): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
+// Result first 203; request outer scope 187; role names 181; shared point differences 179;
+// failure result before release 207; shared cross product 174.
+// Count name with shared cross 174; request-output declarations first 174;
+// outer vector workspaces 174; separate direction vectors 171; request defaults with overrides 186.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -793,9 +808,11 @@ bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 					local_18 += local_15.i * local_17.i;
 					if (local_18 > 0.707106769f)
 					{
-						real local_20 = (local_16.i * local_15.j - local_16.j * local_15.i) * local_17.k;
-						local_20 += (local_16.k * local_15.i - local_16.i * local_15.k) * local_17.j;
-						local_20 += (local_16.j * local_15.k - local_16.k * local_15.j) * local_17.i;
+						vector3f side;
+						cross3f(&local_16, &local_15, &side);
+						real local_20 = side.k * local_17.k;
+						local_20 += side.j * local_17.j;
+						local_20 += side.i * local_17.i;
 						local_20 *= local_19;
 						if (local_20 > 1.0f)
 							function_f47d0(local_14, 1);
@@ -859,6 +876,10 @@ struct s_1ac612
 // source actor named after index home 29; best index and source actor named homes 29;
 // candidate difference shared helper 29; marker difference shared helper 29;
 // forward product shared helper 135; up product shared helper 41. Restored.
+// score 29 (was 29): frame 0x8c agrees; EBP/EDI and offset/selection spill homes remain exchanged.
+// Native source location 58; query outputs at loop/entry and source receiver at entry 29 each;
+// marker reference/readonly candidate tag/distance predicate/aligned up-product scope 29 each.
+// All executable forms and the experimental include restored.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)
@@ -991,6 +1012,9 @@ struct s_1ac9e1
 // literal returns and names 63; ordinary completion local 75.
 // Post-location count char/short/long 52/48/51; shared direction 48; count plus direction
 // 52/48/51; declared previous endpoint 48; reference-success completion/single result 63/63.
+// Native/byte common result 121/110; ordinary common completion 60; result initializes
+// completion 48; result clears history 48; both phases 48; completion entry scope 48;
+// completion from unblocked query 58. Count/initialization scheduling still differs.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)

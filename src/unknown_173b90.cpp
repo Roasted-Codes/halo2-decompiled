@@ -1011,6 +1011,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
 // preference 646; child constant bit stores 220.
 // score 213 (was 213): Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
+// Direct render-table expression 222; request location at rendering 327; byte view result 213;
+// ordinary while location traversal 213; camera up copied first 213.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {
@@ -1137,6 +1139,12 @@ bool function_17afd0(long effect_index, long value);
 // set) 101 plain, kept; stack-bool rename 102; bit 9 as a named bitfield 102; nested
 // attached else-if 102; wide view 102; wide effect index 102; two-step same-view 102;
 // flag as false-init plus conditional set 144 (fast previews 107/102/144).
+// score 101 (was 101): NONE/owner coalescing, BL availability and Boolean homes remain.
+// View-query inline/noinline, attachment noinline, draw inline/noinline,
+// scan inline/noinline and paired predicate boundaries all 102 fast, tying preview.
+// NONE/owner sharing and availability/Boolean homes remain.
+// Next-used helper entry/advance/both 200/202/244; native draw/query+draw bits 101/128;
+// native bits with entry/advance helper 195/198; inline/outline-inline query 101/101.
 // @retail 0x174220
 // score 101 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
 // availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag

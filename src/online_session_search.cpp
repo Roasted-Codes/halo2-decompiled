@@ -204,7 +204,8 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 50 (was 50): current/bound registers and request scheduling differ; native field layout,
+// score 50 (was 50): current/bound registers and request fill differ; explicit helper current 103, total 51, both 51; standard lower/upper/both clamps 50; combined 51; field current 50 (round 117).
+// current/bound registers and request scheduling differ; native field layout,
 // typed bound/flag/request groups 0..7: 50, 50, 50, 50, 50, 50, 50, 50.
 // frame 0x20 agrees; ECX/EAX allocation and request clear/fill scheduling differ;
 // tried request count before other fields 48; request assignments in observed order 50;
@@ -212,6 +213,8 @@ extern "C" void _ReadWriteBarrier(void);
 // bound result homes declared together 50; task result used for store and test 50;
 // explicit clock selection 53; direct zero initialized request 87;
 // current snapshot inside active guard 50; both bounds declared before current 50. Restored.
+// score 50 (was 50): shared bound workspace 50; default score first 98; invalid score inputs first 50;
+// named progress 50; lower/upper/both output clamps 105/104/98; inactive current first 58.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -585,7 +588,9 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
-// score 21 (was 21): shared true return remains late; real final-key table trials:
+// score 21 (was 21): shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
+// score 21 (was 21): shared true exit remains late; reversed signed operands at primary 25, latency 21, tertiary 21, key pairs 21/25, all keys 25 (round 117).
+// shared true return remains late; real final-key table trials:
 // local long decisions/relation 81/109, short 99/118; static long 48/85, short 70/94.
 // shared true return remains after later tests, first +0x17;
 // cached primary keys 21; latency keys 21; third keys 21; primary/latency 21;
@@ -679,10 +684,16 @@ done:
 	return result;
 }
 
-// score 128 (was 128): frame 0x10 agrees; initial results observation,
+// score 128 (was 128): results observation, details cursor base and kind/count homes differ.
+// Initial results snapshot 183; scalar/cursor role names 128; exact end-pointer test 128;
+// repeated-use computed distance 128; shared maximum bonus 128; persistent details cursor 154.
+// frame 0x10 agrees; initial results observation,
 // details/score cursor base and input/score homes remain. Native score fields
 // 213; complete count-clamp arms 213; named interpolation fraction 213; indexed
 // result loop 214; single total-score accumulator 229.
+// Initial snapshot plus persistent details cursor 190; with invalid-entry continue 199;
+// early details-state observation 196; count/value/kind read order 128;
+// ordinary-field defaults before details 173. Original body retained.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {
