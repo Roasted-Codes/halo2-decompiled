@@ -377,7 +377,8 @@ real function_14b240(s_14b240_owner const *owner, s_bsp3d_disk const *disk, poin
 // test are not jump-threaded as ours are. Tried: a ternary 44, the count in
 // a local 44, count > index 44, an inline helper returning NONE early 44,
 // (long)index 44, the index lookup moved out of the cluster test 49, a copy
-// of the scenario view 101.
+// of the scenario view 101, (short)*sky_index at each use 44, tag_index
+// declared first 44, a long copy of the index for the compare 44.
 // @retail 0x14b360
 bool cluster_get_sky(long cluster_index, long *sky_index, vector3f *vector, bool *found)
 {
