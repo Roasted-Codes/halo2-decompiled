@@ -77,6 +77,9 @@ void function_17e670(s_effect_source *source, point3f const *point, long tag_ind
 #define CLUSTER_MASK_TEST(mask, index) ((mask)[(index) >> 5] & (1 << ((index) & 0x1f)))
 
 /* Starts and stops cluster effects when the active cluster masks change. */
+// score 16 (was 16): frame and prefix agree; palette/entry register ownership differs from +0xba.
+// Shared entry 17; entry plus palette 17; shared index 32; const shared entry 17;
+// direct tag 52; tag after angles 28; tag after direction 52; shared direction helper 17.
 // @retail 0x23aad0
 void __stdcall function_23aad0(long previous_address, long current_address, long count)
 {
@@ -169,6 +172,10 @@ PRIVATE __forceinline void vertex_decode_23ac30(short x, short y, short z,
 	vertex_decode_ranges_23ac30(x, y, z, bounds, &range, point);
 }
 
+// score 62 (was 62): format 3 offset register and format 4 base/index lifetime remain.
+// Indexed native decoder 582; ordinary index 582; native input reference/value 578/549;
+// native axis bounds 62; range value input 267; range output reference 62; natural format
+// case order 127; static indexed/input templates 582/578.
 // @retail 0x23ac30
 void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 	s_vertex_bounds_23ac30 const *bounds, point3f *point, long *node)

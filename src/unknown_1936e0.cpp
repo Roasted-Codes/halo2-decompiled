@@ -238,6 +238,15 @@ void function_193b30(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills a variant of type 1, or of type 2 when flag is set */
+// score 34 (was 34): scale now enters EAX and is saved in EBX as in retail; (held: the 24 wrote the type as 2 - !flag, six bytes long, and moved the unmatched caller 0x193c70 from 203 to 208)
+// mode selection and settings-copy scheduling still differ (98/92 bytes).
+// Fast: settings memcpy 34; memmove 15 (extra call, reverted); settings before
+// initializer 34, before delays 34; inline 34; noinline 34; Boolean mode 37;
+// disabled mode 24; disabled conditional 34; decrement mode 33; increment mode 33;
+// bool disabled part 34; integer disabled part 24; byte option 34; signed byte option 34.
+// scale arrives in EBX rather than EAX saved to EBX;
+// inline/noinline declarations 34; settings memcpy/field stores 34;
+// numeric type after/before delays 37; delay-table rename/scope 34.
 // @retail 0x193ba0
 void function_193ba0(long scale, bool flag, s_built_variant *variant, long name_string, long description_string, dword field_8, s_variant_place_settings const *settings, long field_59c)
 {
@@ -260,6 +269,10 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
+// score 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
+// adds a save and shifts settings homes; constant argument pushes also differ.
+// Native zero initialization 199; complete aggregate values 307; grouped
+// place cases 204; case returns 203; zero initialization and grouping 206.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
@@ -277,9 +290,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 1:
 	{
-		s_variant_type4_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type4_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 3;
 		settings.last_team = 4;
@@ -304,9 +315,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 3:
 	{
-		s_variant_type4_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type4_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 5;
 		settings.last_team = 8;
@@ -322,9 +331,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 4:
 	{
-		s_variant_type5_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type5_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 3;
 		settings.last_team = 4;
@@ -334,9 +341,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 5:
 	{
-		s_variant_type5_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type5_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 6;
 		settings.last_team = 8;
@@ -346,9 +351,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 6:
 	{
-		s_variant_team_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_team_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 2;
 		settings.last_team = 4;

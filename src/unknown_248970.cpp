@@ -49,17 +49,23 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
+// score 252 (was 256): frame 0x10 versus 0x14, stacked activation and location/settings homes remain.
+// Prior shared position base 256; child byte stride 258; direct input 265; radius expression 256;
+// selected influence 259; active first 253; stored gate 256; activation default 284.
+// Early activation 246 with inherited address read rejected; scalar homes 256; short viewer 299;
+// allocation failure first 256; maximum branches 257; direct input/early activation 253;
+// delayed child handle 252 kept; one initialized/link record pointer 300.
+// frame, boolean convention and child-loop homes differ. Tried shared position field base 256; child record byte stride 258; direct location input 265; distance through radius 256; reuse selected influence 259; active branch first 253; stored activation gate 256; activation influence default 284.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
 {
-	s_particle_location_datum *const *location_reference = &arg_0;
-	s_248970 *local_20 = (s_248970 *)*location_reference;
-	long local_0 = local_20->field_4;
+	s_248970 *local_20 = (s_248970 *)arg_0;
+	local_20->field_2 = arg_5;
 	s_248971 *local_1 = (s_248971 *)arg_2->function_1751d0();
+	long local_0 = local_20->field_4;
 	long local_2 = local_1->field_30;
 	local_20->field_10 = arg_4->position;
-	local_20->field_2 = arg_5;
 	if (!arg_5)
 	{
 		local_20->field_1c = 0.f;

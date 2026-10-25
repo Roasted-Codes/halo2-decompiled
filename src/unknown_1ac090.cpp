@@ -117,6 +117,12 @@ void __stdcall function_1ada70(long actor_index, s_slot *slot);
 
 /* ---- slot type 0x2c ---- */
 
+// score 12 (was 12): conversion spills still use the rounding slot; timer-setting boundary 29, 29, 29, 33; output first 12, output scope 12, byte before rounding 19, native int output 12 (round 115).
+// integer conversion spills use the rounding slot rather than the parameter home;
+// existing rounding helper 29; named tick value with helper 29; later state with helper 29;
+// direct state fields with helper 29; unit range with helper 29; native range with helper 29;
+// unit range with parameter home 12; shared range with parameter home 12; existing time
+// conversion 29; time conversion and later state 29; unit range and time conversion 29.
 // @retail 0x1ac090
 bool __stdcall function_1ac090(long actor_index, s_slot *slot)
 {
@@ -278,6 +284,14 @@ short __stdcall function_1ac3f0(long actor_index)
 	return result;
 }
 
+// score 43 (was 43): frame four agrees; scale is popped at the first timer multiply and stores differ;
+// tried first timer shared conversion direct 114; first timer shared conversion named seconds 103;
+// second timer shared conversion 49; both timers shared conversion 121; integral tick rate 47;
+// shared timer homes at entry 49; scale first timer product 43; chained boolean resets 46;
+// existing timer writer for first timer 47; double tick rate 43. Restored.
+// first duration multiply pops scale early and reset stores cross the scale
+// addition. Duration-seconds name 43; ticks name 43; both names 43; both timer names 43; product
+// update 43; duration scope 43; entry delay 43; early rate 37/333 (one-use field copy, rejected).
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -409,6 +423,12 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
+// score 24 (was 24): early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
+// frame 0x28 agrees; pool-data load and mode-lookup registers still differ;
+// tried full width mode 39; mode tests reversed 27; inactive state branch first 168;
+// missing prop early return 24; alignment product operands 30; unsigned short mode 24;
+// timer homes at entry 24; request home in active state scope 24;
+// low word actor slot used by both lookups 155. Restored.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -590,6 +610,9 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 	return true;
 }
 
+// score 58 (was 58): default reload and saved-register roles differ. Branch-assigned defaults,
+// valid object first: short result with entry/scoped state 76/76, long result 73/73; invalid
+// object first: short 80/80, long 77/77.
 // @retail 0x1ad5b0
 short __stdcall function_1ad5b0(long actor_index, s_slot *slot, bool active)
 {
@@ -826,6 +849,12 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
+// score 29 (was 29): actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
+// frame 0x8c agrees; EBP/EDI, two spill homes and product/address scheduling still differ;
+// tried result declared first 30; best index named before actor home 29;
+// source actor named after index home 29; best index and source actor named homes 29;
+// candidate difference shared helper 29; marker difference shared helper 29;
+// forward product shared helper 135; up product shared helper 41. Restored.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)
@@ -952,11 +981,16 @@ struct s_1ac9e1
 	bool field_2e;
 };
 
+// score 48 (was 60): shared result exit restores the blocked-output CL read; count in AL,
+// immediate completion store and tail join differ. Literal query returns 63; native history points
+// 60; both 63; common result exit 48; native points and common exit 48; workspace names 60;
+// literal returns and names 63; ordinary completion local 75.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)
 {
 	s_actor_view *local_1 = actor_get(arg_0);
+	bool result = false;
 	bool local_0 = false;
 	arg_7->field_7 = false;
 	s_262b40_result *local_2 = function_262b40(arg_1);
@@ -964,48 +998,53 @@ bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 		*(long *)((byte *)local_2 + 0x14) != NONE &&
 		*(long *)((byte *)local_2 + 0x14) != 0xffff)
 	{
-		bool local_8 = function_1f4a20(arg_2, arg_0, arg_1, arg_6, false, &arg_7->field_1c,
+		result = function_1f4a20(arg_2, arg_0, arg_1, arg_6, false, &arg_7->field_1c,
 			&arg_7->field_8, &arg_7->field_2c, &local_0);
-		if (local_8)
+		if (result)
 		{
 			arg_7->field_19 = true;
 			arg_7->field_2e = false;
 			arg_7->field_7 = true;
 			arg_7->field_1 = false;
-			return local_8;
+			goto done;
 		}
 		if (local_0)
-			return local_8;
+			goto done;
 	}
-	s_reference local_3 = function_2626b0(arg_0, arg_1, arg_3, arg_4, arg_5, true);
-	arg_7->field_1 = false;
-	s_reference local_4 = g_470fa0;
-	if (*(long *)&local_3 == *(long *)&local_4)
 	{
-		actor_get(arg_0)->unknown040 = false;
-		return false;
-	}
-	arg_7->field_19 = false;
-	volatile bool local_5 = true;
-	if (local_1->unknown539 > 0)
-	{
-		function_26c180(arg_0);
-		s_type_c3b527 const *local_6 = (s_type_c3b527 const *)((byte *)local_1 +
-			0x52c + local_1->unknown539 * 0x1c);
-		s_type_c3b527 const *local_7;
-		if (local_1->unknown539 > 1)
-			local_7 = (s_type_c3b527 const *)((byte *)local_1 +
-				0x510 + local_1->unknown539 * 0x1c);
-		else
-			local_7 = (s_type_c3b527 const *)((byte *)local_1 + 0x27c);
-		if (local_6 && local_7)
+		s_reference local_3 = function_2626b0(arg_0, arg_1, arg_3, arg_4, arg_5, true);
+		arg_7->field_1 = false;
+		s_reference local_4 = g_470fa0;
+		if (*(long *)&local_3 == *(long *)&local_4)
 		{
-			function_210be0(local_6, local_7, &arg_7->field_8);
-			arg_7->field_8.k = 0.0f;
-			arg_7->field_7 = function_30bf0(&arg_7->field_8) > g_45dbd8;
+			actor_get(arg_0)->unknown040 = false;
+			result = false;
+			goto done;
 		}
+		arg_7->field_19 = false;
+		volatile bool local_5 = true;
+		if (local_1->unknown539 > 0)
+		{
+			function_26c180(arg_0);
+			s_type_c3b527 const *local_6 = (s_type_c3b527 const *)((byte *)local_1 +
+				0x52c + local_1->unknown539 * 0x1c);
+			s_type_c3b527 const *local_7;
+			if (local_1->unknown539 > 1)
+				local_7 = (s_type_c3b527 const *)((byte *)local_1 +
+					0x510 + local_1->unknown539 * 0x1c);
+			else
+				local_7 = (s_type_c3b527 const *)((byte *)local_1 + 0x27c);
+			if (local_6 && local_7)
+			{
+				function_210be0(local_6, local_7, &arg_7->field_8);
+				arg_7->field_8.k = 0.0f;
+				arg_7->field_7 = function_30bf0(&arg_7->field_8) > g_45dbd8;
+			}
+		}
+		result = local_5;
 	}
-	return local_5;
+done:
+	return result;
 }
 
 

@@ -52,6 +52,8 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 
 /* the next recent player after the iterator's: a valid, online, known player
    with a name; iterator starts at the first entry and ends at NONE */
+// score 43 (was 43): Early index save, next-index register, loop rotation and hoisted mask still differ.
+// existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {
@@ -101,6 +103,9 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
+// score 113 (was 121): frame 0x0c versus 0x10 and properties/buffer
+// register/stack split remain. Entry cursor 125; property cursor 135;
+// per-record property counts 113; count homes 121; cursor/count combination 132.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -129,8 +134,6 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 			properties->type = 4;
 			properties->unknown08 = (long)buffers;
 			properties++;
-			property_capacity--;
-			properties_used++;
 			buffers += 0x40;
 			buffer_capacity--;
 			buffers_used++;
@@ -141,8 +144,8 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 				properties[j].unknown08 = 0;
 			}
 			properties += 3;
-			property_capacity -= 3;
-			properties_used += 3;
+			property_capacity -= 4;
+			properties_used += 4;
 		}
 	}
 	if (record_count)
@@ -510,13 +513,7 @@ bool function_7fb50(void)
 {
 	bool local_0 = false;
 	s_type_acf665 local_1;
-	memset(&local_1, 0, sizeof(local_1));
-	local_1.signature = FILE_REFERENCE_SIGNATURE;
-	local_1.location = NONE;
-	if (local_1.flags & 1)
-		function_1373c0(local_1.path);
-	function_137320(local_1.path, g_450c68);
-	local_1.flags |= 1;
+	file_ref_create(&local_1, false, g_450c68);
 	if (g_467264.handle == INVALID_HANDLE_VALUE)
 	{
 		async_create_file_blocking((file_reference_data const *)&local_1, 2, 4, 4, 2, &g_467264);
@@ -530,7 +527,7 @@ bool function_7fb50(void)
 		function_163ba0((dword *)&g_4cf974, &g_4cf978, 0x8e44);
 		g_4cf970 = 8;
 		function_120d50(&g_467260, false);
-		function_1a1050(g_467264, &g_4cf970, 0x8e4c, 0, 0, 2, 6, NULL, &g_467260);
+		function_1a1050(g_467264, &g_4cf970, 0x8e4c, 0, s_file_write_flags(0), 2, 6, NULL, &g_467260);
 		local_0 = true;
 	}
 	return local_0;
@@ -728,6 +725,10 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
+// score 300 (was 368): frame 0x0c agrees; removed-index registers, upper
+// bound selection and copy-loop induction remain. Paired range arms 373;
+// native FILETIME 314; short adjustment 300; unsigned repair counter 364;
+// range/time/short combination 375; native time and short adjustment 357.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
@@ -769,14 +770,14 @@ long function_7fe90(const s_cached_player_identity *identity, long position, con
 			for (long i = upper - 1; i >= lower; i--)
 				g_4cf98c[i + 1] = g_4cf98c[i];
 		}
-		long change = downward ? -1 : 1;
+		short change = downward ? -1 : 1;
 		for (long i = 0; i < 350; i++)
 		{
 			s_player_configuration_cache_entry *entry = &g_4cf98c[i];
-			if (entry->previous_other >= lower && entry->previous_other <= upper) entry->previous_other += (short)change;
-			if (entry->next_other >= lower && entry->next_other <= upper) entry->next_other += (short)change;
-			if (entry->unknown58 >= lower && entry->unknown58 <= upper) entry->unknown58 += (short)change;
-			if (entry->next >= lower && entry->next <= upper) entry->next += (short)change;
+			if (entry->previous_other >= lower && entry->previous_other <= upper) entry->previous_other += change;
+			if (entry->next_other >= lower && entry->next_other <= upper) entry->next_other += change;
+			if (entry->unknown58 >= lower && entry->unknown58 <= upper) entry->unknown58 += change;
+			if (entry->next >= lower && entry->next <= upper) entry->next += change;
 		}
 		if (g_4cf97c >= lower && g_4cf97c <= upper) g_4cf97c += change;
 		if (g_4cf980 >= lower && g_4cf980 <= upper) g_4cf980 += change;

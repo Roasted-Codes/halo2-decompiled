@@ -45,7 +45,11 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 
-// score 164 (was 164): Frame 0x28 agrees; separate pool homes and iterator/actor lifetimes differ.
+// score 164 (was 164): frame 0x28 agrees; separate pool/iterator homes,
+// null-result timing and actor-successor residency remain. Inactive early exit
+// 164; native flag mask 164; successful inner-update continue 164; pointer-result
+// for loop 275; early-exit/mask/continue combination 164.
+// Frame 0x28 agrees; separate pool homes and iterator/actor lifetimes differ.
 // Native record iterator 222; long partition index 163; full actor view 164; outer actor workspace 164; ineligible-first branch 171.
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive continue 164; direct datum 164; unsigned successor 164.
 // @retail 0x1c7bb0
