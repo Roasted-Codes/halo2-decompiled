@@ -75,6 +75,9 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 // unsigned handle storage 22; unsigned index 25; status role name 22; nested success admission 52; loop
 // proven callback status 121; completion status invariant 77; inline rollback declaration 22; noinline
 // rollback declaration 22.
+// identifier writer inline/noinline 22; index before outcome stores 106; index before admission 25;
+// pretested callback with separate rollback tails 106; completed handle lifetime 22; status returns 83;
+// final room-failure guard 22.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {

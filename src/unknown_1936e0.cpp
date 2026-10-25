@@ -236,6 +236,9 @@ void function_193b30(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills a variant of type 1, or of type 2 when flag is set */
+// score 34 (was 34): scale still enters EBX rather than EAX; typed mode enum 34;
+// entry enum value 34; enum success update 33; complete enum outcomes 34; entry enum outcomes 32;
+// enum member publication 34; enum last member first 34; enum complete settings value 13 (one-use copy rejected).
 // @retail 0x193ba0
 void function_193ba0(long scale, bool flag, s_built_variant *variant, long name_string, long description_string, dword field_8, s_variant_place_settings const *settings, long field_59c)
 {
