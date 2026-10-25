@@ -58,7 +58,11 @@ bool __stdcall function_215f40(long type, byte *buffer)
 	return name[0] != 0;
 }
 
-// score 20 (was 20): formatted-name address reuse still shortens the branch.
+// score 20 (was 20): formatted-name address reuse and the resulting short branch remain; ordinary
+// type input 20; direct api status result 21; function scope drive root 20; role named buffer homes
+// 20; explicit library path clear 58; byte status result 54; drive before status lifetime 20; query
+// failure returns 63.
+// formatted-name address reuse still shortens the branch.
 // Long success result 52; initialized name/root arrays 67/64; path after
 // name success 23; function scope buffers 35; drive root result 29;
 // format failure single exit 20; nested validation 20.
@@ -103,6 +107,10 @@ bool unicode_string_list_has_string(long tag_index, long string_handle);
 void function_217a80(long string_handle_2, long language, word *buffer);
 word *unicode_string_append(word *destination, word const *source, long maximum_count);
 
+// score 8 (was 8): prefix address is reused in ESI after formatting instead of recomputed; existing
+// copy helper 8; ordinary input parameters 8; guard owned prefix buffer 12; prefix value
+// initialization 69; native string handle 8; out of line format declarations 8; available prefix
+// buffer 21; lookup result function scope 8.
 // @retail 0x216da0
 bool function_216da0(long type, wchar_t *name, wchar_t const *display_name, long language)
 {

@@ -71,7 +71,16 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 }
 
 /* kind 3: creation of an entity and the entities linked to it */
-// score 22 (was 22): callback setup, post-call index reload/status stores and rollback setup differ.
+// score 22 (was 22): virtual arguments, index/status reload and rollback setup differ;
+// unsigned handle storage 22; unsigned index 25; status role name 22; nested success admission 52; loop
+// proven callback status 121; completion status invariant 77; inline rollback declaration 22; noinline
+// rollback declaration 22.
+// callback argument setup, index reload and rollback order differ;
+// masked entry index 22; constant member dispatch 78; actual entry pointer 22;
+// admitted mask/owner snapshots 52/52; peer receiver refresh 24;
+// direct initial receiver 22; mask plus member dispatch 101;
+// persistent entry-array base 91; separate callback handle 22. Body restored.
+// callback setup, post-call index reload/status stores and rollback setup differ.
 // Earlier callback adapter 73; member dispatch 78; parallel cursors 92; status assignment 102;
 // field references 52; no counter self-read 97; grouped arrays 39; byte status 22; failure first 57;
 // common rollback 88; element pointers 22; argument record 46. Array role names 22; early release

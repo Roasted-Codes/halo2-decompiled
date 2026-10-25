@@ -1394,6 +1394,9 @@ void function_170630(long player_index);
 // score 7 (was 7): command/base registers and channel address setup differ;
 // three channel-pointer orders 7/7/7; delta pointer early/late 7/7;
 // command pointer 7; guard return 7; motion-channel view 7.
+// scalar channel addresses 7; timer cursor after delta 11; countdown for 7;
+// inline/noinline delta declarations 7/7; noinline update declaration 7;
+// shifted command bit 33; branch timer stores 27.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {
@@ -1432,6 +1435,11 @@ struct s_camera_clip_reference_16ebf0
 	byte field_14[4];
 };
 
+// score 229 (was 234): frame 0x9c versus 0x98 and vector/state homes differ;
+// shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
+// aggregate copies with shared cross product 249, role names 249, combined scope 249.
+// Frame 0x9c versus 0x98; vector-copy homes and narrow/fraction convention differ.
+// Direct view call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode branch 240.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
@@ -1508,9 +1516,8 @@ void function_16ebf0(long user_index)
 					&((s_camera_clip_reference_16ebf0 *)geometry->references)[reference & 0x7f];
 				if (entry->index != NONE)
 				{
-					if (!(reference & 0x80) ||
-						entry->plane.j * point.y + entry->plane.k * point.z + entry->plane.i * point.x - entry->plane.d < 0.0f)
-						narrow = true;
+					narrow = !(reference & 0x80) ||
+						entry->plane.j * point.y + entry->plane.k * point.z + entry->plane.i * point.x - entry->plane.d < 0.0f;
 				}
 			}
 		}

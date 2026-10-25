@@ -2451,7 +2451,8 @@ bool network_session_handle_session_disband(c_class_58d20 *session, const s_type
 	return result;
 }
 
-// score 10 (was 10): result initialization width and success tails differ;
+// score 10 (was 10): byte zero/result exits still differ; full-state nonzero/equality 39/40; joined state 39/40; scalar-state boundary 39/40; accepted-state equality 55/36.
+// result initialization width and success tails differ;
 // peer result with literal/result reason 24/23; peer-fed value/bool view 37/43;
 // host-fed reason with bool/union result 14/10; both test results 24;
 // peer-fed common success 15.
@@ -2881,6 +2882,8 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 // direct session/clear/connected/both member fields 31/43/39/48; session
 // and clear fields direct 43; shared member receiver 86; message at entry 31;
 // shared member and entry message 86.
+// cold state-clear arm still precedes the mask tail; dead-state, state-value, search and combined local names 31; repeated field reads 31; connected state snapshot 31; shared state snapshot and renamed shared snapshot 51.
+// state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
 {
@@ -3641,6 +3644,9 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
+// score 120 (was 120): frame agrees; timeout owner spill and identity load order differ;
+// shared result 120, aggregate zero initialization 120, identifier memcpy 120,
+// reply pointer first 121, announcement outer lifetime 120.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -4316,6 +4322,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
+// score 407 (was 434): frame agrees; sender/identity homes and acknowledgement placement differ;
+// shared exit 407, result first 411, role names 411, complete reason arms 411,
+// separate rejection tests 424, positive state arm 411.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4326,26 +4335,26 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  if (!state || state == 10)
  {
   *reason = 1;
-  return result;
+  goto done;
  }
  if (state != 9)
  {
   if (state <= 2 || state > 8)
   {
    *reason = 2;
-   return result;
+   goto done;
   }
   if (function_058d90(session) && !session->function_058d20())
   {
    *reason = 3;
-   return result;
+   goto done;
   }
   if (state == 8)
   {
    if (sender != NONE)
     goto acknowledge;
    result = true;
-   return result;
+   goto done;
   }
   long host = session->member_index;
   const s_session_member_identity *host_identity = (const s_session_member_identity *)&session->members[host];
@@ -4358,24 +4367,24 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
    *reason = 5;
    *has_identity = true;
    *identity = *host_identity;
-   return result;
+   goto done;
   }
   if (network_observer_channel_timed_out(session->observer, host_state->unknown04))
   {
    *reason = same_host ? 4 : 6;
    *has_identity = true;
    *identity = *host_identity;
-   return result;
+   goto done;
   }
   if (session->value4c == NONE)
   {
    *reason = 8;
-   return result;
+   goto done;
   }
   if (session->observer->channels[host_state->unknown04].state == 7 && !same_host)
   {
    result = true;
-   return result;
+   goto done;
   }
  }
  if (session->state != 9)
@@ -4383,7 +4392,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  if (sender == NONE || sender == session->current_member)
  {
   *reason = 9;
-  return result;
+  goto done;
  }
  {
   byte received[0xc0];
@@ -4440,7 +4449,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
    }
    result = true;
    if (same || better)
-    return result;
+    goto done;
   }
   goto disconnected;
  refused:
@@ -4453,7 +4462,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  disconnected:
   if (session_peer_map_set_connected(map, remote, false))
    transition->selection_time = function_75870();
-  return result;
+  goto done;
  }
 acknowledge:
  {
@@ -4471,8 +4480,10 @@ acknowledge:
   if (session->state == 7)
    network_session_clear_peer(session, sender);
   result = true;
-  return result;
+  goto done;
  }
+done:
+ return result;
 }
 #pragma inline_depth()
 

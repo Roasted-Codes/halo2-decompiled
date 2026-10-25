@@ -1789,6 +1789,10 @@ struct s_collision_result_25f7b0
 // score 7 (was 7): collision byte +0x13/+0x10, product loads and allow-store schedule remain;
 // tried immutable distance 7p; guarded classification 210p; nested hit classification 199p; classification enum 7p;
 // projection first 7p; allow from second type 6p; allow from first type 8p; native query flag 123p.
+// collision byte home, distance product loads and allow store remain;
+// early short result 7; entry short result 7; unsigned short result 7; early unsigned result 7;
+// early distance 7; entry distance 7; shared candidate field pointer 7; early definition pointer
+// 7.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {

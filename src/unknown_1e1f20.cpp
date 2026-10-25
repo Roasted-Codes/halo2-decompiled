@@ -28,6 +28,9 @@ static inline long unit_get_current_weapon(long unit_index)
 	return result;
 }
 
+// score 22 (was 22): primary link compare/reread and fallback handle transfer differ.
+// Ordinary primary reads 37; ordinary guard/lookup alone 22/22; conditional primary 28;
+// direct fallback output 49; primary success output 45; success before fallback 34; integer result 22.
 // @retail 0x1e1f20
 long function_1e1f20(long actor_index)
 {
@@ -51,7 +54,12 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 	return result;
 }
 
-// score 20 (was 20): actor-base load folding and merged sentinel exits remain.
+// score 20 (was 20): actor-base folding and merged outer/inner sentinel exits remain; separate
+// outer failure return 22; result lifetime from entry 24; native unit index 20; readonly actor
+// input 20; existing weapon slot helper 20; shared query separate outer exit 22; shared query
+// result from entry 24; result assigned from both arms 21; existing query forceinline declaration
+// 20.
+// actor-base load folding and merged sentinel exits remain.
 // Inner entry result/both-arm assignment 20/20; absent slot return 19;
 // inner slot selection 20; inner sentinel early exit 19; readonly unit 20;
 // two result lifetimes 24; absent unit input return 22.

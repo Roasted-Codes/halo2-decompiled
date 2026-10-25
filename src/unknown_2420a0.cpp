@@ -149,7 +149,7 @@ void function_1967d0(long a, long c, long b, long delta);
 void function_1970a0(long b, long a, long delta);
 void function_197210(long player_index, long value14, long value10);
 s_event *game_engine_event_initialize(long type, long subtype, s_event *event);
-void game_engine_event_set_cause_player(s_event *event, long player_index);
+void game_engine_event_set_cause_player(long player_index, s_event *event);
 point3f *function_b9dd0(long object_index, point3f *result);
 s_team_entry *function_15e410(short team);
 bool function_161e10(long team);
@@ -1102,8 +1102,8 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 				{
 					s_event event;
 
-					game_engine_event_set_cause_player(
-						game_engine_event_initialize(ctf_options()->engine_type == 9 ? 10 : 3, 1, &event), player_index);
+					game_engine_event_set_cause_player(player_index,
+						game_engine_event_initialize(ctf_options()->engine_type == 9 ? 10 : 3, 1, &event));
 					event.effect_team = (short)((short)slot == 8 ? NONE : (short)slot);
 					function_19eb90(&event);
 				}
@@ -1163,8 +1163,8 @@ void c_game_engine_markers::v24(long object_index, long unit_index)
 				{
 					s_event event;
 
-					game_engine_event_set_cause_player(game_engine_event_initialize(ctf_options()->engine_type == 9 ? 10 : 3, 2, &event),
-						player_index);
+					game_engine_event_set_cause_player(player_index,
+						game_engine_event_initialize(ctf_options()->engine_type == 9 ? 10 : 3, 2, &event));
 					event.effect_team = (short)((short)slot == 8 ? NONE : (short)slot);
 					function_19eb90(&event);
 				}
@@ -2210,7 +2210,7 @@ void __stdcall function_240820(long arg_0)
 			{
 				game_engine_event_initialize(ctf_options()->engine_type == 9 ? 10 : 3, ctf_options()->engine_type == 9 ? 0x10 : 0xc, &local_3);
 				local_3.effect_team = function_244301((short)local_2);
-				game_engine_event_set_cause_player(&local_3, local_10);
+				game_engine_event_set_cause_player(local_10, &local_3);
 				function_19eb90(&local_3);
 			}
 			g_51ec80->flags[local_2] |= 4;

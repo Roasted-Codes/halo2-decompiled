@@ -164,6 +164,10 @@ bool function_01dd60(long index, long *width, long *height)
 
 // score 21 (was 21): width remains stacked and height/register saves differ; retail masks the packed fields.
 // Direct width 24; byte pitch expression 24; field store schedule 22; zero flag branch 25; Boolean mask 25; flag result selection 25; complete height field 28; packed role names 24; direct input and mask 22.
+// Width remains on the stack and height in saved ESI instead of retail ESI/EDI
+// inputs; the unsigned packing and Boolean gate still lower differently; height expression 21;
+// width expression 21; packed expression 21; direct width height expression 24; direct packed
+// expression 24; late entry 21; shared publication 21; separate gated result 21.
 // @retail 0x1ddd0
 void function_01ddd0(long index, dword width, dword height)
 {
@@ -195,16 +199,14 @@ bool function_01de20(long index)
 dword function_1d6f0(bool linear, bool alternate, dword format, long width, long height);
 long g_55e6c0;
 
+// score 122 (was 131): Incoming data home, delayed saves and header bias still differ.
+// Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
+// score 115 (was 122): incoming data home, saved-register timing and level-header bias remain.
+// Shared primary header 161; walking level pointer 135; Boolean packed-word product 152;
+// byte-count expression in the level loop 115; delayed clamped-count publication 148.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {
-    (void)&kind;
-    (void)&width;
-    (void)&height;
-    (void)&alternate;
-    (void)&linear;
-    (void)&count;
-    (void)&data;
     if (data)
     {
         s_unknown_01dcc0 *entry = &g_4b4b58[index];
@@ -228,11 +230,9 @@ bool function_1df20(long index, long kind, long width, long height, bool alterna
         entry->sub_header[3] = function_1d6f0(linear, alternate, count, width, height);
         D3DResource_Register((D3DResource *)entry->sub_header, data);
         long offset = 0;
-        long shift = 0;
-        long size = ((width + 63) & ~63) * height * 4;
-        for (long i = 0; i < entry->element_count; ++i, shift += 2)
+        for (long i = 0; i < entry->element_count; ++i)
         {
-            long bytes = size >> shift;
+            long bytes = (((width + 63) & ~63) * height * 4) >> (i * 2);
             long *element = entry->elements[i];
             element[0] = 0x50001;
             element[1] = entry->sub_header[1] + offset;

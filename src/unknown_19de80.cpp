@@ -636,7 +636,7 @@ s_event *game_engine_event_initialize(long type, long subtype, s_event *event)
 }
 
 // @retail 0x19ebe0
-void game_engine_event_set_cause_player(s_event *event, long player_index)
+void game_engine_event_set_cause_player(long player_index, s_event *event)
 {
 	event->cause_player_index = player_index;
 	event->cause_team = event_player_get(player_index)->team;
