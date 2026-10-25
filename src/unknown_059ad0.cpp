@@ -1036,7 +1036,9 @@ bool __stdcall network_session_boot_machine(c_class_58d20 *session, const s_sess
 // score 23 (was 23): retail keeps the inlined disconnect's reason in a pushed ebx set after
 // the memset; ours stores an immediate. Tried: the sibling's long/bool union 33; the result
 // assigned in the call's argument 6 (bool in bl, reason still folded); a long result passed as
-// the reason 62.
+// the reason 62; a reason parameter the caller passes as 1 41 (it stays on the stack); the
+// result set first and passed by name 35; the callee's volatile reason read 27 (a stack temp);
+// `inline` on the callee 23; the reason as `true` 23.
 // @retail 0x5ade0
 bool network_session_host_boot_member(c_class_58d20 *session, long member_index)
 {
