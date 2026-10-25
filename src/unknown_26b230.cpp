@@ -489,6 +489,10 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // score 68 (was 68): Frame and nullable-current lifetime remain; current datum 68;
 // success-controlled loop 68; selected datum 132; node/prop inline 68/68; forced node/prop
 // expansion 246/158; datum plus success loop 68.
+// score 68 (was 68): frame 0x1c/0x20, first team sign extension and nullable current remain.
+// Nullable value selection 68; inactive step exit 71; null step failure exit 94; word/byte
+// success result 94/68; native step state value 123; shared step expansion 68; native selected
+// index 68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {

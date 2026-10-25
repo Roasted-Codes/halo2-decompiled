@@ -78,6 +78,10 @@ static __forceinline void decode_direction_194d30(long index, vector3f *directio
 	direction->k = z * face->axes[2].k + y * face->axes[1].k + x * face->axes[0].k + face->origin.k;
 }
 
+// score 62 (was 62): early decode zero/scale scheduling and final x87 component forwarding remain.
+// Face scale value 82; integer grid values 62; complete shared decoder 503; decoder output
+// reference 62; native component loop 173; complete private decode consumer 62; ordinary
+// decoder inline 394; initial direction value 63.
 // @retail 0x194d30
 void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *forward)
 {

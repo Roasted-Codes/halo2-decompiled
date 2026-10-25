@@ -313,6 +313,10 @@ void __stdcall function_18c630(long object_index, long tag_index, long a, long b
 }
 #pragma inline_depth(255)
 
+// score 7 (was 7): sample-base and offset registers plus object call setup remain; readonly data
+// input 7; readonly entry input 7; native count identity 7; output count lifetime 52; existing
+// scale storage lifetime 7; input pointer home names 7; existing scale home names 7; inline matched
+// output callee 7.
 // @retail 0x18ca20
 void __stdcall function_18ca20(long object_index, long tag_index, s_sound_permutation const *permutation, real scale)
 {
@@ -376,6 +380,10 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 }
 #pragma inline_depth(255)
 
+// score 12 (was 12): object/tag entry registers differ with the dispatch tag convention; inline
+// existing dispatch callee 12; out of line dispatch declaration 12; readonly tag input 12; readonly
+// set input 12; readonly first permutation 12; selected permutation two consumers 12; selected
+// input guard first 17; typed permutation readonly range 12.
 // @retail 0x18c6a0
 void __stdcall function_18c6a0(long object_index, long unused, long tag_index, long set_index, long permutation, long scale)
 {
