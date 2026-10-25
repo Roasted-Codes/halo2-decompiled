@@ -117,17 +117,22 @@ short function_120850(vector3f const *v);
 PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, real const *x, real const *y, s_decal_quad_17d9a0 *quad, point2f *out)
 {
 	point3f point;
+	short const *axes = g_440b94[quad->axis * 2 + quad->positive];
 	point.x = matrix->forward.i * *x + matrix->left.i * *y + matrix->position.x;
 	point.y = matrix->left.j * *y + matrix->forward.j * *x + matrix->position.y;
 	point.z = matrix->forward.k * *x + matrix->left.k * *y + matrix->position.z;
-	short const *axes = g_440b94[quad->axis * 2 + quad->positive];
 	short horizontal_axis = axes[0];
 	short vertical_axis = axes[1];
 	out->x = ((real const *)&point)[horizontal_axis];
 	out->y = ((real const *)&point)[vertical_axis];
 }
 
-// score 164 (was 164): plane-distance store base and projection/edge scheduling remain; both indices long 179f, horizontal long 164f, vertical long 179f, captured-index Y-first 164f, plane view after normal copy 181f.
+// score 158 (was 164): plane-distance store base and projection/edge scheduling remain; both indices long 179f, horizontal long 164f, vertical long 179f, captured-index Y-first 164f, plane view after normal copy 181f.
+// Read-only projection metadata 164; selector field inputs 164; output reference 164; shared
+// point construction 162; vertical index first 164; table row before point 158 (kept); complete
+// edge predicate 166; row helper input 160; inverse at entry 230; normal block copy 168; copy-
+// return plane receiver 158 at 993 bytes; copy return with early row 171; early row with shared
+// point construction 160.
 // @retail 0x17d9a0
 void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_quad_17d9a0 *quad)
 {

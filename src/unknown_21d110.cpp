@@ -309,6 +309,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 
 #define sound_effect_delete function_21dcf1
 
+// score 220 (was 220): frame eight versus four and opposite start/delete expansion;
+// joined query/allocation 220, unforced failure-first 221, effect pointer scope 220,
+// shifted platform flag 220, inline depth zero 391.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

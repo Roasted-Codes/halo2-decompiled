@@ -335,6 +335,12 @@ public:
 // building the input object first alone 169, with that update 160; combined lifetimes
 // 180, as did float scopes, local names, a stored kind result, a contact
 // base, reversed comparison, direct step reads and a reference constructor.
+// Fixed end pointer 200; ordered end pointer 200; late end pointer 181;
+// pair-scoped input 160; end pointer plus input 200; leading pair step 176;
+// output pointer 160; late end plus output pointer 181.
+// Positive remaining count 192, after the constructor call 174; increasing ordinal
+// 192, with later count 174; indexed pointer/reference 175; input-object
+// reference 174; shared entry timer 189. Original body retained.
 // @retail 0x317950
 void narrow_phase_317c00::function_317950(void const *input)
 {

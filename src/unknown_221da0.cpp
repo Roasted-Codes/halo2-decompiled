@@ -178,6 +178,11 @@ struct s_effect_inputs
 dword function_191660(long string_handle, long index);
 
 /* fills the data block of one component of a sound effect */
+// score 169 (was 169): frame 0x24 versus 0x28; full parameter-pointer spill
+// and input-selector registers differ. Parameter record 200; early bounds 223;
+// type ladders 177; speaker presence 207; bound values 220; fallback default 227;
+// output mode 169; parameter record with ladders 208. Selected-record copy 206
+// excluded for earlier overlap. Original body retained.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)
@@ -757,6 +762,9 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
+// score 225 (was 225): inline table clear aligns the frame and occupies EBP;
+// reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
+// indexed batch-entry pointer 225; previous-gain snapshot 262.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

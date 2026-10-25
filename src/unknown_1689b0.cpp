@@ -576,7 +576,7 @@ bool function_1de630(dword test_flags, s_slot_entry_list *bsp, s_collision_bsp_t
 	long maximum_leaf_count, byte const *arg_c9e1f7, point3f const *point, vector3f const *vector);
 bool function_244980(long cluster_index, point3f const *point, vector3f const *vector, dword flags,
 	dword test_flags, s_collision_result_1697c0 *result);
-long function_b8940(short cluster_index, s_object_cluster_reference **reference, s_object_cluster_iterator *iterator);
+long function_b8940(long cluster_index, s_object_cluster_reference **reference, s_object_cluster_iterator *iterator);
 long function_b89b0(s_object_cluster_reference **reference, s_object_cluster_iterator *iterator);
 bool __stdcall function_169510(long object_index, bool a, dword flags, dword test_flags, point3f const *point,
 	vector3f const *vector, long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *result);
@@ -798,7 +798,7 @@ bool __stdcall function_168f40(long flags, s_vehicle_ray const *ray,
 			word object_flags = collision_flags_to_object_flags(flags);
 			word types = (word)(((dword)flags >> 4) & 0x1fff);
 			s_object_cluster_iterator iterator;
-			for (long object_index = function_b8940((short)cluster_index, &reference, &iterator);
+			for (long object_index = function_b8940(cluster_index, &reference, &iterator);
 				object_index != NONE; object_index = function_b89b0(&reference, &iterator))
 			{
 				if ((types & (1 << reference->type)) && !(reference->flags & object_flags))
@@ -823,6 +823,10 @@ bool __stdcall function_168f40(long flags, s_vehicle_ray const *ray,
 	return result;
 }
 
+// score 25 (was 25): plane k/j product operands at +0x314, late i/y
+// products and success-result reload differ; single plane k/j snapshots
+// 340/357; start z/y 124/124; movement j 56; plane k+j 390;
+// correction movement i 56; start z+y 157.
 // @retail 0x1697c0
 bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const *vector,
 	long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *collision)
@@ -1005,7 +1009,7 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
 					s_object_cluster_iterator iterator;
 					long object_index;
 
-					for (object_index = function_b8940((short)cluster_index, &reference, &iterator); object_index != NONE;
+					for (object_index = function_b8940(cluster_index, &reference, &iterator); object_index != NONE;
 						object_index = function_b89b0(&reference, &iterator))
 					{
 						long object_mark_index = object_index & 0xffff;
@@ -1407,6 +1411,10 @@ PRIVATE __forceinline long shape_cluster_next(long *next)
     return result;
 }
 
+// score 170 (was 170): world-mask width, leaf induction and pool/cluster homes differ;
+// integer query result 251f; paired world mask 205 plain; leaf step at read 222 plain;
+// unsigned leaf/handle/count views and normal iterator inline 251f; direct count returns 249f
+// (unchanged fast control 251; full 170).
 // @retail 0x16a440
 bool __stdcall function_16a440(dword flags, point3f const *position, real extent, real height,
     real radius, long ignore_object, long ignore_parent, s_shapes *shapes)

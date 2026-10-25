@@ -39,6 +39,9 @@ PRIVATE __forceinline long sky_surface_tag(short index)
 
 real function_30bf0(vector3f *vector);
 
+// score 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
+// and pending trigonometric components differ. Native sky fields 213; native
+// light/value fields 213; both views 213; frame pointer 296; status enum 213.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -982,6 +985,9 @@ PRIVATE __forceinline bool surface_status_failed(long status)
 // differ, followed by tag-bit extraction. Zero then OR 148; const tag 44;
 // byte tag bitfield 135; dword object bitfield 44; named query failure 44;
 // explicit final exits 181; inverse failure result 44; retry flag update 44.
+// Status predicate as byte 65, short 69, long 68; arm-assigned result 129;
+// signed status bounds 130; selected predicate 161; staged result 58;
+// ordinary predicate inline 139. Original predicate and locals restored.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {

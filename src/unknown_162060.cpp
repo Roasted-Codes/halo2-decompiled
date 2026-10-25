@@ -111,7 +111,7 @@ static inline bool engine_has_teams(void)
 
 	if (game_engine_get())
 	{
-		volatile bool teams;
+		bool teams;
 
 		result = (g_4e6948->flags184.bit0 & 1) != 0;
 		teams = result;
@@ -130,6 +130,11 @@ static inline bool engine_team_is_playing(long team)
 	return result;
 }
 
+// score 2 (was 37): only post-activation engine/world reload order differs;
+// long/byte teams result 97/94; long playing result 89; both long/byte results 116/94;
+// activation input orders and type-first creation inputs 37/37/37.
+// unqualified teams scratch 2 plain; authority/playing/both result joins 37/37/37;
+// pretested slot while 304; direct team bit 37; active-team result 121; short team ordinal 124.
 // @retail 0x162060
 void __stdcall function_162060(void *engine)
 {

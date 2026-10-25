@@ -140,6 +140,9 @@ void __stdcall function_46230(short target, real const *bounds)
     function_14bc0((short)g_4858b8, 0, true);
 }
 
+// score 127 (was 127): the block after the first call is laid out the other way round: retail
+// jumps forward when the call succeeds and falls through to the rest, ours jumps to the exit
+// when it fails; the register that is cleared is EBX in retail and EBP in ours.
 // @retail 0x32ac0
 bool function_32ac0(void)
 {
@@ -3310,6 +3313,8 @@ void function_1eb00()
     g_4b6294 = true;
 }
 
+// score 79 (was 79): the ratio of the two counters is computed with the other operand order:
+// ours divides into xmm3 and multiplies xmm4, retail divides into xmm2 and multiplies xmm0.
 // @retail 0x36580
 void function_36580()
 {
@@ -4029,6 +4034,8 @@ void __stdcall function_484b0(point3f const *point, real depth, real width, real
     }
 }
 
+// score 152 (was 152): the four floats are loaded into the other XMM registers and the products
+// are formed in the other order.
 // @retail 0x480a0
 void __stdcall function_480a0(point3f const *point, real width, real height, real cosine, real sine, dword color)
 {
@@ -4735,8 +4742,8 @@ struct s_filter_vector { real x, y, z, w; };
 static s_filter_vector const s_default_filter_coordinate = { 0.0f, 0.0f, 0.0f, 0.0f };
 s_filter_vector const *g_4687c0 = &s_default_filter_coordinate;
 void function_01ddd0(long index, dword width, dword height);
-long function_21360(long source, real radius, real low, real high, long target,
-    long alternate, long passes, long unused, bool configure, bool full_surface, real scale);
+long function_21360(long count, long source, real radius, real low, real high, long target,
+    long alternate, long output, bool configure, bool full_surface, real scale);
 long function_211a0(long source, real passes, real distortion, real falloff,
     long target, long alternate, long unused, long configure, long full_surface,
     real scale, real offset);
@@ -4875,9 +4882,10 @@ void function_2d140(long tag, real const *weights, long columns, long rows, s_fi
                     function_01ddd0(output, scaled_width, scaled_height);
                     function_01ddd0(alternate, scaled_width, scaled_height);
                     if (flags & 4)
-                        target = function_21360(target, *(real const *)(entry + 0x48),
-                            *(real const *)(entry + 0x50), *(real const *)(entry + 0x54), output, alternate,
-                            (long)*(real const *)(entry + 0x44), NONE, true, false, 0.0f);
+                        target = function_21360((long)*(real const *)(entry + 0x44), target,
+                            *(real const *)(entry + 0x48), *(real const *)(entry + 0x50),
+                            *(real const *)(entry + 0x54), output, alternate,
+                            NONE, true, false, 0.0f);
                     else target = function_211a0(target, *(real const *)(entry + 0x44),
                         *(real const *)(entry + 0x48), *(real const *)(entry + 0x4c),
                         output, alternate, NONE, 1, 0, 0.0f, 0.0f);
@@ -5330,12 +5338,15 @@ void function_36560(void);
 /* moves a rectangle by (dx, dy) */
 static __forceinline void offset_rectangle_1f070(short_rectangle2d *rectangle, short dx, short dy)
 {
-    rectangle->top += dy;
     rectangle->left += dx;
-    rectangle->bottom += dy;
     rectangle->right += dx;
+    rectangle->top += dy;
+    rectangle->bottom += dy;
 }
 
+// score 60 (was 75): the two rectangles sit four bytes higher in the frame than retail's and the
+// bitmap pointer shares the clip's slot instead of being spilled; the clip branch clamps the left
+// edge with a conditional set instead of retail's branch.
 // @retail 0x1f070
 void function_1f070(short_rectangle2d const *bounds, short_rectangle2d const *clip,
     short *position, long line_gap, dword const *text, real scale,
@@ -5343,33 +5354,33 @@ void function_1f070(short_rectangle2d const *bounds, short_rectangle2d const *cl
 {
     (void)&position; (void)&line_gap; (void)&text; (void)&scale;
     (void)&color; (void)&shadow; (void)&preserve;
+    short_rectangle2d wanted_clip;
+    short_rectangle2d wanted_bounds;
+    s_bitmap_view *bitmap;
     if (g_51080c || g_485602 != 0) return;
     ++g_4670c0;
-    s_bitmap_view *bitmap = g_4b62a0 ? g_4b62ac : 0;
+    bitmap = g_4b62a0 ? g_4b62ac : 0;
     if (!bitmap || !*text) return;
     /* the window rectangle: g_4b9dd0 .. g_4b9dd6 are one rectangle of the camera storage */
-    short_rectangle2d const *window = (short_rectangle2d const *)&g_4b9dd0;
-    short_rectangle2d wanted_bounds;
     if (!bounds)
     {
         wanted_bounds = g_4b9dd8;
-        offset_rectangle_1f070(&wanted_bounds, -window->left, -window->top);
+        offset_rectangle_1f070(&wanted_bounds, -g_4b9dd2, -g_4b9dd0);
     }
     else
     {
         wanted_bounds = *bounds;
     }
-    short_rectangle2d wanted_clip;
     if (!clip)
     {
-        wanted_clip = *window;
-        offset_rectangle_1f070(&wanted_clip, -window->left, -window->top);
+        wanted_clip = *(short_rectangle2d const *)&g_4b9dd0;
+        offset_rectangle_1f070(&wanted_clip, -g_4b9dd2, -g_4b9dd0);
     }
     else
     {
-        long bottom = window->bottom - window->top;
+        long bottom = g_4b9dd4 - g_4b9dd0;
         if (bottom > clip->bottom) bottom = clip->bottom;
-        long right = window->right - window->left;
+        long right = g_4b9dd6 - g_4b9dd2;
         if (right > clip->right) right = clip->right;
         long top = clip->top < 0 ? 0 : clip->top;
         short left = clip->left < 0 ? 0 : clip->left;
@@ -5932,7 +5943,6 @@ bool function_13450(s_depth_parameters_13450 const *parameters)
 #endif
 
 extern dword g_4b82f8, g_4b8324;
-dword g_4b8474;
 extern byte g_4c19c0;
 extern dword g_4c1a04;
 struct s_2e9e0_saved { long tag; point3f position; };
@@ -5941,6 +5951,8 @@ struct s_2e3f0_record;
 long __stdcall function_2e9e0(byte const *context, s_2e3f0_record const *record);
 void function_46ea0(long tag, point3f const *position);
 
+// score 3 (was 22): the g_4b8438 store is emitted after the range comparison of the inlined call,
+// where retail emits it before.
 // @retail 0x2df00
 void function_2df00()
 {
@@ -5964,7 +5976,7 @@ void function_2df00()
     g_4b82e0 = 0x203; D3DDevice_SetRenderState(D3DRS_ZFUNC, 0x203);
     g_4b82fc = 0; D3DDevice_SetRenderState(D3DRS_ZWRITEENABLE, 0);
     g_4b8450 = 0; D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
-    g_4b8474 = 0; D3DDevice_SetVertexShader(0);
+    function_0222d0(D3DRS_SAMPLEALPHA, 0);
     g_51f3c8[1][0] = NULL;
     g_51f3c8[1][1] = NULL;
     g_51f3c8[1][2] = NULL;
@@ -5986,8 +5998,7 @@ void function_2df00()
     g_4c19c0 = false;
     g_4c1a04 = 0;
     function_20bb0(g_4b9ed4, 0xf, NULL, 0, false, (visibility_draw_callback)function_2e9e0);
-    long saved_count = (long)g_4c1a04;
-    for (long i = 0; i < saved_count; ++i)
+    for (long i = 0; i < (long)g_4c1a04; ++i)
         function_46ea0(g_4c19c4[i].tag, &g_4c19c4[i].position);
 }
 
@@ -6004,7 +6015,6 @@ long function_30830(point3f const *point, s_camera const *camera, vector3f const
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out);
 void function_47ea0(short stage, byte flags);
-extern dword g_4b8474;
 
 // @retail 0x4f7e0
 bool __stdcall function_4f7e0(long tag, s_501e0 const *points, long count, short bitmap,
@@ -6018,8 +6028,7 @@ bool __stdcall function_4f7e0(long tag, s_501e0 const *points, long count, short
     {
         if (!g_46713c)
         {
-            g_4b8474 = 0;
-            D3DDevice_SetVertexShader(0);
+            function_0222d0(D3DRS_SAMPLEALPHA, 0);
         }
         g_46713c = true;
     }
@@ -6539,8 +6548,7 @@ void __stdcall function_4f010(void *payload)
     }
     if (!g_46713c)
     {
-        g_4b8474 = 0;
-        D3DDevice_SetVertexShader(0);
+        function_0222d0(D3DRS_SAMPLEALPHA, 0);
     }
     g_46713c = true;
 }

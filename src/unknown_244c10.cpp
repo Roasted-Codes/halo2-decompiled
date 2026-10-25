@@ -87,6 +87,11 @@ struct s_244980_output
     long field_20;
 };
 
+// score 19 (was 19): bound/fraction/endpoint XMM chain and stores differ;
+// plain coordinate type 19; coordinate array 19; coordinate output initializer 25.
+// workspace value initializer 140; alias analysis 19; expression scope 510.
+// size preference 117; one inline level 101; late endpoint completion 19.
+// fraction before pair 19.
 // @retail 0x244980
 bool function_244980(long cluster_index, point3f const *point, vector3f const *vector,
     dword flags, dword test_flags, s_collision_result_1697c0 *result)

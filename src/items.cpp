@@ -556,6 +556,9 @@ struct s_item_collision_bsp
 	s_item_collision_instance *instances;
 };
 
+// score 249 (was 253): plane-index width, plane-join registers and spin stores differ;
+// seed before square root 249; fallback input copy 364; up pointer 253;
+// plane input scalars 254; angular output initializer 253.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
@@ -635,8 +638,8 @@ void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effe
 	}
 	else
 	{
-		real speed = (real)sqrt(impulse->j * impulse->j + impulse->k * impulse->k + impulse->i * impulse->i);
 		dword *seed = &g_4e7408->unknown0;
+		real speed = (real)sqrt(impulse->j * impulse->j + impulse->k * impulse->k + impulse->i * impulse->i);
 		if (speed < 0.0001f)
 		{
 			*seed = *seed * 0x19660d + 0x3c6ef35f;
@@ -825,6 +828,8 @@ void function_10ca80(long object_index, long owner_index)
 void function_1420f0(transform4x3f *out, point3f const *position, vector3f const *forward, vector3f const *up);
 void function_b92d0(long index, s_object_marker const *old_parent, transform4x3f const *new_parent);
 
+// score 130 (was 130): frame 0xc0 versus 0xb4 and initial product ranks differ. Shared scale 130; inline
+// depth one 130; size preference 277; complete rotated vector 207; fallback vector initializer 130.
 // @retail 0x10d710
 void function_10d710(vector3f const *facing, long object_index, point3f const *origin, point3f *position)
 {
@@ -953,6 +958,11 @@ struct s_item_flags_view_10b850
 // score 819 (was 819): frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
 // correction assigned by branch 861. Original body retained.
+// j91: frame 0x154 versus 0x12c and Boolean homes remain; native rotation copies reach 0x148 but regress.
+// collision result predicate 819; settle result predicate 888; collision settle predicate 879; native rotation
+// copies 885; shared native rotation 886
+// Frame pointer 1103; inline depth one 819; trigonometric snapshots 891;
+// flow output in dead motion workspace 818 (frame 0x148); cross scalars first 820.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1180,6 +1190,8 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // release-byte RMW, impulse sharing and event-point homes differ;
 // scale-first 204; shared release with current carriers 182; shared damping 182; both scales 183;
 // detached arm first 199; expiry guard first 181; event point function scope 184.
+// rate input snapshot 182; gain input snapshot 182; both input snapshots 182; direction input 204.
+// external direction reference input 204; rate input formal 182; scale input formal 204; separate impulse noinline 182.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

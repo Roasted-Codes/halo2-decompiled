@@ -1015,6 +1015,9 @@ void function_178240(point3f const *origin, vector3f const *direction, s_effect_
 }
 
 // score 38 (was 38): the branches that reject the value jump to a different place and the table pointer is loaded into edx instead of ecx
+// Stored event selection 38; definition per use 86; initialized delay destination 54;
+// delay readback 55; event record 59; definition record 38; explicit seed lifetime 82;
+// stored event with completed delay 82. Tag retention and bound-load sharing still differ.
 // @retail 0x1782a0
 void function_1782a0(long effect_index, short event_index)
 {
@@ -1761,6 +1764,9 @@ long function_1785c0(s_effect_object_marker const *marker, s_effect_datum *effec
 	return index;
 }
 
+// score 94 (was 94): Frame agrees; node/matrix and marker receivers, early normalization loads still differ.
+// Shared difference 187; shared scale 94; both helpers 186; separate point workspace 125;
+// normalized workspace 164; scale snapshot 185; marker vector snapshot 184; point setters 227.
 // @retail 0x1786f0
 void function_1786f0(s_effect_object_marker *out, s_effect_marker_source const *source, short marker_index)
 {
@@ -2083,10 +2089,12 @@ long function_179190(s_effect_datum *effect)
 			event_index++;
 		if (event_index >= definition->event_count)
 			break;
-		if (!(definition->events[event_index].skip_chance > 0.0f))
+		real skip_chance = definition->events[event_index].skip_chance;
+		if (!(skip_chance > 0.0f))
 			break;
 		dword *seed = TEST_FIELD_BIT(TAG_GET(s_effect_definition, effect->tag_index)->flag2) ? &g_4e7408->unknown0 : &g_4e7408->seed;
-		if (!(definition->events[event_index].skip_chance > function_x82e52f(seed, __FILE__, __LINE__)))
+		real skip_roll = function_x82e52f(seed, __FILE__, __LINE__);
+		if (!(skip_roll < definition->events[event_index].skip_chance))
 			break;
 	}
 	return event_index;
@@ -2678,6 +2686,9 @@ void __stdcall function_17a380(s_effect_datum *effect)
 }
 
 // score 109 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// Deferred particle cursor 125; active-only effect cursor 125; particle-location
+// record 109; system/definition/type/effect records 109 each; exhausted-particle
+// continue 109. Frame remains eight bytes small; pool/register and cursor homes differ.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {

@@ -1601,6 +1601,9 @@ static inline bool weapon_state_replaceable(long current, long state)
 }
 
 /* puts a weapon in a state and plays the state's animation */
+// score 69 (was 69): success-byte scheduling and final call argument registers still differ.
+// Byte outcome 67; short/word outcomes 87; actual object references and nested scope 69;
+// signed-word mask 83; owner-first test 68.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {
@@ -1800,8 +1803,6 @@ bool function_101490(long weapon_index, long magazine_index)
 }
 /* finds a weapon's animation (its overlay, else the animation) in the graph
    for its holder's character, and makes it the weapon's current one */
-// score 4 (was 4): the graph index is kept in ecx where retail keeps it in edx,
-// and the two values that are read out of the frame are read in the other order.
 // @retail 0x105c20
 bool __stdcall function_105c20(long weapon_index, long animation_name)
 {
@@ -1834,8 +1835,8 @@ bool __stdcall function_105c20(long weapon_index, long animation_name)
 						{
 							long graph_index = player_animation->graph_index;
 
-							weapon->animation_254 = animation_id;
 							weapon->value250 = graph_index;
+							weapon->animation_254 = animation_id;
 							weapon->value258 = 0.0f;
 							function_b7360(weapon_index);
 							result = true;
@@ -2188,6 +2189,9 @@ void function_1055b0(vector3f *direction, vector3f const *axis, short index, sho
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 
+// score 89 (was 89): timing stack homes, trigger spill and released-output registers differ.
+// Trigger/settings references, rate snapshot and threshold input 89; double duration 134;
+// bounded age increment 167; byte conditional clamp 162.
 // @retail 0x1027b0
 void function_1027b0(long weapon_index, long trigger_index, bool *pressed, bool *held, bool *released)
 {
@@ -2514,7 +2518,11 @@ long __stdcall function_fda00(long weapon_index, s_scenario_weapon_view *placeme
 }
 
 // score 3 (was 3): the word is stored at +0x254 where retail stores it at +0x256, so the two
-// stores are in the wrong order.
+// stores are in the wrong order. That is `pop esi`: ours pops it right after edi, before the
+// inlined reset's two word stores; retail after them. Tried: the reset storing value250 before
+// value258 3 (0x105be0 2); the reset's animation as one default object 18; 0x105be0 defined
+// after this function 3; one short index for all three loops 3; the definition read after the
+// field resets 110.
 // @retail 0xfdad0
 bool __stdcall function_fdad0(long weapon_index, void *placement, bool *flag)
 {
@@ -2888,6 +2896,8 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 
 // score 52 (was 69): the record's pointer is kept in ebx where retail keeps it in
 // ebp, and the word of the record is read into cx where retail reads it into dx.
+// Ordinary inline 468; automatic inline 468; barrel reference 52; magazine-tag reference 52;
+// magazine reference 52; combined references 52; empty-first tests 88; query result first 140.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {

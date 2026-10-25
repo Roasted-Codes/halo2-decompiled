@@ -404,6 +404,10 @@ bool function_1b1970(long actor_index, short mode, vector2f const *forward,
 // through the list in ebx; index and mode read in the call 66; short index with the
 // mode in the call 66; short index before the mode local 79, after it 79; short index
 // with the mode local inside the branch 42; short index and a bool result stored once 95.
+// origin/forward setup and native index/mode arguments differ;
+// origin pointer 19; origin reference 19; external index reference 79.
+// external mode reference 46; no target vector setter 65; native index type 19.
+// alias analysis 19; size preference 321; external field pair 78.
 // @retail 0x1b1a90
 void __stdcall function_1b1a90(long actor_index, s_slot *slot, s_slot_target_list *list)
 {

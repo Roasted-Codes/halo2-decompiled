@@ -135,6 +135,10 @@ static __forceinline long real_to_long(real value);
 // the i term through slot_state->direction 4; direction first in every product 2;
 // direction->n[] 2; a projection local tested < 0 2; the slot pointer at the top 2;
 // every operand and term order ties (the sum is canonicalised).
+// final i-product load/multiply operands differ at +0xf4.
+// Projection in the existing helper 6; Boolean projection 6; facing first 6;
+// Boolean facing first 6; product scalars kji/ijk 2/2; Boolean scalars 2;
+// facing first with scalars 2.
 // @retail 0x1ab4b0
 bool __stdcall function_1ab4b0(long actor_index, s_slot *slot)
 {

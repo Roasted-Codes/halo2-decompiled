@@ -85,6 +85,10 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // score 171 (was 171): receiver reloads and count/ranking allocation;
 // typed fallback entries 171; end cursor 173; signed-word count 168;
 // byte count 195; carried tag read before count update 171.
+// score 171 (was 171): receiver reloads and count/ranking handoff remain;
+// native carried view 171; read-only view 171; dword workspace 171;
+// unsigned tags 171; selected position 182; unsigned ranks 172;
+// word rank 172; unsigned ranking position 171.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {
