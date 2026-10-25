@@ -298,7 +298,7 @@ void __stdcall function_2b0565(c_class_2b01eb *widget, long frame)
     bool show_label = g_54d59f && widget->has_screen() && widget->v11() != 6;
     if (*(long *)((byte *)widget->definition + 0x1c) != NONE)
     {
-        short mode = 0;
+        long mode = 0;
         dword color = bitmap_channel_round_2b(alpha * 255.0f);
         color = (color << 8) | bitmap_channel_round_2b(widget->color.red * 255.0f);
         color = (color << 8) | bitmap_channel_round_2b(widget->color.green * 255.0f);
@@ -310,12 +310,18 @@ void __stdcall function_2b0565(c_class_2b01eb *widget, long frame)
         source.y1 = (real)bitmap->height;
         s_float_rect rectangle;
         function_22ea81(widget, &rectangle, (short_rectangle2d const *)frame);
-        rectangle.x0 += x;
-        rectangle.x1 += x;
-        rectangle.y0 -= y;
-        rectangle.y1 -= y;
-        if (*(short *)((byte *)widget->definition + 8) == 1)
+        real offset_y = (real)-y;
+        real offset_x = (real)x;
+        rectangle.x0 += offset_x;
+        rectangle.y0 += offset_y;
+        rectangle.x1 += offset_x;
+        rectangle.y1 += offset_y;
+        switch (*(short *)((byte *)widget->definition + 8))
+        {
+        case 1:
             mode = 1;
+            break;
+        }
         if (*(real *)((byte *)widget->definition + 0x10) == 0.0f &&
             *(real *)((byte *)widget->definition + 0x14) == 0.0f)
         {
