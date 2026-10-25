@@ -491,12 +491,6 @@ struct s_ai_scene_model
 	s_ai_scene_model_variant *variants;
 };
 
-struct s_ai_scene_unit_header
-{
-	byte unknown00[8];
-	s_ai_scene_unit *unit;
-};
-
 /* the scenes that have started once (ai.cpp) */
 extern void *g_5044d0;
 
@@ -507,8 +501,6 @@ void __stdcall function_2919e0(s_ai_scene *scene, s_ai_scene_assignment *assignm
 
 /* starts a scene (by name) with the actors the ai indices name when its
    trigger conditions hold */
-// score 83 (was 79): the score loop and the final stores pick other
-// registers, and the branches into the shared helpers land elsewhere.
 // @retail 0x291b40
 bool function_291b40(long name, short command_script_index, long ai_index, long ai_index2, long ai_index3)
 {
@@ -604,16 +596,17 @@ bool function_291b40(long name, short command_script_index, long ai_index, long 
 					for (k = 0; k < scene->role_count; k++)
 					{
 						s_ai_scene_actor *actor = &((s_ai_scene_actor *)g_4f55f0->data)[assignment->actor_indices[k] & 0xffff];
+						s_ai_scene_unit *unit = (s_ai_scene_unit *)object_get(actor->unit_index);
 						short variant_index = assignment->variant_indices[k];
 						long local_dbe893 = assignment->variant_names[k];
-						s_ai_scene_unit *unit = ((s_ai_scene_unit_header *)g_4e0300->data)[actor->unit_index & 0xffff].unit;
 						if (((s_ai_scene_unit_variant *)((byte *)unit + unit->variant_offset))->local_dbe893 != local_dbe893 &&
 							local_dbe893 && variant_index != NONE)
 						{
 							s_ai_scene_model *model = (s_ai_scene_model *)g_4e3b44[*(long *)(g_4e3b44[unit->definition_index & 0xffff].bytes + 0x38) & 0xffff].bytes;
 							if (variant_index >= 0 && variant_index < model->variant_count)
 							{
-								s_ai_scene_unit_variant *variant = (s_ai_scene_unit_variant *)((byte *)unit + unit->variant_offset);
+								s_ai_scene_unit *written_unit = (s_ai_scene_unit *)object_get(actor->unit_index);
+								s_ai_scene_unit_variant *variant = (s_ai_scene_unit_variant *)((byte *)written_unit + written_unit->variant_offset);
 								variant->name = model->variants[variant_index].name;
 								variant->local_dbe893 = local_dbe893;
 							}
