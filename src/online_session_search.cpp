@@ -663,6 +663,9 @@ done:
 	return result;
 }
 
+// score 128 (was 128): results observation, details cursor base and kind/count homes differ.
+// Initial results snapshot 183; scalar/cursor role names 128; exact end-pointer test 128;
+// repeated-use computed distance 128; shared maximum bonus 128; persistent details cursor 154.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

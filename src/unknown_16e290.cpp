@@ -1434,6 +1434,9 @@ struct s_camera_clip_reference_16ebf0
 
 // score 229 (was 234): Frame 0x9c versus 0x98; vector-copy homes and narrow/fraction convention differ.
 // Direct view call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode branch 240.
+// Scalar-workspace role names 229; scale assigned after copies 229; later position pointer 226;
+// no inner position alias 229; directions published first 229; scalar vector aggregates 229;
+// later position pointer with native direction copies 237. Three-point gain rejected.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
