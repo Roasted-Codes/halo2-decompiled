@@ -278,9 +278,13 @@ short __stdcall function_1b39e0(long actor_index)
 	return (short)result;
 }
 
+// score 1 (was 36): literal target differs (1.5 versus 1.0); one result 1;
+// result supplies flags 1; byte expression 36; flags after unit 35; unit before copy 46;
+// clear return receiver 63; first/second shared timer rounding 86/63.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
+    bool result = false;
     s_1b36e0 *local_0 = (s_1b36e0 *)((byte *)slot + 0xc);
     long local_1 = actor_get(actor_index)->first_prop_index;
     long local_2 = NONE;
@@ -331,9 +335,9 @@ bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
         long local_8 = actor_get(actor_index)->unknown018;
         if (local_8 != NONE)
             function_20ba60(0x62, local_8, local_3->object_index, NONE, NONE, NULL);
-        return true;
+        result = true;
     }
-    return false;
+    return result;
 }
 
 
@@ -362,6 +366,9 @@ short __stdcall function_1b3ea0(long actor_index)
 	return result;
 }
 
+// score 26 (was 26): offset/pool setup and zero register differ;
+// compound bit 26; word mask 26; slot sentinel result 36; slot Boolean result 38;
+// joint slot result 43; reset mode result 38; reset owner result 39; active slot result 43.
 // @retail 0x1b3ee0
 bool __stdcall function_1b3ee0(long actor_index, s_slot *slot)
 {

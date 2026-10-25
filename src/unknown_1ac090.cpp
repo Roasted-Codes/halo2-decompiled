@@ -408,6 +408,9 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
+// score 24 (was 24): early pool-data load, mode registers and restore order differ;
+// timer names 24; timer declarations 24; request before mode 24; type after point 34;
+// reverse word declarations 24; mode after vector 44; request result 26; failure first 48.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -820,6 +823,9 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
+// score 29 (was 29): actor offset/candidate registers and two spill homes differ;
+// separate cleanup receiver 29; success return 74; shared displacement 29; scan scope 44;
+// unsigned candidate counter 227; unsigned marker counter 153; const source/marker 29/29.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)

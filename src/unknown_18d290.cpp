@@ -131,6 +131,9 @@ bool function_bafb0(long object_index, long ancestor_index);
 
 bool function_14ddc0(long local_player_index);
 
+// score 44 (was 44): existence byte and index/unit registers differ;
+// inline/noinline controller 44/44; inline/noinline hierarchy 44/44;
+// force-inline existence 44; controller range 58; membership 59; success break 44.
 // @retail 0x18d4f0
 void function_18d4f0(long object_index, char *audible, long *local_player_index)
 {
