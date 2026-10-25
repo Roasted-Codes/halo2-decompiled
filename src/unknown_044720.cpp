@@ -230,6 +230,10 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Both buffer pointers first 194; second pointer first 194; capacities/counts before pointers 188
 // (two-point gain rejected); counts/pointers/capacities 192; large radius first 193; native query
 // alignment 190; direct object-index field 190; read-only bound source 190. Opening body restored.
+// score 190 (was 190): entry/index spill and sphere/position homes remain.
+// Native bound sphere with branch/entry count homes 196/196; aligned bound 203/203.
+// Native bound with split center/query 197 for both count homes and either bound alignment.
+// All native sphere copies restored; no field observation or float grouping retained.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

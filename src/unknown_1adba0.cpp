@@ -653,6 +653,11 @@ bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void cons
 // score 112 (was 112): ESI is still saved around the middle region; result/index registers differ;
 // result first 110, point scope 112, settings scope 112, source scope 112, workspace scope 112,
 // result first/workspace scope 110, named result 112, named workspaces 112, prop index once 229.
+// frame 0x88 agrees; ESI save/restore and query-copy carriers remain.
+// Point/valid/both output receivers 230/112/230; common terminal result 112;
+// point/valid/both with common result 230/112/230; both plus native source 230.
+// Source/query/both publication orders 102/111/101; query-only one-point gain rejected.
+// Native source alone/with source order/with both orders 114/104/103.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {
@@ -680,10 +685,10 @@ short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 		local_8.radius = local_3->field_4;
 		local_8.unknown04 = false;
 		local_8.object_index = local_7;
-		local_8.unknown0c = local_0->unknown018;
 		local_8.has_point = true;
 		*(s_type_c3b527 *)&local_8.point = local_5->unknown48;
 		local_8.unknown24 = *(long *)((byte *)local_5 + 0x44);
+		local_8.unknown0c = local_0->unknown018;
 		local_8.unknown4c = 0.0f;
 		byte *local_9 = ai_scratch_buffer_get();
 		function_271300((s_type_f17a25 *)local_9, NULL, &local_6, &local_8, 0);

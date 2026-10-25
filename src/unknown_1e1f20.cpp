@@ -66,6 +66,9 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 // Inner entry result/both-arm assignment 20/20; absent slot return 19;
 // inner slot selection 20; inner sentinel early exit 19; readonly unit 20;
 // two result lifetimes 24; absent unit input return 22.
+// Unit pointer/readonly boundary 20/20; actor query boundary 27; actor result
+// first/from tests 30/27; slot sentinel result 27; actor slot sentinel 27;
+// unit and slot sentinel results 31.
 // @retail 0x1e1fd0
 long function_1e1fd0(long actor_index)
 {

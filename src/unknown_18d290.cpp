@@ -134,6 +134,9 @@ bool function_14ddc0(long local_player_index);
 // score 44 (was 44): existence BL and loop/unit allocation still differ. index-accessor
 // predicate 67; shared player index 65; short index 61; unsigned index 44;
 // relationship result/guards 44/44; immutable existence 44; audible guard 44.
+// existence byte and index/unit registers differ;
+// inline/noinline controller 44/44; inline/noinline hierarchy 44/44;
+// force-inline existence 44; controller range 58; membership 59; success break 44.
 // existence byte still coalesces across the controller call; eligibility input 44, eligibility guard 44, saved existence output 44, conditional merge 44; the same forms with the player accessor 44,44,44,44 (round 115).
 // existence flag and loop/unit registers differ;
 // long/word/byte split masks 72/59/69; char/long existence with mask 72/83;

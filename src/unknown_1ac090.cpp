@@ -423,7 +423,10 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
-// score 24 (was 24): early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
+// score 24 (was 24): early pool-data load, mode registers and restore order differ;
+// timer names 24; timer declarations 24; request before mode 24; type after point 34;
+// reverse word declarations 24; mode after vector 44; request result 26; failure first 48.
+// early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
 // frame 0x28 agrees; pool-data load and mode-lookup registers still differ;
 // tried full width mode 39; mode tests reversed 27; inactive state branch first 168;
 // missing prop early return 24; alignment product operands 30; unsigned short mode 24;
@@ -855,7 +858,10 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
-// score 29 (was 29): actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
+// score 29 (was 29): actor offset/candidate registers and two spill homes differ;
+// separate cleanup receiver 29; success return 74; shared displacement 29; scan scope 44;
+// unsigned candidate counter 227; unsigned marker counter 153; const source/marker 29/29.
+// actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
 // frame 0x8c agrees; EBP/EDI, two spill homes and product/address scheduling still differ;
 // tried result declared first 30; best index named before actor home 29;
 // source actor named after index home 29; best index and source actor named homes 29;
