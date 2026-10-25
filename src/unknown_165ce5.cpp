@@ -1188,7 +1188,10 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // score 36 (was 46): the 0x20 frame agrees; node-address registers and one byte still differ.
 // Field reference with calls in both arms 36; wide parent 117; unsigned root 115;
 // root reference 115; parent reference 115; predicate 46; signed mask 47; unsigned mask 46.
-// score 36 (was 36): The node-base addition and ECX/EDX roles still differ.
+// score 36 (was 36): parent address LEA/base-index roles and overlay setup remain.
+// Native root/parent/both node values 140/141/153; native result field, unsigned result,
+// arms entry binding/update and mapping outcome 36; parent word/index and late index 115/115.
+// The node-base addition and ECX/EDX roles still differ.
 // Shared node array 36; read-only nodes 36; mutable parent-field binding 36;
 // root read before graph 38; immutable active 36; earlier animation receiver
 // 188; immutable mode 36; arms-map entry reference 36 (plain scores).

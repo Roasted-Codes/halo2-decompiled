@@ -97,7 +97,10 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 // before the release block. Was: the error codes folded into the release test
 // (32); the error set in an if/else with `result = error` before the release, the
 // index test nested: 25.
-// score 25 (was 25): Allocation failure remains before cleanup. Immutable
+// score 25 (was 25): cold allocation-error placement remains; validation-derived result 98;
+// allocation/handler error defaults 63/64; valid-scope error 98; native payload word 25;
+// validation plus payload word 98; size-first and type-first publication 25/25.
+// Allocation failure remains before cleanup. Immutable
 // allocation/handler/size 25/25/25; shared allocator receiver 29; indexed
 // output 34; output element reference 25; signed-word error 41; direct failure
 // result on the nested-index body 40.
