@@ -101,6 +101,10 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 // allocation/handler/size 25/25/25; shared allocator receiver 29; indexed
 // output 34; output element reference 25; signed-word error 41; direct failure
 // result on the nested-index body 40.
+// score 25 (was 25): Cold error-2 placement still differs. Success-first
+// coded outcome 59; tested public outcome 75; path-defined outcome 81;
+// function-scope size 25; registry record 25; produced-count reference 25;
+// native publication on tested outcome 112; path-defined success 78.
 // @retail 0x8b110
 long c_vtable_450cb8::v0(long index, long a2, long a3, long *count, s_item_450cb8 *items, void *a6)
 {

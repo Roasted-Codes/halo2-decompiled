@@ -35,6 +35,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // (three-point gain rejected), long 214; blocked long/byte 190/190; existing
 // flag helper force-inline 190; returned point 199; marker bits 190; option
 // scope 190. Original body and helper declaration retained.
+// score 190 (was 190): Cached pool base and merged completion stores remain.
+// Native player record 190; scoring-team field binding 190; both 190;
+// increment counter binding 202; decrement binding 190; both counters 202;
+// marker-team value 194; native player with both counters 202.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
