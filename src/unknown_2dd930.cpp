@@ -184,6 +184,12 @@ public:
 // that store 171; input countdown 171; finishing optimization disabled 171;
 // local writable mask 171; reverse pointers with the store 174. The single
 // translated-distance SIMD store is retained, at 674/672 bytes.
+// score 171 (was 171): input registers and the SIMD load/store schedule differ.
+// Positive finishing counter with the index derived from it 166 (not kept: a hand-inverted loop); early query reads, cursor-first reads,
+// array-entry references, a shared magnitude helper, first-output ordering
+// and an input-object reference 171; early second output 191;
+// direct index countdown 168; counter with entry references
+// or an earlier origin read 166.
 // @retail 0x2dd930
 void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
