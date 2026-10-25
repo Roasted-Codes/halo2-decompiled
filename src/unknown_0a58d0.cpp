@@ -853,6 +853,8 @@ PRIVATE inline bool z_state_real_valid(real value)
 // score 146 (was 146): initial direct byte SETNE, scalar zero and output-vector roles remain.
 // Actual position/first-vector/second-vector bindings 146/146/146; scale and two scalar
 // field bindings 146/146/146; decode-array element binding 146; combined scalar fields 146.
+// score 146 (was 146): direct result-byte SETNE and scalar-zero reloads remain.
+// Wide sticky validity 352; byte sticky validity 146; decoder exits/lower-first 146/295; finite classifier 243; exponent extraction 146; decoded region count/state 146/146.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {

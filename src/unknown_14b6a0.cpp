@@ -118,6 +118,8 @@ void function_14bac0()
 	players_pending_creation_process(iterator_reference);
 }
 
+// score 234 (was 234): frame 0x34 versus 0x3c and point/iterator homes remain.
+// Existing first/second/both iterator calls 280/247/263; typed request/marker/both records 234/234/234; read-only request record 234; accepted-point memcpy 234.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

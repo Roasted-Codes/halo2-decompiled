@@ -83,6 +83,8 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // Native cache pointer 142; changed-record predicate 142; actual head field 142;
 // unsigned child handle 142; shared bounded selector 142; word flags 142;
 // word flags with bounded selector 142; child zero-age before enable 142.
+// score 142 (was 142): cached-pointer memory compare, child pushes and in-loop lookup remain.
+// Cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime field 142; mask/lifetime fields 142.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)
