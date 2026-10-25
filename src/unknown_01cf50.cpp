@@ -5943,7 +5943,6 @@ bool function_13450(s_depth_parameters_13450 const *parameters)
 #endif
 
 extern dword g_4b82f8, g_4b8324;
-dword g_4b8474;
 extern byte g_4c19c0;
 extern dword g_4c1a04;
 struct s_2e9e0_saved { long tag; point3f position; };
@@ -5977,7 +5976,7 @@ void function_2df00()
     g_4b82e0 = 0x203; D3DDevice_SetRenderState(D3DRS_ZFUNC, 0x203);
     g_4b82fc = 0; D3DDevice_SetRenderState(D3DRS_ZWRITEENABLE, 0);
     g_4b8450 = 0; D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
-    g_4b8474 = 0; D3DDevice_SetVertexShader(0);
+    function_0222d0(D3DRS_SAMPLEALPHA, 0);
     g_51f3c8[1][0] = NULL;
     g_51f3c8[1][1] = NULL;
     g_51f3c8[1][2] = NULL;
@@ -6016,7 +6015,6 @@ long function_30830(point3f const *point, s_camera const *camera, vector3f const
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out);
 void function_47ea0(short stage, byte flags);
-extern dword g_4b8474;
 
 // @retail 0x4f7e0
 bool __stdcall function_4f7e0(long tag, s_501e0 const *points, long count, short bitmap,
@@ -6030,8 +6028,7 @@ bool __stdcall function_4f7e0(long tag, s_501e0 const *points, long count, short
     {
         if (!g_46713c)
         {
-            g_4b8474 = 0;
-            D3DDevice_SetVertexShader(0);
+            function_0222d0(D3DRS_SAMPLEALPHA, 0);
         }
         g_46713c = true;
     }
@@ -6551,8 +6548,7 @@ void __stdcall function_4f010(void *payload)
     }
     if (!g_46713c)
     {
-        g_4b8474 = 0;
-        D3DDevice_SetVertexShader(0);
+        function_0222d0(D3DRS_SAMPLEALPHA, 0);
     }
     g_46713c = true;
 }
