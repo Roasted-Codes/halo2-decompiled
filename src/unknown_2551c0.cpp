@@ -28,14 +28,13 @@ struct s_unit_0c_view
    given */
 static inline void function_x84d9e8(vector3f *vector, vector3f const *axis, real sine, real cosine)
 {
-	real i = vector->i;
-	real j = vector->j;
-	real k = vector->k;
-	real projection = (axis->k * k + axis->i * i + j * axis->j) * (1.f - cosine);
-
-	vector->i = (axis->i * projection + i * cosine) - (axis->k * j - k * axis->j) * sine;
-	vector->j = (j * cosine + projection * axis->j) - (k * axis->i - axis->k * i) * sine;
-	vector->k = (axis->k * projection + k * cosine) - (i * axis->j - j * axis->i) * sine;
+	real projection = (vector->i * axis->i + vector->j * axis->j + vector->k * axis->k) * (1.f - cosine);
+	real cross_i = vector->j * axis->k - vector->k * axis->j;
+	real cross_j = vector->k * axis->i - vector->i * axis->k;
+	real cross_k = vector->i * axis->j - vector->j * axis->i;
+	vector->i = vector->i * cosine + projection * axis->i - cross_i * sine;
+	vector->j = vector->j * cosine + projection * axis->j - cross_j * sine;
+	vector->k = vector->k * cosine + projection * axis->k - cross_k * sine;
 }
 
 real function_30bf0(vector3f *v);
@@ -72,8 +71,17 @@ short __stdcall function_2551c0(long actor_index)
 	return local_0;
 }
 
-// score 117 (was 117): our frame is four bytes larger than retail's and the
-// inlined rotation helper runs on a different SSE schedule.
+// score 43 (was 117): retail computes the second products of the j and k cross terms before
+// the call's pushes (ours the first j product: 2 bytes longer, j/k cross registers swapped) and
+// sums the score's dot product j, k, i (ours k, i, j). Kept: the rotation as projection first, then
+// three named cross terms, each output `v * cos + projection * axis - cross * sin` (frame now
+// retail's). Tried: cross before projection 109, any other statement order 49-112; product operand
+// orders 43; the original output forms 72; i/j/k locals 116; cross as a struct or cross3f 154/159;
+// dot3f for the projection 72; output statements reordered 59-124; one_minus_cosine local 56;
+// forceinline 43; the score's dot written out in any order 72-146 or swapped 43; loop-local
+// declaration orders 43.
+// Earlier: our frame was four bytes larger than retail's and the
+// inlined rotation helper ran on a different SSE schedule.
 // @retail 0x2551f0
 bool __stdcall function_2551f0(long actor_index, s_slot *slot)
 {
