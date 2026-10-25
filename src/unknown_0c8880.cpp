@@ -58,7 +58,8 @@ real function_c8880(long unit_index, short field_240)
 		{
 			if (function_100f70(weapon_index))
 			{
-				return function_101090(weapon_index, field_240);
+				result = function_101090(weapon_index, field_240);
+				goto done;
 			}
 
 			bool unzoomed = (((s_zoom_weapon_definition *)g_4e3b44[ZOOM_UNIT(weapon_index)->definition_index & 0xffff].data)->flags12e & 1) != 0;
@@ -68,7 +69,7 @@ real function_c8880(long unit_index, short field_240)
 
 			if (unzoomed)
 			{
-				return result;
+				goto done;
 			}
 		}
 	}
@@ -82,5 +83,6 @@ real function_c8880(long unit_index, short field_240)
 		}
 		result = (globals->magnification_maximum - globals->magnification_minimum) * fraction + globals->magnification_minimum;
 	}
+done:
 	return result;
 }

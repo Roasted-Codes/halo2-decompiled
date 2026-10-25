@@ -421,11 +421,16 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 	if (handle != NONE)
 		function_82a40(handle, (s_relevance_observers const *)a2, a3, a4);
 }
-// score 13 (was 13): only registers differ: retail keeps the table in ecx and the index in edx, ours
+// score 13 (was 13): table and masked index exchange ECX/EDX from +0x4;
+// wide flags 17; short index 31; word index 17; active result first 24;
+// selected result first 22; slot-array base 13; independent failure guards 27; identity result first 25.
+// only registers differ: retail keeps the table in ecx and the index in edx, ours
 // the reverse. Tried: result declared first (15, moves caller 0x8b2a0), early returns (26, caller 86),
 // index before table (28), block local (26), no table local (27), flag entry pointer (21),
 // else-false default (22), (flags & 2) != 0 (13), one combined condition (13), nested ifs (13),
 // flags-array local (13), dword index (13).
+// read-only table 13; signed flag byte 13; native index 13; required-bit equality 21;
+// mask-proved lower/upper bounds 25/29; slot pointer expression 13; complete required-bit predicate 28.
 // @retail 0x979f0
 bool function_979f0(s_world_450cb8 *world, long handle)
 {

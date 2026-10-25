@@ -115,6 +115,10 @@ void *function_1e4e50(long actor_index);
 short function_1a77a0(long actor_index, long a, short level);
 
 #pragma inline_depth(0)
+// score 72 (was 72): early actor-pool register/save, zero-result path and target equality loads remain.
+// Native result value 72; entry result lifetime 72; shared result exit 90; native shared
+// result 90; native node pool value 122; existing record queries 181; return-tested entry
+// loop 72; stable object query key 89.
 // @retail 0x1b4680
 short __stdcall function_1b4680(long actor_index)
 {
