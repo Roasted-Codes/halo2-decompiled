@@ -805,6 +805,10 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // (six match losses). On 251: logical channel 287; logical offset 248 (gain
 // three, dropped); loop expression 345; success after query 274; before
 // overlay 255; previous-loop home name 251.
+// score 251 (was 251): ID/result/loop homes, blend reloads and frame clamp remain.
+// Transition ID name 251; blend-first join 327; failed result from flag 354;
+// frame-position snapshot 297; reversed bitwise loop result 251; previous-loop
+// lifetime first 254; false result after channel observation 286 (fast).
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

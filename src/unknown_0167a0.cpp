@@ -1199,6 +1199,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // score 246 (was 246): Frame 0x28 agrees; sampler convention and descriptor rereads differ.
 // Unsigned counters 325; rescale pointer traversal 354; remapping-source address 268; separate
 // clamp passes 358; shared native color workspace 246 (fast).
+// score 246 (was 246): sampler convention and dirty-store descriptor rereads remain.
+// Existing packed-range accessors 325; post-clamp mask capture 275; positive filter
+// with full-width descriptors 269; alpha-first color 250; alpha-first clamps 270 (fast).
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
