@@ -2953,6 +2953,11 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // Round 127: short selector with barrel input 133; with weapon/barrel 52;
 // with tag/barrel 52; with all receivers 52; with external record references 52;
 // reserve query, reload notification and barrel stop noinline 52 each.
+// score 52 (was 52): still the ebp/ebx receiver and dx/cx selector swap. Permuter
+// ran out its window in the baseline build (no tries scored). Neighbor inline
+// getter 52; header-table local 52; masked definition-index local 52; outcome and
+// selector declarations swapped 52; nested macro get 131; barrel address by
+// arithmetic 52; shared-linkage forced inline 52; magazine address by arithmetic 52.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {

@@ -939,6 +939,12 @@ void __stdcall function_25edd0(
 // projected workspace first 50; unsigned line ordinal 145. Iterator setup and bonus tests remain.
 // Selected-arm staged scales 72; upper-first staged 66; half by division 50;
 // selected margin carrier 186; near/far or separate bonus names 50; staged/name pairs 66.
+// score 50 (was 50): the range bonus in retail is a two-test select (over 2 first,
+// then over 0) with two multiplies (halve, then times ten); that exact form scores 66
+// (997 bytes) because the line loop's xmm homes rotate — the allocation cascade from the
+// protected iterator setup defeats it. Nested select 83; staged halves with the new
+// order 66; new order with folded multiply 58; old order with two multiplies 72;
+// squared-length local 186; closest product order 66; margin initialized 66.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,
