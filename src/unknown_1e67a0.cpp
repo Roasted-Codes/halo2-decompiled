@@ -696,7 +696,12 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
  return a->k * b->k + a->j * b->j + a->i * b->i;
 }
 
-// score 155 (was 155): movement slot and rotation/output allocation still differ.
+// score 155 (was 155): movement/rotation homes and cross/result lifetimes still differ.
+// early side products 249f; single turn cross 249f.
+// rotation cross as old 155f; rotation cross as new 153f.
+// one rotation cross for both 245f; saved forward reads 220f.
+// saved forward plus shared cross 232f; indexed equal rotation rows 181f.
+// movement slot and rotation/output allocation still differ.
 // Existing velocity scale 185; scale from field 186; first dot products commuted 155;
 // side projection values 166; rotated alignment value 166; axis field reference 155;
 // output record reference 155; scale plus dot flow 185. Opening body retained.

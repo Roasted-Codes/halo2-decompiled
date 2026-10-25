@@ -472,7 +472,12 @@ void function_3dd10(long object_index, bool force);
 // Variant between native remainder and rounding 213; variant assigned at metadata test 134;
 // immutable early variant 122; output element reference 131; metadata entry reference 122;
 // twice-used choice key 131; late mixed HSV workspace 122; selected choice reference 122.
-// score 122 (was 122): Saved output/count roles and second-remainder
+// score 122 (was 122): remainder publication, saved color roles and signed scan exits still differ.
+// lower HSV reused 199f; upper HSV reused 203f.
+// weighted selection reused 122f; cumulative weight reused 122f.
+// shared scan ordinal 122f; short variant ordinal 263f.
+// selection plus lower HSV 199f; weight plus upper HSV 203f.
+// Saved output/count roles and second-remainder
 // publication still differ. Early variant field binding 149; live count 122;
 // both 149; early presence predicate 131; default/supplied/final color
 // memcpy 213/213/213; base-color name 122; model-first guard 150; shared
