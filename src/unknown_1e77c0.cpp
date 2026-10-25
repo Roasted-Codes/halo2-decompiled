@@ -336,6 +336,11 @@ bool function_1df560(short team_a, short team_b);
 // score 47 (was 47): retail keeps the scaled index in EAX and reads the field
 // as [eax+esi+0x28], and loads the table pointer after the index is scaled;
 // ours materialises the record pointer in EBX and reads [ebx+0x28].
+// Ours gives the state EAX for the final call's `state + 0x140` argument
+// (`add eax, 0x140`), so the record moves to EBX; retail keeps the record in
+// EAX and passes `lea eax, [edx+0x140]`. Tried: state declared first 47; a
+// previous-request pointer 47; the state as a byte offset 47; no record
+// local, a fresh one for the unit 52; the copies without `current` 47.
 // @retail 0x1e6b00
 void function_1e6b00(long player_index, s_request_source *source)
 {

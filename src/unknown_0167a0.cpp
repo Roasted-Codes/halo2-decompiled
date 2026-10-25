@@ -931,7 +931,8 @@ PRIVATE __forceinline long rounded_shader_integer(real value)
     return result;
 }
 
-PRIVATE __forceinline long rounded_shader_alpha(real value)
+/* value * 255 rounded as the x87 does, moved into the alpha byte of a color */
+PRIVATE __forceinline long packed_shader_alpha(real value)
 {
     real scale = 255.0f;
     long result = 0;
@@ -939,6 +940,7 @@ PRIVATE __forceinline long rounded_shader_alpha(real value)
     __asm { fld scale }
     __asm { fmulp st(1), st(0) }
     __asm { fistp result }
+    __asm { shl result, 24 }
     return result;
 }
 
@@ -962,7 +964,7 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
             {
             case 0:
                 {
-                    dword alpha = (dword)rounded_shader_alpha(value) << 24;
+                    dword alpha = packed_shader_alpha(value);
                     dword old = 0;
                     D3DDevice_GetRenderState((D3DRENDERSTATETYPE)parameter->state, &old);
                     D3DDevice_SetRenderState((D3DRENDERSTATETYPE)parameter->state, alpha ^ ((old ^ alpha) & 0xffffff));
@@ -1027,7 +1029,7 @@ void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
             {
             case 0:
                 {
-                    dword alpha = (dword)rounded_shader_alpha(value) << 24;
+                    dword alpha = packed_shader_alpha(value);
                     dword previous;
                     D3DDevice_GetRenderState((D3DRENDERSTATETYPE)setting->state, &previous);
                     D3DDevice_SetRenderState((D3DRENDERSTATETYPE)setting->state, alpha ^ ((previous ^ alpha) & 0xffffff));
@@ -1055,12 +1057,6 @@ void __stdcall function_17b60(byte *context, s_packed_shader_range const *range)
     }
 }
 
-// score 51 (was 51): the switch on the procedure id is compiled to a different table: retail
-// reads the entry with movzx ecx from a table at another base, ours uses
-// esi and another table.
-// Frame 0x10 agrees; table pointer and alpha memory shift still differ.
-// Short counter 51; word counter 220; unsigned counter 210; byte alpha 50;
-// word alpha 50; scalar memcpy 322; color-input pointer 51; const entry 51.
 // @retail 0x1ab50
 void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 {
@@ -1077,7 +1073,7 @@ void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
             {
             case 0:
                 {
-                    dword alpha = (dword)rounded_shader_alpha(value) << 24;
+                    dword alpha = packed_shader_alpha(value);
                     dword old;
                     D3DDevice_GetTextureStageState(entry[0], (D3DTEXTURESTAGESTATETYPE)parameter->state, &old);
                     sampler_state_write(entry[0], (D3DTEXTURESTAGESTATETYPE)parameter->state, alpha ^ ((old ^ alpha) & 0xffffff));
@@ -1139,12 +1135,6 @@ void __stdcall function_19be0(byte *state, word const *range)
 
 
 
-// score 39 (was 39): the jump table's targets and the shifts around it differ: retail shifts
-// the word at esp+0x18 and keeps the index in ecx, ours keeps it in esi
-// and shifts later.
-// Frame 0x18 agrees; alpha still shifts in a register.
-// Byte alpha 38; word alpha 38; short counter 250; unsigned counter 251;
-// rounding-result name 39; scale name 39; result first 41; integer case first 39.
 // @retail 0x18560
 void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 {
@@ -1174,7 +1164,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
             {
             case 0:
                 {
-                    dword alpha = (dword)rounded_shader_alpha(value) << 24;
+                    dword alpha = packed_shader_alpha(value);
                     dword previous;
                     D3DDevice_GetTextureStageState(entry[0], (D3DTEXTURESTAGESTATETYPE)setting->state, &previous);
                     sampler_state_write(entry[0], (D3DTEXTURESTAGESTATETYPE)setting->state, alpha ^ ((previous ^ alpha) & 0xffffff));
