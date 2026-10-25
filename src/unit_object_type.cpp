@@ -711,6 +711,9 @@ bool function_c70b0(long unit_index)
 }
 
 /* the last object of the chain the units' +0x24c links */
+// score 25 (was 25): retail retains a separate ESI link observation and reloads the result;
+// unit cursor 40, unit before result 46, link-value cursor 40; separate observation 25, observation first 41;
+// object for loop 40, assigned link test 40, object plus observation 40; existing object/link getter 40/25.
 // @retail 0xc7100
 long function_c7100(long unit_index)
 {

@@ -423,6 +423,8 @@ PRIVATE byte const g_saved_game_image[4096] =
 /* writes the save image into a game variant's saved game directory; the
    other types have none */
 // score 26 (was 26): failure spans, buffer/size setup and shared byte exits remain; shared reference initializer 26; earlier reference/error workspaces 26/26; initializer return consumed directly 26; zero reference/path aggregates 28/93; header aggregate 62; all workspaces before path 26.
+// score 26 (was 26): positioned-write helper stays out of line; existing writer/shared reference/early error/path names 46/46/46/46;
+// positioned close output 32; negative failures 46; comparison result 86; shared reference with close output 32.
 // @retail 0x216f80
 bool saved_game_file_write_save_image(long type, s_saved_game_file_location *location)
 {

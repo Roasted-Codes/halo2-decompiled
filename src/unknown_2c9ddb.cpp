@@ -288,6 +288,9 @@ void c_class_2c9e69::select_last_variant()
 }
 
 /* shows the item's variant name */
+// score 23 (was 23): nonempty receiver is reloaded after the name call instead of retained in EBX;
+// branch name workspace before receiver, immutable receiver, receiver names 36/36/36; common completion 36;
+// completion with immutable receiver or receiver before name 36/36; ordinary pointer with scoped/common completion 36/36.
 // @retail 0x2c9ff4
 void c_class_2c9e69::v20(c_class_1a2c81 *item, long unused)
 {

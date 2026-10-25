@@ -323,6 +323,8 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 	return seat_animation_entry_find(tag_index, index, type, element_index);
 }
 
+// score 22 (was 22): EBP holds the table instead of the requested index; native walk index 21, direct input 33;
+// native parent assignment 21; native requested index 22; both indices 21, direct input 33; native hit return 21; result first 21.
 // @retail 0x1882d0
 s_seat_animation_entry *function_1882d0(long type, short element_index, long index, short entry_element_index)
 {

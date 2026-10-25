@@ -162,6 +162,8 @@ void c_widget::v16()
 	}
 }
 
+// score 20 (was 20): entry candidate still uses ESI before its save; entry/repeat/both link cursors 20/20/20;
+// entry/repeat/both last-widget results 20/20/20; link for scans 20; selected declaration first with link scans 20.
 // @retail 0x22ec1b
 void c_widget::v17()
 {
