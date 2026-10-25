@@ -36,6 +36,19 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 // into ebx for the started test (526 bytes). Argument-list assignment 85; plain reads
 // throughout 116; second half plain 90; all three through the reference 28; first half
 // plain 41; the first test alone through the reference 169; non-volatile reference 116.
+// frame 0xa0 agrees; +0x115 consumes the slot pointer
+// for the variant, then reloads it; object playback setup and source-result
+// allocation also differ. Earlier pointer/result scopes tied at 38; standalone
+// argument playback gave 83/523. Ordinary trials: indexed final store 156/537;
+// descriptive homes 35; shared source mode 97/521; slot reference 35; argument
+// playback with early request variant 81/523; argument playback with indexed
+// final store 148/539; failed-duration tail 35; early variant and argument
+// playback with descriptive homes 81/523; object retained during argument
+// evaluation 85/523. Opening executable body restored.
+// slot base/result registers at +0x115 and object playback setup remain;
+// direct duration 35; duration with argument playback 85; shared permutation 123;
+// permutation with argument playback 123; completion result 55; request variant first 41;
+// callback fields first 60; separate standard noinline declaration 35 (ordinary scores).
 // @retail 0x189cd0 standard
 void __stdcall function_189cd0(long tag_index, long object_index, real scale, long a, long b, long label, long duration_address)
 {

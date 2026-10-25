@@ -1601,7 +1601,7 @@ static inline bool weapon_state_replaceable(long current, long state)
 }
 
 /* puts a weapon in a state and plays the state's animation */
-// score 69 (was 69): notification input registers and success scheduling still differ.
+// score 67 (was 69): notification input registers and success scheduling still differ.
 // forced replacement 69; long replacement 115; complete predicate arms 69; predicate tests 136;
 // state-selected flags 96; case-selected flags 137; const animation receiver 69;
 // wide predicate and case flags 128.
@@ -1610,6 +1610,9 @@ static inline bool weapon_state_replaceable(long current, long state)
 // success-byte scheduling and final call argument registers still differ.
 // Byte outcome 67; short/word outcomes 87; actual object references and nested scope 69;
 // signed-word mask 83; owner-first test 68.
+// wide set/flags/class 67; single played result 130; unit lookup before flags 75;
+// replaceable-first gate 111; nested class gate 67; wide unit index 67;
+// class-by-default test 67; class ternary 75.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {

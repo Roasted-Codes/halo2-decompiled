@@ -253,7 +253,10 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // Shared squared length/self product 152/152; outside-sphere exit 57; root declared first 57;
 // default output before normalization 174; center/sphere value copies 397/396; center plus squared helper 397.
 
-// score 57 (was 57): sphere displacement/normal coalescing and reciprocal-one hoisting remain.
+// score 57 (was 57): displacement/normal XMM homes and early reciprocal-one load remain;
+// late radius after normal/before root/after root, shared double-factor scale, in-place input,
+// late radius with scale, native factor and partial squared distance 62, 65, 65, 397, 397, 397, 397, 61.
+// sphere displacement/normal coalescing and reciprocal-one hoisting remain.
 // Containment-test return, successful plane/depth pointer returns, normal-first projection,
 // projection value, existing reverse dot in either input order and test/projection result all 57.
 // score 57 (was 57): the normal's x and z products go in place only when the sum's first reads of
