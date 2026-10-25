@@ -1419,6 +1419,9 @@ PRIVATE __forceinline long shape_cluster_next(long *next)
 // integer query result 251f; paired world mask 205 plain; leaf step at read 222 plain;
 // unsigned leaf/handle/count views and normal iterator inline 251f; direct count returns 249f
 // (unchanged fast control 251; full 170).
+// External position/collection records 170/170; read-only pool/link views
+// 170/170; native pool reference 170; word link slot 180; slot with read-only
+// pool or external call receivers 180/180 (complete fast control 170).
 // @retail 0x16a440
 bool __stdcall function_16a440(dword flags, point3f const *position, real extent, real height,
     real radius, long ignore_object, long ignore_parent, s_shapes *shapes)

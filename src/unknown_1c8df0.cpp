@@ -50,6 +50,9 @@ extern vector3f *g_4687bc;
 // direct primary miss 207; entry fraction zero 185; early probe bit 181; arithmetic clear bit 288;
 // early bit with shared probe and Boolean/native clear 44/85 (not matched);
 // shared probe with entry fraction/direct primary miss 44/71 (not matched).
+// Staged byte-flow positive/negative/both point names 5/5/5; native positive/
+// negative component arrays 5/5; existing shared scale for positive/both points
+// 276/210; direct quarter constant 5. All unmatched added-byte forms restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

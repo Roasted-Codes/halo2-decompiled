@@ -39,6 +39,9 @@ PRIVATE __forceinline void function_1d3fc1(vector3f *arg_0)
 // score 149 (was 155): magnitude/SSE carriers remain; component scale loop 155;
 // shared self-dot 155; i/j/k squared values 152/149/154; all squares 155;
 // self-dot or all squares with scale loop 155. Keep the j-square intermediate.
+// Paired i/j and j/k squares 152/153; first-plane subtotal 149;
+// sequential squared length 152; paired squares with subtotal 152/149;
+// separate reciprocal division 149; paired squares with scaled components 153.
 // @retail 0x1d3fc0
 void __stdcall function_1d3fc0(long arg_0, s_havok_component *arg_1)
 {
