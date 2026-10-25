@@ -2388,6 +2388,9 @@ void function_1e9ce0(long player_index, long counter, s_statborg *statistics, lo
 // score 44 (was 44): frame 0x10 agrees; statistics-call setup, event scratch registers and options reload remain.
 // value-initialized iterator 102; shared iterator record 44; immutable mode/old score 44;
 // current-score lifetime 44; frame pointer 118; global optimization disabled 219; size preference 191; record reference 44.
+// score 44 (was 44): statistics setup, event scratch rotation and cached options remain;
+// statistics reference/narrow delta 44/44; event-only delta 116; event-mode snapshot 44;
+// combined selection 78; aggregate if arms 50 (retail length); shared index initialization 44; improvement value 57.
 // @retail 0x15b650
 void __stdcall function_15b650(long team, long delta)
 {

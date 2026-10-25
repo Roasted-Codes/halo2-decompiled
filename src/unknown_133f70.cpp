@@ -75,6 +75,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Source/index initialization swapped 162; ordinal initialized inside guard 163; offset
 // declarations reversed 162; filter input captured 162; override query result 162;
 // existing object getter 162; entry order plus getter/query result 162/162.
+// score 162 (was 162): early source retention, count cursor and feature homes remain;
+// formal source/original record reference 191/191 (caller differs); selected copy source 210;
+// category/object-category values 162/162; chained sentinel/disabled fields 162/162; inherited mask value 197.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

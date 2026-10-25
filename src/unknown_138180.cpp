@@ -67,6 +67,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // short duplicate indices 308; byte duplicate indices 294.
 // short membership index 234; byte membership index 234.
 // long final result 220; short final result 235.
+// score 175 (was 175): frame 0x14/0x18 and options/index/mask homes remain;
+// session type/option kind/limit/index values 175/175/175/175; name length 175;
+// local-machine validity value 263; uniqueness/found entry lifetimes 175/175.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
