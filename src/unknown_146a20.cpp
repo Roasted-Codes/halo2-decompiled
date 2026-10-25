@@ -259,7 +259,10 @@ void function_146de0(void)
 	}
 }
 
-// score 143 (was 143): frame 0x18 versus 0x14 and shared update expansion remain.
+// score 143 (was 143): timestamp high-word home and update expansion still differ.
+// Global analysis off 120 (0x50 frame); frame pointer 161; size/speed 281/143;
+// local analysis with frame/size 120/158; frame with size/speed 281/161; policies restored.
+// frame 0x18 versus 0x14 and shared update expansion remain.
 // Constructed allocator result 164; conditional usable capacity 140/frame 0x14 (three-point gain dropped);
 // conditional padding 141; block/padding outer scopes 143; current block-first homes 143;
 // construction scope 143; zero-first padding 143 at 377 bytes.

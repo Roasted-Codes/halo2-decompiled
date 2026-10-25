@@ -393,6 +393,8 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // score 42 (was 42): frame 0x104 agrees; visited update still loads, ORs and stores.
 // Branch-local graph 42; saved mode 74; const model 42; visited base 42;
 // iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
+// Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
+// value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)

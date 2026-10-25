@@ -76,6 +76,9 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // cached-pointer compare and in-loop lookup differ;
 // metadata read order 142; direct child getter 160; early result declaration
 // 142; word flag update 244; reciprocal default first 142.
+// score 142 (was 142): cached-pointer compare and selective lookup expansion remain;
+// cache slot/early flags/both/cache reference 142; reciprocal input 143;
+// global optimization off 433; frame pointer 314; depth two 142.
 // read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
 // child datum accessor 146; both datum accessors 298; native child ordinal 142; immutable
 // creation inputs 142; reciprocal before child link 143.

@@ -2188,6 +2188,9 @@ event_done:
 
 #pragma inline_depth()
 
+// score 109 (was 109): frame agrees; object-index caching and visibility block order differ.
+// Const tag/root 109/109; external datum reference 109; visibility result tests 189;
+// inline depth one/two 109/109; global optimization off 550; frame pointer 200.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {

@@ -31,6 +31,12 @@ struct s_motion_adjustment_result
 	vector3f velocity;
 };
 
+// score 86 (was 86): frame 0x24 agrees; product scheduling, raw-copy registers, early J/K loads and tick clamp
+// differ; tried offset aggregate 86; squared length value 96; adjustment rate value 109; tick rate value 120;
+// current position value 106; basis input value 128; offset component loop 103; normalization component loop
+// 96.
+// Raw-delta name 86; unit-direction name 86; combined-vector name 86; two offset names 86; entry
+// length 86; entry step 86; both scalar declarations 86; normalization scope 86.
 // @retail 0x1fa810
 void __stdcall function_1fa810(long *ticks, s_motion_adjustment_result *out, s_motion_adjustment const *state)
 {

@@ -98,6 +98,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // aggregate with early result 357; early result with count cursor 300.
 // failure arm first 168; direct result exits 364; byte category index 311;
 // headroom do 167; flat eight-entry submix scan 258. Frame 0x80 still agrees.
+// long channel-count snapshot 303; reused voice count 165; both 322;
+// complete count record 454; pointer-primary count scan 302;
+// unsigned category long/word 165/311; separate voice result 323.
 // returned byte 313; returned byte/count cursor 341; serial HRESULT 169; descriptor prefixes 323;
 // complete listener value 468; frame pointer 443; global optimization disabled 1166; size preference 645;
 // separate final-call result 302; result transfer before reset 294.

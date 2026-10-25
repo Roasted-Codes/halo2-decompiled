@@ -754,6 +754,9 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
+// score 157 (was 157): frame 0xc versus 0x10; table/entry homes and selector rereads differ.
+// Ordinary writer inline 513; packed/index formal domains 189/181; shared complement 214;
+// global optimization off 621; frame pointer 207; branch table lifetimes 184; inline depth two 157.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -984,7 +987,10 @@ void __stdcall function_1a170(byte *state, s_packed_shader_range const *range)
     }
 }
 
-// score 90 (was 90): Frame 0x18 agrees; rounded alpha shifts in a register instead of its conversion slot.
+// score 90 (was 90): frame 0x18 agrees; rounded alpha still shifts after its load.
+// Shared helper packing 90; no conversion initializer 287; unsigned result storage 90;
+// result declared first 92; ordinary alpha/integer inline 90/618; inline depth one/two 90/90.
+// Frame 0x18 agrees; rounded alpha shifts in a register instead of its conversion slot.
 // Signed rounding result, alpha before switch/loop 90; low-mask OR 259;
 // high-mask XOR 91; clear/OR state update 259; shared scalar rounding result 90;
 // cases 0/2/1 90; unsigned return from existing alpha helper 90.
@@ -1102,6 +1108,9 @@ void __stdcall function_1ab50(byte *state, s_packed_shader_range const *range)
 
 // score 54 (was 54): the two arguments land in different registers (retail uses ebp for the
 // second and ecx for the first) and the bit-field extraction order differs.
+// Frame 0x10 agrees; state EBP/range-slot reload and the stacked evaluator component still differ.
+// score 54 (was 54): external packed-word reference 54; explicit output/mask/both banks 72/78/91;
+// input count once 60; inline depth one/two 54/54; plain while scan 54.
 // Frame 0x10 agrees; state/range and evaluator component registers still differ.
 // Unsigned range accessors 54; output/mask/both bank predicates 54;
 // byte component 51 (193 bytes), byte kind 73, both byte inputs 60; output fields 54.

@@ -641,6 +641,9 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // score 19 (was 66): frame/length agree; child-query vtable load, ordinal spill and remap entry differ.
 // Radius before transform 140; scoped instance index 80; later ordinal correction 19;
 // key/owner continues 66/102; remap/removal/both while loops 66.
+// score 19 (was 19): dispatch scheduling, ordinal/context homes and remap entry differ.
+// Complete center 19; local/radius/input memcpy 100/75/142; table/key references 19/137;
+// expansion entry return 19; size preference 200.
 // Actual query reference 102; owner/instance/both record references 19;
 // correction after remap 142; early input sphere 130;
 // normal remap inline 176 (498 bytes); normal removal inline 19.

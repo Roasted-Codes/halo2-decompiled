@@ -85,7 +85,10 @@ void function_130bb0(s_fog_state *fog)
 	}
 }
 
-// score 57 (was 57): block layout. Retail falls through from the pending test
+// score 57 (was 57): default-result and classification-block placement differ; copy/reset tail agrees; tried
+// short result 101; byte result 118; pending distance 100; first intensity 114; second intensity 114; wide
+// distance 133; color value 57; transition distance 96.
+// block layout. Retail falls through from the pending test
 // into the pending checks (jbe to the no-pending block), sets result 3 only after
 // that test, and places the no-pending block after the max's jmp, before its
 // height arm; ours places the no-pending block first. Tried: if (pending > 0)

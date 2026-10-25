@@ -471,6 +471,9 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // score 56 (was 56): Offset initialization, scalar initializer order, property reloads and rotation scheduling differ.
 // Combined entry decisions 53; entry decisions with shared cache 53; scale/alpha/both result locals 119/56/119;
 // saved successor 217; particle cache with scale result 119; combined entry/property/cache 116.
+// Captured position/late output 353; captured velocity/late output 357; both 437;
+// translation component loop 56; inner cache member 56; derived mask at use 198;
+// scale initialized at property selection 273; translation value 160.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {

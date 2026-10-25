@@ -778,6 +778,9 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // Unsigned attached handle 157; const contacts 157; unsigned selection 157;
 // initialized found 364; forward workspace 482; shared difference 237; const objects 157.
 // On per-use scan: direct count 88; direct table 356; both 356; found first 87 (one-point addition dropped).
+// score 88 (was 88): own-object/node registers and contact-table setup still differ.
+// Native flags/parent/both 88/88/88; attachment/position/input-field references 88/88/88;
+// frame pointer 563; global analysis off 1220.
 // Validated attached handle 88; detached selection lifetime 396; outer found 88;
 // state reference 88; output flag reference 88; post-validation selection 106;
 // selected contact reference 88; direct output test result 104. Attached object/node and scan setup still differ.

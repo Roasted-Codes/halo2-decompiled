@@ -82,6 +82,9 @@ long function_14de70(long arg_1);
 // Mask/player ranks and parent/tag scheduling remain; initial parent value 113;
 // seat value 421; parent plus seat 131; direct queried flag 426; display presence 151;
 // target query value and primary/both color copies 113 each (plain).
+// score 113 (was 113): mask/player register roles and parent-load scheduling remain;
+// parent/seat/both references 131f; native current/parent-child tags 131f;
+// repeated secondary pass 446f; bulk sentinel initialization 527f; frame omission 131f.
 // sentinel loop 527f; typed selection arrays 298f; handle/rank/both snapshots 138/131/131f;
 // child test order 141f; wider selection scope 131f; cached zone count 145f (control 131f).
 // Native output sentinel/flag/scalar/pairs/full/scoped views 131f (control 131f);
