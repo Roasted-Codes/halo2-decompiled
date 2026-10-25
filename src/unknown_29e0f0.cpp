@@ -220,6 +220,9 @@ struct s_29e730
 };
 struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long field_54; };
 
+// score 332 (was 332): frame 0x114 versus 0x10c and stacked request versus EAX remain; metadata lifetimes tie, counter/flag forms regress, shared inline declarations tie.
+// primary index after vector 332; primary index before point 332; extra index before point 332; branch counter
+// result 356; extra flag native width 342; position helper inline 332.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,
