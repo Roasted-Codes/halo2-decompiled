@@ -239,6 +239,9 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // Existing element helper out of line 189; type query, geometry test, value callback,
 // value update and context reset noinline declarations 140 each; unsigned extent 140;
 // native int ordinal 140. All temporary helper contracts and declarations restored.
+// score 140 (was 140): retained table register and unfused lookups still differ.
+// Typed count/address helper pointer/reference, unsigned ordinal/extent, byte result,
+// ordinary inline and two typed formal orders all 140; original helper restored.
 // score 136 (was 140): saved table register and unfused lookup addresses still differ;
 // group reads at use 156; cache/mask/pointer zeros before final lookup 141/156/159;
 // callback input before lookup 141; group reads with cache/mask/pointer zeros 157/136/136.

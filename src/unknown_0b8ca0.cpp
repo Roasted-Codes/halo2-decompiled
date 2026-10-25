@@ -1433,6 +1433,9 @@ done:
 // score 17 (was 17): type/descriptor/palette/stride allocation at the tail remains.
 // Test-produced result 78; with wide stride/call-use palette/both 76/44/42;
 // with direct offsets/type name/read-only descriptor/read-only wide 78/78/78/76.
+// entry agrees; tail type/base/palette/stride allocation differs.
+// Canonical descriptor fields through mutable/const pointers and references all 17;
+// the same four contracts with a promoted stride all 27 (236 bytes).
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {
@@ -1481,6 +1484,10 @@ long __stdcall function_bb670(short name_index, bool force)
 // Valid-path stride before/after scenario 106/106; offset references 31; offset references plus
 // valid stride 106; direct guards with valid stride 106; word valid stride 106; one-use creation index copy 27 (reverted in review);
 // creation index with valid stride 106.
+// score 31 (was 31): Metadata/sentinel saves and final input staging remain. metadata result arms
+// 108; placement result arms 94; palette result start 89; palette result arms 104; input index
+// entry binding 31; tag index field binding 31; stride field binding 93; native promoted metadata
+// 31; shared input index binding 31.
 // @retail 0xa73b0
 long __stdcall function_a73b0(s_entity_info *info)
 {
@@ -1614,6 +1621,9 @@ void function_bba20(long index);
 // byte permission 319; byte activity 319; both byte carriers 319;
 // vector transforms before point 385; byte permission with vectors first 385.
 // score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward 319; direct node array 323.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
+// scheduling remain. Unsigned header offset 319; short permission 320; native location fields 330;
+// pooled root reference 319; guarded native cluster 319.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

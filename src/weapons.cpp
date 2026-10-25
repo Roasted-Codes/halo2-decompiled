@@ -2765,6 +2765,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // score 407 (was 407): activity/dispatch registers and pointer homes differ. Trials: published
 // output test 407; scalar clamp 407; unsigned word selector 407; shared progress guard 413; shared
 // barrel read 414; typed flags field 407.
+// score 407 (was 407): Frame eight versus four bytes and activity/tag homes remain. Descending
+// progress classifier 407; direct short selectors 407; shared threshold 407; normalization range
+// 407; shifted property flags 428.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {

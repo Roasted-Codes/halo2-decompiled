@@ -606,6 +606,11 @@ __forceinline byte *job_thread_buffer_get(s_async_task *task, dword *size);
 // signature receiver differ; short-lived body/header/both size reads 182/174/182;
 // reversed signature equality 68; Boolean equality 68; inline depth one 68;
 // global optimization off 491; frame pointer 246.
+// score 68 (was 68): retail computes the remaining size in each buffer arm (re-read
+// after the scratch-buffer stores) and clamps the capacity by it; that per-arm form
+// loses the entry ebp save: written into size by the getter 179, capacity clamped
+// by remaining 181, remaining clamped by capacity 234. Total as sizeof first 68;
+// body size grouped with sizeof 68.
 // @retail 0x2ad7c0
 PRIVATE long __stdcall signed_file_read_work(s_async_task *task, s_signed_file_read_parameters *parameters, long parameters_size)
 {

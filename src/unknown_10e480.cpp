@@ -148,6 +148,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // and spilled induction remain; native-byte sample frame 221; short sample frame 261;
 // one tag frame count 255; input cursors 273; signed-byte sampled result 221;
 // signed-byte ordinal 221; native frame/count 255; cursors/sampled result 273.
+// score 221 (was 221): destination and induction homes plus getter expansion remain;
+// successful-sample count 274; equality bound 221; frame cursor 283;
+// weight cursor 284; end-controlled input cursors 265; frame guard before weight 266;
+// weight-magnitude first 266; actual animation reference 221.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

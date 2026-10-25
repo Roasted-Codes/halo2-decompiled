@@ -1923,6 +1923,9 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // Type query, color update, matrix query and spawn update noinline declarations 163 each;
 // existing tint/multiplication result byte carriers 146/159, both 142 kept;
 // placement result byte carrier 163. No new result copy or field read.
+// score 128 (was 171): frame 0x40 versus 0x44; color/cursor homes and zone-base carriers remain.
+// Round 173: tint bool 165; multiply bool 137; both bool 128 kept plain; direct multiply
+// with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -1938,8 +1941,8 @@ void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum
 	spawn.location_index = particle_system->location_index;
 	{
 		c_type_4e7709 *particle_definition = function_137bd0(particle_system->function_1751d0()->tag_index);
-		signed char tinted = particle_definition->tinted();
-		signed char multiplied = particle_definition->multiplied();
+		bool tinted = particle_definition->tinted();
+		bool multiplied = particle_definition->multiplied();
 
 		function_175a80(tinted, effect->color_a, effect->color_b, particle_system, multiplied);
 	}
@@ -2523,6 +2526,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup still differ.
 // Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
 // sound aggregate 313; direct radius on the seed-pointer body 344 (frame 0x100).
+// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility differ. Shared direction output 313;
+// owner/location CRT copies 313; sound stores before compression 313; detached arms first 318; early damage
+// scale 313.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2654,6 +2660,11 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // score 166 (was 166): radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
+// Round 173: part-scope radius 166; radius product 166; product with lower bound 352;
+// full-width location index 352; positive mode scope 166. Scalar homes and flag/random lifetimes remain.
+// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
+// Two-use lower 163 (three-point gain dropped); span/lower plus span 167/349;
+// entry cursor/event record/read-only tag 166/166/166; cursor plus lower 163; event plus span 167.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2790,6 +2801,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // score 176 (was 189): frame 0x50 agrees; early false-result and player-pool registers differ.
 // Persistent effect pool 194; persistent player pool 189; outer for 189;
 // squared distance compared first 176; player slot/unit names 189.
+// score 176 (was 176): frame 0x50 agrees; early BL result and player-pool/count registers differ. Unit-skip
+// guard 176; vector walk lifetime 176; retained radius 275; location for 390; shared point-transform call
+// 392.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
@@ -2870,6 +2884,9 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
+// score 112 (was 287): frame 0x94 agrees; event/flare registers and point/call setup differ. Vector walk
+// lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
+// initialization 112.
 // @retail 0x179880
 void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 {
@@ -2895,9 +2912,7 @@ void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 				vector3f forward = location->matrix.forward;
 				vector3f up = location->matrix.up;
 				color3f color = *(color3f *)&g_4686cc->red;
-				real scale = 1.0f;
-				if (part->a_scales & 0x20)
-					scale = effect->scale_a;
+				real scale = (part->a_scales & 0x20) ? effect->scale_a : 1.0f;
 				if (part->b_scales & 0x20)
 					scale *= effect->scale_b;
 				if (location->node_index != NONE)
