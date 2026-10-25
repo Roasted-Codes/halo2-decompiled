@@ -116,6 +116,7 @@ void __stdcall function_1ada70(long actor_index, s_slot *slot);
 
 /* ---- slot type 0x2c ---- */
 
+// score 12 (was 12): conversion spills still use the rounding slot; timer-setting boundary 29, 29, 29, 33; output first 12, output scope 12, byte before rounding 19, native int output 12 (round 115).
 // @retail 0x1ac090
 bool __stdcall function_1ac090(long actor_index, s_slot *slot)
 {
@@ -408,6 +409,7 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
+// score 24 (was 24): early pool load, mode registers and restore order differ; data snapshot 26, shared byte offset 26, named unit index 26, timer setter 24, rounding result 150, direction memcpy 45, direct slot 24, timer byte first 35 (round 115).
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -820,6 +822,7 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
+// score 29 (was 29): actor/candidate registers and two spill homes differ; shared offset 29, lifetime names 29, actor parameter name 29, unsigned handles 29, location memcpy 58, distance scope 29, continue guards 29, joint vector helpers 41 (round 115).
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)
