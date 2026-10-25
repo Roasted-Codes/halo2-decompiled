@@ -258,6 +258,10 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
+// score 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
+// adds a save and shifts settings homes; constant argument pushes also differ.
+// Native zero initialization 199; complete aggregate values 307; grouped
+// place cases 204; case returns 203; zero initialization and grouping 206.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
@@ -275,9 +279,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 1:
 	{
-		s_variant_type4_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type4_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 3;
 		settings.last_team = 4;
@@ -302,9 +304,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 3:
 	{
-		s_variant_type4_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type4_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 5;
 		settings.last_team = 8;
@@ -320,9 +320,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 4:
 	{
-		s_variant_type5_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type5_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 3;
 		settings.last_team = 4;
@@ -332,9 +330,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 5:
 	{
-		s_variant_type5_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_type5_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 6;
 		settings.last_team = 8;
@@ -344,9 +340,7 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 6:
 	{
-		s_variant_team_settings settings;
-
-		memset(&settings, 0, sizeof(settings));
+		s_variant_team_settings settings = {0};
 		settings.team_size = 2;
 		settings.first_team = 2;
 		settings.last_team = 4;
