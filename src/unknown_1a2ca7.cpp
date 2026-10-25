@@ -1435,6 +1435,9 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // differ. immutable count snapshots 124; native list record references 124; original count name
 // 124; original count observation order 117; original count names and order 117; row pair without
 // initial merge 219.
+// score 117 (was 117): count homes, early count retention and membership flag reloads remain.
+// On the recovered comparison carriers: outer/inner/both merge cursors 231/117/231;
+// friend/member/both search cursors 186/219/222; outer-plus-friend 236, inner-plus-member 217.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {

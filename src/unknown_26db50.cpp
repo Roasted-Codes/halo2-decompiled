@@ -484,6 +484,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // frame 0xd8 agrees; entry/ring conversion, rotation XMM and sector registers remain.
 // Rotation output/axis/both object references 163/163/163; each with output last 163/163/163;
 // cosine-first output/axis reference contracts 163/163. Original helper and body restored.
+// score 125 (was 125): entry-table/ring conversion and rotation allocation remain.
+// Native direction value with output first/last, sine/cosine first 276/276/276/276;
+// both vector values 328/328; rotated-vector return 281/281. Original rotation contract retained.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
