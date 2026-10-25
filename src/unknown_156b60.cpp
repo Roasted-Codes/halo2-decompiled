@@ -160,6 +160,9 @@ PRIVATE void render_clamp_156b60(real *value)
 	else if (*value > 1.0f) *value = 1.0f;
 }
 
+// score 155 (was 155): alpha result coalesces into XMM0; duplicated interpolation tail absent.
+// Standard alpha/RGB/all bounds 207/253/300; sampled pixel 155 and bound combinations
+// 207/253/300; sampled pixel with alpha clamped last 155; full color aggregate/library initialization 186/182.
 // @retail 0x157020
 void __stdcall function_157020(byte *definition, point3f const *position, vector3f const *forward,
 	real value, long row, long column, long element, long entry)

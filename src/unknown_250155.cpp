@@ -1371,6 +1371,9 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // score 116 (was 116): extra query frame dword, count homes and scalar tail fills remain.
 // Row-total lexical rank 116; independent query storage and renamed combination 160;
 // actual row reference, short row result and native index array 116; native predicates and query-success local 136.
+// score 116 (was 116): query/count homes and scalar tails remain. Shared query with
+// first/second/both standard maxima 143/117/158; indexed rows 135, plus first/both maxima
+// 150/145; shared query default at entry 142, plus both maxima 151.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {

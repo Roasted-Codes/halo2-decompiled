@@ -97,6 +97,9 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 // before the release block. Was: the error codes folded into the release test
 // (32); the error set in an if/else with `result = error` before the release, the
 // index test nested: 25.
+// score 25 (was 25): cold allocation-error placement remains; validation-derived result 98;
+// allocation/handler error defaults 63/64; valid-scope error 98; native payload word 25;
+// validation plus payload word 98; size-first and type-first publication 25/25.
 // @retail 0x8b110
 long c_vtable_450cb8::v0(long index, long a2, long a3, long *count, s_item_450cb8 *items, void *a6)
 {
