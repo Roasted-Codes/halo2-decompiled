@@ -112,6 +112,10 @@ struct s_handler_slot
 // Tried (all 67): pointer-to-field locals (s_gateway_slot **), static dispose helpers,
 // inline member dispose() on both slots, static detach helpers taking T **, reading the
 // globals again inside the tests; volatile initialized/back-pointer fields 65 (other shape).
+// score 67 (was 67): Handler/gateway field carriers and post-clear link load still differ.
+// byte release ordinal 112; short session ordinal 125; byte session ordinal 125; shared index
+// scope 67; session reference 67; session array receiver 67; link reference 67; handler/gateway
+// references 67.
 // @retail 0x8dd70
 void function_8dd70(void)
 {
