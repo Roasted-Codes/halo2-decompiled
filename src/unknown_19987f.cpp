@@ -2171,54 +2171,37 @@ bool function_19a902(void)
 	return result;
 }
 /* the interface state for each network session state */
-// score 32 (was 32): repeated-constant registers, zero-store order and folded default differ;
-// enum keys 32; enum values 32; enum pairs 32.
-// enum array 32; enum fallback 32; const enum array 32.
-// table member search 67; const member search 67; forceinline member 32.
-// const forceinline member 32.
 // @retail 0x19a5fd
 long function_19a5fd(long state)
 {
-	struct
+	long result = 0;
+	long table[16][2] =
 	{
-		long entries[16][2];
-		long default_value;
-	} table =
-	{
-		{
-			{ 0, 0x9 },
-			{ 1, 0xb },
-			{ 2, 0xc },
-			{ 3, 0xd },
-			{ 4, 0xe },
-			{ 5, 0xf },
-			{ 6, 0x10 },
-			{ 7, 0x11 },
-			{ 8, 0x12 },
-			{ 9, 0x13 },
-			{ 0xa, 0x14 },
-			{ 0xb, 0x15 },
-			{ 0xc, 0x16 },
-			{ 0xd, 0x17 },
-			{ 0xe, 0x18 },
-			{ 0xf, 0x19 },
-		},
-		0
+		{ 0, 0x9 },
+		{ 1, 0xb },
+		{ 2, 0xc },
+		{ 3, 0xd },
+		{ 4, 0xe },
+		{ 5, 0xf },
+		{ 6, 0x10 },
+		{ 7, 0x11 },
+		{ 8, 0x12 },
+		{ 9, 0x13 },
+		{ 0xa, 0x14 },
+		{ 0xb, 0x15 },
+		{ 0xc, 0x16 },
+		{ 0xd, 0x17 },
+		{ 0xe, 0x18 },
+		{ 0xf, 0x19 },
 	};
-
-
-	long result;
 	for (dword i = 0; i < 16; i++)
 	{
-		if (table.entries[i][0] == state)
+		if (table[i][0] == state)
 		{
-			result = table.entries[i][1];
-			goto done;
+			result = table[i][1];
+			break;
 		}
 	}
-
-	result = table.default_value;
-done:
 	return result;
 }
 
