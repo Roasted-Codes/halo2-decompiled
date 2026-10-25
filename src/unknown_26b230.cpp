@@ -52,6 +52,10 @@ static __forceinline long real_to_long(real value);
 // Real counter/global/both members 144/144/144; native member word comparison 149;
 // direct budget members 144; per-record threshold 144; inactive-record continue 144;
 // budget initialized after cursor 155. Body and member declarations restored.
+// score 144 (was 144): frame 0x18/0x20 and current/datum homes remain.
+// Shared record result 144; with separate native/long budget 146/152;
+// member initialization 144; direct modulo clock 144; shared result/clock 144;
+// native counter snapshot 149; update-state-first count path 149.
 // @retail 0x268510
 void function_268510()
 {

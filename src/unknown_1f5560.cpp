@@ -760,6 +760,13 @@ real normalize2d(point2f *v);
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
+// score 172 (was 172): frame 0x48 agrees; fast-byte zero and trajectory convention remain.
+// Validation after query 220; with late minimum 220; early query output 171;
+// minimum first 174; early output/minimum 170; first-type first 172;
+// shared Boolean initialization 173; early output with late validation 218.
+// Fast-byte memset 172; actual actor/requested-type/maximum-type references 172 each;
+// actual destination/origin references 172 each; read-only unit view 172;
+// native two-component normalization workspace 206. Zero source and trajectory convention remain.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

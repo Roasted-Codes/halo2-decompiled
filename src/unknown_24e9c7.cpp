@@ -140,6 +140,10 @@ struct s_24e9c7_bounds
 // Scalar homes and sprite-source/SSE scheduling remain; original quad retained.
 // Scalar origin x/y/both 194/194/194; scaled height/width/both accumulation 125/125/125;
 // side-product updates 125; y capture with side updates 194. Original scalar homes and spills remain.
+// score 125 (was 125): scalar homes and retained basis spill still differ;
+// upper / negative-side / positive-side addition inputs 125/125/125;
+// upper-negative / upper-positive / both sides / all additions 125/125/125/125;
+// all additions with constant-first size 125. Original addition trees retained.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {

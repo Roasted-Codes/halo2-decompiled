@@ -42,6 +42,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Native player record 190; scoring-team field binding 190; both 190;
 // increment counter binding 202; decrement binding 190; both counters 202;
 // marker-team value 194; native player with both counters 202.
+// score 190 (was 190): cached pool, merged completion stores and flag-result materialization remain.
+// Predicate long/short/byte/signed-byte returns 189/190/190/190;
+// byte predicate input 190; byte input with long/short/byte results 189/190/190.
+// Both one-point gains rejected; original predicate and body restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

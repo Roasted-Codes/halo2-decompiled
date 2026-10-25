@@ -142,6 +142,10 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 // Shared projection operation 334; native plane result 237; row-selector local 152;
 // bounds-first/vertical-first helper contracts 140/140; pointer-input point initializer 152;
 // vertical result snapshot 170; first-edge squared length 138; corrected contract/length combinations 146/146.
+// score 138 (was 138): plane-distance store base, selector publication and edge/zero schedule remain.
+// Actual table-element bindings both/horizontal/vertical 188/138/188; both plus Y-first 191;
+// distance-field binding 146; metadata object reference 138; native row reference 138;
+// edge records bound after publication 142 at 992 bytes (fast scores).
 // @retail 0x17d9a0
 void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_quad_17d9a0 *quad)
 {

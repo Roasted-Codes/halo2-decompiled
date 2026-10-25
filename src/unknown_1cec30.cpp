@@ -2603,6 +2603,10 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // score 175 (was 175): Staggered saves and paired velocity homes remain; reversed getter
 // order 178; linear norm before angular read 176; angular read/norm before linear read 186;
 // native simulation result 180; post-update body receiver 187 (plain). Opening body retained.
+// staggered saves and paired velocity homes remain;
+// linear / angular / both component loops 175/175/175; horizontal initialization 173;
+// linear / angular / both loops with horizontal initialization 173/173/175;
+// direct component pointers 183 (plain; original double products and component order retained).
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
