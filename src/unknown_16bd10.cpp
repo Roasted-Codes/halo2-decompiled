@@ -791,6 +791,10 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // direction preload, length/zero XMM roles, flag stores and timer differ.
 // Forced dot/plane/tick expansion 247 each; each pair and all three 247;
 // all three plus immutable command pointer and scale 253 (fast base 247).
+// score 245 (was 245): frame 0x48 agrees; projection preload, length/zero
+// registers and flag stores remain. Intrinsic copies of the normal 245, basis 401,
+// output axes 245, pan axes 245, position 245, animation 245; projection copies
+// together 401, all record copies 402 (each fast and plain).
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

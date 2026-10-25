@@ -133,6 +133,10 @@ void function_8dd70(void);
 // score 230 (was 230): entry normalization, helper boundaries and global reloads differ.
 // Actual link/observer/manager/trim/availability/interface return receivers 230 each;
 // five receivers together 230; guarded interface with observer/trim/availability 230.
+// score 230 (was 230): entry normalization, helper boundaries and global reloads remain.
+// Shared setup link/message/gateway inputs 232/230/229; all three 233;
+// retained observer 230; session-list publication 230; existing gateway reverse
+// receiver 255; shared inputs with that receiver 251.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
