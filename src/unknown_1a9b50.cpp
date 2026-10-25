@@ -411,6 +411,8 @@ extern point2f *g_468778;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
+// Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
+// inner threshold 388; entry planar workspace 379. Actor/settings/prop carriers still differ.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
