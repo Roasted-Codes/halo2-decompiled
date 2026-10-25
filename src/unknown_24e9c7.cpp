@@ -134,6 +134,9 @@ struct s_24e9c7_bounds
 // basis with upper / side / both input orders 125. Original products retained.
 // Scalar origin x/y/both 194/194/194; scaled height/width/both accumulation 125/125/125;
 // side-product updates 125; y capture with side updates 194. Original scalar homes and spills remain.
+// score 125 (was 125): scalar homes and basis spills remain; selected bitmap word 153;
+// bitmap after bounds 125; word bitmap/long sequence 169; late word bitmap 153;
+// shared opacity tail 142; tail with word/late bitmap 161/142; branch-set tail 142.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {
