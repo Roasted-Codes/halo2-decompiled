@@ -10,6 +10,26 @@ matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
 ```
 
 0 new matches, none lost:
+- @coldspear's #810: the checker now scores a jump table that does not line up with retail's the same wherever the link places the function (tools/check.py, #86 item 90); about 60 unmatched scores re-baselined once, no status changes.
+
+## 2026-10-25: 9600 functions match
+
+```
+matched 9600 of 11321 game functions (1528677 of 2784283 bytes, 54.90%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @coldspear's #809: closer scores and notes, no new match.
+
+## 2026-10-25: 9600 functions match
+
+```
+matched 9600 of 11321 game functions (1528677 of 2784283 bytes, 54.90%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
 - @coldspear's #808: closer scores and notes, no new match.
 
 ## 2026-10-25: 9600 functions match
