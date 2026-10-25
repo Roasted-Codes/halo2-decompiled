@@ -2880,33 +2880,36 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 }
 #pragma function(_ReadWriteBarrier)
 
+// score 56 (was 95): mode load and record-store scheduling differ; real record
+// receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
+// outer route 95; actual count 96; conditional mode-result combinations all 92;
+// direct talker parameter with early player 56.
 // @retail 0x56df0
 void __stdcall function_56df0(s_voice_player_settings *settings, long talker, long mode)
 {
-	// The retail entry reads the talker from its stack argument slot.
-	long const *talker_reference = &talker;
 	bool active = false;
 	if (settings->initialized && voice_available())
 		active = g_4c9878.mode == 1;
-	if (active && voice_xhv_has_remote_talker(&g_476fc8, *talker_reference))
+	if (active && voice_xhv_has_remote_talker(&g_476fc8, talker))
 	{
 		dword local = voice_get_local_player_mask();
 		bool valid = function_54df0(talker);
 		s_voice_route_choice choices[16] = {0};
 		for (long player = 0; player < 16; player++)
 		{
+			s_voice_route_choice *choice = &choices[player];
+			choice->player = player;
 			long route = 0;
 			if ((local & (1 << player)) && function_54df0(player) && valid)
 			{
 				long requested = function_57c20(settings, player, talker, mode);
 				long result = function_57d60(requested, player, talker);
 				if (requested == 1) settings->unknown148[talker] = g_510c54->game_time;
-				if (result == 3) choices[player].distance = function_57a80(player, talker);
+				if (result == 3) choice->distance = function_57a80(player, talker);
 				route = result;
 				if (route) settings->unknownc4 |= 1 << talker;
 			}
-			choices[player].mode = route;
-			choices[player].player = player;
+			choice->mode = route;
 		}
 		function_57eb0(settings, talker, choices, 16);
 	}

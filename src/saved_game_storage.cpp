@@ -422,6 +422,9 @@ PRIVATE byte const g_saved_game_image[4096] =
 
 /* writes the save image into a game variant's saved game directory; the
    other types have none */
+// score 19 (was 26): byte success/failure exits and writer setup differ; consistent
+// writer orders 24/27/26/26/27; direct close 17, test result 45, common result 72;
+// original-interface direct close 19 (250/249 bytes).
 // @retail 0x216f80
 bool saved_game_file_write_save_image(long type, s_saved_game_file_location *location)
 {
@@ -445,10 +448,11 @@ bool saved_game_file_write_save_image(long type, s_saved_game_file_location *loc
 	function_137320(file.path, path);
 	file.flags |= 1;
 	dword error;
-	return (function_1367d0(&file) &&
+	if (function_1367d0(&file) &&
 		function_136970(&file, 2, &error) &&
-		function_136d00(&file, g_saved_game_image, sizeof(g_saved_game_image)) &&
-		function_136bb0(&file));
+		function_136d00(&file, g_saved_game_image, sizeof(g_saved_game_image)))
+		return function_136bb0(&file);
+	return false;
 }
 
 /* the types' names in each language; 0x217a80 picks one by the string id

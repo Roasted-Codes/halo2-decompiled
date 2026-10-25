@@ -204,6 +204,8 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
+// score 50 (was 50): current/bound registers and request scheduling differ; native field layout,
+// typed bound/flag/request groups 0..7: 50, 50, 50, 50, 50, 50, 50, 50.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -326,6 +328,8 @@ static inline void release_block(void *block, long *info)
 
 /* stops a session search: cancels its online task and its QoS lookups and
    releases its buffers */
+// score 91 (was 91): receiver, sentinel and release registers differ; existing local-output release
+// for buffer masks 1/2/4/3/5/6/7, then shared size output: 96, 96, 96, 92, 96, 96, 92, 96.
 // @retail 0x90c80
 void __stdcall function_090c80(byte *p)
 {
@@ -575,6 +579,8 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
+// score 21 (was 21): shared true return remains late; real final-key table trials:
+// local long decisions/relation 81/109, short 99/118; static long 48/85, short 70/94.
 // @retail 0x90f10
 bool __stdcall session_search_result_precedes(void const *a, void const *b, void const *context)
 {
