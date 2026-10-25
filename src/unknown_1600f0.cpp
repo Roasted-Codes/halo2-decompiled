@@ -1031,6 +1031,10 @@ struct s_game_engine_globals_connections_view
 // Positive place visibility 318; horizontal/vertical/both live origin fields 184/184/184;
 // completed color alpha 184; visibility with origins 318; horizontal/both origins
 // with completed color alpha 184/184. Widget-root control equals the full baseline.
+// score 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain.
+// Dim-default glyph 183 (one-point gain rejected); glyph-last/icon-alpha-first metadata 184/184;
+// connection alpha first 185; two-use numeric width 281; time/connection bottom first 184/184;
+// dim default plus numeric width 281. Opening body restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

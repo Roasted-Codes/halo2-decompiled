@@ -503,7 +503,11 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
-// score 182 (was 182): Frame 0x28 and state/output registers agree; six direct-dot displacement
+// score 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
+// scaled cross 264; scaled limited input 241; scaled axis projection 267;
+// full component rotation 239; accumulated alignment 245; normalization decision 183;
+// scaled-cross scalars 186; projected-plus-cosine sums 186.
+// Frame 0x28 and state/output registers agree; six direct-dot displacement
 // bytes and rotation scheduling remain. Ground memcpy 182; limited memcpy 182; separate real
 // components 182; cosine complement 180 (two-point gain dropped); separate cross workspaces 182;
 // cosine/complement before sine 181; explicit alignment with complement 182 (fast).
