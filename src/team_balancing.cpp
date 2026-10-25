@@ -390,6 +390,9 @@ bool balance_teams_greedy(s_balance_problem *problem, long team_count, s_balance
 // score 116 (was 116): frame 0x2694 agrees; team-pointer homes, delta and query ownership differ.
 // Reduced baseline 80 (full 116); team/party/both lexical priority 80/80/80;
 // short outer/inner/both ordinals 142/142/155; accepted scope and comparison names 80/80.
+// score 116 (was 116): count homes, signed delta and query ownership remain.
+// Reduced candidate/reference/both spread values 135/127/137; spread delta 132;
+// candidate A/B/both team roots 80/150/150; outer party cursor 91 (reduced baseline 80).
 // @retail 0x91bd0
 void s_balance_optimizer::try_swap(long team_a, long team_b)
 {

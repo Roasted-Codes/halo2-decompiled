@@ -235,6 +235,9 @@ void c_turret_entity_definition::v21(s_entity *entity)
 // EBP result, early false lifetime and shared header lookup still differ. Incoming flags 72;
 // byte/native/short result 76/49/52; published index 70; full acceptance 73;
 // incoming flags with byte/native result 64/69.
+// score 49 (was 49): frame agrees; false-result BL, saved EBP and shared header lookup differ.
+// Early long/byte/short/signed-byte success result 67/70/65/70; byte after notification 70;
+// native header acceptance 65; native rejection first 52; combined native acceptance 67.
 // @retail 0xa5a60
 bool c_object_type_definition::v22(s_entity *entity, long b, s_entity_info *info, long d, long e, long f)
 {
