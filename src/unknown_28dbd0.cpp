@@ -84,6 +84,11 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // in-place input scale 260; in-place cross scale 229; both scales 232;
 // ordinary rotation inline 213; forced shared cross 213; output-pointer result 213;
 // result plus forced cross 213; result plus both scales 232.
+// score 213 (was 213): frame 0x11c/0x118 and rotation cross homes remain; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj 223/195/222/237/216; double angle 216; output-angle-axis helper 213 (fast).
+// rotation cross spills and the extra frame dword remain;
+// sine-weighted cross products 226; cosine-plus-projection sums 226;
+// axis projection products 226; cosine products 226; rotation-helper names 213;
+// cross/projection lexical homes 213; sine/cosine products 227; launch-offset products 213.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

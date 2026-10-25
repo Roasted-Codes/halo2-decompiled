@@ -546,6 +546,9 @@ real function_267370(long volatile object_index);
 // score 273 (was 273): frame and held-direction byte home remain.
 // Field-zero chains 272; sentinel chains 273; signed mode range 343;
 // native seat index 322; early holder output 350 (all plain scores).
+// score 273 (was 273): frame 0x8c versus 0x90 and held-direction byte home remain.
+// Byte plane result 273; left/actor references 273/273;
+// motion-direction reference 277; up reference 273 (plain).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -735,6 +738,10 @@ short ai_player_index_get(long player_index);
 void function_10e9f0(long object_index, short channel, real value, real time);
 bool function_1a8220(long index, short a, short b, long unknown, short c, short d, short e);
 
+// score 32 (was 32): actor base construction at +0x1bc and child traversal registers remain;
+// typed actor 32; earlier actor workspace 32; both 32; native tick interval 36;
+// shared rounding helper 215; typed child cursor 32; attachment scalar homes 66;
+// complete optional view selection 186.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -850,6 +857,9 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 #include "unknown_1fb7e0.h"
 // Round 36: the corrected forwarding call keeps 0x1ca260 matched; this body remains 48 differences.
 // Retail 0x1e18f0
+// score 44 (was 44): entry pool saves and actor/old-weapon registers still differ.
+// Shared object lookup 44; direct tag reads 43; early player with shared lookup 75;
+// direct parameters 82; conditional values 81; shared target 79; eligibility tests 45; value homes 44.
 // @retail 0x1e18f0
 void __fastcall function_1e18f0(long actor_index, long old_weapon, long player_index, long new_weapon)
 {
@@ -940,6 +950,15 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // complete equipment arms 346; squad-mode word 342; guarded long predicate 350.
 // Frame 0x11c versus 0x118 and missing-index homes remain; repaired frame with vertical-first, second-horizontal-first, vector initializer, word creation or word request each 342; three-point gains rejected.
 // score 320 (was 320): Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
+// score 320 (was 320): Frame 0x118 agrees; sentinel and settings/squad homes remain.
+// Native Boolean flag 357; guarded Boolean flag 356; late cleanup indices 365; entry placement
+// view 320; complete replacement arms 358; late actor result 367; zero grenade guards 339;
+// short grenade result 338.
+// Frame 0x118 agrees; sentinel, squad/settings homes and success layout remain. Tried scoped
+// perception cleanup 366; unit producer cleanup 363; both producer cleanups 347; outer perception cleanup 366;
+// both with outer index 347; late actor result 345; Boolean creation mode 378; late unit sentinel 356; perception
+// first cleanup 320; independent perception first 337; independent unit first 337; perception first with Boolean
+// mode 357.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -1497,6 +1516,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
+// score 308 (was 314): actor/object-pool registers and scalar/ammo homes differ. Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1564,10 +1584,8 @@ void function_1e2a90(long actor_index)
 				{
 					if (*(real *)(weapon_options + 0x8c) > 0.0f || *(real *)(weapon_options + 0x90) > 0.0f)
 					{
-						real lower = *(real *)(weapon_options + 0x8c);
-						real upper = *(real *)(weapon_options + 0x90);
-						real fraction = lower + (upper - lower) *
-							function_x82e52f(&g_4e7408->unknown0, NULL, 0);
+						real fraction = function_259d0(&g_4e7408->unknown0, NULL, 0,
+							*(real *)(weapon_options + 0x8c), *(real *)(weapon_options + 0x90));
 						if (g_4e6948->state == 1 && g_4f55e0)
 							fraction *= 0.5f;
 						function_101a10(weapons[i], fraction);

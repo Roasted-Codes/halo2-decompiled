@@ -1987,7 +1987,7 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
-// score 480 (was 502): frame 28 agrees; actor/state registers and first point home still differ.
+// score 478 (was 502): frame 28 agrees; actor/state registers and first point home still differ.
 // Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;
 // deferred completion else block 505 (unchanged reduced preview 505).
 // actor/state registers and the first point home differ;
@@ -1995,6 +1995,8 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Unsigned result 502; completion-test result 712; native unit predicate 490; iterator initializer 490;
 // first/facing countdown values 636/621; planar memcpy 502; facing vector value 483;
 // unit plus iterator 490; facing plus unit 486; facing plus iterator 486.
+// Actor-position cursor 478; actor-facing cursor 574; facing-output cursor 573; state-flag cursor 510;
+// actor handle 478; position/facing 574; position/flags 510; combined subobjects 597.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

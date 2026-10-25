@@ -65,6 +65,16 @@ short __stdcall function_1b1f30(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 32 (was 32): +0x29 default target moves with the four-byte length gap;
+// retail reuses ESI for the node base and constant 2, ours uses EDI and immediates.
+// Earlier separate exits 28/233; node reference, paired stores, reversed paths
+// and nested view forms tied; unsigned range 55/231. Ordinary trials: short
+// classification 32; long classification 31/231 (below keep threshold); equality
+// cases 106/183; test-derived state 32; assigned state 32; short classification
+// with shared default stores 49/217; state with common exit 32; primary-state
+// store first with short classification 32. Opening executable body restored.
+// score 32 (was 32): node-base EDI versus retail ESI/shared two still differs; node, actor, view and combined receiver names 32; early node declaration and renamed early node 32; complete native node type 32; native node with open classification bounds 39.
+// node-base/constant register ownership and extent still differ; index/direct pointer lookup 109/32; shared handle 109/42; entry-scope view with index/native lookup 109/32; entry view and shared handle 109/42 (all plain).
 // @retail 0x1b21f0
 void __stdcall function_1b21f0(long actor_index, s_slot *slot)
 {
@@ -185,6 +195,16 @@ real function_1e3920(long actor_index);
 // early ESI slot, scalar homes and fallback arms remain;
 // shared defaults / native mode with defaults / native mode 168/168/164f on earlier scratch;
 // consumed request scope / scope with defaults / unsigned output handle / fallback result / combined 164/168/164/164/168f.
+// score 164 (was 164): early slot ESI, scalar homes and cold reference arms remain.
+// Mixed pre-scratch request enable/permission/both/byte/enable-byte/permission-byte
+// stores 165/168/165/166/165/165; outer actor join 166; inactive return 164.
+// early ESI slot, scalar homes and cold reference arms remain;
+// branch-only reference on earlier scratch 211; with read-only actor / slot reference 211/211;
+// common release / request scope / late handle / early permission / release plus late handle 181/211/207/211/178.
+// score 164 (was 164): delayed ESI slot, saved scalar homes and cold reference joins remain.
+// Signed permission byte/short 197/200; entry mode shared by two tests 193;
+// rejection-first fallback 164; failure-first acceptance 169; request eligibility exit 164;
+// eligibility/fallback 164; short permission with failure-first acceptance 200.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

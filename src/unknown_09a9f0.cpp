@@ -227,20 +227,23 @@ void c_turret_entity_definition::v21(s_entity *entity)
 	}
 }
 
+// score 69 (was 77): result from validity improves the score; frame 4 versus retail 0, early EBP
+// save and cached header lookup remain. Incoming output flags 87; later result 80; both 89;
+// invalid header first 75; shared header 77; incoming flags and header 87; guard exits 77; result
+// from validity 69.
 // @retail 0xa5a60
 bool c_object_type_definition::v22(s_entity *entity, long b, s_entity_info *info, long d, long e, long f)
 {
-    bool result = false;
     long value = d;
     long object_index = v29(b, info, &value, e, f);
     entity->object_index = object_index;
-    if (object_index != NONE)
+    bool result = object_index != NONE;
+    if (result)
     {
         if (!(OBJECT_HEADER(object_index)->flags & 0x10))
         {
             OBJECT(object_index)->field_d4 = entity->field0;
             object_dispatch_attach_simulation_entity(object_index);
-            result = true;
             if (value)
             {
                 v31(entity->object_index, value, e, f);
@@ -249,6 +252,7 @@ bool c_object_type_definition::v22(s_entity *entity, long b, s_entity_info *info
         else
         {
             entity->object_index = NONE;
+            result = false;
         }
     }
     return result;

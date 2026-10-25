@@ -890,6 +890,12 @@ void hkRigidBody::motion_transform_set(hkTransform const &transform)
 void function_1d1260(s_havok_component *component);
 void function_1d1540(s_havok_component *component);
 
+// score 81 (was 81): component arrives on the stack where retail passes it in ebx (no push ebx,
+// plain ret, frame 0x88), the entry copy is rep movsd where retail uses movaps, and retail tests
+// m_fixed before flag5. Tried: copy through hkTransform::set 77 at 237 bytes (0x1d1b60 lost);
+// set + body pointer + m_fixed first 88 at 230 (retail's code except the ebx parameter); that with
+// flag5 first 27 at 220 (component in edi, costs 0x1d0c20 and 0x1d1b60); as a member function, every
+// parameter order, body pointer at the top, else arm first, early return, noinline: all as 88.
 // @retail 0x1d0cf0
 void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_component *component, hkTransform const *transform)
 {
@@ -919,6 +925,8 @@ void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_com
 // score 38 (was 38): frame and component register still differ; external matrix/component records 38/38;
 // complete frame set/initialization/library copy 81/71/71; translation memcpy 70;
 // aligned forward/up column values 49/49. Original body retained.
+// score 38 (was 38): only 0x1d0cf0's convention (component in ebx) is left; defined ahead of
+// 0x1d0cf0 38; 0x1d0cf0's set-copy forms 40/40/49.
 // @retail 0x1d0c20
 void havok_component_rigid_body_matrix_set(long rigid_body_index, s_havok_component *component, transform4x3f const *matrix)
 {
@@ -1389,6 +1397,15 @@ PRIVATE __forceinline real const &component_time_step()
 // acceleration register, memory timestep multiply and stop-test schedule differ.
 // Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
 // completed clamp before ratio 82; accelerated candidate default 114.
+// score 26 (was 26): acceleration/timestep allocation and stopping schedule remain.
+// Combined forced/stopping step-first, distance-first, eager distance, conditional result,
+// named decision and stopping guard 106 each; merged default/return scaling 140/110.
+// score 26 (was 26): isolated mass return 113; threshold-first return 121; returned
+// selection/nested return/power selection 113 each; direct/default/assigned magnitude
+// results with mass return 113/127/113. XMM0 prefix improves; memory timestep still differs.
+// score 26 (was 26): acceleration/timestep allocation and stopping order remain.
+// Mass eligibility early scale/mass-first 164/166, late 26/120; selected divisor early/late 143/114;
+// early eligibility with selected normalization scale/mass-first 164/166. Original helper retained.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)
@@ -2704,6 +2721,7 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 303: first mapped byte 299; second mapped byte 213; first node at use 338;
 // second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
 // score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
+// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

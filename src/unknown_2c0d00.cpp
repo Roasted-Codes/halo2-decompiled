@@ -230,6 +230,12 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Native category on retained homes 910 (frame 0x2cb4); direct query
 // members 911; current priority long 894; relationship results long 893;
 // sphere flag byte 917 (frame 0x2cb4). Original body kept.
+// score 866 (was 866): Frame 0x2cb8 versus 0x2cac; actor/unit and query/marker homes remain.
+// category switch 948; shared marker workspace 914; object matrix across iterations 866; sphere radius
+// before transform 878; flags at ordinary insertion 910; motion enabled guard 866.
+// frame 0x2cb8 versus 0x2cac and actor/unit homes remain. Plain direct sphere differences
+// 881; direct object differences 866; both 881; shared raised-point setter 866; ordered sphere-filter join
+// 866. Fast scores 927/916/927/916/916; full control 866.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -883,6 +889,10 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // split crossing phases 399; late second workspace 399; split phases/ordinary previous history 397;
 // Boolean ring direction 399; vertex words/ordinary previous, first, both history 414,415,415;
 // vertex words/Boolean ring direction 408. Retained code 1307/1312, checker extent 1312/1312.
+// score 385 (was 397): frame 0x28 and length agree; zero register,
+// edge/history homes and indexed node loads differ. Later first/second/both
+// differences in place 397/397/397; one displacement 397; one radial offset
+// 385; offset with shared displacement 385; phase scopes 397; offset/scopes 385.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -916,19 +926,19 @@ bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real
         vector2d_from_points2d(start, end, &direction);
         point2f normal = { direction.y, 0.0f - direction.x };
         normalize_offset_direction_2c(&normal);
-        point2f positive, negative;
-        scale_offset_direction_2c(radius, &normal, &positive);
-        positive.x = origin->x + positive.x;
-        positive.y = origin->y + positive.y;
-        scale_offset_direction_2c(0.0f - radius, &normal, &negative);
-        negative.x = origin->x + negative.x;
-        negative.y = origin->y + negative.y;
+        point2f offset;
+        scale_offset_direction_2c(radius, &normal, &offset);
+        offset.x = origin->x + offset.x;
+        offset.y = origin->y + offset.y;
         point2f first;
-        vector2d_from_points2d(&positive, start, &first);
+        vector2d_from_points2d(&offset, start, &first);
         bool first_crossing = (first.y * direction.y + first.x * direction.x < 0.0f ? 1 : 0) == side &&
             first.x * direction.y - first.y * direction.x < 0.0f;
+        scale_offset_direction_2c(0.0f - radius, &normal, &offset);
+        offset.x = origin->x + offset.x;
+        offset.y = origin->y + offset.y;
         point2f second;
-        vector2d_from_points2d(&negative, start, &second);
+        vector2d_from_points2d(&offset, start, &second);
         bool second_crossing = second.x * direction.y - second.y * direction.x < 0.0f;
         bool crossing = first_crossing || second_crossing || first_vertex == NONE;
         long vertex = ((crossing != first_open) == side) ? vertex1 : vertex0;
@@ -1014,6 +1024,9 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // Nested expansion zero 1163, one 342; global optimization off 2011; size policy 518;
 // ordinary signed-angle inline 342.
 // score 342 (was 342): Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
+// score 342 (was 342): frame 0x3c versus 0x34 and angular homes remain;
+// early endpoint wrap 365; target-angles first 387; endpoint direction reuse angular 374,
+// distance 360, both 376; angular reuse with direction or projection names each 374 (fast).
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)

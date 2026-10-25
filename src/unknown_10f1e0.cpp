@@ -403,6 +403,14 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // score 42 (was 42): address-first memory OR and second-call staging remain; mask-first assignment 42;
 // source/target/both Boolean lookup results 42; shared node mask 118; shared word index 109;
 // source/target Boolean results with mask-first assignment 42.
+// score 37 (was 42): the shift-form visited test gives retail's memory OR update but retail tests a
+// mask; back-edge reload order and the 0x1d90e0/second-lookup staging registers still differ.
+// Shared bit-vector setter 42; iterator stores before the graph 99; graph_tag_get 42; call results > 0 38;
+// iterator a before b 41; arms swapped 40; markers in the loop 41; visited declared first 37.
+// score 37 (was 37): Frame agrees; the shift test versus retail mask, state/table reload order and
+// second lookup/transform staging still differ; shifted word expression 37; clear before object
+// chain 191; shift and clear order 191; entry marker workspaces 37; entry markers and shift 37;
+// entry markers and clear 191; complete workspace boundaries 191; model after clear 191.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
@@ -445,7 +453,7 @@ void __stdcall function_113980(long object_index, long target_index, bool altern
 				if (iterator->b != NONE && iterator->b && iterator->a != NONE && iterator->a)
 				{
 					if (function_b8d30(object_index, iterator->a, &marker, 1, false) &&
-						!(visited[marker.node_index >> 5] & (1 << (marker.node_index & 31))) &&
+						!((visited[marker.node_index >> 5] >> (marker.node_index & 31)) & 1) &&
 						function_b8d30(target_index, iterator->b, &target, 1, false))
 					{
 						function_1d90e0(*(long *)(model + 4), marker.node_index, nodes, &marker.node_matrix,
@@ -1379,15 +1387,13 @@ bool __stdcall function_110ab0(long unit_index)
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
 // score 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
-// score 443 (was 450): Frame 8 versus 12 and requested/state homes remain;
+// score 430 (was 453): Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
+// Frame 8 versus 12 and requested/state homes remain;
 // byte result 506; byte interruptibility 453; separate overlay result 508;
 // direct inner membership 486; held-index names 451 (fast control 451). Opening body retained.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
-	// Retail keeps this argument on the stack.
-	long const *unit_reference = &unit_index;
-	unit_index = *unit_reference;
 	s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(unit_index);
 	s_unit_animation_control *control = UNIT_ANIMATION_CONTROL(unit);
 	s_animation_state *state = UNIT_ANIMATION_STATE(unit);
@@ -1437,7 +1443,9 @@ bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 		case 0xe00002a:
 		case 0xe0000c3:
 		case 0x1000006c:
-			result = requested != 0x600008c ? interruptible : true;
+			result = interruptible;
+			if (requested == 0x600008c)
+				result = true;
 			break;
 		case 0x500000a:
 		case 0x5000024:
@@ -2541,6 +2549,11 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // frame 60 versus 56 and protected action/seat argument registers remain.
 // Signed success/force/both bytes 147/152/147; word channel backing 152;
 // mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
+// Round 277: language-char result 147; unsigned-word force 164; signed-byte/word animated result 147/156;
+// base success test 153; success/force/both initialized before selection 187 each.
+// score 147 (was 147): frame 0x3c versus 0x38 and action/availability conventions remain; separate
+// copy-return boundaries 142 (exact-only, discarded); base-channel entry/selection 147/147;
+// animation-result home 147; receiver/workspace copy split 162/162, with base channel 162/162.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

@@ -176,6 +176,11 @@ static __forceinline bool structure_bsp_collision_available()
 // external triangle reference 68; source publication 68; byte result merge 68;
 // query workspace names 68. Native record retested with byte result storage.
 // BL exclusion and source-slot reload remain; model inline 68; model noinline 68; state inline 68; both contracts 68; probe result 68; model result 68; final found result 111; triangle inline 68.
+// score 68 (was 68): VC threads the exclusion flag on every edge. The collision re-read from the
+// parameter at the join 68 (with a block-local flag 68); the flag as one && expression tested
+// twice, with returns 68; the same with an else-if tail and a final else for the no-object case
+// 71 (286 bytes); assigned with the && expression, tests unchanged 68; an inline helper for the
+// scenery test stays out of line and is threaded 113/111.
 // @retail 0x14b120
 bool function_14b120(s_surface_query_source source, void *surface)
 {
@@ -259,6 +264,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // BSP/section carriers, range/plane homes and vertex joins remain;
 // BSP/range/block references 185/185/185; native block value 330; vertex count/memory copy 185/185;
 // native strip-word input 257; range plus block references 185. Defined vertex failure retained.
+// score 185 (was 185): BSP/section carriers, range/plane homes and vertex joins remain.
+// Failure accumulator bool/byte 185/185; signed byte/word fetch result 185/185;
+// negative-index guard first 211; index test before data 208; failure plus early guard 211;
+// failure accumulator plus signed-byte fetch 185. All defined failures retained.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -373,6 +382,12 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Region base at each use 268; surface lookup name 236; local point name 236; triangle vertex name
 // 236; node/corner scalar names 236; node count at uses 236; native part-bound locals 236;
 // section field at early uses 236.
+// score 236 (was 236): region scheduling and model/range/vertex homes remain. Fast trials: separate
+// NONE result 269; separate count result 262; unsigned candidate and NONE result 269; unsigned
+// candidate and count result 262; entry NONE-result lifetime 269; entry count-result lifetime 262;
+// node pointer search 270; bounded mismatch scan 236. All restored.
+// Model lookups at uses 298; refreshed model 284; read-only nodes 236; extraction-output lifetime 236;
+// strip cursor 242; read-only strip 236; output lifetime plus strip 242; model uses plus strip 300.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

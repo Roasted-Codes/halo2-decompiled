@@ -13,6 +13,7 @@
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
 #include "vector_products.h"
+#include "normalize3d.h"
 // score 647 (was 647): frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
 // primary output scale 744; default depth scale 743; alternate depth scales 727; product scale workspaces 734;
 // late wave lifetime 743; wave offset workspaces 660; inverse before basis 765; direct integer component 743;
@@ -20,6 +21,12 @@
 // wave basis copy blocks 806; shape discriminant 776; wave shape discriminant 696
 // Ordinary camera reads with early/late special cross products 737/747;
 // early sine amplitude 738; accumulated maxima 796; common mode publication 743.
+// score 604 (was 647): Frame 0x60 agrees; scalar/basis scheduling and final integer conversion remain.
+// wave with conditional shapes fixed 738; wave with camera offsets 634; wave with early projection
+// scales 672; wave with phased cross results 691; shared wave offset 667; camera with early projection
+// scales 630; camera with phased cross results 620; camera with shared wave offset 604; camera with late
+// inverse 648; shared camera early scales 631; shared camera phased cross 620; shared camera early
+// phased 625; shared camera late inverse 618.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -48,9 +55,9 @@ void function_0497a0(
 
 	bool special = ((0x20 & flags->flags)) && (0x40000 & flags->flags);
 	point3f v1 = special ? g_4b9da0 : source->v2c;
-	vector3f v2 = special ? g_4b9dac : (*(s_view_camera *volatile *)&camera)->v28;
-	vector3f v3 = special ? g_4b9dac : (shape1 ? shape1->v4 : (*(s_view_camera *volatile *)&camera)->v28);
-	vector3f v4 = special ? g_4b9db8 : (*(s_view_camera *volatile *)&camera)->v34;
+	vector3f v2 = special ? g_4b9dac : camera->v28;
+	vector3f v3 = special ? g_4b9dac : (shape1 ? shape1->v4 : camera->v28);
+	vector3f v4 = special ? g_4b9db8 : camera->v34;
 	vector3f w;
 
 	if (special)
@@ -60,13 +67,16 @@ void function_0497a0(
 		real s1 = (real)sin(g_4b9da0.x * 5.6f + g_4b9da0.y);
 		real s0 = (real)((sin(g_4b9da0.x * 8.2f) * cos(g_4b9da0.y * 7.8f) * sin(g_4b9da0.x) + cos(g_4b9da0.y * 7.75f)) * 0.5f);
 		real amp = s0 * 0.03f;
-		v1.x = (v4.i * amp) + v1.x;
-		v1.y += amp * v4.j;
-		v1.z = v1.z + (amp * v4.k);
+		vector3f wave_shift;
+		vector3f_scale(&v4, amp, &wave_shift);
+		v1.x = (wave_shift.i) + v1.x;
+		v1.y += wave_shift.j;
+		v1.z = v1.z + (wave_shift.k);
 		real k = s1 * 0.025f;
-		v1.x = (c.i * k) + v1.x;
-		v1.y += k * c.j;
-		v1.z = (k * c.k) + v1.z;
+		vector3f_scale(&c, k, &wave_shift);
+		v1.x = (wave_shift.i) + v1.x;
+		v1.y += wave_shift.j;
+		v1.z = (wave_shift.k) + v1.z;
 		cross3f(&v2, &v4, &w);
 	}
 	else
@@ -102,9 +112,9 @@ void function_0497a0(
 		result->v20.i = source->v1c.i * inv;
 		result->v20.j = (inv * source->v1c.j);
 		result->v20.k = inv * source->v1c.k;
-		result->v30.i = (*(s_view_camera *volatile *)&camera)->v34.i * inv;
-		result->v30.j = inv * (*(s_view_camera *volatile *)&camera)->v34.j;
-		result->v30.k = inv * (*(s_view_camera *volatile *)&camera)->v34.k;
+		result->v30.i = camera->v34.i * inv;
+		result->v30.j = inv * camera->v34.j;
+		result->v30.k = inv * camera->v34.k;
 		result->f2c = 0.0f;
 		result->f3c = 0.0f;
 		break;
@@ -149,7 +159,7 @@ void function_0497a0(
 
 	case 1:
 	{
-		vector3f const * up = special ? &g_4b9dac : &(*(s_view_camera *volatile *)&camera)->v28;
+		vector3f const * up = special ? &g_4b9dac : &camera->v28;
 		if (source->type != 1)
 		{
 			result->v40.i = up->i * inv;
@@ -176,12 +186,14 @@ void function_0497a0(
 
 	*old20 = *(vector4f *)&result->v20;
 	*old30 = *(vector4f *)&result->v30;
-	result->v20.i = result->v20.i + ((*(s_view_camera *volatile *)&camera)->f6c * result->v40.i);
-	result->v20.j = (result->v40.j * (*(s_view_camera *volatile *)&camera)->f6c) + result->v20.j;
-	result->v20.k += (*(s_view_camera *volatile *)&camera)->f6c * result->v40.k;
-	result->v30.i += result->v40.i * (*(s_view_camera *volatile *)&camera)->f70;
-	result->v30.j = (result->v40.j * (*(s_view_camera *volatile *)&camera)->f70) + result->v30.j;
-	result->v30.k = (result->v30.k + ((*(s_view_camera *volatile *)&camera)->f70 * result->v40.k));
+	real side_shift = camera->f6c;
+	real vertical_shift = camera->f70;
+	result->v20.i = result->v20.i + (side_shift * result->v40.i);
+	result->v20.j = (result->v40.j * side_shift) + result->v20.j;
+	result->v20.k += side_shift * result->v40.k;
+	result->v30.i += result->v40.i * vertical_shift;
+	result->v30.j = (result->v40.j * vertical_shift) + result->v30.j;
+	result->v30.k = (result->v30.k + (vertical_shift * result->v40.k));
 
 	vector3f c = *c_in;
 	vector3f d = *d_in;

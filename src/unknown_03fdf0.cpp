@@ -97,6 +97,10 @@ void function_4a1e0(s_view_source *source, s_view_camera *camera, long resource_
 
 // score 54 (was 54): retail multiplies the index into edx and clears the globals before the
 // loop, ours computes the index in eax and stores the table pointer later.
+// The block indexed at each use (no block pointer) takes the index in edx
+// and lines up the loop slots, but keeps the entries in esi rather than edx
+// and drops two moves: 144 (492 bytes); entries indexed by the counter 164;
+// separate cursor pointer 54; block pointer declared inside the count test 151.
 // score 54 (was 54): without the block pointer (count and entries indexed at each
 // use) the head is retail's (scaled index in edx, spilled), but count lands in
 // edx and first in eax, and the inner loop reloads the cursor on every path; 144
@@ -170,6 +174,21 @@ void function_402b0(long cache_index, long mode)
 // j93: Frame 0x84/0x88 and helper conventions/expansion remain; original API values preserved.
 // first pass byte 202; second pass byte 201; third pass byte 195; typed parent lookup 183; direct tag lookup
 // 226.
+// score 183 (was 183): Frame is four bytes small; cache/draw contracts and render expansion
+// remain. first pass result arms 205; second pass result arms 196; third pass result arms 195;
+// fourth pass result arms 195; all pass result arms 219; native cache record binding 183; native
+// setup field updates 183; cache inline contract 183; signed setup word 183; native table
+// traversal 266.
+// score 183 (was 183): Frame is four bytes small; callee transport and graphics expansion remain. shared first pass 315; shared
+// second pass 377; shared third pass 364; shared final pass 370; shared all passes 785; forced shared all
+// passes 785; forced shared boolean results 785; forced shared byte results 785; constant table shared all
+// passes 749; constant table forced shared all passes 749; constant table forced shared boolean results
+// 749; constant table forced shared byte results 749; typed constant table shared all passes 280; typed
+// constant table forced shared all passes 280; typed constant table forced shared boolean results 280;
+// typed constant table forced shared byte results 280.
+// frame 0x84/0x88, helper conventions and API expansion remain;
+// independent final-pass byte 199; with first/second/third byte 209/208/202;
+// with first-second/first-third/second-third bytes 218/214/213; final-pass short 200 (plain).
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -255,6 +274,10 @@ bool function_404b0(long mode)
 // entry observations reordered 326; native local names 250 (fast).
 // Early weight with context-first material 226; depth zero 250, one 250;
 // size policy 462; shared tail-pass loop 476.
+// score 226 (was 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
+// first multipass 269; shared second multipass 281; shared conditional pass 273; shared twentieth pass 269;
+// shared seventh pass 269; shared all passes 291; forced shared all passes 291; shared final result two
+// consumers 291; native final result two consumers 291.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

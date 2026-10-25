@@ -54,6 +54,13 @@ PRIVATE __forceinline long texture_floor(real value)
     }
 }
 
+// score 4 (was 4): Frame agrees; the final slot-bit clear uses EDX instead of EAX. Tried unsigned slot bit 4;
+// signed traversal mask 4; unsigned slot index 4; toggle selected bit 14; subtract selected bit 16; assign
+// remaining mask 4; pending slots name 4; for mask traversal 4; named slot bit 4; bias declaration first 4;
+// slot index name 4; texture frame name 4.
+// the final bit-clear mask uses EDX instead of EAX. Lowest-bit clear 19;
+// early clear 111; entry lifetime 4; scan-index lifetime 4; level lifetime 4; integral
+// level clamp 86; short bitmap 4; typed texture entry 4.
 // @retail 0x1b0a0
 void __stdcall function_1b0a0(byte *state)
 {
@@ -1263,7 +1270,15 @@ void __stdcall function_20bb0(long player, dword mask, long const *indices, long
 long __stdcall function_3bf20(s_slot *slot, byte *data);
 
 // score 71 (was 71): the test of the global comes after the test of the call in ours and before
-// it in retail, and ours is twenty-five bytes shorter.
+// it in retail, and ours is twenty-five bytes shorter. Retail puts the failed lookup's exit last,
+// forms the slot pointer after the global test (with the frame counter loaded before it), and
+// spills the clamped amount into the key's second field with a store in each clamp arm; the
+// amount here is that field (memory), so its stores merge before the draw call. `valid` lands in
+// the parameter's home as a plain bool. Tried: a plain amount 108 (frame 0x1c, own slot); the key
+// in its own block 108; that and the rest under `index != NONE` 101; the positive guard alone 92;
+// with a slot pointer 91; the global and valid tests nested, both else arms written out 87; the
+// frame computed before the slot pointer 99; the frame read before it 93; one clamped
+// assignment from a named product 87; the key built in an inline helper 108.
 // @retail 0x3c270
 bool __stdcall function_3c270(dword value)
 {
@@ -1277,8 +1292,7 @@ bool __stdcall function_3c270(dword value)
     key.e = 0;
     long index = function_0209b0(&key, &value, 4);
     if (index == NONE) return false;
-    byte &valid = *(byte *)&value;
-    valid = false;
+    bool valid = false;
     bool available;
     real &amount = *(real *)&key.b;
     if (g_51f408 && g_51f40c.slots[index].valid)

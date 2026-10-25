@@ -96,6 +96,15 @@ static inline vector3f *function_x84d9e8(vector3f *vector, vector3f const *axis,
 	return vector;
 }
 
+// score 6 (was 6): cross-product operand preloads and SSE allocation remain.
+// shared cross-product interface 6;
+// plain component rotation loop 47;
+// shared cross product and component loop 47;
+// cosine vector snapshot 35;
+// rotation output vector snapshot 136;
+// shared cross product and cosine vector 35;
+// shared cross product and rotation output 136;
+// shared cross product with distinct rotation input and output 134;
 // @retail 0x18c250
 bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
@@ -304,6 +313,10 @@ void __stdcall function_18c630(long object_index, long tag_index, long a, long b
 }
 #pragma inline_depth(255)
 
+// score 7 (was 7): sample-base and offset registers plus object call setup remain; readonly data
+// input 7; readonly entry input 7; native count identity 7; output count lifetime 52; existing
+// scale storage lifetime 7; input pointer home names 7; existing scale home names 7; inline matched
+// output callee 7.
 // @retail 0x18ca20
 void __stdcall function_18ca20(long object_index, long tag_index, s_sound_permutation const *permutation, real scale)
 {
@@ -337,6 +350,9 @@ static __forceinline long float_to_int_nearest(real value)
 }
 
 #pragma inline_depth(0)
+// score 21 (was 21): tag/sound/promotion use EBX/EDI/ESI versus EDI/ESI/EBX.
+// Read-only tag 21; wide promotion selector 62; conditional promotion 22; complete eligibility guard 21;
+// separate promotion failures 21; set after rounding 72; named rounding homes 21; read-only set 21.
 // @retail 0x18c720
 void function_18c720(long tag_index, long object_index, long set_index, long permutation_index, real scale)
 {
@@ -367,6 +383,14 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 }
 #pragma inline_depth(255)
 
+// score 12 (was 12): object/tag entry registers differ with the dispatch tag convention; inline
+// existing dispatch callee 12; out of line dispatch declaration 12; readonly tag input 12; readonly
+// set input 12; readonly first permutation 12; selected permutation two consumers 12; selected
+// input guard first 17; typed permutation readonly range 12.
+// object/tag entry registers still follow the dispatch
+// convention. Nested validation 12; object query receiver 12; validation from
+// tests 43; globals after tag query 38; direct set/first element 12/12;
+// absolute set part 12; relative permutation index 26.
 // @retail 0x18c6a0
 void __stdcall function_18c6a0(long object_index, long unused, long tag_index, long set_index, long permutation, long scale)
 {
