@@ -462,6 +462,9 @@ struct s_squad_iterator
 };
 
 // score 92 (was 92): squad/definition registers and persistent zero/count homes remain; shared lookup 92; parent while 148; read-only squad 92; unused formal addresses removed 92; definition scope 92; cached entries 87 (one-use pointer excluded); direct mode flags 94; early index 92; native count/entries block 90.
+// no frame; squad/definition EAX/ECX and zero/count homes differ.
+// Common scan exit 94; direct count 92; alternate reads 92; fallback-first flags 102;
+// search condition 92; exit/direct count 94; exit/alternate reads 94; definition result 92.
 // @retail 0x204ec0
 void function_204ec0(s_squad_iterator *iterator, short squad_index, short flags, short mode)
 {
@@ -2470,6 +2473,9 @@ bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
 // score 152 (was 152): frame 0x1c agrees; task zeroing/retest and iterator head remain; optional producer scope, delay scope, both scopes, native trigger entry, signed entry index, threshold selection, iterator name and native entry with producer scopes each 152.
+// frame 0x1c agrees; task zeroing/retest, optional-output width and iterator head differ.
+// Test-produced task 152; short output 152; wide task 154; both widths 154; direct inputs
+// on test-produced task 152; short trigger count 152; wide threshold 152; pending store first 152.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {

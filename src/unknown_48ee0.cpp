@@ -26,6 +26,9 @@ extern real g_4c9798[36];
 // score 295 (was 295): Frame 0x20 versus 0x28 and input/rounding homes remain.
 // Distinct normals 295; scoped near normal 295; local near-normal dot 301; point setters 305;
 // late pixel area 295; origin pointer 295; clamp result 295; fallback-first far scale 296 (plain).
+// Frame 0x20 versus 0x28, input registers and rounding reloads remain. Tried texture row
+// memset 300; whole table memcpy 361; two vector memcpy calls 295; row clear and whole copy 366; row clear and
+// vector copies 300; near normal memcpy 295; far normal memcpy 295; both normal memcpy calls 295.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {

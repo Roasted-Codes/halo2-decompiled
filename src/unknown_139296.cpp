@@ -352,6 +352,9 @@ bool function_22acb4(long player_index);
 // second-mask slot and constant homes remain; second-mask bit orders
 // 16/2/4/8, 2/16/4/8, 2/4/16/8, 8/4/2/16 all 190;
 // 2/8/4/16, 16/8/4/2, 8/16/2/4, 4/8/16/2 all 190 at 884 bytes.
+// score 190 (was 190): second-mask spill and constant homes remain.
+// First enum order one/zero/NONE 189 (below gate), zero/NONE/one 195, zero/one/NONE 195,
+// NONE/one/zero 197; native fourth on current enums 299; signed third/fourth/both 271/299/285.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

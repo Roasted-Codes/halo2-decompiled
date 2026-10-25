@@ -264,6 +264,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // BSP/section carriers, range/plane homes and vertex joins remain;
 // BSP/range/block references 185/185/185; native block value 330; vertex count/memory copy 185/185;
 // native strip-word input 257; range plus block references 185. Defined vertex failure retained.
+// score 185 (was 185): BSP/section carriers, range/plane homes and vertex joins remain.
+// Failure accumulator bool/byte 185/185; signed byte/word fetch result 185/185;
+// negative-index guard first 211; index test before data 208; failure plus early guard 211;
+// failure accumulator plus signed-byte fetch 185. All defined failures retained.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

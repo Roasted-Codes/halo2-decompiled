@@ -1275,6 +1275,9 @@ struct s_player_properties
 // score 184 (was 184): owner/name-count/zero allocation and requested cursor remain.
 // Cache/record/both equality operands reversed 200/212/201; separate name-count
 // publication 211, with those reversals 200/212/201; split cache guard 201.
+// owner/count/zero homes and requested cursor remain.
+// Current fields at use all/names 198/184; metadata/all with live mask/all with late count 234/198/198;
+// all with owner at use/second index/both indices 207/198/198.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
