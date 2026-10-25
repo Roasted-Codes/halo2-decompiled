@@ -179,6 +179,8 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // score 342 (was 342): frame 0x10 agrees; texture factors spill before the inlined reservations.
 // Value half-size 342; disabled-path return 342; C begin/vertex calls 561;
 // C texture-state calls 455; role-named texture coordinates 342.
+// First-quad scope 342; texture expressions at calls 386; C++ color entry 342;
+// complete descriptor value initialization 619; parallel alpha-byte packing 342.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
