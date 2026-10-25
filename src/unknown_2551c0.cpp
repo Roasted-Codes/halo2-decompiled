@@ -71,7 +71,8 @@ short __stdcall function_2551c0(long actor_index)
 	return local_0;
 }
 
-// score 43 (was 117): retail computes the second products of the j and k cross terms before
+// score 43 (was 43): cross-product schedule and score-dot registers still differ.
+// Earlier allocation: retail computes the second products of the j and k cross terms before
 // the call's pushes (ours the first j product: 2 bytes longer, j/k cross registers swapped) and
 // sums the score's dot product j, k, i (ours k, i, j). Kept: the rotation as projection first, then
 // three named cross terms, each output `v * cos + projection * axis - cross * sin` (frame now
@@ -82,6 +83,9 @@ short __stdcall function_2551c0(long actor_index)
 // declaration orders 43.
 // Earlier: our frame was four bytes larger than retail's and the
 // inlined rotation helper ran on a different SSE schedule.
+// Named second j/k products 109/109; both second products 65; both first products 65;
+// named j/k cosine products 120/109; both cosine products 61;
+// second products plus cosine parts 139.
 // @retail 0x2551f0
 bool __stdcall function_2551f0(long actor_index, s_slot *slot)
 {
