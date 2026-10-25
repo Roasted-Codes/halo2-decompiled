@@ -380,7 +380,7 @@ void function_b3200(void)
 				if (status == 2 || status == 5)
 				{
 					entry->reply_received = true;
-					entry->qos_valid = qos_target_result(g_4d8ef4, &entry->qos, i);
+					entry->qos_valid = qos_target_result(g_4d8ef4, i, &entry->qos);
 					if (entry->qos_valid && entry->qos.data_size > 0)
 					{
 						if (session_description_decode_buffer(entry->qos.data_size, entry->qos.data, description))

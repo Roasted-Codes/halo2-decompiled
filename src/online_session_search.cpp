@@ -482,7 +482,7 @@ void __stdcall function_905a0(s_session_search *search, long kind)
 					case 4: session_search_mark_seen(search, entry); break;
 					case 5:
 						{
-							if (!qos_target_result(search->qos_handles[kind], &entry->qos, entry->unknown7c))
+							if (!qos_target_result(search->qos_handles[kind], entry->unknown7c, &entry->qos))
 								session_search_mark_seen(search, entry);
 							else if (!entry->qos.data_size)
 								session_search_mark_seen(search, entry);

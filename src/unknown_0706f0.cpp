@@ -31,7 +31,11 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // primary-session join carrier and return normalization remain;
 // secondary consumer scope / state phases / byte result after state / after sessions 182/182/185/185f;
 // scoped dispatch / member receiver / both lifetimes / with dispatch 183/182/182/183f.
-// score 182 (was 182): primary-session ESI joins and canonical return normalization remain;
+// score 182 (was 182): Primary-session join carriers and Boolean normalization remain. final existing state query 182; initial
+// existing state query 182; both existing state queries 182; dispatch result accumulation 182; state
+// queries and accumulation 182; result after owner capture 184; native state object receiver 182; native
+// signed state and ordinal 182.
+// primary-session ESI joins and canonical return normalization remain;
 // low-bit / true-equality return 184/212; primary object reference 182, with those returns 184/212;
 // owner plus primary references 182; primary reference with native dispatch / low-bit return 183/185.
 // score 182 (was 182): primary-session ESI joins remain; actual search-status member cursor
