@@ -49,11 +49,15 @@ static __forceinline long marker_viewer_unit(void)
 	return unit_index;
 }
 
-// score 123 (was 233): projection-result store, coordinate registers and later helper scheduling differ;
+// score 120 (was 233): projection-result store, coordinate registers and later helper scheduling differ;
 // bool result 231; early placement 233; position snapshot 282; late collision 237;
 // final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
 // projected endpoints 123; word centers 225; final endpoints 123; native direction 264; distance lifetime 141.
 // Branch status with word/native extents 218/212 (match-only, reverted); numerator lifetimes 123; viewer exits 123; earlier extent product 213.
+// Native point initialization 123; up-vector snapshot 294; ellipse bounds 241;
+// existing projection output 123 (match-only, reverted); placement memcpy 123;
+// collision record at file scope 123; direct collision result 281; double rounding result 180.
+// Plain list position (no list_reference) 120.
 // score 123 (was 123): projection-result store, coordinate homes and helper scheduling still differ.
 // native byte projection result 123f; native horizontal half extent 216f.
 // native vertical half extent 215f; value initialized placement 263f.
@@ -77,9 +81,7 @@ void __stdcall function_24e59f(s_marker_list *list)
 		byte surface_flags[2];
 		short surface_index;
 	};
-	/* retail keeps list on the stack (ret 4); its callers push it */
-	s_marker_list *const *list_reference = &list;
-	point3f const *position = &(*list_reference)->position;
+	point3f const *position = &list->position;
 	real distance = distance3d(position, &g_4b9da0);
 	real lift = list->r18;
 	if (lift > distance * 0.35)

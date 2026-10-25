@@ -1968,6 +1968,11 @@ struct s_player_creation_record
 // Caller depth 1/2 33/33; size preference 335; common reset 55;
 // auto-inline off 33; global optimization off 395; depth 0 305;
 // common reset with size preference 343.
+// Retail looks like function_14f270(index, record->value04) inlined one level
+// (its NONE arm inline, its recursive NONE call kept), as 0x152f80 also
+// shows; our build does not inline that call (267, also with
+// inline_recursion(on) around this function). Written in function_14f270's
+// arm order, the NONE call in the other arm inlines instead (49).
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {
@@ -2663,6 +2668,9 @@ struct s_unit_flags_14d8b0
 // Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
 // native reset timer 155; both native long/short fields 155; signed native countdowns 155;
 // all native countdown fields 155; full native current-player record 153.
+// score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
+// Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
+// incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

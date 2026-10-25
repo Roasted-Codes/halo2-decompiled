@@ -283,6 +283,9 @@ PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_reco
 // const record 57; existing bool iterator 126; existing search boundary 123.
 // bool iterator size 147; one inline level 57; frame pointer 64.
 // global optimization 102; size preference 145.
+// Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
+// typed parent lookup 78; retained handle lookup 78; root predicate 57;
+// sentinel cursor with typed parent 65. Null-result lifetime still differs.
 // @retail 0x202370
 void function_202370(void)
 {
@@ -305,6 +308,9 @@ void function_202370(void)
 // const record 62; existing bool iterator 154; existing search boundary 134.
 // value initializer 57; zero initialization call 60; frame pointer 55.
 // global optimization 124; size preference 158.
+// Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
+// typed parent lookup 78; retained handle lookup 78; root predicate 57;
+// sentinel cursor with typed parent 65. Null-result lifetime still differs.
 // @retail 0x2024c0
 void function_2024c0(void)
 {
@@ -1782,6 +1788,9 @@ bool function_1e11b0(long actor_index, bool active);
 // record flag bitfield 64; existing actor step 100 (caller loss); existing actor getter 84.
 // frame pointer 74; size preference 82; native index stdcall 69.
 // byte record stdcall 64; record fields stdcall 64; record bit stdcall 64.
+// Iterator current handle 64; scalar next handle 64; zero iterator 76;
+// invalid iterator 80; tick snapshot 62; initial flags 64; current handle
+// with tick 62; scalar cursor with tick 62. Two-point gains rejected.
 // @retail 0x203bf0
 bool function_203bf0(long squad_index)
 {

@@ -796,6 +796,9 @@ void function_25aba0(long actor_index);
 // Empty native initializer 143; value/assigned-value initialization 249 each; empty initializer with early state pop 146;
 // owner/handler records 69 each; current-level snapshot 69; level snapshot with empty initializer 143.
 // Actor/result ESI/EDI, state-one decrement, zero-fill and insertion setup still differ.
+// Native initializer with early state pop 140; candidate index snapshot 252;
+// candidate receiver 69; choice before workspace 69; callback/insertion names 69;
+// completion/eligibility/insertion results 69/163/69; existing mask helper inline 69.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -1790,6 +1793,10 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // readonly tag/capacity value/scalar names 113 each; initialized marker output 209.
 // Initial candidate plus positive table 93 kept; initial candidate plus weighting 109.
 // Initial helper setup now agrees through +0x102; marker call setup and exits still differ.
+// score 85 (was 98): marker setup, optional transform and exits still differ after +0x102.
+// Candidate indexed by accepted count 85 plain kept; post-query candidate 85; native query there 86;
+// existing tag helper 161; first candidate record 98; post-query marker record/workspace 85 each;
+// tag helper plus post-query candidate 161.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
@@ -1811,7 +1818,6 @@ long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool 
 	if (marker_tag != NONE)
 	{
 		s_target_marker_table *table = (s_target_marker_table *)g_4e3b44[marker_tag & 0xffff].bytes;
-		s_sort_candidate_view *candidate = &candidates[count];
 		for (long marker_index = 0; marker_index < table->count; marker_index++)
 		{
 			s_target_marker *marker = &table->markers[marker_index];
@@ -1821,11 +1827,10 @@ long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool 
 			{
 				if (count < 64 && function_1a5e40(object_index, alternate, marker_index, marker,
 					&markers[0].matrix, marker_count == 2 ? &markers[1].matrix : NULL,
-					origin, direction, candidate) &&
-					function_1a60f0(candidate, weights, marker->field_10 * scale))
+					origin, direction, &candidates[count]) &&
+					function_1a60f0(&candidates[count], weights, marker->field_10 * scale))
 				{
 					count++;
-					candidate++;
 				}
 			}
 		}

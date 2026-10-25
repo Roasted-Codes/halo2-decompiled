@@ -1200,6 +1200,8 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // immutable release scale 182; angular input value 191.
 // rate input snapshot 182; gain input snapshot 182; both input snapshots 182; direction input 204.
 // external direction reference input 204; rate input formal 182; scale input formal 204; separate impulse noinline 182.
+// Known-set XOR removals on flag 5/6/both 182/182/182; subtractive removals
+// on flag 5/6/both 182/182/182; XOR/subtract mixed both ways 182/182.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

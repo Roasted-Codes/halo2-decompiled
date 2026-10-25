@@ -48,6 +48,10 @@ static __forceinline long real_to_long(real value);
 // Native current-pointer/cursor view 132; with Boolean slice API 127; independent
 // long budget 114; separate native cursors 178; native first only 198; short
 // increment 121; Boolean branch 130; handle snapshots 127. Cursor views rejected.
+// score 144 (was 144): frame 0x18 versus 0x20; current/datum homes and slice-step interface still differ.
+// Real counter/global/both members 144/144/144; native member word comparison 149;
+// direct budget members 144; per-record threshold 144; inactive-record continue 144;
+// budget initialized after cursor 155. Body and member declarations restored.
 // @retail 0x268510
 void function_268510()
 {
@@ -1832,6 +1836,11 @@ void function_2689d0(void)
 // Member/prop ordinary inline 5/5; every plain whole-program trial preserves all baseline matches.
 // node/prop next homes 0x1c/0x14 versus 0x18/0x1c; setup scope 5; typed prop 5; both 5;
 // link references 5; array views 5; prop names 5; record references 5; joint declarations 5.
+// Prop iterator declared before the node iterator 5; both iterators in one array 69 (frame 0x14);
+// node iterator renamed to sort after props 5; prop iterator initialized before the node loop 125;
+// prop init through the clump view 174 (the clump-offset spill vanishes); helper definitions
+// swapped 5; both iterators brace-initialized 5; prop init by array indexing 5; an early dead
+// store into the prop iterator 5. The two homes do not move for any source-level reordering.
 // @retail 0x269250
 void function_269250(long clump_index, long actor_index)
 {

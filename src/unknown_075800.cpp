@@ -964,6 +964,12 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // score 198 (was 198): selector/message/address convention differs; full baseline 198, fast preview 196.
 // Unified switch 208; retail-order switch with lookup exits 218; missing-connection exits 196; inline depth
 // one 196; size preference 243.
+// score 198 (was 198): selector/message/address allocation and dispatch root remain.
+// Isolated endpoint/leave/query cases 195p/198p/206p; separate connection phase 258p;
+// two session cases first 199p; connection order reversed 198p; direct lookup guard 198p;
+// residual phase reversed 207p. All eight plain checked; fast preview 196 versus full 198.
+// Inline declarations on query, acknowledgment, update and reconnect handlers,
+// singly and paired, all 196 fast; combined session handlers 198 plain, no gain.
 // Direct/full if ladders 278/241; link snapshot 215; unsigned connection handle 196;
 // typed session payload 196; session cases before lookup cases 210; reversed direct
 // cases 195; adjacent lookup range after direct phase 205 (fast control 196).

@@ -1197,6 +1197,11 @@ bool function_0bfe60(dword const *flags, long bit);
 
 // score 52 (was 52): the zeroed register is EDI in ours and EBP in retail, and the block the
 // test jumps to is laid out differently.
+// score 52 (was 52): the code is retail's apart from the colours (loop counter and total
+// EDI where retail has EBP, the test index EBP where retail has EDI) and ADD for retail's LEA
+// of the bitset row; push pointer without volatile 56; device as a field pointer 56 (52 with
+// volatile); total zeroed in an else arm 139; one combined query-result test 52;
+// &bitsets[set][0] 52; slots + index 52; the push expansion in a forced-inline helper 52.
 // @retail 0x20bb0
 void __stdcall function_20bb0(long player, dword mask, long const *indices, long count, bool query, visibility_draw_callback draw)
 {
