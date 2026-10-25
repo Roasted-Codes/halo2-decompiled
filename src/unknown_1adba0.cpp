@@ -482,6 +482,10 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // was: retail keeps the -1 sentinel in EBP and pushes the arguments in the
 // other order, where ours uses EBX for the sentinel, so the prologue and the
 // calls that follow differ.
+// score 15 (was 15): Sentinel/clock and returned-settings EBX/EBP homes remain swapped.
+// actor reference 15; immutable actor 15; actor/node references 15; settings reference 15;
+// timestamp reference 15; interval reference 15; settings/timestamp references 15;
+// actor/coefficient references 15.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {
