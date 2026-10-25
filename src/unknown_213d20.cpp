@@ -171,6 +171,9 @@ void cache_copy_forget(char const *map_name)
 	}
 }
 
+// score 6 (was 6): post-path EBX reuse remains. selected index 76; oldest timestamp 40;
+// selected-record arms 6; age operands 9; entry selection 6; short index 45;
+// whole-path destination 6; no-selection exit 6.
 // @retail 0x214100
 void __stdcall cache_copy_record_use(char const *map_name)
 {
@@ -322,6 +325,9 @@ long cache_copy_priority(char const *map_name)
 	return result;
 }
 
+// score 7 (was 7): post-path EBX reuse remains. shared completion 7; state value 7;
+// entry-result single exit 57; short result 55; inline query 7;
+// outlined inline query 7; inline completion 7; open success last 37.
 // @retail 0x213f10
 long map_location_get(char const *map_name)
 {

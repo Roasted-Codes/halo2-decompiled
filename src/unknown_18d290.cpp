@@ -131,6 +131,9 @@ bool function_bafb0(long object_index, long ancestor_index);
 
 bool function_14ddc0(long local_player_index);
 
+// score 44 (was 44): existence BL and loop/unit allocation still differ. index-accessor
+// predicate 67; shared player index 65; short index 61; unsigned index 44;
+// relationship result/guards 44/44; immutable existence 44; audible guard 44.
 // @retail 0x18d4f0
 void function_18d4f0(long object_index, char *audible, long *local_player_index)
 {

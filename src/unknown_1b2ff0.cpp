@@ -183,6 +183,9 @@ bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 
 real function_1f8940(long actor_index);
 
+// score 44 (was 44): actor-data load and early selected-reference transfer still differ.
+// late selected value 44; late value/native result 97; native/short/byte result
+// 97/94/134; sentinel operands 44; active-test result 122; native request fields 44.
 // @retail 0x1b3380
 bool __stdcall function_1b3380(long actor_index, s_slot *slot)
 {

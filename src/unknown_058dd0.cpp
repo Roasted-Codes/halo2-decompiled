@@ -1875,6 +1875,9 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // score 48 (was 48): readiness input and failure/timer join persist. Full
 // preparation pending 71; staged/second-call pending 95/96; tail guard 48;
 // wide completion 146; unsigned preparation 71; early/raw pending 128/61.
+// score 48 (was 48): readiness input and failure/timer join persist. Duration pending 91;
+// shared/early countdown seconds 97/107; clock value 90; timed/five arm order
+// with integer pending 117/118; word completion 146; early duration pending 137.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {
