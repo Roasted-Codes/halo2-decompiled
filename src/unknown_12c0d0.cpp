@@ -347,12 +347,6 @@ byte __stdcall texture_cache_entry_state(long datum_index)
 	return result;
 }
 
-// score 10 (was 11): GPU result uses setne and another return; retail branches
-// back to the format-failure return. Combined protection state 28; selected mask 18;
-// override first 15; record reference 11; inverse idle result 26; early format
-// with override first 31; early format 26; format and residency snapshots 11.
-// the shared false block is emitted after the resource check, where retail
-// emits it right after the hardware format compare and jumps back to it.
 // @retail 0x12d1a0
 bool __stdcall texture_cache_entry_busy(long datum_index)
 {
@@ -364,12 +358,10 @@ bool __stdcall texture_cache_entry_busy(long datum_index)
 		return true;
 	if (entry->hardware_format == NONE)
 		return false;
-	if (entry->resident)
-	{
-		if (!D3DResource_IsBusy(&entry->resource))
-			return false;
-	}
-	return true;
+	else if (entry->resident && !D3DResource_IsBusy(&entry->resource))
+		return false;
+	else
+		return true;
 }
 
 /* the physical memory's callback when a block is freed: waits for the GPU to

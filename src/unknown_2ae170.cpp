@@ -769,6 +769,10 @@ void c_sound_effects::set_i3dl2(s_sound_i3dl2_parameters *parameters, long unuse
 // SSE (the gain's bits copied through ebx into a stack temp) while our
 // union pun makes MSVC use x87; five more rewrites of the pun scored 55 or
 // worse.
+// score 55 (was 55): retail inlines the existing out-of-line mix bin append (its
+// count++ is reused by the second send), ours the local copy. The existing
+// append called directly stays out of line 252, 238; plain sums 102; one
+// adjusted level 167; the gain parameter adjusted in place 167.
 // @retail 0x2af800
 __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, s_mixbin_settings *mixbins)
 {
