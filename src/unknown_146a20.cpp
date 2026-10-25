@@ -276,7 +276,7 @@ void function_146de0(void)
 // j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
 // byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
 // guard 143; post retry capacity 143.
-// score 139 (was 139): capacity/timestamp homes and update expansion remain.
+// score 129 (was 139): capacity/timestamp homes and update expansion remain.
 // Constructor mask 139; repaired native construction result with/without mask 164/164;
 // entry capacity plus mask 141; native buffer/address/padding-scope plus mask 139/139/139;
 // actual masked-capacity local 138 (one-point gain dropped).

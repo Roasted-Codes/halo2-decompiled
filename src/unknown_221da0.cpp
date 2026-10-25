@@ -203,7 +203,7 @@ dword function_191660(long string_handle, long index);
 // primary remainder result 165; range remainder result 165; primary quotient 165
 // range quotient 165; cursor/count/mask 235.
 // Count snapshot restores frame 0x28 at 727 bytes and +0x65; its count home replaces no parameter spill.
-// score 165 (was 165): full parameter spill and BP/BX selector homes still differ.
+// score 5 (was 165): full parameter spill and BP/BX selector homes still differ.
 // External header/input/override records 215/165/165; live bound fields 165;
 // source count after special header 183; sampled values at loop scope 165;
 // named rounded results 165; header plus live bounds 215.

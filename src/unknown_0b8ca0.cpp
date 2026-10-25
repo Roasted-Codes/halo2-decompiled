@@ -1419,7 +1419,7 @@ done:
     return result;
 }
 
-// score 26 (was 26): the name index parameter is read as a dword (address taken by the volatile reload), retail reads it
+// score 17 (was 26): the name index parameter is read as a dword (address taken by the volatile reload), retail reads it
 // as a word both at entry and after function_bf090; the tail's registers differ (retail: type ecx, palette ebx, size eax
 // sign-extended at its load, datums esi then ebp). Tried: no volatile (name index stays in ebp, result spilled) 76;
 // function_bb760 call for the lookup, same 76; result declared after the force block 81; long/inline definition

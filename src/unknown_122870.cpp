@@ -396,7 +396,7 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 	}
 }
 
-// score 67 (was 74): frame 0x24 versus 0x18; independent query homes still differ.
+// score 68 (was 74): frame 0x24 versus 0x18; independent query homes still differ.
 // Output-first helper 80; ordinary inline 80; depth one 80; not-loaded arm first 128;
 // guarded stages 126; nested name guard 76 fast, 74 plain.
 // Later-three scratch 194; menu/shared scratch 180; final-pair scratch 109;

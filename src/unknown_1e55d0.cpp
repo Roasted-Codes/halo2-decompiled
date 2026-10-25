@@ -53,7 +53,7 @@ bool function_1c5210(transform4x3f const *matrix, void *shape, long component, l
 
 static __forceinline long real_to_long(real value);
 
-// score 349 (was 349): frame 0x8c versus aligned 0x94; global optimization off 988, inline depth 2 348, no reference truth test 348, shape flag result 352, combined 352.
+// score 353 (was 349): frame 0x8c versus aligned 0x94; global optimization off 988, inline depth 2 348, no reference truth test 348, shape flag result 352, combined 352.
 // Base-position/velocity/both input values 379f/382f/413f; move-stage handle 352f;
 // minimum-radius value 352f; activity/compound byte 352f/352f; header offset 352f.
 // Last five forms retain the unchanged reduced executable instructions (preview 352f).

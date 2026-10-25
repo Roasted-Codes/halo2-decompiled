@@ -53,7 +53,7 @@ static __forceinline void king_settings_verify(s_game_variant_king_settings *set
 
 /* clamps every setting of a variant into its range; a variant that needed
    any change is replaced by the slayer defaults */
-// score 58 (was 58): the switch's jump table address is baked into the code
+// score 57 (was 58): the switch's jump table address is baked into the code
 // and can never match, and retail masks the flags in eax where ours masks them
 // in ecx, so the stores of the masked flags and the copy differ.
 // Round 43: with eax busy right after the wcsncpy call the zero takes ecx and

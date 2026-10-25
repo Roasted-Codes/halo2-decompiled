@@ -4072,7 +4072,7 @@ struct s_score_zone_view
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // score 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
-// score 477 (was 477): Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
+// score 472 (was 477): Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

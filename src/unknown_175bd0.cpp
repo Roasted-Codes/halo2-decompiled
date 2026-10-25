@@ -1919,7 +1919,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // score 160 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
-// score 142 (was 163): frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
+// score 171 (was 163): frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
 // Type query, color update, matrix query and spawn update noinline declarations 163 each;
 // existing tint/multiplication result byte carriers 146/159, both 142 kept;
 // placement result byte carrier 163. No new result copy or field read.

@@ -70,7 +70,7 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // score 174 (was 174): frame 0x14/0x18 and options/index/mask homes remain.
 // Fast: native machine 266; native identifier 295; native player machine 282; identifier and machine 287;
 // native player 288; both machines 313; identifier library copy 295; machine library copy 266.
-// score 177 (was 177): frame 0x14/0x18 and options/index/mask homes remain.
+// score 171 (was 177): frame 0x14/0x18 and options/index/mask homes remain.
 // Byte-frame equality input order: machine pair 175f; empty identifier 175f;
 // duplicate identifier 177f; local machine 176f; membership 173f/175p;
 // machine and membership 173f; player comparisons 178f; all comparisons 176f.

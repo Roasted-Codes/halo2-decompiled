@@ -1379,7 +1379,7 @@ bool __stdcall function_110ab0(long unit_index)
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
 // score 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
-// score 450 (was 450): Frame 8 versus 12 and requested/state homes remain;
+// score 443 (was 450): Frame 8 versus 12 and requested/state homes remain;
 // byte result 506; byte interruptibility 453; separate overlay result 508;
 // direct inner membership 486; held-index names 451 (fast control 451). Opening body retained.
 // @retail 0x1103a0
