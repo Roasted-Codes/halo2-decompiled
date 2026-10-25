@@ -617,6 +617,9 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 // score 115 (was 115): Coefficient/zero XMM roles, classification products and projection staging remain.
 // Existing scale for first/second/source/all normal negations 425/410/433/446f; reused projected
 // workspace 249f; per-use outside bytes 249f; completed projection total 214f; native short total 115f.
+// score 115 (was 115): coefficient/zero XMM roles, classification operands and projection homes remain.
+// Native camera vector member 115; camera/bounds references 251/133; clipped/camera/projected point names 115/115/115;
+// paired projection names 115; native vector plus three point names 115.
 // @retail 0x1652e0
 bool function_1652e0(s_view *view, real margin, const point3f *points, long point_count, point3f *projected_points, short *projected_count, s_bounds3d *bounds, bool use_plane0, bool use_plane1)
 {

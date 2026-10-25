@@ -266,6 +266,9 @@ void function_146de0(void)
 // score 139 (was 143): frame 0x14 now agrees; update expansion and saved registers differ.
 // Per-attempt padding after/before publication 149/149; consumed padding 139/151;
 // guarded consumption 145; rounded padding/consumption 163/162; bounded search 149.
+// score 139 (was 139): selective update expansion and request/timestamp homes remain.
+// Update defining-source inline/force-inline declarations 139/139; separate request/usable capacity 139;
+// per-attempt request 139; split capacity plus inline/force-inline update 139/139; request plus inline 139; native handle plus split capacity 139.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {

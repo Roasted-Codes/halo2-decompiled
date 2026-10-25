@@ -646,6 +646,9 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // score 19 (was 19): dispatch load and ordinal/remap homes remain; workspace scope 19;
 // pre-removal append count 86; removal postdecrement 66; paired ordinal names 19;
 // shared center setter 107; sphere component view 19; int append ordinal 19; outer while 19.
+// score 19 (was 19): early child-vtable load and exchanged ordinal/context homes remain.
+// Child query declaration/abstract slot/abstract interface 19/19/19; remap context/cursor names 19/19;
+// actual context type 19; typed context plus names 19; abstract query plus typed context/names 19.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)
