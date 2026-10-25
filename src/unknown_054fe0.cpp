@@ -1251,6 +1251,9 @@ struct s_player_properties
 // score 199 (was 199): frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
+// Requested/current/both property references 199/199/199; name/update bits at use 228/224;
+// packed initialization word 238; contiguous payload copy 284; contiguous tail copies 263
+// (all plain). Owner/count allocation and the requested cursor remain unchanged.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

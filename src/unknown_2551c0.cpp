@@ -512,6 +512,12 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // Frame and first-length/radius homes still differ;
 // exhaustive timing branches 205; trace distances after location 213; first length in guard 200;
 // completed direction reused 200; timing and trace lifetimes 206.
+// score 151 (was 200): frame 0x58 versus 0x54 and first-length/radius homes remain;
+// earlier interval lifetime 151; earlier request 226; earlier side 200;
+// nested normalizations 200; later radius on fallback body 203.
+// score 151 (was 151): frame 0x58 versus 0x54; first-length/radius homes remain.
+// Early-declared exhaustive interval 205; entry first length 151; trace/location names 151;
+// pre-normalization interval 149; byte side 220. Original body retained.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {
@@ -528,6 +534,7 @@ short __stdcall function_255740(long arg_0, s_slot *arg_1)
 		real local_5 = function_30bf0(&local_3);
 		if (local_5 > 0.f && function_30bf0(&local_4) > 0.f)
 		{
+			real local_23 = 0.4f;
 			real local_6 = *(real *)((byte *)function_1e4a50(local_0->unknown054) + 4);
 			real local_9 = local_2->unknown03c + local_6;
 			vector3f local_7;
@@ -583,7 +590,6 @@ short __stdcall function_255740(long arg_0, s_slot *arg_1)
 							}
 							short local_19, local_21;
 							real local_20, local_22;
-							real local_23 = 0.4f;
 							if (unit_animation_get_timing(local_0->unknown018, 0x7000101, local_18, &local_19, &local_20, &local_21, &local_22))
 								local_23 = local_20 * 1.33f;
 							if (local_23 > local_8)

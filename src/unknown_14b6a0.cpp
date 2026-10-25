@@ -118,6 +118,11 @@ void function_14bac0()
 	players_pending_creation_process(iterator_reference);
 }
 
+// score 234 (was 234): frame 0x34 versus 0x3c, query/iterator homes and visit-counter reloads differ;
+// destination byte 234; alternate byte 234.
+// destination word 243; alternate word 264.
+// destination long 244; alternate long 265.
+// both words 271; both longs 258.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
