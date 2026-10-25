@@ -65,7 +65,8 @@ bool g_47f05b;
 // Without `block` (g_479888 read at both placements) the reload sits on the constructed arm as in
 // retail but the 1 becomes immediates: 38. Tried: the pool placed at `block + 0x15040` 40; the
 // buffer argument through g_479888 38; `(c_havok_fixed_memory *)g_479888 + 1` 38; a typed
-// `fixed` pointer local with `fixed + 1` 34.
+// `fixed` pointer local with `fixed + 1` 34; `block` read after the three global stores 34; the
+// fixed buffer in a local before storing g_479894 38; `block` reassigned from g_479888 for the pool 34.
 // @retail 0x146a20
 void function_146a20(void)
 {
