@@ -353,6 +353,11 @@ extern long g_51ec0c;
 
 /* joins the friend's game (mode 1 to 4: how a squad already formed comes
    along) */
+// score 80 (was 80): matching 0x14 frame; cold state/mode block placement still differs,
+// with twelve missing bytes. Earlier join-mode widths and session-record forms excluded;
+// tried cold cases first 80; state nine first 80; entry join result 96; shared player gate 104;
+// leave from join result 123; positive title gate 101; zero-time initializer 80;
+// query declarations first 80.
 // @retail 0x2395dc
 void __stdcall function_2395dc(XONLINE_FRIEND *friend_, long controller_index, long mode)
 {

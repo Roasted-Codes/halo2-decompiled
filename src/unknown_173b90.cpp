@@ -1126,15 +1126,19 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
 long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
-// score 106 (was 106): frame 0x14 agrees; owner/NONE coalescing and Boolean homes differ.
+// score 101 (was 106): frame 0x14 agrees; owner/NONE coalescing and Boolean homes differ.
 // Next-slot assignments 107; word absolute slot 158; separate scan result 107;
 // shared datum conversion 199; long attachment 120; short same-view 145; byte draw 107;
 // long camera-relative 144 (fast preview 107, full 106). Original body retained.
 // Round 109: unavailable predicate 148; other-view predicate 146; detached predicate 108;
 // fixed-camera result 148; external system reference 107; nullable effect view 149;
 // const definition 107; packed effect handle 107 (fast preview 107, full 106).
+// Round 18: the availability gate (flag from view != NONE, then the query result if
+// set) 101 plain, kept; stack-bool rename 102; bit 9 as a named bitfield 102; nested
+// attached else-if 102; wide view 102; wide effect index 102; two-step same-view 102;
+// flag as false-init plus conditional set 144 (fast previews 107/102/144).
 // @retail 0x174220
-// score 106 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
+// score 101 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
 // availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag
 // in al, and it tests the definition's bit 9 as a byte instead of a shifted word.
 void __stdcall function_174220(bool view_pass)
@@ -1156,7 +1160,8 @@ void __stdcall function_174220(bool view_pass)
             long owner = NONE;
             if (effect_index != NONE) owner = DATUM(g_4ea93c, s_effect_datum, effect_index)->unknown58;
             long view = g_4b9ed8;
-            bool local_287b6e_2 = view != NONE && !function_155760(view);
+            bool local_287b6e_2 = view != NONE;
+            if (local_287b6e_2) local_287b6e_2 = !function_155760(view);
             bool same_view = owner != NONE && view == owner && local_287b6e_2;
             bool attached = local_287b6e_2 && effect_index != NONE && function_17afd0(effect_index, view);
             bool draw = same_view == view_pass;

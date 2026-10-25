@@ -40,6 +40,10 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 // final store 148/539; failed-duration tail 35; early variant and argument
 // playback with descriptive homes 81/523; object retained during argument
 // evaluation 85/523. Opening executable body restored.
+// slot base/result registers at +0x115 and object playback setup remain;
+// direct duration 35; duration with argument playback 85; shared permutation 123;
+// permutation with argument playback 123; completion result 55; request variant first 41;
+// callback fields first 60; separate standard noinline declaration 35 (ordinary scores).
 // @retail 0x189cd0 standard
 void __stdcall function_189cd0(long tag_index, long object_index, real scale, long a, long b, long label, long duration_address)
 {

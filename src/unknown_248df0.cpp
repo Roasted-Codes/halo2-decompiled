@@ -125,6 +125,9 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 // score 30 (was 30): complete displacement staging in 12/13/both 39/208/208;
 // destructive projected components in 12/13/both 99/212/218; staged 13 with
 // component products 212; staged 12 with both product sets 218. Load order remains.
+// projection operand loads and cross-product SSE ownership still differ.
+// This round: direct definition 119; cross-first lexical homes 119; direction-first lexical homes 119; cross declared first 119; pointer fractions with existing boundary 30; pointer fraction in first projection 119; pointer fraction in second projection 119; pointer fractions in both 119.
+// projection stack/global operands and cross-product XMM roles remain; partial projection sums 30/30/30, both sums 214; cross component orders 34/34/31/31/34; cross before displacement/after normalization 45/42; returned direction at three uses 77/74.
 // @retail 0x248df0
 real function_248df0(long arg_0, void *arg_1, void *arg_2, void const *arg_3)
 {

@@ -79,6 +79,11 @@ PRIVATE __forceinline vector3f *function_249171(real arg_0, vector3f *arg_1)
 // score 82 (was 82): case conversion/angle homes and normalization scheduling still differ;
 // whole input vector 167, staged output 152, component loop 546, compound loop 546,
 // input snapshot/reverse stores 167, scaled components 106, aggregate output 152, snapshot loop 586.
+// matching 0x1c frame; case conversion/angle stack homes and
+// normalization multiply scheduling differ. Earlier per-case expression forms excluded;
+// all trials used unqualified scale inputs: ordinary inputs 106; existing scale helper 106;
+// shared squared length 106; shared azimuth 99; shared polar 329; shared shape scalars 416;
+// scalar name order 106; case declarations first 106. Entry body restored.
 // @retail 0x249170
 void function_249170(real const *values, s_particle_spawn_state *particle, s_particle_spawn_definition const *definition, s_particle_system_datum const *system)
 {

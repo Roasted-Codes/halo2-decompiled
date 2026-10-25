@@ -79,6 +79,13 @@ static __forceinline void decode_direction_194d30(long index, vector3f *directio
 }
 
 // score 62 (was 62): decoder zero/scale schedule and final x87 component forwarding differ; shared face/grid scales 96, initialized grid 133, shared scale value 96; complete output aggregate/memcpy 155; default memcpy and direct angle 62 (round 117).
+// early decode zero/scale scheduling and final x87 component forwarding remain.
+// Face scale value 82; integer grid values 62; complete shared decoder 503; decoder output
+// reference 62; native component loop 173; complete private decode consumer 62; ordinary
+// decoder inline 394; initial direction value 63.
+// decode zero/scale schedule and final-component x87 forwarding remain;
+// workspace names, formatter scope, unsigned index, complete bounds, shared rounding, shared/existing
+// decoded normalization, completed decode output and decoder pointer/vector results 62, 62, 62, 122, 72, 62, 62, 88, 62, 155.
 // @retail 0x194d30
 void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *forward)
 {

@@ -258,6 +258,13 @@ done:
 	parse_copy(buffer, g_55c2e4);
 }
 
+// score 49 (was 54): output-buffer EBX cache and tag/selector scheduling differ.
+// Native name ID, const globals, name declaration first, default first and absent cases 54;
+// direct tag field 45 (171 bytes; still 39 code rows); existing getter/copy force-inline 54/54;
+// selected-name fallback result 54.
+// buffer register and selector/tag scheduling remain different.
+// Numeric case order 49; descending 52; native copy 54; direct selector 57 at 171 bytes;
+// const variant 54; scalar names 54; entry variant/tag declarations 54/54.
 // @retail 0x22d456
 void __stdcall parse_gametype(long string_handle, word *buffer)
 {
@@ -277,9 +284,6 @@ void __stdcall parse_gametype(long string_handle, word *buffer)
 		case 1:
 			name_id = 0x1000010d;
 			break;
-		case 9:
-			name_id = 0x700010e;
-			break;
 		case 2:
 			name_id = 0x600010f;
 			break;
@@ -294,6 +298,9 @@ void __stdcall parse_gametype(long string_handle, word *buffer)
 			break;
 		case 8:
 			name_id = 0xb000115;
+			break;
+		case 9:
+			name_id = 0x700010e;
 			break;
 		default:
 			goto done;
