@@ -2519,6 +2519,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // score 152 (was 152): action/result packing and action/seat helper conventions remain.
 // Direct action decision 163; actual overlay-bit result 224; converged play operations 152;
 // control/tag/table role names 152/152/152; selected-overlay initialization 178; word play flags 150.
+// frame 60 versus 56 and protected action/seat argument registers remain.
+// Signed success/force/both bytes 147/152/147; word channel backing 152;
+// mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
@@ -2533,7 +2536,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
     long lookup = g_4408f8[type];
     long animation = NONE;
     if (lookup != NONE) animation = g_46fc30[lookup];
-    bool result = false;
+    signed char result = false;
     bool force_overlay = false;
     short action;
     c_animation_channel *overlay;

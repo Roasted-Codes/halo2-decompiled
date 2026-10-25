@@ -135,6 +135,9 @@ static inline bool engine_team_is_playing(long team)
 // activation input orders and type-first creation inputs 37/37/37.
 // unqualified teams scratch 2 plain; authority/playing/both result joins 37/37/37;
 // pretested slot while 304; direct team bit 37; active-team result 121; short team ordinal 124.
+// score 2 (was 2): post-activation engine/world reload order still differs;
+// creation world reference/database-field input 2/2; activation database/joint receivers 191/191;
+// byte slot 243; short slot value 2; eligibility value/assigned arms 2/113.
 // Actual table activation method / output reference 2/2; native kind enum 2; refreshed engine receiver 2;
 // shared / slot-only identifier scopes 2/2; equality loop bound 3; authority interval 6. Reload order remains.
 // world activation before store 2; world activation after store 200; world reference 2;
