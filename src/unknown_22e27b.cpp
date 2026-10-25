@@ -169,6 +169,7 @@ static inline real interpolate_linear(real a, real b, real t)
 // score 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.
 // Next time before elapsed 206; fraction after delta 106 kept (plain); on that frame,
 // frame index outer scope 106, wrap case first 106, type-first disposal 272.
+// Fraction just before delta 204; explicit interval divisor 106; duration-first next-time sum 106; outer delta scope 106; direction-first short sum 106; opening 106 restored.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {

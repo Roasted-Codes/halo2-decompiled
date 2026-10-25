@@ -236,6 +236,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // declaration 195; native displaced-point copy 315; direct predicate 195.
 // Direction-first x/z and origin-first y sums together, x/z alone, y alone
 // 195 each; inverse-depth names 195; native displaced-point aggregate 195.
+// Later paired factor publication 197; depth-first displaced point 216; outer displacement
+// scalars 195; zero-output failure test 195; chained zero stores 195; opening 195 restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
