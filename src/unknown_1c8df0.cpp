@@ -64,6 +64,9 @@ extern vector3f *g_4687bc;
 // score 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
 // staged-byte center-left completion X/Z/XZ/Y 5/5/5/5; constant-left products X/Z/XZ 5/5/5;
 // both operand affinities on XZ 5. All unmatched added-byte forms restored.
+__declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
+ void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
+
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

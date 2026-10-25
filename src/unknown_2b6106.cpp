@@ -533,7 +533,7 @@ void c_y_menu_player_selected_screen::v3()
 	else if (screen->qos_handle != NONE && qos_is_complete(screen->qos_handle))
 	{
 		s_qos_result information;
-		if (qos_target_result(screen->qos_handle, &information, 0) &&
+		if (qos_target_result(screen->qos_handle, 0, &information) &&
 			session_description_decode_buffer(information.data_size, information.data, screen->unknown9c4))
 		{
 			screen->value10e4 = true;

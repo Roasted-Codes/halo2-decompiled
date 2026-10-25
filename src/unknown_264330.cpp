@@ -418,6 +418,12 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // score 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
 // kept; word update/sample/sampled count 430/449/449; native view 426; later view lifetime 426;
 // word maximum plus native view/later view/update 420/420/424.
+// score 420 (was 420): frame 0xa4 versus 0xa0, actor input and workspace homes remain.
+// Native signed maximum 420; signed maximum/original loads 420; later maximum/signed
+// maximum 422/422; signed counter/original and signed maximum 420/420;
+// later counter/original and signed maximum 422/422. Each fast and plain.
+// Existing sampling-helper automatic, inline and force-inline boundaries 486 each;
+// all declarations restored after the force-inline form lost a checked caller.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -754,6 +760,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // object/current/suppression alone at entry 367/368/368; group/prop/reference
 // pointer names 363; shared squad getter 363; entry pointer declarations 363
 // (fast control 363, full baseline 358); all restored.
+// Pairwise object/current, object/suppression, suppression/current entry captures
+// 366/375/371; false-default suppression on those pairs 366/375/371;
+// optional unit pointer on first two pairs 370/373 (fast control 363).
+// Object/current pair plain 373 versus 358; actor ESI and saved-pointer/flag homes remain.
 // score 358 (was 358): frame 0x20 agrees; actor ESI versus EBX and saved-actor/flag homes remain.
 // Native prop/datum/sample/motion references 363f/363f/363f/363f; direct alternate
 // sight result 363f; child/guarded-parent handles 363f/363f; adjacent priority memmove

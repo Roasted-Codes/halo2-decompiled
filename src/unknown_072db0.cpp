@@ -1324,9 +1324,12 @@ struct s_rating_summary
 // native records plus formatted identity 219 (one-point follow-up dropped); UTF-16 input 220;
 // shared eligibility 353; bounded name conversion 332; direct native team pointer 220;
 // native team pointer/reference plus formatted identity 219/219 (one-point follow-ups dropped).
+// score 206 (was 220): key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
+// score 206 (was 206): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
+    long value, change, level, lower;
     long key = collection->key;
     s_surface_description *variant = function_192e60(key);
     batch->attribute_count = 0;
@@ -1341,14 +1344,14 @@ void __stdcall function_741f0(s_match_player_rating_collection *collection, s_qu
             const s_match_player_rating_entry *player = (const s_match_player_rating_entry *)(local_0 - 0x9a);
             if (!player->active || player->team == NONE || (*(const dword *)((const byte *)player + 0xa) & 3)) continue;
             long skill = player->unknown9a;
-            long value = player->value;
+            value = player->value;
             if (*(const dword *)((const byte *)player + 0xa) != 0xbad00000 &&
                 player->key == key && skill != NONE && value != NONE)
             {
-                long change = function_74800(collection, i);
+                change = function_74800(collection, i);
                 value += change;
-                long level = function_74970(value, skill);
-                long lower = value >= 0 ? function_74970(value, 0) : 0;
+                level = function_74970(value, skill);
+                lower = value >= 0 ? function_74970(value, 0) : 0;
                 const byte *stats = local_1;
                 long third = *(const word *)(stats + 8) & 0x7fff;
                 long first = *(const word *)stats & 0x7fff;
@@ -1431,13 +1434,13 @@ void __stdcall function_741f0(s_match_player_rating_collection *collection, s_qu
             if (team->active && memcmp(identity, g_440070, 12) != 0)
             {
                 short skill = team->skill;
-                long value = team->value;
+                value = team->value;
                 if (skill != NONE && value != NONE)
                 {
-                    long change = function_74720((const s_match_rating_collection *)collection, i);
+                    change = function_74720((const s_match_rating_collection *)collection, i);
                     value += change;
-                    long level = function_74970(value, skill);
-                    long lower = value >= 0 ? function_74970(value, 0) : 0;
+                    level = function_74970(value, skill);
+                    lower = value >= 0 ? function_74970(value, 0) : 0;
                     const byte *stats = local_3;
                     function_73e00(lower, batch, identity, change,
                         *(const word *)stats & 0x7fff, *(const word *)(stats + 6) & 0x7fff,
@@ -1534,6 +1537,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // return 791; duplicate cursor equality 773; byte team/failure results 770/770;
 // incomplete-property arm first 785 (fast). Opening body and helpers retained.
 // Frame 0xc0 agrees; user/identity and request homes remain. Terminal record reuse 787; native identifier field 770; clamp-value lifetime 770; type-first duplicate filter 794; request-player cursor 804 (fast).
+// score 770 (was 770): Frame 0xc0 agrees; user/identity and request homes remain; native identity flags 770; repeated flag snapshot 770; identity after property copy 772; property value after lookup 786; received-record cursor 770 (fast).
 // @retail 0x74aa0
 void function_074aa0(void)
 {
