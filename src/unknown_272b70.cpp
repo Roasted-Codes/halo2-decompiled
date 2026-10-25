@@ -1602,6 +1602,17 @@ inline short ai_random_range(short lower, short upper)
 
 /* gives the actors an ai index names a random number of grenades of their
    current type, by their character */
+// score 21 (was 21): only the grenade tail differs. Ours keeps actor->unit_index
+// (read once after the seed store) in esi through the count lookup and the add,
+// so g_4e0300->data is hoisted above the imul and the unit goes in ebp; retail
+// reads [actor+0x18] again for the add and keeps the actor in ebp. No store sits
+// between the two reads in retail either. Tried: the local unit_index in the
+// count call (104) or the add call (98), the count before the random (125), the
+// count recomputed in the add (101), the add through an actor wrapper (21), the
+// count as 0xcdff0(unit, 0xce020(unit)) inline copies (21), unsigned helper
+// parameters (21), random_next() for the seed step (21), an early-return count
+// helper (21), no unit_index local (21), the tail as one inline helper (not
+// inlined, 257).
 // @retail 0x2758b0
 void function_2758b0(long ai_index)
 {
@@ -2667,7 +2678,7 @@ void function_2773d0(long point_reference, long facing_point_reference)
 			}
 			else
 			{
-				local_0.field_4.k = g_45dbd8;
+				local_0.field_4.k = 0.0f;
 				if (normalize2d((point2f *)&local_0.field_4) == 0.0f)
 				{
 					function_118e80(unit_index, &local_0.field_4);
