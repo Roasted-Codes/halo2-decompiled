@@ -131,6 +131,8 @@ void c_widget::v15(c_widget *widget)
 // inline/noinline eligibility declarations 44/20; focus declarations 20/20;
 // single search cursor 41; proven initial candidate do-while 37;
 // eligibility in loop admission 47; named eligibility result 20.
+// shared success exit/current for 20/20; selection/reverse role names 20/20;
+// separate entry result and entry-for 42/42; failure continue 20; for plus break 20.
 // candidate uses ESI before the first scan; retail delays ESI and uses EAX.
 // Initial result arms 20; both result arms 21; entry reverse lifetime 20; scoped widget 26;
 // scoped result arms 21; scoped reverse lifetimes 26; selected-widget success tail 47;

@@ -306,7 +306,10 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 }
 #pragma optimize("", on)
 
-// score 61 (was 61): first range FADDP remains fused; frame and tick-conversion tail agree.
+// score 61 (was 61): first range still fuses its x87 add; native interval fields 61;
+// interval by value/reference/pointer 94/84/84; value with result 94; reference/pointer
+// input copies 64/64; value with named sample 95. All interval and helper forms restored.
+// first range FADDP remains fused; frame and tick-conversion tail agree.
 // Existing rounding boundary for delay/duration/both, shared short/real clock, first output before
 // duration, early output with rounding and shared clock with rounding 68, 65, 71, 75, 75, 79, 100, 89.
 // score 61 (was 61): first range still fuses; frame and later tick conversion agree.

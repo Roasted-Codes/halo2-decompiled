@@ -995,6 +995,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Direct orders 0,4,2,3 / 0,4,3,2 / 2,0,4,3 / 2,3,0,4 give 193/196/193/195 fast;
 // 2,3,4,0 / 3,0,2,4 / 4,0,2,3 / 4,2,0,3 give 194/193/193/191 fast.
 // Last order is 193 plain, tying baseline; fast control 191. All rejected.
+// score 193 (was 193): incoming selector/message/address allocation remains.
+// Connection refusal/establishment/closure inline and noinline declarations,
+// individually and as a group, all 191 fast, tying preview. All restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

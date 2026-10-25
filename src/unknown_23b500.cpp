@@ -59,6 +59,9 @@ struct s_spawn_scenario_23aea0
 	s_spawn_settings_23aea0 *settings;
 };
 
+// score 105 (was 105): input receiver and integer destination offset still differ;
+// actual batch/type ranges 139/227; inner type ordinal 139; direct twelve types 254;
+// source records with direct/batch/read-only ranges 257/227/227; complete override 140.
 // @retail 0x23aea0
 void function_23aea0()
 {

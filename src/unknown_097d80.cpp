@@ -52,6 +52,12 @@ struct c_aggregate : c_child
 };
 
 
+// score 92 (was 104): frame and request/cursor registers agree; output homes,
+// dispatch layout and release global reload differ. Cleanup block/item/both cursors
+// 104/104/104; child-boundary cursor 99; indexed child/range 106; shared child base
+// 133, with range 153; collection rejection 116; read-only range 99; range-array bound
+// 92; child-array bound 139; read-only range bound 92; repaired-entry completion,
+// release and both output names 92/92/92.
 // @retail 0x97d80
 long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 {
@@ -76,11 +82,12 @@ long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 	if (error == 0 && request->type != 4)
 	{
 		c_child **child = (c_child **)children;
-		for (long i = 0; i < 3; i++, child++)
+		for (long *range = starts; range < starts + 3; range++)
 		{
 			c_child *object = *child;
-			for (long j = starts[i]; j < starts[i + 1]; j++)
+			for (long j = range[0]; j < range[1]; j++)
 				object->v6(&blocks[j]);
+			child++;
 		}
 	}
 

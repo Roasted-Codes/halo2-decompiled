@@ -387,6 +387,11 @@ bool balance_teams_greedy(s_balance_problem *problem, long team_count, s_balance
 }
 #pragma function(_ReadWriteBarrier)
 
+// score 116 (was 116): count-address homes, party registers, delta and query order differ.
+// Reduced control 80 (full 116); count fields A/B/both 80/80/80; early roots 173;
+// players A/B/both 78/75/80; reverse count roots 173; B players root before A/first/
+// between views 82/88/82; immutable B root 75. B players plain 115 is an ineligible
+// one-count gain; all subobject forms restored.
 // @retail 0x91bd0
 void s_balance_optimizer::try_swap(long team_a, long team_b)
 {

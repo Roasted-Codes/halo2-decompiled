@@ -353,7 +353,10 @@ static __forceinline long float_to_int_nearest(real value)
 }
 
 #pragma inline_depth(0)
-// score 21 (was 21): tag/sound/promotion use EBX/EDI/ESI versus EDI/ESI/EBX.
+// score 21 (was 21): tag/sound/promotion saved-register rotation remains.
+// existing promotion/rounding/both queries 79/60/89; shared admission/failure exit 89/89;
+// out-of-line dispatch 21; inline/out-of-line class query 21/21.
+// tag/sound/promotion use EBX/EDI/ESI versus EDI/ESI/EBX.
 // Read-only tag 21; wide promotion selector 62; conditional promotion 22; complete eligibility guard 21;
 // separate promotion failures 21; set after rounding 72; named rounding homes 21; read-only set 21.
 // @retail 0x18c720
