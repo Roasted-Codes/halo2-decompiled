@@ -1095,6 +1095,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // frame 0x2c agrees; result/output homes and initial ECX/EDX remain. Existing complete
 // helper for original request 2287; resolved request 2208; both 3530; immutable requested mode/type 828/828.
 // Shared iterator and helper bodies unchanged.
+// score 828 (was 828): Frame 0x2c agrees; class/NONE and result/output/candidate homes plus later zero
+// carrier remain. Candidate before iterator 967; post-search result copy 998; earlier candidate/native
+// iterator 965; post-search copy with saved mode 998; with saved type 998 (fast).
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1166,6 +1169,9 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // frame 0x2c agrees; result/output homes and initial ECX/EDX remain. Existing complete
 // helper for original request 2287; resolved request 2208; both 3530; immutable requested mode/type 828/828.
 // Shared iterator and helper bodies unchanged.
+// score 828 (was 828): Frame 0x2c agrees; class/NONE and result/output/candidate homes plus later zero
+// carrier remain. Candidate before iterator 967; post-search result copy 998; earlier candidate/native
+// iterator 965; post-search copy with saved mode 998; with saved type 998 (fast).
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
