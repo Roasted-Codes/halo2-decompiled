@@ -272,6 +272,9 @@ void function_146de0(void)
 // j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
 // byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
 // guard 143; post retry capacity 143.
+// score 139 (was 139): Capacity/timestamp homes and update expansion remain; wrapped/full boundary
+// distances 164/149; direct consumption 164; counted distance 153; remainder update 140; byte padding
+// 144; unsigned capacity/native allocation 139/139.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {

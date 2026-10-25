@@ -24,6 +24,9 @@
 // XZ product chain 59 plain kept; second cubic root chain, coefficient 8/12/9/5/6 chains
 // and root/edge combination 113; repaired XZ plus early coefficient 15 147/148,
 // cubic X chain 139, first cubic root chain 59.
+// score 59 (was 59): SSE/x87 scheduling, cubic homes and common-root retention remain; repaired-prefix
+// linear Y/Z/X/all values 59 each; late root-five/depth square 59/59; linear scope 59; later common
+// root 59.
 // @retail 0x143360
 void spherical_harmonics_evaluate_direction(vector3f const *direction, dword order, real *result)
 {
