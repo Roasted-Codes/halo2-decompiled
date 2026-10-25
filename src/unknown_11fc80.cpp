@@ -73,6 +73,10 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // score 65 (was 65): distance/delta XMM homes and final Z-product destination remain.
 // Existing interpolation inputs by vector/point/both values 709/498/872; native component
 // array 65; shared scale stage 353; point-value return 519; early Z product 307; vector/early Z 709.
+// score 65 (was 65): distance/delta SSE homes and destructive Z-product destination remain;
+// direction-output-point-fraction 65; point-output-direction-fraction 65; direction-point-fraction-output 65;
+// point-direction-output-fraction 65; products before stores 65; equality bound 1280;
+// emission-count scope 194; complete XY before publication 124.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,

@@ -489,6 +489,9 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // score 68 (was 68): Frame and nullable-current lifetime remain; current datum 68;
 // success-controlled loop 68; selected datum 132; node/prop inline 68/68; forced node/prop
 // expansion 246/158; datum plus success loop 68.
+// score 68 (was 68): frame, first team extension and nullable-current EDI lifetime remain;
+// native clean success 102; optimistic result 113; initial success return 135; found success return 147;
+// returned current pointer 68; existing record step 122; inline record step 119; entry side scope 68.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {

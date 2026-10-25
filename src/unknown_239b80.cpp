@@ -126,6 +126,9 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
+// score 42 (was 42): zero/one SSE homes, state/index/point registers and normalized Y load remain;
+// byte state 91; unsigned word ordinal 85; state increments 76; terminal equality 43;
+// first point before scan 85; normalizer reference 42; point-first dot 42; success normalizer 102.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {

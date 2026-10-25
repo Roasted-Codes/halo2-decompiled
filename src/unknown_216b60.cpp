@@ -58,6 +58,10 @@ bool __stdcall function_215f40(long type, byte *buffer)
 	return name[0] != 0;
 }
 
+// score 20 (was 20): post-call name-address reuse still shortens the first branch;
+// separate noinline name builder 20; validation-result lifetime 124; complete create predicate 50;
+// aggregate path initializer 20; name initialized before path 20; success-scoped root 20;
+// create rejection exit 34; formatting-result carry 22.
 // @retail 0x216120
 bool function_216120(word *string, long type)
 {

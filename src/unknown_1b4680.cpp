@@ -115,6 +115,9 @@ void *function_1e4e50(long actor_index);
 short function_1a77a0(long actor_index, long a, short level);
 
 #pragma inline_depth(0)
+// score 72 (was 72): early actor-pool ESI lifetime, separate zero exits and native success remain;
+// actor pool/data workspaces 72/72; isolated actor query 136; positive guards 72; absent-prop exit 72;
+// found predicate 133; target equality read order 70 (two-point gain dropped); combined predicate/order 133.
 // @retail 0x1b4680
 short __stdcall function_1b4680(long actor_index)
 {
