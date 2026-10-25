@@ -1008,6 +1008,11 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection register schedule;
 // default-zero byte icon 230, native integer 184; parsed-name scope 184;
 // separate connection rectangle 206; both name buffers scoped 184.
+// score 184 (was 184): deferred icon tail and time/connection coordinate registers remain;
+// whole-row reference 184; column reference 184.
+// input-color reference 184; color snapshot 309.
+// channel samples 323; direct right edges 306.
+// trailing right edges 297; row reference with trailing edges 297.
 // Direct icon zero default 192; initializer zero default 208; separate place/icon/name
 // rectangles 184/229/222; place and icon rectangles 184; scoped numeric buffers 225;
 // scoped numeric buffers plus direct icon default 188 (all plain).

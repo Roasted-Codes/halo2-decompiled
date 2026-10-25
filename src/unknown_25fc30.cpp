@@ -1744,6 +1744,9 @@ struct s_collision_result_25f7b0
 // product loads, word-mode comparison and allow-store timing differ.
 // Byte collision flag 14; byte allow flag 43; long initial mode 34;
 // short collision flag 247; scoped ray setup/result 14 (plain). Body restored.
+// Guarded collision fraction 14 plain; hit distance 14; native collision output 228; ray endpoint 232;
+// distance endpoint 201; both endpoints 266; final query point 111; horizontal normalization value 177.
+// Collision byte home, product loads, formal mode width and allow-store timing remain.
 // score 14 (was 14): collision byte, product loads and word-mode comparison still differ.
 // reuse ray displacement 14p; existing dot helper 14p.
 // squared length lifetime 14p; normalization result lifetime 14p.

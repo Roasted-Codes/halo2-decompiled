@@ -2188,7 +2188,10 @@ event_done:
 
 #pragma inline_depth()
 
-// score 109 (was 109): frame agrees; object-index caching and visibility block order differ.
+// score 109 (was 109): Object-index reload and visibility joins still differ. Update word 109; response
+// word 119; both words 119; native missing location 204; root location value 194; root velocity value 198;
+// both root values 218; origin value 109.
+// frame agrees; object-index caching and visibility block order differ.
 // Const tag/root 109/109; external datum reference 109; visibility result tests 189;
 // inline depth one/two 109/109; global optimization off 550; frame pointer 200.
 // @retail 0x1794e0

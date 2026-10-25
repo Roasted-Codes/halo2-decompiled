@@ -35,6 +35,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // (three-point gain rejected), long 214; blocked long/byte 190/190; existing
 // flag helper force-inline 190; returned point 199; marker bits 190; option
 // scope 190. Original body and helper declaration retained.
+// Read-only helper input 190; table reference 190; native team parameter 190; result-first predicate 192;
+// flag byte sample 190; direct capped result 190; cap and table reference 190; option guard order 190. Pool
+// reload and separate completion stores remain.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
