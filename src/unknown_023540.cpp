@@ -3226,6 +3226,9 @@ void function_27aa0();
 // New trials at 5: zero-initialized buffer 160; cleared buffer 160;
 // cleared trailing triple 105; first/third/second row component loops
 // 242/242/242; coefficient loop 242; first reciprocal divided in place 104.
+// score 5 (was 5): opening projection loads remain x/y/z rather than z/y/x.
+// Six-by-four buffer 5; branched reciprocal 72; full buffer initializer 155;
+// direction/scalar/tail/third-row ordering 100/148/143/75; shared span carrier 144.
 // @retail 0x25a10
 void function_25a10(vector3f const *direction, point3f const *position, byte const *state)
 {

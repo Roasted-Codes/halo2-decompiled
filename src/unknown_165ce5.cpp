@@ -1188,6 +1188,9 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // score 36 (was 46): the 0x20 frame agrees; node-address registers and one byte still differ.
 // Field reference with calls in both arms 36; wide parent 117; unsigned root 115;
 // root reference 115; parent reference 115; predicate 46; signed mask 47; unsigned mask 46.
+// score 36 (was 36): separate node-base addition and ECX/EDX roles remain.
+// Parent/root/query-result names 36/36/36; outer query result 36; retained-field
+// plus root/parent object references 36/36; animation/interface references 36/36.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {

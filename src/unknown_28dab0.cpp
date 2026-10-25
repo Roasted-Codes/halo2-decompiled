@@ -41,6 +41,9 @@ void __stdcall swarm_delete(long arg_0);
 // source rewrites (the declaration order, the result split from the
 // allocation, the comparison against the variable, the goto, the width of the
 // limit) all scored 53 or worse.
+// score 44 (was 44): tag/sentinel roles and the spilled loop bound remain.
+// Existing point setters first/second/both 83/88/92; tag/placement references 44/44;
+// plain while 44; equality termination 45; completed-count field reference 44.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {

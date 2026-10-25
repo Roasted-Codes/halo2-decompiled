@@ -353,6 +353,9 @@ byte __stdcall texture_cache_entry_state(long datum_index)
 // with override first 31; early format 26; format and residency snapshots 11.
 // the shared false block is emitted after the resource check, where retail
 // emits it right after the hardware format compare and jumps back to it.
+// score 10 (was 10): the false return still follows the GPU query.
+// Proven first/second/both result predicates 29/10/29; format/residency/resource
+// field references 10/10/10; native idle predicate 10; assigned outcome result 11.
 // @retail 0x12d1a0
 bool __stdcall texture_cache_entry_busy(long datum_index)
 {
