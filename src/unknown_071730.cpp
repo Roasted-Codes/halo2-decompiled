@@ -70,6 +70,8 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // frame 0x3e8 versus 0x3e4, result-byte home and getter boundary differ;
 // output-scalar lifetime 449; type/first-state/second-state scopes 449; inline depth one 449; the five
 // settings read into one-use locals first 443 (not kept: the locals only fix the argument order).
+// Existing property setter 475; selected value result 451; unsigned reset/balance 449/449;
+// balance test outcomes 449; readiness at outcome 450; reset at outcome 481; unsigned found count 449.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

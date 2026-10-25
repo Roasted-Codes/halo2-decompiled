@@ -100,6 +100,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // angle result from branches 408; separate evaluation scratches 425; general arm first 441.
 // Signed byte candidate/endpoint/both 408/408/408; quarter-turn table loop 481;
 // short facing result 430. Entry loads and 0x18 versus 0x1c return cleanup remain.
+// Helper-owned/returned evaluation 425/425; native endpoint result 443; endpoint value 455;
+// ratio value result 408; consuming angle cursor 416; side before distance 408; angle pair initialization 414.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
