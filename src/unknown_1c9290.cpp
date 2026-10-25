@@ -47,6 +47,10 @@ PRIVATE __forceinline void function_1c9291(point3f const *arg_0, vector3f const 
 // after the component loop 18; the two-point ray test (0x16a040) called instead
 // of the vector and 0x1697c0 16; horizontal loop then arc then vertical 45;
 // one named step for both uses 72; plain inline 6.
+// score 6 (was 6): horizontal/square schedule remains; square/weighted producer
+// split across output loop 6/6; split accumulators 6/6; delayed
+// vertical consumers 6/6; split unsigned ordinal 6; shared step on
+// component/sentinel form 72.
 // @retail 0x1c9290
 bool function_1c9290(long arg_0, point3f const *arg_1, vector3f const *arg_2,
  real arg_3, real arg_4, long arg_5, bool arg_6)

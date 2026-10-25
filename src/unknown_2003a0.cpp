@@ -890,9 +890,13 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// @retail 0x201b70
 // score 69 (was 69): the record's field is read into SI where retail reads it into BP, so the two
 // values are exchanged and the compare uses the other register.
+// score 69 (was 69): merged index and fallback short/promoted pair still differ.
+// Multi-use promoted index 73; helper failure guards 69; native short selection
+// 69; input-default result 75; read-only table 69; signed bounded length 70;
+// promotion/input-default result 119; read-only promotion/signed length 75.
+// @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
 	(void)&actor_index;
