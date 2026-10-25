@@ -408,6 +408,12 @@ bool function_1b1970(long actor_index, short mode, vector2f const *forward,
 // origin pointer 19; origin reference 19; external index reference 79.
 // external mode reference 46; no target vector setter 65; native index type 19.
 // alias analysis 19; size preference 321; external field pair 78.
+// A `short index` gives retail's xor/`cmp ax` read, but then the list is no longer
+// reloaded into EBX after the 0x1b0e40 block (66); retail reloads it there and reads
+// the mode through EBX. Tried: word index with 0xffff 66, with the mode local inside 42;
+// word mode local inside 42; mode assigned inside 42; long index of the word 53; the
+// NONE case first 44 (short index) / 26 (current form); the >= 7 block as a
+// __forceinline helper 19-70.
 // @retail 0x1b1a90
 void __stdcall function_1b1a90(long actor_index, s_slot *slot, s_slot_target_list *list)
 {
