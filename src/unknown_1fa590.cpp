@@ -469,9 +469,9 @@ real function_30bf0(vector3f *v);
 void function_c7840(vector3f const *desired, vector3f *current, transform4x3f const *frame, real rate,
     vector3f *velocity, real const *limits, real max_speed, real acceleration);
 
-// score 8 (was 8): the last term of the dot product and the first product of
-// the cross product keep their operands in the other order, so retail loads
-// the forward vector's component into the register and ours the facing one
+// score 4 (was 8): the dot product's last term still loads the facing component into
+// the register where retail loads the forward one, and the call to 0xc7840 sets up its
+// null frame argument before the address of the desired vector where retail does it after
 // @retail 0x1faf80
 bool function_1faf80(vector3f *facing, long object_index, void const *settings_pointer,
     vector3f const *control, real threshold, real *turn)
@@ -499,9 +499,9 @@ bool function_1faf80(vector3f *facing, long object_index, void const *settings_p
     vector3f *forward = &object->forward;
     vector3f const *up = (vector3f const *)((byte *)object + 0x7c);
     vector3f left;
-    left.i = object->forward.j * up->k - *(real const *)((byte *)object + 0x80) * object->forward.k;
-    left.j = up->i * object->forward.k - up->k * object->forward.i;
-    left.k = up->j * object->forward.i - up->i * forward->j;
+    left.i = forward->j * up->k - *(real const *)((byte *)object + 0x80) * forward->k;
+    left.j = up->i * forward->k - up->k * object->forward.i;
+    left.k = up->j * forward->i - up->i * forward->j;
     real value = (facing->k * left.k + facing->j * left.j + facing->i * left.i) * 3.3333332538604736f;
     value *= control->i;
     value -= control->j;

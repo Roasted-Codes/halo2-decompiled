@@ -97,6 +97,9 @@ void function_130bb0(s_fog_state *fog)
 // mov edx, 3 moves as in retail but the no-pending block goes to the end);
 // returns in this shape (99); a goto to the no-pending block at the end (99);
 // nested ifs (107); the max as an if/else (57, 81) or an inline helper (71-91).
+// the classification block still sits inline right after the
+// pending intensity test, where retail runs the value10c and value118 tests
+// first; those two comparisons are ucomiss with an unordered test in retail.
 // @retail 0x130de0
 long function_130de0(s_fog_state *fog)
 {
