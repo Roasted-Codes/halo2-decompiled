@@ -28,6 +28,9 @@ static inline long unit_get_current_weapon(long unit_index)
 	return result;
 }
 
+// score 22 (was 22): primary compare/load sharing and fallback handle transfer differ.
+// ordinary shared weapon query/nested gate 37/37; primary expression/index 36/37;
+// fallback index/direct exit 37/45; force-inline private query/read-only actor 37/37.
 // @retail 0x1e1f20
 long function_1e1f20(long actor_index)
 {

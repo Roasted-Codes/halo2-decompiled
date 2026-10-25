@@ -162,6 +162,9 @@ bool function_01dd60(long index, long *width, long *height)
 	return result;
 }
 
+// score 21 (was 21): width stack/height ESI differ from ESI/EDI inputs; packed gate differs.
+// width/height/both unit subtraction before shifts 25/28/30; native packed words 30;
+// row-byte part 30; selected/masked new packed word 27/28; early dimensions 30.
 // @retail 0x1ddd0
 void function_01ddd0(long index, dword width, dword height)
 {

@@ -346,6 +346,9 @@ static __forceinline long float_to_int_nearest(real value)
 }
 
 #pragma inline_depth(0)
+// score 21 (was 21): tag/sound/promotion saved-register rotation remains.
+// existing promotion/rounding/both queries 79/60/89; shared admission/failure exit 89/89;
+// out-of-line dispatch 21; inline/out-of-line class query 21/21.
 // @retail 0x18c720
 void function_18c720(long tag_index, long object_index, long set_index, long permutation_index, real scale)
 {
