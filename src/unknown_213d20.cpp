@@ -271,6 +271,10 @@ void cache_copy_buffer_resize(long size)
 	}
 }
 
+// score 5 (was 5): second buffer address reused after call;
+// buffer home names 5; result declared last 5; comparison array initialized 56; equality inputs reversed 14;
+// mismatch early return 24; inline comparison declaration 5; noinline comparison declaration 5; noinline
+// path declaration 5.
 // @retail 0x213e30
 long cache_copy_current_priority(char const *map_name)
 {
@@ -289,6 +293,10 @@ long cache_copy_current_priority(char const *map_name)
 	return result;
 }
 
+// score 5 (was 5): second buffer address reused after call;
+// buffer home names 5; result declared last 5; comparison array initialized 56; equality inputs reversed 14;
+// mismatch early return 24; inline comparison declaration 5; noinline comparison declaration 5; noinline
+// path declaration 5; reversed buffer name order 5.
 // @retail 0x213e90
 long cache_copy_queued_priority(char const *map_name)
 {

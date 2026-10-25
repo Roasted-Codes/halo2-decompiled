@@ -185,6 +185,9 @@ step:
 	return result;
 }
 
+// score 20 (was 20): entry/repeated traversal registers and early ESI save differ;
+// entry field walk 20; repeated field walk 20; both field walks 20; entry helper only 43; shared edge cursor
+// 20; earlier entry edge lifetime 20; widget edge iteration 20; nested eligibility 20.
 // @retail 0x2c8f56
 void c_button_widget_45d5d0::v8()
 {
@@ -222,6 +225,9 @@ void c_button_widget_45d5d0::v8()
 	}
 }
 
+// score 20 (was 20): entry/repeated traversal registers and early ESI save differ;
+// entry field walk 20; repeated field walk 20; both field walks 20; entry helper only 43; shared edge cursor
+// 20; earlier entry edge lifetime 20; widget edge iteration 20; nested eligibility 20.
 // @retail 0x2c8fb4
 void c_button_widget_45d5d0::v9()
 {

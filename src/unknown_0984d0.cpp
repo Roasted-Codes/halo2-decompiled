@@ -71,6 +71,10 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 }
 
 /* kind 3: creation of an entity and the entities linked to it */
+// score 22 (was 22): virtual arguments, index/status reload and rollback setup differ;
+// unsigned handle storage 22; unsigned index 25; status role name 22; nested success admission 52; loop
+// proven callback status 121; completion status invariant 77; inline rollback declaration 22; noinline
+// rollback declaration 22.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {
