@@ -4461,6 +4461,13 @@ bool __stdcall function_2b278e(long controller_index)
 	return true;
 }
 
+// score 54 (was 56): only case 3 differs. Retail keeps controller in esi, spills controller_index
+// to [ebp+8] and reads (*controller)->controller_index again for the dialog masks after
+// function_1a334a. Our build reuses the index loaded before player_slot_get_identity: LTCG here
+// treats function_1a334a as writing no memory (an impure call placed after it gives retail's
+// registers exactly), so the cause is outside this function. Tried: bool member (199: 8 bytes
+// shorter, though closer by align.py), no controller_index local (199), long volatile
+// controller_index (188). Case 2's count = 0 first: 56 -> 54.
 // @retail 0x2b24ff
 void c_clan_options_list::handle_item(s_controller_reference **controller, long *item)
 {
@@ -4490,10 +4497,10 @@ void c_clan_options_list::handle_item(s_controller_reference **controller, long 
 				{
 					break;
 				}
+				count = 0;
 				iterator.iterator.data = source;
 				iterator.iterator.index = NONE;
 				iterator.iterator.datum_index = NONE;
-				count = 0;
 				while (count < entry_count)
 				{
 					s_online_member *member;
@@ -4587,6 +4594,8 @@ void c_clan_options_list::handle_item(s_controller_reference **controller, long 
 
 			if (player_slot_get_identity(controller_index, &identity))
 			{
+				/* volatile: stored to the stack slot where retail spills
+				   controller_index, which keeps retail's length (see the score note) */
 				long volatile member = function_1a334a(controller_index, (_XUID const *)&identity);
 
 				if (identity.type != 1 && member)
