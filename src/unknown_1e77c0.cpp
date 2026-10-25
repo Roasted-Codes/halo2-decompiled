@@ -341,6 +341,12 @@ bool function_1df560(short team_a, short team_b);
 // EAX and passes `lea eax, [edx+0x140]`. Tried: state declared first 47; a
 // previous-request pointer 47; the state as a byte offset 47; no record
 // local, a fresh one for the unit 52; the copies without `current` 47.
+// Also tried: the unit index in a local (before or after the copies) 47; a short
+// local index 58; the player as an array element 47; an early return 47; the
+// local index read again for the state 58; the unit tests in one condition 47;
+// the local index read without the player local (before or after it) 47; the
+// player table in a local 47; the request pointer as an early local 64; the
+// counter through a byte local 47.
 // @retail 0x1e6b00
 void function_1e6b00(long player_index, s_request_source *source)
 {
