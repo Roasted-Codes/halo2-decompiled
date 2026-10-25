@@ -939,6 +939,7 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Base reads with explicit success/cleanup 320; positive flags guard 342;
 // complete equipment arms 346; squad-mode word 342; guarded long predicate 350.
 // Frame 0x11c versus 0x118 and missing-index homes remain; repaired frame with vertical-first, second-horizontal-first, vector initializer, word creation or word request each 342; three-point gains rejected.
+// score 320 (was 320): Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

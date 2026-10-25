@@ -129,6 +129,7 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // 421; attribution shared frequency 460
 // Frame pointer 530; long selection index 451; short assist counts 421 (1549 bytes);
 // long consideration result 426; long hostility result 430.
+// score 421 (was 421): Frame 0x48/0x50, result homes and rounding calls remain; typed history 421; history base before team query 466; named rounded windows 421; byte consideration 421; short award counters 433.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {
@@ -271,7 +272,13 @@ void __stdcall function_1e9fa0(void *engine_globals, long object_index, long rep
 // Tried: a plain field read 85 (folded into the add); an inline entry
 // accessor 85; game_engine_get() and function_x340af0() for the tests 13;
 // local names 13; an old-value local 16 (engine test then EDX/EAX); a word
-// or dword index 44-61 (convention changes)
+// or dword index 44-61 (convention changes). Each of these folds the field
+// read into the add (85, one row short): a plain short delta, a volatile
+// field parameter, nested row structs, values[0][field + index * 14] and
+// other flat spellings, delta + old, the indirection without volatile; the
+// array re-indexed at each use (also with inline get/set helpers) 80 (the
+// delta read is then the one hoisted into EDX). The clamp as one ternary or
+// into a short local 13 (the engine test swap stays).
 // @retail 0x1e9ce0
 void function_1e9ce0(long player_index, long counter, s_statborg *statistics,
 	long field, long volatile delta, bool by_team)

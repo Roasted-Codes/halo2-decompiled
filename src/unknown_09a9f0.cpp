@@ -530,9 +530,14 @@ bool c_projectile_type::v8(long a, long b)
  return result;
 }
 
-// score 5 (was 5): retail masks the 16-bit index with and eax, 0xffff, ours
-// truncates it with movzx eax, ax; masking explicitly gives the right
-// instruction but re-schedules the whole prologue
+// score 5 (was 5): retail masks the 16-bit group index with and eax, 0xffff,
+// ours truncates it with movzx eax, ax. Writing (index & 0xffff) gives the and
+// but swaps the object (esi) and flags (edi) registers (12). Tried with the
+// mask: flags declared first / long / b used directly (12), early returns
+// (47), real pointer into the group (15), a 12 byte group struct indexed (12),
+// one (flags & 0x800) && group != NONE test (24, 12), unsigned index (12),
+// 0x9d450's object address form (12); (dword)(word)index is unchanged (5).
+// Dropping the volatile this copy loses retail's push ecx/[esp] store (55).
 // @retail 0xa3df0
 long c_device_type::v27(long a, long b, long c, long d)
 {
@@ -739,24 +744,22 @@ bool c_projectile_impact_effect_event::v11(long a, long const *entities, long c,
 
 bool function_100f00(long weapon_index);
 
-// score 93 (was 93): the flags word is kept in the other register and the
-// result in the other one, so retail tests the flag bits in the high byte of
-// the word and keeps the result in edx while ours keeps them in dx and eax
+/* Copies the weapon's flag bits, counters and timer into the update record
+   for each requested field that changed, after the item fields. */
 // @retail 0xa1f70
 long c_weapon_type::v27(long a, long b, long c, long d)
 {
  long object_offset = (a & 0xffff) * 12;
  byte *object = *(byte **)(object_offset + g_4e0300->data + 8);
- volatile long result = ((c_item_type *)this)->c_item_type::v27(a, b & 0x7ff, 0x94, d);
+ long result = ((c_item_type *)this)->c_item_type::v27(a, b & 0x7ff, 0x94, d);
  dword requested = b;
  s_object_view *updated_object = OBJECT(a);
- s_tag_instance *tags = g_4e3b44;
- byte *definition = tags[*(volatile long *)&updated_object->definition_index & 0xffff].bytes;
+ byte *definition = g_4e3b44[updated_object->definition_index & 0xffff].bytes;
  if (*(short *)(definition + 0x290))
  {
   if (requested & 0x800)
   {
-   word source_flags = *(word *)(object + 0x16c);
+   dword source_flags = *(word *)(object + 0x16c);
    byte flags = (byte)((source_flags >> 8) & 1);
    if (source_flags & 0x200) flags |= 2; else flags &= ~2;
    if (source_flags & 0x400) flags |= 4; else flags &= ~4;
@@ -775,7 +778,7 @@ long c_weapon_type::v27(long a, long b, long c, long d)
  }
  if (requested & 0x2000)
  {
-  definition = tags[*(long *)object & 0xffff].bytes;
+  definition = g_4e3b44[*(long *)object & 0xffff].bytes;
   bool changed = false;
   bool force = !function_100f00(a);
   if (*(real *)(d + 0x9c) != *(real *)(object + 0x184) || force)
@@ -791,7 +794,7 @@ long c_weapon_type::v27(long a, long b, long c, long d)
    *(real *)(d + 0x9c) = *(real *)(object + 0x184);
    *(short *)(d + 0x98) = *(short *)(object + 0x22c);
    *(short *)(d + 0x9a) = *(short *)(object + 0x22a);
-   return result | 0x2000;
+   result |= 0x2000;
   }
  }
  return result;

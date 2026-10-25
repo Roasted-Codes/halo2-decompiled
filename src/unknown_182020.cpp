@@ -133,13 +133,6 @@ static inline short shape_material_index_get(c_material_shape *shape)
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
-// score 1 (was 1): second lookup short is at esp+0xc rather than +0xe.
-// Caller buffers through helper 1; shared buffer 164; helper output 1;
-// returned destination 1; helper size 1; helper frame pointer 1;
-// helper global optimization off 183; helper nested depth zero 1.
-// second lookup short at esp+0xc, retail +0xe;
-// shared entry/component bool 1/1, component/entry byte 1/1, component long 22;
-// initialized lookup short 164, output memcpy 1, output memmove 139.
 // @retail 0x182b90
 void function_182b90(c_material_shape *shape, hkEntity const *entity,
 	real *friction, real *restitution, short *material)
@@ -156,7 +149,10 @@ void function_182b90(c_material_shape *shape, hkEntity const *entity,
 			if (index < globals->count)
 				properties = &globals->materials[index];
 		}
-		*material = shape_material_index_get(shape);
+		/* the material index of the shape, looked up into the upper half of a
+		   pair of shorts */
+		short material_indices[2];
+		*material = *function_1ee410((s_lookup_source *)shape, &material_indices[1]);
 		*friction = properties->friction;
 		*restitution = properties->restitution;
 		return;

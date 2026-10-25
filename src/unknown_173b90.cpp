@@ -741,7 +741,17 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 	spawn->location_index = particle_location->next_index;
 }
 
-// score 29 (was 29): the single store leaves the system pointer on the stack and
+// score 41 (was 29): each path now stores the colour itself, as retail does, which gives
+// retail's convention (tinted in AL, colours in ECX/EDI, the system in ESI, multiplied on
+// the stack; callers 0x178c80 164 -> 131, 0x174a30 329 -> 338). The score counts the shift
+// from one missing instruction: retail lays out the halving path first but ends it at the
+// real epilogue (the untinted exit jumps there short) and copies `mov ecx, eax / push ecx`
+// for pack's argument; ours keeps the real epilogue after the color_a store (near je) and
+// pushes EAX. Writing the multiplied paths first gives retail's halving block exactly but
+// lays them out first (45). Tried: one store after a shared `packed` local 29/63 (system on
+// the stack); halving through unpack's returned pointer 47; a scale helper 41; shared locals
+// 41; early or explicit returns in either branch 41/43; `multiplied == true` 47.
+// the single store leaves the system pointer on the stack and
 // multiplied in bl; retail has three stores, system in esi, multiplied on the stack.
 // Per-branch stores give retail's registers but the untinted exit still jumps to
 // the last epilogue and the half path pushes eax (retail copies it to ecx) 41;
@@ -749,20 +759,18 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
-	dword packed = color_a;
 	if (!multiplied)
 	{
 		if (tinted)
 		{
 			color3f color;
+			color3f *halved = unpack_color3f(color_b, &color);
 
-			unpack_color3f(color_b, &color);
 			color.red *= 0.5f;
 			color.green *= 0.5f;
 			color.blue *= 0.5f;
-			packed = pack_color3f(&color);
+			particle_system->color = pack_color3f(halved);
 		}
-		else return;
 	}
 	else if (tinted)
 	{
@@ -774,9 +782,12 @@ void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_syste
 		color.red *= other.red;
 		color.green *= other.green;
 		color.blue *= other.blue;
-		packed = pack_color3f(&color);
+		particle_system->color = pack_color3f(&color);
 	}
-	particle_system->color = packed;
+	else
+	{
+		particle_system->color = color_a;
+	}
 }
 
 extern vector3f *g_4687bc;

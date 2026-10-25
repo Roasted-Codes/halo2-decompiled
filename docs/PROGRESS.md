@@ -2,6 +2,76 @@
 
 The newest entry comes first.
 
+## 2026-10-25: 9607 functions match
+
+```
+matched 9607 of 11321 game functions (1531843 of 2784283 bytes, 55.02%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+7 new matches, none lost:
+- Machine 3's batch 122 (#813): `0x823d0`, `0x12d1a0`, `0x182b90`, `0x1b6120`, `0x1f58c0`, `0x211fd0` and `0x294050` match.
+
+## 2026-10-25: 9600 functions match
+
+```
+matched 9600 of 11321 game functions (1528677 of 2784283 bytes, 54.90%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @coldspear's #810: the checker now scores a jump table that does not line up with retail's the same wherever the link places the function (tools/check.py, #86 item 90); about 60 unmatched scores re-baselined once, no status changes.
+
+## 2026-10-25: 9600 functions match
+
+```
+matched 9600 of 11321 game functions (1528677 of 2784283 bytes, 54.90%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @coldspear's #809: closer scores and notes, no new match.
+
+## 2026-10-25: 9600 functions match
+
+```
+matched 9600 of 11321 game functions (1528677 of 2784283 bytes, 54.90%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
+- @coldspear's #808: closer scores and notes, no new match.
+
+## 2026-10-25: 9600 functions match
+
+```
+matched 9600 of 11321 game functions (1528677 of 2784283 bytes, 54.90%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+2 new matches, none lost:
+- @coldspear's #807: `0x8a210` and `0x2742f0` match.
+
+## 2026-10-25: 9598 functions match
+
+```
+matched 9598 of 11321 game functions (1527927 of 2784283 bytes, 54.88%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+1 new matches, none lost:
+- @coldspear's #806: `0x1b7b90` match.
+
+## 2026-10-25: 9597 functions match
+
+```
+matched 9597 of 11321 game functions (1527704 of 2784283 bytes, 54.87%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+5 new matches, none lost:
+- @coldspear's #800, @coldspear's #801, @coldspear's #802, @marioag0412's #803: `0x6c360`, `0x828b0`, `0xa1f70`, `0x1332f0` and `0x1c9a00` match.
+
 ## 2026-10-25: 9592 functions match
 
 ```

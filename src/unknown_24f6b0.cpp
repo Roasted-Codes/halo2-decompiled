@@ -24,12 +24,15 @@ PRIVATE __forceinline void direction_face_point(s_direction_face const *face, ve
 // score 19 (was 50): the components are stored in retail's order (i, j then
 // k), so our zero is materialised after the multiplies where retail keeps it
 // in xmm3 from the top of the function; the low six bits also come from a
-// byte move here instead of retail's full copy of the index.
-// Retail builds the zero before the first product (as in 0x194d30); a zero
-// local first, later or in the scaled form never moves it. Vector cleared
-// before the coordinates 43 (242 bytes); third product read from the point 19;
-// assigned scale products 19; zero local declared first 19; full-width x with
-// the zero stored first 50.
+// byte move here instead of retail's full copy of the index. Tried: a long
+// low coordinate (57, 3 bytes short: no copy of the zero for z); the helper
+// testing face->scale directly as 0x194d30 does, with a long coordinate (37,
+// same size and the zero copied to z as retail, but the zero still made after
+// the multiplies, into xmm2); that form with k stored first (30, zero at the
+// top as retail but in xmm2 and stored first); reading z first (47) or z
+// multiplied first (39); x*= vs scale*x forms (19); a plain inline helper (not
+// inlined, 217); a vector3f local copied to the direction (125); a set helper
+// for the three stores (68); /O2 /Ob1 flags (60).
 // @retail 0x24f6b0
 real __fastcall function_24f6b0(dword index, vector3f *direction)
 {
