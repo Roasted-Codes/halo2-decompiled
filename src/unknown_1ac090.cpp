@@ -432,6 +432,10 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 // Receiver names/separate initialization/constant receivers/nested facing test 24 each;
 // facing eligibility value 26; direct direction-bit snapshots 39; request memset 195;
 // request aggregate initialization 190. All executable forms restored.
+// score 24 (was 24): early actor-data load, mode registers and restore order remain.
+// Node/view/both entry scopes 24/24/24; read-only view 24;
+// active-result lifetime 176; direct bit-view consumers 24; absent view first 95;
+// active result with direct bit-view consumers 176. Restored.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -857,6 +861,10 @@ struct s_1ac612
 // Native source location 58; query outputs at loop/entry and source receiver at entry 29 each;
 // marker reference/readonly candidate tag/distance predicate/aligned up-product scope 29 each.
 // All executable forms and the experimental include restored.
+// score 29 (was 29): actor-offset/selection registers and spill homes still differ.
+// Candidate cursor 244; marker cursor 234; both cursors 249; distance first 29;
+// distance across queries 266; point declaration first 29; selection update first 30;
+// short ordinal entry scopes 29. Restored.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)

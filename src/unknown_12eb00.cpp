@@ -63,6 +63,10 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 // an inline pin function 254-263, equality operands swapped 42; blend terms or
 // factors swapped 40. Earlier: unsigned table 136; indexed output 140;
 // indexed clusters 136; component accumulation 538; component blend 615.
+// score 21 (was 21): count/cursor homes, pin-result registers and blend address remain.
+// Accumulation row cursor 116; blend row cursor 91; both row cursors 142;
+// accumulation short ordinal 159; blend short ordinal 110; both short ordinals 178;
+// unsigned output count 21; unsigned remaining count 21. Restored.
 // @retail 0x12eb00
 long function_12eb00(long count, s_fog_cluster_distance *clusters, s_12eb00 *output)
 {
