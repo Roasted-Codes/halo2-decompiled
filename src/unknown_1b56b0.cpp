@@ -100,6 +100,7 @@ static inline s_actor_view *clump_actor_iterator_advance_1b57f0(s_clump_iterator
 
 /* sends the nearest clump member at the actor's prop (in slot group 0x22 or
    0x1b) to slot 0xb, unless a near one is already in it */
+// score 111 (was 137): saved-register staging and member/index homes differ. Tried shared neutral exit 111; index after prop gates 137; native walk role homes 137; nested source view gates 137; nested nearby candidate 137; shared exit late index 111; shared exit member scope 111; shared exit native homes 111.
 // @retail 0x1b57f0
 short __stdcall function_1b57f0(long actor_index, s_slot *slot)
 {
@@ -142,7 +143,7 @@ short __stdcall function_1b57f0(long actor_index, s_slot *slot)
 				if (!(distance < 4.0f))
 					continue;
 				if (actor_behavior_find_level(other_index, 0xb) != NONE)
-					return g_46fbe4;
+					goto done;
 
 				real weight = 1.0f / (distance + 1.0f);
 
@@ -163,6 +164,7 @@ short __stdcall function_1b57f0(long actor_index, s_slot *slot)
 			}
 		}
 	}
+done:
 	return g_46fbe4;
 }
 

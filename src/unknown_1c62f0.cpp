@@ -81,6 +81,9 @@ void c_animation_channel::clear()
 // score 36 (was 36): Incoming graph save and later store schedule still differ.
 // paired defaults 42; identifier memcpy 36; metadata before resets 42; trailing defaults 41;
 // redundant byte clear removed 36; early derived state 38; explicit state bit 35; defaults plus memcpy 42.
+// graph ECX needs an ESI save and a late store;
+// validity-result 43; animation guard first 44; inline/noinline declarations 41;
+// existing reset 43; state memset 51; high-bit predicate 41; ID word copies 50.
 // @retail 0x1c6470
 bool c_animation_channel::set(long graph_tag_index, word flags, c_type_709360 animation_id, long unknown08,
 	char unknown0c, char unknown0d, char unknown0e)

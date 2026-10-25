@@ -1399,6 +1399,9 @@ struct s_item_collection
 // direct field conversion 27; record reference 27; positive field guards 23; field scope 27.
 // score 5 (was 5): integer join and tag base still differ. Outer scenario/equipment/root-entry
 // receivers and tag base at entry/selection/fallback/root-entry/table-fallback 5/5/5/38/17/12/38/12.
+// score 5 (was 5): retail's ticks avoid eax and ecx as if live through the fallback arm.
+// Arms swapped 20; group tag local 5; tag index local 17; default after the spawn read 5;
+// fallback ticks before its zero test 6 (ticks in ecx).
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -4471,6 +4474,9 @@ bool function_158eb0()
 // score 5 (was 5): mode/index scratch registers still differ. Rejection state 27;
 // rejection predicate 63; wide/byte rejection 51/27; rejection from score 67;
 // rejection cardinality exit 32; rejection fallthrough 85; rejection after iterator 30.
+// score 5 (was 5): BLOCKED-BY 0x23f260 (mode declared first). Mode local before the count 38;
+// in-argument ternary on the global 38; inline helper taking the mode last 5; `!!` on the
+// global 38; index local read after the count, before the flag 5.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -5031,6 +5037,10 @@ void function_161420(long player_index, real alpha);
 // score 24 (was 24): state/user saved registers and final x87 scheduling remain.
 // Actual flag/tick/both lvalues, timer receiver/receiver with lvalues, shared mask,
 // mask with lvalues/mask with receiver 24/24/24/24/24/164/164/164.
+// score 2 (was 24): only `mov edx, ebx` ahead of the power's fstp before 0x161420 (retail after).
+// Fade by if 127; nested target test 24; power into intensity 2; float pow overload 2;
+// early return for no intensity 4; fraction straight into intensity 52; noinline
+// 0x161420 declaration 2; a 600 s permuter run (39 tries), none below 2.
 // @retail 0x159880
 void function_159880(void)
 {
@@ -5068,12 +5078,11 @@ void function_159880(void)
                     if (alpha > 0.0f)
                     {
                         function_159250(target_index, alpha);
-                        globals = function_xaee93d();
                     }
                 }
             }
         }
-        real fade = local_user == NONE ? 1.0f : globals->timers[local_user];
+        real fade = local_user == NONE ? 1.0f : function_xaee93d()->timers[local_user];
         if (fade > 0.0f)
         {
             color4f color;

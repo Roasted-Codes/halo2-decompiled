@@ -56,7 +56,11 @@ bool function_2161d0(long file_index, void *buffer, long size)
 	return result;
 }
 
-// score 10 (was 10): path address reuse and cached-completion pop order differ;
+// score 10 (was 10): local path address retained after append and cached ESI-pop timing remain;
+// tried type at use 40f; type after copy 40f; cached result first 20f; completion bool order 11f;
+// cached progress first 13f; location guard nested 10f; result in each path 10f; completion from success 11f;
+// complete location object 10f.
+// path address reuse and cached-completion pop order differ;
 // bounded copy 10; append result local/expression 27/27;
 // bounded copy plus append result 27/27; location result 53;
 // copy result with original/returned read path 85/85.

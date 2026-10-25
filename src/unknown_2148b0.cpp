@@ -23,6 +23,9 @@ extern s_cache_copy_request g_55be24[2];
 // score 2 (was 2): Frame agrees; numerator conversion follows the denominator reload instead of preceding it.
 // Tried accumulate fraction 29; real numerator 29; integer numerator 40; extended numerator 29; converted
 // operands 32; integral and real 32; fraction and total 32; integral operands 28.
+// the numerator conversion follows the denominator reload. Plain total 37;
+// double fraction 86; double operands 3; branch-assigned fraction 27; fraction first 2;
+// state snapshot 2; range selection 42; high range first 43; mixed precision division 2.
 // @retail 0x2148b0
 bool function_2148b0(long progress)
 {

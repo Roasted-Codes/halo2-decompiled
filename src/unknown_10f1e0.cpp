@@ -409,6 +409,10 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // iterator a before b 41; arms swapped 40; markers in the loop 41; visited declared first 37.
 // score 37 (was 37): the mask/shift test, back-edge reloads and later call staging differ.
 // Marker/transform/both inline declarations 37; shared exit 37; exit plus each/both declarations 37; iterator inline declarations 37.
+// Frame agrees; the shift test versus retail mask, state/table reload order and
+// second lookup/transform staging still differ; shifted word expression 37; clear before object
+// chain 191; shift and clear order 191; entry marker workspaces 37; entry markers and shift 37;
+// entry markers and clear 191; complete workspace boundaries 191; model after clear 191.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)

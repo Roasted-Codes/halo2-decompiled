@@ -581,6 +581,10 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
+// score 21 (was 21): shared true return remains after later tests, first +0x17;
+// cached primary keys 21; latency keys 21; third keys 21; primary/latency 21;
+// primary/third 21; latency/third 21; all repeated keys 21; primary-test result 46.
+// shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
 // @retail 0x90f10
 bool __stdcall session_search_result_precedes(void const *a, void const *b, void const *context)
 {
@@ -669,6 +673,10 @@ done:
 	return result;
 }
 
+// score 128 (was 128): frame 0x10 agrees; initial results observation,
+// details/score cursor base and input/score homes remain. Native score fields
+// 213; complete count-clamp arms 213; named interpolation fraction 213; indexed
+// result loop 214; single total-score accumulator 229.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

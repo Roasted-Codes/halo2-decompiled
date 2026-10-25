@@ -1262,7 +1262,13 @@ bool c_weapon_reload_event::v11(long a, long const *entities, long c, void const
     return result;
 }
 
-// score 32 (was 32): Device/unit saved registers and the second mask temporary differ.
+// score 32 (was 32): +0x12 device/unit EDI/EBP roles differ; the second
+// type mask lacks the saved EBX temporary and header-base copy. Earlier guard,
+// declaration/result lifetime, header/table and unsigned-mask forms gave 32-54.
+// Tried: named device mask 32; named unit mask 32; both masks 32; byte suppression
+// bitfields 35; byte flags view 35; byte bitfields with masks 35; combined header
+// predicates 39; byte flags with masks 35. Opening executable body restored.
+// Device/unit saved registers and the second mask temporary differ.
 // constant indices 32; unsigned indices 32; index names 32; early unit offset 39; word slots 53; byte mask 35; typed word slots 69; shifted membership masks 38.
 // score 32 (was 32): complete device/unit classification 32/32/32; deferred eligibility 49/51;
 // negative classification exits 32; explicit membership 53; contiguous byte domains 66.

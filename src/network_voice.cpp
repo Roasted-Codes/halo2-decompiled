@@ -2022,6 +2022,10 @@ long voice_players_share_team(long other, long player)
 	return false;
 }
 
+// score 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
+// Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
+// team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
+// bit addition 59; signed result 55; initial guard 121; conditional/late mask 46/46; direct outputs 141/144.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
@@ -2031,10 +2035,8 @@ dword function_56c60(s_voice_player_settings *settings, long player)
 		if (g_4c9878.mode == 2 || g_4c9878.mode == 3)
 		{
 			long mode = g_4c9878.mode;
-			dword mask = 0;
 			byte *membership = (byte *)voice_get_membership();
-			if (membership)
-				mask = *(dword *)(membership + 0x10d0);
+			dword mask = membership ? *(dword *)(membership + 0x10d0) : 0;
 			if (mode == 3)
 			{
 				s_network_session_player *players = (s_network_session_player *)voice_get_players();
@@ -2489,6 +2491,9 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
  return result;
 }
 
+// score 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
+// Capacity named slots 124; native long preserve 144; final preferred-bit recomputation 161;
+// non-preservation-first finish 131; separate entry guards 124.
 // @retail 0x565c0
 void __stdcall function_565c0(s_voice_routing *routing, dword remaining, s_voice_route *output)
 {
@@ -2790,6 +2795,9 @@ struct s_voice_route_choice
 	real distance;
 };
 
+// score 394 (was 400): frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
+// byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
@@ -2800,12 +2808,11 @@ void function_57eb0(s_voice_player_settings *settings, long talker,
 	for (long i = 0; i < count; i++)
 	{
 		long player = choices[i].player;
-		long mode = choices[i].mode;
-		if (mode == 1)
+		if (choices[i].mode == 1)
 			headset |= 1 << player;
 		else
 			headset &= ~(1 << player);
-		if (mode == 2 || mode == 3)
+		if (choices[i].mode == 2 || choices[i].mode == 3)
 		{
 			settings->unknownc8[player] |= 1 << talker;
 			if (choices[i].mode == 2)
