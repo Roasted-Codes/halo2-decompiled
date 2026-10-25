@@ -1986,7 +1986,9 @@ void function_1dd7a0(long *reference);
 
 /* attaches the arms to the weapon's markers while the unit's aiming blends */
 // score 9 (was 9): the object pointer and the entry index are kept in swapped registers in the
-// second lookup.
+// second lookup (retail builds the arms marker group in the index's register, ecx; ours in the base's,
+// edx). The arguments arrive as in retail (eax and two stack words, ret 8), so the caller is not the
+// cause. Tried: a weapon definition local like the arms one (9), the group as index + pointer (9).
 // @retail 0x168644
 void function_168644(long user_index, s_first_person_model *arms, s_first_person_model *arg_2f82bc)
 {
@@ -2065,6 +2067,12 @@ extern bool g_4f55e2;
    active weapon and the unit's own body; returns how many */
 // score 20 (was 20): the game state check is tested as a byte here and and-ed with the flag mask
 // in retail, and the second condition is combined with it as a word here and as a byte in retail.
+// Retail's `active` is a byte that starts as the masked flag itself (al, no zeroing): writing
+// `bool active = state == 1 ? g_4f55e2 : false;` and testing `!active` builds that loop exactly, but
+// the and becomes `and al, byte ptr` without retail's `and eax, dword ptr` + `test al, al`, so the
+// function is 2 bytes short (236). Tried: bool active = false (23, an extra xor al, al); the reused
+// local as char/byte, with `: 0`, with a (long) cast (all 236); `!= 0` of a long ternary (249); a
+// nodes local in the second loop (20).
 // @retail 0x165f16
 long __stdcall first_person_weapons_get_models(long user_index, long unit_index, long maximum_count,
 	s_first_person_model *models)
