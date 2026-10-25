@@ -385,6 +385,7 @@ real *function_143600(real const *rotation, unsigned long order, real const *coe
 // between trig 272; sines with paired mixed products 242; sines with cosine before sine 239;
 // short table field 243; sines with axis field reference 255; sines with angle field
 // reference 257; sines with input field references 273.
+// Frame 0x7c versus 0x68 and axis/trig/call homes remain; on reused square/mixed products: direct axis 300; direct angle 264; both 284; native coefficient index 257; geometry scalar scope 243. Reduced callee caveat; no keeper.
 // @retail 0x22850
 void function_22850(void)
 {
