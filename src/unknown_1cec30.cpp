@@ -1397,6 +1397,15 @@ PRIVATE __forceinline real const &component_time_step()
 // acceleration register, memory timestep multiply and stop-test schedule differ.
 // Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
 // completed clamp before ratio 82; accelerated candidate default 114.
+// score 26 (was 26): acceleration/timestep allocation and stopping schedule remain.
+// Combined forced/stopping step-first, distance-first, eager distance, conditional result,
+// named decision and stopping guard 106 each; merged default/return scaling 140/110.
+// score 26 (was 26): isolated mass return 113; threshold-first return 121; returned
+// selection/nested return/power selection 113 each; direct/default/assigned magnitude
+// results with mass return 113/127/113. XMM0 prefix improves; memory timestep still differs.
+// score 26 (was 26): acceleration/timestep allocation and stopping order remain.
+// Mass eligibility early scale/mass-first 164/166, late 26/120; selected divisor early/late 143/114;
+// early eligibility with selected normalization scale/mass-first 164/166. Original helper retained.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)

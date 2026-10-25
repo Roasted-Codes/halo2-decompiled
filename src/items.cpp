@@ -1211,6 +1211,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // score 154 (was 163): Release RMW/tail and event homes remain; idle/count results 166/169;
 // earlier damage key 185; event-first/key plus event-first 196/196; early complete point/origin
 // publication 198/157; initializer-owned sentinel 154 kept, combined origin 176.
+// score 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
+// Native byte clears 5/6/both 154/154/154; native guard/clear 5/6/both 192/167/207;
+// all native guards/clears 216; native guards with original byte stores 216.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

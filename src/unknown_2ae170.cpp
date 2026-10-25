@@ -847,6 +847,9 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 // All/front/rear byte bin counters; native source/destination/both records;
 // mode field binding and promoted mode on the retained front-byte endpoints
 // Fast scores 152/149/147/137/137/137/137/137; original body retained.
+// score 137 (was 137): source/bin allocation, runtime attenuation and mode dispatch remain.
+// Selected mode-two range with speaker cases 123: long/captured 159, long/direct 184,
+// byte/captured 162, byte/direct 177; cases 321 give 159/184/162/177. Original loops retained.
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {
