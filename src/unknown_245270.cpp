@@ -279,6 +279,9 @@ void function_245400(s_source_245400 const *source, long index,
 // combined views 204; native side bitfields 207; indexed vector scaling 205.
 // source reference 204; surface reference 204; vertex table snapshot 204; plane references 204.
 // transform forceinline 204; const transform result 204; separate emitter noinline 204; both call boundaries 204.
+// score 204 (was 204): Frame 0x24/0x2c, source and side homes remain; first/second/both normal
+// values 230/208/248; first/second/both endpoint values 235/205/244; cross scope/late side values
+// 204/204.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
