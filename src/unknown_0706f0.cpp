@@ -28,6 +28,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // score 182 (was 182): primary-session EBP/ESI joins and return normalization remain; signed-byte
 // result and readiness, update, mode-value and two dispatch noinline declarations 185 each in the
 // reduced image; unchanged preview 185 (full 182).
+// primary-session join carrier and return normalization remain;
+// secondary consumer scope / state phases / byte result after state / after sessions 182/182/185/185f;
+// scoped dispatch / member receiver / both lifetimes / with dispatch 183/182/182/183f.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

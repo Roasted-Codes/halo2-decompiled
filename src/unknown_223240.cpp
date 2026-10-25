@@ -88,6 +88,10 @@ void function_2232a0(void)
 // First/second/both conditional countdown expressions 169/161/167;
 // signed-byte/unsigned-word layout 189/174; unsigned-word output ordinal 201;
 // signed-byte selection 164; dispatch noinline declaration 151. Original body retained.
+// One-dword frame agrees; count-one paths bypass the shared count/layout join, with slot and reset
+// allocation gaps. unsigned selected slot 151; word selected slot 157; word view ordinal 201; byte
+// view ordinal 167; exact scan bound 175; existing initializer inline 151; completed search result
+// 180; word scan and ordinal 157; byte selected slot 164.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

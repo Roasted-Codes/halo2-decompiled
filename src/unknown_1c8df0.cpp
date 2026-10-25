@@ -52,6 +52,15 @@ extern vector3f *g_4687bc;
 // shared probe with entry fraction/direct primary miss 44/71 (not matched).
 // Separate copied probe output for all/quarter/triple/both arms 428/498/468/397;
 // same output scopes with Boolean primary clear 422/492/462/391. Output copies grow frames.
+// Staged byte-flow positive/negative/both point names 5/5/5; native positive/
+// negative component arrays 5/5; existing shared scale for positive/both points
+// 276/210; direct quarter constant 5. All unmatched added-byte forms restored.
+// score 170 (was 170): Frame 0x8c/0x94 and secondary-result tail remain; byte-flow quarter-point
+// XZY/YXZ/YZX/ZXY/ZYX completion 12/23/20/21/18; XYZ products then XYZ/ZXY centers 36/37; ZYX
+// products then XYZ centers 47. All added-byte forms restored without a match.
+// score 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
+// staged-byte negative point first 230; negative XZY/YXZ/YZX/ZXY/ZYX 11/17/14/18/18;
+// staged paired axes 53; both points staged 5. All added-byte forms restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

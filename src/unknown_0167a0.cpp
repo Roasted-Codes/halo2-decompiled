@@ -85,7 +85,10 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Logarithm width and reset/restore scheduling remain;
 // rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
 // record reload after render call 192; raw global-first unions 167.
-// score 167 (was 167): logarithm width and reset/restore scheduling remain;
+// score 167 (was 167): Frame and entry agree; logarithm operand width/reset and restore allocation
+// differ. Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
+// record 167; conditional reciprocal 167 (fast).
+// logarithm width and reset/restore scheduling remain;
 // early dirty mask, update byte or late counter pair each 296; first published range 167;
 // second published range 187.
 // @retail 0x16b90
@@ -1198,6 +1201,12 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native
 // ternary clamp loops 359.
+// score 246 (was 246): Frame 0x28 agrees; sampler convention and descriptor rereads differ.
+// Unsigned counters 325; rescale pointer traversal 354; remapping-source address 268; separate
+// clamp passes 358; shared native color workspace 246 (fast).
+// score 246 (was 246): sampler convention and dirty-store descriptor rereads remain.
+// Existing packed-range accessors 325; post-clamp mask capture 275; positive filter
+// with full-width descriptors 269; alpha-first color 250; alpha-first clamps 270 (fast).
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

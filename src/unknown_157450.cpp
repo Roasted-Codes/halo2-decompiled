@@ -1397,6 +1397,8 @@ struct s_item_collection
 // arm conversions with long fallback 19; both duration fields reread 5.
 // Shared duration-field address 27; selected short/long snapshot 31/36; explicit source arms 13;
 // direct field conversion 27; record reference 27; positive field guards 23; field scope 27.
+// score 5 (was 5): integer join and tag base still differ. Outer scenario/equipment/root-entry
+// receivers and tag base at entry/selection/fallback/root-entry/table-fallback 5/5/5/38/17/12/38/12.
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -1685,6 +1687,14 @@ void function_15e460(long object_index, long value)
 // guard 27, after player guard 28; narrowed scope with options record reference
 // 29, mode field reference 29, flags field reference 29, final option reference
 // 29, both record and final option references 29.
+// True-first if/else with the compare in the else arm reproduces retail's branch
+// skeleton (compare block out of line, setne al) 30; the same with no assignment
+// on the special arm enregisters the one (shared by the shift and the compare)
+// but in EAX with the options in EDX 32; the options record read before the
+// guard moves the engine lookup to ESI/EDI (retail's) yet keeps one in EAX 29;
+// that plus the assignment on the special arm 29; the special arm as an early
+// return 30; a single || chain return 31. A permutation run's cold scratch
+// build outran its timeout before searching.
 // @retail 0x15eb20
 bool function_15eb20(long player_index)
 {
@@ -2194,6 +2204,10 @@ static __forceinline void add_clamped_score(short *score, short delta)
 
 // score 5 (was 5): the two operands of the clamped score are sign extended into swapped registers,
 // and the peer lookup keeps them in different ones.
+// Helper parameter order swapped 5; helper taking long delta with the cast inside 5; single
+// expression sum 5; score-first sum 5; value returned and stored by the callers 5; dword index 5;
+// nested index28 test 5; player declared before index 5; score address as base plus index 99;
+// branch order swapped with the tests merged 111.
 // @retail 0x15b7c0
 bool function_15b7c0(long delta, long player_index)
 {
@@ -2395,6 +2409,13 @@ void function_1e9ce0(long player_index, long counter, s_statborg *statistics, lo
 // score 44 (was 44): frame 0x10 agrees; statistics-call setup, event scratch registers and options reload remain.
 // value-initialized iterator 102; shared iterator record 44; immutable mode/old score 44;
 // current-score lifetime 44; frame pointer 118; global optimization disabled 219; size preference 191; record reference 44.
+// score 44 (was 44): statistics setup, event scratch rotation and options reload remain.
+// Final aggregate acceptance 106; final rejection 106; old-score retention 215;
+// old-score-first result 51; post-event winner guard 44; retained result/winner guard 215;
+// acceptance with immutable receiver 106; old-score-first acceptance 105.
+// statistics setup, event scratch rotation and cached options remain;
+// statistics reference/narrow delta 44/44; event-only delta 116; event-mode snapshot 44;
+// combined selection 78; aggregate if arms 50 (retail length); shared index initialization 44; improvement value 57.
 // @retail 0x15b650
 void __stdcall function_15b650(long team, long delta)
 {
@@ -3817,6 +3838,7 @@ static __forceinline long nonnegative_15ce70(long value)
 // score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // score 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
+// score 480 (was 480): Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4050,6 +4072,7 @@ struct s_score_zone_view
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // score 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
+// score 472 (was 477): Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4439,6 +4462,9 @@ bool function_158eb0()
 // direct final count rejection 23. Scratch index/mode allocation still differs.
 // Cardinality bias 12; bounded count 43; singleton states 56; retained quotient/raw score 63/63;
 // signed/unsigned halfword result 58/58; bounded extra-player count 46. Scratch exchange remains.
+// score 5 (was 5): mode/index scratch registers still differ. Rejection state 27;
+// rejection predicate 63; wide/byte rejection 51/27; rejection from score 67;
+// rejection cardinality exit 32; rejection fallthrough 85; rejection after iterator 30.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -4996,6 +5022,9 @@ void function_161420(long player_index, real alpha);
 // frame pointer 173; global optimization disabled 242; float consistency 42; force-inline fraction 24.
 // Double power expression/result 24/51; shared RGB setter 130; alpha-last 24;
 // rectangle-first 118; setter/power 130; branch-assigned intensity 62; combined output fill 130.
+// score 24 (was 24): state/user saved registers and final x87 scheduling remain.
+// Actual flag/tick/both lvalues, timer receiver/receiver with lvalues, shared mask,
+// mask with lvalues/mask with receiver 24/24/24/24/24/164/164/164.
 // @retail 0x159880
 void function_159880(void)
 {
@@ -5072,6 +5101,9 @@ void __stdcall function_d6bc0(long object_index);
 // reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
 // nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
 // score 175 (was 175): Frame 0x14 versus 0x18; timer/base homes and scheduling joins remain. Native placement record 175; named time slice 175; mode case order 175; explicit real defaults 175; positive slice guard 175 (fast).
+// score 167 (was 175): frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
+// type result before engine 167f/plain; engine consumer scope 167f;
+// timer reference / read-only object / scheduling handle / entry-test result / distance results / combined 175/175/175/175/175/175f.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5085,8 +5117,8 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
         byte *placement = *(byte **)(scenario + 0x124) + i * 0x90;
         if (i % arg_642c39 != g_510c54->game_time % arg_642c39) continue;
         short *timer = &entries[i].value04;
-        c_engine_peer *engine = game_engine_get();
         long type = NONE;
+        c_engine_peer *engine = game_engine_get();
         if (engine)
             type = engine->p0();
         if (function_15a090(type, 4, (short *)(placement + 4)) == NONE) continue;

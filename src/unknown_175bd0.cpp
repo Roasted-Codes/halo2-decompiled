@@ -1919,7 +1919,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // score 160 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
-// score 142 (was 163): frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
+// score 171 (was 163): frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
 // Type query, color update, matrix query and spawn update noinline declarations 163 each;
 // existing tint/multiplication result byte carriers 146/159, both 142 kept;
 // placement result byte carrier 163. No new result copy or field read.
@@ -2204,6 +2204,10 @@ event_done:
 // frame agrees; object-index caching and visibility block order differ.
 // Const tag/root 109/109; external datum reference 109; visibility result tests 189;
 // inline depth one/two 109/109; global optimization off 550; frame pointer 200.
+// Four-byte frame agrees; cached object index across validity query and visibility/destruction
+// joins differ. external tag record 109; external root record 109; wide visibility result 144;
+// byte visibility result 109; unsigned color handle 109; root velocity address 109; root location
+// address 109; origin output lifetime 247.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2726,7 +2730,7 @@ void __stdcall function_17a380(s_effect_datum *effect)
 	}
 }
 
-// score 96 (was 109): the frame is eight bytes smaller and the two globals are loaded into the other registers
+// score 96 (was 96): the frame is eight bytes smaller and the two globals are loaded into the other registers
 // tried transform name 109; query results, particle cursor and colors at entry 109; read-only settings 109;
 // immutable mode once 96 (kept); size policy 146; inline depth zero 109.
 // the frame is eight bytes smaller and the two globals are loaded into the other registers
@@ -2737,6 +2741,10 @@ void __stdcall function_17a380(s_effect_datum *effect)
 // Type query, color update, matrix query and location update noinline declarations 96 each;
 // signed-byte flag 108; word flag 106; unsigned successor 96; read-only transform result 96.
 // score 96 (was 96): unsigned-byte location flag 108; frame and color staging still differ.
+// Frame remains eight bytes small; pool/system allocation, query/color carriers and cursor homes
+// differ. mode after color 112; late signed mode 112; late effect cursor home 112; late particle
+// cursor home 112; early mode traversal transform 96; early mode node observation 96; early mode
+// transform home 96; early mode query scope 96.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {

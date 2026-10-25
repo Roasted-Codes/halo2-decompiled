@@ -386,6 +386,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // j92: camera/points saved registers remain exchanged; corner order and diagnostic/lifetime forms do not improve the frameless entry.
 // corners in index order 426; diagnostic result chain 423; plane tests result 671; camera plane predicate 669;
 // far depth snapshot 646.
+// score 423 (was 423): Camera/points saved registers and initial store schedule remain.
+// corner point setters 622; rectangle CRT copy 423; plane array receiver 761;
+// native plane return 700; late right/top products 682 (fast).
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
@@ -628,6 +631,9 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 // First/second input-vector value copies 463/474; external vector references 251/279;
 // both copies 454; shared scaled difference 390; conditional plane enable 474;
 // projection cursor before its guard 115. Arithmetic grouping and count guards retained.
+// score 115 (was 115): Normal/zero XMM roles, classification and projection homes remain; offset
+// accumulator 269; shared segment count 468; count result 459; projected/intersection values 402/323;
+// bool/second endpoint values 259/362; completed cursor 196.
 // @retail 0x1652e0
 bool function_1652e0(s_view *view, real margin, const point3f *points, long point_count, point3f *projected_points, short *projected_count, s_bounds3d *bounds, bool use_plane0, bool use_plane1)
 {
