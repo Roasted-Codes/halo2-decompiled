@@ -1291,7 +1291,8 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
-// score 165 (was 175): frame 0x84 agrees; early ESI save/computed return byte
+// score 165 (was 165): frame 0x84 agrees; early ESI save, computed return byte and actor/motion homes differ.
+// Earlier 165 (was 175): frame 0x84 agrees; early ESI save/computed return byte
 // and actor/motion homes differ; scratch at entry 175; pointer/index names 175;
 // byte update result 232; byte readiness 182; byte behavior result 182.
 // early ESI save, update-result byte and motion-copy registers differ;
@@ -1301,18 +1302,20 @@ bool function_1e1de0(long arg_0);
 // anchor/location/facing/observed/all copy boundaries 175; late readiness default 175;
 // default output values 165 kept; shared output guard 168; Boolean activity 257;
 // shared guard with Boolean activity 225.
-// score 175 (was 175): early ESI save/return byte and motion-copy registers remain.
+// Earlier 175 (was 175): early ESI save/return byte and motion-copy registers remain.
 // Typed observed point, facing, anchor and location 175 each; combined fields 175;
 // combined with const motion 257, literal success 232, guarded single exit 249.
 // early ESI save, literal return byte and motion-copy registers differ.
 // Native behavior/activity levels and activity/location/target/root result receivers 175 each;
 // three actor receivers together 175; all six observations 175.
-// score 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
 // Current defaults with literal/shared/entry-tested result 252/248/257; signed update byte/word
 // 238/270; return-home name 165; literal/shared result with Boolean activity 241/250.
-// score 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
 // Object/actor homes 165/165; both homes/character/all scalar homes 165/165/165;
 // common guard with object/actor/both homes 168/168/168.
+// Computed guarded result 250; failed literal/previous-time snapshot 165/165; conditional motion 191;
+// ordinary-parent-first/separate actor producers/cases 1,0,12 165/165/165; timestamp-first final stores 167.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

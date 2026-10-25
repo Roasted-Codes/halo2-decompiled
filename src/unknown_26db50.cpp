@@ -459,7 +459,8 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 	vector->k = axis->k * along + k * cosine - (axis->j * i - axis->i * j) * sine;
 }
 
-// score 195 (was 195): frame 0xdc versus 0xd8 and a rotation spill; shared cross
+// score 120 (was 120): frame 0xd8 agrees; object-table entry, ring conversion and rotation registers differ.
+// Earlier 195 (was 195): frame 0xdc versus 0xd8 and a rotation spill; shared cross
 // 244; native component loop 244; cross before dot 257;
 // signed-byte spoke 213; size optimization 395.
 // rotation spill keeps frame 0xdc versus 0xd8; radius copy and sector-test registers differ.
@@ -467,34 +468,36 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // One rotation spill still adds four frame bytes; axis component values 285;
 // symmetric dot inputs 195; two/all cross subtrahends, minuends and projected-axis values 210;
 // cosine-direction values 211; private rotation output last 195.
-// score 184 (was 195): frame 0xd8 now agrees; radius setup, rotation schedule and sector-test registers remain.
+// Earlier 184 (was 195): frame 0xd8 now agrees; radius setup, rotation schedule and sector-test registers remain.
 // Cosine first 197; shared direction/axis/both scales 210/213/261; cosine-first inputs 195;
 // angle product lifetime 196; per-use ring phase 184 kept, 1087/1089 bytes; angle-result names 195.
 // cosine complement 195; cosine first 197; output scalars 195; direct-input outputs 256;
 // components before dot 195; shared rotation 195/1091; output scalars plus plain radius 209;
 // shared rotation plus plain radius 208/1095. Rotation spill and frame 0xdc remain.
-// score 163 (was 184): Frame 0xd8 agrees; entry/ring conversion, rotation and sector registers
+// Earlier 163 (was 184): Frame 0xd8 agrees; entry/ring conversion, rotation and sector registers
 // remain. Shared real ring 182; ring plus phase 195; record-first 163 kept; with real ring 161
 // rejected for two extra points; double base with ring/phase 182/195; axis value 317;
 // record/ring/spoke values 163.
-// score 125 (was 163): entry-table/ring conversion and rotation allocation remain.
+// Earlier 125 (was 163): entry-table/ring conversion and rotation allocation remain.
 // Assigned sector word/short 161/161; default sector word 125 kept, short 128;
 // missing-sector continue, sentinel-between-direction and sentinel-first 163 each;
 // assigned short sector with interleaved publication 162.
 // frame 0xd8 agrees; entry/ring conversion, rotation XMM and sector registers remain.
 // Rotation output/axis/both object references 163/163/163; each with output last 163/163/163;
 // cosine-first output/axis reference contracts 163/163. Original helper and body restored.
-// score 125 (was 125): entry-table/ring conversion and rotation allocation remain.
+// Earlier 125 (was 125): entry-table/ring conversion and rotation allocation remain.
 // Native direction value with output first/last, sine/cosine first 276/276/276/276;
 // both vector values 328/328; rotated-vector return 281/281. Original rotation contract retained.
-// score 120 (was 125): entry-table load, ring conversion and rotation XMM allocation remain.
+// Earlier 120 (was 125): entry-table load, ring conversion and rotation XMM allocation remain.
 // Native radius member 125; shared ring with/without native radius 123/123; three-use trace distance 120 plain;
 // shared trace displacement 225; elevation vector 245; collision point setter 125; collision-offset vector 189;
 // trace distance with shared ring 120. Keep the smaller trace-distance form; frame 0xd8, 1090/1089 bytes.
-// score 120 (was 120): frame 0xd8 agrees; entry/ring conversion, rotation and sector publication differ.
+// Earlier 120 (was 120): frame 0xd8 agrees; entry/ring conversion, rotation and sector publication differ.
 // Named collision marker 120; marker before entry 120; entry before point 236;
 // complete point components 144; promoted sector 120; conditional sector store 154;
 // direct radius with trace scalar 239; sector eligibility result 120.
+// Separated object before record/sector and early native radius 120/120/120;
+// direction/world library copies 120/120; conditional sector/pathfinding 154/234; separate count advance 120.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
