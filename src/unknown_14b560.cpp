@@ -2517,6 +2517,12 @@ static inline bool player_datum_iterator_next(s_data_datum_iterator *iterator)
 // score 103 (was 103): the global is kept in EDI here and in ESI in retail,
 // so the prologue saves the other registers and the field that is written
 // afterwards is reached through a different base register.
+// pool through a helper parameter 141; no pool local 141; busy by duplicated
+// store plus continue 123; position through a pointer local 103; wide busy 134;
+// failed after the iterator init 108; failed at function scope 128; body wrapped
+// in the unit test 103; the existing out-of-line root helper called with its
+// noinline removed inlines to the same 103 but regresses 0x14e200 17 -> 534 and
+// 0x31910 139 -> 201, so the attribute and the written-out walk stay.
 // @retail 0x14cdd0
 void function_14cdd0(void)
 {

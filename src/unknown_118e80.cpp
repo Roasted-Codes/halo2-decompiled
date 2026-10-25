@@ -230,7 +230,10 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // score 220 (was 226): Frame 0x78 versus 0x6c; basis/position homes remain. Speed-arm scalars 270;
 // acceleration first 226; scalar names 226; early turn-velocity capture 226; zero velocity after
 // world-up 220 kept (plain).
-// score 220 (was 220): Frame 0x78 versus 0x6c and basis/position homes remain.
+// score 220 (was 220): Frame 0x78 versus 0x6c and basis/position homes remain. Selected up buffer
+// 269; normalized forward at third call 222; at second call 265; all calls with retained scale
+// and late zero 265; selected up plus shared normalized forward 301 (plain).
+// Frame 0x78 versus 0x6c and basis/position homes remain.
 // Angular/basis scope 220; angular-only scope 220; scoped angular/position names 220;
 // scoped branch zero 242; basis copies 220; angular copies 220; common exit 218;
 // scoped point setter 242 (plain); two-point gain dropped.

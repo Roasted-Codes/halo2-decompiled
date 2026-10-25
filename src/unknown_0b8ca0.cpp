@@ -639,6 +639,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // score 231 (was 231): Caller-dependent eight-byte alignment and scalar homes remain. Native root
 // fields 235; radius field pointer 235; unit slot pointer 247; long cluster 246; early centre
 // address 235 (ordinary radius in all).
+// score 231 (was 231): Caller-dependent eight-byte alignment and scalar homes remain. Positive
+// root scope 239; unsigned root handles 239; compact cluster search 239; far-range arm first 239;
+// squared-bound names/order 239 (direct radius operand, both callers included in all).
 // Caller-dependent eight-byte alignment and angle homes remain. Player for-loop 235; cluster for-loop 235; squared zoom 235; position library copy 235; direct unit receiver 234 (fast, ordinary radius in all).
 // @retail 0xbba80
 bool function_bba80(long object_index)
@@ -1440,6 +1443,10 @@ done:
 // entry agrees; tail type/base/palette/stride allocation differs.
 // Canonical descriptor fields through mutable/const pointers and references all 17;
 // the same four contracts with a promoted stride all 27 (236 bytes).
+// score 17 (was 17): entry agrees; tail type/descriptor/stride ownership still differs.
+// Shared type home 17; promoted placement index 28; both 28; shared type plus stride 27;
+// promoted index/stride 36; shared type/index/stride 36; shared type with call-use palette 37;
+// shared type/index with call-use palette 26.
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {
@@ -1631,6 +1638,9 @@ void function_bba20(long index);
 // score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Native
 // child 319; native parent 319; both native views 319; header flag pointer 402; object flag pointer
 // 330.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
+// scheduling remain. Positive acceptance scope 358; sibling-first sentinels 319; hidden Boolean
+// shift 318; connection Boolean shift 318; unsigned masks 319; both Boolean shifts 323.
 // Frame 0x64 agrees; pool/permission homes and parent/SIMD lifetimes remain. Dead parent lookup removed 319; header-data base 336; node before link 319; separate output phases 319; bitset indexing 319 (fast).
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
