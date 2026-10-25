@@ -203,6 +203,9 @@ bool __stdcall function_25dd30(long a, long b)
 // signed sphere ordinal 1031; unsigned sphere ordinal 1031; count snapshot 175; snapshot with signed
 // ordinal 1031; snapshot with unsigned ordinal 1031; final unit cap 352; final cap with signed ordinal
 // 1023; final cap with count snapshot 352. All restored.
+// score 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
+// sphere 182; readonly cone 175; required-flags field 325; offset/minimum scopes 175/175; enabled-mask gate
+// 175; position and sphere fields 410.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

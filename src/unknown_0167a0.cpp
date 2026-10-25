@@ -97,6 +97,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 162 (was 162): logarithm/reset schedule and restore/final allocation remain.
 // Record-field pointer 162; signed entry/pass/both carriers 163/163/164;
 // negated equalities 162; saved tag at both tests 246; dirty-mask cursor 161; both cursors 161 (one-point gains dropped).
+// score 153 (was 162): dirty-word library clear recovers numeric/reset scheduling;
+// logarithm width and restore allocation remain. Native entry/chain/both descriptors,
+// const record and signed change forms 162; update/counter/all/reset-last clears 287/258/307/157.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -121,7 +124,7 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
     else inverse = 100000.0f;
     *(real *)(state + 0x28) = inverse;
     *(real *)(state + 0x2c) = (real)(log((double)inverse) * 0.6931471824645996f);
-    *(dword *)(state + 0x58) = 0;
+    memset(state + 0x58, 0, sizeof(dword));
     state[0x1514] = false;
     *(dword *)(state + 0x1518) = 0;
     *(dword *)(state + 0x151c) = 0;
@@ -320,6 +323,10 @@ struct s_2f6b0_point
 // score 94 (was 94): frame 0x1c versus 0x18; position/output argument homes and rectangle loads differ.
 // Rectangle/origin names 94/94; horizontal/vertical/both origins in place 100/92/115; native step initializer 94;
 // shared output assignment 94; workspace names plus short origin 113; native frame with scalar steps 118, short origin 91.
+// score 29 (was 94): frame 0x18 and incoming/output contract recovered; initial rectangle loads
+// and origin/step allocation still differ. Direct horizontal/vertical/both origins 99/29/102; output readback/native 94/94.
+// Both direct origins with readback/native/late full 102/102/102; on vertical-direct,
+// rectangles swapped/late full/global vertical value/global horizontal value 101/102/67/101.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)
@@ -333,11 +340,10 @@ void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	step.x = (bounds.v3 - bounds.v1) / grid->x;
 	step.y = (bounds.v2 - bounds.v0) / grid->y;
 	long x = bounds.v1;
-	short y = bounds.v0;
 	bounds.v1 = x + (word)position->x * step.x;
 	bounds.v3 = x + (word)(span->x + position->x) * step.x;
-	bounds.v0 = y + (word)position->y * step.y;
-	bounds.v2 = y + (word)(span->y + position->y) * step.y;
+	bounds.v0 = g_485a8a.b.v0 + (word)position->y * step.y;
+	bounds.v2 = g_485a8a.b.v0 + (word)(span->y + position->y) * step.y;
 	*outer = bounds;
 	*inner = bounds;
 	if (position->x == 0)
@@ -886,6 +892,9 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
 // dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
 // both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
 // shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
+// score 2 (was 2): Final zero-store pair remains reversed. Isolated width chain 6; shared width
+// chain 25; shared width/height cases 21/27; mixed-pair clear 85; width clear/loop 74/95; height
+// clear 61; zero-family clear 93.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {

@@ -31,7 +31,15 @@ struct s_motion_adjustment_result
 	vector3f velocity;
 };
 
-// score 86 (was 86): product schedule, raw-copy registers and early normalization J/K loads differ;
+// score 73 (was 86): retail loads normalized j/k into xmm1/xmm0 before fsqrt and multiplies them in
+// place (i stays a memory operand), which also moves two j products earlier and costs 8 bytes; the tick
+// clamp differs. Kept: else-copy of the raw offset into a motion vector 92 (integer copy registers
+// now retail's), then the existing normalize3d 73. Tried after: motion products in any operand order 73;
+// scale helper for the motion 80; step before the copy 103, after sqrt 96; normalize_inline 85;
+// out-of-line function_30bf0 167; motion = offset before the if 73; declarations moved 73; the
+// normalize written out with a named inverse and the scale helper loads all three early 67;
+// MAX(0, *ticks - 1) gives retail's tail exactly (80 at 533 bytes, aligned 16 -> 12).
+// Earlier, at 86: product schedule, raw-copy registers and early normalization J/K loads differ;
 // left/up/both accumulation loops 86/86/86; target/combined/both scale receivers 131/86/131;
 // float square root 86; float absolute value 86.
 // frame 0x24 agrees; product scheduling, raw-copy registers, early J/K loads and tick clamp
@@ -62,26 +70,20 @@ void __stdcall function_1fa810(long *ticks, s_motion_adjustment_result *out, s_m
 	offset.j = desired.j - state->current.j;
 	offset.k = desired.k - state->current.k;
 	vector3f normalized = offset;
-	real length = (real)sqrt(normalized.i * normalized.i + (normalized.j * normalized.j + normalized.k * normalized.k));
-	if (!(fabs(length) < 0.0001f))
-	{
-		real inverse = 1.0f / length;
-		normalized.i *= inverse;
-		normalized.j *= inverse;
-		normalized.k *= inverse;
-	}
-	else
-		length = 0.0f;
+	real length = normalize3d(&normalized);
 	real step = g_510c54->rate * state->rate;
+	vector3f motion;
 	if (length > step)
 	{
-		offset.i = normalized.i * step;
-		offset.j = normalized.j * step;
-		offset.k = normalized.k * step;
+		motion.i = normalized.i * step;
+		motion.j = normalized.j * step;
+		motion.k = normalized.k * step;
 	}
-	out->velocity.i = state->current.i + offset.i;
-	out->velocity.j = state->current.j + offset.j;
-	out->velocity.k = state->current.k + offset.k;
+	else
+		motion = offset;
+	out->velocity.i = state->current.i + motion.i;
+	out->velocity.j = state->current.j + motion.j;
+	out->velocity.k = state->current.k + motion.k;
 	long remaining = *ticks - 1;
 	*ticks = remaining < 0 ? 0 : remaining;
 }

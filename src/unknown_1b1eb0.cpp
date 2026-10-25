@@ -65,7 +65,14 @@ short __stdcall function_1b1f30(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 32 (was 32): +0x29 default target moves with the four-byte length gap;
+// score 32 (was 32): node-pool/state-two register reuse and four-byte extent excess remain.
+// Paired mode result short/long 62/63; flags before paired state short/long 81/82;
+// guarded mode result short/long 46/45; view rejection first 32; conditional view acceptance 32.
+// node-pool base uses EDI instead of retail ESI, which
+// retail reuses for state two; four-byte extent gap. State/mode destination
+// pointers 32/32; both destinations 32; default flag destinations 33; readonly
+// view 32; readonly view with state/mode/both destinations 32/32/32.
+// +0x29 default target moves with the four-byte length gap;
 // retail reuses ESI for the node base and constant 2, ours uses EDI and immediates.
 // Earlier separate exits 28/233; node reference, paired stores, reversed paths
 // and nested view forms tied; unsigned range 55/231. Ordinary trials: short
