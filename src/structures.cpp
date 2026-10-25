@@ -242,6 +242,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // BSP/section registers and range/plane homes remain;
 // reference table before traversal 221; instance case first 232; byte success result 185;
 // result-controlled traversal 205; reference table and result traversal 216.
+// score 185 (was 185): BSP/section residency, range/plane homes and vertex-result joins remain.
+// Index-first/output-first fetch contracts 185/185; filled-point return 185; native span inputs 238;
+// actual validity publication 185; triangle query into result 217; validity-byte name 185; read-only section 185.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

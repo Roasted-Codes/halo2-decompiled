@@ -2493,6 +2493,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // unsigned word result 173; short table index 188.
 // Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
 // repeated table index 152; mode after animation 157.
+// score 152 (was 152): action/result packing and action/seat helper conventions remain.
+// Direct action decision 163; actual overlay-bit result 224; converged play operations 152;
+// control/tag/table role names 152/152/152; selected-overlay initialization 178; word play flags 150.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
