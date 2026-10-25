@@ -195,6 +195,9 @@ real function_1e3920(long actor_index);
 // Signed permission byte/short 197/200; entry mode shared by two tests 193;
 // rejection-first fallback 164; failure-first acceptance 169; request eligibility exit 164;
 // eligibility/fallback 164; short permission with failure-first acceptance 200.
+// score 164 (was 164): delayed slot ESI, scalar homes and cold reference arms remain;
+// explicit mode assignments 164; native reference initializer 220; library reference copy 164;
+// reference/actor/scratch/selection noinline contracts 164 each; mode/reference initializers 220.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

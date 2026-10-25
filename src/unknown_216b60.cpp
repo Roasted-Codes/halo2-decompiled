@@ -62,6 +62,9 @@ bool __stdcall function_215f40(long type, byte *buffer)
 // separate noinline name builder 20; validation-result lifetime 124; complete create predicate 50;
 // aggregate path initializer 20; name initialized before path 20; success-scoped root 20;
 // create rejection exit 34; formatting-result carry 22.
+// score 20 (was 20): post-call name-address reload and shortened entry branch remain;
+// short success 51; caller inline contract 20; drive-root noinline 20; API status local 20;
+// creation-failure clear 71; validation noinline 20; conditional success 20; short/clear 57.
 // @retail 0x216120
 bool function_216120(word *string, long type)
 {

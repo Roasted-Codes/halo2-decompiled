@@ -231,13 +231,17 @@ void c_turret_entity_definition::v21(s_entity *entity)
 // save and cached header lookup remain. Incoming output flags 87; later result 80; both 89;
 // invalid header first 75; shared header 77; incoming flags and header 87; guard exits 77; result
 // from validity 69.
+// score 49 (was 69): native validity result removes the frame gap at retail length;
+// EBP result, early false lifetime and shared header lookup still differ. Incoming flags 72;
+// byte/native/short result 76/49/52; published index 70; full acceptance 73;
+// incoming flags with byte/native result 64/69.
 // @retail 0xa5a60
 bool c_object_type_definition::v22(s_entity *entity, long b, s_entity_info *info, long d, long e, long f)
 {
     long value = d;
     long object_index = v29(b, info, &value, e, f);
     entity->object_index = object_index;
-    bool result = object_index != NONE;
+    long result = object_index != NONE;
     if (result)
     {
         if (!(OBJECT_HEADER(object_index)->flags & 0x10))
