@@ -487,6 +487,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // score 125 (was 125): entry-table/ring conversion and rotation allocation remain.
 // Native direction value with output first/last, sine/cosine first 276/276/276/276;
 // both vector values 328/328; rotated-vector return 281/281. Original rotation contract retained.
+// score 125 (was 125): frame 0xd8 agrees; entry-table scheduling, ring conversion and rotation homes differ.
+// Early object/record-pool producers 123/123 (exact-only); real ring/spoke 273/195;
+// short remaining count 125; unsigned/double ring 248/261; real ring and spoke 201.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
