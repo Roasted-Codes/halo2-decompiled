@@ -210,6 +210,10 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // common sphere radius 227; bound center at use 203.
 // bound radius before node query 204; unsigned node cache 196.
 // radius plus geometry guard 227; list field initialization 194.
+// score 190 (was 190): entry/index spill and sphere/position homes still differ.
+// Aligned split center, both points or bound alone 199/199/199; aligned bound with
+// the original query 197; ordinary query with aligned center 199; complete native
+// query with aligned center, bound or both 205/205/205.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

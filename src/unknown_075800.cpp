@@ -973,6 +973,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Direct/full if ladders 278/241; link snapshot 215; unsigned connection handle 196;
 // typed session payload 196; session cases before lookup cases 210; reversed direct
 // cases 195; adjacent lookup range after direct phase 205 (fast control 196).
+// score 198 (was 198): selector/message/address allocation still differs.
+// Lookup inline/noinline 198/198; direct refusal 198/198; direct query 198/198;
+// direct information 198/198, all plain-confirmed. Fast control 195 versus full 198.
+// Original bodies, signatures, declarations and every game-call tuple restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

@@ -46,6 +46,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Predicate long/short/byte/signed-byte returns 189/190/190/190;
 // byte predicate input 190; byte input with long/short/byte results 189/190/190.
 // Both one-point gains rejected; original predicate and body restored.
+// score 190 (was 190): cached pool base, merged completion stores and predicate result remain.
+// Native unit/weapon/both header references 190/190/190; external carried-index,
+// selected-slot or both field bindings 190/190/190; initializer return used directly 311;
+// external options record reference 190.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
