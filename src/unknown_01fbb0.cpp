@@ -124,6 +124,10 @@ void function_0204b0(long tag_index)
 // shared final fraction 492; clear block memset 461; value clamp expressions 458; progress workspace reuse
 // 458; shared final clamps 492; cleared block clamps 461; clear block test completion 454; clear block test
 // clamps 454; clear block test progress 454
+// score 454 (was 454): frame 4 agrees; early register saves and scalar/constant scheduling differ.
+// Native completion 451; first/color complements 454/454; summary copy 469; earlier completion 476;
+// first/duration field clears 466/472; native completion plus first complement/first clear/duration
+// clear 451/463/475.
 // @retail 0x1fd20
 s_timed_effect_globals *function_01fd20(s_timed_effect_globals *result)
 {

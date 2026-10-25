@@ -913,7 +913,8 @@ struct s_object_list_208070
 // pointer (ebx) before reading the expression; in the retain arm it masks the list index before
 // loading the pool (into eax). Tried: a word list index 21 (retail's 361 bytes, movzx); a pool
 // base local 21; pointer arithmetic on the pool data 21; the expression index in a local after
-// the value pointer 21; the initial expression node in a local 21.
+// the value pointer 21; the initial expression node in a local 21. BLOCKED-BY 0x2099f0: its
+// parameters in the order (thread, expression, result) match this function as it stands.
 // @retail 0x208070
 void __stdcall function_208070(short function_index, long thread_index, bool initialize)
 {
@@ -969,7 +970,14 @@ s_type_f4462a const g_44b0d8 = { _hs_type_passthrough, 2, function_208070, "<var
 extern long g_4686c0;
 long function_16b990(s_record_pool *data, long index);
 
-// score 5 (was 5): Expression preload precedes resets/destination setup. Allocated record
+// score 5 (was 5): retail forms the value pointer (ebx) before it reads and pushes
+// the initialization expression; ours reads the expression first. BLOCKED-BY 0x2099f0:
+// with its parameters in the order (thread, expression, result) at the definition and
+// every call, and the expression read at the call, this matches (and so does 0x208070).
+// Tried here: the expression read at the call 72; a result pointer local after the
+// resets 72, before them 72, with the expression in a local after them 72; the value
+// as a field pointer 72.
+// Expression preload precedes resets/destination setup. Allocated record
 // reference 5; native value reference 6; unsigned expression bits 5; thread
 // rereads 130; size memset 88; script-index memset 12; unsigned allocated
 // index 5; external thread reference 5.

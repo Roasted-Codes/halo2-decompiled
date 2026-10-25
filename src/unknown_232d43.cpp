@@ -984,6 +984,8 @@ struct s_string_buffer
 // score 13 (was 13): discrete 7/8 tests and the final 9 test after RET differ;
 // low/high partitions 59/56, conditional membership 57/53, classified result
 // 57/53, upper/lower range result 95/53 (plain scores).
+// Range in a bool local 13; both values under a repeated test 104; conditional
+// values 140; forced-inline mode predicate 50; one flag for both values 50 (fast).
 // @retail 0x2342e9
 void c_postgame_statistics_list_459680::fill_row(c_class_1a2c81 *item, long row)
 {

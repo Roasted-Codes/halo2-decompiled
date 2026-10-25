@@ -742,6 +742,10 @@ void c_session_client::function_06dbc0()
 	function_06dc60(this, 3);
 }
 
+// score 44 (was 43): this stays in edx where retail copies it to ebx at entry, so
+// the mode and member index take esi; separate case 7 and 8 labels (retail's direct
+// table) with an inline compare-and-update helper 47, an inline id-compare helper 48,
+// a member-index local 47, an id copy 47, the mode in a local 47.
 // @retail 0x6dbd0
 void c_session_client::function_06dbd0(const s_session_id *id)
 {

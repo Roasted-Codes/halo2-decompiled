@@ -617,9 +617,14 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 // Forward value copy 474; direct projected element 246; scaled direct element 247; separate scaled vector 115.
 // Second-plane-first 425; reuse first negated normal 463; indexed plane selection 375.
 // Frame pointer 574; zero inline depth 609.
+// First/second normal memcpy 115/115; negated aggregate 115;
+// native endpoint classification 387; default-zero intersection ratio 252.
 // score 115 (was 115): Coefficient/zero XMM roles, classification products and projection staging remain.
 // Existing scale for first/second/source/all normal negations 425/410/433/446f; reused projected
 // workspace 249f; per-use outside bytes 249f; completed projection total 214f; native short total 115f.
+// score 115 (was 115): coefficient/zero XMM roles, classification operands and projection homes remain.
+// Native camera vector member 115; camera/bounds references 251/133; clipped/camera/projected point names 115/115/115;
+// paired projection names 115; native vector plus three point names 115.
 // First/second input-vector value copies 463/474; external vector references 251/279;
 // both copies 454; shared scaled difference 390; conditional plane enable 474;
 // projection cursor before its guard 115. Arithmetic grouping and count guards retained.

@@ -627,6 +627,9 @@ bool function_aa970(long index)
 
 // score 37 (was 37): the float is added into the accumulator and stored back; retail loads it into
 // a separate register, adds and stores that.
+// BLOCKED-BY 0xd0620 (its iterator in ebx); also tried the accumulator from header->object 37, a masked
+// child index local 37, an index-first byte offset 37, the accumulator declared before the displacement 37,
+// a position pointer local 57
 // @retail 0xaa9e0
 void function_aa9e0(long index, point3f const *previous_position, vector3f const *velocity)
 {

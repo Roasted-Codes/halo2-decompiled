@@ -225,6 +225,7 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Frame and basis/position homes still differ.
 // normalized forward shared 265; basis scratch roles reused 269; velocity/basis scratch shared 252;
 // shared forward and scoped velocity 257; early position snapshot 263.
+// score 226 (was 235): Frame 0x78 versus 0x6c; basis/position homes remain. Shared speed scale 226 kept; left/velocity scratch 252; zero-source memcpy 235; angle-limit lifetime 233; accepted-up first 255 (plain).
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -239,8 +240,9 @@ void function_1197b0(long object_index)
 	real acceleration = definition->acceleration;
 	if (object->speed_mode == 1)
 	{
-		max_angle *= definition->speed_scale;
-		acceleration *= definition->speed_scale;
+		real speed_scale = definition->speed_scale;
+		max_angle *= speed_scale;
+		acceleration *= speed_scale;
 	}
 	vector3f forward, turn_velocity;
 	if (max_angle == 0.0f && acceleration == 0.0f)
@@ -832,6 +834,7 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Sweep/impact homes and store scheduling still differ.
 // targeted sweep name 278; sweep/impact names exchanged 278; completed normal reused 285; candidate
 // countdown 284; header flag at use 278.
+// score 159 (was 159): Frame 0x124 agrees; quotient spill and sweep/impact homes remain. Native collision result 159; later best fraction 161; later quotient 281; candidate cursor 393; bool return 159 (fast).
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -993,6 +996,8 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // homes differ. Branch flag store 131; long force 130; native velocity copy 131; long activity
 // 164; reversed result OR 131; parent result earlier 123; update/countdown result earlier 131.
 // With original flag store, early parent result 109; long force 101; both 110.
+// Native motion/input/state fields 98 each; request/output/all basis copies 98 each;
+// movement-output and orientation-output scopes 98 each.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {
