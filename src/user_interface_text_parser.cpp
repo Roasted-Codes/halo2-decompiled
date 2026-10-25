@@ -265,6 +265,9 @@ done:
 // buffer register and selector/tag scheduling remain different.
 // Numeric case order 49; descending 52; native copy 54; direct selector 57 at 171 bytes;
 // const variant 54; scalar names 54; entry variant/tag declarations 54/54.
+// score 49 (was 49): Extra EBX buffer cache and tag/selector schedule remain. Native buffer
+// object 49; seven adjacent case-pair layouts 48/49/51/51/51/51/50. Best executable reduction is
+// one row.
 // @retail 0x22d456
 void __stdcall parse_gametype(long string_handle, word *buffer)
 {
