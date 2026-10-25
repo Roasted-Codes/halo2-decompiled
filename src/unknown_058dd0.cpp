@@ -1129,6 +1129,9 @@ long __stdcall function_063190(void *summary, long user);
 // Indexed aggregate 129; aggregate field reference 110; availability count 156;
 // early summary result 110; rank element pointer 110; absent-rank continue 110;
 // count before extrema 113; active-session spill name 110. Opening body retained.
+// score 110 (was 110): session spill and aggregate registers remain different.
+// Count/member/scan failure exits 124/121/115; complete-rating/property skips 110/110;
+// empty-aggregate rejection 112; live count field 110; distinct traversal roles 110.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {

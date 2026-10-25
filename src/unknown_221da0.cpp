@@ -192,6 +192,11 @@ dword function_191660(long string_handle, long index);
 // shared range selector 220; period plus range 238; function plus range 220;
 // curve record 202; primary field plus range 220; source plus period 164
 // (739 bytes, rejected); source plus function 165. Source reference kept.
+// score 165 (was 165): full parameter-pointer spill and primary/range selector registers still differ.
+// parameter count once 165; override mask once 260; parameter cursor 215
+// primary remainder result 165; range remainder result 165; primary quotient 165
+// range quotient 165; cursor/count/mask 235.
+// Count snapshot restores frame 0x28 at 727 bytes and +0x65; its count home replaces no parameter spill.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)

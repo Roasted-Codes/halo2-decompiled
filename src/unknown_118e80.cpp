@@ -698,6 +698,10 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // Word-flag/handle registers and call Boolean roles still differ.
 // absent-component exit 99; signed flags with early Boolean 99; long state with early Boolean 135;
 // counter reset before increment 103; threshold default and override 99.
+// score 95 (was 95): flag-word/handle registers and final flag-store width still differ.
+// native word field 95; native counters 95; both native fields 95; returned position 144
+// active-query result 95; native source receiver 95; definition subrecord at use 95
+// inactive-body exit 95.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {

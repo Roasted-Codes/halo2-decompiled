@@ -39,6 +39,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Native player record 190; scoring-team field binding 190; both 190;
 // increment counter binding 202; decrement binding 190; both counters 202;
 // marker-team value 194; native player with both counters 202.
+// score 190 (was 190): pool-data reload, completion stores and final predicate layout still differ.
+// permission result 190; fallback permission scope 190; present-unit scope 190
+// eligible-weapon scope 190; present-slot scope 190; present-marker scope 190
+// unit/weapon scopes 190; option once 190.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
