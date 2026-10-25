@@ -1002,6 +1002,7 @@ done:
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
 // Scalar velocity 309; approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast).
 // score 307 (was 307): Frame 0x18 versus 0x1c and actor/object/factor homes remain; object receiver first 309; approach component scopes 308; following component scope 308; shared minimum scalar 308; library velocity copy 309 (fast control 308).
+// score 307 (was 307): Frame 0x18 versus 0x1c remains; conditional-body factor names 308; velocity field pointer 308; goal field pointer 308; speed field pointer 308; radius field pointer 308 (fast control 308).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1278,6 +1279,7 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
 // Ordinary lifetimes: facing value 307; scalar side 309; scalar center 306; origin constructed first 306; reused negative radius 329.
 // score 294 (was 294): Frame 0x3c agrees; direction materialization and radius/result homes remain. Ordinary input/side lifetimes: point pair plus arc helper 344; pair plus direction output 299; origin/facing values 292 (plain 292, two-point gain rejected); target/facing values 306; three point values 328.
+// score 294 (was 294): Frame 0x3c and initial direction/result-home differences remain; ordinary inputs/side with early 3D origin 291; entry trace 306; reused threshold 306; separate centers 306; early origin plus centers 291 (fast).
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

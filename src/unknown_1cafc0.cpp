@@ -812,6 +812,7 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Transition ID name 251; blend-first join 327; failed result from flag 354;
 // frame-position snapshot 297; reversed bitwise loop result 251; previous-loop
 // lifetime first 254; false result after channel observation 286 (fast).
+// score 251 (was 251): Frame 0x38 agrees; ID/Boolean homes and blend lifetime remain. Word result 255; word previous loop 334; word combined state 312; reused selected set 251; found record at lookup 251; byte result plus logical offset 269 (fast).
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
