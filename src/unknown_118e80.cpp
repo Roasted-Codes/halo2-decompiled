@@ -222,6 +222,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // shared-left output with one exit 233 (two-point gain dropped).
 // Branch-scoped velocity 248; scalar point setter 255; parent-transform first 237;
 // entry flag mask 278; active-angle first 235.
+// Frame and basis/position homes still differ.
+// normalized forward shared 265; basis scratch roles reused 269; velocity/basis scratch shared 252;
+// shared forward and scoped velocity 257; early position snapshot 263.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -692,6 +695,9 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // score 95 (was 99): frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.
+// Word-flag/handle registers and call Boolean roles still differ.
+// absent-component exit 99; signed flags with early Boolean 99; long state with early Boolean 135;
+// counter reset before increment 103; threshold default and override 99.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -819,6 +825,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // point/normal/location copies first 278; target size optimization 536.
 // Query before sweep 159; distinct later-up output 288; double best fraction 255;
 // named radius field 278; const sweep with distinct later-up output 288.
+// Sweep/impact homes and store scheduling still differ.
+// targeted sweep name 278; sweep/impact names exchanged 278; completed normal reused 285; candidate
+// countdown 284; header flag at use 278.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -973,6 +982,10 @@ void function_1e6120(s_biped_physics_output *arg_0, void *arg_1, real arg_2, boo
     bool arg_5, real arg_6);
 void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped_physics_output *arg_2);
 
+// score 98 (was 98): Frame 0x1f0 agrees; call setup, flag merge, component loads and final result
+// homes differ. Branch flag store 131; long force 130; native velocity copy 131; long activity
+// 164; reversed result OR 131; parent result earlier 123; update/countdown result earlier 131.
+// With original flag store, early parent result 109; long force 101; both 110.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

@@ -924,6 +924,10 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 156: depth zero 348; target size 504; table-base reads with complete
 // equipment results 346, entry cleanup outputs 342, substitution output order 342.
 // Three-point gains rejected; original frame and body retained.
+// Equipment base read at use 342 (frame 0x118; three-point gain rejected);
+// count reads 350; both 352; selected-character local 380; outer creation buffer 348;
+// base read plus Boolean predicate 365, shifted Boolean 364, combined loop guard 438,
+// or full-width shifted predicate 350.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

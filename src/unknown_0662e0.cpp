@@ -515,6 +515,7 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // Zero inline depth 610; depth one 363; frame pointer 487;
 // global optimization off 1180; size preference 538. Original kept.
 // register allocation differs from the first loop on. Retail keeps i
+// register allocation differs from the first loop on. Retail keeps i
 // in ebp and walks a pointer in esi over value84 (value40 at [esi - 0x44]), comparing it
 // with &value84[1] and &value84[4]; the inlined levels loops walk pointers the same way.
 // Ours keeps i in esi with scaled addressing and holds 0 (ebp) and 1 (edx) in registers,
@@ -526,6 +527,9 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // value2c copies too (420); all of these 419. Tried: i < 2 (454), its own loop variable
 // for the first loop (363); initial real stores first 363; outer word index 469 signed
 // or unsigned; column word index 464; both signed-word indices 512. Original kept.
+// Lanes also tried: first-table result names 363; loop-scope steps 363; initialized steps 363;
+// first regular table tail loop 531; second tail loop 530; zero inline depth 610; depth one 363;
+// frame pointer 487; global optimization off 1180; size preference 538.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {

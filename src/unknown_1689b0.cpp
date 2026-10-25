@@ -1411,6 +1411,10 @@ PRIVATE __forceinline long shape_cluster_next(long *next)
     return result;
 }
 
+// score 170 (was 170): world-mask width, leaf induction and pool/cluster homes differ;
+// integer query result 251f; paired world mask 205 plain; leaf step at read 222 plain;
+// unsigned leaf/handle/count views and normal iterator inline 251f; direct count returns 249f
+// (unchanged fast control 251; full 170).
 // @retail 0x16a440
 bool __stdcall function_16a440(dword flags, point3f const *position, real extent, real height,
     real radius, long ignore_object, long ignore_parent, s_shapes *shapes)

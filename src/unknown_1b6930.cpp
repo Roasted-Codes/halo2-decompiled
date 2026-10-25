@@ -591,6 +591,8 @@ short __stdcall function_1b7000(long actor_index, s_slot *slot)
 
 // score 33 (was 33): the address of the argument is copied into ECX and pushed; retail loads it
 // into EBX directly.
+// BLOCKED-BY 0xd0620: retail's iterator initializer takes the iterator in ebx (it stores through
+// ebx and leaves it for the caller's `mov edx, ebx`); ours takes it on the stack.
 // @retail 0x1b73b0
 short __stdcall function_1b73b0(long actor_index, s_slot *slot)
 {

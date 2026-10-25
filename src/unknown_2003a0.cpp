@@ -278,9 +278,12 @@ PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_reco
 	return iterator->group = g_4f55d0->active ? (s_squad_group_datum *)data_iterator_next_inlined(&iterator->records) : NULL;
 }
 
-// @retail 0x202370
-// score 62 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
+// score 57 (was 57): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
 // count and the bit mask take the other two registers.
+// const record 57; existing bool iterator 126; existing search boundary 123.
+// bool iterator size 147; one inline level 57; frame pointer 64.
+// global optimization 102; size preference 145.
+// @retail 0x202370
 void function_202370(void)
 {
 	s_group_record_iterator iterator = {0};
@@ -297,12 +300,15 @@ void function_202370(void)
 	}
 }
 
-// @retail 0x2024c0
-// score 62 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
+// score 57 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
 // count and the bit mask take the other two registers.
+// const record 62; existing bool iterator 154; existing search boundary 134.
+// value initializer 57; zero initialization call 60; frame pointer 55.
+// global optimization 124; size preference 158.
+// @retail 0x2024c0
 void function_2024c0(void)
 {
-	s_group_record_iterator iterator;
+	s_group_record_iterator iterator = {0};
 	if (g_4f55d0->active)
 	{
 		iterator.records.data = g_51e9dc;
@@ -1078,6 +1084,8 @@ struct s_squad_tree_definition
 // Const current group 43; unsigned squad parent 43; unsigned group parent 63;
 // unsigned sibling 43; full-width final index 63; parent-field view 43;
 // parent view in both passes 82; append noinline declaration 43.
+// Current/parent/both record references 43; short child 60; readonly definition 43;
+// parent reference with short child 60; force parent accessor 43; force with current reference 43.
 // @retail 0x2009d0
 void function_2009d0(void)
 {
@@ -1765,9 +1773,14 @@ void function_204450(long definition_index, long squad_index)
 bool function_1e11b0(long actor_index, bool active);
 
 #pragma inline_depth(0)
+// score 64 (was 64): frame 0xc agrees; the squad address stays in EBX instead of
+// retail's spilled ESI pointer and EBP handle. The common loop head and
+// full-width return mask still differ.
+// byte record 64; native absolute index 64 (caller loss); record field types 64.
+// record flag bitfield 64; existing actor step 100 (caller loss); existing actor getter 84.
+// frame pointer 74; size preference 82; native index stdcall 69.
+// byte record stdcall 64; record fields stdcall 64; record bit stdcall 64.
 // @retail 0x203bf0
-// score 64 (was 64): the record's address is computed from the index in EBX where retail keeps the
-// index in EAX, so the flag byte is read into AL instead of into CL.
 bool function_203bf0(long squad_index)
 {
     (void)&squad_index;
