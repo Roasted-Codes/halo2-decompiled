@@ -171,6 +171,9 @@ void function_194fa0(s_bitstream *stream, word *buffer, long count)
 	}
 }
 
+// score 38 (was 38): frame 8 vs 4; log/weight scheduling prevents argument-slot reuse;
+// limit before compare/read/call 41/44/60; limit/log local renames 38;
+// earlier weight declarations 38; integer weights 43; named weighted logs 38.
 // @retail 0x194ff0
 real function_194ff0(s_bitstream *stream, real lo, real hi, long bits)
 {

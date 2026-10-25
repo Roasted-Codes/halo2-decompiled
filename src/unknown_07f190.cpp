@@ -216,6 +216,10 @@ void function_7f070(void)
 		function_7f2a0();
 }
 
+// score 37 (was 37): final observer/flag registers differ after +0x11b;
+// flag declared first 39; observer before publication 37; shared reset tail 37;
+// global observer stores 36 (421 bytes); flag rename/direct minimum 37;
+// shared observer values 67; branch-local observer 37.
 // @retail 0x7f410
 void function_7f410(void)
 {

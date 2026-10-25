@@ -225,6 +225,9 @@ void function_193b30(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills a variant of type 1, or of type 2 when flag is set */
+// score 34 (was 34): scale arrives in EBX rather than EAX saved to EBX;
+// inline/noinline declarations 34; settings memcpy/field stores 34;
+// numeric type after/before delays 37; delay-table rename/scope 34.
 // @retail 0x193ba0
 void function_193ba0(long scale, bool flag, s_built_variant *variant, long name_string, long description_string, dword field_8, s_variant_place_settings const *settings, long field_59c)
 {

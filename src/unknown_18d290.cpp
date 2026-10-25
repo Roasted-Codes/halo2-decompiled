@@ -131,6 +131,9 @@ bool function_bafb0(long object_index, long ancestor_index);
 
 bool function_14ddc0(long local_player_index);
 
+// score 44 (was 44): existence flag and loop/unit registers differ;
+// long/word/byte split masks 72/59/69; char/long existence with mask 72/83;
+// existing player accessor 44; related-player result 86; shared emitter index 44.
 // @retail 0x18d4f0
 void function_18d4f0(long object_index, char *audible, long *local_player_index)
 {
