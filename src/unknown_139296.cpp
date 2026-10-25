@@ -346,6 +346,9 @@ bool function_22acb4(long player_index);
 // Round 303: both enum groups 216; unified item predicate 256; multiplayer at use 257;
 // shifted source flags 281; fourth enum selection 284; one-case bit first 190;
 // one total enum-bit update 291. Final stores and query argument preserved.
+// score 190 (was 190): second-mask slot and constant homes remain; second-mask bit orders
+// 16/2/4/8, 2/16/4/8, 2/4/16/8, 8/4/2/16 all 190;
+// 2/8/4/16, 16/8/4/2, 8/16/2/4, 4/8/16/2 all 190 at 884 bytes.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

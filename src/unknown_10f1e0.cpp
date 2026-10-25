@@ -2541,6 +2541,8 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // frame 60 versus 56 and protected action/seat argument registers remain.
 // Signed success/force/both bytes 147/152/147; word channel backing 152;
 // mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
+// Round 277: language-char result 147; unsigned-word force 164; signed-byte/word animated result 147/156;
+// base success test 153; success/force/both initialized before selection 187 each.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
