@@ -1903,6 +1903,9 @@ static inline void approach_126660(real *value, real delta, real lower, real upp
 /* advances the sound system's clock and the ambience fades, and fades the
    master gain out while the game asks for it (after its delay) and back in
    once nothing is busy */
+// score 30 (was 30): conversion and clamp registers, elapsed reload differ; shared quotient 30;
+// shared elapsed 79; both time values 79; shared change 74; quotient/change 74; shared lower bound
+// 74; quotient/lower bound 74; all clamp values 74.
 // @retail 0x1269f0
 void sound_system_update_time(void)
 {
@@ -2591,6 +2594,9 @@ static inline short sound_voice_find_available_channel(char type)
 }
 
 /* assigns a free channel and, when needed, a shared driver voice */
+// score 113 (was 113): frame 12 versus 8 and saved true byte; validity result 135; assigned result
+// 135; playback handle 113; const playback 113; long buffer index 117; entry status 113;
+// allocation-scope status 113; status name 113; allocation success result 122.
 // @retail 0x1295e0
 bool __stdcall function_1295e0(short voice_index)
 {
@@ -3567,6 +3573,9 @@ void function_21b0e0(bool arg_0);
 long players_first_active_local_player(void);
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1);
 
+// score 108 (was 108): aligned frame 0x174c versus 0x1744; promoted voice limit 108; entry system
+// 108; direct elapsed 108; pending byte 108; frame input 108; short player cursor 122; short
+// next-player result 115; both player values 122.
 // @retail 0x125b40
 void function_125b40(void)
 {
