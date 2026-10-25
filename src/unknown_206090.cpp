@@ -111,9 +111,8 @@ PRIVATE __forceinline void function_206095(vector3f *arg_0, vector3f const *arg_
 
 PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, vector3f *arg_2)
 {
-    arg_2->i = arg_0->i * arg_1;
-    arg_2->j = arg_0->j * arg_1;
-    arg_2->k = arg_0->k * arg_1;
+    for (long component = 0; component < 3; ++component)
+        arg_2->n[component] = arg_0->n[component] * arg_1;
 }
 
 #pragma inline_depth(1)
@@ -127,6 +126,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // score 1600 (was 1600): frame 0x580 versus 0x58c and indexed contact homes remain.
 // Shared point subtraction first/contact/both 1625/1656/1676;
 // indexed normalized-direction copy 1645; indexed tangential-velocity copy 1638.
+// score 1596 (was 1600): frame 0x58c recovered; velocity homes and indexed contacts differ. Contact velocity
+// 1604; point velocity 1663; both 1659; result normalizers 1641; cross j/k/i 1642. On contact form:
+// normalizers 1646; scale loop 1596 kept; cross order 1608; velocity names 1604; add loop 1622; scale/add
+// loops 1618. Original-frame scale loop 1626.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
@@ -226,8 +229,10 @@ bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, 
             local_43->i = *(real *)(local_39 + 0x34) - local_0->field_60.i;
             local_43->j = *(real *)(local_39 + 0x38) - local_0->field_60.j;
             local_43->k = *(real *)(local_39 + 0x3c) - local_0->field_60.k;
-            function_206092(&local_5, local_43, local_44);
-            function_206095(local_44, &local_4);
+            vector3f contact_velocity;
+            function_206092(&local_5, local_43, &contact_velocity);
+            function_206095(&contact_velocity, &local_4);
+            *local_44 = contact_velocity;
             local_32++;
             byte *local_45 = local_36 + local_38 * 0x3c;
             function_207ab0(local_38, arg_0, (s_vehicle_contact_result *)local_45);

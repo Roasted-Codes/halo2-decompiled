@@ -176,6 +176,11 @@ static __forceinline bool structure_bsp_collision_available()
 // external triangle reference 68; source publication 68; byte result merge 68;
 // query workspace names 68. Native record retested with byte result storage.
 // BL exclusion and source-slot reload remain; model inline 68; model noinline 68; state inline 68; both contracts 68; probe result 68; model result 68; final found result 111; triangle inline 68.
+// score 68 (was 68): VC threads the exclusion flag on every edge. The collision re-read from the
+// parameter at the join 68 (with a block-local flag 68); the flag as one && expression tested
+// twice, with returns 68; the same with an else-if tail and a final else for the no-object case
+// 71 (286 bytes); assigned with the && expression, tests unchanged 68; an inline helper for the
+// scenery test stays out of line and is threaded 113/111.
 // @retail 0x14b120
 bool function_14b120(s_surface_query_source source, void *surface)
 {

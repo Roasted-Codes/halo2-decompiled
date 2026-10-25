@@ -973,7 +973,11 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Direct/full if ladders 278/241; link snapshot 215; unsigned connection handle 196;
 // typed session payload 196; session cases before lookup cases 210; reversed direct
 // cases 195; adjacent lookup range after direct phase 205 (fast control 196).
-// score 198 (was 198): selector/address/payload convention and dispatch schedule still differ.
+// score 198 (was 198): selector/message/address allocation still differs.
+// Lookup inline/noinline 198/198; direct refusal 198/198; direct query 198/198;
+// direct information 198/198, all plain-confirmed. Fast control 195 versus full 198.
+// Original bodies, signatures, declarations and every game-call tuple restored.
+// selector/address/payload convention and dispatch schedule still differ.
 // instance cases first 227f; standalone cases first 250f.
 // lookup cases first 239f; query cases first 209f.
 // connection cases first 277f; peer cases first 190f.
@@ -982,23 +986,28 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // incoming selector/message/address allocation remains.
 // Six separate noinline handler declarations and query/ack or peer/session groups
 // all 195 in the reduced image, tying its unchanged 195 preview. All declarations restored.
+// score 193 (was 198): selector/message/address convention still differs; executable rows 155 to 150.
+// Direct-case orders 3,4,0,2 / 4,3,0,2 / 2,4,0,3 / 3,2,4,0 score 196/196/191/195 fast;
+// keep 2,4,0,3 at plain 193, retail length. Lookup orders 7,5,6 / 6,7,5 give 196/195;
+// acknowledgment first in residual phase 196; unified observed order 218. All call inputs preserved.
+
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
 	long connection_index;
 	switch (message_type)
 	{
-	case 0:
-		network_message_handler_refuse_connect((const s_connect_request *)message, this, (long)address);
-		return;
 	case 2:
 		function_093fa0(this, message);
 		return;
-	case 3:
-		network_message_handler_handle_session_query((const s_network_message_session_query *)message, address);
-		return;
 	case 4:
 		function_0785d0(unknown10, address, message);
+		return;
+	case 0:
+		network_message_handler_refuse_connect((const s_connect_request *)message, this, (long)address);
+		return;
+	case 3:
+		network_message_handler_handle_session_query((const s_network_message_session_query *)message, address);
 		return;
 	default: break;
 	}
@@ -1052,5 +1061,6 @@ void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_ty
 	case 11:
 		function_94270((const s_session_id *)message, address);
 		break;
+
 	}
 }

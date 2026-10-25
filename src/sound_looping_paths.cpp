@@ -422,6 +422,10 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // position memcpy 223; tag aggregate initializer 270.
 // cue sentinel chain 222; cue nibble chain 223.
 // both cue chains 222; prior tag on bounded search 223.
+// score 223 (was 223): BSP/camera homes, transition spill and cue zero carrier remain;
+// cue sentinel order 222; cue pointer order 223; cue byte-first zeros 223;
+// cue integer-zero/scale order 223; direct transition conditional 253;
+// exact listener bound 223; query-index cursor 248; Boolean fallback scale 237.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

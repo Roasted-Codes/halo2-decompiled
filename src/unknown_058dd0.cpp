@@ -1868,6 +1868,9 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // score 48 (was 59): readiness callee input and failure/timer join still differ.
 // Live timer/mode/both fields 59/59/59; integer pending 48 kept;
 // byte/word pending 90/59; common-tail guard 59; pending with live timer 48.
+// score 48 (was 48): readiness input and failure/timer join persist. Full
+// preparation pending 71; staged/second-call pending 95/96; tail guard 48;
+// wide completion 146; unsigned preparation 71; early/raw pending 128/61.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {
