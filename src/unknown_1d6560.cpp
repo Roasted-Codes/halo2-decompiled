@@ -100,6 +100,12 @@ void __stdcall function_1d6560(s_havok_component *component, s_physics_model_own
 }
 
 /* the collision layer of one of the object's rigid bodies, by object type */
+// score 96 (was 96): retail reads the type once before the kind test with the component in
+// eax and the rigid index in ecx; every one-read type form flips that pair (the caller
+// 0x1d5bf0 then differs). Type read after the rigid body 94 at 256 bytes (caller 13), first
+// 117, after headers/body/index 94 (caller 13), body then type 136, kind 7 as a ternary 104;
+// case 0 through the object_index local 91 at 256 bytes (caller 146), with the one-read type
+// 132-133; parameters reordered (rigid index first, component last) 96 / 94 (caller 13).
 // score 96 (was 89): retail pushes ebp and holds the base pointer there, ours keeps the record in esi and ecx;
 // the whole register allocation differs.
 // @retail 0x1d69d0
