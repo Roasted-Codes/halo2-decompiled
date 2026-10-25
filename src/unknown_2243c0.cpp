@@ -242,7 +242,7 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // score 140 (was 140): retained table register and unfused lookups still differ.
 // Typed count/address helper pointer/reference, unsigned ordinal/extent, byte result,
 // ordinary inline and two typed formal orders all 140; original helper restored.
-// saved table register and unfused lookup addresses still differ;
+// score 136 (was 140): saved table register and unfused lookup addresses still differ;
 // group reads at use 156; cache/mask/pointer zeros before final lookup 141/156/159;
 // callback input before lookup 141; group reads with cache/mask/pointer zeros 157/136/136.
 // @retail 0x224db0

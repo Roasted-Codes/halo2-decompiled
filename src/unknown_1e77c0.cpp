@@ -648,7 +648,7 @@ long function_1469f0(real seconds);
 // score 290 (was 302): First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
 // Native signed-word slot 283 fast/290 plain; full-width difficulty 308; shared elapsed 309;
 // cooldown-first 296; fixed initial do scan 340; slot plus cooldown-first 281.
-// score 290 (was 290): frame 4 versus 12 and slot/state/flag homes remain.
+// score 288 (was 290): frame 4 versus 12 and slot/state/flag homes remain.
 // Restriction result 293; selection-field references 290; state reference 290;
 // initial state gates 288; byte scan 319; gates with native slot 307 (plain).
 // @retail 0x1e6bd0
