@@ -50,6 +50,11 @@ struct s_object_flags_256bd0
 	word bit6 : 1;
 };
 
+// score 211 (was 211): frame 0x114 versus 0x110 and hoisted active byte remain;
+// native placement fields 213; actor getter 212.
+// slot reference 211; native fields with getter 214.
+// const entry result 211; condition-local entry 211.
+// candidate skip 211; placement scope 211.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
