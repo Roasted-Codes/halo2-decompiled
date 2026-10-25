@@ -162,6 +162,10 @@ bool function_01dd60(long index, long *width, long *height)
 	return result;
 }
 
+// score 21 (was 21): Width remains on the stack and height in saved ESI instead of retail ESI/EDI
+// inputs; the unsigned packing and Boolean gate still lower differently; height expression 21;
+// width expression 21; packed expression 21; direct width height expression 24; direct packed
+// expression 24; late entry 21; shared publication 21; separate gated result 21.
 // @retail 0x1ddd0
 void function_01ddd0(long index, dword width, dword height)
 {

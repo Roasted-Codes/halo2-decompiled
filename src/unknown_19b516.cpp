@@ -166,6 +166,10 @@ void c_widget::v16()
 	}
 }
 
+// score 20 (was 20): Entry candidate still occupies ESI before the fallback scan; the existing
+// native object type and direct method boundaries do not recover the delayed save; native
+// traversal 20; native entry scan 42; native repeat scan 20; native next cursors 20; native
+// candidate 20; direct existing methods 20; native selected lifetime 26; native success tail 47.
 // @retail 0x22ec1b
 void c_widget::v17()
 {
