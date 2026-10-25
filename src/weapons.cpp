@@ -1936,6 +1936,9 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
    the reserves of the holder's other weapons of the same kind */
 // score 124 (was 124): frame eight bytes agrees; magazine, available and taken registers and pool reloads differ
 // tried all lookups pool value 124; needed result first 171; positive take continue 124; availability before update 124; first reserve field reference 123.
+// score 124 (was 124): magazine/available/taken registers and pool reloads remain; original getter,
+// per-slot getters, all object getters and header getters 124 each; first/other/both magazine references
+// 124 each; unit reference 124.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2403,6 +2406,9 @@ bool function_106280(long object_index, long *out_index, byte *out_entry);
 
 // score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
 // tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
+// score 130 (was 130): frame 88 versus 84 and current-object spill remain; object/header getters 130/130;
+// entry weapon/tag references 130/130; output magazine reference 219; byte/long active carriers 192/194;
+// target-model reference 130.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
@@ -2914,6 +2920,9 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // shared object/header getters 52/52.
 // Ordinary inline 468; automatic inline 468; barrel reference 52; magazine-tag reference 52;
 // magazine reference 52; combined references 52; empty-first tests 88; query result first 140.
+// score 52 (was 52): barrel/magazine and selector registers remain reversed; weapon/tag/both receiver
+// inputs 52/52/52; barrel input 131; weapon+barrel/tag+barrel/all inputs 52/52/52; direct success with
+// weapon input 111.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
