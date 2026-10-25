@@ -1177,6 +1177,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // completed-write result in both arms 172; reversed header string stores 172.
 // Direct write count 171; late expected-size query 288; signed-word ordinal 257;
 // validity from handle/header tests 165 kept; nested failed-write close 172.
+// Combined header predicates 189; valid-file continue 165; earlier size lookup 225;
+// task-before-path declaration 165; combined header guard 165.
 // @retail 0x213970
 void function_213970(void)
 {
