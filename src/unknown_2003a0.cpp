@@ -451,6 +451,7 @@ struct s_squad_iterator
 	s_squad_definition_entry *definition;
 };
 
+// score 92 (was 92): squad/definition registers and persistent zero/count homes remain; shared lookup 92; parent while 148; read-only squad 92; unused formal addresses removed 92; definition scope 92; cached entries 87 (one-use pointer excluded); direct mode flags 94; early index 92; native count/entries block 90.
 // @retail 0x204ec0
 void function_204ec0(s_squad_iterator *iterator, short squad_index, short flags, short mode)
 {
@@ -1441,6 +1442,7 @@ bool function_1df560(short team_a, short team_b);
 bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
 // score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
+// score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -2450,6 +2452,7 @@ short function_290cd0(short arg_0, long arg_1, long arg_2, short *arg_3, short *
 bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
+// score 152 (was 152): frame 0x1c agrees; task zeroing/retest and iterator head remain; optional producer scope, delay scope, both scopes, native trigger entry, signed entry index, threshold selection, iterator name and native entry with producer scopes each 152.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
