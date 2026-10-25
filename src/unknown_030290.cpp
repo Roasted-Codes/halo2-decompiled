@@ -86,6 +86,9 @@ long g_4ba134;
 // score 164 (was 164): viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
 // Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
 // eager first tangent coordinates 164; in-place tangent projection 164. Original body retained.
+// Frame 0x34 and coordinate prefix agree; viewport conversion and
+// root/ratio/tangent homes remain. Tried split viewport conversions 164; viewport conversions
+// first 176; horizontal tangent scope 164; tangent blend weights 164; horizontal root name 164.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {

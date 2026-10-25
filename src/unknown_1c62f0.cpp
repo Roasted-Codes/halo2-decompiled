@@ -78,6 +78,9 @@ void c_animation_channel::clear()
 
 // score 36 (was 41): Early frame-position store keeps 36 at retail length; input save and later store order still differ.
 // sentinel chain 41; word clear chain 41; byte clear chain 43; two-byte memset 43; stored flags 41; early frame 36 plain; stored-ID result 76; renamed late graph 42; dword flags plus early frame 36; long flags plus early frame 37.
+// score 36 (was 36): Incoming graph save and later store schedule still differ.
+// paired defaults 42; identifier memcpy 36; metadata before resets 42; trailing defaults 41;
+// redundant byte clear removed 36; early derived state 38; explicit state bit 35; defaults plus memcpy 42.
 // graph ECX needs an ESI save and a late store;
 // validity-result 43; animation guard first 44; inline/noinline declarations 41;
 // existing reset 43; state memset 51; high-bit predicate 41; ID word copies 50.
@@ -642,6 +645,12 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 }
 
 /* Parameter access through local pointers preserves the stack-only entry convention. */
+// score 97 (was 97): adjacent flag load/byte clear and callback reload still differ; direct parameters
+// 139; direct channel/state/user 113, with word events 113; word/short events 97/97; separate bit clears
+// 126; clears spanning clamp 136, with word events 136. Original body and parameter accesses restored.
+// adjacent word-load/byte-clear order and callback reload remain.
+// Native state bit clears/chained clears/publication/both 126/126/97/126;
+// dispatcher word flags 122; with separate/chained/all native state writes 137/137/137.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)

@@ -278,12 +278,16 @@ short __stdcall function_1b39e0(long actor_index)
 	return (short)result;
 }
 
-// score 36 (was 36): object-flag byte register and shared tail zero still differ.
+// score 1 (was 36): literal target differs (1.5 versus 1.0); one result 1;
+// result supplies flags 1; byte expression 36; flags after unit 35; unit before copy 46;
+// clear return receiver 63; first/second shared timer rounding 86/63.
+// object-flag byte register and shared tail zero still differ.
 // Chained flags 36; direct object flag 93; const property state 36; flags before link 37;
 // flag-pair memset 61; target memcpy 36; duration names 36; accepted state scope 115.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
+    bool result = false;
     s_1b36e0 *local_0 = (s_1b36e0 *)((byte *)slot + 0xc);
     long local_1 = actor_get(actor_index)->first_prop_index;
     long local_2 = NONE;
@@ -334,9 +338,9 @@ bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
         long local_8 = actor_get(actor_index)->unknown018;
         if (local_8 != NONE)
             function_20ba60(0x62, local_8, local_3->object_index, NONE, NONE, NULL);
-        return true;
+        result = true;
     }
-    return false;
+    return result;
 }
 
 
@@ -365,7 +369,10 @@ short __stdcall function_1b3ea0(long actor_index)
 	return result;
 }
 
-// score 26 (was 26): actor-index/pool load order and zero register differ;
+// score 26 (was 26): offset/pool setup and zero register differ;
+// compound bit 26; word mask 26; slot sentinel result 36; slot Boolean result 38;
+// joint slot result 43; reset mode result 38; reset owner result 39; active slot result 43.
+// actor-index/pool load order and zero register differ;
 // native word ordinal 32; sentinel-first stores 26; actor after/between slot stores 52/27;
 // actor after reset/direct final getter 35/34; published-bit return 31;
 // sentinel after reset 36; activation before reset 25, rejected. Body restored.
@@ -401,6 +408,9 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 63 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
+// duration and timer names, ticks first, timer scope, named ticks first, named
+// timer scope, direct slot and named direct slot each 63. Opening body restored.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {

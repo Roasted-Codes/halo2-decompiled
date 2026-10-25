@@ -2988,6 +2988,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // 1084; word color input 971; word alpha input 1181 at retail length.
 // Capability declaration/name order 971/971; late rescaling flag 971; native color aggregates 971;
 // conditional-update shared clamp 1207 (fast). Original body and shared clamp retained.
+// score 971 (was 971): round 106: Frame 0x2c agrees; capability/save and state expansion remain. Packed range clamp 1199; early exponent lifetime 1201; shared gain divisor 1194; late input selectors 1204; late clipped width 970 (one-point gain rejected).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
