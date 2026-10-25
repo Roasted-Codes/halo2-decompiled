@@ -871,14 +871,23 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // score 401 (was 401): ordinary previous/first/both history 399/401/400;
 // word node index 408; alternate normalizer 401; indexed node pair 428;
 // indexed pair with ordinary previous history 438. Frame and edge/history homes remain.
+// score 401 (was 401): frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
+// Reduced trials: direct dot predicate 401; shared dot product 401; immutable predicates 401; geometry
+// names 401; output memcpy 401; earlier offset workspaces 401; native first-open 416; word selected vertex
+// 404.
 // j91: frame 0x30 versus 0x28; edge/history homes and indexed node selection differ; origin snapshots gain only one and grow frame to 0x38.
 // first offset in place 401; second offset in place 401; both offsets in place 401; first offset origin
 // snapshot 400; second offset origin snapshot 400
+// score 397 (was 401): frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
+// Node fields at use 420; vertex words at use 414; endpoint values 432; normal assignments 401;
+// split crossing phases 399; late second workspace 399; split phases/ordinary previous history 397;
+// Boolean ring direction 399; vertex words/ordinary previous, first, both history 414,415,415;
+// vertex words/Boolean ring direction 408. Retained code 1307/1312, checker extent 1312/1312.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
 {
-    volatile long previous_vertex = NONE;
+    long previous_vertex = NONE;
     volatile long first_vertex = NONE;
     for (;;)
     {
@@ -914,11 +923,12 @@ bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real
         scale_offset_direction_2c(0.0f - radius, &normal, &negative);
         negative.x = origin->x + negative.x;
         negative.y = origin->y + negative.y;
-        point2f first, second;
+        point2f first;
         vector2d_from_points2d(&positive, start, &first);
-        vector2d_from_points2d(&negative, start, &second);
         bool first_crossing = (first.y * direction.y + first.x * direction.x < 0.0f ? 1 : 0) == side &&
             first.x * direction.y - first.y * direction.x < 0.0f;
+        point2f second;
+        vector2d_from_points2d(&negative, start, &second);
         bool second_crossing = second.x * direction.y - second.y * direction.x < 0.0f;
         bool crossing = first_crossing || second_crossing || first_vertex == NONE;
         long vertex = ((crossing != first_open) == side) ? vertex1 : vertex0;

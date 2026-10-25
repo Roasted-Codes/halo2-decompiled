@@ -87,11 +87,6 @@ struct s_244980_output
     long field_20;
 };
 
-// score 19 (was 19): bound/fraction/endpoint XMM chain and stores differ;
-// plain coordinate type 19; coordinate array 19; coordinate output initializer 25.
-// workspace value initializer 140; alias analysis 19; expression scope 510.
-// size preference 117; one inline level 101; late endpoint completion 19.
-// fraction before pair 19.
 // @retail 0x244980
 bool function_244980(long cluster_index, point3f const *point, vector3f const *vector,
     dword flags, dword test_flags, s_collision_result_1697c0 *result)
@@ -118,32 +113,32 @@ bool function_244980(long cluster_index, point3f const *point, vector3f const *v
         output.workspace = &workspace;
         c_244c10 callback;
         workspace.minimum.m_quad = _mm_setzero_ps();
-        workspace.maximum.m_quad = _mm_setzero_ps();
-        end.y = point->y + vector->j;
-        end.z = point->z + vector->k;
         workspace.minimum.m_quad.m128_f32[3] = 1e30f;
+        workspace.maximum.m_quad = _mm_setzero_ps();
         workspace.maximum.m_quad.m128_f32[3] = 1e30f;
-        callback.field_04 = ((real *)result)[1];
-        end.x = point->x + vector->i;
-        callback.field_1c = result;
+        workspace.transform.m_rotation.m_col0.m_quad = _mm_setzero_ps();
+        workspace.transform.m_rotation.m_col1.m_quad = _mm_setzero_ps();
+        workspace.transform.m_rotation.m_col2.m_quad = _mm_setzero_ps();
         callback.field_08 = flags;
-        ray.first.m_quad.m128_f32[0] = point->x;
-        ray.first.m_quad.m128_f32[1] = point->y;
-        ray.first.m_quad.m128_f32[2] = point->z;
         callback.field_0c = test_flags;
         callback.field_10 = point;
         callback.field_14 = vector;
         callback.field_18 = false;
+        callback.field_1c = result;
+        callback.field_04 = ((real *)result)[1];
+        end.x = point->x + vector->i;
+        end.y = point->y + vector->j;
+        end.z = point->z + vector->k;
         reference.flags = 0;
         query.allocation_size = 0;
+        ray.first.m_quad.m128_f32[0] = point->x;
+        ray.first.m_quad.m128_f32[1] = point->y;
+        ray.first.m_quad.m128_f32[2] = point->z;
         ray.first.m_quad.m128_f32[3] = 0.0f;
         ray.second.m_quad.m128_f32[0] = end.x;
         ray.second.m_quad.m128_f32[1] = end.y;
         ray.second.m_quad.m128_f32[2] = end.z;
         ray.second.m_quad.m128_f32[3] = 0.0f;
-        workspace.transform.m_rotation.m_col0.m_quad = _mm_setzero_ps();
-        workspace.transform.m_rotation.m_col1.m_quad = _mm_setzero_ps();
-        workspace.transform.m_rotation.m_col2.m_quad = _mm_setzero_ps();
         workspace.transform.m_rotation.m_col0.m_quad.m128_f32[0] = 1.0f;
         workspace.transform.m_rotation.m_col1.m_quad.m128_f32[1] = 1.0f;
         workspace.transform.m_rotation.m_col2.m_quad.m128_f32[2] = 1.0f;

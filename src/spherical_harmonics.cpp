@@ -16,6 +16,14 @@
 // Tried: outer order return 123; cubic order return 123; roots before inputs 137;
 // early Z square 128; first-band Z store first 128; repeated inline sqrt(2.0)/sqrt(105.0) (retains
 // the roots like retail but moves the band-3 products) 158-162; /Op 383 (and 0x146020 stops matching).
+// score 113 (was 123): Y/scalar homes and sqrt(2) lifetime still differ; final chain retains sqrt(105).
+// First-band product staging, first Y product, square-difference staging and quadratic
+// mixed-product staging 123; cubic Y staging 129; mixed-root staging 123;
+// final-root product chain 113 plain kept (651/660); linear plus final chain 113.
+// score 59 (was 113): frame and quadratic homes agree; x87/SSE scheduling and sqrt(2) retention differ.
+// XZ product chain 59 plain kept; second cubic root chain, coefficient 8/12/9/5/6 chains
+// and root/edge combination 113; repaired XZ plus early coefficient 15 147/148,
+// cubic X chain 139, first cubic root chain 59.
 // @retail 0x143360
 void spherical_harmonics_evaluate_direction(vector3f const *direction, dword order, real *result)
 {
@@ -44,7 +52,9 @@ void spherical_harmonics_evaluate_direction(vector3f const *direction, dword ord
 		result[5] = band2 * z * y * -0.5f;
 		sqrt5 = (real)sqrt(5.0);
 		result[6] = sqrt5 * (zz * 3.0f - 1.0f) * inverse_sqrt_pi * 0.25f;
-		result[7] = z * x * band2 * -0.5f;
+		real quadratic_xz = z * x;
+		quadratic_xz *= band2;
+		result[7] = quadratic_xz * -0.5f;
 		result[8] = xx_yy * sqrt15 * inverse_sqrt_pi * 0.25f;
 		if (order > 3)
 		{
@@ -64,7 +74,10 @@ void spherical_harmonics_evaluate_direction(vector3f const *direction, dword ord
 			result[10] = xy * sqrt105 * inverse_sqrt_pi * z * 0.5f;
 			sqrt7 = (real)sqrt(7.0);
 			result[12] = sqrt7 * (zz5 - 3.0f) * inverse_sqrt_pi * z * 0.25f;
-			result[14] = inverse_sqrt_pi * z * sqrt105 * xx_yy * 0.25f;
+			real cubic_difference = inverse_sqrt_pi * z;
+			cubic_difference *= sqrt105;
+			cubic_difference *= xx_yy;
+			result[14] = cubic_difference * 0.25f;
 			result[15] = xx_3yy * band3_35 * inverse_sqrt_pi * x * -0.125f;
 		}
 	}

@@ -259,10 +259,16 @@ void function_146de0(void)
 	}
 }
 
-// score 143 (was 143): frame 0x18 versus 0x14 and shared update expansion remain.
+// score 143 (was 143): timestamp high-word home and update expansion still differ.
+// Global analysis off 120 (0x50 frame); frame pointer 161; size/speed 281/143;
+// local analysis with frame/size 120/158; frame with size/speed 281/161; policies restored.
+// frame 0x18 versus 0x14 and shared update expansion remain.
 // Constructed allocator result 164; conditional usable capacity 140/frame 0x14 (three-point gain dropped);
 // conditional padding 141; block/padding outer scopes 143; current block-first homes 143;
 // construction scope 143; zero-first padding 143 at 377 bytes.
+// score 139 (was 143): frame 0x14 now agrees; update expansion and saved registers differ.
+// Per-attempt padding after/before publication 149/149; consumed padding 139/151;
+// guarded consumption 145; rounded padding/consumption 163/162; bounded search 149.
 // j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
 // byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
 // guard 143; post retry capacity 143.
@@ -279,13 +285,14 @@ c_havok_abstract_allocator *function_146e30(void)
 		{
 			block = (byte *)function_80e14(size, 0, 0, 0, 90, 1.0f);
 			g_47988c = (long)block;
+			adjustment = (dword)block & 0xf;
+			if (adjustment)
+				adjustment = 0x10 - adjustment;
+			size -= adjustment;
 		}
 		while (!block && ((size >>= 1) >= 0x100000));
 
-		adjustment = (dword)block & 0xf;
-		if (adjustment)
-			adjustment = 0x10 - adjustment;
-		g_4798a0 = new ((byte *)g_479888 + 0x105440) c_havok_fixed_memory(block, size - adjustment);
+		g_4798a0 = new ((byte *)g_479888 + 0x105440) c_havok_fixed_memory(block, size);
 		function_1c4590(1);
 	}
 	return g_4798a0;

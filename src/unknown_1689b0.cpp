@@ -826,7 +826,11 @@ bool __stdcall function_168f40(long flags, s_vehicle_ray const *ray,
 // score 25 (was 25): plane k/j product operands at +0x314, late i/y
 // products and success-result reload differ; single plane k/j snapshots
 // 340/357; start z/y 124/124; movement j 56; plane k+j 390;
-// correction movement i 56; start z+y 157.
+// correction movement i 56; start z+y 157; the found path's `result = true;` dropped 92
+// (retail's single result-reload exit, but the reload is hoisted onto two inner paths);
+// `return true;` there 25; point/vector read directly in the plane distances 124; the k/j
+// plane terms through `instanced_plane->plane` 177 (both k products then load the plane
+// first, as retail; j does not, and the stepping block grows); the j operands swapped 25.
 // @retail 0x1697c0
 bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const *vector,
 	long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *collision)
