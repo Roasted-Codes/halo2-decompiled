@@ -515,6 +515,9 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // score 151 (was 200): frame 0x58 versus 0x54 and first-length/radius homes remain;
 // earlier interval lifetime 151; earlier request 226; earlier side 200;
 // nested normalizations 200; later radius on fallback body 203.
+// score 151 (was 151): frame 0x58 versus 0x54; first-length/radius homes remain.
+// Early-declared exhaustive interval 205; entry first length 151; trace/location names 151;
+// pre-normalization interval 149; byte side 220. Original body retained.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {

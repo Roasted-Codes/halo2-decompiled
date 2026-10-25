@@ -339,6 +339,9 @@ bool function_22acb4(long player_index);
 // shared item guard 241; descending selection cases 232. Original body retained.
 // score 232 (was 232): extra second-mask slot/constant registers remain;
 // set-only all masks 529; first 381; second 293; third 262; fourth 294.
+// score 196 (was 232): extra second-mask slot and constant homes remain; second enum group kept.
+// Second/fourth/third phases 287; fourth/third/second 297; first enum group 238;
+// complete type-bit selection 227; second enum group 196; combined selections 201.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
@@ -359,9 +362,12 @@ void function_13a050(byte const *status, long user_index, long type, s_13ad48_it
 	SET_CONDITION(first, 8, *(short const *)(status + 0x36) == 1);
 	SET_CONDITION(first, 0x10, status[0x30]);
 	SET_CONDITION(first, 0x20, status[0x31]);
-	SET_CONDITION(first, 0x40, *(short const *)(status + 0x3c) == NONE);
-	SET_CONDITION(first, 0x80, *(short const *)(status + 0x3c) == 0);
-	SET_CONDITION(first, 0x100, *(short const *)(status + 0x3c) == 1);
+	if (*(short const *)(status + 0x3c) == NONE)
+		first |= 0x40;
+	else if (*(short const *)(status + 0x3c) == 0)
+		first |= 0x80;
+	else if (*(short const *)(status + 0x3c) == 1)
+		first |= 0x100;
 	SET_CONDITION(first, 0x100, *(short const *)(status + 0x3c) == 1);
 	SET_CONDITION(first, 0x200, status[0x32]);
 	SET_CONDITION(first, 0x400, status[0x3e]);
