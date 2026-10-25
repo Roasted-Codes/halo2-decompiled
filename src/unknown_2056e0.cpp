@@ -124,6 +124,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Query workspace in caller alone/with broad rotation 234/234; live rotation input 232;
 // first-product output pointer 224; pointer with separate transpose 236; native square-root
 // result, limiter output pointer and both 184/184/184. All helper contracts restored.
+// score 184 (was 184): query/rotation overlap and scalar-product allocation remain;
+// query output pointer ignored/retained/ordinary/ordinary ignored 184/184/184/184;
+// new pointer flow with broad rotation/first product/final product/transpose 221/194/213/222.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

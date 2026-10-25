@@ -1280,6 +1280,10 @@ extern bool g_4ed39d;
 // lobby recovery result 213; with connection/all recovery results 213/222;
 // dialog high/middle cases first 184/184; scoped default-dialog query,
 // dialog-presence and alternate-menu results 184/184/184.
+// score 184 (was 184): game/main byte homes and dialog joins remain; low-mode error 190;
+// both error chains 186; recovery-needed result alone/with low error 174/159 (latter plain);
+// default main alone/with low error 228/229; default handled/both defaults 181/231.
+// The 159 form adds instructions and worsens normalized sequence edits 69 to 77; restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

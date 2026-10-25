@@ -3238,6 +3238,9 @@ void __stdcall function_1264c0(dword arg_0);
 // score 87 (was 102): reconstruction calls, clock conversion and wait layout remain;
 // reconstruction force/plain inline 102/102; with shared fade 87 plain; with flag/gain/deadline/reset
 // 102/102/102/102 fast; ordinary inline plus fade 107 fast; shared fade without declaration 87 plain.
+// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// shared inline reconstruction both/first/next 123/120/108; calling iterator with fade 101;
+// expanded tick names/lexical homes/wait/fill 123/123/123/124.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
