@@ -1362,6 +1362,7 @@ bool __stdcall function_110ab0(long unit_index)
 // Byte-context word/native interruptible 456/453; named channel words 453;
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
+// score 451 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2194,6 +2195,7 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // score 679 (was 679): ordinary-helper Boolean transition 712; native helper result 706;
 // explicit helper result 679; size policy 1026; byte validity 679. Request/control
 // homes and the second stack argument remain unresolved.
+// score 679 (was 679): Request/control homes and second stack argument remain; native node selector 704, node ordinal 679, separate transformed point 686, completion cases first 679, early data construction 679.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
