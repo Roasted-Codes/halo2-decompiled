@@ -960,6 +960,13 @@ real function_21f650(long channel_index, long mode);
 
 /* moves a voice on to its queued chunk once its stream has played the
    current one, and advances its play time */
+// score 42 (was 42): function_219290's two arguments load group-first (retail index-first; its
+// parameters swapped would fix it, but contributor caller 0x21c400 calls the present order), one
+// store sits after the permutation copy, the second release hoists the chunk-table load, and the
+// last block swaps ecx/edx with the post-call SOUND_SYSTEM load in edx (retail eax). Tried: a
+// function-wide channel_index local 113; the last block's locals folded into one expression 42;
+// elapsed_time read into a local before the rate call 42; a stream pointer for the last state
+// test 42; the table pointer declared at the outer scope 42.
 // @retail 0x12a450
 void sound_voice_update_chunks(short voice_index)
 {
@@ -1903,6 +1910,13 @@ static inline void approach_126660(real *value, real delta, real lower, real upp
 /* advances the sound system's clock and the ambience fades, and fades the
    master gain out while the game asks for it (after its delay) and back in
    once nothing is busy */
+// score 30 (was 30): retail reloads elapsed_time after function_12be90 (ours keeps it in xmm0;
+// BLOCKED-BY 0x12be90, whose file another lane holds), so the fade-in clamp and every jump
+// after it differ; the fade-out clamp's two subtractions sit in swapped registers. Tried:
+// elapsed_time stored before seconds 28 (top then exact); the products' * and / swapped 30;
+// fade-out through PIN_126660 74, as PIN_126660 + fade 68, fade + PIN_126660 68, via SOUND_SYSTEM
+// 68; a change local before the step 77; fade-in without the elapsed local 44. Every value-first
+// fade-out merges retail's two return tails.
 // @retail 0x1269f0
 void sound_system_update_time(void)
 {
