@@ -316,6 +316,7 @@ void __stdcall function_2b0565(c_class_2b01eb *widget, long frame)
         rectangle.y0 += offset_y;
         rectangle.x1 += offset_x;
         rectangle.y1 += offset_y;
+        /* a switch, not an if: retail sign-extends the field and decrements it (an if scores 109) */
         switch (*(short *)((byte *)widget->definition + 8))
         {
         case 1:
@@ -4595,7 +4596,7 @@ void c_clan_options_list::handle_item(s_controller_reference **controller, long 
 			if (player_slot_get_identity(controller_index, &identity))
 			{
 				/* volatile: stored to the stack slot where retail spills
-				   controller_index, which keeps retail's length (see the score note) */
+				   controller_index, which keeps the function within a byte of retail's length (see the score note) */
 				long volatile member = function_1a334a(controller_index, (_XUID const *)&identity);
 
 				if (identity.type != 1 && member)
