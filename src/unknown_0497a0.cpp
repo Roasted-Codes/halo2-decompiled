@@ -186,11 +186,11 @@ void function_0497a0(
 
 	*old20 = *(vector4f *)&result->v20;
 	*old30 = *(vector4f *)&result->v30;
-	real horizontal_offset = camera->f6c;
+	real side_shift = camera->f6c;
 	real vertical_shift = camera->f70;
-	result->v20.i = result->v20.i + (horizontal_offset * result->v40.i);
-	result->v20.j = (result->v40.j * horizontal_offset) + result->v20.j;
-	result->v20.k += horizontal_offset * result->v40.k;
+	result->v20.i = result->v20.i + (side_shift * result->v40.i);
+	result->v20.j = (result->v40.j * side_shift) + result->v20.j;
+	result->v20.k += side_shift * result->v40.k;
 	result->v30.i += result->v40.i * vertical_shift;
 	result->v30.j = (result->v40.j * vertical_shift) + result->v30.j;
 	result->v30.k = (result->v30.k + (vertical_shift * result->v40.k));
