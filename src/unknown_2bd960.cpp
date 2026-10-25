@@ -441,6 +441,10 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // shared point count 326; height plus count 345 (plain).
 // score 130 (was 134): protected control/sampling calls and scan induction remain;
 // center/radius/both/height/all endpoint scans 375/475/716/378/950f; frame/size/global 237/276/1164f.
+// score 130 (was 130): Protected control/sampling conventions and scan induction still differ.
+// shared edge magnitude 158p; native radius displacement 130p; center component loop 138p; scale
+// component loop 130p; marker position reference 133p; marker array cursor 165p; perimeter vertex
+// references 130p; edge magnitude with radius value 158p.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

@@ -75,6 +75,11 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Source/index initialization swapped 162; ordinal initialized inside guard 163; offset
 // declarations reversed 162; filter input captured 162; override query result 162;
 // existing object getter 162; entry order plus getter/query result 162/162.
+// score 155 (was 162): Early source retention, count/cursor and feature-byte homes still differ.
+// selection-row cursor 162f; word-row cursor 155p; both input cursors 155f; outer feature
+// lifetimes 162f; outer decoded index 162f; outer encoded byte 162f; mask entry lifetime 162f;
+// shared argument lifetimes 162f; cursor values name 155f; outer ordinal name 155f; inner ordinal
+// name 155f; source pointer name 155f; cursor and ordinal role names 155f.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
@@ -115,6 +120,7 @@ void function_133f70(s_133f70 const *arg_1, bool arg_2)
 				dword local_7 = ((local_2->field_170 & 4) << 13) | ((local_2->field_170 & 0x40) << 7)
 					| (local_2->field_70[local_1] ? 0x800 : 0) | (local_2->field_16c ? 0x400 : 0)
 					| local_2->field_1ac | local_2->field_1b0;
+				word const *entry_cursor = (word const *)((byte const *)local_2 + 0xc6 + local_15);
 				for (long local_8 = 0; local_8 < *(long const *)((byte const *)local_2 + local_13); local_8++)
 				{
 					byte selected = *((byte const *)local_2 + 0x75 + local_14 + local_8);
@@ -131,7 +137,8 @@ void function_133f70(s_133f70 const *arg_1, bool arg_2)
 						NULL, local_2->field_1d0, local_2->field_1b4, local_2->field_1c0,
 						local_2->field_1c4, local_10, local_11, local_2->field_1d4,
 						local_2->field_1d8, local_2->field_1dc, local_2->field_1e0,
-						(byte)*(word const *)((byte const *)local_2 + 0xc6 + local_15 + local_8 * 2), &local_2->field_194, local_2->field_1a0);
+						(byte)*entry_cursor, &local_2->field_194, local_2->field_1a0);
+					++entry_cursor;
 				}
 
 			}
