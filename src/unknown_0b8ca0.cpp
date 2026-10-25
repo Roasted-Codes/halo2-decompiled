@@ -212,6 +212,7 @@ short function_b8d30(long object_index, long marker_name, s_object_marker *marke
 
 // Preserve the activation call boundary while inlining the component lookup.
 __declspec(noinline) void __stdcall function_b9b90(long object_index, bool disable);
+// score 4 (was 4): the component pool data loads after the index scaling, into eax (retail: before it, into ecx); tried a flags pointer local 4, a component index local tested and passed 13, a goto-free bool form 55, NONE on the left 4, a component pointer local 4
 // @retail 0xb9b90
 void __stdcall function_b9b90(long object_index, bool disable)
 {
@@ -1080,7 +1081,6 @@ extern s_object_list *g_4de2f4;
 void function_c0110();
 void function_1089d0(long object_index);
 
-// score 3 (was 3): the record pointer is materialised in esi in ours, retail loads the table into ecx and computes the record address with lea
 // @retail 0xb6c50
 void function_b6c50()
 {
@@ -1108,14 +1108,12 @@ void function_b6c50()
     while (iteration.object)
     {
         long index = iteration.iterator.object_index;
-        s_record_pool *pool = g_4e0300;
-        byte *records = pool->data;
-        long offset = (index & 0xffff) * 12;
-        s_object_header_view *header = (s_object_header_view *)(records + offset);
-        if (header->flags & 1)
+        s_object_header_view *header = OBJECT_HEADER_GET(index);
+        byte flags = OBJECT_HEADER_GET(index)->flags;
+        if (flags & 1)
         {
-            byte *current = *(byte **)(*(byte *volatile *)((byte *)pool + 0x44) + offset + 8);
-            header->flags &= ~5;
+            byte *current = (byte *)OBJECT_GET(index);
+            header->flags = flags & ~5;
             if ((1 << header->type) & 0x1883) function_1c38a0(index);
             if ((bool)((s_object_flags *)current)->flag14) --*(short *)((byte *)g_4de2f4 + 4);
         }

@@ -494,15 +494,13 @@ void function_12e150(long tag_index)
 	}
 }
 
-// score 37 (was 37): ours keeps the record pointer in esi, retail uses edi, and retail has two early exits that
-// return 1 where ours falls through to the common tail.
 // @retail 0x12e210
 bool __stdcall geometry_cache_block_busy(long block_index)
 {
 	s_cache_block *cache_block = &((s_cache_block *)g_4e648c->data)[block_index & 0xffff];
 	s_physical_block *physical_block = physical_block_get(block_index);
-	bool result = false;
 	long age = physical_object_get()->time - physical_block->time;
+	bool result = false;
 
 	if (age == 0)
 	{
@@ -512,11 +510,9 @@ bool __stdcall geometry_cache_block_busy(long block_index)
 	{
 		return true;
 	}
-	if (age >= 5)
-		return false;
-	if (cache_block->block->runtime_linked)
+	if (age < 5 && cache_block->block->runtime_linked)
 	{
-		result = fixup_group_has_resource((s_fixup_group *)cache_block->block, (byte *)(physical_block->offset << physical_object_get()->page_shift) + g_4e6494);
+		result = fixup_group_has_resource((s_fixup_group *)((s_cache_block *)g_4e648c->data)[block_index & 0xffff].block, (byte *)(physical_block->offset << physical_object_get()->page_shift) + g_4e6494);
 	}
 	return result;
 }
