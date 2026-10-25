@@ -1605,6 +1605,8 @@ static inline bool weapon_state_replaceable(long current, long state)
 // forced replacement 69; long replacement 115; complete predicate arms 69; predicate tests 136;
 // state-selected flags 96; case-selected flags 137; const animation receiver 69;
 // wide predicate and case flags 128.
+// nested retry 69; animation failure-first 76; nested inventory gates 69; direct predicate returns 69;
+// role-based selection names 69; short animation offset 129; complete mask arms 117; shared case pairs 129.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {
@@ -2193,6 +2195,8 @@ static __forceinline long real_to_long(real value);
 // score 89 (was 89): ticks/trigger/product homes and release/age registers still differ.
 // conversion scope 89; press reference 89; hold reference 89; release reference 89;
 // complete byte clamp 162; output chain 89; threshold mask 133; release and conversion scope 89.
+// shared object/header getters 89/89; delta after age store 152; equality-first 106; rising-first 119;
+// shared held clear 118; redundant release test removed 110; immutable receivers 89.
 // @retail 0x1027b0
 void function_1027b0(long weapon_index, long trigger_index, bool *pressed, bool *held, bool *released)
 {
@@ -2899,6 +2903,9 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // ebp, and the word of the record is read into cx where retail reads it into dx.
 // long outcome 128; byte outcome 127; long helper return 127; both wide 128; const barrel 52;
 // const magazine tag 52; const tags 52; forced-body receiver names 52.
+// late magazine tag 127; late const tag 127; saved query selector 107; failure-first 52;
+// exemption-first 76; distinct stop ordinals 52; immutable selector/barrel 52/52;
+// shared object/header getters 52/52.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
