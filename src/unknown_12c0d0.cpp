@@ -701,8 +701,8 @@ long log2_floor(dword value);
 /* builds a bitmap's hardware texture header over its description, pointing
    into the shared pixel data */
 // score 58 (was 86): everything up to the mip count call matches. After it retail keeps the
-// levels in EAX, the sizes in ECX/EBX/EDI, the format bits in EBP and zeroes with EDX; ours
-// assigns the same values other registers (EDX/EAX/EDI/ECX, EBX, ECX). Tried: the default
+// width/height/depth in ECX/EBX/EDI, the format bits in EBP and zeroes with EDX; ours keeps
+// the height in EDI, the depth in EDX, the bits in EBX and zeroes with ECX. Tried: the default
 // format in a plain local 109 (kept in EDI, the width spilled instead); the if/else 86;
 // the sizes read from the fields at each use 124; the sizes declared before the format 106;
 // `g_4e646c + hardware_data` 109; the format read before the data 110; the dword sizes taken
