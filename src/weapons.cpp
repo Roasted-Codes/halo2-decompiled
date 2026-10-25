@@ -1933,6 +1933,10 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 // tried return from test 181; other reserve reference 123; weapon record reference 124.
 // tried read-only settings 124; reserve publication 124; storage names 124.
 // tried size policy 451; inline depth zero 124.
+// Success before transfers 124; delayed tag 197; remaining need 224;
+// need before holder 125; request-first clamp 182; upper bound first 124;
+// actual tag reference 124; unsigned slot counter 124. Magazine/transfer
+// registers and pooled receiver homes still differ.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2904,6 +2908,10 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // ebp, and the word of the record is read into cx where retail reads it into dx.
 // Ordinary inline 468; automatic inline 468; barrel reference 52; magazine-tag reference 52;
 // magazine reference 52; combined references 52; empty-first tests 88; query result first 140.
+// Actual flag member 52; tag at each use 201; actual tag reference 52;
+// success before notification 116; parent handle 52; capacity snapshot 99;
+// absolute object index 90; flag member with tag reference 52. EBP/EBX
+// receiver roles and DX/CX selector still differ.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
