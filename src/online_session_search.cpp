@@ -680,6 +680,9 @@ done:
 // details/score cursor base and input/score homes remain. Native score fields
 // 213; complete count-clamp arms 213; named interpolation fraction 213; indexed
 // result loop 214; single total-score accumulator 229.
+// Initial snapshot plus persistent details cursor 190; with invalid-entry continue 199;
+// early details-state observation 196; count/value/kind read order 128;
+// ordinary-field defaults before details 173. Original body retained.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

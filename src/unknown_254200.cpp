@@ -185,7 +185,11 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 276 (was 342): frame 0x10 agrees; texture-factor homes and reservation scheduling still differ.
+// score 237 (was 276): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// Native color value 246 fast / 237 plain; value half-size 276; replicated alpha 349;
+// alpha after clear 265; second coordinate C entry 403; color with later alpha 252;
+// memcpy color 246. Only the native color value is kept.
+// Previously 276 (was 342): frame 0x10 agreed; texture-factor homes and reservation scheduling differed.
 // Value half-size 342; disabled-path return 342; C begin/vertex calls 561;
 // C texture-state calls 455; role-named texture coordinates 342.
 // First-quad scope 342; texture expressions at calls 386; C++ color entry 342;
@@ -245,10 +249,10 @@ void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 			g_484f68.PSFinalCombinerInputsABCD = 0xc;
 			g_484f68.PSFinalCombinerInputsEFG = 0x1c00;
 			function_15180(&g_484f68);
-			color3f const *local_2 = (color3f const *)function_13927e(g_4b9ed8);
+			color3f color = *(color3f const *)function_13927e(g_4b9ed8);
 			function_1cf50();
 			D3DDevice::Begin(D3DPT_TRIANGLEFAN);
-			D3DDevice_SetVertexData4f(5, local_2->red, local_2->green, local_2->blue, 1.f);
+			D3DDevice_SetVertexData4f(5, color.red, color.green, color.blue, 1.f);
 			real local_3 = arg_1 * 0.5f;
 			real local_4 = local_3 + 0.5f;
 			real local_5 = 0.5f - local_3;
