@@ -614,6 +614,9 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 // Forward value copy 474; direct projected element 246; scaled direct element 247; separate scaled vector 115.
 // Second-plane-first 425; reuse first negated normal 463; indexed plane selection 375.
 // Frame pointer 574; zero inline depth 609.
+// First/second input-vector value copies 463/474; external vector references 251/279;
+// both copies 454; shared scaled difference 390; conditional plane enable 474;
+// projection cursor before its guard 115. Arithmetic grouping and count guards retained.
 // @retail 0x1652e0
 bool function_1652e0(s_view *view, real margin, const point3f *points, long point_count, point3f *projected_points, short *projected_count, s_bounds3d *bounds, bool use_plane0, bool use_plane1)
 {

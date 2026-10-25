@@ -83,6 +83,8 @@ long function_14de70(long arg_1);
 // child test order 141f; wider selection scope 131f; cached zone count 145f (control 131f).
 // Native output sentinel/flag/scalar/pairs/full/scoped views 131f (control 131f);
 // the original prefix stores and all protected query interfaces are retained.
+// Seat-word observation, native parent/child links, ordinary child for, combined links,
+// child for plus seat word and display/both workspace names each 131f (control 131f).
 // @retail 0x13992a
 void function_13992a(byte *arg_1, long arg_2)
 {
