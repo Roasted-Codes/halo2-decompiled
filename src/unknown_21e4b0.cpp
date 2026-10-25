@@ -117,6 +117,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // result from startup tests 424; tested-state transfer 424; result at first test 424;
 // final result after reset completion 303; before effects 303; before submix 262;
 // before impulse cleanup 174; before volume stores 165.
+// score 165 (was 165): saved success/type/first-channel allocation remains;
+// listener consumer scope 165; with reset/earlier byte state 280/283; submix scope 165;
+// both scopes 165; both with reset state 280; listener/reset with pointer-first bins 280;
+// all consumer boundaries 280. Original short-circuit loops retained.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

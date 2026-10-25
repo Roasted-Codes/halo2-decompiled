@@ -77,6 +77,9 @@ extern long g_55c154;
 // destination name after/before default 88/88; destination record late/early 88/88;
 // record/name receivers 88; publication order 174; named second load 61;
 // common name receiver 88; split loads plus common/default name receiver 199/199.
+// score 61 (was 61): creation classification spill and selective copy expansion remain;
+// live entry-handle/edit-mode/type fields 61/61/61; handle-mode/handle-type/mode-type
+// field pairs 61/61/61; three live fields and external record combination 61/61.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {

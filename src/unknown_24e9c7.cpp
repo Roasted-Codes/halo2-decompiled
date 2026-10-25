@@ -140,6 +140,9 @@ struct s_24e9c7_bounds
 // Scalar homes and sprite-source/SSE scheduling remain; original quad retained.
 // Scalar origin x/y/both 194/194/194; scaled height/width/both accumulation 125/125/125;
 // side-product updates 125; y capture with side updates 194. Original scalar homes and spills remain.
+// score 125 (was 125): result/metadata homes and geometric scheduling remain;
+// external group/live count/live shader 125/125/125; live scale/group with scale 141/141;
+// count with shader/size accumulator/across component lifetimes 125/125/138.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {
