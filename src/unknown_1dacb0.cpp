@@ -1099,6 +1099,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // carrier remain. Candidate before iterator 967; post-search result copy 998; earlier candidate/native
 // iterator 965; post-search copy with saved mode 998; with saved type 998 (fast).
 // Frame 0x2c agrees; result/output/candidate homes remain. Entry iterator after result 1004; missing-name continue 991; returned-object library copy 828; entry iterator before result 993; shared success predicate 992 (fast).
+// score 828 (was 828): frame 0x2c agrees; class/NONE, result/output homes and later zero remain.
+// Tight iterator scope 828; entry output declarations 828; combined scopes 828; native-long
+// selected index 990; all original keys retained jointly 828 (fast).
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

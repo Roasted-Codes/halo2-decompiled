@@ -86,6 +86,9 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // Completed-request/result names 433; direct selected-file calls 440; direct size predicate 374;
 // header-result branches 413; terminal disposition tests 434; adjacent state clears 439;
 // direct size predicate plus header-result branches 382.
+// score 367 (was 374): frame 0x110 agrees; request-copy homes and outgoing write options remain.
+// Direct initial slot 393; failed publication first 473; terminal case first 467; signed-word
+// state 572; dependency-time cursor 367 kept (1712/1720 bytes); cursor-end bound 375.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
@@ -128,6 +131,7 @@ bool function_2141f0(void)
 			success = g_55bcf0 == 0x800 && cache_header_verify((s_cache_header const *)&g_55b4f0);
 			if (success)
 			{
+				FILETIME const *dependency_time = g_55b4f0.dependency_times;
 				for (long type = 0; type < 3; type++)
 				{
 					if (g_55b4f0.dependencies_required[type])
@@ -135,11 +139,12 @@ bool function_2141f0(void)
 						long slot = cache_file_slot_from_type(type);
 
 						if (!g_557c90[slot].header.path[0] ||
-							CompareFileTime(&g_557c90[slot].header.source_time, &g_55b4f0.dependency_times[type]) != 0)
+							CompareFileTime(&g_557c90[slot].header.source_time, dependency_time) != 0)
 						{
 							success = false;
 						}
 					}
+					++dependency_time;
 				}
 			}
 			state = 5;
