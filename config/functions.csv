@@ -1131,7 +1131,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 0006b730,79,game,speed,a16 pad,,,0006cd50 0016b840,src/online_tasks.cpp,matched
 0006b780,81,game,speed,a16 pad,,,0006b640 0016b910,src/online_tasks.cpp,matched
 0006b7e0,22,game,speed,a16 pad,,,,src/online_tasks.cpp,matched
-0006b800,129,game,speed,a16 pad,,,,src/online_tasks.cpp,todo
+0006b800,129,game,speed,a16 pad,,,,src/online_tasks.cpp,matched
 0006b890,124,game,speed,a16 pad,,,,src/online_tasks.cpp,todo
 0006b910,64,game,speed,a16 pad,,,,src/online_tasks.cpp,matched
 0006b950,293,game,unknown,a16,,,0006b640 0006b890,src/online_tasks.cpp,todo
@@ -7438,7 +7438,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 0020a1a0,230,game,speed,a16 pad,,,,src/unknown_20a130.cpp,matched
 0020a290,72,game,speed,a16 pad,,,000bb760,src/unknown_209520.cpp,matched
 0020a2e0,424,game,speed,a16 pad,,,,src/unknown_209bc0.cpp,matched
-0020a490,612,game,speed,a16 pad,,,001dee80,src/unknown_209bc0.cpp,todo
+0020a490,612,game,speed,a16 pad,,,001dee80,src/unknown_209bc0.cpp,matched
 0020a700,72,game,speed,a16 pad,,,0016b650 001ded00 00208ff0 0020a750,src/hs_scheduler.cpp,matched
 0020a750,118,game,speed,a16 pad,,,0016b6b0 0016b7a0 002090a0 002a09c0,src/hs_scheduler.cpp,matched
 0020a7d0,61,game,speed,a16 pad,,,00209290 0020a850,src/hs_scheduler.cpp,matched
