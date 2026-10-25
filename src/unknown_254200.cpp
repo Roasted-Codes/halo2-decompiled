@@ -135,6 +135,15 @@ void function_254200(void)
 
 #undef program_words_254200
 
+// score 4 (was 4): two depth/top-edge reload pairs remain.
+// shared left edge lifetimes 162;
+// shared right edge lifetimes 118;
+// shared left/right edge lifetimes 171;
+// shared bottom edge lifetimes 150;
+// shared left/bottom edge lifetimes 146;
+// shared right/bottom edge lifetimes 142;
+// shared left/right/bottom edge lifetimes 189;
+// read-only point and extent snapshots 4;
 // @retail 0x254490
 void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, color3f const *arg_3, bool arg_4)
 {

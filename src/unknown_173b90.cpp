@@ -823,6 +823,9 @@ public:
 // score 329 (was 355): frame 0x64 versus 0x60; flag clear and selective calls differ.
 // Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
 // child tag scalar 394; long result 329; dword flags 401.
+// score 308 (was 338): Frame 0x60 now agrees; flag transfer, child carriers and selective calls
+// remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
+// 308 (plain verified); child for-loop 338.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -927,14 +930,13 @@ bool function_174a30(s_particle_system_datum *particle_system, real dt)
 			}
 			matrix.scale = 1.0f;
 			matrix.position = *(point3f *)(particle + 0x1c);
-			dword color = particle_system->color;
 			s_particle_system_spawn spawn;
 			spawn.scale = *(real *)(particle + 8) / *(real *)(particle + 0xc) - dt;
 			spawn.unknown = dt;
 			spawn.location_index = child->location_index;
 			c_type_4e7709 *child_tag = function_137bd0(child->function_1751d0()->tag_index);
 			bool tinted = child_tag->tinted();
-			function_175a80(tinted, color, 0xffffffff, child, child_tag->multiplied());
+			function_175a80(tinted, particle_system->color, 0xffffffff, child, child_tag->multiplied());
 			function_175270(child, &spawn, &matrix, false);
 		}
 		if (!function_174a30(child, dt))

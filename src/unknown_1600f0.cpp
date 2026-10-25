@@ -1022,7 +1022,12 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection registers remain;
 // arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
 // receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
-// score 184 (was 184): icon tail and time/connection register schedule still differ.
+// score 184 (was 184): Deferred icon tail and time/connection coordinate registers remain. place
+// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
+// rectangle aggregates 320; trailing rectangle aggregates 306.
+// icon tail and time/connection register schedule still differ.
+// icon tail and time/connection register schedule still differ.
 // entry icon zero 261f; outer icon scope 184f.
 // zero before icon init 205f; zero before place format 248f.
 // signed word result 184f; unsigned native result 184f.
@@ -1244,6 +1249,7 @@ PRIVATE inline long score_string_list_1608e0()
 // global optimization off 2237; size optimization 1348.
 // viewer pointer name 810; viewer lookup at first scroll use 848; short displayed-row number 811;
 // short row rank 810; direct team activity predicate 826.
+// score 805 (was 810): frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1422,7 +1428,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		long place = display.player_ranks[player_row] / 2 + 1;
 		bool has_engine = game_engine_get() != NULL;
 		bool teams = has_engine && g_4e6948->flags184.bit0;
-		char team = *(char *)(player + 0xc0);
+		char const &team = *(char *)(player + 0xc0);
 		if (teams && team != NONE)
 		{
 			for (short team_row = 0; team_row < display.team_count; ++team_row)

@@ -47,6 +47,9 @@ const dword g_455978[81] = {
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
 // both path lifetimes 485; count just before scan 366; read-only body 370; native transform copies 370.
 // score 361 (was 366): the presence callback at its retail 12-byte size, initialised by its constructor.
+// score 361 (was 361): Frame 0x1d4 agrees; optional input/scalar homes and helper expansion differ. Tried early
+// bounds filter 430; early transform filter 361; both early filters 423; reset at query 361; direct ray rejection
+// 393; per query callback 376; callback and direct ray 376; early filters and reset 423.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

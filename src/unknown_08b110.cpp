@@ -121,6 +121,11 @@ void function_82ac0(s_object_relevance_source *source, s_object_relevance_result
 // presence 76; complete index predicate 25; native pointer advancement 25;
 // immutable post-info release owner 25; presence/owner 76; separated error
 // enum 25; enum/presence 76; validation/publication/owner 25.
+// score 25 (was 25): error-2 arm still inline before the release, retail sinks
+// it past the cleanup return. Arms swapped 49; success/error returns split 73;
+// handler-error default 64; separate post-hoc allocation test 25; function-scope
+// error 25; const block 25; error declared after allocation 25; separate test with
+// result after release 41.
 // @retail 0x8b110
 long c_vtable_450cb8::v0(long index, long a2, long a3, long *count, s_item_450cb8 *items, void *a6)
 {

@@ -71,6 +71,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // score 646 (was 652): Frame 0xf8 versus 0x108 and basis/rotation homes remain.
 // native rotation return 666; native origin return 695; native cross return 864;
 // short ray ordinal 712; active minimum lifetime 646 (fast).
+// score 646 (was 646): Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
+// ray length through hit 661; hit clear per ray 719; angle limit observed once 647; ray length array
+// initializer 646; joined output zero 648.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

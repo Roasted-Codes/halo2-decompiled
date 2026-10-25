@@ -68,6 +68,9 @@ static __forceinline long real_to_long(real value);
 // distinct current-shape lifetime 353. Seven tying forms share the preview instruction prefix.
 // Lead (@coldspear, #801): with the capsule made an aligned local instead of the placement-new
 // buffer, the frame becomes retail's aligned one (and esp, -16) and the count falls to 326.
+// Frame 0x8c versus aligned 0x94 remains; complete dispatch 4/5,1,3,6,2 350;
+// 4/5,3,2,6,1 350; 4/5,6,3,1,2 354; 6,3,1,4/5,2 353; 6,4/5,2,3,1 354.
+// Position yzx/zxy/zyx 353/353/353 (plain); no qualifying executable gain.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {

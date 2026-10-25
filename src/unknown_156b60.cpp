@@ -183,6 +183,9 @@ PRIVATE void render_clamp_156b60(real *value)
 // score 38 (was 38): offset/clamp schedule persists; early actual attribute
 // offset 126, width home 135, offset/width 157, offset/length 45, geometry 60;
 // offset before alpha 158, before color 184, entry attribute declaration 126.
+// score 38 (was 38): offset/clamp allocation remains; in-place independent
+// tests/low return/assigned result 38/38/38, upper-first 39; native field
+// reference with original/independent/low-return/upper-first flow 38/38/38/39.
 // horizontal-offset and clamp/attribute scheduling remain.
 // Fixed UVs before dimensions/after dimensions/before alpha/after alpha 270/194/163/141;
 // each with geometry-time offset production 251/144/163/104.
