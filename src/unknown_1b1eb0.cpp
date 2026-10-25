@@ -165,6 +165,11 @@ real function_1e3920(long actor_index);
 // reference before request/index/guard 203/203/201; late output index 163;
 // selection flag before clear 168; scratch before fields/clear 164/181;
 // early reference/scratch with late index 204.
+// score 164 (was 164): delayed ESI slot, scalar homes and cold reference arms remain.
+// Short-circuit invalid result 166; empty-reference first 166; mode-first guard 163;
+// copied initial reference 139 (dropped); target reference 162; request permission 165;
+// short-circuit/mode-first 166; both reference copies 143 (dropped);
+// declared-field equality 196; actual pooled-field reference 164.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

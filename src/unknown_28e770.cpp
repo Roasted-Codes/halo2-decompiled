@@ -114,6 +114,10 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // long marker count 206f; case-assigned short/long count 129/206f;
 // prior motion across scale 203f; elapsed fraction 129f; clamped elapsed 141f;
 // mode/all inputs assigned by arms 536/552f; unchanged preview 129f.
+// score 118 (was 118): alignment operands, marker clear join and contribution schedule remain.
+// In-place direction scale 124f; contribution-first adds 124f; both 124f;
+// separation/combined length results 124/124f; both 124f; drift distance 124f;
+// normalization results with in-place scale 124f; preview 124f, all 103 code differences.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {
