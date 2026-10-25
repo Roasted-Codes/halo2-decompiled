@@ -127,7 +127,11 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 
 struct s_object_tag
 {
-	byte unknown00[0x1d4];
+	short type;
+	word flag0 : 1;
+	word flag1 : 1;
+	word : 14;
+	byte unknown04[0x1d4 - 4];
 	real value1d4;
 	byte unknown1d8[4];
 	real value1dc;
@@ -146,7 +150,9 @@ struct s_object_range
 struct s_object
 {
 	long tag_index;
-	dword unknown04 : 26;
+	dword unknown04 : 13;
+	dword flag13 : 1;
+	dword unknown04a : 12;
 	dword flag26 : 1;
 	dword unknown04b : 5;
 	byte unknown08[4];
@@ -981,13 +987,18 @@ PRIVATE __forceinline bool surface_status_failed(long status)
     return status == 1 || status == 2 || status == 3;
 }
 
-// score 44 (was 44): early object-flag register and pointer/flags homes
-// differ, followed by tag-bit extraction. Zero then OR 148; const tag 44;
+// score 2 (was 44): the retry call computes `flags & ~1` after pushing the object
+// index; retail computes it before.
+// Earlier, with volatile tag pointer and flags locals (44): zero then OR 148; const tag 44;
 // byte tag bitfield 135; dword object bitfield 44; named query failure 44;
 // explicit final exits 181; inverse failure result 44; retry flag update 44.
 // Status predicate as byte 65, short 69, long 68; arm-assigned result 129;
 // signed status bounds 130; selected predicate 161; staged result 58;
-// ordinary predicate inline 139. Original predicate and locals restored.
+// ordinary predicate inline 139.
+// Now (no volatiles, object bit 13 and the tag's word bit 1 as bitfields, flags = 0 then
+// |= 1 twice) 2: retry flags snapshot 2; `flags &= ~1` before the retry 2; retry flags in
+// a local 2; dword flags 2; flags declared before the tag pointer 4; point declared first 24;
+// failed set after the retry 104.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
@@ -998,29 +1009,23 @@ long function_d1850(long object_index, bool value, s_effect_color_query *query)
         if (*(long *)(bsp + 0x1c) != NONE && *(long *)(bsp + 4) == *(long *)((byte *)g_4e0348 + 8))
         {
             s_object *object = OBJECT_FROM_INDEX(object_index);
-            dword object_flags = *(dword *)((byte *)object + 4);
-            byte *volatile definition = g_4e3b44[object->tag_index & 0xffff].bytes;
-            long volatile flags;
-            bool object_bit = (object_flags >> 13) & 1;
-            if (object_bit) flags = 1;
-            else flags = 0;
-            byte tag_flags = definition[2];
-            bool tag_bit = (tag_flags >> 1) & 1;
-            if (tag_bit) flags |= 1;
+            s_object_tag *definition = TAG_FROM_OBJECT(object);
+            long flags = 0;
+            if (TEST_FIELD_BIT(object->flag13)) flags |= 1;
+            if (TEST_FIELD_BIT(definition->flag1)) flags |= 1;
             point3f *point = (point3f *)((byte *)object + 0x30);
             long status = function_d2a50(flags, object_index, value, query, 0, point);
             if (surface_status_failed(status))
             {
                 failed = true;
-                long retry_flags = flags;
-                if (retry_flags & 1)
+                if (flags & 1)
                 {
-                    status = function_d2a50(retry_flags & ~1, object_index, value, query, 0, point);
+                    status = function_d2a50(flags & ~1, object_index, value, query, 0, point);
                     if (surface_status_failed(status)) failed = true;
                 }
                 if (status != 3)
                 {
-                    short type = *(short *)definition;
+                    short type = definition->type;
                     if (type == 1)
                     {
                         byte *unit_tag_bytes = g_4e3b44[OBJECT_FROM_INDEX(object_index)->tag_index & 0xffff].bytes;
