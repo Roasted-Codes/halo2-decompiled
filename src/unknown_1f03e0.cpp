@@ -899,12 +899,9 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
         copy = *input;
         input = &copy;
     }
-    real i = input->i;
-    real j = input->j;
-    real k = input->k;
-    out->i = j * matrix->left.i + k * matrix->up.i + i * matrix->forward.i;
-    out->j = i * matrix->forward.j + j * matrix->left.j + k * matrix->up.j;
-    out->k = i * matrix->forward.k + j * matrix->left.k + k * matrix->up.k;
+    out->i = input->j * matrix->left.i + input->k * matrix->up.i + input->i * matrix->forward.i;
+    out->j = input->i * matrix->forward.j + input->j * matrix->left.j + input->k * matrix->up.j;
+    out->k = input->i * matrix->forward.k + input->j * matrix->left.k + input->k * matrix->up.k;
 }
 
 // score 101 (was 101): final override load order and rotation input/coefficient schedule differ.
@@ -917,6 +914,14 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // Final point setter 104; completed translation 189; translation record 102;
 // rotation result 175; direction snapshot 187; orientation snapshot 193;
 // point/rotation results 177; translation/orientation snapshots 301.
+// score 87 (was 101): the rotation reads each input component at its use, as retail
+// does (re-reading after every store); that is correct in place, since the alias copy
+// points the input at the copy when it is the output. Override additions still load
+// the velocity before the position, and the rotations' term order and operand roles
+// differ. Components accumulated by statements in retail's term order 86; matrix-first
+// products 86; the 0x2477b1 helper's form 88; typed position/velocity pointers 86;
+// swapped operands 86; through shape_add 164 (position first, as retail, plus a copy);
+// typed pointers with explicit sums 86.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

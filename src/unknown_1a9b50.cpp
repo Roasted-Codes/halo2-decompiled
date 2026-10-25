@@ -426,6 +426,9 @@ extern point2f *g_468778;
 // Round 173: external actor / guarded slot / combined references 379/379/379;
 // external facing reference 379; prediction-path velocity reference 395. Frame 0x40 agrees;
 // early actor/settings/prop carriers remain. Original body retained.
+// score 375 (was 379): frame 0x40 agrees; early actor/settings/prop carriers remain.
+// Failure guard with direct result 440; primary components i/j/k 379; earlier normalization
+// distance 375 kept (plain); double distance 406; named facing projection 387.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -490,6 +493,7 @@ bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 				}
 				else
 				{
+					real local_13 = 0.0f;
 					real local_10 = 0.0f;
 					real local_11 = magnitude3d(&local_6->field_1c);
 					if (local_11 > 0.0f)
@@ -498,7 +502,6 @@ bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 					local_9.j = local_6->field_1c.j * local_12 + local_6->field_4.y - local_0->position.y;
 					local_9.k = local_6->field_1c.k * local_12 + local_6->field_4.z - local_0->position.z;
 					local_9.i = local_6->field_1c.i * local_12 + local_6->field_4.x - local_0->position.x;
-					real local_13 = 0.0f;
 					if (0.0f > local_8->k * local_9.k + local_8->j * local_9.j + local_8->i * local_9.i)
 						local_9 = *local_8;
 					else

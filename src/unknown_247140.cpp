@@ -252,7 +252,11 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 194 (was 194): the range field (a function-data member at +0x50 with a get_range_maximum reader) scores
+// score 194 (was 194): frame 0x1c versus 0x20, input registers and final
+// selector expansion differ. Per-iteration definition 196; conditional
+// accumulation 194; flag-first cleanup 196; lower-first bounds 202;
+// upper range first 194.
+// the range field (a function-data member at +0x50 with a get_range_maximum reader) scores
 // 177 but moves the unmatched caller 0x174a30 from 338 to 370, so it is held.
 // Frame 0x1c versus 0x20 and final selector call still differ. Shared squared length 194;
 // full bounds aggregate 202; entry displacement workspace 194; scoped emitter counter 194;
@@ -262,6 +266,11 @@ public:
 // score 194 (was 194): round 108: frame 0x1c/0x20 and location/receiver homes remain.
 // Late range accumulator 201; outer range endpoints 194; shared center setter 198;
 // scoped successor for traversal 194; nested age/cleanup guards 194.
+// Lower-reader ordinary inline 194; both readers ordinary inline 194; native origin 170
+// (held: unmatched caller 0x174a30 308 -> 369); direct selector result 194; reversed center stores 194.
+// Origin-field pointer 194; reused native center 170; shared point setter 197; native origin/direct receiver 170.
+// Persistent definition cursor 213; closed bounds lifetime 194; scalar displacement 194;
+// output center subobject 194; shared traversal handle 194.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
