@@ -1013,6 +1013,7 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // frame pointer 458; shared side dot products 384.
 // Nested expansion zero 1163, one 342; global optimization off 2011; size policy 518;
 // ordinary signed-angle inline 342.
+// score 342 (was 342): Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
