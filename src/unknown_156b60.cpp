@@ -186,6 +186,9 @@ PRIVATE void render_clamp_156b60(real *value)
 // horizontal-offset and clamp/attribute scheduling remain.
 // Fixed UVs before dimensions/after dimensions/before alpha/after alpha 270/194/163/141;
 // each with geometry-time offset production 251/144/163/104.
+// score 38 (was 38): the width offset in the attribute initializer or after the clamps gives
+// retail's XMM0 clamps but the alpha result coalesces into XMM0 and loses its duplicated tail
+// (155/155); range result variable 220; flag case first 155; range clamping its input 167.
 // @retail 0x157020
 void __stdcall function_157020(byte *definition, point3f const *position, vector3f const *forward,
 	real value, long row, long column, long element, long entry)
