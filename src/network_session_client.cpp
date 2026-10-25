@@ -589,6 +589,8 @@ static inline bool session_set_machine_limit(c_class_58d20 *session, long value)
 // in ESI. Member count read before the clears 129; summary set after the clears 129; machine
 // pointer before the clears 55; zero initialisers for the two buffers 151; summary as a
 // conditional 131.
+// score 55 (was 55): as a session method 55; the address copy as a plain for
+// loop 114 (477 bytes); bit-first mask test 55; nested mask and slot tests 55.
 // @retail 0x6e720
 bool function_06e720(c_class_58d20 *session)
 {

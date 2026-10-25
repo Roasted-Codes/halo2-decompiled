@@ -795,6 +795,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // registers and flag stores remain. Intrinsic copies of the normal 245, basis 401,
 // output axes 245, pan axes 245, position 245, animation 245; projection copies
 // together 401, all record copies 402 (each fast and plain).
+// frame 0x48 agrees; direction preload, XMM roles and flag updates remain.
+// Existing line helpers 368p/371p; fraction-home and output-record combinations 368p/367p/367p.
+// External command record 236p (one executable row); pan/view fraction homes 245/245.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

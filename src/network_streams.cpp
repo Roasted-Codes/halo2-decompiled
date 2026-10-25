@@ -1140,11 +1140,14 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // readonly decode records 215; native stream value initialization 254; native copy size bits 215; native
 // fragment result selection 213; frame pointer 289; global optimization 297; size preference 571; existing
 // window helper boundary 215; fragment result buffer publication 211.
+// score 193 (was 211): oldest/false carriers and copy-loop entry remain.
+// Signed-byte/short/word results 210/193/193; read-only scan/copy entries 211/211;
+// oldest with direct fragment selection 232, plus signed byte 234 or read-only scan 232.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {
 	c_network_unreliable_stream *self = (c_network_unreliable_stream *)header;
-	bool result = false;
+	short result = false;
 	if (!sequence_window_count(&self->m_fragment_window))
 		return result;
 	{

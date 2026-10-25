@@ -220,6 +220,10 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Entry/index and sphere/position homes remain; node-count branch/entry homes
 // 190/190; both list entry lifetimes 191; bound reference 198; completed distance/radius/both
 // squares 190/190/190; count/cache boundary 190.
+// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and point homes remain.
+// Both buffer pointers first 194; second pointer first 194; capacities/counts before pointers 188
+// (two-point gain rejected); counts/pointers/capacities 192; large radius first 193; native query
+// alignment 190; direct object-index field 190; read-only bound source 190. Opening body restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

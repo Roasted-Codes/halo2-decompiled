@@ -546,6 +546,9 @@ real function_267370(long volatile object_index);
 // score 273 (was 273): frame and held-direction byte home remain.
 // Field-zero chains 272; sentinel chains 273; signed mode range 343;
 // native seat index 322; early holder output 350 (all plain scores).
+// score 273 (was 273): frame 0x8c versus 0x90 and held-direction byte home remain.
+// Byte plane result 273; left/actor references 273/273;
+// motion-direction reference 277; up reference 273 (plain).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
