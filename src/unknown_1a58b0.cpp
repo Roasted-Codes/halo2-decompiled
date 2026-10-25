@@ -1656,6 +1656,9 @@ struct s_candidate_unit_definition
 // geometry-call convention and exchanged failure exits remain; native
 // flag/limit/adjacent clears 216/152/199; direction memcpy 18; clear plus copy 216/152/199;
 // branch-zero clear 199.
+// score 11 (was 11): query stack/register boundary remains; object-last interface 15;
+// object-last stdcall/inline/both 15/15/15; original inline/stdcall 11/11;
+// reordered query outcome/entry axis 126/15. All query interfaces restored.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
