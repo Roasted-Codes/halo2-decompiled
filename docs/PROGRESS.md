@@ -2,6 +2,26 @@
 
 The newest entry comes first.
 
+## 2026-10-24: 9567 functions match
+
+```
+matched 9567 of 11321 game functions (1511987 of 2784283 bytes, 54.30%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+2 new matches, none lost:
+- @coldspear's #789: `0x2b0565` and `0x2b2b40` match.
+
+## 2026-10-24: 9565 functions match
+
+```
+matched 9565 of 11321 game functions (1510777 of 2784283 bytes, 54.26%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+2 new matches, none lost:
+- @coldspear's #787, #788: `0x6b800` and `0x20a490` match.
+
 ## 2026-10-24: 9563 functions match
 
 ```
