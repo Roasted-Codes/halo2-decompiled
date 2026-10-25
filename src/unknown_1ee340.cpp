@@ -651,6 +651,9 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // Late/early context 25/88; sphere/key-array references 19/19; packet copy before removal/count 78/19;
 // point-first workspaces 19; early packet plus context 92; pre-dispatch ordinal with
 // late/early context, early packet or receiver 74/109/32/121.
+// dispatch timing, ordinal/context homes and remap entry remain; entry ordinal 19; int
+// ordinal 19; immutable append boundary/shape 19/19; component sphere 158; SSE sphere 84; combined ordinal
+// lifetimes 19; component sphere plus early correction 114.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)

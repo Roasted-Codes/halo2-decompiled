@@ -55,6 +55,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // machine array base 175f; player array base 242f.
 // native array bases 242f; external options record 175f.
 // search cursor machine base 231f; byte search player base 272f.
+// frame 0x14 versus 0x18 and options/index/mask homes remain;
+// fast bounded scan indexed 239; direct terminator exit 175; signed result/count/bound 175/175/175;
+// signed count and result 175; indexed terminator exit 239; scan cursor/count names 175.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
