@@ -543,6 +543,8 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // library record move 628; outer name-snapshot declarations 444. Byte success kept.
 // Round 303: graph after resolution 621; fallback snapshot order 544; request snapshot order 419;
 // signed byte success 403; explicit final failure 530. Hidden-result homes/frame still differ.
+// score 403 (was 403): hidden-result homes and frame eight versus twelve remain; word success 533;
+// shared request guard 403; resource-array base 426; urgent-array base 508; both bases 599.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)

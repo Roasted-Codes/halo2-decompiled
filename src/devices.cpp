@@ -1227,6 +1227,8 @@ bool function_0b6760(s_index_pair const *pair);
 // Round 303: entry position output 351; previous-value name 351; early previous velocity 373;
 // changing-power arm first 351; early activity result 418. Frame/index/state homes still differ.
 // Ordinary saved pointer with shared previous 381 at retail length; original qualifiers kept.
+// score 347 (was 347): frame 0x1c versus 0x20 and index/state homes remain; byte result 351;
+// word result 358; shared position complement 347; common group receiver 347; clamp arms 352.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
