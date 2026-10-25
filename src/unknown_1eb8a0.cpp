@@ -786,6 +786,10 @@ PRIVATE __forceinline long movement_counter_increment(byte value)
 // Node byte/data offset and immutable handle 88; shared projection scale 90;
 // scale plus in-place difference 78; nested/best-first scan 88/98; detached dot 88;
 // independent forward output on the scaled flow 437. Input values and grouping retained.
+// score 78 (was 78): own-object/node registers and contact scan setup still differ.
+// Own handle bits 78; attached counter field reference 78; selected-index success 398;
+// orientation test result 78; detached shared difference 166; detached shared cross 78;
+// both detached helpers 78; contact height field reference 78. Opening body retained.
 // @retail 0x1ed4a0
 void function_1ed4a0(s_state_c570 *state, dword *output, byte const *input)
 {
