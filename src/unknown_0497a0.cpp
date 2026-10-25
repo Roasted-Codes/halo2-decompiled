@@ -13,6 +13,11 @@
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
 #include "vector_products.h"
+// score 647 (was 647): frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
+// primary output scale 744; default depth scale 743; alternate depth scales 727; product scale workspaces 734;
+// late wave lifetime 743; wave offset workspaces 660; inverse before basis 765; direct integer component 743;
+// complete shape branches 743; wave alternate scales 695; wave product scales 692; wave primary scales 659;
+// wave basis copy blocks 806; shape discriminant 776; wave shape discriminant 696
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

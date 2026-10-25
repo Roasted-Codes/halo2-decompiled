@@ -47,15 +47,17 @@ real function_2008fc(s_interface_pulse const *arg_0, bool arg_1);
 void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
     long arg_2, long arg_3, long arg_4);
 
-// score 103 (was 103): frame 0x50 agrees; first-pass table/index registers,
-// pulse-base setup and row-X scheduling differ; aggregate quad 103;
+// score 70 (was 103): frame 0x50 agrees; pulse/entry setup and second-pass
+// tag/index and row-X scheduling differ; aggregate quad 103;
 // half-height first 103; signed mask 103; shared ordinal word 229, byte 229.
 // shared resolved result 103; shared tag 103; shared pulse receiver 103;
 // all three shared 103; positive first-pass validity block 103.
+// Fresh first-pass entry base 70; indexed user 103; user before table 215;
+// shared entry/sequence/user combination 103/103/103; extent values 103;
+// late accepted mask 229. Pulse-base setup and second-pass homes still differ.
 // @retail 0x200462
 void function_200462(long arg_0)
 {
-    byte *local_1 = *(byte **)((byte *)g_510c94 + 0x404);
     s_interface_pulse *local_0 = (s_interface_pulse *)((byte *)g_510c4c + arg_0 * 0x6c + 0x2c);
     real local_2 = 0.0f;
     dword local_3 = 0;
@@ -63,7 +65,7 @@ void function_200462(long arg_0)
     for (entry_index = 0; entry_index < 9; entry_index++)
     {
         s_interface_pulse *local_6 = &local_0[entry_index];
-        byte *local_5 = local_1 + entry_index * 0x1c;
+        byte *local_5 = *(byte **)((byte *)g_510c94 + 0x404) + entry_index * 0x1c;
         if (*(long *)(local_5 + 4) == NONE || *(long *)(local_5 + 0xc) == NONE ||
             (!local_6->delay && !local_6->ticks))
             continue;

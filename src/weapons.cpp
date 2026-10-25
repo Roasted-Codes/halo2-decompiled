@@ -1601,6 +1601,9 @@ static inline bool weapon_state_replaceable(long current, long state)
 }
 
 /* puts a weapon in a state and plays the state's animation */
+// score 69 (was 69): success-byte scheduling and final call argument registers still differ.
+// Byte outcome 67; short/word outcomes 87; actual object references and nested scope 69;
+// signed-word mask 83; owner-first test 68.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {
@@ -2186,6 +2189,9 @@ void function_1055b0(vector3f *direction, vector3f const *axis, short index, sho
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 
+// score 89 (was 89): timing stack homes, trigger spill and released-output registers differ.
+// Trigger/settings references, rate snapshot and threshold input 89; double duration 134;
+// bounded age increment 167; byte conditional clamp 162.
 // @retail 0x1027b0
 void function_1027b0(long weapon_index, long trigger_index, bool *pressed, bool *held, bool *released)
 {
@@ -2890,6 +2896,8 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 
 // score 52 (was 69): the record's pointer is kept in ebx where retail keeps it in
 // ebp, and the word of the record is read into cx where retail reads it into dx.
+// Ordinary inline 468; automatic inline 468; barrel reference 52; magazine-tag reference 52;
+// magazine reference 52; combined references 52; empty-first tests 88; query result first 140.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {

@@ -958,6 +958,9 @@ struct s_item_flags_view_10b850
 // score 819 (was 819): frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
 // correction assigned by branch 861. Original body retained.
+// j91: frame 0x154 versus 0x12c and Boolean homes remain; native rotation copies reach 0x148 but regress.
+// collision result predicate 819; settle result predicate 888; collision settle predicate 879; native rotation
+// copies 885; shared native rotation 886
 // Frame pointer 1103; inline depth one 819; trigonometric snapshots 891;
 // flow output in dead motion workspace 818 (frame 0x148); cross scalars first 820.
 // @retail 0x10b850
@@ -1187,6 +1190,8 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // release-byte RMW, impulse sharing and event-point homes differ;
 // scale-first 204; shared release with current carriers 182; shared damping 182; both scales 183;
 // detached arm first 199; expiry guard first 181; event point function scope 184.
+// rate input snapshot 182; gain input snapshot 182; both input snapshots 182; direction input 204.
+// external direction reference input 204; rate input formal 182; scale input formal 204; separate impulse noinline 182.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
