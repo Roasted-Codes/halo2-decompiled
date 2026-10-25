@@ -2985,6 +2985,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Frame 0x2c agrees; capability/save roles, state expansion and
 // color/quantizer homes differ. Word success 1194; unsigned exponent 1197; mode decision chain
 // 1084; word color input 971; word alpha input 1181 at retail length.
+// score 971 (was 971): round 106: Frame 0x2c agrees; capability/save and state expansion remain. Packed range clamp 1199; early exponent lifetime 1201; shared gain divisor 1194; late input selectors 1204; late clipped width 970 (one-point gain rejected).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

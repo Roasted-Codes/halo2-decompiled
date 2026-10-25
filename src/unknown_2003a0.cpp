@@ -57,6 +57,9 @@ extern short const g_44aee8[20] =
 // score 82 (was 82): word mask/RMW and sentinel/array-base registers remain.
 // Late next-link/word/long sentinel subsets 82,82,82,82,82,82,82;
 // native-short five-handle counter 99. Initializer body restored.
+// score 82 (was 82): narrow mask/RMW and sentinel/base registers remain.
+// Boolean first/second/both bits 107/88/112; conditional second bit 88;
+// library clear with first/both bits 124/127; counted pointer fill 82, with Boolean bits 112.
 // @retail 0x200c20
 void function_200c20(byte const *definition)
 {
@@ -802,6 +805,7 @@ done:
 // Conditional next publication 218; definition mode first 211; current-field result 223;
 // size preference 285; zero inline depth 232. Original kept.
 // score 176 (was 176): round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
+// score 176 (was 176): round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -1461,6 +1465,9 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
 // score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
 // score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
+// score 120 (was 120): extra frame dword and x87 shared tail remain.
+// Unused mode address removed/read-only mode 120/120; in-place transform 123;
+// noinline, staged subtraction and fallback memcpy each 120; nonpositive-first 119; failure exits 118.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1732,6 +1739,7 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // score 305 (was 305): Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // Pooled reference 323; entry-block reuse 323; delta workspace 305; shared scan cursor 305; valid
 // actor continue 305.
+// score 264 (was 305): round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -1766,7 +1774,7 @@ void function_204450(long definition_index, long squad_index)
         real nearest = 3.402823466e+38F;
         squad[0x30] = 0;
         function_b9dd0(*(long *)(squad + 0x80), &point);
-        byte *entries = definition + (squad[0x60] ? 0x5c : 0x54);
+        byte *entries = squad[0x60] ? definition + 0x5c : definition + 0x54;
         if (*(long *)entries > 0)
         {
             for (short i = 0; i < *(long *)entries && (signed char)squad[0x30] < 10; i++)
@@ -2822,6 +2830,7 @@ void function_2011f0(long arg_0);
 // Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
 // repeated signed category 387; function-scope workspaces 387; case two first 387.
 // score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
+// score 383 (was 383): round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

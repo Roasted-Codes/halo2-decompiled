@@ -95,7 +95,10 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
     return result;
 }
 
-// score 51 (was 51): conversion addresses, append list/count/result and final call registers differ.
+// score 51 (was 51): diagnostic arguments, append count/result and enumeration registers differ.
+// File path/directory/both receivers 51/51/51; conditional character store 69;
+// capacity first 54; capacity nonzero 51; short type index 189; no parameter address 51.
+// conversion addresses, append list/count/result and final call registers differ.
 // Existing root/path helpers 51/51; file-reference/all helpers 233/233;
 // append names/force-inline and buffer names 51/51/51; source step at character read 72.
 // score 51 (was 51): conversion addresses, append and enumeration registers still differ.
