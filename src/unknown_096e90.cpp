@@ -412,13 +412,12 @@ s_sub_450d14 *c_vtable_450d14::v0()
 	return &sub;
 }
 
-// score 2 (was 2): index/table argument loads still exchanged; result declaration first 2; zero-store order 4; unsigned handle 2; unsigned result declaration 2; successful void return 2; conditional delegation 2; immutable handle 2; scalar library clear 19.
 // @retail 0x979b0
 void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 {
 	*a3 = 0.0f;
 	*a4 = 0;
-	long handle = function_699a0(a1, world->unknown0c);
+	long handle = function_699a0(world->unknown0c, a1);
 	if (handle != NONE)
 		function_82a40(handle, (s_relevance_observers const *)a2, a3, a4);
 }

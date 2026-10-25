@@ -266,7 +266,7 @@ bool function_1e11b0(long actor_index, bool active)
  return result;
 }
 
-// score 1 (was 1): absent-cluster branch still reaches the result test; absent-cluster continue 1; object bound first 104; complete membership result 38; success assignment 56; native cluster 54; continue/native cluster 54; explicit link state 1; success/object bound 106; membership break 98.
+// score 1 (was 1): absent-cluster branch still reaches the result test; absent-cluster continue 1; object bound first 104; complete membership result 38; success assignment 56; native cluster 54; continue/native cluster 54; explicit link state 1; success/object bound 106; membership break 98; De Morgan condition 1; shared bit test 1; shared bit test/De Morgan 1; guarded do/shared bit test 98; unsigned traversal 1; nested result/shared bit test 1; success-only/shared bit test 56; const traversal/shared bit test 1.
 // @retail 0x1e12b0
 bool function_1e12b0(long actor_index, const dword *clusters)
 {
