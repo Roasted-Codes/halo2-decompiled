@@ -88,6 +88,10 @@ long function_213760(dword location, long size, void *buffer, dword *bytes_read,
 void map_file_path_get(char const *map_name, char *path);
 bool cache_header_verify(s_cache_header const *header);
 
+// score 4 (was 4): post-normalization path address reuses EBX; retail forms it again.
+// Fast: empty path value 82; normalizer-owned path 54; initialized read count 33;
+// success before read 16; result in each outcome 60; immutable handle 4;
+// file-path observation 4; native read result 4.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {

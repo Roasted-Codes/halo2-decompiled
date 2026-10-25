@@ -225,6 +225,12 @@ void function_193b30(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills a variant of type 1, or of type 2 when flag is set */
+// score 34 (was 34): scale now enters EAX and is saved in EBX as in retail; (held: the 24 wrote the type as 2 - !flag, six bytes long, and moved the unmatched caller 0x193c70 from 203 to 208)
+// mode selection and settings-copy scheduling still differ (98/92 bytes).
+// Fast: settings memcpy 34; memmove 15 (extra call, reverted); settings before
+// initializer 34, before delays 34; inline 34; noinline 34; Boolean mode 37;
+// disabled mode 24; disabled conditional 34; decrement mode 33; increment mode 33;
+// bool disabled part 34; integer disabled part 24; byte option 34; signed byte option 34.
 // @retail 0x193ba0
 void function_193ba0(long scale, bool flag, s_built_variant *variant, long name_string, long description_string, dword field_8, s_variant_place_settings const *settings, long field_59c)
 {
