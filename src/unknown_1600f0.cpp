@@ -1035,6 +1035,10 @@ struct s_game_engine_globals_connections_view
 // Dim-default glyph 183 (one-point gain rejected); glyph-last/icon-alpha-first metadata 184/184;
 // connection alpha first 185; two-use numeric width 281; time/connection bottom first 184/184;
 // dim default plus numeric width 281. Opening body restored.
+// Deferred icon tail and time/connection coordinate registers remain. place
+// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
+// rectangle aggregates 320; trailing rectangle aggregates 306.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

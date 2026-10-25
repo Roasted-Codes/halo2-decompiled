@@ -1481,6 +1481,10 @@ long __stdcall function_bb670(short name_index, bool force)
 // Valid-path stride before/after scenario 106/106; offset references 31; offset references plus
 // valid stride 106; direct guards with valid stride 106; word valid stride 106; one-use creation index copy 27 (reverted in review);
 // creation index with valid stride 106.
+// score 31 (was 31): Metadata/sentinel saves and final input staging remain. metadata result arms
+// 108; placement result arms 94; palette result start 89; palette result arms 104; input index
+// entry binding 31; tag index field binding 31; stride field binding 93; native promoted metadata
+// 31; shared input index binding 31.
 // @retail 0xa73b0
 long __stdcall function_a73b0(s_entity_info *info)
 {
