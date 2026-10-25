@@ -2117,6 +2117,7 @@ static __forceinline long player_round_ticks(real value)
 // native activity results 707; native permission 701. Original body kept.
 // Cooldown scalar names 701; rest-first clamp stores 706; gated idle cap 705;
 // separate melee button tests 709; target-age store before test 701.
+// score 701 (was 701): Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
@@ -2673,6 +2674,18 @@ struct s_unit_flags_14d8b0
 // score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
 // Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
 // incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
+// score 128 (was 155): native root-bit observation recovers SHR/TEST; iterator and tick scheduling remain.
+// Wide user/table entry/both 157/158/162; wide/entry/both with first flag 155/156/160;
+// root with both 129, plus first flag 127; root alone 128 plain; root with wide/entry 125/132.
+// Three-point wide-user addition dropped; only the root-bit expression retained.
+// iterator/tick scheduling and damage transport remain;
+// shared event send 155; existing initializer 304f; both event APIs 283f;
+// event/damage/both workspace scopes 155/155/155; scopes with send 207f;
+// both APIs with typed first flag 281f. Original body retained.
+// Iterator publication, tick/rate schedule, damage call and trigger registers
+// remain. current record consumer 155; successful current publication 155; explicit iterator
+// initialization 155; defined current at advance 155; saturating source expression 254; saturate
+// before increment 224; native flag boolean 264; publication with native results 300.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
@@ -2777,7 +2790,7 @@ void function_14d8b0(void)
         {
             long root = unit;
             for (long current = unit; current != NONE; current = *(long *)(object_get_unchecked(current) + 0x14)) root = current;
-            if (!(*(dword *)(object_get_unchecked(root) + 4) & (1 << 18)))
+            if (!(bool)((*(dword *)(object_get_unchecked(root) + 4) >> 18) & 1))
             {
                 byte *scenario = (byte *)g_4e0350;
                 for (short trigger = 0; trigger < *(long *)(scenario + 0x130); ++trigger)

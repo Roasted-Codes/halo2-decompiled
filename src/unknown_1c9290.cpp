@@ -47,13 +47,22 @@ PRIVATE __forceinline void function_1c9291(point3f const *arg_0, vector3f const 
 // after the component loop 18; the two-point ray test (0x16a040) called instead
 // of the vector and 0x1697c0 16; horizontal loop then arc then vertical 45;
 // one named step for both uses 72; plain inline 6.
-// score 6 (was 6): Horizontal products still follow the arc square; copied-step operand differs.
+// score 6 (was 6): horizontal products and the duration square still exchange order.
+// Endpoint local/input subtraction 6/138; complete advance endpoint/scalar 120/120;
+// advance with point/velocity/both snapshots 116/141/158; endpoint with both 158.
+// Horizontal products still follow the arc square; copied-step operand differs.
 // Helper orders (P point, V velocity, D step, G gravity, O output):
 // OPVDG/PVODG/PDVGO/PVGDO/DPVGO/DGPVO/POVDG/PDGVO all 6.
 // horizontal/square schedule remains; square/weighted producer
 // split across output loop 6/6; split accumulators 6/6; delayed
 // vertical consumers 6/6; split unsigned ordinal 6; shared step on
 // component/sentinel form 72.
+// score 6 (was 6): horizontal/square schedule persists; native point accumulation
+// 111, scaled-output accumulation 116, delayed-arc versions 115/116; actual
+// point/velocity/input/all-object reference contracts 6/6/6/6.
+// score 6 (was 6): horizontal products and self-square still differ; complete
+// vertical return 6, arc return 6, loop point return 175, separate arc output 16;
+// late vertical/point return 18/177; native component pointers/array references 6/6.
 // @retail 0x1c9290
 bool function_1c9290(long arg_0, point3f const *arg_1, vector3f const *arg_2,
  real arg_3, real arg_4, long arg_5, bool arg_6)

@@ -87,6 +87,15 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // early EBP save, team-byte home and local-slot spill differ.
 // Complete iterator/cursor clear 263/263; word/byte population 250/245;
 // live pool ordinal 241; unsigned datum 196; complete iterator with ordinal 264; plus byte population 244.
+// score 196 (was 196): delayed EBP save, team-byte home and word local-slot spill remain.
+// Early/late/both snapshot record references 196/196/196; late pooled-player reference 196;
+// native fade reference with word slot 196; player and fade references 196; first-branch
+// short rate 196; both snapshot references plus player/rate 196, all plain-confirmed.
+// delayed EBP save, missing team-byte home and local-slot spill remain.
+// Signed/unsigned byte local slots 244/244; each with indexed fade 244/244;
+// signed-byte population 197 (plain 197), signed-byte team 248;
+// signed-byte population/slot 245; unsigned-byte slot with signed-byte team 244.
+
 // @retail 0x15c150
 void function_15c150()
 {

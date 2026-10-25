@@ -420,6 +420,12 @@ extern point2f *g_468778;
 // read-only prop payload 379; weight after magnitude 379. Early actor/settings/prop homes remain.
 // score 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
 // validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
+// score 379 (was 379): Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
+// result 379; unit field pointer 379; external state byte reference 390; position pointer 387;
+// velocity pointer 424.
+// Round 173: external actor / guarded slot / combined references 379/379/379;
+// external facing reference 379; prediction-path velocity reference 395. Frame 0x40 agrees;
+// early actor/settings/prop carriers remain. Original body retained.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -598,6 +604,10 @@ static __forceinline long real_to_long(real value);
 // score 410 (was 466): Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
 // late object receiver 470; trajectory planar view 466; direct request view 466;
 // test-derived readiness 410; conditional approach factor 466 (fast).
+// score 410 (was 410): frame 0x54 versus 0x58, early rejection and query homes remain.
+// Separate query in/out scalar 494; wider output scope 410; wider trajectory scope 410;
+// scalar/output and scalar/trajectory scopes 494 each; output/trajectory scopes 410;
+// all query homes 494; all homes with earlier query-scalar declaration 494.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

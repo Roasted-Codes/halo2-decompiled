@@ -2765,6 +2765,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // score 407 (was 407): activity/dispatch registers and pointer homes differ. Trials: published
 // output test 407; scalar clamp 407; unsigned word selector 407; shared progress guard 413; shared
 // barrel read 414; typed flags field 407.
+// score 407 (was 407): Frame eight versus four bytes and activity/tag homes remain. Descending
+// progress classifier 407; direct short selectors 407; shared threshold 407; normalization range
+// 407; shifted property flags 428.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -2953,6 +2956,11 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // Round 127: short selector with barrel input 133; with weapon/barrel 52;
 // with tag/barrel 52; with all receivers 52; with external record references 52;
 // reserve query, reload notification and barrel stop noinline 52 each.
+// score 52 (was 52): still the ebp/ebx receiver and dx/cx selector swap. Permuter
+// ran out its window in the baseline build (no tries scored). Neighbor inline
+// getter 52; header-table local 52; masked definition-index local 52; outcome and
+// selector declarations swapped 52; nested macro get 131; barrel address by
+// arithmetic 52; shared-linkage forced inline 52; magazine address by arithmetic 52.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {

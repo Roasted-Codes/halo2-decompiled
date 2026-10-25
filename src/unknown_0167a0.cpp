@@ -91,6 +91,12 @@ PRIVATE inline byte const *material_parameters(long tag)
 // logarithm width and reset/restore scheduling remain;
 // early dirty mask, update byte or late counter pair each 296; first published range 167;
 // second published range 187.
+// score 162 (was 167): logarithm width/reset and restore allocation remain;
+// final consumers read the actual published record field. Entry-only read 169; pass-only read 167;
+// early saved-tag predicate 298; published-record field reference 162 (plain); equality arms 167.
+// score 162 (was 162): logarithm/reset schedule and restore/final allocation remain.
+// Record-field pointer 162; signed entry/pass/both carriers 163/163/164;
+// negated equalities 162; saved tag at both tests 246; dirty-mask cursor 161; both cursors 161 (one-point gains dropped).
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -168,12 +174,12 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
     if (changed || different_tag || (*(dword *)(state + 0x58) & *(dword *)(state + 0x54)))
         function_17170(state, (word const *)(*(byte **)(state + 0x1c) + 2));
     function_174d0(state, first, second, third, fourth);
-    record = *(byte **)(state + 0x24);
-    function_18a90(state, (word const *)record);
-    function_19be0(state, (word const *)(record + 0x124));
-    function_19ca0(state, (word const *)(record + 0x122));
-    function_1a170(state, (s_packed_shader_range const *)(record + 0x11e));
-    function_1ab50(state, (s_packed_shader_range const *)(record + 0x120));
+    byte *const &shader_record = *(byte **)(state + 0x24);
+    function_18a90(state, (word const *)shader_record);
+    function_19be0(state, (word const *)(shader_record + 0x124));
+    function_19ca0(state, (word const *)(shader_record + 0x122));
+    function_1a170(state, (s_packed_shader_range const *)(shader_record + 0x11e));
+    function_1ab50(state, (s_packed_shader_range const *)(shader_record + 0x120));
     function_17420(state, first, second, third, fourth);
     function_18d70((s_18d70_state *)state);
     function_18e80((s_shader_constant_state *)state);
@@ -771,6 +777,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // selector-use output indices 230f; signed byte cursors 163f.
 // byte cursors 190f; byte mapping slot 189f.
 // word source-kind 157f; special-slot result 180f.
+// score 157 (was 157): Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -856,6 +863,10 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
     }
 }
 
+// score 212 (was 218): component remains stacked instead of incoming EDI;
+// extra EDI save and ret 12 versus ret 8 remain. Native color fields 229;
+// complete dimension initialization paths 212; both 221; scalar case order 218;
+// texture case order 217.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {
@@ -885,11 +896,17 @@ bool function_1b2c0(byte const *state, long index, long component, long texture,
         *(color3f *)out = ((color3f const *)(state + 0x108))[index];
     else
     {
-        real width = 1.0f, height = 1.0f;
+        real width;
+        real height;
         if (texture)
         {
             width = (real)*(long const *)(state + 0x12e8 + texture * 64);
             height = (real)*(long const *)(state + 0x12ec + texture * 64);
+        }
+        else
+        {
+            width = 1.0f;
+            height = 1.0f;
         }
         switch (component)
         {
@@ -1207,6 +1224,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // score 246 (was 246): sampler convention and dirty-store descriptor rereads remain.
 // Existing packed-range accessors 325; post-clamp mask capture 275; positive filter
 // with full-width descriptors 269; alpha-first color 250; alpha-first clamps 270 (fast).
+// score 246 (was 246): sampler convention and descriptor rereads remain;
+// sample-array name order 246; branch-local sample arrays 250; mapped-field reference 268;
+// shared sampler selector 246; descending component rescale 262 (fast).
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

@@ -26,6 +26,9 @@ long function_249e20(s_structure_bsp_view *bsp, long index)
 	return result;
 }
 
+// score 9 (was 9): entry saves/index load and audibility EDI allocation differ;
+// shared bit test/read-only bits 9/9; second-arm cursor 44; category loops
+// indexed/shared test/cursor/mask 58/58/46/45; final result selection 37.
 // @retail 0x249e60
 long function_249e60(long cluster_index, s_structure_bsp_view *bsp, long index)
 {

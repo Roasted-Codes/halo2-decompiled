@@ -385,14 +385,6 @@ bool __stdcall function_110ab0(long unit_index);
 /* asks the actor's unit to move to the point facing the given way (request
    0x25), once it is within half a world unit of it; when asked, only while
    it faces within 45 degrees of its prop */
-// score 4 (was 100): only the facing dot product's j and k terms come in the other order
-// (retail j, k, i; ours k, j, i). Harness: the order follows the direction's component
-// definition order (k written first gives j, k, i but moves the zero store first, 9);
-// swapped dot3f arguments, the direction declared elsewhere, the comparison spelt
-// `>`/`!(>=)`, two ifs, byte result, no position pointer: all k first.
-// Earlier: retail's prologue saves ESI as well and pushes the
-// registers in the order EBP, EBX, ESI, EDI; here only EBX, EBP and EDI are
-// saved, so every stack slot after the prologue sits at another offset.
 // @retail 0x1f4f40
 bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_type_c3b527 const *point, bool face_prop)
 {
@@ -414,8 +406,7 @@ bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_
 				point3f const *prop_position = &function_25d690(prop_ref_get(actor->prop_index))->position;
 				vector3f direction;
 
-				direction.i = prop_position->x - actor->position.x;
-				direction.j = prop_position->y - actor->position.y;
+				vector3d_from_points3d(&actor->position, prop_position, &direction);
 				direction.k = 0.0f;
 				if (!(function_30bf0(&direction) > 0.0f) || dot3f(facing, &direction) < 0.70710677f)
 					goto done;
@@ -764,7 +755,10 @@ real normalize2d(point2f *v);
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
-// score 172 (was 172): frame 0x48 agrees; fast-byte zero and trajectory convention remain.
+// score 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
+// retry/movement/both threshold products 172/172/172; clamped upward result
+// 172, with both products 172; retry/movement/both eligibility results 172/172/172.
+// frame 0x48 agrees; fast-byte zero and trajectory convention remain.
 // Validation after query 220; with late minimum 220; early query output 171;
 // minimum first 174; early output/minimum 170; first-type first 172;
 // shared Boolean initialization 173; early output with late validation 218.
@@ -1008,6 +1002,10 @@ done:
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
 // Scalar velocity 309; approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast).
 // score 307 (was 307): Frame 0x18 versus 0x1c and actor/object/factor homes remain; object receiver first 309; approach component scopes 308; following component scope 308; shared minimum scalar 308; library velocity copy 309 (fast control 308).
+// score 307 (was 307): Frame 0x18 versus 0x1c remains; conditional-body factor names 308; velocity field pointer 308; goal field pointer 308; speed field pointer 308; radius field pointer 308 (fast control 308).
+// Frame 0x18 versus 0x1c and receiver/factor homes remain; entry velocity workspace
+// 307; native actor fields 307; external object reference 307; branch-assigned approach 352; native actor
+// plus entry velocity 307 (plain).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1284,6 +1282,10 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
 // Ordinary lifetimes: facing value 307; scalar side 309; scalar center 306; origin constructed first 306; reused negative radius 329.
 // score 294 (was 294): Frame 0x3c agrees; direction materialization and radius/result homes remain. Ordinary input/side lifetimes: point pair plus arc helper 344; pair plus direction output 299; origin/facing values 292 (plain 292, two-point gain rejected); target/facing values 306; three point values 328.
+// score 294 (was 294): Frame 0x3c and initial direction/result-home differences remain; ordinary inputs/side with early 3D origin 291; entry trace 306; reused threshold 306; separate centers 306; early origin plus centers 291 (fast).
+// Frame 0x3c agrees; input convention, direction materialization and radius/result
+// homes remain. Ordinary input/side lifetimes: external origin reference 311; target reference 306; facing
+// reference 306; all three references 305; full-width side state 301 (fast).
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

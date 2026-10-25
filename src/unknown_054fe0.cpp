@@ -284,33 +284,37 @@ long __stdcall function_64610(dword *xuid)
 	return index;
 }
 
+/* the membership getter below, expanded at the user-state query */
+inline bool network_session_get_membership(c_class_58d20 *session, long *value4c, long *host_member_index, long *local_member_index, long *value50, long *member_count, s_session_member **members, long *player_count, dword *player_mask, s_network_session_player **players);
+
 /* how far a local user has got into the session: 0 none, 1 the session is
    not live, 2/3 no player yet, 4 no slot, 5 player out of date, 6 up to date */
-// score 48 (was 48): missing separate players base and shared state tails;
-// const session/player 48/48, players-array reference 48, unsigned player
-// handle 48, unsigned user ordinal 48, reversed property comparison 48,
-// member-index array reference 48, array reference with unsigned handle 48.
 // @retail 0x646b0
 long network_session_interface_get_user_state(c_class_58d20 *session, long user_index)
 {
 	if (g_4cd868.users[user_index].valid &&
 		!(online_logon_connected() && g_4cd868.users[user_index].xuid.dwUserFlags == 0xbad00000))
 	{
-		if (SESSION_STATE_IS_LIVE(session->state))
+		long host_member_index;
+		s_session_member *members;
+		s_network_session_player *players;
+		if (network_session_get_membership(session, NULL, &host_member_index, NULL, NULL, NULL, &members, NULL, NULL, &players))
 		{
-			long player_index = session->members[session->current_member].player_indices[user_index];
-			if (player_index == NONE)
-				return g_4cd868.users[user_index].unknowncc[session->value10] ? 3 : 2;
-			s_network_session_player *player = &session->players[player_index];
-			if (player->unknown14 == NONE)
+			long player_index = members[host_member_index].player_indices[user_index];
+			if (player_index != NONE)
+			{
+				s_network_session_player *player = &players[player_index];
+				if (player->unknown14 != NONE)
+				{
+					if (player->unknown14 == g_4cd868.users[user_index].unknown10 &&
+						memcmp(player->properties18, g_4cd868.users[user_index].properties, sizeof(player->properties18)) == 0 &&
+						player->unknown138 == g_4cd868.users[user_index].unknowna4)
+						return 6;
+					return 5;
+				}
 				return 4;
-			if (player->unknown14 != g_4cd868.users[user_index].unknown10)
-				return 5;
-			if (memcmp(player->properties18, g_4cd868.users[user_index].properties, sizeof(player->properties18)) != 0)
-				return 5;
-			if (player->unknown138 != g_4cd868.users[user_index].unknowna4)
-				return 5;
-			return 6;
+			}
+			return g_4cd868.users[user_index].unknowncc[session->value10] ? 3 : 2;
 		}
 		return 1;
 	}
@@ -1131,6 +1135,11 @@ static inline bool session_member_get_qos(s_network_observer *observer, c_class_
 
 // score 67 (was 67): the frame is four bytes smaller than retail's and the locals
 // (the count, the minimum and the maximum) are set up in another order.
+// Retail gives latency ebp and spills the member cursor; ours the reverse. The
+// mask update written in both arms gives latency ebp but moves session off ebx
+// (two stack arguments): 112, host arm first 112, with continue 112; the same
+// with host read after the observer 109/109. Retail also re-reads member_count
+// in the member check where ours reuses the loop's load.
 // @retail 0x64480
 void network_session_get_member_latency(s_session_member_latency *latency, c_class_58d20 *session)
 {
@@ -1263,6 +1272,12 @@ struct s_player_properties
 // On the direct-requested-field base: counted first/second/both default arrays 240/240/235;
 // chained defaults 184; shared actual three-element prefixes 198; selective first/second
 // reset calls 240/240; both reset calls 235.
+// score 184 (was 184): owner/name-count/zero allocation and requested cursor remain.
+// Cache/record/both equality operands reversed 200/212/201; separate name-count
+// publication 211, with those reversals 200/212/201; split cache guard 201.
+// owner/count/zero homes and requested cursor remain.
+// Current fields at use all/names 198/184; metadata/all with live mask/all with late count 234/198/198;
+// all with owner at use/second index/both indices 207/198/198.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

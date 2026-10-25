@@ -154,6 +154,12 @@ void function_221490(
 // score 83 (was 83): the prologue and the loop's registers differ: retail pushes ebp, esi
 // and edi first and keeps the pair count in ebp and the pair pointer in ebx, ours loads the
 // pointer into ebx before the pushes and counts in ecx.
+// Round 81: retail strength-reduces &settings->pairs[i].lVolume into the pointer (esi) and
+// indexes the list's dwMixBin, which leaves the list in eax and the seen mask in ebp; ours
+// walks the list's pairs and indexes settings. Both compares reading both arrays 96; volume
+// read after the mixbin compare 136 (settings becomes the pointer, as retail); the mixbin
+// compare reading both arrays 115; an explicit settings pair pointer 103; volume before
+// mixbin 83; element pointer locals and declared parameter orders compile the same.
 // @retail 0x2215d0
 void function_2215d0(
 	s_mixbin_list *list,
@@ -228,6 +234,10 @@ set_all:
 // score 83 (was 83): the prologue and the loop's registers differ: retail pushes ebp, esi
 // and edi first and keeps the pair count in ebp and the pair pointer in ebx, ours loads the
 // pointer into ebx before the pushes and counts in ecx.
+// Round 81: written as 0x2215d0 is (the two entry tests as early exits to set_all, no
+// volatile on changed_mask) 83; the volatile removed from the if form alone 85; volume
+// read after the mixbin compare 136/145; volume before mixbin 83. Same pairing cause as
+// 0x2215d0.
 // @retail 0x2216f0
 void function_2216f0(
 	s_mixbin_list *list,
@@ -238,7 +248,7 @@ void function_2216f0(
 	DSMIXBINVOLUMEPAIR out_pairs[8];
 	long values[32];
 	long out_count = 0;
-	volatile dword changed_mask = 0;
+	dword changed_mask = 0;
 	dword seen_mask = 0;
 	bool changed;
 	long i;
@@ -246,7 +256,10 @@ void function_2216f0(
 	out_mixbins.dwMixBinCount = 0;
 	out_mixbins.lpMixBinVolumePairs = out_pairs;
 
-	if (list && list->count == (long)settings->mixbins.dwMixBinCount)
+	if (!list)
+		goto set_all;
+	if (list->count != (long)settings->mixbins.dwMixBinCount)
+		goto set_all;
 	{
 		long count = list->count;
 		changed = false;

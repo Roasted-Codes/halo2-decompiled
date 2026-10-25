@@ -199,6 +199,10 @@ bool __stdcall function_25dd30(long a, long b)
 // score 175 (was 175): initial offset schedule and protected geometry carriers remain;
 // read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
 // 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
+// score 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
+// signed sphere ordinal 1031; unsigned sphere ordinal 1031; count snapshot 175; snapshot with signed
+// ordinal 1031; snapshot with unsigned ordinal 1031; final unit cap 352; final cap with signed ordinal
+// 1023; final cap with count snapshot 352. All restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -939,6 +943,12 @@ void __stdcall function_25edd0(
 // projected workspace first 50; unsigned line ordinal 145. Iterator setup and bonus tests remain.
 // Selected-arm staged scales 72; upper-first staged 66; half by division 50;
 // selected margin carrier 186; near/far or separate bonus names 50; staged/name pairs 66.
+// score 50 (was 50): the range bonus in retail is a two-test select (over 2 first,
+// then over 0) with two multiplies (halve, then times ten); that exact form scores 66
+// (997 bytes) because the line loop's xmm homes rotate — the allocation cascade from the
+// protected iterator setup defeats it. Nested select 83; staged halves with the new
+// order 66; new order with folded multiply 58; old order with two multiplies 72;
+// squared-length local 186; closest product order 66; margin initialized 66.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,
@@ -1750,27 +1760,32 @@ struct s_collision_result_25f7b0
 	byte unknown26[0x5c - 0x26];
 };
 
-// score 14 (was 14): frame/length agree; collision byte +0x13 versus +0x10,
-// product loads, word-mode comparison and allow-store timing differ.
-// Byte collision flag 14; byte allow flag 43; long initial mode 34;
-// short collision flag 247; scoped ray setup/result 14 (plain). Body restored.
+// score 7 (was 14): the mode local is stored and passed as a dword but retail compares
+// its low word, so the test reads it as a short (same width pattern as the kept cast in
+// 0x1af5c0); that also cleared the constant/call-address artifacts and the trailing pad.
+// Still differ: the collision bool's byte home (+0x13 against +0x10), the product's load
+// order (loads the hit fraction where retail loads the distance), and the allow-byte init
+// store placed after the second type test in retail (sunk past the first branch).
+// Earlier rounds at 14: byte collision flag 14; byte allow flag 43; long initial mode 34;
+// short collision flag 247; scoped ray setup/result 14 (plain).
 // Guarded collision fraction 14 plain; hit distance 14; native collision output 228; ray endpoint 232;
 // distance endpoint 201; both endpoints 266; final query point 111; horizontal normalization value 177.
-// Collision byte home, product loads, formal mode width and allow-store timing remain.
-// score 14 (was 14): collision byte, product loads and word-mode comparison still differ.
 // reuse ray displacement 14p; existing dot helper 14p.
 // squared length lifetime 14p; normalization result lifetime 14p.
 // shared projection output 25p; shared displacement workspace 60p.
 // sibling byte home name 14p; native projection mode 14p.
 // Immutable collision decision and cluster/origin values 14 each; external actor/candidate/context
 // records 14 each; visible-path collision decision 257; external definition record 53;
-// initialized native collision output 236 (plain). Collision byte home, product loads, word-mode
-// comparison and allow-store timing still differ; original body restored.
-// Frame 0x80 agrees; attachment byte 0x13/0x10, product loads, mode width and allow-store timing remain.
+// initialized native collision output 236 (plain).
 // parent index 251; early collision mask 255.
 // unattached decision 15; mask bit clear 14.
 // index plus bit clear 251; unattached mask bit 17.
 // shared parent index 249; shared attachment decision 53.
+// This round (from 14, all plain): bool declared at block top 14; product operands swapped,
+// flipped comparison, named product local, local_4 rename, local_18-first and local_15/16
+// declaration orders, bool declared after the first query call, local_22
+// uninitialized-early, byte-typed local_4: all tie at 7. local_22 initialized before the
+// mode selection 113; the entry type copy reused in the allow test 260.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {
@@ -1865,7 +1880,7 @@ void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *
 			local_18 = 2;
 		point3f local_21;
 		function_1e3b00(local_0->unknown018, local_18, &arg_2->position, local_16, local_15, &local_21);
-		if (local_18 == 2 && arg_2->unknown5c == 3)
+		if ((short)local_18 == 2 && arg_2->unknown5c == 3)
 			local_21.z -= 0.1f;
 		switch (*(short *)arg_1)
 		{

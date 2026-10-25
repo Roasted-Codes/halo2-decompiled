@@ -209,6 +209,9 @@ void c_session_state_pre_game::enter(long a, long b, long c)
 
 /* ---- start-game ---- */
 
+// score 65 (was 65): the result lives in bl where retail keeps it in a stack
+// byte, because retail's 0x6e720 takes the session in ebx (this function saves
+// ebx around that call) and ours takes it in esi; see the note there.
 // @retail 0x6e500
 bool c_session_state_start_game::update()
 {
@@ -1139,6 +1142,10 @@ long __stdcall function_063190(void *summary, long user);
 // score 110 (was 110): three-word frame/session spill and aggregate allocation remain.
 // Mode field 115; selection snapshot 131; property/player records 110/110;
 // source rank/value/both field bindings 110/110/110; live selection field 110.
+// score 110 (was 110): Three-word frame/session spill and aggregate allocation remain. byte missing count 110; signed byte
+// missing count 110; byte player ordinal 129; both byte counters 129; native signed counters 110; aggregate
+// function scope 110; native member property storage 110; fixed player end test 110; sse after rank binding
+// 111.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
@@ -1865,6 +1872,9 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // score 48 (was 59): readiness callee input and failure/timer join still differ.
 // Live timer/mode/both fields 59/59/59; integer pending 48 kept;
 // byte/word pending 90/59; common-tail guard 59; pending with live timer 48.
+// score 48 (was 48): readiness input and failure/timer join persist. Full
+// preparation pending 71; staged/second-call pending 95/96; tail guard 48;
+// wide completion 146; unsigned preparation 71; early/raw pending 128/61.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {
