@@ -464,6 +464,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // signed-byte spoke 213; size optimization 395.
 // rotation spill keeps frame 0xdc versus 0xd8; radius copy and sector-test registers differ.
 // Current-allocation plain radius 209; scalar cross lifetimes 195; dot lifetime 195; unsigned-word spoke 195; depth one 195.
+// One rotation spill still adds four frame bytes; axis component values 285;
+// symmetric dot inputs 195; two/all cross subtrahends, minuends and projected-axis values 210;
+// cosine-direction values 211; private rotation output last 195.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

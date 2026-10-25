@@ -913,6 +913,9 @@ void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_com
 	}
 }
 
+// score 38 (was 38): Frame and component-in-EBX convention still differ; zero transform/translation/both 64/61/84;
+// rotation workspace/initialized workspace/initialized transform with workspace 78/106/107;
+// position input value 77; rotation input values 143. Original body restored.
 // @retail 0x1d0c20
 void havok_component_rigid_body_matrix_set(long rigid_body_index, s_havok_component *component, transform4x3f const *matrix)
 {
@@ -1371,6 +1374,10 @@ PRIVATE __forceinline real const &component_time_step()
 	return g_510c54->rate;
 }
 
+// score 26 (was 43): Acceleration XMM0/memory timestep prefix and stop-test schedule still differ;
+// negative-target guard 50; stopping branch first 106; step predicate first 26 (kept, plain 26);
+// negative guard with step predicate 32; independent/eager stop decisions 129/124;
+// explicit fraction branches 43; velocity input/output lifetime 219.
 // @retail 0x1d2280
 real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real target, real acceleration,
 	real velocity, real limit, real position, real exponent, bool force_acceleration, real *ratio)
@@ -1388,7 +1395,7 @@ real function_1d2280(bool allow_reverse, bool scale_by_mass, real mass, real tar
 		else
 		{
 			real stop_distance = (velocity / step + 1.0f) * (delta_time * velocity) * 0.5f;
-			if (target > stop_distance && target > step)
+			if (target > step && target > stop_distance)
 				next_velocity = velocity + step;
 			else if (target < 0.0f)
 				next_velocity = velocity;
@@ -2570,6 +2577,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 
 // score 175 (was 175): staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
+// Force-inline linear/angular/both getter declarations 175 each; initialized linear/angular outputs 199 each;
+// initialized pair 219; initialized pair with getter declarations 219; live external array receiver 175
+// (plain scores; reduced preview 135). Staggered saves and paired getter allocation still differ.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

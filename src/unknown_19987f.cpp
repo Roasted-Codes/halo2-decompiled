@@ -1270,6 +1270,9 @@ extern bool g_4ed39d;
 // score 184 (was 184): game/main byte homes and dialog joins differ;
 // branch loader scope 184; lobby byte 184; main byte 184; word dialog ID 190;
 // signed user flags 184.
+// score 184 (was 184): initialized message before menu results 183; later mode 184;
+// results before user query 193; late dialog ID 184; full-width dialog flags 189;
+// recovery middle/high groups first 184/184; qualified pending/gate exits 184.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

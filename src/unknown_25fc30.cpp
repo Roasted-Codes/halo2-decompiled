@@ -1737,6 +1737,10 @@ struct s_collision_result_25f7b0
 // squared length lifetime 14p; normalization result lifetime 14p.
 // shared projection output 25p; shared displacement workspace 60p.
 // sibling byte home name 14p; native projection mode 14p.
+// Immutable collision decision and cluster/origin values 14 each; external actor/candidate/context
+// records 14 each; visible-path collision decision 257; external definition record 53;
+// initialized native collision output 236 (plain). Collision byte home, product loads, word-mode
+// comparison and allow-store timing still differ; original body restored.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {

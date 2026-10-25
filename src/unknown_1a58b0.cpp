@@ -729,7 +729,10 @@ dword function_1a7ad0(long owner_index)
 	return (1 << owner->unknown086_byte) | ((1 << (byte)shift) << 10);
 }
 
-// score 96 (was 96): owner/output register ranks, fallback-base LEA and intersection setup differ.
+// score 96 (was 96): Owner/output register ranks, fallback base and intersection schedule still differ;
+// aggregate selection 119; initial/default bitset values 190/167; shared intersection 109;
+// aggregate plus shared intersection 144; common return, fallback handle, phased table 96 each.
+// owner/output register ranks, fallback-base LEA and intersection setup differ.
 // Nullable definition 81 (adds a null branch); typed fallback 96; both 81;
 // const owner, definition, source, tags and object/element views 96 each;
 // ordinary shared source copy 143; shared copy with owner tag 143.
@@ -1767,12 +1770,18 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 	return (s_target_link_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 }
 
-// score 113 (was 131): call argument setup, marker-loop homes and terminal epilogues still differ.
+// score 98 (was 113): call argument setup, marker-loop homes and terminal epilogues still differ.
+// Kept: the first candidate named inside the count test (98); with a repeated positive-count guard
+// around the marker loop 93 (not kept: a test the loop already makes).
 // Direct count increment 121; native short query 129; shared exit 131; direct optional transform 115.
 // Positive marker count 129; combined increment/transform 113; combined short query 114; direct count cleanup 113.
 // Two-phase candidate cursor 125; marker/table/both records 113 each; cursor with marker record 125;
 // cursor with native query 129; cursor with positive table 126; separate count result 169.
 // Existing helper argument setup, marker-loop homes and terminal exits still differ.
+// Initial candidate lifetime 98; marker presence 113; weighting value 120; optional matrix value 173;
+// readonly tag/capacity value/scalar names 113 each; initialized marker output 209.
+// Initial candidate plus positive table 93 kept; initial candidate plus weighting 109.
+// Initial helper setup now agrees through +0x102; marker call setup and exits still differ.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
@@ -1783,9 +1792,13 @@ long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool 
 	if (((1 << object->field_aa) & 3) &&
 		(bool)((function_1a5c01(object_index)->field_bc >> 19) & 1))
 		scale = ((s_candidate_scale_globals *)g_4e034c)->field_f4->field_8;
-	if (count < 64 && function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
-		origin, direction, &candidates[count]) && function_1a60f0(&candidates[count], weights, scale))
-		count++;
+	if (count < 64)
+	{
+		s_sort_candidate_view *first_candidate = &candidates[count];
+		if (function_1a5e40(object_index, alternate, NONE, NULL, NULL, NULL,
+			origin, direction, first_candidate) && function_1a60f0(first_candidate, weights, scale))
+			count++;
+	}
 	long marker_tag = *(long *)(definition + 0x38);
 	if (marker_tag != NONE)
 	{
@@ -2229,6 +2242,9 @@ struct s_1a4c01
 // Controlled/selected/both handle names 36 each; target declaration beside controlled handle 36;
 // blend in target/forward workspace 66/87; result copied from forward/target 170/353.
 // Handle homes, interpolation coefficient allocation and closing publication registers still differ.
+// Packed controlled/selected/both handles 36 each; returned result before stores 34 (only -2);
+// acceptance-first test 65; squared component values, aggregate blend and angle snapshot 36 each.
+// The two handle homes, coefficient allocation and final stores still differ; original body restored.
 // @retail 0x1a4c00
 bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector3f *direction, point3f *point)
 {

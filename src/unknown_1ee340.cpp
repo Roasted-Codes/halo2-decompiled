@@ -647,6 +647,10 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // score 19 (was 19): dispatch load and ordinal/remap homes remain; workspace scope 19;
 // pre-removal append count 86; removal postdecrement 66; paired ordinal names 19;
 // shared center setter 107; sphere component view 19; int append ordinal 19; outer while 19.
+// score 19 (was 19): Dispatch scheduling, ordinal/context homes and remap entry still differ.
+// Late/early context 25/88; sphere/key-array references 19/19; packet copy before removal/count 78/19;
+// point-first workspaces 19; early packet plus context 92; pre-dispatch ordinal with
+// late/early context, early packet or receiver 74/109/32/121.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)

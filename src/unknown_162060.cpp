@@ -135,6 +135,8 @@ static inline bool engine_team_is_playing(long team)
 // activation input orders and type-first creation inputs 37/37/37.
 // unqualified teams scratch 2 plain; authority/playing/both result joins 37/37/37;
 // pretested slot while 304; direct team bit 37; active-team result 121; short team ordinal 124.
+// Actual table activation method / output reference 2/2; native kind enum 2; refreshed engine receiver 2;
+// shared / slot-only identifier scopes 2/2; equality loop bound 3; authority interval 6. Reload order remains.
 // @retail 0x162060
 void __stdcall function_162060(void *engine)
 {
