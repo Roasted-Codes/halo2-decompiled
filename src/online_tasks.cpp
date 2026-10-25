@@ -849,6 +849,8 @@ bool function_6c2a0(s_type_9df9da *task, long task_index)
 	return result;
 }
 
+/* Continues a task and maps its status to a result code; every outcome but
+   success marks the task finished and failed. */
 // @retail 0x6c360
 bool function_6c360(s_type_9df9da *task)
 {
@@ -857,22 +859,14 @@ bool function_6c360(s_type_9df9da *task)
 	{
 	case (long)0x80151001:
 		task->result = 4;
-		task->flag_bits.finished = true;
-		task->flag_bits.failed = true;
 		break;
 	case (long)0x80151003:
-		task->flag_bits.finished = true;
-		task->flag_bits.failed = true;
 		task->result = 8;
 		break;
 	case (long)0x80151002:
-		task->flag_bits.finished = true;
-		task->flag_bits.failed = true;
 		task->result = 3;
 		break;
 	case (long)0x80151006:
-		task->flag_bits.finished = true;
-		task->flag_bits.failed = true;
 		task->result = 6;
 		break;
 	case (long)0x80151300:
@@ -881,8 +875,6 @@ bool function_6c360(s_type_9df9da *task)
 			task->result = 10;
 			if (status == 2)
 				task->result = status;
-			task->flag_bits.finished = true;
-			task->flag_bits.failed = true;
 		}
 		break;
 	case 0:
@@ -903,10 +895,13 @@ bool function_6c360(s_type_9df9da *task)
 		}
 		break;
 	default:
-		task->flag_bits.finished = true;
-		task->flag_bits.failed = true;
 		task->result = 10;
 		break;
+	}
+	if (!result)
+	{
+		task->flag_bits.finished = true;
+		task->flag_bits.failed = true;
 	}
 	return result;
 }
