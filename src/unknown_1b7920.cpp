@@ -67,13 +67,18 @@ short __stdcall function_1b7920(long actor_index)
 	return result;
 }
 
-// score 74 (was 74): retail inlines the linear congruential generator (imul by
-// 0x19660d, add 0x3c6ef35f) where ours calls a helper that reads the value out
-// of the state, so our code is four bytes longer.
-// Current drift: both generator steps inline, but interval bounds use SSE
-// instead of x87. Inline depth two 74, zero 251; global optimization off 189;
-// header interval helper alone 148; force-inline draw/step 74/74;
-// double delay/ticks carriers 78/74.
+// score 12 (was 74): function_259d0's interval written out, with the bounds
+// in locals (upper first) and the random drawn into a local, keeps the delay
+// in x87 as retail does. Only scheduling differs: retail issues the delay's
+// fmulp/fxch/fadd/fstp one slot earlier among the point copy's stores.
+// Tried: function_259d0 call 74 (with local bounds 74); bounds read in the
+// expression 71/77; lower declared first 58; random folded into the
+// expression 26; local inline interval helper 148; delay computed after the
+// point copy 74; bounds declared before ticks 67; first random folded into
+// ticks 76; z delta hoisted before/after the delay 83/68. Earlier: inline
+// depth two 74, zero 251; global optimization off 189; header interval
+// helper alone 148; force-inline draw/step 74/74; double delay/ticks
+// carriers 78/74.
 // @retail 0x1b79d0
 bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 {
@@ -88,7 +93,10 @@ bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 		s_slot_1e *state = (s_slot_1e *)slot;
 		real sample = function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__);
 		real ticks = character->unknown08 + sample * 2.0f;
-		real delay = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, character->unknown1c, character->unknown20);
+		real upper = character->unknown20;
+		real lower = character->unknown1c;
+		real sample2 = function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__);
+		real delay = lower + (upper - lower) * sample2;
 
 		state->point = view->unknown18;
 		state->point.point.z += s_type_5cfb45->unknown38 - s_type_5cfb45->position.z;
@@ -101,46 +109,47 @@ bool __stdcall function_1b79d0(long actor_index, s_slot *slot)
 	return result;
 }
 
-// score 75 (was 75): retail pushes EBP first and keeps the character in EBP,
-// and calls function_25d740 out of line; our build inlines that helper and
-// keeps the character in EBX.
-// Read-only character/actor/view 75/75/75; distance limit snapshot 84;
-//  delay/start snapshots 75/75; early object input 79; selective getter outlining 68/201.
-//  The getter expansion and early EBP save still differ; outlining dropped.
-// keeps the character in EBX. Wrapper depths one/two 75; global optimization
-// off 75/223 bytes; size preference 129; point-getter result 80; direct view
-// getter with point result 80; point result/depth zero 120; point result
-// with explicit outcome arms 77.
+#pragma inline_depth(0)
+/* the slot's status: continue (g_46fbe8) while the delay runs, or once it is
+   over while the prop's point is within the character's distance of the
+   prop's object; finished (g_46fbe4) otherwise. Retail calls function_25d740 out of line here, so
+   inlining is off for this function and the actor and prop node lookups are
+   written out; the result is one local, as retail reloads g_46fbe8 for it
+   after the calls. */
 // @retail 0x1b7b90
 short __stdcall function_1b7b90(long actor_index, s_slot *slot, bool active)
 {
-	s_actor_view *actor = actor_get(actor_index);
+	s_actor_view *actor = (s_actor_view *)(g_4f55f0->data + (actor_index & 0xffff) * sizeof(s_actor_view));
 	s_character_e50 *character = (s_character_e50 *)function_1e4e50(actor_index);
+	short result = g_46fbe4;
 
 	if (character && actor->prop_index != NONE)
 	{
 		s_slot_1e *state = (s_slot_1e *)slot;
-		short result = g_46fbe8;
 
+		result = g_46fbe8;
 		if (g_510c54->game_time - state->start_time > state->delay)
 		{
-			s_prop_node_view *node = prop_node_get(actor->prop_index);
-			s_prop_view_fields *view = prop_node_view(node);
+			s_prop_node_view *node = (s_prop_node_view *)(g_502418->data + (actor->prop_index & 0xffff) * sizeof(s_prop_node_view));
+			s_prop_view_fields *view = (s_prop_view_fields *)function_25d740((s_prop_node *)node);
 
 			if (view)
 			{
 				point3f position;
 
 				function_b9dd0(node->object_index, &position);
-				if (!(function_210ac0(&view->unknown18, &position) > character->distance))
-					return g_46fbe8;
+				if (function_210ac0(&view->unknown18, &position) > character->distance)
+					result = g_46fbe4;
 			}
-			return g_46fbe4;
+			else
+			{
+				result = g_46fbe4;
+			}
 		}
-		return result;
 	}
-	return g_46fbe4;
+	return result;
 }
+#pragma inline_depth()
 
 // @retail 0x1b7c70
 void __stdcall function_1b7c70(long actor_index, s_slot *slot)
