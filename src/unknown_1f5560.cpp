@@ -747,6 +747,10 @@ real normalize2d(point2f *v);
 // result homes differ. Validity initialized in typed arm 241; first type initialized by branch
 // 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
 // movement flag stores 174; retry speed first 172; native planar output copies 172.
+// score 172 (was 172): frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
+// first-type state 172/208; decisions after query 177; both byte decisions 172.
+// Word validity reaches 935 bytes but gains only two points and is restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

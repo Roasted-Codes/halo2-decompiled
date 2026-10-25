@@ -43,6 +43,10 @@ static __forceinline long real_to_long(real value);
 // Native current-pointer/cursor view 132; with Boolean slice API 127; independent
 // long budget 114; separate native cursors 178; native first only 198; short
 // increment 121; Boolean branch 130; handle snapshots 127. Cursor views rejected.
+// score 144 (was 144): frame 0x18 versus 0x20; current/datum homes and slice-step interface still differ.
+// Real counter/global/both members 144/144/144; native member word comparison 149;
+// direct budget members 144; per-record threshold 144; inactive-record continue 144;
+// budget initialized after cursor 155. Body and member declarations restored.
 // @retail 0x268510
 void function_268510()
 {

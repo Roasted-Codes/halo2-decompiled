@@ -201,6 +201,10 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
+// score 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
+// Transform inline/noinline declarations separately and together 196; chained counts
+// or capacities 194/194; indexed geometry input 229; memory bound/center copies 196/196;
+// radius before displacements 196; both list initialization chains 190.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {
@@ -214,11 +218,9 @@ void function_45560(short entry_index, point3f const *center, real radius)
         {
             __declspec(align(16)) s_visibility_query_storage<512> first, second;
             first.list.indices = first.indices;
-            first.list.count = 0;
-            first.list.capacity = (long)0x80000200;
+            first.list.count = second.list.count = 0;
+            first.list.capacity = second.list.capacity = (long)0x80000200;
             second.list.indices = second.indices;
-            second.list.count = 0;
-            second.list.capacity = (long)0x80000200;
             query.center.x = center->x;
             query.center.y = center->y;
             query.center.z = center->z;
