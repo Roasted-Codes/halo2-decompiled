@@ -206,6 +206,14 @@ bool camera_velocity_profile_new(s_camera_velocity_profile *profile, real total_
 	return result;
 }
 
+// score 49 (was 49): retail keeps only start and deceleration in xmm registers and reads the
+// peak (twice) and acceleration from their array homes (frame 0x1c); ours keeps all four in
+// registers (frame 0x10). Three-arm first clamp 96; two separate result clamps 49 (same);
+// last term as a separate += 55 (retail's add order and single-exit clamp tail appear);
+// one 2x3 coefficient array 54 (retail's 0x1c frame and tail, but the reads stay in
+// registers); reordered coefficient fills 55; start/deceleration as named locals 59;
+// endpoint field reads in the sum 114 (the homes collapse); pointer-taking fill helper 63;
+// coefficient fill after the clamps 120.
 // @retail 0x16be50
 real camera_velocity_profile_evaluate(s_camera_velocity_profile const *profile, long ticks)
 {
