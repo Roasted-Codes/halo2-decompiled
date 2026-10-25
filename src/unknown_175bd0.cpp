@@ -1254,7 +1254,10 @@ void function_17aec0(short node_index, s_effect_datum *effect, transform4x3f *ma
     *matrix = nodes[(short)index];
 }
 
-// score 13 (was 13): the node index is masked in ecx in retail, ours loads it from the stack into ecx and masks it later
+// score 13 (was 13): the node index is masked in ecx in retail, ours loads it from the stack into ecx and masks it later.
+// Tried (r27b): the plain form without the volatile reread, with or without the node local, 37 (the node
+// moves to eax and the flag to cl); a `short const *` reference to the node keeps it on the stack but
+// swaps the flag and matrix registers (cl/eax, retail al/ecx) 32.
 // @retail 0x17af30
 void function_17af30(bool field_b4, short node_index, s_effect_datum *effect, transform4x3f *matrix)
 {
