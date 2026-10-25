@@ -204,7 +204,8 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 50 (was 50): frame 0x20 agrees; ECX/EAX allocation and request clear/fill scheduling differ;
+// score 50 (was 50): current/bound registers and request fill differ; explicit helper current 103, total 51, both 51; standard lower/upper/both clamps 50; combined 51; field current 50 (round 117).
+// frame 0x20 agrees; ECX/EAX allocation and request clear/fill scheduling differ;
 // tried request count before other fields 48; request assignments in observed order 50;
 // request declared at entry 50; minimum score before bound updates 62;
 // bound result homes declared together 50; task result used for store and test 50;
@@ -581,7 +582,9 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
-// score 21 (was 21): shared true return remains after later tests, first +0x17;
+// score 21 (was 21): shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
+// score 21 (was 21): shared true exit remains late; reversed signed operands at primary 25, latency 21, tertiary 21, key pairs 21/25, all keys 25 (round 117).
+// shared true return remains after later tests, first +0x17;
 // cached primary keys 21; latency keys 21; third keys 21; primary/latency 21;
 // primary/third 21; latency/third 21; all repeated keys 21; primary-test result 46.
 // shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).

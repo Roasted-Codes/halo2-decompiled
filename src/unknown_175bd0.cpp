@@ -2764,6 +2764,9 @@ void __stdcall function_17a380(s_effect_datum *effect)
 // differ. mode after color 112; late signed mode 112; late effect cursor home 112; late particle
 // cursor home 112; early mode traversal transform 96; early mode node observation 96; early mode
 // transform home 96; early mode query scope 96.
+// score 96 (was 96): current frame 0x50 versus 0x54, system/cursor homes and color staging remain;
+// native mode 96; entry word/native mode 108/109; unsigned particle cursor alone/with native mode 96/96;
+// node predicate at use 109, with native mode 110; late native mode 106. Opening body restored.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {

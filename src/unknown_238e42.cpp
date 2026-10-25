@@ -883,6 +883,9 @@ bool __stdcall function_2399da(long controller_index)
 }
 
 /* sets the selected player's rank in the clan (NONE removes them) */
+// score 90 (was 90): identity/rank registers and the extra move before removal remain; selection guard,
+// permission guard and both 90 each; update-first branch with neither/either/both guards 92 each;
+// requested-rank lifetime 90. Frame and all call arguments preserved on restore.
 // @retail 0x2393ae
 void __stdcall function_2393ae(long controller_index, long rank)
 {

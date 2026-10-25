@@ -126,7 +126,10 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
-// score 42 (was 42): Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
+// score 42 (was 42): coupled state/index/XMM homes and normalized Y load remain;
+// local/formal point cursor with short ordinal 94/93; short remaining count
+// 94/93; long ordinal 97/97; long remaining count 94/93. Opening body restored.
+// Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
 // normalizer input vector 126; compound scales 42; factor-first scales 42; positive normalizer scope 42; long point index 101; count-first guard 99; long state 86; plane/point names 42; forced normalizer 42; forced dot 42; both forced 42.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)

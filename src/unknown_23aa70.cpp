@@ -172,7 +172,8 @@ PRIVATE __forceinline void vertex_decode_23ac30(short x, short y, short z,
 	vertex_decode_ranges_23ac30(x, y, z, bounds, &range, point);
 }
 
-// score 62 (was 62): format 3 offset register and format 4 base/index lifetime remain.
+// score 62 (was 62): format-3 offset register and format-4 base/index differ; indexed format 4 or both packed arrays 175, format 2 62, format 3 60; node formats/ordinary index/range producer 175 (round 117).
+// format 3 offset register and format 4 base/index lifetime remain.
 // Indexed native decoder 582; ordinary index 582; native input reference/value 578/549;
 // native axis bounds 62; range value input 267; range output reference 62; natural format
 // case order 127; static indexed/input templates 582/578.

@@ -171,6 +171,9 @@ bool function_01dd60(long index, long *width, long *height)
 // inputs; the unsigned packing and Boolean gate still lower differently; height expression 21;
 // width expression 21; packed expression 21; direct width height expression 24; direct packed
 // expression 24; late entry 21; shared publication 21; separate gated result 21.
+// score 21 (was 21): Width/height input registers and flag normalization still differ. Native
+// index/width/height parameter-type sets 24 in all seven forms; native contract with separate
+// noinline declaration 24, all at 79 bytes.
 // @retail 0x1ddd0
 void function_01ddd0(long index, dword width, dword height)
 {

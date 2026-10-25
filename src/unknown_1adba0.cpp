@@ -309,6 +309,7 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 // score 61 (was 61): first range still fuses its x87 add; native interval fields 61;
 // interval by value/reference/pointer 94/84/84; value with result 94; reference/pointer
 // input copies 64/64; value with named sample 95. All interval and helper forms restored.
+// first range add still fuses; shared delay/duration/both range helpers 74/77/68; ordinary/direct/test-derived success 91; state at stores 61; shared ranges ordinary result 91 (round 117).
 // first range FADDP remains fused; frame and tick-conversion tail agree.
 // Existing rounding boundary for delay/duration/both, shared short/real clock, first output before
 // duration, early output with rounding and shared clock with rounding 68, 65, 71, 75, 75, 79, 100, 89.
@@ -649,6 +650,9 @@ bool function_270640(s_type_f17a25 *arg_0, s_type_c3b527 const *arg_1,
 bool function_2715a0(byte *arg_0);
 bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void const *arg_4);
 
+// score 112 (was 112): ESI is still saved around the middle region; result/index registers differ;
+// result first 110, point scope 112, settings scope 112, source scope 112, workspace scope 112,
+// result first/workspace scope 110, named result 112, named workspaces 112, prop index once 229.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {
