@@ -716,6 +716,8 @@ bool function_1f8660(long arg_0);
 // score 174 (was 181): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
 // Result first 203; request outer scope 187; role names 181; shared point differences 179;
 // failure result before release 207; shared cross product 174.
+// Count name with shared cross 174; request-output declarations first 174;
+// outer vector workspaces 174; separate direction vectors 171; request defaults with overrides 186.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
