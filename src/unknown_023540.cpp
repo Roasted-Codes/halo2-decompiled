@@ -1222,11 +1222,18 @@ scaled:
     }
 }
 
-
+// score 12 fast (was 16 fast, 13 full): only the mode 1 exit differs: retail
+// tests `jne` to the shared false exit and falls into its own `mov al, 1`
+// return, ours jumps back to case 0's identical return and falls into the false
+// exit. The fraction multiplies last only when it is written first (g*s*f and
+// s*g*f compile as g*f*s, 16). Tried: a result flag for the whole switch 154;
+// `if (mode == 1) return true` 16; `return mode == 1` 20; break to a return
+// false after the switch 18; one shared `return true` after the strength block
+// 16; the fraction inlined 73 or declared before the strength 26. The old
+// `(void)&` parameter line changed nothing (the marker keeps them on the stack).
 // @retail 0x298f0 standard
 bool __stdcall function_298f0(long mode, real const *bounds, real const *t, real *out, long unused)
 {
-    (void)&mode; (void)&bounds; (void)&t; (void)&out; (void)&unused;
     if (g_509400 <= 0.0f)
         g_509400 = g_485ae0;
     switch (mode)
@@ -1262,8 +1269,8 @@ bool __stdcall function_298f0(long mode, real const *bounds, real const *t, real
             if (strength != 0.0f)
             {
                 real fraction = (5 - mode) * 0.25f;
-                real x = *(real *)(g_4b99b0 + 0x1c) * strength * fraction + 1.0f;
-                real y = *(real *)(g_4b99b0 + 0x20) * strength * fraction + 1.0f;
+                real x = fraction * (*(real *)(g_4b99b0 + 0x1c) * strength) + 1.0f;
+                real y = fraction * (*(real *)(g_4b99b0 + 0x20) * strength) + 1.0f;
                 real inverse_x = x > 0.0f ? 1.0f / x : 0.0f;
                 real inverse_y = y > 0.0f ? 1.0f / y : 0.0f;
                 out[0] = (bounds[1] - bounds[0]) * (1.0f - inverse_x) * 0.5f + out[0] * inverse_x;
