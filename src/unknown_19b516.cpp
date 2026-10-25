@@ -128,6 +128,9 @@ void c_widget::v15(c_widget *widget)
 // score 20 (was 20): candidate/current allocation and delayed ESI save differ;
 // shared widget view 20; immutable current 26; initial/later/both reverse for 20/20/20;
 // current initially empty 20; direct existing predicate/focus 20/20.
+// inline/noinline eligibility declarations 44/20; focus declarations 20/20;
+// single search cursor 41; proven initial candidate do-while 37;
+// eligibility in loop admission 47; named eligibility result 20.
 // @retail 0x22ebc3
 void c_widget::v16()
 {
