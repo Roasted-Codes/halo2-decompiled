@@ -56,6 +56,10 @@ bool function_2161d0(long file_index, void *buffer, long size)
 	return result;
 }
 
+// score 10 (was 10): local path address retained after append and cached ESI-pop timing remain;
+// tried type at use 40f; type after copy 40f; cached result first 20f; completion bool order 11f;
+// cached progress first 13f; location guard nested 10f; result in each path 10f; completion from success 11f;
+// complete location object 10f.
 // @retail 0x2162b0
 bool function_2162b0(long file_index, void *buffer, long size, s_saved_game_file_task *task)
 {

@@ -1776,6 +1776,9 @@ struct s_collision_result_25f7b0
 // declaration orders, bool declared after the first query call, local_22
 // uninitialized-early, byte-typed local_4: all tie at 7. local_22 initialized before the
 // mode selection 113; the entry type copy reused in the allow test 260.
+// score 7 (was 7): collision byte +0x13/+0x10, product loads and allow-store schedule remain;
+// tried immutable distance 7p; guarded classification 210p; nested hit classification 199p; classification enum 7p;
+// projection first 7p; allow from second type 6p; allow from first type 8p; native query flag 123p.
 // @retail 0x25f7b0
 void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *arg_2)
 {

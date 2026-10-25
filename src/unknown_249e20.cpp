@@ -26,6 +26,10 @@ long function_249e20(s_structure_bsp_view *bsp, long index)
 	return result;
 }
 
+// score 9 (was 9): audibility load before saved-register/index setup remains;
+// tried entry row first 31f; entry row after result 31f; second category default 29f; explicit absence results 42f;
+// complete category selection 37f; native row domain 9f; native stride domain 9f; read only word table 9f;
+// direct table fields 44f; direct row expressions 38f.
 // @retail 0x249e60
 long function_249e60(long cluster_index, s_structure_bsp_view *bsp, long index)
 {

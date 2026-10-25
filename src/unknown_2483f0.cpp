@@ -170,6 +170,10 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
+// score 13 (was 13): link-store effective address and late seed/constant schedule remain;
+// tried native record receiver 14f; shared position setter 45f; shared vector setter 47f; both shared setters 49f;
+// scalars before copies 33f; links reverse order 14f; allocation failure return 48f; origin value 61f;
+// immutable allocation index 14f; seed input lifetime 14f.
 // @retail 0x248620
 long function_248620()
 {
