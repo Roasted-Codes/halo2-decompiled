@@ -491,6 +491,10 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Native radius member 125; shared ring with/without native radius 123/123; three-use trace distance 120 plain;
 // shared trace displacement 225; elevation vector 245; collision point setter 125; collision-offset vector 189;
 // trace distance with shared ring 120. Keep the smaller trace-distance form; frame 0xd8, 1090/1089 bytes.
+// score 120 (was 120): frame 0xd8 agrees; entry/ring conversion, rotation and sector publication differ.
+// Named collision marker 120; marker before entry 120; entry before point 236;
+// complete point components 144; promoted sector 120; conditional sector store 154;
+// direct radius with trace scalar 239; sector eligibility result 120.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

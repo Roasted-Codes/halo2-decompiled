@@ -1326,6 +1326,9 @@ struct s_rating_summary
 // native team pointer/reference plus formatted identity 219/219 (one-point follow-ups dropped).
 // score 206 (was 220): key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
 // score 206 (was 206): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
+// score 206 (was 206): key/statistic homes and grouped team dispatch remain; frame 0xfc agrees.
+// Shared short/promoted skill 284/220; entry/shared statistics 206/206; entry group 206;
+// shared statistics with short/promoted skill 284/220; statistics plus entry group 206 (fast).
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

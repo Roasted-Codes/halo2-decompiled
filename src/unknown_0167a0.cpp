@@ -883,6 +883,9 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
 // dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
 // both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
 // shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
+// score 2 (was 2): width-family zero-store pair remains; entry and 704-byte extent agree.
+// Later width/height case owner 2/2; mixed-before-pair 2; unit/zero before mixed 2/111;
+// adjacent dimension families 30; dimension/zero families first 48/61.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {
