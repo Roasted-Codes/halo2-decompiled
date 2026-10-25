@@ -139,6 +139,11 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 // arithmetic homes and branch placement remain. Caller noinline declaration 620;
 // callee noinline declaration 236; shared magnitude 236; shared point 236;
 // destination name 236; long result 233; point/name/magnitude together 236.
+// score 232 (was 336): Frame 0x48 agrees; actor/view registers, trace carriers and
+// movement/failure block placement remain. Tried category short outlined query 338; completion
+// early return 232; category short completion 236; movement result first 232; movement workspace
+// scope 232; probe frame names 232; existing point setter 232; far failure arm first 232;
+// movement success return 232.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
@@ -153,8 +158,9 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 	if (actor->unknown504 == 2)
 	{
 		state->unknown0c = true;
+		return true;
 	}
-	else if (actor->unknown040)
+	if (actor->unknown040)
 	{
 		state->unknown0c = false;
 		if (view->unknown70 == 1)

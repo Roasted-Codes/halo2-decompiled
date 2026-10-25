@@ -2766,6 +2766,11 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 // 237; separate player row counters 237; existing widget lookups 175; native animation bit 233; widget
 // lookups animation bit 179; map text lookup 237; text lookup helpers 156; bitmap lookup helpers 164; native
 // widget query indices 180; heading widget lookups 237; text helper query indices 164.
+// score 156 (was 156): Frame 0x754 agrees; item-loop receiver reload, bitmap case placement and
+// row/animation homes remain. Tried item pointer walk 301; game result width 309; row counter
+// short 247; direct map names 218; direct search result 172; bitmap exhaustive result fixed 189;
+// offline index range 195; exhaustive bitmap long 189; exhaustive bitmap case order serial 189;
+// exhaustive bitmap range serial 195.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {
