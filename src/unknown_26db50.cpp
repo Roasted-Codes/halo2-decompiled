@@ -470,6 +470,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // score 184 (was 195): frame 0xd8 now agrees; radius setup, rotation schedule and sector-test registers remain.
 // Cosine first 197; shared direction/axis/both scales 210/213/261; cosine-first inputs 195;
 // angle product lifetime 196; per-use ring phase 184 kept, 1087/1089 bytes; angle-result names 195.
+// cosine complement 195; cosine first 197; output scalars 195; direct-input outputs 256;
+// components before dot 195; shared rotation 195/1091; output scalars plus plain radius 209;
+// shared rotation plus plain radius 208/1095. Rotation spill and frame 0xdc remain.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

@@ -409,6 +409,9 @@ void __stdcall function_25dd50(
 // score 38 (was 38): Face base/index, definition setup, cover registers and failed-facing placement differ;
 // face pointer arithmetic 38; validated edge 38; definition receiver 191; cover reference 38;
 // target setter 38; target initializer 38; lateral component loop 38; output point setter 166.
+// Native trace 38; facing guard 37 (plain 37); cover index before/after base 38/38;
+// shared inset/lateral/both scale 131/106/138; native trace plus guard 37;
+// trace-block definition receiver 104; receiver plus guard 101. One-point gain dropped.
 // @retail 0x25e430
 void __stdcall function_25e430(
 	long actor_index,

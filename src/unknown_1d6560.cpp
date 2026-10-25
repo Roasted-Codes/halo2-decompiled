@@ -208,7 +208,10 @@ struct s_physics_component_walk : s_havok_component
         char *output, long *output_count, void *other_context, dword *visited, bool *active);
 };
 
-// score 275 (was 275): frame 0x1c versus 0x18, current/entry homes and group
+// score 275 (was 275): frame 0x1c versus 0x18; current/entry roles and next-group spill differ.
+// Reduced trials: availability first 303; immutable policy 275; read-only model 275; read-only body 275;
+// native availability 297; native application 305; byte first body 298; read-only sections 275.
+// frame 0x1c versus 0x18, current/entry homes and group
 // spill differ; direct receiver 275; signed-word next 310; byte body 319;
 // direct model uses 275; conditional first body 300. Original body kept.
 // score 275 (was 275): extra frame word and group/current homes remain;

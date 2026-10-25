@@ -2654,6 +2654,9 @@ struct s_unit_flags_14d8b0
 // score 155 (was 155): iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
 // low-time arm first 179; inline depth one 155. Damage call convention differs.
+// Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
+// native reset timer 155; both native long/short fields 155; signed native countdowns 155;
+// all native countdown fields 155; full native current-player record 153.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

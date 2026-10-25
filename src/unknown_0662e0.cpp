@@ -529,6 +529,10 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // value2c copies too (420); all of these 419. Tried: i < 2 (454), its own loop variable
 // for the first loop (363); initial real stores first 363; outer word index 469 signed
 // or unsigned; column word index 464; both signed-word indices 512. Original kept.
+// score 363 (was 363): frame 0x20 agrees; constant five, first-table induction and flag initialization differ.
+// Reduced trials: integer stores reversed 363; result calculation reversed 362; table stores reversed 363;
+// shared multiplier 363; first interpolation local 363; second interpolation local 363; explicit low cases
+// 448; shared rounding 460.
 // Lanes also tried: first-table result names 363; loop-scope steps 363; initialized steps 363;
 // first regular table tail loop 531; second tail loop 530; zero inline depth 610; depth one 363;
 // frame pointer 487; global optimization off 1180; size preference 538.
