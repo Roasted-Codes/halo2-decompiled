@@ -65,10 +65,12 @@ public:
 	void function_2f1ea0(void const *a, void const *b, void const *input, void *collector);
 };
 
-// score 20 (was 38): body A and the sphere take edi here and ebx in retail
+// score 20 (was 20): body A and the sphere take edi here and ebx in retail
 // (the centre the other way round), body B's motion in the inside branch
 // takes esi where retail has edx, and the collector's table and the record's
 // address (and the end mark's time) have eax and edx swapped.
+// Body record values A/B/both 178/193/204; contact-pointer/native status 20/20;
+// short/unsigned axis 62/20; rotation transform reference 20.
 // @retail 0x2f1ea0
 void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *input, void *collector)
 {
@@ -76,7 +78,9 @@ void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *inp
 }
 
 // the same as a function
-// score 20 (was 38): as 0x2f1ea0.
+// score 20 (was 20): as 0x2f1ea0. Inside-first dispatch 124; centre value
+// 188; default face first 93; byte result 20; first/half product parts 20/20;
+// point displacement/distance parts 20/20; default normal value 54.
 // @retail 0x2f2130
 void __cdecl function_2f2130(void const *a, void const *b, void const *input, void *collector)
 {
