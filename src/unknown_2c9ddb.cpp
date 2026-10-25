@@ -87,6 +87,11 @@ extern long g_55c154;
 // creation classification spill and selective copy expansion remain;
 // live entry-handle/edit-mode/type fields 61/61/61; handle-mode/handle-type/mode-type
 // field pairs 61/61/61; three live fields and external record combination 61/61.
+// score 61 (was 61): retail has two load arms (default/selected) and an out-of-line copy call.
+// separate noinline declaration of the copy 61 (still inlined); single load re-testing the
+// selection 77; two load arms 174; two arms plus a shared default-name pointer 179 (the copy
+// becomes retail's register call, but zero is kept in ebx and this spills); arms on direct
+// entry reads 179.
 // @retail 0x2ca284
 void c_class_2c9e69::handle_item(s_controller_reference **controller, long *item)
 {

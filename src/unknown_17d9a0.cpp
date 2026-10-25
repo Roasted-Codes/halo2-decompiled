@@ -142,7 +142,10 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 // Shared projection operation 334; native plane result 237; row-selector local 152;
 // bounds-first/vertical-first helper contracts 140/140; pointer-input point initializer 152;
 // vertical result snapshot 170; first-edge squared length 138; corrected contract/length combinations 146/146.
-// score 138 (was 138): Plane-distance base, projection publication and inverse scheduling still differ.
+// score 138 (was 138): Plane-distance base, projection selectors/stores and inverse scheduling remain. external output record
+// 146; external corner array 138; output and corner array 146; external normal receiver 166; external
+// bounds record 146; matrix memcpy 138; bounds memcpy 152; normal memcpy current length 152.
+// Plane-distance base, projection publication and inverse scheduling still differ.
 // corner input references 144f; origin corner value 172f; first edge value 156f; second edge
 // value 166f; both edge values 183f; first eligibility result 146f; indexed bounds contract 142f;
 // indexed bounds with origin value 174f.

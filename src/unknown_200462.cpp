@@ -81,6 +81,13 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // direct query product right/left 39/39; query with spans 39; spans/direct query 39.
 // Round 277: draw-shared quad/rectangle/both and pre-center quad/rectangle/both 39 each;
 // signed-word selection mask 169; read-only computed draw scalars 39.
+// score 29 (was 39): pulse/table setup, rectangle source address and occupied/height registers differ.
+// Two-use width/query operands 35; height before advance with those operands 29 kept;
+// horizontal/vertical output phases 112/111; operands with horizontal phase 109;
+// coordinate source base 37 (rejected); native output names 39; operands with names 35.
+// score 29 (was 29): table/pulse setup, rectangle source and occupied/height registers remain;
+// rectangle memcpy 29; native zero rectangle 132; both 132; occupied result 70; copy/result 70;
+// zero/result 156; all boundaries and native quad 156/156.
 // @retail 0x200462
 void function_200462(long arg_0)
 {
@@ -146,9 +153,8 @@ void function_200462(long arg_0)
         s_interface_pulse *local_22 = &local_0[entry_index];
         real local_23 = function_2008fc(local_22, true);
         real local_24 = (local_19.x1 - local_19.x0) * (real)*(short *)(local_21 + 4) * 0.5f;
-        real local_26 = local_24 * local_23;
-        local_14.x += local_26;
         real local_25 = (local_19.y1 - local_19.y0) * (real)*(short *)(local_21 + 6) * 0.5f;
+        local_14.x += local_24 * local_23;
         point2f local_27[4];
         local_27[0].x = local_14.x - local_24;
         local_27[0].y = local_14.y - local_25;
@@ -165,6 +171,6 @@ void function_200462(long arg_0)
         g_4e6950.value1c = function_200891(local_22, false) * g_4e69c0[g_4b9ed8];
         function_22a664((s_widget_quad_2b11 const *)local_27, &local_19,
             *(long *)(local_16 + 4), bitmap_index, *(long *)(local_16 + 0xc));
-        local_14.x += local_26;
+        local_14.x += local_24 * local_23;
     }
 }

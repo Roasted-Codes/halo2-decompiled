@@ -1368,6 +1368,10 @@ struct s_133f70;
 // score 213 (was 213): distance staging, nullable entry and cache/result homes remain.
 // Direct successful-output slot, entry lifetime: long/long 379, long/short 371,
 // short/long 354, short/short 350; loop lifetime 360,372,374,375.
+// distance input, nullable-entry address and cache/result scheduling remain.
+// Shared level result 378; direct reuse result 316; both 343; builder-first rejection 216;
+// observed object for cache/cache-pool calls 224/332; direct cache publication 218;
+// direct cache with shared level/reuse results 352. All measured in the full image.
 // distance staging, nullable entry and cache/result schedule remain.
 // Plain signed-byte/short/word success 213/265/265; short/word reuse 370/370;
 // signed-byte level change 213; unsigned failures 213; word entry ordinal 352.
