@@ -805,6 +805,9 @@ done:
 // size preference 285; zero inline depth 232. Original kept.
 // score 176 (was 176): round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
 // score 176 (was 176): round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
+// score 176 (was 176): round 108: frame 8 agrees; next-word/sentinel allocation remains.
+// Native entry table 176; native palette table 176; both table views 176;
+// palette retained across advance 188; direct category-bit extraction 202.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -2820,6 +2823,9 @@ void function_2011f0(long arg_0);
 // repeated signed category 387; function-scope workspaces 387; case two first 387.
 // score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
 // score 383 (was 383): round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
+// score 383 (was 383): round 108: frame 0x13c/0x134 and spawn/definition homes remain.
+// Native placement workspace 383; completion-result guard 383; full-width category 387;
+// unconditional initialized override 388; shared default word 387.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

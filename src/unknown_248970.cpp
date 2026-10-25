@@ -56,6 +56,10 @@ public:
 // allocation failure first 256; maximum branches 257; direct input/early activation 253;
 // delayed child handle 252 kept; one initialized/link record pointer 300.
 // frame, boolean convention and child-loop homes differ. Tried shared position field base 256; child record byte stride 258; direct location input 265; distance through radius 256; reuse selected influence 259; active branch first 253; stored activation gate 256; activation influence default 284.
+// score 221 (was 252): round 108: frame 0x10/0x14, activation and viewer/child homes remain.
+// Scan influence accumulator 285; closed double scope 252; shared salted index 228;
+// explicit zero falloff 245; allocation-failure return 252; combined 221;
+// shared child pointer 228; direct allocated handle 336; complete falloff arms 221.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
@@ -79,10 +83,12 @@ void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s
 			double local_9 = (double)local_20->field_10.z - local_6->position.z;
 			double local_4 = sqrt(local_9 * local_9 + local_8 * local_8 + local_7 * local_7);
 			real local_10 = (real)(local_4 * local_6->radius);
-			real local_11 = 0.f;
+			real local_11;
 			if (g_510c50 && ((byte *)g_510c50)[5])
 				local_11 = 1.f;
-			else if (local_10 > local_1->field_18 && local_1->field_24 > local_10)
+			else if (!(local_10 > local_1->field_18 && local_1->field_24 > local_10))
+				local_11 = 0.f;
+			else
 			{
 				if (local_1->field_1c + local_1->field_18 > local_10)
 					local_11 = (local_10 - local_1->field_18) * local_1->field_20;
@@ -116,7 +122,7 @@ void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s
 			if (local_0 == NONE)
 				break;
 			c_247470 *local_17 = DATUM(local_15, c_247470, local_0);
-			long local_18 = (*(short *)&local_17->field_0 << 16) | (local_17 - (c_247470 *)local_15->data);
+			long local_18 = data_datum_index(local_15, local_17 - (c_247470 *)local_15->data);
 			local_17->field_8 = NONE;
 			if (local_20->field_4 == NONE)
 				local_20->field_4 = local_18;

@@ -259,6 +259,9 @@ public:
 // successor while traversal 194.
 // Selector inline declaration 170 (matched sibling becomes 292); displacement aggregate,
 // squared distance before/after selector, retained center and branched range maximum 194 each.
+// score 194 (was 194): round 108: frame 0x1c/0x20 and location/receiver homes remain.
+// Late range accumulator 201; outer range endpoints 194; shared center setter 198;
+// scoped successor for traversal 194; nested age/cleanup guards 194.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
