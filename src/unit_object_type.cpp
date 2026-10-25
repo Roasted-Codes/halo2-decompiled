@@ -2153,8 +2153,8 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 	real *out_position)
 {
 	bool result = motion->done;
-	real new_position = position;
-	real new_velocity = velocity;
+	real moved_position = position;
+	real moved_velocity = velocity;
 
 	if (!result && time > 0.0f)
 	{
@@ -2163,8 +2163,8 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 			real step = time > motion->field_10_4 ? motion->field_10_4 : time;
 			real change = motion->acceleration * step;
 
-			new_position = (change * 0.5f + new_velocity) * step + new_position;
-			new_velocity = change + new_velocity;
+			moved_position = (change * 0.5f + moved_velocity) * step + moved_position;
+			moved_velocity = change + moved_velocity;
 			time -= step;
 		}
 		if (time > 0.0f)
@@ -2173,7 +2173,7 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 			{
 				real step = time > motion->coast_time ? motion->coast_time : time;
 
-				new_position = step * new_velocity + new_position;
+				moved_position = step * moved_velocity + moved_position;
 				time -= step;
 			}
 			if (time > 0.0f)
@@ -2183,8 +2183,8 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 					real step = time > motion->s_type_8c87de ? motion->s_type_8c87de : time;
 					real change = motion->deceleration * step;
 
-					new_position = (change * 0.5f + new_velocity) * step + new_position;
-					new_velocity = change + new_velocity;
+					moved_position = (change * 0.5f + moved_velocity) * step + moved_position;
+					moved_velocity = change + moved_velocity;
 					time -= step;
 				}
 				if (time > 0.0f)
@@ -2194,8 +2194,8 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 			}
 		}
 	}
-	*out_position = new_position;
-	*out_velocity = new_velocity;
+	*out_position = moved_position;
+	*out_velocity = moved_velocity;
 	return result;
 }
 
