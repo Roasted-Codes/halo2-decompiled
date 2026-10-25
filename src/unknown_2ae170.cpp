@@ -836,6 +836,9 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 // frame pointer 166; word counters 157; common counter 166; exclusive end bins 165;
 // pair/quad capacity predicates 156.
 // score 137 (was 156): Frame eight agrees; runtime zero attenuation and mode dispatch remain. Shared modes 168; adjacent endpoints 193; all byte endpoints 142; byte capacity 156; unsigned counters 156; combined shared modes 161; rear bytes 170; front bytes 137 (plain, exact length).
+// score 137 (was 137): source/bin allocation, runtime attenuation and dispatch remain.
+// Word/long mode capture 137/148; direct capacity with word/long mode 163/165/168;
+// range order/short front endpoints/flags at use 151/164/138.
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {

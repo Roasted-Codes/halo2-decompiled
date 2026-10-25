@@ -1263,6 +1263,9 @@ struct s_player_properties
 // On the direct-requested-field base: counted first/second/both default arrays 240/240/235;
 // chained defaults 184; shared actual three-element prefixes 198; selective first/second
 // reset calls 240/240; both reset calls 235.
+// score 184 (was 184): owner/count/zero homes and requested cursor remain.
+// Current fields at use all/names 198/184; metadata/all with live mask/all with late count 234/198/198;
+// all with owner at use/second index/both indices 207/198/198.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
