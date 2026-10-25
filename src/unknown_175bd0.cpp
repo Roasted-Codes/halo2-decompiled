@@ -2397,6 +2397,10 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // early magnitude 259; scale before owner stores 83; both 259; force-inline normalization 83;
 // impulse name 83; point/axis homes 83; common normalizer with separate output 251,
 // with direct scale-result consumption 33. Original body retained.
+// score 74 (was 83): One direction workspace reaches retail length; frame 0x68 versus 0x74 and normalization scheduling differ.
+// original scale-result consumer 120; in-place random direction 112 fast, 74 plain kept;
+// copied random input 205; separate impulse 225; direct impulse consumer 225; in-place/direct consumer 112;
+// read-only event 120; record/index names 120 (unchanged fast control 120, full 83).
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2418,7 +2422,6 @@ void function_179fb0(s_effect_datum *effect)
 				while ((location = effect_location_next_179fb0(effect, &location_index)) != 0)
 				{
 					point3f point;
-					vector3f forward;
 					vector3f direction;
 
 					if (location->node_index != NONE)
@@ -2427,14 +2430,14 @@ void function_179fb0(s_effect_datum *effect)
 
 						function_17aec0(location->node_index, effect, &matrix);
 						effect_matrix_transform_point(&matrix, &location->matrix.position, &point);
-						effect_matrix_transform_normal_179880(&matrix, &location->matrix.forward, &forward);
+						effect_matrix_transform_normal_179880(&matrix, &location->matrix.forward, &direction);
 					}
 					else
 					{
 						point = location->matrix.position;
-						forward = location->matrix.forward;
+						direction = location->matrix.forward;
 					}
-					random_vector_in_cone(&forward, &direction, &g_4e7408->unknown0, acceleration->inner_cone_angle, acceleration->outer_cone_angle);
+					random_vector_in_cone(&direction, &direction, &g_4e7408->unknown0, acceleration->inner_cone_angle, acceleration->outer_cone_angle);
 					effect_normalize(&direction);
 
 					real magnitude = acceleration->acceleration * object_definition->unknown14;

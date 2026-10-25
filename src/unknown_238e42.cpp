@@ -353,6 +353,9 @@ extern long g_51ec0c;
 
 /* joins the friend's game (mode 1 to 4: how a squad already formed comes
    along) */
+// score 80 (was 80): Cold state/mode blocks precede the main join block; body remains twelve bytes short.
+// state ranges 125; cold range first 99; availability gate 126; common switch exits 80;
+// later join-type lifetime 155; timestamp workspace 80; gate/common exits 126; ranges/lifetime 137.
 // @retail 0x2395dc
 void __stdcall function_2395dc(XONLINE_FRIEND *friend_, long controller_index, long mode)
 {

@@ -78,6 +78,9 @@ static __forceinline void decode_direction_194d30(long index, vector3f *directio
 	direction->k = z * face->axes[2].k + y * face->axes[1].k + x * face->axes[0].k + face->origin.k;
 }
 
+// score 62 (was 62): Decode zero/scale scheduling and final x87 component forwarding still differ.
+// coordinate stages 62; selected scale results 62; plane offset first 100; axis table 62;
+// origin snapshot 129; table subobjects 129; coordinate names 62; existing normalizer call 187.
 // @retail 0x194d30
 void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *forward)
 {

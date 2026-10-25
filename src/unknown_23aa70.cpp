@@ -169,6 +169,9 @@ PRIVATE __forceinline void vertex_decode_23ac30(short x, short y, short z,
 	vertex_decode_ranges_23ac30(x, y, z, bounds, &range, point);
 }
 
+// score 62 (was 62): Format-3 offset register and format-4 base/index lifetime still differ.
+// concrete packed pointer 62; concrete reference 62; native value 173; coordinate-array pointer 62;
+// coordinate-array reference 62; returned point 62; native input/output 62; concrete indexed input 175.
 // @retail 0x23ac30
 void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 	s_vertex_bounds_23ac30 const *bounds, point3f *point, long *node)
