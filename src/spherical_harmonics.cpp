@@ -10,9 +10,12 @@
 #define k_spherical_harmonics_pi 3.14159265f
 
 /* the basis functions of the first order*order bands in a direction */
-// score 123 (was 123): Y/scalar homes and retained x87 roots differ;
-// outer order return 123; cubic order return 123; roots before inputs 137;
-// early Z square 128; first-band Z store first 128.
+// score 123 (was 123): Y/scalar homes and retained x87 roots differ: retail never consumes sqrt(2)
+// or sqrt(105) at their last use (fmul st(1)/st(2), two fstp st(0) before the return; result[14] in
+// source order), ours folds them in (fmulp st(2), result[14] reassociated around sqrt105).
+// Tried: outer order return 123; cubic order return 123; roots before inputs 137;
+// early Z square 128; first-band Z store first 128; repeated inline sqrt(2.0)/sqrt(105.0) (retains
+// the roots like retail but moves the band-3 products) 158-162; /Op 383 (and 0x146020 stops matching).
 // @retail 0x143360
 void spherical_harmonics_evaluate_direction(vector3f const *direction, dword order, real *result)
 {

@@ -977,6 +977,10 @@ long function_16b990(s_record_pool *data, long index);
 // Tried here: the expression read at the call 72; a result pointer local after the
 // resets 72, before them 72, with the expression in a local after them 72; the value
 // as a field pointer 72.
+// Expression preload precedes resets/destination setup. Allocated record
+// reference 5; native value reference 6; unsigned expression bits 5; thread
+// rereads 130; size memset 88; script-index memset 12; unsigned allocated
+// index 5; external thread reference 5.
 // @retail 0x2090a0
 void function_2090a0(void)
 {

@@ -1122,7 +1122,11 @@ struct s_player_rating_properties
 long __stdcall function_063190(void *summary, long user);
 
 #pragma optimize("s", on)
-// score 115 (was 115): EBP frame has three words versus one session spill; aggregate registers differ.
+// score 110 (was 115): Frame/aggregate registers and conditional moves still differ.
+// Read-only session 115; external session reference 115; short missing
+// 116; direct readiness 119; shifted membership bit 120; average scalar
+// 115; external rank reference 110 kept; both rating references 124.
+// EBP frame has three words versus one session spill; aggregate registers differ.
 // Session per-use 169, mode-scoped 115; word ordinal 134; absent/user continues 115/116;
 // ready-first 112; sum-first 118; rating-data reference 115.
 // @retail 0x72540
@@ -1143,15 +1147,16 @@ void function_72540(c_session_state_matchmaking *state)
 					long index = function_063190(ratings->summary, (long)&player->user_id);
 					if (index != NONE)
 					{
+						long &rank = ratings->ranks[index];
 						if (!(player->user_flags & 3))
 						{
-							if (ratings->ranks[index] == NONE || ratings->values[index] == NONE)
+							if (rank == NONE || ratings->values[index] == NONE)
 							{
 								s_player_rating_properties *properties = (s_player_rating_properties *)player;
 								missing++;
 								if (properties->selected == ratings->selected && properties->value != NONE && properties->rank != NONE)
 								{
-									ratings->ranks[index] = properties->rank;
+									rank = properties->rank;
 									ratings->values[index] = properties->value;
 									missing--;
 								}
@@ -1159,7 +1164,7 @@ void function_72540(c_session_state_matchmaking *state)
 						}
 						else
 						{
-							ratings->ranks[index] = NONE;
+							rank = NONE;
 							ratings->values[index] = NONE;
 						}
 					}
@@ -1833,6 +1838,9 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // readiness before countdown 140; shared live-state predicate 90.
 // Owner/secondary/primary/paired object references 90; completion from test 129;
 // host return guard 90; paired preparation result 90; reversed timed-type tests 93.
+// Shared type/all failure commands 144/128; combined mode-readiness 90 (426 bytes);
+// preparation failure first 90; raw-time readiness 94; unsigned saturated time 90;
+// completion before mode call 90; shared failures with combined gate 129.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {

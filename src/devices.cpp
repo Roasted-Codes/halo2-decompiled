@@ -1219,6 +1219,8 @@ bool function_0b6760(s_index_pair const *pair);
 // score 351 (was 365): frame 0x1c versus 0x20; index/header and state/result homes differ.
 // Long direction flag 367; shared completion 365; shared previous value 361;
 // channel guard helper 382; ordinary result 355; shared previous/ordinary result 351 kept.
+// Round 290: ordinary index with shared previous 408; shared previous and header index 408; header index
+// and ordinary tag pointer 384; group path first 392; byte direction predicate 351.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

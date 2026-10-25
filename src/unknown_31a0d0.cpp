@@ -78,6 +78,12 @@ solver_result_31a0d0 const *motion_31a0d0::function_31a0d0(float const *step, fl
 // the motion moved to a moment within the last step: back by the part of the
 // step its position's last lane records, then on by the part given, which
 // is recorded in its place
+// score 5 (was 5): the last vector call uses esp+0x28 rather than +0x48;
+// EDI restoration follows two SSE instructions. On the local-product form:
+// a pose pointer 9; product after the position copy 53; output declared
+// before either preceding call 5/5; quaternion scope through either call 3/3;
+// translation via its field 5; immutable quaternion input 5.
+// Earlier notes:
 // score 5 (was 10): EDI is restored after the final vector subtraction/store;
 // retail restores it before those instructions. The scalar schedule and both
 // point homes agree. A local duration product scores 5; shortening the angular
