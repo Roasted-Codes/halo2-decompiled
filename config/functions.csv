@@ -1600,7 +1600,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00089660,48,game,speed,a16 pad,,,,src/replication_entity_table.cpp,matched
 00089690,114,game,unknown,a16,,,,src/replication_entity_table.cpp,matched
 00089710,421,game,speed,a16 pad,,,,src/replication_entity_table.cpp,matched
-000898c0,141,game,speed,a16 pad,,,000980d0 00099690,src/replication_entity_table.cpp,todo
+000898c0,141,game,speed,a16 pad,,,000980d0 00099690,src/replication_entity_table.cpp,matched
 00089950,205,game,speed,a16 pad,,,,src/replication_entity_table.cpp,matched
 00089a20,534,game,speed,a16 pad,,,00089500 00089570,src/replication_entity_table.cpp,matched
 00089c40,124,game,speed,a16 pad,,,,src/replication_entity_table.cpp,matched
@@ -1918,7 +1918,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00097f30,46,game,speed,a16 pad,,,,src/unknown_097d80.cpp,matched
 00097f60,118,game,speed,a16 pad,,,,src/unknown_097d80.cpp,matched
 00097fe0,238,game,speed,a16 pad,,,,src/unknown_097d80.cpp,matched
-000980d0,73,game,speed,a16 pad,,,,src/unknown_097d80.cpp,todo
+000980d0,73,game,speed,a16 pad,,,,src/unknown_097d80.cpp,matched
 00098120,47,game,speed,a16 pad,,,,src/unknown_097d80.cpp,matched
 00098150,814,game,speed,a16 pad,,,00089d20,src/unknown_096ed0.cpp,todo
 00098480,73,game,speed,a16 pad,,,,src/unknown_096ed0.cpp,matched
