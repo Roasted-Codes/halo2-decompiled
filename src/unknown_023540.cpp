@@ -2969,6 +2969,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Shared mode-
 // two/three tail 1153; redundant case defaults removed 1193; common exponent outputs 1365; second
 // packed color shared 1101; byte fraction 971 (fast).
+// Frame 0x2c agrees; capability/save roles, state expansion and
+// color/quantizer homes differ. Word success 1194; unsigned exponent 1197; mode decision chain
+// 1084; word color input 971; word alpha input 1181 at retail length.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

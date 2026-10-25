@@ -511,6 +511,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // initial j/k/i products 179/180/179; first-plane subtotal 180; rotation
 // k/j/i products 242/183/237; turn alignment 180; paired jk/ki/ji/all
 // initial products 186/186/187/186. Three-point best rejected.
+// Frame 0x28 and state/output registers agree; direct dot displacement bytes
+// and rotation scheduling differ. Word rotation decision 182; long rotation decision 182; shared
+// entry cross 182; all shared crosses 182; vector home names on recovered state base 182.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {

@@ -2233,6 +2233,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // score 674 (was 674): Request/control homes and the second stack argument remain;
 // indexed three-channel completion 743; position field receiver 704; byte transition 711;
 // direct eligibility 705; byte request flags 705. Opening body retained.
+// Frame 0x80 agrees; request/control carriers and ret 4 versus ret 8 remain.
+// Unsigned requested names 674; short held-slot count 674; word activity result 690; transition
+// cases first 674; internal validity linkage 674. Original helper declaration restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
