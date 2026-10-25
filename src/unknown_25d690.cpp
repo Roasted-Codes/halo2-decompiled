@@ -1087,11 +1087,6 @@ s_ai_player *ai_player_get(long player_index);
 
 /* the actor leaves the vehicle it rides in, and its player remembers the
    seat */
-// score 76 (was 76): the prologue: retail loads the global g_4f55f0 and its
-// data pointer before reserving the frame, ours reserves the frame first.
-// Const actor with store lookup 86; saved scalar names and entry homes 76;
-// named acceptance and failed-request exit 76; reversed dispatch 77;
-// shared tick 78; player lifetime across acceptance 76.
 // @retail 0x25c050
 void function_25c050(long player_index, long actor_index)
 {
@@ -1107,17 +1102,17 @@ void function_25c050(long player_index, long actor_index)
 
 		if (actor->unknown266)
 		{
-			if (actor->unknown018 != NONE)
+			if (actor_get(actor_index)->unknown018 != NONE)
 			{
-				function_20ba60(0x6a, actor->unknown018, target_index, NONE, NONE, NULL);
+				function_20ba60(0x6a, actor_get(actor_index)->unknown018, target_index, NONE, NONE, NULL);
 			}
 		}
 		else
 		{
-			short type = 0x6b;
-			if (!actor->unknown268)
-				type = 0x6c;
-			function_1fb7e0(type, actor_index, NULL, target_index, NONE);
+			if (actor->unknown268)
+				function_1fb7e0(0x6b, actor_index, NULL, target_index, NONE);
+			else
+				function_1fb7e0(0x6c, actor_index, NULL, target_index, NONE);
 		}
 		memset(&request, 0, sizeof(request));
 		request.type = 0x1d;

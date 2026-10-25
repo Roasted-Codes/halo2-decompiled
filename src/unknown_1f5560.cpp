@@ -385,14 +385,6 @@ bool __stdcall function_110ab0(long unit_index);
 /* asks the actor's unit to move to the point facing the given way (request
    0x25), once it is within half a world unit of it; when asked, only while
    it faces within 45 degrees of its prop */
-// score 4 (was 100): only the facing dot product's j and k terms come in the other order
-// (retail j, k, i; ours k, j, i). Harness: the order follows the direction's component
-// definition order (k written first gives j, k, i but moves the zero store first, 9);
-// swapped dot3f arguments, the direction declared elsewhere, the comparison spelt
-// `>`/`!(>=)`, two ifs, byte result, no position pointer: all k first.
-// Earlier: retail's prologue saves ESI as well and pushes the
-// registers in the order EBP, EBX, ESI, EDI; here only EBX, EBP and EDI are
-// saved, so every stack slot after the prologue sits at another offset.
 // @retail 0x1f4f40
 bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_type_c3b527 const *point, bool face_prop)
 {
@@ -414,8 +406,7 @@ bool function_1f4f40(long actor_index, vector3f const *facing, short unknown, s_
 				point3f const *prop_position = &function_25d690(prop_ref_get(actor->prop_index))->position;
 				vector3f direction;
 
-				direction.i = prop_position->x - actor->position.x;
-				direction.j = prop_position->y - actor->position.y;
+				vector3d_from_points3d(&actor->position, prop_position, &direction);
 				direction.k = 0.0f;
 				if (!(function_30bf0(&direction) > 0.0f) || dot3f(facing, &direction) < 0.70710677f)
 					goto done;
@@ -764,7 +755,10 @@ real normalize2d(point2f *v);
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
-// score 172 (was 172): frame 0x48 agrees; fast-byte zero and trajectory convention remain.
+// score 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
+// retry/movement/both threshold products 172/172/172; clamped upward result
+// 172, with both products 172; retry/movement/both eligibility results 172/172/172.
+// frame 0x48 agrees; fast-byte zero and trajectory convention remain.
 // Validation after query 220; with late minimum 220; early query output 171;
 // minimum first 174; early output/minimum 170; first-type first 172;
 // shared Boolean initialization 173; early output with late validation 218.

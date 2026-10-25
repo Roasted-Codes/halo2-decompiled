@@ -518,6 +518,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Shape-input classifier with field equality 314 plain (1250/1243 bytes); root entity 319;
 // native plane input 354; rotation/translation/both bases 319/319/319; final normal value 356;
 // native plane output 348; shape-input sampled equality 319; ordinary inline classifier 356.
+// score 321 (was 321): frame 0x48 versus 0x44 and classifier/plane homes remain.
+// Plane normal setter 334; native matrix reference 321; entry/surface/both words
+// 324/323/326; staged plane distance 321; origin field base 323; shape field reference 321.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

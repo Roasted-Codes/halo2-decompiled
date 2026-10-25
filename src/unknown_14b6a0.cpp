@@ -125,6 +125,9 @@ void function_14bac0()
 // destination word 243; alternate word 264.
 // destination long 244; alternate long 265.
 // both words 271; both longs 258.
+// score 234 (was 234): frame 0x34/0x3c, point/iterator homes and counter reloads remain.
+// Existing point difference 234; height/radius/both scalar homes 234/234/234;
+// destination/alternate/both marker results 237/243/244; both plus difference 244.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

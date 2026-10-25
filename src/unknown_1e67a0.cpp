@@ -708,12 +708,19 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Existing velocity scale 185; scale from field 186; first dot products commuted 155;
 // side projection values 166; rotated alignment value 166; axis field reference 155;
 // output record reference 155; scale plus dot flow 185. Opening body retained.
+// score 155 (was 155): movement/rotation homes and scalar scheduling remain;
+// i/j/k/all cosine terms 168/177/192/208;
+// i/j/k/all axis projection terms 186/168/168/218. Opening body retained.
 // Complementary cosine 166; guarded early alignment 205; early moved-away result 231;
 // completed side product 169; complement with early result 231; indexed velocity scale 220;
 // actual animation reference 155; actual forward-field reference 248. Movement/rotation homes remain.
 // score 155 (was 155): sampled-vector slot and rotation/exit schedule still differ.
 // Cross before projection 201; late axis 185; split axis projection 166; goal snapshot 247;
 // direct selection tests 204; turn-first guard 156; scalar final writes 192; library copies 155.
+// score 155 (was 155): sampled-vector slot and scalar/rotation/output scheduling remain.
+// Native cross/rotation/both coordinate initializers; immutable original, cross,
+// rotation, both computed vectors and all three vector values
+// Fast scores 155/155/155/155/155/155/155/155; original body retained.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

@@ -49,10 +49,18 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Predicate long/short/byte/signed-byte returns 189/190/190/190;
 // byte predicate input 190; byte input with long/short/byte results 189/190/190.
 // Both one-point gains rejected; original predicate and body restored.
+// score 190 (was 190): cached pool base, merged completion stores and predicate result remain.
+// Native unit/weapon/both header references 190/190/190; external carried-index,
+// selected-slot or both field bindings 190/190/190; initializer return used directly 311;
+// external options record reference 190.
 // pool-data reload, completion stores and final predicate layout still differ.
 // permission result 190; fallback permission scope 190; present-unit scope 190
 // eligible-weapon scope 190; present-slot scope 190; present-marker scope 190
 // unit/weapon scopes 190; option once 190.
+// score 190 (was 190): frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
+// Negative-three addition 190; default-NONE/explicit-arm team results 191/190; reversed completion
+// bit order 190; in-place limit 190; two-use stored-short ticks 190; limit plus stored ticks 190;
+// default-NONE team plus negative-three addition 191. Opening body and existing helper restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
