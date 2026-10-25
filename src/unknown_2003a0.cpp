@@ -1706,6 +1706,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // differ. Native player iterator 305; native entry cursor 316; word validation 305; matching-area
 // result 315; distance home names 305; field-initialized best 357; area-entry name 305;
 // player-record name 305.
+// score 305 (was 305): Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
+// Pooled reference 323; entry-block reuse 323; delta workspace 305; shared scan cursor 305; valid
+// actor continue 305.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -1872,6 +1875,9 @@ bool function_1df5d0(short team_a, short team_b);
 // score 179 (was 179): Frame 0x14 agrees; next-index memory home, contribution register and entry
 // flag clear differ. Word hostility 233; separate position iterator 235; branch-assigned health
 // 179; position component loop 221; scale component loop 218.
+// score 179 (was 179): Frame 0x14 agrees; next-cursor storage, contribution register and flag
+// clear remain. Long hostility 179; contribution from test 241; absent-tracking continue 179;
+// early centroid pointer 179; unit count before health 179.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2626,6 +2632,9 @@ static __forceinline long real_to_long(real value);
 // score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
 // squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
 // positive-timer continues 227.
+// score 227 (was 227): Frame 0x30 agrees; active/pool observations and zero-result joins remain.
+// Native zero initialization 255; timer addresses 227; final group for 289; final squad for 329;
+// first squad-phase lifetime 227.
 // @retail 0x202720
 void function_202720(void)
 {
