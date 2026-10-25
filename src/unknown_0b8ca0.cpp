@@ -1424,12 +1424,17 @@ done:
 // sign-extended at its load, datums esi then ebp). Tried: no volatile (name index stays in ebp, result spilled) 76;
 // function_bb760 call for the lookup, same 76; result declared after the force block 81; long/inline definition
 // fields with a block local 43, 34; long size only 38.
+// the placement tail: retail keeps the type in ecx and loads the
+// definition into eax, copying it to esi for the size and datums reads (palette offset first);
+// ours keeps the type in esi and reads the definition through eax/ecx.
+// Copy + volatile name reload 26; result declared before the lookup 83; no result variable 78;
+// result declared in the tail 85; long size 27; long offsets + palette at the call + datum local 27;
+// the 0xb7300 placement-block helpers (both orders, both product orders) 23; lookup via 0xbb760 17.
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {
-    short remaining_name_index = name_index;
-    long result = NONE;
     long existing = name_index >= 0 && name_index < 0x280 ? g_4de2d0[name_index] : NONE;
+    long result = NONE;
     if (force && existing != NONE)
     {
         s_object_header_view *header = OBJECT_HEADER_GET(existing);
@@ -1442,12 +1447,11 @@ long __stdcall function_bb670(short name_index, bool force)
         object[0xab] = 2;
         *(short *)(object + 0xa8) = NONE;
         *(long *)(object + 0xa4) = *(long *)((byte *)g_4de2f4 + 0x18);
-        remaining_name_index = *(short volatile const *)&name_index;
         object[0xb0] = 0;
     }
     else if (existing != NONE) return result;
     byte *scenario = (byte *)g_4e0350;
-    byte *name = *(byte **)(scenario + 0x4c) + remaining_name_index * 0x24;
+    byte *name = *(byte **)(scenario + 0x4c) + name_index * 0x24;
     short placement_index = *(short *)(name + 0x22);
     if (placement_index != NONE)
     {
