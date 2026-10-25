@@ -1443,6 +1443,8 @@ struct s_camera_clip_reference_16ebf0
 // Scalar-workspace role names 229; scale assigned after copies 229; later position pointer 226;
 // no inner position alias 229; directions published first 229; scalar vector aggregates 229;
 // later position pointer with native direction copies 237. Three-point gain rejected.
+// Complete direction memcpy 237; direct input cross with late workspaces 244;
+// later up pointer 253; native point carried through composition 229; matrix-axis cross with late workspaces 241.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

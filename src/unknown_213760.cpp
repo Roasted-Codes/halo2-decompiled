@@ -1168,6 +1168,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Constructed write/read/both headers 172/172/172; zero request initializer 192; role names 172; shared acquired handle 188.
 // Early validity result 172; validity-byte aggregate 262; persistent path/request/completion 172;
 // output-handle pointer first 177; reversed invalidation cases 172.
+// Native pointer addition 172; native file cursor 250; outer expected-size carrier 172;
+// completed-write result in both arms 172; reversed header string stores 172.
 // @retail 0x213970
 void function_213970(void)
 {

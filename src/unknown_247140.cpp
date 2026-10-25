@@ -259,6 +259,9 @@ public:
 // successor while traversal 194.
 // Selector inline declaration 170 (matched sibling becomes 292); displacement aggregate,
 // squared distance before/after selector, retained center and branched range maximum 194 each.
+// Lower-reader ordinary inline 194; both readers ordinary inline 194; native origin 170
+// (held: unmatched caller 0x174a30 308 -> 369); direct selector result 194; reversed center stores 194.
+// Origin-field pointer 194; reused native center 170; shared point setter 197; native origin/direct receiver 170.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
