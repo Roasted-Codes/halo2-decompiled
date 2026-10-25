@@ -1542,16 +1542,20 @@ real function_2683f0(long actor_index, long node_index, short type)
 // j93: Frame 0x7c/0x80, saved-link homes and conversion expansion remain; helper declaration restored.
 // shared tracking view 695; shared player lookup 724; very close result 719; native player search indices 702;
 // notification counter view 695; level helper inline 717.
+// score 684 (was 695): Frame, saved-link homes and expanded tick conversions remain.
+// selection names 695; cached state test 707; post-clear results 684;
+// direct score result 695; direct retention result 705 (plain).
+// score 684 (was 684): Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
 // @retail 0x266640
 void function_266640(long actor_index)
 {
 	long const *actor_reference = &actor_index;
 	s_actor_view *actor = actor_get(actor_index);
 	byte *data = (byte *)actor;
+	memset(data + 0x324, 0, 0x10);
 	long best_node = NONE, strongest_node = NONE;
 	long best_level = 0;
 	real strongest = 0.0f;
-	memset(data + 0x324, 0, 0x10);
 	long next;
 	for (long index = actor_get(actor_index)->first_prop_index; index != NONE; index = next)
 	{

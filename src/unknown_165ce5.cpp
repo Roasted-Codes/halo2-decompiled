@@ -1760,6 +1760,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
 // read first 478; ammo channel before lookups 526; ammo channel before state view 470
 // score 455 (was 455): Frame 0x58 versus 0x78; root/channel overlap and copy/sway allocation remain. Model count snapshot 556; vector adjustment helper 471; negative sway first 465; ammo-count boundary 459; early magazine maximum 462 (plain).
+// score 455 (was 455): Frame 0x58 versus 0x78 and copy/sway homes remain. Zero-initialized root 602 (frame 0x78); direct blend time 455; conditional weight 497; adjustment index 464; native orientation copy 455 (plain).
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
