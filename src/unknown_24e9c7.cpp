@@ -129,6 +129,8 @@ struct s_24e9c7_bounds
 // early basis / scale / basis with spans 125/125/125 (fast).
 // Basis i/j/both product input orders 125; upper or side inputs 125;
 // basis with upper / side / both input orders 125. Original products retained.
+// Scalar origin x/y/both 194/194/194; scaled height/width/both accumulation 125/125/125;
+// side-product updates 125; y capture with side updates 194. Original scalar homes and spills remain.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {
