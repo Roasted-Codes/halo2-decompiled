@@ -309,6 +309,9 @@ void function_1f86a0(long actor_index);
 // frame eight agrees; pool-load order, slot EBP and view spill differ.
 // Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
 // word duration ticks 144; ordinary result 203.
+// score 131 (was 131): initial pool order, slot EBP and view spill still differ.
+// Readonly actor/view/both 131 each; force-inline actor/node/view/state boundaries
+// 131 each; readonly records with the view boundary 131.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {

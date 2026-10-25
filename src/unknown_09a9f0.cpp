@@ -238,6 +238,9 @@ void c_turret_entity_definition::v21(s_entity *entity)
 // score 49 (was 49): frame agrees; false-result BL, saved EBP and shared header lookup differ.
 // Early long/byte/short/signed-byte success result 67/70/65/70; byte after notification 70;
 // native header acceptance 65; native rejection first 52; combined native acceptance 67.
+// score 49 (was 49): EBP result, early false lifetime and shared header lookup remain.
+// Result declaration first, output role name, both, native-result header record 49 each;
+// shared header/object/both getters 49/49/49; both getters with early Boolean success 77.
 // @retail 0xa5a60
 bool c_object_type_definition::v22(s_entity *entity, long b, s_entity_info *info, long d, long e, long f)
 {

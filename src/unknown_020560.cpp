@@ -230,6 +230,9 @@ void function_16f60(byte *state, word const *range)
 // score 93 (was 103): dispatch span and selective setter expansion still differ.
 // Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison 103/103;
 // early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
+// score 93 (was 93): dispatch span and selective setter expansion remain.
+// Reference-call branches first/second mode 144/145; paired-label orders 93/93/93;
+// complete group orders 0/12/34/5/6, 0/12/5/6/34, 0/34/6/12/5 105/106/197.
 // @retail 0x15370
 void function_15370(short mode)
 {
