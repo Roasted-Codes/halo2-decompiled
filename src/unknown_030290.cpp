@@ -83,6 +83,9 @@ long g_4ba134;
 // Direct-radius failed-discriminant arms first 185; behind-plane arm first
 // 213; named tangent quotients 193; ratio before root 193; earlier radius
 // square 193; shared root products 212.
+// score 164 (was 164): viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
+// Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
+// eager first tangent coordinates 164; in-place tangent projection 164. Original body retained.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {

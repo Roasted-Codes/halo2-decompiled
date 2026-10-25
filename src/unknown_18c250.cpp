@@ -131,14 +131,14 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 }
 
 
-// score 152 (was 174): frame 0x18 recovered; root-location and normal-transform carriers differ.
-// Outer failure guard 209; forward before location 174; byte object type 164;
-// marker sentinel equality 178; success before audible 152 kept (plain).
+// score 134 (was 152): frame 0x18 retained; root-location and normal-transform carriers differ.
+// Byte result first 150; Boolean early-success result 152; long result 135; independent type tests 170;
+// excluded-class exit 165; long result first 134 kept (plain).
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
+	long result = 0;
 	s_sound_object_view *object = (s_sound_object_view *)function_badc0(object_index, NONE);
-	byte result = 0;
 
 	if (object && !object_or_parent_hidden(object_index))
 	{
@@ -544,6 +544,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 }
 
 // score 293 (was 309): frame 0x84 versus 0x80 and datum/tag registers remain; marker outer scope 309; direct failure predicate 293 kept (plain); stored-scale arm first 314; ascending cases 311; failure exit 314.
+// score 293 (was 293): extra tag-pointer spill and datum/root-location carriers remain.
+// Long failure result 293; marker consumption scope 293; shared scale object index 339;
+// force-inline object-index query 293; marker/axis/audibility role names 293. Original body retained.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
