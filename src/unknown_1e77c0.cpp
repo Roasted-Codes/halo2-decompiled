@@ -379,6 +379,9 @@ void function_1e6b00(long player_index, s_request_source *source)
 // pair 77, both through the state array 77-80, mask local / term order /
 // `21 == index` / limit or next locals / swapped arms 51-52.
 // Earlier: retail saves the pointer argument in EBX and shifts the mask in EBP.
+// score 51 (was 51): index/mask roles and the output join remain; tested completion
+// with separate/state/ticks/both stores 116/112/114/120; shared setter variants
+// 83/111/108/109. Original early-result body restored.
 // @retail 0x1e8d80
 bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_entry_420 *entry, s_request_transition *output)
 {

@@ -324,6 +324,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // frame and opposite start/delete expansion remain.
 // External published record 220; native effect handle 215; immutable playback/result 208;
 // query/attach/both call boundaries 208/208/208; record plus native handle 221; native boundaries 215.
+// score 204 (was 204): frame and start/delete expansion remain; complete
+// admission scope with branch-defined allocation/nested class guards 204 each;
+// shared start with those forms 232/226/232/226. Original lifetimes restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

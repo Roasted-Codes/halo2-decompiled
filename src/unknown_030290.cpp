@@ -232,6 +232,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // frame 0x30 versus 0x2c and projected-point/factor homes differ;
 // role-named points 195; displaced transform first 250; orthographic defaults first 261;
 // shared point initializer 195; single result 280.
+// score 195 (was 195): frame 0x30 versus 0x2c remains; initial/reversed/both
+// component loops 195/195/195; forced existing transform with no/initial/reversed/
+// both loops 195/195/195/195; component loops with displaced storage reused 195.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
