@@ -196,9 +196,10 @@ const char *function_99820()
 	return "slayer-engine-globals";
 }
 
+__declspec(noinline) long function_98480(long handle, c_handle_table_450cd0 *self);
+
 /* the next live handle after `handle` (NONE starts at the first), or NONE;
    retail keeps it out of line in has_pending_entity, which otherwise inlines it */
-#pragma auto_inline(off)
 // @retail 0x98480
 long function_98480(long handle, c_handle_table_450cd0 *self)
 {
@@ -218,7 +219,7 @@ long function_98480(long handle, c_handle_table_450cd0 *self)
 	}
 	return result;
 }
-#pragma auto_inline(on)
+
 __declspec(noinline) bool function_99640(c_handle_table_450cd0 *self, long handle);
 
 // @retail 0x99640
