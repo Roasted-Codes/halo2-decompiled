@@ -1142,6 +1142,15 @@ real g_485a30;
 real g_4e69c0[4];
 real g_4c19b0, g_4c19b4;
 
+// score 89 (was 153): the first colour is copied and the second added to it.
+// What still differs: retail adds each second component straight from memory
+// (`addss xmm0, [eax + 0x38]`); ours loads both into registers first and adds
+// them there. Retail also shares only the `0 > value` exit with case 16,
+// where ours shares the whole upper clamp (`jmp` into case 16's compare),
+// which shifts the code after it. Summing in one expression, via vector or
+// struct fields, through references, with a compiler barrier, if/return or
+// assignment forms of the clamp, an inline clamp and reordered cases score
+// 89 to 271.
 // @retail 0x336f0
 real function_336f0(long selector)
 {
@@ -1157,9 +1166,12 @@ real function_336f0(long selector)
         {
             real const *values = (real const *)g_485a58;
             color3f summed;
-            summed.red = values[4] + values[12];
-            summed.green = values[5] + values[13];
-            summed.blue = values[6] + values[14];
+            summed.red = values[4];
+            summed.green = values[5];
+            summed.blue = values[6];
+            summed.red += values[12];
+            summed.green += values[13];
+            summed.blue += values[14];
             real value = summed.blue * 0.114f + summed.green * 0.587f + summed.red * 0.299f;
             return 0.0f > value ? 0.0f : value > 1.0f ? 1.0f : value;
         }
@@ -2020,9 +2032,10 @@ void c_octree_radius_view_ab::function_3f970(short index, plane3f const *planes,
 
 
 
-PRIVATE __forceinline real random_unit_fraction(s_random_globals *random)
+/* retail keeps the fraction on the x87 stack, unrounded */
+PRIVATE __forceinline double random_unit_fraction(s_random_globals *random)
 {
-    return (real)random_next(&random->seed) * (1.0f / 65535.0f);
+    return (double)random_next(&random->seed) * (1.0f / 65535.0f);
 }
 
 // @retail 0x39a80
@@ -2049,8 +2062,10 @@ bool function_39a80(byte *state)
                 random_unit_fraction(random) + *(real *)(state + 0x1c));
             motion[0] = (real)(random_unit_fraction(random) * *(real *)(state + 0x30));
             motion[1] = (real)(random_unit_fraction(random) * *(real *)(state + 0x34));
-            motion[2] = (real)(random_unit_fraction(random) * *(real *)(state + 0x38));
-            real magnitude = (real)sqrt((double)motion[0] * motion[0] + (double)motion[1] * motion[1] + (double)motion[2] * motion[2]);
+            /* retail squares the unrounded z, not the stored float */
+            double z = random_unit_fraction(random) * *(real *)(state + 0x38);
+            motion[2] = (real)z;
+            real magnitude = (real)sqrt((double)motion[0] * motion[0] + (double)motion[1] * motion[1] + z * z);
             if (!(fabs(magnitude) < 0.0001f))
             {
                 real inverse = 1.0f / magnitude;
