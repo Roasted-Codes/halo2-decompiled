@@ -13,6 +13,14 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
+// score 217 (was 217): frame 0x48 agrees; receiver EDI/EBP and count,
+// priority, size and blocked homes remain. Both redundant count guards removed
+// 249; separate native arrays 249; distinct counter names 249; result-home names
+// 249; arrays and counter names 249; pending-only guard 242; active-only 220.
+// State snapshot 217; direct handled states 247; default chain count 238;
+// invalid-priority-first arms 221; state/default/arm combination 238.
+// Entry-scope guarded arrays 217; shared blocked workspace 217; shared chain
+// index 217; shared callback outputs 224; all-ready predicate 220.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -726,6 +734,9 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
+// score 204 (was 204): frame 0x98 agrees; decoded-kind width, scalar homes and callback setup differ.
+// Native kind 211; role-named scalars 204; shared callback arm 222;
+// library descriptor/payload copies 204; pretested item while 220.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {

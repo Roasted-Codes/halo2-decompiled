@@ -79,6 +79,8 @@ void cache_copy_forget(char const *map_name);
 bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
+// score 433 (was 471): Frame 0x110 agrees; request-copy homes and by-value write-option setup still differ.
+// Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion states 433.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
@@ -166,8 +168,9 @@ bool function_2141f0(void)
 		}
 		break;
 	case 8:
+	case 15:
 		success = g_55bcf0 == 0x800;
-		state = 9;
+		++state;
 		break;
 	case 9:
 		{
@@ -230,10 +233,6 @@ bool function_2141f0(void)
 			g_55bd00 = function_1a1050(file->file, &g_55b4f0, 0x800, 0, 0, 1, 0, &g_55bcf0, &g_55bd0c);
 			state = 15;
 		}
-		break;
-	case 15:
-		success = g_55bcf0 == 0x800;
-		state = 16;
 		break;
 	case 16:
 		memcpy(&g_557c90[g_55bd10].header, &g_55b4f0, sizeof(g_55b4f0));

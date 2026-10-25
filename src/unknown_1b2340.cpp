@@ -128,6 +128,10 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 /* slot type 0x24's update: moves the actor to its prop (to the point the
    prop names, or along its direction) and flags the slot when it is there
    or cannot get there (always returns true) */
+// score 236 (was 620): frame 0x48 recovered; entry registers, trace-point
+// arithmetic homes and branch placement remain. Caller noinline declaration 620;
+// callee noinline declaration 236; shared magnitude 236; shared point 236;
+// destination name 236; long result 233; point/name/magnitude together 236.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
@@ -298,6 +302,9 @@ done:
 bool function_2601f0(long actor_index, s_type_c3b527 const *point, long sector, real radius, real path_distance);
 void function_1f86a0(long actor_index);
 
+// score 144 (was 144): frame eight agrees; pool-load order, slot EBP and view spill differ.
+// Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
+// word duration ticks 144; ordinary result 203.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {

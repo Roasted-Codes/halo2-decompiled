@@ -125,6 +125,16 @@ void c_widget::v15(c_widget *widget)
 	}
 }
 
+// score 20 (was 20): candidate/current allocation and delayed ESI save differ;
+// shared widget view 20; immutable current 26; initial/later/both reverse for 20/20/20;
+// current initially empty 20; direct existing predicate/focus 20/20.
+// inline/noinline eligibility declarations 44/20; focus declarations 20/20;
+// single search cursor 41; proven initial candidate do-while 37;
+// eligibility in loop admission 47; named eligibility result 20.
+// candidate uses ESI before the first scan; retail delays ESI and uses EAX.
+// Initial result arms 20; both result arms 21; entry reverse lifetime 20; scoped widget 26;
+// scoped result arms 21; scoped reverse lifetimes 26; selected-widget success tail 47;
+// initial result arms with success tail 47.
 // @retail 0x22ebc3
 void c_widget::v16()
 {
@@ -162,6 +172,12 @@ void c_widget::v16()
 	}
 }
 
+// score 20 (was 20): entry scan saves ESI early and carries its candidate there; retail uses EAX/EDX before the save.
+// Link for scans 20; transient entry scope 42; eligibility condition 44; rejection arm 20; previous branch 21; one search cursor 21; traversal role names 20; fallback declaration order 20.
+// Entry candidate still occupies ESI before the fallback scan; the existing
+// native object type and direct method boundaries do not recover the delayed save; native
+// traversal 20; native entry scan 42; native repeat scan 20; native next cursors 20; native
+// candidate 20; direct existing methods 20; native selected lifetime 26; native success tail 47.
 // @retail 0x22ec1b
 void c_widget::v17()
 {
@@ -312,6 +328,11 @@ void c_widget::v21()
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 
+// score 89 (was 89): both draw blocks add the left edge to the width in a fresh register before
+// x + left (retail adds it into the width's register afterwards), and the two coordinate homes are
+// swapped (retail converts y first). y before x in the second block only 89 (homes right);
+// in both blocks 93; width + left operand order 89; height before width 91; right edge re-derived
+// from the placement after the left offset 108.
 // @retail 0x24bda2
 void c_widget::v12(long a)
 {

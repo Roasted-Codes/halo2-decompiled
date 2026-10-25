@@ -90,6 +90,13 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // early source retention, count cursor and feature homes remain;
 // formal source/original record reference 191/191 (caller differs); selected copy source 210;
 // category/object-category values 162/162; chained sentinel/disabled fields 162/162; inherited mask value 197.
+// score 155 (was 155): early ESI/source retention, count/cursor and feature homes remain.
+// Native word row 221; cursor for-scope 155; word cursor with shared Boolean/byte,
+// independent byte and complete-mask features 217/221/195/220; paired source/word
+// cursors 156; word cursor with native record assignment 195.
+// score 155 (was 155): early source retention and source/count/feature homes remain.
+// With the word cursor, native count/argument-5/argument-6/argument-8 arrays 195/161/160/161;
+// count plus argument 5 186; arguments 6/8 193; all four arrays 187; native selection array 219.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

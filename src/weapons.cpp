@@ -1601,7 +1601,7 @@ static inline bool weapon_state_replaceable(long current, long state)
 }
 
 /* puts a weapon in a state and plays the state's animation */
-// score 69 (was 69): notification input registers and success scheduling still differ.
+// score 67 (was 69): notification input registers and success scheduling still differ.
 // forced replacement 69; long replacement 115; complete predicate arms 69; predicate tests 136;
 // state-selected flags 96; case-selected flags 137; const animation receiver 69;
 // wide predicate and case flags 128.
@@ -1610,6 +1610,9 @@ static inline bool weapon_state_replaceable(long current, long state)
 // success-byte scheduling and final call argument registers still differ.
 // Byte outcome 67; short/word outcomes 87; actual object references and nested scope 69;
 // signed-word mask 83; owner-first test 68.
+// wide set/flags/class 67; single played result 130; unit lookup before flags 75;
+// replaceable-first gate 111; nested class gate 67; wide unit index 67;
+// class-by-default test 67; class ternary 75.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {
@@ -2956,6 +2959,11 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // Round 127: short selector with barrel input 133; with weapon/barrel 52;
 // with tag/barrel 52; with all receivers 52; with external record references 52;
 // reserve query, reload notification and barrel stop noinline 52 each.
+// score 52 (was 52): still the ebp/ebx receiver and dx/cx selector swap. Permuter
+// ran out its window in the baseline build (no tries scored). Neighbor inline
+// getter 52; header-table local 52; masked definition-index local 52; outcome and
+// selector declarations swapped 52; nested macro get 131; barrel address by
+// arithmetic 52; shared-linkage forced inline 52; magazine address by arithmetic 52.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {

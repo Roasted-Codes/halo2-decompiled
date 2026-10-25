@@ -1142,6 +1142,10 @@ long __stdcall function_063190(void *summary, long user);
 // score 110 (was 110): three-word frame/session spill and aggregate allocation remain.
 // Mode field 115; selection snapshot 131; property/player records 110/110;
 // source rank/value/both field bindings 110/110/110; live selection field 110.
+// score 110 (was 110): Three-word frame/session spill and aggregate allocation remain. byte missing count 110; signed byte
+// missing count 110; byte player ordinal 129; both byte counters 129; native signed counters 110; aggregate
+// function scope 110; native member property storage 110; fixed player end test 110; sse after rank binding
+// 111.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
@@ -1871,6 +1875,12 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // score 48 (was 48): readiness input and failure/timer join persist. Full
 // preparation pending 71; staged/second-call pending 95/96; tail guard 48;
 // wide completion 146; unsigned preparation 71; early/raw pending 128/61.
+// score 48 (was 48): readiness input and failure/timer join persist.
+// Native int pending, pending/completion/millisecond names and outer pending declaration 48;
+// positive-duration test, full-width pending with failure first and nested preparation 48.
+// score 48 (was 48): readiness input and failure/timer join remain different.
+// Unsigned pending/const captured pointers 48; quotient/remainder ceiling 93;
+// separate inline/noinline readiness/preparation declarations 48 each; pending conjunction 92.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {

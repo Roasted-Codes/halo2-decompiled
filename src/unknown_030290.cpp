@@ -71,6 +71,15 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
+// score 164 (was 209): frame 0x34 and coordinate/coefficient homes agree;
+// viewport conversion order, viewport/tangent homes and tail placement remain.
+// Coefficient names 209; viewport names 209; vertical coordinate first 211;
+// tangent names 209; shared root/ratio/tangent workspaces 209.
+// In-place displacements 257; depth-radius product 233; deferred second
+// tangents 164; near-plane early exit 240; shared depth square 209.
+// Direct radius 193; paired horizontal viewport observations 195; interleaved
+// first viewport observation 203; guarded second coordinates 193; invalid-depth
+// arms first 182. These forms retain the delayed second tangent calculations.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
@@ -110,8 +119,6 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			real root = (real)sqrt(disc);
 			real k = radius_value / xz;
 			real za = cz - (cz * radius_value + root * cx) * k;
-			real zb = cz - (cz * radius_value - root * cx) * k;
-			real xb = cx - (cx * radius_value - root * cz) * k;
 			if (za > 0.01f)
 			{
 				real xa = cx - (cx * radius_value + root * cz) * k;
@@ -120,6 +127,8 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			}
 			else
 				bounds->x0 = -k_real_max;
+			real zb = cz - (cz * radius_value - root * cx) * k;
+			real xb = cx - (cx * radius_value - root * cz) * k;
 			if (zb > 0.01f)
 			{
 				real n = xb / zb * m78 + m98;
@@ -141,8 +150,6 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			real root = (real)sqrt(disc2);
 			real k = radius_value / yz;
 			real za = cz - (cz * radius_value + root * cy) * k;
-			real zb = cz - (cz * radius_value - root * cy) * k;
-			real yb = cy - (cy * radius_value - root * cz) * k;
 			if (za > 0.01f)
 			{
 				real ya = cy - (cy * radius_value + root * cz) * k;
@@ -151,6 +158,8 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			}
 			else
 				bounds->y0 = -k_real_max;
+			real zb = cz - (cz * radius_value - root * cy) * k;
+			real yb = cy - (cy * radius_value - root * cz) * k;
 			if (zb > 0.01f)
 			{
 				real n = yb / zb * m8c + m9c;
@@ -216,6 +225,13 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
+// score 195 (was 195): frame 0x30 versus 0x2c and inverse-depth/point homes
+// remain. In-place displaced transform 263; later displaced input 270;
+// perspective-only inverse locals 261; zero-factor early exit 195; both
+// displaced transforms in place 263.
+// frame 0x30 versus 0x2c and projected-point/factor homes differ;
+// role-named points 195; displaced transform first 250; orthographic defaults first 261;
+// shared point initializer 195; single result 280.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

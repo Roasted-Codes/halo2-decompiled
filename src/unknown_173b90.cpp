@@ -823,6 +823,9 @@ public:
 // score 329 (was 355): frame 0x64 versus 0x60; flag clear and selective calls differ.
 // Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
 // child tag scalar 394; long result 329; dword flags 401.
+// score 308 (was 338): Frame 0x60 now agrees; flag transfer, child carriers and selective calls
+// remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
+// 308 (plain verified); child for-loop 338.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -927,14 +930,13 @@ bool function_174a30(s_particle_system_datum *particle_system, real dt)
 			}
 			matrix.scale = 1.0f;
 			matrix.position = *(point3f *)(particle + 0x1c);
-			dword color = particle_system->color;
 			s_particle_system_spawn spawn;
 			spawn.scale = *(real *)(particle + 8) / *(real *)(particle + 0xc) - dt;
 			spawn.unknown = dt;
 			spawn.location_index = child->location_index;
 			c_type_4e7709 *child_tag = function_137bd0(child->function_1751d0()->tag_index);
 			bool tinted = child_tag->tinted();
-			function_175a80(tinted, color, 0xffffffff, child, child_tag->multiplied());
+			function_175a80(tinted, particle_system->color, 0xffffffff, child, child_tag->multiplied());
 			function_175270(child, &spawn, &matrix, false);
 		}
 		if (!function_174a30(child, dt))
@@ -1008,6 +1010,7 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // native request initialization 211; immutable render inputs 213; native definition bit five 317; native
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
 // preference 646; child constant bit stores 220.
+// score 213 (was 213): Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {
@@ -1123,15 +1126,19 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
 long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
-// score 106 (was 106): frame 0x14 agrees; owner/NONE coalescing and Boolean homes differ.
+// score 101 (was 106): frame 0x14 agrees; owner/NONE coalescing and Boolean homes differ.
 // Next-slot assignments 107; word absolute slot 158; separate scan result 107;
 // shared datum conversion 199; long attachment 120; short same-view 145; byte draw 107;
 // long camera-relative 144 (fast preview 107, full 106). Original body retained.
 // Round 109: unavailable predicate 148; other-view predicate 146; detached predicate 108;
 // fixed-camera result 148; external system reference 107; nullable effect view 149;
 // const definition 107; packed effect handle 107 (fast preview 107, full 106).
+// Round 18: the availability gate (flag from view != NONE, then the query result if
+// set) 101 plain, kept; stack-bool rename 102; bit 9 as a named bitfield 102; nested
+// attached else-if 102; wide view 102; wide effect index 102; two-step same-view 102;
+// flag as false-init plus conditional set 144 (fast previews 107/102/144).
 // @retail 0x174220
-// score 106 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
+// score 101 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
 // availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag
 // in al, and it tests the definition's bit 9 as a byte instead of a shifted word.
 void __stdcall function_174220(bool view_pass)
@@ -1153,7 +1160,8 @@ void __stdcall function_174220(bool view_pass)
             long owner = NONE;
             if (effect_index != NONE) owner = DATUM(g_4ea93c, s_effect_datum, effect_index)->unknown58;
             long view = g_4b9ed8;
-            bool local_287b6e_2 = view != NONE && !function_155760(view);
+            bool local_287b6e_2 = view != NONE;
+            if (local_287b6e_2) local_287b6e_2 = !function_155760(view);
             bool same_view = owner != NONE && view == owner && local_287b6e_2;
             bool attached = local_287b6e_2 && effect_index != NONE && function_17afd0(effect_index, view);
             bool draw = same_view == view_pass;
