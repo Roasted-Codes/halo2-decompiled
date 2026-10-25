@@ -2383,6 +2383,7 @@ dword __cdecl function_131fc0(real alpha);
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // score 424 (was 424): Frame 0x24 versus 0x28 and dimension homes remain. Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
 // score 424 (was 424): Frame 0x24 versus 0x28; dimension homes and early saves remain. Fast control 427; early fallback rectangles 438; early source rectangle 442; early reciprocals 439; blend-operation snapshot 438; late strength clamp removed 461 (fast).
+// score 424 (was 424): Frame 0x24 versus 0x28, early saves and dimension homes remain. Fast control 427; long pixel dimensions 433; short dimensions 456; simple combiner first 427; immutable bitmap views 427; explicit bitmap validity 432.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2541,6 +2542,7 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // score 570 (was 570): Frame 0x214 versus 0x200; order, coefficient and sample homes remain. Indexed matrix copies 758; structure reload 588; long eligibility 572; layout-order sample 589; long cache-hit result 570 (fast).
 // score 561 (was 570): Frame 0x214 versus 0x200; coefficient homes, stack order and sample paths remain. Cache index 575; in-place inverse 584; capped short sample count 561 kept (plain); delayed default coefficients 576; failure-first result 589 (fast).
 // score 554 (was 561): Frame 0x214 versus 0x200, stack order and coefficient/sample homes remain. Shared cache helper 718; explicit eligibility 560; entry matrix 561; short bounded sample loop 606; post-metadata defaults 554 (plain).
+// score 554 (was 554): Frame 0x214 versus 0x200, stack order and coefficient/sample homes remain. Native sample arrays 554; byte output cursor 554; exact determinant tree 554; unsigned byte size 554; signed-byte success 563 (fast).
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2636,6 +2638,7 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // score 348 (was 374): frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
+// score 348 (was 348): Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
