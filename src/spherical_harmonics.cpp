@@ -20,6 +20,10 @@
 // First-band product staging, first Y product, square-difference staging and quadratic
 // mixed-product staging 123; cubic Y staging 129; mixed-root staging 123;
 // final-root product chain 113 plain kept (651/660); linear plus final chain 113.
+// score 59 (was 113): frame and quadratic homes agree; x87/SSE scheduling and sqrt(2) retention differ.
+// XZ product chain 59 plain kept; second cubic root chain, coefficient 8/12/9/5/6 chains
+// and root/edge combination 113; repaired XZ plus early coefficient 15 147/148,
+// cubic X chain 139, first cubic root chain 59.
 // @retail 0x143360
 void spherical_harmonics_evaluate_direction(vector3f const *direction, dword order, real *result)
 {
@@ -48,7 +52,9 @@ void spherical_harmonics_evaluate_direction(vector3f const *direction, dword ord
 		result[5] = band2 * z * y * -0.5f;
 		sqrt5 = (real)sqrt(5.0);
 		result[6] = sqrt5 * (zz * 3.0f - 1.0f) * inverse_sqrt_pi * 0.25f;
-		result[7] = z * x * band2 * -0.5f;
+		real quadratic_xz = z * x;
+		quadratic_xz *= band2;
+		result[7] = quadratic_xz * -0.5f;
 		result[8] = xx_yy * sqrt15 * inverse_sqrt_pi * 0.25f;
 		if (order > 3)
 		{
