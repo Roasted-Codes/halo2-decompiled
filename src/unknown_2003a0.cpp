@@ -1463,6 +1463,9 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
 // score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
 // score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
+// score 120 (was 120): frame 0x2c versus 0x28, pool/save allocation and shared Y-tail SSE handling remain.
+// Native actor getter 120; native source-point snapshot 150; source-field reference 120;
+// distance workspace names 120; in-place nonnegative distance before minimum 122.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1903,6 +1906,9 @@ bool function_1df5d0(short team_a, short team_b);
 // score 179 (was 179): Frame 0x14 agrees; next-cursor storage, contribution register and flag
 // clear remain. Long hostility 179; contribution from test 241; absent-tracking continue 179;
 // early centroid pointer 179; unit count before health 179.
+// score 179 (was 179): frame 0x14 agrees; cursor memory home, contribution and split flag clear remain.
+// Shared unit handle 179; shared perception handle 234; native swarm member 179;
+// health clamp assignments 179; shared centroid setter 179.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2053,6 +2059,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
     return result;
 }
 
+// score 275 (was 275): frame 0x48 versus 0x54; iterator/point homes, early saves
+// and intersection spill remain. Native workspace names 275; shared point setter 275;
+// separate squad-phase scope 275; forward bitmap scan 298; Boolean overlap OR 303.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
