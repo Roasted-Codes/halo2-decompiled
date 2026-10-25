@@ -58,6 +58,15 @@ static __forceinline long marker_viewer_unit(void)
 // existing projection output 123 (match-only, reverted); placement memcpy 123;
 // collision record at file scope 123; direct collision result 281; double rounding result 180.
 // Plain list position (no list_reference) 120.
+// score 123 (was 123): projection-result store, coordinate homes and helper scheduling still differ.
+// native byte projection result 123f; native horizontal half extent 216f.
+// native vertical half extent 215f; value initialized placement 263f.
+// viewer index read once 123f; explicit viewer selector 123f.
+// viewer result at query 123f; byte result native placement 263f.
+// projection-status store, coordinate registers and helper scheduling remain.
+// Failure predicate 280; sequential word normalization 222; named ellipse predicate 123;
+// outside-first ellipse arms 123; failure/sequential 249; named/sequential 222;
+// outside-first/sequential 222; failure/outside-first/sequential 249.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {

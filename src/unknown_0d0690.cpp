@@ -1605,6 +1605,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Dynamic validity long 863; base validity short 819; accumulated sampled color 828;
 // weighted normal loop 892; both lengths before scaling 837; one broad sample scope
 // with the other two narrowed (first/second/third) 831/831/831.
+// score 819 (was 819): frame 0xa8 versus 0x90; mesh, UV and sample homes remain.
+// Only third/second/first sample narrowed 828/828/828 (frame 0x9c);
+// byte per-vertex capability 825; function-scope samples 819. Original body retained.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

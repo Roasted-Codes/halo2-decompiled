@@ -2086,6 +2086,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // differ. offset receiver home 183; offset snapshot home 183; offset object home 183; offset
 // result home 183; receiver store lifetime 201; offset positive count 183; tail result mask
 // 208; offset tail result mask 207.
+// score 184 (was 184): getter guard/exhaustive result 200; complete output receiver 184;
+// exhaustive child metadata/count/all results 234/299/311; ordered clamp results
+// and bound returns 191. Object/offset homes and low-mask allocation still differ.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

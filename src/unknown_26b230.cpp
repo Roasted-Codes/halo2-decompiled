@@ -40,6 +40,11 @@ static __forceinline long real_to_long(real value);
 // Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
 // Depth one 144; unsigned maximum 146; word update state 155; first datum API 272; calling scan 208.
 // Activity-controlled first/slice/both loops 158/156/168; signed byte update with short/long maximum 146/152.
+// score 144 (was 144): frame 0x18 versus 0x20; current/datum homes and slice-step interface still differ.
+// Cursor/tick names 144/144; entry budget 164; grouped unsigned maximum 144;
+// grouped long update/maximum 154/152; word counter workspace 149; early update state 144.
+// native separate slice 192; native slice with short count 189, long maximum 200;
+// both budget fields long 162; single rate input 180; byte update 144; early count skip 144; typed clumps 144.
 // Native current-pointer/cursor view 132; with Boolean slice API 127; independent
 // long budget 114; separate native cursors 178; native first only 198; short
 // increment 121; Boolean branch 130; handle snapshots 127. Cursor views rejected.
@@ -139,6 +144,8 @@ void function_268840()
 // frame 0x48 versus 0x50; iterator result and pool homes differ;
 // outer while 296; player while 296; actor for-loop 331; native handle parts 327;
 // proxy-before-unit loads 296. Original body retained.
+// Round 156: depth zero 426; depth one 296; target size 546; byte retention 317;
+// iterator role names 296. Original frame and child traversal retained.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -1904,6 +1911,8 @@ void function_269250(long clump_index, long actor_index)
 // Complete workspace scope 189; depth zero 391; member-link result first 222; replacement-result loop 206; promoted category 195.
 // Depth one 189; outer datum API 290; word unit 218; word group 192; calling scan 237.
 // Direct pool step 254; activity-controlled loop 194; existing prop lookup 189; short/signed byte change 244/189; cached-bound scan 189.
+// node datum type 189; shared object header 189; forced existing scan 188; self-member skip 358;
+// final tracking guard 189; complete unit arms 193; unsigned replacement 189; word category mask 192.
 // Read-only object/external object reference/read-only member/extensions 189/189/189/189.
 // Ordinary prop/node/both iterator inline and separate removal noinline 189/189/189/189.
 // @retail 0x26ae30
@@ -2043,6 +2052,8 @@ void *actor_get_character_situation_entry(long actor_index);
 
 // score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
+// Round 156, caller context: depth zero 505; depth one 322; target size 517;
+// wide cluster selectors 356; retained generation slot 322. Original body retained.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

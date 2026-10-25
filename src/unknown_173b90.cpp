@@ -471,6 +471,9 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // score 56 (was 56): Offset initialization, scalar initializer order, property reloads and rotation scheduling differ.
 // Combined entry decisions 53; entry decisions with shared cache 53; scale/alpha/both result locals 119/56/119;
 // saved successor 217; particle cache with scale result 119; combined entry/property/cache 116.
+// Captured position/late output 353; captured velocity/late output 357; both 437;
+// translation component loop 56; inner cache member 56; derived mask at use 198;
+// scale initialized at property selection 273; translation value 160.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {
@@ -805,18 +808,21 @@ public:
 // score 355 (was 355): frame agrees; byte flag clear, child carriers and selective inlining differ.
 // Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
 // perpendicular call 394; inline depth one 394, zero 517.
+// score 329 (was 355): frame 0x64 versus 0x60; flag clear and selective calls differ.
+// Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
+// child tag scalar 394; long result 329; dword flags 401.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
-	(void)&dt;
+	long result = false;
 	word flags = *((word *)particle_system + 6);
 	if (flags & 0x100)
 		flags |= 0x200;
 	else
 		flags &= ~0x200;
-	*((volatile word *)particle_system + 6) = flags;
+	*((word *)particle_system + 6) = flags;
 	particle_system->flag8 = false;
-	flags = *((volatile word *)particle_system + 6);
+	flags = *((word *)particle_system + 6);
 	if (!(flags & 0x20) &&
 		!(g_4c56c0[particle_system->location.cluster_index >> 5] &
 		(1 << (particle_system->location.cluster_index & 31))))
@@ -929,10 +935,10 @@ bool function_174a30(s_particle_system_datum *particle_system, real dt)
 	}
 	particle_system->flag0 = false;
 	if (function_1753a0(particle_system) > 0 && TEST_FIELD_BIT(particle_system->flag3))
-		return true;
-	if (particle_system->flag0 || particle_system->first_child_index != NONE || particle_system->flag9)
-		return true;
-	return false;
+		result = true;
+	else if (particle_system->flag0 || particle_system->first_child_index != NONE || particle_system->flag9)
+		result = true;
+	return result;
 }
 
 

@@ -77,6 +77,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // rotation axis input first 213; rotation output first 213; native rotation input copy 250; cosine complement
 // lifetime 226; separate creation result 319; creation value initialization 353; frame pointer 304; float
 // consistency 512.
+// Shared-cross scalar captures 226; axis value 293; post-trig alignment 234;
+// launch-speed name 213; tilt name 213; jitter base value 231;
+// two offset component loops 479; transform memcpy 213.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

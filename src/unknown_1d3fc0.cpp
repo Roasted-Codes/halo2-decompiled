@@ -31,6 +31,10 @@ PRIVATE __forceinline void function_1d3fc1(vector3f *arg_0)
 // Axis consumer scopes 155/155/155; symmetric dot 155; projection order 155;
 // dot/projection 155; early inputs 155; native scaled result 352;
 // component-input inline 155; output-first component inline 155.
+// magnitude order and SSE carriers remain;
+// helper-return receivers 153; rotation receiver 155; squared magnitude 155;
+// float square root 155; float absolute value 155; reverse stores 155;
+// j/k/i stores 155; complete projection 155.
 // @retail 0x1d3fc0
 void __stdcall function_1d3fc0(long arg_0, s_havok_component *arg_1)
 {

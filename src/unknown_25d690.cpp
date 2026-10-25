@@ -1306,6 +1306,12 @@ bool function_1e1de0(long arg_0);
 // anchor/location/facing/observed/all copy boundaries 175; late readiness default 175;
 // default output values 165 kept; shared output guard 168; Boolean activity 257;
 // shared guard with Boolean activity 225.
+// score 175 (was 175): early ESI save/return byte and motion-copy registers remain.
+// Typed observed point, facing, anchor and location 175 each; combined fields 175;
+// combined with const motion 257, literal success 232, guarded single exit 249.
+// early ESI save, literal return byte and motion-copy registers differ.
+// Native behavior/activity levels and activity/location/target/root result receivers 175 each;
+// three actor receivers together 175; all six observations 175.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
