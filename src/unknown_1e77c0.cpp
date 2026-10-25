@@ -649,6 +649,9 @@ long function_1469f0(real seconds);
 // score 290 (was 302): First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
 // Native signed-word slot 283 fast/290 plain; full-width difficulty 308; shared elapsed 309;
 // cooldown-first 296; fixed initial do scan 340; slot plus cooldown-first 281.
+// score 279 (was 288): frame 4/12 and slot/transition/flag homes remain; cooldown case first reaches retail length.
+// Selected-state orders 01324/02134/03124/02314/03214/04213/04312/40123: 292/287/280/293/298/302/277/280 fast; last order 279 plain.
+// Byte/word request value 298/293; missing-bit test 317; final byte scan 304 (fast control 293).
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {
@@ -703,6 +706,9 @@ void function_1e6bd0(long player_index)
    }
    switch ((word)transition->state)
    {
+   case 4:
+    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
+    break;
    case 0:
     transition->state = 1;
     transition->ticks = entry ? (short)function_1469f0(*(real *)entry->field_0c) : 0;
@@ -758,9 +764,6 @@ void function_1e6bd0(long player_index)
      *current = NONE;
      *elapsed = 0;
     }
-    break;
-   case 4:
-    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
     break;
    }
   }
