@@ -2082,6 +2082,7 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
 // Round 156, caller context: depth zero 505; depth one 322; target size 517;
 // wide cluster selectors 356; retained generation slot 322. Original body retained.
+// score 322 (was 322): round 312: reset/cursor allocation remains; selected byte 332; generation publication first 338; short visibility count 355; cluster-count snapshot 374; shared iterator initializer 322.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

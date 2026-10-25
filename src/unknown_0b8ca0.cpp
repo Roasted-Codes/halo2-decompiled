@@ -1611,6 +1611,9 @@ void function_bba20(long index);
 // byte permission 319; byte activity 319; both byte carriers 319;
 // vector transforms before point 385; byte permission with vectors first 385.
 // score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward 319; direct node array 323.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
+// scheduling remain. Unsigned header offset 319; short permission 320; native location fields 330;
+// pooled root reference 319; guarded native cluster 319.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

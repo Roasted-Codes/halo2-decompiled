@@ -2523,6 +2523,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup still differ.
 // Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
 // sound aggregate 313; direct radius on the seed-pointer body 344 (frame 0x100).
+// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility differ. Shared direction output 313;
+// owner/location CRT copies 313; sound stores before compression 313; detached arms first 318; early damage
+// scale 313.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2790,6 +2793,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // score 176 (was 189): frame 0x50 agrees; early false-result and player-pool registers differ.
 // Persistent effect pool 194; persistent player pool 189; outer for 189;
 // squared distance compared first 176; player slot/unit names 189.
+// score 176 (was 176): frame 0x50 agrees; early BL result and player-pool/count registers differ. Unit-skip
+// guard 176; vector walk lifetime 176; retained radius 275; location for 390; shared point-transform call
+// 392.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
@@ -2870,6 +2876,9 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
+// score 112 (was 287): frame 0x94 agrees; event/flare registers and point/call setup differ. Vector walk
+// lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
+// initialization 112.
 // @retail 0x179880
 void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 {
@@ -2895,9 +2904,7 @@ void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 				vector3f forward = location->matrix.forward;
 				vector3f up = location->matrix.up;
 				color3f color = *(color3f *)&g_4686cc->red;
-				real scale = 1.0f;
-				if (part->a_scales & 0x20)
-					scale = effect->scale_a;
+				real scale = (part->a_scales & 0x20) ? effect->scale_a : 1.0f;
 				if (part->b_scales & 0x20)
 					scale *= effect->scale_b;
 				if (location->node_index != NONE)
