@@ -25,6 +25,9 @@ struct s_emitter_248340
 	short field_02;
 };
 
+// score 4 (was 4): virtual-table setup precedes the tag-result spill in retail;
+// tried group const query 4; tag const query 4; both const queries 4; group signed return 4;
+// tag unsigned return 4; tag const home 4; tag unsigned home 4; const query receiver 4. Restored.
 // @retail 0x248340
 void function_248340(s_particle_system_datum *system, s_object_246eb0 *particle,
 	s_emitter_248340 *emitter)

@@ -277,6 +277,11 @@ short __stdcall function_1ac3f0(long actor_index)
 	return result;
 }
 
+// score 43 (was 43): frame four agrees; scale is popped at the first timer multiply and stores differ;
+// tried first timer shared conversion direct 114; first timer shared conversion named seconds 103;
+// second timer shared conversion 49; both timers shared conversion 121; integral tick rate 47;
+// shared timer homes at entry 49; scale first timer product 43; chained boolean resets 46;
+// existing timer writer for first timer 47; double tick rate 43. Restored.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -408,6 +413,11 @@ void __stdcall function_1acfd0(long actor_index, s_slot *slot)
 	}
 }
 
+// score 24 (was 24): frame 0x28 agrees; pool-data load and mode-lookup registers still differ;
+// tried full width mode 39; mode tests reversed 27; inactive state branch first 168;
+// missing prop early return 24; alignment product operands 30; unsigned short mode 24;
+// timer homes at entry 24; request home in active state scope 24;
+// low word actor slot used by both lookups 155. Restored.
 // @retail 0x1ad130
 void __stdcall function_1ad130(long actor_index, s_slot *slot)
 {
@@ -820,6 +830,11 @@ struct s_1ac612
 	byte field_44[0x484 - 0x44];
 };
 
+// score 29 (was 29): frame 0x8c agrees; EBP/EDI, two spill homes and product/address scheduling still differ;
+// tried result declared first 30; best index named before actor home 29;
+// source actor named after index home 29; best index and source actor named homes 29;
+// candidate difference shared helper 29; marker difference shared helper 29;
+// forward product shared helper 135; up product shared helper 41. Restored.
 // @retail 0x1ac610
 bool __stdcall function_1ac610(long arg_0, point3f const *arg_1,
 	s_object_marker *arg_2, short *arg_3)
