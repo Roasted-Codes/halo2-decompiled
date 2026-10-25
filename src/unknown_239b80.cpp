@@ -126,6 +126,8 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
+// score 42 (was 42): Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
+// normalizer input vector 126; compound scales 42; factor-first scales 42; positive normalizer scope 42; long point index 101; count-first guard 99; long state 86; plane/point names 42; forced normalizer 42; forced dot 42; both forced 42.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {
@@ -312,6 +314,7 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 	result->j = a->y - b->y;
 }
 
+// score 50 (was 50): entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {
