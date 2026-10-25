@@ -1273,6 +1273,10 @@ extern bool g_4ed39d;
 // score 184 (was 184): initialized message before menu results 183; later mode 184;
 // results before user query 193; late dialog ID 184; full-width dialog flags 189;
 // recovery middle/high groups first 184/184; qualified pending/gate exits 184.
+// score 184 (was 184): game/main byte homes and dialog joins remain;
+// lobby recovery result 213; with connection/all recovery results 213/222;
+// dialog high/middle cases first 184/184; scoped default-dialog query,
+// dialog-presence and alternate-menu results 184/184/184.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
