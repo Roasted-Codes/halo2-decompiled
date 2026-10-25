@@ -1722,12 +1722,6 @@ void territory_marker_color(long player_index, long territory, s_color_bits *col
 	}
 }
 
-// Earlier comparison: score 50 (was 50): the stack slots of the outer frame differ ([esp+0x14]
-// where retail has [esp+0x10]).
-// score 50 (was 50): frame and scalar homes agree; point/holder scheduling
-// and color registers differ; input memcpy 50, input memmove 171, item/top
-// color loops 144/149, one/two color loops 172/130, input memcpy with
-// item/all color loop 144/172.
 // @retail 0x2bf960
 void c_game_engine_45c948::v14(long local_player)
 {
@@ -1742,12 +1736,12 @@ void c_game_engine_45c948::v14(long local_player)
 			s_color_bits color;
 			territory_marker_color(player_index, i, &color);
 			s_marker_list list;
-			point3f position = g_4e0350->marker_entries[(short)state->w60[i]].position;
-			long holder = state->l70[i];
+			s_marker_entry const &marker = g_4e0350->marker_entries[(short)state->w60[i]];
 			list.b0 = 0;
 			list.b1 = 0;
 			list.l4 = 1;
-			list.position = position;
+			list.position = marker.position;
+			long holder = state->l70[i];
 			list.r14 = 0.4f;
 			list.r18 = 0.1f;
 			list.r1c = 0.0f;
