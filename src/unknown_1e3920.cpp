@@ -738,6 +738,8 @@ short ai_player_index_get(long player_index);
 void function_10e9f0(long object_index, short channel, real value, real time);
 bool function_1a8220(long index, short a, short b, long unknown, short c, short d, short e);
 
+// score 32 (was 32): actor-base LEA and child lookup scratch remain; native timestamp/amount/interval/all
+// fields 32/32/32/32; clock object 32; count/limit/first-child homes 32/32/32.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
