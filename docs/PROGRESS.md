@@ -10,6 +10,16 @@ matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
 ```
 
 0 new matches, none lost:
+- @marioag0412's #785: closer scores and notes, no new match.
+
+## 2026-10-24: 9560 functions match
+
+```
+matched 9560 of 11321 game functions (1509191 of 2784283 bytes, 54.20%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+0 new matches, none lost:
 - @coldspear's #782: closer scores and notes, no new match.
 
 ## 2026-10-24: 9560 functions match
