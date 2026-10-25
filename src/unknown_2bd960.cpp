@@ -444,6 +444,10 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // score 130 (was 130): Protected control/sampling conventions and scan induction remain. external center binding 130; external
 // radius binding 131; center radius bindings 131; external height bindings 151; native scan ordinal 130;
 // center library initialization 137; marker library input 130; independent point ordinals 158.
+// protected control/sampling calls and scan induction remain; main scalar
+// bounds 143; shared center height 143; count snapshot 274, with center height 274; selections 143;
+// minimum/maximum alone 140/135; main plus marker bounds 171; initialized bounds 133;
+// initialized bounds with direct height reads 128 (two-point gain rejected). All plain.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

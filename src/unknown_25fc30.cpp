@@ -196,6 +196,9 @@ bool __stdcall function_25dd30(long a, long b)
 // score 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
 // shared component difference at offset/segment/both/fallback 334/343/343/343;
 // sphere/cone/all displacements 368/277/392; existing magnitude helper 175.
+// score 175 (was 175): initial offset schedule and protected geometry carriers remain;
+// read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
+// 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

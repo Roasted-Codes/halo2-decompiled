@@ -84,6 +84,10 @@ void function_2232a0(void)
 // slot-predicate materialization and final initializer residences differ.
 // Mode/options receivers, mode result, external count/slot references, typed selected
 // record, terminal record reference and both record receivers each 151 (575 bytes).
+// score 151 (was 151): the common count/layout join, slot predicate and terminal reset still differ.
+// First/second/both conditional countdown expressions 169/161/167;
+// signed-byte/unsigned-word layout 189/174; unsigned-word output ordinal 201;
+// signed-byte selection 164; dispatch noinline declaration 151. Original body retained.
 // One-dword frame agrees; count-one paths bypass the shared count/layout join, with slot and reset
 // allocation gaps. unsigned selected slot 151; word selected slot 157; word view ordinal 201; byte
 // view ordinal 167; exact scan bound 175; existing initializer inline 151; completed search result
