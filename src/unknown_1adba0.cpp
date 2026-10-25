@@ -641,6 +641,9 @@ bool function_270640(s_type_f17a25 *arg_0, s_type_c3b527 const *arg_1,
 bool function_2715a0(byte *arg_0);
 bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void const *arg_4);
 
+// score 112 (was 112): ESI is still saved around the middle region; result/index registers differ;
+// result first 110, point scope 112, settings scope 112, source scope 112, workspace scope 112,
+// result first/workspace scope 110, named result 112, named workspaces 112, prop index once 229.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {

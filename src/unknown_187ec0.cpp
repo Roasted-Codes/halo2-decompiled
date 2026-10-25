@@ -406,6 +406,9 @@ bool function_172750(long mode, point3f const *point, real radius);
 /* element_index starts the parent walk of 0x1882d0's fallback lookup, and
    entry_element_index (the fifth argument, which retail reads into esi) is
    the element whose values and seat entries are looked up */
+// score 118 (was 118): tag and remapped-index register/stack roles and result homes still differ;
+// index at use 160, branch index 118, update index 118, guarded index 124, entry scope 172,
+// named outputs 118, entry fields first 176, conditional second lookup 156.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)
@@ -513,6 +516,9 @@ dword vector3d_compress(vector3f const *vector);
 #include "unknown_1765e0.h"
 long function_189400(s_sound_position const *position, long object_index, long tag_index, real scale);
 
+// score 89 (was 89): frame and array homes agree; input registers and the first scan counter differ;
+// paired initialization 326, effect cursor 91, sound cursor 100, both cursors 103,
+// paired/effect cursor 328, paired/sound cursor 335, paired/both cursors 344, shared scan index 89.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)
