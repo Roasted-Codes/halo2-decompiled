@@ -1313,6 +1313,9 @@ bool function_1e1de0(long arg_0);
 // score 165 (was 165): early ESI save, return byte and actor/motion homes remain.
 // Object/actor homes 165/165; both homes/character/all scalar homes 165/165/165;
 // common guard with object/actor/both homes 168/168/168.
+// score 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Native initial/parent/root/all header queries 165 each; explicit initial/parent type domains
+// 181/192; both type domains 208; both with native header queries 208.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
