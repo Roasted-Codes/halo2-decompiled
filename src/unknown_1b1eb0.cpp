@@ -65,6 +65,10 @@ short __stdcall function_1b1f30(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 32 (was 32): node-pool base uses EDI instead of retail ESI, which
+// retail reuses for state two; four-byte extent gap. State/mode destination
+// pointers 32/32; both destinations 32; default flag destinations 33; readonly
+// view 32; readonly view with state/mode/both destinations 32/32/32.
 // @retail 0x1b21f0
 void __stdcall function_1b21f0(long actor_index, s_slot *slot)
 {

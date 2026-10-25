@@ -114,6 +114,10 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 	return local_0;
 }
 
+// score 30 (was 30): projection operand loads and cross-product scheduling
+// differ; separate i/j/k product pairs 30/30/30; all product pairs 30;
+// positive/negative products first 30/30; scoped negative products 30;
+// cross-vector initializer 31.
 // @retail 0x248df0
 real function_248df0(long arg_0, void *arg_1, void *arg_2, void const *arg_3)
 {

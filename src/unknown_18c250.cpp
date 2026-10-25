@@ -380,6 +380,8 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 // convention. Nested validation 12; object query receiver 12; validation from
 // tests 43; globals after tag query 38; direct set/first element 12/12;
 // absolute set part 12; relative permutation index 26.
+// Tag expression 12; first ordinal/set base ordinal 12/12; tag/set
+// snapshots 79/80; input role names 12; source/permutation predicates 12/12.
 // @retail 0x18c6a0
 void __stdcall function_18c6a0(long object_index, long unused, long tag_index, long set_index, long permutation, long scale)
 {

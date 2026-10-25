@@ -2877,6 +2877,10 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 
 /* a channel of a member connected (a peer tells the host it is there) or
    closed */
+// score 31 (was 31): state-clear arm remains before the common mask tail;
+// direct session/clear/connected/both member fields 31/43/39/48; session
+// and clear fields direct 43; shared member receiver 86; message at entry 31;
+// shared member and entry message 86.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
 {
