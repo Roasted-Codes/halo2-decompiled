@@ -299,6 +299,10 @@ extern real g_47f05c;
 // Unraised origin copy 265; height view with body reloads 275; selection/result names 202;
 // native point copy, enclosing point, entry displacement and read-only records 202 each;
 // size policy 357; existing magnitude boundary 204 (sum-order form not matched).
+// score 202 (was 202): frame 0xc8 versus 0xd4; displacement folding and shape/entry homes remain;
+// separate displacement scalars, reversed scalar order, coordinate names, partial squared sum,
+// squared-distance result and outer scalar scope 202 each; actual point receiver with scalars 311;
+// separate squared components 204.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -402,6 +406,10 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // score 203 (was 203): frame 0x14 agrees; request/count/table registers and cross-result stores still differ.
 // Shape pointer 329 (not matched); read-only scan and natural while 203/203; desired copy 271;
 // double height comparison 309; size policy 374; floating consistency 314; native default copies 203.
+// score 203 (was 203): frame agrees; request/count/table registers and cross-result stores remain;
+// selected normal from existing pair 233; direct pair cross inputs 209; first normal reference 203;
+// second normal reference 203; both normal references 203; output record reference 226; lower
+// height bound first 211; complete average initializer 203.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)

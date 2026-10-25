@@ -25,6 +25,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // and final Boolean normalization differ; byte return result 182; word return result 275;
 // long return result 258; unsigned return result 258; independent mode gates 243;
 // mode flag else 243; member gates with retained frame 243; terminal gates with retained frame 243.
+// score 182 (was 182): primary-session EBP/ESI joins and return normalization remain; signed-byte
+// result and readiness, update, mode-value and two dispatch noinline declarations 185 each in the
+// reduced image; unchanged preview 185 (full 182).
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {
