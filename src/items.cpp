@@ -967,6 +967,7 @@ struct s_item_flags_view_10b850
 // Normal value copy 882 (frame 0x15c); point value copy 852; marker
 // matrix memcpy 819; settled result long 844; position decision long 887.
 // Original body and helper operands kept.
+// score 858 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
