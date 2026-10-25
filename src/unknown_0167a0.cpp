@@ -320,6 +320,10 @@ struct s_2f6b0_point
 // score 94 (was 94): frame 0x1c versus 0x18; position/output argument homes and rectangle loads differ.
 // Rectangle/origin names 94/94; horizontal/vertical/both origins in place 100/92/115; native step initializer 94;
 // shared output assignment 94; workspace names plus short origin 113; native frame with scalar steps 118, short origin 91.
+// score 29 (was 94): frame 0x18 and incoming/output contract recovered; initial rectangle loads
+// and origin/step allocation still differ. Direct horizontal/vertical/both origins 99/29/102; output readback/native 94/94.
+// Both direct origins with readback/native/late full 102/102/102; on vertical-direct,
+// rectangles swapped/late full/global vertical value/global horizontal value 101/102/67/101.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)
@@ -333,11 +337,10 @@ void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	step.x = (bounds.v3 - bounds.v1) / grid->x;
 	step.y = (bounds.v2 - bounds.v0) / grid->y;
 	long x = bounds.v1;
-	short y = bounds.v0;
 	bounds.v1 = x + (word)position->x * step.x;
 	bounds.v3 = x + (word)(span->x + position->x) * step.x;
-	bounds.v0 = y + (word)position->y * step.y;
-	bounds.v2 = y + (word)(span->y + position->y) * step.y;
+	bounds.v0 = g_485a8a.b.v0 + (word)position->y * step.y;
+	bounds.v2 = g_485a8a.b.v0 + (word)(span->y + position->y) * step.y;
 	*outer = bounds;
 	*inner = bounds;
 	if (position->x == 0)

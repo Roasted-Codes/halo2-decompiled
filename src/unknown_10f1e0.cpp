@@ -407,6 +407,9 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // mask; back-edge reload order and the 0x1d90e0/second-lookup staging registers still differ.
 // Shared bit-vector setter 42; iterator stores before the graph 99; graph_tag_get 42; call results > 0 38;
 // iterator a before b 41; arms swapped 40; markers in the loop 41; visited declared first 37.
+// score 37 (was 37): shift test, back-edge reload order and second-call/transform staging remain.
+// State pair helper 148; all state graph queries 37; both 148; entry state query 37;
+// mode/graph/class 105, graph/class/mode 44, class/graph/mode 106, class/mode/graph 110.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
