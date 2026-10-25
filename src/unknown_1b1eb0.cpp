@@ -34,7 +34,12 @@ PRIVATE __forceinline void function_1b1eb2(long arg_0)
 }
 
 // score 14 (was 14): ours keeps the scaled actor index in ECX and the actor pointer in EAX,
-// retail keeps the index in EAX and the pointer in ECX.
+// retail keeps the index in EAX and the pointer in ECX (so ours also spends a byte on
+// `and ecx, 0xffff`). Tried: actor_reset_state for the helper 18 (pops move); actor
+// before the state 14; helper taking the actor pointer 14; actor_get spelled out,
+// index first, or as an array element (first get, second, or both) 14; the flag read
+// into a local first 14; if/else form 14; the reference in a local first 28; actor_get
+// after the if 25; no actor local 34.
 // @retail 0x1b1eb0
 bool __stdcall function_1b1eb0(long actor_index, s_slot *slot)
 {
