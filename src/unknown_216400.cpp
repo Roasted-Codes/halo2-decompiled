@@ -97,6 +97,9 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
     return result;
 }
 
+// score 51 (was 51): conversion addresses, append list/count/result and final call registers differ.
+// Existing root/path helpers 51/51; file-reference/all helpers 233/233;
+// append names/force-inline and buffer names 51/51/51; source step at character read 72.
 // @retail 0x2164c0
 void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
 {

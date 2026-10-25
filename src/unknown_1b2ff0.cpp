@@ -183,6 +183,9 @@ bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 
 real function_1f8940(long actor_index);
 
+// score 44 (was 44): actor-table load/add and the early selected-reference EBX copy differ.
+// Actor object reference/const view 44/44; candidate/flag/index/joint names 44/44/44/44;
+// result from reference validity 116; successful-selection arm first 71.
 // @retail 0x1b3380
 bool __stdcall function_1b3380(long actor_index, s_slot *slot)
 {
