@@ -571,6 +571,9 @@ long function_1e4a50(long index);
 void function_26c180(long actor_index);
 short actor_behavior_find_level(long owner_index, short type);
 
+// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch homes differ;
+// source store order 145, movement result 142, positive membership scope 161,
+// role names 144, native zero initialization 144, combined setup/result 141.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

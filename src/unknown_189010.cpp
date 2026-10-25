@@ -148,6 +148,10 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
+// score 182 (was 182): first class lookup expands; flag and result homes differ;
+// priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
+// base-first flags 178 (caller losses), role names 182, source snapshot 178,
+// object snapshot 183, priority after flags 192.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
