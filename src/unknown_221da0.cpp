@@ -765,6 +765,10 @@ real function_18cac0(long arg_0);
 // score 225 (was 225): inline table clear aligns the frame and occupies EBP;
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
 // indexed batch-entry pointer 225; previous-gain snapshot 262.
+// score 225 (was 225): aligned clear still owns EBP and shifts the scalar homes;
+// unsigned-word door index 236; unsigned-word cluster index 540; both 523;
+// signed-byte side 246; one door-cluster table 233; selected mask pointer 254;
+// both word indices/signed side 534; mask pointer/native camera index 254.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

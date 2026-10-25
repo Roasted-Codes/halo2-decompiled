@@ -77,6 +77,10 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Shared-cross scalar captures 226; axis value 293; post-trig alignment 234;
 // launch-speed name 213; tilt name 213; jitter base value 231;
 // two offset component loops 479; transform memcpy 213.
+// score 213 (was 213): frame 0x11c versus 0x118 and rotation scalar homes remain;
+// in-place input scale 260; in-place cross scale 229; both scales 232;
+// ordinary rotation inline 213; forced shared cross 213; output-pointer result 213;
+// result plus forced cross 213; result plus both scales 232.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {
