@@ -1205,6 +1205,10 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // score 30 (was 36): early graph load, node-base addition/register roles and overlay setup remain.
 // Plain: arms array 159; weapon array 44; both arrays 159; channel reference 36;
 // graph object 40; model input 82; graph input 30; interface value 230.
+// score 30 (was 30): graph-load timing, node-base addition/register roles and overlay setup remain.
+// Plain: graph inside model guard 188; both metadata values 191; graph guard first 31;
+// conditional graph result 193; graph-field binding 36; model-field binding 30;
+// read-only interface 30; shared root/parent receiver 30.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {

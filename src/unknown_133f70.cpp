@@ -78,6 +78,10 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Source/index initialization swapped 162; ordinal initialized inside guard 163; offset
 // declarations reversed 162; filter input captured 162; override query result 162;
 // existing object getter 162; entry order plus getter/query result 162/162.
+// score 162 (was 162): early source retention, count cursors and feature homes remain.
+// Actual source-array binding 191; repeated count-field binding 163; feature-word binding 162;
+// present-first selected result 162; conditional selected result 162; source/count bindings 200;
+// feature binding plus present-first result 162; actual selected-byte binding 162 (fast scores).
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
