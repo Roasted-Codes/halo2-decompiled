@@ -362,6 +362,10 @@ short __stdcall function_1b3ea0(long actor_index)
 	return result;
 }
 
+// score 26 (was 26): actor-index/pool load order and zero register differ;
+// native word ordinal 32; sentinel-first stores 26; actor after/between slot stores 52/27;
+// actor after reset/direct final getter 35/34; published-bit return 31;
+// sentinel after reset 36; activation before reset 25, rejected. Body restored.
 // @retail 0x1b3ee0
 bool __stdcall function_1b3ee0(long actor_index, s_slot *slot)
 {

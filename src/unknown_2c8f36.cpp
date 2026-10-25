@@ -185,6 +185,10 @@ step:
 	return result;
 }
 
+// score 20 (was 20): entry ESI save and wrapping result registers differ;
+// both wrapped helpers 54; helper search for 45; helper cursor while 45;
+// edge-field walk 47; common-return edge walk 44; scoped edge iterator 45;
+// ordinary inline helper 54; helper selection-first search 42. Body restored.
 // @retail 0x2c8f56
 void c_button_widget_45d5d0::v8()
 {
@@ -222,6 +226,10 @@ void c_button_widget_45d5d0::v8()
 	}
 }
 
+// score 20 (was 20): entry ESI save and wrapping result registers differ;
+// both wrapped helpers 54; helper search for 45; helper cursor while 45;
+// edge-field walk 47; common-return edge walk 44; scoped edge iterator 45;
+// ordinary inline helper 54; helper selection-first search 42. Body restored.
 // @retail 0x2c8fb4
 void c_button_widget_45d5d0::v9()
 {

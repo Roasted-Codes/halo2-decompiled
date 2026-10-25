@@ -283,6 +283,10 @@ void c_class_2c9e69::select_last_variant()
 }
 
 /* shows the item's variant name */
+// score 23 (was 23): nonempty receiver stack test/reload differs from EBX lifetime;
+// text/bitmap/both child helpers 23/23/23; helpers plus named receiver 36;
+// helpers plus nonempty-first/text admission 30/38; parameter text home 49;
+// returned name buffer 21 fast/plain, rejected. Opening body restored.
 // @retail 0x2c9ff4
 void c_class_2c9e69::v20(c_class_1a2c81 *item, long unused)
 {

@@ -71,6 +71,11 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 }
 
 /* kind 3: creation of an entity and the entities linked to it */
+// score 22 (was 22): callback argument setup, index reload and rollback order differ;
+// masked entry index 22; constant member dispatch 78; actual entry pointer 22;
+// admitted mask/owner snapshots 52/52; peer receiver refresh 24;
+// direct initial receiver 22; mask plus member dispatch 101;
+// persistent entry-array base 91; separate callback handle 22. Body restored.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {
