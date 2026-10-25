@@ -106,6 +106,9 @@ PRIVATE inline void shape_transform_point(const transform4x3f *matrix, const poi
 // member initializers 6; index/count/kind initializers 6; const source 6;
 // point memcpy 120; point value with in-place transform 128; word edge
 // cursors 97; full-width side 97.
+// Source-surface reference 6; source-edge reference 6; cached edge table 120;
+// cached vertex table 125; output ordinal snapshot 101; outer transform workspace 6;
+// short side 97; external geometry reference 6. Radius/index and x-store order remain.
 // @retail 0x1edd00
 c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, long index,
 	long user_data, const transform4x3f *matrix) : radius_shape_2de750(0.01f)
@@ -640,6 +643,12 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
 // score 19 (was 19): dispatch scheduling, ordinal/context homes and remap entry differ.
 // Complete center 19; local/radius/input memcpy 100/75/142; table/key references 19/137;
 // expansion entry return 19; size preference 200.
+// Actual query reference 102; owner/instance/both record references 19;
+// correction after remap 142; early input sphere 130;
+// normal remap inline 176 (498 bytes); normal removal inline 19.
+// score 19 (was 19): dispatch load and ordinal/remap homes remain; workspace scope 19;
+// pre-removal append count 86; removal postdecrement 66; paired ordinal names 19;
+// shared center setter 107; sphere component view 19; int append ordinal 19; outer while 19.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)

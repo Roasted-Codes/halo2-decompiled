@@ -632,6 +632,8 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // score 231 (was 231): caller-dependent frame alignment and scalar homes differ;
 // direct double with ancestry for-loop 235; first offset loop 235; second offset
 // loop 235; marker-position loop 235; initial radius snapshot 235.
+// direct radius with double magnitude 231; real radius 239; both widths 231;
+// byte result with real radius 270; word result with double magnitude 237.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1461,6 +1463,9 @@ long __stdcall function_bb670(short name_index, bool force)
 }
 
 // score 84 (was 84): the two fields of the definition are read in the other order and the -1 sentinel is kept in edi instead of ecx
+// score 31 (was 84): the early metadata reads, saved-register order and final argument staging differ.
+// Offset references 84; const metadata 84; long offsets 95; separate metadata 84;
+// direct success 117; input reference 84; index-field reference 31; palette-field reference 84.
 // @retail 0xa73b0
 long __stdcall function_a73b0(s_entity_info *info)
 {
@@ -1473,7 +1478,7 @@ long __stdcall function_a73b0(s_entity_info *info)
     {
         byte *scenario = (byte *)g_4e0350;
         byte *placements = scenario + placement_offset;
-        long index = info->field0;
+        long const &index = info->field0;
         long clamped = index < 0 ? 0 : index > *(long *)placements - 1 ? *(long *)placements - 1 : index;
         if (clamped == index)
         {
@@ -1591,6 +1596,8 @@ void function_bba20(long index);
 // score 319 (was 319): pool/permission registers and transform scheduling differ;
 // native point snapshot 385; native orientation snapshots 341; all snapshots 362;
 // inverse workspace scope 319; spatial workspace names 319.
+// byte permission 319; byte activity 319; both byte carriers 319;
+// vector transforms before point 385; byte permission with vectors first 385.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

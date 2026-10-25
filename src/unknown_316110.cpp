@@ -148,8 +148,14 @@ inline void end_agent_316110(agent_316110 *agent)
 	}
 }
 
-// score 87 (was 185): the first cleanup call still swaps eax/edx vtable
-// registers, and the second handle is cached before the first scan.
+// score 6 (was 185): the first cleanup still exchanges eax/edx, and the
+// first owner load uses ecx between the two loads. A second-member reference
+// with an element reference in each pair loop 6 (from 87); element references alone
+// 84 rejected. First-member reference 170; second or both member references
+// 141; ID references 87. On 6: owner reference 6, agent reference 73, helper
+// early return 6, owner-object reference 6, record reference for cleanup 73,
+// island snapshot 183; first element reference only 9; both pair references
+// 6; first pair plus record references 9.
 // Separate scan blocks with early handle snapshots 87 (from 167); fresh
 // pair reads 141, as did a late second handle, end snapshot, early return,
 // record base, force-inline cleanup, array pointers, split copy steps and
@@ -185,12 +191,13 @@ void cache_316110::function_316110(pair_316110 const *pair)
 		return;
 	}
 	collidable_316110 *first = pair->first;
-	collidable_316110 *second = pair->second;
+	collidable_316110 *const &second = pair->second;
 	{
 		pairs_316110 &pairs = island_of_316110(first)->pairs;
 		for (int i = 0; i < pairs.size; i++)
 		{
-			if (pairs.data[i].first->id == first->id && pairs.data[i].second->id == second->id)
+			pair_316110 const &entry = pairs.data[i];
+			if (entry.first->id == first->id && entry.second->id == second->id)
 			{
 				pairs.size--;
 				pairs.data[i] = pairs.data[pairs.size];
@@ -202,7 +209,8 @@ void cache_316110::function_316110(pair_316110 const *pair)
 		pairs_316110 &pairs = island_of_316110(second)->pairs;
 		for (int i = 0; i < pairs.size; i++)
 		{
-			if (pairs.data[i].first->id == first->id && pairs.data[i].second->id == second->id)
+			pair_316110 const &entry = pairs.data[i];
+			if (entry.first->id == first->id && entry.second->id == second->id)
 			{
 				pairs.size--;
 				pairs.data[i] = pairs.data[pairs.size];

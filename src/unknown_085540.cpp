@@ -432,7 +432,10 @@ bool c_simulation_view::handle_player_update(bool failed, long a, long b, dword 
 	return result;
 }
 
-// score 30 (was 30): early false result and iterator table/database registers differ; database reference 30; native handle 30; wide result 51; fixed database receiver 30;
+// score 30 (was 30): retail clears false before the enabled test, passes the iterator table in EDI
+// and keeps the database in EBP; hoisted handles and view data 33 with caller regressions;
+// mixed result 30; guard result 37; masked/const index, world and distribution aliases 30 each.
+// early false result and iterator table/database registers differ; database reference 30; native handle 30; wide result 51; fixed database receiver 30;
 // alias analysis off 30; inline depth zero 30; size preference 41; database role name 30.
 // @retail 0x86ad0
 bool c_simulation_view::has_pending_entity(void)

@@ -247,6 +247,13 @@ struct s_input_9c610
 // function_e4a20's own body (BLOCKED-BY 0xe4a20). Tried: the flags store first
 // of the second copy group 23 (kept); before the vector copy 67; first of all
 // 67; before field_3c 27.
+// Shared absolute lookup inline 23, out of line 122; shared index
+// reconstruction 107; both shared inline operations 114; point local at
+// notification 23, before guard 23, across dispatch 23; shared lookup
+// with point lifetime 23. Native frame/report copies still agree.
+// final validity predicate 129; byte success result 23; unsigned reconstructed handle 23;
+// signed-byte material 46; bool presence field 23; named validated tag result 23; source-width
+// pool index 112; unsigned salt word 24.
 // Byte notification read 46; byte tail read 23; both byte reads 46; word notification read 46.
 // Word tail read 23; both word reads 46; signed-byte tail read 23; byte notification/signed tail 46.
 // @retail 0x9c610

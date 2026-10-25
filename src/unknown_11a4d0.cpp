@@ -200,28 +200,29 @@ void function_11a430(long list_index, real body_vitality, real shield_vitality)
 }
 
 /* whether the unit holds a weapon of the given definition */
-// score 45 (was 45): retail loads the global once into esi and keeps it there, ours loads it into edx and
-// re-reads the array base; ours ends with an extra xor al,al and four int3s.
 // @retail 0x11a4d0
 bool function_11a4d0(long unit_index, long definition_index)
 {
-	if (unit_index == NONE || definition_index == NONE)
-		return false;
 	bool result = false;
-	s_unit_11a4d0 *unit = unit_get_11a4d0(unit_index);
-	short weapon_index = unit->weapon_index_a;
-	if (weapon_index != NONE)
+
+	if (unit_index != NONE && definition_index != NONE)
 	{
-		long weapon_object_index = unit->weapon_object_indices[weapon_index];
-		if (weapon_object_index != NONE && unit_get_11a4d0(weapon_object_index)->definition_index == definition_index)
-			result = true;
-	}
-	weapon_index = unit->weapon_index_b;
-	if (weapon_index != NONE)
-	{
-		long weapon_object_index = unit->weapon_object_indices[weapon_index];
-		if (weapon_object_index != NONE && unit_get_11a4d0(weapon_object_index)->definition_index == definition_index)
-			result = true;
+		s_record_pool *globals = g_4e0300;
+		s_unit_11a4d0 *unit = unit_get_11a4d0(unit_index);
+		short weapon_index = unit->weapon_index_a;
+		if (weapon_index != NONE)
+		{
+			long weapon_object_index = unit->weapon_object_indices[weapon_index];
+			if (weapon_object_index != NONE && ((s_object_header_11a4d0 *)globals->data)[weapon_object_index & 0xffff].object->definition_index == definition_index)
+				result = true;
+		}
+		weapon_index = unit->weapon_index_b;
+		if (weapon_index != NONE)
+		{
+			long weapon_object_index = unit->weapon_object_indices[weapon_index];
+			if (weapon_object_index != NONE && ((s_object_header_11a4d0 *)globals->data)[weapon_object_index & 0xffff].object->definition_index == definition_index)
+				result = true;
+		}
 	}
 	return result;
 }

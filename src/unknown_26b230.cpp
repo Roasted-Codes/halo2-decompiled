@@ -40,6 +40,9 @@ static __forceinline long real_to_long(real value);
 // Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
 // Depth one 144; unsigned maximum 146; word update state 155; first datum API 272; calling scan 208.
 // Activity-controlled first/slice/both loops 158/156/168; signed byte update with short/long maximum 146/152.
+// Native current-pointer/cursor view 132; with Boolean slice API 127; independent
+// long budget 114; separate native cursors 178; native first only 198; short
+// increment 121; Boolean branch 130; handle snapshots 127. Cursor views rejected.
 // @retail 0x268510
 void function_268510()
 {
@@ -1636,6 +1639,7 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // score 128 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
 // Round 280: remaining-count traversal 128 plain; current-child handle 164; collection write cursor 172; array scope 167; early active flag 199.
 // Child/countdown 125; short remaining 125; unsigned remaining 125 (each only three below the retained countdown).
+// Frame pointer 198; depth zero 313; later generation increment 130; native source slot 175; size preference 360; first-walk generation snapshot 178.
 // generation after destination 221; generation after head 126; read-only source 128; source reference 128.
 // read-only copy 128; read-only first walk 128; ordinary prop inline 128; separate copy noinline 128.
 // @retail 0x269580
@@ -1749,7 +1753,9 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
-// score 134 (was 134): frame 0x38 versus 0x3c; pool register and common null-current join differ.
+// score 134 (was 134): frame 0x38 versus 0x3c; pool/selection homes and threaded exhaustion differ.
+// Retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133; size preference 338.
+// frame 0x38 versus 0x3c; pool register and common null-current join differ.
 // Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
 // @retail 0x2689d0
 void function_2689d0(void)
