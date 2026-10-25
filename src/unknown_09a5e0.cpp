@@ -708,6 +708,12 @@ bool function_e68c0(long type, long unit_index);
 
 // score 75 (was 85): the prologue saves EBX and EBP where retail saves ECX and EBX, so the saved
 // register set and the order of the body differ.
+// With the result a long in ebx the 1<<type shifts use eax, so the vehicle index moves to ebp in
+// the prologue; retail's byte result loses bl to the shifts and spills to the frame slot, the
+// vehicle index stays in eax and ebp is saved late for the pool pointer.
+// Byte result 85; masked-index locals 75; pool data read at each use 77; mask operand order 75;
+// byte result with pool before the guard 89; split missing guards 83; dword indices 75;
+// byte result with the seat read once 85; byte mask locals 82.
 // @retail 0x9ee20
 bool c_unit_exit_vehicle_event_definition::v11(long a, long const *entities, long c, void const *data)
 {
