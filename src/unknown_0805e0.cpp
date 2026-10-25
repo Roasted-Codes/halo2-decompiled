@@ -422,6 +422,8 @@ bool function_80660(void)
 	return valid;
 }
 
+// score 133 (was 149): Frame 0x98 vs 0xa0; identity and redundant initialization stores still fold away.
+// Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -432,7 +434,7 @@ void function_7f930(void)
 	g_4cf97c = NONE;
 	g_4cf984 = NONE;
 	g_4cf988 = NONE;
-	for (long i = 0; i < 350; i++)
+	for (dword i = 0; i < 350; i++)
 	{
 		s_cached_player_identity identity;
 		memset(&identity, 0, sizeof(identity));

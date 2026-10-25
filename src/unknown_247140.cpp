@@ -252,6 +252,8 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
+// score 194 (was 194): the range field (a function-data member at +0x50 with a get_range_maximum reader) scores
+// 177 but moves the unmatched caller 0x174a30 from 338 to 370, so it is held.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
