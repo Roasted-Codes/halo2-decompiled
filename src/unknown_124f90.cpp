@@ -3050,8 +3050,12 @@ static inline long decibels_sum(long const &a, long const &b)
 
 vector3f *function_1427f0(transform4x3f const *arg_0, vector3f const *arg_1, vector3f *arg_2);
 
-// score 4 (was 310): the no-distance path's flag set folds to a store (retail ors the byte), and the fade
-// gain sum loads the distance gain first where retail loads the selected fade gain first.
+// score 101 (was 310): LTCG inlines the class lookup function_221810 that retail calls out of line, which
+// shifts the rest of the listing; with the call kept out of line (a #pragma inline_depth(0) pair around
+// it inside the body, which DECOMPILING.md rules out) the score is 4: the no-distance path's flag set
+// folds to a store (retail ors the byte), and the fade gain sum loads the distance gain first where
+// retail loads the selected fade gain first. Not tried: /Ob1 for the file, which changes every function
+// in it.
 // Tried: one gain local stored after the if/else 35; decibels_sum with a by-value operand 128 (6 at site 2
 // alone); the sum through decibels_sum instead of the local 6; 1000 - fade - time inside PIN 6.
 // Depth zero 417, depth one 310, fade scope 310, shared attenuation 334, callback table 311.
@@ -3165,10 +3169,7 @@ void function_129aa0(short arg_0, long *arg_1, s_looping_channel_spatialization 
 	if (SOUND_FLAG(local_1->location.flags, 11))
 	{
 		s_sound_definition *local_22 = sound_definition_get(local_1->definition_index);
-		/* retail calls the class lookup out of line here */
-#pragma inline_depth(0)
 		s_unknown_5c *local_23 = function_221810(local_22->promotion_index);
-#pragma inline_depth()
 		local_2->field_8 = decibels_sum(*(long *)((byte *)local_23 + 0x14), local_2->field_8);
 	}
 	if (!TEST_FIELD_BIT(local_1->source_updated) && local_1->source && local_1->source->spatialize)
