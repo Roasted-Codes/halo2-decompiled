@@ -279,6 +279,9 @@ void cache_copy_buffer_resize(long size)
 // buffer home names 5; result declared last 5; comparison array initialized 56; equality inputs reversed 14;
 // mismatch early return 24; inline comparison declaration 5; noinline comparison declaration 5; noinline
 // path declaration 5.
+// the second buffer address is reused instead of recomputed after the call.
+// Inline declaration 5; noinline declaration 5; byte memset 5; both clears first 25; selected result 24;
+// later result 13; both buffers initialized 81; priority-first result 31.
 // @retail 0x213e30
 long cache_copy_current_priority(char const *map_name)
 {
@@ -301,6 +304,9 @@ long cache_copy_current_priority(char const *map_name)
 // buffer home names 5; result declared last 5; comparison array initialized 56; equality inputs reversed 14;
 // mismatch early return 24; inline comparison declaration 5; noinline comparison declaration 5; noinline
 // path declaration 5; reversed buffer name order 5.
+// the second buffer address is reused instead of recomputed after the call.
+// Inline declaration 5; noinline declaration 5; byte memset 5; both clears first 25;
+// selected result 24; later result 13; both buffers initialized 81; priority-first result 31.
 // @retail 0x213e90
 long cache_copy_queued_priority(char const *map_name)
 {
@@ -366,6 +372,9 @@ long map_location_get(char const *map_name)
 // Tried buffer declarations 3; first buffer name 3; second buffer name 3; result lifetime 3; second clear
 // lifetime 7; test result 36; two result paths 36; integral result 52; path helper reverse 5; path helper
 // cdecl 5; path helper stdcall 3.
+// the second buffer address is reused instead of recomputed after the call.
+// Noinline declaration 3; inline declaration 3; first buffer initialized 65; second initialized 68;
+// byte memset 3; empty strncpy 81; both buffers initialized 94; shared byte clear 5.
 // @retail 0x214e40
 bool map_names_equal(char const *map_name, char const *other_map_name)
 {

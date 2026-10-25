@@ -331,6 +331,10 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 // entry local, null break, shared return and memcpy copy 22. Direct short carry 33; native carry 31;
 // result loop guard 22; tag workspace lifetime 22; ancestor local names 22; complete result 30;
 // native carry with stack input 23; existing entry lookup 105.
+// initial word load, EBP entry/table lifetime and lookup registers remain;
+// native entry formal 22; native parent formal 22; both native formals 22;
+// direct tag field 22; current-element traversal 141; separate inline declaration 22;
+// separate noinline declaration 22; existing element query 59.
 // @retail 0x1882d0
 s_seat_animation_entry *function_1882d0(long type, short element_index, long index, short entry_element_index)
 {

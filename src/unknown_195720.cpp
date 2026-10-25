@@ -176,6 +176,9 @@ void function_194fa0(s_bitstream *stream, word *buffer, long count)
 // explicit log/weight locals with one result 64; positive interior admission 49.
 // Extra four-byte stack slot and endpoint-log scheduling remain.
 // double logs 38; upper double log 38; lower product reversed 38; upper reversed 38; both reversed 38; integral lower weight 44; integral upper weight 44; direct interior return 36, rejected two-point gain.
+// frame 8 vs 4; log/weight scheduling prevents argument-slot reuse;
+// limit before compare/read/call 41/44/60; limit/log local renames 38;
+// earlier weight declarations 38; integer weights 43; named weighted logs 38.
 // @retail 0x194ff0
 real function_194ff0(s_bitstream *stream, real lo, real hi, long bits)
 {

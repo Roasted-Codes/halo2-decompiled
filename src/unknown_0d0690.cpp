@@ -1005,6 +1005,9 @@ PRIVATE __forceinline bool surface_status_failed(long status)
 // Current bitfield forms (fast): nonzero retry 85; exact retry flag 131; word flags 117;
 // short flags 117; bool option 115; first failure workspace 120; combined bits 147;
 // initial object option 140. Retry AND/push scheduling remains.
+// score 2 (was 2): retry AND still follows the object-index push. XOR 2; subtract 18; clear
+// extracted bit 2; subtract extracted bit 133; retry status scope 2; one failure store 98; long
+// failure 83; entry status 2.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
