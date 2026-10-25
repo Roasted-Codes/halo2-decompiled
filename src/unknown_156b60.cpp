@@ -183,6 +183,9 @@ PRIVATE void render_clamp_156b60(real *value)
 // score 38 (was 38): offset/clamp schedule persists; early actual attribute
 // offset 126, width home 135, offset/width 157, offset/length 45, geometry 60;
 // offset before alpha 158, before color 184, entry attribute declaration 126.
+// score 38 (was 38): offset/clamp allocation remains; in-place independent
+// tests/low return/assigned result 38/38/38, upper-first 39; native field
+// reference with original/independent/low-return/upper-first flow 38/38/38/39.
 // @retail 0x157020
 void __stdcall function_157020(byte *definition, point3f const *position, vector3f const *forward,
 	real value, long row, long column, long element, long entry)

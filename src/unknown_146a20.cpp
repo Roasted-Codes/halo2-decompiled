@@ -290,6 +290,9 @@ void function_146de0(void)
 // Short-padding failure/body, counted and capacity loops 129/131/129; zero-default/select padding
 // 134/129; allocator result 129; full short distance 135; success-only padding consumption
 // 120 (held: the guard repeats the loop's own test).
+// score 129 (was 129): capacity/timestamp homes and update expansion remain;
+// separate byte/char/word/dword/short/long remainders with short padding
+// 134/134/136/146/136/146; byte/word conditional padding 134/136.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {

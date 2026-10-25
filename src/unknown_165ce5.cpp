@@ -1209,6 +1209,9 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // Plain: graph inside model guard 188; both metadata values 191; graph guard first 31;
 // conditional graph result 193; graph-field binding 36; model-field binding 30;
 // read-only interface 30; shared root/parent receiver 30.
+// score 30 (was 30): early graph observation, parent-base addition/registers
+// and overlay setup remain; separate force-inline reset declarations for
+// bits/identity/indices/pair and four combined forms all 30 in plain checks.
 // @retail 0x167e86
 void __stdcall function_167e86(long user_index, long field_x11c898)
 {

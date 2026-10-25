@@ -493,6 +493,9 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // score 15 (was 15): saved-register pair persists; native const/mutable clock
 // records 91/91; interval accumulators on those records 95/95; named elapsed
 // phase 91/91; elapsed plus interval accumulation 95/95.
+// score 15 (was 15): saved sentinel/clock and settings registers still swap;
+// callback failure returns at actor/prop/unit/settings/cooldown/reaction phases
+// 15/106/106/106/106/106; combined actor-settings/all phases 39/39.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {
