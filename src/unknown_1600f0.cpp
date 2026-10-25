@@ -1022,6 +1022,10 @@ struct s_game_engine_globals_connections_view
 // score 184 (was 184): deferred icon tail and time/connection registers remain;
 // arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
 // receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
+// score 184 (was 184): Deferred icon tail and time/connection coordinate registers remain. place
+// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
+// rectangle aggregates 320; trailing rectangle aggregates 306.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

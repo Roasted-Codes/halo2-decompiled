@@ -2671,6 +2671,10 @@ struct s_unit_flags_14d8b0
 // score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
 // Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
 // incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
+// score 155 (was 155): Iterator publication, tick/rate schedule, damage call and trigger registers
+// remain. current record consumer 155; successful current publication 155; explicit iterator
+// initialization 155; defined current at advance 155; saturating source expression 254; saturate
+// before increment 224; native flag boolean 264; publication with native results 300.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

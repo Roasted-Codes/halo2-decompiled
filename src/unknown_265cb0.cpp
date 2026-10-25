@@ -1099,6 +1099,10 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // j93: Frame 0x60 agrees; clock hoisting, conversion copy and three vector homes remain; typed offset output recovers movement/offset homes.
 // wide event results 371; wide target result 374; state per use 433; state eligibility snapshot 338; typed
 // offset output 99; offset outer direction 99; offset blend before delta 99; offset outer query homes 99.
+// score 99 (was 99): Clock conversion schedule, integer copy and geometry homes remain. branch
+// decay result 398; delta before conversion 100; smoothing value samples 345; sampled early delta
+// 389; native rounded count 99; stored width rounded count 396; branch decay late delta 394;
+// sampled branch decay 402; ordinary conversion inline 373; branch exponent result 416.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
