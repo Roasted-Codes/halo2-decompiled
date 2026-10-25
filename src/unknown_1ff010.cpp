@@ -522,6 +522,10 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // 167; horizontal copy observation 144; native input observations 154; existing length
 // inline 142; earlier turn length result 136; earlier turn product input order 136; earlier
 // turn shared result scale 136; earlier turn shared direct scale 160.
+// score 136 (was 136): Horizontal square/copy order, rotation and output scheduling remain. combined memmove 191; immutable real
+// results 136; byte turn truth 136; horizontal memmove 184; turn memmove 168; output memmove 140; external
+// speed binding 147; external side components 136; native planar initializer 161; early turn memcpy 136;
+// completed output memcpy 136.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {

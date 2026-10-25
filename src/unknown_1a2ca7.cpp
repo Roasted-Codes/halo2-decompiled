@@ -1435,6 +1435,9 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // differ. immutable count snapshots 124; native list record references 124; original count name
 // 124; original count observation order 117; original count names and order 117; row pair without
 // initial merge 219.
+// score 117 (was 117): Count homes, early saved-count lifetime and memory flag updates remain. friend field binding 120; member
+// field binding 117; both field bindings 120; native count results 117; merge ordinal scope 117; friend
+// count arms 117; member count arms 117; both count arms 117.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {

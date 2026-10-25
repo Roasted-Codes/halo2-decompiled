@@ -441,6 +441,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // shared point count 326; height plus count 345 (plain).
 // score 130 (was 134): protected control/sampling calls and scan induction remain;
 // center/radius/both/height/all endpoint scans 375/475/716/378/950f; frame/size/global 237/276/1164f.
+// score 130 (was 130): Protected control/sampling conventions and scan induction remain. external center binding 130; external
+// radius binding 131; center radius bindings 131; external height bindings 151; native scan ordinal 130;
+// center library initialization 137; marker library input 130; independent point ordinals 158.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

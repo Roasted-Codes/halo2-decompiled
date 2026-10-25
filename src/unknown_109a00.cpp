@@ -149,6 +149,10 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // (the second call's block is now retail's). Left: the first call's block
 // (into a local) loads angular.i twice where retail folds it, and its
 // subtraction order; the non-rotate branch's scaled differences.
+// score 164 (was 164): First point-velocity and nonrotating difference/add schedules remain. external motion record 164;
+// external object record 164; returned transform input 249; first angular input value 205; first linear
+// input value 197; first center input value 206; first velocity input values 246; immutable displacement
+// rate 164.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {
