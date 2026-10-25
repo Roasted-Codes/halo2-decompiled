@@ -144,6 +144,9 @@ struct s_24e9c7_bounds
 // upper / negative-side / positive-side addition inputs 125/125/125;
 // upper-negative / upper-positive / both sides / all additions 125/125/125/125;
 // all additions with constant-first size 125. Original addition trees retained.
+// scalar homes and basis spills remain; selected bitmap word 153;
+// bitmap after bounds 125; word bitmap/long sequence 169; late word bitmap 153;
+// shared opacity tail 142; tail with word/late bitmap 161/142; branch-set tail 142.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {

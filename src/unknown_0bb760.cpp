@@ -477,6 +477,9 @@ void function_3dd10(long object_index, bool force);
 // weighted selection reused 122f; cumulative weight reused 122f.
 // shared scan ordinal 122f; short variant ordinal 263f.
 // selection plus lower HSV 199f; weight plus upper HSV 203f.
+// output/delta roles, second remainder publication and fallback one reload remain;
+// input/output/both conversion inline declarations 122/122/122; actual lower/upper/both HSV
+// returns 200/199/243; both returns plus input/both declarations 243/243.
 // Saved output/count roles and second-remainder
 // publication still differ. Early variant field binding 149; live count 122;
 // both 149; early presence predicate 131; default/supplied/final color

@@ -1657,6 +1657,9 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // Frame pointer 198; depth zero 313; later generation increment 130; native source slot 175; size preference 360; first-walk generation snapshot 178.
 // generation after destination 221; generation after head 126; read-only source 128; source reference 128.
 // read-only copy 128; read-only first walk 128; ordinary prop inline 128; separate copy noinline 128.
+// Entry group helper 128; fresh-head group helper 128; native prop field 128;
+// prop handle at use 128; child extension at use 128; owner extension at use 130;
+// native entry slots 219; direct populated-array index 160.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {

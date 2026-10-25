@@ -1384,6 +1384,8 @@ PRIVATE __forceinline real const &component_time_step()
 // score 26 (was 26): acceleration/timestep registers and stop scheduling remain; direct stopping decision 106;
 // conditional/stopping-first results, stopping ticks, squared speed, limit magnitude, normalized speed
 // and captured step decision 26 each. Original body retained.
+// score 26 (was 26): acceleration/timestep allocation remains; assigned correction and positive clamp 26;
+// nonpositive/all assigned clamps 45; shared velocity clamp 148; shared bounds 148 (449/450 bytes).
 // acceleration register, memory timestep multiply and stop-test schedule differ.
 // Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
 // completed clamp before ratio 82; accelerated candidate default 114.

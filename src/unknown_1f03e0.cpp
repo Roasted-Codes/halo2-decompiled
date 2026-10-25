@@ -507,6 +507,10 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // bytes and rotation scheduling remain. Ground memcpy 182; limited memcpy 182; separate real
 // components 182; cosine complement 180 (two-point gain dropped); separate cross workspaces 182;
 // cosine/complement before sine 181; explicit alignment with complement 182 (fast).
+// direct state dot loads and rotation carriers remain;
+// initial j/k/i products 179/180/179; first-plane subtotal 180; rotation
+// k/j/i products 242/183/237; turn alignment 180; paired jk/ki/ji/all
+// initial products 186/186/187/186. Three-point best rejected.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {

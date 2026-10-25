@@ -701,6 +701,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // rotation cross as old 155f; rotation cross as new 153f.
 // one rotation cross for both 245f; saved forward reads 220f.
 // saved forward plus shared cross 232f; indexed equal rotation rows 181f.
+// movement/original stack homes and rotation scheduling remain; forward scalar
+// inputs early/late 201/216; shared cross/forward/both scales 206/190/190; projected axis 214;
+// projected axis plus cross scale 212; common forward vector result 234.
 // movement slot and rotation/output allocation still differ.
 // Existing velocity scale 185; scale from field 186; first dot products commuted 155;
 // side projection values 166; rotated alignment value 166; axis field reference 155;

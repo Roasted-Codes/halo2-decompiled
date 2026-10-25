@@ -126,6 +126,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // first result plus torque snapshot 286f; linear change reused 184f.
 // angular acceleration reused 184f; both brake workspaces reused 184f.
 // first result plus shared force scale 194f; first result plus acceleration output 194f.
+// aligned frame overlap and product/brake carriers remain;
+// native inertia row/reverse-column/middle-first/reverse-component/reverse-row
+// publication 184/184/184/184/184; forward/left/up column memcpy 193/191/195.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

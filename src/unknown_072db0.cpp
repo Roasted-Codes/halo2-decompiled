@@ -1319,6 +1319,11 @@ struct s_rating_summary
 // immutable query inputs 231; native counter bits 231; native session fields 231; frame pointer 412; team value
 // snapshots 225; team promoted skill snapshot 239; native player statistics array 231; native statistics arrays
 // 231.
+// score 220 (was 225): key/statistic homes, statistic cursor and grouped team dispatch remain.
+// External player/team/both record references 225/220/220; early player identity 234;
+// native records plus formatted identity 219 (one-point follow-up dropped); UTF-16 input 220;
+// shared eligibility 353; bounded name conversion 332; direct native team pointer 220;
+// native team pointer/reference plus formatted identity 219/219 (one-point follow-ups dropped).
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1407,7 +1412,6 @@ void __stdcall function_741f0(s_match_player_rating_collection *collection, s_qu
     {
         for (long i = 0; ; ++i)
         {
-            const byte *local_2 = (const byte *)collection + 0xdc8 + i * sizeof(s_match_rating_entry);
             const byte *local_3 = (const byte *)collection + 0x49e4 + i * 0x5a;
             long count = NONE;
             switch (variant->type)
@@ -1422,7 +1426,7 @@ void __stdcall function_741f0(s_match_player_rating_collection *collection, s_qu
             }
             if (i >= count)
                 break;
-            const s_match_rating_entry *team = (const s_match_rating_entry *)(local_2 - 4);
+            const s_match_rating_entry *team = &collection->teams[i];
             const XUID *identity = (const XUID *)team->unknown0c;
             if (team->active && memcmp(identity, g_440070, 12) != 0)
             {

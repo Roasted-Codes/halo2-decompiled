@@ -1424,6 +1424,9 @@ PRIVATE __forceinline long shape_cluster_next(long *next)
 // both predicates 318f; saved collection mask 293f.
 // word hit ordinal 172f; full-width instance mask 291f.
 // full-width object mask 291f; collection mask plus word ordinal 300f.
+// External position/collection records 170/170; read-only pool/link views
+// 170/170; native pool reference 170; word link slot 180; slot with read-only
+// pool or external call receivers 180/180 (complete fast control 170).
 // @retail 0x16a440
 bool __stdcall function_16a440(dword flags, point3f const *position, real extent, real height,
     real radius, long ignore_object, long ignore_parent, s_shapes *shapes)
