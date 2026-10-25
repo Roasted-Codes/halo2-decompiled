@@ -190,14 +190,16 @@ bool s_iterator::advance()
 	{
   g = group;
   sub_index = sub;
+		long current_item = item;
 		s = &table->groups[g].subs[sub_index];
 
-		long sub_count = 0;
-		if (s) sub_count = s->count;
-		if (item + 1 < sub_count)
+		if (s)
 		{
-			item_index = item + 1;
-			next = false;
+			if (current_item + 1 < s->count)
+			{
+				item_index = current_item + 1;
+				next = false;
+			}
 		}
 	}
 
