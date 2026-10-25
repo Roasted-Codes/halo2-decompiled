@@ -1390,6 +1390,8 @@ struct s_item_collection
 // record and fallback field references 20; spawn reread with arm conversions 30;
 // spawn reread with early fallback widening 6; full expressions and long spawn 34;
 // arm conversions with long fallback 19; both duration fields reread 5.
+// score 5 (was 5): integer join and tag base still differ. Outer scenario/equipment/root-entry
+// receivers and tag base at entry/selection/fallback/root-entry/table-fallback 5/5/5/38/17/12/38/12.
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -4428,6 +4430,9 @@ bool function_158eb0()
 // actual mode reference 38; options record reference 5; complete iterator 46;
 // iterator scope 5; byte result 69; wide result 59; byte plus mode reference 66;
 // direct final count rejection 23. Scratch index/mode allocation still differs.
+// score 5 (was 5): mode/index scratch registers still differ. Rejection state 27;
+// rejection predicate 63; wide/byte rejection 51/27; rejection from score 67;
+// rejection cardinality exit 32; rejection fallthrough 85; rejection after iterator 30.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -4983,6 +4988,9 @@ void function_161420(long player_index, real alpha);
 // score 24 (was 24): state/user EDI/EBP swap and final x87 argument scheduling remain.
 // value-initialized iterator 158; entry workspaces 42; draw dimensions 24; immutable user 24;
 // frame pointer 173; global optimization disabled 242; float consistency 42; force-inline fraction 24.
+// score 24 (was 24): state/user saved registers and final x87 scheduling remain.
+// Actual flag/tick/both lvalues, timer receiver/receiver with lvalues, shared mask,
+// mask with lvalues/mask with receiver 24/24/24/24/24/164/164/164.
 // @retail 0x159880
 void function_159880(void)
 {
