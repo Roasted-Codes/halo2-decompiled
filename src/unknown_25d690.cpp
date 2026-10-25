@@ -1296,12 +1296,16 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
-// score 175 (was 175): frame 0x84 agrees; early ESI save/computed return byte
+// score 165 (was 175): frame 0x84 agrees; early ESI save/computed return byte
 // and actor/motion homes differ; scratch at entry 175; pointer/index names 175;
 // byte update result 232; byte readiness 182; byte behavior result 182.
 // early ESI save, update-result byte and motion-copy registers differ;
 // native observed-state width 187; activity word 178; level word 194; readiness word 174
 // (only one lower, rejected); old-state-first conjunction 179 (fast).
+// Readiness predicate 171; read-only object observations and parent guard value 175;
+// anchor/location/facing/observed/all copy boundaries 175; late readiness default 175;
+// default output values 165 kept; shared output guard 168; Boolean activity 257;
+// shared guard with Boolean activity 225.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
@@ -1333,7 +1337,6 @@ bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *ar
 	arg_0->position = arg_3->field_c;
 	*(s_location *)((byte *)arg_0 + 0x28) = arg_3->field_24;
 	*(vector3f *)((byte *)arg_0 + 0x1c) = arg_3->field_2c;
-	bool local_6;
 	if (local_3)
 	{
 		function_b8d30(arg_1, 0x40000bd, &local_5.field_1, 1, false);
@@ -1387,17 +1390,11 @@ bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *ar
 	bool local_9 = ((*((byte *)local_2 + 0x10a) >> 2) & 1) != 0;
 	arg_0->unknown5f = local_9 && !arg_0->unknown5e;
 	arg_0->unknown5e = local_9;
-	long local_10;
-	bool local_11;
-	if (local_4 == NONE)
+	bool local_6 = local_4 != NONE && actor_get(local_4)->unknown084 < 4;
+	long local_10 = false;
+	bool local_11 = !local_9;
+	if (local_4 != NONE)
 	{
-		local_6 = false;
-		local_10 = false;
-		local_11 = !local_9;
-	}
-	else
-	{
-		local_6 = actor_get(local_4)->unknown084 < 4;
 		local_10 = function_1e1de0(local_4);
 		local_11 = actor_behavior_find_level(local_4, 14) != NONE;
 	}

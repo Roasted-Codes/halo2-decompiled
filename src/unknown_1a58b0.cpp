@@ -793,6 +793,9 @@ void function_25aba0(long actor_index);
 // Empty native initializer 143; value/assigned-value initialization 249 each; empty initializer with early state pop 146;
 // owner/handler records 69 each; current-level snapshot 69; level snapshot with empty initializer 143.
 // Actor/result ESI/EDI, state-one decrement, zero-fill and insertion setup still differ.
+// Native initializer with early state pop 140; candidate index snapshot 252;
+// candidate receiver 69; choice before workspace 69; callback/insertion names 69;
+// completion/eligibility/insertion results 69/163/69; existing mask helper inline 69.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {

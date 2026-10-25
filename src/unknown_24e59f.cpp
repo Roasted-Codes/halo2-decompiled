@@ -54,6 +54,9 @@ static __forceinline long marker_viewer_unit(void)
 // final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
 // projected endpoints 123; word centers 225; final endpoints 123; native direction 264; distance lifetime 141.
 // Branch status with word/native extents 218/212 (match-only, reverted); numerator lifetimes 123; viewer exits 123; earlier extent product 213.
+// Native point initialization 123; up-vector snapshot 294; ellipse bounds 241;
+// existing projection output 123 (match-only, reverted); placement memcpy 123;
+// collision record at file scope 123; direct collision result 281; double rounding result 180.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {

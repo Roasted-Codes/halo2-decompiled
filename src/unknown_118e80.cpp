@@ -971,6 +971,8 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // homes differ. Branch flag store 131; long force 130; native velocity copy 131; long activity
 // 164; reversed result OR 131; parent result earlier 123; update/countdown result earlier 131.
 // With original flag store, early parent result 109; long force 101; both 110.
+// Native motion/input/state fields 98 each; request/output/all basis copies 98 each;
+// movement-output and orientation-output scopes 98 each.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

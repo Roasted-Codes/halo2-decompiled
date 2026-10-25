@@ -2183,6 +2183,9 @@ event_done:
 
 #pragma inline_depth()
 
+// score 109 (was 109): object index remains cached across the validity call; visibility blocks differ.
+// Native velocity/location/origin/all copies 109; native color record 109;
+// default visibility 109; short origin index 109; shared destruction call 122.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
