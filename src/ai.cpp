@@ -1568,6 +1568,8 @@ bool function_1c8d20(long actor_index, point3f const *origin, long excluded_obje
 bool function_1df5d0(short team_a, short team_b);
 real __stdcall function_265d30(long actor_index, long prop_index);
 
+/* for each active actor's props: copies the object's team into the prop
+   target, refreshes the target's two team tests and the view's 0x3c value */
 // @retail 0x1c9a00
 void function_1c9a00(void)
 {
@@ -1583,12 +1585,18 @@ void function_1c9a00(void)
         {
             byte *object = (byte *)((s_ai_object_header *)g_4e0300->data)[node->object_index & 0xffff].object;
             s_ai_prop_target *target = &((s_ai_prop_target *)g_50241c->data)[node->unknown08 & 0xffff];
-            s_prop_view_fields *view = prop_node_view(node);
+            byte *state = NULL;
+            if (node->view_index != NONE)
+            {
+                byte *view = g_502414->data + (node->view_index & 0xffff) * 0x124;
+                if (view)
+                    state = view + 0x70;
+            }
             *(short *)((byte *)target + 0x20) = *(short *)(object + 0x138);
             target->unknown23 = function_1df560(actor->unknown024, *(short *)((byte *)target + 0x20));
             target->unknown24 = function_1df5d0(actor->unknown024, *(short *)((byte *)target + 0x20));
-            if (view)
-                view->unknown3c = function_265d30(iterator.actor_index, prop_iterator.index);
+            if (state)
+                *(real *)(state + 0x3c) = function_265d30(iterator.actor_index, prop_iterator.index);
         }
     }
 }
