@@ -1278,6 +1278,9 @@ struct s_player_properties
 // owner/count/zero homes and requested cursor remain.
 // Current fields at use all/names 198/184; metadata/all with live mask/all with late count 234/198/198;
 // all with owner at use/second index/both indices 207/198/198.
+// score 184 (was 184): owner/name-count/zero allocation and requested cursor remain.
+// Seven nonempty byte/long/short native aggregate-default groups 339 each;
+// full native defaults with redundant zero stores retained 375. Original initialization restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
