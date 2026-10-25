@@ -208,6 +208,8 @@ bool __stdcall function_64060(s_game_variant *variant)
 	return result;
 }
 
+inline long network_session_interface_get_value_49c8(void);
+
 // @retail 0x641f0
 long network_session_interface_get_value_49c8(void)
 {
@@ -1484,9 +1486,6 @@ struct s_cached_player_source;
 void function_80490(const s_cached_player_identity *identity, const s_cached_player_source *source,
  bool local, bool recent);
 
-// score 45 (was 45): the user struct is reached through a pointer, so ours adds the
-// base of the global to the scaled index; retail leaves the whole offset in the
-// displacement of the store.
 // @retail 0x65530
 void __stdcall function_65530(long user_index)
 {
@@ -1513,34 +1512,30 @@ void __stdcall function_65530(long user_index)
    }
   }
  }
- s_session_interface_user *user = &g_4cd868.users[user_index];
- user->properties[0x7f] = (byte)maximum;
+ g_4cd868.users[user_index].properties[0x7f] = (byte)maximum;
  if (g_4cd868.unknown98 >= 0 && g_4cd868.unknown98 < 16)
-  user->properties[0x7e] = (byte)levels[g_4cd868.unknown98];
+  g_4cd868.users[user_index].properties[0x7e] = (byte)levels[g_4cd868.unknown98];
  else
-  user->properties[0x7e] = 0xff;
- c_class_58d20 *session = network_session_get_live();
- long variant = NONE;
- if (session && SESSION_STATE_IS_LIVE(session->state))
-  variant = session->value49c8;
+  g_4cd868.users[user_index].properties[0x7e] = 0xff;
+ long variant = network_session_interface_get_value_49c8();
  long value, level;
  if (variant != NONE && function_73a10(variant, user_index, 0, &value) &&
   function_73a10(variant, user_index, 1, &level))
  {
-  *(long *)&user->properties[0x84] = variant;
-  *(long *)&user->properties[0x8c] = value;
-  *(short *)&user->properties[0x8a] = (short)level;
+  *(long *)&g_4cd868.users[user_index].properties[0x84] = variant;
+  *(long *)&g_4cd868.users[user_index].properties[0x8c] = value;
+  *(short *)&g_4cd868.users[user_index].properties[0x8a] = (short)level;
  }
  else
  {
-  *(long *)&user->properties[0x84] = NONE;
-  *(long *)&user->properties[0x8c] = NONE;
-  *(short *)&user->properties[0x8a] = NONE;
+  *(long *)&g_4cd868.users[user_index].properties[0x84] = NONE;
+  *(long *)&g_4cd868.users[user_index].properties[0x8c] = NONE;
+  *(short *)&g_4cd868.users[user_index].properties[0x8a] = NONE;
  }
- *(word *)&user->properties[0x88] = 0xffff;
- if (!(user->xuid.dwUserFlags & 3) && user->xuid.dwUserFlags != 0xbad00000)
-  function_80490((const s_cached_player_identity *)&user->xuid,
-   (const s_cached_player_source *)user->properties, true, false);
+ *(word *)&g_4cd868.users[user_index].properties[0x88] = 0xffff;
+ if (!(g_4cd868.users[user_index].xuid.dwUserFlags & 3) && g_4cd868.users[user_index].xuid.dwUserFlags != 0xbad00000)
+  function_80490((const s_cached_player_identity *)&g_4cd868.users[user_index].xuid,
+   (const s_cached_player_source *)g_4cd868.users[user_index].properties, true, false);
 }
 
 bool game_loop_running(void);

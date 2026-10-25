@@ -418,6 +418,9 @@ void __stdcall function_25dd50(
 // Native trace 38; facing guard 37 (plain 37); cover index before/after base 38/38;
 // shared inset/lateral/both scale 131/106/138; native trace plus guard 37;
 // trace-block definition receiver 104; receiver plus guard 101. One-point gain dropped.
+// score 38 (was 38): face/definition and cover register ownership, normal y product and cold block remain.
+// Candidate-record reference 38; reference-flags binding 67; normal input copy 42;
+// point/normal/both output copies 42/42/42; facing scalar 38; published-side switch 59.
 // @retail 0x25e430
 void __stdcall function_25e430(
 	long actor_index,

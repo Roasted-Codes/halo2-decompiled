@@ -2191,6 +2191,9 @@ event_done:
 // score 109 (was 109): Object-index reload and visibility joins still differ. Update word 109; response
 // word 119; both words 119; native missing location 204; root location value 194; root velocity value 198;
 // both root values 218; origin value 109.
+// object index remains cached across the validity call; visibility blocks differ.
+// Native velocity/location/origin/all copies 109; native color record 109;
+// default visibility 109; short origin index 109; shared destruction call 122.
 // frame agrees; object-index caching and visibility block order differ.
 // Const tag/root 109/109; external datum reference 109; visibility result tests 189;
 // inline depth one/two 109/109; global optimization off 550; frame pointer 200.
@@ -2372,6 +2375,9 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // score 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
 // Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
 // early missing-object return 181; separate impulse buffer 251.
+// score 83 (was 181): frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
+// Existing snapshot-normal helper 177; direction lifetime 181; point lifetime 181; returned-record for 346;
+// saved short marker 182; existing point plus snapshot-normal helpers 83 kept.
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2401,8 +2407,8 @@ void function_179fb0(s_effect_datum *effect)
 						transform4x3f matrix;
 
 						function_17aec0(location->node_index, effect, &matrix);
-						transform_point_179fb0(&matrix, &location->matrix.position, &point);
-						effect_matrix_transform_normal(&matrix, &location->matrix.forward, &forward);
+						effect_matrix_transform_point(&matrix, &location->matrix.position, &point);
+						effect_matrix_transform_normal_179880(&matrix, &location->matrix.forward, &forward);
 					}
 					else
 					{
@@ -2498,6 +2504,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // score 313 (was 345): frame 0x104 versus 0x100; point/up argument eligibility and record copies differ.
 // Placement name 345; request name 345; retained decal seed pointer 313;
 // direct case returns 345; failed-placement guard 345.
+// score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup still differ.
+// Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
+// sound aggregate 313; direct radius on the seed-pointer body 344 (frame 0x100).
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2626,6 +2635,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
+// score 166 (was 166): radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
+// Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
+// Part-table cursor 340 rejected for short-counter wraparound.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {

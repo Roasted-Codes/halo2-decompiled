@@ -1280,6 +1280,10 @@ extern bool g_4ed39d;
 // Plain: direct dialog callbacks 202; callbacks after mode 199; callbacks at display 192;
 // direct callbacks/plain game result 242; late callbacks/plain result 233; display callbacks/plain result 237;
 // direct callbacks/scalar error 245; direct callbacks/both plain 268.
+// game/main byte homes and dialog joins remain;
+// lobby recovery result 213; with connection/all recovery results 213/222;
+// dialog high/middle cases first 184/184; scoped default-dialog query,
+// dialog-presence and alternate-menu results 184/184/184.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

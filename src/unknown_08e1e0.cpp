@@ -233,9 +233,6 @@ struct s_pending_transfer_definition
 };
 const long g_4402a4[2] = { 1, 1 };
 
-// score 2 (was 2): only the upload-directory EAX/ECX setup moves are reversed;
-// kind-first lifetime 200; complete owner value 198; immutable request values / owner memcpy 2/2;
-// upload / download / both directory values 4/163/163; kind-first with upload directory 200.
 // @retail 0x8e240
 void function_8e240(void)
 {

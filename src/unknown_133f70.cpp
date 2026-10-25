@@ -74,6 +74,10 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // score 162 (was 162): delayed ESI/source/count cursors and feature homes remain.
 // Fast: native feature bits 206; common bit gate 211; packed bits 162; packed and independent 206;
 // packed and common 211; byte bit results 216; bitwise bits 214; packed and bitwise 214.
+// frame 0x214 agrees; early source ESI retention and count/cursor homes still differ.
+// Source/index initialization swapped 162; ordinal initialized inside guard 163; offset
+// declarations reversed 162; filter input captured 162; override query result 162;
+// existing object getter 162; entry order plus getter/query result 162/162.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

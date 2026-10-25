@@ -1188,10 +1188,17 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // score 36 (was 46): the 0x20 frame agrees; node-address registers and one byte still differ.
 // Field reference with calls in both arms 36; wide parent 117; unsigned root 115;
 // root reference 115; parent reference 115; predicate 46; signed mask 47; unsigned mask 46.
-// score 36 (was 36): The node-base addition and ECX/EDX roles still differ.
+// score 36 (was 36): parent address LEA/base-index roles and overlay setup remain.
+// Native root/parent/both node values 140/141/153; native result field, unsigned result,
+// arms entry binding/update and mapping outcome 36; parent word/index and late index 115/115.
+// The node-base addition and ECX/EDX roles still differ.
 // Shared node array 36; read-only nodes 36; mutable parent-field binding 36;
 // root read before graph 38; immutable active 36; earlier animation receiver
 // 188; immutable mode 36; arms-map entry reference 36 (plain scores).
+// score 36 (was 36): Parent observations and overlay homes remain different.
+// Direct parent fields 99; native parent value 115; root-entry binding 114;
+// parent flags by field/value 36/36; shared overlay result 40; independent
+// overlay results 45; actual indices-record reference 38 (plain scores).
 // separate node-base addition and ECX/EDX roles remain.
 // Parent/root/query-result names 36/36/36; outer query result 36; retained-field
 // plus root/parent object references 36/36; animation/interface references 36/36.
@@ -1756,6 +1763,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // blend time true arm 506; ammo nonnegative path first 463; adjustment flag from index 460; arms model read
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
 // read first 478; ammo channel before lookups 526; ammo channel before state view 470
+// score 455 (was 455): Frame 0x58 versus 0x78; root/channel overlap and copy/sway allocation remain. Model count snapshot 556; vector adjustment helper 471; negative sway first 465; ammo-count boundary 459; early magazine maximum 462 (plain).
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

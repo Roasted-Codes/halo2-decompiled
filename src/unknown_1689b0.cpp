@@ -1542,6 +1542,9 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // face classification from normal selection 553.
 // frame 0xb964 agrees; sum/counter homes and EBX/ESI zero carrier still differ.
 // Result-first edge cap 625; long inside 600; long normal selection 552; projected entry lifetime 552; independent sums with word counters 594; shared initial point 553.
+// score 552 (was 552): frame 0xb964 agrees; sum homes and query zero register differ. Signed
+// accepted counts 552; selected endpoint pointer 653; vertex cursor 628; shared inverse 552; early
+// opposite radius 647; word-count shared reconstruction and early successor 686.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

@@ -206,7 +206,15 @@ bool camera_velocity_profile_new(s_camera_velocity_profile *profile, real total_
 	return result;
 }
 
-// score 49 (was 49): retail keeps both arrays in its frame (sub esp, 0x1c)
+// score 49 (was 49): retail keeps only start and deceleration in xmm registers and reads the
+// peak (twice) and acceleration from their array homes (frame 0x1c); ours keeps all four in
+// registers (frame 0x10). Three-arm first clamp 96; two separate result clamps 49 (same);
+// last term as a separate += 55 (retail's add order and single-exit clamp tail appear);
+// one 2x3 coefficient array 54 (retail's 0x1c frame and tail, but the reads stay in
+// registers); reordered coefficient fills 55; start/deceleration as named locals 59;
+// endpoint field reads in the sum 114 (the homes collapse); pointer-taking fill helper 63;
+// coefficient fill after the clamps 120.
+// retail keeps both arrays in its frame (sub esp, 0x1c)
 // and reads rates[1], rates[2] and accelerations[0] back from it; ours keeps
 // only rates[2] there, so the sum takes other registers, the b * b term
 // moves up (the compiler reorders the sum: the source order of the terms

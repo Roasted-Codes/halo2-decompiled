@@ -499,6 +499,10 @@ static __forceinline void function_x7a3668(plane3f const *plane, transform4x3f *
 // score 51 (was 51): the three components are squared and summed in a different order, the scaled
 // component is kept in a different register, and the cross product holds its operands in swapped
 // registers.
+// The first difference is an extra early load of the first component (retail
+// loads only the second before the magnitude test). Second component scaled first
+// 52; first scaled as component * inverse 51; third stored first 53; first and
+// third read into locals 51; third scaled as k * inverse 51 (fast).
 // @retail 0x142390
 void function_142390(
 	plane3f const *plane,

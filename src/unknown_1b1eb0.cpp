@@ -165,6 +165,10 @@ real function_1e3920(long actor_index);
 // slot reference 164; actor reference 164; both references 164;
 // const actor pointer 164; declared request byte 164; slot/request byte 164;
 // actor/request byte 164; both/request byte 164.
+// early slot receiver, scalar homes and reference arms remain;
+// reference before request/index/guard 203/203/201; late output index 163;
+// selection flag before clear 168; scratch before fields/clear 164/181;
+// early reference/scratch with late index 204.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
