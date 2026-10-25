@@ -342,6 +342,10 @@ bool function_22acb4(long player_index);
 // score 196 (was 232): extra second-mask slot and constant homes remain; second enum group kept.
 // Second/fourth/third phases 287; fourth/third/second 297; first enum group 238;
 // complete type-bit selection 227; second enum group 196; combined selections 201.
+// score 190 (was 196): second-mask spill and constant homes remain.
+// Round 303: both enum groups 216; unified item predicate 256; multiplayer at use 257;
+// shifted source flags 281; fourth enum selection 284; one-case bit first 190;
+// one total enum-bit update 291. Final stores and query argument preserved.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
@@ -357,9 +361,9 @@ void function_13a050(byte const *status, long user_index, long type, s_13ad48_it
 	}
 	word first = 1;
 #define SET_CONDITION(bits, mask, condition) if (condition) { bits |= mask; } else { bits &= ~mask; }
+	SET_CONDITION(first, 8, *(short const *)(status + 0x36) == 1);
 	SET_CONDITION(first, 2, *(short const *)(status + 0x36) == NONE);
 	SET_CONDITION(first, 4, *(short const *)(status + 0x36) == 0);
-	SET_CONDITION(first, 8, *(short const *)(status + 0x36) == 1);
 	SET_CONDITION(first, 0x10, status[0x30]);
 	SET_CONDITION(first, 0x20, status[0x31]);
 	if (*(short const *)(status + 0x3c) == NONE)

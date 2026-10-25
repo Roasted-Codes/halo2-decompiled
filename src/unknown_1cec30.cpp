@@ -2662,6 +2662,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // transforms 301; equal-node arm first 248.
 // second selector word 226; promoted first nodes 290; entry matrix 206;
 // entry relative transform 206; fallback first 206 (plain scores).
+// Round 303: first mapped byte 299; second mapped byte 213; first node at use 338;
+// second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
