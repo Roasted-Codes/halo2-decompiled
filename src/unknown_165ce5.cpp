@@ -1195,6 +1195,10 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // Shared node array 36; read-only nodes 36; mutable parent-field binding 36;
 // root read before graph 38; immutable active 36; earlier animation receiver
 // 188; immutable mode 36; arms-map entry reference 36 (plain scores).
+// score 36 (was 36): Parent observations and overlay homes remain different.
+// Direct parent fields 99; native parent value 115; root-entry binding 114;
+// parent flags by field/value 36/36; shared overlay result 40; independent
+// overlay results 45; actual indices-record reference 38 (plain scores).
 // separate node-base addition and ECX/EDX roles remain.
 // Parent/root/query-result names 36/36/36; outer query result 36; retained-field
 // plus root/parent object references 36/36; animation/interface references 36/36.

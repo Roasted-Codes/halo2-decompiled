@@ -186,6 +186,12 @@ dword function_191660(long string_handle, long index);
 // type ladders 177; speaker presence 207; bound values 220; fallback default 227;
 // output mode 169; parameter record with ladders 208. Selected-record copy 206
 // excluded for earlier overlap. Original body retained.
+// score 165 (was 169): Source-element addressing is closer at retail length;
+// frame 0x24 versus 0x28, parameter spill and input selectors still differ.
+// Function/source references 169/165; shared period 165 (740 bytes);
+// shared range selector 220; period plus range 238; function plus range 220;
+// curve record 202; primary field plus range 220; source plus period 164
+// (739 bytes, rejected); source plus function 165. Source reference kept.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)
@@ -218,7 +224,7 @@ void function_2222c0(s_effect_component const *component, s_effect_component_ove
 
 		if (overrides && (overrides->parameter_mask & (1 << i)))
 		{
-			char source = overrides->sources[source_index];
+			char const &source = overrides->sources[source_index];
 
 			if (source & 1)
 			{

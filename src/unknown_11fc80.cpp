@@ -142,6 +142,8 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 // (50; k-j-i, k-i-j and i-k-j give 26), or with each product's operands
 // swapped (26); new_mid.x as root_forward->i * mid_root (26); the node axes
 // written as root->forward etc. without the pointer locals (59).
+// score 26 (was 26): frame 0x30 agrees; cross-product operand loads and the extra midpoint MOVSS byte remain.
+// Six product values 28; cross accumulators 34; first/second/both input copies 512/565/741; returned cross value 462; cross reference parameters 26; local interpolation helper 28.
 // @retail 0x120220
 void function_120220(
 	transform4x3f *target,

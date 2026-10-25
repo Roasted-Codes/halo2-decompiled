@@ -2661,6 +2661,9 @@ struct s_unit_flags_14d8b0
 // Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
 // native reset timer 155; both native long/short fields 155; signed native countdowns 155;
 // all native countdown fields 155; full native current-player record 153.
+// score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
+// Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
+// incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
