@@ -263,6 +263,9 @@ void function_146de0(void)
 // Constructed allocator result 164; conditional usable capacity 140/frame 0x14 (three-point gain dropped);
 // conditional padding 141; block/padding outer scopes 143; current block-first homes 143;
 // construction scope 143; zero-first padding 143 at 377 bytes.
+// score 139 (was 143): frame 0x14 now agrees; update expansion and saved registers differ.
+// Per-attempt padding after/before publication 149/149; consumed padding 139/151;
+// guarded consumption 145; rounded padding/consumption 163/162; bounded search 149.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
@@ -276,13 +279,14 @@ c_havok_abstract_allocator *function_146e30(void)
 		{
 			block = (byte *)function_80e14(size, 0, 0, 0, 90, 1.0f);
 			g_47988c = (long)block;
+			adjustment = (dword)block & 0xf;
+			if (adjustment)
+				adjustment = 0x10 - adjustment;
+			size -= adjustment;
 		}
 		while (!block && ((size >>= 1) >= 0x100000));
 
-		adjustment = (dword)block & 0xf;
-		if (adjustment)
-			adjustment = 0x10 - adjustment;
-		g_4798a0 = new ((byte *)g_479888 + 0x105440) c_havok_fixed_memory(block, size - adjustment);
+		g_4798a0 = new ((byte *)g_479888 + 0x105440) c_havok_fixed_memory(block, size);
 		function_1c4590(1);
 	}
 	return g_4798a0;
