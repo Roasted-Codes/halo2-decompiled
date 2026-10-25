@@ -1601,7 +1601,13 @@ static inline bool weapon_state_replaceable(long current, long state)
 }
 
 /* puts a weapon in a state and plays the state's animation */
-// score 69 (was 69): success-byte scheduling and final call argument registers still differ.
+// score 69 (was 69): notification input registers and success scheduling still differ.
+// forced replacement 69; long replacement 115; complete predicate arms 69; predicate tests 136;
+// state-selected flags 96; case-selected flags 137; const animation receiver 69;
+// wide predicate and case flags 128.
+// nested retry 69; animation failure-first 76; nested inventory gates 69; direct predicate returns 69;
+// role-based selection names 69; short animation offset 129; complete mask arms 117; shared case pairs 129.
+// success-byte scheduling and final call argument registers still differ.
 // Byte outcome 67; short/word outcomes 87; actual object references and nested scope 69;
 // signed-word mask 83; owner-first test 68.
 // @retail 0x1058b0
@@ -1930,6 +1936,12 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
    the reserves of the holder's other weapons of the same kind */
 // score 124 (was 124): frame eight bytes agrees; magazine, available and taken registers and pool reloads differ
 // tried all lookups pool value 124; needed result first 171; positive take continue 124; availability before update 124; first reserve field reference 123.
+// tried return from test 181; other reserve reference 123; weapon record reference 124.
+// tried read-only settings 124; reserve publication 124; storage names 124.
+// tried size policy 451; inline depth zero 124.
+// score 124 (was 124): magazine/available/taken registers and pool reloads remain; original getter,
+// per-slot getters, all object getters and header getters 124 each; first/other/both magazine references
+// 124 each; unit reference 124.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2189,7 +2201,12 @@ void function_1055b0(vector3f *direction, vector3f const *axis, short index, sho
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 
-// score 89 (was 89): timing stack homes, trigger spill and released-output registers differ.
+// score 89 (was 89): ticks/trigger/product homes and release/age registers still differ.
+// conversion scope 89; press reference 89; hold reference 89; release reference 89;
+// complete byte clamp 162; output chain 89; threshold mask 133; release and conversion scope 89.
+// shared object/header getters 89/89; delta after age store 152; equality-first 106; rising-first 119;
+// shared held clear 118; redundant release test removed 110; immutable receivers 89.
+// timing stack homes, trigger spill and released-output registers differ.
 // Trigger/settings references, rate snapshot and threshold input 89; double duration 134;
 // bounded age increment 167; byte conditional clamp 162.
 // @retail 0x1027b0
@@ -2392,6 +2409,12 @@ bool function_106280(long object_index, long *out_index, byte *out_entry);
 
 // score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
 // tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
+// tried query output names 130; output record reference 219; current receiver first 132.
+// tried nested range tests 130; staged active result 206; natural while 130.
+// tried read-only tags 130; float consistency 130.
+// score 130 (was 130): frame 88 versus 84 and current-object spill remain; object/header getters 130/130;
+// entry weapon/tag references 130/130; output magazine reference 219; byte/long active carriers 192/194;
+// target-model reference 130.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
@@ -2897,8 +2920,16 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 
 // score 52 (was 69): the record's pointer is kept in ebx where retail keeps it in
 // ebp, and the word of the record is read into cx where retail reads it into dx.
+// long outcome 128; byte outcome 127; long helper return 127; both wide 128; const barrel 52;
+// const magazine tag 52; const tags 52; forced-body receiver names 52.
+// late magazine tag 127; late const tag 127; saved query selector 107; failure-first 52;
+// exemption-first 76; distinct stop ordinals 52; immutable selector/barrel 52/52;
+// shared object/header getters 52/52.
 // Ordinary inline 468; automatic inline 468; barrel reference 52; magazine-tag reference 52;
 // magazine reference 52; combined references 52; empty-first tests 88; query result first 140.
+// score 52 (was 52): barrel/magazine and selector registers remain reversed; weapon/tag/both receiver
+// inputs 52/52/52; barrel input 131; weapon+barrel/tag+barrel/all inputs 52/52/52; direct success with
+// weapon input 111.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
@@ -2947,6 +2978,9 @@ struct s_ammo_conversion_entry
 
 // score 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
+// score 203 (was 203): frame agrees; destination/tag and search carriers remain.
+// Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
+// direct retention predicate 213; loaded value clamp 203. Original body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3061,6 +3095,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // score 565 (was 565): frame 0x1c64 vs 0x1c60; weapon/barrel roles and unit/definition homes differ.
 // Plain single-store unit 637; later effect locals 659; long marker count 607;
 // CRT marker copies 565; long fired 582.
+// score 565 (was 565): extra frame word and weapon/barrel roles remain.
+// Owner getter 563; scale names 565; direct barrel uses 641; const barrel tag 565;
+// effect cursor before snapshot 565 (all plain). Original body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3296,6 +3333,10 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // score 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
+// score 1475 (was 1500): frame 0x38 agrees; pool/index roles and scalar homes remain.
+// Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
+// input-array names 1507; barrel completion case order 1507. Full-width result kept.
+// Own plain 1476; later table relocation 1450 with identical normalized code.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
@@ -3308,7 +3349,7 @@ bool __stdcall function_fdfb0(long weapon_index)
     long owner_index = function_101fb0(weapon_index);
     long player_index = owner_index != NONE ? WEAPON_LONG_AT(WEAPON_GET(owner_index), 0x13c) : NONE;
     if (weapon->object_index_194 != NONE && !function_badc0(weapon->object_index_194, NONE)) weapon->object_index_194 = NONE;
-    bool result = function_105e80(weapon_index);
+    long result = function_105e80(weapon_index);
     if (WEAPON_GET(weapon_index)->animation_state_offset != NONE)
     {
         byte *state = (byte *)weapon + weapon->animation_state_offset;

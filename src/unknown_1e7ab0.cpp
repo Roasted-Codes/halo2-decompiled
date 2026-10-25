@@ -173,6 +173,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // multi-use magazine view 656; seat-before-parent acquisition 656; all restored.
 // score 649 (was 649): Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
 // score 651 (was 658): Frame 0x54 agrees; state/player/unit homes remain. Shared seat fields kept 658 to 651, 2300/2308 bytes. Captured seat flags 658; short selector slot 662; typed object headers 658; magazine capacity 658 (plain).
+// Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

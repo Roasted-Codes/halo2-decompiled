@@ -985,7 +985,10 @@ void function_1e6120(s_biped_physics_output *arg_0, void *arg_1, real arg_2, boo
     bool arg_5, real arg_6);
 void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped_physics_output *arg_2);
 
-// score 98 (was 98): Frame 0x1f0 agrees; call setup, flag merge, component loads and final result
+// score 98 (was 98): MOV/LEA call setup, movement flag merge, force argument and activity register still differ;
+// stationary/byte/word movement result 107/98/111; complete flag value 98;
+// initial-state/parent/update/countdown activity values 265/119/98/101. Original body restored.
+// Frame 0x1f0 agrees; call setup, flag merge, component loads and final result
 // homes differ. Branch flag store 131; long force 130; native velocity copy 131; long activity
 // 164; reversed result OR 131; parent result earlier 123; update/countdown result earlier 131.
 // With original flag store, early parent result 109; long force 101; both 110.

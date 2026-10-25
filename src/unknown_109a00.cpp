@@ -64,21 +64,6 @@ int __fastcall function_142a60(transform4x3f const *a, transform4x3f const *b, t
 void function_b75a0(long object_index, point3f const *point, vector3f const *forward,
 	vector3f const *up, s_location const *location, bool unknown);
 
-PRIVATE inline void carrier_point_velocity(point3f const *center, vector3f const *linear,
-	vector3f const *angular, point3f const *point, vector3f *result)
-{
-	vector3f offset;
-	offset.i = point->x - center->x;
-	offset.j = point->y - center->y;
-	offset.k = point->z - center->z;
-	result->i = angular->j * offset.k - angular->k * offset.j;
-	result->j = angular->k * offset.i - angular->i * offset.k;
-	result->k = angular->i * offset.j - angular->j * offset.i;
-	result->i = linear->i + result->i;
-	result->j = linear->j + result->j;
-	result->k = linear->k + result->k;
-}
-
 PRIVATE inline void carrier_add_vectors(vector3f const *a, vector3f const *b, vector3f *result)
 {
 	result->i = a->i + b->i;
@@ -158,6 +143,12 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 	return result;
 }
 
+// score 164 (was 128): one instruction longer (1018 bytes, retail 1012), so most
+// differences are positional; aligned it went 66 -> 40 when the shared
+// carrier_point_velocity began computing the cross product before writing it
+// (the second call's block is now retail's). Left: the first call's block
+// (into a local) loads angular.i twice where retail folds it, and its
+// subtraction order; the non-rotate branch's scaled differences.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

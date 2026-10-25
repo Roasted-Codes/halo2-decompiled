@@ -1383,6 +1383,9 @@ struct s_item_collection
 };
 
 // score 5 (was 5): the tick count is sign extended into eax here and into edx in retail.
+// collection object reference 5; positive fallback 5; selection scope 5;
+// nested positive groups 5; object plus scope 5; valid-selection result 25;
+// native-short valid selection 29; object plus positive fallback 5. Integer join still differs.
 // Full record expressions with arm conversions 5; with short ticks 34;
 // record and fallback field references 20; spawn reread with arm conversions 30;
 // spawn reread with early fallback widening 6; full expressions and long spawn 34;
@@ -1503,7 +1506,9 @@ short function_15cca0(long player_index, byte code)
 }
 
 // score 24 (was 24): the datum index and the record count are kept in swapped registers through
-// the whole lookup.
+// the whole lookup. Receiver and other pointer 37; const other pointer 37; target noinline 24;
+// absolute lookup forceinline 24; mark code 24; mark identifier 24; late absolute index 67;
+// counter declared first 24; existing team helper 50; team helper forceinline 50.
 // @retail 0x15cd90
 void function_15cd90(long player_index, short identifier, long other_player_index)
 {
@@ -2660,7 +2665,10 @@ void function_158090(long player_index, short old_team)
 }
 
 // score 12 (was 12): the player index and the player table base are kept in swapped registers, and
-// the peer lookup after it reloads them the other way round.
+// the peer lookup after it reloads them the other way round. Tried: an unsigned index parameter 12;
+// the table read before the peer call 31; a const table pointer 12; the existing dirty-slot helper 12;
+// the existing cause setter forced inline 69; inline depth one 12; the existing initializer forced
+// inline 73; global optimization off 120.
 // @retail 0x157de0
 void function_157de0(long player_index)
 {
@@ -2935,7 +2943,10 @@ void function_15ba20(void)
 }
 
 // score 16 (was 16): the event fields are stored in a different order than retail, and the player
-// lookup keeps the index in a different register.
+// lookup keeps the index in a different register. Tried: an unsigned index parameter 16; the shared
+// input-counter helper 16; the force-inline input-counter helper 16; the table read before the peer
+// call 68; the existing cause setter forced inline 70; the existing initializer forced inline 79;
+// size optimization 125; global optimization off 86.
 // @retail 0x157ed0
 void function_157ed0(long player_index)
 {
@@ -4416,6 +4427,9 @@ bool function_158eb0()
 // mode in ecx and the index in edx, ours the other way round. Ours evaluates the index argument
 // first (right to left, the mode is 0x23f260's first parameter); retail behaves as if the mode were
 // last. Tried: `(long)(flag != 0)` 5; `!!flag` 5; a byte flag 5; `> 1` for `/ 2 > 0` 35.
+// actual mode reference 38; options record reference 5; complete iterator 46;
+// iterator scope 5; byte result 69; wide result 59; byte plus mode reference 66;
+// direct final count rejection 23. Scratch index/mode allocation still differs.
 // @retail 0x158f50
 bool function_158f50()
 {

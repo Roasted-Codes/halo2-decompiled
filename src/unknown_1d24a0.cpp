@@ -112,6 +112,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // score 1214 (was 1218): frame 0x1d0 versus 0x1d4; early EBX/entry allocation and vector reloads differ.
 // Direct radial residual loop 1282; planar residual loop 1261; angular residual loop 1214, kept;
 // displacement loop 1246; all three residual loops 1227.
+// score 1207 (was 1214): frame 0x1d4 restored; early EBX, entry homes and vector reloads remain.
+// Record-scope angular residual 1214; function-scope angular change 1214; early angular axis 1214;
+// native removed-slot element 1214; one record option-word read for all four flags 1207, kept.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
@@ -145,13 +148,14 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
     --local_8;
     continue;
    }
-   bool local_17 = (bool)((local_12->field_0 >> 2) & 1);
-   bool local_18 = (bool)((local_12->field_0 >> 1) & 1);
+   dword record_flags = local_12->field_0;
+   bool local_17 = (bool)((record_flags >> 2) & 1);
+   bool local_18 = (bool)((record_flags >> 1) & 1);
    hkRigidBody *local_19 = arg_0->rigid_bodies.data[local_10->field_3].rigid_body;
    bool local_20 = (!local_19->m_fixed && local_19->body_is_simulating().m_bool) || local_1;
    bool local_21 = local_14->rigid_bodies.data[local_15].rigid_body->body_is_simulating().m_bool || local_20;
-   bool local_22 = (bool)((local_12->field_0 >> 25) & 1);
-   bool local_23 = (bool)((local_12->field_0 >> 26) & 1);
+   bool local_22 = (bool)((record_flags >> 25) & 1);
+   bool local_23 = (bool)((record_flags >> 26) & 1);
    s_object_marker local_24;
    if (!function_b8d30(arg_0->object_index, local_12->field_8, &local_24, 1, false))
     function_ba160(arg_0->object_index, &local_24.matrix);
