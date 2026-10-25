@@ -105,19 +105,27 @@ PRIVATE inline s_projectile_choice *projectile_choice_get(short type)
 	return result;
 }
 
+/* the choice's definition, or NONE without a choice */
+PRIVATE inline long projectile_choice_definition(s_projectile_choice const *choice)
+{
+	long definition_index = NONE;
+	if (choice && choice->definition_index != NONE)
+		definition_index = choice->definition_index;
+	return definition_index;
+}
+
+/* aims a projectile of the choice at the target, again just above its adjusted speed
+   when the first try fails; the velocity and gravity are optional outputs */
 // @retail 0x1ff200
-// score 51 (was 51): ours clears the low byte of the flags register where retail clears DL, and loads
-// the record pool's pointer into EDI where retail uses EDX; the arguments of the
-// call are pushed in a different order.
 bool function_1ff200(short type, point3f const *origin, real speed, point3f const *target,
 	real const *limit, bool alternate, vector3f *direction, real *speed_out, real *time,
 	vector3f *velocity, real *gravity)
 {
-	s_projectile_choice *choice = projectile_choice_get(type);
 	bool result = false;
-	if (choice && choice->definition_index != NONE)
+	s_projectile_choice *choice = projectile_choice_get(type);
+	long definition_index = projectile_choice_definition(choice);
+	if (definition_index != NONE)
 	{
-		long definition_index = choice->definition_index;
 		real adjusted_speed;
 		bool linear = false;
 		if (function_fa6a0(definition_index, &speed, origin, target, &adjusted_speed, limit, NULL,
@@ -439,9 +447,7 @@ bool __stdcall function_1ff010(long arg_0, point3f const *arg_1)
         point3f local_5;
         function_210850((s_type_c3b527 const *)((byte *)local_3 + 0x7d0), &local_5);
         s_projectile_choice *local_6 = projectile_choice_get(*(short *)(local_4 + 4));
-        long local_7 = NONE;
-        if (local_6 && local_6->definition_index != NONE)
-            local_7 = local_6->definition_index;
+        long local_7 = projectile_choice_definition(local_6);
         vector3f local_8;
         real local_9;
         real local_10;
