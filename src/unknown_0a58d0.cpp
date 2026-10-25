@@ -862,6 +862,9 @@ PRIVATE inline bool z_state_real_valid(real value)
 // Native long/byte first validation results 146/146; range-first decoder inputs 146;
 // range-first plus long validation 146; short encoding count 146; count plus range-first 146;
 // stream-last decoder inputs 146; unsigned native limit 460 at 901 bytes (fast scores).
+// direct result-byte SETNE and scalar zero remain. Scalar code input,
+// scale/all code lifetimes, field reference/pointer outputs, code with reference/pointer output,
+// code with default lower result 146/146/146/146/146/146/146/295.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {

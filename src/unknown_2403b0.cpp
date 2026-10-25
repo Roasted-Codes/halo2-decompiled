@@ -46,6 +46,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Predicate long/short/byte/signed-byte returns 189/190/190/190;
 // byte predicate input 190; byte input with long/short/byte results 189/190/190.
 // Both one-point gains rejected; original predicate and body restored.
+// pool-data reload, completion stores and final predicate layout still differ.
+// permission result 190; fallback permission scope 190; present-unit scope 190
+// eligible-weapon scope 190; present-slot scope 190; present-marker scope 190
+// unit/weapon scopes 190; option once 190.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

@@ -128,6 +128,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // final byte 167; final byte with wide state 301; final byte cross-reset 288;
 // final byte with bool state 167, cross-reset 288; scoped wide state 302;
 // wide state across reset/listener 293/294. Original byte state retained.
+// saved success/type/first-channel allocation remains;
+// listener consumer scope 165; with reset/earlier byte state 280/283; submix scope 165;
+// both scopes 165; both with reset state 280; listener/reset with pointer-first bins 280;
+// all consumer boundaries 280. Original short-circuit loops retained.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

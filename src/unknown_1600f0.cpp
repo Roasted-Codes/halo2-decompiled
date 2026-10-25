@@ -1027,6 +1027,10 @@ struct s_game_engine_globals_connections_view
 // zero before icon init 205f; zero before place format 248f.
 // signed word result 184f; unsigned native result 184f.
 // signed result before icon init 205f; native result before icon init 205f.
+// deferred icon tail and time/connection homes still differ.
+// Positive place visibility 318; horizontal/vertical/both live origin fields 184/184/184;
+// completed color alpha 184; visibility with origins 318; horizontal/both origins
+// with completed color alpha 184/184. Widget-root control equals the full baseline.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

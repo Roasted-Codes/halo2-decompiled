@@ -129,6 +129,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // aligned frame overlap and product/brake carriers remain;
 // native inertia row/reverse-column/middle-first/reverse-component/reverse-row
 // publication 184/184/184/184/184; forward/left/up column memcpy 193/191/195.
+// frame overlap and motion/reciprocal, product and brake allocation remain.
+// Separate transpose output via returned/completed output 222/195; with first product 201/240;
+// with final product 243/240; with both products 201/240. Opening matrices and helpers retained.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

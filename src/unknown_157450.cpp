@@ -1397,6 +1397,8 @@ struct s_item_collection
 // arm conversions with long fallback 19; both duration fields reread 5.
 // Shared duration-field address 27; selected short/long snapshot 31/36; explicit source arms 13;
 // direct field conversion 27; record reference 27; positive field guards 23; field scope 27.
+// score 5 (was 5): integer join and tag base still differ. Outer scenario/equipment/root-entry
+// receivers and tag base at entry/selection/fallback/root-entry/table-fallback 5/5/5/38/17/12/38/12.
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -4445,6 +4447,9 @@ bool function_158eb0()
 // direct final count rejection 23. Scratch index/mode allocation still differs.
 // Cardinality bias 12; bounded count 43; singleton states 56; retained quotient/raw score 63/63;
 // signed/unsigned halfword result 58/58; bounded extra-player count 46. Scratch exchange remains.
+// score 5 (was 5): mode/index scratch registers still differ. Rejection state 27;
+// rejection predicate 63; wide/byte rejection 51/27; rejection from score 67;
+// rejection cardinality exit 32; rejection fallthrough 85; rejection after iterator 30.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -5002,6 +5007,9 @@ void function_161420(long player_index, real alpha);
 // frame pointer 173; global optimization disabled 242; float consistency 42; force-inline fraction 24.
 // Double power expression/result 24/51; shared RGB setter 130; alpha-last 24;
 // rectangle-first 118; setter/power 130; branch-assigned intensity 62; combined output fill 130.
+// score 24 (was 24): state/user saved registers and final x87 scheduling remain.
+// Actual flag/tick/both lvalues, timer receiver/receiver with lvalues, shared mask,
+// mask with lvalues/mask with receiver 24/24/24/24/24/164/164/164.
 // @retail 0x159880
 void function_159880(void)
 {
@@ -5078,6 +5086,9 @@ void __stdcall function_d6bc0(long object_index);
 // reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
 // nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
 // score 175 (was 175): Frame 0x14 versus 0x18; timer/base homes and scheduling joins remain. Native placement record 175; named time slice 175; mode case order 175; explicit real defaults 175; positive slice guard 175 (fast).
+// score 167 (was 175): frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
+// type result before engine 167f/plain; engine consumer scope 167f;
+// timer reference / read-only object / scheduling handle / entry-test result / distance results / combined 175/175/175/175/175/175f.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5091,8 +5102,8 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
         byte *placement = *(byte **)(scenario + 0x124) + i * 0x90;
         if (i % arg_642c39 != g_510c54->game_time % arg_642c39) continue;
         short *timer = &entries[i].value04;
-        c_engine_peer *engine = game_engine_get();
         long type = NONE;
+        c_engine_peer *engine = game_engine_get();
         if (engine)
             type = engine->p0();
         if (function_15a090(type, 4, (short *)(placement + 4)) == NONE) continue;

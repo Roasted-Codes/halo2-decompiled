@@ -125,6 +125,9 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // score 119 (was 119): alignment/facing products, clear join and contribution schedule remain.
 // Genuine alignment i/j/k products 125/129/125f; ij/ik/jk products 129/125/125f;
 // all products and products with complete result 125/125f; preview 125f.
+// alignment operands, marker-clear join and contribution schedule remain;
+// byte busy result / elapsed consumer / factor accumulator / contribution-first sums / combined 124/124/124/124/124f;
+// marker comparison result 124f; terminal marker case / comparison 206/206f.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {

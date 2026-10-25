@@ -286,6 +286,9 @@ void function_245400(s_source_245400 const *source, long index,
 // both shared products 204; snapshot with early sides 209.
 // Signed-byte side carriers first/second/both 238/238/204; native-long carriers
 // first/second/both 228/228/222; mixed signed-byte/native-long both ways 228/228.
+// score 204 (was 204): frame, source register and separate side-byte homes still differ.
+// Live first material/matrix/plane table/material table/index 204/204/204/204/204;
+// material plus matrix records 208; both table fields 204; records with table fields 204.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

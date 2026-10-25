@@ -109,6 +109,9 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // score 144 (was 144): receiver/count reloads and ranking dispatch remain.
 // Getter pool reference / typed entry input / handle-first / both contracts 144f;
 // first/second conditional handle selection 193/193f; both with pool reference 207f.
+// carried receiver/count reloads and ranking handoff remain;
+// declared payload / read-only result / read-only pool / handle domain 144/144/144/144f;
+// native payload slots 176f; distinct typed receivers / priority enum / payload with enum 144/144/144f.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {

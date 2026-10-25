@@ -67,6 +67,12 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // score 70 (was 70): pulse/table entry schedule and draw-pass carriers remain;
 // pulse/image/sprite reads at use 224/155/137; pulse guard first 78;
 // first sequence count once 209; positive draw arm 70; occupied width first 70; exhaustive bitmap result 148.
+// score 70 (was 70): pulse/table setup and draw-pass register scheduling still differ.
+// selected-entry scope 81; live draw sequence 70; live first sequence 70; both sequence bindings 70
+// native first entry 70; native draw entry 70; both entry references 70; native dimension inputs 70.
+// score 70 (was 70): pulse/table setup, draw-pass carriers and running-X scheduling remain.
+// Complete first index 209; absent-index guard 70; both 209; bit after query 70;
+// first/draw/both image field bindings 70/70/70; complete first index with both fields 209.
 // @retail 0x200462
 void function_200462(long arg_0)
 {

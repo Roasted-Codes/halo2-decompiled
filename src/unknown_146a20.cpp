@@ -280,6 +280,9 @@ void function_146de0(void)
 // Constructor mask 139; repaired native construction result with/without mask 164/164;
 // entry capacity plus mask 141; native buffer/address/padding-scope plus mask 139/139/139;
 // actual masked-capacity local 138 (one-point gain dropped).
+// capacity/timestamp homes and selective update expansion remain.
+// Final rounded/low-bit/conditional/word padding 149/152/143/145; signed-word
+// per-attempt padding 129 plain kept; capacity/allocation/joint home names 139/139/139.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
@@ -287,7 +290,7 @@ c_havok_abstract_allocator *function_146e30(void)
 	{
 		long size = 0x800000;
 		byte *block;
-		long adjustment;
+		short adjustment;
 
 		do
 		{
