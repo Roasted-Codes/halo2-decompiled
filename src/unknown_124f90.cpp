@@ -1226,6 +1226,8 @@ long function_2197f0(real gain);
 
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
+// score 162 (was 162): frame 0xc agrees; early gain home, delayed ESI save and fade scheduling differ.
+// Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -3319,6 +3321,8 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
+// score 241 (was 241): frame 0x49c versus 0x494; gain argument and clamp homes differ.
+// Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3458,7 +3462,7 @@ void function_1293f0(void)
 
 long function_155760(long arg_0);
 void function_caf60(long arg_0, point3f *arg_1);
-void function_11d6a0(vector3f const *arg_0, vector3f const *arg_1, quaternionf *arg_2);
+void function_11d6a0(quaternionf *arg_2, vector3f const *arg_0, vector3f const *arg_1);
 void function_11d950(quaternionf const *arg_0, quaternionf const *arg_1, quaternionf *arg_2, real arg_3);
 extern quaternionf *g_4687cc;
 void function_220790(s_sound_listener const *arg_0);
@@ -3499,6 +3503,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 	arg_2->k = (arg_0->i * arg_1->j - arg_0->j * arg_1->i) * local_2 + arg_0->k * local_1 + local_0 * arg_1->k;
 }
 
+// score 551 (was 551): frame 0x12c versus 0xe8; native vector and environment homes differ.
+// Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
+// Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {
@@ -3537,7 +3544,7 @@ void function_127400(bool arg_0)
 					local_9.y = (local_20.y - local_6->field_0.y) * local_19 + local_6->field_0.y;
 					local_9.z = (local_20.z - local_6->field_0.z) * local_19 + local_6->field_0.z;
 					quaternionf local_21;
-					function_11d6a0(&local_6->field_20, (vector3f *)(local_13 + 0x180), &local_21);
+					function_11d6a0(&local_21, &local_6->field_20, (vector3f *)(local_13 + 0x180));
 					function_11d950(g_4687cc, &local_21, &local_21, local_19);
 					function_1275d8(&local_21, &local_6->field_20, &local_7);
 					function_1275d8(&local_21, &local_6->field_2c, &local_8);

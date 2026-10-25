@@ -866,6 +866,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // second identifier first 149; location home name 151; native request after lifetime gains 151; distinct
 // up after lifetime gains 180; location before identifiers 218; long first with second first 154; long
 // second with second first 154; both long with second first 150.
+// score 151 (was 151): quotient spill, sweep/impact/location homes and owner-call setup remain.
+// Repeated quotient after query 287; native sweep array loop 731; exhausted-selection exit 290;
+// selected handle after tuple 162; normal before point 160.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

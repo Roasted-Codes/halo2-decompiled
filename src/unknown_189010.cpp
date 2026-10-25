@@ -152,6 +152,10 @@ static __forceinline long float_to_int_nearest(real value)
 // priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
 // base-first flags 178 (caller losses), role names 182, source snapshot 178,
 // object snapshot 183, priority after flags 192.
+// score 167 (was 182): frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
+// Conditional flags then priority 187; deferred flags publication 176; location first with copied
+// audible priority 167 kept (full); location memcpy 182; conditional end-time publications 175.
+// Outer state scope 167; early optional-size default 164 (below threshold); size before marker copy 167; nested class tests 167; platform-flags block first 167; opening 167 restored.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -161,8 +165,9 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 	{
 		s_sound_play_tag *sound = (s_sound_play_tag *)g_4e3b44[tag_index & 0xffff].bytes;
 		s_sound_play_state state;
+		state.location = request->location;
 		// Retail also clears the padding after the priority field.
-		*(long *)&state.priority = request->location.audible ? 3 : 1;
+		*(long *)&state.priority = state.location.audible ? 3 : 1;
 		dword flags = (request->source ? 0x20 : 0) + 5;
 
 		if (request->object_index != NONE)
@@ -182,7 +187,6 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 			flags &= ~0x100;
 		}
 		state.flags = flags;
-		state.location = request->location;
 		state.object_index = request->object_index;
 		state.source = request->source;
 		state.platform_playback = request->platform_playback;

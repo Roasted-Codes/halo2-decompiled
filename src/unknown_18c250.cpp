@@ -131,6 +131,9 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 }
 
 
+// score 152 (was 174): frame 0x18 recovered; root-location and normal-transform carriers differ.
+// Outer failure guard 209; forward before location 174; byte object type 164;
+// marker sentinel equality 178; success before audible 152 kept (plain).
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
@@ -189,8 +192,8 @@ bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker
 				}
 
 				location->spatial.location = object_location;
-				location->audible = function_18d4b0(tag_index, location->requested_audible, object_index, NULL);
 				result = true;
+				location->audible = function_18d4b0(tag_index, location->requested_audible, object_index, NULL);
 			}
 		}
 	}
@@ -540,6 +543,7 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 	location->spatial.compressed_forward = vector3d_compress(g_4687b0);
 }
 
+// score 293 (was 309): frame 0x84 versus 0x80 and datum/tag registers remain; marker outer scope 309; direct failure predicate 293 kept (plain); stored-scale arm first 314; ascending cases 311; failure exit 314.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
@@ -554,9 +558,7 @@ void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 		{
 			location->audible = 1;
 			vector3f forward;
-			bool failed = true;
-			if (!TEST_FIELD_BIT(sound->flag1))
-				failed = !function_17b2d0(sound->owner, &location->spatial.position, &forward, &location->scale);
+			bool failed = TEST_FIELD_BIT(sound->flag1) || !function_17b2d0(sound->owner, &location->spatial.position, &forward, &location->scale);
 			if (!failed)
 			{
 				location->spatial.compressed_forward = vector3d_compress(&forward);

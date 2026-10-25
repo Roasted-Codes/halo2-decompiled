@@ -154,6 +154,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // counter allocation remain. Shared output cursor 221; native array cursors 229;
 // independent string counters 221; direct countdown points copy 226;
 // shared cursor, independent counters and countdown copy 194.
+// Separate increasing-counter cursors 194; short counters 194; native array
+// cursors with countdown points 194; word table index 219 (frame 0x408,
+// variant EBP); existing shared lookup 327.
 // Separate points input cursor 228; direct string countdowns 194; both 228;
 // independent countdown output cursors 228; shared remaining-string counter 228.
 // @retail 0x1936e0
@@ -273,6 +276,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // adds a save and shifts settings homes; constant argument pushes also differ.
 // Native zero initialization 199; complete aggregate values 307; grouped
 // place cases 204; case returns 203; zero initialization and grouping 206.
+// Native settings memset 203; Boolean fields first 200; shared type-four
+// workspace 206; equal-place assignment chain 199; team case first 218.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
