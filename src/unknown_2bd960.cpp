@@ -1728,6 +1728,20 @@ void territory_marker_color(long player_index, long territory, s_color_bits *col
 	}
 }
 
+// Earlier comparison: score 50 (was 50): the stack slots of the outer frame differ ([esp+0x14]
+// where retail has [esp+0x10]).
+// score 50 (was 50): frame and scalar homes agree; point/holder scheduling
+// and color registers differ; input memcpy 50, input memmove 171, item/top
+// color loops 144/149, one/two color loops 172/130, input memcpy with
+// item/all color loop 144/172.
+// score 50 (was 50): BLOCKED-BY 0x24e59f: it reads its list parameter through
+// the parameter's address, which makes every caller's list escape, so here the
+// list stores keep the holder load behind them; with 0x24e59f reading `list`
+// directly, `s_marker_entry const &marker = ...;` then b0, b1, l4,
+// `list.position = marker.position;` and the holder local matches (alone 67).
+// Flags between the position and holder locals 107; flags first 112; marker
+// reference with the position local 104; reference, holder, flags, copy 67;
+// reference, copy, holder, flags 67.
 // @retail 0x2bf960
 void c_game_engine_45c948::v14(long local_player)
 {
