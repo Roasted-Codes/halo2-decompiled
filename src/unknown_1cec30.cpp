@@ -2113,6 +2113,17 @@ PRIVATE __forceinline void component_surface_property_set(hkEntity *entity, long
     entity->entity_property_put(HAVOK_PROPERTY_2003, s_havok_property_word(value));
 }
 
+/* clears a vector; function_1d87b0 stores through this inline function:
+   written in place, its store keeps function_181db0's result pointer off ebx
+   (scores 69 for 0x181db0 and 211 for 0x1d87b0 that way) */
+PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
+{
+    vector->m_quad = _mm_setzero_ps();
+}
+
+// score 137 (was 211): the velocity sums in the material loop load the
+// running sum second in retail, and the final scale and its stores are
+// scheduled differently; not worked on yet.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {
@@ -2148,7 +2159,7 @@ void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_ind
     if (material_count == 0)
     {
         havok_entity_property_2003_set((hkEntity *)body->rigid_body, 0);
-        *( __m128 *)((byte *)body + 0x30) = _mm_setzero_ps();
+        component_surface_vector_clear((hkVector4 *)((byte *)body + 0x30));
         body->unknown44 = 0;
         return;
     }
