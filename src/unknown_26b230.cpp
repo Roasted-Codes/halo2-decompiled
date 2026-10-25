@@ -6,6 +6,8 @@
 #include "unknown_26b230.h"
 #include "globals.h"
 #include "data_array.h"
+#include "data_iterator.h"
+#include "unknown_0259d0.h"
 #include "slot_handler.h"
 #include "unknown_20f040.h"
 #include "unknown_2551c0.h"
@@ -111,34 +113,65 @@ void function_268510()
 	}
 }
 
-// score 81 (was 81): retail loads the global and tests its active byte before it reserves the
-// frame and pushes the registers, and it keeps the pool pointer in ebx and the index in edi;
-// ours reserves the frame first and holds the global in ebp, so the prologue and the loop
-// head differ.
-// First/second/both callee noinline 81/81/81; existing typed current 81; typed const view 81.
-// Typed unsigned handle/role names/both noinline 81/81/81; cached global and nullable join remain.
-// Entry guard 90; inactive return 86; outer current 81; zero initialization 53
-// (extra entry stores, restored); byte activity 81; calling scanner 120;
-// shared datum iterator 158; inactive continue 81. Original body retained.
+/* walks the clumps of g_502420, only while the ai is active (0x255d60's walk) */
+struct s_clump_datum_walk
+{
+	s_data_datum_iterator iterator;
+	long clump_index;
+};
+
+static inline void clump_datum_walk_new(s_clump_datum_walk *iterator)
+{
+	if (g_4f55d0->active)
+	{
+		iterator->iterator.data = g_502420;
+		iterator->iterator.index = NONE;
+		iterator->iterator.datum_index = NONE;
+	}
+}
+
+/* the next clump while the ai is active, or NULL */
+PRIVATE __forceinline byte *clump_datum_walk_next(s_clump_datum_walk *iterator, bool active)
+{
+	byte *clump = NULL;
+
+	if (active)
+	{
+		if (data_datum_iterator_next_inlined(&iterator->iterator))
+			clump = iterator->iterator.datum;
+		iterator->clump_index = iterator->iterator.datum_index;
+	}
+	return clump;
+}
+
+/* likewise, with the activity flag passed in and the index scan called */
+PRIVATE __forceinline byte *clump_datum_walk_next_calling(s_clump_datum_walk *iterator, bool active)
+{
+	byte *clump = NULL;
+
+	if (active)
+	{
+		if (data_datum_iterator_next_called(&iterator->iterator))
+			clump = iterator->iterator.datum;
+		iterator->clump_index = iterator->iterator.datum_index;
+	}
+	return clump;
+}
+
+/* runs 0x2687a0 and 0x268900 for each clump whose byte at +0x1c is set, then
+   0x2689d0 and 0x268c90 */
 // @retail 0x268840
 void function_268840()
 {
-	struct { byte *current; s_record_pool_iterator pool; long datum_index; } iterator;
-	if (g_4f55d0->active)
+	s_clump_datum_walk clumps;
+	clump_datum_walk_new(&clumps);
+	byte *clump;
+	while ((clump = clump_datum_walk_next(&clumps, g_4f55d0->active)) != NULL)
 	{
-		iterator.pool.data = g_502420;
-		iterator.pool.index = NONE;
-	}
-	for (;;)
-	{
-		iterator.current = g_4f55d0->active ? data_iterator_next_inlined(&iterator.pool) : NULL;
-		byte *clump = iterator.current;
-		iterator.datum_index = clump ? iterator.pool.datum_index : NONE;
-		if (!clump) break;
 		if (clump[0x1c])
 		{
-			function_2687a0(iterator.datum_index);
-			function_268900(iterator.datum_index);
+			function_2687a0(clumps.clump_index);
+			function_268900(clumps.clump_index);
 		}
 	}
 	function_2689d0();
@@ -154,22 +187,19 @@ void function_268840()
 // proxy-before-unit loads 296. Original body retained.
 // Round 156: depth zero 426; depth one 296; target size 546; byte retention 317;
 // iterator role names 296. Original frame and child traversal retained.
+// score 246 (was 296): the clump datum walk gives retail's loop head; NONE kept in ebx
+// where retail keeps the player pool in ebp, and the current clump's slot differs.
 // Round 173: long expiry result 315; long child-step result 295 (one-point gain rejected);
 // retention if/else 302; existing typed actor fields 296; external player-pool reference 296.
 // Frame 0x48 versus 0x50 and current/exhaustion/player homes remain; child-call carriers differ.
 // @retail 0x268c90
 void function_268c90()
 {
-	s_record_pool_iterator clumps;
-	if (g_4f55d0->active)
+	s_clump_datum_walk clumps;
+	clump_datum_walk_new(&clumps);
+	byte *clump;
+	while ((clump = clump_datum_walk_next(&clumps, g_4f55d0->active)) != NULL)
 	{
-		clumps.data = g_502420;
-		clumps.index = NONE;
-	}
-	for (;;)
-	{
-		byte *clump = g_4f55d0->active ? data_iterator_next_inlined(&clumps) : NULL;
-		if (!clump) break;
 		bool expired = false;
 		if (clump[0x3c])
 		{
@@ -254,7 +284,7 @@ void function_268c90()
 				}
 			}
 		}
-		if (!*(short *)(clump + 0x10)) function_2691b0(clumps.datum_index);
+		if (!*(short *)(clump + 0x10)) function_2691b0(clumps.clump_index);
 	}
 }
 
@@ -1504,8 +1534,8 @@ long function_26bc60(long clump_index)
 	return 2;
 }
 
-// score 127 (was 127): frame 0x1c versus 0x20; result register, iterator null join and center copy differ.
-// Plain oldest-time/index storage separately 136/126; byte activity 127; native pool step 160; activity while 136.
+/* a new clump at the center for the team; when the pool is full, the clump
+   whose active time is oldest is freed first */
 // @retail 0x269040
 long function_269040(point3f const *center, short team)
 {
@@ -1791,6 +1821,9 @@ void function_269250(long clump_index, long actor_index);
 // Retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133; size preference 338.
 // frame 0x38 versus 0x3c; pool register and common null-current join differ.
 // Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
+// score 126 (was 134): the clump datum walk with a cached activity flag gives retail's frame;
+// retail keeps the pool in ebx through the scan and the selection only on the stack.
+// Selection stored before the best score 126.
 // @retail 0x2689d0
 void function_2689d0(void)
 {
@@ -1799,27 +1832,20 @@ void function_2689d0(void)
 	s_actor_view *actor;
 	while ((actor = (s_actor_view *)function_1e46c0(&actors)) != NULL)
 	{
-		s_clump_pool_iterator groups;
-		if (g_4f55d0->active)
-		{
-			groups.pool.data = g_502420;
-			groups.pool.index = NONE;
-		}
+		s_clump_datum_walk groups;
+		clump_datum_walk_new(&groups);
+		bool active = g_4f55d0->active;
 		long selected = NONE;
 		real best = 0.0f;
-		for (;;)
+		s_clump_activity_view *group;
+		while ((group = (s_clump_activity_view *)clump_datum_walk_next(&groups, active)) != NULL)
 		{
-			s_clump_activity_view *group = NULL;
-			if (g_4f55d0->active)
-				group = (s_clump_activity_view *)data_iterator_next_inlined(&groups.pool);
-			groups.current = (s_clump *)group;
-			if (!group) break;
 			if (group->team != actor->unknown024) continue;
 			real score = function_268bb0(group, actor);
 			if (score > best)
 			{
 				best = score;
-				selected = groups.pool.datum_index;
+				selected = groups.clump_index;
 			}
 		}
 		if (selected != NONE)
