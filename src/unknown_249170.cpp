@@ -81,6 +81,10 @@ PRIVATE __forceinline vector3f *function_249171(real arg_0, vector3f *arg_1)
 // all trials used unqualified scale inputs: ordinary inputs 106; existing scale helper 106;
 // shared squared length 106; shared azimuth 99; shared polar 329; shared shape scalars 416;
 // scalar name order 106; case declarations first 106. Entry body restored.
+// score 82 (was 82): case scalar/seed homes and normalization scheduling remain.
+// Ring/sphere/both shared position producers 94/84/96; cone/disk point setters 84/95;
+// shared/named direction workspace 380/82; all position helpers 111;
+// direction/seed/reverse case orders 319/575/518. Opening body restored.
 // @retail 0x249170
 void function_249170(real const *values, s_particle_spawn_state *particle, s_particle_spawn_definition const *definition, s_particle_system_datum const *system)
 {

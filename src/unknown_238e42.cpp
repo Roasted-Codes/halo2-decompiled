@@ -883,6 +883,9 @@ bool __stdcall function_2399da(long controller_index)
 }
 
 /* sets the selected player's rank in the clan (NONE removes them) */
+// score 90 (was 90): selected identity ECX/rank EAX and extra remove-call copy remain.
+// Producer pointer scope/name, parameter-only rank name/both names 90/90/90/90;
+// own-rank/task lifetime, immutable pointer and native Boolean homes 90/90/90/90.
 // @retail 0x2393ae
 void __stdcall function_2393ae(long controller_index, long rank)
 {
