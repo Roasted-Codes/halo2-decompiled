@@ -92,6 +92,9 @@ void function_2232a0(void)
 // allocation gaps. unsigned selected slot 151; word selected slot 157; word view ordinal 201; byte
 // view ordinal 167; exact scan bound 175; existing initializer inline 151; completed search result
 // 180; word scan and ordinal 157; byte selected slot 164.
+// score 151 (was 151): count/layout join still threads. First/second/both native
+// countdown scalars 151/151/151; prefix countdown publication 151/151/151;
+// paired countdowns with int count or int ordinals 151/151. Original body retained.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

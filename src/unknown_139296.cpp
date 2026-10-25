@@ -1056,6 +1056,11 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // mask-zero producer with direct result 122; output-only masks 116; first,
 // second, third or fourth default omitted 102/103/98/104; shared zeros with
 // true or explicit false comparison 87/122. Original failure byte retained.
+// score 38 (was 38): native success with first captured count 42; second/third 118;
+// first plus second 45; count/offset names 42; offset before first count 12 plain,
+// offset before setup 20; original count observations with early offsets 125/121;
+// guard-assigned count 20; offset-produced mask zeros 125. Native-result 12 remains
+// unmatched: first count takes EBX and offset spills; match-only result form restored.
 // @retail 0x13a3c6
 bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
 {

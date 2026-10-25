@@ -198,6 +198,9 @@ dword function_191660(long string_handle, long index);
 // 165/165/165; early parameter plus range bit 5 plain. Corrected-frame primary,
 // range, paired and shared phase results 5 each; common period 175; implicit
 // remainder-result conversion 5.
+// score 5 (was 5): remainder stores versus parameter/speaker reloads remain;
+// conditional primary/range/both remainder results 5/5/5; primary/range/both
+// gain results 5/5/5; paired primary/range remainder-and-gain results 5/5.
 // full parameter-pointer spill and primary/range selector registers still differ.
 // parameter count once 165; override mask once 260; parameter cursor 215
 // primary remainder result 165; range remainder result 165; primary quotient 165

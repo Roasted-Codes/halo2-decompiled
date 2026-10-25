@@ -708,6 +708,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Existing velocity scale 185; scale from field 186; first dot products commuted 155;
 // side projection values 166; rotated alignment value 166; axis field reference 155;
 // output record reference 155; scale plus dot flow 185. Opening body retained.
+// score 155 (was 155): movement/rotation homes and scalar scheduling remain;
+// i/j/k/all cosine terms 168/177/192/208;
+// i/j/k/all axis projection terms 186/168/168/218. Opening body retained.
 // Complementary cosine 166; guarded early alignment 205; early moved-away result 231;
 // completed side product 169; complement with early result 231; indexed velocity scale 220;
 // actual animation reference 155; actual forward-field reference 248. Movement/rotation homes remain.
