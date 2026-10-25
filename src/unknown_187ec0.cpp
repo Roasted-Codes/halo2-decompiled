@@ -323,6 +323,10 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 	return seat_animation_entry_find(tag_index, index, type, element_index);
 }
 
+// score 22 (was 22): initial word load, EBP entry/table lifetime and lookup registers remain;
+// native entry formal 22; native parent formal 22; both native formals 22;
+// direct tag field 22; current-element traversal 141; separate inline declaration 22;
+// separate noinline declaration 22; existing element query 59.
 // @retail 0x1882d0
 s_seat_animation_entry *function_1882d0(long type, short element_index, long index, short entry_element_index)
 {

@@ -31,6 +31,10 @@ long function_18d5b0(long label);
 long function_189fe0(s_sound_request const *request, long tag_index);
 long function_189340(long object_index, long tag_index, long audible, s_sound_marker const *marker, s_sound_source_callbacks const *source, real scale, long platform_playback, char const *variant);
 
+// score 35 (was 35): slot base/result registers at +0x115 and object playback setup remain;
+// direct duration 35; duration with argument playback 85; shared permutation 123;
+// permutation with argument playback 123; completion result 55; request variant first 41;
+// callback fields first 60; separate standard noinline declaration 35 (ordinary scores).
 // @retail 0x189cd0 standard
 void __stdcall function_189cd0(long tag_index, long object_index, real scale, long a, long b, long label, long duration_address)
 {
