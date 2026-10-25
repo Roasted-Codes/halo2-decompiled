@@ -1209,7 +1209,10 @@ static inline void transform4x3f_set_identity(transform4x3f *matrix)
 // Plain: graph inside model guard 188; both metadata values 191; graph guard first 31;
 // conditional graph result 193; graph-field binding 36; model-field binding 30;
 // read-only interface 30; shared root/parent receiver 30.
-// score 30 (was 30): early graph load, node-base addition/register roles and overlay setup remain.
+// score 30 (was 30): early graph observation, parent-base addition/registers
+// and overlay setup remain; separate force-inline reset declarations for
+// bits/identity/indices/pair and four combined forms all 30 in plain checks.
+// early graph load, node-base addition/register roles and overlay setup remain.
 // Conditional query, root-first result publication, unit value/field, read-only tag,
 // model-validity result, combined animation flags and conditional/root-first query
 // Plain scores 30/35/30/30/30/30/118/35; original body retained.

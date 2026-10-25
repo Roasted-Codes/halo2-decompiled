@@ -185,7 +185,10 @@ real function_1e3920(long actor_index);
 // early ESI slot, scalar homes and fallback arms remain;
 // shared defaults / native mode with defaults / native mode 168/168/164f on earlier scratch;
 // consumed request scope / scope with defaults / unsigned output handle / fallback result / combined 164/168/164/164/168f.
-// score 164 (was 164): early ESI slot, scalar homes and cold reference arms remain;
+// score 164 (was 164): early slot ESI, scalar homes and cold reference arms remain.
+// Mixed pre-scratch request enable/permission/both/byte/enable-byte/permission-byte
+// stores 165/168/165/166/165/165; outer actor join 166; inactive return 164.
+// early ESI slot, scalar homes and cold reference arms remain;
 // branch-only reference on earlier scratch 211; with read-only actor / slot reference 211/211;
 // common release / request scope / late handle / early permission / release plus late handle 181/211/207/211/178.
 // score 164 (was 164): delayed ESI slot, saved scalar homes and cold reference joins remain.

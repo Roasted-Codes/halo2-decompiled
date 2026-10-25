@@ -379,7 +379,13 @@ real *function_143600(real const *rotation, unsigned long order, real const *coe
 // score 243 (was 252): frame, axis/trigonometric homes and rotation-call layout remain;
 // native coefficient array 258; payload clears first 257; late axis squares 258;
 // reused mixed-axis products 243; entry result buffer 252; source pointer before reset 250.
-// score 243 (was 243): Frame 0x7c versus 0x68 and axis/trig/call homes remain; on reused square/mixed products: direct axis 300; direct angle 264; both 284; native coefficient index 257; geometry scalar scope 243. Reduced callee caveat; no keeper.
+// score 237 (was 243): Frame 0x80 versus 0x68, axis/trigonometric homes and rolled
+// coefficient calls remain. squares between trig 256; paired mixed products 265; cosine
+// before sine 242; scalar sine products 237; single sample exit 243; sines with squares
+// between trig 272; sines with paired mixed products 242; sines with cosine before sine 239;
+// short table field 243; sines with axis field reference 255; sines with angle field
+// reference 257; sines with input field references 273.
+// Frame 0x7c versus 0x68 and axis/trig/call homes remain; on reused square/mixed products: direct axis 300; direct angle 264; both 284; native coefficient index 257; geometry scalar scope 243. Reduced callee caveat; no keeper.
 // @retail 0x22850
 void function_22850(void)
 {
@@ -413,15 +419,18 @@ void function_22850(void)
             real cross_ji = axis.j * complement * axis.i;
             real cross_ki = axis.k * complement * axis.i;
             real cross_jk = axis.j * axis.k * complement;
+            real sine_i = axis.i * sine;
+            real sine_j = axis.j * sine;
+            real sine_k = axis.k * sine;
             real rotation[9];
             rotation[0] = (1.0f - square_i) * cosine + square_i;
-            rotation[1] = cross_ji + axis.k * sine;
-            rotation[2] = cross_ki - axis.j * sine;
-            rotation[3] = cross_ji - axis.k * sine;
+            rotation[1] = cross_ji + sine_k;
+            rotation[2] = cross_ki - sine_j;
+            rotation[3] = cross_ji - sine_k;
             rotation[4] = (1.0f - square_j) * cosine + square_j;
-            rotation[5] = cross_jk + axis.i * sine;
-            rotation[6] = cross_ki + axis.j * sine;
-            rotation[7] = cross_jk - axis.i * sine;
+            rotation[5] = cross_jk + sine_i;
+            rotation[6] = cross_ki + sine_j;
+            rotation[7] = cross_jk - sine_i;
             rotation[8] = (1.0f - square_k) * cosine + square_k;
             for (real *coefficients = (real *)(sample + 0xc);
                 coefficients != (real *)(sample + 0x78); coefficients += 9)
@@ -2647,6 +2656,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
 // score 348 (was 348): Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
+// score 348 (was 348): Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
+// dimensions 460; long dimensions 478; word width 444; word height 430; height first 352; word dimensions height
+// first 460; long dimensions height first 478; word width height first 444.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

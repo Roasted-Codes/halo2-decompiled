@@ -99,6 +99,9 @@ void function_1d56f0(s_havok_component *component)
 // success tail, BLOCKED-BY 0x1d0cf0 (retail passes it the component in EBX, ours pushes it).
 // inc/dec update alone 90; with the 12-byte callback 80; callback after the direction 80; callback
 // declared at the world add 86; the 12-byte callback with the subtraction update 119.
+// score 77 (was 77): rigid-body address operand order and success-tail setter convention remain.
+// Two-use body/motion sources 223/215; output columns 021/102/201/210 78/80/80/79;
+// translation publication/input before rotation 84/83. Frame and callback homes stay correct.
 // @retail 0x1d5120
 bool function_1d5120(s_havok_component *arg_0, long arg_1, long arg_2, long arg_3,
  real arg_4, long *arg_5, long arg_6)

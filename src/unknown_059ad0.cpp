@@ -2451,6 +2451,10 @@ bool network_session_handle_session_disband(c_class_58d20 *session, const s_type
 	return result;
 }
 
+// score 10 (was 10): result initialization width and success tails differ;
+// peer result with literal/result reason 24/23; peer-fed value/bool view 37/43;
+// host-fed reason with bool/union result 14/10; both test results 24;
+// peer-fed common success 15.
 // @retail 0x5e1a0
 bool network_session_handle_session_boot(c_class_58d20 *session, const s_type_99af70 *address)
 {

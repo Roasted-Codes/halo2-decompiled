@@ -452,7 +452,6 @@ long function_75870(void);
 bool qos_is_complete(long handle);
 long qos_target_status(long handle, long index);
 
-// score 2 (was 2): query result-address/index-push order remains; unsigned query index 3; short query index 195; unsigned cleanup index 3; eligibility continue 2; complete case first 178; word completion state 172; decoding workspace scope 2; unsigned index/eligibility 3.
 // @retail 0x905a0
 void __stdcall function_905a0(s_session_search *search, long kind)
 {
@@ -477,7 +476,7 @@ void __stdcall function_905a0(s_session_search *search, long kind)
 					case 4: session_search_mark_seen(search, entry); break;
 					case 5:
 						{
-							if (!qos_target_result(search->qos_handles[kind], &entry->qos, entry->unknown7c))
+							if (!qos_target_result(search->qos_handles[kind], entry->unknown7c, &entry->qos))
 								session_search_mark_seen(search, entry);
 							else if (!entry->qos.data_size)
 								session_search_mark_seen(search, entry);

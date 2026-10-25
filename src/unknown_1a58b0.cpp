@@ -799,6 +799,11 @@ void function_25aba0(long actor_index);
 // Native initializer with early state pop 140; candidate index snapshot 252;
 // candidate receiver 69; choice before workspace 69; callback/insertion names 69;
 // completion/eligibility/insertion results 69/163/69; existing mask helper inline 69.
+// score 69 (was 69): with 0x1a7b30's sources sharing one copy (NULL-preset source there), both callees'
+// parameters reordered and the workspace memset, only the state-one pop differs (retail keeps level in
+// a register around the handler store): NULL-preset source 62; plus 0x1a7b30 order 60; plus memset
+// 134 (aligned 4); pop before the store 137; plus 0x1a8080 order 134 (aligned 2); without memset 58;
+// the two orders alone 67. Original body kept (the NULL preset is a tested sentinel; 0x1a7b30 rises to 100).
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -1648,6 +1653,9 @@ struct s_candidate_unit_definition
 // copy 36; geometry success guard 218; first clearing cases 42.
 // score 11 (was 18): geometry-call convention remains; type rejection to the shared exit 11 kept.
 // Query result exit 219; type result 253; branch result lifetime 220; output initialization schedule 22; zero order 20; common success 199; object role name 18; flat type rejection 11; query false return 216.
+// geometry-call convention and exchanged failure exits remain; native
+// flag/limit/adjacent clears 216/152/199; direction memcpy 18; clear plus copy 216/152/199;
+// branch-zero clear 199.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -1808,6 +1816,9 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // Round 277: nullable second-marker base 13 at retail length; branches/before presence 80/80;
 // native query count 73; index name/shared marker buffer 13/13; weight result 67; combined eligibility 80.
 // Accepted-count snapshot after/before query 13/13; query name first/with count 12/12; selectors require a match.
+// score 85 (was 85): frame 0xf0 agrees; query carriers and optional matrix conversion remain;
+// native marker value before/after query 100/110; library copies 100/110; native query width
+// 126/128; shared descriptor 100; late copy with shared outputs 110.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
@@ -2254,6 +2265,16 @@ bool function_11d3b0(vector3f const *a, vector3f *out, vector3f const *b, real s
 short function_1557c0(long unit_index, point3f *position, vector3f *forward);
 long function_baf80(long object_index);
 
+/* the vector a fraction t of the way from a to b */
+static inline void vector3f_interpolate(vector3f const *a, vector3f const *b, real t, vector3f *result)
+{
+	real s = 1.0f - t;
+
+	result->i = a->i * s + b->i * t;
+	result->j = a->j * s + b->j * t;
+	result->k = a->k * s + b->k * t;
+}
+
 struct s_1a4c00
 {
 	byte field_0[0x240];
@@ -2269,15 +2290,6 @@ struct s_1a4c01
 	byte field_26[0x5c - 0x26];
 };
 
-// score 36 (was 116): the target index and the unit index sit in each other's stack slots, the
-// interpolation loads forward.i where retail copies 1 - fraction, and the closing stores use
-// other registers.
-// Controlled/selected/both handle names 36 each; target declaration beside controlled handle 36;
-// blend in target/forward workspace 66/87; result copied from forward/target 170/353.
-// Handle homes, interpolation coefficient allocation and closing publication registers still differ.
-// Packed controlled/selected/both handles 36 each; returned result before stores 34 (only -2);
-// acceptance-first test 65; squared component values, aggregate blend and angle snapshot 36 each.
-// The two handle homes, coefficient allocation and final stores still differ; original body restored.
 // @retail 0x1a4c00
 bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector3f *direction, point3f *point)
 {
@@ -2326,6 +2338,7 @@ bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector
 				target_index = candidate.object_index;
 			}
 		}
+		vector3f aim_direction;
 		{
 			s_1a4c01 collision;
 
@@ -2357,22 +2370,17 @@ bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector
 			ray.j = forward.j * 128.0f;
 			ray.k = forward.k * 128.0f;
 			function_1697c0(0x2480000f, &position, &ray, function_baf80(unit_index), NONE, (s_collision_result_1697c0 *)&collision);
-			vector3d_from_points3d(point, &collision.point, &forward);
+			vector3d_from_points3d(point, &collision.point, &aim_direction);
 		}
-		if (function_30bf0(&forward) == 0.0f)
-			forward = *direction;
+		if (function_30bf0(&aim_direction) == 0.0f)
+			aim_direction = *direction;
 
 		bool accepted;
 		{
 			vector3f result_direction;
-			distance = 1.0f - fraction;
+			vector3f_interpolate(&aim_direction, &target_direction, fraction, &result_direction);
 
-			result_direction.i = distance * forward.i + target_direction.i * fraction;
-			result_direction.j = forward.j * distance + target_direction.j * fraction;
-			result_direction.k = forward.k * distance + target_direction.k * fraction;
-
-			real length_squared = result_direction.k * result_direction.k + result_direction.j * result_direction.j +
-				result_direction.i * result_direction.i;
+			real length_squared = length_sq3f(&result_direction);
 
 			if (length_squared != 0.0f)
 			{
@@ -2390,9 +2398,9 @@ bool function_1a4c00(long player_index, s_entry_pair *pair, bool primary, vector
 		}
 		if (fraction >= 1.0f && accepted)
 		{
+			result = true;
 			player->field_174 = target_index;
 			player->field_178 = g_510c54->game_time;
-			result = true;
 		}
 	}
 done:
