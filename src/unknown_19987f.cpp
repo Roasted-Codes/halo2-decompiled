@@ -2200,7 +2200,6 @@ long function_19a5fd(long state)
 		{ 0xe, 0x18 },
 		{ 0xf, 0x19 },
 	};
-
 	for (dword i = 0; i < 16; i++)
 	{
 		if (table[i][0] == state)
