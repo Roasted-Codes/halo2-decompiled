@@ -539,10 +539,10 @@ void function_1eece0(s_surface_key_array *array, void *owner);
 bool function_1ef3e0(void const *owner, dword key);
 
 /* the sphere a child query takes: a centre with the radius in its w lane */
-struct c_query_sphere
+struct c_sphere_probe
 {
  __m128 value;
- c_query_sphere(const __m128 *center, real radius)
+ c_sphere_probe(const __m128 *center, real radius)
  {
   value = *center;
   ((real *)&value)[3] = radius;
@@ -561,7 +561,7 @@ struct c_instance_surface_query
  virtual void v7() {}
  virtual void v8() {}
  virtual void v9() {}
- virtual void query_sphere(const c_query_sphere &sphere, s_surface_key_array *keys) {}
+ virtual void query_sphere(const c_sphere_probe &sphere, s_surface_key_array *keys) {}
  virtual void query_box(const c_query_transform *matrix, const __m128 *extent, real tolerance, s_surface_key_array *keys) {}
 };
 
@@ -681,7 +681,7 @@ void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_ins
      query_remove_key(keys, i);
      long first = keys->count;
      --i;
-     ((c_instance_surface_query *)(shape + 0x50))->query_sphere(c_query_sphere(&center.value, ((const real *)sphere)[3]), keys);
+     ((c_instance_surface_query *)(shape + 0x50))->query_sphere(c_sphere_probe(&center.value, ((const real *)sphere)[3]), keys);
      query_remap_keys(&owner->object, keys, first, instance_index);
     }
    }
