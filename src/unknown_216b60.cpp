@@ -135,6 +135,15 @@ bool function_216da0(long type, wchar_t *name, wchar_t const *display_name, long
 extern long g_55c280;
 dword function_217b70(word const *text);
 
+// score 5 (was 5): post-fill prefix address reused instead of rematerialized.
+// short language ordinal 84;
+// signed byte language ordinal 46;
+// signed byte language result 75;
+// short ordinal and byte language 85;
+// byte ordinal and language 92;
+// unsigned measured length 5;
+// completed-name return 5;
+// completed-name return with short ordinal and unsigned length 84;
 // @retail 0x216e50
 void __stdcall function_216e50(word const *display_name, long type, char *language, word *name)
 {

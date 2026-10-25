@@ -412,6 +412,7 @@ s_sub_450d14 *c_vtable_450d14::v0()
 	return &sub;
 }
 
+// score 2 (was 2): index/table argument loads still exchanged; result declaration first 2; zero-store order 4; unsigned handle 2; unsigned result declaration 2; successful void return 2; conditional delegation 2; immutable handle 2; scalar library clear 19.
 // @retail 0x979b0
 void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 {
@@ -421,6 +422,11 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 	if (handle != NONE)
 		function_82a40(handle, (s_relevance_observers const *)a2, a3, a4);
 }
+// score 13 (was 13): only registers differ: retail keeps the table in ecx and the index in edx, ours
+// the reverse. Tried: result declared first (15, moves caller 0x8b2a0), early returns (26, caller 86),
+// index before table (28), block local (26), no table local (27), flag entry pointer (21),
+// else-false default (22), (flags & 2) != 0 (13), one combined condition (13), nested ifs (13),
+// flags-array local (13), dword index (13).
 // @retail 0x979f0
 bool function_979f0(s_world_450cb8 *world, long handle)
 {

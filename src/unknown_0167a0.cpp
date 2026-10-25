@@ -94,6 +94,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // score 162 (was 167): logarithm width/reset and restore allocation remain;
 // final consumers read the actual published record field. Entry-only read 169; pass-only read 167;
 // early saved-tag predicate 298; published-record field reference 162 (plain); equality arms 167.
+// score 162 (was 162): logarithm/reset schedule and restore/final allocation remain.
+// Record-field pointer 162; signed entry/pass/both carriers 163/163/164;
+// negated equalities 162; saved tag at both tests 246; dirty-mask cursor 161; both cursors 161 (one-point gains dropped).
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -774,6 +777,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // selector-use output indices 230f; signed byte cursors 163f.
 // byte cursors 190f; byte mapping slot 189f.
 // word source-kind 157f; special-slot result 180f.
+// score 157 (was 157): Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -859,6 +863,10 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
     }
 }
 
+// score 212 (was 218): component remains stacked instead of incoming EDI;
+// extra EDI save and ret 12 versus ret 8 remain. Native color fields 229;
+// complete dimension initialization paths 212; both 221; scalar case order 218;
+// texture case order 217.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {
@@ -888,11 +896,17 @@ bool function_1b2c0(byte const *state, long index, long component, long texture,
         *(color3f *)out = ((color3f const *)(state + 0x108))[index];
     else
     {
-        real width = 1.0f, height = 1.0f;
+        real width;
+        real height;
         if (texture)
         {
             width = (real)*(long const *)(state + 0x12e8 + texture * 64);
             height = (real)*(long const *)(state + 0x12ec + texture * 64);
+        }
+        else
+        {
+            width = 1.0f;
+            height = 1.0f;
         }
         switch (component)
         {

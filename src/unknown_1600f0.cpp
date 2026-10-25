@@ -1249,6 +1249,7 @@ PRIVATE inline long score_string_list_1608e0()
 // global optimization off 2237; size optimization 1348.
 // viewer pointer name 810; viewer lookup at first scroll use 848; short displayed-row number 811;
 // short row rank 810; direct team activity predicate 826.
+// score 805 (was 810): frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1427,7 +1428,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		long place = display.player_ranks[player_row] / 2 + 1;
 		bool has_engine = game_engine_get() != NULL;
 		bool teams = has_engine && g_4e6948->flags184.bit0;
-		char team = *(char *)(player + 0xc0);
+		char const &team = *(char *)(player + 0xc0);
 		if (teams && team != NONE)
 		{
 			for (short team_row = 0; team_row < display.team_count; ++team_row)
@@ -1498,6 +1499,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
     }
 }
 
+// score 219 (was 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation
+// remain. Persistent row cursors: team background 305; player background 257; team text 219 (plain kept);
+// player text 246; both backgrounds 304; both text passes 249 (fast).
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {
@@ -1550,12 +1554,14 @@ score_background_161420(data + 0x270, 0x60);
 score_text_161420(data + 0x144, 0x60);
 score_text_161420(data + 0x1a8, 0x60);
 score_text_161420(data + 0x20c, 0x60);
+    s_game_engine_score_row const *team_row = panel.teams;
     for (long team = 0; team < panel.team_count; ++team)
     {
-        score_text_161420((byte const *)&panel.teams[team].place, 0x44);
-        score_text_161420((byte const *)&panel.teams[team].name, 0x60);
-        score_text_161420((byte const *)&panel.teams[team].score, 0x44);
-        score_text_161420((byte const *)&panel.teams[team].time, 0x44);
+        score_text_161420((byte const *)&team_row->place, 0x44);
+        score_text_161420((byte const *)&team_row->name, 0x60);
+        score_text_161420((byte const *)&team_row->score, 0x44);
+        score_text_161420((byte const *)&team_row->time, 0x44);
+        ++team_row;
     }
     for (long player = 0; player < panel.player_count; ++player)
     {

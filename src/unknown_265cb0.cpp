@@ -812,6 +812,11 @@ struct s_object_activity_flags
 // entry input is EAX versus EDX; nullable actor and save timing still differ.
 // Entry/all header helpers 79/79; external object reference 79; const object/actor/settings views 79/79/79.
 // Combined const views 79; header helper with const object 79; existing scalar qualifier and original body restored.
+// score 79 (was 79): retail's second-call re-read looks like a plain spill reload of the parameter
+// (all four saved registers busy); without the qualifier ours keeps the index in ebp and spills the
+// actor instead. NULL actor then conditional lookup re-measured 113 (index eax, header/first edi/ebx);
+// on it: settings as one conditional 170; header getter 113; plain parameter used directly 140;
+// actor declared before the object 113. Settings conditional on the opening body 114.
 // @retail 0x267370
 real function_267370(long volatile object_index)
 {
@@ -1561,6 +1566,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 // selection names 695; cached state test 707; post-clear results 684;
 // direct score result 695; direct retention result 705 (plain).
 // score 684 (was 684): Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
+// score 684 (was 684): Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
 // @retail 0x266640
 void function_266640(long actor_index)
 {

@@ -85,6 +85,15 @@ short __stdcall function_1b3590(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 6 (was 6): shared epilogue targets and false-zero placement remain.
+// result from inactive or already-set tests 14;
+// result from successive state tests 41;
+// admission predicate and complementary result 38;
+// result from inactive or already-set tests with direct actor flag 14;
+// result from successive state tests with direct actor flag 41;
+// admission predicate and complementary result with direct actor flag 38;
+// result from inactive or already-set tests with target admission 14;
+// admission predicate and complementary result with target admission 38;
 // @retail 0x1b3600
 bool __stdcall function_1b3600(long actor_index, s_slot *volatile slot)
 {

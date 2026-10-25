@@ -96,6 +96,15 @@ static inline vector3f *function_x84d9e8(vector3f *vector, vector3f const *axis,
 	return vector;
 }
 
+// score 6 (was 6): cross-product operand preloads and SSE allocation remain.
+// shared cross-product interface 6;
+// plain component rotation loop 47;
+// shared cross product and component loop 47;
+// cosine vector snapshot 35;
+// rotation output vector snapshot 136;
+// shared cross product and cosine vector 35;
+// shared cross product and rotation output 136;
+// shared cross product with distinct rotation input and output 134;
 // @retail 0x18c250
 bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {

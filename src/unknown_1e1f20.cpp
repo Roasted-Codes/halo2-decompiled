@@ -457,6 +457,10 @@ PRIVATE inline s_prop_node_view *prop_list_take_next(long *prop_index)
  return prop;
 }
 
+// score 7 (was 7): slot address and callback lookup allocation differ;
+// shared slot/condition callback/at-use callback 10/10/10; nullable slot
+// before lookup/after test 10/10; handler local/slot reference 10/10;
+// direct slot expressions 7.
 // @retail 0x1e23c0
 void function_1e23c0(long actor_index)
 {

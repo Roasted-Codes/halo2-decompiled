@@ -452,6 +452,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // bounds 143; shared center height 143; count snapshot 274, with center height 274; selections 143;
 // minimum/maximum alone 140/135; main plus marker bounds 171; initialized bounds 133;
 // initialized bounds with direct height reads 128 (two-point gain rejected). All plain.
+// Frame 0x110 and protected helper conventions remain; independent center publication
+// xzy/yxz/yzx/zxy/zyx 134/134/134/134/134; center scale xzy/yxz/zyx 130/130/130
+// (all plain). Original arithmetic, scans and helper calls restored.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
