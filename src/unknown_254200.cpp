@@ -135,6 +135,15 @@ void function_254200(void)
 
 #undef program_words_254200
 
+// score 4 (was 4): two depth/top-edge reload pairs remain.
+// shared left edge lifetimes 162;
+// shared right edge lifetimes 118;
+// shared left/right edge lifetimes 171;
+// shared bottom edge lifetimes 150;
+// shared left/bottom edge lifetimes 146;
+// shared right/bottom edge lifetimes 142;
+// shared left/right/bottom edge lifetimes 189;
+// read-only point and extent snapshots 4;
 // @retail 0x254490
 void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, color3f const *arg_3, bool arg_4)
 {
@@ -176,6 +185,13 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
+// score 276 (was 342): frame 0x10 agrees; texture-factor homes and reservation scheduling still differ.
+// Value half-size 342; disabled-path return 342; C begin/vertex calls 561;
+// C texture-state calls 455; role-named texture coordinates 342.
+// First-quad scope 342; texture expressions at calls 386; C++ color entry 342;
+// complete descriptor value initialization 619; parallel alpha-byte packing 342.
+// Coordinates before inlined begin 376; scale-parameter half-span 342; function-scope coordinates 342;
+// shared resource pointer 511; dword alpha carrier 276.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
@@ -286,7 +302,7 @@ void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 			function_0224f0(0, D3DTSS_ALPHAKILL, 0);
 			function_0222d0((D3DRENDERSTATETYPE)0x3e, 1);
 			function_0222d0((D3DRENDERSTATETYPE)0x3f, 0x303);
-			byte local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
+			dword local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
 			memset(&g_484f68, 0, sizeof(g_484f68));
 			g_484f68.PSConstant0[0] = (((((dword)local_6 << 8) | local_6) << 8 | local_6) << 8) | local_6;
 			g_484f68.PSCombinerCount = 1;

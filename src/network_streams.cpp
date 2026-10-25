@@ -537,7 +537,7 @@ long c_network_reliable_stream::v3(long a, long b)
 }
 
 // @retail 0x966d0
-s_reliable_message *reliable_stream_get_message(c_network_reliable_stream *stream, long sequence)
+inline s_reliable_message *reliable_stream_get_message(c_network_reliable_stream *stream, long sequence)
 {
 	s_reliable_message *result;
 	long index = sequence_window_index(&stream->m_message_window, sequence);
@@ -623,6 +623,14 @@ void c_network_reliable_stream::mark_received(long sequence)
 	}
 }
 
+// score 81 (was 94): the getter inlined (0x966d0 marked inline) and previous set
+// in an if/else fix the head; retail computes the bit index's start as
+// (acknowledged - 1) - acknowledged, ours stores -1, and keeps current in edi and
+// the message in ebx (ours swapped). Bit index derived from current in four
+// spellings 81 (folded to -1); `(local_1 & 8) ? 5 : 4` 118 (current/message
+// registers then as retail, but no movzx and the first lookup in eax); bit as the
+// loop variable 144; loop over the sequence parameter 174; type after the flag
+// store 120; message variable reused in the loop 81.
 // score 94 (was 94): the slot address is kept in EAX here and in EDX in
 // retail, and ours zeroes EAX before the range test, so the loop head differs.
 // @retail 0x96910
@@ -633,13 +641,12 @@ long c_network_reliable_stream::function_96910(long sequence, long bit_count, dw
 	if (delta < 0)
 		delta += 0x100;
 	long acknowledged = m_message_window.newest - delta;
-	long index = sequence_window_index(&m_message_window, acknowledged);
-	s_reliable_message *message = 0;
-	if (index != NONE)
-		message = &m_messages[index];
-	long previous = m_next_sequence;
+	s_reliable_message *message = reliable_stream_get_message(this, acknowledged);
+	long previous;
 	if (message)
 		previous = acknowledged - message->distance;
+	else
+		previous = m_next_sequence;
 	m_unknown959 = false;
 	if (acknowledged <= m_message_window.oldest)
 	{
@@ -651,10 +658,7 @@ long c_network_reliable_stream::function_96910(long sequence, long bit_count, dw
 		long bit = -1;
 		for (long current = acknowledged; current > m_message_window.oldest; current--, bit++)
 		{
-			long slot = sequence_window_index(&m_message_window, current);
-			s_reliable_message *entry = 0;
-			if (slot != NONE)
-				entry = &m_messages[slot];
+			s_reliable_message *entry = reliable_stream_get_message(this, current);
 			word local_0 = entry->flags;
 			if (!(local_0 & 1))
 			{
@@ -1140,11 +1144,14 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // readonly decode records 215; native stream value initialization 254; native copy size bits 215; native
 // fragment result selection 213; frame pointer 289; global optimization 297; size preference 571; existing
 // window helper boundary 215; fragment result buffer publication 211.
+// score 193 (was 211): oldest/false carriers and copy-loop entry remain.
+// Signed-byte/short/word results 210/193/193; read-only scan/copy entries 211/211;
+// oldest with direct fragment selection 232, plus signed byte 234 or read-only scan 232.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {
 	c_network_unreliable_stream *self = (c_network_unreliable_stream *)header;
-	bool result = false;
+	short result = false;
 	if (!sequence_window_count(&self->m_fragment_window))
 		return result;
 	{

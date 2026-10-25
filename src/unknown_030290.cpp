@@ -3,6 +3,8 @@
 #include "unknown_030290.h"
 #include "globals.h"
 #include <math.h>
+#include "normalize3d.h"
+#include "vector_products.h"
 
 // @flags /O2 /Ob1 /Gr /arch:SSE
 #include "flags_storage.h"
@@ -69,6 +71,15 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
+// score 164 (was 209): frame 0x34 and coordinate/coefficient homes agree;
+// viewport conversion order, viewport/tangent homes and tail placement remain.
+// Coefficient names 209; viewport names 209; vertical coordinate first 211;
+// tangent names 209; shared root/ratio/tangent workspaces 209.
+// In-place displacements 257; depth-radius product 233; deferred second
+// tangents 164; near-plane early exit 240; shared depth square 209.
+// Direct radius 193; paired horizontal viewport observations 195; interleaved
+// first viewport observation 203; guarded second coordinates 193; invalid-depth
+// arms first 182. These forms retain the delayed second tangent calculations.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
@@ -108,8 +119,6 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			real root = (real)sqrt(disc);
 			real k = radius_value / xz;
 			real za = cz - (cz * radius_value + root * cx) * k;
-			real zb = cz - (cz * radius_value - root * cx) * k;
-			real xb = cx - (cx * radius_value - root * cz) * k;
 			if (za > 0.01f)
 			{
 				real xa = cx - (cx * radius_value + root * cz) * k;
@@ -118,6 +127,8 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			}
 			else
 				bounds->x0 = -k_real_max;
+			real zb = cz - (cz * radius_value - root * cx) * k;
+			real xb = cx - (cx * radius_value - root * cz) * k;
 			if (zb > 0.01f)
 			{
 				real n = xb / zb * m78 + m98;
@@ -139,8 +150,6 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			real root = (real)sqrt(disc2);
 			real k = radius_value / yz;
 			real za = cz - (cz * radius_value + root * cy) * k;
-			real zb = cz - (cz * radius_value - root * cy) * k;
-			real yb = cy - (cy * radius_value - root * cz) * k;
 			if (za > 0.01f)
 			{
 				real ya = cy - (cy * radius_value + root * cz) * k;
@@ -149,6 +158,8 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			}
 			else
 				bounds->y0 = -k_real_max;
+			real zb = cz - (cz * radius_value - root * cy) * k;
+			real yb = cy - (cy * radius_value - root * cz) * k;
 			if (zb > 0.01f)
 			{
 				real n = yb / zb * m8c + m9c;
@@ -214,6 +225,13 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
+// score 195 (was 195): frame 0x30 versus 0x2c and inverse-depth/point homes
+// remain. In-place displaced transform 263; later displaced input 270;
+// perspective-only inverse locals 261; zero-factor early exit 195; both
+// displaced transforms in place 263.
+// frame 0x30 versus 0x2c and projected-point/factor homes differ;
+// role-named points 195; displaced transform first 250; orthographic defaults first 261;
+// shared point initializer 195; single result 280.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
@@ -411,27 +429,12 @@ void function_30e30(long key, long value, bool add, real x)
 
 real function_30bf0(vector3f *v);
 
-PRIVATE __forceinline void normalize_cross_vector(vector3f *v)
-{
-	real squared_length = v->k * v->k + v->j * v->j + v->i * v->i;
-	real length = (real)sqrt(squared_length);
-	if (!(fabs(length) < k_real_epsilon))
-	{
-		real inverse = 1.0f / length;
-		for (long component = 0; component < 3; ++component)
-			v->n[component] *= inverse;
-	}
-}
-
-static __forceinline void cross_product_31b40(vector3f const *a, vector3f const *b, vector3f *out)
-{
-	out->i = a->j * b->k - b->j * a->k;
-	out->j = b->i * a->k - a->i * b->k;
-	out->k = b->j * a->i - a->j * b->i;
-}
-
-// score 47 (was 47): first x87 product loads and second-product SSE roles
-// differ. First input by value 138; second 173; both 240; vector return 209;
+// score 42 (was 47): the first product's x87 operand order and the SSE
+// registers of the normalization and second product differ. Shared cross3f and
+// normalize3d 42; a local copy of axis gives retail's x87 order (35) but is
+// not kept; normalize_inline 53 (harness); result declared first, length kept,
+// direct stores or a struct copy of the result: no gain.
+// Earlier: first input by value 138; second 173; both 240; vector return 209;
 // scalar input groups 112; coordinate pairs 112; scalar first stage 94;
 // scalar second stage 78. Original squared-length result and loop restored.
 // Retail's x87 products follow this source's operand order; ours reverses five
@@ -443,10 +446,10 @@ static __forceinline void cross_product_31b40(vector3f const *a, vector3f const 
 real function_31b40(vector3f *vector, vector3f const *axis)
 {
 	vector3f cross;
-	cross_product_31b40(vector, axis, &cross);
-	normalize_cross_vector(&cross);
+	cross3f(vector, axis, &cross);
+	normalize3d(&cross);
 	vector3f result;
-	cross_product_31b40(axis, &cross, &result);
+	cross3f(axis, &cross, &result);
 	vector->i = result.i;
 	vector->j = result.j;
 	vector->k = result.k;

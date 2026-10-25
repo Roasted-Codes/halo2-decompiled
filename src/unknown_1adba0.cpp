@@ -306,6 +306,12 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 }
 #pragma optimize("", on)
 
+// score 61 (was 61): first range FADDP remains fused; frame and tick-conversion tail agree.
+// Existing rounding boundary for delay/duration/both, shared short/real clock, first output before
+// duration, early output with rounding and shared clock with rounding 68, 65, 71, 75, 75, 79, 100, 89.
+// score 61 (was 61): first range still fuses; frame and later tick conversion agree.
+// In-place delay/duration/both products 61/61/61; delay/duration/both operand orders 61/61/61;
+// entry failure guard 85; earlier state initialization 61.
 // @retail 0x1aded0
 bool __stdcall function_1aded0(long actor_index, s_slot *slot)
 {
@@ -482,7 +488,10 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // was: retail keeps the -1 sentinel in EBP and pushes the arguments in the
 // other order, where ours uses EBX for the sentinel, so the prologue and the
 // calls that follow differ.
-// score 15 (was 15): Sentinel/clock and returned-settings EBX/EBP homes remain swapped.
+// score 15 (was 15): sentinel/clock and settings still exchange EBX/EBP.
+// Elapsed-seconds ready/arms/wait/nested results 15/15/15/15;
+// each with the weighted probability product separated 65/65/65/65.
+// Sentinel/clock and returned-settings EBX/EBP homes remain swapped.
 // actor reference 15; immutable actor 15; actor/node references 15; settings reference 15;
 // timestamp reference 15; interval reference 15; settings/timestamp references 15;
 // actor/coefficient references 15.
@@ -490,6 +499,12 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // cooldown, reaction and combined test results 15/15/15/15; immutable cooldown
 // inputs 15; read-only two-use clock 91; complete actor/timestamp record and
 // its read-only receiver 15/15.
+// score 15 (was 15): saved-register pair persists; native const/mutable clock
+// records 91/91; interval accumulators on those records 95/95; named elapsed
+// phase 91/91; elapsed plus interval accumulation 95/95.
+// score 15 (was 15): saved sentinel/clock and settings registers still swap;
+// callback failure returns at actor/prop/unit/settings/cooldown/reaction phases
+// 15/106/106/106/106/106; combined actor-settings/all phases 39/39.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {

@@ -198,6 +198,7 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Ordinary counter conversion on guarded-coefficient body 710; indexed activation displacement 667;
 // interleaved displacement/sample loop 696; target-coordinate loop 699; impulse-coordinate loop 661.
 // Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain.
+// score 660 (was 660): Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain. Shared output scale 660; shared sample scale 680; capped-length initializer 660; shared limit predicate 690; conditional flag store 674 (fast).
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

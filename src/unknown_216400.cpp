@@ -97,6 +97,17 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
     return result;
 }
 
+// score 51 (was 51): conversion addresses, append list/count/result and final call registers differ.
+// Existing root/path helpers 51/51; file-reference/all helpers 233/233;
+// append names/force-inline and buffer names 51/51/51; source step at character read 72.
+// score 51 (was 51): conversion addresses, append and enumeration registers still differ.
+// Const handle/unsigned conversion capacity 51; indexed conversion 63; full path copy 110;
+// aggregate-zero file 53; unsigned append count/entry memcpy/enumeration names 51.
+// matching 0x8ac frame; conversion scratch registers, append count/result homes
+// and enumeration argument registers differ. Earlier helper/index/loop forms excluded; tried append
+// success result 54; capacity return 54; counted conversion 229; conversion end pointer 58;
+// entry lifetime 51; entry zero initializer 199; file lifetime 51; drive-validation return 51;
+// shared character conversion 51.
 // @retail 0x2164c0
 void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
 {

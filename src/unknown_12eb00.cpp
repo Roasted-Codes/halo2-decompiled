@@ -48,6 +48,11 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
+// score 21 (was 40): the count/cursor homes and the two index pins still differ, and the
+// blend store addresses [esi + eax] for [eax + esi]. The product update written out fixed
+// the blend's operand order (40 -> 21). Tried: an interpolation helper for the blend 40;
+// no element pointer 215; long index locals 259; count declared after the table pointer 82;
+// the running sum written out 21; a 600 s permuter run, none below 21.
 // score 40 (was 136): the count and cluster cursor homes are swapped (0x18 and
 // 0x1c); the two index pins keep the bound rather than the index in the result
 // register (jg for jle); the final blend multiplies the weight product by
@@ -95,7 +100,7 @@ long function_12eb00(long count, s_fog_cluster_distance *clusters, s_12eb00 *out
 						local_12 = PIN(local_12, 0.0f, 1.0f);
 						local_6 += local_12;
 						local_8[local_9] = local_12;
-						local_7 *= 1.0f - local_12;
+						local_7 = local_7 * (1.0f - local_12);
 					}
 				}
 				if (local_6 > 0.0f)

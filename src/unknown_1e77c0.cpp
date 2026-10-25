@@ -371,19 +371,19 @@ void function_1e6b00(long player_index, s_request_source *source)
 	}
 }
 
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
-// score 57 (was 57): retail saves the pointer argument in EBX and shifts the
-// mask in EBP, where ours keeps the mask in EBP and the pointer in EAX; the
-// prologue and the argument setup of the call differ.
+// score 51 (was 57): retail keeps the index in EBX and the mask in EBP (ours
+// the other way round), loads the output pointer once above the last test and
+// stores the low flag word first in the inlined update. Without the read
+// barrier: high word through the pair and low word through the state array 51
+// (retail's load order and `mov eax, mask; and eax, low`); both through the
+// pair 77, both through the state array 77-80, mask local / term order /
+// `21 == index` / limit or next locals / swapped arms 51-52.
+// Earlier: retail saves the pointer argument in EBX and shifts the mask in EBP.
 // @retail 0x1e8d80
 bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_entry_420 *entry, s_request_transition *output)
 {
 	s_flag_pair *flags = (s_flag_pair *)((byte *)state + 0x170);
-	dword high = flags->high;
-	// Preserve the observed order of the two flag-word reads.
-	_ReadWriteBarrier();
-	long value = ((high & (1 << index)) ? 2 : 0) + ((flags->low & (1 << index)) ? 1 : 0);
+	long value = ((flags->high & (1 << index)) ? 2 : 0) + ((state->request_flags[0] & (1 << index)) ? 1 : 0);
 	if (index == 21)
 		function_1e8d80(22, state, entry_420_get(22), (s_request_transition *)((byte *)state + 0x58));
 	if (!entry)
@@ -410,7 +410,6 @@ bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_e
 	output->ticks = g_510c54->field_2_3 * entry->duration;
 	return false;
 }
-#pragma function(_ReadWriteBarrier)
 
 // @retail 0x1e8fa0
 void function_1e8fa0(long player_index, long object_index, byte kind)
@@ -653,6 +652,12 @@ long function_1469f0(real seconds);
 // score 290 (was 302): First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
 // Native signed-word slot 283 fast/290 plain; full-width difficulty 308; shared elapsed 309;
 // cooldown-first 296; fixed initial do scan 340; slot plus cooldown-first 281.
+// score 279 (was 288): frame 4/12 and slot/transition/flag homes remain; cooldown case first reaches retail length.
+// Selected-state orders 01324/02134/03124/02314/03214/04213/04312/40123: 292/287/280/293/298/302/277/280 fast; last order 279 plain.
+// Byte/word request value 298/293; missing-bit test 317; final byte scan 304 (fast control 293).
+// frame 4 versus 12 and slot/state/flag homes remain.
+// Restriction result 293; selection-field references 290; state reference 290;
+// initial state gates 288; byte scan 319; gates with native slot 307 (plain).
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {
@@ -707,6 +712,9 @@ void function_1e6bd0(long player_index)
    }
    switch ((word)transition->state)
    {
+   case 4:
+    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
+    break;
    case 0:
     transition->state = 1;
     transition->ticks = entry ? (short)function_1469f0(*(real *)entry->field_0c) : 0;
@@ -762,9 +770,6 @@ void function_1e6bd0(long player_index)
      *current = NONE;
      *elapsed = 0;
     }
-    break;
-   case 4:
-    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
     break;
    }
   }

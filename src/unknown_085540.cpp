@@ -432,29 +432,27 @@ bool c_simulation_view::handle_player_update(bool failed, long a, long b, dword 
 	return result;
 }
 
-// score 30 (was 30): retail clears false before the enabled test, passes the iterator table in EDI
-// and keeps the database in EBP; hoisted handles and view data 33 with caller regressions;
-// mixed result 30; guard result 37; masked/const index, world and distribution aliases 30 each.
-// early false result and iterator table/database registers differ; database reference 30; native handle 30; wide result 51; fixed database receiver 30;
-// alias analysis off 30; inline depth zero 30; size preference 41; database role name 30.
 // @retail 0x86ad0
 bool c_simulation_view::has_pending_entity(void)
 {
+	bool result = false;
+
 	if (data->unknown39)
 	{
 		s_simulation_entity_database *database = &world->distribution->field_2098;
 		long handle = NONE;
-		s_simulation_entity *entity;
+
 		do
 		{
 			handle = function_98480(handle, (c_handle_table_450cd0 *)data->handles);
 			if (handle == NONE)
-				return false;
-			entity = &database->entities[handle & 0x3ff];
-		} while (!database->definitions->definitions[entity->type]->v6(entity));
-		return true;
+				break;
+			s_simulation_entity *entity = &database->entities[handle & 0x3ff];
+			if (database->definitions->definitions[entity->type]->v6(entity))
+				result = true;
+		} while (!result);
 	}
-	return false;
+	return result;
 }
 
 // @retail 0x85cb0
@@ -835,6 +833,12 @@ bool function_1995a0(const byte *source, dword source_size, byte *destination, l
 // Round 109: direct view plus writer forceinline 93; unsigned writer result 93;
 // writer reference 93; native count 93; unsigned offset 93; word kind 93;
 // named packet record 93; moving payload pointer 144.
+// score 90 (was 90): with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
+// count in a `remaining` local (compressed size scoped to the compressor call, copied when it
+// succeeds), no gotos and the last write tested for success first, only four single instructions
+// differ (20, aligned 4): flag 130; plus remaining 58; scoped 51; copy on success 38; failures
+// returned 63; single-exit breaks 38; success first 20; then element address 20; offset first 20;
+// header = { 1 } 22; flag before the header 125; count before cursors 24; all of it without the flag 128.
 // @retail 0x86800
 bool function_86800(dword capacity, c_simulation_view *view, dword source_size, byte *destination)
 {

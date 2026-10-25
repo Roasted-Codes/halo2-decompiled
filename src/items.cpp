@@ -560,6 +560,9 @@ struct s_item_collision_bsp
 // seed before square root 249; fallback input copy 364; up pointer 253;
 // plane input scalars 254; angular output initializer 253.
 // Shared input/output scaling 249; transform value 350; linear/angular loops 249/249; normal-row loop 250.
+// score 249 (was 249): plane-index width, plane-join homes and spin stores remain.
+// Item/transform references 249/249; surface selector 250;
+// speed-role names 249; current-spin reference 249 (plain).
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
@@ -967,6 +970,7 @@ struct s_item_flags_view_10b850
 // Normal value copy 882 (frame 0x15c); point value copy 852; marker
 // matrix memcpy 819; settled result long 844; position decision long 887.
 // Original body and helper operands kept.
+// score 858 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1208,6 +1212,13 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // score 154 (was 163): Release RMW/tail and event homes remain; idle/count results 166/169;
 // earlier damage key 185; event-first/key plus event-first 196/196; early complete point/origin
 // publication 198/157; initializer-owned sentinel 154 kept, combined origin 176.
+// score 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
+// Native byte clears 5/6/both 154/154/154; native guard/clear 5/6/both 192/167/207;
+// all native guards/clears 216; native guards with original byte stores 216.
+// release-byte RMW/tail and event-point homes remain.
+// Scalar/component factor orders, eight forms 154; direct output 207; native
+// point value 176; owner/origin/position/pair/all library copies 154; direct
+// output with library copies 207. Retained origin reuse and initializer unchanged.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

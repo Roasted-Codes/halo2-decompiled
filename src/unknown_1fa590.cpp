@@ -476,6 +476,12 @@ void function_c7840(vector3f const *desired, vector3f *current, transform4x3f co
 
 // score 4 (was 8): the dot product's last term still loads the facing component into
 // the register where retail loads the forward one, and the call to 0xc7840 sets up its
+// null frame argument before the address of the desired vector where retail does it after.
+// the last-term operand swap, a const facing parameter, a desired-address pointer local,
+// a named alignment local, a named idle bool and a mutable settings pointer all compile
+// to the same bytes; the != branch swap 28; the nested-if duplicated else 317/996;
+// the forward const reference 202; the settings/object declaration swap 6. The call-setup
+// order follows the unmatched contributor callee 0xc7840's register binding.
 // null frame argument before the address of the desired vector where retail does it after
 // score 4 (was 4): final alignment product and null-frame/address setup remain; desired default 84;
 // forward/facing values 255/232; facing plus default 227; forward plus default 253;
@@ -554,6 +560,9 @@ PRIVATE __forceinline void motion_cross(vector3f const &a, vector3f const &b, ve
 // active rotation scope 235; idle sine after scaling 235.
 // active/idle/both real trig 233/235/233; shared weighted axis 214 plain kept;
 // weighted cross 218; both weights 258; output cosine scale 235; real trig plus axis 226.
+// score 214 (was 214): Frame 0x28 agrees; angle/trig homes and projection scheduling remain. Active angle
+// name 214; external up reference 212; forward reference 216; both output references
+// 178 (held: reference aliases of the two parameters); external velocity reference 214.
 // @retail 0x1faa20
 void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *ticks)
 {

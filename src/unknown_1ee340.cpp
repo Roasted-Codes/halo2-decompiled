@@ -154,6 +154,12 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Hit point setter 250; component normalization loop 250; short projection side 255;
 // direct hit result 251; ray before origin with float setters 251.
 // Early offset 259; late ray direction 264; squared-normal value 250; descending projection 358; offset/direction combination 264.
+// score 250 (was 250): Frame 0x78 versus 0x90 and normal/ray/polygon homes remain. Native ray 266
+// (frame 0x88); separate unscaled normal 307 (0x84); both 311 (0x94); projected initializer 250;
+// both with plain projection loop 278 (0x90).
+// Frame, ray/normal homes and polygon input registers still differ. Tried native plane 257;
+// early distance 260; entry plane 257; early hit result 257; plain plane projection 259; plane normal copy 262;
+// native ray start 251; early edge vectors 257.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
@@ -538,6 +544,17 @@ c_shape_global_owner::~c_shape_global_owner()
 void function_1eece0(s_surface_key_array *array, void *owner);
 bool function_1ef3e0(void const *owner, dword key);
 
+/* the sphere a child query takes: a centre with the radius in its w lane */
+struct c_sphere_probe
+{
+ __m128 value;
+ c_sphere_probe(const __m128 *center, real radius)
+ {
+  value = *center;
+  ((real *)&value)[3] = radius;
+ }
+};
+
 struct c_instance_surface_query
 {
  virtual void v0() {}
@@ -550,7 +567,7 @@ struct c_instance_surface_query
  virtual void v7() {}
  virtual void v8() {}
  virtual void v9() {}
- virtual void query_sphere(const __m128 *sphere, s_surface_key_array *keys) {}
+ virtual void query_sphere(const c_sphere_probe &sphere, s_surface_key_array *keys) {}
  virtual void query_box(const c_query_transform *matrix, const __m128 *extent, real tolerance, s_surface_key_array *keys) {}
 };
 
@@ -642,34 +659,6 @@ void c_shape_owner::query_box(const c_query_transform *matrix, const __m128 *ext
  }
 }
 
-// score 19 (was 66): frame/length agree; child-query vtable load, ordinal spill and remap entry differ.
-// Radius before transform 140; scoped instance index 80; later ordinal correction 19;
-// key/owner continues 66/102; remap/removal/both while loops 66.
-// score 19 (was 19): dispatch scheduling, ordinal/context homes and remap entry differ.
-// Complete center 19; local/radius/input memcpy 100/75/142; table/key references 19/137;
-// expansion entry return 19; size preference 200.
-// Actual query reference 102; owner/instance/both record references 19;
-// correction after remap 142; early input sphere 130;
-// normal remap inline 176 (498 bytes); normal removal inline 19.
-// score 19 (was 19): dispatch load and ordinal/remap homes remain; workspace scope 19;
-// pre-removal append count 86; removal postdecrement 66; paired ordinal names 19;
-// shared center setter 107; sphere component view 19; int append ordinal 19; outer while 19.
-// score 19 (was 19): early child-vtable load and exchanged ordinal/context homes remain.
-// Child query declaration/abstract slot/abstract interface 19/19/19; remap context/cursor names 19/19;
-// actual context type 19; typed context plus names 19; abstract query plus typed context/names 19.
-// Dispatch scheduling, ordinal/context homes and remap entry still differ.
-// Late/early context 25/88; sphere/key-array references 19/19; packet copy before removal/count 78/19;
-// point-first workspaces 19; early packet plus context 92; pre-dispatch ordinal with
-// late/early context, early packet or receiver 74/109/32/121.
-// score 19 (was 19): child dispatch and ordinal/context/remap homes remain; native radius lane 19;
-// initialized transform 187; successful remap advancement 56; source-index removal 140;
-// remap parameter cursor/validation result/key type shift 19 each; invalid result first 60.
-// dispatch timing, ordinal/context homes and remap entry remain; entry ordinal 19; int
-// ordinal 19; immutable append boundary/shape 19/19; component sphere 158; SSE sphere 84; combined ordinal
-// lifetimes 19; component sphere plus early correction 114.
-// score 19 (was 19): Child dispatch/ordinal/context homes remain; distinct inverse output/scope
-// 106/106; mutation cursor 161; removal count/reference 19/19; transform ordinary inline 309;
-// transform output/remap array references 19/19.
 // @retail 0x1ee5b0
 void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_instances,
  bool filter, s_surface_key_array *keys)
@@ -697,10 +686,8 @@ void function_1ee5b0(c_shape_owner *owner, const __m128 *sphere, bool expand_ins
      center.inverse_transform(&transform, &center.value);
      query_remove_key(keys, i);
      long first = keys->count;
-     __m128 local = center.value;
-     ((real *)&local)[3] = ((const real *)sphere)[3];
-     ((c_instance_surface_query *)(shape + 0x50))->query_sphere(&local, keys);
      --i;
+     ((c_instance_surface_query *)(shape + 0x50))->query_sphere(c_sphere_probe(&center.value, ((const real *)sphere)[3]), keys);
      query_remap_keys(&owner->object, keys, first, instance_index);
     }
    }

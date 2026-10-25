@@ -522,7 +522,16 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // 167; horizontal copy observation 144; native input observations 154; existing length
 // inline 142; earlier turn length result 136; earlier turn product input order 136; earlier
 // turn shared result scale 136; earlier turn shared direct scale 160.
-// score 136 (was 136): horizontal square/copy order, rotation schedule and output length remain.
+// score 136 (was 136): Horizontal square/copy order, rotation and output scheduling remain. combined memmove 191; immutable real
+// results 136; byte turn truth 136; horizontal memmove 184; turn memmove 168; output memmove 140; external
+// speed binding 147; external side components 136; native planar initializer 161; early turn memcpy 136;
+// completed output memcpy 136.
+// Horizontal store/square, rotation and final publication schedules still differ.
+// Y/X horizontal initialization 161f; factor entry lifetime 136f; native output loop 137f; turn
+// input before normalization 171f; turn workspace at entry 136f; output after target update 136f;
+// normalization failure first 131p; Y/X input with output loop 157f.
+// Failure-first branch worsens aligned instruction order; original branch retained.
+// horizontal square/copy order, rotation schedule and output length remain.
 // Native horizontal on early turn copy 136; axis reference/snapshot 152/190;
 // native horizontal with either axis form 152/190; vertical input 171, with native horizontal 171, with axis snapshot 214.
 // score 136 (was 136): horizontal square/copy order, rotation and output scheduling remain;

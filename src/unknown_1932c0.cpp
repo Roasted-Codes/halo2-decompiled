@@ -901,6 +901,7 @@ static inline short pending_request_last_result(s_pending_message_header const *
 	return ((short const *)&header->unknown0c)[1];
 }
 
+// score 2 (was 2): initial counter zero/save order remains; inline counter 2; forceinline counter 2; counter name 2; timing names 2; payload names 2; output-size lifetime 50; result from tests 25; sample before result 2.
 // @retail 0x194260
 bool __stdcall game_variants_received(s_pending_message_header *header)
 {
@@ -926,6 +927,12 @@ bool __stdcall game_variants_received(s_pending_message_header *header)
 	return result;
 }
 
+// score 3 (was 3): first tick zero store precedes EDI save and false-result store;
+// timer before buffer 3; success rename 3; buffer rename 3; timestamp rename 3;
+// pointer declared first 3; retries before timer 17; write result assigned 53; long result 103.
+// unsigned retries 4; retry cap equality 4; elapsed clamp expression 3;
+// success before write 48; branch result initialization 104; allocation guard return 88;
+// prior-result expression 3; immutable start tick 3; allocator pointer name 3.
 // @retail 0x194160
 bool __stdcall game_variants_retry(s_pending_message_header *header)
 {

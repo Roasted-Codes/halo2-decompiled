@@ -159,6 +159,11 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // unsigned target count 919; used-mask memset 919.
 // frame 0x4e0 agrees; target/primary and query-array homes differ.
 // Existing-count word 939; query-cursor word 927; completed append 929; early primary 940; primary word 925.
+// score 886 (was 919): Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and
+// choice register remain. byte target count 934; short query count 886; byte query count 914;
+// byte query cursor 927; byte duplicate cursor 928; short query with byte target count 932;
+// short query with byte query cursor 935; short query with byte duplicate cursor 922; short
+// query with long choice count 957.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
@@ -172,9 +177,10 @@ void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point
 		long indices[64], gains[64], portals[64], clusters[64];
 		long count = 0;
 		function_18d730(bsp_data, cluster, point, 20.0f, indices, gains, portals, clusters, &count);
+		short query_count = count;
 		s_loop_path_choice choices[2];
 		short choice_count = 0;
-		for (long i = 0; i < count && choice_count != 2; i++)
+		for (long i = 0; i < query_count && choice_count != 2; i++)
 		{
 			long index = indices[i];
 			if (index == NONE) continue;
@@ -208,10 +214,10 @@ void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point
 			choice_count++;
 		}
 		bool inside = cluster == clusters[0];
-		if (count > 1 && choice_count && inside)
+		if (query_count > 1 && choice_count && inside)
 		{
 			s_loop_path_sound *sound = &bsp->sounds[choices[0].source];
-			for (long i = 1; i < count; i++)
+			for (long i = 1; i < query_count; i++)
 			{
 				long index = indices[i];
 				if (index != NONE && bsp->sounds[index].tag == choices[0].tag)
@@ -422,6 +428,14 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // position memcpy 223; tag aggregate initializer 270.
 // cue sentinel chain 222; cue nibble chain 223.
 // both cue chains 222; prior tag on bounded search 223.
+// score 223 (was 223): BSP/camera homes, transition spill and cue zero carrier remain;
+// cue sentinel order 222; cue pointer order 223; cue byte-first zeros 223;
+// cue integer-zero/scale order 223; direct transition conditional 253;
+// exact listener bound 223; query-index cursor 248; Boolean fallback scale 237.
+// score 223 (was 223): frame, BSP/camera/query homes and duration spill remain.
+// Environment-table lifetime 273; direct duration source 223; cue location subobject 250;
+// shared caller cue workspace 229; unsigned query index 223; table/direct duration 273;
+// shared workspace/location 233; table/workspace 254 (fast). Shared cue workspace gives frame 0xf4, not retail 0x148.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

@@ -1399,6 +1399,9 @@ struct s_item_collection
 // direct field conversion 27; record reference 27; positive field guards 23; field scope 27.
 // score 5 (was 5): integer join and tag base still differ. Outer scenario/equipment/root-entry
 // receivers and tag base at entry/selection/fallback/root-entry/table-fallback 5/5/5/38/17/12/38/12.
+// score 5 (was 5): retail's ticks avoid eax and ecx as if live through the fallback arm.
+// Arms swapped 20; group tag local 5; tag index local 17; default after the spawn read 5;
+// fallback ticks before its zero test 6 (ticks in ecx).
 // @retail 0x15ac50
 long function_15ac50(long index)
 {
@@ -2820,7 +2823,7 @@ void function_15e7f0(long unit_index, long vehicle_index)
 		{
 			s_event event;
 			game_engine_event_initialize_inline(&event, 0, 44);
-			game_engine_event_set_cause_player(&event, unit->player_index);
+			game_engine_event_set_cause_player(unit->player_index, &event);
 			function_19eb90(&event);
 			function_1970a0(unit->player_index & 0xffff, 11, 1);
 		}
@@ -3838,7 +3841,10 @@ static __forceinline long nonnegative_15ce70(long value)
 // score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // score 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
-// score 480 (was 480): Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
+// score 480 (was 480): frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
+// scope 480; decoding before lookup 481; different-player arm first 490; override selection 480; shared
+// message formulas 575.
+// Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4001,7 +4007,7 @@ void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte
         {
             s_event event;
             game_engine_event_initialize_inline(&event, 1, message);
-            game_engine_event_set_cause_player(&event, attacker_index);
+            game_engine_event_set_cause_player(attacker_index, &event);
             game_engine_event_set_effect_player(&event, victim_index);
             function_19eb90(&event);
         }
@@ -4072,7 +4078,10 @@ struct s_score_zone_view
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // score 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
-// score 472 (was 477): Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
+// score 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
+// differ. Individual palette lifetime 472; exact format mode set 480; common zone maximum scan 886; byte
+// weapon slot 476; early weapon lifetime 689.
+// Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4465,6 +4474,9 @@ bool function_158eb0()
 // score 5 (was 5): mode/index scratch registers still differ. Rejection state 27;
 // rejection predicate 63; wide/byte rejection 51/27; rejection from score 67;
 // rejection cardinality exit 32; rejection fallthrough 85; rejection after iterator 30.
+// score 5 (was 5): BLOCKED-BY 0x23f260 (mode declared first). Mode local before the count 38;
+// in-argument ternary on the global 38; inline helper taking the mode last 5; `!!` on the
+// global 38; index local read after the count, before the flag 5.
 // @retail 0x158f50
 bool function_158f50()
 {
@@ -5025,6 +5037,10 @@ void function_161420(long player_index, real alpha);
 // score 24 (was 24): state/user saved registers and final x87 scheduling remain.
 // Actual flag/tick/both lvalues, timer receiver/receiver with lvalues, shared mask,
 // mask with lvalues/mask with receiver 24/24/24/24/24/164/164/164.
+// score 2 (was 24): only `mov edx, ebx` ahead of the power's fstp before 0x161420 (retail after).
+// Fade by if 127; nested target test 24; power into intensity 2; float pow overload 2;
+// early return for no intensity 4; fraction straight into intensity 52; noinline
+// 0x161420 declaration 2; a 600 s permuter run (39 tries), none below 2.
 // @retail 0x159880
 void function_159880(void)
 {
@@ -5062,12 +5078,11 @@ void function_159880(void)
                     if (alpha > 0.0f)
                     {
                         function_159250(target_index, alpha);
-                        globals = function_xaee93d();
                     }
                 }
             }
         }
-        real fade = local_user == NONE ? 1.0f : globals->timers[local_user];
+        real fade = local_user == NONE ? 1.0f : function_xaee93d()->timers[local_user];
         if (fade > 0.0f)
         {
             color4f color;
@@ -5104,6 +5119,9 @@ void __stdcall function_d6bc0(long object_index);
 // score 167 (was 175): frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
 // type result before engine 167f/plain; engine consumer scope 167f;
 // timer reference / read-only object / scheduling handle / entry-test result / distance results / combined 175/175/175/175/175/175f.
+// Round 173 on the retained query-result order: external entry reference 221; mode if dispatch
+// 164 (three-point gain rejected); conditional reset counter 195; long modifier 184; byte kind 168.
+// Frame 0x14 versus 0x18 and timer/base homes remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
