@@ -238,6 +238,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // 195 each; inverse-depth names 195; native displaced-point aggregate 195.
 // Later paired factor publication 197; depth-first displaced point 216; outer displacement
 // scalars 195; zero-output failure test 195; chained zero stores 195; opening 195 restored.
+// frame 0x30 versus 0x2c and projected-point/factor homes differ;
+// role-named points 195; displaced transform first 250; orthographic defaults first 261;
+// shared point initializer 195; single result 280.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

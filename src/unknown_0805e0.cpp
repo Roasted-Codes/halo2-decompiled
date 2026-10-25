@@ -52,6 +52,8 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 
 /* the next recent player after the iterator's: a valid, online, known player
    with a name; iterator starts at the first entry and ends at NONE */
+// score 43 (was 43): Early index save, next-index register, loop rotation and hoisted mask still differ.
+// existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {
@@ -423,29 +425,31 @@ bool function_80660(void)
 	return valid;
 }
 
+struct s_profile_record;
+void function_1537f0(s_profile_record *record);
+
+// score 129 (was 133): Frame 0x98 vs 0xa0; identity slots and initialization homes still differ.
+// Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
+// Existing record initializer with zero tail 130; short/word counters 133/133;
+// counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
 // @retail 0x7f930
 void function_7f930(void)
 {
-	g_4cf970 = 8;
 	g_4cf974 = 0;
 	g_4cf978 = 0;
+	g_4cf970 = 8;
 	g_4cf980 = NONE;
 	g_4cf97c = NONE;
 	g_4cf984 = NONE;
 	g_4cf988 = NONE;
-	for (long i = 0; i < 350; i++)
+	for (dword i = 0; i < 350; i++)
 	{
 		s_cached_player_identity identity;
 		memset(&identity, 0, sizeof(identity));
 		s_cached_player_source source;
-		memset(&source, 0, sizeof(source));
-		source.field40 = 0;
-		source.field44_47 = 0;
-		source.field48 = 0;
-		source.field70 = 0;
-		source.field74 = 0;
-		source.field78 = 0;
-		source.field7f = 0xff;
+		function_1537f0((s_profile_record *)&source);
+		memset(source.unknown7c, 0, sizeof(source.unknown7c));
+		memset(source.unknown80, 0, sizeof(source.unknown80));
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
 		function_7f8b0((s_cached_player_view *)&entry->player, &identity, &source, NULL);
 		entry->next = entry->next_other = entry->unknown58 = entry->previous_other = NONE;
@@ -509,13 +513,7 @@ bool function_7fb50(void)
 {
 	bool local_0 = false;
 	s_type_acf665 local_1;
-	memset(&local_1, 0, sizeof(local_1));
-	local_1.signature = FILE_REFERENCE_SIGNATURE;
-	local_1.location = NONE;
-	if (local_1.flags & 1)
-		function_1373c0(local_1.path);
-	function_137320(local_1.path, g_450c68);
-	local_1.flags |= 1;
+	file_ref_create(&local_1, false, g_450c68);
 	if (g_467264.handle == INVALID_HANDLE_VALUE)
 	{
 		async_create_file_blocking((file_reference_data const *)&local_1, 2, 4, 4, 2, &g_467264);
@@ -529,7 +527,7 @@ bool function_7fb50(void)
 		function_163ba0((dword *)&g_4cf974, &g_4cf978, 0x8e44);
 		g_4cf970 = 8;
 		function_120d50(&g_467260, false);
-		function_1a1050(g_467264, &g_4cf970, 0x8e4c, 0, 0, 2, 6, NULL, &g_467260);
+		function_1a1050(g_467264, &g_4cf970, 0x8e4c, 0, s_file_write_flags(0), 2, 6, NULL, &g_467260);
 		local_0 = true;
 	}
 	return local_0;

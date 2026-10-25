@@ -524,6 +524,9 @@ long function_1891d0(long object_index, long marker_name, s_sound_label_play con
 	return function_1890c0(play, object_index, marker.node_index, &marker.node_matrix.position, &marker.node_matrix.forward);
 }
 
+// score 51 (was 51): frame agrees; saved registers, root-location contract and stacked play differ.
+// Plain workspace order 51; workspace names 51; zero initialization 99; aggregate construction 64;
+// native point copy 51; compression first 52; velocity first 49; separate location output 73.
 // @retail 0x189210
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play)
 {
@@ -544,7 +547,10 @@ real function_30bf0(vector3f *vector);
 long function_1895f0(s_sound_position const *position, real scale, long tag_index);
 
 #pragma inline_depth(0)
-// score 2 (was 2): success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
+// score 2 (was 2): success result/pop schedule; result before submit/request 181/181;
+// forward/velocity/location library copies 2/2/2; location before velocity 23;
+// read-only camera 2; forward assignment 2.
+// success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
 // @retail 0x1897c0
 bool function_1897c0(long local_player_index, long unit_index, long tag_index, s_location const *location, point3f const *origin, vector3f const *direction)
 {

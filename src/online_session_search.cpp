@@ -204,6 +204,12 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
+// score 50 (was 50): frame 0x20 agrees; ECX/EAX allocation and request clear/fill scheduling differ;
+// tried request count before other fields 48; request assignments in observed order 50;
+// request declared at entry 50; minimum score before bound updates 62;
+// bound result homes declared together 50; task result used for store and test 50;
+// explicit clock selection 53; direct zero initialized request 87;
+// current snapshot inside active guard 50; both bounds declared before current 50. Restored.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -575,6 +581,10 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
+// score 21 (was 21): shared true return remains after later tests, first +0x17;
+// cached primary keys 21; latency keys 21; third keys 21; primary/latency 21;
+// primary/third 21; latency/third 21; all repeated keys 21; primary-test result 46.
+// shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
 // @retail 0x90f10
 bool __stdcall session_search_result_precedes(void const *a, void const *b, void const *context)
 {
