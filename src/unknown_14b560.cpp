@@ -2686,6 +2686,9 @@ struct s_unit_flags_14d8b0
 // remain. current record consumer 155; successful current publication 155; explicit iterator
 // initialization 155; defined current at advance 155; saturating source expression 254; saturate
 // before increment 224; native flag boolean 264; publication with native results 300.
+// score 128 (was 128): iterator/tick scheduling, damage transport and trigger registers remain.
+// Native trigger record ordinary/const 128/128; each with native point member 128/128;
+// native first-word flag with those four interfaces 126/126/126/126. Two-point forms dropped.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

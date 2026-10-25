@@ -65,6 +65,9 @@ short __stdcall function_1b1f30(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
+// score 32 (was 32): node-pool/state-two register reuse and four-byte extent excess remain.
+// Paired mode result short/long 62/63; flags before paired state short/long 81/82;
+// guarded mode result short/long 46/45; view rejection first 32; conditional view acceptance 32.
 // @retail 0x1b21f0
 void __stdcall function_1b21f0(long actor_index, s_slot *slot)
 {
