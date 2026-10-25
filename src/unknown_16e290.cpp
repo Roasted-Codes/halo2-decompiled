@@ -1394,6 +1394,9 @@ void function_170630(long player_index);
 // score 7 (was 7): command/base registers and channel address setup differ;
 // three channel-pointer orders 7/7/7; delta pointer early/late 7/7;
 // command pointer 7; guard return 7; motion-channel view 7.
+// scalar channel addresses 7; timer cursor after delta 11; countdown for 7;
+// inline/noinline delta declarations 7/7; noinline update declaration 7;
+// shifted command bit 33; branch timer stores 27.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {

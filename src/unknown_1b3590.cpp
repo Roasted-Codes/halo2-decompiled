@@ -278,6 +278,9 @@ short __stdcall function_1b39e0(long actor_index)
 	return (short)result;
 }
 
+// score 36 (was 36): object-flag byte register and shared tail zero still differ.
+// Chained flags 36; direct object flag 93; const property state 36; flags before link 37;
+// flag-pair memset 61; target memcpy 36; duration names 36; accepted state scope 115.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {

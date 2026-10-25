@@ -171,6 +171,9 @@ void function_194fa0(s_bitstream *stream, word *buffer, long count)
 	}
 }
 
+// score 38 (was 38): frame is 8 bytes versus 4; lower product precedes upper log;
+// upper-first logs, real weighted sum/exponent, entry log homes and reader declarations 38;
+// explicit log/weight locals with one result 64; positive interior admission 49.
 // @retail 0x194ff0
 real function_194ff0(s_bitstream *stream, real lo, real hi, long bits)
 {

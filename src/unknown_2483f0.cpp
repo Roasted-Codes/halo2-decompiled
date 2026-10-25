@@ -136,6 +136,10 @@ static inline void particle_cross_product3d(vector3f const *a, vector3f const *b
 
 /* the rotation and position a particle system is drawn at: its own, or
    moved by the first person offset */
+// score 52 (was 52): cross-product scheduling and point/XMM homes still differ; four bytes long.
+// Shared cross product 55; rotation memcpy/const point/point memcpy 52;
+// indexed rotation 92, accumulated components 95, indexed translation 85;
+// position output first 54; existing axis-matrix helper 73.
 // @retail 0x248450
 void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f *position, matrix3x3 const **rotation_result, point3f const **position_result, bool field_b4)
 {
