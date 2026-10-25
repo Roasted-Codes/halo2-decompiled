@@ -263,6 +263,9 @@ void function_146de0(void)
 // Constructed allocator result 164; conditional usable capacity 140/frame 0x14 (three-point gain dropped);
 // conditional padding 141; block/padding outer scopes 143; current block-first homes 143;
 // construction scope 143; zero-first padding 143 at 377 bytes.
+// j93: Frame 0x18/0x14 and update expansion remain; word padding 140 gains only three and is dropped.
+// byte alignment padding 150; word alignment padding 140; allocation success result 143; explicit placement
+// guard 143; post retry capacity 143.
 // @retail 0x146e30
 c_havok_abstract_allocator *function_146e30(void)
 {
