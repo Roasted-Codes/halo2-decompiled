@@ -25,7 +25,10 @@ struct s_emitter_248340
 	short field_02;
 };
 
-// score 4 (was 4): second virtual-call vtable/spill order remains.
+// score 4 (was 4): virtual-table setup precedes the tag-result spill in retail;
+// tried group const query 4; tag const query 4; both const queries 4; group signed return 4;
+// tag unsigned return 4; tag const home 4; tag unsigned home 4; const query receiver 4. Restored.
+// second virtual-call vtable/spill order remains.
 // initial virtual-query result lifetime 4;
 // invalid-query common exit 4;
 // system index name after tag home 4;

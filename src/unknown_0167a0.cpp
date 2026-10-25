@@ -562,6 +562,9 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 	}
 }
 
+// score 68 (was 130): frame 0x3c agrees; zero/scale/trigonometric register allocation differs.
+// Zero-angle defaults on their own branch 68; shared rounded angle 166;
+// basis before translation 168; role-named workspaces 130; value-initialized matrix 133.
 // @retail 0x1b790
 bool function_1b790(byte const *state, long index, real *out, long mode)
 {
@@ -569,13 +572,18 @@ bool function_1b790(byte const *state, long index, real *out, long mode)
     real sx = values[7];
     real sy = values[8];
     transform4x3f matrix;
-    real sine = 0.0f;
-    real cosine = 1.0f;
+    real sine;
+    real cosine;
     memset(&matrix, 0, sizeof(matrix));
     if (!(fabs(values[13]) < 0.0001f))
     {
         sine = sinf(values[13] * 6.2831854820251465f);
         cosine = cosf(values[13] * 6.2831854820251465f);
+    }
+    else
+    {
+        sine = 0.0f;
+        cosine = 1.0f;
     }
     matrix.forward.j = 0.0f - sx * sine;
     matrix.position.x = (1.0f - cosine + sine) * sx * 0.5f + values[10];
@@ -873,6 +881,11 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
 // extra EDI save and ret 12 versus ret 8 remain. Native color fields 229;
 // complete dimension initialization paths 212; both 221; scalar case order 218;
 // texture case order 217.
+// score 2 (was 212): entry registers, cleanup and retail length recovered; output-2/3 zero-store pair remains.
+// Component-first signature 212; color-first 224; conditional dimensions 222; scalar tests 210;
+// dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
+// both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
+// shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {
@@ -899,39 +912,39 @@ bool function_1b2c0(byte const *state, long index, long component, long texture,
         return true;
     }
     else if (component == 4)
-        *(color3f *)out = ((color3f const *)(state + 0x108))[index];
+    {
+        out[0] = ((color3f const *)(state + 0x108))[index].red;
+        out[1] = ((color3f const *)(state + 0x108))[index].green;
+        out[2] = ((color3f const *)(state + 0x108))[index].blue;
+    }
     else
     {
-        real width;
-        real height;
+        real width = 1.0f;
+        real height = 1.0f;
         if (texture)
         {
             width = (real)*(long const *)(state + 0x12e8 + texture * 64);
             height = (real)*(long const *)(state + 0x12ec + texture * 64);
         }
-        else
-        {
-            width = 1.0f;
-            height = 1.0f;
-        }
+        long output_component = component - 5;
         switch (component)
         {
-        case 5: out[component - 5] = width; break;
-        case 6: out[component - 5] = width; break;
-        case 7: out[component - 5] = width; break;
-        case 8: out[component - 5] = width; break;
+        case 5: out[output_component] = width; break;
+        case 6: out[output_component] = width; break;
+        case 7: out[output_component] = width; break;
+        case 8: out[output_component] = width; break;
         case 9: out[0] = width; out[1] = height; break;
         case 10: out[2] = width; out[3] = height; break;
         case 11: out[0] = out[1] = 0.0f; break;
-        case 12: out[2] = out[3] = 0.0f; break;
-        case 13: out[0] = width; out[1] = height; out[2] = out[3] = 0.0f; break;
-        case 14: out[0] = width; out[1] = out[2] = out[3] = 0.0f; break;
-        case 15: out[1] = height; out[0] = out[2] = out[3] = 0.0f; break;
+        case 12: out[3] = out[2] = 0.0f; break;
+        case 13: out[0] = width; out[1] = height; out[3] = out[2] = 0.0f; break;
+        case 14: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 15: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
         case 16: out[0] = width; out[1] = height; out[2] = 1.0f; break;
         case 17: out[0] = out[1] = out[2] = 0.0f; break;
-        case 18: out[0] = width; out[1] = out[2] = out[3] = 0.0f; break;
-        case 19: out[1] = height; out[0] = out[2] = out[3] = 0.0f; break;
-        case 20: out[0] = out[1] = out[2] = out[3] = 0.0f; break;
+        case 18: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 19: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
+        case 20: out[0] = out[1] = out[3] = out[2] = 0.0f; break;
         default: __assume(0);
         }
     }

@@ -560,6 +560,18 @@ bool balance_teams_by_count(long player_count, long const *party_indices, long t
 /* whether the players and the extra players joining them can be balanced
    into the teams within the given imbalance; each extra player is a party
    of its own */
+// score 34 (was 34): frame 0x48 agrees; +0x14 player-count EAX/EDX roles
+// differ and flow through the copy, fill and call setup. Earlier result-first
+// 34; guarded countdown 45; source/output cursors 67; count parameter reference 54.
+// Tried: shared existing count 34; staged total 34; capacity lifetime first 34;
+// independent loop indices 34; named candidate party 34; descriptive scalar
+// homes 34; independent indices with candidate 34; earlier imbalance output 65.
+// Opening executable body and outside call sites retained.
+// score 34 (was 34): player-count EAX/EDX roles still exchange; standard party maximum in either order 100; standard excess maximum in either order 61; both maxima 118; guarded standard fill 55; maxima with fill 119.
+// player-count EAX/EDX roles and final clamp allocation remain;
+// total after copy 74; phase-accumulated total 74; shared party value 73;
+// strict maximum update 35; early imbalance 66; explicit excess clamp 46;
+// result from combined tests 67; separate noinline declaration 34.
 // @retail 0x91f00
 bool balance_teams_can_add(long player_count, long const *party_indices, long extra_count, long team_count,
 	long maximum_team_size, bool flag_parties, long flag_minimum, long flag_maximum, bool use_parties,

@@ -78,7 +78,11 @@ static __forceinline void decode_direction_194d30(long index, vector3f *directio
 	direction->k = z * face->axes[2].k + y * face->axes[1].k + x * face->axes[0].k + face->origin.k;
 }
 
-// score 62 (was 62): decode zero/scale schedule and final-component x87 forwarding remain;
+// score 62 (was 62): early decode zero/scale scheduling and final x87 component forwarding remain.
+// Face scale value 82; integer grid values 62; complete shared decoder 503; decoder output
+// reference 62; native component loop 173; complete private decode consumer 62; ordinary
+// decoder inline 394; initial direction value 63.
+// decode zero/scale schedule and final-component x87 forwarding remain;
 // workspace names, formatter scope, unsigned index, complete bounds, shared rounding, shared/existing
 // decoded normalization, completed decode output and decoder pointer/vector results 62, 62, 62, 122, 72, 62, 62, 88, 62, 155.
 // @retail 0x194d30

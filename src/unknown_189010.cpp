@@ -148,6 +148,10 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
+// score 182 (was 182): first class lookup expands; flag and result homes differ;
+// priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
+// base-first flags 178 (caller losses), role names 182, source snapshot 178,
+// object snapshot 183, priority after flags 192.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -542,7 +546,10 @@ real function_30bf0(vector3f *vector);
 long function_1895f0(s_sound_position const *position, real scale, long tag_index);
 
 #pragma inline_depth(0)
-// score 2 (was 2): success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
+// score 2 (was 2): success result/pop schedule; result before submit/request 181/181;
+// forward/velocity/location library copies 2/2/2; location before velocity 23;
+// read-only camera 2; forward assignment 2.
+// success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
 // @retail 0x1897c0
 bool function_1897c0(long local_player_index, long unit_index, long tag_index, s_location const *location, point3f const *origin, vector3f const *direction)
 {

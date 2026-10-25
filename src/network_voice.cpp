@@ -2491,6 +2491,9 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
  return result;
 }
 
+// score 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
+// Capacity named slots 124; native long preserve 144; final preferred-bit recomputation 161;
+// non-preservation-first finish 131; separate entry guards 124.
 // @retail 0x565c0
 void __stdcall function_565c0(s_voice_routing *routing, dword remaining, s_voice_route *output)
 {
@@ -2792,6 +2795,9 @@ struct s_voice_route_choice
 	real distance;
 };
 
+// score 394 (was 400): frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
+// byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
@@ -2802,12 +2808,11 @@ void function_57eb0(s_voice_player_settings *settings, long talker,
 	for (long i = 0; i < count; i++)
 	{
 		long player = choices[i].player;
-		long mode = choices[i].mode;
-		if (mode == 1)
+		if (choices[i].mode == 1)
 			headset |= 1 << player;
 		else
 			headset &= ~(1 << player);
-		if (mode == 2 || mode == 3)
+		if (choices[i].mode == 2 || choices[i].mode == 3)
 		{
 			settings->unknownc8[player] |= 1 << talker;
 			if (choices[i].mode == 2)

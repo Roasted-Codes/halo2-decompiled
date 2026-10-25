@@ -1047,6 +1047,9 @@ void __stdcall function_c4880(long unit_index)
 
 /* outside mode 4: steps the unit's 4-bit counter at +0x210 and marks the
    object +0xd4 names */
+// score 3 (was 3): indexed-load operands and final owner register differ;
+// mode early exit, index first, unit reload, second owner and counter scope 3;
+// signed counter 7; shared header entry 35; direct related field 3.
 // @retail 0xcea00
 void function_cea00(long unit_index)
 {
@@ -3168,6 +3171,9 @@ long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool h
 
 /* whether the object's root, simulated by Havok and not keyframed, has
    something in the way (0x168f40 from its main rigid body's position) */
+// score 12 (was 12): root and rigid-body offset saved registers differ;
+// entry result 89; native short body index 12 at 293 bytes; root cursor/seed 110/96;
+// parent while, existing keyframe method and point first 12; point value copy 46.
 // @retail 0xcc460
 bool __stdcall function_cc460(long object_index)
 {
@@ -3330,6 +3336,9 @@ long __stdcall function_c7160(long unit_index, short seat_index, long a, long ve
 
 /* throws away all the unit's grenades: outside mode 4 each one becomes a
    grenade object that is dropped (0xce470) */
+// score 364 (was 364): Frame 0xc8 versus 0xd8; drop helper stays out of line.
+// Inline drop 364; forced drop 148 loses exact callers; pointer body step 364; indexed counts 364;
+// entry placement 364; forced split count base 148; forced body step 148.
 // @retail 0xceb30
 void __stdcall function_ceb30(long unit_index)
 {
@@ -4008,6 +4017,9 @@ store:
    speed in a cone around the unit's aim on top of the unit's velocity
    (capped at 4 unless the unit's +0xc0 bit 1 is set), and deletes it in
    state 1 when it has nowhere to go and is not a predicted copy (0xa7670) */
+// score 13 (was 13): argument setup scheduling and squared-length XMM homes differ;
+// existing length/dot helpers, direction lifetime/name and named angle 13;
+// existing random-real helper 111; scale/add component loops 80/13.
 // @retail 0xce6b0
 void function_ce6b0(long unit_index, long name, long object_index, real scale)
 {
@@ -5745,7 +5757,7 @@ void function_c98a0(point2f const *direction, long unit_index, long type, short 
 
 /* sends a unit request straight to its handler and tells the player's
    controller how it went (as 0xce520 does for request 9) */
-static void unit_perform_request(long unit_index, long type)
+static __forceinline void unit_perform_request(long unit_index, long type)
 {
 	s_unit_request request;
 
@@ -5773,6 +5785,8 @@ static void unit_perform_request(long unit_index, long type)
 /* the unit dies: the biped's death (0xe4a20), its player and actor let
    go, its weapons and grenades dropped, it leaves its seat, its requests
    end (unless a ragdoll timer runs, when forced) and its actions stop */
+// score 323 (was 628): Frame 0x24 agrees; unit entry, callback loads and request-result homes differ.
+// Inline request helper 628; forced expansion 323; two-hand do/while 323; entry request workspace 324; zero aggregate 327.
 // @retail 0xcaa60
 void __stdcall function_caa60(long unit_index, long object_index, point3f const *point, bool knocked, bool force)
 {

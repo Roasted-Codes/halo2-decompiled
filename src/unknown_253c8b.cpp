@@ -344,7 +344,11 @@ void c_class_19b8b1::v3()
 	c_class_1a2c81::v3();
 }
 
-// score 14 (was 14): the shared sound tail follows both action tails rather than separating them;
+// score 14 (was 14): common sound tail sits after both direction tails;
+// tried guarded event arms 16f; primary owned fallback 50f; guards and primary fallback 50f;
+// local failure returns 22f; boolean sound 33f; byte sound 33f; sound before actions 39f;
+// guarded boolean sound 33f.
+// the shared sound tail follows both action tails rather than separating them;
 // default sound 51; shared action groups 43; reversed action groups 45; shared actions and
 // default sound 65; sound selection result 16; single result exit 14; shared event type 50;
 // shared direction flags 40.

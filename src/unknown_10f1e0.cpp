@@ -410,6 +410,10 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // score 37 (was 37): shift test, back-edge reload order and second-call/transform staging remain.
 // State pair helper 148; all state graph queries 37; both 148; entry state query 37;
 // mode/graph/class 105, graph/class/mode 44, class/graph/mode 106, class/mode/graph 110.
+// Frame agrees; the shift test versus retail mask, state/table reload order and
+// second lookup/transform staging still differ; shifted word expression 37; clear before object
+// chain 191; shift and clear order 191; entry marker workspaces 37; entry markers and shift 37;
+// entry markers and clear 191; complete workspace boundaries 191; model after clear 191.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)

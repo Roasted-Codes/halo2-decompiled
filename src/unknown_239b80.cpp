@@ -126,6 +126,8 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
+// score 42 (was 42): Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
+// normalizer input vector 126; compound scales 42; factor-first scales 42; positive normalizer scope 42; long point index 101; count-first guard 99; long state 86; plane/point names 42; forced normalizer 42; forced dot 42; both forced 42.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {
@@ -216,11 +218,11 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 
 /* gift wrapping: the indices of the convex hull of the points, starting from
    the lowest */
+// score 250 (was 261): scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
 	long hull_count = 0;
-	short **indices_reference = &indices;
 
 	if (function_239b80(count, points) == 2)
 	{
@@ -230,29 +232,22 @@ short function_239e50(short count, point2f const *points, short *indices)
 		real lowest_y = FLT_MAX;
 		short current = count;
 
+		for (short i = 0; i < count; ++i)
 		{
-			short i = 0;
-			if (i < count)
+			if (lowest_y - k_real_epsilon > points[i].y ||
+				lowest_y > points[i].y && lowest_x + k_real_epsilon > points[i].x ||
+				lowest_y + k_real_epsilon > points[i].y && lowest_x - k_real_epsilon > points[i].x)
 			{
-				do
-				{
-					if (lowest_y - k_real_epsilon > points[i].y ||
-						lowest_y > points[i].y && lowest_x + k_real_epsilon > points[i].x ||
-						lowest_y + k_real_epsilon > points[i].y && lowest_x - k_real_epsilon > points[i].x)
-					{
-						lowest_x = points[i].x;
-						lowest_y = points[i].y;
-						current = i;
-					}
-					i++;
-				} while (i < count);
+				lowest_x = points[i].x;
+				lowest_y = points[i].y;
+				current = i;
 			}
 		}
 
 		while ((short)hull_count < count)
 		{
 			real best_distance = -FLT_MAX;
-			(*indices_reference)[(short)hull_count++] = current;
+			indices[(short)hull_count++] = current;
 			short next = NONE;
 			real best_angle = FLT_MAX;
 			real best_delta = FLT_MAX;
@@ -270,7 +265,7 @@ short function_239e50(short count, point2f const *points, short *indices)
 						delta += g_55e470;
 					if (delta < best_delta - k_real_epsilon ||
 						!(delta > best_delta + k_real_epsilon) &&
-						(j == (*indices_reference)[0] || next != (*indices_reference)[0] && distance > best_distance))
+						(j == indices[0] || next != indices[0] && distance > best_distance))
 					{
 						best_distance = distance;
 						best_angle = angle;
@@ -285,10 +280,10 @@ short function_239e50(short count, point2f const *points, short *indices)
 			if (next == NONE)
 				goto finished;
 			if (!left_start)
-				left_start = !points2d_equal(&points[next], &points[(*indices_reference)[0]]);
-			if (next == (*indices_reference)[0])
+				left_start = !points2d_equal(&points[next], &points[indices[0]]);
+			if (next == indices[0])
 				goto finished;
-			if (left_start && points2d_equal(&points[next], &points[(*indices_reference)[0]]))
+			if (left_start && points2d_equal(&points[next], &points[indices[0]]))
 				goto finished;
 		}
 
@@ -297,10 +292,10 @@ short function_239e50(short count, point2f const *points, short *indices)
 			short j;
 			for (j = 0; j < i; j++)
 			{
-				if ((*indices_reference)[j] == (*indices_reference)[i])
+				if (indices[j] == indices[i])
 				{
 					hull_count = i - j;
-					memcpy(*indices_reference, &(*indices_reference)[j], sizeof(short) * (short)hull_count);
+					memcpy(indices, &indices[j], sizeof(short) * (short)hull_count);
 					break;
 				}
 			}
@@ -322,6 +317,7 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 // score 50 (was 50): initial count load, wrap-bound ownership and XMM allocation remain.
 // Edge first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50;
 // nested predicates 50; entry success 51; predicate result 51. Two-point gain rejected.
+// entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {
@@ -374,6 +370,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
+// score 243 (was 243): count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

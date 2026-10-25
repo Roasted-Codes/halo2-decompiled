@@ -88,7 +88,11 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // score 29 (was 29): table/pulse setup, rectangle source and occupied/height registers remain;
 // rectangle memcpy 29; native zero rectangle 132; both 132; occupied result 70; copy/result 70;
 // zero/result 156; all boundaries and native quad 156/156.
-// score 29 (was 29): pulse/table setup, rectangle source and occupied/height homes remain;
+// score 29 (was 29): Frame and query schedule agree; pulse/table acquisition, draw-copy ADD versus
+// LEA and occupied-width/height SSE roles remain different; native draw bounds 29; native width
+// bounds 29; native bounds records 29; complete native quad 29; quad and draw bounds 29; quad and
+// width bounds 29; complete native boundaries 29; vertical corner order 32.
+// pulse/table setup, rectangle source and occupied/height homes remain;
 // dimension names, entry height/width, height/width at use and vertical/horizontal/early vertical bounds
 // 29, 29, 29, 35, 200, 47, 54, 40.
 // @retail 0x200462

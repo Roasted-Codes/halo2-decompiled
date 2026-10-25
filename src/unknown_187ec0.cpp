@@ -329,6 +329,18 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 // native parent assignment 21; native requested index 22; both indices 21, direct input 33; native hit return 21; result first 21.
 // Native parent/request/both formals 22/14/14; register parameter second/third/last 22/22/22;
 // native parent with register last 22; native indices with register second 14. All restored: unmatched index wrappers rejected.
+// initial word load, requested-index/table register ownership and lookup schedule still differ.
+// This round: success before parent 28; native carry with alias 30; initial negative guard 73; signed loop admission 79; walking formal 38; direct native carry 35; complete per-tag result 56; success inside tag arm 28.
+// initial short load and global-table/entry-index register lifetimes differ.
+// Earlier requested-index snapshot 22; parent snapshot 28; explicit lookup 22; found return 22;
+// word carry 22; result first 22; one-element array 21; for parent walk 71; parameter walk 22;
+// entry local, null break, shared return and memcpy copy 22. Direct short carry 33; native carry 31;
+// result loop guard 22; tag workspace lifetime 22; ancestor local names 22; complete result 30;
+// native carry with stack input 23; existing entry lookup 105.
+// initial word load, EBP entry/table lifetime and lookup registers remain;
+// native entry formal 22; native parent formal 22; both native formals 22;
+// direct tag field 22; current-element traversal 141; separate inline declaration 22;
+// separate noinline declaration 22; existing element query 59.
 // @retail 0x1882d0
 s_seat_animation_entry *function_1882d0(long type, short element_index, long index, short entry_element_index)
 {
