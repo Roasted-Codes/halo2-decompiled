@@ -236,6 +236,9 @@ void function_193b30(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills a variant of type 1, or of type 2 when flag is set */
+// score 34 (was 34): mode production and settings-copy schedule still differ; 98/92 bytes. (held: the 23 wrote the type as 2 >> !flag, an arithmetic stand-in for the conditional, like round M139's 2 - !flag)
+// Left/right shift and XOR complement at call 33/23/32; same values produced before delay 33/23/32;
+// full delay-workspace initialization 66, with XOR mode 68. Right shift retained after plain whole-image check.
 // @retail 0x193ba0
 void function_193ba0(long scale, bool flag, s_built_variant *variant, long name_string, long description_string, dword field_8, s_variant_place_settings const *settings, long field_59c)
 {

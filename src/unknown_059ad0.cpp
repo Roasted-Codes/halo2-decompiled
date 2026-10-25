@@ -2879,6 +2879,8 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 /* a channel of a member connected (a peer tells the host it is there) or
    closed */
 // score 31 (was 31): state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
+// Dead snapshot omitted 38; entry/disconnect snapshot scope 31/31; entry snapshot/message orders 31/31;
+// shared lookup without snapshot 38, with entry snapshot 31, with entry message/snapshot 31; all restored.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
 {

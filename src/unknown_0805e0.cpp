@@ -52,6 +52,9 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 
 /* the next recent player after the iterator's: a valid, online, known player
    with a name; iterator starts at the first entry and ends at NONE */
+// score 43 (was 43): successor register, exclusion mask and loop rotation still differ; 127/127 bytes.
+// Native identity OR/logical OR 83/78; each with native name 83/78; native name alone 43;
+// shared player receiver 43, with native OR/name 83, with native logical OR/name 78; all restored.
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {

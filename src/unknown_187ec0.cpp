@@ -141,6 +141,8 @@ public:
 // score 33 (was 42): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
 // Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
+// Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
+// inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {
@@ -325,6 +327,8 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 
 // score 22 (was 22): EBP holds the table instead of the requested index; native walk index 21, direct input 33;
 // native parent assignment 21; native requested index 22; both indices 21, direct input 33; native hit return 21; result first 21.
+// Native parent/request/both formals 22/14/14; register parameter second/third/last 22/22/22;
+// native parent with register last 22; native indices with register second 14. All restored: unmatched index wrappers rejected.
 // @retail 0x1882d0
 s_seat_animation_entry *function_1882d0(long type, short element_index, long index, short entry_element_index)
 {
