@@ -8,6 +8,7 @@
 #include "object_iterator.h"
 #include "unit_requests.h"
 #include "unknown_11cc90.h"
+#include "data_iterator.h"
 
 // @flags /O2 /Gr /arch:SSE
 
@@ -279,71 +280,68 @@ void __stdcall function_202570(long group_index)
 	group->active = active;
 }
 
-/* the group walk of 0x202370 and 0x2024c0 */
+/* the group walk of 0x202720 */
 PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_record_iterator *iterator)
 {
 	return iterator->group = g_4f55d0->active ? (s_squad_group_datum *)data_iterator_next_inlined(&iterator->records) : NULL;
 }
 
-// score 57 (was 57): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
-// count and the bit mask take the other two registers.
-// const record 57; existing bool iterator 126; existing search boundary 123.
-// bool iterator size 147; one inline level 57; frame pointer 64.
-// global optimization 102; size preference 145.
-// Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
-// typed parent lookup 78; retained handle lookup 78; root predicate 57;
-// sentinel cursor with typed parent 65. Null-result lifetime still differs.
-// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
-// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
-// actual parent-field reference 57; actual record reference 57. Null-result join remains.
-// @retail 0x202370
-void function_202370(void)
+/* walks the squad groups of g_51e9dc, only while the ai is active */
+struct s_group_datum_walk
 {
-	s_group_record_iterator iterator = {0};
+	s_data_datum_iterator iterator;
+	long group_index;
+};
+
+static inline void group_datum_walk_new(s_group_datum_walk *walk)
+{
 	if (g_4f55d0->active)
 	{
-		iterator.records.data = g_51e9dc;
-		iterator.records.index = NONE;
-	}
-	s_squad_group_datum *group;
-	while ((group = next_group_record_202370(&iterator)) != NULL)
-	{
-		if (group->parent_index == NONE)
-			function_202420(iterator.records.datum_index);
+		walk->iterator.data = g_51e9dc;
+		walk->iterator.index = NONE;
+		walk->iterator.datum_index = NONE;
 	}
 }
 
-// score 57 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
-// count and the bit mask take the other two registers.
-// const record 62; existing bool iterator 154; existing search boundary 134.
-// value initializer 57; zero initialization call 60; frame pointer 55.
-// global optimization 124; size preference 158.
-// Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
-// typed parent lookup 78; retained handle lookup 78; root predicate 57;
-// sentinel cursor with typed parent 65. Null-result lifetime still differs.
-// score 57 (was 57): nullable search result and pool/mask register lifetimes remain.
-// Guarded zero/native/member/library initialization 63/82/82/63;
-// inactive early return with each initialization 63/82/82/63.
-// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
-// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
-// actual parent-field reference 57; actual record reference 57. Null-result join remains.
-// score 57 (was 57): null-result join and pool/index/mask allocation remain.
-// Direct native cursor, zero/member/ready/conditional initialization with ternary
-// tests 97/97/117/97; conjunction tests 80/100/99/95. Original wrapper retained.
+/* the next squad group while the ai is active, or NULL */
+PRIVATE __forceinline s_squad_group_datum *group_datum_walk_next(s_group_datum_walk *walk, bool active)
+{
+	s_squad_group_datum *group = NULL;
+
+	if (active)
+	{
+		if (data_datum_iterator_next_inlined(&walk->iterator))
+			group = (s_squad_group_datum *)walk->iterator.datum;
+		walk->group_index = walk->iterator.datum_index;
+	}
+	return group;
+}
+
+/* runs 0x202420 for each squad group without a parent */
+// @retail 0x202370
+void function_202370(void)
+{
+	s_group_datum_walk groups;
+	group_datum_walk_new(&groups);
+	s_squad_group_datum *group;
+	while ((group = group_datum_walk_next(&groups, g_4f55d0->active)) != NULL)
+	{
+		if (group->parent_index == NONE)
+			function_202420(groups.group_index);
+	}
+}
+
+/* runs 0x202570 for each squad group without a parent */
 // @retail 0x2024c0
 void function_2024c0(void)
 {
-	s_group_record_iterator iterator = {0};
-	if (g_4f55d0->active)
-	{
-		iterator.records.data = g_51e9dc;
-		iterator.records.index = NONE;
-	}
+	s_group_datum_walk groups;
+	group_datum_walk_new(&groups);
 	s_squad_group_datum *group;
-	while ((group = next_group_record_202370(&iterator)) != NULL)
+	while ((group = group_datum_walk_next(&groups, g_4f55d0->active)) != NULL)
 	{
 		if (group->parent_index == NONE)
-			function_202570(iterator.records.datum_index);
+			function_202570(groups.group_index);
 	}
 }
 
@@ -1858,6 +1856,13 @@ bool function_1e11b0(long actor_index, bool active);
 // Actual squad/actor/both record references 64/64/64;
 // result from update 79; retained Boolean guard/result 70; proven success exit 79;
 // update result with squad reference 79; Boolean result with actor reference 70.
+// score 64 (was 64): the squad pointer stays in EBX where retail keeps the handle in EBP and spills
+// the pointer to the handle's argument slot; loop rotation and return width as above. Inlined
+// actor step under the depth-zero pragma (stays a call) 100; the step inlined with the pragma
+// dropped and the two callees declared noinline 78 (184 bytes; unrotated loop and the or-byte
+// flag store as in retail, structural 16 against 19); that with no parameter address 78, an actor
+// index local 78, both 78, the squad getter 78, the iterator's handle stored 85, the squad
+// re-fetched after the loop 76.
 // @retail 0x203bf0
 bool function_203bf0(long squad_index)
 {
