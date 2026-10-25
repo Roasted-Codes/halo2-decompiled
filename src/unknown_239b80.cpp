@@ -318,6 +318,9 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 }
 
 // score 50 (was 50): entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
+// score 50 (was 50): entry count load, word tail and XMM edge/offset homes remain.
+// Current point value 111; advancing point cursor 58 at 184 bytes; ordinary while 50;
+// named edge squares/cross products/both 50/50/50; point value with edge squares/both 111/111.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {
@@ -344,6 +347,10 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 	return result;
 }
 
+// score 31 (was 31): short body index/tail width and point/wrap homes remain.
+// Difference helper ordinary inline/pointer result/input references 31/31/31;
+// input values 161; staged differences 31; output reference 31;
+// current point value 82; advancing current-point cursor 42.
 // @retail 0x23a220
 bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
 {

@@ -47,6 +47,10 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Separate offset loops 226; output cursor 225; short transform index 405;
 // first/second bound at uses 225/236; bound declaration order 227;
 // separate offsets with output cursor 221 plain (1145/1136 bytes); short index/first bound 397.
+// score 221 (was 221): extra frame dword and coefficient/result/tail homes remain.
+// On the output-cursor form: forward/up/right snapshots 275/275/269;
+// all coefficients before/after scale 453/448; shared scale 252 at 1136 bytes;
+// early/late coefficients with shared scale 478/477.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

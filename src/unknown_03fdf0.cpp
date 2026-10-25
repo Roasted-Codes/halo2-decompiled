@@ -278,6 +278,10 @@ bool function_404b0(long mode)
 // first multipass 269; shared second multipass 281; shared conditional pass 273; shared twentieth pass 269;
 // shared seventh pass 269; shared all passes 291; forced shared all passes 291; shared final result two
 // consumers 291; native final result two consumers 291.
+// score 226 (was 226): unsigned-zero branch, pass-result stores and call joins remain.
+// Late single/third/both success publication 220/212/210; single/third/conditional
+// result arms 232/214/226; all result arms 204 at 1217 bytes;
+// ordered conditional result 221. All unmatched flag-publication forms restored.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {
