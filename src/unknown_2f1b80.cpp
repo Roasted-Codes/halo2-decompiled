@@ -34,8 +34,11 @@ public:
 
 // the contact of a sphere with a box, added to the output with the id the
 // owner hands out; a miss drops it and hands the id back
-// score 37 (was 67): the centre and body B take edi and ebx where retail has
+// score 37 (was 37): the centre and body B take edi and ebx where retail has
 // ebx and edi, and three 4-byte stack slots are packed differently.
+// Further trials: output element/record/both role names 37 each; output work
+// scope alone/element name 37/37; id role name 37; output receiver before
+// the mark alone/element name 37/37. Shared geometry retained unchanged.
 // @retail 0x2f1b80
 void class_2f1b80::function_2f1b80(void const *a, void const *b, void const *input, void *collector)
 {

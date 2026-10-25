@@ -250,6 +250,9 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 // Further trials: split reciprocal lifetime 49; late reciprocal field 49;
 // sphere value snapshot 61; size preference 40; explicit scalar splat 48;
 // in-place delta 33; named radius times two 33; aligned intrinsic loads 48.
+// Further trials: native centre/diameter field 33; packed output 75; pending
+// before state with original/native field 36/36; coordinate scope 33/33;
+// existing zero setter with original/native field 71/71.
 // @retail 0x2ddbd0
 void __cdecl function_2ddbd0(void *data, s_visibility_sphere_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)
