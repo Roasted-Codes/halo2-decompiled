@@ -1254,6 +1254,9 @@ struct s_player_properties
 // Session-root control 199; owner at use 239; empty name table 222; first name unit 240; requested name
 // length 199; native requested/current/both records 264/212/293; direct requested fields 184 plain, 926/916
 // bytes. Name-count spill, zero lifetime and requested cursor still differ.
+// Requested/current/both property references 199/199/199; name/update bits at use 228/224;
+// packed initialization word 238; contiguous payload copy 284; contiguous tail copies 263
+// (all plain). Owner/count allocation and the requested cursor remain unchanged.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

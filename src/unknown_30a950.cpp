@@ -129,6 +129,9 @@ struct new_faces_30ae70
 // Const pointer, input reference and captured array base 4; intrinsic
 // write on this reference 5; input reference with pointer writes 46; array
 // before pointer 24; named result and unsigned flags 4. Body retained.
+// Further forms: pointer after array construction 23; pointer, array and
+// element-reference renames 4 each; early pointer declaration 4; field
+// reference 5; unsigned ordinal and input-pointer copy 4.
 // @retail 0x30ae70
 int class_30a810::function_30ae70(long count, edge_30aac0 *horizon, __m128 const *position)
 {

@@ -74,6 +74,10 @@ void function_2232a0(void)
 	function_2c8a0((byte const *)function_2232a1(&g_47f0f8[0]));
 }
 
+// score 151 (was 151): count-one paths skip the common count/layout join;
+// slot-predicate materialization and final initializer residences differ.
+// Mode/options receivers, mode result, external count/slot references, typed selected
+// record, terminal record reference and both record receivers each 151 (575 bytes).
 // @retail 0x2234e0
 void function_2234e0(void)
 {

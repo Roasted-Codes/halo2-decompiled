@@ -77,6 +77,9 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // scalar XY inputs 401 (sibling 10); epsilon failure first 398; geometry before trig 398;
 // ordinary inline 389; single dot clamp 396. Early J and scalar homes still differ.
 // J snapshot 395; I/J snapshots 392; axis by value 502; destination first 389; XY common result 389.
+// real sine/cosine/pair 395/395/389; real yaw inverse cosine 401; shared
+// weighted axis/cross/both/input vectors 431/427/420/423; all restored;
+// matched sibling and both matched callees preserved throughout.
 // score 389 (was 389): frame 0x2c agrees; early J load and magnitude/angle homes still differ.
 // Complete input for length 497; input for normalization 496; point input 419; both inputs 513;
 // immutable one/both magnitudes 389/389; earlier length publication 396; immutable rotation outputs 389.
