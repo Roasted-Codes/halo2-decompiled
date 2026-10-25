@@ -2,6 +2,16 @@
 
 The newest entry comes first.
 
+## 2026-10-25: 9616 functions match
+
+```
+matched 9616 of 11321 game functions (1535660 of 2784283 bytes, 55.15%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+2 new matches, none lost:
+- @coldspear's #811: `0x86ad0` and `0x98480` match.
+
 ## 2026-10-25: 9614 functions match
 
 ```
