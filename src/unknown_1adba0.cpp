@@ -306,6 +306,9 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 }
 #pragma optimize("", on)
 
+// score 61 (was 61): first range FADDP remains fused; frame and tick-conversion tail agree.
+// Existing rounding boundary for delay/duration/both, shared short/real clock, first output before
+// duration, early output with rounding and shared clock with rounding 68, 65, 71, 75, 75, 79, 100, 89.
 // @retail 0x1aded0
 bool __stdcall function_1aded0(long actor_index, s_slot *slot)
 {

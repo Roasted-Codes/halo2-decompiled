@@ -78,6 +78,9 @@ static __forceinline void decode_direction_194d30(long index, vector3f *directio
 	direction->k = z * face->axes[2].k + y * face->axes[1].k + x * face->axes[0].k + face->origin.k;
 }
 
+// score 62 (was 62): decode zero/scale schedule and final-component x87 forwarding remain;
+// workspace names, formatter scope, unsigned index, complete bounds, shared rounding, shared/existing
+// decoded normalization, completed decode output and decoder pointer/vector results 62, 62, 62, 122, 72, 62, 62, 88, 62, 155.
 // @retail 0x194d30
 void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *forward)
 {
