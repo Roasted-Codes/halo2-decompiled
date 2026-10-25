@@ -122,6 +122,9 @@ short function_1a77a0(long actor_index, long a, short level);
 // score 72 (was 72): actor-pool save and distinct zero exits remain.
 // Native iterator after/before type gate 74/76; fieldwise before gate 76;
 // entry iterator 121; read-only actor/view 72/72; seeded scan 85; combined native inputs 74.
+// score 72 (was 72): actor-data save and query/return staging remain.
+// Forced existing actor/node/joint/all queries 136/147/122/181; separate view gate 72;
+// character result 72 (exact-only); forced existing view query 72; read-only node/joint 72.
 // @retail 0x1b4680
 short __stdcall function_1b4680(long actor_index)
 {

@@ -146,6 +146,10 @@ void owner_30c8e0::function_30f340(member_30c8e0 *member)
 // adds the member, gives its island the constraints added with it, and notes
 // each member its constraints and actions tie it to that is not fixed; an
 // action the fixed island held moves to the member's island
+// score 47 (was 47): dying-index owner stores and pair count/array registers differ.
+// Common/conditional endpoint 320/320; distinct member arms 58; shared list counter 65;
+// native pair publication 266; selected pair publication 329; selected final element 320;
+// both final element pointers 31 (exact-only, restored).
 // @retail 0x30f380
 void owner_30c8e0::function_30f380(member_30c8e0 *member, constraints_30f380 const *added)
 {

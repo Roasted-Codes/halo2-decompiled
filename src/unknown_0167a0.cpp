@@ -324,6 +324,9 @@ struct s_2f6b0_point
 // and origin/step allocation still differ. Direct horizontal/vertical/both origins 99/29/102; output readback/native 94/94.
 // Both direct origins with readback/native/late full 102/102/102; on vertical-direct,
 // rectangles swapped/late full/global vertical value/global horizontal value 101/102/67/101.
+// score 29 (was 29): initial rectangle load order and origin/step registers remain.
+// Full/bounds/both library copies 29/29/29; native edge construction 129;
+// snapshot vertical origin 105; recovered-frame rectangle names 29; short horizontal origin 113; native step construction 29.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)
@@ -565,6 +568,9 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 // score 68 (was 130): frame 0x3c agrees; zero/scale/trigonometric register allocation differs.
 // Zero-angle defaults on their own branch 68; shared rounded angle 166;
 // basis before translation 168; role-named workspaces 130; value-initialized matrix 133.
+// score 68 (was 68): zero/scale/trigonometric allocation remains.
+// Sine/cosine default alone 69/70; defaults after clear/split phases 131/131;
+// Y-scale first 69; clear before scales 68; planar/complete output rows first 99/150.
 // @retail 0x1b790
 bool function_1b790(byte const *state, long index, real *out, long mode)
 {
