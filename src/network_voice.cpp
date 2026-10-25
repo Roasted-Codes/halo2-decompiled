@@ -1283,6 +1283,8 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 // score 134 (was 134): player input is EDI rather than EAX; mask and length
 // homes differ. Five coordinated register-input orders 134; shared invalid
 // exit 169; entry size as unsigned word 188 or byte 170. Original kept.
+// Real entry/header/both field views 134; direct valid range 153; remaining-budget local 171;
+// result length before header with raw/entry/all fields 134.
 // @retail 0x55c40
 long function_55c40(s_voice_queue *queue, long player, byte *cursor, byte *output, long capacity, bool include_mask)
 {
@@ -2451,10 +2453,15 @@ void function_56790(long *capacity, dword *remaining, dword allowed, word *selec
 	}
 }
 
-// @retail 0x53b00
 // score 4 (was 4): retail calls function_56380 with the output pointer in eax and
 // the channels, player and capacity on the stack; our callee takes them in another
 // order, so the call and its two pushes differ.
+// Guarded return 20; fully assigned result arms 23; conditional count 23;
+// enabled-query lifetime 21; scoped count 23; packet lifetime 4; available-byte
+// lifetime 4; immutable input bindings 4. The original call tuple remains.
+// Separate packet-call / gate / both declarations 4; assigned result with noinline 23;
+// numeric query result with forceinline / both 19; guarded single exit with either boundary 4.
+// @retail 0x53b00
 long __stdcall function_53b00(long player, byte *output, long capacity)
 {
  long result = 0;
@@ -2946,7 +2953,9 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
  return count;
 }
 
-// score 139 (was 139): frame and extent agree; channel/cursor/count registers and route homes differ.
+// score 139 (was 139): channel/cursor/count registers and route homes differ;
+// frame pointer 188; short stride 163; short index 139; recipient-bit reuse 161; route name 139.
+// frame and extent agree; channel/cursor/count registers and route homes differ.
 // Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
 // entry route lifetime 139; ordinary delivery arm first 162.
 // @retail 0x55e10

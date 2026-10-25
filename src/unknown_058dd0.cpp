@@ -1834,6 +1834,9 @@ bool network_session_host_become_leader(c_class_58d20 *session);
 // readiness before countdown 140; shared live-state predicate 90.
 // Owner/secondary/primary/paired object references 90; completion from test 129;
 // host return guard 90; paired preparation result 90; reversed timed-type tests 93.
+// Shared type/all failure commands 144/128; combined mode-readiness 90 (426 bytes);
+// preparation failure first 90; raw-time readiness 94; unsigned saturated time 90;
+// completion before mode call 90; shared failures with combined gate 129.
 // @retail 0x72700
 bool c_session_state_start_match::update()
 {

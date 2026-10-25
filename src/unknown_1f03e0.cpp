@@ -495,6 +495,7 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // cosine first 183; shared cosine scale 241; native settings mask 303.
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
+// Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -850,7 +851,10 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
     out->k = i * matrix->forward.k + j * matrix->left.k + k * matrix->up.k;
 }
 
-// score 101 (was 101): reading the input vector's components at each use in shape_rotate_vector scores
+// score 101 (was 101): final override load order and rotation input/coefficient schedule differ.
+// Rotation pointer/reference results 101/101; matrix reference 101; remaining helper orders 101/101/101.
+// Deferred rotation stores 102; left-coefficient snapshots 102; original alias copy and arithmetic restored.
+// reading the input vector's components at each use in shape_rotate_vector scores
 // 76-82, but both calls rotate in place (input and out are the same vector), so every input component
 // must be read before the first store; that form is not kept.
 // Final override load order and rotation input/coefficient allocation still differ.
@@ -949,6 +953,7 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // accepted-count pass bound 492; result publication 431.
 // Ordinary count with search cursor 525; candidate countdown 474; fixed-pass do loop 427;
 // snapshot projection helper 428; native relative-velocity subtraction 642.
+// Frame pointer 692; depth zero 967; size preference 1011; moving arm first 449; native component subtraction loops 427 (one-point gain rejected).
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)

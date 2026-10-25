@@ -125,6 +125,10 @@ struct s_24e9c7_bounds
 // Scalar homes, sprite source and geometric spills remain; shader snapshot 174;
 // sequence count snapshot 160; sequence field at use 125; unscaled height/width/both 125;
 // shared forward values 161; external bitmap reference 125.
+// Native input direction/center/both 125/125/125; direct quad array 125; span locals 125;
+// early basis / scale / basis with spans 125/125/125 (fast).
+// Basis i/j/both product input orders 125; upper or side inputs 125;
+// basis with upper / side / both input orders 125. Original products retained.
 // @retail 0x24e9c7
 real function_24e9c7(s_24e9c7_marker const *marker, s_24e9c7_placement const *placement)
 {

@@ -732,6 +732,10 @@ dword function_1a7ad0(long owner_index)
 // score 96 (was 96): Owner/output register ranks, fallback base and intersection schedule still differ;
 // aggregate selection 119; initial/default bitset values 190/167; shared intersection 109;
 // aggregate plus shared intersection 144; common return, fallback handle, phased table 96 each.
+// owner/output register ranks, fallback-base LEA and intersection setup differ.
+// Nullable definition 81 (adds a null branch); typed fallback 96; both 81;
+// const owner, definition, source, tags and object/element views 96 each;
+// ordinary shared source copy 143; shared copy with owner tag 143.
 // @retail 0x1a7b30
 void function_1a7b30(s_flag_bits *result, long owner_index)
 {
@@ -1160,6 +1164,8 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
 // Support handle 18; nullable component 110; body read first 30;
 // valid body interval 85; entry workspace 18; unit-scope workspace 18;
 // const support 18; unsigned object handle 18.
+// Round 109: ordinary scale inline 18; scale pointer result 18; three scale formal orders 18;
+// scale input reference 18; point-query noinline 18; velocity-query noinline 18.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {
@@ -1987,6 +1993,9 @@ struct s_1a5370
 
 // score 10 (was 10): the local record sits at a different stack address and its fields are read
 // from different offsets.
+// Retail bases the induction cursor at candidate+0x14, not +0; after-sort and full-lifetime aliases 10;
+// radius-origin parent, pointer arithmetic, indexed/const/array views, index/count lifetimes and output
+// indexing 10 each.
 // @retail 0x1a5370
 bool __stdcall function_1a5370(s_sort_weight_view const *arg_0, point3f const *arg_1,
 	vector3f const *arg_2, long arg_3, short arg_4, s_sort_candidate_view *arg_5)

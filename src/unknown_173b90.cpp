@@ -696,6 +696,8 @@ s_effect_particle_system_definition *s_particle_system_datum::function_1751d0()
 
 // score 21 (was 21): the or-ed mask is written into the local after the call arguments are pushed
 // here and before them in retail.
+// The final callee takes its flag on the stack, not in AL; inline+noinline, noinline and inline 21;
+// force-inline 21 with caller regressions; late values, flag, location and successor-reference forms 21.
 // @retail 0x175270
 void function_175270(s_particle_system_datum *particle_system, s_particle_system_spawn *spawn, transform4x3f const *matrix, bool field_b4)
 {
@@ -1104,6 +1106,9 @@ bool function_17afd0(long effect_index, long value);
 // Next-slot assignments 107; word absolute slot 158; separate scan result 107;
 // shared datum conversion 199; long attachment 120; short same-view 145; byte draw 107;
 // long camera-relative 144 (fast preview 107, full 106). Original body retained.
+// Round 109: unavailable predicate 148; other-view predicate 146; detached predicate 108;
+// fixed-camera result 148; external system reference 107; nullable effect view 149;
+// const definition 107; packed effect handle 107 (fast preview 107, full 106).
 // @retail 0x174220
 // score 106 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
 // availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag

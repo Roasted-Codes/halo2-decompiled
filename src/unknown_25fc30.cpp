@@ -909,9 +909,14 @@ void __stdcall function_25edd0(
 	}
 }
 
-// score 50 (was 50): iterator setup, bonus tests/multiplies and query load scheduling differ.
+// score 50 (was 50): protected iterator setup and range-bonus comparisons/multiplies differ.
+// Normalized clamp 66; bounded raw margin 137; positive fraction 83; source-domain fraction 51;
+// nested candidate 50; conditional weapon result 50; real unit reference 50; guarded owner result 264.
+// iterator setup, bonus tests/multiplies and query load scheduling differ.
 // Upper-margin-first 58; range once/limit once/range before root 155; full-width mode 258;
 // reversed style cases 50; forward position countdown 255; nearest conditional 50.
+// Selected-arm staged scales 72; upper-first staged 66; half by division 50;
+// selected margin carrier 186; near/far or separate bonus names 50; staged/name pairs 66.
 // @retail 0x25eea0
 void __stdcall function_25eea0(
 	long actor_index,

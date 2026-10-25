@@ -747,6 +747,10 @@ real normalize2d(point2f *v);
 // planar component stores 265; native masks/metadata snapshot 172 each;
 // retry requirement 196; first type from bits 277. Fast-byte zero and trajectory convention
 // still differ; original body restored.
+// score 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// result homes differ. Validity initialized in typed arm 241; first type initialized by branch
+// 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
+// movement flag stores 174; retry speed first 172; native planar output copies 172.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

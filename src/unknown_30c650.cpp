@@ -206,6 +206,10 @@ static void __cdecl function_30d0c0(pointers_30c650 *out, owner_30d480 const *ow
 // the capacity parameter renamed 76. Kept: complete flags with ordered stores
 // and the byte count written in the call 72 (the named byte count, 76, is a
 // one-use local and not kept).
+// Further trials: signed ownership 183; view member initializers 181;
+// release function defined separately, input/output object references, unsigned
+// complete flags and distinct gathered types 72; cleanup resets 122;
+// signed release multiplication and a full-flags snapshot 72.
 // @retail 0x30d480
 void __cdecl function_30d480(owner_30d480 const *owner, pointers_30c650 *out)
 {

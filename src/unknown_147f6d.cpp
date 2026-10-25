@@ -1200,10 +1200,12 @@ bool __stdcall function_148f36(long controller)
 }
 
 /* whether the user's frontmost screen takes the user's input */
-// score 73 (was 73): the two global checks come before the address is computed
-// in retail and after it in ours, retail keeps the address in esi and calls the
-// helper with it while ours calls the helper with the index
-// @retail 0x148fff
+// score 69 (was 66): retail keeps the user index on the stack (its only caller
+// 0x186ab0 pushes it and the function ends with ret 4, so the standard marker
+// below gives it that convention and lets that caller match, 245 -> 149); the
+// body still differs in the layout of the three fixed windows' blocks and in
+// the empty case of the last window.
+// @retail 0x148fff standard
 bool __stdcall function_148fff(long user_index)
 {
 	bool result = false;
@@ -1217,18 +1219,26 @@ bool __stdcall function_148fff(long user_index)
 	{
 		c_window_channel *window;
 
-		if (index == 4 && function_1473b6(window = &g_54d598.window_0))
-			result = window->function_235276(user_index);
+		if (index == 4 && function_1473b6(&g_54d598.window_0))
+			window = &g_54d598.window_0;
 		else if (function_1473b6(&g_54d598.windows_1[index]))
-			result = g_54d598.windows_1[index].function_235276(user_index);
+			window = &g_54d598.windows_1[index];
 		else if (index == 4 && function_1473b6(&g_54d598.window_2))
-			result = g_54d598.window_2.function_235276(user_index);
+			window = &g_54d598.window_2;
 		else if (function_1473b6(&g_54d598.windows_3[index]))
-			result = g_54d598.windows_3[index].function_235276(user_index);
-		else if (index == 4 && function_1473b6(window = &g_54d598.window_4))
-			result = window->function_235276(user_index);
+			window = &g_54d598.windows_3[index];
+		else if (index == 4 && function_1473b6(&g_54d598.window_4))
+			window = &g_54d598.window_4;
 		else if (function_1473b6(&g_54d598.windows_5[index]))
-			result = g_54d598.windows_5[index].function_235276(user_index);
+			window = &g_54d598.windows_5[index];
+		else
+		{
+			window = 0;
+		}
+		if (window)
+		{
+			result = window->function_235276(user_index);
+		}
 		if (index == 4)
 		{
 			break;
