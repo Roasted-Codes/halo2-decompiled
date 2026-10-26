@@ -12,10 +12,12 @@ struct s_1badc0
 
 real normalize2d(point2f *arg_0);
 
-// score 220 (was 277): frame 0x90 agrees; output EBX/EBP, point/vector homes and SSE scheduling differ.
+// score 220 (was 220): frame 0x90 agrees; output EBX/EBP, point/vector homes and SSE scheduling differ.
 // Delayed vertical zero 274; with center difference 271; native 2D perpendicular 286/285;
 // complete aggregate 277/274; delayed zero and early three-use clearance 220; with center 259.
 // Delayed zero and early clearance kept; other executable forms restored.
+// Shared perpendicular 265; split squared/root distances 220; both 265; clean output with shared/split/both
+// 282/279/282; shared perpendicular with coherent point source 225; with split distances 225.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

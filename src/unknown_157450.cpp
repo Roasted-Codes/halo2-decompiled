@@ -3867,6 +3867,7 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 358: Category-only byte 545; modifier-only byte 530; modifier after category predicate 543;
 // exhaustive subtype result 566; entry statistics ordinal 557. Frame/NONE and decision homes remain; opening
 // body and shared award update restored.
+// Clock/round/options base snapshots 566/481/487; clock-round/clock-options/round-options/all 492/558/548/496; role-named marker and both events 470. Frame and attacker/NONE homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
