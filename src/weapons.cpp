@@ -3010,14 +3010,18 @@ struct s_ammo_conversion_entry
     long definition_index;
 };
 
-// score 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
+// score 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
-// score 203 (was 203): frame agrees; destination/tag and search carriers remain.
+// Earlier: frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
 // direct retention predicate 213; loaded value clamp 203. Original body restored.
-// score 203 (was 203): Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
+// Earlier: Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
 // Conversion ordinal 203; same-definition carrier 224; destination object reference 203; magazine
 // reference 203; source sum order 203; native conversion fields 203.
+// Round 132: word acquisition result 198 plain kept (731/731 bytes), frame 0x24/0x20;
+// destination/tag and conversion staging remain. Byte result/retention/both 200/203/200; word
+// retention/both 207/199; result/both at entry 200/202; word/byte result with type rereads
+// 238/215; word result/both at entry 225/226.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3027,7 +3031,7 @@ bool __stdcall function_ffc60(long weapon_index, long other_index, long player_i
     s_weapon_definition *other_definition = WEAPON_DEFINITION(other);
     *rounds = 0;
     bool other_has_rounds = false;
-    bool acquired = false;
+    short acquired = false;
     for (short i = 0; i < definition->magazine_count; ++i)
     {
         s_weapon_magazine_definition *magazine_definition = &definition->magazines[i];

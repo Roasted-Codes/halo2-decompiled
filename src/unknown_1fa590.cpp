@@ -48,6 +48,9 @@ struct s_motion_adjustment_result
 // 96.
 // Raw-delta name 86; unit-direction name 86; combined-vector name 86; two offset names 86; entry
 // length 86; entry step 86; both scalar declarations 86; normalization scope 86.
+// Round 132: left/up/both in-place scale [95, 109, 109]; left/up/both native weighted values
+// [95, 109, 108]; mixed in-place/value scales [109, 109]. Early normalization J/K loads and
+// tick clamp remain.
 // @retail 0x1fa810
 void __stdcall function_1fa810(long *ticks, s_motion_adjustment_result *out, s_motion_adjustment const *state)
 {

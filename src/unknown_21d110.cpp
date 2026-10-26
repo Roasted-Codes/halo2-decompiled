@@ -326,6 +326,10 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Availability/allocation/accessor expansion declarations and all three together 204 each;
 // immutable state/tag/both input bindings 204 each; all boundaries with both bindings 204. Frame
 // and opposite start/delete expansion remain; protected caller cycle preserved.
+// Round 132: creator noinline/inline+noinline/inline 204 each; outlined creator with shared
+// start expansion 80/80; query/attachment/both call boundaries with that expansion 80 each, all
+// five lose eight callers. Frame and start/delete expansion remain; original body and metadata
+// restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
