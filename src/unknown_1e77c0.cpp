@@ -663,8 +663,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 }
 
 long function_1469f0(real seconds);
+// score 279 (was 279): frame 4/12, early slot spill and state/displacement/final-cursor homes remain.
 
-// score 279 (was 279): Frame 4/12, early slot spill and state/transition/flag homes remain.
+// Earlier: Frame 4/12, early slot spill and state/transition/flag homes remain.
 // Earlier: frame 4/12 and slot/state/transition/flag homes remain.
 // Query, cancellation and execution separate inline/noinline declarations, individually
 // and together, all 280 fast, tying the unchanged preview (full 279). All restored.
@@ -683,6 +684,9 @@ long function_1469f0(real seconds);
 // Selected workspace orders entry/current/transition 285, current/entry/transition 287,
 // transition/current/entry 280, entry/transition/current 285, transition/entry/current 280;
 // promoted slot alone/with entry-first 291/296; final post-tested scan 280 (fast control 280). All restored.
+// Round 187: admission exit 280; selection after timers 292; selection phase scope 280;
+// native countdown results alone/with admission/with scope 317/317/317, with late selection 326;
+// admission plus late scoped selection 292. Fast control 280; all restored.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {

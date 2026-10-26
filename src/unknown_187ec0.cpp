@@ -446,7 +446,8 @@ bool function_172750(long mode, point3f const *point, real radius);
 /* element_index starts the parent walk of 0x1882d0's fallback lookup, and
    entry_element_index (the fifth argument, which retail reads into esi) is
    the element whose values and seat entries are looked up */
-// score 118 (was 118): frame 0x1c agrees; tag/remapped-index registers and output homes remain.
+// score 118 (was 118): frame 0x1c agrees; tag/remapped-index ownership and the dead-argument output home remain.
+// Earlier: frame 0x1c agrees; tag/remapped-index registers and output homes remain.
 // Earlier forms and observations:
 // Defaults before element 175; index before element 165; both before element 151;
 // read-only element 118; narrowed element index 118; shared special-index test 167;
@@ -457,6 +458,8 @@ bool function_172750(long mode, point3f const *point, real radius);
 // This round:
 // First/second/both/all default chains 119/119/120/120;
 // first/second/both tag-test results 150/162/162; both results and default chain 160.
+// Round 187: field-pair default orders 021/102/120/201/210 gave 119/117/119/119/120;
+// first-side/second-side defaults 118/119; immutable remapped index 118. All restored.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)
