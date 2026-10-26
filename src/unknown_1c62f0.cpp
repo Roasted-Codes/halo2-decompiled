@@ -665,6 +665,9 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 // Direct callback with user/frame/state/frame-user/state-user/frame-state 125 each; callback with
 // channel/channel-user 139 each. Entry convention shifts and matched callers regress; original
 // callback and argument homes restored. Word-load schedule and callback reload remain.
+// Chained/reversed event-word resets 99/99; unsigned mask 97; index-first identity 161; sampled
+// callback parameter with/without chaining 132/132; first-pair callback with/without chaining
+// 138/138.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)

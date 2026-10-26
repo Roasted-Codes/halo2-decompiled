@@ -1187,6 +1187,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Existing open API, file-element reference, both 165/165/165; open API with
 // constructed write/read/both headers 165/165/165; handle-field pointer 165;
 // native file and both headers 165. Shared API emits the same request code.
+// Common completion at all/open/size/update waits 165 each; named constant write options 112
+// rejected; initialized size output 207; cleanup-state byte 165; options with common wait 112
+// rejected.
 // @retail 0x213970
 void function_213970(void)
 {
