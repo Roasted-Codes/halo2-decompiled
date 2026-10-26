@@ -414,7 +414,7 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 	function_189fe0(&request, tag);
 }
 
-// score 223 (was 264): frame 0x14c versus 0x148; BSP/camera lifetimes and query/output homes still differ.
+// score 223 (was 223): frame 0x14c versus 0x148; BSP/camera lifetimes and query/output homes still differ.
 // Transition result 235; unsigned listener 264; byte listener 319; angle lifetime 264; separate request indices 264.
 // Request transition field 263; bounded listener result 223 plain; separate fill guard 255;
 // depth one 235; size optimization 441; direct search returns 254.
@@ -428,11 +428,11 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // position memcpy 223; tag aggregate initializer 270.
 // cue sentinel chain 222; cue nibble chain 223.
 // both cue chains 222; prior tag on bounded search 223.
-// score 223 (was 223): BSP/camera homes, transition spill and cue zero carrier remain;
+// Earlier: BSP/camera homes, transition spill and cue zero carrier remain;
 // cue sentinel order 222; cue pointer order 223; cue byte-first zeros 223;
 // cue integer-zero/scale order 223; direct transition conditional 253;
 // exact listener bound 223; query-index cursor 248; Boolean fallback scale 237.
-// score 223 (was 223): frame, BSP/camera/query homes and duration spill remain.
+// Earlier: frame, BSP/camera/query homes and duration spill remain.
 // Environment-table lifetime 273; direct duration source 223; cue location subobject 250;
 // shared caller cue workspace 229; unsigned query index 223; table/direct duration 273;
 // shared workspace/location 233; table/workspace 254 (fast). Shared cue workspace gives frame 0xf4, not retail 0x148.
@@ -440,6 +440,9 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Native BSP view 223; multi-use environment row 267; initialized query count 296;
 // duration interval/sign arms 231/229 (frame 0x148); BSP/count 296;
 // BSP/interval 231; BSP/count/interval 286.
+// Native cluster word 287; readonly camera 223; angle-output name 223;
+// early fade/tag stores 270; cluster/camera 287; cluster/angle 287;
+// camera/angle 223; combined input/output and earlier stores 285.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

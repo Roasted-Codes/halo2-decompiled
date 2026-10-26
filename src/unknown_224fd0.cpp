@@ -80,10 +80,11 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 	out->left.k=jk+sine*axis->i;
 }
 
-// score 380 (was 380): frame 0x64 versus 0x6c; rotation copies and product homes differ.
+// score 380 (was 380): Frame 0x64 versus 0x6c; independently scheduled axis expansions and cosine/product spills remain.
 // Scalar axis inputs 393 plain (391 fast, frame 0x6c); all axis snapshots 754;
 // third component snapshot 820; first two 900; camera record snapshot 615.
 // Scalar-axis factor names, product names and independent square order all 391 (fast).
+// Reverse scalar inputs 441; trig-first scalar inputs 441; reversed inputs with orientation snapshot 441; reversed inputs with shared axis cases 400; reversed inputs with separate trig declarations 441.
 // @retail 0x224fd0
 void __stdcall function_224fd0(s_draw_mesh_seed const *seed, s_draw_value_cache *values,
 	point3f const *position, vector3f const *direction, real scale, color4f const *color,

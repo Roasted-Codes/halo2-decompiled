@@ -235,6 +235,13 @@ void function_16f60(byte *state, word const *range)
 // common exit 99; sixth exit 93; comparison exit 93; fifth exit 93; sixth comparison exit 93; fifth
 // sixth exit 93; explicit default common exit 99; fourth comparison first 93. Selective setter
 // expansion and shared tails remain.
+// frameless BX entry agrees; dispatch span and selective setter expansion differ.
+// 0/34/5/6/12 224; 0/6/5/34/12 165. Earlier code rows 91 to 80; 780/772 bytes.
+// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison 103/103;
+// Reference-call branches first/second mode 144/145; paired-label orders 93/93/93;
+// complete group orders 0/12/34/5/6, 0/12/5/6/34, 0/34/6/12/5 105/106/197.
+// Shared keep-pass group/conditional comparison/mask-call branches 282/270/207;
+// shared first one/two/three calls 188/235/292; first one/three with group 313/368.
 // @retail 0x15370
 void function_15370(short mode)
 {

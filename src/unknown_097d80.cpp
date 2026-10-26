@@ -51,19 +51,31 @@ struct c_aggregate : c_child
 
 };
 
-// score 92 (was 92): frame and request/cursor registers agree; output homes,
+
+// score 92 (was 92): error/completion/information homes and dispatch/release registers still differ.
+// Cleanup block/item/both cursors
+// frame and request/cursor registers agree; output homes,
+// Frame 0x8020 agrees; output homes, dispatch and release allocation remain.
+// Earlier: frame and request/cursor registers agree; output homes,
 // dispatch layout and release global reload differ. Cleanup block/item/both cursors
 // 104/104/104; child-boundary cursor 99; indexed child/range 106; shared child base
 // 133, with range 153; collection rejection 116; read-only range 99; range-array bound
 // 92; child-array bound 139; read-only range bound 92; repaired-entry completion,
 // release and both output names 92/92/92.
-// request/cursor registers and produced/release scratch homes differ;
+// Completion/information/both output lifetimes 105/99/110; cleanup block/item cursors
+// in the boundary-array context 92/92; actual dispatch block range 103; nested error
+// scope and early error/total results 92/92.
 // count name 104; release-output name 104; both names 104; result-first 104;
 // arrays swapped 104; collection cursor 105; indexed dispatch 104; allocator capture 115.
+// Error identity 92; total before error 92; error-first gate 98;
+// cleanup null exit 92; proven nonempty count 92; cleanup ordinal names 92;
+// unsigned fixed collection 93; exact boundary-end test 92.
 // produced after arrays 105; produced after counters 105; information after arrays 99; both after
 // arrays 110; collection boundary cursor 148; shared boundary cursor 148; paired collection cursors
 // 132; boundary lifetime 92. Scalar output homes, dispatch ownership and release observations
 // remain.
+// Concrete collection/dispatch class and allocation-pointer combinations 92 each; shared typed table 150;
+// common child-interface collection/dispatch/both/both with allocation pointer 92 each.
 // @retail 0x97d80
 long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 {

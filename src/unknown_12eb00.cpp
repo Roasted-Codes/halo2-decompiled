@@ -54,6 +54,7 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 // no element pointer 215; long index locals 259; count declared after the table pointer 82;
 // the running sum written out 21; a 600 s permuter run, none below 21.
 // Earlier: the count and cluster cursor homes are swapped (0x18 and
+// Earlier at 40 (was 136): the count and cluster cursor homes were swapped (0x18 and
 // 0x1c); the two index pins keep the bound rather than the index in the result
 // register (jg for jle); the final blend multiplies the weight product by
 // memory instead of loading the field first, and stores through [esi + eax].
@@ -63,8 +64,17 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 // an inline pin function 254-263, equality operands swapped 42; blend terms or
 // factors swapped 40. Earlier: unsigned table 136; indexed output 140;
 // indexed clusters 136; component accumulation 538; component blend 615.
+// Traversal count/cluster/output scopes 21/21/21; all three scopes 21;
+// accumulation record before ramps/function scope 21/21; count initialized
+// after table 82; earlier table-receiver scope with unchanged load point 21.
 // Entry/ramp/both bound expressions 49/199/200; input/output/both cursors
 // initialized before the table 78/78/317; const element view 21; int result 21.
+// score 21 (was 21): count/cursor homes, pin-result registers and blend address remain.
+// Accumulation row cursor 116; blend row cursor 91; both row cursors 142;
+// accumulation short ordinal 159; blend short ordinal 110; both short ordinals 178;
+// unsigned output count 21; unsigned remaining count 21. Restored.
+// Named entry/ramp/both pin results 21/21/21; explicit count update 21;
+// contribution part 20; named blend 21; full accumulation/output-step assignments 21/21.
 // @retail 0x12eb00
 long function_12eb00(long count, s_fog_cluster_distance *clusters, s_12eb00 *output)
 {

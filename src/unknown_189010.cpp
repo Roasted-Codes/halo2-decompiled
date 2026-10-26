@@ -159,6 +159,9 @@ static __forceinline long float_to_int_nearest(real value)
 // Conditional flags then priority 187; deferred flags publication 176; location first with copied
 // audible priority 167 kept (full); location memcpy 182; conditional end-time publications 175.
 // Outer state scope 167; early optional-size default 164 (below threshold); size before marker copy 167; nested class tests 167; platform-flags block first 167; opening 167 restored.
+// score 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
+// Late tag receiver 184; branch-assigned result 193; shared marker observation 167;
+// absent-marker-first 165 (below threshold); native short priority and padding memset 176.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -567,6 +570,9 @@ long function_1895f0(s_sound_position const *position, real scale, long tag_inde
 // forward/velocity/location library copies 2/2/2; location before velocity 23;
 // read-only camera 2; forward assignment 2.
 // success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
+// score 2 (was 2): success result/pop order remains; camera helper 34; result/scalar names 2/2;
+// length squared first 2; entry maximum/outer owner index 2/2; distance before position 2;
+// submission name 2; delayed false initialization 5; inverted success 2; all scores plain.
 // @retail 0x1897c0
 bool function_1897c0(long local_player_index, long unit_index, long tag_index, s_location const *location, point3f const *origin, vector3f const *direction)
 {

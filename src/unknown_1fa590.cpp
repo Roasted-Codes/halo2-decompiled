@@ -31,7 +31,9 @@ struct s_motion_adjustment_result
 	vector3f velocity;
 };
 
-// score 73 (was 86): retail loads normalized j/k into xmm1/xmm0 before fsqrt and multiplies them in
+// score 73 (was 73): frame 0x24 agrees; early J/K loads and the tick clamp still differ.
+// Earlier at 73: retail loads normalized j/k into xmm1/xmm0 before fsqrt and multiplies them in
+// retail loads normalized j/k into xmm1/xmm0 before fsqrt and multiplies them in
 // place (i stays a memory operand), which also moves two j products earlier and costs 8 bytes; the tick
 // clamp differs. Kept: else-copy of the raw offset into a motion vector 92 (integer copy registers
 // now retail's), then the existing normalize3d 73. Tried after: motion products in any operand order 73;
@@ -51,6 +53,9 @@ struct s_motion_adjustment_result
 // Round 132: left/up/both in-place scale [95, 109, 109]; left/up/both native weighted values
 // [95, 109, 108]; mixed in-place/value scales [109, 109]. Early normalization J/K loads and
 // tick clamp remain.
+// Normalized output 81; selected pointer 100; conditional scale result 108; branch scale receiver 105;
+// normalized/motion/both library copies 73/73/73; normalized output with tick clamp 80.
+// Round 138: left i/j/k product parts 73/73/73; up i/j/k parts 73/73/73; up at offset 99; with left j part 102.
 // @retail 0x1fa810
 void __stdcall function_1fa810(long *ticks, s_motion_adjustment_result *out, s_motion_adjustment const *state)
 {

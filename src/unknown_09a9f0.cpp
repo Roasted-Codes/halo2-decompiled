@@ -227,17 +227,23 @@ void c_turret_entity_definition::v21(s_entity *entity)
 	}
 }
 
-// score 69 (was 77): result from validity improves the score; frame 4 versus retail 0, early EBP
+// score 49 (was 49): Zero frame agrees; early false BL, EBP lifetime and separate header lookup remain.
+// Earlier: result from validity improves the score; frame 4 versus retail 0, early EBP
 // save and cached header lookup remain. Incoming output flags 87; later result 80; both 89;
 // invalid header first 75; shared header 77; incoming flags and header 87; guard exits 77; result
 // from validity 69.
-// score 49 (was 69): native validity result removes the frame gap at retail length;
+// Earlier: native validity result removes the frame gap at retail length;
 // EBP result, early false lifetime and shared header lookup still differ. Incoming flags 72;
 // byte/native/short result 76/49/52; published index 70; full acceptance 73;
 // incoming flags with byte/native result 64/69.
-// score 49 (was 49): frame agrees; false-result BL, saved EBP and shared header lookup differ.
+// Earlier: frame agrees; false-result BL, saved EBP and shared header lookup differ.
 // Early long/byte/short/signed-byte success result 67/70/65/70; byte after notification 70;
 // native header acceptance 65; native rejection first 52; combined native acceptance 67.
+// Signed-byte/unsigned-word/unsigned-native validity 76/52/49; shared success exit bool/long/byte
+// 75/67/70; shared validity exit native/word 52/55.
+// score 49 (was 49): EBP result, early false lifetime and shared header lookup remain.
+// Result declaration first, output role name, both, native-result header record 49 each;
+// shared header/object/both getters 49/49/49; both getters with early Boolean success 77.
 // @retail 0xa5a60
 bool c_object_type_definition::v22(s_entity *entity, long b, s_entity_info *info, long d, long e, long f)
 {

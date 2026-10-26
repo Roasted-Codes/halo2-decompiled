@@ -371,7 +371,8 @@ void function_1e6b00(long player_index, s_request_source *source)
 	}
 }
 
-// score 51 (was 57): retail keeps the index in EBX and the mask in EBP (ours
+// score 51 (was 51): index EBX/mask EBP priority, repeated output load and low/high store order remain.
+// retail keeps the index in EBX and the mask in EBP (ours
 // the other way round), loads the output pointer once above the last test and
 // stores the low flag word first in the inlined update. Without the read
 // barrier: high word through the pair and low word through the state array 51
@@ -379,6 +380,15 @@ void function_1e6b00(long player_index, s_request_source *source)
 // pair 77, both through the state array 77-80, mask local / term order /
 // `21 == index` / limit or next locals / swapped arms 51-52.
 // Earlier: retail saves the pointer argument in EBX and shifts the mask in EBP.
+// score 51 (was 51): index/mask roles and the output join remain; tested completion
+// with separate/state/ticks/both stores 116/112/114/120; shared setter variants
+// 83/111/108/109. Original early-result body restored.
+// index/mask registers and the repeated output load remain.
+// Declared paired-word view with mixed/pair/array/mirrored reads 51/77/80/77;
+// paired snapshot before/after pointer lifetime and low-first snapshot 115/115/115;
+// paired snapshot with one shifted mask 85.
+// Early dependency predicate, native signed ordinal, both, native recursive slot, predicate/slot all 51;
+// request value advanced in place alone/with native ordinal 58/58; adjacent recursive ordinal 51.
 // @retail 0x1e8d80
 bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_entry_420 *entry, s_request_transition *output)
 {
@@ -649,10 +659,13 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 
 long function_1469f0(real seconds);
 
-// score 290 (was 302): First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
+// score 279 (was 279): frame 4/12 and slot/state/transition/flag homes remain.
+// Query, cancellation and execution separate inline/noinline declarations, individually
+// and together, all 280 fast, tying the unchanged preview (full 279). All restored.
+// First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
 // Native signed-word slot 283 fast/290 plain; full-width difficulty 308; shared elapsed 309;
 // cooldown-first 296; fixed initial do scan 340; slot plus cooldown-first 281.
-// score 279 (was 288): frame 4/12 and slot/transition/flag homes remain; cooldown case first reaches retail length.
+// frame 4/12 and slot/transition/flag homes remain; cooldown case first reaches retail length.
 // Selected-state orders 01324/02134/03124/02314/03214/04213/04312/40123: 292/287/280/293/298/302/277/280 fast; last order 279 plain.
 // Byte/word request value 298/293; missing-bit test 317; final byte scan 304 (fast control 293).
 // frame 4 versus 12 and slot/state/flag homes remain.

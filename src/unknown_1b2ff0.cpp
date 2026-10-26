@@ -87,6 +87,17 @@ s_slot_handler_2 g_47e1c0 =
 	(t_slot_proc)function_1b3380, 0, function_1b3540
 };
 
+// score 109 (was 109): frame 0x44 and initial stores agree; direction XMM, square/store and normalization scheduling differ.
+// Earlier split direction plus rolled reset 116; selection initialization 109;
+// wider ordinals/saved pairs 192/164/128/132/199; source references and projection 109;
+// declaration/component order 114-118; shared point selection 152; scalar directions 150.
+// Shared subtraction 107; existing direction call 312; squared-length part,
+// separation/reciprocal homes and compound reciprocal 109 each; shared scale 107;
+// positive short-vector arm 110; subtraction plus scale 107. Two-point gains rejected.
+// frame 0x44 agrees; direction SIMD homes and square/store schedule differ.
+// Shared normalizers 160/107; existing magnitude 182; squared-length helper 107;
+// projection products 109; side projection part 109; distance penalty 109; winning score first 109.
+// All changed-sum helpers restored; the two-point gains are ineligible.
 // @retail 0x1b3070
 bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 {
@@ -186,6 +197,8 @@ real function_1f8940(long actor_index);
 // score 27 (was 27): frame and active-getter prefix agree; selected reference enters EBX before validation.
 // Earlier forms and observations:
 // actor-data load and early selected-reference transfer still differ.
+// the selected reference still enters EBX before its validity comparison.
+// Earlier: actor-data load and early selected-reference transfer still differ.
 // late selected value 44; late value/native result 97; native/short/byte result
 // 97/94/134; sentinel operands 44; active-test result 122; native request fields 44.
 // the active test reads through the getter, as the other actor
@@ -206,6 +219,10 @@ real function_1f8940(long actor_index);
 // This round:
 // Member equality low/high first 92/92; combined follow/cancel 27; native follow result 27;
 // nested count domain 33; owner/path/both output defaults 113/63/120.
+// Earlier: actor-data load and selected-reference transfer still differ.
+// failed result first 34; failed result chain 27; shared cancellation count 27;
+// native cancellation limit 89; const reference and count 27; result chain and count 27;
+// cancel completion test 27; named cancel result 27.
 // @retail 0x1b3380
 bool __stdcall function_1b3380(long actor_index, s_slot *slot)
 {
