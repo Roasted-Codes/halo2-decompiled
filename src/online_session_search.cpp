@@ -581,10 +581,7 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
-// score 21 (was 21): shared true return remains after later tests, first +0x17;
-// cached primary keys 21; latency keys 21; third keys 21; primary/latency 21;
-// primary/third 21; latency/third 21; all repeated keys 21; primary-test result 46.
-// shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
+/* the order of the search results: whether a sorts before b */
 // @retail 0x90f10
 bool __stdcall session_search_result_precedes(void const *a, void const *b, void const *context)
 {
@@ -592,22 +589,23 @@ bool __stdcall session_search_result_precedes(void const *a, void const *b, void
 	s_search_result const *second = (s_search_result const *)b;
 	if (first->field1f8 < second->field1f8)
 		return true;
-	if (first->field1f8 <= second->field1f8)
+	if (first->field1f8 > second->field1f8)
+		return false;
+	if (first->unknown74)
 	{
-		if (first->unknown74)
-		{
-			if (first->qos.rtt_median > second->qos.rtt_median)
-				return true;
-			if (first->qos.rtt_median < second->qos.rtt_median)
-				return false;
-		}
-		if (first->field1fc > second->field1fc)
+		if (first->qos.rtt_median > second->qos.rtt_median)
 			return true;
-		if (first->field1fc < second->field1fc)
+		if (first->qos.rtt_median < second->qos.rtt_median)
 			return false;
-		if (first->field10c > second->field10c)
-			return true;
 	}
+	if (first->field1fc > second->field1fc)
+		return true;
+	if (first->field1fc < second->field1fc)
+		return false;
+	if (first->field10c > second->field10c)
+		return true;
+	if (first->field10c < second->field10c)
+		return false;
 	return false;
 }
 

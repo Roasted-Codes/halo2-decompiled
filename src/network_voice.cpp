@@ -1426,6 +1426,14 @@ static __forceinline bool function_57d63(long arg_0, long arg_1);
 // Rejected set 100; rejected set with wide bit 168; indexed rejection bit 99;
 // allowed result 107; signed allowed result 107; allowed result with wide bit 130;
 // candidate snapshot 97; candidate snapshot with wide bit 119. Frame/spill and flag-query expansion remain.
+// Retail shape (for-statement counter, dword bit and muted, store only for active players, plain
+// availability tests with 0x56b70's active/passive mode flags, `1 << j` in the inner loop) 85, but
+// the mode flags are set inside a test (kept only on a match); without them 104; with the counter
+// declared first 117; volatile muted/mode/both tests 103/99/142; counter in the for statement alone
+// 125. With the first port-flag query on the plain
+// availability test and the second inlined, a one-file LTCG build is byte-identical to retail
+// only when voice_get_membership's call chain may write arbitrary memory; ours is known to write
+// only its own local, which leaves the second availability byte loaded lazily.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {

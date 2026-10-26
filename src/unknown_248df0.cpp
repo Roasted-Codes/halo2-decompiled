@@ -125,6 +125,9 @@ PRIVATE __forceinline real function_248df1(long arg_0, void *arg_1, void const *
 // projection operand loads and cross-product SSE ownership still differ.
 // This round: direct definition 119; cross-first lexical homes 119; direction-first lexical homes 119; cross declared first 119; pointer fractions with existing boundary 30; pointer fraction in first projection 119; pointer fraction in second projection 119; pointer fractions in both 119.
 // projection stack/global operands and cross-product XMM roles remain; partial projection sums 30/30/30, both sums 214; cross component orders 34/34/31/31/34; cross before displacement/after normalization 45/42; returned direction at three uses 77/74.
+// Plain (non-volatile) cross vector 212: case 13's projection becomes exact but the result moves to
+// xmm1 and case 13 merges into case 12's tail; with cross3f 212; with scale-first products or the
+// pointer fraction in case 12/13 212/212/212/212; cross.i subtrahend factors swapped 30 (same code).
 // @retail 0x248df0
 real function_248df0(long arg_0, void *arg_1, void *arg_2, void const *arg_3)
 {

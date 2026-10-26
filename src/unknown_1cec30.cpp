@@ -751,11 +751,11 @@ void havok_component_rigid_body_point_velocity_get(long rigid_body_index, s_havo
 }
 
 // @retail 0x1d0b20
-void havok_component_rigid_body_inertia_get(long rigid_body_index, s_havok_component *component, matrix3x3 *inertia)
+void s_havok_component::rigid_body_inertia_get(long rigid_body_index, matrix3x3 *inertia)
 {
 	hkRotation havok_inertia;
 
-	havok_component_rigid_body_get(rigid_body_index, component)->m_motion->getInertiaWorld(havok_inertia);
+	havok_component_rigid_body_get(rigid_body_index, this)->m_motion->getInertiaWorld(havok_inertia);
 	vector3d_from_havok(&inertia->forward, &havok_inertia.m_col0);
 	vector3d_from_havok(&inertia->left, &havok_inertia.m_col1);
 	vector3d_from_havok(&inertia->up, &havok_inertia.m_col2);
@@ -764,9 +764,9 @@ void havok_component_rigid_body_inertia_get(long rigid_body_index, s_havok_compo
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 // @retail 0x1d0bb0
-real havok_component_rigid_body_mass_get(long rigid_body_index, s_havok_component *component)
+real s_havok_component::rigid_body_mass_get(long rigid_body_index)
 {
-	return MAX(1.0f, havok_component_rigid_body_get(rigid_body_index, component)->m_motion->getMass());
+	return MAX(1.0f, havok_component_rigid_body_get(rigid_body_index, this)->m_motion->getMass());
 }
 
 // @retail 0x1d0c00
