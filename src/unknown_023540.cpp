@@ -2400,7 +2400,7 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 331 (was 331): frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
+// score 331 (was 331): Frame 0x28 agrees; inverse AL entry save, dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
@@ -2417,6 +2417,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 147: fast control 335; blend complement 401; paired blend branches 453 (exact-only); finite clamp
 // operands/branches 335/335; chained source zeros 335; paired half-extents 335; shared UV edges/half-
 // extents 456/456.
+// Unsigned/signed byte flag formals for inverse, inverse plus blend, all flags,
+// and inverse plus combiner flags: 335 each (fast control 335). Original
+// Boolean definition and every declaration restored; no call argument or order changed.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
