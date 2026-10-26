@@ -381,6 +381,9 @@ long map_location_get(char const *map_name)
 // the second buffer address is reused instead of recomputed after the call.
 // Noinline declaration 3; inline declaration 3; first buffer initialized 65; second initialized 68;
 // byte memset 3; empty strncpy 81; both buffers initialized 94; shared byte clear 5.
+// score 3 (was 3): later element address 3; whole-array pointer 3; two-dimensional paths 3;
+// path callee noinline/inline declarations 3; call element address 3; call-output pointer 3;
+// later comparison pointer 3; later whole-array comparison pointer 3.
 // @retail 0x214e40
 bool map_names_equal(char const *map_name, char const *other_map_name)
 {
