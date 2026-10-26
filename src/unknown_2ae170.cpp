@@ -583,6 +583,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // recovered-frame front/rear snapshots 546. Original loops and native workspaces kept.
 // Word ordinals 464; word routing table 454; last-two scopes 498;
 // front-only snapshot 502; word ordinals with first/third scopes 479 (fast).
+// Fast control 453 versus full 463. Current-loop first/second scopes 497 (frame 0x94); both
+// level snapshots 502; scopes with snapshots 545; unsigned ordinals 453; direct shared appends
+// 463. Full frame 0xdc versus 0x94 and repeated-conversion homes remain.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
