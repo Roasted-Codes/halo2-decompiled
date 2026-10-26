@@ -94,6 +94,8 @@ public:
 // override-receiver-head-link 215; tail-link 215.
 // override-receiver-tail-link 215; head-link-tail-link 215.
 // override-receiver-head-link-tail-link 215; links-before-index-helper 215.
+// Complete metadata native/library copies 254/254; with complete viewer point 237/237;
+// early head with native/library metadata 269/269, and with complete viewer point 237/237.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

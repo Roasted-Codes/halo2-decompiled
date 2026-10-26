@@ -28,7 +28,7 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
-// score 157 (was 171): frame 0x14/0x18 and options/index/mask homes remain.
+// score 157 (was 157): frame 0x14/0x18 and options/index/mask homes remain.
 // Earlier: frame 0x18 agrees. Retail compares i and count signed
 // (long), stores count = 0 before the first loop and counts a player before
 // its uniqueness test. Registers still rotate: retail has options in edi
@@ -83,6 +83,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // signed-byte accumulated/player/both/final validity 174/171/174/193.
 // Native input references: primary machine 171; identifier 198; both 198; player machine, with primary, with identifier or with both 240 each; complete current-player reference 175. Original input reads, comparisons and byte membership restored.
 // Round 161: separate player/machine/both pass cursors 171/157/157; word machine/player 262/171; short/unsigned/byte separate passes 262/157/262. Independent native long pass cursors 157 plain kept.
+// Independent-pass membership long/short 183/184; with retail count lower bound 188/188;
+// shared switch-result tail with long/short 196/189, and with lower bound 194/189.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

@@ -3578,6 +3578,8 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Weighted cross terms 596; projection products 596; scaled-input terms 590; rotation subtotals 596;
 // vector-first publication 535 (fast); all restored.
 // Shared handle query 575; complete rotation outputs 1050; quaternion cross helper 1050; unsigned listener ordinal 557; plain environment cursor 649; positive entry scope 535 (fast); all restored.
+// Rotation output orders ikj/jik/jki/kij/kji 545/560/554/541/550;
+// uniform projection/scaled-input/cross-scale multiply operand orders 535/535/535.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

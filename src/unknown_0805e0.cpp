@@ -468,7 +468,7 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 67 (was 73): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// score 67 (was 67): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
@@ -491,6 +491,8 @@ void function_1537f0(s_profile_record *record);
 // immutable source with native identity 95; split source-tail fills 115, with native identity 115.
 // Contiguous link fill 67; link fill with native identity/late identity/intermediate identity 67/67/67;
 // link fill with outer source/lexical source/unsigned ordinal/NONE byte 67/67/87/67.
+// Complete zero suffix at field44/field40/field48/unknown50 67/67/67/67;
+// suffixes at field70/field74/field78 give 99/89/83; whole source suffix 125. Frame remains 0x90.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -591,7 +593,7 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 90 (was 111): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
+// score 90 (was 90): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // Frame 0x1c agrees; records/buffers register contract and cursor/count
 // scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
@@ -607,6 +609,8 @@ bool function_7fb50(void)
 // field/end 90; field/ordinal 111; end/ordinal 90; all three 90; named end ordinal 90.
 // On source-end traversal: long ordinal/packed values/both 92/90/92; scalar element 90;
 // element with long ordinal/packed values/both 92/90/92; word ordinal 90.
+// Two-use selected buffer 90; with record/property/both capacity deltas 120/135/129;
+// with word record/property/both totals 91/91/94; with native scalar ordinal 92.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
