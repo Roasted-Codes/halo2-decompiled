@@ -1125,27 +1125,31 @@ struct s_player_rating_properties
 long __stdcall function_063190(void *summary, long user);
 
 #pragma optimize("s", on)
-// score 110 (was 115): Frame/aggregate registers and conditional moves still differ.
-// Read-only session 115; external session reference 115; short missing
-// 116; direct readiness 119; shifted membership bit 120; average scalar
-// 115; external rank reference 110 kept; both rating references 124.
-// EBP frame has three words versus one session spill; aggregate registers differ.
-// Session per-use 169, mode-scoped 115; word ordinal 134; absent/user continues 115/116;
-// ready-first 112; sum-first 118; rating-data reference 115.
-// score 110 (was 110): session spill and aggregate allocation still differ.
-// Indexed aggregate 129; aggregate field reference 110; availability count 156;
-// early summary result 110; rank element pointer 110; absent-rank continue 110;
-// count before extrema 113; active-session spill name 110. Opening body retained.
-// score 110 (was 110): session spill and aggregate registers remain different.
-// Count/member/scan failure exits 124/121/115; complete-rating/property skips 110/110;
-// empty-aggregate rejection 112; live count field 110; distinct traversal roles 110.
-// score 110 (was 110): three-word frame/session spill and aggregate allocation remain.
-// Mode field 115; selection snapshot 131; property/player records 110/110;
-// source rank/value/both field bindings 110/110/110; live selection field 110.
-// score 110 (was 110): Three-word frame/session spill and aggregate allocation remain. byte missing count 110; signed byte
-// missing count 110; byte player ordinal 129; both byte counters 129; native signed counters 110; aggregate
-// function scope 110; native member property storage 110; fixed player end test 110; sse after rank binding
-// 111.
+// score 110 (was 115): frame, aggregate registers and conditional moves differ. Retail
+// keeps one frame word (the session), missing/ordinal in EBX/EBP, and in the last loop
+// indexes the ranks by EDX, rereads the player count and keeps minimum/maximum in
+// EAX/EBX with cmovg/cmovle, which needs /arch:SSE (this file is /O2 /Gr; retail's
+// `mov eax, 1`/`mov eax, 0x7f` are speed-mode code, the size pragma here gives
+// `inc`/`push; pop`).
+// Round 129: without the size pragma 180 (483 bytes); a plain `for` for the last loop
+// 129 (435 bytes); both 143; ternary minimum/maximum 129 (either comparison order).
+// Screened with /arch:SSE on a scratch copy: the plain `for` without the pragma gives
+// retail's register minimum/maximum and cmovs and a one-word frame, but counts the loop
+// down with the count cached and a pointer, where retail rereads the count.
+// Before: read-only session 115; external session reference 115; short missing 116;
+// direct readiness 119; shifted membership bit 120; average scalar 115; external rank
+// reference 110 kept; both rating references 124; session per-use 169, mode-scoped 115;
+// word ordinal 134; absent/user continues 115/116; ready-first 112; sum-first 118;
+// rating-data reference 115; indexed aggregate 129; aggregate field reference 110;
+// availability count 156; early summary result 110; rank element pointer 110; absent-rank
+// continue 110; count before extrema 113; active-session spill name 110; count/member/scan
+// failure exits 124/121/115; complete-rating/property skips 110/110; empty-aggregate
+// rejection 112; live count field 110; distinct traversal roles 110; mode field 115;
+// selection snapshot 131; property/player records 110/110; source rank/value/both field
+// bindings 110/110/110; live selection field 110; byte missing count 110; signed byte
+// missing count 110; byte player ordinal 129; both byte counters 129; native signed
+// counters 110; aggregate function scope 110; native member property storage 110; fixed
+// player end test 110; sse after rank binding 111.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
