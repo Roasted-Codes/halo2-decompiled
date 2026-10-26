@@ -189,6 +189,14 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 // key pointer before globals 6; direct index construction 6; delayed globals assignment 6;
 // read-only key pointer 6; global at each use 6; read-only index result 6;
 // direct key address 29; read-only key parameter 6.
+// the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
+// 0x1885f0's entry-live result body (key compared first, break) both match unless the caller 0x1eb020
+// is 16-byte self-aligned (with a frame pointer but no alignment, or a double buffer, both match), and
+// only while 0x1885f0 returns its index class through memory (a short result keeps the key in a register).
+// Key as a by-value class 6 (0x1eb020 copies it through eax); that class with the entry-live body 7;
+// an explicit short out pointer 25; key read through a volatile own-parameter cast 8; the entry-live
+// body with 0x1eb020 not taking &material_index/buffer declared after result 7/7; the search as a
+// constructor of the index class 10 (key still on the stack). BLOCKED-BY 0x1eb020
 // @retail 0x188640
 s_globals_element *function_188640(long key)
 {
@@ -472,6 +480,8 @@ bool function_172750(long mode, point3f const *point, real radius);
 // Round 147: existing index getter 210; distance-reject exit 118; variant-first guards 188; equality
 // membership 144; reverse cases 118; nested guards 118; selected first-table index 188; second-case
 // branches 151.
+// Round 186 initial/fallback/both conditional lookup results 162/118/162; guarded payload
+// selection alone/with initial/with fallback/with both 219/230/219/230; shared getter force-inline 118.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)

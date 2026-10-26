@@ -590,7 +590,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 201 (was 211): frame 0x50/0x54, early EBX and child-iterator convention remain.
+// score 201 (was 201): frame 0x50/0x54, early EBX and child-iterator convention remain.
+// Frame 0x50/0x54 and protected child-iterator register contract remain.
+// frame 0x50/0x54, early EBX and child-iterator convention remain.
 // Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
 // frame 0x50/0x54 and child-iterator registers differ;
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
@@ -612,6 +614,27 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Count-first friendliness AND/logical/conditional/explicit forms 201/232/211/211;
 // count-last counterparts 223/233/252/252. Boolean AND keeps every qualifying-child
 // team test and counter; 201 kept after ordinary check. Frame/child convention remain.
+// Existing predicted-point point/velocity/both value inputs 295/238/328; shared
+// real/double scale then point addition 232/251; real scale with point/velocity
+// value inputs 306/242; double scale with both value inputs 353. All restored;
+// frame and protected child-initializer register contract remain.
+// Round 143: occupied/empty Boolean and byte results on retained AND graph 232 each;
+// both byte results with AND 232/232; twice-used child-player input with count/occupied 202/233.
+// Original count/AND body restored; protected child-iterator contract remains.
+// word unit count with Boolean AND reduction 202; signed unit count with Boolean AND reduction 201; long
+// friendliness AND with retained unit count 228; word friendliness AND with retained unit count 209; signed
+// byte friendliness AND with retained unit count 201; word count and long friendliness AND 229; named
+// complete child friendliness predicate 201; word count and word friendliness AND 210.
+// Round 185 hostility OR bool/byte/short/long with count first 231/231/247/248; count last
+// 224/224/236/235 (fast). All restored; frame and protected child contract remain.
+// Retained count/AND graph: outer/child/both workspace names 201/201/201; friendly name/all names 201/201;
+// child workspace first/friendly before count/both with role names 201/201/201.
+// Retained count/AND graph: native dead/attached/both bits 246/201/246;
+// shared square alone/with dead/attached/both 202/247/202/247;
+// independent current-object and iterator locals 249. Original view and body restored.
+// Point publication xzy/yxz/yzx/zxy/zyx 204/204/232/207/232;
+// complete displacement products/coordinates 205/205; uniform per-row products 205.
+// Original helper/body restored; frame and protected child convention remain.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {
