@@ -677,6 +677,7 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 // 229/30/81/81; shared data-field reference 22; data before component dispatch 70.
 // Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
 // native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
+// Entry color/interval/data declarations, paired/all scopes and entry sample: eight forms 22 each.
 // @retail 0x1b580
 bool function_1b580(long unused, byte const *definition, long component, long mode, real *out)
 {
@@ -1321,6 +1322,8 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // 309/312/315; direct fields plus native mapped descriptors 265 (1197/1225).
 // Actual four-byte entry fields, input bitfields, rescale bit and native signed mapping records:
 // eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
+// Shared writer reference 267; masked value 302; split stores 267; reference/mask 302;
+// reference/split 267; mask/split and all three 302; named destination values 267.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

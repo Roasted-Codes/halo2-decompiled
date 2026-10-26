@@ -218,6 +218,7 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // live clock with normalized/remaining/both values 700/662/700; entry normalizer workspace 660.
 // Native fallback vector assignment 642 kept; activation mode once 684; conditional coefficients 824;
 // copy/mode 670; copy/coefficients 824; mode/coefficients 812; all three 807; fallback memcpy 642.
+// Readonly input d/q/both/a/b/pos/b-pos/all contracts: eight forms 642 each.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

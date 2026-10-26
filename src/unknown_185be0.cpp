@@ -71,7 +71,7 @@ struct s_185be6
     vector3f field_34;
     long field_40;
     byte field_44[0x68 - 0x44];
-    byte field_68;
+    bool field_68;
     byte field_69[0x78 - 0x69];
     real field_78;
     real field_7c;
@@ -140,7 +140,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 989 (was 1017): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
+// score 985 (was 989): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
 // frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
@@ -157,6 +157,8 @@ union s_185be7
 // inline 1017; no outer zero-mask guard 1018; second-copy continue/final input ternary/const settings 1017
 // each; paired branch with complete flags 989 (plain kept); paired branch with external state reference
 // 994; combined with promoted component 1010, word copy ordinal 989, input-first mask 1016 (fast).
+// Native flag/scalar/state-bool declarations 989/989/985; flag+scalar 989;
+// flag+bool/scalar+bool/all fields 985; all fields with promoted selected value 984.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
