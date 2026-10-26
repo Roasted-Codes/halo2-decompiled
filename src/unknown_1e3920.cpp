@@ -552,6 +552,10 @@ real function_267370(long volatile object_index);
 // motion-direction reference 277; up reference 273 (plain).
 // Flag-range memset 441; movement-mode branches 369; named activity time 371;
 // per-use geometry fields 371; predicate/index role names 371 (fast control 371).
+// Round 167: Plane products, complete forward product terms, and both 371 each;
+// uniform four-use movement flags alone/with plane/with forward/with both 428 each;
+// complete named plane distance 371. Fast control 371; full baseline 273.
+// Original arithmetic, repeated flag observations and protected interfaces restored.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
