@@ -532,7 +532,7 @@ void __stdcall function_363a0(void *vertices)
 }
 
 // @retail 0x36880
-void function_36880(color4f const *color, s_short_rectangle const *rectangle)
+void function_36880(s_short_rectangle const *rectangle, color4f const *color)
 {
 	// Retail callers keep the rectangle argument on the stack.
 	s_short_rectangle const *const *rectangle_reference = &rectangle;

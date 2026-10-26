@@ -3131,7 +3131,7 @@ struct s_engine_border_state
 	bool flag1c0;
 };
 
-void function_36880(color4f const *color, s_short_rectangle const *rectangle);
+void function_36880(s_short_rectangle const *rectangle, color4f const *color);
 
 // score 4 (was 4): the store of the border bottom is scheduled after the call arguments are set up
 // instead of before them. With four stores before a call the last one always sinks below the push
@@ -3151,23 +3151,23 @@ void function_15ff80(s_engine_border_state const *state)
 	border.left = bounds.left;
 	border.right = bounds.right;
 	border.bottom = bounds.top;
-	function_36880(&color, &border);
+	function_36880(&border, &color);
 	border.right = bounds.right + 1;
 	short bottom = bounds.bottom + 1;
 	border.left = bounds.right;
 	border.top = bounds.top - 1;
 	border.bottom = bottom;
-	function_36880(&color, &border);
+	function_36880(&border, &color);
 	border.left = bounds.left;
 	border.top = bounds.bottom;
 	border.right = bounds.right;
 	border.bottom = bottom;
-	function_36880(&color, &border);
+	function_36880(&border, &color);
 	border.left = bounds.left - 1;
 	border.top = bounds.top - 1;
 	border.right = bounds.left;
 	border.bottom = bottom;
-	function_36880(&color, &border);
+	function_36880(&border, &color);
 }
 
 bool function_15d770(long player_index);
@@ -5026,7 +5026,7 @@ void function_157ae0(void)
 #include <math.h>
 extern long g_4e64a8;
 void function_36580(void);
-void function_36880(color4f const *color, s_short_rectangle const *rectangle);
+void function_36880(s_short_rectangle const *rectangle, color4f const *color);
 void function_161420(long player_index, real alpha);
 
 // score 24 (was 24): state/user EDI/EBP swap and final x87 argument scheduling remain.
@@ -5094,7 +5094,7 @@ void function_159880(void)
             bounds.right = (short)(g_4b9dd6 - g_4b9dd2);
             bounds.bottom = (short)(g_4b9dd4 - g_4b9dd0);
             function_36580();
-            function_36880(&color, &bounds);
+            function_36880(&bounds, &color);
         }
         if (player_index != NONE)
         {

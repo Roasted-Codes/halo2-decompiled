@@ -139,11 +139,10 @@ void function_11d610(quaternionf *q)
 	}
 }
 
-// score 15 (was 15): retail emits the dot product's j term first (ours i first) and
+// score 11 (was 11): cross-product multiply and root reload scheduling remain; dot product and frame agree.
+// Earlier forms: retail emits the dot product's j term first (ours i first) and
 // hoists one more cross product multiply before the first subtract; the source order
-// of the terms does not change our schedule. BLOCKED-BY 0x127400 (@BirchWoodGod's
-// claim): the (out, a, b) parameter order, with its declaration and call there
-// changed to match, gives 11 (0x127400 stays 551): retail's dot product and operand
+// of the terms does not change our schedule. The corrected output-first interface gives 11 (caller stays 551): retail's dot product and operand
 // order; then only retail's i term first multiply (a->j * b->k) hoisted before the
 // first subtract and s reloaded after the j subtract still differ. Tried: cross terms
 // in i, j, k order 23; reciprocal after the cross terms 36; j as a->k * b->i - a->i *
@@ -153,8 +152,8 @@ void function_11d610(quaternionf *q)
 // order 20; products written straight into out 32; cross3f into a local 24, into out
 // then scaled 74; branches swapped (s < 0.001f) 38; square root in its own local,
 // clamp as a ternary, sqrtf, i or k terms with swapped operands 11 each.
-// score 11 (was 15): output before inputs in the parameter list recovers the call setup and dot product;
-// the cross-product multiply and reciprocal reload schedule still differs. Arithmetic body unchanged.
+// Shared point setter 11; scaled-component setter 19; shared cross plus setter 24; native coordinate
+// input/setter/scaled-setter 11/11/19; reused first-k/second-j scalar captures 24/30.
 // @retail 0x11d6a0
 void function_11d6a0(
 	quaternionf *out,

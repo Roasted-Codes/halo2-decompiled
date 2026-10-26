@@ -1475,7 +1475,7 @@ void connection_widget_draw(s_text_widget_c const *widget);
 struct s_engine_border_state;
 void function_15ff80(s_engine_border_state const *state);
 void function_36580(void);
-void function_36880(color4f const *color, s_short_rectangle const *rectangle);
+void function_36880(s_short_rectangle const *rectangle, color4f const *color);
 void function_13ec70(color4f const *color);
 struct s_33a0b_default;
 extern s_33a0b_default *g_4686d4;
@@ -1484,7 +1484,7 @@ extern s_33a0b_default *g_4686d4;
 PRIVATE __forceinline void score_background_161420(byte const *widget, long valid)
 {
     if (widget[valid])
-        function_36880((color4f const *)(widget + 0x14), (s_short_rectangle const *)widget);
+        function_36880((s_short_rectangle const *)widget, (color4f const *)(widget + 0x14));
 }
 
 PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
@@ -1499,9 +1499,15 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
     }
 }
 
-// score 219 (was 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation
+// score 122 (was 219): background address scheduling agrees after the consistent rectangle-first
+// draw interface; team/player text induction bases and scratch-register scheduling still differ.
+// Earlier at 219 (from 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation
 // remain. Persistent row cursors: team background 305; player background 257; team text 219 (plain kept);
 // player text 246; both backgrounds 304; both text passes 249 (fast).
+// Rectangle-first interface 122; background/text/both validity-offset-first forms 219 each;
+// rectangle/generic-text/both input contracts and unsigned offsets 219 each. On the new interface:
+// indexed team text 148; both text cursors 150; player cursor with indexed team 139; explicit
+// justification arms 122. Original team-text cursor retained.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {
