@@ -1290,6 +1290,9 @@ static __forceinline long function_72458(s_surface_description *arg_0)
 #pragma inline_depth(255)
 
 // score 9 (was 9): retail tests the variant type as cmp 5/je, cmp 3/je, cmp 4/jne default,
+// (MiniMax S run 4: an else-if chain of equality gotos for 5, 3 and 4 gives retail's filter but
+// scores 7, a gain under the bar: the session member, level address and reloaded type stay in
+// the wrong registers.)
 // ours turns the 3/4 cases into a jl/jg range; the session member travels in eax (ours ecx)
 // and the reloaded type in edx (ours eax). Every goto-free form lays the default block out
 // first: one 5 || 3 || 4 test or its negation (100), case 5/3/4 in one switch (108), cases
