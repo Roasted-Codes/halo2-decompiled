@@ -216,17 +216,26 @@ void function_7f070(void)
 		function_7f2a0();
 }
 
-// score 37 (was 37): measured-byte, level and observer suffix registers still differ; five independent estimate/flag/level publication orders 37 each; measured name, level name and both result names 37 each.
-// score 37 (was 37): suffix flag/level/observer registers remain; predicate before/after refinement 68/110;
-// result cursor and guarded search 131 each; early predicate with either search 159/159; late 159/159.
-// final observer/flag registers differ after +0x11b;
-// flag declared first 39; observer before publication 37; shared reset tail 37;
-// global observer stores 36 (421 bytes); flag rename/direct minimum 37;
-// shared observer values 67; branch-local observer 37.
-// score 37 (was 37): measured/level/observer register allocation after +0x11b remains;
-// native measurement state 81; narrow level 37; branch bandwidth lifetime 37;
-// observer reference 37; explicit measurement stores 42; flag-before-bandwidth stores 37;
-// conditional clamp 37; separate noinline declaration 37.
+/* stores a bandwidth estimate in the observer, pinned between the observer's
+   minimum and 0x100000 (0x100000 and reliable when there is no estimate),
+   and restarts its bandwidth measurement */
+static inline void observer_pin_rate(s_network_observer *observer, long bandwidth, bool reliable)
+{
+	if (bandwidth == NONE)
+	{
+		observer->value4e04 = 0x100000;
+		observer->unknown4e01[0] = true;
+	}
+	else
+	{
+		long minimum = *(long *)((byte *)observer->configuration + 0x114);
+		observer->value4e04 = bandwidth < minimum ? minimum : (bandwidth > 0x100000 ? 0x100000 : bandwidth);
+		observer->unknown4e01[0] = reliable;
+	}
+	network_observer_reset_bandwidth(observer);
+	function_7a740(observer);
+}
+
 // @retail 0x7f410
 void function_7f410(void)
 {
@@ -287,24 +296,5 @@ void function_7f410(void)
 	g_4cf968 = estimate;
 	g_4cf964 = measured;
 	g_4cf96c = level;
-	s_network_observer *observer = g_4cf8e4;
-	if (estimate == NONE)
-	{
-		observer->value4e04 = 0x100000;
-		observer->unknown4e01[0] = true;
-		network_observer_reset_bandwidth(observer);
-		function_7a740(observer);
-	}
-	else
-	{
-		long minimum = *(long *)((byte *)observer->configuration + 0x114);
-		if (estimate < minimum)
-			estimate = minimum;
-		else if (estimate > 0x100000)
-			estimate = 0x100000;
-		observer->value4e04 = estimate;
-		observer->unknown4e01[0] = measured;
-		network_observer_reset_bandwidth(observer);
-		function_7a740(observer);
-	}
+	observer_pin_rate(g_4cf8e4, estimate, measured);
 }

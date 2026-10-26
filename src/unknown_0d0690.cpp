@@ -1627,6 +1627,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // score 819 (was 819): frame 0xa8 versus 0x90; mesh, UV and sample homes remain.
 // Only third/second/first sample narrowed 828/828/828 (frame 0x9c);
 // byte per-vertex capability 825; function-scope samples 819. Original body retained.
+// score 819 (was 819): frame 0xa8 versus 0x90, mesh/sample/UV homes and helper expansion remain.
+// Presence-branch samples 831 (frame 0x90); later vertex pointer 853; common base/normal outputs 825;
+// direct static material use 859; base-only fallback first 818. Original body retained.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

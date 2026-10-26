@@ -82,6 +82,16 @@ buffered_writer_2d9e40::~buffered_writer_2d9e40()
 // score 30 (was 30): retail stores the stream before the vtable and reloads it
 // for the test (as if the stream were set by a base between); an intermediate
 // base gets the store order but scores 34.
+// Further trials: ownership after reference increment 30; after allocation
+// or complete initialization 33; capacity before allocation 31; empty size
+// before allocation 28; both buffer fields before allocation 38; stream
+// base with late ownership 34/33. Stream reload and count register differ.
+// Held-stream value 30; count += or explicit update 30/30; requested-capacity
+// value 30; input names 30; explicit shared base 30; declaration/definition
+// order 30/30; body stream store with held value 28 (discarded).
+// Further trials: byte/signed-byte ownership 30/30; nonthrowing construction
+// with Boolean/byte ownership 89/89; native buffer storage alone/byte flag
+// 30/30; body stream assignment with byte/native byte storage 28/28.
 // @retail 0x2d9f80
 buffered_writer_2d9e40::buffered_writer_2d9e40(referenced_2d88a0 *stream_, long capacity_)
 	: stream(stream_), owns_buffer(true)
