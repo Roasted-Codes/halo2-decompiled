@@ -257,6 +257,10 @@ void __stdcall function_b8540(long object_index);
 // score 9 (was 9): function_cd0c0's calling convention differs: retail pushes 1, the
 // argument and the third value, ours pushes 1 and the argument and moves the third value
 // into the argument's register.
+// Frame agrees; unit argument still moves to ESI instead of being pushed for function_cd0c0.
+// Placement field library clear fast 9; choice-entry traversal 78; short/unsigned choice indices 121/10;
+// unsigned creation index 9; choice output workspace 9; chained selection clear 11;
+// placement lifetime ending before the unit test 9. All new scores reduced; callee untouched.
 // @retail 0x19ef40
 void __stdcall function_19ef40(long unit_index, long *first_count, long *second_count)
 {

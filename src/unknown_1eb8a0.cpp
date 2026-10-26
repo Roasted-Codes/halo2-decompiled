@@ -184,7 +184,10 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 	}
 }
 
-// score 660 (was 709): clock register recovered by capped-use coefficient lifetimes; vector argument homes,
+// score 660 (was 660): Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
+// selected vector 689; selected vector arms 674; workspace role names 660; wide failure on guarded
+// coefficients 671; native counter increment 665.
+// Earlier: clock register recovered by capped-use coefficient lifetimes; vector argument homes,
 // scalar schedules and counter return still differ; tried initial output native copy 745; normalizer
 // workspace native copy 709; existing displacement scale 750; native target displacement 709; native output
 // scale loops 733; native qr post clamp coefficient 719; native qr guarded coefficients 660; coefficient
@@ -192,14 +195,14 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // vector argument homes and retained clock differ in the 0x24 frame.
 // Void return 708; native failure 716; input role names 709;
 // native extra ticks 709; vector memmove 730.
-// score 660 (was 660): vector argument homes still differ; selected velocity pointer 685;
+// Earlier: vector argument homes still differ; selected velocity pointer 685;
 // activation velocity snapshot 786 (caller lost); contiguous velocity scale 660;
 // fast-byte observations 660; integer remaining-tick test 699.
 // Ordinary counter conversion on guarded-coefficient body 710; indexed activation displacement 667;
 // interleaved displacement/sample loop 696; target-coordinate loop 699; impulse-coordinate loop 661.
 // Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain.
-// score 660 (was 660): Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain. Shared output scale 660; shared sample scale 680; capped-length initializer 660; shared limit predicate 690; conditional flag store 674 (fast).
-// score 660 (was 660): Frame 0x24 and clock EDI agree; vector homes and scalar schedules remain. Shared
+// Earlier: Frame 0x24 and clock EDI agree; vector argument homes and scalar schedules remain. Shared output scale 660; shared sample scale 680; capped-length initializer 660; shared limit predicate 690; conditional flag store 674 (fast).
+// Earlier: Frame 0x24 and clock EDI agree; vector homes and scalar schedules remain. Shared
 // output counter 706; computed activation alignment 710; impulse-add loop 687; active target advance loop
 // 698; active target extension loop 700 (fast); matched caller preserved.
 // @retail 0x1eb8a0

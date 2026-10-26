@@ -636,10 +636,21 @@ struct s_1f9762
 	s_actor_point_entry field_30[4];
 };
 
-// score 108 (was 108): ours is five bytes longer than retail: the value that
+// score 67 (was 67): Frame 0x1c agrees; fallback approach placement and scalar registers still differ.
+// Earlier: ours is five bytes longer than retail: the value that
 // is compared is loaded into another register and the call that follows takes
 // its argument from another stack slot.
-// score 67 (was 108): approach as its own statement after the arms (no gotos), struct copy of the direction and `remaining <` on the left give retail's length and code; left: retail lays the previous-point false arm and the approach call after the first return (a jump-threaded copy) with the last-path projection falling into the shared test. Direction-first dots 67/67; `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
+// Earlier: approach as its own statement after the arms (no gotos), struct copy of the direction and `remaining <` on the left give retail's length and code; left: retail lays the previous-point false arm and the approach call after the first return (a jump-threaded copy) with the last-path projection falling into the shared test. Direction-first dots 67/67; `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
+// Normal admission first 111; admitted last result 125; combined forced/last result 208;
+// path-defined validity 131; true-default validity 135; path-defined reached 149;
+// path-defined projection 67; admitted last with complete validity 149.
+// frame 0x1c and entry agree; deferred approach block placement differs.
+// The earlier longer body also differed in the compared-value register and call argument home.
+// approach as its own statement after the arms (no gotos), struct copy of the direction and `remaining <` on the left give retail's length and code; left: retail lays the previous-point false arm and the approach call after the first return (a jump-threaded copy) with the last-path projection falling into the shared test. Direction-first dots 67/67; `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
+// Separate approach body: first/last/both normalized-result assignments 111/105/116; entry valid default
+// 127; long validity/last/both 161/161/173; conditional last projection 67.
+// Reached word/native 110/111; short validity/last/both 163/164/178; direction-publication-first
+// 67; publication-first with word reached 110; readonly actor/path receivers 67 (fast).
 // @retail 0x1f9760
 bool function_1f9760(long actor_index, long object_index, point3f const *point, real distance,
 	bool *last_out, bool *direction_valid_out, vector3f *direction_out)
@@ -990,14 +1001,18 @@ done:
         *movement_out = movement;
 }
 
-// score 307 (was 307): frame 0x18 versus 0x1c; actor/object roles and factor homes differ.
-// Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following factor 335; frame pointer 399; inline depth one 308 (fast).
-// Scalar velocity 309; approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast).
-// score 307 (was 307): Frame 0x18 versus 0x1c and actor/object/factor homes remain; object receiver first 309; approach component scopes 308; following component scope 308; shared minimum scalar 308; library velocity copy 309 (fast control 308).
-// score 307 (was 307): Frame 0x18 versus 0x1c remains; conditional-body factor names 308; velocity field pointer 308; goal field pointer 308; speed field pointer 308; radius field pointer 308 (fast control 308).
-// Frame 0x18 versus 0x1c and receiver/factor homes remain; entry velocity workspace
-// 307; native actor fields 307; external object reference 307; branch-assigned approach 352; native actor
-// plus entry velocity 307 (plain).
+// score 307 (was 307): Frame 0x18 versus 0x1c; actor/object roles, factor homes and x87 scheduling differ.
+// Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following
+// factor 335; frame pointer 399; inline depth one 308 (fast). Scalar velocity 309;
+// approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast). object
+// receiver first 309; approach component scopes 308; following component scope 308; shared minimum
+// scalar 308; library velocity copy 309 (fast control 308). conditional-body factor names 308;
+// velocity field pointer 308; goal field pointer 308; speed field pointer 308; radius field
+// pointer 308 (fast control 308). entry velocity workspace 307; native actor fields 307; external
+// object reference 307; branch-assigned approach 352; native actor plus entry velocity 307
+// (plain). Shared approach geometry 377; conditional-body entry result 308; direct turning
+// fraction 321; turning workspace scope 308; conditional-body ordered minimum branches 308 (fast
+// control 308).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1270,14 +1285,18 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
     return 0.0f;
 }
 
-// score 294 (was 294): frame 0x3c agrees; radius/result homes and initial direction materialization differ.
-// With ordinary input/side lifetimes: persistent target 313, both input points 297, shared arccosine 296, late radius 312, frame pointer 401.
-// Ordinary lifetimes: facing value 307; scalar side 309; scalar center 306; origin constructed first 306; reused negative radius 329.
-// score 294 (was 294): Frame 0x3c agrees; direction materialization and radius/result homes remain. Ordinary input/side lifetimes: point pair plus arc helper 344; pair plus direction output 299; origin/facing values 292 (plain 292, two-point gain rejected); target/facing values 306; three point values 328.
-// score 294 (was 294): Frame 0x3c and initial direction/result-home differences remain; ordinary inputs/side with early 3D origin 291; entry trace 306; reused threshold 306; separate centers 306; early origin plus centers 291 (fast).
-// Frame 0x3c agrees; input convention, direction materialization and radius/result
-// homes remain. Ordinary input/side lifetimes: external origin reference 311; target reference 306; facing
-// reference 306; all three references 305; full-width side state 301 (fast).
+// score 298 (was 298): Frame 0x3c agrees; radius/result homes and initial direction materialization differ.
+// With ordinary input/side lifetimes: persistent target 313, both input points 297, shared
+// arccosine 296, late radius 312, frame pointer 401. Ordinary lifetimes: facing value 307; scalar
+// side 309; scalar center 306; origin constructed first 306; reused negative radius 329. Ordinary
+// input/side lifetimes: point pair plus arc helper 344; pair plus direction output 299;
+// origin/facing values 292 (plain 292, two-point gain rejected); target/facing values 306; three
+// point values 328. ordinary inputs/side with early 3D origin 291; entry trace 306; reused
+// threshold 306; separate centers 306; early origin plus centers 291 (fast). Ordinary input/side
+// lifetimes: external origin reference 311; target reference 306; facing reference 306; all three
+// references 305; full-width side state 301 (fast). Sector before transforms 306; origin transform
+// first 306; pathfinding result first 306; late result on ordinary convention 307; redundant upper
+// clamp removed 318 (fast).
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)
