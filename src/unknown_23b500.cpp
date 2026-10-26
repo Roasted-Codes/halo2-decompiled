@@ -590,7 +590,7 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 201 (was 211): frame 0x50/0x54, early EBX and child-iterator convention remain.
+// score 201 (was 201): frame 0x50/0x54, early EBX and child-iterator convention remain.
 // Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
 // frame 0x50/0x54 and child-iterator registers differ;
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
@@ -612,6 +612,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Count-first friendliness AND/logical/conditional/explicit forms 201/232/211/211;
 // count-last counterparts 223/233/252/252. Boolean AND keeps every qualifying-child
 // team test and counter; 201 kept after ordinary check. Frame/child convention remain.
+// Round 143: occupied/empty Boolean and byte results on retained AND graph 232 each;
+// both byte results with AND 232/232; twice-used child-player input with count/occupied 202/233.
+// Original count/AND body restored; protected child-iterator contract remains.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

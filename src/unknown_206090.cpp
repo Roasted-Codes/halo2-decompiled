@@ -141,7 +141,7 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
-// score 1402 (was 1585): Frame 0x5cc versus 0x58c; component/velocity homes, contact induction and scheduling remain.
+// score 1402 (was 1402): Frame 0x5cc versus 0x58c; component/velocity homes, contact induction and scheduling remain.
 // Earlier 1585 (was 1596): Frame 0x590 versus 0x58c; component/velocity homes and contact induction remain.
 // Earlier 1600 from 1600: frame 0x580 versus 0x58c; velocity homes and contact induction differ;
 // frame pointer 2092; inline depth zero 3049, eight 1600; point/contact row tables 1600/1600;
@@ -169,6 +169,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // captures alone/with second cross 1577/1604. Vector magnitude snapshot plus second cross scalars kept, plain
 // 1402; all original interfaces and call expressions preserved.
 // Complete cross-vector second/first/both captures with magnitude snapshot 1655/1552/1765; rejected.
+// Round 143: pointer-interface complete add/scale/both captures 1991/1892/2424;
+// first/second/both dot inputs 1885/1772/2221; add+dot and scale+dot 2664/2554.
+// On the retained magnitude/second-cross graph, velocity/buffers/magnitude home names and
+// all four combinations 1402 each; all three second-cross component names 1402. All restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {

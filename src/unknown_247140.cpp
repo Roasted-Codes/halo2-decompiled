@@ -243,7 +243,7 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 163 (was 174): Frame 0x28 versus 0x20, input carriers and selective selector expansion remain; caller preserved.
+// score 163 (was 163): Frame 0x28 versus 0x20, input carriers and selective selector expansion remain; caller preserved.
 // Earlier 174 (was 174): Frame/input carriers, range lowering and selective selector expansion remain; caller preserved.
 // Earlier 174 (was 174): Frame/input registers and selective selector expansion remain.
 // Frame 0x1c versus 0x20, input registers, range classification and final selector expansion remain.
@@ -299,6 +299,9 @@ public:
 // Round 140: native range values lower/upper/both 166/182/178; native header values lower/upper/both
 // 163/177/152; both range/header inputs with ordinary inline 178/152. Both-header 152 forms reject for caller
 // 308 to 369; lower-header-only kept, plain 163 with caller 308.
+// Round 143: lower scalar/type-first and endpoint-first 174/174; upper scalar 165;
+// both scalar/type-first, endpoint-first, native types and mixed order 198 each; lower native type 174.
+// All original reader contracts restored; frame 0x28/0x20 and input/selector expansion remain.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
