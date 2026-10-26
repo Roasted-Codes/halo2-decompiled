@@ -1186,6 +1186,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Native normal copy and its name/scope combinations 613 (caller 510; matched caller lost);
 // captured-normal role names, entry color declarations and entry length 508 (caller 442);
 // inline/noinline declarations 508 (caller 442). Restore original body to preserve caller 364.
+// Incoming lightmap value before normal: native/component/library copy 551/546/551;
+// after length: native/component/library copy 556/554/556;
+// reused channel scalars 555; native adjusted-value construction 551. All restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)

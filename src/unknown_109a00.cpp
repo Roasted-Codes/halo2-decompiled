@@ -119,11 +119,10 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 							point3f moved;
 							transform4x3f_apply_point(&motion->transform, &matrix.position, &moved);
 							real ticks = (real)g_510c54->field_2_3;
-							vector3f displacement = {
-								matrix.position.x - moved.x,
-								matrix.position.y - moved.y,
-								matrix.position.z - moved.z
-							};
+							vector3f displacement;
+							displacement.j = matrix.position.y - moved.y;
+							displacement.k = matrix.position.z - moved.z;
+							displacement.i = matrix.position.x - moved.x;
 							vector3f change = {
 								displacement.i * ticks,
 								displacement.j * ticks,
@@ -146,7 +145,7 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 	return result;
 }
 
-// score 126 (was 164): Frame 0x88 agrees; point-velocity and nonrotating scale/add
+// score 118 (was 126): Frame 0x88 agrees; point-velocity and nonrotating scale/add
 // scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
 // 128/1015 to 164/1018 and aligned differences 66 to 40; second call schedule recovered.
 // First point-velocity and nonrotating difference/add schedules remain. external motion record 164;
@@ -168,6 +167,8 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // Native clock short/long/double 179/175/193; native difference initializer 164;
 // separate displacement/scaled-change vectors 126 (kept); with short/long/double clock
 // 173/168/199. The actual scaled change remains used by the addition and delta outputs.
+// Separate displacement components xzy/yxz/yzx/zxy/zyx 122/122/118/126/126;
+// clock-first products 126; scaled-output orders jki/kij 140/146. yzx kept after plain check.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {
