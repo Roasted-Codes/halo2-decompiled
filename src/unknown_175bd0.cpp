@@ -1944,6 +1944,9 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // Existing tint result unsigned byte/unsigned word/signed word 139/189/189;
 // multiplication result unsigned byte/unsigned word/signed word 163/137/137;
 // both unsigned byte/word 169/192. Early color frame home and native query pushes remain.
+// Spawn location first/middle 130/130; unknown before scale 127 (three-count gain rejected);
+// query receiver scope/enduring query outputs 130/130; signed node domain/sign after NONE 151/135;
+// condition-local location 130. Original stores, query scopes and node predicate restored.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2863,6 +2866,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Full-width result 176; per-unit matrix 176; named squared radius 176;
 // absent-node point memcpy 176; nested eligibility tests 176.
 // Point at function entry 176; matrix at function entry 176; effect/tag/cursor role names 176; native disabled-bit mask 251; positive player guard 176.
+// Unsigned effect/player/both indices 176/176/176; native result byte 176;
+// condition-local location 176; entry unit/scan player lifetimes 176/176;
+// readonly effect metadata 176. Original body, native widths and metadata restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

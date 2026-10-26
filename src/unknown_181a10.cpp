@@ -533,6 +533,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Component result 370; search index 338; property cursor 336; cursor result 338;
 // bounded search condition 327; output index homes 321; hit distance home 321;
 // component result with output homes 370. Original entry scan and scalar homes restored.
+// Separate root guards 321; exclusion equality first 324; direct key-clamp test 321;
+// publication/validity rejection guards 321/321; readonly instance transform 321;
+// immutable material receiver/short material output before plane 321/321. Original body restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
