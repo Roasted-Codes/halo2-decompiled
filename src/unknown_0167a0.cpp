@@ -119,6 +119,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // 289/283/307; native signed packed carriers 153; signed carriers with table field 289.
 // Readonly definition/pass/both 153/153/153; first/second/both native record copies
 // 153/153/153; range publication at consumer 153; copies with late publication 153.
+// Entry/pass/both/range/record/entry-pass-range/all base-first pointers 153 each; all bases with
+// ordinary log input 152 (one-point gain dropped).
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

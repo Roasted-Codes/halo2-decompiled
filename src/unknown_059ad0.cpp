@@ -3623,7 +3623,7 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 101 (was 115): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
+// score 101 (was 101): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
 // Earlier: Frame agrees; timeout owner spill and native identity/reply load order differ.
 // frame agrees; timeout owner spill and identity load order differ;
 // Frame agrees; timeout owner spill and native identity/reply load order differ.
@@ -3639,6 +3639,8 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 // actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;
 // native workspace names 115; chained message flags 115; peer result with chained flags 101; host
 // result at send 113.
+// Deferred-leave/announcement/both Boolean home names 101/101/101; byte/word host result 101/137;
+// byte/word leave result 101/130; reverse protocol-byte stores 101.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -4313,7 +4315,7 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
+// score 370 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
 // Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
@@ -4330,6 +4332,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // direct state observations 387; result after state 384. Frame/Boolean homes and block placement remain.
 // Word identity result 384; word preference/equality states 396/396; local member first 386;
 // selection flags after map updates 384; word reachability counts 383.
+// Negative identity predicate 396; signed-byte/unsigned raw identity result 384/384; direct
+// map/transition/peer fields 384/384/370; preferred-first processing 384; selection declaration
+// order 384.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4472,16 +4477,15 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
 acknowledge:
  {
   s_session_id id = *(s_session_id *)&session->unknown1c;
-  s_network_session_member_state *peer = &session->member_states[sender];
-  if (peer->flag1)
+  if (session->member_states[sender].flag1)
   {
-   if (session->observer->channels[peer->unknown04].state == 7)
-    network_observer_send_message(session->observer, session->value10, peer->unknown04, false, 18, sizeof(id), &id);
-   network_observer_send_message(session->observer, session->value10, peer->unknown04, true, 18, sizeof(id), &id);
+   if (session->observer->channels[session->member_states[sender].unknown04].state == 7)
+    network_observer_send_message(session->observer, session->value10, session->member_states[sender].unknown04, false, 18, sizeof(id), &id);
+   network_observer_send_message(session->observer, session->value10, session->member_states[sender].unknown04, true, 18, sizeof(id), &id);
   }
-  peer->unknown08 = NONE;
-  peer->unknown0c = NONE;
-  peer->flag3 = true;
+  session->member_states[sender].unknown08 = NONE;
+  session->member_states[sender].unknown0c = NONE;
+  session->member_states[sender].flag3 = true;
   if (session->state == 7)
    network_session_clear_peer(session, sender);
   result = true;
