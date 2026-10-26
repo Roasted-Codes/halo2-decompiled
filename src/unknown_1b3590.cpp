@@ -289,6 +289,9 @@ short __stdcall function_1b39e0(long actor_index)
 // native state clear 180; constant before timers 35. Numerical value preserved.
 // Separate real timers 8; separate tick results/both pairs/pair scopes 1/1/1;
 // unsigned identifiers 1; long result 149; current-id lifetime 1; early result 27.
+// score 1 (was 1): constant between timers 13; after timers before link 2;
+// after selected call 6; after mode/state/link stores 7/18/21; after flags 23;
+// after unit notification 60. Original constant site restored; numerical value preserved.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
