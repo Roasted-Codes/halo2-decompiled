@@ -1241,6 +1241,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // prevents four-way expansion; all original code restored.
 // Unsigned total 281; unsigned total with counted walk 112; direct-receiver word ordinal 281;
 // word ordinal with unsigned total 281; unsigned counted ordinal 112. Expanded forms lose 0x54990.
+// Native identity with original validation: rolled 316, counted 144; byte identity counted 112;
+// other-player identity 144; native/byte identity with channel rejection 144/112;
+// native/other-player identity with entry-width value 165/165. All lose the matched caller; original retained.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2863,6 +2866,10 @@ struct s_voice_route_choice
 // 1103. Selected results prevent four-way expansion; all original code restored.
 // Per-choice pointer 393; signed-word radio 393; signed headset 394;
 // function-scope descriptor only 402; function-scope pairs only 401.
+// Selected route value 459; byte/word radio with route value 491/459;
+// route value with three pairs 469; native descriptor 464; word/three pairs 467;
+// byte/descriptor 495; native mixer combination 503. Frame shrinks to 0x40;
+// original indexed selection and mixer workspace retained.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

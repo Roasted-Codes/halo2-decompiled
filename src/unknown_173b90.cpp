@@ -840,6 +840,10 @@ public:
 // Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
 // child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
 // Original entry result, ordinary pooled flags and all child calls restored.
+// Native flag bytes 382; flag-stage result 378; native flag overlay 382;
+// Overlay with flag-stage result 378; named byte transfer 411; transfer/result 411;
+// byte flags with ordinal observations 388; overlay/ordinal/result 384.
+// All native byte layouts lose five matched controls; original word flags retained.
 // Flag-stage long result/native bitfield transfer/direct visibility and combinations
 // 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
 // @retail 0x174a30

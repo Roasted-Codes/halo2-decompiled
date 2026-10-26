@@ -5150,7 +5150,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 163 (was 163): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// score 157 (was 163): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5176,6 +5176,9 @@ void __stdcall function_d6bc0(long object_index);
 // Round 201: Reset-only entry pointer 190; later timer after query recovery 166 (one-point gain rejected); native bool schedule after query recovery 184; type result before slice 223; scenario global at use 231.
 // Native scheduling/activity/both bits 167/204/204; full native object fields 204;
 // Boolean schedule with bits 216; bits with late timer 204; full fields/late timer 204; direct countdown/bits 214.
+// Round 138: word kind 157 plain kept; native int delay 163; signed/unsigned byte schedule
+// 180/180; word kind with either byte schedule 168/168; readonly preset 163; word kind and
+// readonly preset 157. Frame 0x14 versus 0x18 and timer/base homes remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5243,7 +5246,7 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
             {
                 long delay = function_15ac50(i);
                 short modifier = 0;
-                long kind = *(signed char *)(placement + 0x14);
+                short kind = *(signed char *)(placement + 0x14);
                 if (kind == 0) modifier = *(signed char *)((byte *)g_4e6948 + 0x211);
                 else if (kind >= 1 && kind <= 7) modifier = *(signed char *)((byte *)g_4e6948 + 0x208);
                 switch (modifier)

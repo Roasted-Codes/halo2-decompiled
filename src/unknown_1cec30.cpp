@@ -2171,6 +2171,11 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // Round 187: complete contact input/normal sum/both 220/267/463; complete velocity sum 283;
 // symmetric scaled components, separate speed product, material count after store and corrected-boundary speed-first each 137;
 // fallback-first 150; separate normal/velocity/both normalization inputs 443/232/478. All restored.
+// score 137 (was 137): the velocity sums in the material loop load the
+// scheduled differently; initial normal XMM roles also differ.
+// Round 138: native flag byte, signed index, both fields, native bit, bit/index, Boolean bit,
+// Boolean bit/index and readonly native contacts all 137. Normal/velocity XMM roles and
+// property-zero retention remain; frame 0x34 agrees.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {

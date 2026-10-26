@@ -447,15 +447,16 @@ void function_2bde90(real t, point3f *out, point3f *points)
 /* builds the hill's polygon on the spline through its markers, and its
    center, radius, perimeter and height range (the height range also covers
    the hill's other markers) */
-// score 130 (was 134): control-call convention and scan induction differ;
+// score 25 (was 25): control/sampling conventions, radius base and marker registers remain.
+// Earlier at 130 (was 134): control-call convention and scan induction differ;
 // segment control scope 141 fast; sample point scope 141 fast; late marker
 // array 141 fast; unsigned edges 142 fast; separate marker counters 141 fast.
 // Control/sampling calls and scan induction remain; center/radius/both values 171/169/185;
 // vertex memcpy 190; edge-length values 139; main height value 130 plain kept;
 // shared point count 326; height plus count 345 (plain).
-// score 130 (was 134): protected control/sampling calls and scan induction remain;
+// Earlier at 130 (was 134): protected control/sampling calls and scan induction remain;
 // center/radius/both/height/all endpoint scans 375/475/716/378/950f; frame/size/global 237/276/1164f.
-// score 130 (was 130): Protected control/sampling conventions and scan induction remain. external center binding 130; external
+// Earlier at 130 (was 130): Protected control/sampling conventions and scan induction remain. external center binding 130; external
 // radius binding 131; center radius bindings 131; external height bindings 151; native scan ordinal 130;
 // center library initialization 137; marker library input 130; independent point ordinals 158.
 // Protected control/sampling conventions and scan induction still differ.
@@ -469,12 +470,15 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // Frame 0x110 and protected helper conventions remain; independent center publication
 // xzy/yxz/yzx/zxy/zyx 134/134/134/134/134; center scale xzy/yxz/zyx 130/130/130
 // (all plain). Original arithmetic, scans and helper calls restored.
-// score 25 (was 130): the calls to 0x2bdd70 (index in a stack slot, retail EDX) and 0x2bde90
+// Earlier at 25 (was 130): the calls to 0x2bdd70 (index in a stack slot, retail EDX) and 0x2bde90
 // (t in XMM3, retail XMM2), the radius loop's pointer base and the marker loop's registers differ.
 // Element pointer for both radius components 22 (gain 3, not kept); marker index zeroed before its
 // guard 20 (not kept); marker loop as a for 582 (unrolled); globals local in/before the marker loop
 // 20/22; callee 0x2bdd70 without its index address read 43 -> 64 (index in ECX); (spline, points,
 // n, out) order with an indexed body 86 (points on the stack).
+// Native XY aggregate copy 187f; marker height 160f; unsigned/short marker ordinal 74f/92f;
+// copy plus height/index 220f/187f; height plus index 97f; copy/height/index 201f.
+// Unchanged reduced preview 74f versus full 25; all new forms restored.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

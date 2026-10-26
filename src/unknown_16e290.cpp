@@ -346,12 +346,17 @@ bool function_44690(s_word_bit_iterator *iterator, long *out);
 
 // score 125 (was 125): Frame 0xf0 agrees; padded-count/byte-count lifetime, scalar homes and memcmp carriers remain.
 // Earlier 125 (was 142): retail keeps count + 31 in EBX (word count shifted from it after the copies),
+// frame 0xf0 agrees; padded-count retention and iterator/portal homes differ.
+// Earlier at 125 (was 142): retail keeps count + 31 in EBX (word count shifted from it after the copies),
 // bytes in EDI and base in ESI; ours keeps bytes in EBX, so the spill homes and memcmp registers differ.
 // Bytes as words * sizeof(dword) 237; rounded-count local for all three 209; masked rounded count
 // 252 (822 bytes); bytes >> 2 125; word count declared before the arrays 125; byte-wide or bitfield
 // portal flags 142 each (retail's byte load into BL stays a memory test).
 // Count/cluster/portal field references and paired element references 125 each;
 // cluster/portal/all element fields at uses 125 each; count reference with direct elements 125. All restored.
+// Native output/nested/visited/expanded memory-operation results 194/230/184/267f;
+// output plus visited/expanded 247/279f; scratch results 205f; all results 268f;
+// aligned signed bits divided by eight 241f. Fast baseline 125; all restored.
 // @retail 0x16de20
 void function_16de20(short index, s_16e150_bits const *table, dword *output)
 {
