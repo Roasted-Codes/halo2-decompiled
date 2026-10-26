@@ -1943,6 +1943,7 @@ bool function_1df5d0(short team_a, short team_b);
 // Frame 0x14 agrees; next-index memory home, contribution register and entry
 // Frame 0x14 agrees; next-cursor storage, contribution register and flag
 // Round 110: delayed long count from native population 235; known native squad fields 179; direct hostility OR 238; hostility first 179; native point memcpy 179.
+// Zero/sentinel iterator seeds 243/228; actor pointer/health names 179/179; shared actor level 248; shared definition flags 179; live last-update reads 179; health publication before count 179. Cursor memory home and contribution allocation remain.
 // @retail 0x203360
 void function_203360(long squad_index)
 {

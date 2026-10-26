@@ -394,6 +394,7 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // strip cursor 242; read-only strip 236; output lifetime plus strip 242; model uses plus strip 300.
 // Cache inline/noinline, lookup inline/noinline, both inline/noinline, and
 // mixed inline/noinline pairs 236 each; all declaration metadata restored.
+// Extraction-helper inline/noinline 236/236; unsigned/short/word vertex ordinal 236/248/248; initialized vertices/node/both 303/243/304. All helper declarations restored. Region schedule and model/range/vertex homes remain.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

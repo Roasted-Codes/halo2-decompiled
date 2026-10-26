@@ -27,6 +27,7 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // separate chain size 239; capacity/count/size combination 272.
 // Pending/active/both counted while 217/217/294; pending/active unsigned chain index 217/217; shared dispatch and chain aggregation 340.
 // Round 111: Positive pending/active/both equality termination 217/217/217; active state first 253; Boolean-OR blocked reduction 264.
+// Pending/active/both invalid-query continues 229/217/229; zero-state exit 217; output-failure exit 217; initialized handle arrays 297; pending/active selector after lookup 219/217. Receiver and callback/output/blocked homes remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
