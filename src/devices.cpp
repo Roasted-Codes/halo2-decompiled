@@ -1238,6 +1238,9 @@ bool function_0b6760(s_index_pair const *pair);
 // frame 0x1c versus 0x20 and index/state homes remain; byte result 351;
 // word result 358; shared position complement 347; common group receiver 347; clamp arms 352.
 // Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303; both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c versus 0x20 and index/header/state/result homes remain; all helper declarations restored.
+// Round 148: Explicit absent-state else 309; false result after flag clear 302; both joins 308; zero-first
+// direction/activity 303/303; state else plus direction 309; later false result plus activity 302; all
+// joins/zero tests 308. One-point gains dropped; frame/index/header/state/result homes remain.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

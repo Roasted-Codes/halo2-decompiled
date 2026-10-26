@@ -323,6 +323,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Type-four native value reset 216; first-case shared three/four 193/193; second-case shared five 192; all
 // equal type-four values chained 199; type-five range/full reversed stores 186/186; descending cases 228.
 // Scale EBX/EAX and constant pushes remain.
+// Round 148: Complementary place/type-four/type-five pair reversal 188/190/188; place plus type-four/type-five
+// 196/190; type-four plus type-five 192; all pairs 198; alternate presets before base presets 206. Frame 0x38
+// agrees; scale EBX/EAX and constant pushes remain.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

@@ -1319,7 +1319,7 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
+// score 202 (was 202): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Earlier: frame 0xfc agrees; key/statistic homes and grouped team dispatch remain.
 // key/statistic homes, statistic cursor and grouped team dispatch differ.
 // frame 0xfc agrees; key/statistic homes, six-byte statistic cursor shift and grouped dispatch remain.
@@ -1356,6 +1356,10 @@ struct s_rating_summary
 // Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.
 // Summary count/lookup/formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three 316. Full-width character retained at 1167/1212 after plain whole-image confirmation.
+// Round 148: Existing bound helper in bounded for, caller ordinary/force-inline/inline 323/323/323; direct
+// bound-helper break 224; native player pointer 325; whole summary clear 353; outer summary workspace 323;
+// native player plus summary clear 353; definition-side force-inline with bounded for/direct break 323/216.
+// Key/statistic homes and helper expansion remain.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
