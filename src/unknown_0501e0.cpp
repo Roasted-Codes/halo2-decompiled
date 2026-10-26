@@ -36,17 +36,18 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
     }
 }
 
-// score 255 (was 255): frame 0x20 versus 0x14 and transform coefficient/result registers differ.
+// score 221 (was 221): frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 // Global optimization off 961; depth zero 555; frame pointer 300;
 // input-first products 255; k/j/i transform output 272.
-// score 227 (was 255): frame 0x18 versus 0x14; coefficient/result registers and tail differ.
 // Offset/transform/blend loops 315/291/255; paired loops 237; depth bounds 237; both 227.
 // Paired loops with blend/unsigned/in-place 236/237/287;
 // scoped bounds 230; literal zero 227; bound scalar homes 227 (plain).
-// score 221 (was 227): frame 0x18 versus 0x14 and coefficient/result/tail homes still differ.
 // Separate offset loops 226; output cursor 225; short transform index 405;
 // first/second bound at uses 225/236; bound declaration order 227;
 // separate offsets with output cursor 221 plain (1145/1136 bytes); short index/first bound 397.
+// Value direction 348; reference direction/output 221/221; input-first scale products 221;
+// selected scaled inputs 275; short offset counters 277; byte transform counter 394;
+// value direction with reference output 348. Retained separate offset loops and cursor restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

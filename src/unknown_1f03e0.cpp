@@ -904,24 +904,21 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
     out->k = input->i * matrix->forward.k + input->j * matrix->left.k + input->k * matrix->up.k;
 }
 
-// score 101 (was 101): final override load order and rotation input/coefficient schedule differ.
+// score 87 (was 87): frame 0x58 agrees; final override loads and rotation coefficient/input scheduling remain.
 // Rotation pointer/reference results 101/101; matrix reference 101; remaining helper orders 101/101/101.
 // Deferred rotation stores 102; left-coefficient snapshots 102; original alias copy and arithmetic restored.
-// reading the input vector's components at each use in shape_rotate_vector scores
-// 76-82, but both calls rotate in place (input and out are the same vector), so every input component
-// must be read before the first store; that form is not kept.
-// Final override load order and rotation input/coefficient allocation still differ.
+// Partial component reads 76-82; the alias copy protects both in-place inputs.
 // Final point setter 104; completed translation 189; translation record 102;
 // rotation result 175; direction snapshot 187; orientation snapshot 193;
 // point/rotation results 177; translation/orientation snapshots 301.
-// score 87 (was 101): the rotation reads each input component at its use, as retail
-// does (re-reading after every store); that is correct in place, since the alias copy
-// points the input at the copy when it is the output. Override additions still load
-// the velocity before the position, and the rotations' term order and operand roles
-// differ. Components accumulated by statements in retail's term order 86; matrix-first
+// All current input reads use the protected copy when input and output alias.
+// Components accumulated by statements in retail's term order 86; matrix-first
 // products 86; the 0x2477b1 helper's form 88; typed position/velocity pointers 86;
 // swapped operands 86; through shape_add 164 (position first, as retail, plus a copy);
 // typed pointers with explicit sums 86.
+// Initialized alias copy 118; memcpy copy 87; shared copy setter 84 (three-count gain rejected);
+// alias-copy name 87; value input 110; reference input with copy 110; value matrix 201;
+// unconditional input copy 109. All eight helper/call forms restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {
