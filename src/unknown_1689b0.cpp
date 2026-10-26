@@ -1559,6 +1559,8 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // opposite radius 647; word-count shared reconstruction and early successor 686.
 // Entry direction 552; prism-scope contact points 552; contact/half role names 552;
 // sum memcpy 552; full-width reconstruction axis 593 at retail length.
+// DL134: short/long projection indices 621/553; polygon count 555; normal component 647;
+// axis at use 744; coordinate inputs 651; short indices/inputs 686; polygon/plane inputs 660.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

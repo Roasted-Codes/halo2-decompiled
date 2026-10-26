@@ -167,17 +167,21 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
-// score 649 (was 649): frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
-// score 613 (was 656): frame/type agree; state/player/unit allocation remains.
+// score 631 (was 645): frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
+// Earlier 649 from 649: frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
+// Earlier 613 from 656: frame/type agree; state/player/unit allocation remains.
 // Direct state receiver 656; unsigned unit carrier 656; early blocked local 656;
 // multi-use magazine view 656; seat-before-parent acquisition 656; all restored.
-// score 649 (was 649): Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
-// score 649 (was 658): Frame 0x54 agrees; state/player/unit homes remain. Shared seat fields kept 658 to 651, 2300/2308 bytes. Captured seat flags 658; short selector slot 662; typed object headers 658; magazine capacity 658 (plain).
+// Earlier 649 from 649: Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
+// Earlier 649 from 658: Frame 0x54 agrees; state/player/unit homes remain. Shared seat fields kept 658 to 651, 2300/2308 bytes. Captured seat flags 658; short selector slot 662; typed object headers 658; magazine capacity 658 (plain).
 // Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
-// score 645 (was 645): Frame 0x54 and EDX type agree; state/player/unit homes remain. Long seat index 647; early child iterator 645; seat disqualifier predicate 645; pooled seat reference 645; function-scope unit index 645 (plain).
-// score 645 (was 645): Frame 0x54/type EDX agree; state/player/unit homes remain. Shared primary weapon 653;
+// Earlier 645 from 645: Frame 0x54 and EDX type agree; state/player/unit homes remain. Long seat index 647; early child iterator 645; seat disqualifier predicate 645; pooled seat reference 645; function-scope unit index 645 (plain).
+// Earlier 645 from 645: Frame 0x54/type EDX agree; state/player/unit homes remain. Shared primary weapon 653;
 // secondary 655; status weapon 645; all three observations 688; native input state fields 645 (fast); matched
 // sibling preserved.
+// DL134: byte state view 645; entry first 646; status/child/workspace cases first
+// 642/641/642; direct flag cases first 631 kept; communication first 633; byte/status 642;
+// flags with child/status first 647/631. Both keepers plain-confirmed; the latter tie is restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
@@ -197,6 +201,9 @@ bool function_1e7ab0(long local_index, long type)
    byte *unit = request_unit(unit_index, g_4e0300->data);
    switch (type)
    {
+   case 0: result = (state->field_194 & 1) != 0; break;
+   case 1: result = ((state->field_194 >> 1) & 1) != 0; break;
+   case 31: result = ((state->field_194 >> 2) & 1) != 0; break;
    case 10:
     if (!function_13cb40() && *(short *)(unit + 0x1fc) != NONE && *(long *)(unit + 0x14) != NONE && function_1e8eb0(unit_index, NONE, true))
     { result = true; if (*(long *)(data + 0x80) != 10) data[0x1a0] = false; }
@@ -252,9 +259,6 @@ bool function_1e7ab0(long local_index, long type)
    case 18:
     if (request_weapon(player, false, g_4e0300->data) != NONE && !motion_sensor_enemy_nearby(local_index) && function_1e7a10(local_index, 15)) result = true;
     break;
-   case 0: result = (state->field_194 & 1) != 0; break;
-   case 1: result = ((state->field_194 >> 1) & 1) != 0; break;
-   case 31: result = ((state->field_194 >> 2) & 1) != 0; break;
    case 17: if (state->field_19b > 0 && *(short *)(unit + 0x1fc) == NONE) result = true; break;
    case 30:
     if (g_4e6948->state == 2 && function_15eaf0() && function_162fd0(local_index) != NONE)
