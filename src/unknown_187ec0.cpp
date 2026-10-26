@@ -138,11 +138,16 @@ public:
 	short m_index;
 };
 
-// score 33 (was 42): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
+// score 33 (was 33): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
 // Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
 // Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
 // inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
+// Entry-live result with break, key compared first 42 (key on the stack); early return in the loop
+// 42; aligned char buffer in 0x1eb020 with that body 42; 0x188640 calling without its key reference
+// 42 (0x1eb020 lost); __stdcall 0x188640 42; parameters swapped 42. With the 0x1eb020 -> 0x188640
+// call removed, or 0x1eb020 unaligned, that body and 0x188640 both match: the aligned caller's edge
+// keeps the key out of ebx. BLOCKED-BY 0x1eb020
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {

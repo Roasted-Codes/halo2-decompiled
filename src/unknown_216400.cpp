@@ -67,6 +67,7 @@ long function_217590(long memory_unit)
 
 void __stdcall function_216e50(word const *display_name, long type, char *language, word *name);
 void unicode_string_snprintf(word *buffer, long maximum_count, word const *format, ...);
+void unicode_string_to_ascii(const word *source, char *destination, long maximum_count);
 
 struct s_save_entry_2164c0
 {
@@ -95,26 +96,23 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
     return result;
 }
 
-// score 51 (was 51): diagnostic arguments, append count/result and enumeration registers differ.
-// File path/directory/both receivers 51/51/51; conditional character store 69;
-// capacity first 54; capacity nonzero 51; short type index 189; no parameter address 51.
-// conversion addresses, append list/count/result and final call registers differ.
-// Existing root/path helpers 51/51; file-reference/all helpers 233/233;
-// append names/force-inline and buffer names 51/51/51; source step at character read 72.
-// score 51 (was 51): conversion addresses, append and enumeration registers still differ.
-// Const handle/unsigned conversion capacity 51; indexed conversion 63; full path copy 110;
-// aggregate-zero file 53; unsigned append count/entry memcpy/enumeration names 51.
-// matching 0x8ac frame; conversion scratch registers, append count/result homes
-// and enumeration argument registers differ. Earlier helper/index/loop forms excluded; tried append
-// success result 54; capacity return 54; counted conversion 229; conversion end pointer 58;
-// entry lifetime 51; entry zero initializer 199; file lifetime 51; drive-validation return 51;
-// shared character conversion 51.
-// score 32 (was 51): the append's count/result/list registers (ours eax/cl/edx, retail esi/al/ecx,
-// new count stored before the copy) and the two scratch pairs before 0x13fb70 and
-// XFindNextSaveGame differ. The append's memcpy into `&entries[count++]` gives retail's index copy
-// (51 -> 32); an element pointer for the slot 32; post-increment index local 51; index then
-// count store 51; found flag with the found arm first 51/32; helper parameters swapped 32;
-// force-inline helper 32.
+// score 32 (was 32): the append's count/result/list registers (ours eax/cl/edx, retail esi/al/ecx,
+// new count stored before the copy) and the scratch pairs before the format call and
+// XFindNextSaveGame differ; without the format call the enumeration registers are retail's.
+// The append's memcpy into `&entries[count++]` gave retail's index copy (51 -> 32). Tried:
+// file path/directory/both receivers 51/51/51; conditional character store 69; capacity first 54;
+// capacity nonzero 51; short type index 189; no parameter address 51/32; file-reference/all helpers
+// 233/233; append names/force-inline and buffer names 51; source step at character read 72; const
+// handle/unsigned conversion capacity 51; indexed conversion 63; full path copy 110; aggregate-zero
+// file 53; unsigned append count/entry memcpy/enumeration names 51; append success result 54;
+// capacity return 54; counted conversion 229; conversion end pointer 58; entry lifetime 51; entry
+// zero initializer 199; file lifetime 51; drive-validation return 51; element pointer for the slot
+// 32; post-increment index local 51; index then count store 51; found flag with the found arm first
+// 51/32; helper parameters swapped 32; force-inline helper 32; count local 44; increment first 44;
+// pointer arithmetic slot 32; count reference 32; append as a list method 32; conversion local
+// orders 34-36; type/find/data declared at the top 32; NONE-type test before the found arm
+// 71/73; format and name locals 32; the existing root, path and ASCII helpers in place of their
+// written-out bodies 32 (kept).
 // @retail 0x2164c0
 void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
 {
@@ -123,10 +121,7 @@ void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
     if (function_1249f0(memory_unit, &drive))
     {
         char root[8] = "";
-        if (function_1249f0(memory_unit, &drive))
-            function_11c9c0(root, sizeof(root), "%c:\\", drive);
-        else
-            root[0] = 0;
+        function_216400(memory_unit, root, sizeof(root));
         XGAME_FIND_DATA data;
         HANDLE find = XFindFirstSaveGame(root, &data);
         if (find != INVALID_HANDLE_VALUE)
@@ -142,9 +137,7 @@ void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
                 {
                     char path[256];
                     path[0] = 0;
-                    strncpy(path, entry.directory, sizeof(path));
-                    path[255] = 0;
-                    function_122810(path, saved_game_type_get_storage_name(type));
+                    function_216d70(path, entry.directory, type);
                     s_storage_file_reference file;
                     memset(&file, 0, sizeof(file));
                     file.signature = FILE_REFERENCE_SIGNATURE;
@@ -176,23 +169,7 @@ void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
                     word description[256];
                     unicode_string_snprintf(description, 256, L"unrecognized saved game file found by XFindNextSaveGame(): display name= '%s' path= '%hs'", data.szSaveGameName, data.wfd.cFileName);
                     char text[256];
-                    word const *source = description;
-                    char *destination = text;
-                    long left = 256;
-                    word character;
-                    do
-                    {
-                        character = *source;
-                        if (left == 1)
-                            *destination = 0;
-                        else if (character <= 0x7f)
-                            *destination = (char)character;
-                        else
-                            *destination = '?';
-                        source++;
-                        destination++;
-                        left--;
-                    } while (character && left > 0);
+                    unicode_string_to_ascii(description, text, 256);
                 }
                 goto next;
 found:
