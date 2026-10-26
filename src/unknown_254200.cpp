@@ -188,7 +188,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
+// score 153 (was 153): Frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
 // Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
@@ -240,6 +240,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Word-alpha pointer/shared-color helper 349; direct consumer query/helper 378; late query/helper 378;
 // immutable query/helper 349; pointer/direct helper with scalar size 349/378;
 // lower-first helper coordinates 372; symmetric role-named lower-first coordinates 372 (fast control 162).
+// Round 159: Shared getter resource-result-first 517; bitmap failure returns 522; both null producers
+// 516; ordinary inline resource/bitmap/both 162/162/162; both null producers with resource/bitmap inline
+// 516/516 (fast control 162, full baseline 153). All getter bodies, metadata and target code restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

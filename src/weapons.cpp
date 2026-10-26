@@ -3039,10 +3039,10 @@ struct s_ammo_conversion_entry
     byte unknown02[6];
     long definition_index;
 };
-// score 198 (was 198): Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
+
+// score 198 (was 198): Frame 0x24 versus 0x20; destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 
-// score 198 (was 198): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
 // Earlier: frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
@@ -3071,6 +3071,10 @@ struct s_ammo_conversion_entry
 // Round 318: actual unloaded/loaded/both source-count values 207/201/202;
 // native source state 236; capacity arm 197 (gain 1, rejected); values/state with capacity arm
 // 202/236; both values with Boolean acquisition 220. Frame and saved roles remain; all restored.
+// Round 159: Native leading tag byte/conversion fields/both 198/198/198; native fields with machine-width
+// loaded/unloaded/both transfers 198/205/205; native fields with common acquisition result 212 (740
+// bytes); native kind at every use 236 (747 bytes). Original word acquisition, raw observations, transfer
+// types and return flow restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

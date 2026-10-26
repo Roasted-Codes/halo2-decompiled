@@ -405,7 +405,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 181 (was 181): Frame 0x14 agrees; request/count/table registers, cross publication and projection schedule remain.
+// score 177 (was 181): Frame 0x14 agrees; request/count registers, cross publication and projection schedule remain.
 // Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
@@ -430,14 +430,19 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Fallback pointer/value 244/266; selected contact index 276, with pointer/value 309/299;
 // per-case defaults 269; complete normalized result 239, with fallback pointer 310.
 // Height-expression and full eligibility values 215/215; nested height filter 181; component fields at uses 370, with height/eligibility/nesting 368/368/370; signed valid-selection range 209. Original pair-result join restored.
+// Round 159: Shared cross, native component, native contact, combined native layout and their three
+// shared-cross combinations 181 each; native layout/shared cross with selected/lowest initialized first
+// 177; original layout/private cross with both results initialized first 177 (975/977 bytes, plain
+// confirmed and kept). Only the two constant initializations move; every memory read and call stays in
+// place.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
 {
-    long component_index = *(long *)(request + 0x40) & 0xffff;
-    byte *component = g_51e9b8->data + component_index * 0xa0;
     long selected = NONE;
     real lowest = 0.0f;
+    long component_index = *(long *)(request + 0x40) & 0xffff;
+    byte *component = g_51e9b8->data + component_index * 0xa0;
     for (long i = 0; i < count; i++)
     {
         byte *entry = *(byte **)(component + 0x88) + indices[i] * 0x48;
@@ -929,22 +934,21 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
         copy = *input;
         input = &copy;
     }
-    real product_left_i = input->j * matrix->left.i;
     real product_forward_i = input->i * matrix->forward.i;
+    real product_left_i = input->j * matrix->left.i;
     real product_up_i = input->k * matrix->up.i;
     out->i = product_left_i + product_up_i + product_forward_i;
-    real product_left_j = input->j * matrix->left.j;
     real product_forward_j = input->i * matrix->forward.j;
+    real product_left_j = input->j * matrix->left.j;
     real product_up_j = input->k * matrix->up.j;
     out->j = product_forward_j + product_left_j + product_up_j;
-    real product_left_k = input->j * matrix->left.k;
     real product_forward_k = input->i * matrix->forward.k;
+    real product_left_k = input->j * matrix->left.k;
     real product_up_k = input->k * matrix->up.k;
     out->k = product_forward_k + product_left_k + product_up_k;
 }
 
-// score 54 (was 87): frame 0x58 agrees; final override load order and rotation coefficient residency remain.
-
+// score 50 (was 54): Frame 0x58 agrees; final override load order and rotation coefficient residency remain.
 // Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // final override load order and rotation input/coefficient schedule differ.
@@ -991,6 +995,10 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // forward/up products in every row 87 fast;
 // all three products in every row 54 fast;
 // first syntactic product in every row 90 fast;
+// Round 159: Complete named-product declaration orders forward/left/up 50; forward/up/left 54;
+// left/up/forward 54; up/forward/left 53; up/left/forward 53; matrix-first named products 54; immutable
+// named products 54; named products with all partial sums 59. Forward/left/up kept at 1040/1043 bytes;
+// plain confirmed.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {
