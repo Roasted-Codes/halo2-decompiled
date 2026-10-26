@@ -703,7 +703,8 @@ struct s_85650
  s_sender *field_0c[15];
 };
 
-// score 141 (was 141): Frame 0x24 versus 0x28 and distribution/owner/child/callback homes remain.
+// score 69 (was 69): Frame 0x28 and length 551 agree; aggregate-base scheduling, owner mask and callback carriers remain.
+// Earlier 141 (was 141): Frame 0x24 versus 0x28 and distribution/owner/child/callback homes remain.
 // Earlier: the frame is four bytes smaller than retail's
 // (sub esp,0x24 against sub esp,0x28), so every stack slot sits at another
 // offset and the record pointer is kept in EBP here and in EDX in retail.
@@ -743,6 +744,7 @@ struct s_85650
 // active through a state local 141; distribution declared after the storage 142.
 // Signed-byte/short/word active 148/152/152; bool/byte/short/word/dword count 142/142/145/145/141. Original count and active types restored.
 // Round 116: Type range 146; flag-span clear 141; complete sender fields 173 (frame 0x28); callback scope 141; distribution fields 150; wide initializer input 145 (callee loss, restored); fresh first sender on bool-active/count-default base 69 kept plain; aggregate receiver 69; mask operand order 69; flag-clear combination 78. Every baseline match preserved.
+// Member child attachment with force/ordinary inline, index/child-first formals and input/published-slot queries: all eight 69.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {

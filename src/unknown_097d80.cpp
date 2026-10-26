@@ -51,8 +51,8 @@ struct c_aggregate : c_child
 
 };
 
-
-// score 85 (was 92): frame 0x8024 against 0x8020 (retail packs the completion output with two later
+// score 85 (was 85): Frame 0x8024 versus 0x8020, completion-output home, dispatch ownership and allocator reload remain.
+// Earlier 85 (was 92): frame 0x8024 against 0x8020 (retail packs the completion output with two later
 // spills), the dispatch loop (retail: index in ebp, child cursor and inner count spilled) and one
 // allocator reload (retail loads the global again for the release, into eax then edi) still differ.
 // Kept: item test on the field and the allocator global held across the release 85.
@@ -85,6 +85,7 @@ struct c_aggregate : c_child
 // remain.
 // Concrete collection/dispatch class and allocation-pointer combinations 92 each; shared typed table 150;
 // common child-interface collection/dispatch/both/both with allocation pointer 92 each.
+// Existing shared release helper with default/force-inline linkage and local/direct-field input 102 each; real starts initialized on those four forms 151 each.
 // @retail 0x97d80
 long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 {
