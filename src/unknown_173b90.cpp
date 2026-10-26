@@ -824,39 +824,35 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 308 (was 308): frame agrees; byte flag clear, child carriers and selective inlining differ.
-// Round 88: the child loop's type lookup through function_137bd0_inline (retail inlines it there,
-// as at 0x247fd0's loop, and calls it at the first site) 294 (not kept: a copy of 0x137bd0's body,
-// kept only with a match).
-// Frame 0x60 agrees; early result zero, byte flag clear, location transport and selective child-tag expansion remain.
-// Earlier: frame agrees; byte flag clear, child carriers and selective inlining differ.
-// Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
-// perpendicular call 394; inline depth one 394, zero 517.
-// Earlier context: frame 0x64 versus 0x60; flag clear and selective calls differ.
-// Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
-// child tag scalar 394; long result 329; dword flags 401.
-// Frame 0x60 now agrees; flag transfer, child carriers and selective calls
-// remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
-// 308 (plain verified); child for-loop 338.
-// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native
-// orientation result 373, with shared cross 373.
-// frame 0x60 agrees; early long-result store, flag transfer and child/call homes remain.
-// Ordinary local parent 366; word result 338; direct final result 388; direct parent color
-// Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
-// child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
-// Original entry result, ordinary pooled flags and all child calls restored.
-// Native flag bytes 382; flag-stage result 378; native flag overlay 382;
-// Overlay with flag-stage result 378; named byte transfer 411; transfer/result 411;
-// byte flags with ordinal observations 388; overlay/ordinal/result 384.
-// All native byte layouts lose five matched controls; original word flags retained.
-// Flag-stage long result/native bitfield transfer/direct visibility and combinations
-// 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
-// native-definition 308; shared-velocity-address 308.
-// native-definition-shared-velocity-address 308; readonly-particle 308.
-// native-definition-readonly-particle 308; shared-velocity-address-readonly-particle 308.
-// native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
-// Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
-// canonical results 374/374/308/375 on the recovered frame. Original body restored.
+// score 308 (was 308): frame 0x60 agrees; the early result store, the flag 8 clear (retail
+// stores the word, clears the bit with a byte and, then reloads), the location-loop and child
+// registers, and retail's inlined 0x137bd0 at the child-loop call (EBX then holds the tag
+// object and the tinted byte spills) differ. 0x137bd0's file is built /Ob1, which keeps it out
+// of line; moved to a file without /Ob1, LTCG inlines it at every caller (all matched callers
+// grow about 30 bytes), so retail's one inlined site is not a whole-program inlining choice.
+// Tried this round (aligned differences, addresses masked, in brackets; baseline [179]): one
+// bool-expression return 405 [239] (32-bit exits agree, frame 0x5c); 0x137bd0 moved out of
+// its /Ob1 file 457; the volatile parent removed 371 [247] (frame 0x64: the first-child address
+// is hoisted and spilled; retail forms it with lea at the call); both 392 [178] (frame 0x60);
+// flag 9/8 update through the bitfields 368 [200].
+// Round 88: the child loop's type lookup through an inline copy of 0x137bd0 294 (not kept: a
+// copy of an existing body, kept only with a match).
+// Earlier: reversed-component loops 394; normalization loop 394; perpendicular call 394;
+// inline depth one 394, zero 517; spawn initializer 394; early matrix values 393; child tag
+// scalar 394; long result 329; dword flags 401; ordinary local parent 366; word result 338;
+// direct final result 388; direct parent color 308 (kept); child for-loop 338; native
+// fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364;
+// native orientation result 373, with shared cross 373; late long result 411; entry/late
+// complete result arms 395/395; late result from tests 395; child/location-stage result
+// 315/316; late successful default 411; signed flags with late result 411; native flag bytes
+// 382; flag-stage result 378; native flag overlay 382; overlay with flag-stage result 378;
+// named byte transfer 411; transfer/result 411; byte flags with ordinal observations 388;
+// overlay/ordinal/result 384 (all native byte layouts lose five matched controls); flag-stage
+// long result/native bitfield transfer/direct visibility and combinations 305-368;
+// post-visibility result 315; native definition, shared velocity address, readonly particle
+// and their combinations 308; native receivers/location for 308; native location/child/
+// successor/all handle domains 308; byte/signed-byte/word/bool canonical results
+// 374/374/308/375.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

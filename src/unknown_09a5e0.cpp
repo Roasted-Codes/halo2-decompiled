@@ -2055,20 +2055,7 @@ struct s_9d450
 	real field_f4;
 };
 
-static __forceinline real function_9d452(real const *arg_0)
-{
-	real local_0;
-	volatile real local_1 = *arg_0;
-	if (local_1 < 0.0f)
-		local_0 = 0.0f;
-	else
-	{
-		local_0 = 1.0f;
-		if (!(local_1 > 1.0f))
-			local_0 = local_1;
-	}
-	return local_0;
-}
+#define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
 static __forceinline long function_9d453(long arg_0, short arg_1)
 {
@@ -2081,32 +2068,33 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 184 (was 184): object/offset homes and low-mask allocation remain;
-// native unit view 184; read-only unit view 184; native child view 184;
-// both native views 184; unsigned result mask 184; child defaults reversed 186;
-// immutable output binding 184; read-only byte source 184.
-// frame 0x1c agrees; object/offset homes and slot mask differ.
-// Frame pointer 291; scalar clamp input 184; sample-first clamp result 189;
-// indexed snapshot records 230; native-word ordinary tail flags 192.
-// Frame 0x1c agrees; indexed lookup, object/offset homes and slot-mask allocation still
-// differ. offset receiver home 183; offset snapshot home 183; offset object home 183; offset
-// result home 183; receiver store lifetime 201; offset positive count 183; tail result mask
-// 208; offset tail result mask 207.
-// score 184 (was 184): getter guard/exhaustive result 200; complete output receiver 184;
-// exhaustive child metadata/count/all results 234/299/311; ordered clamp results
-// and bound returns 191. Object/offset homes and low-mask allocation still differ.
-// score 184 (was 184): object/offset homes and low-mask allocation remain;
-// getter byte slot 200; table/full identifier, object, table/decoded index 184;
-// header/object/table with byte slot 200; table word object slot plus byte slot 287.
-// score 184 (was 184): object/offset homes and low-mask allocation remain;
-// reversed getter with short/byte/long slot 184/200/208; unsigned handle
-// combination 184/200/208; reversed short/long with scalar clamp 184/208.
-// header/object homes and low-mask allocation remain.
-// Clamp source/result names and source-first declarations 184/184/184;
-// tail fractions, child fraction, mask names and both scratch-home combinations 184 each.
-// score 184 (was 184): object/offset homes and low-mask allocation remain;
-// forced/ordinary/compiler-selected getter and clamp inline contracts, all eight
-// alternatives 184 each. Both original helper contracts and bodies retained.
+// score 210 (was 184): the clamps are PIN on the unit's fields (re-read at each use, as retail
+// does) in place of a helper that steered through a volatile local, the tail flags are declared
+// first and the dead volatile on the second flag is gone (aligned differences 126 -> 99; without
+// both volatiles the old body is 226). Retail keeps the requested flags in EDI and spills the
+// mask (EBP) in the child loop where ours keeps the mask in EDI, updates the result with
+// load/or/store, keeps the object pointer at +0xc and the offset at +0x10 (ours +4 and +0xc),
+// and reloads the unit pointer for the tail. The volatile copy of this gives retail's store of
+// ECX at entry (without it 294 [aligned 102]).
+// Tried this round: long second child value 191 (kept now on the PIN body: retail sign-extends
+// it); unit pointer with the data base first / as the object header array 184/184; no volatile
+// this 272; no volatile tail flag 184 (kept); no volatile clamp 226; PIN 212; PIN with the tail
+// flags first 213 [98]; chained flag initialisation 212; long first child value 210 [94] (not
+// kept: retail loads it 16-bit). Renaming the unit pointer does not move its slot.
+// Earlier (184): native unit view; read-only unit view; native child view; both native views;
+// unsigned result mask; immutable output binding; read-only byte source 184; child defaults
+// reversed 186; frame pointer 291; scalar clamp input 184; sample-first clamp result 189;
+// indexed snapshot records 230; native-word ordinary tail flags 192; offset receiver, snapshot,
+// object and result homes 183; receiver store lifetime 201; offset positive count 183; tail
+// result mask 208; offset tail result mask 207; getter guard/exhaustive result 200; complete
+// output receiver 184; exhaustive child metadata/count/all results 234/299/311; ordered clamp
+// results and bound returns 191; getter byte slot 200; table/full identifier, object,
+// table/decoded index 184; header/object/table with byte slot 200; table word object slot plus
+// byte slot 287; reversed getter with short/byte/long slot 184/200/208; unsigned handle
+// combination 184/200/208; reversed short/long with scalar clamp 184/208; clamp source/result
+// names and source-first declarations 184; tail fractions, child fraction, mask names and both
+// scratch-home combinations 184; forced/ordinary/compiler-selected getter and clamp inline
+// contracts 184.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -2187,7 +2175,7 @@ local_18:
 			long local_9 = NONE;
 			short local_10 = NONE;
 			long local_11 = 0;
-			short local_12 = 0;
+			long local_12 = 0;
 			real local_13 = 0.0f;
 			if (local_8 != NONE)
 			{
@@ -2229,12 +2217,12 @@ local_18:
 	}
 	if (local_3 & 0x800000)
 	{
-		real local_5 = function_9d452((real *)(local_1 + 0x2b0));
-		real local_6 = function_9d452((real *)(local_1 + 0x2b8));
-		byte local_7 = (byte)((*(dword *)(local_1 + 0x134) >> 3) & 1);
 		bool local_8 = false;
-		volatile bool local_9 = false;
+		bool local_9 = false;
 		bool local_10 = false;
+		real local_5 = PIN(*(real *)(local_1 + 0x2b0), 0.0f, 1.0f);
+		real local_6 = PIN(*(real *)(local_1 + 0x2b8), 0.0f, 1.0f);
+		byte local_7 = (byte)((*(dword *)(local_1 + 0x134) >> 3) & 1);
 		if (local_2->field_ee != local_7)
 		{
 			local_2->field_ee = local_7;
