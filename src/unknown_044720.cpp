@@ -252,6 +252,10 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // 236, with one final geometry result 236. Entry/index and point homes remain.
 // Round 324: index/radius/center contract 192; radius/index/center 192; center/index/radius 190;
 // radius/center/index 192; the same orders with a full absolute ordinal 193/193/191/193.
+// Round 232: first header split 220; second header split 216.
+// both headers split 235; natural headers/aligned buffers 236.
+// all natural split storage 236; all aligned split storage 235.
+// first natural header/aligned buffer 220; second natural header/aligned buffer 216.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

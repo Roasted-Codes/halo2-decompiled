@@ -923,7 +923,7 @@ short function_205010(s_squad_iterator *iterator)
 
 long function_257ed0(long actor_index, short script_index, long thread_index);
 
-PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *scenario, short index, char const *name)
+PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *scenario, short const &index, char const *name)
 {
 	if (index >= 0 && index < scenario->script_count)
 	{
@@ -937,29 +937,13 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// score 13 (was 13): the merged index is now the first record index's own register as in
-// retail; the fallback index and its promoted copy sit in SI/EBP where retail has BP/ESI, and
-// the fallback's result is tested before its copy into the merged index (retail copies, then
-// tests). Round 87: index read into the result before the first check 13 (kept); both checks
-// seeded so 36; bool check with assigned index 81 (267 bytes); helper name before index 13;
-// count-first range compare 15; result declared first 13; single-exit helper result 141.
-// Earlier at 69: multi-use promoted index 73; helper failure guards 69; native short selection
-// 69; input-default result 75; read-only table 69; signed bounded length 70; promotion/input-
-// default result 119; read-only promotion/signed length 75; actual shared script fields: native
-// snapshot 109; direct fields 70; NONE/input results 141/115; descriptor first 109; const table
-// 109; long result/ordinal 119/108; existing bounded-length call 69; native candidate
-// invalidation 75; invalidation plus bounded call 75; negated success 75/75; candidate
-// selection 75/75 (manual/shared length); signed count 76.
-// Round 186 seeded-first validator: promoted ordinal 103; input-default native result 13;
-// long return/input 121/98; signed/word scan counts 16/174; immutable index 13; equality bound 178.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
 	(void)&actor_index;
 	s_squad_placement_definition *squad = &((s_squad_placement_table *)g_4e0350)->squads[squad_index & 0xffff];
 	s_squad_placement_entry *entry = &squad->entries[entry_index];
-	short script_index = entry->command_script_index;
-	script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, script_index, entry->command_script_name);
+	short script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, entry->command_script_index, entry->command_script_name);
 	if (script_index == NONE)
 		script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, squad->command_script_index, squad->command_script_name);
 	if (script_index != NONE)
@@ -1507,6 +1491,11 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // accumulated sums with x,z,y deltas 124 (whole sum merged); deltas x,y,z with accumulated sums
 // 58 (kept); squad before actor 59 (index registers swap); named marker 58; offset-first entry 58;
 // branch-scoped transformed point 58; permuter 600 s found nothing.
+// Round 232: native actor receiver 58; native squad receiver 58.
+// both native receivers 58; uniform live actor fields 145.
+// uniform live squad fields 76; all live fields 147.
+// early iterator/native actor 58; early iterator/both native 58.
+// native area records 58; live squad/native area records 76.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1792,6 +1781,10 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 110: branch table with native selection 323; actual palette field reference 279; reference with branch table 301; split point scopes on native iterator/count frame 264; early actor iterator workspace 264.
 // Round 186 actual native records: definition 321; entry 257; both 321; area 257;
 // definition/area 321; entry/area 257; all 321; all read-only 321. Strides and field widths preserved.
+// Round 232: margin value input 342; margin field reference 257.
+// located-point/extent inputs 268; located-point/extent reference 257.
+// both scalar inputs 348; margin value/extent reference 342.
+// both field references 257; native inputs/named reach 348.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
