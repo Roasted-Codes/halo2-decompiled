@@ -456,22 +456,6 @@ static inline vector3f *effect_matrix_transform_normal_179880(transform4x3f cons
 	return out;
 }
 
-static inline real effect_normalize(vector3f *v)
-{
-	real i = v->i;
-	real j = v->j;
-	real k = v->k;
-	real magnitude = (real)sqrt(k * k + j * j + i * i);
-
-	if (fabs(magnitude) < 0.0001f)
-		return 0.0f;
-	real inverse = 1.0f / magnitude;
-	v->i = inverse * i;
-	v->j = j * inverse;
-	v->k = k * inverse;
-	return magnitude;
-}
-
 // @retail 0x175b50
 void function_175b50(void)
 {
@@ -1768,25 +1752,24 @@ long function_1785c0(s_effect_object_marker const *marker, s_effect_datum *effec
 	return index;
 }
 
-// score 77 (was 94): node/matrix read order, marker base and forward/up register homes remain; frame 0x1c agrees.
-// Earlier 77 (was 94): the point computed into position, normalize3d and cross3f give retail's
-// early up.j/up.k loads; left: node index read after the matrix (retail first), the forward
-// and up components in other xmm registers (retail forward i/j/k xmm4/2/3, up i/j xmm5/1).
+// score 77 (was 77): node/matrix entry order and the forward/up xmm homes remain (retail forward
+// in xmm4/2/3 and up in xmm5/1/0; the marker forward values take xmm2 first here); frame 0x1c agrees.
+// The point computed into position, normalize3d and cross3f give retail's early up.j/up.k loads.
 // Node index first 107 (marker index sign extension hoisted); forward without locals 132;
 // locals k,j,i 80, j,k,i 81; dot3f for forward 132, for position 82; written cross 119;
-// marker pointer in the else branch 198.
-// Earlier 94 (was 94): Frame agrees; node/matrix and marker receivers, early normalization loads still differ.
-// Shared difference 187; shared scale 94; both helpers 186; separate point workspace 125;
-// normalized workspace 164; scale snapshot 185; marker vector snapshot 184; point setters 227.
-// score 77 (was 77): node/matrix entry order and direction/up XMM homes remain.
-// Cartesian scalar names, ordered direction/point accumulation, displacement scalars,
-// output-matrix receiver, early direction inputs and immutable accumulation 77 each;
-// existing inverse-point call 417.
-// Earlier 77 (was 77): node/matrix order and marker/forward/up register homes remain.
-// Native node copy 77; copy first 107; complete/immutable/shared marker inputs 212/212/208;
-// node-first marker value 211; direction results 77; results with node first 107. Marker values lose the matched caller.
-// Direction inputs i,k,j / j,i,k / k,i,j 79/80/81; with node copied first 109/110/111.
-// Read-only node-matrix input and marker-array input 77/77; matched controls unchanged.
+// marker pointer in the else branch 198. Shared difference 187; shared scale 94; both helpers 186;
+// separate point workspace 125; normalized workspace 164; scale snapshot 185; marker vector
+// snapshot 184; point setters 227. Cartesian scalar names, ordered direction/point accumulation,
+// displacement scalars, output-matrix receiver, early direction inputs and immutable accumulation
+// 77 each; existing inverse-point call 417. Native node copy 77; copy first 107;
+// complete/immutable/shared marker inputs 212/212/208; node-first marker value 211 (marker values
+// lose the matched caller); direction results 77; results with node first 107. Direction inputs
+// i,k,j / j,i,k / k,i,j 79/80/81; with node copied first 109/110/111. Read-only node-matrix input
+// and marker-array input 77/77.
+// Node copy first (retail entry and length 758, index sign extension hoisted into the entry) 107;
+// with the matrix local inside the branch 107; marker forward value copy 166; marker forward
+// fields read directly 139; forward locals named x/y/z or forward_i/j/k 107/107; declarations
+// forward/position/up or up/forward/position 107/107.
 // @retail 0x1786f0
 void function_1786f0(s_effect_object_marker *out, s_effect_marker_source const *source, short marker_index)
 {
@@ -2393,21 +2376,6 @@ void function_179850(long effect_index, real dt)
 		function_1792b0(effect_index, dt);
 }
 
-static __forceinline void transform_point_179fb0(transform4x3f const *matrix, point3f const *point, point3f *out)
-{
-	point3f p = *point;
-
-	if (matrix->scale != 1.0f)
-	{
-		p.x = matrix->scale * p.x;
-		p.y = matrix->scale * p.y;
-		p.z = matrix->scale * p.z;
-	}
-	out->x = matrix->up.i * p.z + matrix->left.i * p.y + matrix->forward.i * p.x + matrix->position.x;
-	out->y = matrix->up.j * p.z + matrix->left.j * p.y + matrix->forward.j * p.x + matrix->position.y;
-	out->z = matrix->up.k * p.z + matrix->left.k * p.y + matrix->forward.k * p.x + matrix->position.z;
-}
-
 static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effect_datum *effect, long *location_index)
 {
 	s_effect_location_datum *location = 0;
@@ -2422,51 +2390,7 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
-// score 59 (was 59): Frame 0x74 and transforms agree; early I capture, normalized stores and final output home remain.
-// Earlier: Frame 0x74 and transforms agree; early I load, normalized stores and final output home differ.
-// Earlier 59 (was 181): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
-// frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
-// Frame 0x74 agrees; early I retention, normalized stores and final output
-// home remain. Pointer/void results 59/59; vector value result 315; separate normalized
-// direction/alias/distinct outputs 196/199/185; vector reference 59; separate reference output
-// 196.
-// Earlier 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
-// Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
-// early missing-object return 181; separate impulse buffer 251.
-// Earlier 83 (was 181): frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
-// Existing snapshot-normal helper 177; direction lifetime 181; point lifetime 181; returned-record for 346;
-// saved short marker 182; existing point plus snapshot-normal helpers 83 kept.
-// Earlier 83 (was 83): normalization component retention and the final scale register still differ.
-// frame 0x68 versus 0x74; matrix/point homes, random input/output separation and final scale copy differ.
-// Earlier at 181: frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
-// Earlier at 83: frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
-// Earlier at 83: normalization component retention and the final scale register still differ.
-// Common normalizer 33 and header normalizer 81 (changed grouping, exact-only);
-// early magnitude 259; scale before owner stores 83; both 259; force-inline normalization 83;
-// impulse name 83; point/axis homes 83; common normalizer with separate output 251,
-// with direct scale-result consumption 33. Original body retained.
-// Earlier 74 (was 83): One direction workspace reaches retail length; frame 0x68 versus 0x74 and normalization scheduling differ.
-// Earlier at 74: One direction workspace reaches retail length; frame 0x68 versus 0x74 and normalization scheduling differ.
-// original scale-result consumer 120; in-place random direction 112 fast, 74 plain kept;
-// copied random input 205; separate impulse 225; direct impulse consumer 225; in-place/direct consumer 112;
-// read-only event 120; record/index names 120 (unchanged fast control 120, full 83).
-// normalization component retention and final scale copy remain.
-// Fast control 120; object before normalize 259; magnitude at scale 119; normalize after owner 260;
-// owner memory order/read-only acceleration/read-only object tag/location continue 120 each; shared iterator 120.
-// Random result to original direction output/direct consumer 63/63; normalized/random result
-// copies 144/117; shared scale/void result 74/74, paired result forms 76/117.
-// On the separate result form, scalar inputs k,j,i 63; j,k,i / i,j,k / j,k 59/59/59.
-// Final result reused 79/79; result exit 59; vector output 201; separate impulse 214.
-// Fast: single-direction matrix loop/entry 112/112; point/direction entry 112/112; both/all output lifetimes
-// 112/112; common/header normalizers 112/116 (grouping, exact-only).
-// Scalar inputs/vector output 105; scalar references/pointers 59/59; scalar inputs/vector
-// reference or value output 105/315; scalar-reference result arms 59; early impulse
-// under scalar contract 105; scalar-input distinct normalization output 65. All restored.
-// Native shared/indexed rescale 63/63; separate-result home names 59/59; result with
-// location outputs/across accelerations/at entry/with matrix lifetime 59/59/59/59.
-// Fast control 100; remaining snapshot orders IKJ/JIK/KIJ 104/100/104; uniform inverse/input
-// products 100/100; independent stores JKI/KJI 104/102; admitted normalization 100;
-// owner-first normalization/magnitude-first 251/250; early final scale 100. Squared-length float 100 (precision diagnostic only).
+/* pushes the effect's object along each acceleration of the event, from every location */
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2503,19 +2427,18 @@ void function_179fb0(s_effect_datum *effect)
 						point = location->matrix.position;
 						direction = location->matrix.forward;
 					}
-					vector3f random_direction;
+					vector3f impulse;
 
-					random_vector_in_cone(&direction, &random_direction, &g_4e7408->unknown0, acceleration->inner_cone_angle, acceleration->outer_cone_angle);
-					effect_normalize(&random_direction);
+					random_vector_in_cone(&direction, &impulse, &g_4e7408->unknown0, acceleration->inner_cone_angle, acceleration->outer_cone_angle);
+					normalize3d(&impulse);
+					vector3f_scale(&impulse, acceleration->acceleration * object_definition->unknown14, &impulse);
 
-					real magnitude = acceleration->acceleration * object_definition->unknown14;
 					s_effect_object *object = OBJECT_GET(effect->object_index);
 
 					object->owner_unknown4 = effect->owner.unknown4;
 					object->owner_unknown0 = effect->owner.unknown0;
 					object->owner_unknown8 = effect->owner.unknown8;
-					vector3f_scale(&random_direction, magnitude, &direction);
-					function_b7880(effect->object_index, NONE, &point, &direction, NULL);
+					function_b7880(effect->object_index, NONE, &point, &impulse, NULL);
 				}
 			}
 		}
@@ -2736,7 +2659,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 166 (was 166): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
+// score 153 (was 166): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
 // frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
@@ -2758,6 +2681,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Round 123: Corrected-frame orientation/scatter/both Boolean producers 165/163/155; both plus two-use lower 145; both plus signed detached 147 (one-use flags rejected); two-use vector selections and detached propagation 245; unsigned mode 166; native reversal 236.
 // Live mode/reversal/location fields 342/240/166; live location plus mode 371;
 // conditional scale initializer 170; random-result lifetime 167; native tag record 166; live fields plus scale 375.
+// Mode-first admission 358; joint outer spatial outputs 179; parent conditional 163; compound scale 166; tag-first eligibility 222.
+// Parent conditional with two-use lower 156, signed detached state 159, both 153 kept plain;
+// on both: unsigned mode 153, part point 166, conditional scale 156 (fast); follow-ups restored.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2782,7 +2708,7 @@ void __stdcall function_17a380(s_effect_datum *effect)
 
 		while ((location = effect_location_next(effect, &next_index, 0)) != 0)
 		{
-			bool detached = TEST_FIELD_BIT(part->flag2);
+			signed char detached = TEST_FIELD_BIT(part->flag2);
 			point3f point;
 			vector3f forward;
 			vector3f up;
@@ -2810,11 +2736,11 @@ void __stdcall function_17a380(s_effect_datum *effect)
 			}
 			if (TEST_FIELD_BIT(part->flag1))
 			{
-				real radius = part->radius_lower + (part->radius_upper - part->radius_lower) * function_x82e52f(&g_4e7408->seed, __FILE__, __LINE__);
+				real lower = part->radius_lower;
+				real radius = lower + (part->radius_upper - lower) * function_x82e52f(&g_4e7408->seed, __FILE__, __LINE__);
 				long object_index = effect->object_index;
 
-				if (object_index != NONE)
-					object_index = function_baf40(object_index);
+				object_index = object_index != NONE ? function_baf40(object_index) : NONE;
 				function_16a8e0(0xd800005, &point, radius, object_index, NONE, &point, &radius);
 				detached = true;
 			}
@@ -2995,27 +2921,30 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
-// score 88 (was 88): Frame 0x94 agrees; scale-default/branch, point SSE copies and render input roles remain.
-// Earlier: Frame 0x94 agrees; scale constant/branch, point SSE copies and render input roles differ.
-// Earlier 88 (was 112): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
-// frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
-// Frame 0x94 agrees; early scale/default branch and point SSE/render setup
-// remain. Point/normal/both reverse captures 308/187/202; shared color scale 325; existing point
-// operation 548; color with point/normal/both captures 324/327/327.
-// lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
-// initialization 112.
-// Readonly tag/event/part/all metadata 112 each; location cursor home 112; vector homes 112;
-// bounded word flare count 208; transform/color homes 112; consistent alternate argument order 88.
-// Frame 0x94 agrees; scale initialization branch, point SSE setup and later call setup remain.
-// After the consistent call contract: default-first scale 272; default after point 270;
-// default before color 270. Conditional scale and the 88-point body retained.
+// score 88 (was 88): frame 0x94 agrees; the scale default/conditional branch, the point transform's
+// y copy (retail keeps y in xmm5 and copies it to xmm4; ours scales it in place) and the lens call
+// setup remain. The lens call is BLOCKED-BY 0x2dba0: retail passes its tag index in ecx and the
+// position on the stack, ours the other way round (its body is in a contributor's file).
+// Point/normal/both reverse captures 308/187/202; shared color scale 325; existing point operation
+// 548; color with point/normal/both captures 324/327/327; lifetime 287; branch color 324;
+// event/count names 287; part-pointer walk 394; conditional scale initialization 112. Read-only
+// tag/event/part/all metadata 112 each; location cursor home 112; vector homes 112; bounded word
+// flare count 208; transform/color homes 112; consistent alternate argument order 88. After the
+// consistent call contract: default-first scale 272; default after point 270; default before color
+// 270. Fast control 416 (reduced call/global caveats); scale workspace/test arms 416/416; default
+// before inputs 425; conditional before inputs/after point/after forward/before color
+// 416/416/416/416; B-first product 416.
+// Aligned comparison (masked addresses, difflib) instead of the positional count: the original
+// body differs in 21 instructions; `real scale = 1.0f; if (a) scale = scale_a; if (b) scale *= scale_b;`
+// after the color copy 15 (272 positional, 1518 bytes), with the default declared before the color
+// copy 13 (270): the scale block then matches and only the y copy (6 bytes) and the blocked lens call
+// remain, so that form should be kept once the y copy is solved. On it: node matrix declared at the
+// loop top 13 (270); up transformed before forward 29; forceinline point transform 13 (270).
 // Consistent tag/direction formal positions: 82/81/81/414/414/83/82/88; none recovers
 // tag ECX/position stack. Native position/forward/up/color 331/329/323/321; both directions
 // 361; spatial inputs 392; point/color 328; all inputs 396. All source/contracts restored.
 // Indexed point/directions/spatial/separate-spatial copies 323/331/352/511;
 // the same copies with native default-first scale 313/333/344/498. All restored.
-// Fast control 416 (reduced call/global caveats); scale workspace/test arms 416/416;
-// default before inputs 425; conditional before inputs/after point/after forward/before color 416/416/416/416; B-first product 416.
 // @retail 0x179880
 void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 {

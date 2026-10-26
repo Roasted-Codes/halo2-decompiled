@@ -318,7 +318,7 @@ struct s_location_entry_view
 		};
 	};
 	short field10;
-	word sector;
+	short sector;
 	long owner;
 	vector2f direction;
 };
@@ -368,7 +368,7 @@ bool function_26d9c0(long record_index, s_type_c3b527 const *point, short entry_
 			if (sector_index == NONE)
 				goto done;
 			entry->sector = ((s_record_sector_map *)g_4e0348)->entries[sector_index].sector;
-			if (entry->sector == (word)NONE)
+			if (entry->sector == NONE)
 				goto done;
 			location_entry_activate(record->active, entry_index);
 			entry->owner = owner;
@@ -459,7 +459,15 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 	vector->k = axis->k * along + k * cosine - (axis->j * i - axis->i * j) * sine;
 }
 
-// score 120 (was 120): frame 0xd8 agrees; object-table entry, ring conversion and rotation registers differ.
+// score 90 (was 120): frame 0xd8 agrees; ring conversion (fild where retail converts in SSE) and the
+// rotation schedule (one spilled component) differ; 1085 bytes against 1089.
+// Round 50: conditional sector store with the field read back as short (120 -> 109) and the
+// sector index read after the radius (-> 90) kept. Rotation with cross j, k before i 100
+// (no spill, frame 0xd4); with a named ring phase as well 96 (frame 0xd8, retail's SSE ring
+// conversion and rotation core, but the radius copies through integer registers); statement
+// orders of the cross/along locals 96-105; 0x2982f0/0x170d70/0x11d3b0 rotation forms 126-139;
+// existing cross3f after/before the dot 134/255; distance inside the spoke loop 254; shared real
+// ring 100; plain radius local 112; collision marker before the point 89; entry first 215.
 // Earlier 195 (was 195): frame 0xdc versus 0xd8 and a rotation spill; shared cross
 // 244; native component loop 244; cross before dot 257;
 // signed-byte spoke 213; size optimization 395.
@@ -511,8 +519,8 @@ long function_26d570(long object_index)
 	if (result != NONE)
 	{
 		s_location_record_view *record = (s_location_record_view *)(g_51eca4->data + (result & 0xffff) * sizeof(s_location_record_view));
-		long sector_index = record->location_index;
 		real radius_value = *(real *)((byte *)object_get(object_index) + 0x3c);
+		long sector_index = record->location_index;
 		real const &radius = radius_value;
 		long ring = 0;
 		long rings_remaining = 2;
@@ -558,11 +566,9 @@ long function_26d570(long object_index)
 					point.y = g_4687b0->j * 0.1f + collision.point.y;
 					point.z = g_4687b0->k * 0.1f + collision.point.z;
 					long sector = function_14a280((s_bsp3d *)g_4e0340, 0, &point);
-					word selected_sector = entry->sector;
 					if (sector != NONE)
-						selected_sector = ((s_record_sector_map *)g_4e0348)->entries[sector].sector;
-					entry->sector = selected_sector;
-					if (selected_sector != (word)NONE)
+						entry->sector = ((s_record_sector_map *)g_4e0348)->entries[sector].sector;
+					if (entry->sector != NONE)
 					{
 						entry->flags |= 0x40;
 						entry->direction.i = 0.0f;

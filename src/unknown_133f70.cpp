@@ -98,7 +98,7 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Earlier 155 (was 155): early source retention and source/count/feature homes remain.
 // With the word cursor, native count/argument-5/argument-6/argument-8 arrays 195/161/160/161;
 // count plus argument 5 186; arguments 6/8 193; all four arrays 187; native selection array 219.
-// score 155 (was 155): early source retention and scalar/feature homes remain.
+// Earlier 155 (was 155): early source retention and scalar/feature homes remain.
 // Composite-mask, optional-index and feature-byte names 155/155/155;
 // mask/index, mask/features and index/features names 155/155/155;
 // all argument names and source-handle/argument names 155/155.
@@ -117,6 +117,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Long/read-only-byte/read-only-long source elements 155 each; direct
 // long/read-only-long source handles 155; dword optional index alone or
 // with long/read-only-long source elements 155. Original typing restored.
+// Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
+// ordinal 223; wide optional index 214; wide composite mask 192; word cursor
+// before packed mask 154. One-point reduction rejected; original body retained.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

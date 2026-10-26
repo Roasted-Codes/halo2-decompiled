@@ -40,6 +40,15 @@ static inline bool voice_available(void)
 	return *(volatile bool *)&g_4c9878.initialized && *(volatile bool *)&g_476fc8.initialized;
 }
 
+/* the voice mode, 0 while voice is unavailable */
+static inline long voice_get_mode(void)
+{
+	long result = 0;
+	if (g_4c9878.initialized && g_476fc8.initialized)
+		result = g_4c9878.mode;
+	return result;
+}
+
 static inline long voice_port_next(long port)
 {
 	long next;
@@ -1241,6 +1250,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // prevents four-way expansion; all original code restored.
 // Unsigned total 281; unsigned total with counted walk 112; direct-receiver word ordinal 281;
 // word ordinal with unsigned total 281; unsigned counted ordinal 112. Expanded forms lose 0x54990.
+// Native identity with original validation: rolled 316, counted 144; byte identity counted 112;
+// other-player identity 144; native/byte identity with channel rejection 144/112;
+// native/other-player identity with entry-width value 165/165. All lose the matched caller; original retained.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2046,15 +2058,23 @@ long voice_players_share_team(long other, long player)
 	return false;
 }
 
-// score 34 (was 34): Mode/mask saves precede acceptance and cold exits differ; peer loop agrees.
+// score 25 (was 34): retail tests the mode in eax before saving ebx/esi and copies it
+// to esi afterwards; ours loads it straight into esi, so both saves come first. Exits agree.
+// Mode/mask saves precede acceptance and cold exits differ; peer loop agrees.
 // early mode/mask saves and cold exits remain; 368/368 bytes.
 // Earlier 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
 // Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
 // team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
 // bit addition 59; signed result 55; initial guard 121; conditional/late mask 46/46; direct outputs 141/144.
-// Earlier 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
 // Mode with complete mask 46; shared team/all-peer modes 148/148; team acceptance first 46;
 // mask before mode 34; equality with other/selected validity 117/118; unsigned peer ordinal 130.
+// Passive-mode bool 55; mode re-read in the block 55; unsigned mode 55; switch 121;
+// mode test in the entry condition 55; zero-default mode 55; a 600 s permuter run, none below 34;
+// mode getter after a plain flag test 25 (kept); with the mask in the block 56; with
+// voice_available() 63; getter as the only test 49; getter re-read for the team test 25.
+// early mode/mask saves and cold exits remain; 368/368 bytes.
+// Earlier 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
+// Earlier 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
 // Accepted/available/filter output arms 124/117/119; filter arms with live mode 119;
 // accepted-only mode capture 34 (exact-only); entry players/team/both declarations 34/34/34. Restored.
 // Deferred mask initialization 55; complete query arms/selection 46/46;
@@ -2067,10 +2087,10 @@ long voice_players_share_team(long other, long player)
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
 	dword result = 0;
-	if (settings->initialized && voice_available())
+	if (settings->initialized && g_4c9878.initialized && g_476fc8.initialized)
 	{
 		dword mask = 0;
-		long mode = g_4c9878.mode;
+		long mode = voice_get_mode();
 		if (mode == 2 || mode == 3)
 		{
 			byte *membership = (byte *)voice_get_membership();
@@ -2530,7 +2550,9 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
  return result;
 }
 
-// score 124 (was 124): Frame 0x14 agrees; capacity/preserve homes, preferred index/bit and helper setup differ.
+// score 124 (was 124): capacity/preserve homes, preferred-bit scheduling and the 0x53c70 call order differ;
+// retail tests the availability flags once (no re-read) and recomputes 1 << preferred for the final ors.
+// Frame 0x14 agrees; capacity/preserve homes, preferred index/bit and helper setup differ.
 // Earlier 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
 // Capacity named slots 124; native long preserve 144; final preferred-bit recomputation 161;
 // non-preservation-first finish 131; separate entry guards 124.
@@ -2539,6 +2561,9 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
 // Boolean role names 124; entry-scope workspaces 124; guarded preferred/mode values 154;
 // shared final selected bit 189; direct blocked assignment 165.
 // Capacity/preserve and preferred-bit homes remain; original body retained.
+// Mode read from field +4 as retail does (value fix) 124; existing unknown00 getter 124;
+// plain flag test for preferred 162; word deferred 138 (its block then agrees, 447 bytes);
+// zero-initialised masks 124 but loses the matched 0x54890; int/unsigned shift in the final ors 176/176.
 // Captured/working capacity after guard/preserve/preferred/mode/members 127/147/158/147/147;
 // entry working declaration 127; derived capacity before admission/in routing scope 147/130. Restored.
 // Round 117: Plain availability fields 162; joint workspace names 124; full final mask 143; mode observation first 130; existing preferred getter 124; byte preserve 146; unsigned preferred 124.
@@ -2555,12 +2580,10 @@ void __stdcall function_565c0(s_voice_routing *routing, dword remaining, s_voice
  if (capacity <= 0)
   return;
  bool preserve = voice_unknown00_valid();
- long preferred = 0;
- if (voice_available())
-  preferred = g_4c9878.unknown00;
+ long preferred = voice_get_unknown00();
  long mode = 0;
  if (g_4c9878.initialized)
-  mode = g_4c9878.session_kind;
+  mode = g_4c9878.unknown04;
  dword eligible = voice_get_current_member_value();
  dword preferred_bit = 1 << (long)preferred;
  bool blocked = false;
@@ -2846,7 +2869,8 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 394 (was 394): frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// score 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
+// Earlier: frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
 // byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
 // Scalar role names 394; rejected-mode first 394; signed while traversal 394;
@@ -2863,6 +2887,14 @@ struct s_voice_route_choice
 // 1103. Selected results prevent four-way expansion; all original code restored.
 // Per-choice pointer 393; signed-word radio 393; signed headset 394;
 // function-scope descriptor only 402; function-scope pairs only 401.
+// Selected route value 459; byte/word radio with route value 491/459;
+// route value with three pairs 469; native descriptor 464; word/three pairs 467;
+// byte/descriptor 495; native mixer combination 503. Frame shrinks to 0x40;
+// original indexed selection and mixer workspace retained.
+// nearest-distance 534; candidate-distance 526.
+// nearest-distance-bool 572; nearest-distance-word 533.
+// nearest-distance-descriptor 538; candidate-distance-bool 572.
+// candidate-distance-word 525; candidate-distance-native-mixer 576.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
@@ -2952,37 +2984,20 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 }
 #pragma function(_ReadWriteBarrier)
 
-// score 56 (was 56): Mode load and final record cursor/store order differ; frame 0xcc agrees.
-// Earlier 56 (was 95): mode load and output cursor/store scheduling differ; direct formal 95;
-// mode load and output cursor/store scheduling differ; direct formal 95;
-// Frame agrees; mode-load and output cursor/store scheduling still differ.
-// Earlier direct formal 95.
-// unsigned index 95; short/byte 107; early choices 95; early unsigned/short 95/107; direct unsigned 95.
-// mode load and record-store scheduling differ; real record
-// receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
-// outer route 95; actual count 96; conditional mode-result combinations all 92;
-// direct talker parameter with early player 56.
-// Immediate final-route alias 60; evaluated/request-result declaration scopes 56/56;
-// route role names 56; complete active arms 56; wide active/complete active/validity 79/79/81. Restored.
-// Shared route result/default arms 60/84; completed-player forms 94/85;
-// shared input bit 60/84; both computed bit parts 60/84.
-// Output mode owns result before timestamp, early/late player 127/112;
-// mode store before distance, early/late player 112/112; after distance 95/95; after flags 95/95.
 // @retail 0x56df0
 void __stdcall function_56df0(s_voice_player_settings *settings, long talker, long mode)
 {
 	bool active = false;
-	if (settings->initialized && voice_available())
-		active = g_4c9878.mode == 1;
+	if (settings->initialized && g_4c9878.initialized && g_476fc8.initialized)
+		active = voice_get_mode() == 1;
 	if (active && voice_xhv_has_remote_talker(&g_476fc8, talker))
 	{
 		dword local = voice_get_local_player_mask();
 		bool valid = function_54df0(talker);
 		s_voice_route_choice choices[16] = {0};
+		s_voice_route_choice *choice = choices;
 		for (long player = 0; player < 16; player++)
 		{
-			s_voice_route_choice *choice = &choices[player];
-			choice->player = player;
 			long route = 0;
 			if ((local & (1 << player)) && function_54df0(player) && valid)
 			{
@@ -2993,7 +3008,9 @@ void __stdcall function_56df0(s_voice_player_settings *settings, long talker, lo
 				route = result;
 				if (route) settings->unknownc4 |= 1 << talker;
 			}
+			choice->player = player;
 			choice->mode = route;
+			choice++;
 		}
 		function_57eb0(settings, talker, choices, 16);
 	}
@@ -3009,7 +3026,7 @@ void function_56b70(s_voice_player_settings *settings)
 	{
 		bool active = false;
 		if (g_4c9878.initialized && g_476fc8.initialized)
-			active = g_4c9878.mode == 1;
+			active = voice_get_mode() == 1;
 		if (active)
 		{
 			function_56f60((c_voice_observer *)settings);
