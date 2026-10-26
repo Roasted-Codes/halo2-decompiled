@@ -2549,25 +2549,23 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
-// score 152 (was 162): frame 60 versus 56; action-output and seat-query argument registers still differ.
-// Native channel workspace 139; copy return to play 152; accumulated channel failure 177;
-// unsigned word result 173; short table index 188.
-// Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
-// repeated table index 152; mode after animation 157.
-// score 147 (was 152): action/result packing and action/seat helper conventions remain.
-// Direct action decision 163; actual overlay-bit result 224; converged play operations 152;
-// control/tag/table role names 152/152/152; selected-overlay initialization 178; word play flags 150.
-// frame 60 versus 56 and protected action/seat argument registers remain.
-// Signed success/force/both bytes 147/152/147; word channel backing 152;
-// mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
-// Round 277: language-char result 147; unsigned-word force 164; signed-byte/word animated result 147/156;
-// base success test 153; success/force/both initialized before selection 187 each.
-// score 147 (was 147): frame 0x3c versus 0x38 and action/availability conventions remain; separate
-// copy-return boundaries 142 (exact-only, discarded); base-channel entry/selection 147/147;
-// animation-result home 147; receiver/workspace copy split 162/162, with base channel 162/162.
-// score 147 (was 147): frame 0x3c versus 0x38 and action-output convention remain;
-// success/force/both role names 147/147/147; unsigned lookup/animation/mode 147 each;
-// action-result assignment/positive completion 161/161; direct success return 154.
+// score 147 (was 147): BLOCKED-BY 0xe70b0 (retail passes the unit in ecx and the action pointer
+// in eax and compares through the pointer it returns); frame 0x3c versus 0x38: retail packs the
+// address-taken action short at +2 beside the two flag bytes, ours gives it a 4-byte slot.
+// Tried: native channel workspace 139; copy return to play 152; accumulated channel failure 177;
+// unsigned word result 173; short table index 188; dword channel backing 152; direct copy chain 152;
+// mode at use 196 (frame 56); repeated table index 152; mode after animation 157; direct action
+// decision 163; actual overlay-bit result 224; converged play operations 152; control/tag/table role
+// names 152 each; selected-overlay initialization 178; word play flags 150; signed success/force/both
+// bytes 147/152/147; word channel backing 152; mode fallback 154; unsigned play mask, const tag view
+// and success fallthrough 152 each; language-char result 147; unsigned-word force 164;
+// signed-byte/word animated result 147/156; base success test 153; success/force/both initialized
+// before selection 187 each; separate copy-return boundaries 142 (exact-only, discarded);
+// base-channel entry/selection 147/147; animation-result home 147; receiver/workspace copy split
+// 162/162, with base channel 162/162; success/force/both role names 147 each; unsigned
+// lookup/animation/mode 147 each; action-result assignment/positive completion 161/161; direct
+// success return 154; copy statement before the play call 162 (aligned diff 71 -> 65); copy with
+// direct success return 165; bool result 152, with the copy 162, with copy and return 162.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

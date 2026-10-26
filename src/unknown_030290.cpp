@@ -581,12 +581,16 @@ static __forceinline void index_state_flags_update_31660(s_index_state_31660 *st
     }
 }
 
-// score 98 (was 133): only the 0x3800 loops differ: ours tests set13 before loading the value (movzx),
+// score 98 (was 98): only the 0x3800 loops differ: ours tests set13 before loading the value (movzx),
 // retail loads first, splitting the zero extension around the test (xor eax, eax / test dl / mov ax).
 // Tried: plain loops without the helper (133), word flags (162), direct *value updates (213),
 // long set13/set12 (186), set12 before set13 (175), loading the value in each branch (194),
 // while-loop for the 0x20000 pass (134); dword flags, ternary flag updates, byte set13/set12,
-// *value & 0xffff and passing flag13 without != 0 change nothing.
+// *value & 0xffff and passing flag13 without != 0 change nothing; short flags in the second-list
+// loops / all loops, word flags in the second-list loops / all loops 195 each (definition moves to
+// edi); short flags in the second-group pass only 62 (that pass then matches; not kept, the two
+// passes would differ in type). A short flag word gives retail's group-loop code but widens the
+// constant 0x20000 pass's mask (retail 0xdfff), so the constant and runtime passes may not share code.
 // @retail 0x31660
 void function_31660(long index, long tag, s_index_state_31660 *state,
     long first_group, long second_group, bool skip, bool *output)
