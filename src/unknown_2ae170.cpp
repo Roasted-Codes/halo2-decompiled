@@ -642,7 +642,7 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 	return mode == 1 ? (TEST_FLAG(parameters->flags, 6) ? g_44f70c : effects->m_settings.level2c) : effects->m_settings.level10;
 }
 
-// score 447 (was 453): Frame twelve agrees; selected-level homes and SSE argument staging remain.
+// score 447 (was 447): Frame twelve agrees; selected-level homes and SSE argument staging remain.
 // Earlier 453 from 460: frame twelve agrees; selected-level homes and SSE argument staging remain.
 // Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
 // completed-path return 532; offset reads 554; retail-order base 514;
@@ -663,6 +663,9 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // settings record 453; ordinary settings record 474; input record 517; special record/early gains 455;
 // ordinary record/early offset 476 (fast). Keep only paired gain declarations before the pure
 // selector.
+// Round 144: live ordinary gains with retained thresholds 500; selected-field reference 519;
+// word destinations 510; both 528; primary value with those four forms 503/521/490/518.
+// All restored; the 490 form loses the dispatcher. Frame/selected-level/SSE homes remain.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
