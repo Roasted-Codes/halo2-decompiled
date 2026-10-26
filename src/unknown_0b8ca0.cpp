@@ -657,6 +657,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // shared square/dot/both 239/239/239; raw/viewed distance 242; distance/facing partials 239/239;
 // shared square with facing partial 239; both partials with viewed distance 242 (all without the
 // inherited radius alias and snapshot).
+// Real calling/step/datum iterator state 326/286/286; with Boolean result
+// 355/328/328; sole calling/datum pool receivers 326/282. All original
+// code restored; caller-dependent self-alignment and full-handle spills remain.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {

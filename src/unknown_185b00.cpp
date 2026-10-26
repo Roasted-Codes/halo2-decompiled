@@ -728,6 +728,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Settings at use 335; settings after camera 262; native pitch interval aggregate/assignments
 // 267/267; native yaw interval 267; pitch/yaw interval with settings at use 335/335; both
 // intervals with settings at use 339.
+// Pitch approach value-result/target-first/reference/pointer-result 268/267/244/244;
+// each with the actual periodic-difference input gives 268/267/244/244.
+// Coordinated camera inline/inline-plus-noinline declarations 244/244.
+// All original helpers and declarations restored; scalar/frame homes remain.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

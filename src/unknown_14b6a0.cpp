@@ -132,6 +132,11 @@ void function_14bac0()
 // names/native recipient 257. Frame, iterator sharing and result homes remain.
 // Round 215: function-scope shared iterator 234; readiness declaration order 233;
 // scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
+// Shared marker query output/pointer-result/reference 332/332/332, each
+// with native recipient 321; native point result 303, with native recipient 280.
+// Forced output/pointer-result/reference 234/234/234, each with native recipient
+// 257; forced point result 269, with native recipient 302. Original restored;
+// query/recipient overlap, result-byte homes and frame 0x34/0x3c remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
