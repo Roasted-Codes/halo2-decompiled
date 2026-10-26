@@ -348,6 +348,11 @@ bool function_22acb4(long player_index);
 // shifted source flags 281; fourth enum selection 284; one-case bit first 190;
 // one total enum-bit update 291. Final stores and query argument preserved.
 // second-mask spill/constant-one retention remain.
+// extra second-mask slot and retained constant registers differ;
+// Earlier 232 (was 232): extra second-mask slot/constant registers remain;
+// Earlier 196 (was 232): extra second-mask slot and constant homes remain; second enum group kept.
+// Earlier 190 (was 196): second-mask spill and constant homes remain.
+// Earlier 190 (was 190): second-mask spill/constant-one retention remain.
 // Total low-bit updates from seeded accumulators: second/third/both/fourth/
 // second-fourth/third-fourth/all 254,190,254,190,254,190,254; second seed 3 253.
 // second-mask slot and constant homes remain; second-mask bit orders
@@ -357,6 +362,10 @@ bool function_22acb4(long player_index);
 // First enum order one/zero/NONE 189 (below gate), zero/NONE/one 195, zero/one/NONE 195,
 // NONE/one/zero 197; native fourth on current enums 299; signed third/fourth/both 271/299/285.
 // second-mask spill and persistent constant homes remain.
+// Earlier 190 (was 190): second-mask spill and constant homes remain.
+// Fourth-mask code/side/flag-a/flag-b/flag-c observations once: 190/260/209/209/209;
+// all five/code plus flag-a/flag-b plus flag-c: 271/209/287. Second-mask spill remains.
+// score 190 (was 190): second-mask spill and persistent constant homes remain.
 // Individual redundant clears removed: first16 284; second16 281; both16 290;
 // first2/4/8 286/286/290; first2+16 301; initial third128 249. All restored.
 // False-first total setters: first/second/third/fourth 190/190/248/207;
@@ -1060,10 +1069,12 @@ void function_22b8e2(s_22b8e2 const *arg_0, long arg_1, color4f const *arg_2);
 void function_22aff1(long arg_1, byte const *arg_2, byte const *arg_3, real const *arg_4);
 void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3, real const *arg_4);
 
-// score 38 (was 83): retail keeps a success byte (set to 1 up front, overwritten with the
+// score 1 (was 12): only first count zero-test differs: TEST EAX,EAX versus CMP EAX,EBX; frame 0x28 and retail length agree.
+// Earlier: only first count zero-test differs: test EAX,EAX versus CMP EAX,EBX; frame 0x28 and length agree.
+// Earlier: retail keeps a success byte (set to 1 up front, overwritten with the
 // call's result on failure) and returns that byte directly; ours keeps the failure flag, so the
 // store and the negated return differ and the function is eight bytes longer.
-// score 38 (was 38): Failure-byte initialization, stores and inverted return still differ.
+// Earlier: Failure-byte initialization, stores and inverted return still differ.
 // descriptor reference 38; immutable descriptor 38; single count reads 38; byte failure 38;
 // signed-byte failure 38; wide failure 70; immutable callback results 38; shared callback-result
 // home 38.
@@ -1071,16 +1082,23 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // mask-zero producer with direct result 122; output-only masks 116; first,
 // second, third or fourth default omitted 102/103/98/104; shared zeros with
 // true or explicit false comparison 87/122. Original failure byte retained.
-// score 38 (was 38): native success with first captured count 42; second/third 118;
+// Earlier: native success with first captured count 42; second/third 118;
 // first plus second 45; count/offset names 42; offset before first count 12 plain,
 // offset before setup 20; original count observations with early offsets 125/121;
 // guard-assigned count 20; offset-produced mask zeros 125. Native-result 12 remains
 // unmatched: first count takes EBX and offset spills; match-only result form restored.
-// score 12 (was 38): the success byte is retail's (set, cleared after a failed draw, returned);
+// Earlier: the success byte is retail's (set, cleared after a failed draw, returned);
 // the first loop's count takes EBX and its offset spills, where retail keeps the offset in EBX.
 // Indexed loops over captured counts 118; their call result stored 118; first loop count declared
 // before its offset 42; first offset alone outside the guard 118; one shared offset/count 41;
 // first loop indexed 118; every count captured before its guard 20.
+// First positive-count for/while 1/1; unsigned admitted remainder 1; unsigned first offset 12;
+// admitted offset 42; shared color workspace 12; native color type 12; admitted offset plus shared color 42.
+// Positive-count for kept after whole-program validation; all draw call tuples unchanged.
+// Original positive guard before positive/nonzero counted walk 1/1; both redundant-guard diagnostics
+// restored because they are nonexact. The ordinary positive-count for remains the plain-validated keeper.
+// Repaired-countdown mask chain 5; offset mask producer 5; late result 1; subject,
+// descriptor, input and mask lexical roles 1/1/1/1; mask chain with native roles 5.
 // @retail 0x13a3c6
 bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
 {
@@ -1094,21 +1112,17 @@ bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
     function_13a050(arg_3, arg_2, arg_4, &local_7, &local_3, &local_4, &local_5, &local_6);
     long offset = 0;
     long count = local_2->field_20;
-    if (count > 0)
+    for (; count > 0; --count)
     {
-        do
+        byte const *local_9 = local_2->field_24 + offset;
+        if (function_13ac87((s_condition_masks const *)(local_9 + 8), local_3, local_4,
+            local_6, (s_condition_subject const *)local_7, local_5))
         {
-            byte const *local_9 = local_2->field_24 + offset;
-            if (function_13ac87((s_condition_masks const *)(local_9 + 8), local_3, local_4,
-                local_6, (s_condition_subject const *)local_7, local_5))
-            {
-                real local_10[4];
-                function_13ad48(arg_2, local_9 + 4, local_10, arg_3, local_7);
-                if (!function_22b7dd(local_9, arg_2)) success = false;
-            }
-            offset += 0x50;
+            real local_10[4];
+            function_13ad48(arg_2, local_9 + 4, local_10, arg_3, local_7);
+            if (!function_22b7dd(local_9, arg_2)) success = false;
         }
-        while (--count);
+        offset += 0x50;
     }
     if (local_2->field_8 > 0)
     {

@@ -746,6 +746,7 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // typed actor 32; earlier actor workspace 32; both 32; native tick interval 36;
 // shared rounding helper 215; typed child cursor 32; attachment scalar homes 66;
 // complete optional view selection 186.
+// score 17 (was 32): the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -827,10 +828,10 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 	}
 	if (type == 11)
 	{
-		long unit_index = actor_get(actor_index)->unknown018;
-		if (unit_index != NONE)
+		actor = (byte *)actor_get(actor_index);
+		if (*(long *)(actor + 0x18) != NONE)
 		{
-			long child_index = *(long *)((byte *)ai_object_get(unit_index) + 0x10);
+			long child_index = *(long *)((byte *)ai_object_get(*(long *)(actor + 0x18)) + 0x10);
 			s_actor_child_limit_view *first_definition = NULL;
 			short count = 0;
 			short limit = 50;
@@ -861,15 +862,18 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 #include "unknown_1fb7e0.h"
 // Round 36: the corrected forwarding call keeps 0x1ca260 matched; this body remains 48 differences.
 // Retail 0x1e18f0
-// score 44 (was 44): no frame gap; actor/old-weapon registers and early player address differ.
+// score 44 (was 44): No frame gap; incoming actor/old-weapon ownership and early player address differ.
+// Earlier: no frame gap; actor/old-weapon registers and early player address differ.
 // Inline/noinline 44/44; direct player/replacement only 82/55; replacement-first 86;
 // late replacement zero 44; old-greater first 47; early unit observation 91.
 // entry pool saves and actor/old-weapon registers still differ.
 // Shared object lookup 44; direct tag reads 43; early player with shared lookup 75;
 // direct parameters 82; conditional values 81; shared target 79; eligibility tests 45; value homes 44.
-// score 44 (was 44): The entry actor/old-weapon registers and early player address still differ
+// Earlier: The entry actor/old-weapon registers and early player address still differ
 // without a frame gap. Old/new default arms 45/44; shared player lookup late/entry 44/81; event
 // inline/noinline 44/44; late actor receiver 44; word event result 123.
+// Object global 44; both lookup globals 43; indexed native headers 44; native player 44;
+// global tables/native entry player 85; native entry player 81; player fields at use 128; native item/header chain 44.
 // @retail 0x1e18f0
 void __fastcall function_1e18f0(long actor_index, long old_weapon, long player_index, long new_weapon)
 {
@@ -1529,7 +1533,10 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
-// score 308 (was 314): actor/object-pool registers and scalar/ammo homes differ. Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
+// score 299 (was 308): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
+// Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
+// Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
+// word two-weapon counter 299 kept (plain); promoted minimum 316.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1590,7 +1597,7 @@ void function_1e2a90(long actor_index)
 			*(short *)(unit + 0x23e) = 0;
 		if (weapon_options)
 		{
-			long i = 0;
+			short i = 0;
 			do
 			{
 				if (weapons[i] != NONE)

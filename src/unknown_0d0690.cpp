@@ -1010,6 +1010,9 @@ PRIVATE __forceinline bool surface_status_failed(long status)
 // score 2 (was 2): retry AND still follows the object-index push. XOR 2; subtract 18; clear
 // extracted bit 2; subtract extracted bit 133; retry status scope 2; one failure store 98; long
 // failure 83; entry status 2.
+// score 2 (was 2): retry AND still follows the object-index push; mask assignment in the call 2;
+// nested retry status predicate 2; direct status initialization 2; two-call index local 2;
+// read-only point 2; byte failure 2; negated return 2; guarded mask assignment 87.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {
@@ -1624,6 +1627,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // score 819 (was 819): frame 0xa8 versus 0x90; mesh, UV and sample homes remain.
 // Only third/second/first sample narrowed 828/828/828 (frame 0x9c);
 // byte per-vertex capability 825; function-scope samples 819. Original body retained.
+// score 819 (was 819): frame 0xa8 versus 0x90, mesh/sample/UV homes and helper expansion remain.
+// Presence-branch samples 831 (frame 0x90); later vertex pointer 853; common base/normal outputs 825;
+// direct static material use 859; base-only fallback first 818. Original body retained.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

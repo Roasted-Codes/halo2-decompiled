@@ -83,6 +83,11 @@ long g_4ba134;
 // Direct-radius failed-discriminant arms first 185; behind-plane arm first
 // 213; named tangent quotients 193; ratio before root 193; earlier radius
 // square 193; shared root products 212.
+// score 112 (was 164): viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
+// Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
+// eager first tangent coordinates 164; in-place tangent projection 164. Original body retained.
+// Frame 0x34 and coordinate prefix agree; viewport conversion and
+// root/ratio/tangent homes remain. Tried split viewport conversions 164; viewport conversions
 // Split viewport conversions 164; viewport conversions
 // first 176; horizontal tangent scope 164; tangent blend weights 164; horizontal root name 164.
 // Second depths early 197; second coordinates early 232; second pairs early 209;
@@ -238,7 +243,10 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): frame 0x30 versus 0x2c and inverse-depth/point homes
+// score 195 (was 195): frame 0x30 versus 0x2c, inverse defaults and displaced point/factor spill homes remain.
+// frame 0x30 versus 0x2c and inverse-depth/point homes
+// frame 0x30 versus 0x2c and inverse-depth/point homes remain.
+// Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
 // remain. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
@@ -251,6 +259,16 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // frame 0x30 versus 0x2c and projected-point/factor homes differ;
 // role-named points 195; displaced transform first 250; orthographic defaults first 261;
 // shared point initializer 195; single result 280.
+// Origin/camera/scale fallback selections, all three paired selections and all together 195 each;
+// native floating factor admission 195. Complete original body restored.
+// Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;
+// y-first displaced construction 218; scale shared through existing helper 235.
+// Earlier: frame 0x30 versus 0x2c remains; initial/reversed/both
+// component loops 195/195/195; forced existing transform with no/initial/reversed/
+// both loops 195/195/195/195; component loops with displaced storage reused 195.
+// Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
+// 423/376/529/359/538/536/718; all with local inline declaration 718.
+// All nonexact shared-transform forms restored, including their floating sum order; no external change remains.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

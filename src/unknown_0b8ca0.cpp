@@ -632,6 +632,8 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 
 // score 231 (was 231): caller-dependent alignment and scalar/angle homes remain.
 // caller-dependent frame alignment and scalar homes differ;
+// Caller-dependent eight-byte alignment and scalar/angle homes remain.
+// Earlier 231 (from 231): caller-dependent frame alignment and scalar homes differ;
 // direct double with ancestry for-loop 235; first offset loop 235; second offset
 // loop 235; marker-position loop 235; initial radius snapshot 235.
 // direct radius with double magnitude 231; real radius 239; both widths 231;
@@ -648,6 +650,13 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // Byte/char return with direct radius 269/269; byte return with bool/byte/char
 // result 292/292/292; byte return with angle/double magnitude/angle sum 261/257/261.
 // Both caller declarations and every executable statement restored.
+// Earlier 231 (from 231): Caller-dependent eight-byte alignment and angle homes remain. Direct marker position 262; displacement initializer 235; scaled range 235; successive square sum 235; unsigned model handle 235 (ordinary radius in all).
+// Earlier 231 (from 231): Caller-dependent eight-byte alignment and scalar homes remain. Native root
+// Earlier 231 (from 231): Caller-dependent eight-byte alignment and scalar homes remain. Positive
+// Earlier 231 (from 231): Caller-dependent eight-byte alignment and scalar/angle homes remain. Narrow marker lifetime 251; shared root bit reader 275; cluster reader 239; native tag fields 239; long-result success breaks 239; direct unit guard 239 (all without the inherited radius alias and snapshot).
+// shared square/dot/both 239/239/239; raw/viewed distance 242; distance/facing partials 239/239;
+// shared square with facing partial 239; both partials with viewed distance 242 (all without the
+// inherited radius alias and snapshot).
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
