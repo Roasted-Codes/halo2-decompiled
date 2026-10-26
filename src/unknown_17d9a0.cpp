@@ -518,12 +518,17 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 749 (was 749): frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
+// score 749 (was 749): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.
 // Long emission index 763; tag-pointer rename/lifetime 774/774; group-first plus offset 786; plus long emission 747 (alignment worse).
+// frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
 // Native initial face cursor 752; group-search cursor 785; candidate cursor 786;
 // native bounds-component access 753; angle-input memcpy 749; single cosine clamp 803.
+// Alias-free plane memcpy 798; rotated-result memcpy 796; both transfers 798; second angle-input
+// memcpy 872; all copy boundaries 872. Original body and all helpers restored; frame 0x2204 versus
+// 0x21dc and definition/output/equality homes remain.
+// frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
 // Without parameter-address aliases: reversed equality buffers 796; native plane result 925;
 // rotation pointer result 796; native rotation output reference 796; native angle input 796 (fast).
 // Original complete body and all helpers restored.

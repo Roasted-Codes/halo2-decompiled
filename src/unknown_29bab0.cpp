@@ -72,10 +72,12 @@ PRIVATE __forceinline real function_29bab4(vector3f const *arg_0, vector3f const
 // Frame 0x88 agrees; early input/heading and normalization homes remain. Alias-free
 // planar response snapshot 853; shared default vector 807; native input copy 804; shared radial predicate
 // 809; native output copies 804 (fast).
+// Direct-input short correction sign 840; blocked-direction predicate 805; opposite side 804;
+// unsigned-word response mode 804; short sign plus blocked direction 841. Original body and helpers
+// restored.
 // Direct-input dot-product terms 804; complete velocity snapshot 870; output addition loop 824; positive
 // configuration guard 831; fallback vector memcpy 804. Extra all-square-terms control 748 is excluded from the
 // five new trials and gains only two. Frame/input/heading and normalization homes remain; original body/helpers
-// restored.
 // Direct-input normalizer native input/output contracts 859/856; native normalizer reference 804;
 // upper-bound-first clamp 803; native projection references 804 (fast). Original complete body/helpers restored.
 // @retail 0x29bab0

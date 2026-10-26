@@ -1016,9 +1016,11 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // native request initialization 211; immutable render inputs 213; native definition bit five 317; native
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
 // preference 646; child constant bit stores 220.
-// score 213 (was 213): Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
+// Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
 // Direct render-table expression 222; request location at rendering 327; byte view result 213;
 // ordinary while location traversal 213; camera up copied first 213.
+// Negative visibility 287; exclusion membership 213; opposite-view classification 213; three negative
+// predicates 287; signed render mask 213. Original source restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

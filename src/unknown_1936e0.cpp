@@ -150,7 +150,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 194 (was 194): Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
+// score 194 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
+// String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
+// Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
 // Earlier: Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
 // Frame 0x40c versus 0x408, tag/language and string cursor/count homes remain.
 // Earlier 194 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
@@ -167,17 +169,17 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Separate points input cursor 228; direct string countdowns 194; both 228;
 // independent countdown output cursors 228; shared remaining-string counter 228.
 // Simultaneous output cursors 226; native string-array end bounds 263; shared increasing counter 194; score-array cursor 210; points-array end bound 191; shared counter/end bound 191; simultaneous cursors/end bound 222.
-// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
-// Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
-// Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Tried string workspace scope 211; masked list index 217; byte string counters 194; independent
 // score counters 194; score upper clamps 226; unsigned score counter 194.
 // Round 109: Complete point memcpy 217; role-named buffer/counters 194; whole wide-buffer zero 248 (three sibling losses); direct list field 212; independent named cursors 194.
-// Round 113: Intermediate wide-buffer entry scope 194; unloaded-table early return 194; table pointer before list 194; list receiver before language query 202; existing table helper output-first 194.
-// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Explicit language last/first 194/194; explicit-language ordinary inline 433;
 // original lookup/table/both ordinary inline 481/194/481; readonly language inputs 194;
 // native wide workspace 194. Original lookup helpers, contracts and body restored.
+// Inner string workspace at helper entry 194; file-local lookup helpers 194; string-first helper 194;
+// native short range inputs 194; short ranges with file-local helpers 194 (fast); all restored.
+// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
+// Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
+// Round 113: Intermediate wide-buffer entry scope 194; unloaded-table early return 194; table pointer before list 194; list receiver before language query 202; existing table helper output-first 194.
 // retained list receiver 235; retained table root 223; both receivers 235; source-end copy 200;
 // indexed source with destination cursor 221; both arrays indexed 221; list receiver/source end 241;
 // table root/source end 215.

@@ -62,8 +62,6 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // 164; ineligible-first branch 171.
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive
 // continue 164; direct datum 164; unsigned successor 164.
-// Native record iterator 222; long partition index 163; full actor view 164; outer actor workspace 164; ineligible-first branch 171.
-// Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive continue 164; direct datum 164; unsigned successor 164.
 // traversal phase lifetimes do not recover separate pool
 // Earlier: traversal phase lifetimes do not recover separate pool
 // Earlier 164 (was 164): traversal phase lifetimes do not recover separate pool
@@ -87,6 +85,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // active-aware shared step 240; native datum initialization 252.
 // Existing iterator member orders datum/index/records, records/datum/index, records/index/datum,
 // index/datum/records and index/records/datum each 164; original layout restored.
+// Private absolute-index ordinal 217; native ordinal member 218; exhaustion result 164;
+// inactive step early return 165; native ordinal/exhaustion result 218.
 // Separate inline/noinline declarations for eligibility, location update, detach, actor test, attach, transfer, partition update and final update each 164. All eight original declarations and both traversals restored.
 // Native step reference 164; unsigned-word completion 164; shared absolute ordinal 250;
 // native record-array view 180; cleanup inline declaration 164; reference/word contract 164.

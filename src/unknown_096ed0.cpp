@@ -21,7 +21,6 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Earlier 217 from 217: Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
 // Frame 0x48 agrees; receiver EDI/EBP and query/blocked homes remain.
 // Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
-// Earlier 217 (was 217): Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
 // State snapshot 217; direct handled states 247; default chain count 238;
 // invalid-priority-first arms 221; state/default/arm combination 238.
 // Entry-scope guarded arrays 217; shared blocked workspace 217; shared chain
@@ -34,6 +33,10 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 111: Positive pending/active/both equality termination 217/217/217; active state first 253; Boolean-OR blocked reduction 264.
 // Pending/active/both separate chain lengths 219/219/221;
 // pre-query peer flags 229; flags plus separate lengths 254.
+// Pending/active/both callback outputs before traversal 217/217/217; both with guarded
+// output cursor 250; both with emitted-count output indexing 250 (fast); all restored.
+// Guarded aggregate priority/size/emitted-count/query-count names and all four together
+// 217/217/217/217/217; receiver and callback-output homes remain.
 // Round 115: Guarded distinct indices 217; separate blocked names 217; separate callback-output names 217; aggregate declarations first 217; guarded index/blocked names together 217. Opening body restored.
 // Pending/active/both invalid-query continues 229/217/229; zero-state exit 217; output-failure exit 217; initialized handle arrays 297; pending/active selector after lookup 219/217. Receiver and callback/output/blocked homes remain.
 // @retail 0x98150

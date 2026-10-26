@@ -1390,18 +1390,21 @@ bool __stdcall function_110ab0(long unit_index)
 }
 
 
-// score 453 (was 478): frame 8 versus 12 and requested/state registers still differ.
+// score 450 (was 450): Frame 8 versus 12, requested/state carriers and result joins remain.
+// frame 8 versus 12 and requested/state registers still differ.
 // Predicate names 478; byte result 538; byte depleted/overlay 453; global optimization off 1195;
 // merged interruptible cases 473; byte depleted alone 458; byte overlay alone 477; merged cases with bytes 456.
-// score 451 (was 451): frame 8 versus 12 and requested/state homes remain.
+// frame 8 versus 12 and requested/state homes remain.
 // Byte-context word/native interruptible 456/453; named channel words 453;
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
-// score 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
-// score 430 (was 453): Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
+// Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
+// Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Frame 8 versus 12 and requested/state homes remain;
 // byte result 506; byte interruptibility 453; separate overlay result 508;
 // direct inner membership 486; held-index names 451 (fast control 451). Opening body retained.
+// Byte return with byte result 482; byte return alone 450; byte return/result with Boolean overlay 482;
+// with controlling field at use 482; with separate final overlay byte 482. Original Boolean interface retained.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2239,22 +2242,25 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
-// score 679 (was 707): frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
+// score 674 (was 674): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
+// frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
 // requested-name snapshots 709; inline plus native final/validity 696/707.
-// score 679 (was 679): ordinary-helper Boolean transition 712; native helper result 706;
+// ordinary-helper Boolean transition 712; native helper result 706;
 // explicit helper result 679; size policy 1026; byte validity 679. Request/control
 // homes and the second stack argument remain unresolved.
-// score 674 (was 679): request/control homes and second stack argument remain;
+// request/control homes and second stack argument remain;
 // force decision at use 723; late validity 677; final activity values 676;
 // entry output scalars 679; early-invalid helper 710; late validity plus activity values 674.
 // Request/control homes and second stack argument remain; native node selector 704, node ordinal 679, separate transformed point 686, completion cases first 679, early data construction 679.
-// score 674 (was 674): Request/control homes and the second stack argument remain;
+// Request/control homes and the second stack argument remain;
 // indexed three-channel completion 743; position field receiver 704; byte transition 711;
 // direct eligibility 705; byte request flags 705. Opening body retained.
 // Frame 0x80 agrees; request/control carriers and ret 4 versus ret 8 remain.
 // Unsigned requested names 674; short held-slot count 674; word activity result 690; transition
 // cases first 674; internal validity linkage 674. Original helper declaration restored.
+// Forced validity on late-result body 707; reversed validity fields 722; fallback vector memcpy 674;
+// current-frame request/workspace names 674; shared channel flag word 674. Opening body and helper retained.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

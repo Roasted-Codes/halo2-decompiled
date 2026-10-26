@@ -3846,14 +3846,22 @@ static __forceinline long nonnegative_15ce70(long value)
 	return value < 0 ? 0 : value;
 }
 
-// score 480 (was 480): Frame 0xe4 versus 0xe0, eager attacker, category/NONE and predicate/event homes remain.
-// Earlier 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
+// score 470 (was 480): frame 0xe4 versus 0xe0; attacker/category/NONE and decision-byte homes differ.
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
-// Earlier 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
-// Earlier 480 (was 480): frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
+// Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
+// frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
 // scope 480; decoding before lookup 481; different-player arm first 490; override selection 480; shared
 // message formulas 575.
 // Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
+// Positive self-inflicted predicate 480; positive opposing-team predicate 555;
+// both positive predicates 555; default position setter 481; both position setters 568.
+// Award after victim lookup 479; minimum-first total maximum 480; common modifier-one award 470
+// plain; contiguous special range 482; shared absent/self classification 584. Frame 0xe4 versus
+// 0xe0 and attacker/category/NONE homes remain.
+// Frame 0xe4 versus 0xe0, eager attacker, category/NONE and predicate/event homes remain.
+// Earlier 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
+// Earlier 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
+// Earlier 480 (was 480): frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
 // Round 201: One reused event 485; distinct inner event names 480; byte different-player 480; byte same-team 480; long different-player 543.
 // Conversion spill names 480; complete special comparisons 577; category-only word 570; modifier-only word 579;
 // plain timed-step for 480. Frame/NONE and event homes remain; helper and body restored.
@@ -3944,26 +3952,24 @@ void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte
         }
         else if (attacker_index == victim_index) subtype = damage_type == 1 ? 0x22 : 1;
         else if (betrayal) subtype = 2;
-        else if (special)
-        {
-            award = 0;
-            subtype = damage_modifier == 2 ? 0x2b : 0x24;
-            if (damage_modifier != 2 && damage_modifier == 1) award = 0xe;
-        }
-        else if (damage_type == 2 || damage_modifier == 3)
-        {
-            subtype = 0x23;
-            award = 1;
-            if (damage_modifier == 1) award = 0xe;
-        }
-        else if (damage_type == 0x16 && damage_modifier == 2)
-        {
-            subtype = 0x29;
-            award = 2;
-        }
         else
         {
-            subtype = damage_type == 0xd || damage_type == 0xe ? 0x2a : 0;
+            if (special)
+            {
+                award = 0;
+                subtype = damage_modifier == 2 ? 0x2b : 0x24;
+            }
+            else if (damage_type == 2 || damage_modifier == 3)
+            {
+                subtype = 0x23;
+                award = 1;
+            }
+            else if (damage_type == 0x16 && damage_modifier == 2)
+            {
+                subtype = 0x29;
+                award = 2;
+            }
+            else subtype = damage_type == 0xd || damage_type == 0xe ? 0x2a : 0;
             if (damage_modifier == 1) award = 0xe;
         }
     }
@@ -4086,15 +4092,23 @@ struct s_score_zone_view
     short count;
 };
 
-// score 472 (was 472): Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
-// Earlier 481 (was 544): scalar homes now agree; text-workspace and later call/store allocation differ.
+// score 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
-// Earlier 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
-// Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
+// Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
+// frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
 // differ. Individual palette lifetime 472; exact format mode set 480; common zone maximum scan 886; byte
 // weapon slot 476; early weapon lifetime 689.
 // Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
+// Shared own-team formatter 627; held-zone direct color output 503; both zone outputs 597;
+// shared zone color workspace 507; plain zone while 472.
+// Exclusive-path rival text 472; own text 472; both real text workspaces 472; team-test return
+// result 684; individual best-score-first declarations 472. Frame 0x48c and early homes agree;
+// reversed text/color homes and zone/charge allocation remain.
+// Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
+// Earlier 481 (was 544): scalar homes now agree; text-workspace and later call/store allocation differ.
+// Earlier 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
+// Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
 // Round 201: Shared team text 469 (three-point gain rejected); shared team color 484; shared iterator after copy recovery 472; native word presence mask 472; short score selectors 608; charge qualifier removed after copy recovery 495.
 // Team color library copies 472; individual iterator chained reset 473; zone iterator chained reset 472; shared
 // zone output index 522; common zone count clear 472. Text/color homes and native zone/charge allocation remain.
@@ -5130,7 +5144,8 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 167 (was 167): Frame 0x14 versus 0x18 and timer/base homes remain.
+// score 163 (was 163): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// Frame 0x14 versus 0x18 and timer/base homes remain.
 // Earlier 167 (was 167): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
 // reset/scheduling/both displacement producers 175/167/175; outer short index 167; outer countdown
 // pointer 167; pointer with reset/scheduling/both 175/167/175.
@@ -5144,6 +5159,11 @@ void __stdcall function_d6bc0(long object_index);
 // Round 173 on the retained query-result order: external entry reference 221; mode if dispatch
 // 164 (three-point gain rejected); conditional reset counter 195; long modifier 184; byte kind 168.
 // Frame 0x14 versus 0x18 and timer/base homes remain.
+// Positive reset-count predicate 194 (frame 0x18); object-wait predicate 171;
+// both predicates 194; reverse modifier cases 167; native word modifier 163 (plain).
+// Word schedule 161 (two-point gain rejected); native rate with repaired query/modifier carriers
+// 221; entry indices at use 163; direct countdown field 169; native kind byte with word modifier
+// 164. Frame 0x14 versus 0x18 and timer/base homes remain.
 // Round 201: Reset-only entry pointer 190; later timer after query recovery 166 (one-point gain rejected); native bool schedule after query recovery 184; type result before slice 223; scenario global at use 231.
 // Native scheduling/activity/both bits 167/204/204; full native object fields 204;
 // Boolean schedule with bits 216; bits with late timer 204; full fields/late timer 204; direct countdown/bits 214.
@@ -5213,7 +5233,7 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
             if (schedule)
             {
                 long delay = function_15ac50(i);
-                signed char modifier = 0;
+                short modifier = 0;
                 long kind = *(signed char *)(placement + 0x14);
                 if (kind == 0) modifier = *(signed char *)((byte *)g_4e6948 + 0x211);
                 else if (kind >= 1 && kind <= 7) modifier = *(signed char *)((byte *)g_4e6948 + 0x208);

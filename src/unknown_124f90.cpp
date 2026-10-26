@@ -1234,6 +1234,8 @@ long function_2197f0(real gain);
 // short-duration exit 162.
 // Release fraction term 163; ducking-field rereads 313; shared fade fraction 162;
 // shared fade time 162; both fade workspaces 162.
+// Hold duration snapshot 165; ambience time snapshot 173; ducking gain snapshot 165;
+// upper-first release clamp 162; all three snapshots 178 (fast); all restored.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -3400,6 +3402,8 @@ struct s_128ca0
 // flag masks 234.
 // Both branch gain names 234; raw gain before pitch 268 (frame 0x494); playback-bound rereads 234;
 // pitch-range rereads 258; existing-stream branch first 235; recovered-frame form with shared scale 237.
+// Definition after packet initialization 237; branch gain writeback 234; current-chunk candidate 234;
+// sequential gain workspace 234; direct processed-gain initialization 234 (fast); all restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3582,7 +3586,7 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 	arg_2->k = (rotation_i * arg_1->j - rotation_j * arg_1->i) * local_2 + rotation_k * local_1 + local_0 * arg_1->k;
 }
 
-// score 535 (was 551): Frame 0x130 versus 0xe8; native vector, environment and listener-index homes differ.
+// score 535 (was 535): Frame 0x130 versus 0xe8; native vector, environment and listener-index homes differ.
 // Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
 // Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
 // Static const fallback 727 (frame 0xec); spatial role names 551; long success workspace 551;
@@ -3590,6 +3594,8 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // position-zero setter 616.
 // Quaternion input values 535 kept (plain, frame 0x130); vector input values 647; both input sets 1057; entry
 // quaternion 551; entry queried position 551.
+// Weighted cross terms 596; projection products 596; scaled-input terms 590; rotation subtotals 596;
+// vector-first publication 535 (fast); all restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {
