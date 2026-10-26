@@ -68,6 +68,8 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // memcpy producers 298/297/334; both inputs before offsets 335; both input copies with
 // origin 287; first/second input copy with origin 264/266 (both at 1136 bytes). All restored.
 // Descending first/second/both displacement indices 220/260/260; first/second/both displacement destination cursors 224/224/226; all axis products 221; scalar-role homes 221. Extra frame dword and coefficient/result homes remain; one-point descending-first form rejected.
+// Round 230: Uniform transform first-pair sum/last product/row result 227/284/221;
+// pair with last/row, last with row, all, and all product parts 222/227/284/222/222.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

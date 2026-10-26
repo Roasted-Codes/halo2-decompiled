@@ -1601,6 +1601,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // remain.
 // Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
+// Round 230: Actor after weapon/settings queries 277/308; shared current/secondary/both
+// slot queries 329/317/349; both queries with later actor 352/308; direct shared queries 279.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
