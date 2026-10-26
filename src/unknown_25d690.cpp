@@ -1335,6 +1335,8 @@ bool function_1e1de0(long arg_0);
 // Round 127: isolated actor-index admission 247; readiness failure tests 165; both 247; native
 // observed-bit conversion 165; admission/bit 247; readiness/bit 165; all 247; immutable actor-index
 // producer 219. All restored; early ESI and computed result remain.
+// Coherent native-byte return with bool/byte update, early/shared exit and long/bool activity:
+// 165/165/250/250/257/257/245/245. Original Boolean return, both outside declarations and all producer/copy forms restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

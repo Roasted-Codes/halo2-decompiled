@@ -1240,6 +1240,9 @@ long function_2197f0(real gain);
 // Shared sum operand order 174; interpolation start snapshot/accumulator 149/149;
 // addition accumulator 147; start snapshot plus sum order 174; native endpoints 149;
 // both accumulators 147; integer result home 149.
+// Existing shared sum 173; shared sum with live gain/common result/readonly fade 188/142/173;
+// live gain with value sum 211; shared common result with readonly fade/shared workspaces 142/142;
+// shared live gain with direct table 188. Seven-point result forms and unmatched reference forms restored.
 // @retail 0x127010
 long function_127010(short class_index)
 {
