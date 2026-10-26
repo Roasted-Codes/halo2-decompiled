@@ -1330,6 +1330,9 @@ struct s_rating_summary
 // Bounded character countdown 326; group guards 206; player admission scope 206; team guards 206;
 // group guards plus character countdown 326; player/team admission 206; all admissions plus character countdown 326;
 // negative-first lower selection 212.
+// Unsigned name capacity 207; capacity-first continuation 216; ordinary-slot-first output 213;
+// capacity/continuation, capacity/output, continuation/output, all three 241/214/220/248;
+// copied-character ordinal with native pointers 207.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
