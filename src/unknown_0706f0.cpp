@@ -21,7 +21,7 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0);
 bool __stdcall function_71d70(c_session_state_matchmaking *arg_0);
 bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 
-// score 182 (was 182): primary-session ESI joins and byte return normalization remain.
+// score 182 (was 182): Frame 0x10 agrees; primary-session ESI joins and byte normalization remain.
 // Earlier: frame and length agree; primary-session EBP versus ESI, mode joins
 // and final Boolean normalization differ; byte return result 182; word return result 275;
 // long return result 258; unsigned return result 258; independent mode gates 243;
@@ -49,6 +49,8 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // all eight tested results 243. All original byte assignments restored.
 // Initial/type/final direct field observations 182/182/182; initial+type/initial+final/type+final/all
 // 182/182/182/182; all with the two-use secondary state 182. Original byte-result body restored.
+// Negative update-result bool/byte/short/long from entry 296/296/297/305;
+// after the reset exit 307/307/292/299. Original positive byte-result body restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

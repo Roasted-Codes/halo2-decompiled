@@ -772,6 +772,8 @@ real function_18cac0(long arg_0);
 // unsigned membership masks 246; pretested cluster while walk 225.
 // Round 215: unsigned-word selector 229; read-only audibility receiver 225;
 // mask declaration before gain 225; chained small-mask zero 245; branch-derived gain result 229.
+// Three-state mask admission with long/short/signed-byte/byte complete arms 225/229/246/246;
+// default-first admission at those widths 225/229/246/246. Original early continue, selector and whole library clear restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
