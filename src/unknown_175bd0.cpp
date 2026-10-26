@@ -1942,6 +1942,8 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
 // Native spawn initialization/query outputs first/both 130 each; complete placement helper 375;
 // returned-location for 379; placement output first/rejection guard 130 each; native spawn with for 379.
+// Zone cluster input 130; direct leaf result 173; live zone base 130; native byte result 152; point-first
+// input 130; cluster/direct result 173; live-base/direct result 173; cluster/byte result 152.
 // Existing tint result unsigned byte/unsigned word/signed word 139/189/189;
 // multiplication result unsigned byte/unsigned word/signed word 163/137/137;
 // both unsigned byte/word 169/192. Early color frame home and native query pushes remain.
@@ -2578,7 +2580,8 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 313 (was 313): frame 0x104 versus 0x100, incoming point/up eligibility and record/call setup remain.
+// score 313 (was 313): Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
+// frame 0x104 versus 0x100, incoming point/up eligibility and record/call setup remain.
 // frame 0x104 versus 0x100; point/up eligibility and record/call setup remain.
 // Placement name 345; request name 345; retained decal seed pointer 313;
 // direct case returns 345; failed-placement guard 345.
@@ -2591,6 +2594,7 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // object-case random record 313; full-width sound node 313.
 // Word flags/admission 319/319; word flags/direct radius 309 plain (caller 200 versus 166, rejected); admission/chained copies/shared seed 313 each; word flags/shared seed 319; vector CRT copies 313; byte detached with word flags/direct radius 309 (caller 200).
 // Native velocity loop 313; native placement component loop 342; detached flag first 318; separate character guards 313; location-before-owner copy 319.
+// Round 123: Native point/up/forward/all input references 313 each; all references/direct decal radius 344. All pointer contracts and sole caller restored.
 // Decal velocity at entry/created-object guard/native node admission/active cases by value/immutable sound
 // record 313 each; direct default flag 322; position before origin/case order plus velocity lifetime 313/313.
 // @retail 0x17a8a0
@@ -2721,7 +2725,8 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 166 (was 166): frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
+// score 166 (was 166): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
+// frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
 // part-scope radius 166; radius product 166; product with lower bound 352;
@@ -2739,6 +2744,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Detached signed byte 163 (three-point gain dropped); word/long 378/380; reversed signed byte/word
 // 166/288; mode result byte and creation result long 166 each; detached/mode bytes 163;
 // detached byte with two-use lower bound 163. All executable forms restored.
+// Round 123: Corrected-frame orientation/scatter/both Boolean producers 165/163/155; both plus two-use lower 145; both plus signed detached 147 (one-use flags rejected); two-use vector selections and detached propagation 245; unsigned mode 166; native reversal 236.
 // Live mode/reversal/location fields 342/240/166; live location plus mode 371;
 // conditional scale initializer 170; random-result lifetime 167; native tag record 166; live fields plus scale 375.
 // @retail 0x17a380
@@ -2877,7 +2883,8 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 	return next_index;
 }
 
-// score 176 (was 176): frame 0x50 agrees; early false-result, player bitmap/count carriers and point scheduling remain.
+// score 176 (was 176): Frame 0x50 agrees; early false BL, player bitmap/count carriers and point/advance scheduling remain.
+// frame 0x50 agrees; early false-result, player bitmap/count carriers and point scheduling remain.
 // Persistent effect pool 194; persistent player pool 189; outer for 189;
 // squared distance compared first 176; player slot/unit names 189.
 // Unit-skip
@@ -2886,6 +2893,10 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Full-width result 176; per-unit matrix 176; named squared radius 176;
 // absent-node point memcpy 176; nested eligibility tests 176.
 // Point at function entry 176; matrix at function entry 176; effect/tag/cursor role names 176; native disabled-bit mask 251; positive player guard 176.
+// Round 123: Effect rejection in natural for 176; current-player while/unit skip 176; both traversal joins 176; guarded tag lifetime in natural for 176; guarded tag/current-player traversal 176.
+// Actual byte/signed-byte return 176/176; signed/unsigned word return 179/179; signed/unsigned long return
+// 179/179; byte-return tested result 176; signed-byte status/return 176. Wider returns lose both checked
+// callers; all declarations restored.
 // Unsigned effect/player/both indices 176/176/176; native result byte 176;
 // condition-local location 176; entry unit/scan player lifetimes 176/176;
 // readonly effect metadata 176. Original body, native widths and metadata restored.

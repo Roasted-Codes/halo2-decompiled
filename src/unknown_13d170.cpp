@@ -170,7 +170,18 @@ struct s_block_candidate
 	long pages;
 };
 
-// score 370 (was 370): Frame 0x1050 versus 0x1054; retail spills the ring tail and keeps page offset in EBX.
+// score 370 (was 370): frame 0x1050 versus 0x1054; retail spills the ring
+// tail and keeps page offset in EBX. Limit-first guard 385; oldest timestamp
+// initialised 381; enclosing inner-next scope 370; short ring endpoints 392;
+// candidate copy through memcpy 370.
+// Bounded ring masks 387; unsigned-word endpoints 392; frame pointer 475;
+// zero inline depth 418; size preference 643 (fast).
+// Native busy result 370; native selection result 373; gap endpoint snapshot 370;
+// page cursor published first 372; byte ring tail 432 (fast).
+// Round 210: Word best-present/busy/policy states 372/373/374; byte ring head 393; function-
+// scope deletion iterator 370. Frame 0x1050 versus 0x1054 and page/tail allocation remain.
+// Round 212: Shared page shift 370; byte limit category 418; unsigned-word inner/insertion-next/successor cursors 374/375/383. Frame and page/tail homes remain.
+// Frame 0x1050 versus 0x1054; retail spills the ring tail and keeps page offset in EBX.
 // Limit-first guard 385; oldest timestamp initialised 381; enclosing inner-next scope 370; short
 // ring endpoints 392; candidate copy through memcpy 370. Bounded ring masks 387; unsigned-word
 // endpoints 392; frame pointer 475; zero inline depth 418; size preference 643 (fast). Native busy

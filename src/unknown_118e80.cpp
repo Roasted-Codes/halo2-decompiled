@@ -723,9 +723,30 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     long arg_2, long arg_3, long arg_4, bool arg_5, bool arg_6, bool arg_7,
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
+// score 87 (was 95): the builder now gets retail's values (0xc0 bit 8 as its first flag, the
+// 0x12c bit 5 as its second; they were in the first and fourth places) and the parent handle is
+// chosen in an if/else. Left: retail loads the definition word with `mov al, 1; test al, cl`,
+// tests the result bit and its copy separately (`test cl, 1`, then `mov al, cl; and al, 1`),
+// writes the output and state bits with byte or/and, and evaluates the 3/1 scale after the
+// state test. On the kept form: the existing flag setter for the two output bits 86, also for
+// the state bit 101 (633 bytes), with the scale as a shifted bit test 98, with that scale inside
+// each state branch as a ternary 95, as an if 84. Earlier (with the old builder values): frame
+// agrees; target size 225; global optimization off 639; saturation before increment 139;
+// shared output-bit branch 95; direct final state result 101; absent-component exit 99; signed
+// flags with early Boolean 99; long state with early Boolean 135; counter reset before
+// increment 103; threshold default and override 99; snapshot after word 95; earlier threshold
+// 129; unsigned saturation 97; unsupported counter first 106; valid byte last 96; native word
+// field 95; native counters 95; both native fields 95; returned position 144; active-query
+// result 95; native source receiver 95; definition subrecord at use 95; inactive-body exit 95;
+// native flag snapshot 129; low parent bit first 95; absent-state arm first 98; split Boolean
+// output tests 99; copied position 162; shared threshold product 101; existing definition view
+// 95; counter names 95; existing mask setter 112; result through setter 95; setter with split
+// output tests/direct threshold 106/101; short query 124; builder scope 98; direct
+// parent/read-only tag receivers 95/95; admission word/mask 136/166; native output byte 95;
+// shared counter and output decision 123; shared counter carrier 95; byte with shared counter 95;
+// reversed adjacent output publications 95; final native word 102.
 
-// score 95 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
-// frame 0x6c agrees; flag/handle carriers and final state stores differ.
+// score 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.
@@ -768,19 +789,20 @@ void __stdcall function_118b80(long arg_0)
         if (havok_component_any_rigid_body_active(local_3) || local_7
             || !(bool)((*(word *)((byte *)local_1 + 0xc0) >> 6) & 1))
         {
-            bool use_flag = TEST_FIELD_BIT(local_1->flags.flag5);
             word local_8 = *(word *)((byte *)local_1 + 0xc0);
-            long local_9 = NONE;
+            long local_9;
             if ((bool)((local_8 >> 2) & 1) || (bool)((local_8 >> 1) & 1))
                 local_9 = *(long *)((byte *)local_1 + 0xb8);
+            else
+                local_9 = NONE;
             s_118b80 local_10;
             s_118b81 local_11;
             byte *local_12 = local_4 + 0xd4;
             byte *local_13 = (byte *)local_1 + 0x17c;
             function_1e68a0((s_character_physics_update_input_datum_a *)&local_10,
                 (s_source_a *)local_13, (long)local_12, *(long *)((byte *)local_1 + 0xb4),
-                local_9, use_flag, false, false,
-                (bool)((local_8 >> 8) & 1), local_7, &local_6,
+                local_9, (bool)((local_8 >> 8) & 1), TEST_FIELD_BIT(local_1->flags.flag5), false,
+                false, local_7, &local_6,
                 (point3f *)&local_1->forward, (point3f *)&local_1->control);
             local_10.field_14 = true;
             if (!(bool)((*(dword *)local_12 >> 4) & 1))

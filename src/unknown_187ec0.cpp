@@ -145,6 +145,11 @@ public:
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
 // Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
 // inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
+// Entry-live result with break, key compared first 42 (key on the stack); early return in the loop
+// 42; aligned char buffer in 0x1eb020 with that body 42; 0x188640 calling without its key reference
+// 42 (0x1eb020 lost); __stdcall 0x188640 42; parameters swapped 42. With the 0x1eb020 -> 0x188640
+// call removed, or 0x1eb020 unaligned, that body and 0x188640 both match: the aligned caller's edge
+// keeps the key out of ebx. BLOCKED-BY 0x1eb020
 // Native return object first/bound first/found constructor 42/42/42; late result object 35;
 // cursor object with member/copy exhaustion 41/40; entry object/live field bound 42;
 // entry object with completed search 46. Existing class and aligned caller unchanged.
@@ -577,13 +582,16 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // frame and array homes agree; input registers and the first scan counter differ;
 // paired initialization 326, effect cursor 91, sound cursor 100, both cursors 103,
 // paired/effect cursor 328, paired/sound cursor 335, paired/both cursors 344, shared scan index 89.
-// This round:
+// Earlier counter-width forms:
 // Narrow first short/word/byte 120/120/120; narrow second short/word/byte 77/77/77;
 // both short/word 126/126; signed-short second scan 77 plain, 337/336 bytes.
 // First/second/both array library fills 99/102/101;
 // local defaults/library defaults before point 77/101;
 // compression before point copy 75; location before velocity 76;
 // both sound copy orders 74 (three-point gain, rejected).
+// Exact-end sound scans dword/long/short 89/89/77; exact-end effect scan 84;
+// shared complete offset scale 125; sound point setter 106;
+// native velocity/location field copies 89/96.
 // direction alias 89; point memcpy 89; velocity memcpy 89; location memcpy 89; three copies 89;
 // signed effect index 89; signed sound index 89; signed indices 89; own-parameter input 87;
 // inline effect callee 89; inline sound callee 89; inline dispatch callees 89.

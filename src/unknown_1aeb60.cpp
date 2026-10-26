@@ -340,7 +340,8 @@ struct s_unit_state_0f
 
 static __forceinline long real_to_long(real value);
 
-// score 49 (was 49): Frame four agrees; actor/index ECX/EDX and final argument setup still differ.
+// score 49 (was 49): Frame agrees; actor/index ECX/EDX and final call setup differ.
+// Frame four agrees; actor/index ECX/EDX and final argument setup still differ.
 // actor/index ECX/EDX and final setup remain; existing state query
 // ordinary/inline/forced 138 each; query with long timer 143; timer/mode 143; mode 137; readonly actor
 // 138; readonly records 138.
@@ -355,6 +356,9 @@ static __forceinline long real_to_long(real value);
 // Native countdown/mode/both 134/80/138; shared range 49; its native countdown/mode/both 127/64/129; unit
 // reference 49; short/early short countdown 49/123; actor reference and read-only node/unit/actor/all
 // views 49 each; final guard 49; direct shared product/conversion 49/49; shared low-half index with
+// pointer/reference 127/127. Timer test combined as in 0x1b7c70 49; `--state->ticks <= 0` 49;
+// slot cast declared first 49; constant first in the time test 49; timer record by pointer
+// addition 49 (the same code each time).
 // pointer/reference 127/127.
 // Nested prop/clock/tick names singly, in all pairs and together 49 each; early uninitialized tick declaration 49.
 // Actor getter boundary 49; getter observations at timer/prop/both 117/115/140;

@@ -1048,10 +1048,14 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // frame pointer 458; shared side dot products 384.
 // Nested expansion zero 1163, one 342; global optimization off 2011; size policy 518;
 // ordinary signed-angle inline 342.
-// Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
-// frame 0x3c versus 0x34 and angular homes remain;
+// Earlier: Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
+// Earlier: frame 0x3c versus 0x34 and angular homes remain;
 // early endpoint wrap 365; target-angles first 387; endpoint direction reuse angular 374,
 // distance 360, both 376; angular reuse with direction or projection names each 374 (fast).
+// Round 122: Perpendicular reuse at first/second angular endpoint 402/393; first/second distance
+// endpoint 346/350; first endpoint in both branches 382.
+// Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
+// frame 0x3c versus 0x34 and angular homes remain;
 // Round 342: first-clamp tests 342; second-clamp tests 342; separate second-clamp scalar 410;
 // second angular endpoint reuse 373; second distance endpoint reuse 360.
 // @retail 0x2c2a70
@@ -1133,7 +1137,10 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
 
-// score 478 (was 478): frame 0x104 versus 0x10c; radius/index and metadata homes remain.
+// score 469 (was 478): Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
+// word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
+// output slot 469; with unsigned outer 470 (frame 0x10c); unsigned next 493.
+// frame 0x104 versus 0x10c; radius/index and metadata homes remain.
 // frame 0x104 versus 0x10c; metadata result homes recover 0x10c at 482 but radius, index and branch allocation still differ.
 // metadata common emission 482; metadata long type 482; metadata long link 483; metadata both long 482;
 // metadata outer index 482; metadata radius home 482; metadata ordinary output 513; metadata index register
@@ -1172,6 +1179,7 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
             for (long index = 0; index < count; )
             {
                 s_path_step_view const *entry = &points[index];
+                s_path_step_view *out = &result[used];
                 short next = NONE;
                 long edge = 0xffff;
                 bool found = false;
@@ -1263,7 +1271,6 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                     next = index + 1;
                 }
             emit:
-                s_path_step_view *out = &result[used];
                 out->node_index = sector;
                 out->point.point.x = origin.x;
                 out->point.point.y = origin.y;
