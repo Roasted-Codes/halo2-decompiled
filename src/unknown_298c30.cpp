@@ -280,6 +280,8 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 }
 
 // score 749 (was 749): frame 0x11c versus 0x114; radius caching and trace/point homes differ.
+// Frame 0x11c versus 0x114, early radius retention and trace/pivot/result homes remain.
+// Earlier: frame 0x11c versus 0x114; radius caching and trace/point homes differ.
 // Shared endpoint setters 767; center CRT copy 767; step CRT copies 767;
 // obstacle-radius observation 813; requested-angle observation 796; all restored.
 // Trace-field forward sector 772, reverse 776, both 774; settings radius rereads 812; short-index obstacle cursor 814.
@@ -299,6 +301,10 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // rotation height-source input 767; endpoint pointer result 767; native settings member 767 (fast).
 // Original helper contracts and settings storage restored.
 // Round 155: actual state-field references, then obstacle-element reference: side 749; angle 840; side angle 840; clearance 793; side clearance 793; angle clearance 845; side angle clearance 845; obstacle element reference 749. All restored.
+// rotation-products 749; normalization-products 749.
+// distance-products 749; rotation-normalization-products 749.
+// rotation-distance-products 749; normalization-distance-products 749.
+// rotation-normalization-distance-products 749; obstacle-rotation-products 749.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

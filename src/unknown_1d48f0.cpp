@@ -47,6 +47,7 @@ const dword g_455978[81] = {
 // Earlier: Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // score 350 (was 350): Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Earlier 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
+// Frame 0x1d4 agrees; optional input registers, scalar homes and selective location/release expansion remain.
 // Earlier: Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
 // frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
@@ -70,6 +71,8 @@ const dword g_455978[81] = {
 // Sample-element reference 350; object-index field reference 357; both references 357;
 // world snapshot alone/with sample 484/484; with object field/with both references 483/483;
 // body/shape declaration homes at entry 350. All restored.
+// Transform description after body/shape load/shape choice/pose copy 351/351/351/411;
+// bounds description ends before add/exclusion 406/363; full shape selection 350; word success 415.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

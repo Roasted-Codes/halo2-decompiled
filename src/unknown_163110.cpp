@@ -379,7 +379,8 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
 
-// score 412 (was 423): Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
+// score 412 (was 412): Camera/point saved registers and initial stores differ; complete buffered normal rows require an exact match.
+// Earlier: Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
 // inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
 // native float error with distance 412.
 // Earlier 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
@@ -399,6 +400,10 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Earlier 423 (was 423): camera/point homes and plane input/product residency remain.
 // Scaled distance 469; normal inputs KJI 433; normal names 423; helper order 422;
 // scaled distance/KJI 474; first slope before constants 478; all side slopes 618; last corner XYZ 424.
+// complete-normal-xyz 512 (exact only); distance-products-xyz 412.
+// complete-normal-distance-products-xyz 512 (exact only); complete-normal-yxz 512 (exact only).
+// complete-normal-xzy 511 (exact only); complete-normal-zxy 512 (exact only).
+// distance-products-yxz 426; distance-products-zxy 430.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

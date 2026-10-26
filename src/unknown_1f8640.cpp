@@ -372,6 +372,12 @@ struct s_1f8a70_actor
 // Earlier 399 (was 399): Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
 
 // Earlier 399 (was 399): Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
+// Frame 0x80 agrees; pool/data entry schedule, protected unit-mode boundary and result/route homes remain.
+// Earlier: Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
+// Earlier at 399 (was 399): frame 0x80 agrees; pool/data entry order, unit-mode boundary and result/route homes remain.
+// Earlier forms and observations:
+// frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
+// Previous forms at 399 (was 399): Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
 // Earlier: frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
 // Frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
 // Earlier: frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
@@ -424,6 +430,11 @@ struct s_1f8a70_actor
 // restored; pool/data entry and protected unit-mode/result homes remain.
 // Character-index/destination-mode/root-override field references, singly and in all combinations, 399 each;
 // existing actor query consistently at every use 787. All restored.
+// Request/location/reference receivers 449/399/449/450/449/450/449; route-only request 449 (fast).
+// Original complete body restored; pool/data entry and protected unit-mode/result storage remain.
+// Movement flags byte/dword/long 396/399/399; state const pointer/reference 399/399;
+// state reference with flags byte/dword/long 396/399/399; long result/long route/both on byte flags
+// and state reference 421/410/427. Three-point reductions rejected; all restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

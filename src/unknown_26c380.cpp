@@ -145,6 +145,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 
 // score 419 (was 419): Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit tails remain.
 // Earlier 419 (was 419): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
+// Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct output tails remain.
+// Earlier: frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
 // tails remain; tried late first independent normal 490; late first native result word 438; native edge
 // orientation 438; existing planar product inline 435; late first unsigned count 435.
 // frame 0x5c versus 0x64; normal, result/first/hit homes and exit tails differ.
@@ -164,6 +166,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // retains its preview baseline. Original helpers restored.
 // Existing planar point/vector and magnitude input reference contracts, singly and in all seven combinations, 419 each;
 // existing cross-producer output reference 419. Original helpers and body restored.
+// Complete named products: planar/cross/magnitude 421/455/421; planar and cross 453;
+// planar and magnitude 419; cross and magnitude 453; all three 455; point offsets 418. All restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

@@ -437,6 +437,8 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 // 60/64; late final-accessor resets 60/64.
 // Native record clear before slot stores/after zero pair/after property/before tick product
 // 58/58/58/58; those placements with shared conversion 64/61/62/61. Opening body restored.
+// Native flag fields/chain, direct/member receivers at final reset 63/63/63/63;
+// the same complete field resets before tick conversion 63/63/63/63.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
@@ -642,6 +644,8 @@ short actor_behavior_find_level(long owner_index, short type);
 // slot state view 140, with clear 144; captured successor 143; aggregate and unsigned candidate 219.
 // Admission-result join 166; typed search buffer 140; both 166; candidate-first distance comparison 140;
 // comparison with admission/buffer/both 166/140/166; native settings initialization 215.
+// Native start/candidate/both/selected location receivers 159/139/161/139;
+// start-selected/candidate-selected/all receivers 158/138/160; all with query-output scope 160.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

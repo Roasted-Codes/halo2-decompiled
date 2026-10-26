@@ -129,6 +129,8 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 }
 
 // score 421 (was 421): Frame 0x50 versus 0x60, tint/second-UV overlap, cache EBP/EBX and scalar homes remain.
+// Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX homes remain.
+// Earlier: Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX remain.
 // frame 0x50 versus 0x60; tint/second-UV homes and cache register remain.
 // frame 0x50 versus 0x60; tint/second-UV homes and cache register differ.
 // Frame pointer 597; size optimization 990; tint input-array parameter 435;
@@ -144,6 +146,8 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // UV output-pointer return 421; reference bounds formal 421. Original helpers and body retained.
 // Native in-place UV pointer/reference 421/421; by-value result 494; UV-first pointer/reference 421/421;
 // force-inline in-place pointer/reference/value 421/421/738. Original helper and all alias-safe captures restored.
+// Definition at every use 462; shared cache value array 421; both 462; shared pivot weight 421;
+// with definition/cache/both 462/421/462; complete seed products 421. All restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

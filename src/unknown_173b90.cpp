@@ -824,7 +824,8 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 308 (was 308): frame agrees; byte flag clear, child carriers and selective inlining differ.
+// score 308 (was 308): Frame 0x60 agrees; early result zero, byte flag clear, location transport and selective child-tag expansion remain.
+// Earlier: frame agrees; byte flag clear, child carriers and selective inlining differ.
 // Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
 // perpendicular call 394; inline depth one 394, zero 517.
 // Earlier context: frame 0x64 versus 0x60; flag clear and selective calls differ.
@@ -846,6 +847,10 @@ public:
 // All native byte layouts lose five matched controls; original word flags retained.
 // Flag-stage long result/native bitfield transfer/direct visibility and combinations
 // 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
+// native-definition 308; shared-velocity-address 308.
+// native-definition-shared-velocity-address 308; readonly-particle 308.
+// native-definition-readonly-particle 308; shared-velocity-address-readonly-particle 308.
+// native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

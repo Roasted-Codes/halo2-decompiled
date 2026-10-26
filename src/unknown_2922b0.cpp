@@ -64,7 +64,8 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 646 (was 646): frame 0xf8 versus 0x108; result/basis/rotation homes differ.
+// score 646 (was 646): Frame 0xf8 versus 0x108, early success BL/EBX and basis/ray/root/rotation homes remain.
+// Earlier: frame 0xf8 versus 0x108; result/basis/rotation homes differ.
 // Frame pointer 960; size preference 1163; cosine-difference carrier 652;
 // cross before trigonometry 655; inline depth one 652.
 // Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652;
@@ -92,6 +93,10 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // result 646; rotation pointer result 646; symmetric lateral parts 675; symmetric axial parts 727; both row
 // parts 643; row parts/rotation names 643; row parts/declaration homes 643; row parts/origin result 643; row
 // parts/rotation result 643.
+// bool-logical-clearance 648; bool-compound-clearance 658.
+// byte-logical-clearance 648; byte-compound-clearance 660.
+// short-logical-clearance 644; short-compound-clearance 655.
+// long-logical-clearance 645; long-compound-clearance 702.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

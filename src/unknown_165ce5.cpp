@@ -1743,6 +1743,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
    orientations, then builds the weapon's node matrices */
 // score 410 (was 410): Frame 0x78 and root/channel homes agree; early blend byte and later receiver/sway homes differ.
 // Earlier frame 0x58 overlapped root/channel homes; kept the nonnegative ammo arm and common index-derived adjustment bit.
+// Frame 0x78 and initial copies/probe agree; early eligibility byte and later sway homes remain; new trial counts are fast, control 411/2166.
+// Earlier: frame 0x58 versus 0x78; root/channel overlap and later sway homes remain.
+// root/channel homes still overlap in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // blend time true arm 506; ammo nonnegative path first 463; adjustment flag from index 460; arms model read
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
 // read first 478; ammo channel before lookups 526; ammo channel before state view 470
@@ -1767,6 +1770,10 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Complementary partial-blend predicate at bool/byte/word/long width 446/446/446/447;
 // raw animation flag at byte/word/dword/long width 443/440/442/442
 // against fast control 411; all initial sampling and game-call tuples retained.
+// bool-logical-query-eligibility 422; bool-compound-query-eligibility 430.
+// byte-logical-query-eligibility 422; byte-compound-query-eligibility 430.
+// word-logical-query-eligibility 448; word-compound-query-eligibility 448.
+// long-logical-query-eligibility 451; long-compound-query-eligibility 446.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
