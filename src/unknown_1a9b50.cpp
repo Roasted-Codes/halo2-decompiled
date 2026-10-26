@@ -406,7 +406,8 @@ real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
-// score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
+// score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
+// Earlier at 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // actor-table/result/prop carriers still differ; first
 // actor-table/result/prop carriers still differ; first
 // prediction loop 391; second prediction loop 391; planar reverse loop 391;
@@ -444,6 +445,10 @@ extern point2f *g_468778;
 // Existing point-difference helper at primary/secondary/both predictions 375/375/375; native predicted
 // point at primary/secondary/both 375/375/375; unary planar negation 390; earlier uninitialized
 // prediction-time storage 375. Actor/settings/prop carriers remain.
+// Native unit/state/rate values 393/405/380f; unit plus state/rate 406/395f;
+// state plus rate 403f; all three 401f; actual distance value 403f.
+// Early actor acquisition with the new unit/state/rate/all-three/distance values
+// 395/424/406/410/410f. All native scalar captures and lookup changes restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
