@@ -80,7 +80,8 @@ bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
 // score 367 (was 367): Aligned frame 0x110 agrees; request-source reuse and outgoing write options remain.
-// Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion states 433.
+// Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion
+// states 433.
 // Signed-word dependency index 446; unsigned index 446; explicit existing write flags 453;
 // terminal snapshot assignment 433; adjacent write-header cases 434.
 // Completed-request/result names 433; direct selected-file calls 440; direct size predicate 374;
@@ -88,9 +89,14 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // direct size predicate plus header-result branches 382.
 // Direct initial slot 393; failed publication first 473; terminal case first 467; signed-word
 // state 572; dependency-time cursor 367 kept (1712/1720 bytes); cursor-end bound 375.
-// Cursor/count while 469; unsigned cursor ordinal 367; native unsigned state 367; dependency file pointer 445; pointer plus while 479.
-// Dependency Boolean reduction 536; immutable terminal snapshot 367; header-copy case beside request-copy case 495; result-first declarations 367; byte cursor ordinal 367.
-// Paired dependency cursors 367; signed-word cursor ordinal 367; terminal memmove 568; separate name/priority locals 383; header failure-first result 430.
+// Cursor/count while 469; unsigned cursor ordinal 367; native unsigned state 367; dependency file pointer
+// 445; pointer plus while 479.
+// Dependency Boolean reduction 536; immutable terminal snapshot 367; header-copy case beside request-copy
+// case 495; result-first declarations 367; byte cursor ordinal 367.
+// Paired dependency cursors 367; signed-word cursor ordinal 367; terminal memmove 568; separate name/priority
+// locals 383; header failure-first result 430.
+// Positioned write inline/noinline 367/367; positioned copy 367/367; flush 367/367; write+copy/all inline
+// 367/367. All existing declarations restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
