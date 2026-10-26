@@ -512,6 +512,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Helper-owned angle/trigonometry 236; cosine first 237; early direction inputs 236;
 // early projection or projection plus inputs 239; byte ring 161, remaining count 120,
 // both byte states 161. Existing helper and all ring/trace inputs restored.
+// Parallel displacement/elevation/both product parts 215/90/215; collision-offset parts 90;
+// displacement with collision parts 215; elevation with collision parts 90; all parts 215;
+// native point aggregate initializer 90. Original body and rotation helper retained.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

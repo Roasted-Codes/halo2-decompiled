@@ -143,6 +143,8 @@ struct s_cache_property_record
 // unsigned property/all totals 109/109; flat entry admission 109; property element with unsigned ordinal 114.
 // Native identifier field 104; scalar-array end bound 105; activation ordinals 104;
 // field/end 105; field/ordinals 104; end/ordinals 105; all three 105; named activation ordinals 104.
+// On the capacity-delta graph: short/word scalar ordinals 141/141; short/word identifiers
+// 133/133; long/short/word ordinal do-loops 142/141/141; long identifier do-loop 134.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -482,6 +484,8 @@ void function_1537f0(s_profile_record *record);
 // word ordinal 94; record/view/both force-inline declarations 73 each.
 // Immutable identity with tail clear 74; source-before-identity names 73; source-only outer scope 73; identity between initializer and tail 73; tail-clear entry-end traversal 94.
 // Complete destination clear 73; contiguous destination-tail clear 67 kept; destination first/after identity 75/75; links before view 98; tail before view 95; direct indexed destination 73; tail fill with early links 100.
+// Ordinary record inline/native identity 67/67; immutable source/identity/both once 95/83/86;
+// immutable source with native identity 95; split source-tail fills 115, with native identity 115.
 // @retail 0x7f930
 void function_7f930(void)
 {
