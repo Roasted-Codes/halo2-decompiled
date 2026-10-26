@@ -2830,6 +2830,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // live tag radius/live unit fields 254/254; live tag with accumulated result 258.
 // Radius before displacement 176; displacement-first declaration 176; location-scoped matrix 176;
 // each pair and all three 176; absent-node point setter 228 (fast).
+// Complementary bool/test-produced/signed-byte/full-width status 176/176/176/176;
+// complementary success join/test-produced join 303/309; positive tested join 289;
+// initial salted-query truth 269. All original results and exits restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

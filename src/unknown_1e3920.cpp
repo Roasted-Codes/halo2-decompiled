@@ -1029,6 +1029,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Chained cleanup defaults/all three defaults/reverse chain/perception-first defaults 320 each;
 // unsigned actor/cleanup/all handles and unsigned chained defaults 320 each.
 // Short squad admission 382; identity first 360; horizontal/vertical/both angle inputs 337/321/338; angles plus admission 383; vertical-first inputs 338; angle-home names 338.
+// Separate actor/unit/perception creation producers from persistent outputs 320/320/320;
+// actor-unit/actor-perception/unit-perception/all producer splits 320/320/320/320;
+// all splits with delayed cleanup publication 331. Original output and cleanup ownership restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
