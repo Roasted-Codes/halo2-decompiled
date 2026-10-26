@@ -25,6 +25,7 @@ extern real g_4c9798[36];
 // near normal first 309; height clamp first 311; sample y/z first 313, plus normal first 311.
 // Earlier form: Frame 0x20 versus 0x28 and input/rounding homes remain. Near normal input 313; far normal copy 295 kept (plain, retail length); integer maximum reuse 311; far point before scale 313; height rounding first 311 (fast).
 // Earlier form: Frame 0x20 versus 0x28 and input/rounding homes remain.
+// Frame 0x20 versus 0x28; state/matrix and protected rounding/dimension carriers remain.
 // frame 0x20 versus 0x28; input registers and rounding-call scalar reloads remain.
 // frame 0x20/0x28 and state/matrix/rounding homes remain.
 // Radius/scaled-radius/padded-radius parts 295/295/295; size accumulation 295;
@@ -44,6 +45,9 @@ extern real g_4c9798[36];
 // signed-byte mode 331.
 // Direction/origin/both value snapshots 376/329/411; far output dot 311;
 // point component loops 303; normal loop 295; plane scaling loops 295; combined loops 300.
+// Native width/height/both result arms 295/295/295; shared sizing predicate 331;
+// height limit first 303; complete mode result 295; initial projection/opposite loops 295/295.
+// Shared near/far/both/projection/all scaling 295/295/295/295/295; near/far/both point accumulation 295/295/295.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {

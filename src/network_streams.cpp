@@ -1150,6 +1150,8 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 
 // score 172 (was 172): Frame and length agree; oldest/false carriers, copy-loop entry and allocator save still differ.
 // Earlier: Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
+// Frame and length agree; oldest/false carriers and copy-loop entry still differ.
+// Earlier at 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Earlier: retained oldest/false registers and copy-loop entry differ;
 // scan getter 302; copy getter 325; both getters 361; unsigned byte progress 215; decode buffer first 213; forced-inline getters 223.
 // readonly decode records 215; native stream value initialization 254; native copy size bits 215; native
@@ -1165,6 +1167,11 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // native initial-window count/first with short/bool/byte/signed-byte results give 269/278/274/274.
 // Single-result reset at payload/copy/CRC phases and validation tests, short
 // 256/231/214/255, Boolean 229/268/265/276. All restored.
+// Independent bool/byte/short/long completion with literal returns 210/210/193/255;
+// with separate callback results 206/206/189/253. All reverted.
+// On common-failure result: oldest after/before result and result before receiver 229/229/229;
+// shared initial newest with oldest-first/newest-first 202/202; oldest plus readonly types/stream
+// helper/unsigned byte total 229/229/229.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {

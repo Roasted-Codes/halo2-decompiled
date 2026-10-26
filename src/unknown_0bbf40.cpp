@@ -910,7 +910,7 @@ struct s_light_tree_header_ab
 
 void function_c3220(long light_index);
 void __stdcall function_c2d00(long light_index);
-long __stdcall function_c1720(long object_index, long remove, long add);
+long __stdcall function_c1720(long object_index, byte remove, byte add);
 
 // @retail 0xbef30
 void __stdcall function_bef30(long object_index, long remove, long add, long siblings, bool own_flags)

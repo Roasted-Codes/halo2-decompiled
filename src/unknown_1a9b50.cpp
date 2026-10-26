@@ -409,11 +409,13 @@ extern point2f *g_468778;
 // score 375 (was 375): frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
 // Earlier: frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // actor-table/result/prop carriers still differ; first
+// actor-table/result/prop carriers still differ; first
 // prediction loop 391; second prediction loop 391; planar reverse loop 391;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
 // Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
+// Earlier at 379 (was 379): Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
 // 408; integer clock 413; conditional threshold 389; aggregate request 379; branch-derived
 // prediction weight 385 (fast).
 // Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
@@ -423,6 +425,8 @@ extern point2f *g_468778;
 // actor/settings/prop carriers differ; request direction at use 379; request
 // validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
 // Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
+// Earlier at 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
+// Earlier at 379 (was 379): Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
 // result 379; unit field pointer 379; external state byte reference 390; position pointer 387;
 // velocity pointer 424.
 // Round 173: external actor / guarded slot / combined references 379/379/379;
@@ -439,6 +443,10 @@ extern point2f *g_468778;
 // all projection products 375; products with live actor 516; clock at use 391; products with prediction values 406.
 // Target velocity/position/both pointers at prediction 397/377/392; at receiver 434/383/425;
 // position/both with separate second time 377/425.
+// Earlier at 375 (was 379): frame 0x40 agrees; early actor/settings/prop carriers remain.
+// Existing point-difference helper at primary/secondary/both predictions 375/375/375; native predicted
+// point at primary/secondary/both 375/375/375; unary planar negation 390; earlier uninitialized
+// prediction-time storage 375. Actor/settings/prop carriers remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -609,6 +617,8 @@ static __forceinline long real_to_long(real value);
 // score 386 (was 386): frame 0x58 and length agree; early rejection and query scalar/object homes remain.
 // Earlier: Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // Earlier forms: prediction loop 482; initial velocity snapshot 538; direct
+// early false exit, frame 0x54 versus 0x58 and scratch
+// homes differ; prediction loop 482; initial velocity snapshot 538; direct
 // eligibility 484; full-width readiness 495; fallback copy loops 541.
 // j92: actor/settings registers agree; frame 0x54 versus 0x58, early false exit and speed/object homes remain; retain facing view and native planar copy.
 // shared velocity length 486; separate minimum speed 488; retained facing vector 472; planar direction copy
@@ -627,6 +637,10 @@ static __forceinline long real_to_long(real value);
 // Direct six-use object velocity field producer 386 kept (plain), removing the one-use object pointer.
 // Actor/target/both position receivers 443/451/461; both at receiver 441; actor at entry 463;
 // positions with direct rejection 493, named query scalars 461, named query direction 461.
+// Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// frame 0x54 versus 0x58, early rejection and query homes remain.
+// query output names 410; native request clear 474; positive mode arms 483; far prediction first 413; request
+// mode first 522; relative velocity expression 413; direct facing field 524; deadline mode first 510.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

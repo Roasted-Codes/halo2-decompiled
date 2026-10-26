@@ -128,7 +128,8 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 /* slot type 0x24's update: moves the actor to its prop (to the point the
    prop names, or along its direction) and flags the slot when it is there
    or cannot get there (always returns true) */
-// score 232 (was 232): Frame 0x48 agrees; actor/view registers, trace carriers and
+// score 146 (was 146): frame 0x48 and length 1077 agree; entry pool/view carriers and movement/failure placement remain.
+// Frame 0x48 agrees; actor/view registers, trace carriers and
 // movement/failure block placement remain. Native type width 611; common success exit 595
 // (multiple-goto form discarded); lookups after actor guards 616; tracked type first 619;
 // bounded trace distance 620; visibility result 620; single exit native category 584
@@ -161,6 +162,10 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 // outlined visibility result 238; failure expression/read-only view/remaining distance
 // 232/232/232; shared trace origin 238; geometry-only origin 153 kept;
 // geometry setter/native category 153/195. Plain 153, 1080/1077, no trailing fill.
+// Direct slot/actor reference/node reference/both 153 each; direction before query 146 kept; full result 150; direct slot/entry trace with direction 146/146.
+// native slot formal 146; readonly direction 146; fallback native record copy 146; directed native record copy
+// 146; both native record copies 146; native yz distance part 146; native direction field 146; native direction
+// field at use 211.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
@@ -214,8 +219,8 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 		type = view->unknown70;
 		if (type == 0)
 		{
-			s_prop_state_view *prop_entry = prop_node_state(node);
 			vector3f *direction = (vector3f *)((byte *)view + 0x94);
+			s_prop_state_view *prop_entry = prop_node_state(node);
 			s_sector_trace_result trace;
 
 			if ((real)sqrt(direction->i * direction->i + direction->j * direction->j + direction->k * direction->k) > 0.0f &&
@@ -281,6 +286,11 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 // character exits 66; view admission 66; duration/view admission 128; actor/view guards 66.
 // Direct slot 66; shared period input 119; both 119; native point setter 113;
 // idle/character store orders 67/67, both 68; period with point setter 97.
+// Integer quotient/threshold result arms/remaining expression 78/78/78; readonly slot receiver 66;
+// converted-position home/native point memcpy/slot record reference 66/66/66; quotient plus position home 78.
+// short tick-rate producer 113; long tick-rate producer 113; real tick-rate producer 113; chained movement mode
+// 68; chained character flags 67; native point destination 137; readonly external records 66; native slot
+// formal/callback 66.
 // @retail 0x1b2bb0
 void __stdcall function_1b2bb0(long actor_index, s_slot *slot)
 {
@@ -338,16 +348,19 @@ done:
 bool function_2601f0(long actor_index, s_type_c3b527 const *point, long sector, real radius, real path_distance);
 void function_1f86a0(long actor_index);
 
-// score 131 (was 131): frame eight agrees; initial pool order, slot EBP/view spill and nine-byte deficit remain.
+// score 131 (was 131): frame eight agrees; initial pool order, slot EBP, view spill and nine-byte deficit remain.
 // shared range generation recovers the random-first x87 sequence;
+// initial pool order, slot/view homes and nine-byte deficit remain. Shared range 131;
+// frame eight agrees; initial pool order, slot EBP/view spill and nine-byte deficit remain.
 // Shared range 131;
 // chained ticks 144; both 131; state query noinline 144; early short/long defaults 147/179;
 // native duration fields 144; native fields with shared range 131.
 // Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
 // word duration ticks 144; ordinary result 203.
-// score 131 (was 131): initial pool order, slot EBP and view spill still differ.
+// initial pool order, slot EBP and view spill still differ.
 // Readonly actor/view/both 131 each; force-inline actor/node/view/state boundaries
 // 131 each; readonly records with the view boundary 131.
+// Direct slot stores/actor reference/node reference/both/absent-view return 131 each; success publication 145; native slot fields/direct native slot fields 131/131.
 // Named duration product 131; flag-pair/elapsed-word/both library clears 135/131/135;
 // product with both clears 135; shared sector 131; supported-view scope 149; sector with scope 149.
 // @retail 0x1b23c0

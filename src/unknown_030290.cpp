@@ -247,7 +247,7 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): frame 0x30 versus 0x2c, inverse defaults and displaced point/factor spill homes remain.
+// score 195 (was 195): Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
 // frame 0x30 versus 0x2c and inverse-depth/point homes
 // frame 0x30 versus 0x2c and inverse-depth/point homes remain.
 // Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
@@ -263,6 +263,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // frame 0x30 versus 0x2c and projected-point/factor homes differ;
 // role-named points 195; displaced transform first 250; orthographic defaults first 261;
 // shared point initializer 195; single result 280.
+// Native transform input/result/both by value 402/314/288; helper-local
+// scale observation 225; orthographic arm first 215. Frame and point/factor homes remain.
 // Origin/camera/scale fallback selections, all three paired selections and all together 195 each;
 // native floating factor admission 195. Complete original body restored.
 // Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;
@@ -273,6 +275,10 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
 // 423/376/529/359/538/536/718; all with local inline declaration 718.
 // All nonexact shared-transform forms restored, including their floating sum order; no external change remains.
+// Native point input/output/camera references 195/195/195; paired point/all references 195/195;
+// parallel named pre-translation sums 263.
+// Round 115: Origin/displaced/both reciprocal selections 195/195/195; guarded helper coordinate initialization 293; negate selections 195; initial displacement scope ends after transforms 195. Opening body/helper restored.
+// Round 117: Transformed storage first 195; chained inverse defaults 195; complete inverse results 296; helper coordinate homes 195; depth-first inputs 225; output-pointer result 195.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

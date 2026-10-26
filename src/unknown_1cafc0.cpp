@@ -540,6 +540,7 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 
 // score 399 (was 399): frame eight versus twelve and hidden query-result homes still differ.
 // Earlier: frame 8 versus 12 and hidden-result homes still differ.
+// frame 8 versus 12 and hidden-result homes still differ.
 // Byte success 403; fallback fields at use 551; request fields at use 639;
 // library record move 628; outer name-snapshot declarations 444. Byte success kept.
 // Round 303: graph after resolution 621; fallback snapshot order 544; request snapshot order 419;
@@ -549,6 +550,10 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Request class/mode/type 399; fallback class/mode/type 544; inherited ordinal scope 403; inherited while 403; ordinary group inline 1794; request class/type/mode 399 kept; request mode/type/class 419; request type/mode/class 403.
 // Output mode/class/type receivers 399/435/420; mode-class/mode-type/class-type/all receivers
 // 435/420/435/435; all receivers after record copy 421.
+// First/fallback/both native result-field copies 518/499/546; their immediate-index
+// forms 518/499/546; mutable result fields 546; shared query workspace 597. Frame remains eight in separate-copy forms.
+// Primary/fallback/both library result publication 415/431/483; name library copy 399;
+// complete library publication 483; unstreamed continue 399; leaf inline/automatic 1622/1622.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
@@ -805,24 +810,39 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 	}
 }
 
-// score 251 (was 273): frame 0x38 agrees; ID slots, result/loop byte homes,
+// score 251 (was 251): Frame 0x38 agrees; ID/result/loop homes and protected query lifetime remain.
+// Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
+// 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
+// Two-point gains dropped.
+// frame 0x38 agrees; ID slots, result/loop byte homes,
 // blend reloads and the frame clamp differ. Success after setup 251; loop
+// Frame 0x38 agrees; identifier/result/loop homes and protected query lifetime remain.
+// Success after setup 251; loop
 // state width 283; channel state width 314; name aggregate 322; flag mask 353
 // (six match losses). On 251: logical channel 287; logical offset 248 (gain
 // three, dropped); loop expression 345; success after query 274; before
 // overlay 255; previous-loop home name 251.
-// Frame 0x38 agrees; ID/Boolean homes and blend call lifetime remain. Byte result 249 (gain two, dropped); entry third ID 306; two-channel clear loop 251; masked blend bit 311; byte combined state 251.
-// ID/result/loop homes, blend reloads and frame clamp remain.
+// Byte result 249 (gain two, dropped); entry third ID 306; two-channel clear loop 251; masked blend bit 311; byte combined state 251.
 // Transition ID name 251; blend-first join 327; failed result from flag 354;
 // frame-position snapshot 297; reversed bitwise loop result 251; previous-loop
 // lifetime first 254; false result after channel observation 286 (fast).
-// Frame 0x38 agrees; ID/Boolean homes and blend lifetime remain. Word result 255; word previous loop 334; word combined state 312; reused selected set 251; found record at lookup 251; byte result plus logical offset 269 (fast).
-// Frame 0x38 agrees; identifier/result/loop homes and protected query lifetime remain.
+// Word result 255; word previous loop 334; word combined state 312; reused selected set 251; found record at lookup 251; byte result plus logical offset 269 (fast).
 // Full-width return 255; signed-byte previous loop 251; primary ID at lookup 339; names initialized at
 // lookup 443; aggregate names on late-success form 320 (fast).
+// This round: channel result producer 248; channel result late false 286; channel result byte 271;
+// channel result word 260; channel result long 259; channel result changed width 291; channel result
+// previous byte 248; channel result carrier pair 291; channel producer logical offset 293; channel
+// producer logical queries 327.
+// Frame 0x38 agrees; ID/Boolean homes and blend call lifetime remain. Byte result 249 (gain two, dropped); entry third ID 306; two-channel clear loop 251; masked blend bit 311; byte combined state 251.
+// ID/result/loop homes, blend reloads and frame clamp remain.
+// Frame 0x38 agrees; ID/Boolean homes and blend lifetime remain. Word result 255; word previous loop 334; word combined state 312; reused selected set 251; found record at lookup 251; byte result plus logical offset 269 (fast).
+// Frame 0x38 agrees; identifier/result/loop homes and protected query lifetime remain.
 // Optional blend-ID initialization 289; transition-set lookup scope 251; both 289; channel-state
 // initialization 251; positive channel flag 254; reversed independent clears 251;
 // state/flag/clear combination 254; native ID/set/state combination 289.
+// First logical blend 311; query-first logical blend 310; both logical 318; staged channel
+// admission 248 (gain three, dropped); logical staged 315; named readiness 254;
+// logical named readiness 312; lookup-owned work 251.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
