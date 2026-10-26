@@ -140,6 +140,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // query output pointer ignored/retained/ordinary/ordinary ignored 184/184/184/184;
 // new pointer flow with broad rotation/first product/final product/transpose 221/194/213/222.
 // Joint query/rotation output with rotation copy after 0/1/3/4/6/7/8/9 native publications gives 219/219/219/219/219/220/221/221. Frame 0xc4 and prefix through +0xfd recover, but all fast trial scores regress; original query boundary and scoped rotation restored.
+// Query-source-only matrix with early/late world declarations 213/213; broad rotation 216;
+// distinct first world output 194; completed transpose alone/with first output 277/240;
+// late world and broad rotation 216; first world and broad rotation 194. All restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

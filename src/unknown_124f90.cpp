@@ -3385,6 +3385,9 @@ struct s_128ca0
 // Definition after packet initialization 237; branch gain writeback 234; current-chunk candidate 234;
 // sequential gain workspace 234; direct processed-gain initialization 234 (fast); all restored.
 // Pitch lower snapshot 273; native flag3 view 236; pitch workspace subtraction 234; zero-default controller gain 267; readonly parameter/range views 234 (fast); all restored.
+// Native nested packet with original/part/whole/aggregate clears 234/304/316/309;
+// reverse part clears/entry declaration/late packet/entry with part clears 304/234/283/304.
+// Original packet view and clear boundaries restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

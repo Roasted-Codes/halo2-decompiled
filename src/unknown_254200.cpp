@@ -238,6 +238,8 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // immutable query/helper 349; pointer/direct helper with scalar size 349/378;
 // lower-first helper coordinates 372; symmetric role-named lower-first coordinates 372 (fast control 162).
 // RGB/BGR scalar channels 150/150; outer declarations 150/150; RGB after Begin/commit 379/152; BGR after Begin 378; BGR with value half-size 150 (fast control 162). Scalar channels recover frame 0x10 but are one-use field copies without a match, so all restored.
+// Native query pointer with every nonempty public C++ color/first-two-position boundary set
+// 349 each; with last-consumer pointer scope 349 (fast control 162). All restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

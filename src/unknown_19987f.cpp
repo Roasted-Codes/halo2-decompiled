@@ -1300,6 +1300,8 @@ extern bool g_4ed39d;
 // game/lobby/main/handled and combined results 184 each; signed-word game/lobby/main
 // 177/181/186. Word game worsens normalized sequence edits 69 to 97; restored.
 // Game/handled true chains in menu-first and handled-first order 184/186; lobby/handled chains 184/184; both menu-first/both handled-first/mixed orders 184/186/184/186. Byte homes and dialog joins remain.
+// Complement game/lobby/both/main/game-main/lobby-main/all menu results 184/184/184/184/184/214/184;
+// all complemented with the recovery result 174. Original result representations restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
