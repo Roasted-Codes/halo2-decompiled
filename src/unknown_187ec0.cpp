@@ -138,11 +138,14 @@ public:
 	short m_index;
 };
 
-// score 33 (was 42): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
+// score 33 (was 33): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
 // Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
 // Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
 // inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
+// Native return object first/bound first/found constructor 42/42/42; late result object 35;
+// cursor object with member/copy exhaustion 41/40; entry object/live field bound 42;
+// entry object with completed search 46. Existing class and aligned caller unchanged.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {

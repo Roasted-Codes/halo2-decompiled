@@ -950,7 +950,8 @@ void function_a7b30(long index);
 void __stdcall swarm_delete(long perception_index);
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type);
 
-// score 345 (was 364): frame 0x11c versus 0x118; sentinel and success blocks differ.
+// score 320 (was 320): frame 0x118 agrees; entry sentinel, squad and substitution/result homes differ.
+// Earlier form: frame 0x11c versus 0x118; sentinel and success blocks differ.
 // Facing products 345/1272; split squad lookup 388; direct substitution gates 369;
 // guarded Boolean 384; typed actor fields 364.
 // frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
@@ -962,12 +963,12 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // count reads 350; both 352; selected-character local 380; outer creation buffer 348;
 // base read plus Boolean predicate 365, shifted Boolean 364, combined loop guard 438,
 // or full-width shifted predicate 350.
-// score 320 (was 345): frame 0x118 agrees; sentinel and later register homes differ.
+// Earlier form: frame 0x118 agrees; sentinel and later register homes differ.
 // Base reads with explicit success/cleanup 320; positive flags guard 342;
 // complete equipment arms 346; squad-mode word 342; guarded long predicate 350.
 // Frame 0x11c versus 0x118 and missing-index homes remain; repaired frame with vertical-first, second-horizontal-first, vector initializer, word creation or word request each 342; three-point gains rejected.
-// score 320 (was 320): Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
-// score 320 (was 320): Frame 0x118 agrees; sentinel and settings/squad homes remain.
+// Earlier form: Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
+// Earlier form: Frame 0x118 agrees; sentinel and settings/squad homes remain.
 // Native Boolean flag 357; guarded Boolean flag 356; late cleanup indices 365; entry placement
 // view 320; complete replacement arms 358; late actor result 367; zero grenade guards 339;
 // short grenade result 338.
@@ -976,6 +977,8 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // both with outer index 347; late actor result 345; Boolean creation mode 378; late unit sentinel 356; perception
 // first cleanup 320; independent perception first 337; independent unit first 337; perception first with Boolean
 // mode 357.
+// Chained cleanup defaults/all three defaults/reverse chain/perception-first defaults 320 each;
+// unsigned actor/cleanup/all handles and unsigned chained defaults 320 each.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

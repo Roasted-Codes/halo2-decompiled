@@ -216,6 +216,9 @@ real function_1f8940(long actor_index);
 // failed result first 34; failed result chain 27; shared cancellation count 27;
 // native cancellation limit 89; const reference and count 27; result chain and count 27;
 // cancel completion test 27; named cancel result 27.
+// Request clear before scratch 71; all constants before scratch 76; full request before scratch 75;
+// kind/numerics/flags before scratch 68/68/77; choice fields before constants 30;
+// constant prefix with range before choice 77. Scratch/request staging restored.
 // @retail 0x1b3380
 bool __stdcall function_1b3380(long actor_index, s_slot *slot)
 {

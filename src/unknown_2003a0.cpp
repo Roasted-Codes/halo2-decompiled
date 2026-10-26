@@ -2100,6 +2100,8 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
 // unsigned current handle 275; declared word bitfield 294.
 // Long overlap 321; raised-component loop 275; shared current-handle scope 275; per-squad area scope 275; long actor wake 301.
+// Exact tick result 312; native word index/actor type 275/275; complete point value 275;
+// value/lexical order 275; failed-team result 275; first-overlap exit 305; early output object 275.
 // @retail 0x201ea0
 void function_201ea0(void)
 {

@@ -2664,16 +2664,23 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 348 (was 348): Frame 0x58 agrees; stage constants/call convention and UV/trig homes still differ.
+// score 348 (was 348): frame 0x58 agrees; stage constants/call convention and scale/trig homes differ.
+// Earlier form: frame 0x58 agrees; stage-call convention and constants differ.
+// Byte stage 617; distinct second trig scalars 374; separate texture scales 348
+// (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
+// Earlier form: Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
+// Earlier form: Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
+// Frame 0x58 agrees; stage constants/call convention and UV/trig homes still differ.
 // Existing helper producers: x rotation 348; y rotation 424; both 464; x scaled 348;
 // y scaled 424; both scaled 464; both biased 465; output-first rotations 464. Original helper retained.
 // frame 0x58 agrees; stage-call convention and constants differ.
-// Byte stage 617; distinct second trig scalars 374; separate texture scales 348
-// (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
 // Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
 // Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
 // dimensions 460; long dimensions 478; word width 444; word height 430; height first 352; word dimensions height
 // first 460; long dimensions height first 478; word width height first 444.
+// Normalization before states/stages 508/429; complete scale prefix before states/stages 424/348;
+// bounds before states/stages 481/412; zero defaults before bounds 361; early normalized defaults 414;
+// only maximum before stages/states 424/418; maximum with late zero defaults/early bounds 424/425.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

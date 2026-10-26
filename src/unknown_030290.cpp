@@ -71,7 +71,9 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
-// score 112 (was 164): coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
+// score 112 (was 112): Frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes still differ.
+// Earlier: frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes differ.
+// coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
 // Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
 // tangent names 209; shared root/ratio/tangent workspaces 209.
 // In-place displacements 257; depth-radius product 233; deferred second
@@ -82,7 +84,7 @@ long g_4ba134;
 // Direct-radius failed-discriminant arms first 185; behind-plane arm first
 // 213; named tangent quotients 193; ratio before root 193; earlier radius
 // square 193; shared root products 212.
-// score 112 (was 164): viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
+// Earlier: viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
 // Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
 // eager first tangent coordinates 164; in-place tangent projection 164. Original body retained.
 // Frame 0x34 and coordinate prefix agree; viewport conversion and
@@ -93,6 +95,13 @@ long g_4ba134;
 // horizontal pair early 247; vertical pair early 241; coordinate-before-depth pairs 112;
 // early depths with guarded coordinates 197; inline first coordinates 209.
 // On early coordinate/depth pairs: direct radius 205; coordinate role names 112.
+// Early-pair context: vertical coefficient names 112; vertical edge names 112; vertical-first coefficients 118;
+// coefficient fields at use 252; viewport first 130; later vertical viewport 217; later vertical coefficients 180; both later 217.
+// Coordinate accumulator x/depth/all 112 each; horizontal/depth/all leading products 112 each;
+// shared camera scale 245; branch-defined scaled components 137.
+// entry projection declarations 112; shared tangent declarations 149; both declarations 149; radial
+// values first 222; both radial squares first 227; viewport after discriminant 214; coefficients after
+// discriminant 137; shared difference helper 112.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
