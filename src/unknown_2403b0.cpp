@@ -35,21 +35,21 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // (three-point gain rejected), long 214; blocked long/byte 190/190; existing
 // flag helper force-inline 190; returned point 199; marker bits 190; option
 // scope 190. Original body and helper declaration retained.
-// score 190 (was 190): pool reload and separate completion stores remain;
+// Earlier 190 (was 190): pool reload and separate completion stores remain;
 // read-only unit/type result 190/190; scoring team at call 226; completion event prepared first 193;
 // marker/slot entry lifetimes 190/190; success-result predicate 193; type result plus event preparation 193.
 // Read-only helper input 190; table reference 190; native team parameter 190; result-first predicate 192;
 // flag byte sample 190; direct capped result 190; cap and table reference 190; option guard order 190. Pool
 // reload and separate completion stores remain.
-// score 190 (was 190): Cached pool base and merged completion stores remain.
+// Earlier 190 (was 190): Cached pool base and merged completion stores remain.
 // Native player record 190; scoring-team field binding 190; both 190;
 // increment counter binding 202; decrement binding 190; both counters 202;
 // marker-team value 194; native player with both counters 202.
-// score 190 (was 190): cached pool, merged completion stores and flag-result materialization remain.
+// Earlier 190 (was 190): cached pool, merged completion stores and flag-result materialization remain.
 // Predicate long/short/byte/signed-byte returns 189/190/190/190;
 // byte predicate input 190; byte input with long/short/byte results 189/190/190.
 // Both one-point gains rejected; original predicate and body restored.
-// score 190 (was 190): cached pool base, merged completion stores and predicate result remain.
+// Earlier 190 (was 190): cached pool base, merged completion stores and predicate result remain.
 // Native unit/weapon/both header references 190/190/190; external carried-index,
 // selected-slot or both field bindings 190/190/190; initializer return used directly 311;
 // external options record reference 190.
@@ -57,10 +57,12 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // permission result 190; fallback permission scope 190; present-unit scope 190
 // eligible-weapon scope 190; present-slot scope 190; present-marker scope 190
 // unit/weapon scopes 190; option once 190.
-// score 190 (was 190): frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
+// Earlier 190 (was 190): frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
 // Negative-three addition 190; default-NONE/explicit-arm team results 191/190; reversed completion
 // bit order 190; in-place limit 190; two-use stored-short ticks 190; limit plus stored ticks 190;
 // default-NONE team plus negative-three addition 191. Opening body and existing helper restored.
+// noinline 101280 190; noinline 15b2f0 190; noinline 138880 190; noinline 138860 190; noinline 15fe70 190;
+// noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
