@@ -659,7 +659,11 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 
 long function_1469f0(real seconds);
 
-// score 279 (was 279): frame 4/12 and slot/state/transition/flag homes remain.
+// score 279 (was 279): frame four/twelve and slot/state/transition homes remain.
+// Integer query 358; three/four indexed timers 342/342; three/four timer cursors 296/291;
+// query with four/three indexed timers 361/361, four cursor timers 311.
+// Reduced control 280; all restored.
+// frame 4/12 and slot/state/transition/flag homes remain.
 // Query, cancellation and execution separate inline/noinline declarations, individually
 // and together, all 280 fast, tying the unchanged preview (full 279). All restored.
 // First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
