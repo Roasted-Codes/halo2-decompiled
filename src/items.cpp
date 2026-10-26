@@ -994,6 +994,7 @@ struct s_item_flags_view_10b850
 // Round 126: Native dot/scaled-add pointer inputs 813/813; complete rotation outputs 813 at retail length;
 // component cross-result fill 813; ordinary dot inline 813; reused geometry predicate 858; reused contact
 // kind 878; all velocity copies by memcpy 813 (fast); all restored.
+// Complemented motion/floor/speed/surface 922/813/811/890; floor-speed/surface-floor/surface-speed/all 811/890/888/879 (fast). Two-count speed gain rejected; frame 0x154/0x12c and native workspace homes remain.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1258,6 +1259,7 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // common contact/event point at entry or active scope 201;
 // native tag plus common point 201. Complete tag, helper and body restored.
 // Native state-byte/countdown/both field references 200/200/200; damage-key reference 154; state/key, countdown/key and all three 200 each; surface-contact expression 200. Original release and event code restored.
+// Direction global at every use with bool/long/short update result 229/243/242; bool/byte/short/long idle result 223/223/243/244; entry bool idle 224 (fast). All restored; release RMW/tail and event/location homes remain.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

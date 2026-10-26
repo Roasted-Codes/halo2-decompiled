@@ -150,7 +150,7 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 266 (was 279): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
+// score 231 (was 266): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
@@ -172,6 +172,10 @@ void player_action_initialize(s_player_action *arg_0);
 // and all three pairs 279 each; angle pair plus complete four-float control copy 314.
 // Complete request flags once before admission at byte/word/short/dword width 279/282/282/267;
 // after admission 279/281/281/266. Dword after admission 266 plain; frame 0x54 agrees.
+// Shared request with bool/byte/word permission 379/379/266; definite short/bool arms 266/379;
+// declaration fallback with short/bool 255/379; combined permission 376; snapshot after object lookup 258;
+// after selection stores with short/bool/byte 252/231/231; late snapshot plus bool/short fallback 366/369.
+// Late coherent request and Boolean permission 231 plain; selection/count and cold output scheduling remain.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
@@ -201,11 +205,11 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
     }
     if (local_1->field_0 != NONE)
     {
-        dword request_flags = local_3.field_1c;
         s_186ab5 *local_4 = ((s_186ab6 *)g_4e0300->data)[local_1->field_0 & 0xffff].field_8;
         if (local_1->field_28 != local_4->field_214)
             *(long *)&local_1->field_28 = *(long *)&local_4->field_214;
-        short local_5 = (request_flags & 1) != 0;
+        dword request_flags = local_3.field_1c;
+        bool local_5 = (request_flags & 1) != 0;
         char local_6 = local_1->field_2a;
         if (local_4->field_213 != NONE)
             local_5 = false;
