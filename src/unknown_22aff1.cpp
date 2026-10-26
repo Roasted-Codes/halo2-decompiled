@@ -85,6 +85,8 @@ PRIVATE __forceinline real function_22aff5(real arg_0)
 // uniform named axis products at each row 121; uniform origin addition stages at each row 119; constant
 // axis initialization at declaration 136; explicit offset branches with native point workspace 121; width
 // used directly by repeated draw spacing 121; immutable palette with body cursor step 121.
+// Uniform two-row horizontal/vertical product and pair-sum operand orders 121 each;
+// complete input-color component publication 518.
 // @retail 0x22aff1
 void function_22aff1(long arg_0, byte const *arg_1, byte const *arg_2, real const *arg_3)
 {

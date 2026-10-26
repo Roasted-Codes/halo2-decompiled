@@ -3099,6 +3099,10 @@ struct s_ammo_conversion_entry
 // Round 183 complementary acquisition word/byte/long 212/194/215; source depletion
 // bool/byte/short 197/197/212; both word-plus-bool/bytes 215/200 (fast). Byte acquisition
 // recovers frame 0x20 but gains only four, so all restored; destination/tag and conversion homes remain.
+// Complementary byte acquisition with source counts/capacity branch/source scope/
+// table at every use 210/193/207/195; source counts with capacity/source scope 210/210;
+// twice-used offered count 194, with source scope 207. Capacity form has frame 0x20
+// and retail length but gains only five; all combinations restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

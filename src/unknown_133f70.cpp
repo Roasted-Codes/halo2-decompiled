@@ -129,6 +129,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // 195, 182, 197, 193]; unsigned-word outer 196. Early source/count and feature homes remain.
 // Common disabled bool/byte/short/long with positive/negative feature results [192, 193, 192, 193, 201, 207, 192, 193].
 // Original body, word cursor and inherited qualifiers restored.
+// Entry count/selection/word-row offset lifetimes 156/154/154; count-selection/count-word/selection-word/all 156/156/156/156;
+// all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

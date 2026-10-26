@@ -732,6 +732,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // each with the actual periodic-difference input gives 268/267/244/244.
 // Coordinated camera inline/inline-plus-noinline declarations 244/244.
 // All original helpers and declarations restored; scalar/frame homes remain.
+// Per-helper half-turn/full-turn/both observations 311/291/339; early
+// positive-range sum 270; with half-turn/full-turn/both 319/323/374;
+// both observed limits passed through the existing helper 261. Original helpers restored.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

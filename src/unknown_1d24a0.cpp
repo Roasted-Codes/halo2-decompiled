@@ -106,6 +106,7 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 }
 
 // score 953 (was 953): Frame 0x1f4 versus 0x1d4, entry EAX/ECX, delayed EBX and record/vector homes remain.
+// Frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
 // Earlier 1218 from 1259: frame agrees; early EBX save, array/entry allocation and delta reloads differ.
 // Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
 // inline depth one 1259; counted angular residual 1218, kept after plain check.
@@ -129,6 +130,8 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Original scale word ordinal, angular coefficient pair and all helpers restored.
 // Native scale/add/subtract input values singly and in pairs/all [1295, 992, 977, 1455, 1456, 1130, 1555];
 // all with planar input values 1746. Original helpers and coefficient pair restored.
+// Complete native vector outputs in scale/add/subtract helpers 1291/1048/984; scale-add/scale-subtract/add-subtract/all 1466/1434/1147/1610;
+// all native vector outputs with completed planar workspace 1668. Original helpers and accepted loop/coefficient pair restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

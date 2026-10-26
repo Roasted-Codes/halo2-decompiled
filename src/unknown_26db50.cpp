@@ -523,6 +523,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Sine-scaled cross 215; with projected-axis/cosine terms 215/215; all terms 90;
 // projection plus cosine 215; projection/cross/cosine and cosine/cross/projection orders 90/90;
 // all terms with cosine complement 90. Uniform rows; opening helper and body restored.
+// Parallel displacement/elevation/both product parts 215/90/215; collision-offset parts 90;
+// displacement with collision parts 215; elevation with collision parts 90; all parts 215;
+// native point aggregate initializer 90. Original body and rotation helper retained.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

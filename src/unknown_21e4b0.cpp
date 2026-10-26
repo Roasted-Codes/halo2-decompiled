@@ -156,6 +156,8 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 187 closed allocation/checksum scope: signed extent original/listener/reset/both
 // 165/165/280/280; unsigned extent same four 165/165/280/280 (fast).
 // All restored; success/type carriers and first-channel spill remain.
+// Direct output-buffer fields: plain 279; spatial 295; both 297; submix 233;
+// plain/submix 280; spatial/submix 282; all 297; repeated effect-mixbin field 290.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

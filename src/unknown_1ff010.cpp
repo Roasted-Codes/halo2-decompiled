@@ -36,7 +36,7 @@ struct s_projectile_aim_view
 	real unknown164;
 };
 
-// score 122 (was 135): frame agrees; actor in edi and definition/projectile in esi (retail the reverse); retail
+// score 122 (was 122): frame agrees; actor in edi and definition/projectile in esi (retail the reverse); retail
 // frame and length agree; actor/definition colouring, barrel address and aim-load order remain.
 // Earlier: frame agrees; actor in edi and definition/projectile in esi (retail the reverse); retail
 // materializes the barrel pointer before reading its projectile index and loads edx before eax for the aim call.
@@ -52,6 +52,8 @@ struct s_projectile_aim_view
 // Per-use object tag 135; per-use definition entry 138 (entry registers recovered); fallback-only actor 143;
 // read-only actor 135; per-use definition plus fallback actor 154; fraction snapshots 137;
 // distance snapshots 150; all range snapshots 153.
+// Complete eligibility after actor bool/const/native 158/158/153; before actor
+// 158/158/150; eligibility after/before actor with common return 163/163.
 // @retail 0x1ffbd0
 bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	point3f const *origin, point3f const *target, bool flag, vector3f *direction,

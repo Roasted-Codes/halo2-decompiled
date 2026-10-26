@@ -239,6 +239,9 @@ bool __stdcall function_25dd30(long a, long b)
 // Earlier at 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
 // Round 229: Object lookup valid-first/conditional calls/selected index/missing-first arms
 // 309/309/310/309; with shared unit input 331/331/254/331. Original body restored.
+// Independent clearance/movement reaches: separate native lifetimes 310; point-of-computation
+// declarations 310; read-only values 310; role names 310; first home before vectors 310;
+// paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

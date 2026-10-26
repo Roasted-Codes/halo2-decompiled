@@ -3601,6 +3601,8 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 160: Rotation scale declaration orders 0/2/1 583, 1/0/2 589, 1/2/0 589, 2/0/1 586, 2/1/0 1050;
 // quaternion acquisitions w/i/j/k 538 and k/j/i/w 545; native scale-home names 535. Original quaternion
 // snapshots, expressions, helper contract and body restored.
+// Rotation output orders ikj/jik/jki/kij/kji 545/560/554/541/550;
+// uniform projection/scaled-input/cross-scale multiply operand orders 535/535/535.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

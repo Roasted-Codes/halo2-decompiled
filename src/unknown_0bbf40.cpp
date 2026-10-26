@@ -1017,6 +1017,9 @@ void function_1ced00(s_havok_component *component);
 // result declared inside the awake branch 30; inverted final test with an early return 122.
 // Awake-predicate bool/byte/char/short results 127/132/132/164; native byte/char/short/word
 // accumulators with common result exits 17/17/100/100. All restored.
+// Countdown common/separate/paired result exits 27/28/28; reused countdown predicate 43;
+// countdown activity accumulation 41; one done exit 27; positive call contributions 148;
+// positive contributions with countdown result 145. Original body retained.
 // @retail 0xbc470
 bool __stdcall function_bc470(long object_index)
 {

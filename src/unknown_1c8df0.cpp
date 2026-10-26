@@ -79,6 +79,7 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // Round 187 separate caller/provider inline/noinline declarations: preliminary query 352/170;
 // primary collision 170/170; secondary collision 170/170; all three 352/170 (fast).
 // All restored; frame 0x8c/0x94 and raw secondary-result home/common tail remain.
+// Round 161: complete scalar centers direct/staged/native point 321 each; native center plus complete offsets 329; complete scalar inputs direct/native points/staged positive 321 each; library center plus offsets 329. All added-byte forms restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

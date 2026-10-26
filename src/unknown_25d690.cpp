@@ -1343,6 +1343,10 @@ bool function_1e1de0(long arg_0);
 // Round 187 final readiness/activity/behavior/time publication orders RABT/BRAT/BART/ARBT/ABRT
 // 167/167/167/168/168; RTBA/RBTA/BTRA 167/166/166 (fast). All restored;
 // early ESI, return byte and actor/motion homes remain.
+// Round 161: category/root/observed-state producers 165/165/279; category-root/category-observed/root-observed/all 165/279/279/279; character-observed branch publication 165. All restored.
+// Final producer orders activity/readiness/behavior 165; behavior/readiness/activity 164;
+// activity/behavior/readiness 163; behavior/activity/readiness 162; readiness/behavior/activity 165;
+// activity zero at entry 265, after object lookup 251, with behavior first 268.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

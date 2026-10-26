@@ -1194,6 +1194,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 222: native query-vector field 529; field at every use 567; native query copy 578; original-query squared-length helper 529; native-query length before copy 528; all RGB first products 530; all RGB illumination terms 577; normal memcpy 578.
 // Negative selection bool/byte/short/long 534/534/567/565; with uniform live block count
 // 561/561/531/533. Original selection, count snapshot and every math/helper form restored.
+// Incoming lightmap value before normal: native/component/library copy 551/546/551;
+// after length: native/component/library copy 556/554/556;
+// reused channel scalars 555; native adjusted-value construction 551. All restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)

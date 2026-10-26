@@ -318,6 +318,9 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // trace/pivot homes remain.
 // Round 185 obstacle-facing result bool/byte/short/long 749/749/775/777; complementary result
 // 749/749/775/777 (fast). All restored; frame 0x11c/0x114 and radius/trace/pivot homes remain.
+// Rotation publication xzy/yxz/yzx/zxy/zyx 749/749/748/749/748;
+// endpoint yx alone/with yxz rotation 811/811; normalized kij publication 749.
+// One-point forms rejected; original helper stores and body restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

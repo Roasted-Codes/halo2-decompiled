@@ -114,6 +114,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 187 twice-used absolute actor slot long/dword/word/outer long with original view
 // 188/188/168/188; same four with full native actor accessor 188/188/168/188 (fast).
 // All restored; separate pool/iterator, early null and successor EBP remain.
+// Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
+// shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

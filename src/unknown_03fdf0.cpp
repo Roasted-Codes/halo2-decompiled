@@ -317,6 +317,9 @@ bool function_404b0(long mode)
 // Round 165: Two-use setup setting captured within single/third/conditional/
 // twentieth/seventh passes 226 each; all five captures 226; both actual cull-setting
 // observations once 226; all setting captures 226. Original reads and body restored.
+// Formal-address removal, pass-phase false result, entry result and entry false result
+// 226/226/226/226; removal with pass false/entry/entry false 226/226/226;
+// isolated unsigned-byte lower-bound admission 225. Original body restored.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

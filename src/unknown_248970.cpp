@@ -105,6 +105,8 @@ public:
 // child updater inline/noinline/inline-noinline/force-inline declarations 215 each.
 // Getter force-inline grows to 875 bytes and loses the child match; all declarations restored.
 // Activation bool/byte/long/inverse carriers 215/215/229/231; the same carriers with position-boundary publication 252/252/251/231. Frame 0x10/0x14 and activation/metadata/viewer/child homes remain.
+// Complete metadata native/library copies 254/254; with complete viewer point 237/237;
+// early head with native/library metadata 269/269, and with complete viewer point 237/237.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

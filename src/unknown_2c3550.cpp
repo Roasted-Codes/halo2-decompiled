@@ -609,6 +609,7 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // score 711 (was 711): Frame 0x1f88 agrees; entry completion/result/path and obstacle/search/step homes differ.
 // Earlier 711 from 735: uniform native forward obstacle indices recover the frame.
 // Frame 0x1f88 agrees; radius/pathfinding entry schedule, success-result and avoidance-workspace homes differ.
+// frame 0x1f88 agrees; result/path pointer and obstacle/search/step homes differ.
 // Short/signed byte result 740/788; long/byte inserted count 730/741; word flags 742.
 // Long inserted count has retail frame but 2965 bytes; native reverse index 770/2925 bytes; original length preserved.
 // Round 121: Byte last-step predicate 735 kept; insertion-only/all avoidance storage scopes 742/763; Boolean enable bit 740; word retry 740; bit plus retry 742; byte-last plus bit/retry/both 735/737/734. Extra one-point combination rejected.
@@ -629,6 +630,8 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Negative failure bool/byte/short/long, original entry order: 774/774/766/766;
 // negative failure with radius before pathfinding: 775/775/762/762 (fast).
 // Original success result, insertion path and five native forward indices restored.
+// Pathfinding at every use 785; one actual transform workspace 760; both 825; paired segment start/node 735;
+// paired with live pathfinding/shared scratch/both 777/763/812; complete receiver graph with word frame 810. Original source restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,

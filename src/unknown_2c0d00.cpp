@@ -1144,6 +1144,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // score 453 (was 453): Frame 0x10c and exact extent agree; radius, persistent zero and metadata/endpoint homes remain.
 // Earlier: Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
 // Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
+
+// score 469 (was 469): Frame 0x104 versus 0x10c, radius/metadata/index homes still differ.
+// Earlier: Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
+// Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
+// word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
 // output slot 469; with unsigned outer 470 (frame 0x10c); unsigned next 493.
 // frame 0x104 versus 0x10c; radius/index and metadata homes remain.
 // frame 0x104 versus 0x10c; metadata result homes recover 0x10c at 482 but radius, index and branch allocation still differ.
@@ -1160,6 +1165,10 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // 478.
 // Trace endpoint names 478; first trace at entry 478; target at entry 478;
 // outer candidate point 478; complete path-record memcpy 478.
+// direct entry 489; direct output 471.
+// native source 470; entry/output 483.
+// entry/source 485; output/source 477.
+// all three accesses 475; direct endpoints 469.
 // Target Z once/shared endpoint zero initialization 470/470; one sector-trace output 466; avoidance at entry/iteration 469/469; sector pair before attempts 469; outer direction 469; outer tangents 469.
 // Round 318, early-output-pointer body: signed-word outer 485; unsigned/native output count
 // 469/522; native attempt 470; native end/candidate/both 500/472/516;

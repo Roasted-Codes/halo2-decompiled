@@ -1634,6 +1634,7 @@ void function_b7360(long object_index);
 // 526/466/519/474/515/468/518; native-width outcomes in all three cases 518. Selection-only short result
 // 466 plain (kept), without a shared function exit. Validity initialized before selection 536; native selection
 // outcome 466; both 536; selection outcome begun after dispatch 467. Entry carriers and rounding homes remain.
+// Round 161: movement/selection/recording completion 533/528/529; paired movement-selection/movement-recording/selection-recording 524/523/533; all outcome completion 528; orientation branch store 525. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
