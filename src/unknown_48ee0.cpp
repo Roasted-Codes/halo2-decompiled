@@ -44,6 +44,8 @@ extern real g_4c9798[36];
 // signed-byte mode 331.
 // Direction/origin/both value snapshots 376/329/411; far output dot 311;
 // point component loops 303; normal loop 295; plane scaling loops 295; combined loops 300.
+// Native width/height/both result arms 295/295/295; shared sizing predicate 331;
+// height limit first 303; complete mode result 295; initial projection/opposite loops 295/295.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {

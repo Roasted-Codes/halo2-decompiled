@@ -703,20 +703,21 @@ struct s_85650
  s_sender *field_0c[15];
 };
 
-// score 112 (was 116): the frame is four bytes smaller than retail's
+// score 141 (was 141): Frame 0x24 versus 0x28 and distribution/owner/child/callback homes remain.
+// Earlier: the frame is four bytes smaller than retail's
 // (sub esp,0x24 against sub esp,0x28), so every stack slot sits at another
 // offset and the record pointer is kept in EBP here and in EDX in retail.
-// score 100 (was 112): frame 0x24 and owner/child/callback homes still differ.
+// Earlier: frame 0x24 and owner/child/callback homes still differ.
 // Child ordinary inline 112; aggregate result 112; child result 112;
 // five child formal orders 112; wide active with both-arm count 100;
 // wide active with both-arm count and fresh sender 124.
-// score 100 (was 100): frame 0x24 versus 0x28 and owner/child/callback homes remain.
+// Earlier: frame 0x24 versus 0x28 and owner/child/callback homes remain.
 // Owner mask value 100; peers address 100; distribution/channel references 100/100;
 // entry type value 100; callback address at publication 100; mask plus peers 100; mask plus fresh child 124.
 // Frame 0x24 versus 0x28 and owner/child/callback homes still differ.
 // Child slot before total/count 106/142; request/tail/both sender clears 139/139/143;
 // world-state value 100; short child ordinal 125; child slot plus clears 143.
-// score 100 (was 100): frame and owner/child/callback homes remain; published child/total/count field references 142 each;
+// Earlier: frame and owner/child/callback homes remain; published child/total/count field references 142 each;
 // ordinal field reference 100; initialized type/client/both arrays 133/133/150; active byte 99 (below gate).
 // frame 24 versus 28 and child/distribution/callback homes remain; first aggregate
 // storage 145; storage plus fresh child 115; published-child query 100; immutable child count 100;
@@ -725,14 +726,15 @@ struct s_85650
 // frame and owner/child/callback homes still differ.
 // Child count-first 128; completed total 128; aggregate/child references 100/100;
 // storage/sender references 100/100; connection/owner references 100/100.
-// score 100 (was 100): Frame 24/28 and child/distribution/callback homes remain; count predicate/empty
+// Earlier: Frame 24/28 and child/distribution/callback homes remain; count predicate/empty
 // arm 100/100; sender/baseline zero chains 100/100; array-wise clears 104; sequence value 100; sender
 // scope/owner boundary 100/100.
-// score 141 (was 154): frame 0x24 against 0x28 (the distribution spill reuses the channel index's
+// Earlier: frame 0x24 against 0x28 (the distribution spill reuses the channel index's
 // home) and the callback is taken from the initializer's eax where retail keeps it in ebp; retail
 // also passes `active` as a 32-bit 0/1. Count defaulted before the type test 151; bool active 144;
 // both 141 (kept); active as a direct argument 141; active cleared in an if 138 (flag form);
 // active through a state local 141; distribution declared after the storage 142.
+// Signed-byte/short/word active 148/152/152; bool/byte/short/word/dword count 142/142/145/145/141. Original count and active types restored.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {

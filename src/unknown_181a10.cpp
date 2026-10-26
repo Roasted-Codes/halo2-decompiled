@@ -536,6 +536,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Separate root guards 321; exclusion equality first 324; direct key-clamp test 321;
 // publication/validity rejection guards 321/321; readonly instance transform 321;
 // immutable material receiver/short material output before plane 321/321. Original body restored.
+// Scalar origin Z/Y/X, hit Y/X/Z and both producer orders 321/321/321;
+// side before normal publication 324; immutable normal 321, with late publication 324;
+// encoded field at uses 358; consistent readonly second-node/root contract 321.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

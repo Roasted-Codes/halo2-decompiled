@@ -81,6 +81,7 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // weighted axis/cross/both/input vectors 431/427/420/423; all restored;
 // matched sibling and both matched callees preserved throughout.
 // Earlier: frame 0x2c agrees; early J load and magnitude/angle homes still differ.
+// frame 0x2c agrees; early J load and magnitude/angle homes still differ.
 // Complete input for length 497; input for normalization 496; point input 419; both inputs 513;
 // immutable one/both magnitudes 389/389; earlier length publication 396; immutable rotation outputs 389.
 // Widened first/point/both numeric returns 407/410/412; widened optional
@@ -89,6 +90,7 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // First-return widening loses the matched sibling to 45; all helper contracts
 // and normalization order restored. Early J and magnitude/yaw homes remain.
 // Earlier: early J preload and shared magnitude/yaw home remain. Fast trials: vector
+// early J preload and shared magnitude/yaw home remain. Fast trials: vector
 // input/output split 389; first external vector input 441; second external vector input 410; both
 // external vector inputs 452; point input/output split 389; both normalizer splits 389; both splits
 // and first external input 441; both splits and both external inputs 452. All restored.
@@ -96,6 +98,9 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // Vector/point/both squared-length arguments 389 each; rotation alignment 389;
 // cosine remainder 389; both projection parts 389; clamp parameter result 391;
 // squared argument plus clamp parameter 391. Original expressions and helper contracts restored.
+// Shared normalizer scale 399; common result 398; early length publication 409;
+// nonnegative vector/point/both magnitude tests 382/399/352, shared scale with
+// nonnegative vector/point 362/390. Vector-test forms lose the matched sibling; all restored.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)
