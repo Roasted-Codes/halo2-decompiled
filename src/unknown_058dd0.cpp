@@ -1299,6 +1299,10 @@ static __forceinline long function_72458(s_surface_description *arg_0)
 // Member at each use 165; member before session root 9; common limit result 190;
 // retained width/minimum results 99/162; typed variant storage/native record copy 9/9;
 // typed storage with helper classification 128. Frame and first +0xe remain unchanged.
+// helper classification with fallback noinline 128; without the barrier 145;
+// fallback noinline alone 9; immutable member 9; member after collection 10;
+// immutable variant 9; immutable summary 9; immutable values 9;
+// immutable type 9; unsigned type 9.
 // @retail 0x72330
 void function_72330(c_session_state_matchmaking *state)
 {

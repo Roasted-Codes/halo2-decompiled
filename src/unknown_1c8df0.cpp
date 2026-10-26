@@ -71,6 +71,9 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
 
 // Round 151: Retained ray 192; with native side/mode/both 192/191/191; Boolean primary with ray/side/mode/both 186/186/185/185.
+// Round 127: normalized side snapshot 275; third-probe axis receiver 177; both 273; collision at
+// entry with side/axis/both 275/177/273; both with short category 288 or Boolean primary 261.
+// Calibrated with magnitude 24590; all restored. Frame 0x8c and secondary-result tail remain.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

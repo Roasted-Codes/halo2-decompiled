@@ -824,7 +824,8 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 308 (was 308): frame agrees; byte flag clear, child carriers and selective inlining differ.
+// score 308 (was 308): Frame 0x60 agrees; early result zero, byte flag clear, location transport and selective child-tag expansion remain.
+// Earlier: frame agrees; byte flag clear, child carriers and selective inlining differ.
 // Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
 // perpendicular call 394; inline depth one 394, zero 517.
 // Earlier context: frame 0x64 versus 0x60; flag clear and selective calls differ.
@@ -840,8 +841,18 @@ public:
 // Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
 // child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
 // Original entry result, ordinary pooled flags and all child calls restored.
+// Native flag bytes 382; flag-stage result 378; native flag overlay 382;
+// Overlay with flag-stage result 378; named byte transfer 411; transfer/result 411;
+// byte flags with ordinal observations 388; overlay/ordinal/result 384.
+// All native byte layouts lose five matched controls; original word flags retained.
 // Flag-stage long result/native bitfield transfer/direct visibility and combinations
 // 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
+// native-definition 308; shared-velocity-address 308.
+// native-definition-shared-velocity-address 308; readonly-particle 308.
+// native-definition-readonly-particle 308; shared-velocity-address-readonly-particle 308.
+// native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
+// Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
+// canonical results 374/374/308/375 on the recovered frame. Original body restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

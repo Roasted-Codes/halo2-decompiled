@@ -372,13 +372,28 @@ struct s_1f8a70_actor
 // Earlier 399 (was 399): Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
 
 // Earlier 399 (was 399): Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
+// Frame 0x80 agrees; pool/data entry schedule, protected unit-mode boundary and result/route homes remain.
+// Earlier: Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
+// Earlier at 399 (was 399): frame 0x80 agrees; pool/data entry order, unit-mode boundary and result/route homes remain.
+// Earlier forms and observations:
+// frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
+// Previous forms at 399 (was 399): Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
 // Earlier: frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
+// Frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
+// Earlier: frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
+// Returned immediate/arrival/mode tests 437/437/450; pairs 441/432/458;
+// all tests 439; initial decision ladder 436. All restored.
+// frame 0x80 agrees; pool/data entry order, unit-mode boundary and result/route homes remain.
+// Earlier forms and observations:
+// frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
 // pool/data load schedule, unit-mode call and result/route homes differ;
 // fast control 415; signed-char result 425; entry workspaces 415; common target query 440;
 // shared cases four/five 448; position-owner local 415.
+// frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
+// Earlier: frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
+// Earlier: frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
+// Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
 // Earlier score 408 (was 418): frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
-// frame 0x80 agrees; pool/data entry order, unit-mode boundary and result/route homes remain.
-// Earlier forms and observations:
 // frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
 // frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
 // Earlier: frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
@@ -396,6 +411,8 @@ struct s_1f8a70_actor
 // reference/query case layout still differs at the shared route tail.
 // Destination orders 234675 437; 235674 440; 452367 419; 243567 418;
 // 234657 412; 235746 453; 456723 415; 246357 433. Opening case order retained.
+// Entry parameter-only path conversion, uninitialized unit-mode/route homes and their four
+// combinations each 399; complete entry/reference/root/position declaration homes 399.
 // Destination receiver at switch/entry/unit boundary/route phase 435/396/396/412;
 // node/radius receiver 399/399; all three receivers at switch/route 435/412.
 // Both three-point gains rejected; all executable forms restored.
@@ -413,6 +430,11 @@ struct s_1f8a70_actor
 // restored; pool/data entry and protected unit-mode/result homes remain.
 // Character-index/destination-mode/root-override field references, singly and in all combinations, 399 each;
 // existing actor query consistently at every use 787. All restored.
+// Request/location/reference receivers 449/399/449/450/449/450/449; route-only request 449 (fast).
+// Original complete body restored; pool/data entry and protected unit-mode/result storage remain.
+// Movement flags byte/dword/long 396/399/399; state const pointer/reference 399/399;
+// state reference with flags byte/dword/long 396/399/399; long result/long route/both on byte flags
+// and state reference 421/410/427. Three-point reductions rejected; all restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

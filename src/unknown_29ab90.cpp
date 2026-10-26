@@ -63,6 +63,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Earlier 428 (was 434): Frame 0x5c versus 0x64, input convention and x87 homes remain.
 // Earlier score 434 (was 434): frame 0x5c versus 0x64, input registers and x87 lifetimes differ;
 // Frame 0x5c versus 0x64, input convention and x87 homes remain.
+// frame 0x5c versus 0x64, input convention and x87 homes remain.
+// Earlier: Frame 0x5c versus 0x64, input convention and x87 homes remain.
+// Frame 0x5c versus 0x64, input convention and x87 homes remain.
 // Earlier 434 from 434: frame 0x5c versus 0x64, input registers and x87 lifetimes differ;
 // double input components 437; scalar component parameters 469; double product lifetimes 437; repeated field access 434; size optimization 802.
 // Degenerate normal first 434; independent speed components 434; initial/requested/output memcpy 434/434/434;
@@ -76,8 +79,16 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // once for all six original uses; original arithmetic grouping, source vectors, stores, helpers and
 // call arguments remain unchanged.
 // Two-use stored/minimum/acceleration scalars and combinations 428/429/429/429/429/430/430; native velocity value 454.
+// Existing native object getter/record with native actor, read-only binding
+// and early velocity field lifetimes: eight forms all 428. Opening body and
+// private math helpers restored; frame/input and x87 homes remain.
 // DL134: unrounded magnitude/planar/both root boundaries 428/433/433; real sign 432;
 // named correction root/term 428/428; scale output return 428; ordered clamp returns 428.
+// Native real component inputs: magnitude memory/math order 472/472; planar memory/math
+// order 428/428; both memory/math order 472/472; crossed declaration orders 472/472.
+// Native coordinate-array magnitude/normalizer/both/scale/all interfaces 428 each;
+// array normalizer with planar transfers 447; array normalizer plus planar names 428;
+// both arrays, native transfers and planar names 447.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

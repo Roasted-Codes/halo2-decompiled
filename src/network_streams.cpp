@@ -623,7 +623,8 @@ void c_network_reliable_stream::mark_received(long sequence)
 	}
 }
 
-// score 7 (was 81): the first lookup's pointer is in EAX (retail EDX), the flags OR is done in
+// score 7 (was 7): Frame 0x14 agrees; initial message EAX/EDX, copy-before-OR and final delivery branch remain.
+// the first lookup's pointer is in EAX (retail EDX), the flags OR is done in
 // place and copied (retail copies, then ORs: mov eax, edx; or eax, 1), and the last delivery
 // test branches to the skip arm (retail jumps to the delivery arm). Kept: the bit index as a
 // named base minus current (retail's unfolded lea/sub start; every spelling of
@@ -646,6 +647,8 @@ void c_network_reliable_stream::mark_received(long sequence)
 // alone/with skips 105/105/105.
 // Actual time operand 142; two-use elapsed 84; later type with actual time/reused elapsed 148/121;
 // original flag type alone/with time 113/143; native type byte with time 142; direct publication/time 143.
+// Read-only first message, fixed first/loop/both pointers, live original flags, live flags with fixed pointers, immutable flag stages and retained-value names all 7.
+// Full-width original signed/unsigned 8/8; both signed/unsigned 9/8; separate flag copy/update 7; one word/dword flags value 68/69; named repeated predicate 7.
 // @retail 0x96910
 long c_network_reliable_stream::function_96910(long sequence, long bit_count, dword const *bits, bool complete)
 {

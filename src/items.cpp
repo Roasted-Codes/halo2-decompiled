@@ -967,7 +967,7 @@ struct s_item_flags_view_10b850
     byte flag7 : 1;
 };
 
-// score 813 (was 821): Frame 0x154 versus 0x12c and Boolean/vector homes remain.
+// score 813 (was 813): Frame 0x154 versus 0x12c and Boolean/vector homes remain.
 // frame 0x154 versus 0x12c; direction workspace 861;
 // frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
@@ -991,6 +991,9 @@ struct s_item_flags_view_10b850
 // Rotation helper explicit axis 853; explicit trigonometric inputs 893; all rotation inputs 892;
 // native reference output 821; output return 821; ordinary rotation inline 1926.
 // Frame/Boolean/native workspace homes remain; original body and every helper restored.
+// Round 126: Native dot/scaled-add pointer inputs 813/813; complete rotation outputs 813 at retail length;
+// component cross-result fill 813; ordinary dot inline 813; reused geometry predicate 858; reused contact
+// kind 878; all velocity copies by memcpy 813 (fast); all restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

@@ -243,9 +243,12 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 174 (was 174): Frame 0x1c versus 0x20, input registers, range classification and final selector expansion remain.
+// score 174 (was 174): Frame/input carriers, range lowering and selective selector expansion remain; caller preserved.
+// Earlier 174 (was 174): Frame/input registers and selective selector expansion remain.
+// Frame 0x1c versus 0x20, input registers, range classification and final selector expansion remain.
 // Earlier 174 (was 174): Frame/input registers and final selector expansion still differ; eight new reader trials restored.
 // Frame/input registers and selective selector expansion remain.
+// Frame 0x1c versus 0x20, input registers, range classification and final selector expansion remain.
 // Earlier: Frame/input registers and final selector expansion still differ; eight new reader trials restored.
 // Earlier: frame/input registers, range-header lowering and final selector expansion still differ.
 // frame 0x1c versus 0x20, input registers and final
@@ -288,6 +291,10 @@ public:
 // 174/174/174; native typed origin 154 (541 bytes), with const receiver 154, both held
 // for caller 308 -> 369 and frame 0x2c. Native origin component/member producers
 // 182/182; coherent location front/middle on component producer 182/182. All restored.
+// Round 186: Method inline current/direct 174/174, shared range/both 177/177 (caller 369); method force-inline current/direct 174/174, shared range/both 177/177 (caller 960). All declarations and bodies restored.
+// Lower-preserving, upper-preserving and explicit two-arm range results, both reader orders, 174 each;
+// single shared accumulated-maximum conditionals, both reader orders, 174 each. Direct selected-branch
+// updates 169/169 rejected for duplicate update code. Original shared reduction restored.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

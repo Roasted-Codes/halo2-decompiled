@@ -73,6 +73,11 @@ bool function_b9d20(long arg_0);
 // identically and was dropped.
 // Round 157: Iterator/location/both native home names 94/94/94; entry location/iterator/both lifetimes
 // 94/94/94; admitted datum scope with inherited iterator read 94; complete iterator initialization 94.
+// Earlier 94 (was 106). Native two-use object index; completed update/release continues;
+// object/exit combinations and repeated cluster index: eight forms 94, all 486/486.
+// Coupled occupancy while 117; high-water per use 94; bitmap per use 94;
+// coupled/high-water 133; coupled/bitmap 117; both fields per use 94;
+// coupled/both fields 133; iterator ordinal published before datum 94.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
 {

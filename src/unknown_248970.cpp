@@ -49,7 +49,8 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 215 (was 215): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
+// score 215 (was 215): Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata/viewer/child homes differ.
+// Earlier: Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
 // Frame 0x10/0x14, stacked activation versus AL and metadata/viewer/child homes remain.
 // Earlier 221 (was 221): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
 // Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata, viewer and child homes differ.
@@ -85,6 +86,16 @@ public:
 // alone/with live pool 215/215.
 // Round 157: Outcome-arm activation publication, active byte/bool 220/220; with early head 219/219;
 // inactive byte/bool 224/224; with early head 223/223.
+// Double coordinate orders xzy/yxz/yzx/zxy/zyx 217/217/218/218/217;
+// coordinate declarations before viewer 215; complete scalar phase declared first 215;
+// coordinate declarations at activation scope 215.
+// Native Boolean activation destination, published gate, live child count and both 215/251/247/265;
+// the same four with read-only metadata 215/251/247/265. Boolean published gate with one actual
+// location-parameter-slot read 232 (exact-only, reverted).
+// override-receiver 215; head-link 215.
+// override-receiver-head-link 215; tail-link 215.
+// override-receiver-tail-link 215; head-link-tail-link 215.
+// override-receiver-head-link-tail-link 215; links-before-index-helper 215.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

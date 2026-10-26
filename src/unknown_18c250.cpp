@@ -566,6 +566,8 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // object property base reread 560; const retained tag bytes 293.
 // Cases zero/three/two 293, two/zero/three 296, three/zero/two 293;
 // direct effect/impact flag masks 345; final native flag mask 300.
+// Round 214: direct selected cluster 312; unsigned category mask 293; nested tag/audibility guards 293; conditional final flag 297; force-inline header lookup 293.
+// External datum reference 293; late three-query handle 317; marker position setter 303; complete kind if/else chain 322; readonly object properties 293 (fast); all restored.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
