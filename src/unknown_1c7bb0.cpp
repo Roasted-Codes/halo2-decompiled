@@ -45,7 +45,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 
-// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator storage, early null publication and successor EBP remain.
+// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null publication and saved successor EBP remain.
+// Frame 0x28 agrees; separate pool/iterator storage, early null publication and successor EBP remain.
 // Earlier 164 (was 164): frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
 // null-result timing and actor-successor residency remain. Inactive early exit
 // 164; native flag mask 164; successful inner-update continue 164; pointer-result
@@ -77,6 +78,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 112: Typed squad result 164; native record-step call 252; shared datum step expanded 267;
 // active-aware shared step 240; native datum initialization 252.
 // Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
+// Round 123: Native force-inline member 164; member pointer result 164; ordinary inline member 281; current-handle for 190; force-inline member with current-handle for 190.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
