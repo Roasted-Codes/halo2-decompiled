@@ -361,6 +361,21 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
     return pixel;
 }
 
+// score 615 (was 615): Frame 0xac agrees; definition/output carriers, endpoint placement and color/vector homes remain.
+// Tried definition first 620; paired vertex store order 636; zero color record
+// 626; shared position setters 621; second output element 640; single result exit 631; plain point chain for
+// 620; color factor result 626; shared cross products 615; shared direction difference 620; native vector
+// role homes 620; native point initialization 623; loop vertex store order 620; shared geometry helpers 615;
+// shared cross position setters 617; shared cross zero color 622.
+// Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
+// Advancing output cursor 664; segment/camera-delta/plus-minus point names 615/615/615; second
+// position copied from first 629; byte state flags 615; true result and one exit 647.
+// Paired displacement loop 615; side scaling loop 615; normal scaling loops 615; RGB tint loop 615; planar geometry cases first 615.
+// Width-path result 626; scale override 622; unsigned point handle 615; final endpoint base 634; two-use packed pixel 615.
+// score 615 (was 615): round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
+// score 615 (was 615): round 108: definition/output carriers, endpoint placement and color/vector homes remain.
+// Persistent workspaces 620; fused color-component loop 643; shared geometry neighbor 620;
+// half-width before tint 620; valid-state-first arms 616.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {
@@ -498,9 +513,7 @@ bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_
                 direction.i = previous ? point->position.x - neighbor->position.x : neighbor->position.x - point->position.x;
                 direction.j = previous ? point->position.y - neighbor->position.y : neighbor->position.y - point->position.y;
                 direction.k = previous ? point->position.z - neighbor->position.z : neighbor->position.z - point->position.z;
-                side.i = direction.k * view.j - direction.j * view.k;
-                side.j = direction.i * view.k - direction.k * view.i;
-                side.k = direction.j * view.i - direction.i * view.j;
+                cross3f(&view, &direction, &side);
                 real length = (real)sqrt(side.k * side.k + side.j * side.j + side.i * side.i);
                 if (!(fabs(length) < 0.0001f))
                 {
@@ -512,9 +525,7 @@ bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_
                 first.z += side.k * half_width; second.z -= side.k * half_width;
                 if (input->normal)
                 {
-                    normal.i = side.k * direction.j - side.j * direction.k;
-                    normal.j = side.i * direction.k - side.k * direction.i;
-                    normal.k = side.j * direction.i - side.i * direction.j;
+                    cross3f(&direction, &side, &normal);
                     length = (real)sqrt(normal.k * normal.k + normal.j * normal.j + normal.i * normal.i);
                     if (!(fabs(length) < 0.0001f))
                     {

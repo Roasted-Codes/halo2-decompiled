@@ -456,6 +456,8 @@ void function_1cf50(void);
 // Current stride agrees; the hoisted zero, callee convention and color/draw
 // scheduling differ. Record view, byte-channel locals, material/color results,
 // block-pool/byte-offset lifetimes and typed-record for 100; byte bitmap 98.
+// score 100 (was 100): BLOCKED-BY 0x144f0, which retail calls with the tag, stage and index in
+// EAX/ECX/EBX and three pushes (ours four pushes and the priority in XMM2, zero held in EBX).
 // @retail 0x44040
 void __stdcall function_44040(long cell, short mask)
 {
@@ -1294,6 +1296,18 @@ long function_4c450(long object_index, real distance, real const *definition, re
 short function_4bcc0(byte *output, long object_index, real distance, long override,
     bool *cached, bool force, signed char *level);
 
+// score 43 (was 43): count/current EDI and wanted ESI replace retail ESI/EDI;
+// default count and selector scheduling remain. Native definition/library clear/both 43/43/43;
+// defaults first 99; default pointers 54; native level/result 83/100; typed default pointers 54.
+// Cache/selector inline, outline and combined call contracts: six further trials at 43.
+// Entry inline/stdcall/cdecl 43/43/44; byte return 43; final false/true exits 64;
+// fallback failure exit 100; both failure exits 119; inline final exits 64.
+// early EDI save, count/current EDI and wanted ESI remain.
+// Pointer order/role name, entry result, count first/library clear, signed workspace all 43;
+// direct level 83; unused formal addresses 43; count/variant names 43/43;
+// twice-used source count 43; source count with direct level 83.
+// Native word buffer 43; default tag scope with byte/word data 98/98; native word clear 43;
+// actual object fields with byte/word data 43/43; initial-selection result alone/with fields 43/43.
 // @retail 0x4c190
 bool function_4c190(long *count, long object_index, bool defaults, long tag,
     short *level, signed char fallback_level, signed char *sections, bool *fallback)

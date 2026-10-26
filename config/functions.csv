@@ -873,7 +873,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 0005f360,69,game,speed,a16 pad,,,0005f670,src/unknown_059ad0.cpp,matched
 0005f3b0,4,game,speed,a16 pad,,,,src/unknown_059ad0.cpp,matched
 0005f3c0,181,game,speed,a16 pad,,,00058d90,src/unknown_059ad0.cpp,matched
-0005f480,306,game,speed,a16 pad,,,00062b40 00075e80,src/unknown_059ad0.cpp,todo
+0005f480,306,game,speed,a16 pad,,,00062b40 00075e80,src/unknown_059ad0.cpp,matched
 0005f5c0,54,game,speed,a16 pad,,,,src/unknown_059ad0.cpp,matched
 0005f600,100,game,speed,a16 pad,,,0005f670 00075ce0,src/unknown_059ad0.cpp,matched
 0005f670,43,game,speed,a16 pad,,,,src/network_session_channel.cpp,matched
@@ -1428,7 +1428,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 0007f190,200,game,speed,a16 pad ebp,,,00320890,src/unknown_07f190.cpp,matched
 0007f260,60,game,speed,a16 pad,,,00075af0 003314b0,src/unknown_07f190.cpp,matched
 0007f2a0,361,game,speed,a16 pad,,,00075af0 00075c80 0007f410 00320890 003314b0,src/unknown_07f190.cpp,matched
-0007f410,412,game,speed,a16 pad,,,00075af0 0007a740 0007f190 0007f410,src/unknown_07f190.cpp,todo
+0007f410,412,game,speed,a16 pad,,,00075af0 0007a740 0007f190 0007f410,src/unknown_07f190.cpp,matched
 0007f5b0,175,game,speed,a16 pad,,,0019fd00 001a0180 003207ed,src/unknown_07f720.cpp,matched
 0007f660,192,game,speed,a16 pad,,,0007f5b0 003207ed 00320870 00320e1a,src/unknown_07f720.cpp,matched
 0007f720,111,game,unknown,a16,,,,src/unknown_07f720.cpp,matched
@@ -1907,7 +1907,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 000976d0,19,game,unknown,a16,,,000976f0,src/unknown_096e90.cpp,matched
 000976f0,320,game,speed,a16 pad,,,00089e70,src/unknown_096e90.cpp,matched
 00097830,370,game,unknown,a16,,,0006a3b0,src/unknown_096e90.cpp,matched
-000979b0,59,game,speed,a16 pad,,,000699a0 00082a40,src/unknown_096e90.cpp,near
+000979b0,59,game,speed,a16 pad,,,000699a0 00082a40,src/unknown_096e90.cpp,matched
 000979f0,64,game,speed,a16 pad,,,,src/unknown_096e90.cpp,todo
 00097a30,52,game,unknown,a16,,,,src/unknown_096e90.cpp,matched
 00097a70,6,game,speed,a16 pad,,,,src/unknown_096e90.cpp,matched
@@ -4310,7 +4310,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 001396c7,611,game,size,ebp packed,,,0002b460 00030710 00030bf0 00142570 0014ddc0 0014de70 00155760 0016f3a0,src/unknown_1396c7.cpp,todo
 0013992a,1830,game,size,packed,,,000c53c0 000c8860 000cb430 000cbd50 000cbe60 000cdff0 000ce020 000cfe40 00100f70 00138820 0013afa9 0013b164 0013fac0 0014de70 0015dea0 0015eaf0 0015eb20 0015f3a0 0015fef0 00162fd0 0022bfc0 0022bff0,src/unknown_13992a.cpp,todo
 0013a050,886,game,unknown,a16 ebp,,,0022acb4,src/unknown_139296.cpp,todo
-0013a3c6,364,game,size,ebp packed,,,0013a050 0013ac87 0013ad48 0022a9bc 0022af8d 0022b7dd,src/unknown_139296.cpp,todo
+0013a3c6,364,game,size,ebp packed,,,0013a050 0013ac87 0013ad48 0022a9bc 0022af8d 0022b7dd,src/unknown_139296.cpp,near
 0013a532,350,game,size,ebp packed,,,0013a050 0013ac87 0013ad48 0022aa16 0022aff1 0022b8e2,src/unknown_139296.cpp,matched
 0013a690,88,game,unknown,a16,,,00016a90,src/unknown_139296.cpp,matched
 0013a6e8,56,game,size,packed,,,,src/unknown_139296.cpp,matched
@@ -4835,7 +4835,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00159250,517,game,speed,a16 pad,,,00030710 000b8d30 0015e530 0022d2b7 003207ed,src/unknown_157450.cpp,matched
 00159460,358,game,speed,a16 pad,,,001587f0 00161e60 0019f240,src/unknown_157450.cpp,matched
 001595d0,55,game,speed,a16 pad,,,,src/unknown_157450.cpp,matched
-00159610,118,game,speed,a16 pad,,,,src/unknown_157450.cpp,todo
+00159610,118,game,speed,a16 pad,,,,src/unknown_157450.cpp,matched
 00159690,484,game,speed,a16 pad,,,000baf80 00372d48,src/unknown_157450.cpp,matched
 00159880,565,game,speed,a16 pad,,,00036580 00036880 00159250 00159690 00161420 0019f300 00372d48,src/unknown_157450.cpp,near
 00159ac0,629,game,speed,a16 pad,,,000b8540 000b9b90 000baeb0 00100f00 00161cd0,src/unknown_157450.cpp,matched
@@ -5012,7 +5012,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00166d62,19,game,size,packed,,,00166cd1,src/unknown_165ce5.cpp,matched
 00166d75,2199,game,size,ebp packed,,,00024590 000259d0 000b6760 000b6780 000bff60 000c8a10 000d03b0 0011eed0 0013cb40 001469f0 00155760 00166561 0016674e 00166992 00166c39 0016760c 00168311 0016840e 00187420 00187a40 001c63f0 001c6560 001c6ea0 001cb520 001cb5b0 001cb710 001cc260 001cd4e0 001d9320 00373b6a,src/unknown_165ce5.cpp,todo
 0016760c,2170,game,size,ebp packed,,,000b6760 000b6780 000bd970 00100b40 001416c0 00167e86 0016898b 001c62f0 001c6440 001c6560 001c6f60 001c7100 001cb490 001cbd30 001cbd50 001cbd80 001cc2b0 001cd590 001d9240 001d9370,src/unknown_165ce5.cpp,todo
-00167e86,1065,game,size,ebp packed,,,000cbd50 00166561 00166992 00168311 0016834a 0016840e 0016898b 001c63f0 001cb0d0 001cb520 001cb9d0 001cbdb0 001cbde0 001cc2d0 001dd490,src/unknown_165ce5.cpp,todo
+00167e86,1065,game,size,ebp packed,,,000cbd50 00166561 00166992 00168311 0016834a 0016840e 0016898b 001c63f0 001cb0d0 001cb520 001cb9d0 001cbdb0 001cbde0 001cc2d0 001dd490,src/unknown_165ce5.cpp,matched
 001682af,16,game,size,packed,,,001682bf,src/unknown_165ce5.cpp,matched
 001682bf,82,game,size,packed,,,00167e86 00168311,src/unknown_1682bf.cpp,matched
 00168311,57,game,size,packed,,,,src/unknown_165ce5.cpp,matched
@@ -5446,13 +5446,13 @@ va,size,owner,style,evidence,name,object,calls,source,status
 0018ae50,36,game,unknown,a16,,,,src/unknown_18a2f0.cpp,matched
 0018ae80,3327,game,speed,a16 pad,,,0014b240 0016b840 0018d730,src/sound_looping_paths.cpp,todo
 0018bb80,1033,game,speed,a16 pad,,,00126660 00189fe0 0018ab70 0018ae80 0018dc90,src/sound_looping_paths.cpp,todo
-0018bf90,194,game,speed,a16 pad,,,000badc0 0018c720 0020b3c0,src/unknown_18c250.cpp,todo
+0018bf90,194,game,speed,a16 pad,,,000badc0 0018c720 0020b3c0,src/unknown_18c250.cpp,matched
 0018c060,486,game,speed,a16 pad,,,000b9d20 000ba300 000badc0 001272c0 00127400 0016ba40 0018a7b0 0018bb80 0018bf90 0018cb10 0018d1c0 0021d390 00225b60,src/unknown_18c060.cpp,todo
 0018c250,346,game,speed,a16 pad,,,0018c3b0,src/unknown_18c250.cpp,todo
 0018c3b0,636,game,speed,a16 pad,,,000b8bd0 000b9ce0 000ba1d0 000ba300 000badc0 0011b930 0011bed0 00125360 00142570 00188dd0 0018d4b0 00221810 00249e20 00249e60,src/unknown_18c250.cpp,todo
 0018c630,104,game,speed,a16 pad,,,000badc0 0012de70 00221810,src/unknown_18c250.cpp,matched
-0018c6a0,116,game,speed,a16 pad,,,000badc0 0018c720,src/unknown_18c250.cpp,todo
-0018c720,233,game,speed,a16 pad,,,0012de70 0018c9b0 0018ca20 00218e50 00221810,src/unknown_18c250.cpp,todo
+0018c6a0,116,game,speed,a16 pad,,,000badc0 0018c720,src/unknown_18c250.cpp,matched
+0018c720,233,game,speed,a16 pad,,,0012de70 0018c9b0 0018ca20 00218e50 00221810,src/unknown_18c250.cpp,matched
 0018c810,163,game,speed,a16 pad,,,,src/unknown_18c810.cpp,matched
 0018c8c0,71,game,speed,a16 pad,,,000badc0 000d0dc0,src/unknown_18c810.cpp,matched
 0018c910,73,game,speed,a16 pad,,,0018c8c0,src/unknown_18c810.cpp,matched
@@ -6275,7 +6275,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 001b3820,89,game,speed,a16 pad,,,001b3590 00267770,src/unknown_1b3590.cpp,matched
 001b3880,352,game,speed,a16 pad,,,001fb7e0 00210850,src/unknown_1b3590.cpp,matched
 001b39e0,151,game,unknown,a16,,,0025d690,src/unknown_1b3590.cpp,matched
-001b3a80,471,game,speed,a16 pad,,,0020ba60 0025d690 0026c2d0,src/unknown_1b3590.cpp,todo
+001b3a80,471,game,speed,a16 pad,,,0020ba60 0025d690 0026c2d0,src/unknown_1b3590.cpp,near
 001b3c60,445,game,speed,a16 pad,,,001f4280 001fb7e0 00210850,src/actor_behavior.cpp,matched
 001b3e20,123,game,speed,a16 pad,,,001a79e0,src/unknown_1b3590.cpp,matched
 001b3ea0,55,game,speed,a16 pad,,,,src/unknown_1b3590.cpp,matched
@@ -7330,9 +7330,9 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00201df0,173,game,speed,a16 pad,,,00203360,src/unknown_2003a0.cpp,todo
 00201ea0,1122,game,speed,a16 pad,,,0011bed0 001e11b0 001e12b0 001e13f0 00202310 00203bf0 00203cc0 00204ec0 00205010 00210850,src/unknown_2003a0.cpp,todo
 00202310,92,game,speed,a16 pad,,,001e12b0,src/unknown_2003a0.cpp,matched
-00202370,169,game,speed,a16 pad,,,00202420,src/unknown_2003a0.cpp,todo
+00202370,169,game,speed,a16 pad,,,00202420,src/unknown_2003a0.cpp,matched
 00202420,158,game,speed,a16 pad,,,00202420,src/unknown_2003a0.cpp,matched
-002024c0,169,game,speed,a16 pad,,,00202570,src/unknown_2003a0.cpp,todo
+002024c0,169,game,speed,a16 pad,,,00202570,src/unknown_2003a0.cpp,matched
 00202570,421,game,speed,a16 pad,,,00202570,src/unknown_2003a0.cpp,matched
 00202720,725,game,speed,a16 pad,,,00202a00 00202be0,src/unknown_2003a0.cpp,todo
 00202a00,476,game,speed,a16 pad,,,00202a00 00202be0 00202e30 002093d0 0020ba60 00290cd0,src/unknown_2003a0.cpp,todo
@@ -7849,7 +7849,7 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00222cb0,198,game,speed,a16 pad,,,,src/unknown_2229d0.cpp,matched
 00222d80,265,game,speed,a16 pad,,,,src/unknown_2229d0.cpp,matched
 00222e90,495,game,speed,a16 pad,,,0013b390,src/unknown_2229d0.cpp,matched
-00223080,441,game,speed,a16 pad,,,0002c490 0002f600 0002f640 0002f6b0 0002f800 0003f450 0014a250,src/unknown_223080.cpp,todo
+00223080,441,game,speed,a16 pad,,,0002c490 0002f600 0002f640 0002f6b0 0002f800 0003f450 0014a250,src/unknown_223080.cpp,near
 00223240,92,game,speed,a16 pad,,,00013f10 00068290 0012b2e0 002232a0 002234e0,src/unknown_223240.cpp,matched
 002232a0,115,game,speed,a16 pad,,,0002c8a0 0002f800,src/unknown_223240.cpp,matched
 00223320,116,game,speed,a16 pad,,,0011ca80 0033039a,src/unknown_223080.cpp,matched

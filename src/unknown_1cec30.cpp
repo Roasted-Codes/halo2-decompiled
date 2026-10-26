@@ -1397,7 +1397,11 @@ PRIVATE __forceinline real const &component_time_step()
 // acceleration register, memory timestep multiply and stop-test schedule differ.
 // Ordinary acceleration/magnitude/time inline contracts and paired forms 26;
 // completed clamp before ratio 82; accelerated candidate default 114.
-// score 26 (was 26): acceleration/timestep allocation and stopping schedule remain.
+// score 26 (was 26): the time step is still loaded before its product; retail multiplies from memory
+// and keeps the step's address. Step on the left of both products 26; direct field reads 26;
+// one-expression step 26; address-taken target 26; step pointer first 142; direct reads with the
+// stopping test first 43; product inside the scale helper 26; per-arm mass step 135.
+// acceleration/timestep allocation and stopping schedule remain.
 // Combined forced/stopping step-first, distance-first, eager distance, conditional result,
 // named decision and stopping guard 106 each; merged default/return scaling 140/110.
 // score 26 (was 26): isolated mass return 113; threshold-first return 121; returned
@@ -2722,6 +2726,10 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
 // score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
 // score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
+// score 206 (was 206): frame 0xb4 agrees; stride/base and relative-call registers remain.
+// Reduced search operand order first/second/both 346/346/346; frame-test operands
+// first/second/both 346/346/346; first mapped-index result 345; with search operands 345
+// (control 346; one-point reductions excluded).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

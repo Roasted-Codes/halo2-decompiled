@@ -52,8 +52,16 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 
 /* the next recent player after the iterator's: a valid, online, known player
    with a name; iterator starts at the first entry and ends at NONE */
-// score 43 (was 43): Early index save, next-index register, loop rotation and hoisted mask still differ.
+// score 43 (was 43): early ESI save, EBX successor, mask hoist and loop exit differ;
+// native successor 51; persistent entry while/for 57; complete admission 43; identity predicate 53;
+// native player assignment 43; native successor with identity 57; admission result 59.
+// successor register, exclusion mask and loop rotation still differ; 127/127 bytes.
+// Native identity OR/logical OR 83/78; each with native name 83/78; native name alone 43;
+// shared player receiver 43, with native OR/name 83, with native logical OR/name 78; all restored.
+// Early index save, next-index register, loop rotation and hoisted mask still differ.
 // existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
+// score 43 (was 43): iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;
+// result-terminated loop 52; iterator result termination 44; output outcomes 68; native termination 47.
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {
@@ -103,9 +111,16 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 113 (was 121): frame 0x0c versus 0x10 and properties/buffer
+// score 109 (was 113): frame 0x0c versus 0x10 and properties/buffer
 // register/stack split remain. Entry cursor 125; property cursor 135;
 // per-record property counts 113; count homes 121; cursor/count combination 132.
+// Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
+// short property ordinal 114; ordinal names 113; early four-property accounting 109 kept;
+// split first/three accounting 109. Reported length is now 352/352.
+// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// Entry cursor 125; property cursor 135;
+// Count-indexed record/buffer/both outputs 129/113/128; scalar-identifier induction 113;
+// identifier with record/buffer/both indices 114/114/113 (each 352 bytes); shared final total 151.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -137,6 +152,8 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 			buffers += 0x40;
 			buffer_capacity--;
 			buffers_used++;
+			property_capacity -= 4;
+			properties_used += 4;
 			for (long j = 0; j < 3; j++)
 			{
 				*(short *)&properties[j].unknown00 = (short)(j + 2);
@@ -144,8 +161,6 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 				properties[j].unknown08 = 0;
 			}
 			properties += 3;
-			property_capacity -= 4;
-			properties_used += 4;
 		}
 	}
 	if (record_count)
@@ -428,10 +443,14 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 129 (was 133): Frame 0x98 vs 0xa0; identity slots and initialization homes still differ.
+// score 73 (was 122): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // Existing record initializer with zero tail 130; short/word counters 133/133;
 // counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
+// Array-end bound 129; workspace names 129; native identity zero 129; signed induction 122; array-end/native zero 129; signed/native zero 122; signed identity-array fill 122.
+// Contiguous tail clear with sentinel restored 73; identity after record helper 122;
+// fixed do loop with record helper 122; tail clear plus late identity 73;
+// function-scope identity with record helper 122 (fast); tail clear 73 plain.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -442,14 +461,14 @@ void function_7f930(void)
 	g_4cf97c = NONE;
 	g_4cf984 = NONE;
 	g_4cf988 = NONE;
-	for (dword i = 0; i < 350; i++)
+	for (long i = 0; i < 350; i++)
 	{
 		s_cached_player_identity identity;
 		memset(&identity, 0, sizeof(identity));
 		s_cached_player_source source;
 		function_1537f0((s_profile_record *)&source);
-		memset(source.unknown7c, 0, sizeof(source.unknown7c));
-		memset(source.unknown80, 0, sizeof(source.unknown80));
+		memset(source.unknown7c, 0, sizeof(source.unknown7c) + sizeof(source.field7f) + sizeof(source.unknown80));
+		source.field7f = 0xff;
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
 		function_7f8b0((s_cached_player_view *)&entry->player, &identity, &source, NULL);
 		entry->next = entry->next_other = entry->unknown58 = entry->previous_other = NONE;
@@ -533,6 +552,14 @@ bool function_7fb50(void)
 	return local_0;
 }
 
+// score 111 (was 111): frame 0x1c agrees; records/properties registers, counter homes and ret 0x18 versus 0x1c remain.
+// Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
+// Frame 0x1c agrees; records/buffers register contract and cursor/count
+// scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
+// 132; per record totals 150; entry pointer walk 132; three properties do loop 132; frame role
+// names 132.
+// Unsigned short ordinal 111; selected property pointer 111; early remaining-property accounting 137; scalar while 111; cache scan while 111 (fast, retained values-cursor form).
+// Paired source/destination cursors 129; direct property identifier 116; paired cursors with native ordinal 130; complete property-array indexing 152; short-ordinal advancing buffer 116.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -557,20 +584,21 @@ void function_80bf0(long record_capacity, s_cache_property_record *records,
 			records++;
 			record_capacity--;
 			records_used++;
-			memcpy(buffers, (byte *)&entry->player + 0xc, 0x40);
+			memcpy(buffers + 0x40 * buffers_used, (byte *)&entry->player + 0xc, 0x40);
 			*(short *)&properties->unknown00 = -3;
 			properties->type = 4;
-			properties->unknown08 = (long)buffers;
+			properties->unknown08 = (long)(buffers + 0x40 * buffers_used);
 			properties++;
 			property_capacity--;
 			properties_used++;
-			buffers += 0x40;
 			buffers_used++;
-			for (long j = 0; j < 3; j++)
+			long const *value = values;
+			for (short j = 0; j < 3; j++)
 			{
 				*(short *)&properties[j].unknown00 = (short)(j + 2);
 				properties[j].type = 1;
-				properties[j].unknown08 = values[j];
+				properties[j].unknown08 = *value;
+				++value;
 			}
 			properties += 3;
 			property_capacity -= 3;
@@ -725,10 +753,19 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 300 (was 368): frame 0x0c agrees; removed-index registers, upper
+// score 243 (was 243): Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy induction differ.
+// Paired range arms 373;
+// frame 0x0c agrees; removed-index registers, upper
 // bound selection and copy-loop induction remain. Paired range arms 373;
 // native FILETIME 314; short adjustment 300; unsigned repair counter 364;
 // range/time/short combination 375; native time and short adjustment 357.
+// Three relative-position cases 243; early bounds 377; explicit upper bound 361;
+// forward destination index 366; reverse destination index 360; widened
+// global-index adjustment 358.
+// First removal-call acquisition 243; real repair-table cursor 819; short repair counter 819;
+// long direction flag 244; equality-first cases 243; forward CRT memmove 385.
+// Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
+// Paired signed min/max 302; independent bound overrides 362; forward entry cursor 369; reverse entry cursor 394; both entry cursors 406.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
@@ -744,13 +781,22 @@ long function_7fe90(const s_cached_player_identity *identity, long position, con
 	bool downward = false;
 	if (removed != NONE)
 	{
-		lower = removed > position ? position : removed;
-		upper = removed > position ? removed : position;
-		if (removed < position)
+		if (removed > position)
 		{
-			upper--;
+			lower = position;
+			upper = removed;
+		}
+		else if (removed < position)
+		{
+			lower = removed;
+			upper = position - 1;
 			position--;
 			downward = true;
+		}
+		else
+		{
+			lower = position;
+			upper = position;
 		}
 	}
 	else if (position < g_4cf978)

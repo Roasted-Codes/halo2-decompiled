@@ -1164,10 +1164,29 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 172 (was 172): Frame 0x1144 agrees; file/task scheduling and by-value I/O argument setup still differ.
+// score 165 (was 165): frame 0x1144 agrees; file-displacement register,
+// Frame 0x1144 and length agree; file displacement and request/I-O setup differ.
+// task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
+// completion scope 172; output scopes 172; slot equality 393;
+// equal-size arm first 209.
+// Frame 0x1144 agrees; file/task scheduling and by-value I/O argument setup still differ.
 // Constructed write/read/both headers 172/172/172; zero request initializer 192; role names 172; shared acquired handle 188.
 // Early validity result 172; validity-byte aggregate 262; persistent path/request/completion 172;
 // output-handle pointer first 177; reversed invalidation cases 172.
+// Native pointer addition 172; native file cursor 250; outer expected-size carrier 172;
+// completed-write result in both arms 172; reversed header string stores 172.
+// Direct write count 171; late expected-size query 288; signed-word ordinal 257;
+// validity from handle/header tests 165 kept; nested failed-write close 172.
+// Combined header predicates 189; valid-file continue 165; earlier size lookup 225;
+// task-before-path declaration 165; combined header guard 165.
+// Handle-success/handle-failure result arms 159/159; entry-scope carried validity 165; handle-success
+// plus failed-write result 159; request lifetime through submission only 165.
+// Handle-result arms 159 rejected as a branch flag.
+// Ordinary slot while 165; unsigned slot while 165; request clear before path 202; long/byte validity 210/165.
+// Round 111: Redundant request zeros omitted 225; shared handle-field pointer 165; iteration-scope write/read headers 165/165; request path after access fields 169.
+// Existing open API, file-element reference, both 165/165/165; open API with
+// constructed write/read/both headers 165/165/165; handle-field pointer 165;
+// native file and both headers 165. Shared API emits the same request code.
 // @retail 0x213970
 void function_213970(void)
 {
@@ -1193,14 +1212,15 @@ void function_213970(void)
         bool volatile done;
         function_120ba0(6, &task, 0, function_1a08f0, &done);
         cache_wait_for_completion(&done);
-        bool valid = false;
-        if (file->handle != INVALID_HANDLE_VALUE)
+        bool valid = file->handle != INVALID_HANDLE_VALUE;
+        if (valid)
         {
             dword size;
             function_1a15f0(*(s_file_handle *)&file->handle, 0, 6, &size, &done);
             cache_wait_for_completion(&done);
             if (size != expected_size)
             {
+                valid = false;
                 if (remove_later)
                 {
                     function_2138f0(index + 1, 6);
@@ -1226,25 +1246,28 @@ void function_213970(void)
                     file->handle = INVALID_HANDLE_VALUE;
                 }
             }
-            else if (cache_file_header_read(index))
+            else
             {
-                valid = true;
-                if (index >= 1 && index <= 1)
+                valid = cache_file_header_read(index);
+                if (valid)
                 {
-                    s_cache_header header;
-                    cache_header_initialize_strings(&header);
-                    valid = function_213800((char const *)file + 0x24, &header);
-                    if (valid)
-                        valid = *(long *)((byte *)file + 0x148) == *(long *)((byte *)&header + 0x144);
-                    if (valid && index != 0 && index != 1)
+                    if (index >= 1 && index <= 1)
                     {
-                        for (long type = 0; type < 3; type++)
+                        s_cache_header header;
+                        cache_header_initialize_strings(&header);
+                        valid = function_213800((char const *)file + 0x24, &header);
+                        if (valid)
+                            valid = *(long *)((byte *)file + 0x148) == *(long *)((byte *)&header + 0x144);
+                        if (valid && index != 0 && index != 1)
                         {
-                            if (*((byte *)file + 0x178 + type) && valid_types[type])
+                            for (long type = 0; type < 3; type++)
                             {
-                                FILETIME const *current = (FILETIME const *)((byte *)cache_file_from_type(type) + 0x17c);
-                                FILETIME const *stored = (FILETIME const *)((byte *)file + 0x184 + type * 8);
-                                valid = CompareFileTime(current, stored) == 0;
+                                if (*((byte *)file + 0x178 + type) && valid_types[type])
+                                {
+                                    FILETIME const *current = (FILETIME const *)((byte *)cache_file_from_type(type) + 0x17c);
+                                    FILETIME const *stored = (FILETIME const *)((byte *)file + 0x184 + type * 8);
+                                    valid = CompareFileTime(current, stored) == 0;
+                                }
                             }
                         }
                     }

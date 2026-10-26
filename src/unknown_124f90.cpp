@@ -1226,6 +1226,10 @@ long function_2197f0(real gain);
 
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
+// score 162 (was 162): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
+// Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
+// Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
+// shared fade-in duration 162; distinct-ambience case first 163.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -1424,6 +1428,12 @@ void looping_sound_controller_release(long index);
 
 /* deletes a playing sound, letting go of its looping sound's controller */
 #pragma inline_depth(0)
+// score 5 (was 5): Pool save remains EBP versus EBX; void tail result 5, inline release declaration 5,
+// noinline declaration 5, controller workspace first 5, byte count workspace 5, complete decrement
+// predicate 5, signed count view 5, indexed controller 5.
+// playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
+// Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
+// scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
 // @retail 0x127390
 void sound_playback_delete(long sound_index)
 {
@@ -1465,6 +1475,16 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
+// score 46 (was 46): slot/lookup scheduling, retained identifier and full-width return tails differ;
+// long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
+// index input with long result 46; existing class operation 169; priority difference 71;
+// class-index input with retained other identifier 44 (two-point gain excluded).
+// frame and length agree; lookup scheduling, retained identifier and return tails differ.
+// Other identifier retained 44; both identifiers 44; normalized slots with other identifier 44;
+// this priority first 87; direct comparison results 107; short priorities 45;
+// integer result 123; this definition read at its priority use 94.
+// Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
+// readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
@@ -2790,6 +2810,13 @@ void function_129380(vector3f const *const *voice_values, vector3f const *const 
 	}
 }
 
+// score 3 (was 3): Fade-call EDI/EAX/EBX setup remains; pool scope 3, metadata scope 3, fixed receiver
+// 3, direct pool 3, listener home names 3, stored location reference 3, distance outcomes 23, index
+// workspace first 3.
+// frame 0xc and length agree; fade-call EDI/EAX/EBX setup order differs.
+// Clear helper/listener declaration/query test 3 each; accepted listener first 34;
+// shared playback flags/direct location flags 3 each; fading field 8; fading helper 3;
+// shared next-index helper 3; shared slot index 176.
 // @retail 0x128020
 void function_128020(void)
 {
@@ -2991,6 +3018,9 @@ struct s_animation_ref;
 void function_219310(s_animation_state *state, s_animation_ref *ref, short value);
 long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 
+// score 86 (was 86): Loop-entry playback/clock loads and mode comparison remain.
+// pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
+// promoted voice 132; shared absolute index 162; mode with entry reason 127.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3249,19 +3279,32 @@ void function_125d60(void)
 
 void __stdcall function_1264c0(dword arg_0);
 
-// score 102 (was 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain; frame eight agrees.
+// Earlier: shared invalid register, fade-store schedule and signed-tick/wait code differ.
 // Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
 // pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.
 // Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
-// score 87 (was 102): reconstruction calls, clock conversion and wait layout remain;
+// Earlier: reconstruction calls, clock conversion and wait layout remain;
 // reconstruction force/plain inline 102/102; with shared fade 87 plain; with flag/gain/deadline/reset
 // 102/102/102/102 fast; ordinary inline plus fade 107 fast; shared fade without declaration 87 plain.
-// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// Earlier: early EDI save, reconstruction calls and signed-clock wait remain;
 // shared inline reconstruction both/first/next 123/120/108; calling iterator with fade 101;
 // expanded tick names/lexical homes/wait/fill 123/123/123/124.
-// score 87 (was 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// Earlier: reconstruction expansion and signed-clock wait remain; shared fade with
 // native/full-inline/Boolean iterators 113/112/118; native integer tick 113; iterator workspace
 // before clock inline/Boolean 111/118; early real tick native/inline 113/113.
+// Absolute search cursor 91; with initial/next/both inline reconstruction 105/110/127;
+// cursor with early deadline 90; native int tick 91; early real start 96; traversal-only cursor 86.
+// Entry source and every shared operation restored.
+// Early EDI save, reconstruction calls and signed-clock wait remain.
+// Earlier 102 (from 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// Earlier 87 (from 102): reconstruction calls, clock conversion and wait layout remain;
+// Earlier 87 (from 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// Earlier 87 (from 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// initial/next/both valid-search conditionals 98/103/113; initial/next/both result arms 98/103/113;
+// both admissions with native tick/index 113/113.
+// Masked slot copied before the fade call 83 at retail length (a one-use copy, not kept);
+// next slot 86; with both inline lookups 111/117, initial inline lookup 90/96, next inline lookup 101/104.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
@@ -3323,6 +3366,10 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
+// score 234 (was 241): Frame 0x49c versus 0x494; initial gain argument homes and clamp stores still differ.
+// Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
+// Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
+// long next-chunk candidate 254; completed-chunk early exit 241.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3363,8 +3410,7 @@ void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization c
 	if (!(bool)((local_1->flags >> 9) & 1))
 	{
 		real local_12 = *(real *)&local_6 + (real)*(signed char *)((byte const *)local_8 + 4);
-		local_12 = PIN(local_12, -64.0f, 0.0f);
-		local_3.field_c = *(long *)&local_12;
+		local_3.field_c = decibels_pin(*(long *)&local_12);
 		function_21f8a0(local_0->channel_index, (s_looping_channel_properties *)&local_3, (s_looping_effect_playback *)local_3.field_48);
 		function_21f720((s_looping_impulse_parameters *)local_3.field_468);
 		sound_voice_queue_chunk(arg_0, local_8, local_1->chunk_index);
@@ -3384,8 +3430,7 @@ void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization c
 	else if (local_0->permutation)
 	{
 		real local_15 = *(real *)&local_6 + (real)*(signed char *)((byte const *)local_0->permutation + 4);
-		local_15 = PIN(local_15, -64.0f, 0.0f);
-		local_3.field_c = *(long *)&local_15;
+		local_3.field_c = decibels_pin(*(long *)&local_15);
 		function_21fa80(local_0->channel_index, (s_looping_channel_properties *)&local_3, (s_looping_effect_playback *)local_3.field_48, true);
 	}
 	if (!TEST_FIELD_BIT(local_1->flag6))
@@ -3462,7 +3507,7 @@ void function_1293f0(void)
 
 long function_155760(long arg_0);
 void function_caf60(long arg_0, point3f *arg_1);
-void function_11d6a0(vector3f const *arg_0, vector3f const *arg_1, quaternionf *arg_2);
+void function_11d6a0(quaternionf *arg_2, vector3f const *arg_0, vector3f const *arg_1);
 void function_11d950(quaternionf const *arg_0, quaternionf const *arg_1, quaternionf *arg_2, real arg_3);
 extern quaternionf *g_4687cc;
 void function_220790(s_sound_listener const *arg_0);
@@ -3503,6 +3548,12 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 	arg_2->k = (arg_0->i * arg_1->j - arg_0->j * arg_1->i) * local_2 + arg_0->k * local_1 + local_0 * arg_1->k;
 }
 
+// score 551 (was 551): Frame 0x12c versus 0xe8; native vector, environment and listener-index homes differ.
+// Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
+// Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
+// Static const fallback 727 (frame 0xec); spatial role names 551; long success workspace 551;
+// short listener counter 581; outer spatial workspace 551; interpolated point setter 615;
+// position-zero setter 616.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {
@@ -3541,7 +3592,7 @@ void function_127400(bool arg_0)
 					local_9.y = (local_20.y - local_6->field_0.y) * local_19 + local_6->field_0.y;
 					local_9.z = (local_20.z - local_6->field_0.z) * local_19 + local_6->field_0.z;
 					quaternionf local_21;
-					function_11d6a0(&local_6->field_20, (vector3f *)(local_13 + 0x180), &local_21);
+					function_11d6a0(&local_21, &local_6->field_20, (vector3f *)(local_13 + 0x180));
 					function_11d950(g_4687cc, &local_21, &local_21, local_19);
 					function_1275d8(&local_21, &local_6->field_20, &local_7);
 					function_1275d8(&local_21, &local_6->field_2c, &local_8);

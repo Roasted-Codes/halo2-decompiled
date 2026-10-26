@@ -165,6 +165,12 @@ void function_44720(void)
 // score 107 (was 107): retail keeps the entry index in eax and the table base
 // in ebp with a frame four bytes smaller, ours puts the index in ebp and the
 // frame four bytes larger, so every local sits four bytes higher
+// score 107 (was 107): level != 31 at the call (no cached byte) gives retail's 0x40 frame
+// and call setup, 135 (487 bytes, aligned 42 against 59); retail also re-reads the flags
+// word in the inlined geometry lookup where ours keeps it. On that form: short transform
+// 141; material index read first 135; transform first 136; the lookup given
+// &g_4ba138[(short)index] 136 (503 bytes, flags re-read, but the scenario structure
+// pointer hoisted into ebx).
 void __stdcall function_44c90(long group, dword selection_mask, long level,
     dword and_mask, dword or_mask, dword fallback_and_mask, dword fallback_or_mask, bool force)
 {
@@ -201,7 +207,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
-// score 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
+// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
+// Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
 // or capacities 194/194; indexed geometry input 229; memory bound/center copies 196/196;
 // radius before displacements 196; both list initialization chains 190.
@@ -210,7 +217,7 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // common sphere radius 227; bound center at use 203.
 // bound radius before node query 204; unsigned node cache 196.
 // radius plus geometry guard 227; list field initialization 194.
-// score 190 (was 190): entry/index spill and sphere/position homes still differ.
+// Earlier 190 (was 190): entry/index spill and sphere/position homes still differ.
 // Aligned split center, both points or bound alone 199/199/199; aligned bound with
 // the original query 197; ordinary query with aligned center 199; complete native
 // query with aligned center, bound or both 205/205/205.
@@ -220,10 +227,18 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Entry/index and sphere/position homes remain; node-count branch/entry homes
 // 190/190; both list entry lifetimes 191; bound reference 198; completed distance/radius/both
 // squares 190/190/190; count/cache boundary 190.
-// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and point homes remain.
+// Earlier 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and point homes remain.
 // Both buffer pointers first 194; second pointer first 194; capacities/counts before pointers 188
 // (two-point gain rejected); counts/pointers/capacities 192; large radius first 193; native query
 // alignment 190; direct object-index field 190; read-only bound source 190. Opening body restored.
+// Indexed mark/tag/link/read-only receivers 228/271/271/271; large center aggregate copy 202;
+// signed-short node cache 216, with byte node 234, with selective indexed reads 285.
+// score 190 (was 190): entry/index spill and sphere/position homes remain.
+// Native bound sphere with branch/entry count homes 196/196; aligned bound 203/203.
+// Native bound with split center/query 197 for both count homes and either bound alignment.
+// All native sphere copies restored; no field observation or float grouping retained.
+// Shared point setter at initial/query/bound producers 245/190/204; initial+query/initial+bound/query+bound 245/246/204.
+// All three point setters 246; native bound-point initializer 204.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

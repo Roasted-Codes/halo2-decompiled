@@ -62,7 +62,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 	bool arg_16, bool arg_17, bool arg_18, real arg_19, real arg_20,
 	real arg_21, byte arg_22, point3f const *arg_23, real arg_24);
 
-// score 162 (was 162): Frame 0x214 agrees; delayed ESI save, source/count cursor and feature-byte homes differ.
+// score 155 (was 155): frame 0x214 agrees; late ESI save and source/count/feature homes remain.
+// Earlier 162 (was 162): Frame 0x214 agrees; delayed ESI save, source/count cursor and feature-byte homes differ.
 // entry word count 162; entry native count 162.
 // entry inner ordinal 162; repeated count location 162.
 // selected-index default 187; conditional mask updates 163.
@@ -71,14 +72,14 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Shared byte/word feature results 216/210; independent bytes 193; Boolean bitwise AND 208;
 // shared bytes plus source cursor 215; ordinary source pointer 232 (caller differs);
 // bitwise predicates plus aggregate copy 210 (caller differs); unsigned handle 162.
-// score 162 (was 162): delayed ESI/source/count cursors and feature homes remain.
+// Earlier 162 (was 162): delayed ESI/source/count cursors and feature homes remain.
 // Fast: native feature bits 206; common bit gate 211; packed bits 162; packed and independent 206;
 // packed and common 211; byte bit results 216; bitwise bits 214; packed and bitwise 214.
 // frame 0x214 agrees; early source ESI retention and count/cursor homes still differ.
 // Source/index initialization swapped 162; ordinal initialized inside guard 163; offset
 // declarations reversed 162; filter input captured 162; override query result 162;
 // existing object getter 162; entry order plus getter/query result 162/162.
-// score 155 (was 162): Early source retention, count/cursor and feature-byte homes still differ.
+// Earlier 155 (was 162): Early source retention, count/cursor and feature-byte homes still differ.
 // selection-row cursor 162f; word-row cursor 155p; both input cursors 155f; outer feature
 // lifetimes 162f; outer decoded index 162f; outer encoded byte 162f; mask entry lifetime 162f;
 // shared argument lifetimes 162f; cursor values name 155f; outer ordinal name 155f; inner ordinal
@@ -90,13 +91,32 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // early source retention, count cursor and feature homes remain;
 // formal source/original record reference 191/191 (caller differs); selected copy source 210;
 // category/object-category values 162/162; chained sentinel/disabled fields 162/162; inherited mask value 197.
-// score 155 (was 155): early ESI/source retention, count/cursor and feature homes remain.
+// Earlier 155 (was 155): early ESI/source retention, count/cursor and feature homes remain.
 // Native word row 221; cursor for-scope 155; word cursor with shared Boolean/byte,
 // independent byte and complete-mask features 217/221/195/220; paired source/word
 // cursors 156; word cursor with native record assignment 195.
-// score 155 (was 155): early source retention and source/count/feature homes remain.
+// Earlier 155 (was 155): early source retention and source/count/feature homes remain.
 // With the word cursor, native count/argument-5/argument-6/argument-8 arrays 195/161/160/161;
 // count plus argument 5 186; arguments 6/8 193; all four arrays 187; native selection array 219.
+// score 155 (was 155): early source retention and scalar/feature homes remain.
+// Composite-mask, optional-index and feature-byte names 155/155/155;
+// mask/index, mask/features and index/features names 155/155/155;
+// all argument names and source-handle/argument names 155/155.
+// early source/count retention and feature-result homes remain.
+// Earlier 155 (was 155): early source/count retention and feature-result homes remain.
+// Existing word query 155; combined category/query gate 155; both features before selector with query/native tag 210/210;
+// first/second feature early 206/206; features before optional-index result 201; query with while ordinal 155;
+// conditional Boolean query 195. Original body, word cursor and both inherited local qualifiers retained.
+// Earlier 155 (was 155): early source/count and feature-result homes remain.
+// Entry active-record workspace 155; entry current-source workspace 155; packed-only
+// source snapshot 155; memcpy-return selection 155; first/second conditional feature
+// results 154/154; both conditional results 153; complete feature branches 217.
+// early source retention and count/cursor/feature homes remain;
+// entry-source count 196 and original filter 165 (caller differs); first-group ordinal 195;
+// filter enabled first 206; signed feature bytes 195; integer group/record/both masks 195/201/205.
+// Long/read-only-byte/read-only-long source elements 155 each; direct
+// long/read-only-long source handles 155; dword optional index alone or
+// with long/read-only-long source elements 155. Original typing restored.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

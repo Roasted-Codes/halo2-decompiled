@@ -87,17 +87,18 @@ struct s_save_list_2164c0
 
 PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_entry_2164c0 const *entry)
 {
-    long count = list->count;
-    bool result = count != 4096;
+    bool result = list->count != 4096;
     if (result)
     {
-        list->count = count + 1;
-        list->entries[count] = *entry;
+        memcpy(&list->entries[list->count++], entry, sizeof(s_save_entry_2164c0));
     }
     return result;
 }
 
-// score 51 (was 51): conversion addresses, append list/count/result and final call registers differ.
+// score 51 (was 51): diagnostic arguments, append count/result and enumeration registers differ.
+// File path/directory/both receivers 51/51/51; conditional character store 69;
+// capacity first 54; capacity nonzero 51; short type index 189; no parameter address 51.
+// conversion addresses, append list/count/result and final call registers differ.
 // Existing root/path helpers 51/51; file-reference/all helpers 233/233;
 // append names/force-inline and buffer names 51/51/51; source step at character read 72.
 // score 51 (was 51): conversion addresses, append and enumeration registers still differ.
@@ -108,6 +109,12 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
 // success result 54; capacity return 54; counted conversion 229; conversion end pointer 58;
 // entry lifetime 51; entry zero initializer 199; file lifetime 51; drive-validation return 51;
 // shared character conversion 51.
+// score 32 (was 51): the append's count/result/list registers (ours eax/cl/edx, retail esi/al/ecx,
+// new count stored before the copy) and the two scratch pairs before 0x13fb70 and
+// XFindNextSaveGame differ. The append's memcpy into `&entries[count++]` gives retail's index copy
+// (51 -> 32); an element pointer for the slot 32; post-increment index local 51; index then
+// count store 51; found flag with the found arm first 51/32; helper parameters swapped 32;
+// force-inline helper 32.
 // @retail 0x2164c0
 void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
 {
