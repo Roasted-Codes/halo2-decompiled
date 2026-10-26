@@ -334,30 +334,33 @@ void function_13ad48(long user_index, byte const *selectors, real *values, byte 
 
 bool function_22acb4(long player_index);
 
-// score 232 (was 232): extra second-mask slot and retained constant registers differ;
+// score 190 (was 190): extra second-mask spill and persistent constant homes remain.
+// extra second-mask slot and retained constant registers differ;
 // third/second/fourth phases 265; fourth/second/third 261; third/fourth/second 246;
 // shared item guard 241; descending selection cases 232. Original body retained.
-// score 232 (was 232): extra second-mask slot/constant registers remain;
+// extra second-mask slot/constant registers remain;
 // set-only all masks 529; first 381; second 293; third 262; fourth 294.
-// score 196 (was 232): extra second-mask slot and constant homes remain; second enum group kept.
+// extra second-mask slot and constant homes remain; second enum group kept.
 // Second/fourth/third phases 287; fourth/third/second 297; first enum group 238;
 // complete type-bit selection 227; second enum group 196; combined selections 201.
-// score 190 (was 196): second-mask spill and constant homes remain.
+// second-mask spill and constant homes remain.
 // Round 303: both enum groups 216; unified item predicate 256; multiplayer at use 257;
 // shifted source flags 281; fourth enum selection 284; one-case bit first 190;
 // one total enum-bit update 291. Final stores and query argument preserved.
-// score 190 (was 190): second-mask spill/constant-one retention remain.
+// second-mask spill/constant-one retention remain.
 // Total low-bit updates from seeded accumulators: second/third/both/fourth/
 // second-fourth/third-fourth/all 254,190,254,190,254,190,254; second seed 3 253.
 // second-mask slot and constant homes remain; second-mask bit orders
 // 16/2/4/8, 2/16/4/8, 2/4/16/8, 8/4/2/16 all 190;
 // 2/8/4/16, 16/8/4/2, 8/16/2/4, 4/8/16/2 all 190 at 884 bytes.
-// score 190 (was 190): second-mask spill and constant homes remain.
+// second-mask spill and constant homes remain.
 // First enum order one/zero/NONE 189 (below gate), zero/NONE/one 195, zero/one/NONE 195,
 // NONE/one/zero 197; native fourth on current enums 299; signed third/fourth/both 271/299/285.
-// score 190 (was 190): second-mask spill and persistent constant homes remain.
+// second-mask spill and persistent constant homes remain.
 // Individual redundant clears removed: first16 284; second16 281; both16 290;
 // first2/4/8 286/286/290; first2+16 301; initial third128 249. All restored.
+// False-first total setters: first/second/third/fourth 190/190/248/207;
+// first-second/all 190/260. Clear-before-guarded-set second/all 259/340.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
