@@ -122,10 +122,15 @@ PRIVATE inline byte const *material_parameters(long tag)
 // early record-table/selected-record/both pointer homes 153/153/153; complete native declaration block 153.
 // Readonly definition/pass/both 153/153/153; first/second/both native record copies
 // 153/153/153; range publication at consumer 153; copies with late publication 153.
+// Entry/pass/both/range/record/entry-pass-range/all base-first pointers 153 each; all bases with
+// ordinary log input 152 (one-point gain dropped).
 // Actual table header / five-word entry / three-word range / table-entry /
 // table-range / entry-range / all metadata records / all readonly records 153 each.
 // Distinct restore word/input/entry/all carrier lifetimes 153 each; initial/restore/both
 // metadata graph scopes 153 each; full restore graph with separate upload record 153.
+// Round 226: selected-record prefix 153; record-block header 153; pass-input prefix 153; record
+// and block 153; record and pass 153; block and pass 153; all three metadata objects 153; all
+// readonly metadata objects 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -854,6 +859,10 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // ordinary/special bank-one-first arms 159/167.
 // Actual value/entry/remap table fields singly, all three pairs and all together 157 each;
 // all native table fields with native entry bits and body cursor steps 155; two-point gain dropped.
+// Round 226: ordinary bank-zero output pointer 157; ordinary bank-one output pointer 157; special
+// bank-zero output pointer 157; special bank-one output pointer 157; both ordinary destinations
+// 157; both special destinations 157; all four destinations 157; all destinations with named
+// masked value 202.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

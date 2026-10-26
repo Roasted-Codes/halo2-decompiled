@@ -552,6 +552,9 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // animation value 168; direct side plus animation 168; unsigned word side 142;
 // immutable side plus animation 168; retained-fallback conditional 141; complete
 // side/animation/timing-result graph 168. Original executable body retained.
+// conditional heading-result initialization 141; heading result rejection 162; positive projection
+// rejection 162; reach rejection 162; lateral clearance rejection 162; heading alignment rejection 162; all
+// five geometric rejection exits 162; named complete forward-range predicate 143.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {

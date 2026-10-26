@@ -44,7 +44,8 @@ void function_1d1260(s_havok_component *arg_0);
 void __stdcall function_b8540(long arg_0);
 void __stdcall function_b8890(long arg_0);
 
-// score 212 (was 212): list selection, second-count home and cleanup schedule remain;
+// score 212 (was 212): Frame 0x424 agrees; list/index/second-count homes and cleanup induction differ.
+// Earlier: list selection, second-count home and cleanup schedule remain;
 // list reference 212; island reference 212.
 // body reference 212; header reference 212.
 // unsigned object handle 212; list and island references 212.
@@ -52,9 +53,14 @@ void __stdcall function_b8890(long arg_0);
 // frame agrees; list/index/count homes and cleanup induction differ;
 // existing component-delete helper 341; existing detach helper 464; inline declarations
 // 341/464; category byte comparisons 266; signed-byte category 212, membership 212, both 212.
-// score 212 (was 212): list selection/count homes and cleanup schedule remain.
+// Earlier 212 (was 212): list selection/count homes and cleanup schedule remain.
 // Outer selector byte/short/word/dword 219/266/266/212; byte/short with branched
 // selection 245/291; byte/short with indexed cleanup 226/269. Original restored.
+// Round 225: First/second array list/island ownership pairs 01/02/10/11/12/20/21/22: 212 each.
+// List/index/count and cleanup homes remain.
+// Round 227: Remove redundant first/second/both pre-retry initializations 212/212/212; split
+// first/second/both insertion increments 212/212/212; both removals with second/both split increments
+// 212/212. Original resets and body restored.
 // @retail 0x278f00
 void function_278f00()
 {

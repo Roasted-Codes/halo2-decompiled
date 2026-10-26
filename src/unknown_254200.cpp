@@ -246,6 +246,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Round 159: Shared getter resource-result-first 517; bitmap failure returns 522; both null producers
 // 516; ordinary inline resource/bitmap/both 162/162/162; both null producers with resource/bitmap inline
 // 516/516 (fast control 162, full baseline 153). All getter bodies, metadata and target code restored.
+// Round 224: Entry color/phase scalar/joint declaration ownership 162/162/162; later color lexical
+// home and separate native assignment 162/162; pure half-span before color/commit/entry 405/403/527
+// (fast control 162). Frame and reservation homes remain.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

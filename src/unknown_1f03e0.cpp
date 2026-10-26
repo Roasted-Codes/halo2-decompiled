@@ -536,7 +536,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 	return (arg_0 >> 3) & 1;
 }
 
-// score 182 (was 182): frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
+// score 182 (was 182): Frame 0x28 and state/output registers agree; initial dot displacement bytes and rotation schedule remain.
+// Earlier: frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
 // Earlier 182 (was 195): state/forward registers agree; rotation scheduling differs.
 // Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
@@ -566,6 +567,10 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // array views 182/182/182. Original scalar expressions, shared helpers and outputs restored.
 // Native dot/up/orientation/full input fields 182/182/182/182; test-produced rotation 183;
 // inactive forward/active forward/both active output library copies 182/182/182.
+// Initial/all snapshot-safe crosses 182/182; ordinary cross inlining 182; both one-use aliases removed 180;
+// fallback axis/default library copies 182/182; initial snapshot with aliases removed 182;
+// all snapshots with fallback copies 182; settings-only/forward-only alias removal 291/291;
+// up-field reference on combined alias removal 195. Two-point gain rejected; original body/helper restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -885,7 +890,8 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 }
 #undef settings
 
-// score 582 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain.
+// score 582 (was 582): Frame 0x34 versus 0x30, direct-mode carrier and vector homes remain.
+// Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain.
 // Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
 // Frame 0x34 versus 0x30; direct-mode carrier and original/limited vector homes remain.
 // Earlier: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
@@ -924,6 +930,10 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
 // Earlier: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
 // Horizontal delta on retained join 614; signed-word direct/damping/gravity/flying 622/622/624/616.
+// Unsigned-byte gravity/direct/damping/all states each 582; input squared-length helper 582;
+// consistent active direct crosses 580; in-place history addition 641 (frame 0x30, 2981 bytes);
+// byte states with direct crosses 580; flying-only/ground-only direct crosses 580/582.
+// Two-point cross gain rejected; original private implementation and inherited qualifiers restored.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {

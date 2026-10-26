@@ -109,6 +109,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // and declarations restored; pool/iterator and successor homes remain.
 // Round 141: Canonical inline-only provider/caller declarations at the same eight boundaries also give
 // 164 each; every provider and original declaration restored.
+// Round 222: split iterator plus datum/index outputs 164; split pointer result 164; returned datum with ordinal output 164; outputs-first contract 164; typed split datum 164; split completion result first 165; split byte completion 164; internal split-step linkage 164.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

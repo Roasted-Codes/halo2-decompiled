@@ -619,6 +619,10 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Round 143: occupied/empty Boolean and byte results on retained AND graph 232 each;
 // both byte results with AND 232/232; twice-used child-player input with count/occupied 202/233.
 // Original count/AND body restored; protected child-iterator contract remains.
+// word unit count with Boolean AND reduction 202; signed unit count with Boolean AND reduction 201; long
+// friendliness AND with retained unit count 228; word friendliness AND with retained unit count 209; signed
+// byte friendliness AND with retained unit count 201; word count and long friendliness AND 229; named
+// complete child friendliness predicate 201; word count and word friendliness AND 210.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

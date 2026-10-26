@@ -171,6 +171,11 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // Separate-output shared real scale 123 (three-point gain rejected), double scale 195;
 // final shared real scale 126; both real 165; double then real 198; real then double
 // 152 (retail length); both double 198; real scale plus forced original addition 123.
+// native scaled change initialized by value then scaled 243; native scaled change assigned by component
+// 126; clock conversion after completed native displacement 168; shared point difference with separate
+// scaled change 125; plain component loop for separate scaled change 164; scaled change workspace declared
+// before displacement 126; immutable completed displacement and scaled change 126; complete native delta
+// value before output copy 174.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

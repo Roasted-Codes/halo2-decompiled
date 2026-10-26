@@ -73,7 +73,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 	return result;
 }
 
-// score 196 (was 196): delayed EBP save, team-byte home and word slot spill.
+// score 196 (was 196): Frame 0x1c agrees; delayed EBP save, teams-byte home and word local-slot spill remain.
+// Earlier: delayed EBP save, team-byte home and word slot spill.
 // Cursor player 253; count at loop tail 199; both 257; signed/unsigned
 // word team counters 248; tail count plus word team counter 252.
 // early EBP save, teams byte home and local-slot spill differ;
@@ -98,6 +99,10 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Round 143: complete per-use state receiver 196; with tail count/shared crowded/both
 // 199/248/252. Team admission in body/condition 247/264; with per-use state 247/264.
 // All original code restored; delayed EBP save, team-byte and word-slot homes remain.
+
+// Round 227: Private slot search sentinel-plus-one start 193; short return 196; short input 199; both
+// short 199; simple start with short return/input/both 193/193/193 (three-point gains dropped);
+// terminating candidate scan 230. Existing helper restored.
 // @retail 0x15c150
 void function_15c150()
 {

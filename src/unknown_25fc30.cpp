@@ -230,6 +230,15 @@ bool __stdcall function_25dd30(long a, long b)
 // Round 140: repeated segment-origin/actor-position/both receivers 356/311/357; sphere-radius receiver 175;
 // radius plus origin/position/both 356/311/357; all three native references 357. Original executable source
 // restored; earlier stacked notes merged.
+// Frame 0x30 agrees; offset/segment scheduling, geometry carriers, score adds and pool load differ.
+// Earlier: vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
+// Earlier at 175 (was 175): first vector schedule, geometry registers and score adds remain;
+// Earlier at 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
+// Earlier at 175 (was 175): initial offset schedule and protected geometry carriers remain;
+// Earlier at 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
+// Earlier at 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
+// Round 229: Object lookup valid-first/conditional calls/selected index/missing-first arms
+// 309/309/310/309; with shared unit input 331/331/254/331. Original body restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

@@ -1171,7 +1171,7 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
     return 0.0f;
 }
 
-// score 529 (was 529): Frame 0x2c versus 0x28, stored result and block/query carriers remain.
+// score 529 (was 529): Frame 0x2c versus 0x28, stored selection result and block/query carriers remain.
 // Selected ordinal 587; combined admission mask 570; unsigned scan 529; shared bias local 559
 // (caller lost); common blend weight 533.
 // frame 0x2c versus 0x28, stored result and block/query registers differ.
@@ -1190,6 +1190,7 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Native normal copy and its name/scope combinations 613 (caller 510; matched caller lost);
 // captured-normal role names, entry color declarations and entry length 508 (caller 442);
 // inline/noinline declarations 508 (caller 442). Restore original body to preserve caller 364.
+// Round 222: native query-vector field 529; field at every use 567; native query copy 578; original-query squared-length helper 529; native-query length before copy 528; all RGB first products 530; all RGB illumination terms 577; normal memcpy 578.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)

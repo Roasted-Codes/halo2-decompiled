@@ -2629,7 +2629,7 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 168 (was 175): staggered register saves and paired velocity homes differ;
+// score 168 (was 168): staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
 // Force-inline linear/angular/both getter declarations 175 each; initialized linear/angular outputs 199 each;
 // initialized pair 219; initialized pair with getter declarations 219; live external array receiver 175
@@ -2645,6 +2645,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // original-order real accumulations 128 reduced, 168 plain; nested post-update guards 135 (control 135). Keep
 // the seven-point full-image accumulation gain at retail length; frame 0x30, staggered saves and paired
 // getter homes remain.
+// Round 224: Iteration norm/vector/both declarations 128/128/128; inverse velocity/gravity lexical
+// homes 128/128; complete immutable norms 133; chained horizontal stores 130; joint homes/norms/chain
+// 135 (fast control 128, full 168). Save staging and paired fixed/zero homes remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
