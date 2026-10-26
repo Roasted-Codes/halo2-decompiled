@@ -283,6 +283,8 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 // character exits 66; view admission 66; duration/view admission 128; actor/view guards 66.
 // Direct slot 66; shared period input 119; both 119; native point setter 113;
 // idle/character store orders 67/67, both 68; period with point setter 97.
+// Integer quotient/threshold result arms/remaining expression 78/78/78; readonly slot receiver 66;
+// converted-position home/native point memcpy/slot record reference 66/66/66; quotient plus position home 78.
 // @retail 0x1b2bb0
 void __stdcall function_1b2bb0(long actor_index, s_slot *slot)
 {
