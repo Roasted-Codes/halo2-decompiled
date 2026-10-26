@@ -2770,7 +2770,7 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 	return result;
 }
 
-// score 398 (was 398): Frame eight versus four and activity/tag/object homes remain; native metadata traversal does not recover them.
+// score 398 (was 398): Frame eight versus four and object/tag/activity homes remain.
 // Frame eight versus four and object/tag/activity/dispatch homes remain.
 // Earlier: Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
 // maximum 398; barrel read 422; scale reads 422; property bits 420; branch maxima 404; all maxima
@@ -2804,6 +2804,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Trigger metadata cursor 422; with barrel cursor, native bounds, both 422/422/422;
 // cursor with field scale, both cursors with field scale 427/427; cursor with complete maxima 422;
 // both cursors/bounds/field scale/maxima 426. All restored.
+// Negative unknown-name bool/byte/short/long with original exits 398 each;
+// single-exit guarded publication 471/471/462/466. All restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {

@@ -111,6 +111,8 @@ void function_2232a0(void)
 // Whole countdown placements before count/layout/scan, first/second phases
 // 01/02/10/11/12/20/21/22: 185/159/185/190/190/159/190/164 (fast).
 // Original timer order, count/layout producers, shared initializer and body restored.
+// Negative world-rejection bool/byte/short/long in multiple-first layout 151 each;
+// single-first layout on those negative-result graphs 168 each. All restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

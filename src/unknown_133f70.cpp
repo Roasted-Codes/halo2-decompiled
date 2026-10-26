@@ -62,7 +62,7 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 	bool arg_16, bool arg_17, bool arg_18, real arg_19, real arg_20,
 	real arg_21, byte arg_22, point3f const *arg_23, real arg_24);
 
-// score 155 (was 155): frame 0x214 agrees; late ESI save and source/count/feature homes remain.
+// score 155 (was 155): Frame 0x214 agrees; delayed ESI save, source retention and count/cursor/feature homes remain.
 // Earlier 162 (was 162): Frame 0x214 agrees; delayed ESI save, source/count cursor and feature-byte homes differ.
 // entry word count 162; entry native count 162.
 // entry inner ordinal 162; repeated count location 162.
@@ -120,6 +120,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
 // ordinal 223; wide optional index 214; wide composite mask 192; word cursor
 // before packed mask 154. One-point reduction rejected; original body retained.
+// Common disabled bool/byte/short/long with positive/negative feature results [192, 193, 192, 193, 201, 207, 192, 193].
+// Original body, word cursor and inherited qualifiers restored.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
