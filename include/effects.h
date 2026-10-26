@@ -402,6 +402,29 @@ public:
 
 c_type_4e7709 *function_137bd0(long tag_index);
 
+extern c_type_4e7709 g_479868;
+extern c_type_4e7709 g_479874;
+
+/* function_137bd0's body, for the calls retail inlines (it lives in a /Ob1
+   file, so LTCG cannot inline the original) */
+static inline c_type_4e7709 *function_137bd0_inline(long tag_index)
+{
+	c_type_4e7709 *result = 0;
+
+	switch (TAG_GROUP(tag_index))
+	{
+	case 'prt3':
+		result = &g_479868;
+		break;
+	case 'PRTM':
+		result = &g_479874;
+		break;
+	}
+	if (result)
+		result->initialize(tag_index);
+	return result;
+}
+
 /* what a particle system spawns from (function_178c80) */
 struct s_particle_system_spawn
 {

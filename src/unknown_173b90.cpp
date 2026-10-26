@@ -820,7 +820,9 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 308 (was 308): frame agrees; byte flag clear, child carriers and selective inlining differ.
+// score 294 (was 308): frame agrees; byte flag clear and child carriers differ.
+// Round 88: the child loop's type lookup through function_137bd0_inline (retail inlines it there,
+// as at 0x247fd0's loop, and calls it at the first site) 294 (kept).
 // Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
 // perpendicular call 394; inline depth one 394, zero 517.
 // Earlier context: frame 0x64 versus 0x60; flag clear and selective calls differ.
@@ -946,7 +948,7 @@ bool function_174a30(s_particle_system_datum *particle_system, real dt)
 			spawn.scale = *(real *)(particle + 8) / *(real *)(particle + 0xc) - dt;
 			spawn.unknown = dt;
 			spawn.location_index = child->location_index;
-			c_type_4e7709 *child_tag = function_137bd0(child->function_1751d0()->tag_index);
+			c_type_4e7709 *child_tag = function_137bd0_inline(child->function_1751d0()->tag_index);
 			bool tinted = child_tag->tinted();
 			function_175a80(tinted, particle_system->color, 0xffffffff, child, child_tag->multiplied());
 			function_175270(child, &spawn, &matrix, false);
