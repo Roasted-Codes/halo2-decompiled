@@ -51,7 +51,11 @@ static __forceinline long marker_viewer_unit(void)
 	return unit_index;
 }
 
-// score 120 (was 233): projection-result store, coordinate registers and later helper scheduling differ;
+// score 105 (was 105): projection-status store, normalized coordinate XMM homes and late scheduling remain;
+// native projected scalar pair 105f; pair/native extents 231f; coordinate product operands 105f; extent
+// product operands 105f; both operand forms 105f; live up fields 105f; shared double lift limit 165f;
+// limit/projected pair 165f.
+// projection-result store, coordinate registers and later helper scheduling differ;
 // bool result 231; early placement 233; position snapshot 282; late collision 237;
 // final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
 // projected endpoints 123; word centers 225; final endpoints 123; native direction 264; distance lifetime 141.
@@ -60,7 +64,7 @@ static __forceinline long marker_viewer_unit(void)
 // existing projection output 123 (match-only, reverted); placement memcpy 123;
 // collision record at file scope 123; direct collision result 281; double rounding result 180.
 // Plain list position (no list_reference) 120.
-// score 123 (was 123): projection-result store, coordinate homes and helper scheduling still differ.
+// projection-result store, coordinate homes and helper scheduling still differ.
 // native byte projection result 123f; native horizontal half extent 216f.
 // native vertical half extent 215f; value initialized placement 263f.
 // viewer index read once 123f; explicit viewer selector 123f.
@@ -69,7 +73,7 @@ static __forceinline long marker_viewer_unit(void)
 // Failure predicate 280; sequential word normalization 222; named ellipse predicate 123;
 // outside-first ellipse arms 123; failure/sequential 249; named/sequential 222;
 // outside-first/sequential 222; failure/outside-first/sequential 249.
-// score 105 (was 120): the viewer unit chosen in an if/else (retail's `or eax, -1` arm) 105 kept. On
+// the viewer unit chosen in an if/else (retail's `or eax, -1` arm) 105 kept. On
 // top of it: the rounding result scaled as a float (retail's dword constant) 104; the ellipse test
 // as `half_extents * half_extents > ...` 104, outside arm first with `<=` 103 (retail's comiss order);
 // the extents product first 219 and long half extents 232 (both retail's code, one line off). With

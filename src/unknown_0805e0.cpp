@@ -111,7 +111,11 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 109 (was 113): frame 0x0c versus 0x10 and properties/buffer
+// score 109 (was 109): frame 0x0c versus 0x10 and property/buffer carriers remain; shared record/buffer total
+// 125f; property total from records 113f; property total from buffers 113f; admission accounting 108f (below
+// threshold); shared record/buffer admission 163f; derived property admission 156f; shared total/property
+// phases 125f; derived property/entry cursor 113f.
+// frame 0x0c versus 0x10 and properties/buffer
 // register/stack split remain. Entry cursor 125; property cursor 135;
 // per-record property counts 113; count homes 121; cursor/count combination 132.
 // Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
