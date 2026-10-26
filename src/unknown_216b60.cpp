@@ -66,6 +66,10 @@ bool __stdcall function_215f40(long type, byte *buffer)
 // Long success result 52; initialized name/root arrays 67/64; path after
 // name success 23; function scope buffers 35; drive root result 29;
 // format failure single exit 20; nested validation 20.
+// score 20 (was 20): after the call to 0x216da0, retail recomputes the name address with a lea
+// where ours copies EDI. Path and name in one struct 58; (void)&name in 0x216da0 20; 0x216da0
+// reading name through its address 39; noinline declarations of 0x216da0/0x217a80 20; 0x216da0
+// result variable 20.
 // @retail 0x216120
 bool function_216120(word *string, long type)
 {
