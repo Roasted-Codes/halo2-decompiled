@@ -167,7 +167,12 @@ static __forceinline real avoidance_normalize2d(point2f *direction)
 /* adds a node at the point, passing the obstacle on the side, unless it
    leads back around an obstacle on its way; returns its index or NONE */
 // score 92 (was 92): the scaled components are kept in different registers and the length is
-// squared and summed in a different order.
+// squared and summed in a different order. Retail loads y into XMM0 before the square root and
+// keeps `y * inverse` and `other.y * y` in source operand order; ours copies the register
+// operand and multiplies by memory. The compile-only build gives ours for every helper form.
+// Products x*inv/inv*y 92; compound scaling 92; tiny case first with one return 92; scalar
+// direction locals 165; y scaled first 93; helper reads both components first 156; dot test
+// through the node array 153; zero on the left of the dot test 92.
 // @retail 0x2c3680
 short avoidance_add_node(s_avoidance_search *search, point2f const *point, bool side, long value08, short obstacle,
 	short value1a, real cost, short parent)

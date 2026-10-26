@@ -278,20 +278,6 @@ short __stdcall function_1b39e0(long actor_index)
 	return (short)result;
 }
 
-// score 1 (was 1): literal target differs (1.5 versus 1.0); one result 1;
-// result supplies flags 1; byte expression 36; flags after unit 35; unit before copy 46;
-// clear return receiver 63; first/second shared timer rounding 86/63.
-// Before the result, the object-flag byte register and shared tail zero differed.
-// Chained flags 36; direct object flag 93; const property state 36; flags before link 37;
-// flag-pair memset 61; target memcpy 36; duration names 36; accepted state scope 115.
-// score 1 (was 1): only the constant target differs; retained property 155; joint admission 154;
-// admission result 1; retained admission 156; selection result 151; retained selection 144;
-// native state clear 180; constant before timers 35. Numerical value preserved.
-// Separate real timers 8; separate tick results/both pairs/pair scopes 1/1/1;
-// unsigned identifiers 1; long result 149; current-id lifetime 1; early result 27.
-// score 1 (was 1): constant between timers 13; after timers before link 2;
-// after selected call 6; after mode/state/link stores 7/18/21; after flags 23;
-// after unit notification 60. Original constant site restored; numerical value preserved.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
@@ -336,7 +322,7 @@ bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
         }
         local_0->field_4 = (short)local_7;
         local_0->field_0 = local_2;
-        local_0->field_24 = 1.5f;
+        local_0->field_24 = 1.0f;
         function_26c2d0(local_2);
         local_0->field_8 = 2;
         local_0->field_10 = local_4->unknown48;

@@ -3716,6 +3716,11 @@ bool function_07ab10(long key_index, s_type_99af70 *address, long local, word po
 // host/session homes, cleanup placement and clock expansion differ;
 // isolated failure-first 159, identifier assignment 136, delayed ready flag 136,
 // redundant false removed from one-exit flow 165, inline depth zero 136.
+// Join-key helper call 163; single-exit loopback bool helper 136 (retail's sete/test);
+// with it the clock helper forceinline 147; then channel failure first 138 at 573 bytes with
+// only the host register left (retail esi copied to ebx for the address call, session
+// reloaded; ours keeps host in ebx across it); inline address callee 138; inline key
+// setter 138; session parameter re-read at the address call 137 (host still ebx).
 // @retail 0x59e50
 bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
  const XNKID *kid, const XNKEY *key, const s_session_member_identity *host,

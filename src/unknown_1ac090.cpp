@@ -655,6 +655,9 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // Separate continuation, word/native with arms/conditional: branch 55/58/56/59; entry
 // 55/58/56/59 (three-point gain rejected). Tag/prop/state inline and noinline declarations,
 // singly and together, 58 each. Independent default reload and saved roles still differ.
+// No else (entry default kept) 55; invalid test first without else 55; slot cast at each use 58;
+// split 0xe tests 58; nested property/element tests 58; result first 58; state first 58;
+// inverted tick test 60.
 // Actor readonly/reference, element readonly/reference, readonly pair, native input
 // pair, state reference and all record references: 58 each; default reload and saved roles remain.
 // @retail 0x1ad5b0

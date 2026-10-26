@@ -1122,6 +1122,10 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // absent-parent first 94; absent-parent with byte force 94. The single-use word carrier is rejected unless exact.
 // Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
 // each; conditional orientation success 112; short activity 168.
+// Squared length in i, j, k order, through the shared squared-length or dot helper 94 each;
+// a vector3f field at 0x138 of the output read directly 92 (retail's k, j, i loads); with a
+// word force result 14 (the rest is the force push and the MOV/LEA order). Named output, up and
+// forward pointers 94/92 with the field.
 // Word force with ordered squares/native publication/output receiver 14/16/16; squares and
 // publication/squares and output/output and publication 14/14/16; all three 14; ordered squares with final
 // mask setter 14. Changed single-use word carrier is exact-only; all restored.

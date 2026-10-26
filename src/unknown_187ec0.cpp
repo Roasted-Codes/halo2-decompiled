@@ -600,6 +600,10 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // direction alias 89; point memcpy 89; velocity memcpy 89; location memcpy 89; three copies 89;
 // signed effect index 89; signed sound index 89; signed indices 89; own-parameter input 87;
 // inline effect callee 89; inline sound callee 89; inline dispatch callees 89.
+// BLOCKED-BY 0x1883e0: with its 4th/5th parameters as the one-short index class this takes
+// retail's eax/ecx inputs and only the second scan differs (short/word 56, dword/long 70).
+// Callee entry index through its address 77; volatile effect read 90 (retail inputs);
+// aggregate effect point 77; typed effect-direction local 77; point and description first 77.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)
