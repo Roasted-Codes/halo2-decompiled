@@ -1,5 +1,6 @@
 // @flags /O1 /Oi /arch:SSE /Gr
 #include "view_context_storage.h"
+#include "hud_messages.h"
 /* UNKNOWN_139296.CPP: per-player interface state (built for size) */
 
 #include "unknown_11c920.h"
@@ -571,30 +572,15 @@ void function_13934d(s_name_buffer *buffer, long string_handle)
 
 long function_155760(long index);
 bool function_155d60(long index);
-bool g_4f55e2;
 
-// score 7 (was 7): ours masks the byte with an and against a memory constant and negates it, retail masks a
-// dword in memory and tests the low byte; a four-byte global read into a char local already gives retail's
-// dword and, so what is left is the end: retail branches on the mask, ours negates it and pops esi early.
-// Tried: return !local_1 (11), local_1 + 1 (11), ?: false : true, if (!local_1) return true; return false,
-// char/long local (7); one shared bool result (30, 32); the whole test as one && chain, as a return or
-// with if (!local_1) return true falling to one return false (19: test byte ptr, xor eax/inc eax).
-// 0x165f16 shows the same dword and on this flag (0x4f55e2 sits between the bools at 0x4f55e0/e4).
-// Selected-index global at each call 7; admission-derived complete/staged/serial/interface result
-// 19/19/19/19; admission-derived long/short/byte result 24/25/24.
 // @retail 0x13939b
 bool function_13939b()
 {
 	long index = g_4b9ed8;
 	if ((function_155760(index) != 3 || function_155d60(index)) &&
 		function_155760(index) != 2 &&
-		((s_510c4c_view *)g_510c4c)->flag1d2)
-	{
-		bool local_1 = g_4e6948->state == 1 ? g_4f55e2 : false;
-		if (local_1)
-			return false;
+		((s_510c4c_view *)g_510c4c)->flag1d2 && !function_2ac270_get(6))
 		return true;
-	}
 	return false;
 }
 

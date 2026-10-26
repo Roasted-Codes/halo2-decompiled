@@ -80,13 +80,20 @@ static __forceinline long object_query_weapon(long unit_index, short slot)
 	return result;
 }
 
-// score 65 (was 65): the value at [edx+0x10] is compared in a different register: retail
+// score 50 (was 50): after the function_c7100 call retail looks the child up again
+// for the first weapon slot (the table pointer and object reloaded), where ours reuses
+// the unit pointer kept in EDI; the rest follows (13 bytes shorter). The same holds
+// with function_c7100 compiled to retail's exact code, so the cause is not that body.
+// Earlier: the value at [edx+0x10] is compared in a different register: retail
 // loads it into edx and keeps eax for the index, ours loads it into eax.
 // Shared-helper arm result 76; early exit 76; byte slot 71; long slot 75;
 // selected result 76; wide selection 86; unsigned handle 65;
 // slot-validity local 65; shared parent/sibling cursor 65.
 // Shared object getter 65; shared header getter 65; output references 65; child reference 65; association
 // result 65; byte slots 65; shared/output 65; reference/result 65.
+// function_cbd50 called for both slots 93 (stays out of line); helper inline instead
+// of forceinline 93; object index first in the comparison 51; unit declared outside
+// the loop 50; while loop 50.
 // @retail 0x82c10
 void __stdcall function_82c10(long object_index, long *weapons)
 {

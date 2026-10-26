@@ -636,7 +636,18 @@ struct s_1f9762
 	s_actor_point_entry field_30[4];
 };
 
-// score 67 (was 67): Frame 0x1c agrees; fallback approach placement and scalar registers still differ.
+// score 67 (was 67): approach as its own statement after the arms (no gotos), struct copy of the
+// direction and `remaining <` on the left give retail's length and code; left: retail lays the
+// previous-point false arm and the approach call after the first return (a jump-threaded copy)
+// with the last-path projection falling into the shared test. Direction-first dots 67/67;
+// `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction
+// pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
+// The approach inside the not-last arm under its direction test 104; `direction_valid && !last`
+// (also with the last arm's tests swapped or nested, or `&& !projection_direction`) moves the
+// approach after the first return as retail does but keeps the projection pointer in edi and
+// the actor index in ecx (191); `!projection_direction &&` first 67; the last arm's
+// `actor->unknown4d4 && direction_valid` 69 and nested 67; permuter 56 tries, best 67.
+// Frame 0x1c agrees; fallback approach placement and scalar registers still differ.
 // Earlier: ours is five bytes longer than retail: the value that
 // is compared is loaded into another register and the call that follows takes
 // its argument from another stack slot.

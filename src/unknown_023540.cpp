@@ -2400,7 +2400,7 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 331 (was 344): frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
+// score 331 (was 331): frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
@@ -2411,6 +2411,9 @@ dword __cdecl function_131fc0(real alpha);
 // captured inverse 335; direct inverse with width/height/both defaults 365/434/349;
 // captured inverse with both defaults 349; bounded dimension results 430;
 // entry dimension results 429. Only the own-address inverse alias is removed.
+// Tag/bitmap/both observations 400/399/399; pixel fields at use 335;
+// native source/destination/both bounds 335/335/335 (exact-only, restored);
+// one shared exit 335; all fast against control 335.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2557,7 +2560,11 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
 
-// score 544 (was 554): Frame 0x214 versus 0x200; stack order, coefficient homes and shared sample paths remain.
+// score 530 (was 544): Frame 0x214 versus 0x200; order, coefficient homes and sample paths remain.
+// Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
+// unsigned handle 544; native bucket fields 544.
+// Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
+// Earlier 544 (was 554): Frame 0x214 versus 0x200; stack order, coefficient homes and shared sample paths remain.
 // Full-width order 578; byte sample 575; bucket cursor 580; bucket rotation scope 575;
 // found-index search 572; long found-index 603.
 // Native cache cursor 590; bounded sample while 575; bounded bucket while 575;
@@ -2569,6 +2576,7 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Shared cache helper 718; explicit eligibility 560; entry matrix 561; short bounded sample loop 606; post-metadata defaults 554 (plain).
 // Native sample arrays 554; byte output cursor 554; exact determinant tree 554; unsigned byte size 554; signed-byte success 563 (fast).
 // Next matrix at loop tail 586; sample input cursor 552; short count override 554; entry direction workspace 554; positive allocation scope 544 kept (plain); scope plus sample cursor 542, extra two rejected.
+// Round 151: Live structure 561; live cache entry 530 kept; both live 544; six determinant terms 544; terms with structure/cache/both 561/530/544; direct bucket input 544.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2579,9 +2587,8 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         for (short i = 0; i < g_5093e8; ++i)
             if (g_4b89b0[i].key == object_index) found = true;
         if (found || g_5093e8 >= 24) goto done;
-        s_table_entry *entry = &g_4b89b0[g_5093e8];
-        entry->key = object_index;
-        *(short *)&entry->unknown4 = order;
+        g_4b89b0[g_5093e8].key = object_index;
+        *(short *)&g_4b89b0[g_5093e8].unknown4 = order;
         byte const *structure = (byte *)g_4e0344;
         bool use_samples = structure && *(long const *)(structure + 0x80) > 0 && g_4e0348 &&
             *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
@@ -2592,7 +2599,7 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         real const *data = layout->data + layout->levels[level].offset;
         long stride = layout->groups * (layout->columns * 3 + 4);
         s_bucket_source const *buckets = (s_bucket_source const *)vertices;
-        long total = function_023540((short)count, buckets, entry, stride);
+        long total = function_023540((short)count, buckets, &g_4b89b0[g_5093e8], stride);
         long bytes = total * stride * sizeof(real);
         if (!use_samples)
         {
@@ -2606,7 +2613,7 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         {
             long handle = g_487b18.size & 0x0fffffff;
             g_487b18.size = next;
-            entry->data_handle = handle;
+            g_4b89b0[g_5093e8].data_handle = handle;
             real *output = (real *)(g_487b18.data + handle);
             for (long bucket = 0; bucket < count; ++bucket)
             {
@@ -2627,7 +2634,7 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
                         {
                             byte *bsp = *(byte **)(structure + 0x84);
                             function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
-                                (byte)layout->order, &entry->scale, position);
+                                (byte)layout->order, &g_4b89b0[g_5093e8].scale, position);
                         }
                     }
                     real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
@@ -2687,6 +2694,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Native coordinate output 348; first/second/both corner-table loops 466/475/467;
 // native output with both loops 467; native corner input 561; corner input loops 560;
 // native corner and coordinate loops 560. Original helper and all eight calls restored.
+// Original-body helper output/scale/rotation-first parameters 348/348/348;
+// ordinary inline 348; separate trig scopes 351; later second output 348;
+// separate output plus trig scopes 351; exact stage terminator 348.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
