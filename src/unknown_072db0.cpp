@@ -1320,7 +1320,8 @@ struct s_rating_summary
 
 #pragma inline_depth(0)
 
-// score 202 (was 202): Key/statistic homes, cursor and grouped team dispatch remain; live
+// score 202 (was 202): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
+// Earlier: Key/statistic homes, cursor and grouped team dispatch remain; live
 // key/player/team/both skills 348/320/199/317; key plus player/team/both 379/374/388; player-only
 // key phase 266. Three-point team-read gain rejected.
 // Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
@@ -1365,6 +1366,9 @@ struct s_rating_summary
 // Signed full-width character 203; entry query-table workspace 202; test-derived translated
 // character 264; signed character plus query workspace 203; signed/entry/both with
 // translation 264/264/264; entry name-capacity workspace 202 (fast). All restored.
+// Native unsigned masked statistics 202; shared player/team ordinal 220 (key home recovered);
+// contiguous summary prefix fill 217; counts/ordinal 220; counts/prefix 217; ordinal/prefix 214;
+// all three 214; read-only query table 202.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
