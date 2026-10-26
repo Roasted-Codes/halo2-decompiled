@@ -176,6 +176,8 @@ static __forceinline long float_to_int_nearest(real value)
 // Round 124: Consistent variant-pointer field reads 118; disjoint source mask OR 118;
 // conditional optional flags 161 and full flag expression 162 (each loses eight callers, rejected);
 // nested class admission 118; real class-word mask with direct query 135. All body/type trials restored.
+// State/result/flags/both names 118/118/118/118; early object/source/platform/all stores
+// 118/135/118/133; swapped object-source/source-platform stores 118/118.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {

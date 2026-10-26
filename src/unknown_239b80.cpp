@@ -259,12 +259,14 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 
 /* gift wrapping: the indices of the convex hull of the points, starting from
    the lowest */
-// score 203 (was 208): scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
+// score 203 (was 203): scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
 // Full count tests 274; current-point snapshot 271; byte start state 250; float workspace names 250; still-at-origin state 264; inline classifier declaration 250; forced equality declaration 250.
 // Unsigned word result 275; unsigned first/candidate ordinals 247/209 (caller lost); native compaction ordinals 285;
 // monotonic departure 263; compaction shared exit 279; heading initialized after lowest scan 234.
 // signed-word departure state 208; native selected-next index 273; departure before classifier 218; unsigned compaction ordinals 248; lowest constants after current index 234.
 // Round 212: Unsigned-word/native-long departure 208/203; result lexical home 208; native lowest-scan ordinal 612; entry heading lifetime 237. Result/departure slots, bound and compaction boundary remain.
+// Departure/output/both/current/heading names 203 each; byte departure 234; late departure and
+// lowest-coordinate order 203/203; heading before scan 220.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
