@@ -3867,6 +3867,7 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 358: Category-only byte 545; modifier-only byte 530; modifier after category predicate 543;
 // exhaustive subtype result 566; entry statistics ordinal 557. Frame/NONE and decision homes remain; opening
 // body and shared award update restored.
+// Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

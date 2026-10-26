@@ -1287,6 +1287,7 @@ real function_30bf0(vector3f *vector);
 // limited-normal/turned-normal/all homes 364/364/364; outer rotation workspace 364.
 // All original normal, copied color and rotation values and helper boundaries retained.
 // Round 152: All rotation-row partial sums/products 364/438; all normalizer products 430 (retail frame/length); normalizer with rotation partials/products 430/449; all RGB blend products 429 (retail frame/length); blend/rotation partials 443; all parallel products 429.
+// Color clamp orders 102/210/201/012/021 386/377/393/393/387; first color scale orders rbg/grb/gbr 364/363/362.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
