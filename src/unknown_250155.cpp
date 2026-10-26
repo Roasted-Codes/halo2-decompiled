@@ -2769,7 +2769,7 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 	item->value5c = team;
 }
 
-// score 100 (was 156): Frame 0x754 agrees; item-loop receiver reload, bitmap block order, row carriers and animation load remain.
+// score 100 (was 100): Frame 0x754 agrees; item-loop receiver reload, bitmap block order, row carriers and animation load remain.
 // Tried category descending 237; title default first 244; bitmap index long 237; title widget scopes
 // 237; separate player row counters 237; existing widget lookups 175; native animation bit 233; widget
 // lookups animation bit 179; map text lookup 237; text lookup helpers 156; bitmap lookup helpers 164; native
@@ -2789,6 +2789,9 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 // row/animation homes remain. Tried item pointer walk 301; game result width 309; row counter
 // Name/appearance/team/all item operations force-inline 156 each; unsigned word rows 203;
 // loop-scoped row widgets 157; bitmap category order 156; player-item array home name 156.
+// Native/promoted retained item count 100/100; count-tested item while 100;
+// independent item admissions 100; name-only item continue 100; current array-item pointer 294;
+// complete bitmap/title guards on the offline-first body 100/100. Original body retained.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {

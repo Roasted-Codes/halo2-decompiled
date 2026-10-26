@@ -3021,6 +3021,9 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // score 86 (was 86): Loop-entry playback/clock loads and mode comparison remain.
 // pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
 // promoted voice 132; shared absolute index 162; mode with entry reason 127.
+// Failed-acquisition first 127; pending-chunk first 131; retained callback source 86;
+// previous voice owner 86; mode zero guard 155; separate update guard 86;
+// range pointer addition 86; callback-availability first 85 (one point, rejected).
 // @retail 0x1282d0
 void function_1282d0(void)
 {
