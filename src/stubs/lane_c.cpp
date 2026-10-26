@@ -29,13 +29,7 @@ public:
  virtual hkBool function_2dfae0(void const *arg_0, void const *arg_1);
 };
 
-class c_2dfbf0
-{
-public:
- c_2dfbf0();
- void function_2df950(long arg_0, long arg_1);
- void function_2df990(long arg_0, long arg_1);
-};
+class c_2dfbf0;
 
 struct s_3111d0
 {
@@ -69,8 +63,7 @@ public:
 
 // @stub 0x2d8780
 void __cdecl function_2d8780() {}
-// @stub 0x2d7f00
-void __cdecl function_2d7f00() {}
+
 class c_278370
 {
 public:

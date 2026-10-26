@@ -217,24 +217,14 @@ public:
 
 // motion objects 0x311940 builds
 class class_31ad80 { public: class_31ad80(void const *position, void const *orientation); };
-class class_3193c0 { public: class_3193c0(void const *position, void const *orientation); void function_319740(unsigned long value); };
-class class_31a6b0 { public: class_31a6b0(void const *position, void const *orientation); };
+
 
 // @stub 0x31ad80
 class_31ad80::class_31ad80(void const *position, void const *orientation)
 {
 }
 
-// @stub 0x3193c0
-class_3193c0::class_3193c0(void const *position, void const *orientation)
-{
-}
 
-// an XDK networking routine (10 bytes, a slot of 0x31a6b0's vtable)
-// @stub 0x319740
-void class_3193c0::function_319740(unsigned long value)
-{
-}
 
 // Havok round 23: callees of the functions this round writes
 
