@@ -867,6 +867,9 @@ long texture_cache_bitmap_level(s_bitmap_data const *bitmap, real scale)
    one second (type 2) */
 // score 2 (was 2): the value is stored to the stack before EDI is pushed; retail pushes EDI
 // first and stores it afterwards.
+// score 2 (was 2): timer zero store still precedes the EDI save; split start 2; direct start 2;
+// immutable start 2; result declaration before start 2; counter declaration before start 2;
+// timeout before start 15; pump bound before start 10; nested allocation result 2.
 // @retail 0x12d400
 long function_12d400(long type, long size, long user_data, long update, long release)
 {
@@ -976,6 +979,9 @@ struct s_bitmap_texture_view
 
 // score 3 (was 3): the masked level address is loaded into EDX, retail reuses the base register,
 // which is dead after that load.
+// Entry data declaration 3; level-index local 3; reversed subscript 3; 28-bit field view 3;
+// shift mask 3; modulus mask 3; signed addresses 3; destination OR 3; initialized entry data 3;
+// bitmap-view alias 3.
 // @retail 0x12d6d0
 void __stdcall function_12d6d0(s_bitmap_texture_view const *bitmap, long level, D3DTexture *texture)
 {

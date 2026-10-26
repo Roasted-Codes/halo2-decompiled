@@ -1259,7 +1259,7 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
-// score 184 (was 199): frame 0xe4 agrees; owner/count registers and requested cursor differ.
+// score 184 (was 184): frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
 // Session-root control 199; owner at use 239; empty name table 222; first name unit 240; requested name
@@ -1268,16 +1268,25 @@ struct s_player_properties
 // Requested/current/both property references 199/199/199; name/update bits at use 228/224;
 // packed initialization word 238; contiguous payload copy 284; contiguous tail copies 263
 // (all plain). Owner/count allocation and the requested cursor remain unchanged.
-// score 184 (was 184): owner/name-count/zero allocation and requested induction remain.
+// Earlier: owner/name-count/zero allocation and requested induction remain.
 // On the direct-requested-field base: counted first/second/both default arrays 240/240/235;
 // chained defaults 184; shared actual three-element prefixes 198; selective first/second
 // reset calls 240/240; both reset calls 235.
-// score 184 (was 184): owner/name-count/zero allocation and requested cursor remain.
+// Earlier: owner/name-count/zero allocation and requested cursor remain.
 // Cache/record/both equality operands reversed 200/212/201; separate name-count
 // publication 211, with those reversals 200/212/201; split cache guard 201.
 // owner/count/zero homes and requested cursor remain.
 // Current fields at use all/names 198/184; metadata/all with live mask/all with late count 234/198/198;
 // all with owner at use/second index/both indices 207/198/198.
+// Earlier: owner/name-count/zero allocation and requested cursor remain.
+// Seven nonempty byte/long/short native aggregate-default groups 339 each;
+// full native defaults with redundant zero stores retained 375. Original initialization restored.
+// owner/count/zero allocation and requested cursor remain.
+// Redundant team/byte/both byte zeros removed 208/208/197; first/second array zeros removed 194/205.
+// First/second array plus both bytes 226/232; all redundant zero stores removed 245.
+// Overwritten byte/long/short sentinel defaults omitted 199/199/201;
+// byte+long/byte+short/long+short 226/228/230; all sentinels 246;
+// all overwritten defaults 296. Original initialization retained.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
@@ -1589,6 +1598,12 @@ static __forceinline bool function_65341(c_class_58d20 **out)
 
 // score 114 (was 120): retail picks the observer pointer with a conditional move
 // after the flag test; ours computes the same value with a negation and a test.
+// score 118 (was 118): retail builds this body with SSE (cmovne, movss, cvttss2si), which this
+// file lacks, and inlines the session-a/b getters there (their static inline bodies live in
+// unknown_058ee0.cpp). In a new /arch:SSE file: as written 136; if-form state with the variant
+// getter 142 at retail's length; existing getters with forceinline declarations 162 (kept out of
+// line); per-case getter copies 155 and switch in the body 155 (the session then goes through a
+// stack slot); existing getters without /Ob1 173; per-case result assignments 149.
 // @retail 0x65340
 void function_065340(void)
 {

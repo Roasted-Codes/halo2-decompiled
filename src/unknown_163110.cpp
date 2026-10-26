@@ -637,6 +637,9 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 // score 115 (was 115): Normal/zero XMM roles, classification and projection homes remain; offset
 // accumulator 269; shared segment count 468; count result 459; projected/intersection values 402/323;
 // bool/second endpoint values 259/362; completed cursor 196.
+// The locals as plane3f 115; plane_distance_to_point for the classification 265, plus the
+// intersection distance 269, plus dot3f for the denominator 216; the distance alone 117;
+// dot3f for the first plane's d 278 (either argument order), for both planes' d 155.
 // @retail 0x1652e0
 bool function_1652e0(s_view *view, real margin, const point3f *points, long point_count, point3f *projected_points, short *projected_count, s_bounds3d *bounds, bool use_plane0, bool use_plane1)
 {
@@ -797,7 +800,7 @@ color4f *g_4686d8;
 color4f *g_4686dc;
 color4f *g_4686e8;
 
-void function_36880(color4f const *color, s_short_rectangle const *rectangle);
+void function_36880(s_short_rectangle const *rectangle, color4f const *color);
 
 /* draws a connection quality widget: a frame and one bar per quality step */
 // @retail 0x1634d0
@@ -829,7 +832,7 @@ void connection_widget_draw(s_text_widget_c const *widget)
 		color.alpha = widget->color_b.alpha;
 		bounds.top = widget->bounds.bottom - 0x12;
 		bounds.bottom = widget->bounds.bottom - 1;
-		function_36880(&color, &bounds);
+		function_36880(&bounds, &color);
 
 		bounds.left = widget->bounds.left + 1;
 		bounds.right = widget->bounds.right - 1;
@@ -850,7 +853,7 @@ void connection_widget_draw(s_text_widget_c const *widget)
 		color.alpha = widget->color_b.alpha;
 		for (i = bar_count; i > 0; i--)
 		{
-			function_36880(&color, &bounds);
+			function_36880(&bounds, &color);
 			bounds.top -= 3;
 			bounds.bottom -= 3;
 		}

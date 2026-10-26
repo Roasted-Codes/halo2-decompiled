@@ -71,9 +71,12 @@ static inline s_sound_object_header *sound_object_header(long object_index)
 
 static inline vector3f *transform4x3f_apply_normal(transform4x3f const *matrix, vector3f const *vector, vector3f *out)
 {
-	out->i = matrix->up.i * vector->k + matrix->left.i * vector->j + matrix->forward.i * vector->i;
-	out->j = matrix->up.j * vector->k + matrix->left.j * vector->j + matrix->forward.j * vector->i;
-	out->k = matrix->up.k * vector->k + matrix->left.k * vector->j + matrix->forward.k * vector->i;
+	real x = vector->i;
+	real y = vector->j;
+	real z = vector->k;
+	out->i = matrix->up.i * z + matrix->left.i * y + matrix->forward.i * x;
+	out->j = matrix->up.j * z + matrix->left.j * y + matrix->forward.j * x;
+	out->k = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x;
 	return out;
 }
 
@@ -131,11 +134,15 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 }
 
 
+// score 55 (was 134): frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
+// Byte result first 150; Boolean early-success result 152; long result 135; independent type tests 170;
+// excluded-class exit 165; long result first 134 kept (plain).
+// Root output at entry 134; forward at entry 134; direct successful completion 185; machine arm first 134; CRT location publication 134; existing normal helper input values 55 kept (plain).
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
+	long result = 0;
 	s_sound_object_view *object = (s_sound_object_view *)function_badc0(object_index, NONE);
-	byte result = 0;
 
 	if (object && !object_or_parent_hidden(object_index))
 	{
@@ -189,8 +196,8 @@ bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker
 				}
 
 				location->spatial.location = object_location;
-				location->audible = function_18d4b0(tag_index, location->requested_audible, object_index, NULL);
 				result = true;
+				location->audible = function_18d4b0(tag_index, location->requested_audible, object_index, NULL);
 			}
 		}
 	}
@@ -350,9 +357,6 @@ static __forceinline long float_to_int_nearest(real value)
 }
 
 #pragma inline_depth(0)
-// score 21 (was 21): tag/sound/promotion use EBX/EDI/ESI versus EDI/ESI/EBX.
-// Read-only tag 21; wide promotion selector 62; conditional promotion 22; complete eligibility guard 21;
-// separate promotion failures 21; set after rounding 72; named rounding homes 21; read-only set 21.
 // @retail 0x18c720
 void function_18c720(long tag_index, long object_index, long set_index, long permutation_index, real scale)
 {
@@ -366,8 +370,7 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 			promotion = &((s_sound_globals_promotion_view *)g_51ebd4)->promotions[local_0];
 		if (promotion && (function_12de70(&promotion->block, 2) || promotion->count > 0))
 		{
-			s_sound_globals_promotion_view *globals = (s_sound_globals_promotion_view *)g_51ebd4;
-			s_sound_permutation_set *set = &globals->sets[sound->permutation_base + set_index];
+			s_sound_permutation_set *set = &((s_sound_globals_promotion_view *)g_51ebd4)->sets[sound->permutation_base + set_index];
 
 			real local_1 = scale * 30.0f;
 			long local_2;
@@ -377,20 +380,12 @@ void function_18c720(long tag_index, long object_index, long set_index, long per
 				fistp local_2
 			}
 			function_18c9b0(object_index, function_218e50(tag_index, (short)set_index, (short)permutation_index, (short)local_2));
-			function_18ca20(object_index, tag_index, &globals->permutations[set->first_permutation + permutation_index], scale);
+			function_18ca20(object_index, tag_index, &((s_sound_globals_promotion_view *)g_51ebd4)->permutations[set->first_permutation + permutation_index], scale);
 		}
 	}
 }
 #pragma inline_depth(255)
 
-// score 12 (was 12): object/tag entry registers differ with the dispatch tag convention; inline
-// existing dispatch callee 12; out of line dispatch declaration 12; readonly tag input 12; readonly
-// set input 12; readonly first permutation 12; selected permutation two consumers 12; selected
-// input guard first 17; typed permutation readonly range 12.
-// object/tag entry registers still follow the dispatch
-// convention. Nested validation 12; object query receiver 12; validation from
-// tests 43; globals after tag query 38; direct set/first element 12/12;
-// absolute set part 12; relative permutation index 26.
 // @retail 0x18c6a0
 void __stdcall function_18c6a0(long object_index, long unused, long tag_index, long set_index, long permutation, long scale)
 {
@@ -408,8 +403,6 @@ real sound_permutation_reference_duration(long definition_index, s_sound_permuta
 
 /* replays the impulse sounds in the slots of g_4ed288 on their objects and
    frees the slots whose sounds are over or whose objects are gone */
-// score 58 (was 58): BLOCKED-BY 0x18c720: it takes the tag in ebx (retail edi), which adds a push
-// ebx here and shifts both float spills by four; aligned, nothing else differs.
 #pragma inline_depth(0)
 // @retail 0x18bf90
 void function_18bf90(void)
@@ -540,6 +533,13 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 	location->spatial.compressed_forward = vector3d_compress(g_4687b0);
 }
 
+// score 293 (was 293): Frame 0x84 versus 0x80; datum/tag and root-location carriers remain.
+// marker outer scope 309; direct failure predicate 293 kept (plain); stored-scale arm first 314; ascending cases 311; failure exit 314.
+// Long failure result 293; marker consumption scope 293; shared scale object index 339;
+// force-inline object-index query 293; marker/axis/audibility role names 293.
+// Tag-first declaration 293; explicit failure arms 309; word cluster 294; CRT velocity copy 293; owner value conditional 301.
+// Effect axis at entry 293; audibility output at entry 293; direct late tag flag 323 (frame 0x80);
+// readonly datum 293; CRT marker position 293.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
@@ -554,9 +554,7 @@ void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 		{
 			location->audible = 1;
 			vector3f forward;
-			bool failed = true;
-			if (!TEST_FIELD_BIT(sound->flag1))
-				failed = !function_17b2d0(sound->owner, &location->spatial.position, &forward, &location->scale);
+			bool failed = TEST_FIELD_BIT(sound->flag1) || !function_17b2d0(sound->owner, &location->spatial.position, &forward, &location->scale);
 			if (!failed)
 			{
 				location->spatial.compressed_forward = vector3d_compress(&forward);

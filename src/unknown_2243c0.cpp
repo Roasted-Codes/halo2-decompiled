@@ -255,6 +255,9 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // Tag index read once (table moves to retail's EDI, first difference +0xe) 135; plus flags read at
 // the call 162; plus lookups in the record_material shape 135; plus all four zero stores after the
 // lookups 163; plus a tag entry pointer for the group tests 152; pointer and late zeros 149.
+// frame 0x5c and EAX input agree; saved EDI table ownership and unfused lookups differ.
+// Five native byte-block formal orders 136 each; accessor result lifetime 136;
+// extent-first product 136; target inline contract 136. Original helper retained.
 // @retail 0x224db0
 void __stdcall function_224db0(s_interface_definition *arg_0, long arg_1, long arg_2,
 	long arg_3, long arg_4)

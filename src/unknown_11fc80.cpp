@@ -73,10 +73,18 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // score 65 (was 65): distance/delta XMM homes and final Z-product destination remain.
 // Existing interpolation inputs by vector/point/both values 709/498/872; native component
 // array 65; shared scale stage 353; point-value return 519; early Z product 307; vector/early Z 709.
-// score 65 (was 65): current-distance/delta XMM homes and final Z-product destination remain.
+// score 65 (was 65): distance/delta SSE homes and destructive Z-product destination remain;
+// direction-output-point-fraction 65; point-output-direction-fraction 65; direction-point-fraction-output 65;
+// point-direction-output-fraction 65; products before stores 65; equality bound 1280;
+// emission-count scope 194; complete XY before publication 124.
+// current-distance/delta XMM homes and final Z-product destination remain.
 // Complete endpoint consumer 297; distance-input consumer 332; complete edge consumer 297;
 // difference input reference 65; complete plane input 392; current/prior classifications
 // at use 1268/455; retained-side classifications 469.
+// score 65 (was 65): same XMM homes (ours delta z takes xmm2 and receives the z product).
+// Loop-carried updates as distance/inside/point and inside/distance/point 65/65; z product
+// written k * t 65; current distance as two statements like the previous one 83; span
+// before delta with t passed inline 65.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,

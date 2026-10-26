@@ -564,6 +564,9 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 
 /* sets up the hill of the index: its markers, the vertices each spline
    segment gets (32 in all), and its polygon */
+// score 2 (was 2): the post-loop pointer/index restores remain reversed.
+// Final count and entry divisor 2/2; low-bit clear/remainder 64/63; endpoint
+// parts/start-first 2/2; step cursor 10; parity first 6; polygon/index names 2/2.
 // @retail 0x2bdc70
 void hill_set(s_polygon_2be *hill, long index)
 {
@@ -1027,6 +1030,9 @@ PRIVATE __forceinline bool territory_holder_matches_player(long holder, long pla
 // inline depths one/two, state per use, early team-array lifetime, invalid
 // marker continue, point memcpy and nested holder test 88; marker-first 90.
 // holder and marker registers plus append carriers remain; append output last 88; point last 88; full-list guard 88; short ordinal 153; word ordinal 151; player team first 88; team failure exit 92; short ordinal with output last 153.
+// score 88 (was 88): the team test branches directly with the holder predicate as one condition,
+// but the players base hoists 92; read through the pool in the test 96; helper as one expression 96;
+// position passed directly 92; position copied as a struct through its pointer 88 (same code, kept).
 // @retail 0x2bf740
 void c_game_engine_45c948::v32(long player_index, long list_pointer)
 {
@@ -1042,12 +1048,8 @@ void c_game_engine_45c948::v32(long player_index, long list_pointer)
 		{
 			if (territory_holder_matches_player(holder, player_index, g_4e8c24))
 			{
-				long bits[3];
 				point3f const *source = &g_4e0350->marker_entries[marker].position;
-				bits[0] = ((long const *)source)[0];
-				bits[1] = ((long const *)source)[1];
-				bits[2] = ((long const *)source)[2];
-				point_list_add_2bf(list, *(point3f const *)bits,
+				point_list_add_2bf(list, *source,
 					*(real *)&g_502258[35], *(real *)&g_502258[36], *(real *)&g_502258[0], *(real *)&g_502258[1], *(real *)&g_502258[37]);
 			}
 		}

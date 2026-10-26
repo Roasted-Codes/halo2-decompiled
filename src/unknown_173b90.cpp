@@ -817,15 +817,16 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 355 (was 355): frame agrees; byte flag clear, child carriers and selective inlining differ.
+// score 308 (was 308): frame 0x60 agrees; early long-result store, flag transfer and child/call homes remain.
 // Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
 // perpendicular call 394; inline depth one 394, zero 517.
-// score 329 (was 355): frame 0x64 versus 0x60; flag clear and selective calls differ.
 // Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
 // child tag scalar 394; long result 329; dword flags 401.
-// score 308 (was 338): Frame 0x60 now agrees; flag transfer, child carriers and selective calls
-// remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
+// Ordinary local parent 366; word result 338; direct final result 388; direct parent color
 // 308 (plain verified); child for-loop 338.
+// Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
+// child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
+// Original entry result, ordinary pooled flags and all child calls restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1011,6 +1012,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
 // preference 646; child constant bit stores 220.
 // score 213 (was 213): Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
+// Direct render-table expression 222; request location at rendering 327; byte view result 213;
+// ordinary while location traversal 213; camera up copied first 213.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {
@@ -1137,6 +1140,15 @@ bool function_17afd0(long effect_index, long value);
 // set) 101 plain, kept; stack-bool rename 102; bit 9 as a named bitfield 102; nested
 // attached else-if 102; wide view 102; wide effect index 102; two-step same-view 102;
 // flag as false-init plus conditional set 144 (fast previews 107/102/144).
+// score 101 (was 101): NONE/owner coalescing and Boolean homes remain; fast control 102.
+// Implied owner validity/availability-first equality 170/172; classification scope 102; scope
+// with implied validity 170; short/signed-byte availability 147/102; combined forms 148/102.
+// NONE/owner coalescing, BL availability and Boolean homes remain.
+// View-query inline/noinline, attachment noinline, draw inline/noinline,
+// scan inline/noinline and paired predicate boundaries all 102 fast, tying preview.
+// NONE/owner sharing and availability/Boolean homes remain.
+// Next-used helper entry/advance/both 200/202/244; native draw/query+draw bits 101/128;
+// native bits with entry/advance helper 195/198; inline/outline-inline query 101/101.
 // @retail 0x174220
 // score 101 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
 // availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag

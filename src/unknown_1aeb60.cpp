@@ -337,8 +337,17 @@ struct s_unit_state_0f
 
 static __forceinline long real_to_long(real value);
 
-// score 114 (was 114): the argument is read into ECX and the other value into EDX; retail reads them
+// score 49 (was 79): Frame agrees; actor/index ECX/EDX and final call setup differ.
+// Earlier: the argument is read into ECX and the other value into EDX; retail reads them
 // in the opposite order.
+// Earlier: ecx and edx are swapped through the whole body (retail: index edx, actor ecx);
+// retail also keeps the random scale and the range as two fmuls. Slot view first 79; one actor
+// pointer for the last test 138; marker local in the last block 80; `--timer == 0` 79; prop index
+// local 79.
+// Native countdown/mode/both 134/80/138; shared range 49; its native countdown/mode/both 127/64/129; unit
+// reference 49; short/early short countdown 49/123; actor reference and read-only node/unit/actor/all
+// views 49 each; final guard 49; direct shared product/conversion 49/49; shared low-half index with
+// pointer/reference 127/127.
 // @retail 0x1afb30
 void __stdcall function_1afb30(long actor_index, s_slot *slot)
 {
@@ -351,9 +360,8 @@ void __stdcall function_1afb30(long actor_index, s_slot *slot)
 		if (!state->timer && actor->unknown227 && !actor->unknown229)
 			function_1f86a0(actor_index);
 	}
-	short remaining = state->ticks - 1;
-	state->ticks = remaining;
-	if (remaining <= 0)
+	state->ticks--;
+	if (state->ticks <= 0)
 	{
 		if (actor->prop_index != NONE)
 		{
@@ -366,10 +374,7 @@ void __stdcall function_1afb30(long actor_index, s_slot *slot)
 				timer->time = now;
 			}
 		}
-		real seconds = slot_random_range(3.0f, 10.0f);
-		real ticks = g_510c54->field_2_3 * seconds;
-		long rounded = real_to_long(ticks);
-		state->ticks = (short)rounded;
+		state->ticks = (short)real_to_long(g_510c54->field_2_3 * function_259d0(&g_4e7408->unknown0, NULL, 0, 3.0f, 10.0f));
 	}
 	if (state->unknown16 && !state->unknown17 && state->unknown34 && actor_get(actor_index)->unknown504 == 2)
 	{

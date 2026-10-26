@@ -24,6 +24,10 @@ bool function_1946f0(s_bitstream *stream)
 	return result;
 }
 
+// score 2 (was 2): the masked-byte and clear-start LEAs keep the reversed data/index operand order.
+// Reversed additions 2; grouped clear start 2; data plus one then index 2; shared clear start 24;
+// count before mask 47; count declared first 2; split index declaration 2; index plus one then data 2;
+// element address plus one 2; const index and count 2; size local 47.
 // @retail 0x194710
 void function_194710(s_bitstream *stream, bool discard)
 {
@@ -171,7 +175,15 @@ void function_194fa0(s_bitstream *stream, word *buffer, long count)
 	}
 }
 
-// score 38 (was 38): frame is 8 bytes versus 4; lower product precedes upper log;
+// score 38 (was 38): retail computes both logarithms before either product, keeps
+// the upper one on the x87 stack until the division (FILD n + FDIVP) and stores the
+// integer weights in the dead lo/hi argument slots (PUSH ECX frame); ours multiplies
+// the lower product first, divides with FIDIV and needs a second slot. Implicit
+// integer weights 43 (FIMUL); one expression with the log calls 43; named exponent
+// with inline conversions 43; weights before the logs 38; named exponent 38; double
+// intrinsics 41; the blend as an inline helper taking the logs 38 (diagnostic only);
+// n declared after the logs 38.
+// frame is 8 bytes versus 4; lower product precedes upper log;
 // upper-first logs, real weighted sum/exponent, entry log homes and reader declarations 38;
 // explicit log/weight locals with one result 64; positive interior admission 49.
 // Extra four-byte stack slot and endpoint-log scheduling remain.

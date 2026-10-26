@@ -223,6 +223,25 @@ void function_16f60(byte *state, word const *range)
     }
 }
 
+// score 93 (was 93): frameless BX entry agrees; dispatch span and selective setter expansion
+// differ.
+// Complete case orders 0/12/34/6/5 114; 0/12/5/34/6 119; 0/12/6/34/5 103 kept;
+// 0/34/12/5/6 158; 0/5/12/34/6 151; 0/6/12/34/5 167;
+// 0/34/5/6/12 224; 0/6/5/34/12 165. Code rows 91 to 80; 780/772 bytes.
+// dispatch span and selective setter expansion still differ.
+// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison
+// 103/103;
+// early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
+// common exit 99; sixth exit 93; comparison exit 93; fifth exit 93; sixth comparison exit 93; fifth
+// sixth exit 93; explicit default common exit 99; fourth comparison first 93. Selective setter
+// expansion and shared tails remain.
+// frameless BX entry agrees; dispatch span and selective setter expansion differ.
+// 0/34/5/6/12 224; 0/6/5/34/12 165. Earlier code rows 91 to 80; 780/772 bytes.
+// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison 103/103;
+// Reference-call branches first/second mode 144/145; paired-label orders 93/93/93;
+// complete group orders 0/12/34/5/6, 0/12/5/6/34, 0/34/6/12/5 105/106/197.
+// Shared keep-pass group/conditional comparison/mask-call branches 282/270/207;
+// shared first one/two/three calls 188/235/292; first one/three with group 313/368.
 // @retail 0x15370
 void function_15370(short mode)
 {
@@ -243,12 +262,26 @@ void function_15370(short mode)
 		function_0222d0(D3DRS_STENCILWRITEMASK, 255);
 		g_467010 = mode;
 		return;
+	case 6:
+		function_0222d0(D3DRS_STENCILENABLE, TRUE);
+		function_0222d0(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
+		function_0222d0(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
+		function_0222d0(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+		function_0222d0(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+		function_0222d0(D3DRS_STENCILREF, 0);
+		function_0222d0(D3DRS_STENCILMASK, 3);
+		function_0222d0(D3DRS_STENCILWRITEMASK, 0);
+		g_467010 = mode;
+		return;
 	case 3: case 4:
 		function_0222d0(D3DRS_STENCILENABLE, TRUE);
 		function_0222d0(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
 		function_0222d0(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
 		function_0222d0(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
-		function_0222d0(D3DRS_STENCILFUNC, mode == 3 ? D3DCMP_EQUAL : D3DCMP_NOTEQUAL);
+		if (mode == 3)
+			function_0222d0(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+		else
+			function_0222d0(D3DRS_STENCILFUNC, D3DCMP_NOTEQUAL);
 		function_0222d0(D3DRS_STENCILREF, 0);
 		function_0222d0(D3DRS_STENCILMASK, 1);
 		function_0222d0(D3DRS_STENCILWRITEMASK, 0);
@@ -265,17 +298,7 @@ void function_15370(short mode)
 		function_0222d0(D3DRS_STENCILWRITEMASK, 2);
 		g_467010 = mode;
 		return;
-	case 6:
-		function_0222d0(D3DRS_STENCILENABLE, TRUE);
-		function_0222d0(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
-		function_0222d0(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
-		function_0222d0(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
-		function_0222d0(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-		function_0222d0(D3DRS_STENCILREF, 0);
-		function_0222d0(D3DRS_STENCILMASK, 3);
-		function_0222d0(D3DRS_STENCILWRITEMASK, 0);
-		g_467010 = mode;
-		return;
+
 	}
 	g_467010 = mode;
 }

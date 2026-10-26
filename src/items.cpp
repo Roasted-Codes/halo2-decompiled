@@ -970,7 +970,10 @@ struct s_item_flags_view_10b850
 // Normal value copy 882 (frame 0x15c); point value copy 852; marker
 // matrix memcpy 819; settled result long 844; position decision long 887.
 // Original body and helper operands kept.
-// score 858 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
+// score 821 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
+// Direct byte saturation 878; fixed before vector copies 858; matrix assignment 858;
+// flow-side assignment 858; support test before slow 821; reversed rotation input copies 858;
+// ordinary cross inline 970; float absolute alone 873; support test plus float absolute 837.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1019,7 +1022,7 @@ void __stdcall function_10b850(long object_index)
                 surface = ((1 << header->type) & 0x3c0) != 0;
                 if (!surface) surface = (g_4e3b44[header->item->definition_index & 0xffff].bytes[2] & 0x40) != 0;
             }
-            if (slow && ((surface && floor) || item->value_13a >= 4) && !(collision.value_58 & 0x20))
+            if (((surface && floor) || item->value_13a >= 4) && slow && !(collision.value_58 & 0x20))
             {
                 position = point;
                 item->value_13a = 0;
@@ -1192,7 +1195,8 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 	function_10cf80(&velocity, object_index, false);
 }
 
-// score 182 (was 182): frame 0xac agrees; release-byte clears, vector-tail sharing
+// score 154 (was 154): frame 0xac agrees; release RMW/tail, event homes and location-call setup remain.
+// Earlier 182 (was 182): frame 0xac agrees; release-byte clears, vector-tail sharing
 // and event-point homes differ; impulse loop 182; damping loop 182; both loops 182;
 // source-vector reference 182; owner/request at entry 184.
 // release-byte RMW, impulse sharing and event-point homes differ;
@@ -1204,21 +1208,35 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // immutable release scale 182; angular input value 191.
 // rate input snapshot 182; gain input snapshot 182; both input snapshots 182; direction input 204.
 // external direction reference input 204; rate input formal 182; scale input formal 204; separate impulse noinline 182.
-// score 163 (was 182): frame 0xac agrees; release RMW/tail, event-point homes and location-output call setup remain.
+// Earlier 163 (was 182): frame 0xac agrees; release RMW/tail, event-point homes and location-output call setup remain.
 // Event-point value 174; origin/position publication copies 163/163; item/angular references 182/182;
 // integrated expiry 181; owner entry/impulse output lifetimes 182/182. Origin publication copy retained.
 // Known-set XOR removals on flag 5/6/both 182/182/182; subtractive removals
 // on flag 5/6/both 182/182/182; XOR/subtract mixed both ways 182/182.
-// score 154 (was 163): Release RMW/tail and event homes remain; idle/count results 166/169;
+// Earlier 154 (was 163): Release RMW/tail and event homes remain; idle/count results 166/169;
 // earlier damage key 185; event-first/key plus event-first 196/196; early complete point/origin
 // publication 198/157; initializer-owned sentinel 154 kept, combined origin 176.
-// score 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
+// Earlier 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
 // Native byte clears 5/6/both 154/154/154; native guard/clear 5/6/both 192/167/207;
 // all native guards/clears 216; native guards with original byte stores 216.
 // release-byte RMW/tail and event-point homes remain.
 // Scalar/component factor orders, eight forms 154; direct output 207; native
 // point value 176; owner/origin/position/pair/all library copies 154; direct
 // output with library copies 207. Retained origin reuse and initializer unchanged.
+// score 154 (was 154): release-byte RMW/tail and event homes remain.
+// Returned vector/output buffer 274/274; output with shared scaler 200;
+// native attachment handle/node plus point/all fields 154/154/154;
+// all fields with output buffer/returned vector 274/274.
+// release-byte RMW/tail, event homes and location-call setup remain.
+// Earlier 154 (was 154): release-byte RMW/tail, event homes and location-call setup remain.
+// Surface and parent queries inline/noinline 154 each; contact noinline 154;
+// event initializer inline/noinline 154 each; final update noinline 154.
+// release-byte RMW/tail and event/location homes remain;
+// signed/word update results 155/188; release-byte reference/pointer 200/200;
+// native category 154, with byte reference/signed result 200/155; unsigned attachment 154.
+// Native tag flags/child block/damage/effect/all fields 154 each;
+// common contact/event point at entry or active scope 201;
+// native tag plus common point 201. Complete tag, helper and body restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
