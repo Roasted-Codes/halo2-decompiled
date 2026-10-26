@@ -43,6 +43,8 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Disabled-entry exit 239; empty-list exit 239; both admission exits with later count 246; those
 // exits with advancing cursor 244; those exits with active zero-priority join 243. All reach 814
 // bytes but regress.
+// Round 357: Simple pending/masked-active/both arms first 248/216/246; all query kinds
+// after their queries 275; single-handle counts after callbacks 275. Opening body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
