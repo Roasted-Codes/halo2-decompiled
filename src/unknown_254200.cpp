@@ -188,7 +188,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
+// score 153 (was 153): Frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
 // Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
@@ -229,6 +229,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // native channel packing 238; chained descriptor counts 162 (fast control 162). Frame and
 // reservation scheduling remain.
 // Round 212: Immutable bitmap pointers/repeated texture coordinates 162/162; chained RGB/alpha outputs 165; shared color output with word alpha 162; center snapshot at first final vertex 296 (fast control 162). Frame and reservation scheduling remain.
+// Round 157: Word-alpha frame: second/both expanded position device entries 162/162; first/second
+// coordinate C entry 443/443; complete first-quad device entries 162; native color input reference
+// alone/second position/color entry 349/349/349 (fast control 162, plain 153).
 // Word-alpha context: color pointer/object reference 349/349 fast; immutable alpha/alpha
 // lexical home 162/162; native texture pair/bounds 149/369 (unmatched grouped storage
 // restored); bounds with color pointer/reference 373/373; immutable scalar coordinates 162;
@@ -240,6 +243,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // RGB/BGR scalar channels 150/150; outer declarations 150/150; RGB after Begin/commit 379/152; BGR after Begin 378; BGR with value half-size 150 (fast control 162). Scalar channels recover frame 0x10 but are one-use field copies without a match, so all restored.
 // Native query pointer with every nonempty public C++ color/first-two-position boundary set
 // 349 each; with last-consumer pointer scope 349 (fast control 162). All restored.
+// Round 159: Shared getter resource-result-first 517; bitmap failure returns 522; both null producers
+// 516; ordinary inline resource/bitmap/both 162/162/162; both null producers with resource/bitmap inline
+// 516/516 (fast control 162, full baseline 153). All getter bodies, metadata and target code restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

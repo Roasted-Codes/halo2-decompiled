@@ -110,7 +110,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 	out->up.k = inertia.m_col2(2);
 }
 
-// score 184 (was 184): Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
+// score 184 (was 184): Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
+// Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
 // double cap parameter 249; read-only motion input 184; read-only step view 184; read-only
 // component view 184; native contact receiver 184; complete contact mask result 304; separate
 // braking result 274; linear brake used after its cap 223.
@@ -143,6 +144,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Query-source-only matrix with early/late world declarations 213/213; broad rotation 216;
 // distinct first world output 194; completed transpose alone/with first output 277/240;
 // late world and broad rotation 216; first world and broad rotation 194. All restored.
+// Round 160: Complete force products, linear integration results, angular integration results, both
+// result sets, norm squares, squared cap, all cap products and force-plus-cap products all 184. Every
+// expression tree, input observation, existing helper, matrix role and signed contact loop restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

@@ -2833,6 +2833,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Complementary bool/test-produced/signed-byte/full-width status 176/176/176/176;
 // complementary success join/test-produced join 303/309; positive tested join 289;
 // initial salted-query truth 269. All original results and exits restored.
+// Round 165: Readonly player/unit/both receivers 176/176/176; each with readonly
+// metadata and both with metadata 176/176/176; squared distance at comparison 176;
+// all readonly receivers plus distance boundary 176. Original receivers and body restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

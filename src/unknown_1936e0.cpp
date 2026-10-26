@@ -348,6 +348,10 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Round 317: Mixed complete-case orders 1023456 196; 0142356 197; 0124356 200; 0123645 188; 0126345 198; 0412356 205; 4012365 214; 0214356 206.
 // Round 199: Static native type-four/type-five/both/team/type-four-team/type-five-team/all preset
 // objects 430/294/525/232/474/335/569; all with static place presets 610 (fast). All restored.
+// Round 163: Complete immutable first/second/both type-four/team/first+team/
+// second+team/all settings, then all with implicit type-five zero default
+// 235/228/259/190/239/237/263/267. All regress; original native workspaces, clears and
+// builder arguments restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

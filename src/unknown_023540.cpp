@@ -2427,6 +2427,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 195: explicit output nibble shift 348 fast; full EFG/ABCD/both 442/434/441;
 // single-bit output shift 333; full EFG/ABCD/both 444/439/443 (fast control 335).
 // The two-point selector gain and all packed-field forms restored; full baseline remains 331.
+// Round 164: Common initial alpha packing with ternary/conditional-update/complete
+// raw-result/shared-clamp producers 435/435/431/435; function-entry workspace
+// 435/435/431/435. All regress against fast control 335; original shader graph restored.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,

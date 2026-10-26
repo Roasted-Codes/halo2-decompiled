@@ -1332,6 +1332,8 @@ bool function_1e1de0(long arg_0);
 // first parent producer 209; character-kind alternative first 222;
 // second parent producer 215; selected rising state 169; both parent producers 222.
 // Round 151: Clock/parent/root observations 235/325/165; clock-parent/clock-root/parent-root/all 338/235/325/338; consistent current object 349.
+// Native sentinel/flag/both chains 167/165/167; selector first 169; identifiers/flags first
+// 166/166; selector between identifiers/flags 167/167.
 // Round 127: isolated actor-index admission 247; readiness failure tests 165; both 247; native
 // observed-bit conversion 165; admission/bit 247; readiness/bit 165; all 247; immutable actor-index
 // producer 219. All restored; early ESI and computed result remain.

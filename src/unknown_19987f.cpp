@@ -1267,7 +1267,9 @@ extern bool g_4ed39d;
    the change is pending, then shows the dialog or the menu that follows it.
    Retail passes all three arguments on the stack: reading the screen id
    through its address keeps it there */
-// score 184 (was 184): game/main byte homes and dialog joins differ;
+
+// score 184 (was 184): Frame 0x28 agrees; game/main byte homes and dialog joins remain.
+// game/main byte homes and dialog joins differ;
 // branch loader scope 184; lobby byte 184; main byte 184; word dialog ID 190;
 // signed user flags 184.
 // Dialog-choice name 184; recovery-result name 184; both names 184; qualified loader if/else 184; dialog-
@@ -1302,6 +1304,9 @@ extern bool g_4ed39d;
 // Game/handled true chains in menu-first and handled-first order 184/186; lobby/handled chains 184/184; both menu-first/both handled-first/mixed orders 184/186/184/186. Byte homes and dialog joins remain.
 // Complement game/lobby/both/main/game-main/lobby-main/all menu results 184/184/184/184/184/214/184;
 // all complemented with the recovery result 174. Original result representations restored.
+// Round 160: Branch-local route result long/short/signed byte 254/251/251; callback-presence choice on
+// common flags query 202; long/byte route plus presence 258/263; message clear at publication 228; shared
+// user-flags workspace 184. Original flow, inherited qualifiers, callbacks and calls restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

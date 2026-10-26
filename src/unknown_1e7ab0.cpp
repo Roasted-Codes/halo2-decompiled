@@ -202,6 +202,10 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Round 197: direct-flag cases after case 18, retained case-two result: original local
 // qualifications 656; plain player/result/blocked 769/651/656; player+result, player+blocked,
 // result+blocked, all plain 701/785/665/736. All original cases, qualifications and bodies restored.
+// Round 162: Consistent direct state-array observations with inherited local
+// qualification removals none/result/player/result+player/blocked/result+blocked/
+// player+blocked/all 827/769/649/671/811/750/660/674.
+// All regress; original state receiver, case graph and local qualifiers restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

@@ -1296,6 +1296,10 @@ struct s_player_properties
 // Native requested name/payload/metadata/all 184 each; native current receiver and both receivers
 // 184/184; all current at use and both native observations 198/198. Session-root scores; real
 // player header and property type restored.
+// Round 161: Startup state at use; collected-name table at entry/before getter;
+// those table scopes with state at use; table lexical name; entry table plus name;
+// entry table plus name and state at use: all eight 184 with session roots.
+// Original table, state snapshot, defaults and executable body restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

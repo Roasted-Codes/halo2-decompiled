@@ -447,13 +447,16 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Environment-table lifetime 273; direct duration source 223; cue location subobject 250;
 // shared caller cue workspace 229; unsigned query index 223; table/direct duration 273;
 // shared workspace/location 233; table/workspace 254 (fast). Shared cue workspace gives frame 0xf4, not retail 0x148.
-// score 223 (was 223): BSP/camera/query homes, duration spill and cue zero carrier remain.
+// Earlier: BSP/camera/query homes, duration spill and cue zero carrier remain.
 // Native BSP view 223; multi-use environment row 267; initialized query count 296;
 // duration interval/sign arms 231/229 (frame 0x148); BSP/count 296;
 // BSP/interval 231; BSP/count/interval 286.
 // Native cluster word 287; readonly camera 223; angle-output name 223;
 // early fade/tag stores 270; cluster/camera 287; cluster/angle 287;
 // camera/angle 223; combined input/output and earlier stores 285.
+// Round 164: Paired tag/transition result arms, tag after magnitude, paired
+// defaults and defaults/tag-after 223/275/233/276; outer duration workspace
+// 223/275/233/276. Original separate metadata graph and all helpers restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

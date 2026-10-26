@@ -54,6 +54,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // Omit initial unused state store 226; omit final 219; phase result initialization 220; omit both
 // 249; omit initial with phase result 239; omit final with phase result 248; omit both with phase
 // result 265; member skip guard 182 (fast).
+// Round 165: At-use owner/primary/secondary pointer fields and their three pairs/all
+// 267/269/224/246/239/251/250; two-use optional-host state observation 182.
+// Original pointer snapshots, local state stores and complete body restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

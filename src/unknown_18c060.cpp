@@ -71,6 +71,8 @@ bool function_b9d20(long arg_0);
 // pool/datum names 106; ordinary named carriers 131; ordinary scoped datum 131;
 // ordinary named current consumer 131. The dead parameter address statement compiled
 // identically and was dropped.
+// Round 157: Iterator/location/both native home names 94/94/94; entry location/iterator/both lifetimes
+// 94/94/94; admitted datum scope with inherited iterator read 94; complete iterator initialization 94.
 // Earlier 94 (was 106). Native two-use object index; completed update/release continues;
 // object/exit combinations and repeated cluster index: eight forms 94, all 486/486.
 // Coupled occupancy while 117; high-water per use 94; bitmap per use 94;

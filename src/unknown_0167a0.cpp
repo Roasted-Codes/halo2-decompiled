@@ -1327,6 +1327,10 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
 // Round 197: complete definition/remapping/source observations and their four combinations
 // 267 each; all observations with a common genuine color workspace 267. Original writer/body restored.
+// Round 161: Complete paired clamp results both/direct/mapped 382/356/291;
+// all results before sample publication both/direct/mapped 380/356/291; native color
+// results before sample publication both/direct 375/356. Original sample writes,
+// shared writer, sampler and executable body restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

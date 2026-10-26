@@ -212,6 +212,14 @@ bool __stdcall function_25dd30(long a, long b)
 // Later flag/cone/reference pass cursors stepped at use 345/314/340; flag/cone 345;
 // flag/reference 352; cone/reference 342; all 352; separate later short ordinals on the recovered
 // frame 175 (fast).
+// Earlier: first vector schedule, geometry registers and score adds remain;
+// Earlier: initial offset schedule, geometry carriers and score adds remain;
+// Earlier: initial offset schedule and protected geometry carriers remain;
+// Earlier: initial vector scheduling and protected geometry carriers remain. Fast trials:
+// Earlier: offset-X scheduling and geometry carriers remain; actor-position field 410; native
+// Round 165: Whole squared-offset/movement/sphere expression names 310/310/310;
+// paired offset+movement/offset+sphere/movement+sphere 310/310/310; all three 175;
+// all with segment/fallback squared names 175. Original arithmetic and body restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

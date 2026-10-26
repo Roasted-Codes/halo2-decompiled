@@ -1023,6 +1023,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Round 366: Common direct exit/residual returns/failure breaks/case-local results 216 each;
 // common-exit nested defaults last/first 191/191 fast (ties reduced control);
 // complete common-exit switch retained/observed handler orders 208/218. Original phases restored.
+// One-root family orders connection/peer/query/session and connection/peer/session/query
+// 204/205; session/connection/query/peer 207; session/query/peer/connection,
+// session/peer/query/connection and session/peer/connection/query 220/220/220;
+// peer/connection/query/session and peer/connection/session/query 206/207. All restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

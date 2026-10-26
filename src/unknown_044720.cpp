@@ -243,6 +243,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // all records with uniform node-byte observations 219. Entry spill and point homes remain.
 // Round 368: first/second list alignment 16/8, 8/16, 8/8, 16/4, 4/16,
 // 8/4, 4/8, 4/4 with aligned query 190/190/190/190/190/190/190/190.
+// Combined tag snapshot/live node fields, original/split center 219/221; with shared marking
+// 231/232; branch-scoped count gives the same four 219/221/231/232. All restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

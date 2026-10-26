@@ -123,6 +123,7 @@ void function_8dd70(void);
 // Signed byte link/observer/session/all readiness 232/231/234/235;
 // signed byte entry predicate 230; original short carriers and clear retained.
 // entry predicate, out-of-line calls and global reloads still differ.
+// Earlier: entry predicate, out-of-line calls and global reloads still differ.
 // Native gateway initialized/zero and handler initialized byte fields 230/230/230;
 // consumer/gateway/both receiver fields 230/230/230; all byte fields and all native fields 230/230.
 // entry normalization, helper boundaries and global-pointer reloads differ;
@@ -134,6 +135,8 @@ void function_8dd70(void);
 // Actual link/observer/manager/trim/availability/interface return receivers 230 each;
 // five receivers together 230; guarded interface with observer/trim/availability 230.
 // entry normalization, helper boundaries and global reloads remain.
+// Earlier: entry normalization, helper boundaries and global reloads differ.
+// Earlier: entry normalization, helper boundaries and global reloads remain.
 // Shared setup link/message/gateway inputs 232/230/229; all three 233;
 // retained observer 230; session-list publication 230; existing gateway reverse
 // receiver 255; shared inputs with that receiver 251.
@@ -146,6 +149,9 @@ void function_8dd70(void);
 // short session prerequisite 236; nested manager/interface tests 230.
 // Complementary link/observer/session/link-observer/link-session/observer-session/all
 // stage domains 229/230/230/229/229/230/229; all stages plus positive entry state 229. All restored.
+// Round 164: Plain first-two session cohort long/short/word/byte ordinal
+// 249/251/251/237; last-two cohort long/short/word/byte 241/251/251/234.
+// All regress; original three-call chain, short stage results and clear restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

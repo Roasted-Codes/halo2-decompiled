@@ -84,6 +84,8 @@ public:
 // Consistent live pool/direct location/both 215/215/215; all squared terms 215;
 // live pool with squared terms/selected influence 215/238; native element index
 // alone/with live pool 215/215.
+// Round 157: Outcome-arm activation publication, active byte/bool 220/220; with early head 219/219;
+// inactive byte/bool 224/224; with early head 223/223.
 // Double coordinate orders xzy/yxz/yzx/zxy/zyx 217/217/218/218/217;
 // coordinate declarations before viewer 215; complete scalar phase declared first 215;
 // coordinate declarations at activation scope 215.
@@ -99,6 +101,9 @@ public:
 // Round 195: bounded-viewer NONE test removed 259; native salted index 300;
 // implicit Boolean override 260; both 300. Viewer-row cursor with those four 259/300/260/300.
 // All regress; original ordinal test, field observations and child indexing restored.
+// Getter inline/noinline/inline-noinline/force-inline declarations 215/215/215/397;
+// child updater inline/noinline/inline-noinline/force-inline declarations 215 each.
+// Getter force-inline grows to 875 bytes and loses the child match; all declarations restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

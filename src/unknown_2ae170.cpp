@@ -594,6 +594,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Round 361: first shared rear call on paired-table graph 488; with first/third, first/second,
 // last-two and all scopes 515/514/535/572; with both repeated levels 535; levels plus first/third
 // or all scopes 563/618 (fast control 453). Frame 0x94 in pair scopes but complete scores regress.
+// Round 162: Actual first/second, first/third, last-two and all workspace reuse
+// on current table loops 497/482/498/539; with both repeated level snapshots
+// 545/530/551/598. Frame reuse does not recover conversion/state homes; all restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -769,6 +772,10 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // input/settings/both copies 282/238/277 (dispatcher lost); Boolean/dword predicates with native
 // endpoints 274/273; native bit plus native endpoints/Boolean predicate 273/260. Frame 0x1c and
 // mode/level homes remain.
+// Round 162: Complete settings snapshot plus ordinary right/rear-left/both/rear-right/
+// right+rear-right/both-rear/all destination words 257/251/261/251/263/258/261;
+// all ordinary words plus native routing 255. All lose the dispatcher; three-point
+// gains also fail the minimum margin. Original scalar settings and qualifiers restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

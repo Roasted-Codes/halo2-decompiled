@@ -395,6 +395,9 @@ real function_30bf0(vector3f *vector);
 // Shared scaled differences for delta/motion/both 234/233/225; shared magnitudes 221;
 // with delta/motion/both shared producers 234/265/257; staged native inputs with both helpers 366.
 // Seat cursor advanced in body for each trial; all original producers, grouping and cursor restored.
+// Round 166: Corresponding squared components named at both motion/delta magnitudes:
+// k/j/i 226/226/226; kj/ki/ji/all 221 each; all with complete plane-product names 221.
+// Each trial advances the seat cursor in the body. Original expressions and cursor restored.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {

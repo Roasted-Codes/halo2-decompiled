@@ -2806,6 +2806,10 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Four-byte frames regress; opening early-activity/final-maximum body restored at 398.
 // Trigger fields at use/table pointer/table field reference 398/422/398; selected magazine pointer 398;
 // with each trigger form 398/422/398; barrel array and direct maximum 423. All restored.
+// Round 163: Native trigger-state cursor with metadata/bound/tag-lookup combinations
+// none/metadata/bound/metadata+bound/tag/metadata+tag/bound+tag/all
+// 423/422/423/422/423/422/423/422. Each is 1623/1642 bytes and regresses.
+// Original helper, field observations, maxima and tag ownership restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3044,10 +3048,10 @@ struct s_ammo_conversion_entry
     byte unknown02[6];
     long definition_index;
 };
-// score 198 (was 198): Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
+
+// score 198 (was 198): Frame 0x24 versus 0x20; destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 
-// score 198 (was 198): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
 // Earlier: frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
@@ -3076,6 +3080,10 @@ struct s_ammo_conversion_entry
 // Round 318: actual unloaded/loaded/both source-count values 207/201/202;
 // native source state 236; capacity arm 197 (gain 1, rejected); values/state with capacity arm
 // 202/236; both values with Boolean acquisition 220. Frame and saved roles remain; all restored.
+// Round 159: Native leading tag byte/conversion fields/both 198/198/198; native fields with machine-width
+// loaded/unloaded/both transfers 198/205/205; native fields with common acquisition result 212 (740
+// bytes); native kind at every use 236 (747 bytes). Original word acquisition, raw observations, transfer
+// types and return flow restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

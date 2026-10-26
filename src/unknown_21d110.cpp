@@ -358,6 +358,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 166: long/word effect slots at admission, playback and publication 206/214 each;
 // long/word slots with common result 181/224; long-result 181 plain rejected for eight caller
 // losses.
+// Native sound/type/priority, priority/type/sound, type/priority/sound, sound/priority/type,
+// priority/sound/type publication 204/219/204/204/219; split-result entry home with
+// original/sound-first/priority-first publication 204/204/219.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
