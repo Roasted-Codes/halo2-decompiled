@@ -348,6 +348,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Round 317: Mixed complete-case orders 1023456 196; 0142356 197; 0124356 200; 0123645 188; 0126345 198; 0412356 205; 4012365 214; 0214356 206.
 // Round 199: Static native type-four/type-five/both/team/type-four-team/type-five-team/all preset
 // objects 430/294/525/232/474/335/569; all with static place presets 610 (fast). All restored.
+// Equal type-five team/mode field chain in both directions 186/186; with implicit
+// first-preset zero 180/180, with equal team pair 185/185, with both 180/180 fast.
+// Six-point reduction remains below retention gate; original complete presets restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

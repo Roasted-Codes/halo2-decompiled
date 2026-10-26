@@ -1005,10 +1005,9 @@ struct s_game_engine_globals_connections_view
 };
 
 /* builds a player's row of the scoreboard at a position */
-// score 184 (was 184): deferred icon tail and time/connection register schedule;
+// score 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
 // default-zero byte icon 230, native integer 184; parsed-name scope 184;
 // separate connection rectangle 206; both name buffers scoped 184.
-// score 184 (was 184): deferred icon tail and time/connection coordinate registers remain;
 // whole-row reference 184; column reference 184.
 // input-color reference 184; color snapshot 309.
 // channel samples 323; direct right edges 306.
@@ -1019,14 +1018,11 @@ struct s_game_engine_globals_connections_view
 // Direct icon zero default 192; initializer zero default 208; separate place/icon/name
 // rectangles 184/229/222; place and icon rectangles 184; scoped numeric buffers 225;
 // scoped numeric buffers plus direct icon default 188 (all plain).
-// score 184 (was 184): deferred icon tail and time/connection registers remain;
 // arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
 // receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
-// score 184 (was 184): Deferred icon tail and time/connection coordinate registers remain. place
-// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// Place rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
 // rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
 // rectangle aggregates 320; trailing rectangle aggregates 306.
-// icon tail and time/connection register schedule still differ.
 // icon tail and time/connection register schedule still differ.
 // entry icon zero 261f; outer icon scope 184f.
 // zero before icon init 205f; zero before place format 248f.
@@ -1036,14 +1032,11 @@ struct s_game_engine_globals_connections_view
 // Positive place visibility 318; horizontal/vertical/both live origin fields 184/184/184;
 // completed color alpha 184; visibility with origins 318; horizontal/both origins
 // with completed color alpha 184/184. Widget-root control equals the full baseline.
-// score 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain.
 // Dim-default glyph 183 (one-point gain rejected); glyph-last/icon-alpha-first metadata 184/184;
 // connection alpha first 185; two-use numeric width 281; time/connection bottom first 184/184;
 // dim default plus numeric width 281. Opening body restored.
-// Deferred icon tail and time/connection coordinate registers remain. place
-// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
-// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
-// rectangle aggregates 320; trailing rectangle aggregates 306.
+// Direct rectangle-left accumulation for score/time/connection individually, each pair and all
+// 184 each; all right/bottom field accumulations 184. Opening field expressions restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

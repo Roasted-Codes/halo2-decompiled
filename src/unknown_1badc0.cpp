@@ -20,6 +20,8 @@ real normalize2d(point2f *arg_0);
 // 282/279/282; shared perpendicular with coherent point source 225; with split distances 225.
 // Staged second/first/both direction outputs 231/227/262; center-staged second alone/with first
 // 240/273; copied-point staged second/both/center pair 231/262/276. Opening directions restored.
+// Expanded radius and existing point-setter first/second/both combinations all 220;
+// native squared-vector helper 273. Original point construction restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

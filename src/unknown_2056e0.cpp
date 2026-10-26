@@ -143,6 +143,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Query-source-only matrix with early/late world declarations 213/213; broad rotation 216;
 // distinct first world output 194; completed transpose alone/with first output 277/240;
 // late world and broad rotation 216; first world and broad rotation 194. All restored.
+// Shared double-factor cap scaling in place/through completed output 227/302 fast;
+// with broad rotation 235/310, first matrix output 239/314, completed transpose 240/315.
+// Query/rotation frame fixes still worsen cap scheduling; original helpers and matrices restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
