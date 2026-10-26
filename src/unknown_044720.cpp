@@ -242,6 +242,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // All three point setters 246; native bound-point initializer 204.
 // Round 324: index/radius/center contract 192; radius/index/center 192; center/index/radius 190;
 // radius/center/index 192; the same orders with a full absolute ordinal 193/193/191/193.
+// Round 331: dispatch inline/noinline, node query inline/noinline, both inline,
+// both noinline and either mixed pair: all eight 190f. Entry/index and point
+// homes remain; both caller-local declarations and original body restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

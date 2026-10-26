@@ -5185,6 +5185,9 @@ void __stdcall function_d6bc0(long object_index);
 // 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
 // Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
 // all five call boundaries inline/noinline: all 153; every declaration restored.
+// Round 331: typed scenario/equipment views 153f; time-slice field at each use 243f;
+// views plus field 243f; shared squared length at first/second/both tests 153f each;
+// shared dot products 153f; views/field/length together 243f. All eight restored.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

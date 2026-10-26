@@ -472,7 +472,6 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // score 25 (was 25): control/sampling conventions, radius base and marker registers remain.
 // Earlier at 130 (was 134): control-call convention and scan induction differ;
 
-// score 25 (was 25): frame 0x110 agrees; control/sampling conventions, radius base and marker registers differ.
 // Earlier: control-call convention and scan induction differ;
 // control-call convention and scan induction differ;
 // segment control scope 141 fast; sample point scope 141 fast; late marker
@@ -523,6 +522,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // marker field reads at every use 77f; displacement/height 81f, displacement/marker 78f,
 // height/marker 97f, all three 98f; direct marker reads with a plain for 460f.
 // Reduced control 74 versus full 25; helper conventions and radius/marker homes remain. All restored.
+// Round 331: parallel radius squares 138f; native marker count/ordinal 74f; both 74f;
+// shared center setter 179f, with squares/count/both 171f each; shared marker setter 160f.
+// Reduced control 74f versus full 25. All eight bodies restored.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
