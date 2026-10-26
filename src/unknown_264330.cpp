@@ -434,6 +434,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // later counter/original and signed maximum 422/422. Each fast and plain.
 // Existing sampling-helper automatic, inline and force-inline boundaries 486 each;
 // all declarations restored after the force-inline form lost a checked caller.
+// Round 166: typed actor startup/admission/tracking/completion/all 420 each; native actor
+// getter, native node fields and both 420 each. Actual shared type layout restored.
 // Immutable prior state/node handle/both 420/420/420; current field observations 420;
 // distance-axis names 420; update-first validation 421; availability-first admission 422;
 // admission plus validation order 423.
@@ -445,6 +447,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Sampled-once acquisition after startup/at traversal/before actor 422/422/420; startup plus later
 // node flags 422; completed-sample name 420; separate/reversed node flag declarations 420/422;
 // startup plus reversed flags 424.
+// Initial refresh, spatial startup, node refresh and progress call declarations, each ordinary
+// inline/noinline 420/420; all eight compiled forms and every separate declaration restored.
 // Round 166: typed actor startup/admission/tracking/completion/all 420 each; native actor
 // getter, native node fields and both 420 each. Actual shared type layout restored.
 // @retail 0x262ba0

@@ -728,6 +728,8 @@ void function_143250(
 // basis/matrix homes differ. independent basis 0 6 2311; independent basis 1 7 2293;
 // independent basis 2 5 2320; independent basis 4 7 2298; independent basis 0 3 5 7 2299.
 // Round 349: Independent basis pairs [1,2] 2323; [2,6] 2355; [0,7] 2287; [3,7] 2290; [5,6] 2317 (fast; control 2266).
+// Round 357: Separate first/second/third band tables 2268/2268/2266; independent
+// basis pairs [0,2] 2314, [1,4] 2288 (fast; control 2266). Opening body restored.
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {

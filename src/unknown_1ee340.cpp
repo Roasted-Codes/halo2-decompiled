@@ -150,7 +150,7 @@ c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, lon
 short function_120850(const vector3f *vector);
 bool function_23a220(const point2f *point, short count, const point2f *points, real epsilon);
 
-// score 250 (was 250): frame 0x78 versus 0x90, normal/ray homes and polygon input registers differ.
+// score 253 (was 250): frame 0x78 versus 0x90, normal/ray homes and polygon input registers differ.
 // Hit point setter 250; component normalization loop 250; short projection side 255;
 // direct hit result 251; ray before origin with float setters 251.
 // Early offset 259; late ray direction 264; squared-normal value 250; descending projection 358; offset/direction combination 264.

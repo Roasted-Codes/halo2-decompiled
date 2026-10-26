@@ -2400,7 +2400,7 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 331 (was 331): frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
+// score 331 (was 331): Frame 0x28 agrees; inverse AL entry save, dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
@@ -2414,6 +2414,12 @@ dword __cdecl function_131fc0(real alpha);
 // Tag/bitmap/both observations 400/399/399; pixel fields at use 335;
 // native source/destination/both bounds 335/335/335 (exact-only, restored);
 // one shared exit 335; all fast against control 335.
+// Round 147: fast control 335; blend complement 401; paired blend branches 453 (exact-only); finite clamp
+// operands/branches 335/335; chained source zeros 335; paired half-extents 335; shared UV edges/half-
+// extents 456/456.
+// Unsigned/signed byte flag formals for inverse, inverse plus blend, all flags,
+// and inverse plus combiner flags: 335 each (fast control 335). Original
+// Boolean definition and every declaration restored; no call argument or order changed.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2700,6 +2706,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Original-body helper output/scale/rotation-first parameters 348/348/348;
 // ordinary inline 348; separate trig scopes 351; later second output 348;
 // separate output plus trig scopes 351; exact stage terminator 348.
+// Round 147: native pair result 479; output pointer result 348; common-factor-first products 348; y-first
+// stores 363; zero-safe results 348; ordinal scope 348; reverse scale updates 350; later first buffer 348.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -2820,6 +2828,10 @@ struct s_2a2f0_record
 };
 
 #pragma inline_depth(0)
+// score 145 (was 145): one missing register copy of the bitmap count before the bounds compare
+// (retail inlines the bitmap lookup 0x137550); everything else aligns. Swapped bounds compare 145;
+// the existing lookup called in a full-depth window 258 (out of line); plain count read 167;
+// separate count copy 145 (propagated); file-local forced lookup 258/297 (in a window, spills).
 // @retail 0x2a2f0
 void __stdcall function_2a2f0(long tag, real alpha)
 {

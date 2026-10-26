@@ -331,7 +331,13 @@ PRIVATE inline void carrier_body_angular_velocity_get(s_carrier_body const *body
 // (149; as three field copies 140, through a motion local 129). Tried:
 // parameters swapped at both ends (no change), entry declared before the
 // object or after the component index (113, 128), inline object and entry
-// getters (no change).
+// getters (no change). The three axis pointers declared together before the
+// normalize calls 111 (retail's registers: forward edi, up esi, left ebp; the
+// products then come out forward-first and the dot sums k,i,j where retail has
+// up-first and k,j,i; the source operand order of the dot does not change it,
+// 111); that plus the center through carrier_vector_from_havok 151 (object index
+// in eax as retail, entry index on the stack); with the entry pointer computed
+// first 153; the pointers together with the entry first 112.
 // @retail 0x109660
 void function_109660(long object_index, long entry_index)
 {

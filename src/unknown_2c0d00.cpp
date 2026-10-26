@@ -873,8 +873,11 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
     s_pathfinding_node const *node = &data->nodes[index];
     return (node->flags & 1) && (!(node->flags & 2) || !function_1fa6b0(node, data));
 }
+// score 385 (was 385): frame 0x28 agrees; zero/radius schedule, history homes and indexed node-word lowering remain.
 
-// score 385 (was 385): frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
+// Earlier: frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
+// score 385 (was 385): Frame 0x28 and length agree; zero/radius schedule, history homes and indexed node loads differ.
+// frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
 // Earlier: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
 // Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
 // Earlier: ordinary previous/first/both history 399/401/400;
@@ -906,6 +909,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // edge/history homes and indexed node loads differ. Later first/second/both
 // differences in place 397/397/397; one displacement 397; one radial offset
 // 385; offset with shared displacement 385; phase scopes 397; offset/scopes 385.
+// Complete geometry before predicates 397; with shared dot 397, symmetric cross parts 402,
+// named projection 397, both named products 402, equivalent orientation 421, postincrement count 396,
+// separate ring guards 397. Original single radial workspace and predicate phases restored.
 // Native/promoted cached flags 385/401; explicit flag guards 414/409;
 // node fields at use 384; native/promoted flags with receiver at use 384/383; flag-word single result 406.
 // frame 0x28 and length agree; zero register,
@@ -915,6 +921,8 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Original body, both private helpers and complete shared header restored.
 // Predicate inline declarations 433; ordinary ring history 404; ring/incoming/both history names 385/385/385; declaration order 385; ordinary names/order 404/404; names plus order 385.
 // Native helper side/promoted node/both 385/385/385; word/unsigned node input 409/385; byte/long openness result 417/410; native side and word node 409.
+// Round 187: indexed node array plus Boolean side, native/promoted return and direct/cached flags
+// all 462 with force-inline openness or 429 with ordinary-inline openness. All eight forms and shared type restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1153,6 +1161,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Trace endpoint names 478; first trace at entry 478; target at entry 478;
 // outer candidate point 478; complete path-record memcpy 478.
 // Target Z once/shared endpoint zero initialization 470/470; one sector-trace output 466; avoidance at entry/iteration 469/469; sector pair before attempts 469; outer direction 469; outer tangents 469.
+// Round 318, early-output-pointer body: signed-word outer 485; unsigned/native output count
+// 469/522; native attempt 470; native end/candidate/both 500/472/516;
+// word outer with native attempt 486. All bounded domains and trace inputs retained; all restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

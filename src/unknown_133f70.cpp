@@ -120,6 +120,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // First/second/both conditional source bits 155/155/155; complete mask branches/source-order
 // reversal 196/196; all mask parts named 155; independent word features 207; mask branches with
 // word features 215.
+// Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
+// ordinal 223; wide optional index 214; wide composite mask 192; word cursor
+// before packed mask 154. One-point reduction rejected; original body retained.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
