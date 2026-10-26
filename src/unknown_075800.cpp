@@ -962,6 +962,11 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 /* the out-of-band messages: those that arrive from an address rather than on
    an established channel */
 // score 193 (was 193): selector/message/address convention and dispatch root remain.
+// incoming selector/message/address allocation and dispatch root remain.
+// Single-root family orders query/connection/session/peer 210; query/session/connection/peer 219;
+// query/peer/connection/session 211; connection/query/session/peer 207; connection/session/query/peer 208;
+// session/query/connection/peer 220; session/connection/peer/query 216; peer/query/session/connection 222.
+// All restored; reduced preview 191 versus full 193 with differing-callee caveats.
 // selector/message/address convention differs; full baseline 198, fast preview 196.
 // Unified switch 208; retail-order switch with lookup exits 218; missing-connection exits 196; inline depth
 // one 196; size preference 243.

@@ -325,13 +325,19 @@ struct s_2f6b0_point
 	short x, y;
 };
 
-// score 94 (was 94): frame 0x1c versus 0x18; position/output argument homes and rectangle loads differ.
+// score 29 (was 29): initial rectangle loads, origin/step registers and two narrow additions remain; frame 0x18 and incoming contract agree.
+// Earlier: initial rectangle loads, origin/step registers and two narrow additions still differ.
+// Earlier at 94: frame 0x1c versus 0x18; position/output argument homes and rectangle loads differ.
 // Rectangle/origin names 94/94; horizontal/vertical/both origins in place 100/92/115; native step initializer 94;
 // shared output assignment 94; workspace names plus short origin 113; native frame with scalar steps 118, short origin 91.
-// score 29 (was 94): frame 0x18 and incoming/output contract recovered; initial rectangle loads
+// Earlier at 29: frame 0x18 and incoming/output contract recovered; initial rectangle loads
 // and origin/step allocation still differ. Direct horizontal/vertical/both origins 99/29/102; output readback/native 94/94.
 // Both direct origins with readback/native/late full 102/102/102; on vertical-direct,
 // rectangles swapped/late full/global vertical value/global horizontal value 101/102/67/101.
+// Separate short steps 109; const short steps 109; early/late step names 29/29; const full snapshot 29; const
+// native step 29; both const 29; early horizontal origin 29.
+// Horizontal pipeline 102; vertical step first 102; vertical coordinates first 38; shared column/row/both
+// 29/29/29; horizontal origin consumed 78; vertical pipeline 100. Entry body restored.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)
@@ -570,12 +576,15 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 	}
 }
 
-// score 68 (was 130): frame 0x3c agrees; zero/scale/trigonometric register allocation differs.
+// score 68 (was 68): frame 0x3c agrees; zero/default/scale registers and trig scheduling still differ.
+// Earlier at 68: frame 0x3c agrees; zero/scale/trigonometric register allocation differs.
 // Zero-angle defaults on their own branch 68; shared rounded angle 166;
 // basis before translation 168; role-named workspaces 130; value-initialized matrix 133.
-// score 68 (was 68): frame agrees; zero/scale and trig live ranges still differ.
+// Earlier at 68: frame agrees; zero/scale and trig live ranges still differ.
 // Small-angle first 69; cosine first 68; trig declarations first 68; late matrix clear 75;
 // late scales 172; shared cosine complement 68; scales at use 135; shared Y scale 73.
+// Raw angle early/late/const 177/177/177; double sine/cosine/both APIs 68/68/68; entry success result 68;
+// const scales 68.
 // @retail 0x1b790
 bool function_1b790(byte const *state, long index, real *out, long mode)
 {

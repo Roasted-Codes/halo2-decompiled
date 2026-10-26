@@ -29,6 +29,11 @@ struct s_11c1b0
 
 // score 50 (was 50): entry index/zero registers and saved-index publication still differ.
 // Earlier allocation: retail keeps local_0 in ebx (xor ebx, ebx; mov bx) up to the
+// Initial index/zero registers and early saved-index store still differ; frame and both result lifetimes agree.
+// On the separate-result form: signed ordinal 125; ordinal != 68 51; row cursor 125;
+// counted row cursor 95; callback snapshot 50; signed snapshot 125; row snapshot 125;
+// counted row snapshot 95. Original dispatch, two index values and returns retained.
+// retail keeps local_0 in ebx (xor ebx, ebx; mov bx) up to the
 // function_137da0 call and stores it at once into arg_0's slot, which then serves as
 // local_7; it holds the early false in al (so the limit goes in esi and every push
 // comes first) and only later the result in bl, with edi as its zero register. Ours
@@ -40,6 +45,7 @@ struct s_11c1b0
 // (draft) / 131 (one variable); the body inside if (arg_0 == NONE || in range) 99
 // (draft) / 116 (one variable).
 // Earlier allocation: result false from entry (al) and the success in bl now match
+// result false from entry (al) and the success in bl now match
 // retail, and local_7 shares arg_0's slot, but the zero goes in ebx and local_0 in edi
 // (retail: local_0 ebx, zero edi), and local_7's store comes after the range test
 // (retail: at entry). One variable with result + local_1 128 (retail's registers, but

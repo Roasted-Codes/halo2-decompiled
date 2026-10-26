@@ -19,6 +19,10 @@ extern real g_485a0c[8];
 extern real g_4c9798[36];
 
 // score 295 (was 295): frame 0x20 versus 0x28; input registers and rounding-call scalar reloads remain.
+// frame 0x20/0x28 and state/matrix/rounding homes remain.
+// Radius/scaled-radius/padded-radius parts 295/295/295; size accumulation 295;
+// width/height/both producers 295/295/295; consecutive clamp bounds 301.
+// The one-use radius call result is restored; matched storage-provider root resolves all trials.
 // frame 0x20 versus 0x28; input registers and rounding-call scalar reloads differ.
 // Branch-defined extent 321; two-vector copy loop 311; frame pointer 372; size policy 497; inline depth one 311.
 // Global optimization off 1009; expansion depth zero 349; late mode 350;

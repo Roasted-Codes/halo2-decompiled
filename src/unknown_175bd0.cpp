@@ -2409,11 +2409,16 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // Existing snapshot-normal helper 177; direction lifetime 181; point lifetime 181; returned-record for 346;
 // saved short marker 182; existing point plus snapshot-normal helpers 83 kept.
 // Earlier 83 (was 83): normalization component retention and the final scale register still differ.
+// frame 0x68 versus 0x74; matrix/point homes, random input/output separation and final scale copy differ.
+// Earlier at 181: frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
+// Earlier at 83: frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
+// Earlier at 83: normalization component retention and the final scale register still differ.
 // Common normalizer 33 and header normalizer 81 (changed grouping, exact-only);
 // early magnitude 259; scale before owner stores 83; both 259; force-inline normalization 83;
 // impulse name 83; point/axis homes 83; common normalizer with separate output 251,
 // with direct scale-result consumption 33. Original body retained.
 // Earlier 74 (was 83): One direction workspace reaches retail length; frame 0x68 versus 0x74 and normalization scheduling differ.
+// Earlier at 74: One direction workspace reaches retail length; frame 0x68 versus 0x74 and normalization scheduling differ.
 // original scale-result consumer 120; in-place random direction 112 fast, 74 plain kept;
 // copied random input 205; separate impulse 225; direct impulse consumer 225; in-place/direct consumer 112;
 // read-only event 120; record/index names 120 (unchanged fast control 120, full 83).
@@ -2424,6 +2429,8 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // copies 144/117; shared scale/void result 74/74, paired result forms 76/117.
 // On the separate result form, scalar inputs k,j,i 63; j,k,i / i,j,k / j,k 59/59/59.
 // Final result reused 79/79; result exit 59; vector output 201; separate impulse 214.
+// Fast: single-direction matrix loop/entry 112/112; point/direction entry 112/112; both/all output lifetimes
+// 112/112; common/header normalizers 112/116 (grouping, exact-only).
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {

@@ -284,6 +284,9 @@ short __stdcall function_1b39e0(long actor_index)
 // object-flag byte register and shared tail zero still differ.
 // Chained flags 36; direct object flag 93; const property state 36; flags before link 37;
 // flag-pair memset 61; target memcpy 36; duration names 36; accepted state scope 115.
+// score 1 (was 1): only the constant target differs; retained property 155; joint admission 154;
+// admission result 1; retained admission 156; selection result 151; retained selection 144;
+// native state clear 180; constant before timers 35. Numerical value preserved.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
@@ -378,6 +381,9 @@ short __stdcall function_1b3ea0(long actor_index)
 // sentinel after reset 36; activation before reset 25, rejected. Body restored.
 // input-index, pool and zero registers plus reset-store schedule still differ.
 // This round: Boolean after reset 26; both slots after reset 46; Boolean after activation 25; both slots after activation 53; sentinel after activation 34; actor after reset 34; actor after slots 34; direct slots after reset 46.
+// score 26 (was 26): input offset/pool scheduling and shared zero still differ;
+// explicit getter/reset/both inline contracts 26/26/26; Boolean/sentinel/both field lvalues 26/26/26;
+// inline contracts with Boolean/both lvalues 26/26. All helper declarations and lvalues restored.
 // @retail 0x1b3ee0
 bool __stdcall function_1b3ee0(long actor_index, s_slot *slot)
 {

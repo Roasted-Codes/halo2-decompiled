@@ -94,6 +94,10 @@ s_slot_handler_2 g_47e1c0 =
 // Shared subtraction 107; existing direction call 312; squared-length part,
 // separation/reciprocal homes and compound reciprocal 109 each; shared scale 107;
 // positive short-vector arm 110; subtraction plus scale 107. Two-point gains rejected.
+// frame 0x44 agrees; direction SIMD homes and square/store schedule differ.
+// Shared normalizers 160/107; existing magnitude 182; squared-length helper 107;
+// projection products 109; side projection part 109; distance penalty 109; winning score first 109.
+// All changed-sum helpers restored; the two-point gains are ineligible.
 // @retail 0x1b3070
 bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 {

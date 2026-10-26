@@ -1664,7 +1664,10 @@ struct s_candidate_unit_definition
 // geometry-call convention and exchanged failure exits remain; native
 // flag/limit/adjacent clears 216/152/199; direction memcpy 18; clear plus copy 216/152/199;
 // branch-zero clear 199.
-// score 11 (was 11): frame 0x10 and length agree; geometry query takes a stacked object instead of ECX.
+// score 11 (was 11): query stack/register boundary remains; object-last interface 15;
+// object-last stdcall/inline/both 15/15/15; original inline/stdcall 11/11;
+// reordered query outcome/entry axis 126/15. All query interfaces restored.
+// frame 0x10 and length agree; geometry query takes a stacked object instead of ECX.
 // Query noinline 11; combined rejection/acceptance 18 each; output/marker references 11 each;
 // named type mask 11; result after initialization 16; direction producer home 196;
 // unconditional successful tail 11. Experimental declaration and receiver aliases restored.

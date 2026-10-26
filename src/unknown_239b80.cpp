@@ -39,12 +39,15 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 	return false;
 }
 
-// score 101 (was 101): frame 0x618 agrees; cursor/result initialization, delta XMM
+// score 101 (was 101): frame 0x618 agrees; result/cursor initialization and displacement/fraction SSE homes still differ.
+// Earlier: frame 0x618 agrees; cursor/result initialization, delta XMM
 // homes and extra fraction copies remain. X-first deltas 109; full denominator 103;
 // scales before stores 101; first input record 207; Boolean helper result 101;
 // aggregate intersection 152; capacity-first gate 108; native input count 153;
 // intersection role names 101; output-first helper 101; count-result helper 101;
 // x-first deltas with full denominator 107.
+// Shared difference/projection/both 109/101/109; actual output cursor 256;
+// difference/projection with output cursor 256/256; natural previous update 101; cursor with previous update 256.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)
@@ -132,7 +135,8 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
-// score 42 (was 42): coupled state/index/XMM homes and normalized Y load remain;
+// score 42 (was 42): state/index/point and normalization SSE homes still differ at frame 0x18.
+// Earlier: coupled state/index/XMM homes and normalized Y load remain;
 // local/formal point cursor with short ordinal 94/93; short remaining count
 // 94/93; long ordinal 97/97; long remaining count 94/93. Opening body restored.
 // zero/one SSE homes, state/index/point registers and normalized Y load remain;
@@ -140,11 +144,13 @@ short function_239e50(short count, point2f const *points, short *indices);
 // first point before scan 85; normalizer reference 42; point-first dot 42; success normalizer 102.
 // Frame 0x18 agrees; state/index, point pointer and SSE constant registers differ.
 // normalizer input vector 126; compound scales 42; factor-first scales 42; positive normalizer scope 42; long point index 101; count-first guard 99; long state 86; plane/point names 42; forced normalizer 42; forced dot 42; both forced 42.
-// score 42 (was 42): state/index/point and normalization XMM homes remain.
+// Earlier: state/index/point and normalization XMM homes remain.
 // Single-result normalizer 42; squared-length expression 42; staged scales 42;
 // reverse scale publication 42; length workspace 56; signed-distance expression 42;
 // native first-point components 63; accumulated dot result 46.
 // Repeated j input 42; repeated i input 42; both scalar inputs 126.
+// Shared normalizer/magnitude 42/42; tested initial/distance states 81/76; both tested states 79;
+// early distance default 65; shared normalizer with tested states/default 79/65.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {
@@ -337,12 +343,17 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 // Current point value 111; advancing point cursor 58 at 184 bytes; ordinary while 50;
 // named edge squares/cross products/both 50/50/50; point value with edge squares/both 111/111.
 // The initial count load, widened loop tail and XMM edge/offset homes still
+// entry count load, word loop tail and offset/edge SSE homes still differ.
+// Earlier: entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
+// Earlier: The initial count load, widened loop tail and XMM edge/offset homes still
 // differ. Byte/short/native result 102/104/102; unsigned-short induction 50; early cross 58; distance
 // limit scalar 50; cross square scalar 50; both squared parts 50.
 // initial count load, wrap-bound ownership and XMM allocation remain.
 // Edge first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50;
 // nested predicates 50; entry success 51; predicate result 51. Two-point gain rejected.
 // entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
+// Next before offset 50; radius square at use 71; const radius square 50;
+// outer offset/edge/both storage 50/50/50; early next with outer vectors 50; radius at use with outer vectors 71.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {

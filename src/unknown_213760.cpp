@@ -1184,6 +1184,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Handle-result arms 159 rejected as a branch flag.
 // Ordinary slot while 165; unsigned slot while 165; request clear before path 202; long/byte validity 210/165.
 // Round 111: Redundant request zeros omitted 225; shared handle-field pointer 165; iteration-scope write/read headers 165/165; request path after access fields 169.
+// Existing open API, file-element reference, both 165/165/165; open API with
+// constructed write/read/both headers 165/165/165; handle-field pointer 165;
+// native file and both headers 165. Shared API emits the same request code.
 // @retail 0x213970
 void function_213970(void)
 {

@@ -1316,11 +1316,14 @@ struct s_rating_summary
 #pragma inline_depth(0)
 // score 206 (was 206): frame 0xfc agrees; key/statistic homes and grouped team dispatch remain.
 // key/statistic homes, statistic cursor and grouped team dispatch differ.
+// frame 0xfc agrees; key/statistic homes, six-byte statistic cursor shift and grouped dispatch remain.
+// Earlier: key/statistic homes, statistic cursor and grouped team dispatch differ.
 // existing converter 371; converter inline boundary 367; native summary fields 231; native skill snapshot 302;
 // immutable query inputs 231; native counter bits 231; native session fields 231; frame pointer 412; team value
 // snapshots 225; team promoted skill snapshot 239; native player statistics array 231; native statistics arrays
 // 231.
 // key/statistic homes, statistic cursor and grouped team dispatch remain.
+// Earlier: key/statistic homes, statistic cursor and grouped team dispatch remain.
 // External player/team/both record references 225/220/220; early player identity 234;
 // native records plus formatted identity 219 (one-point follow-up dropped); UTF-16 input 220;
 // shared eligibility 353; bounded name conversion 332; direct native team pointer 220;
@@ -1333,6 +1336,11 @@ struct s_rating_summary
 // Shared identity/statistic views 206/206; both 206; name-source advance at load 218;
 // identity/statistic-view plus source advance 218/218; shared outer statistics cursor 206;
 // both views plus source advance 218.
+// Earlier: key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
+// Earlier: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
+// Bounded character countdown 326; group guards 206; player admission scope 206; team guards 206;
+// group guards plus character countdown 326; player/team admission 206; all admissions plus character countdown 326;
+// negative-first lower selection 212.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
