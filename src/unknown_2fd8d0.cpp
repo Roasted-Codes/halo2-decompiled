@@ -97,6 +97,9 @@ public:
 // the block offset in edx and blocks in eax and switches on eax, ours the
 // reverse (the planes branch now matches, with planes_wanted read into a local
 // for the allocation). Other forms of the block address do not move it.
+// Further trials: block shift 108; lane remainder 97; both 97; short
+// selector 70; lane helper parameter order 31; forced lane helper inline 31;
+// zero component first 31; short selector with zero first 70.
 // @retail 0x2fd8d0
 void blocked_convex_2fd8d0::function_2fd8d0(description_2fd8d0 *out) const
 {

@@ -36,6 +36,9 @@ public:
 // owner hands out; a miss drops it and hands the id back
 // score 37 (was 67): the centre and body B take edi and ebx where retail has
 // ebx and edi, and three 4-byte stack slots are packed differently.
+// Further trials: typed output/body pair/query/all inputs 37/37/37/37;
+// miss first 59; miss to one exit 59; id rejection first 42;
+// output-array member reference 37.
 // @retail 0x2f1b80
 void class_2f1b80::function_2f1b80(void const *a, void const *b, void const *input, void *collector)
 {

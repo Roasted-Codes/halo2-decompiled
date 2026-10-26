@@ -250,6 +250,10 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 // Further trials: split reciprocal lifetime 49; late reciprocal field 49;
 // sphere value snapshot 61; size preference 40; explicit scalar splat 48;
 // in-place delta 33; named radius times two 33; aligned intrinsic loads 48.
+// Further trials: chained pending clears 32; pending initializer list 30;
+// second list after pending state 32; zero offset after pending state 33;
+// splat after diameter 41; named scale product 33; left scale factor 33;
+// vector doubling by multiplication 63.
 // @retail 0x2ddbd0
 void __cdecl function_2ddbd0(void *data, s_visibility_sphere_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)

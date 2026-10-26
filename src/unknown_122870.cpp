@@ -431,6 +431,9 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // Late menu/shared/campaign readbacks 205/188/173; paired menu/shared 214;
 // all late readbacks 231; reference output 39; reference plus late readbacks 231;
 // completed query producers 223.
+// Further trials: weight after entry/map/menu query 45/63/81;
+// accumulation after entry/map/menu query 136/135/136;
+// both scalars after map/menu query 148/148.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {
