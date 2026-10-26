@@ -1141,8 +1141,8 @@ bool __stdcall function_26ccb0(s_pathfinding_data const *pathfinding, s_obstacle
 bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
-
-// score 453 (was 469): Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
+// score 453 (was 453): Frame 0x10c and exact extent agree; radius, persistent zero and metadata/endpoint homes remain.
+// Earlier: Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
 // Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
 // output slot 469; with unsigned outer 470 (frame 0x10c); unsigned next 493.
 // frame 0x104 versus 0x10c; radius/index and metadata homes remain.
@@ -1168,6 +1168,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // with next-entry receiver 453 kept plain, plus corner-data/location/both 452/470/468
 // (one-point extra rejected). Nested next receiver 460; role-based radius names 453; earlier
 // source address 456; plus names 456; consistent source receiver with/without names 456/456.
+// Round 132 on the shared next-entry graph: entry fallback/used/both zero lifetimes 453/453/453;
+// native word outer 490, with entry fallback/used/both 485/491/491; dword fallback state 448;
+// with entry fallback/used/both 451/453/451. Five-point reduction rejected above 30.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

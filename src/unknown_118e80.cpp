@@ -217,8 +217,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 		up->k = matrix->up.k * k + matrix->left.k * j + matrix->forward.k * i;
 	}
 }
-
-// score 220 (was 220): Frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
+// score 220 (was 220): Frame 0x78 versus 0x6c, early ESI save and basis/position homes remain.
+// Earlier: Frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
 // shared-left output with one exit 233 (two-point gain dropped).
@@ -252,6 +252,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // default copies 283; turn transfers 220; turn transfers plus late zero 220; world-up pointer
 // result 220; world-up parameter order 220. Original body/private helper restored; frame 0x78
 // versus 0x6c and early ESI/basis/position homes remain.
+// Round 132: separate input-up and parent metadata 275; native carriers 276; output-first
+// 275/276; actual header input 275/276; header input plus output-first 275/276.
+// All input-splitting contracts regress; existing producer, late zero and basis roles restored.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {

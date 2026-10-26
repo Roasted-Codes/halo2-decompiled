@@ -378,8 +378,8 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 {
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
-
-// score 404 (was 412): Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
+// score 404 (was 404): Camera/points saved registers and initial stores remain; input distance/whole-plane ownership does not qualify.
+// Earlier: Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
 // Earlier: Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
 // Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
 // inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
@@ -411,6 +411,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Round 129: separate normal pointer/reference/value 404/404/835; with matrix reference
 // 404/404/835; separate normal pointer/reference with output-address return 404/404.
 // Only separate normal pointer retained, plain 404; all original input copies precede stores.
+// Round 132: separate distance input 611; whole-plane pointer/reference/value 403/403/883;
+// rotation-scale-position inputs 684; with distance/plane pointer/reference 582/717/717.
+// One-point whole-plane reductions rejected; original in-place input copies retained.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

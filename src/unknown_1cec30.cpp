@@ -2736,7 +2736,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     havok_from_vector3d(&position, (vector3f const *)&matrix->position);
     frame->m_translation = position;
 }
-// score 206 (was 206): Frame 0xb4 agrees; stride/base and relative-call input registers remain.
+// score 206 (was 206): Frame 0xb4 and exact extent agree; stride/base and protected relative-call input registers remain.
+// Earlier: Frame 0xb4 agrees; stride/base and relative-call input registers remain.
 // Earlier: body/stride registers and relative-call input differ;
 // body getters 206; first count after lookup 205 (below gate), both 275;
 // node streams 336; streams with getters 336 (plain scores). Original kept.
@@ -2756,6 +2757,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 130: existing frame converter with matrix/output/both references 206/206/206; direct translation, with matrix/output/both
 // references and actual output return 367/367/367/367/367 (plain scores).
 // The original aligned translation temporary and all interfaces are restored.
+// Round 132: output-first converter, with matrix reference, output pointer return, and
+// output-first return 206/206/206/206; split rotation/translation, output-first split,
+// split return and output-first split return 206/206/206/206 (resolved previews).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
