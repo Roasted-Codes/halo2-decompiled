@@ -1250,7 +1250,7 @@ real g_467484 = 15.0f;
 real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
-// score 364 (was 364): frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// score 364 (was 364): frame 0x4c versus 0x40; normal-copy and native color/rotation homes remain.
 // copied limited color kept; early squared length 428, decoded-color names 429,
 // in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
 // Base clamped in place 444; outer limited-color lifetime 364; copied color plus
@@ -1263,6 +1263,9 @@ real function_30bf0(vector3f *vector);
 // Native rotation input snapshot 490; cosine-first evaluation 364; live axis fields 528 (caller lost);
 // input snapshot with cosine order/in-place output/live axis 490/487/487 (live-axis caller lost);
 // input snapshot with bounded-color home/radians producer 490/490.
+// Native limited/turned/both/normal homes 364/364/364/364;
+// limited-normal/turned-normal/all homes 364/364/364; outer rotation workspace 364.
+// All original normal, copied color and rotation values and helper boundaries retained.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

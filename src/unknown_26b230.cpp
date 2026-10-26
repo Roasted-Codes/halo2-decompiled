@@ -178,7 +178,7 @@ void function_268840()
 	function_268c90();
 }
 
-// score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
+// score 246 (was 246): frame 0x50 agrees; pool/NONE, current/successor homes and child interfaces remain.
 // frame 0x48 versus 0x50; iterator result/exhaustion and
 // player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
@@ -196,6 +196,9 @@ void function_268840()
 // In the recovered 0x50 frame: entry player pool 302; Boolean retention 247; both 302;
 // direct expiry admission 246/893 bytes; pool/Boolean/both plus direct expiry 314/256/314;
 // entry pool and Boolean retention with full-width child result 301.
+// Pool after native setup 297; initial successor before expiry clear 246; both 297;
+// retention before admission 246; with pool/successor/both 297/246/297;
+// named expiry-time sum 246. Original accepted datum walk and child result retained.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2128,7 +2131,7 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
+// score 322 (was 322): frame 0x6a4 agrees; visibility-row scheduling, marking and selection/cleanup differ.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
 // Round 156, caller context: depth zero 505; depth one 322; target size 517;
@@ -2138,6 +2141,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Scoped first distance iterator 322; two-use candidate-distance sample 326; readonly
 // settings view 322; first scope plus sample 326; separate marking result 322; first
 // scope plus marking result 322; chained reset fields 322, plus marking result 322.
+// Live clear/admission/both 322/315/315; live row/clear-row/admission-row/all 315/383/322/356;
+// candidate address before sort 356. Live admission bound 315 (the global re-read at one of four uses; not kept);
+// early reset-word SI load recovered; all call tuples and existing merge/selection loops retained.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

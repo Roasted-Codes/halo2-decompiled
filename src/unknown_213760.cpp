@@ -1164,7 +1164,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 165 (was 165): frame 0x1144 agrees; file-displacement register,
+// score 165 (was 165): frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file displacement and request/I-O setup differ.
 // task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
 // completion scope 172; output scopes 172; slot equality 393;
@@ -1190,6 +1190,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Common completion at all/open/size/update waits 165 each; named constant write options 112
 // rejected; initialized size output 207; cleanup-state byte 165; options with common wait 112
 // rejected.
+// Indexed handle/metadata/both 179/224/224; indexed invalidation 189;
+// indexed handle/invalidation 189, metadata/invalidation 199, all fields 281;
+// one shared header workspace 256. Indexed handle first differs at +0x13f.
 // @retail 0x213970
 void function_213970(void)
 {
