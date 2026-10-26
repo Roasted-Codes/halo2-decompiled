@@ -218,6 +218,9 @@ void function_268840()
 // Recovered-frame expiry byte/long/signed byte 246/250/246; complete expiry result arms 246;
 // byte/signed-byte child result 246/246; unsigned/signed-word retention 247/247. Original
 // body retained.
+// Result-driven distance search 246; with Boolean retention 247, entry pool 302, both 302;
+// with natural actor-handle induction 294, plus Boolean 297, plus pool 266, all three 274.
+// Original accepted datum walk, retention and contributor child interfaces retained.
 // @retail 0x268c90
 void function_268c90()
 {

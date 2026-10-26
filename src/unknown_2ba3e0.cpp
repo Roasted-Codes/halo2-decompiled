@@ -353,6 +353,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // rereads 324; shared previous-velocity scale 249; shared final speed scales 269.
 // Round 215: independent minimum/maximum/change limits 278/270/280;
 // independent minimum+maximum limits 274; minimum+change limits 264.
+// Independent maximum-speed/maximum-change pair 264/1517; with fresh property fields 365/1516;
+// library previous copy with those two forms 264/365; separate particle mask 280/1530, plus
+// fresh properties 351/1521, plus library copy 280, all three 351. Frame remains 0xb8/0xb4.
+// Original full steering/cache layout, masks, vector copies and every call role restored.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
