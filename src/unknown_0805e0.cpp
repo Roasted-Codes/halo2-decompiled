@@ -495,6 +495,8 @@ void function_1537f0(s_profile_record *record);
 // suffixes at field70/field74/field78 give 99/89/83; whole source suffix 125. Frame remains 0x90.
 // Native header zero fields 40/44/40+44/48/40+48/44+48/all 74/90/87/67/74/90/87;
 // complete sixteen-byte header fill 154; source/identity homes remain unchanged.
+// Entry zero/first sentinel pair/second pair chains and all pair subsets 67 each;
+// complete endpoint sentinel chain 67. Frame 0x90 and packed source spills remain.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -615,6 +617,10 @@ bool function_7fb50(void)
 // with word record/property/both totals 91/91/94; with native scalar ordinal 92.
 // Record header property-first/reverse/remaining orders 90 each (five forms);
 // name-property buffer-first/type-first/rotated stores 90 each (three forms).
+// On source-end traversal: chained emitted zeros 92; complete late record commit 90;
+// scalar-loop accounting 120; chained zeros with early scalar accounting 126;
+// completed record/buffer totals 115; chained zeros with record commit 92;
+// scalar accounting with record commit 120, with chained zeros 122. Input homes remain.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
