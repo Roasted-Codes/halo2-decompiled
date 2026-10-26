@@ -1226,6 +1226,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Round 185 resize-derived write success bool/byte/short/long 112/112/203/185; complementary
 // failure 200/200/205/205 (fast). All restored; displacement, request copy and validity joins
 // remain.
+// Round 187 direct-options context: indexed output/values/both 180/180/180; indexed metadata
+// alone/output/values/both 198/198/198/198; native four-use acquired handle 211 (fast).
+// All restored; temporary displacement ECX and request/completion/I-O scheduling remain.
 // @retail 0x213970
 void function_213970(void)
 {

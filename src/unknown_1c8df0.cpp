@@ -74,6 +74,9 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // Calibrated with magnitude 24590; all restored. Frame 0x8c and secondary-result tail remain.
 // Complementary primary-hit bool/byte/short/long outcome arms 180/180/237/171;
 // direct trace producers 274/274/274/200 (fast). Original primary/category flow restored.
+// Round 187 separate caller/provider inline/noinline declarations: preliminary query 352/170;
+// primary collision 170/170; secondary collision 170/170; all three 352/170 (fast).
+// All restored; frame 0x8c/0x94 and raw secondary-result home/common tail remain.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

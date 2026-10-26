@@ -103,6 +103,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // null and successor EBP remain; opening body and private iterator restored. Repeated standalone word form
 // 218 excluded.
 // Native byte/signed-byte/Boolean high-bit fields with Boolean tests 164/164/164; direct tests 164/164/164; native bit values 164/187. Record size stayed 0x98; original flag byte restored.
+// Round 187 twice-used absolute actor slot long/dword/word/outer long with original view
+// 188/188/168/188; same four with full native actor accessor 188/188/168/188 (fast).
+// All restored; separate pool/iterator, early null and successor EBP remain.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

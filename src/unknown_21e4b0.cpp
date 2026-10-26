@@ -144,6 +144,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Native-byte return 165; with final byte/allocation bool/both 169/169/169;
 // native-byte return across reset 280; with final byte/allocation bool/both 290/290/290.
 // Native short count 307; with shared voices 307; short first 322, with shared voices 322; across reset 304, with shared voices 304; short first across reset 298, with shared voices 298. Success/type registers and first-channel spill remain.
+// Round 187 closed allocation/checksum scope: signed extent original/listener/reset/both
+// 165/165/280/280; unsigned extent same four 165/165/280/280 (fast).
+// All restored; success/type carriers and first-channel spill remain.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
