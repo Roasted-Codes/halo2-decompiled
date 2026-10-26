@@ -127,7 +127,10 @@ void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte
 void function_196dd0(long player_index, long counter, long arg_1f407d_2, long delta);
 void function_1ea880(long first_player, long player_index, s_object_values *table);
 
-// score 421 (was 421): frame 0x48 versus 0x50; victim/result homes and rounding calls differ.
+// score 421 (was 421): Frame 0x48 versus 0x50; victim/selection/count homes and rounding calls remain.
+// Byte selection index 421; signed-byte teams 487; explicit append phases 421; selected/fallback result
+// 421; early self result 453 (frame 0x50).
+// Earlier 421 (was 421): frame 0x48 versus 0x50; victim/result homes and rounding calls differ.
 // Assist cursor 464; damage snapshot 466; early hostility 463; hostile arm first 421; size optimization 713.
 // j91: frame 0x48 versus 0x50 and victim/selection/count homes remain; isolated early killer recovers 0x50 at 454 but regresses.
 // early killer result 454; early assist threshold 440; early attribution results 463; shared tick frequency

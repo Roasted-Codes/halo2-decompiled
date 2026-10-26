@@ -325,6 +325,8 @@ static inline bool teams_enabled_19e1c0()
 // Team-test byte/short/long locals with bool returns 433/483/483; native
 // byte/short/long returns 433/430/432; unsigned-word/byte opponent counters 433/433.
 // Ordinary short/long return forms 430/432; both small gains discarded.
+// Player-name/team-name/score-format/time-format inline and noinline declarations
+// 433 each (eight fast forms); all declarations and the original body restored.
 // Immutable capacity/comparison length/both 433/433/433; ordinary result with both 701;
 // valid-team-first/inherited and ordinary result 441/729;
 // word/native exact-end team loop 433/444.
@@ -339,6 +341,8 @@ static inline bool teams_enabled_19e1c0()
 // Name event-first/player complete guards/all event-first/all complete event guards
 // 475/460/430/480; ordinary result with the same four dispatch forms 716/680/718/697. The
 // three-point 430 form is ineligible; all restored.
+// Round 166: mode observations 433; engine result exit 433; fallback test result 435; mode with
+// exit/tests 433/435; native result with exit/tests/mode exit 704/703/704.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

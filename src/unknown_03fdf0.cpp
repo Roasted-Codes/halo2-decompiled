@@ -166,7 +166,8 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
-// score 183 (was 222): frame 0x84/0x88, callee registers and render-state expansion differ;
+// score 183 (was 183): frame 0x84/0x88, helper transport and API expansion remain.
+// Earlier: frame 0x84/0x88, callee registers and render-state expansion differ;
 // dword selection 183; word setup flags 234; combined mask 222;
 // brightness component loop 238; redundant bit-clear removal 217.
 // Word selection 238; byte setup flags 189; joined parent cursor 183;
@@ -174,12 +175,12 @@ void function_402b0(long cache_index, long mode)
 // j93: Frame 0x84/0x88 and helper conventions/expansion remain; original API values preserved.
 // first pass byte 202; second pass byte 201; third pass byte 195; typed parent lookup 183; direct tag lookup
 // 226.
-// score 183 (was 183): Frame is four bytes small; cache/draw contracts and render expansion
+// Earlier: Frame is four bytes small; cache/draw contracts and render expansion
 // remain. first pass result arms 205; second pass result arms 196; third pass result arms 195;
 // fourth pass result arms 195; all pass result arms 219; native cache record binding 183; native
 // setup field updates 183; cache inline contract 183; signed setup word 183; native table
 // traversal 266.
-// score 183 (was 183): Frame is four bytes small; callee transport and graphics expansion remain. shared first pass 315; shared
+// Earlier: Frame is four bytes small; callee transport and graphics expansion remain. shared first pass 315; shared
 // second pass 377; shared third pass 364; shared final pass 370; shared all passes 785; forced shared all
 // passes 785; forced shared boolean results 785; forced shared byte results 785; constant table shared all
 // passes 749; constant table forced shared all passes 749; constant table forced shared boolean results
@@ -189,9 +190,11 @@ void function_402b0(long cache_index, long mode)
 // frame 0x84/0x88, helper conventions and API expansion remain;
 // independent final-pass byte 199; with first/second/third byte 209/208/202;
 // with first-second/first-third/second-third bytes 218/214/213; final-pass short 200 (plain).
-// score 183 (was 183): frame 0x84/0x88 and helper/API contracts remain; independent
+// Earlier: frame 0x84/0x88 and helper/API contracts remain; independent
 // first/second/third/final/all native pass results 202f each; signed native setup flags, unsigned native
 // selection and both 202f each; unchanged reduced preview 202f, full 183.
+// Entry native selection/flags+selection/parent/ordinal/all declarations 202f each;
+// counter+selection/flags+parent+resource/entry coordinated roles 202f each, unchanged control 202f.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

@@ -145,6 +145,11 @@ public:
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
 // Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
 // inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
+// Entry-live result with break, key compared first 42 (key on the stack); early return in the loop
+// 42; aligned char buffer in 0x1eb020 with that body 42; 0x188640 calling without its key reference
+// 42 (0x1eb020 lost); __stdcall 0x188640 42; parameters swapped 42. With the 0x1eb020 -> 0x188640
+// call removed, or 0x1eb020 unaligned, that body and 0x188640 both match: the aligned caller's edge
+// keeps the key out of ebx. BLOCKED-BY 0x1eb020
 // Native return object first/bound first/found constructor 42/42/42; late result object 35;
 // cursor object with member/copy exhaustion 41/40; entry object/live field bound 42;
 // entry object with completed search 46. Existing class and aligned caller unchanged.

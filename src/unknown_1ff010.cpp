@@ -25,9 +25,25 @@ struct s_weapon_aim_ranges
 	real maximum_fraction;
 };
 
-// score 139 (was 139): frame agrees; actor/tag EDI/ESI homes and folded projectile flag test differ.
+/* a projectile definition, as the aiming code reads it */
+struct s_projectile_aim_view
+{
+	byte unknown00[0xbc];
+	dword flag0 : 1;
+	dword flag1 : 1;
+	dword unknownbc : 30;
+	byte unknownc0[0x164 - 0xc0];
+	real unknown164;
+};
+
+// score 135 (was 139): frame agrees; actor in edi and definition/projectile in esi (retail the reverse); retail
+// materializes the barrel pointer before reading its projectile index and loads edx before eax for the aim call.
 // Full-scope fraction 153; native fraction predicate 138; adjusted point construction 140;
-// inline depth zero 195; native barrel ordinal 186.
+// inline depth zero 195; native barrel ordinal 186. Kept: the projectile flag through a dword bitfield
+// (retail's shr/test), the aim call's pointers in retail's slots (unknown0 pushed, unknown1 in edx, unknown2 in
+// eax), the definition pointer declared after the fraction locals. Actor lookup before the projectile index
+// 139, before the barrel 139; typed barrel view 135; use_fraction declared first 135; actor_get at each use 143;
+// definition index renamed 135.
 // @retail 0x1ffbd0
 bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	point3f const *origin, point3f const *target, bool flag, vector3f *direction,
@@ -38,18 +54,18 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	bool result = false;
 	if (ranges)
 	{
-		byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 		real fraction = 0.0f;
 		bool use_fraction = false;
+		byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 		if (barrel_index >= 0 && barrel_index < *(long *)(definition + 0x2d0))
 		{
 			byte *barrel = *(byte **)(definition + 0x2d4) + barrel_index * 0xec;
 			long projectile_index = *(long *)(barrel + 0x90);
 			s_actor_view *actor = actor_get(actor_index);
-			byte *projectile;
+			s_projectile_aim_view *projectile;
 			if (projectile_index != NONE &&
-				((*(long *)((projectile = g_4e3b44[projectile_index & 0xffff].bytes) + 0xbc) >> 1) & 1) &&
-				*(real *)(projectile + 0x164) > 0.0f)
+				TEST_FIELD_BIT((projectile = (s_projectile_aim_view *)g_4e3b44[projectile_index & 0xffff].bytes)->flag1) &&
+				projectile->unknown164 > 0.0f)
 			{
 				real distance = distance3d(origin, target);
 				real upper = 1.0f - (0.0f > ranges->maximum_fraction ? 0.0f : ranges->maximum_fraction > 1.0f ? 1.0f : ranges->maximum_fraction);
@@ -68,10 +84,10 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 				point3f adjusted_origin = actor->position;
 				adjusted_origin.z = origin->z;
 				return weapon_barrel_aim(weapon_index, barrel_index, &adjusted_origin, target, NULL, flag,
-					direction, (real *)unknown1, (real *)unknown0, (real *)unknown2, (bool *)unknown3);
+					direction, (real *)unknown0, (real *)unknown2, (real *)unknown1, (bool *)unknown3);
 			}
 			result = weapon_barrel_aim(weapon_index, barrel_index, origin, target, use_fraction ? &fraction : NULL, flag,
-				direction, (real *)unknown1, (real *)unknown0, (real *)unknown2, (bool *)unknown3);
+				direction, (real *)unknown0, (real *)unknown2, (real *)unknown1, (bool *)unknown3);
 		}
 	}
 	return result;

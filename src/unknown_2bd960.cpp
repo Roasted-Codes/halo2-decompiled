@@ -364,7 +364,10 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 	}
 }
 
-// score 43 (was 43): index remains stacked instead of spline; first average
+// score 43 (was 43): spline/index/points entry convention and first source-address lifetimes remain.
+// Indexed sums/scales/both 41/41/41; native sum/scale setters with index home 135/43;
+// native middle copies 83; previous/both wrapped pointers from current 41/82. All restored.
+// index remains stacked instead of spline; first average
 // address/register schedule differs. With direct index: first/last/both shared
 // scales, first/both point setters, source role names, late second-segment
 // addresses and read-only source points 64/64/64/102/134/64/79/64.
@@ -403,7 +406,10 @@ void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points
 	last_output.z *= 0.5f;
 }
 
-// score 87 (was 87): frame 0x54 versus 0x50, float input and coefficient/
+// score 87 (was 87): frame 0x54/0x50, incoming fraction XMM3/XMM2 and coefficient homes remain.
+// Flat coefficient table 87; flat/direct output 109; flat row for 200; component
+// output alone/flat/direct 170/170/110; coefficient accumulation 89; flat row accumulation 185. All restored.
+// frame 0x54 versus 0x50, float input and coefficient/
 // weighted-sum registers differ. Immutable coefficients/powers 87/87;
 // table/power/all role names 87/87/87; direct output with immutable
 // storage/role names 109/109; complete symmetric channel products 94.
@@ -576,6 +582,9 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 // Earlier: the post-loop pointer/index restores remain reversed.
 // Final count and entry divisor 2/2; low-bit clear/remainder 64/63; endpoint
 // parts/start-first 2/2; step cursor 10; parity first 6; polygon/index names 2/2.
+// NONE arm first 60; inline validity helper 2; count at the top 2; no half local 2;
+// validity bool 2; loop index outside 2; parameter copies 2; callee parameters swapped 2;
+// modulo parity 19; half before the count store 59; while loop 2; count stored after the loop 57.
 // Local count/divisor/index role names singly, in pairs and together 9 fast each;
 // unsigned ordinal 23 fast. Reduced baseline 9; full baseline 2.
 // Consumed count 9 fast; initialized divisor 61; shared start numerator 9;

@@ -1031,12 +1031,12 @@ bool __stdcall function_107ed0(long device_index, long name, real seconds)
 						real speed = 0.0f;
 						transform4x3f original;
 						transform4x3f adjusted;
-						transform4x3f sampled;
 						transform4x3f start;
 						function_1420f0(&original, &device->field_xcc658c, &device->forward, &device->up);
 						adjusted = original;
 						if (device->flags & 8)
 						{
+							transform4x3f sampled;
 							c_type_709360 animation = device->channels[0].animation_id;
 							real time = device->channels[0].frame_position * (1.0f / 30.0f);
 							state->animation_matrix_get(animation, 0.0f, render_model, &start);
@@ -1216,14 +1216,20 @@ struct s_index_pair
 };
 bool function_0b6760(s_index_pair const *pair);
 
-// score 303 (was 303): Frame 0x1c versus 0x20; index/header/state/result homes remain. Ordinary
+// score 303 (was 303): Frame 0x1c versus 0x20 and index/header/state/result homes remain; native
+// power/position/both/activity flag values 376/302/379/370; power-activity/position-
+// activity/all/shared 376/373/376/376. One-point gain rejected.
+// Earlier: Frame 0x1c versus 0x20; index/header and state/result homes remain.
+// Frame 0x1c versus 0x20; index/header and state/result homes remain.
+// Frame 0x1c versus 0x20; index/header/state/result homes remain. Ordinary
 // index 389; ordinary saved pointer 378; both 421; ordinary index with header ordinal 389; both
 // with ordinal 421; both with byte result 413; ordinary saved pointer/index with byte result
 // 386/385. Acceleration producers preserved.
 // Frame 0x1c versus 0x20; index/header and state/result homes remain.
 // Acceleration products 303; speed products 316; both pairs 341; both plus complement 341;
 // delay product 310; acceleration plus delay 303; both plus delay 341; ordinary receiver plus both 378;
-// position/remaining product names 303, plain 303 kept. Sum grouping, fields, calls and existing qualifiers unchanged.
+// position/remaining product names 303, plain 303 kept. Sum grouping, fields, calls and existing qualifiers
+// unchanged.
 // frame 0x1c versus 0x20; index/header and state/result homes differ.
 // Long direction flag 367; shared completion 365; shared previous value 361;
 // channel guard helper 382; ordinary result 355; shared previous/ordinary result 351 kept.
@@ -1237,10 +1243,18 @@ bool function_0b6760(s_index_pair const *pair);
 // Ordinary saved pointer with shared previous 381 at retail length; original qualifiers kept.
 // frame 0x1c versus 0x20 and index/state homes remain; byte result 351;
 // word result 358; shared position complement 347; common group receiver 347; clamp arms 352.
+// Native device/power-group/position-group record references and their pairs/all 303
+// (seven forms); real tag fields 351. All receivers and the original tag type restored.
 // Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303; both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c versus 0x20 and index/header/state/result homes remain; all helper declarations restored.
 // Round 148: Explicit absent-state else 309; false result after flag clear 302; both joins 308; zero-first
 // direction/activity 303/303; state else plus direction 309; later false result plus activity 302; all
 // joins/zero tests 308. One-point gains dropped; frame/index/header/state/result homes remain.
+// Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303;
+// both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c
+// versus 0x20 and index/header/state/result homes remain; all helper declarations restored.
+// Long activity result/entry-long/ordinary index/ordinary saved pointer/both/header ordinal/both with
+// ordinal/shared notification 307,305,380,378,407,316,421,375. Original frame/index/state/result storage and
+// qualifiers restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
