@@ -31,7 +31,12 @@ long function_18d5b0(long label);
 long function_189fe0(s_sound_request const *request, long tag_index);
 long function_189340(long object_index, long tag_index, long audible, s_sound_marker const *marker, s_sound_source_callbacks const *source, real scale, long platform_playback, char const *variant);
 
-// score 35 (was 35): frame 0xa0 agrees; +0x115 consumes the slot pointer
+// score 21 (was 35): retail reads the object index once, after the playback call, into
+// ebx and copies it to esi for the call; ours reads it into esi at the call and again
+// into ebx for the started test (526 bytes). Argument-list assignment 85; plain reads
+// throughout 116; second half plain 90; all three through the reference 28; first half
+// plain 41; the first test alone through the reference 169; non-volatile reference 116.
+// frame 0xa0 agrees; +0x115 consumes the slot pointer
 // for the variant, then reloads it; object playback setup and source-result
 // allocation also differ. Earlier pointer/result scopes tied at 38; standalone
 // argument playback gave 83/523. Ordinary trials: indexed final store 156/537;
@@ -105,13 +110,11 @@ void __stdcall function_189cd0(long tag_index, long object_index, real scale, lo
 					description.flags |= 1;
 				else
 					description.flags &= ~1;
-				long playback = function_18d5b0(label);
-				long request_object = *object_reference;
-				sound_index = function_189340(request_object, tag_index, positioned ? 2 : 1, (s_sound_marker *)&description,
-					&g_444b3c, scale, playback, (char const *)&slot->permutation);
-				if (sound_index != NONE && request_object != NONE)
+				sound_index = function_189340(*object_reference, tag_index, positioned ? 2 : 1, (s_sound_marker *)&description,
+					&g_444b3c, scale, function_18d5b0(label), (char const *)&slot->permutation);
+				if (sound_index != NONE && object_index != NONE)
 				{
-					object_dispatch_sound_started(request_object, tag_index, sound_index);
+					object_dispatch_sound_started(object_index, tag_index, sound_index);
 				}
 			}
 			slot->source_index = sound_index;

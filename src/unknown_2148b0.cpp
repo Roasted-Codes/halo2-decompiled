@@ -26,6 +26,9 @@ extern s_cache_copy_request g_55be24[2];
 // the numerator conversion follows the denominator reload. Plain total 37;
 // double fraction 86; double operands 3; branch-assigned fraction 27; fraction first 2;
 // state snapshot 2; range selection 42; high range first 43; mixed precision division 2.
+// Implicit numerator 2; implicit denominator 2; nested total guard 2; low state uses initial fraction 39;
+// active result first 39; denominator at least one 41; outer branches reversed 31; unit numerator factor 2;
+// entry completed local 51.
 // @retail 0x2148b0
 bool function_2148b0(long progress)
 {

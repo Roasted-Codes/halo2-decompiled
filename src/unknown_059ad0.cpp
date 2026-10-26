@@ -3623,11 +3623,14 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 115 (was 120): frame agrees; timeout owner spill and identity load order differ;
+// score 115 (was 115): Frame agrees; timeout owner spill and native identity/reply load order differ.
+// Earlier: frame agrees; timeout owner spill and identity load order differ;
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
 // Direct leave predicate 115; retained host-query result 137; narrower host-result
 // scope 125; flags before identifier 120; early nonpeer return 123.
+// Native identity assignment 115; identity before identifier 115; announcement/reply/both named identifier stores 115/115/115;
+// entry result lifetimes 120; separate host initialization 118; host result before message 113.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -4302,11 +4305,13 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 396 (was 434): frame and sender/identity homes agree; Boolean homes and acknowledgement placement differ;
+// score 396 (was 396): Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
 // isolated sender rename 407; preference results first 407; old version first 407.
+// Identifier entry workspace 398; received entry workspace 396; long identity equality 402;
+// long preference results 406; equal-version decision first 422.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

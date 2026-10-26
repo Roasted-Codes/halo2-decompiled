@@ -1590,7 +1590,8 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 539 (was 600): actor/output registers, branch layout and rounding homes differ;
+// score 482 (was 534): actor/output and dispatch registers still differ; multi-use actor handle kept.
+// actor/output registers, branch layout and rounding homes differ;
 // direct entry guard 631 fast; notification ranges 642 fast; selection-result field 597 plain
 // (only three lower, rejected); actor pointer name 618 fast; tail case order 639 fast;
 // observed selector with a case scope 611 fast, same as the selection-result form.
@@ -1598,6 +1599,8 @@ void function_b7360(long object_index);
 // the real default case 572 fast, 547 plain (entry full 604, unchanged fast 620).
 // Entry 550; formal role names/native initial conversion/sine first 572 fast; shared motion angle 592 fast.
 // Size optimization 775 fast; depth two 561 fast, 532 plain, 1808/1848 bytes.
+// Command type short/long 530/533; actor object snapshot 482 plain (kept);
+// single-result completion 588; shared entry failure 515 (fast; existing depth two).
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -1619,6 +1622,7 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 		function_259e70(arg_3);
 		break;
 	}
+	long actor_object = local_0->unknown018;
 	switch (local_1->type)
 	{
 	case 0:
@@ -1637,7 +1641,7 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 		{
 			return 2;
 		}
-		if (local_0->unknown018 == NONE)
+		if (actor_object == NONE)
 		{
 			*(s_type_c3b527 *)((byte *)local_2 + 8) = cs_point_get(local_1->unknown28)->point;
 			local_2->field_3 |= 0x40;
@@ -1678,7 +1682,7 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 			local_2->field_c.j = (real)sin(local_5);
 			short local_6 = *(short *)local_1->unknown06;
 			local_2->field_8 = local_6 >= 0 && local_6 <= 3 ? local_6 : NONE;
-			if (arg_1 == local_0->unknown018)
+			if (arg_1 == actor_object)
 			{
 				function_1f86a0(arg_0);
 			}
@@ -1687,13 +1691,13 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 		}
 	case 7:
 		{
-			if (arg_1 == local_0->unknown018 && local_0->unknown26c != NONE)
+			if (arg_1 == actor_object && local_0->unknown26c != NONE)
 			{
 				return 2;
 			}
 			local_2->field_3 = (local_2->field_3 & ~0x18) | 4;
 			bool local_7;
-			if (arg_1 == local_0->unknown018)
+			if (arg_1 == actor_object)
 			{
 				local_7 = local_0->unknown5d0 && *(short *)((byte *)local_0 + 0x5d6) == 0;
 			}
@@ -1730,7 +1734,7 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 		}
 	case 8:
 		{
-			if (arg_1 == local_0->unknown018 && local_0->unknown26c != NONE)
+			if (arg_1 == actor_object && local_0->unknown26c != NONE)
 			{
 				return 2;
 			}
@@ -1772,7 +1776,7 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 				return 2;
 			}
 			s_cs_point *local_15 = cs_point_get(local_1->unknown28);
-			function_cccd0(local_0->unknown018, *(short *)(local_14 + 4), 1);
+			function_cccd0(actor_object, *(short *)(local_14 + 4), 1);
 			local_1->unknown99 = false;
 			*(s_type_c3b527 *)local_1->unknown9c = local_15->point;
 			local_1->unknown9a = 0;
