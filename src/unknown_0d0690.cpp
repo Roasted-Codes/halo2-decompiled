@@ -39,7 +39,8 @@ PRIVATE __forceinline long sky_surface_tag(short index)
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
+// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
+// Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
 // light/value fields 213; both views 213; frame pointer 296; status enum 213.
 // selector complete validation 213; selector result join 213; collision value initialization 238; direct
@@ -47,6 +48,7 @@ real function_30bf0(vector3f *vector);
 // preference 380; float consistency 302.
 // Selector failing-range returns 213; explicit selector context 213; direct collision predicate 213;
 // ordinary while light traversal 213; independent blend bounds 213; constant output first 213.
+// Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {

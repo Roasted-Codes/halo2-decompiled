@@ -45,7 +45,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 
-// score 164 (was 164): frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
+// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator storage, early null publication and successor EBP remain.
+// Earlier 164 (was 164): frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
 // null-result timing and actor-successor residency remain. Inactive early exit
 // 164; native flag mask 164; successful inner-update continue 164; pointer-result
 // for loop 275; early-exit/mask/continue combination 164.
@@ -58,7 +59,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // continue 164; direct datum 164; unsigned successor 164.
 // Native record iterator 222; long partition index 163; full actor view 164; outer actor workspace 164; ineligible-first branch 171.
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive continue 164; direct datum 164; unsigned successor 164.
-// score 164 (was 164): traversal phase lifetimes do not recover separate pool
+// Earlier 164 (was 164): traversal phase lifetimes do not recover separate pool
 // storage or the actor successor register. Squad/actor/both phase scopes 164/164/164;
 // squad/both scopes with actor for-loop 164/164; squad/both scopes with read-only
 // first acquisition 164/164; both scopes with read-only acquisition and for-loop 164.
@@ -75,6 +76,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // initializer 206; active count before both actor stores 166; Boolean completion-first step 165.
 // Round 112: Typed squad result 164; native record-step call 252; shared datum step expanded 267;
 // active-aware shared step 240; native datum initialization 252.
+// Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

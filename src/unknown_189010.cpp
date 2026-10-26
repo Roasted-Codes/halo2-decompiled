@@ -148,7 +148,8 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
-// score 149 (was 167): Frame 0xa8 and request EAX agree; first class query still expands and flag/result homes differ.
+// score 134 (was 149): Frame 0xa8 and request EAX agree; first class lookup expansion and flag/result homes remain.
+// Earlier 149 (was 167): Frame 0xa8 and request EAX agree; first class query still expands and flag/result homes differ.
 // priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
 // base-first flags 178 (caller losses), role names 182, source snapshot 178,
 // object snapshot 183, priority after flags 192.
@@ -162,9 +163,10 @@ static __forceinline long float_to_int_nearest(real value)
 // seconds/ticks terms 167/167; phase with seconds 188; shared receiver with seconds 167.
 // first class lookup expands; flag and result homes differ;
 // frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
-// score 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
+// Earlier 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
 // Late tag receiver 184; branch-assigned result 193; shared marker observation 167;
 // absent-marker-first 165 (below threshold); native short priority and padding memset 176.
+// Round 116: Whole source flags 149; clean state flags 169 (eight caller losses); variant fields before flag 149; audible-first admission 149; post-query marker default 134 kept plain; size conditional 147; looping global reads 130 fast/135 plain rejected; time-global reads 134; size override before copy 134. All 10640 matches preserved by keeper.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -197,14 +199,11 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 			state.location.flags |= 0x800;
 		}
 
+		state.source_data_size = 0;
 		if (request->marker)
 		{
 			state.marker = *request->marker;
 			state.source_data_size = sizeof(s_sound_marker);
-		}
-		else
-		{
-			state.source_data_size = 0;
 		}
 
 		char const *variant = request->variant;
