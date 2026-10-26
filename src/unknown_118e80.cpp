@@ -218,7 +218,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 	}
 }
 
-// score 220 (was 220): frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
+// score 220 (was 220): Frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
+// frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
 // shared-left output with one exit 233 (two-point gain dropped).
 // Branch-scoped velocity 248; scalar point setter 255; parent-transform first 237;
@@ -240,9 +241,17 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Frame 0x78 versus 0x6c; velocity/basis/position homes remain.
 // zero after first basis 240; zero after second basis 240; turn velocity before guard 274; basis role
 // reuse with scale 260; turn zero before guard 220.
+// Existing world-up object input 269; header-base input 220; vector return 285; real rotation member 247;
+// position aggregate initializer 242.
 // Round 110: direct scale on late-zero frame 232; native velocity aggregate 237; const metadata 220; inline basis 220; inline forward 220 with caller loss; symmetric angle order 218 (two-point gain dropped).
 // Round 112: First left/output shared 259; later shared 260; all shared 262; second only 258;
 // third only 219 (one-point gain dropped); shared default velocity 242; native world-up input 295.
+// Both local-first final dot products 222; world-up source-field rereads 273; read-only parent/matrix
+// views 220; position callback scope 242 (retail length); CRT unparented up copy 220.
+// Existing node getter 283; native matrix advance 220; both default CRT copies 220; getter plus
+// default copies 283; turn transfers 220; turn transfers plus late zero 220; world-up pointer
+// result 220; world-up parameter order 220. Original body/private helper restored; frame 0x78
+// versus 0x6c and early ESI/basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -738,6 +747,8 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // Admission word/mask 136/166; native output byte 95; shared counter and output decision 123;
 // shared counter carrier 95; byte with shared counter 95; reversed adjacent output publications
 // 95; final native word 102. Word/Boolean allocation and final store width remain.
+// Direct builder handle/flag/both 127/129/127; state before counters 114; direct handle and earlier state
+// 128; supported/unsupported/both increments before dispatch 99/107/104. All restored.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -889,6 +900,15 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Private unscaled input/native in-place copy/shared in-place scale 337 each; point/location
 // between words 162/164; second word then point 161; identifier declarations 151; timer home name
 // 151. Quotient/sweep/impact homes and protected owner-call setup remain.
+// Candidate index short/word 366/366; native query count 153; reflection conditional 151; with native count
+// 153; ordinary while scan 151; fraction-first comparison 151; nested candidate admission 151. All restored.
+// Complete speed square/all component squares 151/151; each with saved-word lexical homes
+// 151/151; each with scalar homes 151/151; complete magnitude with both home groups 151;
+// complete speed square with existing out-of-place scale 151 (fast).
+// response flag result arms 361; complete reflection dot 151; shared reflection products 164; native reflection
+// vector 164; complete response vector 185; existing rounding helper 151; response arms and collision fill 361;
+// dot with native reflection vector 164; rounding with reflection products 163; rounding with reflection vector
+// 163; rounding with native query count 154; rounding/count/reflection products 166.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1067,6 +1087,14 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // absent-parent first 94; absent-parent with byte force 94. The single-use word carrier is rejected unless exact.
 // Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
 // each; conditional orientation success 112; short activity 168.
+// Word force with ordered squares/native publication/output receiver 14/16/16; squares and
+// publication/squares and output/output and publication 14/14/16; all three 14; ordered squares with final
+// mask setter 14. Changed single-use word carrier is exact-only; all restored.
+// Direct force query 101; velocity-input/complete-input/nested-input scopes 94/94/94; direct query
+// with those input scopes 101/101/101; direct query with reversed orientation result 101 (fast).
+// existing rounding helper 101; chained sentinel words 96; native sentinel library fill 278; byte parent
+// countdown 94; postfix parent countdown 100; shared final flag clear 94; signed short force 16; rounding helper
+// with signed force 62.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

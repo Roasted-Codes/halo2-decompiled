@@ -712,12 +712,17 @@ struct s_85650
 // five child formal orders 112; wide active with both-arm count 100;
 // wide active with both-arm count and fresh sender 124.
 // Earlier: frame 0x24 versus 0x28 and owner/child/callback homes remain.
+// Frame 0x28 and length 551 agree; aggregate-base scheduling, owner mask and callback input/pointer carriers remain.
+// Earlier 112 (was 116): the frame is four bytes smaller than retail's
+// Earlier 100 (was 112): frame 0x24 and owner/child/callback homes still differ.
+// Earlier 100 (was 100): frame 0x24 versus 0x28 and owner/child/callback homes remain.
 // Owner mask value 100; peers address 100; distribution/channel references 100/100;
 // entry type value 100; callback address at publication 100; mask plus peers 100; mask plus fresh child 124.
 // Frame 0x24 versus 0x28 and owner/child/callback homes still differ.
 // Child slot before total/count 106/142; request/tail/both sender clears 139/139/143;
 // world-state value 100; short child ordinal 125; child slot plus clears 143.
 // Earlier: frame and owner/child/callback homes remain; published child/total/count field references 142 each;
+// Earlier 100 (was 100): frame and owner/child/callback homes remain; published child/total/count field references 142 each;
 // ordinal field reference 100; initialized type/client/both arrays 133/133/150; active byte 99 (below gate).
 // frame 24 versus 28 and child/distribution/callback homes remain; first aggregate
 // storage 145; storage plus fresh child 115; published-child query 100; immutable child count 100;
@@ -730,11 +735,14 @@ struct s_85650
 // arm 100/100; sender/baseline zero chains 100/100; array-wise clears 104; sequence value 100; sender
 // scope/owner boundary 100/100.
 // Earlier: frame 0x24 against 0x28 (the distribution spill reuses the channel index's
+// Earlier 100 (was 100): Frame 24/28 and child/distribution/callback homes remain; count predicate/empty
+// Earlier 141 (was 154): frame 0x24 against 0x28 (the distribution spill reuses the channel index's
 // home) and the callback is taken from the initializer's eax where retail keeps it in ebp; retail
 // also passes `active` as a 32-bit 0/1. Count defaulted before the type test 151; bool active 144;
 // both 141 (kept); active as a direct argument 141; active cleared in an if 138 (flag form);
 // active through a state local 141; distribution declared after the storage 142.
 // Signed-byte/short/word active 148/152/152; bool/byte/short/word/dword count 142/142/145/145/141. Original count and active types restored.
+// Round 116: Type range 146; flag-span clear 141; complete sender fields 173 (frame 0x28); callback scope 141; distribution fields 150; wide initializer input 145 (callee loss, restored); fresh first sender on bool-active/count-default base 69 kept plain; aggregate receiver 69; mask operand order 69; flag-clear combination 78. Every baseline match preserved.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
@@ -772,7 +780,7 @@ void function_85650(c_simulation_view *view, s_network_observer *observer, const
   sender->unknown24 = 0;
   s_85650 *owner = (s_85650 *)((byte *)distribution + 0x2048);
   sender->owner = (s_owner_450d1c *)owner;
-  view_add_child(&((c_replication_view_storage *)view->data)->aggregate, 0, sender);
+  view_add_child(&((c_replication_view_storage *)view->data)->aggregate, 0, &((c_replication_view_storage *)view->data)->sender);
   owner->field_08 |= 1 << view->world_index;
   owner->field_0c[view->world_index] = (s_sender *)&((c_replication_view_storage *)view->data)->sender;
   function_97f60(&distribution->handles, view->world_index, &((c_replication_view_storage *)view->data)->handles);

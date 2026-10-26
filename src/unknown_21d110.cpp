@@ -338,6 +338,10 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Availability/allocation/accessor expansion declarations and all three together 204 each;
 // immutable state/tag/both input bindings 204 each; all boundaries with both bindings 204. Frame
 // and opposite start/delete expansion remain; protected caller cycle preserved.
+// Round 132: creator noinline/inline+noinline/inline 204 each; outlined creator with shared
+// start expansion 80/80; query/attachment/both call boundaries with that expansion 80 each, all
+// five lose eight callers. Frame and start/delete expansion remain; original body and metadata
+// restored.
 // Earlier: frame and start/delete expansion remain; complete
 // admission scope with branch-defined allocation/nested class guards 204 each;
 // shared start with those forms 232/226/232/226. Original lifetimes restored.
@@ -346,6 +350,11 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // logical/masked/clear-only flag 165/215/174; scoped logical flag 165;
 // at-use record getters with compound/logical/masked/clear-only flags 185/164/220/177 (all gains lose callers).
 // Class/activation/listener/rate-query inline-noinline declarations 204 each; listener/stage/both output names 204 each; reversed output declarations 204.
+// Listener/stage/both outputs initialized absent or zero 204 each; per-use playback selection
+// alone/with absent outputs 199, rejected for matched-caller losses.
+// Round 164: complete start result 226; positive start admission 204; exhaustive start arms 226;
+// rate result selection 204; query owned stage 204; admission owned outputs 204; scoped positive rate 204;
+// scoped exhaustive results 226.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

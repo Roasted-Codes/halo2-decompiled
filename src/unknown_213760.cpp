@@ -95,6 +95,11 @@ bool cache_header_verify(s_cache_header const *header);
 // Fast: empty path value 82; normalizer-owned path 54; initialized read count 33;
 // success before read 16; result in each outcome 60; immutable handle 4;
 // file-path observation 4; native read result 4.
+// Post-call path address still reuses EBX. Library empty string/buffer address/both fast 4/4/4;
+// verification result 38; staged read/transfer results 25/36; verification-failure exit 26;
+// native transfer result with verification assignment 38; all new scores reduced.
+// Path helper inline, noinline and both 4/4/4; scoped path value 4; open sequencing 4;
+// open-condition assignment 4; handle before the call and before the path 4/4.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {
@@ -1183,10 +1188,17 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // plus failed-write result 159; request lifetime through submission only 165.
 // Handle-result arms 159 rejected as a branch flag.
 // Ordinary slot while 165; unsigned slot while 165; request clear before path 202; long/byte validity 210/165.
+// Byte six-slot ordinal 254; long remove-later state 201; post-cleanup remove-later initialization 168; path/request scope through open wait 165; request path between sharing and disposition 167.
 // Round 111: Redundant request zeros omitted 225; shared handle-field pointer 165; iteration-scope write/read headers 165/165; request path after access fields 169.
 // Existing open API, file-element reference, both 165/165/165; open API with
 // constructed write/read/both headers 165/165/165; handle-field pointer 165;
 // native file and both headers 165. Shared API emits the same request code.
+// File after size lookup 205; entry file lifetime/immutable file cursor 165/165;
+// valid-type byte domain 165; word slot 257; chained validity fill 262;
+// timestamp eligibility guard/write workspace end 165/165. Original body restored.
+// Split file-base/element advance 165; file pointer name 165; wait/header/both forceinline 165/165/165;
+// empty path 205; initialized write count 204; initialized resize result 215. File-displacement and
+// request/I-O setup remain.
 // @retail 0x213970
 void function_213970(void)
 {

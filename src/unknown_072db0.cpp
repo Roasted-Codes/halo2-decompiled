@@ -1348,6 +1348,9 @@ struct s_rating_summary
 // Bounded character countdown 326; group guards 206; player admission scope 206; team guards 206;
 // group guards plus character countdown 326; player/team admission 206; all admissions plus character countdown 326;
 // negative-first lower selection 212.
+// Unsigned name capacity 207; capacity-first continuation 216; ordinary-slot-first output 213;
+// capacity/continuation, capacity/output, continuation/output, all three 241/214/220/248;
+// copied-character ordinal with native pointers 207.
 // Earlier trial set: key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
 // Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.
@@ -1560,7 +1563,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 }
 #pragma optimize("", on)
 
-// score 770 (was 770): Frame 0xc0 agrees; user cursor, identity word and request homes remain.
+// score 754 (was 770): frame 0xc0 agrees; user/identity and request homes remain.
+// Frame 0xc0 agrees; user cursor, identity word and request homes remain.
 // user-cursor and identity-word homes differ;
 // long validity 770; pending read guard first 786; timestamp before
 // counts 770; unsigned property initializer 770; unsigned user group 781.
@@ -1572,6 +1576,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Frame 0xc0 agrees; user/identity and request homes remain; native identity flags 770; repeated flag snapshot 770; identity after property copy 772; property value after lookup 786; received-record cursor 770 (fast).
 // Existing identity snapshot as copy source 770; cache comparison order 797; request header first 771;
 // word request-player index 809; one-based descriptor IDs 770 (fast). Original body retained.
+// All five-group word ordinals 741 (frame 0xc8; rejected); byte clear ordinals 770;
+// read-submission failure first 770; common delay default 769; clamp bounds 769;
+// request/completion/offline word group 775/754/775; completion-only 754 plain, frame 0xc0.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
@@ -1701,7 +1708,7 @@ void function_074aa0(void)
                 if (online_stats_read_result(g_50c46c, (XONLINE_STAT_SPEC *)g_50c474,
                     (word)g_50c470, g_50e9fc, sizeof(g_50e9fc)))
                 {
-                    for (long group = 0; group < 5; group++)
+                    for (short group = 0; group < 5; group++)
                         for (long i = 0; i < 16; i++)
                         {
                             s_search_player_values *player = &g_509454[group].players[i];
