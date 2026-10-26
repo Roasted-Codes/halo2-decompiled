@@ -527,6 +527,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Origin fields at uses 318 (three-count gain rejected); hit fields at publication 329; both 366;
 // first/second node at uses 379/357; byte/long classifier results 321/321;
 // classifier reference input 321. All existing input snapshots and helper contracts restored.
+// Component result 370; search index 338; property cursor 336; cursor result 338;
+// bounded search condition 327; output index homes 321; hit distance home 321;
+// component result with output homes 370. Original entry scan and scalar homes restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
