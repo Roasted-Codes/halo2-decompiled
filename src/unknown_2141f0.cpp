@@ -79,7 +79,7 @@ void cache_copy_forget(char const *map_name);
 bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
-// score 367 (was 367): Aligned frame 0x110 agrees; request-source reuse and outgoing write options remain.
+// score 367 (was 367): Aligned frame 0x110 agrees; request-source reuse, dependency bound and outgoing write options remain.
 // Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion
 // states 433.
 // Signed-word dependency index 446; unsigned index 446; explicit existing write flags 453;
@@ -111,6 +111,8 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // destination states first 451; path summary with completion-first states 491 (fast).
 // Priority word/byte 506/516; retained-cursor do 469; operation-group/reverse cases 479/504;
 // sole time-array traversal 415; staged size result on cursor body 448; checksum state first 367.
+// Defining-unit inline path/checksum/path+checksum/path with separate noinline/clock/path+clock/
+// clock+checksum/all call declarations 367 each; all declarations and bodies restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
