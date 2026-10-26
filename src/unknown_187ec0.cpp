@@ -431,12 +431,16 @@ bool function_172750(long mode, point3f const *point, real radius);
    entry_element_index (the fifth argument, which retail reads into esi) is
    the element whose values and seat entries are looked up */
 // score 118 (was 118): frame 0x1c agrees; tag/remapped-index registers and output homes remain.
+// Earlier forms and observations:
 // Defaults before element 175; index before element 165; both before element 151;
 // read-only element 118; narrowed element index 118; shared special-index test 167;
 // explicit output defaults 118; read-only element and entries 118.
 // tag and remapped-index register/stack roles and result homes still differ;
 // index at use 160, branch index 118, update index 118, guarded index 124, entry scope 172,
 // named outputs 118, entry fields first 176, conditional second lookup 156.
+// This round:
+// First/second/both/all default chains 119/119/120/120;
+// first/second/both tag-test results 150/162/162; both results and default chain 160.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)
@@ -544,12 +548,24 @@ dword vector3d_compress(vector3f const *vector);
 #include "unknown_1765e0.h"
 long function_189400(s_sound_position const *position, long object_index, long tag_index, real scale);
 
-// score 89 (was 89): frame 0x48 agrees; effect/forward registers and first-counter spill remain.
+// score 77 (was 77): frame 0x48 agrees; first counter spill recovered; effect/forward inputs and second scan differ.
+// Earlier forms and observations:
+// frame 0x48 agrees; effect/forward registers and first-counter spill remain.
 // Point setter 89; component loop 317; origin value 150; description position 105;
 // late description 89; result-array names 89; query-owned defaults 122; facing value 149.
 // frame and array homes agree; input registers and the first scan counter differ;
 // paired initialization 326, effect cursor 91, sound cursor 100, both cursors 103,
 // paired/effect cursor 328, paired/sound cursor 335, paired/both cursors 344, shared scan index 89.
+// Earlier counter-width forms:
+// Narrow first short/word/byte 120/120/120; narrow second short/word/byte 77/77/77;
+// both short/word 126/126; signed-short second scan 77 plain, 337/336 bytes.
+// First/second/both array library fills 99/102/101;
+// local defaults/library defaults before point 77/101;
+// compression before point copy 75; location before velocity 76;
+// both sound copy orders 74 (three-point gain, rejected).
+// Exact-end sound scans dword/long/short 89/89/77; exact-end effect scan 84;
+// shared complete offset scale 125; sound point setter 106;
+// native velocity/location field copies 89/96.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)
@@ -583,7 +599,7 @@ void function_188180(point3f const *point, vector3f const *forward, long tag_ind
 	position.compressed_forward = vector3d_compress(forward);
 	position.velocity = *g_4687a4;
 	position.location = *location;
-	for (dword j = 0; j < sizeof(first_values) / sizeof(first_values[0]); j++)
+	for (short j = 0; j < sizeof(first_values) / sizeof(first_values[0]); j++)
 	{
 		if (first_values[j] != NONE)
 		{

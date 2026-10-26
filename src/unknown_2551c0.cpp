@@ -84,6 +84,9 @@ short __stdcall function_2551c0(long actor_index)
 // declaration orders 43.
 // Earlier: our frame was four bytes larger than retail's and the
 // inlined rotation helper ran on a different SSE schedule.
+// Round 132: shared cosine/axial/both/transverse/cosine+transverse/axial+transverse/all scaling
+// [143, 203, 195, 189, 140, 197, 165]; native helper references 43. Early cross products and
+// score-dot schedule remain.
 // Named second j/k products 109/109; both second products 65; both first products 65;
 // named j/k cosine products 120/109; both cosine products 61;
 // second products plus cosine parts 139.

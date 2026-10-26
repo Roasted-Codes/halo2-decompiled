@@ -308,7 +308,7 @@ static inline bool teams_enabled_19e1c0()
 }
 
 /* writes the text of one token for the event, returning its length */
-// score 443 (was 443): frame/result register and separate copy tails still differ.
+// score 433 (was 433): frame/result register and separate copy tails still differ.
 // Depth one with plain result 709; depth one with original result 443; unsigned mode 443;
 // opponent eligibility continue 443; opponent text initialized after scan 459; all restored.
 // frame 0x208 versus 0x204; result and copy tails differ.
@@ -316,13 +316,16 @@ static inline bool teams_enabled_19e1c0()
 // terminators 413 (discarded); size mode with existing result 834; global
 // optimisation off with existing result 1225; comparison-fed plain result 709;
 // first-name comparison terminator 444; score-text comparison terminator 443.
-// score 433 (was 443): frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
+// Earlier: frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
 // iterator 433 kept; explicit modes 443; native local team 457; native eligibility 443; shared
 // player dispatch 593; word iterator plus modes/local team/eligibility 440/451/433.
-// score 433 (was 433): frame 0x208 versus 0x204 and result/copy tails remain.
+// Earlier: frame 0x208 versus 0x204 and result/copy tails remain.
 // Team-test byte/short/long locals with bool returns 433/483/483; native
 // byte/short/long returns 433/430/432; unsigned-word/byte opponent counters 433/433.
 // Ordinary short/long return forms 430/432; both small gains discarded.
+// Immutable capacity/comparison length/both 433/433/433; ordinary result with both 701;
+// valid-team-first/inherited and ordinary result 441/729;
+// word/native exact-end team loop 433/444.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

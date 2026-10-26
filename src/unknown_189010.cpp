@@ -570,9 +570,12 @@ long function_1895f0(s_sound_position const *position, real scale, long tag_inde
 // forward/velocity/location library copies 2/2/2; location before velocity 23;
 // read-only camera 2; forward assignment 2.
 // success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
-// score 2 (was 2): success result/pop order remains; camera helper 34; result/scalar names 2/2;
+// success result/pop order remains; camera helper 34; result/scalar names 2/2;
 // length squared first 2; entry maximum/outer owner index 2/2; distance before position 2;
 // submission name 2; delayed false initialization 5; inverted success 2; all scores plain.
+// Success result/pop order remains. Request/forward/distance/combined scope endings 2 each plain;
+// projection component loop 2 plain; difference/paired component loops fast 4/4;
+// projection library clear fast 161. Reduced exact results need plain confirmation.
 // @retail 0x1897c0
 bool function_1897c0(long local_player_index, long unit_index, long tag_index, s_location const *location, point3f const *origin, vector3f const *direction)
 {

@@ -187,6 +187,10 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // 82/82/82/82; full/final interpolation expressions 82/82; native endpoint tests with/without
 // fraction 85/85; sample offset long/short/word 78/65/77; direct receiver 65; table-operation
 // first 65; explicit endpoint results 79; word-path returns 65; shared index row parts 76.
+// Codex N: wrapped byte offset/native byte pair/record receiver 78/81/80; byte endpoints 83;
+// zero/upper defaults with byte offset 75/78; fraction/production exits 78/79;
+// fallback masked byte/word/long/dword carriers 78/78/78/78; lower field observations 77;
+// produced span 65; both bound fields 77; byte sample with direct bounds 83.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {

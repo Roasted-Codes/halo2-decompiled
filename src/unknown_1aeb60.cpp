@@ -229,6 +229,9 @@ bool __stdcall function_1aefc0(long actor_index, s_slot *slot)
 // result = other, placed last). Goto-free forms keep 8: a do/while (false) with break, a keep
 // flag, if/else-if with an empty then, nested ifs. Tried: one || / && condition (22), early
 // returns (58), a use_other flag (43), return other / g_46fbe8 after a final label (62, 63).
+// State fields through parameter 8; output fields through parameter 8; both direct slot parameters 8;
+// prop lookup at field use 60; selection result names 8; chained activation flags 8;
+// activation result before stores 17; strict prop threshold 9.
 // @retail 0x1af0a0
 short __stdcall function_1af0a0(long actor_index, s_slot *slot, s_slot *arg_2)
 {

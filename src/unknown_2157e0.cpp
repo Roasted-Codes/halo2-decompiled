@@ -59,6 +59,13 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 // native terminator library clears each 91; memcpy for the copy 91; table pointer taken before the
 // drive query 91 (with memcpy 91); copy straight from the table element 106; current declared
 // before the loop 91.
+// native terminator library clears each 91.
+// Cache global at consumers 47 fast / 90 plain (one-point gain rejected); direct copy/global direct copy 106/100;
+// location/zero-index scope 91/123; file-type name 91;
+// global location/global copy index scope 90/124;
+// global direct library copy/address addition 100/100;
+// source-subscript progression/with library copy 109/109;
+// short/word successful index 131/131.
 // @retail 0x2170e0
 long function_2170e0(long file_index)
 {

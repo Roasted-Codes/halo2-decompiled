@@ -364,6 +364,10 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 	}
 }
 
+// score 43 (was 43): index remains stacked instead of spline; first average
+// address/register schedule differs. With direct index: first/last/both shared
+// scales, first/both point setters, source role names, late second-segment
+// addresses and read-only source points 64/64/64/102/134/64/79/64.
 // @retail 0x2bdd70
 void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points)
 {
@@ -399,6 +403,10 @@ void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points
 	last_output.z *= 0.5f;
 }
 
+// score 87 (was 87): frame 0x54 versus 0x50, float input and coefficient/
+// weighted-sum registers differ. Immutable coefficients/powers 87/87;
+// table/power/all role names 87/87/87; direct output with immutable
+// storage/role names 109/109; complete symmetric channel products 94.
 // @retail 0x2bde90
 void function_2bde90(real t, point3f *out, point3f *points)
 {

@@ -165,6 +165,9 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 	*timer = (short)ticks;
 }
 
+// score 68 (was 80): frame eight versus retail zero; mode compare and entry scheduling remain.
+// Both timer helpers 85; add helper 68 plain kept; set helper 80; native tick outputs
+// both 72, first 70, second 80; shared random index 80; library slot copy 80.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -180,13 +183,8 @@ short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 		dword *seed = &g_4e7408->unknown0;
 		*seed = 1664525 * *seed + 1013904223;
 		short delay = (short)(2 + (3 * (*seed >> 16) >> 16));
-		real seconds = (real)delay * g_510c54->field_2_3;
-		__asm
-		{
-			fld seconds
-			fistp slot
-		}
-		state->ticks += (short)(long)slot;
+		local_0((real)delay * g_510c54->field_2_3, &state->ticks);
+		real seconds;
 		state->unknown12 = false;
 		seconds = g_510c54->field_2_3 * 0.5f;
 		__asm
@@ -733,11 +731,14 @@ void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
 
-// score 174 (was 181): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
+// score 174 (was 174): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
 // Result first 203; request outer scope 187; role names 181; shared point differences 179;
 // failure result before release 207; shared cross product 174.
 // Count name with shared cross 174; request-output declarations first 174;
 // outer vector workspaces 174; separate direction vectors 171; request defaults with overrides 186.
+// Short/native-long success 232/228; unsigned selection count 174; native zero/kind request
+// initialization 172/173; status-output name 174; const tag input 174; request through validation 174;
+// success from availability 217; direct exits with failure retained through release 232.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1172,6 +1173,9 @@ struct s_1acda0
     byte unknown3c[0x40 - 0x3c];
 };
 
+// score 114 (was 114): frame 0x764 agrees; slot ESI arrives late, boolean test and exit traffic differ.
+// Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
+// state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {

@@ -740,16 +740,25 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 204 (was 204): Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
+// score 185 (was 193): frame 0x98 agrees; decoded-kind width, scalar homes and callback setup differ.
+// Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
 // Native kind 211; role-named scalars 204; shared callback arm 222;
 // library descriptor/payload copies 204; pretested item while 220.
 // Unsigned native item total 204; joint count/error item guard 220; direct local output cursor 211;
 // pair-pointer cleanup 206; payload-before-info declaration 204.
+// Round 132: count after block publication 193 plain kept (688/692 bytes); frame 0x98,
+// count/kind/callback homes still differ. Entry decision/common exit/path results 271/248/206;
+// native-kind pairs 271/236/223; native kind plus count publication 204; both cursors after
+// publication 208; indexed post-publication output 212.
 // Count-bearing descriptor aggregate 208; update case first 211; persistent descriptor 204;
 // native high nibble 207; total-only lexical order 204.
 // Count-first declarations 205; entry-scope advancing cursor 217; produced before descriptor clear
 // 205; existing release helper 207; native kind with both initialization changes 212.
 // Round 111: Header error recheck removed 206; do-while error continuation 272; persistent native payload 204; persistent produced total 204; update error default first 204.
+// Item cursor 221; paired callback cursors 185 plain kept; all descriptor cursors 193;
+// unsigned error 193; word kind 204; default first 193; reverse cases 211;
+// all cursors with full-width kind 204.
+// Paired cursors with native kind 203; paired/native kind with pretested for 217.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
@@ -798,6 +807,8 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 			info.count = n;
 			long produced = 0;
 			long i = 0;
+			dword *first_cursor = info.b;
+			dword *second_cursor = info.c;
 			do
 			{
 				if (error != 0)
@@ -809,12 +820,12 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 				switch (type)
 				{
 				case 1:
-					error = table->owner->v1(item, &info.b[i], &info.c[i], 8, &produced, data.v, stream);
+					error = table->owner->v1(item, first_cursor, second_cursor, 8, &produced, data.v, stream);
 					break;
 				case 2:
 					break;
 				case 3:
-					error = table->owner->v1(item, &info.b[i], &info.c[i], 8, &produced, data.v, stream);
+					error = table->owner->v1(item, first_cursor, second_cursor, 8, &produced, data.v, stream);
 					break;
 				case 4:
 					break;
@@ -828,6 +839,8 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 					error = 3;
 					break;
 				}
+				first_cursor++;
+				second_cursor++;
 				i++;
 			}
 			while (i < n);
@@ -836,12 +849,12 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 			{
 				s_handle_block *block = cursor;
 				cursor++;
-				count++;
 				block->type = type;
 				block->index = info.items[0];
 				block->info = info;
 				block->count = produced;
 				block->data = data;
+				count++;
 			}
 			else
 			{

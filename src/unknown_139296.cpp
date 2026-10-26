@@ -580,6 +580,8 @@ bool g_4f55e2;
 // char/long local (7); one shared bool result (30, 32); the whole test as one && chain, as a return or
 // with if (!local_1) return true falling to one return false (19: test byte ptr, xor eax/inc eax).
 // 0x165f16 shows the same dword and on this flag (0x4f55e2 sits between the bools at 0x4f55e0/e4).
+// Selected-index global at each call 7; admission-derived complete/staged/serial/interface result
+// 19/19/19/19; admission-derived long/short/byte result 24/25/24.
 // @retail 0x13939b
 bool function_13939b()
 {

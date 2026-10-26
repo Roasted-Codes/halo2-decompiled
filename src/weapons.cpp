@@ -3014,20 +3014,28 @@ struct s_ammo_conversion_entry
     long definition_index;
 };
 
-// score 203 (was 203): Frame 0x20 agrees; destination EDI/EBP, source/tag allocation and conversion entry staging remain.
-// Earlier 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
+// score 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
-// Earlier 203 (was 203): frame agrees; destination/tag and search carriers remain.
+// Earlier: frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
 // direct retention predicate 213; loaded value clamp 203. Original body restored.
-// Earlier 203 (was 203): Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
+// Earlier: Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
 // Conversion ordinal 203; same-definition carrier 224; destination object reference 203; magazine
 // reference 203; source sum order 203; native conversion fields 203.
+// Round 132: word acquisition result 198 plain kept (731/731 bytes), frame 0x24/0x20;
+// destination/tag and conversion staging remain. Byte result/retention/both 200/203/200; word
+// retention/both 207/199; result/both at entry 200/202; word/byte result with type rereads
+// 238/215; word result/both at entry 225/226.
+// Frame 0x20 agrees; destination EDI/EBP, source/tag allocation and conversion entry staging remain.
+// Earlier 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
+// Earlier 203 (was 203): frame agrees; destination/tag and search carriers remain.
+// Earlier 203 (was 203): Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
 // Round 109: Entry-result/ordinal join 206; ordinal-only scan 219; remaining transfer accumulator 203; both objects before tags 215; retained-rounds truth accumulation 203 (731 bytes).
 // frame 0x20 agrees; destination/tag roles and conversion-entry staging remain.
 // Reusable magazine count 211; read-only tag receivers/result names/outer ordinal/conversion
 // scope 203/203/203/203; result-conditioned search 202 (below gate); plain while 203;
 // source-count store order 203. Opening body restored.
+// Success-path return 209; source from each path/after conversion 204/219; conversion count/table/both at use 197/198/198; short current/successor 205; combined ownership 205. One-point gain rejected.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3037,7 +3045,7 @@ bool __stdcall function_ffc60(long weapon_index, long other_index, long player_i
     s_weapon_definition *other_definition = WEAPON_DEFINITION(other);
     *rounds = 0;
     bool other_has_rounds = false;
-    bool acquired = false;
+    short acquired = false;
     for (short i = 0; i < definition->magazine_count; ++i)
     {
         s_weapon_magazine_definition *magazine_definition = &definition->magazines[i];

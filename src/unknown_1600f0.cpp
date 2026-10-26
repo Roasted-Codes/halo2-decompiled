@@ -1511,6 +1511,8 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // justification arms 122. Original team-text cursor retained.
 // typed text 1411; team reference 120; advanced cursor 282; typed reference 1411; native text
 // inputs bounds/receiver/validity/color first 150 each.
+// Text-state store orders SJF/FSJ/FJS/JSF/JFS 122/130/130/122/130;
+// last-widget cursor/with justification first 122/122; default justification 436.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {

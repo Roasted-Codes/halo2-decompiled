@@ -986,6 +986,9 @@ struct s_bitmap_texture_view
 // Entry data declaration 3; level-index local 3; reversed subscript 3; 28-bit field view 3;
 // shift mask 3; modulus mask 3; signed addresses 3; destination OR 3; initialized entry data 3;
 // bitmap-view alias 3.
+// parameter role names 3; format level role names 3; native reduction width 3; immutable reduction table 3;
+// dimension bit declarations 3; named packed dimensions 3; full width dimension bits 57; shared zero header
+// fields 5.
 // @retail 0x12d6d0
 void __stdcall function_12d6d0(s_bitmap_texture_view const *bitmap, long level, D3DTexture *texture)
 {
