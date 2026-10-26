@@ -53,18 +53,25 @@ long __stdcall function_18d1c0(long arg_0);
 bool function_b9d20(long arg_0);
 
 #pragma inline_depth(0)
-// score 106 (was 106): retained pool/scan/datum/handle allocation and root-location call differ;
+// score 94 (was 106): the pool is not kept in EBX across the loop (retail reloads it only after
+// 0x18a7b0), so the scan/datum/handle registers differ; the root-location call differs.
+// The pool global read at each use 94 (kept; the local copy was rematerialised from the
+// global); then a plain iterator read 107; an element pointer for the flag store 94; the flag
+// byte as bitfields 94; the local pool with the iterator set from the global 135; the existing
+// inlined datum iterator with the pragma removed 269 (LTCG then inlines 0xbadc0/0xb9d20, which
+// noinline declarations here do not stop; under inline_depth(0) even __forceinline is called).
+// Earlier forms (106):
 // shared absolute scan 153; native inline iterator 174; existing datum iterator 170;
 // separate scan admissions 106; guarded bitmap for 106; word division 142;
 // readonly bitmap 106; repeated current handle 106.
 // pool retention, datum/scan/handle carriers and location call differ.
 // Ordinary iterator read 131; current-datum consumer 106; both 131; pool names 106;
 // pool/datum names 106; ordinary named carriers 131; ordinary scoped datum 131;
-// ordinary named current consumer 131. Original body retained.
+// ordinary named current consumer 131. The dead parameter address statement compiled
+// identically and was dropped.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
 {
-	(void)&arg_0;
 	if (((s_18c061 *)g_4e6380)->field_78 &&
 		((s_18c061 *)g_4e6380)->field_79 &&
 		((s_18c061 *)g_4e6380)->field_7a)
@@ -81,9 +88,8 @@ void __stdcall function_18c060(real arg_0)
 		local_0 = 1;
 	sound_set_ambience(local_0);
 
-	s_record_pool *local_1 = g_4ed28c;
 	s_data_datum_iterator local_2;
-	local_2.data = local_1;
+	local_2.data = g_4ed28c;
 	local_2.index = NONE;
 	s_18c060 *local_3;
 	for (;;)
@@ -114,13 +120,12 @@ void __stdcall function_18c060(real arg_0)
 		if (local_3->field_3 == 4 && local_3->field_10 != NONE &&
 			local_3->field_10 <= g_510c54->game_time)
 		{
-			byte *local_4 = &((s_18c060 *)local_1->data)[local_2.datum_index & 0xffff].field_4;
+			byte *local_4 = &((s_18c060 *)g_4ed28c->data)[local_2.datum_index & 0xffff].field_4;
 			*local_4 |= 2;
 		}
 		if (local_3->field_3 != 1)
 		{
 			function_18a7b0(local_2.datum_index);
-			local_1 = g_4ed28c;
 		}
 		else if ((local_3->field_4 & 1) && !function_badc0(local_3->field_10, (dword)NONE))
 		{
@@ -130,12 +135,12 @@ void __stdcall function_18c060(real arg_0)
 				long local_6 = function_18d1c0(local_5);
 				if (local_6 != NONE)
 				{
-					s_18c060 *local_7 = (s_18c060 *)local_1->data + (local_6 & 0xffff);
+					s_18c060 *local_7 = (s_18c060 *)g_4ed28c->data + (local_6 & 0xffff);
 					if (local_7->field_c == local_5)
 						local_7->field_4 &= ~0x20;
 				}
 			}
-			record_pool_release(local_1, local_2.datum_index);
+			record_pool_release(g_4ed28c, local_2.datum_index);
 		}
 		else if (function_b9d20(local_3->field_10))
 		{
@@ -145,7 +150,6 @@ void __stdcall function_18c060(real arg_0)
 				(g_54e8a0[local_8.cluster_index >> 5] & (1 << (local_8.cluster_index & 0x1f))))
 			{
 				function_18a7b0(local_2.datum_index);
-				local_1 = g_4ed28c;
 			}
 			else
 				local_3->field_5 &= ~1;

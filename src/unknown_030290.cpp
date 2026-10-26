@@ -71,8 +71,14 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
-// score 112 (was 164): coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
-// Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
+// score 86 (was 112): only an XMM0/XMM1 colouring swap remains (retail keeps the horizontal
+// coordinate in XMM0 and the depth in XMM1, ours the other way round, through the whole body).
+// The half-viewport values as a local box2f 86 (kept: retail keeps them in four adjacent
+// slots, left/right/top/bottom); then depth first 85; r2 inline 86; coefficients after the box
+// 109; ratio before root 101; coordinates as a vector3f 86; cy/cz/cx order 117; a forceinline
+// per-axis helper 118; a 600 s permuter run, none below 86. No-link screens of every operand
+// and term order, names, vector locals and displacement forms keep the same colouring.
+// Earlier forms (164/112): coefficient names 209; viewport names 209; vertical coordinate first 211;
 // tangent names 209; shared root/ratio/tangent workspaces 209.
 // In-place displacements 257; depth-radius product 233; deferred second
 // tangents 164; near-plane early exit 240; shared depth square 209.
@@ -82,13 +88,10 @@ long g_4ba134;
 // Direct-radius failed-discriminant arms first 185; behind-plane arm first
 // 213; named tangent quotients 193; ratio before root 193; earlier radius
 // square 193; shared root products 212.
-// score 112 (was 164): viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
 // Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
-// eager first tangent coordinates 164; in-place tangent projection 164. Original body retained.
-// Frame 0x34 and coordinate prefix agree; viewport conversion and
-// root/ratio/tangent homes remain. Tried split viewport conversions 164; viewport conversions
-// Split viewport conversions 164; viewport conversions
-// first 176; horizontal tangent scope 164; tangent blend weights 164; horizontal root name 164.
+// eager first tangent coordinates 164; in-place tangent projection 164.
+// Split viewport conversions 164; viewport conversions first 176; horizontal tangent scope 164;
+// tangent blend weights 164; horizontal root name 164.
 // Second depths early 197; second coordinates early 232; second pairs early 209;
 // horizontal pair early 247; vertical pair early 241; coordinate-before-depth pairs 112;
 // early depths with guarded coordinates 197; inline first coordinates 209.
@@ -119,10 +122,11 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 		real m98 = camera->unknown98;
 		real m8c = camera->unknown8c;
 		real m9c = camera->unknown9c;
-		real left = view->bounds.left * 0.5f;
-		real top = view->bounds.top * 0.5f;
-		real right = view->bounds.right * 0.5f;
-		real bottom = view->bounds.bottom * 0.5f;
+		box2f half;
+		half.x0 = view->bounds.left * 0.5f;
+		half.y0 = view->bounds.top * 0.5f;
+		half.x1 = view->bounds.right * 0.5f;
+		half.y1 = view->bounds.bottom * 0.5f;
 
 		real xz = cx * cx + cz * cz;
 		real r2 = radius_value * radius_value;
@@ -138,14 +142,14 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			{
 				real xa = cx - (cx * radius_value + root * cz) * k;
 				real n = xa / za * m78 + m98;
-				bounds->x0 = (1.f - n) * left + (n + 1.f) * right;
+				bounds->x0 = (1.f - n) * half.x0 + (n + 1.f) * half.x1;
 			}
 			else
 				bounds->x0 = -k_real_max;
 			if (zb > 0.01f)
 			{
 				real n = xb / zb * m78 + m98;
-				bounds->x1 = (1.f - n) * left + (n + 1.f) * right;
+				bounds->x1 = (1.f - n) * half.x0 + (n + 1.f) * half.x1;
 			}
 			else
 				bounds->x1 = k_real_max;
@@ -169,14 +173,14 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			{
 				real ya = cy - (cy * radius_value + root * cz) * k;
 				real n = ya / za * m8c + m9c;
-				bounds->y0 = (1.f - n) * top + (n + 1.f) * bottom;
+				bounds->y0 = (1.f - n) * half.y0 + (n + 1.f) * half.y1;
 			}
 			else
 				bounds->y0 = -k_real_max;
 			if (zb > 0.01f)
 			{
 				real n = yb / zb * m8c + m9c;
-				bounds->y1 = (1.f - n) * top + (n + 1.f) * bottom;
+				bounds->y1 = (1.f - n) * half.y0 + (n + 1.f) * half.y1;
 			}
 			else
 				bounds->y1 = k_real_max;

@@ -387,17 +387,21 @@ bool balance_teams_greedy(s_balance_problem *problem, long team_count, s_balance
 }
 #pragma function(_ReadWriteBarrier)
 
-// score 116 (was 116): count-address homes, party registers, delta and query order differ.
-// Reduced control 80 (full 116); count fields A/B/both 80/80/80; early roots 173;
-// players A/B/both 78/75/80; reverse count roots 173; B players root before A/first/
-// between views 82/88/82; immutable B root 75. B players plain 115 is an ineligible
-// one-count gain; all subobject forms restored.
-// frame 0x2694 agrees; team-pointer homes, delta and query ownership differ.
-// Reduced baseline 80 (full 116); team/party/both lexical priority 80/80/80;
-// short outer/inner/both ordinals 142/142/155; accepted scope and comparison names 80/80.
-// score 116 (was 116): count homes, signed delta and query ownership remain.
-// Reduced candidate/reference/both spread values 135/127/137; spread delta 132;
-// candidate A/B/both team roots 80/150/150; outer party cursor 91 (reduced baseline 80).
+// score 116 (was 116): the inner party pointer takes EAX (retail ECX), so the count delta is
+// built as 2*(b-a) and the A/B count-address homes swap; the full build also calls each pair of
+// queries in the other order (reference spread first, candidate cost first; retail the reverse).
+// The reduced image scores 80 and orders the cost calls as retail: trust only the plain check.
+// Plain-checked: first party pointer in the outer loop 116; nested ifs instead of continues 116;
+// teams read in full at each use 146 (loses 0x91dd0); comparison operands swapped 116 (the call
+// order follows the operands, not their position); explicit outer party pointer stepping 116.
+// No-link screens: every delta spelling (named, doubled, parenthesised, count-after-swap, abs
+// forms) folds to the same 2*(b-a) sequence; reference/local/method forms keep reference first.
+// Earlier (reduced-image) forms: control 80; count fields A/B/both 80/80/80; early roots 173;
+// players A/B/both 78/75/80; reverse count roots 173; B players root before A/first/between views
+// 82/88/82; immutable B root 75 (B players plain 115, an ineligible one-count gain);
+// team/party/both lexical priority 80/80/80; short outer/inner/both ordinals 142/142/155;
+// scope and comparison names 80/80; candidate/reference/both spread values 135/127/137; spread
+// delta 132; candidate A/B/both team roots 80/150/150; outer party cursor 91.
 // @retail 0x91bd0
 void s_balance_optimizer::try_swap(long team_a, long team_b)
 {

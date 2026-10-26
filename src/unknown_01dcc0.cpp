@@ -214,58 +214,67 @@ bool function_01de20(long index)
 dword function_1d6f0(bool linear, bool alternate, dword format, long width, long height);
 long g_55e6c0;
 
-// score 122 (was 131): Incoming data home, delayed saves and header bias still differ.
-// Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
-// score 115 (was 122): incoming data home, saved-register timing and level-header bias remain.
-// Shared primary header 161; walking level pointer 135; Boolean packed-word product 152;
-// byte-count expression in the level loop 115; delayed clamped-count publication 148.
-// score 115 (was 115): incoming data home, delayed saves and level-header bias remain.
-// Inline/noinline format declarations 115/115; published byte total 192; level/offset names 115;
-// size after format 190; named aligned width 115; element before size 123; linear size branches 174.
+// score 29 (was 115): retail keeps the size packing unfolded (shl/sub, lea/shr/shl/sub) where
+// /Og folds it ((h+0xfffff)<<12, (w<<20)&mask); height/count then take the other register.
+// Kept: the offset declared after the kind store (it reuses the data argument's home, so data
+// stays in EBP) 107, plus one result variable with the busy entry inside an if/else 40, plus
+// the level headers written in full (elements[i][k], retail's +4 bias) 33/29. Then: the clamp as
+// an if/else 168; packing from the stored fields 29; call from the stored fields 29; offset first
+// in the block 29; one packing expression 29; an explicit shift 121; a named level size 120;
+// offset before the entry 109; the whole function without global optimisation (diagnostic) 336.
+// Earlier forms (131/122/115): nested result 136; absent-data guard 156; common result exit 131;
+// level-index shift 122; role-named workspaces 136; shared primary header 161; walking level
+// pointer 135; Boolean packed-word product 152; byte-count expression in the level loop 115;
+// delayed clamped-count publication 148; inline/noinline format declarations 115/115; published
+// byte total 192; level/offset names 115; size after format 190; named aligned width 115;
+// element before size 123; linear size branches 174.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {
+    bool result = true;
     if (data)
     {
         s_unknown_01dcc0 *entry = &g_4b4b58[index];
         if (entry->data || entry->flag95)
-            return false;
-        *(long *)entry->unknown00 = kind;
-        entry->width = width;
-        entry->height = height;
-        entry->data = data;
-        *(long *)entry->unknown8c = 0;
-        entry->element_count = count < 0 ? 0 : count > 4 ? 4 : count;
-        *(long *)entry->unknown7c = 0;
-        entry->sub_header[1] = 0;
-        entry->sub_header[2] = 0;
-        dword packed = ((((dword)width * 4) / 64) << 24) - 0x1000000;
-        packed |= ((dword)height << 12) - 0x1000;
-        packed |= width - 1;
-        entry->flag94 = linear;
-        entry->sub_header[0] = 0x40001;
-        entry->sub_header[4] = linear ? packed : 0;
-        entry->sub_header[3] = function_1d6f0(linear, alternate, count, width, height);
-        D3DResource_Register((D3DResource *)entry->sub_header, data);
-        long offset = 0;
-        for (long i = 0; i < entry->element_count; ++i)
+            result = false;
+        else
         {
-            long bytes = (((width + 63) & ~63) * height * 4) >> (i * 2);
-            long *element = entry->elements[i];
-            element[0] = 0x50001;
-            element[1] = entry->sub_header[1] + offset;
-            element[2] = entry->sub_header[2];
-            element[4] = entry->sub_header[4];
-            element[3] = function_1d6f0(linear, alternate, 1, width >> i, height >> i);
-            element[5] = (long)entry->sub_header;
-            ++entry->sub_header[0];
-            offset += bytes;
-            *(long *)entry->unknown7c += bytes;
+            *(long *)entry->unknown00 = kind;
+            long offset = 0;
+            entry->width = width;
+            entry->height = height;
+            entry->data = data;
+            *(long *)entry->unknown8c = 0;
+            entry->element_count = count < 0 ? 0 : count > 4 ? 4 : count;
+            *(long *)entry->unknown7c = 0;
+            entry->sub_header[1] = 0;
+            entry->sub_header[2] = 0;
+            dword packed = ((((dword)width * 4) / 64) << 24) - 0x1000000;
+            packed |= ((dword)height << 12) - 0x1000;
+            packed |= width - 1;
+            entry->flag94 = linear;
+            entry->sub_header[0] = 0x40001;
+            entry->sub_header[4] = linear ? packed : 0;
+            entry->sub_header[3] = function_1d6f0(linear, alternate, count, width, height);
+            D3DResource_Register((D3DResource *)entry->sub_header, data);
+            for (long i = 0; i < entry->element_count; ++i)
+            {
+                long bytes = (((width + 63) & ~63) * height * 4) >> (i * 2);
+                entry->elements[i][0] = 0x50001;
+                entry->elements[i][1] = entry->sub_header[1] + offset;
+                entry->elements[i][2] = entry->sub_header[2];
+                entry->elements[i][4] = entry->sub_header[4];
+                entry->elements[i][3] = function_1d6f0(linear, alternate, 1, width >> i, height >> i);
+                entry->elements[i][5] = (long)entry->sub_header;
+                ++entry->sub_header[0];
+                offset += bytes;
+                *(long *)entry->unknown7c += bytes;
+            }
         }
     }
     else if (g_55e6c0 < 10)
         ++g_55e6c0;
-    return true;
+    return result;
 }
 
 extern long g_485898;
