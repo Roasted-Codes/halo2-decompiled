@@ -876,6 +876,8 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // score 385 (was 385): frame 0x28 agrees; zero/radius schedule, history homes and indexed node-word lowering remain.
 
 // Earlier: frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
+// score 385 (was 385): Frame 0x28 and length agree; zero/radius schedule, history homes and indexed node loads differ.
+// frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
 // Earlier: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
 // Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
 // Earlier: ordinary previous/first/both history 399/401/400;
@@ -907,6 +909,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // edge/history homes and indexed node loads differ. Later first/second/both
 // differences in place 397/397/397; one displacement 397; one radial offset
 // 385; offset with shared displacement 385; phase scopes 397; offset/scopes 385.
+// Complete geometry before predicates 397; with shared dot 397, symmetric cross parts 402,
+// named projection 397, both named products 402, equivalent orientation 421, postincrement count 396,
+// separate ring guards 397. Original single radial workspace and predicate phases restored.
 // Native/promoted cached flags 385/401; explicit flag guards 414/409;
 // node fields at use 384; native/promoted flags with receiver at use 384/383; flag-word single result 406.
 // frame 0x28 and length agree; zero register,
@@ -1137,7 +1142,7 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
 
-// score 469 (was 478): Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
+// score 469 (was 469): Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
 // word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
 // output slot 469; with unsigned outer 470 (frame 0x10c); unsigned next 493.
 // frame 0x104 versus 0x10c; radius/index and metadata homes remain.
@@ -1155,6 +1160,10 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // 478.
 // Trace endpoint names 478; first trace at entry 478; target at entry 478;
 // outer candidate point 478; complete path-record memcpy 478.
+// Target Z once/shared endpoint zero initialization 470/470; one sector-trace output 466; avoidance at entry/iteration 469/469; sector pair before attempts 469; outer direction 469; outer tangents 469.
+// Round 318, early-output-pointer body: signed-word outer 485; unsigned/native output count
+// 469/522; native attempt 470; native end/candidate/both 500/472/516;
+// word outer with native attempt 486. All bounded domains and trace inputs retained; all restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

@@ -1641,7 +1641,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 790 (was 819): Frame 0x90 now agrees; mesh, UV/color homes and material/magnitude expansion
+// score 790 (was 790): Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
 // remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
 // block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
 // Boolean/word/byte capability 790/802/790.
@@ -1665,6 +1665,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Native packed input record 819; unpack output first 819; decoded sample value return 945;
 // color value contract 1350; native color reference output 819. Frame/mesh/sample/color/UV
 // homes and helper expansion remain; original complete body and both helpers restored.
+// Native part/index/section records 790/790/790; part/index, part/section, index/section 790/790/790;
+// all three 790; all three with result declared first 790. Real metadata layouts canonicalize.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

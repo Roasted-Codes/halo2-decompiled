@@ -465,6 +465,9 @@ bool function_172750(long mode, point3f const *point, real radius);
 // first/second/both tag-test results 150/162/162; both results and default chain 160.
 // Round 187: field-pair default orders 021/102/120/201/210 gave 119/117/119/119/120;
 // first-side/second-side defaults 118/119; immutable remapped index 118. All restored.
+// Round 147: existing index getter 210; distance-reject exit 118; variant-first guards 188; equality
+// membership 144; reverse cases 118; nested guards 118; selected first-table index 188; second-case
+// branches 151.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)
@@ -592,9 +595,15 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // Exact-end sound scans dword/long/short 89/89/77; exact-end effect scan 84;
 // shared complete offset scale 125; sound point setter 106;
 // native velocity/location field copies 89/96.
+// Round 147: two-phase offset 125; origin accumulation 142; all named products 77; origin-first adds 77;
+// effect/sound/both continues 77/77/77; signed short bound 77.
 // direction alias 89; point memcpy 89; velocity memcpy 89; location memcpy 89; three copies 89;
 // signed effect index 89; signed sound index 89; signed indices 89; own-parameter input 87;
 // inline effect callee 89; inline sound callee 89; inline dispatch callees 89.
+// BLOCKED-BY 0x1883e0: with its 4th/5th parameters as the one-short index class this takes
+// retail's eax/ecx inputs and only the second scan differs (short/word 56, dword/long 70).
+// Callee entry index through its address 77; volatile effect read 90 (retail inputs);
+// aggregate effect point 77; typed effect-direction local 77; point and description first 77.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)

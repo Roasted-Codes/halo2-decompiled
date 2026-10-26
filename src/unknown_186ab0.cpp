@@ -168,6 +168,8 @@ void player_action_initialize(s_player_action *arg_0);
 // native three-word source/output fields 279; native fields with packed selection words 279.
 // Short saturation counter 311; two-use held selection 279; both 311; sentinel first 283;
 // sentinel with short/held/both 315/283/315; int counter with held/sentinel 283.
+// Output angle/vector/scalar pair library copies, each pairwise combination
+// and all three pairs 279 each; angle pair plus complete four-float control copy 314.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {

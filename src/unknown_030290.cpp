@@ -254,7 +254,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
+// score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point homes remain.
+// Earlier 195 from 195: Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
 // frame 0x30 versus 0x2c and inverse-depth/point homes
 // frame 0x30 versus 0x2c and inverse-depth/point homes remain.
 // Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
@@ -291,6 +292,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Complete products recover frame 0x2c but regress; opening helper and body restored.
 // Recovered-frame inverse declaration order/names and displaced sums/combined 211/213/213/211;
 // original frame 0x30 and inverse/point homes remain.
+// Both inverse defaults after origin/camera/all fallbacks 195/203/202; displaced-only/origin-
+// only default after all fallbacks 204/204. All retain frame 0x30.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
@@ -593,12 +596,16 @@ static __forceinline void index_state_flags_update_31660(s_index_state_31660 *st
     }
 }
 
-// score 98 (was 133): only the 0x3800 loops differ: ours tests set13 before loading the value (movzx),
+// score 98 (was 98): only the 0x3800 loops differ: ours tests set13 before loading the value (movzx),
 // retail loads first, splitting the zero extension around the test (xor eax, eax / test dl / mov ax).
 // Tried: plain loops without the helper (133), word flags (162), direct *value updates (213),
 // long set13/set12 (186), set12 before set13 (175), loading the value in each branch (194),
 // while-loop for the 0x20000 pass (134); dword flags, ternary flag updates, byte set13/set12,
-// *value & 0xffff and passing flag13 without != 0 change nothing.
+// *value & 0xffff and passing flag13 without != 0 change nothing; short flags in the second-list
+// loops / all loops, word flags in the second-list loops / all loops 195 each (definition moves to
+// edi); short flags in the second-group pass only 62 (that pass then matches; not kept, the two
+// passes would differ in type). A short flag word gives retail's group-loop code but widens the
+// constant 0x20000 pass's mask (retail 0xdfff), so the constant and runtime passes may not share code.
 // @retail 0x31660
 void function_31660(long index, long tag, s_index_state_31660 *state,
     long first_group, long second_group, bool skip, bool *output)

@@ -1650,6 +1650,7 @@ void function_bba20(long index);
 // 318; isolated byte-bit-six test 319; pool at use with unsigned offset 325. Permission scope 319;
 // complete attachment scope 358; entry permission declaration 319; entry activity declaration 319;
 // root-cluster scope 319 (fast).
+// Round 214: signed-byte permission 319; unsigned-word permission 320; signed-word saved activity 319; native-long saved activity 319; word permission/activity homes 319.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

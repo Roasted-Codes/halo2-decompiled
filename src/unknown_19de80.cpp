@@ -325,6 +325,8 @@ static inline bool teams_enabled_19e1c0()
 // Team-test byte/short/long locals with bool returns 433/483/483; native
 // byte/short/long returns 433/430/432; unsigned-word/byte opponent counters 433/433.
 // Ordinary short/long return forms 430/432; both small gains discarded.
+// Round 166: mode observations 433; engine result exit 433; fallback test result 435; mode with
+// exit/tests 433/435; native result with exit/tests/mode exit 704/703/704.
 // Player-name/team-name/score-format/time-format inline and noinline declarations
 // 433 each (eight fast forms); all declarations and the original body restored.
 // Immutable capacity/comparison length/both 433/433/433; ordinary result with both 701;

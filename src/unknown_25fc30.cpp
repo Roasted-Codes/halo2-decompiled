@@ -425,19 +425,23 @@ void __stdcall function_25dd50(
 	}
 }
 
-// score 38 (was 38): Face base/index, definition setup, cover registers and failed-facing placement differ;
-// face pointer arithmetic 38; validated edge 38; definition receiver 191; cover reference 38;
-// target setter 38; target initializer 38; lateral component loop 38; output point setter 166.
-// Native trace 38; facing guard 37 (plain 37); cover index before/after base 38/38;
-// shared inset/lateral/both scale 131/106/138; native trace plus guard 37;
-// trace-block definition receiver 104; receiver plus guard 101. One-point gain dropped.
-// Frame and trace prefix agree; face base/index, definition setup, cover carriers and failed-
-// facing placement differ. native direction initializer 38; native lateral initializer 38; native
-// lateral target copy 177; completed point workspace 80; symmetric facing inputs 38; readonly
-// cover input 38; native cover normal value 38; side output initializer 203.
-// score 38 (was 38): face/definition and cover register ownership, normal y product and cold block remain.
-// Candidate-record reference 38; reference-flags binding 67; normal input copy 42;
-// point/normal/both output copies 42/42/42; facing scalar 38; published-side switch 59.
+// score 38 (was 38): face base/index order, the definition load before the 0x29d7b0 argument
+// pushes, the cover base/index registers, the facing dot's y-product operand order, and the
+// failed-facing store block (retail places it right after the cover arm, ours after the side cases;
+// the aligned difference is 14 instructions).
+// Earlier: face pointer arithmetic 38; validated edge 38; definition receiver 191; cover reference 38;
+// target setter 38; target initializer 38; lateral component loop 38; output point setter 166;
+// native trace 38; facing guard 37 (plain 37); cover index before/after base 38/38; shared
+// inset/lateral/both scale 131/106/138; native trace plus guard 37; trace-block definition receiver
+// 104; receiver plus guard 101; native direction initializer 38; native lateral initializer 38; native
+// lateral target copy 177; completed point workspace 80; symmetric facing inputs 38; readonly cover
+// input 38; native cover normal value 38; side output initializer 203; candidate-record reference 38;
+// reference-flags binding 67; normal input copy 42; point/normal/both output copies 42/42/42; facing
+// scalar 38; published-side switch 59.
+// Round 69: facing dot on the cover's normal with the copy inside the arm 96; point/normal/side
+// declared before the loop 38; trace-block locals at the loop top 38; side read before the two
+// transform calls 152; failed-facing arm setting side to 0 instead of continue 222; any order of
+// the loop-top and trace-block declarations 38 (30 orders screened).
 // @retail 0x25e430
 void __stdcall function_25e430(
 	long actor_index,

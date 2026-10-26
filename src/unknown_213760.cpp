@@ -99,14 +99,17 @@ bool cache_header_verify(s_cache_header const *header);
 // verification result 38; staged read/transfer results 25/36; verification-failure exit 26;
 // native transfer result with verification assignment 38; all new scores reduced.
 // Path helper inline, noinline and both 4/4/4; scoped path value 4; open sequencing 4;
-// open-condition assignment 4; handle before the call and before the path 4/4.
+// open-condition assignment 4; handle before the call and before the path 4/4;
+// header-first parameters 4; without the result address-take 4 (identical code, dropped);
+// header-size transfer counts 4; scoped handle 4; result as the read condition 44;
+// this body ahead of the path helper in the helper's file 4; inline printf helper 4.
+// Every retail caller of 0x214db0 forms its ebx argument again after the call.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {
 	char path[256];
 	path[0] = 0;
 	bool result = false;
-	(void)&result;
 	map_file_path_get(map_name, path);
 	HANDLE file = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
 	if (file != INVALID_HANDLE_VALUE)
@@ -1169,7 +1172,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 165 (was 165): frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
+// score 165 (was 165): Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
+// frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file displacement and request/I-O setup differ.
 // task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
 // completion scope 172; output scopes 172; slot equality 393;
@@ -1209,6 +1213,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // request/I-O setup remain.
 // Native output handle/by-value handles/both/header/output plus header/values plus header/all views
 // 165/165/165/165/165/165/165; all views with initialized completion 224. Opening body restored.
+// Round 124: Sole native file cursor with array ordinal 262; zero-member initialization phase 171;
+// entry-scope header pair 165; header/path/task entry workspaces 165; signed-byte slot 254.
+// Every request, header initialization, wait, validity assignment and I/O tuple restored.
 // @retail 0x213970
 void function_213970(void)
 {

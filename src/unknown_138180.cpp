@@ -84,6 +84,7 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // One membership search/result index: native long 233; signed byte/unsigned word/unsigned byte 269/269/269;
 // exhaustion equality and direct mask 233/233; shared tail with long/byte index 237/275.
 // Original separate found byte restored; frame and options/index/mask homes remain.
+// Native input references: primary machine 171; identifier 198; both 198; player machine, with primary, with identifier or with both 240 each; complete current-player reference 175. Original input reads, comparisons and byte membership restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
