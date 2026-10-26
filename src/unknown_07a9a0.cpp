@@ -1051,7 +1051,7 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	}
 }
 
-// score 766 (was 777): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
+// score 766 (was 766): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
 // private histogram 852; wide group decision 840; shared group total base 879; native group identity copy
 // 918; membership native maximum 834.
 // frame 0xd4 versus 0xb4; session entry and lookup differ.
@@ -1071,6 +1071,8 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Frame 0xd4 versus 0xb4 and session/lookup homes remain. Machine-ID library copy 777; entry word histogram 855;
 // shared rating observation 831; chained group clears 777; Boolean balance accumulation 766 kept at retail length;
 // split lower-bound guard 777 (fast).
+// Consistent player/group/type observations 854/832/847; player+group 886; player+type 828;
+// group+type 948; all 833; full unsigned type 833. Original body and selectors restored.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {
