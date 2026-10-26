@@ -706,19 +706,20 @@ void function_143250(
 	}
 }
 
-// score 2265 (was 2265): frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
+// score 2265 (was 2265): Frame 0x300 agrees; rotation input and basis/matrix homes remain.
 // Frame pointer 3182; separate adjacent basis pairs [0,1] 2278, [2,3] 2320,
 // [4,5] 2286, [6,7] 2329.
 // Round 310: second-band product trees 2265; second-band full trees 2265; third-band
 // products 2272; third-band full trees 2273; both full trees 2273 (plain). Input and matrix homes remain.
-// score 2265 (was 2265): Frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
+// Frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
 // Independent snapshots [1,5,6] 2302; [0,2,7] 2309; [3,4] 2286; [0,4,5] 2286; [3,5,7] 2276 (plain).
-// score 2265 (was 2265): frame 0x300 agrees; rotation admission and matrix homes differ.
+// frame 0x300 agrees; rotation admission and matrix homes differ.
 // Independent basis pairs [0,5] 2275; [1,6] 2320; [2,4] 2325; [3,6] 2317; subset [0,2,4,6] 2367
 // (plain).
-// score 2265 (was 2265): Frame 0x300 agrees; rotation still arrives on the stack and
+// Frame 0x300 agrees; rotation still arrives on the stack and
 // basis/matrix homes differ. independent basis 0 6 2311; independent basis 1 7 2293;
 // independent basis 2 5 2320; independent basis 4 7 2298; independent basis 0 3 5 7 2299.
+// Round 349: Independent basis pairs [1,2] 2323; [2,6] 2355; [0,7] 2287; [3,7] 2290; [5,6] 2317 (fast; control 2266).
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
