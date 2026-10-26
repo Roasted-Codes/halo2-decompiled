@@ -177,7 +177,20 @@ bool function_262890(long actor_index, s_reference reference);
 bool function_1f8660(long actor_index);
 real function_1e3920(long actor_index);
 
-// score 164 (was 164): slot load, actor/permission/index/scratch homes and cold reference arms still differ.
+struct s_slot_05_data
+{
+    byte unknown00;
+    bool unknown01;
+    byte unknown02[2];
+    short unknown04;
+    bool unknown06;
+    byte unknown07;
+    s_reference reference;
+    byte unknown0c[0x34 - 0xc];
+};
+
+// score 91 (was 91): saved scalar homes and cold reference joins remain; early slot ESI now agrees.
+// Earlier: slot load, actor/permission/index/scratch homes and cold reference arms still differ.
 // Early invalid copy 168; early mode copy 140; both copies 140 (nonmatches dropped);
 // unsigned actor handle 168; byte permission 195; reference receiver order 170;
 // request mode first 168; permission first 168; shared active mode 168/635.
@@ -217,52 +230,60 @@ real function_1e3920(long actor_index);
 // explicit mode assignments 164; native reference initializer 220; library reference copy 164;
 // reference/actor/scratch/selection noinline contracts 164 each; mode/reference initializers 220.
 // Native Boolean invalid flag 164; two chained late request flags 164; three chained late/early flags 167/167; Boolean slot with those chains 164/167/167; immutable permission with Boolean slot 164.
+// Native slot payload 105 (kept); payload with native short/early receiver/read-only actor 105/105/105; payload with branch reference/shared defaults/shared mode/role names 121/104/157/105. Early ESI recovered; saved scalar homes and cold reference joins remain.
+// Round 181 complementary permission bool/byte/short/long 185/185/180/180; field permission at every use 184; complementary permission with native short/default helper/branch reference 185/185/211 (fast); all restored. Frame 0x76c agrees; saved scalar homes and cold reference joins remain.
+// Round 183 retail-timed scratch after request fields 91; positive permission short/long/signed-byte/byte
+// 180/180/185/185; timing with branch reference/early selection output/default helper 117/113/91
+// (fast). Keep only scratch timing; scalar homes and cold reference joins remain.
+// Round 186 on native payload/late scratch: common release 151; flag before acquisition 95;
+// both 152; late output handle 112; release/handle 108; flag/handle 112; all three 109;
+// declared request byte 91; conditional reference with selection result 151, with common release 128.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
     s_actor_view *actor = actor_get(actor_index);
-    s_slot_05 *state = (s_slot_05 *)slot;
+    s_slot_05_data *state = (s_slot_05_data *)slot->unknownc;
     if (actor->unknown007)
     {
-        state->unknown10 = 1;
+        state->unknown04 = 1;
         return true;
     }
     if (!actor->unknown267)
     {
         bool allowed = actor->unknown328 <= 2;
-        if (!state->unknown0c && state->unknown10 == 3)
+        if (!state->unknown00 && state->unknown04 == 3)
         {
             if (!REFERENCE_EQUAL(actor->unknown418, g_470fa0))
-                state->unknown0c = !function_262590(actor_index, actor->unknown418, allowed);
+                state->unknown00 = !function_262590(actor_index, actor->unknown418, allowed);
             else
-                state->unknown0c = true;
+                state->unknown00 = true;
         }
         if (actor->unknown270 == 4 && !function_1f8660(actor_index))
-            state->unknown0c = true;
-        else if (!state->unknown0c && !function_1f8660(actor_index) && state->unknown10 == 3 &&
+            state->unknown00 = true;
+        else if (!state->unknown00 && !function_1f8660(actor_index) && state->unknown04 == 3 &&
             !REFERENCE_EQUAL(actor->unknown418, g_470fa0))
         {
             s_262b40_result *target = function_262b40(actor->unknown418);
             if (target && function_210b60((s_type_c3b527 *)target, &actor->position) > 2.0f * function_1e3920(actor_index))
-                state->unknown0c = true;
+                state->unknown00 = true;
         }
-        if (actor->unknown040 && (state->unknown0c || !actor->unknown227))
+        if (actor->unknown040 && (state->unknown00 || !actor->unknown227))
         {
             long other_index = NONE;
-            if (!state->unknown0d)
-                *(short *)state->unknown0e = actor->unknown086 >= 2 ? 2 : 0xff;
+            if (!state->unknown01)
+                *(short *)state->unknown02 = actor->unknown086 >= 2 ? 2 : 0xff;
             s_2605d0_request request;
             memset(&request, 0, sizeof(request));
             request.type = 4;
             request.unknown015 = true;
-            request.unknown69a = *(short *)state->unknown0e;
-            byte *scratch = ai_scratch_buffer_get();
+            request.unknown69a = *(short *)state->unknown02;
             request.unknown698 = true;
             request.unknown69c = allowed;
             *((byte *)&request + 0x59) = true;
+            byte *scratch = ai_scratch_buffer_get();
             bool unknown = false;
             s_reference reference = actor->unknown418;
-            if (state->unknown0c)
+            if (state->unknown00)
             {
                 reference = function_2605d0(actor_index, &request, 0, (long)&other_index, scratch, &unknown);
                 if (!unknown)
@@ -276,7 +297,7 @@ bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
             }
             if (!REFERENCE_EQUAL(function_2626b0(actor_index, reference, other_index, scratch, unknown, true), g_470fa0))
             {
-                state->unknown0c = false;
+                state->unknown00 = false;
                 ai_scratch_buffer_release(scratch);
                 return true;
             }

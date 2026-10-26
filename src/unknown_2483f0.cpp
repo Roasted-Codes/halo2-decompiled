@@ -222,6 +222,11 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 // Earlier link-store base and seed/constant scheduling:
 // link assignment chain 13; forward link chain 13; native link fill 50; shared origin pointer
 // 13; position memcpy 13; vector memcpy 13; both copies 13; native fill and both copies 50.
+// Without the three volatile casts 14 (the frame-count load and store move above the two float
+// stores; a pool data pointer local with indexed link stores 20; the data pointer before the
+// location pointer 14; the frame count stored first 14; 1c before 2c 13 by position only). The
+// frame counter defined in a /GL- file changes nothing. Retail keeps that load after the float
+// stores but hoists the random-seed pointer above them.
 // @retail 0x248620
 long function_248620()
 {

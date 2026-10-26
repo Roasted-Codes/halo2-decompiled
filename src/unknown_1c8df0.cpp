@@ -23,6 +23,9 @@ real function_30bf0(vector3f *v);
 real magnitude3d(vector3f const *v);
 extern vector3f *g_4687bc;
 
+__declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
+ void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
+
 // score 170 (was 170): Frame 0x8c/0x94, raw secondary-result home and common probe tail remain.
 // Earlier 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
 // Word category 225; native clear state 170; direct origin 172; distance category 175; side workspace 175.
@@ -65,13 +68,18 @@ extern vector3f *g_4687bc;
 // Earlier 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
 // staged-byte center-left completion X/Z/XZ/Y 5/5/5/5; constant-left products X/Z/XZ 5/5/5;
 // both operand affinities on XZ 5. All unmatched added-byte forms restored.
-__declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
- void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
-
+// Late length/classification/output/both direction workspaces at entry 170 each;
+// length with classification/output/all workspaces 170 each; all role homes 170 (calibrated).
 // Round 151: Retained ray 192; with native side/mode/both 192/191/191; Boolean primary with ray/side/mode/both 186/186/185/185.
 // Round 127: normalized side snapshot 275; third-probe axis receiver 177; both 273; collision at
 // entry with side/axis/both 275/177/273; both with short category 288 or Boolean primary 261.
 // Calibrated with magnitude 24590; all restored. Frame 0x8c and secondary-result tail remain.
+// Complementary primary-hit bool/byte/short/long outcome arms 180/180/237/171;
+// direct trace producers 274/274/274/200 (fast). Original primary/category flow restored.
+// Round 187 separate caller/provider inline/noinline declarations: preliminary query 352/170;
+// primary collision 170/170; secondary collision 170/170; all three 352/170 (fast).
+// All restored; frame 0x8c/0x94 and raw secondary-result home/common tail remain.
+// Round 161: complete scalar centers direct/staged/native point 321 each; native center plus complete offsets 329; complete scalar inputs direct/native points/staged positive 321 each; library center plus offsets 329. All added-byte forms restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)
