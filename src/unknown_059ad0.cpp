@@ -2878,31 +2878,12 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 
 /* a channel of a member connected (a peer tells the host it is there) or
    closed */
-// score 31 (was 31): state-clear arm remains before the common mask tail;
-// direct session/clear/connected/both member fields 31/43/39/48; session
-// and clear fields direct 43; shared member receiver 86; message at entry 31;
-// shared member and entry message 86.
-// state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
-// Dead snapshot omitted 38; entry/disconnect snapshot scope 31/31; entry snapshot/message orders 31/31;
-// shared lookup without snapshot 38, with entry snapshot 31, with entry message/snapshot 31; all restored.
-// cold state-clear arm still precedes the mask tail; dead-state, state-value, search and combined local names 31; repeated field reads 31; connected state snapshot 31; shared state snapshot and renamed shared snapshot 51.
-// state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
 {
 	c_class_58d20 *session = this;
-	long member_index = NONE;
+	long member_index = network_session_find_member_by_channel_inline(session, channel_index);
 
-	if (channel_index == NONE)
-		return;
-	for (long i = 0; i < MAXIMUM_PLAYERS_PER_SESSION; i++)
-	{
-		if (session->member_states[i].unknown00 && session->member_states[i].unknown04 == channel_index)
-		{
-			member_index = i;
-			break;
-		}
-	}
 	if (member_index == NONE)
 		return;
 	if (connected)
@@ -2918,19 +2899,14 @@ void c_class_58d20::channel_connection_changed(long channel_index, long remote_i
 	else
 	{
 		s_network_session_member_state *state = &session->member_states[member_index];
-		long session_state = session->state;
-		if (session_state != 5 && session_state != 6 && session_state != 7 && session_state != 8)
-		{
-			volatile long unused = session_state;
-			if (member_index == session->member_index)
-				network_session_reset_7620(session);
-		}
-		else
+		if (network_session_state_is_host_local(session->state))
 		{
 			state->unknown08 = NONE;
 			state->unknown0c = NONE;
 			state->flag3 = true;
 		}
+		else if (member_index == session->member_index)
+			network_session_reset_7620(session);
 		if (session->state == 8)
 		{
 			dword mask = ~(1 << member_index);
@@ -3647,11 +3623,14 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 115 (was 120): frame agrees; timeout owner spill and identity load order differ;
+// score 115 (was 115): Frame agrees; timeout owner spill and native identity/reply load order differ.
+// Earlier: frame agrees; timeout owner spill and identity load order differ;
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
 // Direct leave predicate 115; retained host-query result 137; narrower host-result
 // scope 125; flags before identifier 120; early nonpeer return 123.
+// Native identity assignment 115; identity before identifier 115; announcement/reply/both named identifier stores 115/115/115;
+// entry result lifetimes 120; separate host initialization 118; host result before message 113.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -4326,11 +4305,13 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 396 (was 434): frame and sender/identity homes agree; Boolean homes and acknowledgement placement differ;
+// score 396 (was 396): Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
 // isolated sender rename 407; preference results first 407; old version first 407.
+// Identifier entry workspace 398; received entry workspace 396; long identity equality 402;
+// long preference results 406; equal-version decision first 422.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
