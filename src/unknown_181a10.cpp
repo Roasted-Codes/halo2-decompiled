@@ -380,6 +380,9 @@ __forceinline void function_183672(point3f *arg_0, point3f const *arg_1, __m128 
 
 // score 8 (was 8): the three values of the query loop are kept in the stack slots in the
 // opposite order.
+// First component/outer index/inner index spill cycle remains. Indexed second/first/both shape reads
+// fast 24/79/8; indexed second kind 24; both/second entry shape reads 135/135;
+// indexed second/both shape addresses 24/8. All new scores reduced; original frame and loops restored.
 // @retail 0x183670
 bool __stdcall function_183670(long component_a, long component_b, point3f *a, point3f *b, real *distance)
 {

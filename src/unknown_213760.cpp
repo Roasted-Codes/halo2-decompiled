@@ -95,6 +95,9 @@ bool cache_header_verify(s_cache_header const *header);
 // Fast: empty path value 82; normalizer-owned path 54; initialized read count 33;
 // success before read 16; result in each outcome 60; immutable handle 4;
 // file-path observation 4; native read result 4.
+// Post-call path address still reuses EBX. Library empty string/buffer address/both fast 4/4/4;
+// verification result 38; staged read/transfer results 25/36; verification-failure exit 26;
+// native transfer result with verification assignment 38; all new scores reduced.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {
