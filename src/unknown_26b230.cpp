@@ -178,7 +178,8 @@ void function_268840()
 	function_268c90();
 }
 
-// score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
+// score 246 (was 246): Player-pool/NONE allocation and current/successor homes remain.
+// Earlier score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
 // frame 0x48 versus 0x50; iterator result/exhaustion and
 // player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
@@ -196,6 +197,10 @@ void function_268840()
 // In the recovered 0x50 frame: entry player pool 302; Boolean retention 247; both 302;
 // direct expiry admission 246/893 bytes; pool/Boolean/both plus direct expiry 314/256/314;
 // entry pool and Boolean retention with full-width child result 301.
+// DL131: Player-pool/NONE allocation and current/successor homes remain; native clump/player/both
+// views 246 each; player for-loop alone or with clump/player/both/all actor views 255 each;
+// current-group name 246; scalar role names 246; pool at each use 246; fresh pool uses with Boolean
+// retention 247. Original body, header and contributor interfaces restored.
 // @retail 0x268c90
 void function_268c90()
 {
