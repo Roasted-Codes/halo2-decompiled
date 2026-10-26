@@ -178,7 +178,8 @@ void function_268840()
 	function_268c90();
 }
 
-// score 246 (was 246): Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
+// score 246 (was 246): frame 0x50 agrees; pool/NONE allocation and current/successor homes remain.
+// Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
 // frame 0x50 agrees; pool/NONE, current/successor homes and child interfaces remain.
@@ -214,6 +215,9 @@ void function_268840()
 // views 246 each; player for-loop alone or with clump/player/both/all actor views 255 each;
 // current-group name 246; scalar role names 246; pool at each use 246; fresh pool uses with Boolean
 // retention 247. Original body, header and contributor interfaces restored.
+// Recovered-frame expiry byte/long/signed byte 246/250/246; complete expiry result arms 246;
+// byte/signed-byte child result 246/246; unsigned/signed-word retention 247/247. Original
+// body retained.
 // @retail 0x268c90
 void function_268c90()
 {

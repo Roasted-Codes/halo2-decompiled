@@ -2176,6 +2176,9 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // Round 138: native flag byte, signed index, both fields, native bit, bit/index, Boolean bit,
 // Boolean bit/index and readonly native contacts all 137. Normal/velocity XMM roles and
 // property-zero retention remain; frame 0x34 agrees.
+// Aligned frame 0x34 agrees; normal/velocity XMM roles and final property-zero retention differ.
+// Corrected-boundary compound sums 137; plain axis accumulation 184; byte material count 451;
+// unsigned other count 137; corrected-boundary final shared scale 214.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {

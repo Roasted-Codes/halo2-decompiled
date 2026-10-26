@@ -3029,6 +3029,8 @@ struct s_ammo_conversion_entry
 };
 // score 198 (was 198): Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
+
+// score 198 (was 198): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
 // Earlier: frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
@@ -3051,6 +3053,9 @@ struct s_ammo_conversion_entry
 // source-count store order 203. Opening body restored.
 // Round 356: Unsigned-word acquisition 198; complete acquisition arms 198; early uninitialized tag declarations 198; table declaration before count 198; unsigned word with arms 198.
 // Success-path return 209; source from each path/after conversion 204/219; conversion count/table/both at use 197/198/198; short current/successor 205; combined ownership 205. One-point gain rejected.
+// Existing object getter for destination/source/both/all lookups 198/198/198/198;
+// both objects before tags with word acquisition 208; source-first pairs 211;
+// source then destination then tags 209; source-first shared getters 210.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3437,6 +3442,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Input/trigger phase scope, phase-scoped target outputs, function-scoped target outputs,
 // signed-byte input tables and persistent role names each 1436. Original body restored.
 // Round 115: Native status fields 1470; native input fields 1455; both 1466; magazine activity from its test 1455; dual/owner setup scope 1436; signed trigger/barrel/both state bytes 1436/1436/1436 (fast). Opening body/type declarations restored.
+// Existing header getter initially/throughout 1436/1436; header-data receiver 1447;
+// long masked slot 1470; header receiver plus slot 1459; getter plus slot 1470;
+// dword/word masked slot 1470/1434. Two-point word gain rejected; original lookups restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

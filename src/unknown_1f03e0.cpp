@@ -876,6 +876,8 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 
 // score 582 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain.
 // Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
+// Frame 0x34 versus 0x30; direct-mode carrier and original/limited vector homes remain.
+// Earlier: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
 // Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
 // Ordinary gravity with shared normalization 622; cached mode 648; limited-first 625;
 // request bitfields 621; global optimization off 2562; direct scalar lifetimes 623; bitfields plus scalars 626.
@@ -886,11 +888,14 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // repeated damping 624; native enabled/byte view 629; gravity first 616; byte view/low-normal 616;
 // gravity/low-normal 614 kept; gravity/byte view 618.
 // Earlier 614 from 614: Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
+// Earlier: frame 0x34 versus 0x30 and vector homes still differ.
+// Earlier: Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
 // direct 626; damping 619; gravity 619; all predicates 627; later input magnitude 619 (fast).
 // frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
 // Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
 // general distance result 614; masked final gravity word 634.
 // Earlier 614 from 614: frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
+// Earlier: frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
 // direct gravity 618; ordinary local output stores 634; native direct damping gravity 615; native direct
 // gravity damping 615; history time snapshot 614; ground vertical value 614; ground vector arm first 629.
 // frame 0x34 versus 0x30; direct-mode carrier and vector homes remain.
@@ -905,6 +910,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // General/history/both value-add publications 659/641/690; disabled-input shared cross 582 (plain,
 // kept); final direct reuse 620; final mode/direct reuse 631; per-use flight field 623; four Boolean-
 // role names 614 (fast). Keep only the existing cross helper with the distinct local output.
+// Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
+// Earlier: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
+// Horizontal delta on retained join 614; signed-word direct/damping/gravity/flying 622/622/624/616.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1051,6 +1059,8 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 
 // score 421 (was 421): Frame 0x64 agrees; persistent zero and count/component homes remain.
 // Earlier 428 from 489: frame now 0x64; count/component and vector homes still differ.
+// Frame 0x64 agrees; persistent zero, count/component homes and direction retention differ.
+// Earlier: frame now 0x64; count/component and vector homes still differ.
 // Three-pass countdown 490; preferred-contact cursor 527; search cursor 428;
 // inline depth one 489; existing snapshot cross helper 488.
 // Byte flag helper 471; shared adjustment join 437; final contact cursor 595;
@@ -1072,6 +1082,12 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Request flags once 494; flight once 531; preferred surface once 467; complete contact-base snapshot
 // 587; signed contact-bound snapshot 496; flags/flight 596; base/bound 651; flags/flight/preferred 659
 // (fast). All restored.
+// Earlier: Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
+// Earlier: persistent zero and accepted-count/component homes still differ.
+// Earlier: Frame 0x64 agrees; zero/count/component homes remain. Native component 428; stepping
+// Earlier: frame 0x64 agrees; persistent zero and count/component homes remain.
+// Byte/unsigned-word accepted count 462/426; unsigned fixed pass 421; separate entry
+// desired/direction storage 421/421.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1228,22 +1244,24 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
 real function_1201a0(vector3f *vector, vector3f const *fallback);
 bool havok_component_any_rigid_body_active(s_havok_component *component);
 
-// score 230 (was 230): zero-load width, reset/selection lifetimes and material-call expansion;
+// score 230 (was 230): Frame 0x28 agrees; zero-load width, reset/selection homes and material-call expansion remain.
+// Earlier: zero-load width, reset/selection lifetimes and material-call expansion;
 // float consistency 392; native normal 368; current supported long 261; current flag long 361;
 // unsupported-first with original magnitude 258; native movement input 284.
-// score 230 (was 230): double-width zero load, reset/selection homes and second material-call expansion still differ.
+// Earlier: double-width zero load, reset/selection homes and second material-call expansion still differ.
 // Combined eligibility 240; per-contact body-velocity snapshot 346; highest reduction after selection 258;
 // approach at use 351; surface output at entry 230.
-// score 230 (was 230): Frame 0x28 agrees; zero width, reset/selection homes and material-call expansion remain. Preservation arm first 288; entry score storage 230; shared squared length with double comparison 230; byte current flag 240; byte current supported 239 (fast).
-// score 230 (was 230): zero-load width, reset/selection homes and second material-call expansion remain.
+// Earlier: Frame 0x28 agrees; zero width, reset/selection homes and material-call expansion remain. Preservation arm first 288; entry score storage 230; shared squared length with double comparison 230; byte current flag 240; byte current supported 239 (fast).
+// Earlier: zero-load width, reset/selection homes and second material-call expansion remain.
 // Library history resets 238; contact-base field reference 235; unsigned selected ordinal 230;
 // native saved predicates at original magnitude 298; preservation predicate at dispatch 382.
-// score 230 (was 230): Frame 0x28 agrees; real-zero load, reset/selection homes and second material-call
+// Earlier: Frame 0x28 agrees; real-zero load, reset/selection homes and second material-call
 // expansion remain. Native component 230; flag after supported 355; long moving 300; long saved supported
 // 293; long saved flag 296 (fast).
-// score 230 (was 230): frame 0x28 agrees; zero width, selection homes and material-call expansion
+// Earlier: frame 0x28 agrees; zero width, selection homes and material-call expansion
 // remain. Separate inline declaration 230; entry normal workspace 230; unsigned highest 234;
 // native-long flying 306; final cleanup exit 230; normal/ordinal combination 232 (fast).
+// Signed-word moving/saved-supported/saved-flag/current-supported/current-flag 298/283/295/272/351.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {
