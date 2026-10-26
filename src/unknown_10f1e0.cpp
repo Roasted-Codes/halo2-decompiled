@@ -1628,7 +1628,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 810 (was 841): frame 0xcc versus 0xd4 and first angle expansion remain.
+// score 810 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain.
 // Earlier: frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
@@ -1653,6 +1653,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 181 direction input value/native copy 810/810; basis values/native copies 1067/1073;
 // all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166.
 // Direction copied once inside projection retained (plain 810, 3403/3403); frame 0xcc versus 0xd4.
+// Round 188 on retained direction copy: immutable direction 810; ordinary inline 1151;
+// complete result publication 900 (frame 0xd4); pointer result 810; direction/basis/all
+// input references 810/810/810; output-first 810. All original helper contracts retained.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

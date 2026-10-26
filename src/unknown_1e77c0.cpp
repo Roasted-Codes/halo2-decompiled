@@ -664,8 +664,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 
 long function_1469f0(real seconds);
 // score 279 (was 279): frame 4/12, early slot spill and state/displacement/final-cursor homes remain.
-
-// score 279 (was 279): frame 4 versus 12; early slot spill, state displacement and transition/flag homes remain.
+// Earlier: frame 4 versus 12; early slot spill, state displacement and transition/flag homes remain.
 // Earlier: Frame 4/12, early slot spill and state/transition/flag homes remain.
 // Earlier: frame 4/12 and slot/state/transition/flag homes remain.
 // frame four/twelve and slot/state/transition homes remain.
@@ -697,6 +696,8 @@ long function_1469f0(real seconds);
 // byte/signed-byte restriction 280/280; nested restriction result 286; unsigned/signed-word
 // initial scan 335/335. Reduced control 280, full baseline 279; real state layout and
 // executable body restored.
+// Round 188 unsigned state field, shared bitmap tests, forceinline table getter,
+// their pairs/all, and noinline table getter: 280/295/280/295/280/295/295/341 (fast control 280).
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {
