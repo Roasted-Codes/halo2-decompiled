@@ -746,6 +746,7 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // typed actor 32; earlier actor workspace 32; both 32; native tick interval 36;
 // shared rounding helper 215; typed child cursor 32; attachment scalar homes 66;
 // complete optional view selection 186.
+// score 17 (was 32): the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -827,10 +828,10 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 	}
 	if (type == 11)
 	{
-		long unit_index = actor_get(actor_index)->unknown018;
-		if (unit_index != NONE)
+		actor = (byte *)actor_get(actor_index);
+		if (*(long *)(actor + 0x18) != NONE)
 		{
-			long child_index = *(long *)((byte *)ai_object_get(unit_index) + 0x10);
+			long child_index = *(long *)((byte *)ai_object_get(*(long *)(actor + 0x18)) + 0x10);
 			s_actor_child_limit_view *first_definition = NULL;
 			short count = 0;
 			short limit = 50;
