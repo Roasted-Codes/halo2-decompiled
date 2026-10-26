@@ -243,7 +243,8 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 174 (was 174): Frame/input registers and final selector expansion still differ; eight new reader trials restored.
+// score 174 (was 174): Frame/input registers and selective selector expansion remain.
+// Earlier: Frame/input registers and final selector expansion still differ; eight new reader trials restored.
 // Earlier: frame/input registers, range-header lowering and final selector expansion still differ.
 // frame 0x1c versus 0x20, input registers and final
 // selector expansion differ. Per-iteration definition 196; conditional
@@ -277,6 +278,8 @@ public:
 // 174 (507/541, plain). Range field remains at +0x50; sibling exact and caller unchanged.
 // Per-use upper reader ordinary inline 174; early lower/upper/both 174/174/192;
 // per-use default lower/upper/both 174/174/192; complete reader results 174.
+// Shared classification through existing range readers byte/long/dword/bool 201/189/189/189;
+// shared header plus classification byte/long/dword/bool 202/201/201/190. All restored.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
