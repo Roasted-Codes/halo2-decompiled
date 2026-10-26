@@ -132,6 +132,8 @@ void function_14bac0()
 // names/native recipient 257. Frame, iterator sharing and result homes remain.
 // Round 215: function-scope shared iterator 234; readiness declaration order 233;
 // scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
+// root slot 239; visit count 234; root slot visit 239; native root table 234; native root slot 239; native
+// root visit 234; native root slot visit 239; readonly scenario 234.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
