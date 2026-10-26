@@ -71,35 +71,32 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 }
 
 /* kind 3: creation of an entity and the entities linked to it */
-// score 22 (was 22): virtual arguments, index/status reload and rollback setup differ;
-// unsigned handle storage 22; unsigned index 25; status role name 22; nested success admission 52; loop
-// proven callback status 121; completion status invariant 77; inline rollback declaration 22; noinline
-// rollback declaration 22.
-// identifier writer inline/noinline 22; index before outcome stores 106; index before admission 25;
-// pretested callback with separate rollback tails 106; completed handle lifetime 22; status returns 83;
-// final room-failure guard 22.
-// score 22 (was 22): virtual receiver/argument, index reload and rollback order persist;
-// cleanup inline/noinline 22/22; mask-release inline/noinline 22/22; writer inline/noinline
-// 22/22; encoded count before checkpoint 49, after checkpoint 45.
-// callback argument setup, index reload and rollback order differ;
-// masked entry index 22; constant member dispatch 78; actual entry pointer 22;
-// admitted mask/owner snapshots 52/52; peer receiver refresh 24;
-// direct initial receiver 22; mask plus member dispatch 101;
-// persistent entry-array base 91; separate callback handle 22. Body restored.
-// callback setup, post-call index reload/status stores and rollback setup differ.
-// Earlier callback adapter 73; member dispatch 78; parallel cursors 92; status assignment 102;
-// field references 52; no counter self-read 97; grouped arrays 39; byte status 22; failure first 57;
-// common rollback 88; element pointers 22; argument record 46. Array role names 22; early release
-// declaration 22; append increment 22; cleanup counter 22; array initialization 90; unsigned count 25;
-// callback index name 22; status declaration order 24.
+// score 18 (was 22): the callback setup still differs: our table/owner/vtable loads are hoisted
+// above the argument pushes, where retail loads them after the entry value (all in ecx). The loop
+// on `result && i < count` with the nested status test and its else spills the index around the
+// call as retail does, with no volatile reads, goto or self reference; without the outer else the
+// index stays in ebx (135 instructions). Round 49: entry value in a local first 18; retail's
+// continue-shaped status update 14 and an argument-first forwarding helper 14 (each leaves only
+// the receiver loads; neither keepable); owner/table/entry locals 16-18 (owner local in this form 18); status ternaries and
+// `result = result && ...` 41-44; cleanup index, declaration order, handle local, peers receiver
+// and loop shapes in a 100-form random search, 18 or worse.
+// Earlier (22-131): unsigned handle/index storage, status role names, nested success admission,
+// loop-proven status, inline/noinline declarations of the rollback, cleanup, mask release and
+// identifier writer, index before outcome stores/admission, separate rollback tails, completed
+// handle lifetime, status returns, final room guard, encoded count before/after the checkpoint,
+// masked entry index, constant member dispatch, entry pointer, admitted mask/owner snapshots,
+// peer receiver refresh, direct receiver, persistent entry-array base, separate callback handle,
+// callback adapter, parallel cursors, status assignment, field references, grouped arrays, byte
+// status, failure first, common rollback, element pointers, argument record, array names/order,
+// append increment, array initialization, unsigned count, callback index name, status
+// declaration order, inline depth zero.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {
-	c_handle_table_450cd0 *const *self_reference = &self;
-	volatile bool result = true;
+	bool result = true;
 	long handles[4];
 	long count = 0;
-	long handle = (*self_reference)->entries[index].handle;
+	long handle = self->entries[index].handle;
 	s_handle_peers *peers = self->table;
 	while (handle != NONE)
 	{
@@ -113,23 +110,20 @@ bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index
 	function_195720(stream, 3, 3);
 	stream_write_checked(stream, count - 2, 2);
 	long i;
-	i = 0;
-	do
+	for (i = 0; result && i < count; i++)
 	{
-		if (i >= count)
-			goto local_1;
 		handle = handles[i];
 		simulation_write_entity_identifier(handle, stream);
-		if (result && self->table->owner->v0(handle, self->entries[handle & 0x3ff].unknown04, a3, stream, reserved_bits, &released[i]))
-			result = true;
+		if (result)
+		{
+			if (self->table->owner->v0(handle, self->entries[handle & 0x3ff].unknown04, a3, stream, reserved_bits, &released[i]))
+				result = true;
+			else
+				result = false;
+		}
 		else
 			result = false;
-		i = *(volatile long *)&i;
-		i++;
-	} while (result);
-	function_194710(stream, true);
-	return false;
-local_1:
+	}
 	if (result && stream_has_room(stream, reserved_bits))
 	{
 		stream->checkpoint_count--;
@@ -316,6 +310,8 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 // Tried additionally: call-first logical accumulation 191, compound accumulation 197, conditional
 // accumulation 215, failure result 124, named cursors 115, named cursors/logical accumulation 191,
 // named helper inputs 115, named cursors/failure result 124; original body restored at 115.
+// Consistent existing helper input orders 115 (five forms); entry validity 143;
+// entry cursor declarations 115; both entry storage lifetimes 143. Original body restored.
 // Plain pretested for with both/size/handle/no helper producers 195,210,212,212; corresponding while
 // 195,210,212,212. Items/data carriers remain; full opening helper and body restored.
 // @retail 0x98fb0

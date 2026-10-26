@@ -31,7 +31,8 @@ long function_18d5b0(long label);
 long function_189fe0(s_sound_request const *request, long tag_index);
 long function_189340(long object_index, long tag_index, long audible, s_sound_marker const *marker, s_sound_source_callbacks const *source, real scale, long platform_playback, char const *variant);
 
-// score 21 (was 21): single late retained object load and five-byte extent gap remain.
+// score 21 (was 21): retail reads the object index once, after the playback call, into
+// single late retained object load and five-byte extent gap remain.
 // Earlier: retail reads the object index once, after the playback call, into
 // late object carrier/reload still adds five bytes; qualified object refresh 100f/85p;
 // playback then refresh 101f/35p; chained request zeros 121f; initial result 118f; refresh with zeros
@@ -54,6 +55,11 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 // direct duration 35; duration with argument playback 85; shared permutation 123;
 // permutation with argument playback 123; completion result 55; request variant first 41;
 // callback fields first 60; separate standard noinline declaration 35 (ordinary scores).
+// With plain reads throughout the object index takes ebp and the class spatialization is
+// spilled (frame 0xa4); retail keeps spatialization in edi and the object index in memory.
+// Call plain with test and started call through the reference 28; the existing class
+// spatialization helper 154 (plain reads) and 126 (as here), its ternary losing the NULL
+// store; spatialization declared first with plain reads 130; test through the reference 28.
 // Shared spatial query 134f; native positioned value 114f/109p; both 143f;
 // outer description/priority scale 118f each; spatial/playback/request call summaries 118f each.
 // Native description bit 141f; native positioned bit 118f; both bits 141f; request workspace 118f;

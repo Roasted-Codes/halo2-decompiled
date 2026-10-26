@@ -136,7 +136,24 @@ static inline void particle_cross_product3d(vector3f const *a, vector3f const *b
 
 /* the rotation and position a particle system is drawn at: its own, or
    moved by the first person offset */
-// score 52 (was 52): cross-product schedule and retained left-axis/point XMM homes differ.
+// score 52 (was 52): frame 0x30 agrees; four bytes long. Retail keeps the left axis in
+// xmm2/xmm7/xmm5 across 0x142eb0 (which only writes xmm0/xmm1) and gives the point's y/z xmm3/xmm4;
+// ours gives the left axis xmm2/xmm3/xmm4, so the point loads and the products are scheduled
+// differently; the cross-product multiplies interleave with the axis copies in another order.
+// The sums already associate as retail's ((y*l + z*u) + x*f, (x*f + y*l) + z*u); 0x143070 is not
+// the inlined helper (its y/z sums associate differently).
+// Round 49: 40 random product operand/sum orders 52-58 (best 52/52); axis copies before the
+// cross product 56, forward copy only 52 (screened), up copy first 50 positional (screened),
+// cross product of the copied axes 85 positional; point declared at its copy 52.
+// Earlier: matrix inline/noinline 52/52; cross force-inline 52; matrix aggregate 107; left-axis
+// construction 140; point first/renamed 52/52; consumed matrix output 54; shared cross product 55;
+// rotation memcpy/const point/point memcpy 52; indexed rotation 92; accumulated components 95;
+// indexed translation 85; position output first 54; existing axis-matrix helper 73; scalar point
+// coordinates 98; paired cross products 55; six cross products 52; compound cross components 52;
+// cross value result 140; frame-mode return 104; offset at construction 52; shared point setter
+// 78; forward/up snapshots 107/111; both axes and up-first 137/135; scoped axes 137;
+// both/up/forward publication before cross 137.
+// cross-product schedule and retained left-axis/point XMM homes differ.
 // Matrix inline/noinline 52/52; cross force-inline 52; matrix aggregate 107;
 // left-axis construction 140; point first/renamed 52/52; consumed matrix output 54.
 // cross-product scheduling and point/XMM homes still differ; four bytes long.

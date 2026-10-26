@@ -1233,6 +1233,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Early channel-array base with counted traversal 111; base after validation 111;
 // early base with pointer traversal 301; signed-word ordinal 296;
 // early base with validation returns 113. All lose the matched caller; original retained.
+// Direct validation exits rolled/counted 303/120; counted exits with runtime width,
+// full identity, inline declaration or int ordinal 181/145/120/120; success total
+// before query rolled/counted 303/119. Expanded forms still lose caller 0x54990.
 // Out-of-line rolled 281; counted with out-of-line/read-only element/both 112/112/112, each loses the
 // checked caller; fixed equality bound alone/read-only/out-of-line/both 281 each. The equality bound
 // prevents four-way expansion; all original code restored.
@@ -2043,7 +2046,8 @@ long voice_players_share_team(long other, long player)
 	return false;
 }
 
-// score 34 (was 34): early mode/mask saves and cold exits remain; 368/368 bytes.
+// score 34 (was 34): Mode/mask saves precede acceptance and cold exits differ; peer loop agrees.
+// early mode/mask saves and cold exits remain; 368/368 bytes.
 // Earlier 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
 // Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
 // team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
@@ -2051,6 +2055,8 @@ long voice_players_share_team(long other, long player)
 // Earlier 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
 // Mode with complete mask 46; shared team/all-peer modes 148/148; team acceptance first 46;
 // mask before mode 34; equality with other/selected validity 117/118; unsigned peer ordinal 130.
+// Accepted/available/filter output arms 124/117/119; filter arms with live mode 119;
+// accepted-only mode capture 34 (exact-only); entry players/team/both declarations 34/34/34. Restored.
 // Deferred mask initialization 55; complete query arms/selection 46/46;
 // deferred live/native mode 55/55; accepted team predicate 127;
 // deferred default output 53; deferred initial exit 55.
@@ -2524,7 +2530,8 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
  return result;
 }
 
-// score 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
+// score 124 (was 124): Frame 0x14 agrees; capacity/preserve homes, preferred index/bit and helper setup differ.
+// Earlier 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
 // Capacity named slots 124; native long preserve 144; final preferred-bit recomputation 161;
 // non-preservation-first finish 131; separate entry guards 124.
 // Preserve declared before capacity 124; complete output fill 146; later preferred-bit lifetime 124;
@@ -2532,6 +2539,8 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
 // Boolean role names 124; entry-scope workspaces 124; guarded preferred/mode values 154;
 // shared final selected bit 189; direct blocked assignment 165.
 // Capacity/preserve and preferred-bit homes remain; original body retained.
+// Captured/working capacity after guard/preserve/preferred/mode/members 127/147/158/147/147;
+// entry working declaration 127; derived capacity before admission/in routing scope 147/130. Restored.
 // Round 117: Plain availability fields 162; joint workspace names 124; full final mask 143; mode observation first 130; existing preferred getter 124; byte preserve 146; unsigned preferred 124.
 // Definite blocked path result 165; shared mode-two capacity 160; direct session query 188;
 // early allowed-member query 124 (exact-only); mode-two admission first 137;
@@ -2846,6 +2855,9 @@ struct s_voice_route_choice
 // Boolean radio with unsigned nearest index 411; three mixer pairs 394;
 // conditional headset assignment 394; split initial/replacement nearest 412;
 // repeated player-field reads 472. Frame and route homes still differ; original retained.
+// Native Boolean/word radio with choice receiver 410/392; Boolean with three pairs 397;
+// plain pair loop 394, with Boolean 411; native descriptor alone 394 (retail length),
+// with native choice/Boolean 411; native choice/Boolean mixer-workspace names 410.
 // Headset rejection first 394, with native Boolean radio 411; selected nearest result 1101, with native
 // radio 1103, with both 1103; late mixer descriptor 394, with native radio 411; all three with native radio
 // 1103. Selected results prevent four-way expansion; all original code restored.
@@ -2940,7 +2952,9 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 }
 #pragma function(_ReadWriteBarrier)
 
-// score 56 (was 56): mode load and output cursor/store scheduling differ; direct formal 95;
+// score 56 (was 56): Mode load and final record cursor/store order differ; frame 0xcc agrees.
+// Earlier 56 (was 95): mode load and output cursor/store scheduling differ; direct formal 95;
+// mode load and output cursor/store scheduling differ; direct formal 95;
 // Frame agrees; mode-load and output cursor/store scheduling still differ.
 // Earlier direct formal 95.
 // unsigned index 95; short/byte 107; early choices 95; early unsigned/short 95/107; direct unsigned 95.
@@ -2948,6 +2962,8 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 // receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
 // outer route 95; actual count 96; conditional mode-result combinations all 92;
 // direct talker parameter with early player 56.
+// Immediate final-route alias 60; evaluated/request-result declaration scopes 56/56;
+// route role names 56; complete active arms 56; wide active/complete active/validity 79/79/81. Restored.
 // Shared route result/default arms 60/84; completed-player forms 94/85;
 // shared input bit 60/84; both computed bit parts 60/84.
 // Output mode owns result before timestamp, early/late player 127/112;

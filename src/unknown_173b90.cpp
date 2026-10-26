@@ -746,12 +746,15 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 	spawn->location_index = particle_location->next_index;
 }
 
-// score 17 (was 29): the untinted half-path exit is a long jump to the last
+// score 17 (was 17): the untinted half-path exit is a long jump to the last
 // epilogue where retail's short jump joins the half path's own; the half path
 // reads the unpacked color through the returned pointer where retail reads the
 // buffer and pushes the returned pointer. Store per path (retail's entry
 // registers) 41; returned pointer packed only 41; one shared buffer 17;
 // early untinted return 17; tinted tested first 37.
+// Shared double scale 58; immutable/ordinary complete products 23/23;
+// product value copy 74; decode value copy 63; exchanged decode workspaces 17;
+// two decode-result lifetimes 45; double scale with in-place result 64.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
@@ -1019,9 +1022,13 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // native request initialization 211; immutable render inputs 213; native definition bit five 317; native
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
 // preference 646; child constant bit stores 220.
-// score 213 (was 213): Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
+// Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
 // Direct render-table expression 222; request location at rendering 327; byte view result 213;
 // ordinary while location traversal 213; camera up copied first 213.
+// Negative visibility 287; exclusion membership 213; opposite-view classification 213; three negative
+// predicates 287; signed render mask 213. Original source restored.
+// Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
+// availability result before the work guard 355. Early EDI/tag lifetimes remain.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

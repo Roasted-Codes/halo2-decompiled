@@ -4,18 +4,29 @@
 // score 434 (was 434): Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
 
 // Earlier 434 (was 434): Entry/tag-table registers and plane/list homes remain.
+// score 434 (was 434): aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
+// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// Entry/tag-table registers and plane/list homes remain.
 // Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
 // capacity snapshot 438; guarded native input records 445 (plain). Entry/table and plane/list homes remain.
+// Earlier: entry/table registers and plane/list homes differ; plane ordinal word 438;
 // Earlier score 434 (was 438): entry/table registers and plane/list homes differ; plane ordinal word 438;
 // entry/table registers and plane/list homes differ; plane ordinal word 438;
 // view ordinal word 438; frustum ordinal word 437; byte parts predicate 438; early containment byte
 // 436 (plain).
 // Entry-data cursor 438; selection flags 434; query count 438; inverse per frustum 525;
 // captured frustum/view bounds 481/483; entry data plus inverse 525; complete matrix value 527.
+// Destination cursor 444; both plane cursors 484; destination/both with full publication
+// 444/444; destination/both with outer plane 444/484; destination/both with normal declaration 444/484.
+// Native input plane subobjects 468; separate shared-scaler normal output 476;
+// multi-use distance scalar 453; input plus normal/distance 438/468;
+// normal plus distance 471; all three 438; dword plane ordinal 434 (fast). All restored.
 // DL131: Entry/tag-table registers and plane/list homes remain; existing geometry resolver
 // before/after entry 443 each; native geometry record 434; resolver with native record in either
 // entry order 443; resolver with shared normal scaling 443; native geometry with shared normal
@@ -24,6 +35,9 @@
 // Signed 32-bit flags 434; named section/both indices 455/455; structure-first/instance-first/
 // combined selection 453/434/453; native normal/distance publication 441; source-plane cursor 445.
 // Round 317: Native rotation result 472; native center initializer 434; both 472; member alignment 435; aligned rotation/center/both 473/435/473; aligned rotation with shared normal scale 473. Header fully restored.
+// Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
+// 436; query result with products 440; const query 434; query result/products with const query
+// 438/436. All product regroupings restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

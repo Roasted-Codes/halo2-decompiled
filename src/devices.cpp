@@ -1031,12 +1031,12 @@ bool __stdcall function_107ed0(long device_index, long name, real seconds)
 						real speed = 0.0f;
 						transform4x3f original;
 						transform4x3f adjusted;
-						transform4x3f sampled;
 						transform4x3f start;
 						function_1420f0(&original, &device->field_xcc658c, &device->forward, &device->up);
 						adjusted = original;
 						if (device->flags & 8)
 						{
+							transform4x3f sampled;
 							c_type_709360 animation = device->channels[0].animation_id;
 							real time = device->channels[0].frame_position * (1.0f / 30.0f);
 							state->animation_matrix_get(animation, 0.0f, render_model, &start);
@@ -1216,7 +1216,11 @@ struct s_index_pair
 };
 bool function_0b6760(s_index_pair const *pair);
 
-// score 303 (was 303): Frame 0x1c versus 0x20; index/header and state/result homes remain.
+// score 303 (was 303): Frame 0x1c versus 0x20 and index/header/state/result homes remain; native
+// power/position/both/activity flag values 376/302/379/370; power-activity/position-
+// activity/all/shared 376/373/376/376. One-point gain rejected.
+// Earlier: Frame 0x1c versus 0x20; index/header and state/result homes remain.
+// Frame 0x1c versus 0x20; index/header and state/result homes remain.
 // Frame 0x1c versus 0x20; index/header/state/result homes remain. Ordinary
 // index 389; ordinary saved pointer 378; both 421; ordinary index with header ordinal 389; both
 // with ordinal 421; both with byte result 413; ordinary saved pointer/index with byte result
@@ -1239,6 +1243,9 @@ bool function_0b6760(s_index_pair const *pair);
 // Ordinary saved pointer with shared previous 381 at retail length; original qualifiers kept.
 // frame 0x1c versus 0x20 and index/state homes remain; byte result 351;
 // word result 358; shared position complement 347; common group receiver 347; clamp arms 352.
+// Native device/power-group/position-group record references and their pairs/all 303
+// (seven forms); real tag fields 351. All receivers and the original tag type restored.
+// Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303; both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c versus 0x20 and index/header/state/result homes remain; all helper declarations restored.
 // Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303;
 // both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c
 // versus 0x20 and index/header/state/result homes remain; all helper declarations restored.

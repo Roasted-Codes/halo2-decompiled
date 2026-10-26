@@ -129,6 +129,8 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 }
 
 // score 421 (was 421): frame 0x50 versus 0x60; tint/second-UV homes and cache register remain.
+// Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX remain.
+// frame 0x50 versus 0x60; tint/second-UV homes and cache register remain.
 // frame 0x50 versus 0x60; tint/second-UV homes and cache register differ.
 // Frame pointer 597; size optimization 990; tint input-array parameter 435;
 // direct packed-tint return 435; byte flip selector 538.
@@ -142,6 +144,8 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Bitmap field at every use 421; frame-array field at use 442; both 442;
 // immutable frame count once 479; with bitmap/frame fields/both 479/479/479;
 // shared bitmap sequence clamp count 427. All restored; frame 0x50 versus 0x60.
+// UV output-first 421; cache/definition-first tint contract 421; complete bounds snapshot 656;
+// UV output-pointer return 421; reference bounds formal 421. Original helpers and body retained.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

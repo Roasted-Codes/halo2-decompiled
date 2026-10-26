@@ -299,14 +299,28 @@ local_0:
 	return result;
 }
 
-#pragma optimize("g", off)
 PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 {
     return arg_0 + (arg_1 - arg_0) * AI_RANDOM_REAL();
 }
-#pragma optimize("", on)
 
-// score 61 (was 61): first range still fuses its x87 add; native interval fields 61;
+// score 61 (was 61): frame and both tick conversions agree; the only difference is the first
+// range's final add: ours fuses it (faddp) where retail keeps the lower bound live and drops it
+// afterwards (fxch/fadd st(1)/fxch/fstp st(0), 6 bytes). Our build fuses whenever the range's
+// result stays on the x87 stack; the second range (stored) already matches.
+// Round 49: helper without the global-optimisation-off pragma 61 (kept: identical code); result
+// local in the helper 61; the existing slot_random_range 68; named random in the helper 77 (SSE
+// range, 285 bytes); ranges written out in place 90.
+// Earlier: native interval fields 61; interval by value/reference/pointer 94/84/84; value with
+// result 94; reference/pointer input copies 64/64; value with named sample 95; shared delay/
+// duration/both range helpers 74/77/68; ordinary/direct/test-derived success 91; state at stores
+// 61; shared ranges ordinary result 91; rounding boundary for delay/duration/both, shared short/
+// real clock, first output before duration, early output with rounding and shared clock with
+// rounding 68, 65, 71, 75, 75, 79, 100, 89; in-place delay/duration/both products 61; operand
+// orders 61; entry failure guard 85; earlier state initialization 61; the existing 0x259d0 with
+// file and line 67 (SSE ranges; round 49 with its object linked: 73 instructions, NULL file or a
+// seed local the same).
+// first range still fuses its x87 add; native interval fields 61;
 // interval by value/reference/pointer 94/84/84; value with result 94; reference/pointer
 // input copies 64/64; value with named sample 95. All interval and helper forms restored.
 // first range add still fuses; shared delay/duration/both range helpers 74/77/68; ordinary/direct/test-derived success 91; state at stores 61; shared ranges ordinary result 91 (round 117).
@@ -654,7 +668,6 @@ bool function_270640(s_type_f17a25 *arg_0, s_type_c3b527 const *arg_1,
 bool function_2715a0(byte *arg_0);
 bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void const *arg_4);
 
-// Matches retail byte for byte: slot/result declaration order, source zero, early query input word.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {
