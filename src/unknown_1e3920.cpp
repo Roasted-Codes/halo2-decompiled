@@ -556,6 +556,10 @@ real function_267370(long volatile object_index);
 // Held-direction pointer/reference 386/386; complete explicit plane-result arms 418;
 // true-first plane result 371; explicit arms with pointer/reference 425/425;
 // true-first result with pointer/reference 386/386 (fast control 371). All restored.
+// Round 167: Plane products, complete forward product terms, and both 371 each;
+// uniform four-use movement flags alone/with plane/with forward/with both 428 each;
+// complete named plane distance 371. Fast control 371; full baseline 273.
+// Original arithmetic, repeated flag observations and protected interfaces restored.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -1579,24 +1583,17 @@ PRIVATE inline long equipment_current_weapon_r21(long unit_index)
 {
 	s_ai_object *unit = ai_object_get(unit_index);
 	short slot = unit->current_weapon;
-	long result = NONE;
-
-	if (slot != NONE)
-		result = unit->weapons[slot];
-	return result;
+	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
 PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 {
 	s_ai_object *unit = ai_object_get(unit_index);
 	short slot = *((signed char *)unit + 0x213);
-	long result = NONE;
-	if (slot != NONE)
-		result = unit->weapons[slot];
-	return result;
+	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
-// score 279 (was 284): Frame 0x14 agrees; actor/pool roles and scalar/ammunition homes remain.
+// score 270 (was 270): Frame 0x14 and actor ESI agree; index/pool roles and scalar/ammunition homes remain.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
@@ -1608,6 +1605,16 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // settings initialization 317; word admission minimum 288; magazine memset 282; complete probability
 // initialization 309; memset with long ordinal 328 or word minimum 279 (plain kept); combined candidate
 // with long ordinal 300 or weapon entry 279 (fast).
+// force-inline existing pair of equipment queries 279; native byte current equipment slot 296; native
+// signed byte secondary equipment slot 296; both native byte equipment slots 299; both equipment query
+// conditional results 270; both equipment query rejection returns 275; existing equipment queries consume
+// actual unit record 279; actor record lexical identity on native frame 279.
+// Round 224: Native/unsigned-word ordinal 318/270; complete output initialization 271; consistent
+// delay-field reads 282; settings default after query 272; signed-word duration 270; branch-owned
+// probability 279; native ordinal with delay reads 295. Frame agrees; index/pool and scalar homes
+// remain.
+// Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
+// unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

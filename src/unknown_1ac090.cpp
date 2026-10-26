@@ -168,10 +168,16 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // score 68 (was 68): frame eight versus retail zero; mode compare and entry scheduling remain.
 // Both timer helpers 85; add helper 68 plain kept; set helper 80; native tick outputs
 // both 72, first 70, second 80; shared random index 80; library slot copy 80.
+// Round 128: native slot data block/full native copy 91/91; data with second timer writer/native
+// output 80/80; one unit receiver 91; branch-assigned default 103; uniform unit reads 76; uniform
+// reads plus branch default 104. Original eight-byte frame and mode scheduling remain.
 // Round 138: mode predicate/shared clock/both 68/68/68; shared rate 84; second rounding-result
 // helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
 // force-inline second/both/first rounding results 85/70/68; native result with both 78.
 // Zero-frame forms regress allocation or expansion.
+// Round 323: long/word/dword/real delay with second writer 88/85/105/105;
+// the same delay carriers with native second output 88/85/105/105. Conversion-input packing
+// restores zero frame in some forms but regresses allocation; original body restored.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -300,6 +306,9 @@ short __stdcall function_1ac3f0(long actor_index)
 // 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
 // Native character readonly/reference/value 35/35/82; double scale/delay/both 35/74/74;
 // character reference/value plus double scale 35/82. Seed reload and scale pop remain.
+// Round 128: native slot data block 35; data block with early draws 43; first/second/both timer
+// writers 70/35/70; early data receiver 46; initialized early exit 48; later initialized
+// publication 38. Seed retention and first scale pop remain.
 // Round 138: shared seed pointer/record 58/58; shared clock alone/with seed 35/46; common rate
 // alone/with seed 86/91; first conversion input and second output entry homes 35/35.
 // Intermediate seed store and early scale pop remain.
@@ -778,6 +787,9 @@ bool function_1f8660(long arg_0);
 // Round 204: shared release 204; native reference-produced result 226; absent-tag return
 // alone/reference result 226/220; skip return alone/reference result 223/229; both early
 // exits alone/reference result 221/222. Actor/result/count and direction homes remain.
+// Round 323: vehicle field at each use 174; radius read once 191; shared projections
+// 194; vehicle/radius 191; vehicle/projections 194; radius/projections 213; all 213; radius
+// and projections with native vehicle index 213. Original actor/result/count and direction homes remain.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1243,6 +1255,13 @@ struct s_1acda0
 // complete timer predicate with those four 139/129/106/68. Default-false publication and child result kept.
 // Round 204: early state after/before actor on retained result graph 189/189; mode-produced active
 // 134; eligibility-produced active 134; both 199; early state with mode/eligibility/both 184/201/208.
+// Round 128: native data member 114; receiver before result/before actor/before first exit
+// 159/159/159; child result publication and direct return 118; request entry lifetime 118;
+// result/search role names 114; plain result 206. Early ESI, Boolean test and exit traffic remain;
+// all restored.
+// Round 323: existing actor getter 193; prop-index observation 114; common empty
+// reference 124; getter/index 193; getter/reference 188; index/reference 124; all 188;
+// all with conditional prop selection 187. Early ESI and Boolean/result traffic remain.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {

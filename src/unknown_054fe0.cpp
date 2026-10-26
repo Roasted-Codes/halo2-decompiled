@@ -1259,7 +1259,7 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
-// score 184 (was 184): frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// score 184 (was 184): Frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
 // Earlier: frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
@@ -1279,7 +1279,6 @@ struct s_player_properties
 // owner/count/zero homes and requested cursor remain.
 // Current fields at use all/names 198/184; metadata/all with live mask/all with late count 234/198/198;
 // all with owner at use/second index/both indices 207/198/198.
-// Earlier: owner/name-count/zero allocation and requested cursor remain.
 // Seven nonempty byte/long/short native aggregate-default groups 339 each;
 // full native defaults with redundant zero stores retained 375. Original initialization restored.
 // owner/count/zero allocation and requested cursor remain.
@@ -1290,9 +1289,22 @@ struct s_player_properties
 // all overwritten defaults 296. Original initialization retained.
 // Count at entry/before getter/before cache compare/after mask 225/191/265/184;
 // chained byte/long/short/all sentinel groups 184 each with session roots; narrow control 211.
+// Unsigned/signed byte name count 185/185; prefix-bytes-tail, bytes-tail-prefix,
+// tail-prefix-bytes payload copies 184 each; all payload copies before name output 242,
+// with unsigned/signed byte count 241/241. Owner/count allocation and requested cursor remain.
 // Native requested name/payload/metadata/all 184 each; native current receiver and both receivers
 // 184/184; all current at use and both native observations 198/198. Session-root scores; real
 // player header and property type restored.
+// Round 161: Startup state at use; collected-name table at entry/before getter;
+// those table scopes with state at use; table lexical name; entry table plus name;
+// entry table plus name and state at use: all eight 184 with session roots.
+// Original table, state snapshot, defaults and executable body restored.
+// First/second/both actual default-array cursor walks 240/240/235; chained zero
+// bytes 184; first/second/both cursors plus byte chain 240/240/235; both cursor
+// declarations before clear with chain 235. Original defaults and body restored.
+// Existing player getter in collection/update/both phases 222/215/219;
+// update getter with word/short collection mask 216/216; native word/short masks
+// alone 184/184; both getters with bounded byte name count 218. All restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

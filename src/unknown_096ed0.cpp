@@ -45,6 +45,15 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // bytes but regress.
 // Round 357: Simple pending/masked-active/both arms first 248/216/246; all query kinds
 // after their queries 275; single-handle counts after callbacks 275. Opening body restored.
+// Round 165: Pending/active/both byte blocked predicates 217/217/217;
+// pending/active/both dword 247/228/247; mixed dword/byte and byte/dword 247/228.
+// Original Boolean predicates, all guards and executable body restored.
+// Round 165 follow-up: Unsigned handle/link/both domains 217/217/217; readonly
+// entry/peer/both views 217/217/217; unsigned handle with both readonly views 217;
+// all domains/views 217. Original signed locals and mutable views restored.
+// Enabled/nonempty count initialization 230/219; narrow pending/active array names
+// 217/217; pending-before-ready/active-before-waiting names 217/217; enabled count
+// with pending-before-ready 230; nonempty count with active-before-waiting 219.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -759,6 +768,9 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 	}
 }
 // score 185 (was 185): frame 0x98 agrees; count/receiver/native-kind and callback homes remain.
+
+// score 185 (was 185): Frame 0x98 agrees; count/receiver stack homes, decoded-kind width and callback setup remain.
+// Frame 0x98 agrees; total/receiver/callback-index homes and native kind remain different.
 // Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
 // Native kind 211; role-named scalars 204; shared callback arm 222;
 // library descriptor/payload copies 204; pretested item while 220.
@@ -777,6 +789,8 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // unsigned error 193; word kind 204; default first 193; reverse cases 211;
 // all cursors with full-width kind 204.
 // Paired cursors with native kind 203; paired/native kind with pretested for 217.
+// Round 157: Range-first byte/native kind 232/198; count-default byte/native 232/218; terminal-test
+// count byte/native 214/219; test-count pretested while byte/native 214/215.
 // High/low cursor names 185; second cursor declared first 185; descriptor zero
 // initializer 186; names/declaration order 185; names/initializer 186;
 // declaration order/initializer 186; all three 186; cursor declarations before scalars 185.
@@ -787,6 +801,16 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // callback-table-update-entry-count-home-names 219; table-before-item-publication 251.
 // Round 199: Descriptor-owned item bound, byte kind with indexed/pretested/item-cursor/both forms
 // 216/203/181/191; native-kind counterparts 208/205/224/195 (fast). All restored.
+// Round 159: Second-only/first-only callback cursors with byte kind 218/218; native kind 219/219;
+// second-plus-item/first-plus-item cursors with byte kind 218/218 and native kind 219/219. All 704/692
+// bytes, frame 0x9c versus 0x98. Original paired cursors, item indexing, copies and cleanup restored.
+// Round 161: Failure-first 193; native kind 208; direct cleanup-array reads 178;
+// native kind plus array reads 202; metadata before copies 181; failure-first metadata
+// 193; failure-first native metadata 208; failure-first descriptor before index 193.
+// Seven/four-point previews rejected by minimum gain; original body restored.
+// Shared item/cleanup ordinal 185; with pretested items 222; case-local index 200;
+// case-local/pretested 266; native kind 203; native/pretested 217; native/case-local
+// 202; all three 217. Opening body restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {

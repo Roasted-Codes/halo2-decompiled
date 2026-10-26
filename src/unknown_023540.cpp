@@ -2400,7 +2400,9 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 331 (was 331): Frame 0x28 agrees; inverse AL entry save, dimension homes and bitmap-call setup remain.
+// score 331 (was 331): Frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
+// frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
+// Frame 0x28 agrees; inverse AL entry save, dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
@@ -2414,6 +2416,8 @@ dword __cdecl function_131fc0(real alpha);
 // Tag/bitmap/both observations 400/399/399; pixel fields at use 335;
 // native source/destination/both bounds 335/335/335 (exact-only, restored);
 // one shared exit 335; all fast against control 335.
+// Round 361: native group/bitmap/both records 335/335/335; bitmap/grouped bitmap references
+// 335/335; group fields at use alone/with bitmap/with bitmap reference 400/400/400 (fast).
 // Round 147: fast control 335; blend complement 401; paired blend branches 453 (exact-only); finite clamp
 // operands/branches 335/335; chained source zeros 335; paired half-extents 335; shared UV edges/half-
 // extents 456/456.
@@ -2423,6 +2427,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 195: explicit output nibble shift 348 fast; full EFG/ABCD/both 442/434/441;
 // single-bit output shift 333; full EFG/ABCD/both 444/439/443 (fast control 335).
 // The two-point selector gain and all packed-field forms restored; full baseline remains 331.
+// Round 164: Common initial alpha packing with ternary/conditional-update/complete
+// raw-result/shared-clamp producers 435/435/431/435; function-entry workspace
+// 435/435/431/435. All regress against fast control 335; original shader graph restored.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2568,8 +2575,10 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
     real red, real green, real blue, real *red_result, real *green_result, real *blue_result);
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
+// score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
+// Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
-// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// score 530 (was 530): Frame 0x20c versus 0x200; stack order, coefficient homes and sample boundaries remain.
 // Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
 // unsigned handle 544; native bucket fields 544.
 // Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
@@ -2589,6 +2598,15 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Short/word eligibility 537/537; short/word cache hit 534/534; sampled-transform,
 // inverse-rotation and both workspace names 530/530/530; inverse declared at sample
 // entry 530; Boolean success with live cache observations 535.
+// Round 129, live-cache graph: full-width order with long/bool/short/byte result
+// and short sample ordinal 542/535/542/573; with long sample ordinal
+// 570/559/570/573. Original order declarations, result and sample types restored.
+// Round 131: shared cross/dot determinant in all three cyclic orientations,
+// either dot receiver order, 543 each (exact-match-only); signed-byte capped
+// sample count 529 (one-point gain rejected); byte capped count 564.
+// Negative allocation failure bool/byte/short/long in the original rejection arm
+// 531/531/529/528; reused actual capacity predicate 539/539/537/537.
+// Best reduction two is below the gate; original result and all helpers restored.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)

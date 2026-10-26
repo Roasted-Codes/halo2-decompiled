@@ -541,11 +541,16 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Original complete body and helpers restored; frame 0x2204/0x21dc, definition/output and angle equality homes remain.
 // Alias-free single angle exit 796; word edge-side predicate 807; unsigned-word list ordinals 773;
 // native mesh reference 796; native rotation-basis references 796 (fast). Original body/helpers restored.
+// Alias-free angle input order 796; rotation output/input first 792/792; plane output first 796;
+// ordinary angle/rotation/plane inline 1168/796/796; all inline 1168. Original body/helpers restored.
 // Round 155: native element references (alias-free), then complete rotation-input value: decoded plane 796; mesh edge 796; decoded plane mesh edge 796; edge endpoints 796; decoded plane edge endpoints 796; mesh edge edge endpoints 796; decoded plane mesh edge edge endpoints 796; rotation input value 1034. All restored.
 // angle-products 781; axis-products 748.
 // sign-products 748; angle-axis-products 805.
 // angle-sign-products 804; axis-sign-products 770.
 // angle-axis-sign-products 795; diagonal-axis-squares 800.
+// Round 180 alias-free scalar names: selected distances, candidate distances, endpoint distances, axis,
+// rotation, angle cosine, all distances, all scalars; scores 796/796/796/796/796/796/796/796 (fast); all
+// restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

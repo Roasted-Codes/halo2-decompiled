@@ -188,7 +188,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
+// score 153 (was 153): Frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
 // Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
@@ -229,6 +229,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // native channel packing 238; chained descriptor counts 162 (fast control 162). Frame and
 // reservation scheduling remain.
 // Round 212: Immutable bitmap pointers/repeated texture coordinates 162/162; chained RGB/alpha outputs 165; shared color output with word alpha 162; center snapshot at first final vertex 296 (fast control 162). Frame and reservation scheduling remain.
+// Round 157: Word-alpha frame: second/both expanded position device entries 162/162; first/second
+// coordinate C entry 443/443; complete first-quad device entries 162; native color input reference
+// alone/second position/color entry 349/349/349 (fast control 162, plain 153).
 // Word-alpha context: color pointer/object reference 349/349 fast; immutable alpha/alpha
 // lexical home 162/162; native texture pair/bounds 149/369 (unmatched grouped storage
 // restored); bounds with color pointer/reference 373/373; immutable scalar coordinates 162;
@@ -243,6 +246,14 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Round 204: first/second/both bitmap observations at each use 569/458/653; with value
 // half-size 569/458/653; both observations with native color pointer alone/value size
 // 684/684 (fast control 162, full 153). Complete opening body and directives restored.
+// Round 159: Shared getter resource-result-first 517; bitmap failure returns 522; both null producers
+// 516; ordinary inline resource/bitmap/both 162/162/162; both null producers with resource/bitmap inline
+// 516/516 (fast control 162, full baseline 153). All getter bodies, metadata and target code restored.
+// Round 224: Entry color/phase scalar/joint declaration ownership 162/162/162; later color lexical
+// home and separate native assignment 162/162; pure half-span before color/commit/entry 405/403/527
+// (fast control 162). Frame and reservation homes remain.
+// Fast control 162: paired alpha with original/before-color/before-commit/entry half-span
+// 251/394/392/462; staged packed alpha at the same sites 261/327/325/521.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
