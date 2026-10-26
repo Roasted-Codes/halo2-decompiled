@@ -2274,9 +2274,13 @@ PRIVATE __forceinline s_squad_datum *squad_iterator_next_201df0(s_squad_record_i
     return local_0;
 }
 
-// @retail 0x201df0
 // score 12 (was 12): the record pool's pointer is kept in EDI where retail keeps it in
 // EBX, so the count and the bit mask take the other two registers instead.
+// Trailing store order 12; plain inline helper 150; outer squad assignment 12;
+// named search mask 12; late records snapshot 12; entry search result 12;
+// shared iterator byte result 70; bitmap before count 13; count/mask before pool 12;
+// shared bit test 12.
+// @retail 0x201df0
 void function_201df0(void)
 {
     s_squad_record_iterator local_0;

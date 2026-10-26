@@ -185,6 +185,10 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 	return result;
 }
 
+// score 6 (was 6): the key is passed in EDI instead of retail's EBX, rotating the entry saves and loads;
+// key pointer before globals 6; direct index construction 6; delayed globals assignment 6;
+// read-only key pointer 6; global at each use 6; read-only index result 6;
+// direct key address 29; read-only key parameter 6.
 // @retail 0x188640
 s_globals_element *function_188640(long key)
 {
