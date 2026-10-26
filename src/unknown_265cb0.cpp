@@ -1551,7 +1551,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 695 (was 711): frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// score 684 (was 684): frame 0x7c versus 0x80; saved links and conversion expansion remain.
+// frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
 // Conditional facing 731; wide best level 701; direct parameter 701; shared difference 705;
 // wide retention 704; live relative inputs 695; native velocity copy 695; early defaults 755;
 // phase defaults 752.
@@ -1562,11 +1563,14 @@ real function_2683f0(long actor_index, long node_index, short type)
 // j93: Frame 0x7c/0x80, saved-link homes and conversion expansion remain; helper declaration restored.
 // shared tracking view 695; shared player lookup 724; very close result 719; native player search indices 702;
 // notification counter view 695; level helper inline 717.
-// score 684 (was 695): Frame, saved-link homes and expanded tick conversions remain.
+// Frame, saved-link homes and expanded tick conversions remain.
 // selection names 695; cached state test 707; post-clear results 684;
 // direct score result 695; direct retention result 705 (plain).
-// score 684 (was 684): Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
-// score 684 (was 684): Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
+// Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
+// Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
+// Word level with long established/plus long player slot/long visible/long retain/
+// long established and visible 696/724/706/706/699; recovered-frame early selection
+// defaults 684, early successor cursor 712, scalar-first strongest comparison 696 (calibrated fast).
 // @retail 0x266640
 void function_266640(long actor_index)
 {

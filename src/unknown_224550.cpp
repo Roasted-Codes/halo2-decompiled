@@ -128,10 +128,13 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 	return local_0;
 }
 
-// score 435 (was 435): frame 0x50 versus 0x60; tint/second-UV homes and cache register differ.
+// score 421 (was 435): frame 0x50 versus 0x60; tint/second-UV homes and cache register remain.
+// frame 0x50 versus 0x60; tint/second-UV homes and cache register differ.
 // Frame pointer 597; size optimization 990; tint input-array parameter 435;
 // direct packed-tint return 435; byte flip selector 538.
-// score 435 (was 435): Frame 0x50/0x60 and tint/second-UV homes remain; UV result by value 553; bounds input by value 687; short sequence count 441; unsigned flip mask 435; paired UV defaults 439.
+// Frame 0x50/0x60 and tint/second-UV homes remain; UV result by value 553; bounds input by value 687; short sequence count 441; unsigned flip mask 435; paired UV defaults 439.
+// Extended tint lifetime 544; shared flip flags 435; UV extents stored first 435;
+// positive-count interval scope 421 (plain); branch-owned blend defaults 508.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)
@@ -172,9 +175,9 @@ void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache
 			if(context->sequence)
 			{
 				long count=context->sequence->count;
-				long intervals=(definition->flags&8)?count-1:count;
 				if(count>0)
 				{
+					long intervals=(definition->flags&8)?count-1:count;
 					real frame=function_246cd0(&definition->frame,values->values)*(real)intervals;
 					long index=function_016ae0(frame);
 					s_draw_sprite_frame const *frames=context->sequence->frames;
