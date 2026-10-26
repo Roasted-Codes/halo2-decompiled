@@ -81,11 +81,10 @@ long function_2170e0(long file_index)
 		}
 		else
 		{
-			void *files = g_51ea14;
 			char drive;
-			if (files && function_1249f0(0, &drive))
+			if (g_51ea14 && function_1249f0(0, &drive))
 			{
-				s_profile_location_table *table = (s_profile_location_table *)((byte *)files + 0xbef8);
+				s_profile_location_table *table = (s_profile_location_table *)((byte *)g_51ea14 + 0xbef8);
 				s_profile_location_bytes location;
 				location.data[0] = 0;
 				*(word *)(location.data + 0x14) = 0;
@@ -96,7 +95,7 @@ long function_2170e0(long file_index)
 
 					s_profile_location_bytes const *entry = &table->entries[current];
 
-					location = *entry;
+					memcpy(location.data, entry->data, sizeof(location.data));
 					if (*(long *)(location.data + 0x38) != type)
 						continue;
 					if (strncmp((char const *)cached->unknown04, (char const *)location.data, 20))
