@@ -2794,6 +2794,9 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 // complete bitmap/title guards on the offline-first body 100/100. Original body retained.
 // Round 164: row generic query 235; direct text queries 235; game at use 322; team availability 294;
 // native item flags 100; row game observations 314; row team availability 304; row native game 314.
+// Round 166: unsigned rows 100; bitmap presence 106; absent text 100; row while 100; native
+// animation shift 117; unsigned presence/animation 106/117; presence text animation 109;
+// recovered-prefix game-first/query/unsigned/animation 143/171/171/170.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {

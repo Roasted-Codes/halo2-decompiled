@@ -1564,8 +1564,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 684 (was 684): frame 0x7c versus 0x80; saved links and conversion expansion remain.
-// frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// score 684 (was 684): Frame 0x7c/0x80, sentinel/link homes and conversion expansion remain.
+// Earlier 684 (was 684): frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// frame 0x7c versus 0x80; saved links and conversion expansion remain.
 // frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
 // Frame 0x7c versus 0x80; sentinel/link homes and expanded tick conversions
 // remain. Pointer player-table walk 685; forward library copy 684; velocity library copy 684;
@@ -1596,6 +1597,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Earlier 684 (was 684): Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
 // Round 112: Long visible 683 (one-point gain dropped); long positive 710; long close 727; long
 // very-close 699; combined state/view guard 705; ordinary actor input in all.
+// Round 150: wide maximum 739; long queried level 684; both 739; sentinel declaration order 684; shared relative difference 692; nested maximum guards 684; direct proximity result 711; wide maximum with sentinel order 739 (calibrated fast).
 // @retail 0x266640
 void function_266640(long actor_index)
 {

@@ -79,6 +79,10 @@ struct s_spawn_scenario_23aea0
 // native source groups 121; readonly source groups 121; real source groups 121; native destination
 // records 121; native tuple assignment 143; complete source table 103; native group owner 121;
 // native record range 154. Integer destination induction remains; two-point table gain rejected.
+// Unsigned outer counter 141; outer do-while 105; inner do-while 242; table pointer as the
+// globals' last member (retail's memset clears it) 102; running destination index 120.
+// No-link compiles of 1728 loop shapes, counter types and destination forms all fold the
+// global into a pointer induction variable; retail keeps the integer offset 0x18..0xa8.
 // @retail 0x23aea0
 void function_23aea0()
 {
