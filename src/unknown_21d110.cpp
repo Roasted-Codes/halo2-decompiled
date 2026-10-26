@@ -343,6 +343,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 164: complete start result 226; positive start admission 204; exhaustive start arms 226;
 // rate result selection 204; query owned stage 204; admission owned outputs 204; scoped positive rate 204;
 // scoped exhaustive results 226.
+// Round 166: long/word effect slots at admission, playback and publication 206/214 each;
+// long/word slots with common result 181/224; long-result 181 plain rejected for eight caller
+// losses.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
