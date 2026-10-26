@@ -1924,6 +1924,7 @@ bool function_1e1de0(long actor_index);
 bool function_1df5d0(short team_a, short team_b);
 
 // score 179 (was 179): Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
+// Earlier: Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
 // Earlier: frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // Earlier iterator declaration 242; iterator/count role names 242; natural for
@@ -1943,6 +1944,7 @@ bool function_1df5d0(short team_a, short team_b);
 // Frame 0x14 agrees; next-index memory home, contribution register and entry
 // Frame 0x14 agrees; next-cursor storage, contribution register and flag
 // Round 110: delayed long count from native population 235; known native squad fields 179; direct hostility OR 238; hostility first 179; native point memcpy 179.
+// Signed-byte/byte hostility and unsigned branch count 179 each; non-unit default count 242; unsigned tracking handle and readonly tracking/target/both views 179 each. Original values and declaration types restored.
 // @retail 0x203360
 void function_203360(long squad_index)
 {

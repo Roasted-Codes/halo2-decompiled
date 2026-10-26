@@ -405,7 +405,8 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 181 (was 198): Frame 0x14 agrees; request/count/table registers and cross publication still differ.
+// score 181 (was 181): Frame 0x14 agrees; request/count/table registers, cross publication and projection schedule remain.
+// Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
 // reversed independent dot order 203; stepping snapshot 303.
@@ -425,6 +426,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Separate projection results both/first/second 297/288/288; shared projection result 273;
 // common complete pair result 181 at 975 bytes (plain confirmed); swapped dot comparison 198;
 // negated average-default arm 198; common pair result with swapped comparison 181.
+// First-normal i/k/j product and partial sum 198 each; average i/k/j product and partial sum 198 each, all 983/977 bytes. Original projection expressions and pair-result join restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -920,6 +922,7 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 }
 
 // score 87 (was 87): Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
+// Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // final override load order and rotation input/coefficient schedule differ.
 // Rotation pointer/reference results 101/101; matrix reference 101; remaining helper orders 101/101/101.
 // Deferred rotation stores 102; left-coefficient snapshots 102; original alias copy and arithmetic restored.
@@ -955,6 +958,7 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // Axis-record values forward/left/up/all outline the helper, 418 each; output/matrix-output references and
 // trailing-component loops 87 each; force-inline axis values 141/148/146/246; force-inline loop/reference
 // loop 87/87.
+// Partial sums i/j/k 93 each, ij/ik/jk/all 87 each; first lateral product named in the i row only 59 (1040/1043 bytes; not kept: one of three parallel rows). Original grouping and alias copy retained.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {
