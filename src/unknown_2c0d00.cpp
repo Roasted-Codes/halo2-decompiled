@@ -1142,8 +1142,8 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
 
-// score 469 (was 469): Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
-// word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
+// score 453 (was 469): Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
+// Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
 // output slot 469; with unsigned outer 470 (frame 0x10c); unsigned next 493.
 // frame 0x104 versus 0x10c; radius/index and metadata homes remain.
 // frame 0x104 versus 0x10c; metadata result homes recover 0x10c at 482 but radius, index and branch allocation still differ.
@@ -1164,6 +1164,10 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 318, early-output-pointer body: signed-word outer 485; unsigned/native output count
 // 469/522; native attempt 470; native end/candidate/both 500/472/516;
 // word outer with native attempt 486. All bounded domains and trace inputs retained; all restored.
+// Round 129: common corner phase 469; with corner-data/location/both receivers 476/460/464;
+// with next-entry receiver 453 kept plain, plus corner-data/location/both 452/470/468
+// (one-point extra rejected). Nested next receiver 460; role-based radius names 453; earlier
+// source address 456; plus names 456; consistent source receiver with/without names 456/456.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
@@ -1226,42 +1230,43 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                         copied_last = true;
                         break;
                     }
-                    if (edge != 0xffff && points[next].type == NONE)
+                }
+                s_path_step_view const *next_entry = &points[next];
+                if (edge != 0xffff && next_entry->type == NONE)
+                {
+                    point2f corners[2];
+                    bool left = function_2c3030((s_pathfinding_data *)query->pathfinding,
+                        &origin, radius, edge, true, &corners[0]);
+                    bool right = function_2c3030((s_pathfinding_data *)query->pathfinding,
+                        &origin, radius, edge, false, &corners[1]);
+                    if (right && left)
                     {
-                        point2f corners[2];
-                        bool left = function_2c3030((s_pathfinding_data *)query->pathfinding,
-                            &origin, radius, edge, true, &corners[0]);
-                        bool right = function_2c3030((s_pathfinding_data *)query->pathfinding,
-                            &origin, radius, edge, false, &corners[1]);
-                        if (right && left)
+                        point2f const *previous = next > 0 ? (point2f *)&points[next - 1].point.point :
+                            (point2f *)&query->source.point.point;
+                        point2f const *endpoint = (point2f *)&next_entry->point.point;
+                        bool side = function_2c2a70(previous, endpoint, &corners[0], &corners[1], &origin);
+                        point3f start = { origin.x, origin.y, 0.0f };
+                        for (short attempt = 0; attempt < 2; ++attempt)
                         {
-                            point2f const *previous = next > 0 ? (point2f *)&points[next - 1].point.point :
-                                (point2f *)&query->source.point.point;
-                            point2f const *endpoint = (point2f *)&points[next].point.point;
-                            bool side = function_2c2a70(previous, endpoint, &corners[0], &corners[1], &origin);
-                            point3f start = { origin.x, origin.y, 0.0f };
-                            for (short attempt = 0; attempt < 2; ++attempt)
+                            point2f center = corners[side ? 0 : 1];
+                            point2f tangents[2], candidate;
+                            function_2c2740(&origin, &center, radius, side, &tangents[0]);
+                            side = !side;
+                            function_2c2740(endpoint, &center, radius, side, &tangents[1]);
+                            function_2c2910(&center, tangents, &origin, radius, &candidate);
+                            point3f target = { candidate.x, candidate.y, 0.0f };
+                            s_path_trace_result first, second;
+                            function_26c4e0((s_type_c3b527 *)&start, (s_type_c3b527 *)&target,
+                                &first, data, sector, NONE, (long)&query->location);
+                            if (!((s_sector_trace_result *)&first)->blocked &&
+                                !function_26c4e0((s_type_c3b527 *)&target, &next_entry->point,
+                                    &second, data, ((s_sector_trace_result *)&first)->sector_index,
+                                    next_entry->node_index, (long)&query->location))
                             {
-                                point2f center = corners[side ? 0 : 1];
-                                point2f tangents[2], candidate;
-                                function_2c2740(&origin, &center, radius, side, &tangents[0]);
-                                side = !side;
-                                function_2c2740(endpoint, &center, radius, side, &tangents[1]);
-                                function_2c2910(&center, tangents, &origin, radius, &candidate);
-                                point3f target = { candidate.x, candidate.y, 0.0f };
-                                s_path_trace_result first, second;
-                                function_26c4e0((s_type_c3b527 *)&start, (s_type_c3b527 *)&target,
-                                    &first, data, sector, NONE, (long)&query->location);
-                                if (!((s_sector_trace_result *)&first)->blocked &&
-                                    !function_26c4e0((s_type_c3b527 *)&target, &points[next].point,
-                                        &second, data, ((s_sector_trace_result *)&first)->sector_index,
-                                        points[next].node_index, (long)&query->location))
-                                {
-                                    sector = ((s_sector_trace_result *)&first)->sector_index;
-                                    origin = candidate;
-                                    output_index = points[next].point.output_index;
-                                    goto emit;
-                                }
+                                sector = ((s_sector_trace_result *)&first)->sector_index;
+                                origin = candidate;
+                                output_index = next_entry->point.output_index;
+                                goto emit;
                             }
                         }
                     }
@@ -1274,9 +1279,9 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                 }
                 else
                 {
-                    origin = *(point2f *)&points[next].point.point;
-                    sector = points[next].node_index;
-                    output_index = points[next].point.output_index;
+                    origin = *(point2f *)&next_entry->point.point;
+                    sector = next_entry->node_index;
+                    output_index = next_entry->point.output_index;
                     next = index + 1;
                 }
             emit:

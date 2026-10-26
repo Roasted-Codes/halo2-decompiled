@@ -2586,6 +2586,9 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Short/word eligibility 537/537; short/word cache hit 534/534; sampled-transform,
 // inverse-rotation and both workspace names 530/530/530; inverse declared at sample
 // entry 530; Boolean success with live cache observations 535.
+// Round 129, live-cache graph: full-width order with long/bool/short/byte result
+// and short sample ordinal 542/535/542/573; with long sample ordinal
+// 570/559/570/573. Original order declarations, result and sample types restored.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
