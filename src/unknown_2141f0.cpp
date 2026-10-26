@@ -91,6 +91,8 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // Cursor/count while 469; unsigned cursor ordinal 367; native unsigned state 367; dependency file pointer 445; pointer plus while 479.
 // Dependency Boolean reduction 536; immutable terminal snapshot 367; header-copy case beside request-copy case 495; result-first declarations 367; byte cursor ordinal 367.
 // Paired dependency cursors 367; signed-word cursor ordinal 367; terminal memmove 568; separate name/priority locals 383; header failure-first result 430.
+// Priority word/byte 506/516; retained-cursor do 469; operation-group/reverse cases 479/504;
+// sole time-array traversal 415; staged size result on cursor body 448; checksum state first 367.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
