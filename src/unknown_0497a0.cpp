@@ -14,7 +14,7 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 599 (was 599): frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
+// score 594 (was 594): Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
 // Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
 // Earlier: frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
 // Earlier 647 from 647: frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
@@ -41,6 +41,9 @@
 // bool-shape-domain 633; word-shape-domain 645.
 // consumer-shape-wide-special 599; direct-primary-field-wide-special 662.
 // bool-shape-domain-wide-special 654; word-shape-domain-wide-special 642.
+// Round 162: Secondary shape null-first/present-first/zero-arm/present-arm forms
+// 676/671/594/676; reciprocal constant after the shape 679/672/596/678.
+// Original shape selection and reciprocal lifetime restored; frame 0x64 remains.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
