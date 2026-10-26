@@ -758,7 +758,7 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 185 (was 185): frame 0x98 agrees; decoded-kind width, scalar homes and callback setup differ.
+// score 185 (was 185): Frame 0x98 agrees; total/receiver/callback-index homes and native kind remain different.
 // Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
 // Native kind 211; role-named scalars 204; shared callback arm 222;
 // library descriptor/payload copies 204; pretested item while 220.
@@ -785,6 +785,9 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // callback-table-update-entry 219; count-home-names 185.
 // callback-table-count-home-names 251; update-entry-count-home-names 198.
 // callback-table-update-entry-count-home-names 219; table-before-item-publication 251.
+// Shared item/cleanup ordinal 185; with pretested items 222; case-local index 200;
+// case-local/pretested 266; native kind 203; native/pretested 217; native/case-local
+// 202; all three 217. Opening body restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {

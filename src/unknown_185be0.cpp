@@ -140,7 +140,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 985 (was 989): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
+// score 985 (was 985): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
 // frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
@@ -159,6 +159,9 @@ union s_185be7
 // 994; combined with promoted component 1010, word copy ordinal 989, input-first mask 1016 (fast).
 // Native flag/scalar/state-bool declarations 989/989/985; flag+scalar 989;
 // flag+bool/scalar+bool/all fields 985; all fields with promoted selected value 984.
+// First-mask byte/word index with long/byte/word copy indices: all six 1174;
+// shared byte/word ordinals 1174/1174. Native first indices lose useful expansion;
+// original long ordinals and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
