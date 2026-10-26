@@ -226,6 +226,13 @@ long g_55e6c0;
 // data/common after format 142 (both common-word forms lose matched callers);
 // primary format result 115; level parent/count before format 121/131;
 // data after primary format with early level parent 148. All publication forms restored.
+// incoming data home, delayed saves and level-header bias remain.
+// Earlier forms and observations:
+// Incoming data home, delayed saves and header bias still differ.
+// incoming data home, saved-register timing and level-header bias remain.
+// This round:
+// Unsigned offset/level/both 115/116/116; const byte count/output pointer 115/115;
+// paired/all reset chains 117/118; bounded level and paired chain 118.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {

@@ -380,6 +380,9 @@ __forceinline void function_183672(point3f *arg_0, point3f const *arg_1, __m128 
 
 // score 8 (was 8): the three values of the query loop are kept in the stack slots in the
 // opposite order.
+// First component/outer index/inner index spill cycle remains. Indexed second/first/both shape reads
+// fast 24/79/8; indexed second kind 24; both/second entry shape reads 135/135;
+// indexed second/both shape addresses 24/8. All new scores reduced; original frame and loops restored.
 // @retail 0x183670
 bool __stdcall function_183670(long component_a, long component_b, point3f *a, point3f *b, real *distance)
 {
@@ -527,6 +530,12 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Origin fields at uses 318 (three-count gain rejected); hit fields at publication 329; both 366;
 // first/second node at uses 379/357; byte/long classifier results 321/321;
 // classifier reference input 321. All existing input snapshots and helper contracts restored.
+// Component result 370; search index 338; property cursor 336; cursor result 338;
+// bounded search condition 327; output index homes 321; hit distance home 321;
+// component result with output homes 370. Original entry scan and scalar homes restored.
+// Separate root guards 321; exclusion equality first 324; direct key-clamp test 321;
+// publication/validity rejection guards 321/321; readonly instance transform 321;
+// immutable material receiver/short material output before plane 321/321. Original body restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

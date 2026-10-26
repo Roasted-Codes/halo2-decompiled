@@ -2400,20 +2400,23 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 344 (was 424): Frame 0x24 versus 0x28; early inverse save, local dimension homes and bitmap-call setup remain.
+// score 331 (was 344): frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
 // Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
 // Fast control 427; early fallback rectangles 438; early source rectangle 442; early reciprocals 439; blend-operation snapshot 438; late strength clamp removed 461 (fast).
 // Fast control 427; long pixel dimensions 433; short dimensions 456; simple combiner first 427; immutable bitmap views 427; explicit bitmap validity 432.
 // Height-first acquisition 427; paired dimensions 427; alpha clamp branches 427; combiner output branches 427; destination fallback first 348 fast, 344 plain kept.
+// Destination-first control 348 fast; direct inverse 335 fast, 331 plain kept;
+// captured inverse 335; direct inverse with width/height/both defaults 365/434/349;
+// captured inverse with both defaults 349; bounded dimension results 430;
+// entry dimension results 429. Only the own-address inverse alias is removed.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
     real strength, bool blend, bool inverse, bool alternate_target,
     bool screen_target, bool simple, bool preserve_alpha)
 {
-    bool const *inverse_reference = &inverse;
     if ((!g_4b99b0[0] && !g_4b99b0[1]) || strength < 0.0f) return;
     if (strength > 1.0f) strength = 1.0f;
     else if (!(strength > 0.0f)) return;
@@ -2437,8 +2440,8 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     else function_14bc0(*(short *)(g_4b99b0 + 0x34), 0, false);
     function_0222d0(D3DRS_COLORWRITEENABLE, 0x10101);
     function_0222d0(D3DRS_ALPHABLENDENABLE, 1);
-    function_0222d0(D3DRS_SRCBLEND, *inverse_reference ? 0x306 : 1);
-    function_0222d0(D3DRS_DESTBLEND, *inverse_reference ? 0 : 0x303);
+    function_0222d0(D3DRS_SRCBLEND, inverse ? 0x306 : 1);
+    function_0222d0(D3DRS_DESTBLEND, inverse ? 0 : 0x303);
     function_0222d0(D3DRS_BLENDOP, blend && alternate_target ? 0xf006 : 0x8006);
     function_0222d0(D3DRS_ALPHATESTENABLE, 0);
     function_0222d0(D3DRS_CULLMODE, 0);
@@ -2472,7 +2475,7 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
 #pragma inline_depth(255)
         g_484f68.PSConstant1[0] = 0xff;
         g_484f68.PSRGBInputs[0] = 0x8200211;
-        g_484f68.PSRGBOutputs[0] = *inverse_reference ? 0x800 : 0;
+        g_484f68.PSRGBOutputs[0] = inverse ? 0x800 : 0;
         g_484f68.PSConstant0[1] = function_131f40(strength, color);
         g_484f68.PSRGBInputs[1] = 0x8011811;
         g_484f68.PSRGBOutputs[1] = 0xcd;
@@ -2481,7 +2484,7 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
 #pragma inline_depth(0)
         g_484f68.PSFinalCombinerConstant0 = function_131fc0(alpha);
 #pragma inline_depth(255)
-        g_484f68.PSFinalCombinerInputsABCD = ((*inverse_reference ? 0x11 : 0x20) | 0xf00) << 16;
+        g_484f68.PSFinalCombinerInputsABCD = ((inverse ? 0x11 : 0x20) | 0xf00) << 16;
         g_484f68.PSFinalCombinerInputsEFG = ((blend ? 0 : 0x1d) | 0xc0d00) << 8;
     }
     else
@@ -2681,6 +2684,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Normalization before states/stages 508/429; complete scale prefix before states/stages 424/348;
 // bounds before states/stages 481/412; zero defaults before bounds 361; early normalized defaults 414;
 // only maximum before stages/states 424/418; maximum with late zero defaults/early bounds 424/425.
+// Native coordinate output 348; first/second/both corner-table loops 466/475/467;
+// native output with both loops 467; native corner input 561; corner input loops 560;
+// native corner and coordinate loops 560. Original helper and all eight calls restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
