@@ -63,6 +63,10 @@ struct s_11c1b0
 // Requested value before/after old index 50/50; early saved index after request
 // 128, request-first 128, false-before-save 130, false-before-request 130;
 // requested input with wide saved/current carriers 125/122. Separate indices/results retained.
+// One index variable 128 (every instruction as retail except its own slot: a variable takes the
+// argument's home only when defined after the argument's first read); validity bool first, one
+// or two variables 130/130, with the false result first 132; local copy of the requested index
+// read first 128.
 // @retail 0x11c1b0 standard
 bool __stdcall function_11c1b0(short arg_0, bool arg_1)
 {

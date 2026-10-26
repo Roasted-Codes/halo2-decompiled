@@ -2670,16 +2670,23 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 348 (was 348): Frame 0x58 agrees; stage constants/call convention and UV/trig homes still differ.
+// score 348 (was 348): frame 0x58 agrees; stage constants/call convention and scale/trig homes differ.
+// Earlier form: frame 0x58 agrees; stage-call convention and constants differ.
+// Byte stage 617; distinct second trig scalars 374; separate texture scales 348
+// (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
+// Earlier form: Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
+// Earlier form: Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
+// Frame 0x58 agrees; stage constants/call convention and UV/trig homes still differ.
 // Existing helper producers: x rotation 348; y rotation 424; both 464; x scaled 348;
 // y scaled 424; both scaled 464; both biased 465; output-first rotations 464. Original helper retained.
 // frame 0x58 agrees; stage-call convention and constants differ.
-// Byte stage 617; distinct second trig scalars 374; separate texture scales 348
-// (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
 // Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
 // Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
 // dimensions 460; long dimensions 478; word width 444; word height 430; height first 352; word dimensions height
 // first 460; long dimensions height first 478; word width height first 444.
+// Normalization before states/stages 508/429; complete scale prefix before states/stages 424/348;
+// bounds before states/stages 481/412; zero defaults before bounds 361; early normalized defaults 414;
+// only maximum before stages/states 424/418; maximum with late zero defaults/early bounds 424/425.
 // Native coordinate output 348; first/second/both corner-table loops 466/475/467;
 // native output with both loops 467; native corner input 561; corner input loops 560;
 // native corner and coordinate loops 560. Original helper and all eight calls restored.
@@ -3015,7 +3022,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // 1084; word color input 971; word alpha input 1181 at retail length.
 // Capability declaration/name order 971/971; late rescaling flag 971; native color aggregates 971;
 // conditional-update shared clamp 1207 (fast). Original body and shared clamp retained.
-// score 971 (was 971): round 106: Frame 0x2c agrees; capability/save and state expansion remain. Packed range clamp 1199; early exponent lifetime 1201; shared gain divisor 1194; late input selectors 1204; late clipped width 970 (one-point gain rejected).
+// round 106: Frame 0x2c agrees; capability/save and state expansion remain. Packed range clamp 1199; early exponent lifetime 1201; shared gain divisor 1194; late input selectors 1204; late clipped width 970 (one-point gain rejected).
+// Negative permission at use 1187 (retail length); small permission at use 1192; both at use 1190;
+// native permission bit mask 1183; shared clamp early returns 971.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
@@ -3288,6 +3297,10 @@ failure:
 
 dword g_4b8424;
 void function_27aa0();
+// score 5 (was 5): opening projection remains x/y/z with direction x first.
+// Z/y/x with all/first/third k copy-then-multiply 101/101/101; buffer after projection 16;
+// input view after projection 16; early buffer with late input view 16; early dot declaration 16;
+// first k-i-j row 23; multi-use first-scale local 101.
 // score 5 (was 16): retail adds the dot product's terms z, y, x and loads the
 // position's x before the direction's; here x, y, z with the direction's x
 // first. Tried: the terms z, y, x 16 (the k products then copy the scale);

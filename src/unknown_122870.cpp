@@ -440,6 +440,10 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // Further trials: weight after entry/map/menu query 45/63/81;
 // accumulation after entry/map/menu query 136/135/136;
 // both scalars after map/menu query 148/148.
+// Helper writing its own result local and copying it out (direct or kept caller copies) 206/206,
+// frame 0x1c; one scratch for the three queries 206; one scratch or scoped scratches with the
+// helper plain inline 206/206. Any shared scratch slot also drops the non-call-path scratch
+// stores and the reload.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {
