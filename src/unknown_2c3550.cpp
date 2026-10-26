@@ -601,7 +601,7 @@ void obstacle_list_group(s_obstacle_list *obstacles, real radius);
 
 bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center, long object_index, real radius);
 
-// score 735 (was 742): frame 0x1f8c versus 0x1f88; result/path pointer and obstacle/search/step homes differ.
+// score 735 (was 735): frame 0x1f8c versus 0x1f88; result/path pointer and obstacle/search/step homes differ.
 // Short/signed byte result 740/788; long/byte inserted count 730/741; word flags 742.
 // Long inserted count has retail frame but 2965 bytes; native reverse index 770/2925 bytes; original length preserved.
 // Round 121: Byte last-step predicate 735 kept; insertion-only/all avoidance storage scopes 742/763; Boolean enable bit 740; word retry 740; bit plus retry 742; byte-last plus bit/retry/both 735/737/734. Extra one-point combination rejected.
@@ -610,6 +610,7 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Original complete body and existing insertion helper call restored.
 // Late constant success 771; early completion observation 740; unsigned-word input ordinal 775;
 // word truncation result 754; unsigned-word inserted count 742 (fast). Two-point gain rejected.
+// Round 155: double radius/height and short completion storage, then unsigned flags with double height: radius 777; height 728; radius height 797; completion 757; radius completion 795; height completion 758; radius height completion 769; height native mask 728. Double-height forms add qword x87 traffic and frame 0x1f98; all restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,
