@@ -90,6 +90,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // send bits 547; send field order 545; routing flag publication last 545; cache from produced send
 // fields 545; direct output level 545. One-point reductions dropped; all body/type/helper forms
 // restored. Frame 0x22c versus 0x224 and stream/gain/math homes remain.
+// Native sixteen-byte speaker copy 529 fast; distinct scalar math names 532; early selected gain
+// 577; copy/names 529; copy/early gain 561; names/early gain 577; all three 561;
+// send-scope zero energy 533 (reduced control 532). Three-point reductions rejected.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)
