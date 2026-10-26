@@ -133,7 +133,7 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 683 (was 687): Frame 0x4820, clear scheduling and metadata cursor agree; cluster-index EDI and palette carriers differ.
+// score 616 (was 683): Frame 0x4820, clears, metadata cursor and cluster EDI agree; palette/accumulator scheduling differ.
 // Earlier: Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
 // Earlier at 692: Frame 0x4820 agrees; clear scheduling and output cursor +0x10 versus +8
 // Frame 0x4820 agrees; clear setup and +0x10/+8 output induction remain.
@@ -162,6 +162,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // Single-caller source writer 682/681/693/693/684/684; ordinary writer 682/684, all reverted.
 // Round 155: cluster-index snapshot/source-record/byte-state and all four combinations 683 each;
 // all three with readonly source record 683. Native metadata cursor agrees at +0x1838.
+// Consistent palette slot char/short/long, mutable or readonly record: 705/616/713;
+// inverse weighted-state with char/long palette slot: 705/713 (fast).
+// One signed-short palette observation retained at all five uses: 616 plain, 3839/3817 bytes.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {
@@ -199,13 +202,14 @@ void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_
 		local_12->source_kind = 0;
 		local_12->source_index = NONE;
 		local_12->source_weight = 0.0f;
-		if (*(char *)(local_13 + 0x6f) != NONE)
+		short palette_slot = *(char *)(local_13 + 0x6f);
+		if (palette_slot != NONE)
 		{
 			s_12eb00 *local_18 = NULL;
 			if (local_12->previous_index != NONE)
 				local_18 = &local_1[local_12->previous_index];
-			else if (g_4e0350 && *(char *)(local_13 + 0x6f) >= 0 && *(char *)(local_13 + 0x6f) < *(long *)((byte *)g_4e0350 + 0x340))
-				local_18 = (s_12eb00 *)(*(byte **)((byte *)g_4e0350 + 0x344) + *(char *)(local_13 + 0x6f) * 0xf4);
+			else if (g_4e0350 && palette_slot >= 0 && palette_slot < *(long *)((byte *)g_4e0350 + 0x340))
+				local_18 = (s_12eb00 *)(*(byte **)((byte *)g_4e0350 + 0x344) + palette_slot * 0xf4);
 			if (local_18)
 			{
 				real const *local_19 = (real const *)local_18;
@@ -235,7 +239,7 @@ void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_
 					if (local_19[0x38] > 0.0f)
 						function_12efb5(&local_9, local_19 + 0x38, local_21);
 					local_12->source_kind = 2;
-					local_12->source_index = *(char *)(local_13 + 0x6f);
+					local_12->source_index = palette_slot;
 					local_12->source_weight = local_21;
 				}
 			}

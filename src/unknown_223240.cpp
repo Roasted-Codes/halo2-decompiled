@@ -108,6 +108,9 @@ void function_2232a0(void)
 // unsigned native layout 151; immutable native source count 151. Wide source count worsens aligned rows.
 // Round 155: post-traversal terminal index from count as long/dword/short/word/byte
 // 159/159/156/156/157; from completed ordinal as long/word/short 153/150/150. One-point gains rejected.
+// Whole countdown placements before count/layout/scan, first/second phases
+// 01/02/10/11/12/20/21/22: 185/159/185/190/190/159/190/164 (fast).
+// Original timer order, count/layout producers, shared initializer and body restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
