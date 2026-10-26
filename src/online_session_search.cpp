@@ -337,7 +337,8 @@ static inline void release_block(void *block, long *info)
 
 /* stops a session search: cancels its online task and its QoS lookups and
    releases its buffers */
-// score 87 (was 87): extra save, sentinel/zero and rolled handle loop differ; existing local-output release
+// score 87 (was 87): extra save, sentinel/zero and rolled handle loop remain.
+// Earlier: extra save, sentinel/zero and rolled handle loop differ; existing local-output release
 // for buffer masks 1/2/4/3/5/6/7, then shared size output: 96, 96, 96, 92, 96, 96, 92, 96.
 // Task handle 91; two query-handle snapshots 91; plain handle-table loop 87;
 // first/results/seen buffer snapshots 106/105/98; all buffers 116; table plus buffers 113.
@@ -346,6 +347,8 @@ static inline void release_block(void *block, long *info)
 // unsigned counter 87; word counter 87; counted handle value 87; pointer task lifetime 91.
 // Round 167: task/handle postconditions 87/87; first/all buffer postconditions 86/87;
 // task+handles/handles+buffers/all/task+buffers 87/87/87/87. Original body restored.
+// Exact handle endpoint/short exact/byte exact/signed-byte bound 87/87/87/87;
+// direct fixed do loop/byte do loop 87/87; existing release forced/implicit inline 87/87.
 // @retail 0x90c80
 void __stdcall function_090c80(byte *p)
 {
