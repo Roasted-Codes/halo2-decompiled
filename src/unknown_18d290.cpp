@@ -39,7 +39,6 @@ static inline s_looping_sound_datum *looping_sound_get(long index)
 // @retail 0x18d290
 void function_18d290(long looping_sound_index, long tag_index)
 {
-	long local_0 = *(long const volatile *)&looping_sound_index;
 	long index = function_18d1c0(tag_index);
 
 	if (index != NONE)
@@ -50,9 +49,9 @@ void function_18d290(long looping_sound_index, long tag_index)
 			looping_sound->flag5 = false;
 		}
 	}
-	if (local_0 != NONE)
+	if (looping_sound_index != NONE)
 	{
-		s_looping_sound_datum *looping_sound = looping_sound_get(local_0);
+		s_looping_sound_datum *looping_sound = (s_looping_sound_datum *)g_4ed28c->data + (looping_sound_index & 0xffff);
 		if (looping_sound->tag_index == tag_index)
 		{
 			looping_sound->flag5 = true;
