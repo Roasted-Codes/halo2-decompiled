@@ -170,6 +170,9 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // planar and magnitude 419; cross and magnitude 453; all three 455; point offsets 418. All restored.
 // Edge-test / iterator / passability call boundaries, ordinary inline versus noinline,
 // eight combinations 419/435/460/460/435/435/460/460. All contracts and bodies restored.
+// Complete endpoint stages 421; planar sum accumulator 421; normal-first products 419;
+// stages with accumulator / normal-first products 421/421; named completed projection 421;
+// stages with forced planar expansion 421; stages with native planar memcpy 483. All restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

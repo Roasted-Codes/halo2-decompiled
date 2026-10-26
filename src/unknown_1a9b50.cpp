@@ -453,6 +453,9 @@ extern point2f *g_468778;
 // state plus rate 403f; all three 401f; actual distance value 403f.
 // Early actor acquisition with the new unit/state/rate/all-three/distance values
 // 395/424/406/410/410f. All native scalar captures and lookup changes restored.
+// Later false default 409; rejected-arm false default 440; admission result 432;
+// complete buffer names 375; direction names 375; earlier magnitude storage/name 375/375;
+// later default with complete buffer names 409. Early actor/settings/prop homes remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -659,6 +662,9 @@ static __forceinline long real_to_long(real value);
 // value alone/with distance/with rate/with both 516/575/565/586; complete
 // observations plus paired query names 586. Opening 0x58 frame/body restored;
 // early rejection and magnitude/object/query homes remain.
+// Object velocity before magnitude / after weight / after normalization 384/445/465;
+// initialized distinct query speed / flight output / both outputs 453/452/478;
+// distinct speed or flight output with earlier object receiver 455/455. Two-count gain rejected.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
