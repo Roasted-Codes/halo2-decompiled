@@ -723,7 +723,8 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     long arg_2, long arg_3, long arg_4, bool arg_5, bool arg_6, bool arg_7,
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
-// score 87 (was 95): the builder now gets retail's values (0xc0 bit 8 as its first flag, the
+// score 78 (was 78): Frame 0x6c and builder setup agree; literal-one test allocation, separate result mask and final byte stores remain.
+// Earlier: the builder now gets retail's values (0xc0 bit 8 as its first flag, the
 // 0x12c bit 5 as its second; they were in the first and fourth places) and the parent handle is
 // chosen in an if/else. Left: retail loads the definition word with `mov al, 1; test al, cl`,
 // tests the result bit and its copy separately (`test cl, 1`, then `mov al, cl; and al, 1`),
@@ -746,7 +747,9 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // shared counter and output decision 123; shared counter carrier 95; byte with shared counter 95;
 // reversed adjacent output publications 95; final native word 102.
 
-// score 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// Previous forms at 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// score 95 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.
@@ -770,6 +773,15 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // 95; final native word 102. Word/Boolean allocation and final store width remain.
 // Direct builder handle/flag/both 127/129/127; state before counters 114; direct handle and earlier state
 // 128; supported/unsupported/both increments before dispatch 99/107/104. All restored.
+// Entry and builder setup agree; definition-bit test, separate result mask and final state-byte stores remain.
+// metadata-flags 89; result-byte 87.
+// metadata-flags-result-byte 89; independent-output-tests 78.
+// metadata-flags-independent-output-tests 99; result-byte-independent-output-tests 78.
+// metadata-flags-result-byte-independent-output-tests 99; metadata-before-builder 114.
+// bool-result 93; byte-state 96.
+// bool-result-byte-state 111; word-result 84.
+// word-result-byte-state 102; byte-state-shifted-scale 96.
+// bool-result-byte-state-shifted-scale 111; word-result-byte-state-shifted-scale 102.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -826,15 +838,13 @@ void __stdcall function_118b80(long arg_0)
                 *((byte *)local_1 + 0x131) = (byte)local_15;
             }
             if (local_11.field_4 & 1)
-            {
                 *((byte *)local_1 + 0x12d) |= 1;
-                *((byte *)local_1 + 0x12c) |= 0x80;
-            }
             else
-            {
                 *((byte *)local_1 + 0x12d) &= ~1;
+            if (local_11.field_4 & 1)
+                *((byte *)local_1 + 0x12c) |= 0x80;
+            else
                 *((byte *)local_1 + 0x12c) &= ~0x80;
-            }
             real threshold_scale = (*(dword *)local_12 & 8) ? 3.0f : 1.0f;
             if (TEST_FIELD_BIT(local_1->flags.flag5))
             {
@@ -1112,6 +1122,10 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // absent-parent first 94; absent-parent with byte force 94. The single-use word carrier is rejected unless exact.
 // Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
 // each; conditional orientation success 112; short activity 168.
+// Squared length in i, j, k order, through the shared squared-length or dot helper 94 each;
+// a vector3f field at 0x138 of the output read directly 92 (retail's k, j, i loads); with a
+// word force result 14 (the rest is the force push and the MOV/LEA order). Named output, up and
+// forward pointers 94/92 with the field.
 // Word force with ordered squares/native publication/output receiver 14/16/16; squares and
 // publication/squares and output/output and publication 14/14/16; all three 14; ordered squares with final
 // mask setter 14. Changed single-use word carrier is exact-only; all restored.

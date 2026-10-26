@@ -167,7 +167,12 @@ static __forceinline real avoidance_normalize2d(point2f *direction)
 /* adds a node at the point, passing the obstacle on the side, unless it
    leads back around an obstacle on its way; returns its index or NONE */
 // score 92 (was 92): the scaled components are kept in different registers and the length is
-// squared and summed in a different order.
+// squared and summed in a different order. Retail loads y into XMM0 before the square root and
+// keeps `y * inverse` and `other.y * y` in source operand order; ours copies the register
+// operand and multiplies by memory. The compile-only build gives ours for every helper form.
+// Products x*inv/inv*y 92; compound scaling 92; tiny case first with one return 92; scalar
+// direction locals 165; y scaled first 93; helper reads both components first 156; dot test
+// through the node array 153; zero on the left of the dot test 92.
 // @retail 0x2c3680
 short avoidance_add_node(s_avoidance_search *search, point2f const *point, bool side, long value08, short obstacle,
 	short value1a, real cost, short parent)
@@ -610,6 +615,7 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Original complete body and existing insertion helper call restored.
 // Late constant success 771; early completion observation 740; unsigned-word input ordinal 775;
 // word truncation result 754; unsigned-word inserted count 742 (fast). Two-point gain rejected.
+// Round 155: double radius/height and short completion storage, then unsigned flags with double height: radius 777; height 728; radius height 797; completion 757; radius completion 795; height completion 758; radius height completion 769; height native mask 728. Double-height forms add qword x87 traffic and frame 0x1f98; all restored.
 // Settings mask/cache/both at uses 735/736/736; all five forward obstacle indices 711;
 // byte truncation 735; mask with indices 711; cache with indices 719; all observations/indices/byte 719.
 // Native index in obstacle-transform/blocking-transform/retry/failure/ignored loops alone

@@ -319,7 +319,12 @@ void function_f0fd0(long vehicle_index, bool set);
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 // score 123 (was 123): our frame is eight bytes smaller and the base pointer is kept in EDI where
-// retail keeps it in ECX.
+// retail keeps it in ECX. Retail iterates with the four-field datum iterator (data and index stored,
+// the datum index kept in EDI), snapshots the high water per search and computes the element from a
+// second spilled copy of the pool. Shared step with/without the barrier 162/152; datum iterator 152
+// (frame 0x10); plus a pool local for the iterator and release 150 (frame 0x14); iterator from the
+// global, local only for the release 127; that local assigned after the iterator 124 (retail's
+// prologue; retail reads the copy for the element and releases through the global).
 // @retail 0x1fb510
 void function_1fb510(void)
 {

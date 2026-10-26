@@ -939,6 +939,9 @@ bool __stdcall game_variants_received(s_pending_message_header *header)
 // prior-result expression 3; immutable start tick 3; allocator pointer name 3.
 // _ReadWriteBarrier (as 0x194260 has it) moves the zero xor after the pushes: after
 // the result 4; before the result 6; in the allocator before the counter read 4.
+// condition-declared buffer 3; assignment condition 3; immutable buffer 3;
+// split buffer assignment 3; nested buffer scope 3; cleanup goto 3;
+// buffer-guarded return 56; named write result 3; byte result 99.
 // @retail 0x194160
 bool __stdcall game_variants_retry(s_pending_message_header *header)
 {

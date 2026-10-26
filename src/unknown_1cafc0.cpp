@@ -562,6 +562,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // forms 518/499/546; mutable result fields 546; shared query workspace 597. Frame remains eight in separate-copy forms.
 // Primary/fallback/both library result publication 415/431/483; name library copy 399;
 // complete library publication 483; unstreamed continue 399; leaf inline/automatic 1622/1622.
+// Round 148: Primary failure-first 584; inheritance/urgent bound snapshots 418/487; failure-first with
+// inheritance/urgent/both 567/556/555; both bounds 429; flags-first fallback guard 402. Bound-only locals fail
+// their exact-match requirement. Frame eight versus twelve and hidden-result homes remain.
 // Round 317: Primary/fallback/both const native query plus immediate test 415/431/483; both mutable 483; reused existing identifier 590; entry primary/fallback/both query declarations 590/571/590.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,

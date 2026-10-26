@@ -313,6 +313,12 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 // Tried additionally: call-first logical accumulation 191, compound accumulation 197, conditional
 // accumulation 215, failure result 124, named cursors 115, named cursors/logical accumulation 191,
 // named helper inputs 115, named cursors/failure result 124; original body restored at 115.
+// Actual invalid counts: inherited/while/for/early cursor steps 171/212/213/211;
+// actual valid counts with visited-count comparison 194/211/212/212. Items/data
+// validation carriers and loop-entry reload remain; opening body and helper restored.
+// Direct case scopes in validation/chain/notify, chain/validation/notify, notify/validation/chain,
+// and notify/chain/validation orders 115/162/212/186; ordinary inline producer with those orders
+// 115/162/212/186. Existing dispatch and producer restored.
 // Consistent existing helper input orders 115 (five forms); entry validity 143;
 // entry cursor declarations 115; both entry storage lifetimes 143. Original body restored.
 // Plain pretested for with both/size/handle/no helper producers 195,210,212,212; corresponding while

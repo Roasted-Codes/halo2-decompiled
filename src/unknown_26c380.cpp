@@ -143,7 +143,10 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 	return success;
 }
 
-// score 419 (was 419): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
+// score 419 (was 419): Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit tails remain.
+// Earlier 419 (was 419): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
+// Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct output tails remain.
+// Earlier: frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
 // tails remain; tried late first independent normal 490; late first native result word 438; native edge
 // orientation 438; existing planar product inline 435; late first unsigned count 435.
 // frame 0x5c versus 0x64; normal, result/first/hit homes and exit tails differ.
@@ -161,6 +164,10 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Existing point producer output return alone/with forced point expansion/with magnitude/with point and
 // magnitude/with cross/with point and cross/with magnitude and cross/with all three 419 each; every sibling
 // retains its preview baseline. Original helpers restored.
+// Existing planar point/vector and magnitude input reference contracts, singly and in all seven combinations, 419 each;
+// existing cross-producer output reference 419. Original helpers and body restored.
+// Complete named products: planar/cross/magnitude 421/455/421; planar and cross 453;
+// planar and magnitude 419; cross and magnitude 453; all three 455; point offsets 418. All restored.
 // Edge-test / iterator / passability call boundaries, ordinary inline versus noinline,
 // eight combinations 419/435/460/460/435/435/460/460. All contracts and bodies restored.
 // @retail 0x26c590

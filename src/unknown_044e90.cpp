@@ -3,6 +3,7 @@
 #include "normalize3d.h"
 // score 434 (was 434): Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
 
+// score 434 (was 434): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // Earlier 434 (was 434): Entry/tag-table registers and plane/list homes remain.
 // score 434 (was 434): aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
 // Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
@@ -10,7 +11,8 @@
 // Entry/tag-table registers and plane/list homes remain.
 // Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
+// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
@@ -22,6 +24,9 @@
 // 436 (plain).
 // Entry-data cursor 438; selection flags 434; query count 438; inverse per frustum 525;
 // captured frustum/view bounds 481/483; entry data plus inverse 525; complete matrix value 527.
+// Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
+// 436; query result with products 440; const query 434; query result/products with const query
+// 438/436. All product regroupings restored.
 // Destination cursor 444; both plane cursors 484; destination/both with full publication
 // 444/444; destination/both with outer plane 444/484; destination/both with normal declaration 444/484.
 // Native input plane subobjects 468; separate shared-scaler normal output 476;
@@ -34,6 +39,9 @@
 // body unchanged.
 // Signed 32-bit flags 434; named section/both indices 455/455; structure-first/instance-first/
 // combined selection 453/434/453; native normal/distance publication 441; source-plane cursor 445.
+// Round 171 reduced control 434: direct entry 472; output planes 459; live transform pointer 434;
+// entry/output planes 449; entry/live transform 472; planes/live transform 459; all three boundaries 449;
+// entry/live selection flags 575.
 // Round 317: Native rotation result 472; native center initializer 434; both 472; member alignment 435; aligned rotation/center/both 473/435/473; aligned rotation with shared normal scale 473. Header fully restored.
 // Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
 // 436; query result with products 440; const query 434; query result/products with const query

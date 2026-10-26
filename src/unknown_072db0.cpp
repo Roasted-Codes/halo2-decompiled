@@ -1319,10 +1319,12 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 202): Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
+// score 202 (was 202): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
+// Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
 // Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 
-// score 202 (was 202): Key/statistic homes, cursor and grouped team dispatch remain; live
+// score 202 (was 202): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
+// Earlier: Key/statistic homes, cursor and grouped team dispatch remain; live
 // key/player/team/both skills 348/320/199/317; key plus player/team/both 379/374/388; player-only
 // key phase 266. Three-point team-read gain rejected.
 // Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
@@ -1362,12 +1364,19 @@ struct s_rating_summary
 // Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.
 // Summary count/lookup/formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three 316. Full-width character retained at 1167/1212 after plain whole-image confirmation.
+// Round 148: Existing bound helper in bounded for, caller ordinary/force-inline/inline 323/323/323; direct
+// bound-helper break 224; native player pointer 325; whole summary clear 353; outer summary workspace 323;
+// native player plus summary clear 353; definition-side force-inline with bounded for/direct break 323/216.
+// Key/statistic homes and helper expansion remain.
 // Round 317: Late player/team/both statistic producers 199/207/204; late player plus native indexing 199; ascending/descending reads on late player 203/201; both late with ascending/native indexing 208/204. On late player: key first 199; shared carrier names 199; word character 203; positive character-budget for 320. Three-point reduction excluded.
 // Player-change/rating/group-add/group-set inline and noinline call declarations 202 each
 // (eight forms); all declarations restored; key/statistic homes and cursor remain.
 // Signed full-width character 203; entry query-table workspace 202; test-derived translated
 // character 264; signed character plus query workspace 203; signed/entry/both with
 // translation 264/264/264; entry name-capacity workspace 202 (fast). All restored.
+// Native unsigned masked statistics 202; shared player/team ordinal 220 (key home recovered);
+// contiguous summary prefix fill 217; counts/ordinal 220; counts/prefix 217; ordinal/prefix 214;
+// all three 214; read-only query table 202.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
