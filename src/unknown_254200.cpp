@@ -185,7 +185,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 237 (was 276): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// score 157 (was 237): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Native color value 246 fast / 237 plain; value half-size 276; replicated alpha 349;
 // alpha after clear 265; second coordinate C entry 403; color with later alpha 252;
 // memcpy color 246. Only the native color value is kept.
@@ -198,6 +198,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // shared resource pointer 511; dword alpha carrier 276.
 // First coordinate C entry 373; folded half-span with inline reservations 276;
 // delayed lower coordinate 387; delayed upper coordinate 384; lower initialized first 359.
+// Shared color output 246; pointer/helper 276 (exact-only); consumer query/helper 305; byte alpha 166 fast / 157 plain; SDK packing 170; texture-mode-first stores 246 (fast control 246).
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
@@ -308,7 +309,7 @@ void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 			function_0224f0(0, D3DTSS_ALPHAKILL, 0);
 			function_0222d0((D3DRENDERSTATETYPE)0x3e, 1);
 			function_0222d0((D3DRENDERSTATETYPE)0x3f, 0x303);
-			dword local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
+			byte local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
 			memset(&g_484f68, 0, sizeof(g_484f68));
 			g_484f68.PSConstant0[0] = (((((dword)local_6 << 8) | local_6) << 8 | local_6) << 8) | local_6;
 			g_484f68.PSCombinerCount = 1;

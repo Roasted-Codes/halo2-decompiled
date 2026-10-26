@@ -270,6 +270,7 @@ public:
 // output center subobject 194; shared traversal handle 194.
 // Origin memcpy 170 (same held code); two-use origin scalars 205; shared magnitude 194;
 // expansion product 194; unsigned first handle 194.
+// Bounds-after-displacement name 194; displacement-before-bounds name 194; head-before-ordinal 194; outer cleanup handle 194; complete magnitude before selector 194 (exact-only).
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

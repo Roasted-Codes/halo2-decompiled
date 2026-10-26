@@ -444,6 +444,7 @@ void function_1537f0(s_profile_record *record);
 // Contiguous tail clear with sentinel restored 73; identity after record helper 122;
 // fixed do loop with record helper 122; tail clear plus late identity 73;
 // function-scope identity with record helper 122 (fast); tail clear 73 plain.
+// Immutable identity with tail clear 74; source-before-identity names 73; source-only outer scope 73; identity between initializer and tail 73; tail-clear entry-end traversal 94.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -553,6 +554,7 @@ bool function_7fb50(void)
 // names 132.
 // Unsigned short ordinal 111; selected property pointer 111; early remaining-property accounting 137; scalar while 111; cache scan while 111 (fast, retained values-cursor form).
 // Paired source/destination cursors 129; direct property identifier 116; paired cursors with native ordinal 130; complete property-array indexing 152; short-ordinal advancing buffer 116.
+// Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -755,6 +757,7 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // global-index adjustment 358.
 // Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
 // Paired signed min/max 302; independent bound overrides 362; forward entry cursor 369; reverse entry cursor 394; both entry cursors 406.
+// Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
