@@ -56,6 +56,12 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // 164; ineligible-first branch 171.
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive
 // continue 164; direct datum 164; unsigned successor 164.
+// Native record iterator 222; long partition index 163; full actor view 164; outer actor workspace 164; ineligible-first branch 171.
+// Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive continue 164; direct datum 164; unsigned successor 164.
+// score 164 (was 164): traversal phase lifetimes do not recover separate pool
+// storage or the actor successor register. Squad/actor/both phase scopes 164/164/164;
+// squad/both scopes with actor for-loop 164/164; squad/both scopes with read-only
+// first acquisition 164/164; both scopes with read-only acquisition and for-loop 164.
 // Actor-next call alone 234; unsigned-word squad index 230; iterator index initialized first 164;
 // active count before timestamp 166; nested source-squad validation 164; per-squad pool observation
 // 231.

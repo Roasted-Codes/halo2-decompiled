@@ -160,6 +160,9 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 // the second unrolled z store and receiver reload are swapped.
 // Scalar memcpy x/y/z 2/2/2; all-coordinate memcpy/memmove 424/375;
 // scalar vector intrinsics z/all 411/414; tag memcpy 2.
+// the second unrolled third-coordinate store and saved receiver reload remain exchanged.
+// input reference 2; input pointer 2; long input 2; remainder lane 178; quotient block 174;
+// quotient and remainder 242; source field bindings 2; output return 2.
 // @retail 0x2fd430
 void convex_vertices_2fd260::function_2fd430(unsigned short const *indices, int count, __m128 *vertices) const
 {

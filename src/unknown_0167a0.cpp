@@ -76,19 +76,19 @@ PRIVATE inline byte const *material_parameters(long tag)
 
 // score 153 (was 153): logarithm factor width and restore allocation remain; frame and numeric/reset sequence agree.
 // logarithm width/reset schedule and restore/final pointer allocation;
+// frame and numeric/reset sequence agree; logarithm factor width and restore allocation differ.
 // final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
 // promoted inverse 248; float consistency 306; coordinated texture inputs 167.
 // Typed numeric state fields 167; typed pointer fields 181; full state view 181;
 // force-inline material lookup 167; global-first mask unions on full view 181.
-// frame/entry agree; logarithm width, reset and restore scheduling differ.
 // Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
 // Logarithm width and reset/restore scheduling remain;
 // rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
 // record reload after render call 192; raw global-first unions 167.
 // Frame and entry agree; logarithm operand width/reset and restore allocation
 // differ. Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
+// Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
 // record 167; conditional reciprocal 167 (fast).
-// logarithm width and reset/restore scheduling remain;
 // early dirty mask, update byte or late counter pair each 296; first published range 167;
 // second published range 187.
 // logarithm width/reset and restore allocation remain;
@@ -105,6 +105,10 @@ PRIVATE inline byte const *material_parameters(long tag)
 // unqualified float-input logarithm 152; reciprocal default first 157.
 // Float-input logarithm with native descriptors/first range/second range 152/152/184;
 // with first mask pair/mask cursor/both 151/151/151 (two-point gains excluded).
+// Dirty-word library clear 153 recovers numeric/reset scheduling;
+// Native entry/chain/both descriptors,
+// First/second/both native mask loops 152/180/180; published table/record/both field lifetimes
+// 289/283/307; native signed packed carriers 153; signed carriers with table field 289.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -338,6 +342,9 @@ struct s_2f6b0_point
 // native step 29; both const 29; early horizontal origin 29.
 // Horizontal pipeline 102; vertical step first 102; vertical coordinates first 38; shared column/row/both
 // 29/29/29; horizontal origin consumed 78; vertical pipeline 100. Entry body restored.
+// score 29 (was 29): initial rectangle load order and origin/step registers remain.
+// Full/bounds/both library copies 29/29/29; native edge construction 129;
+// snapshot vertical origin 105; recovered-frame rectangle names 29; short horizontal origin 113; native step construction 29.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)
@@ -581,6 +588,10 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 // Zero-angle defaults on their own branch 68; shared rounded angle 166;
 // basis before translation 168; role-named workspaces 130; value-initialized matrix 133.
 // Earlier at 68: frame agrees; zero/scale and trig live ranges still differ.
+// score 68 (was 68): zero/scale/trigonometric allocation remains.
+// Sine/cosine default alone 69/70; defaults after clear/split phases 131/131;
+// Y-scale first 69; clear before scales 68; planar/complete output rows first 99/150.
+// frame agrees; zero/scale and trig live ranges still differ.
 // Small-angle first 69; cosine first 68; trig declarations first 68; late matrix clear 75;
 // late scales 172; shared cosine complement 68; scales at use 135; shared Y scale 73.
 // Raw angle early/late/const 177/177/177; double sine/cosine/both APIs 68/68/68; entry success result 68;

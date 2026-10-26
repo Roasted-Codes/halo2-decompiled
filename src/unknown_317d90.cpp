@@ -125,6 +125,9 @@ public:
 // List before reset 69; index before list 64; both 81; reset and scan order 70; reset/full-width sentinel 202;
 // reset/ordered wide 203; early-index/ordered wide 198; all initialization boundaries 203. Narrow-assignment
 // width diagnostics were exact-only.
+// score 59 (was 59): initial count load and full-width scan allocation remain.
+// Short while/consuming scan/counter-first declarations 59/62/60; list member initialization 59;
+// old-index append 243; full-width old-index append 248; initialized full-width append 248; counter-first append 243.
 // @retail 0x317d90
 void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 {

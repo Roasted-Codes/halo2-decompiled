@@ -371,7 +371,8 @@ void function_1e6b00(long player_index, s_request_source *source)
 	}
 }
 
-// score 51 (was 57): retail keeps the index in EBX and the mask in EBP (ours
+// score 51 (was 51): index EBX/mask EBP priority, repeated output load and low/high store order remain.
+// retail keeps the index in EBX and the mask in EBP (ours
 // the other way round), loads the output pointer once above the last test and
 // stores the low flag word first in the inlined update. Without the read
 // barrier: high word through the pair and low word through the state array 51
@@ -382,6 +383,12 @@ void function_1e6b00(long player_index, s_request_source *source)
 // score 51 (was 51): index/mask roles and the output join remain; tested completion
 // with separate/state/ticks/both stores 116/112/114/120; shared setter variants
 // 83/111/108/109. Original early-result body restored.
+// index/mask registers and the repeated output load remain.
+// Declared paired-word view with mixed/pair/array/mirrored reads 51/77/80/77;
+// paired snapshot before/after pointer lifetime and low-first snapshot 115/115/115;
+// paired snapshot with one shifted mask 85.
+// Early dependency predicate, native signed ordinal, both, native recursive slot, predicate/slot all 51;
+// request value advanced in place alone/with native ordinal 58/58; adjacent recursive ordinal 51.
 // @retail 0x1e8d80
 bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_entry_420 *entry, s_request_transition *output)
 {

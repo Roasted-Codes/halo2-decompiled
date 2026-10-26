@@ -1479,6 +1479,12 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 // long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
 // index input with long result 46; existing class operation 169; priority difference 71;
 // class-index input with retained other identifier 44 (two-point gain excluded).
+// frame and length agree; lookup scheduling, retained identifier and return tails differ.
+// Other identifier retained 44; both identifiers 44; normalized slots with other identifier 44;
+// this priority first 87; direct comparison results 107; short priorities 45;
+// integer result 123; this definition read at its priority use 94.
+// Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
+// readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
@@ -3297,6 +3303,8 @@ void __stdcall function_1264c0(dword arg_0);
 // Earlier 87 (from 87): reconstruction expansion and signed-clock wait remain; shared fade with
 // initial/next/both valid-search conditionals 98/103/113; initial/next/both result arms 98/103/113;
 // both admissions with native tick/index 113/113.
+// Masked slot copied before the fade call 83 at retail length (a one-use copy, not kept);
+// next slot 86; with both inline lookups 111/117, initial inline lookup 90/96, next inline lookup 101/104.
 // @retail 0x1257b0
 void function_1257b0(void)
 {

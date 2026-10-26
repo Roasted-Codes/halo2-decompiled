@@ -117,6 +117,10 @@ struct s_cache_property_record
 // Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
 // short property ordinal 114; ordinal names 113; early four-property accounting 109 kept;
 // split first/three accounting 109. Reported length is now 352/352.
+// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// Entry cursor 125; property cursor 135;
+// Count-indexed record/buffer/both outputs 129/113/128; scalar-identifier induction 113;
+// identifier with record/buffer/both indices 114/114/113 (each 352 bytes); shared final total 151.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,

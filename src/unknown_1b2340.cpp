@@ -276,6 +276,11 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 	return true;
 }
 
+// score 66 (was 66): frame 0x14 versus 0x10; early slot EBX and rounding scratch reuse differ.
+// Duration-only native/word values 128/111; reused character flags 66; actor guard 66;
+// character exits 66; view admission 66; duration/view admission 128; actor/view guards 66.
+// Direct slot 66; shared period input 119; both 119; native point setter 113;
+// idle/character store orders 67/67, both 68; period with point setter 97.
 // @retail 0x1b2bb0
 void __stdcall function_1b2bb0(long actor_index, s_slot *slot)
 {
@@ -333,16 +338,18 @@ done:
 bool function_2601f0(long actor_index, s_type_c3b527 const *point, long sector, real radius, real path_distance);
 void function_1f86a0(long actor_index);
 
-// score 131 (was 144): shared range generation recovers the random-first x87 sequence;
-// initial pool order, slot/view homes and nine-byte deficit remain. Shared range 131;
+// score 131 (was 131): frame eight agrees; initial pool order, slot EBP/view spill and nine-byte deficit remain.
+// shared range generation recovers the random-first x87 sequence;
+// Shared range 131;
 // chained ticks 144; both 131; state query noinline 144; early short/long defaults 147/179;
 // native duration fields 144; native fields with shared range 131.
-// frame eight agrees; pool-load order, slot EBP and view spill differ.
 // Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
 // word duration ticks 144; ordinary result 203.
 // score 131 (was 131): initial pool order, slot EBP and view spill still differ.
 // Readonly actor/view/both 131 each; force-inline actor/node/view/state boundaries
 // 131 each; readonly records with the view boundary 131.
+// Named duration product 131; flag-pair/elapsed-word/both library clears 135/131/135;
+// product with both clears 135; shared sector 131; supported-view scope 149; sector with scope 149.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {

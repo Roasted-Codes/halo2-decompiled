@@ -77,6 +77,8 @@ public:
 // Box at uses 20; sphere at uses 146; box and sphere at uses 146; centre at uses 173;
 // box and centre at uses 173; box-radius value 38; both radius values 174;
 // box radius at uses with extent receiver 20. Restored.
+// Complete box frame 207; box motion 214; sphere motion 206; both motions 239;
+// late box frame 221; both frames 240; box value 217; sphere value 202.
 // @retail 0x2f1ea0
 void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *input, void *collector)
 {
@@ -96,6 +98,9 @@ void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *inp
 // Sphere before transform 24; box before transform 175; aligned axis loads 20;
 // aligned normal stores 133; aligned point store 22; aligned centre load 20;
 // opaque record sides 20; shared completion exit 20. Restored.
+// as 0x2f1ea0.
+// Vector face depths 179; selected face pointer 68; sign operand order 24;
+// rotation accumulation/product order 20/20; vector root/sum 156/33; direction steps 20.
 // @retail 0x2f2130
 void __cdecl function_2f2130(void const *a, void const *b, void const *input, void *collector)
 {
