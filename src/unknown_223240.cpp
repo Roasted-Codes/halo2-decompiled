@@ -84,7 +84,7 @@ void function_2232a0(void)
 // slot-predicate materialization and final initializer residences differ.
 // Mode/options receivers, mode result, external count/slot references, typed selected
 // record, terminal record reference and both record receivers each 151 (575 bytes).
-// score 151 (was 151): common count/layout join, slot predicate and terminal registers remain.
+// common count/layout join, slot predicate and terminal registers remain.
 // Total before layout/scan 172/152; total scan bound 162; two-use mode 151;
 // conditional slot result 157; separate scan/result 158; mode/total 162; scan-result/total 156.
 // the common count/layout join, slot predicate and terminal reset still differ.
@@ -95,9 +95,10 @@ void function_2232a0(void)
 // allocation gaps. unsigned selected slot 151; word selected slot 157; word view ordinal 201; byte
 // view ordinal 167; exact scan bound 175; existing initializer inline 151; completed search result
 // 180; word scan and ordinal 157; byte selected slot 164.
-// score 151 (was 151): count/layout join still threads. First/second/both native
+// count/layout join still threads. First/second/both native
 // countdown scalars 151/151/151; prefix countdown publication 151/151/151;
 // paired countdowns with int count or int ordinals 151/151. Original body retained.
+// Nested slot admission/sentinel continue/selected-source value 151/151/151; source admission before normalization 158; nested source 151; continued source 158; sole output cursor 232; native entry address 151 (restored).
 // @retail 0x2234e0
 void function_2234e0(void)
 {

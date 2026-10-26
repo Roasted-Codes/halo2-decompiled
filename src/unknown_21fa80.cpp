@@ -82,6 +82,7 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Frame 0x22c versus 0x224 and stream/gain homes remain. Redundant level clamp removed: 575 to 545, 1901/1901 bytes. Voice output reuse 575; query output scope 572; complete flag projection 572; output stream observation 614 (plain).
 // Voice selector snapshot 572 fast; level-offset snapshot 557 fast; entry status,
 // initial voice output and initial settings 532 fast each (unchanged preview 532).
+// Native gain read/routing cache/all reads 532/532/532 fast (control 532); native gain/all publication 540/540; common status/buffer volume/stream volume 549/543/566. Full baseline remains 545.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)
