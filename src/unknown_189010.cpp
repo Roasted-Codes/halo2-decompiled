@@ -567,7 +567,10 @@ real function_30bf0(vector3f *vector);
 long function_1895f0(s_sound_position const *position, real scale, long tag_index);
 
 #pragma inline_depth(0)
-// score 2 (was 2): success result/pop schedule; result before submit/request 181/181;
+// score 2 (was 2): success result/pop schedule. BLOCKED-BY 0xf8eb0: a reduced build without
+// that caller matches and one with it reproduces the swap. Round 52 (fast, caller included):
+// noinline declaration 2; plain returns 175; no inner block 2; success falling through to the
+// label 2. Earlier: result before submit/request 181/181;
 // forward/velocity/location library copies 2/2/2; location before velocity 23;
 // read-only camera 2; forward assignment 2.
 // success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
