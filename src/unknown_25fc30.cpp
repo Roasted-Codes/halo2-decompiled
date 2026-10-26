@@ -209,6 +209,9 @@ bool __stdcall function_25dd30(long a, long b)
 // Penalty radius once 325; named margin radius 310; reach square 310; radius+margin 325;
 // radius+reach 326; margin+reach 310; all 326; both reach squares with radius+margin 326. All
 // fast.
+// Later flag/cone/reference pass cursors stepped at use 345/314/340; flag/cone 345;
+// flag/reference 352; cone/reference 342; all 352; separate later short ordinals on the recovered
+// frame 175 (fast).
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
