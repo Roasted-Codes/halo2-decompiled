@@ -1000,6 +1000,10 @@ struct s_item_flags_view_10b850
 // Round 126: Native dot/scaled-add pointer inputs 813/813; complete rotation outputs 813 at retail length;
 // component cross-result fill 813; ordinary dot inline 813; reused geometry predicate 858; reused contact
 // kind 878; all velocity copies by memcpy 813 (fast); all restored.
+// Rotation publication ikj/jik/jki/kij/kji 814/819/814/807/815;
+// scaled-add jki/kij/kji 859/818/860. Kij rotation with scaled-add
+// ikj/jik/jki/kij/kji 811/811/858/812/859. Six-point 807 rejected;
+// original complete body and helpers restored; frame and Boolean homes remain.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1264,6 +1268,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // common contact/event point at entry or active scope 201;
 // native tag plus common point 201. Complete tag, helper and body restored.
 // Native state-byte/countdown/both field references 200/200/200; damage-key reference 154; state/key, countdown/key and all three 200 each; surface-contact expression 200. Original release and event code restored.
+// Release-vector publication ikj/jik/jki/kij/kji 157/160/208/162/208;
+// angular damping jki/kij/kji 155/155/155. Original release helper and body
+// restored; byte RMW/tail and event/location homes remain.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

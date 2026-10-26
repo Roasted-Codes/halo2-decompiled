@@ -615,6 +615,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Retained count/AND graph: native dead/attached/both bits 246/201/246;
 // shared square alone/with dead/attached/both 202/247/202/247;
 // independent current-object and iterator locals 249. Original view and body restored.
+// Point publication xzy/yxz/yzx/zxy/zyx 204/204/232/207/232;
+// complete displacement products/coordinates 205/205; uniform per-row products 205.
+// Original helper/body restored; frame and protected child convention remain.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {
