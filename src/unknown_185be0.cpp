@@ -168,6 +168,9 @@ union s_185be7
 // State root at every field use 987; with reset output result/flag value/both 987/988/999;
 // state and settings roots at each use 1048; with reset result/flag value/both 1048/1026/1014.
 // Original root snapshots, reset, pointer-input flag helper and body restored.
+// Round 166: Native actual settings record with cached/live roots, mutable/const
+// receivers and forced/ordinary existing object getter 991/1022/991/1022/991/1022/991/1022
+// fast. Original settings observations, getter declaration and complete body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

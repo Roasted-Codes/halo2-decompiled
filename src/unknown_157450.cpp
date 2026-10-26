@@ -5198,6 +5198,9 @@ void __stdcall function_d6bc0(long object_index);
 // 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
 // Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
 // all five call boundaries inline/noinline: all 153; every declaration restored.
+// Round 166: Complete entry/placement/both byte displacements 172/315/306;
+// with direct countdown 175/325/324; both with later timer/native reset result 324/272.
+// All fast versus unchanged 153; complete original body restored.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
