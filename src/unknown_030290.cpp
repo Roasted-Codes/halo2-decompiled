@@ -254,7 +254,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point homes remain.
+// score 195 (was 195): Frame 0x30 versus 0x2c; inverse defaults, displaced depth and factor spills remain.
+// Earlier: Frame 0x30 versus 0x2c and inverse/point homes remain.
 // Earlier 195 from 195: Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
 // frame 0x30 versus 0x2c and inverse-depth/point homes
 // frame 0x30 versus 0x2c and inverse-depth/point homes remain.
@@ -289,6 +290,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 117: Transformed storage first 195; chained inverse defaults 195; complete inverse results 296; helper coordinate homes 195; depth-first inputs 225; output-pointer result 195.
 // Both inverse defaults after origin/camera/all fallbacks 195/203/202; displaced-only/origin-
 // only default after all fallbacks 204/204. All retain frame 0x30.
+// Round 327: corresponding two-product sums at each row 259; all partial sums before stores in
+// xyz/xzy/yxz/yzx/zxy/zyx order 259 each; partial rows with shared scale 279.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

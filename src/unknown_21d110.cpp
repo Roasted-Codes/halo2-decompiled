@@ -308,7 +308,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 }
 
 #define sound_effect_delete function_21dcf1
-// score 204 (was 204): Frame eight versus four and opposite start/delete expansion remain; eight sensitive callers preserved.
+// score 204 (was 204): Frame eight versus four, state/tag residence and opposite start/deletion expansion remain.
+// Earlier: Frame eight versus four and opposite start/delete expansion remain; eight sensitive callers preserved.
 // Earlier: frame eight versus four and opposite start/delete expansion;
 
 // Earlier: frame eight versus four and opposite start/delete expansion;
@@ -358,6 +359,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 166: long/word effect slots at admission, playback and publication 206/214 each;
 // long/word slots with common result 181/224; long-result 181 plain rejected for eight caller
 // losses.
+// Round 327: current deletion record/pool/both 211/204/206; public creator noinline 204;
+// with record/pool/both 211/204/206; both observations and boundary with signed class byte 206.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
