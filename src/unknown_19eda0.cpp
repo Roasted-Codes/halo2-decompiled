@@ -408,6 +408,8 @@ PRIVATE inline long polygon_round_19f(real value)
 // Ordinary variant/body pointer step with fade bounds, original-step predecessor result, earlier
 // vertex/edge double declarations and shorter emitted-point scopes: all 400; matched caller
 // loses by 2 in each.
+// Round 211: Ordinary variant/body step with unsigned UV/current ordinals 400/400; top memcpy 400; ordinal
+// predecessor 381; predecessor result-first 378. Original frame/spills and callee conventions remain.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

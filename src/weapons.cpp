@@ -3050,6 +3050,7 @@ struct s_ammo_conversion_entry
 // scope 203/203/203/203; result-conditioned search 202 (below gate); plain while 203;
 // source-count store order 203. Opening body restored.
 // Round 356: Unsigned-word acquisition 198; complete acquisition arms 198; early uninitialized tag declarations 198; table declaration before count 198; unsigned word with arms 198.
+// Success-path return 209; source from each path/after conversion 204/219; conversion count/table/both at use 197/198/198; short current/successor 205; combined ownership 205. One-point gain rejected.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

@@ -155,16 +155,28 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 	return result;
 }
 
-// score 626 (was 626): Frame 0x1490 versus aligned 0x1474 and stacked mode versus CL remain; reduced control differs.
+// score 626 (was 626): frame 0x1490 versus aligned 0x1474; mode stack home versus CL remains.
+// Earlier 638 from 693: ESP realignment and mode convention still differ; native pair results improve length.
+// ESP realignment and mode convention still differ; native pair results improve length.
+// Frame 0x1490 versus aligned 0x1474 and stacked mode versus CL remain; reduced control differs.
 // ESP realignment and mode convention still differ; native pair results improve length.
 // Midpoint pair 718; first-phase pair 709; fused output walk 754; sample pointers 735; accumulated pair 702;
 // sample and midpoint pairs 693; all three pairs 661 (not kept: the running sum's pair is a one-use copy).
 // Independent pass indices 720; additive phase samples 638 kept; curve count-first 693;
 // delayed endpoint loads 691; conditional clamp 693. Entry alignment and stacked mode remain.
-// computed interpolation pair kept; frame 0x1490 versus 0x1474, alignment/mode differ.
+// Earlier 626 from 638: computed interpolation pair kept; frame 0x1490 versus 0x1474, alignment/mode differ.
 // RNG workspace at entry 638; coefficient array at entry 638; real level 640;
 // output pair snapshot 623 (copy rejected); scalar horizontal lifetime 633;
 // interpolation pair with scalar horizontal 626/2384 (tie, restored).
+// DL134: sum/weight fills fast 682/682; both fills 631 full; shared phase/midpoint
+// samples 626/626 full; native delta/direct seed offset fast 680/681; all workspaces 631 full;
+// smaller-frame exponent input/full-mode-first 641/627 full. Shared samples reach frame
+// 0x1478 in the full image but tie; reduced gains do not qualify in the full image.
+// Earlier score 626 (was 638): computed interpolation pair kept; frame 0x1490 versus 0x1474, alignment/mode differ.
+// Direct phase masks 1..7: fast 622/634/620/653/608/611/662; native output
+// pointers all phases 651 (fast control 680). Both additive phases 691/2306 plain;
+// all phases 729/2260 plain. Original computed pairs and body restored.
+// computed interpolation pair kept; frame 0x1490 versus 0x1474, alignment/mode differ.
 // Reduced control 680: upper endpoint at use 701; both endpoint fields at use 686;
 // normalized result pair 704; aggregate computed pairs 680; computed accumulation pair 755.
 // All fast forms restored.

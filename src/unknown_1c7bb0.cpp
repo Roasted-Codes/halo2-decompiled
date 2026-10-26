@@ -46,6 +46,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 }
 // score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null and successor EBP remain.
 // Earlier 164 (was 164): frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
+
+// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null publication and saved successor EBP remain.
+// frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
 // Frame 0x28 agrees; separate pool/iterator homes, early null publication and successor EBP remain.
 // Earlier: Frame 0x28 agrees; separate pool/iterator homes, null timing and successor residency remain.
 // frame 0x28 agrees; separate pool/iterator homes,
@@ -90,8 +93,11 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Separate inline/noinline declarations for eligibility, location update, detach, actor test, attach, transfer, partition update and final update each 164. All eight original declarations and both traversals restored.
 // Native step reference 164; unsigned-word completion 164; shared absolute ordinal 250;
 // native record-array view 180; cleanup inline declaration 164; reference/word contract 164.
+// Round 211: Masked squad slot 250; opaque datum 164; unsigned ordinal member 164; slot/full-width
+// partition 252; slot/opaque datum 250. Separate pool/iterator and successor homes remain.
 // Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
 // Round 356: Explicit active input 164; private datum result 164; both contracts 164; iterator-owned table 195; table with active input 195.
+// Round 123: Native force-inline member 164; member pointer result 164; ordinary inline member 281; current-handle for 190; force-inline member with current-handle for 190.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

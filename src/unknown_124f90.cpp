@@ -1481,47 +1481,22 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
-// score 46 (was 46): playback/tag scheduling and full-width return tails remain; shared playback base
-// 46; base with retained other tag 44; success-live result 44; storage/tag/result 44; distance result
-// 88; class-field reads 74; class/storage/tag 73; class/success result 78.
-// slot/lookup scheduling, retained identifier and full-width return tails differ;
-// Frame/length agree; playback/header scheduling, retained identifier and full-width exits differ.
-// long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
-// index input with long result 46; existing class operation 169; priority difference 71;
-// class-index input with retained other identifier 44 (two-point gain excluded).
-// frame and length agree; lookup scheduling, retained identifier and return tails differ.
-// Other identifier retained 44; both identifiers 44; normalized slots with other identifier 44;
-// this priority first 87; direct comparison results 107; short priorities 45;
-// integer result 123; this definition read at its priority use 94.
-// Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
-// readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
-// Equal-priority first 82; its direct distance result 119; loudness discriminator 79;
-// equal-first discriminator 99; loudness difference 66; equal-first difference 124;
-// complete decision predicate 113; complete equal-first result 73.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
-	s_sound_playback *sound = SOUND_PLAYBACK_GET(sound_index);
 	s_sound_playback *other = SOUND_PLAYBACK_GET(other_index);
+	s_sound_definition *other_definition = sound_definition_get(other->definition_index);
+	s_sound_playback *sound = SOUND_PLAYBACK_GET(sound_index);
 	s_sound_definition *definition = sound_definition_get(sound->definition_index);
-	long other_priority = sound_definition_priority(sound_definition_get(other->definition_index));
+	long other_priority = sound_definition_priority(other_definition);
 	long priority = sound_definition_priority(definition);
 
-	if (other_priority > priority)
-		return true;
-	if (other_priority == priority)
-	{
-		if (other->definition_index == sound->definition_index)
-		{
-			if (other->value_a0 > sound->value_a0)
-				return true;
-			if (other->value_a0 != sound->value_a0)
-				return false;
-		}
-		if (sound_source_get_listener_distance(sound->listener_index, (s_sound_location_source const *)&sound->location) > distance)
-			return true;
-	}
-	return false;
+	return other_priority > priority ||
+		other_priority == priority &&
+		(other->definition_index == sound->definition_index ?
+			other->value_a0 > sound->value_a0 || other->value_a0 == sound->value_a0 &&
+				sound_source_get_listener_distance(sound->listener_index, (s_sound_location_source const *)&sound->location) > distance :
+			sound_source_get_listener_distance(sound->listener_index, (s_sound_location_source const *)&sound->location) > distance);
 }
 
 /* finds a voice for a playing sound: a free one of its definition's type,
@@ -3040,6 +3015,9 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // Loop-entry playback/clock loads and mode comparison remain.
 // pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
 // promoted voice 132; shared absolute index 162; mode with entry reason 127.
+// Retail's `movsx eax, ax; sub eax, 0; jne` is the compare chain of a switch with a second,
+// non-empty case (an empty case or a single case gives `test ax, ax`). Clock on the left 91;
+// pool data playback 104, with the clock on the left 109; while loop 267-270 (all fast).
 // Failed-acquisition first 127; pending-chunk first 131; retained callback source 86;
 // previous voice owner 86; mode zero guard 155; separate update guard 86;
 // range pointer addition 86; callback-availability first 85 (one point, rejected).
