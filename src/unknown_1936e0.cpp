@@ -340,6 +340,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Type-four native value reset 216; first-case shared three/four 193/193; second-case shared five 192; all
 // equal type-four values chained 199; type-five range/full reversed stores 186/186; descending cases 228.
 // Scale EBX/EAX and constant pushes remain.
+// Native output zero value 214; with native type-four/type-five/both/team/type-four+team/type-
+// five+team/all resets 261/226/276/220/267/232/282. Temporary output frame grows to 0x64c;
+// original direct clear and scale contract remain.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
