@@ -1233,6 +1233,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Early channel-array base with counted traversal 111; base after validation 111;
 // early base with pointer traversal 301; signed-word ordinal 296;
 // early base with validation returns 113. All lose the matched caller; original retained.
+// Out-of-line rolled 281; counted with out-of-line/read-only element/both 112/112/112, each loses the
+// checked caller; fixed equality bound alone/read-only/out-of-line/both 281 each. The equality bound
+// prevents four-way expansion; all original code restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2814,7 +2817,7 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 394 (was 400): frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// score 394 (was 394): frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
 // byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
 // Scalar role names 394; rejected-mode first 394; signed while traversal 394;
@@ -2823,6 +2826,9 @@ struct s_voice_route_choice
 // Boolean radio with unsigned nearest index 411; three mixer pairs 394;
 // conditional headset assignment 394; split initial/replacement nearest 412;
 // repeated player-field reads 472. Frame and route homes still differ; original retained.
+// Headset rejection first 394, with native Boolean radio 411; selected nearest result 1101, with native
+// radio 1103, with both 1103; late mixer descriptor 394, with native radio 411; all three with native radio
+// 1103. Selected results prevent four-way expansion; all original code restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
