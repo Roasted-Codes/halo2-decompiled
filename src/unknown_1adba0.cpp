@@ -654,7 +654,7 @@ bool function_270640(s_type_f17a25 *arg_0, s_type_c3b527 const *arg_1,
 bool function_2715a0(byte *arg_0);
 bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void const *arg_4);
 
-// score 102 (was 112): ESI is still saved around the middle region; result/index registers differ;
+// score 102 (was 102): ESI is still saved around the middle region; result/index registers differ;
 // result first 110, point scope 112, settings scope 112, source scope 112, workspace scope 112,
 // result first/workspace scope 110, named result 112, named workspaces 112, prop index once 229.
 // frame 0x88 agrees; ESI save/restore and query-copy carriers remain.
@@ -664,6 +664,8 @@ bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void cons
 // Native source alone/with source order/with both orders 114/104/103.
 // Library source/query/published copies and all combinations 102 (seven forms);
 // existing conversion return as copy source 218. ESI save and query carriers remain.
+// Native actor/slot/prop record references and their pairs/all 102 (seven forms);
+// native query record reference 102; entry-wide ESI save and query-copy carriers remain.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {

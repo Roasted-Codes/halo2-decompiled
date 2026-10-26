@@ -1236,6 +1236,8 @@ bool function_0b6760(s_index_pair const *pair);
 // Ordinary saved pointer with shared previous 381 at retail length; original qualifiers kept.
 // frame 0x1c versus 0x20 and index/state homes remain; byte result 351;
 // word result 358; shared position complement 347; common group receiver 347; clamp arms 352.
+// Native device/power-group/position-group record references and their pairs/all 303
+// (seven forms); real tag fields 351. All receivers and the original tag type restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
