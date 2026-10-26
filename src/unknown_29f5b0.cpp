@@ -944,6 +944,9 @@ long function_1765e0(point3f const *point, vector3f const *direction, vector3f c
 // score 6 (was 6): direction pointer 6; position before flag 41;
 // position after first/second component 6/6; effect/flag index locals 6/6;
 // flag pointer arithmetic/position reference 6/6. Original body restored.
+// Commuted horizontal products 6; all trigonometric factors named 6; position snapshot 65;
+// read-only flag view 6; scenario base reused at each field 74; flag-table lifetime 6;
+// vector component array view 6; angle field references 6.
 // @retail 0x2a05f0
 void function_2a05f0(long effect_index, short cutscene_flag_index)
 {

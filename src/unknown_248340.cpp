@@ -37,6 +37,9 @@ struct s_emitter_248340
 // descriptive group and system names 4;
 // descriptive query and group names 4;
 // all three descriptive stack candidate names 4;
+// Invalid-query cleanup return 38; complete cleanup in both branches 38; dispatch inner scope 4;
+// countdown field pointer 38; const system index 4; sequenced query expression 4;
+// unsigned-int group home 4; wide tag home 57.
 // Direct nested queries 27; split tag assignment 4; split tag with direct group 8;
 // split group assignment 4; both assignments split 4; outer callee inline/noinline/both 4/4/4.
 // @retail 0x248340

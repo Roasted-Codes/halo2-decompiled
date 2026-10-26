@@ -131,12 +131,15 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 692 (was 725): frame 0x4820 agrees; clear scheduling, output cursor
+// score 692 (was 692): Frame 0x4820 agrees; clear scheduling and output cursor +0x10 versus +8
+// remain. Redundant weight guard removed 1080; chained remainder defaults 698; merge failed-weight
+// exit 692; const selected record 692; named uncovered fractions 692.
+// Earlier: frame 0x4820 agrees; clear scheduling, output cursor
 // +0x10 versus +8 and palette/cluster registers still differ. Interleaved
 // scalar helper 727; the alpha term first 707 alone but 713 together with
 // the weight local (not kept); ordinary output inline 725; ordinary color
 // inline 725; output-helper output-first parameters 725.
-// score 692 (was 692): clear schedule and output cursor +0x10 versus +8 remain;
+// Earlier: clear schedule and output cursor +0x10 versus +8 remain;
 // native output clear 742; output clear before palette lookup 790; previous index 692;
 // cluster-distance snapshot 762; zero accumulator copies 835.
 // @retail 0x12efb0

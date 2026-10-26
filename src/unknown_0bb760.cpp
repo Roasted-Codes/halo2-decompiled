@@ -493,6 +493,13 @@ void function_3dd10(long object_index, bool force);
 // Full-width variant 273; eligibility first 122; early choice weight 131; complete clamp value
 // with output reload/direct dual publication 341/341; separate wrapped hue 218; unsigned choice
 // token declaration and receiver 122; weighted upper-channel scalar values 134.
+// score 84 (was 122): variant byte read after the blend value (registers now retail's), last
+// before weight, inverse computed at the top of the blend branch. Still differs: the first scan's
+// `!=` exits (retail's signed `<` loop unrolls by 4 in every for/while/field/shared-counter form,
+// 637-647; short counter 252), blend's stack slot, the inverse subtraction (retail's is in the
+// blend block, with 1.0 reloaded at the not-found exit) and the 1.0/0.0 load order.
+// Second scan as for 196; found flag in its condition 403/406; renames 84; named choices pointer
+// 208/238; select-then-blend 132, with the inverse after the loop 188.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
@@ -520,8 +527,8 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                 real seed = (real)fabs((*(real *)(object + 0x6c) * 744.1241455078125f + *(real *)(object + 0x64) * 315.89312744140625f + index * 431.1289367675781f) + *(real *)(object + 0x68) * 587.1294555664062f);
                 real selection = (real)fmod((double)seed, 1.0);
                 seed = (real)fabs(index * 0.7121099829673767f + *(real *)(object + 0x68));
-                char variant_index = *(char *)(object + 0xb1);
                 real blend = (real)fmod((double)seed, 1.0);
+                char variant_index = *(char *)(object + 0xb1);
 
                 if (variant_index != NONE && *(long *)(definition + 0x38) != NONE)
                 {
@@ -535,8 +542,8 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                     s_colour_choice_ab *choice = &entry->choices[j];
                     if (!choice->field_1c_4 || choice->field_1c_4 == variant)
                     {
-                        weight += choice->weight;
                         last = j;
+                        weight += choice->weight;
                         eligible |= 1 << j;
                     }
 
@@ -544,6 +551,7 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                 }
                 if (eligible && weight > 0.0f)
                 {
+                    real inverse = 1.0f - blend;
                     real cumulative = 0.0f;
                     real target = selection * weight;
                     long j = 0;
@@ -556,7 +564,6 @@ void __stdcall function_be240(long object_index, dword color_mask, color3f const
                             if (j == last || cumulative >= target)
                             {
                                 hsv3f a, b, mixed;
-                                real inverse = 1.0f - blend;
                                 function_1318d0(&choice->lower, &a);
                                 function_1318d0(&choice->upper, &b);
                                 if (fabs(a.hue - b.hue) > 0.5f)
