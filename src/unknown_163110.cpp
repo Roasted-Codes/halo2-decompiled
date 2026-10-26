@@ -379,8 +379,8 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
 
-// score 412 (was 412): Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
-// inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
+// score 412 (was 412): frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
+// YZX normal inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
 // native float error with distance 412.
 // Earlier 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
 // corner loop 432; side-plane loop 1154; reverse direction loop 423;
@@ -402,6 +402,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Immutable scalar inputs 412; native/immutable native normal 789/789; complete row
 // accumulators 410; immutable inputs with row accumulators 410; native normal with rows 790;
 // parallel normal products 410; native normal/products 789. Two-point reductions rejected.
+// Complete depth snapshot 733; all depth fields 667; identifier before rectangle 431; input rectangle
+// value 686; depth snapshot/identifier 733; fields/identifier 682; rectangle/snapshot 699;
+// rectangle/fields 683.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

@@ -1741,9 +1741,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 
 /* samples a weapon's animation, its overlays and its sway into the user's
    orientations, then builds the weapon's node matrices */
-// score 411 (was 411): frame 0x58 versus 0x78; root/channel overlap and later sway homes remain.
-// frame 0x58 versus 0x78; root/channel overlap and later sway homes remain.
-// root/channel homes still overlap in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
+// score 410 (was 410): current frame 0x78 and initial copies agree; early blend byte and user/weapon/sway homes differ.
+// Earlier frame 0x58 versus 0x78; root/channel overlap and later sway homes remained.
+// Earlier root/channel homes overlapped in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // blend time true arm 506; ammo nonnegative path first 463; adjustment flag from index 460; arms model read
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
 // read first 478; ammo channel before lookups 526; ammo channel before state view 470
@@ -1769,6 +1769,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // validity/second model: 359/548/450/527/541/435/367/405 fast (control 412/2166);
 // conditional-flag forms rejected without a match. Direct logical/compound eligibility
 // before sample or channel: 423/446 each; frame 0x58 and root/channel overlap remain.
+// Sway count/weight/output first 410/410/413; value-first products 411; products with
+// count/weight/output first 410/410/413; frame inputs first 415 (fast control 411/2166, full
+// 410/2154).
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
