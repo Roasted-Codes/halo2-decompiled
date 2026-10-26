@@ -55,7 +55,10 @@ PRIVATE __forceinline long function_214f83(char const *arg_0, s_file_handle *arg
 // score 42 (was 55): handle register, success-byte reload and resize/wait scheduling differ.
 // Full-width open result 42; first/second/both waits and shared opener/combined helpers 55;
 // branched success 50; local role names 55; native/early/named result and late success 42.
-// score 42 (was 42): handle/status publication and the second wait still differ.
+// score 42 (was 42): handle ECX and published success-byte reload remain.
+// Resize inline/outline/both 42/42/42; single open/resize/both wait admission 60/52/63;
+// native handle value and branch-set full-width open result 42/42.
+// handle/status publication and the second wait still differ.
 // Opener void/native result 42/42; ordinary inline 229; task aggregate 84;
 // const/early file 42/42; unsigned/word status 42/42.
 // typed open outcome 42; typed success update/complete outcomes 44/42;

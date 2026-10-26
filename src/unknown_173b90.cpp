@@ -827,6 +827,11 @@ public:
 // remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
 // 308 (plain verified); child for-loop 338.
 // Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native orientation result 373, with shared cross 373.
+// frame 0x60 agrees; early long-result store, flag transfer and child/call homes remain.
+// Ordinary local parent 366; word result 338; direct final result 388; direct parent color
+// Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
+// child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
+// Original entry result, ordinary pooled flags and all child calls restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1140,7 +1145,10 @@ bool function_17afd0(long effect_index, long value);
 // set) 101 plain, kept; stack-bool rename 102; bit 9 as a named bitfield 102; nested
 // attached else-if 102; wide view 102; wide effect index 102; two-step same-view 102;
 // flag as false-init plus conditional set 144 (fast previews 107/102/144).
-// score 101 (was 101): NONE/owner coalescing, BL availability and Boolean homes remain.
+// score 101 (was 101): NONE/owner coalescing and Boolean homes remain; fast control 102.
+// Implied owner validity/availability-first equality 170/172; classification scope 102; scope
+// with implied validity 170; short/signed-byte availability 147/102; combined forms 148/102.
+// NONE/owner coalescing, BL availability and Boolean homes remain.
 // View-query inline/noinline, attachment noinline, draw inline/noinline,
 // scan inline/noinline and paired predicate boundaries all 102 fast, tying preview.
 // NONE/owner sharing and availability/Boolean homes remain.

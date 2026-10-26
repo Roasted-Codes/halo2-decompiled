@@ -273,6 +273,10 @@ bool function_404b0(long mode)
 }
 
 // score 226 (was 226): unsigned-zero branch and pass-call boundaries differ;
+// unsigned-zero branch and pass-call boundaries remain.
+// unsigned-zero branch and pass-call boundaries differ;
+// Unsigned-zero admission, setup/result joins and clear-call transport remain.
+// Earlier 226 (from 250): unsigned-zero branch and pass-call boundaries differ;
 // word material index 298; unsigned weight 309; typed geometry header 250;
 // entry observations reordered 326; native local names 250 (fast).
 // Early weight with context-first material 226; depth zero 250, one 250;
@@ -282,6 +286,15 @@ bool function_404b0(long mode)
 // shared seventh pass 269; shared all passes 291; forced shared all passes 291; shared final result two
 // consumers 291; native final result two consumers 291.
 // Conditional cull calls first/third/both 226/226/226; native Boolean cull tests first/third/both 226/226/226; signed/unsigned short pass result 255/255.
+// Inline cull/stencil/first-flush/second-flush/state-pair/flush-pair/all-four
+// declarations 226 each; noinline all-four 226. All declarations restored.
+// score 226 (was 226): unsigned-zero branch, pass-result stores and call joins remain.
+// Late single/third/both success publication 220/212/210; single/third/conditional
+// result arms 232/214/226; all result arms 204 at 1217 bytes;
+// ordered conditional result 221. All unmatched flag-publication forms restored.
+// Earlier 226 (from 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
+// native masks for passes 16/1/3/8/20/7 give 226/226/226/230/226/226; all masks 230; with byte
+// lower-bound admission 229.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

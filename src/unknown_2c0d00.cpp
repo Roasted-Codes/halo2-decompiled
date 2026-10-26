@@ -1108,7 +1108,8 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
 
-// score 478 (was 478): frame 0x104 versus 0x10c; metadata result homes recover 0x10c at 482 but radius, index and branch allocation still differ.
+// score 478 (was 478): frame 0x104 versus 0x10c; radius/index and metadata homes remain.
+// frame 0x104 versus 0x10c; metadata result homes recover 0x10c at 482 but radius, index and branch allocation still differ.
 // metadata common emission 482; metadata long type 482; metadata long link 483; metadata both long 482;
 // metadata outer index 482; metadata radius home 482; metadata ordinary output 513; metadata index register
 // 522
@@ -1117,9 +1118,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // native found-step 494; current-step fallback first 478.
 // Round 310: terminal fallback return 526; double rounded radius 489; long next 519;
 // unsigned edge 478; shared point setters 478. Double radius recovers 0x10c but worsens scalar homes.
-// score 478 (was 478): frame 0x104 versus 0x10c and radius/index homes differ; trace continues 478;
+// frame 0x104 versus 0x10c and radius/index homes differ; trace continues 478;
 // unsigned output word 478; byte attempt 495; distinct trace-origin name 478; outer world endpoints
 // 478.
+// Trace endpoint names 478; first trace at entry 478; target at entry 478;
+// outer candidate point 478; complete path-record memcpy 478.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

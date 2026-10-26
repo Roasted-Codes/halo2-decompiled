@@ -510,6 +510,7 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 }
 
 // score 321 (was 321): frame 0x48 versus 0x44 and plane/output homes;
+// frame 0x48 versus 0x44; classifier, plane and output homes remain.
 // normal component loop 319; material-output scope 319; direct validity 351;
 // key-clamp result arms 319; optional entity result 319.
 // j92: frame 0x48 versus 0x44 and node/plane/output homes remain; delayed reads and native rotation copy regress; coordinate names and positive root guard tie.
@@ -520,11 +521,16 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // native plane output 348; shape-input sampled equality 319; ordinary inline classifier 356.
 // Frame and plane/output homes remain. classifier bound result first 329; native classifier signed domain
 // 321; classifier direct bounds 345; existing entity query boundary 321; native destination record 388;
+// Classifier bound result first 329; native classifier signed domain 321; classifier direct bounds 345;
+// existing entity query boundary 321; native destination record 388;
 // native output index values 321; validity after index defaults 321; readonly first node input 321.
 // frame 0x48 versus 0x44 and classifier/plane homes remain.
 // Plane normal setter 334; native matrix reference 321; entry/surface/both words
 // 324/323/326; staged plane distance 321; origin field base 323; shape field reference 321.
 // Native signed data, live classifier fields, both 321/321/321; material output names/scope/both 321/321/321; short material home 321; signed data with output names 321.
+// Origin fields at uses 318 (three-count gain rejected); hit fields at publication 329; both 366;
+// first/second node at uses 379/357; byte/long classifier results 321/321;
+// classifier reference input 321. All existing input snapshots and helper contracts restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

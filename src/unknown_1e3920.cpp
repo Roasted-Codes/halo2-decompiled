@@ -746,6 +746,7 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // typed actor 32; earlier actor workspace 32; both 32; native tick interval 36;
 // shared rounding helper 215; typed child cursor 32; attachment scalar homes 66;
 // complete optional view selection 186.
+// score 17 (was 32): the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -827,10 +828,10 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 	}
 	if (type == 11)
 	{
-		long unit_index = actor_get(actor_index)->unknown018;
-		if (unit_index != NONE)
+		actor = (byte *)actor_get(actor_index);
+		if (*(long *)(actor + 0x18) != NONE)
 		{
-			long child_index = *(long *)((byte *)ai_object_get(unit_index) + 0x10);
+			long child_index = *(long *)((byte *)ai_object_get(*(long *)(actor + 0x18)) + 0x10);
 			s_actor_child_limit_view *first_definition = NULL;
 			short count = 0;
 			short limit = 50;
@@ -1532,7 +1533,10 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
-// score 308 (was 314): actor/object-pool registers and scalar/ammo homes differ. Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
+// score 299 (was 308): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
+// Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
+// Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
+// word two-weapon counter 299 kept (plain); promoted minimum 316.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1593,7 +1597,7 @@ void function_1e2a90(long actor_index)
 			*(short *)(unit + 0x23e) = 0;
 		if (weapon_options)
 		{
-			long i = 0;
+			short i = 0;
 			do
 			{
 				if (weapons[i] != NONE)

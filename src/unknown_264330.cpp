@@ -751,7 +751,11 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 
-// score 358 (was 370): actor/view registers and pointer/flag homes; ordinary
+// score 358 (was 358): Frame 0x20 agrees; actor ESI versus EBX, saved actor and flag homes still differ.
+// Equal-zero reference, equal-four sight, view zero, priority zero, paired defaults, all defaults chains
+// 363/363/363/363/363/363; alternate-view short pair memmove 374; copy field order 363 (control 363).
+// Original stores, body and local pointer qualifier retained; full baseline 358.
+// actor/view registers and pointer/flag homes; ordinary
 // path first 373; maximum result 372 (plain 370); wide other priorities 376;
 // visible-view arm first 376; tracking-handle snapshot 373.
 // ordinary current scope 375; suppression scope 366 (plain 373); object/unit
@@ -768,7 +772,7 @@ real function_296600(long actor_index, long prop_ref_index);
 // 366/375/371; false-default suppression on those pairs 366/375/371;
 // optional unit pointer on first two pairs 370/373 (fast control 363).
 // Object/current pair plain 373 versus 358; actor ESI and saved-pointer/flag homes remain.
-// score 358 (was 358): frame 0x20 agrees; actor ESI versus EBX and saved-actor/flag homes remain.
+// frame 0x20 agrees; actor ESI versus EBX and saved-actor/flag homes remain.
 // Native prop/datum/sample/motion references 363f/363f/363f/363f; direct alternate
 // sight result 363f; child/guarded-parent handles 363f/363f; adjacent priority memmove
 // 377f (preview 363f); all original bodies and call arguments restored.
