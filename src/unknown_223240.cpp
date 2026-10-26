@@ -102,7 +102,7 @@ void function_2232a0(void)
 // Earlier 151 (was 151): count/layout join still threads. First/second/both native
 // countdown scalars 151/151/151; prefix countdown publication 151/151/151;
 // paired countdowns with int count or int ordinals 151/151. Original body retained.
-// Round 150: chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
+// chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
 // count/layout join still threads. First/second/both native
 // Nested slot admission/sentinel continue/selected-source value 151/151/151; source admission before normalization 158; nested source 151; continued source 158; sole output cursor 232; native entry address 151 (restored).
 // sentinels/mode/rectangles 151; rectangles/sentinels/mode 151.
@@ -122,6 +122,8 @@ void function_2232a0(void)
 // Contiguous eight-byte sentinel fill 152; fill with native rectangle value/library rectangle copies 152/152;
 // fill with existing slot predicate alone/rectangle value/copies 151/151/151; fill with plain pretest 170; all 178.
 // Every sentinel-fill form also loses the matched initializer caller in the reduced image; all restored.
+// Layout field-test orders flag/state/index, index/flag/state, index/state/flag,
+// state/flag/index, state/index/flag and three global-first orders 151 each.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

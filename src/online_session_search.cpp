@@ -207,6 +207,7 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 extern "C" void _ReadWriteBarrier(void);
 // score 36 (was 36): Frame 0x20 and request fill agree; current/bound/score register exchange remains.
 // Earlier: Frame/length and the whole request fill agree; the bound and score section is retail's
+// Frame/length and the whole request fill agree; the bound and score section is retail's
 // with EAX and ECX exchanged (current ECX, clamp temporaries/total EAX, score EAX where retail has EDX).
 // Round 87: request filled x, y, count, maximum pair, minimum pair 36 (screen of all 120 orders after x, y:
 // 36..54); with each-use loose read 50; current as field/local, upper first, flags first, ternary clamps on
@@ -236,6 +237,8 @@ extern "C" void _ReadWriteBarrier(void);
 // shared invalid predicate with those inputs 105/105/108/108. Original helper and body restored.
 // Round 229: Existing score helper pointer output with original/current/total/both scalar inputs
 // 36/36/36/36; reference output with those inputs 36/36/36/36. Original helper/body restored.
+// Current/lower/upper/both names 36/36/36/36; const current/endpoint 36/36; force-inline score 36;
+// score guard reordered 36; lower/upper candidate clamp 37/36.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {

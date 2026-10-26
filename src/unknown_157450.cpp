@@ -3877,6 +3877,7 @@ static __forceinline long nonnegative_15ce70(long value)
 // Clock/round/options base snapshots 566/481/487; clock-round/clock-options/round-options/all 492/558/548/496; role-named marker and both events 470. Frame and attacker/NONE homes remain.
 // Round 131: word special/different/both/team/special-team/different-team/all
 // decision carriers 477/528/540/470/477/528/540; dword subtype 470.
+// Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

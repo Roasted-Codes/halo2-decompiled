@@ -3103,6 +3103,8 @@ struct s_ammo_conversion_entry
 // table at every use 210/193/207/195; source counts with capacity/source scope 210/210;
 // twice-used offered count 194, with source scope 207. Capacity form has frame 0x20
 // and retail length but gains only five; all combinations restored.
+// State declaration order, acquisition/retention names, source declaration order, capacity and
+// conversion comparisons 198 each; explicit return truth 202; source minimum branch 197.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

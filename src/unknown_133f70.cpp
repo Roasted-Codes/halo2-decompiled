@@ -131,6 +131,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Original body, word cursor and inherited qualifiers restored.
 // Entry count/selection/word-row offset lifetimes 156/154/154; count-selection/count-word/selection-word/all 156/156/156/156;
 // all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
+// Count/word/byte, byte/count/word, byte/word/count and word/count/byte
+// declaration orders 154/155/154/155; same offset-step orders 155/156/156/155.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

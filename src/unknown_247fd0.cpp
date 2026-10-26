@@ -301,6 +301,8 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // full independent native objects on the recovered collision/velocity-source frame 466. All restored.
 // Shared point constructor: blend 368, collision 371, motion 375, blend/collision 371,
 // blend/motion 375, collision/motion 378, all three 378, all plus trace-start 368. All restored.
+// Guard bit word/long, collision declaration, workspace/guard names, combined flags and
+// child while 368 each; common scalar for all four samples 423.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

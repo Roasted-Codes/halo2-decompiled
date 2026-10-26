@@ -218,6 +218,8 @@ void function_268840()
 // Recovered-frame expiry byte/long/signed byte 246/250/246; complete expiry result arms 246;
 // byte/signed-byte child result 246/246; unsigned/signed-word retention 247/247. Original
 // body retained.
+// Iterator pointer order, expiry/successor names, retention scope, extra/player comparisons,
+// child positive arm and player while 246 each.
 // @retail 0x268c90
 void function_268c90()
 {

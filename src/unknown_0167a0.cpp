@@ -131,6 +131,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Round 226: selected-record prefix 153; record-block header 153; pass-input prefix 153; record
 // and block 153; record and pass 153; block and pass 153; all three metadata objects 153; all
 // readonly metadata objects 153.
+// Final change/tag/mask test orders 155/158/159/158/159; reversed early test 155,
+// reversed middle test 175, both reversed 177.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
