@@ -527,6 +527,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Origin fields at uses 318 (three-count gain rejected); hit fields at publication 329; both 366;
 // first/second node at uses 379/357; byte/long classifier results 321/321;
 // classifier reference input 321. All existing input snapshots and helper contracts restored.
+// Scalar origin Z/Y/X, hit Y/X/Z and both producer orders 321/321/321;
+// side before normal publication 324; immutable normal 321, with late publication 324;
+// encoded field at uses 358; consistent readonly second-node/root contract 321.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

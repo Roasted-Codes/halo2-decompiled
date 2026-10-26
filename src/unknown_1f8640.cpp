@@ -384,6 +384,9 @@ struct s_1f8a70_actor
 // Destination orders 234675 437; 235674 440; 452367 419; 243567 418;
 // 234657 412; 235746 453; 456723 415; 246357 433. Opening case order retained.
 // Reset/cleanup/arrival/property/movement/target/predicate/route inline-noinline declarations 399 each; all eight original boundaries restored.
+// Initial mode/reference mode/root override snapshots 399/399/399; named and
+// separate route admission 399/399; scratch-location memcpy 399; readonly query
+// targets 399; combined native mode/root values 399. All original forms restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
