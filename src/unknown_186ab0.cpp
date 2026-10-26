@@ -150,7 +150,7 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 158 (was 231): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
+// score 135 (was 158): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
@@ -179,6 +179,10 @@ void player_action_initialize(s_player_action *arg_0);
 // Round 185 late complete flags byte/word/short/signed byte with bool permission 158/319/319/158;
 // with short permission 279/246/246/288 (fast). Native unsigned byte flags with bool permission
 // kept at 158 plain; every value, observation boundary and call tuple unchanged.
+// Round 189 pulse-latch combined/release-first guards with union/two masks 181/177/165/169;
+// test-derived latch publication 135, with two masks 175; two-use pulse plus publication
+// with union/two masks 172/175. Keep direct latch publication; protected input, count,
+// cold clear and output/angle scheduling remain.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
@@ -308,16 +312,9 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
             local_1->field_30 = false;
         if ((byte *)g_4e6948 + 8 && ((byte *)g_4e6948)[0xd] != 3)
         {
-            if (request_flags & 0x40)
-            {
-                if (!local_1->field_92)
-                {
-                    local_1->field_92 = true;
-                    local_1->field_91 = !local_1->field_91;
-                }
-            }
-            else
-                local_1->field_92 = false;
+            if ((request_flags & 0x40) && !local_1->field_92)
+                local_1->field_91 = !local_1->field_91;
+            local_1->field_92 = (request_flags & 0x40) != 0;
             if (local_3.field_18 & 0x4630260)
                 local_1->field_91 = false;
             if (local_1->field_91 && local_4->field_14 == NONE)
