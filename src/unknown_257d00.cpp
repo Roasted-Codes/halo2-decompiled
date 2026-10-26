@@ -1592,6 +1592,8 @@ void function_b7360(long object_index);
 #pragma inline_depth(2)
 // score 476 (was 476): Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/pool/output entry carriers and rounding homes still differ; selection case result retained.
+// Earlier: Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output acquisition, dispatch layout and forty missing bytes remain.
 // Earlier 482 (was 482): Actor/output registers, dispatch layout and rounding homes still differ; eight source trials restored.
 // Earlier: actor/output and dispatch registers still differ; multi-use actor handle kept.
@@ -1626,6 +1628,12 @@ void function_b7360(long object_index);
 // Native command scalar, command point, state point variant and command location
 // point 476 each; scalar+command point, scalar+state point, both point destinations
 // and all four native payloads 476 each.
+// Notification, point-test and movement inline/inline-noinline declarations, separately and combined, 476 each;
+// all restored. Notification contracts lose reduced matched controls; restored-context losses distinguished.
+// Results within movement/selection/both/recording/movement+recording/selection+recording/all cases
+// 526/466/519/474/515/468/518; native-width outcomes in all three cases 518. Selection-only short result
+// 466 plain (kept), without a shared function exit. Validity initialized before selection 536; native selection
+// outcome 466; both 536; selection outcome begun after dispatch 467. Entry carriers and rounding homes remain.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -1778,6 +1786,8 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 			return 0;
 		}
 	case 10:
+	{
+		short selection_outcome = 2;
 		switch (*(short *)local_1->unknown06)
 		{
 		case 0: local_1->unknown8c = true; local_1->unknown90 = 0x700002c; break;
@@ -1792,7 +1802,10 @@ short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long 
 		case 9: case 10: local_1->unknown90 = NONE; local_1->unknown8c = true; break;
 		default: local_1->unknown8c = false; break;
 		}
-		return local_1->unknown8c ? 0 : 2;
+		if (local_1->unknown8c)
+			selection_outcome = 0;
+		return selection_outcome;
+	}
 	case 5:
 		{
 			byte *local_14 = (byte *)function_1e5380(arg_0);

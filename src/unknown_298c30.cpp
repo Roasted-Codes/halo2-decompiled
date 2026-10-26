@@ -305,6 +305,14 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // distance-products 749; rotation-normalization-products 749.
 // rotation-distance-products 749; normalization-distance-products 749.
 // rotation-normalization-distance-products 749; obstacle-rotation-products 749.
+// Round 141: Native point input, vector input and both 749/749/749; direct actor center 815;
+// point/vector/both native inputs with direct center 815 each; readonly actor with native inputs/direct
+// center 815. Frame 0x11c versus 0x114 and eager radius remain.
+// Round 141: Shared transform/index/both/trace/transform-trace/index-trace/all inline and transform
+// noinline 749 each (3383 with transform or index; otherwise 3372). The inline forms recover
+// branch-time radius loads but frame 0x11c remains. In that context: ordinary/after-actor/after-sector
+// result 778/778/814; state names 749; ordinary state names 778; positive sector/common exit/common
+// exit with names 762 each. All headers/providers/body restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

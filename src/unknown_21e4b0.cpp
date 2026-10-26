@@ -145,6 +145,12 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // native-byte return across reset 280; with final byte/allocation bool/both 290/290/290.
 // Joint final/allocation failure carriers: bool-byte/byte-byte/bool-bool/byte-bool 168/167/167/167;
 // the same four spanning reset 308/303/303/303. Original positive results and guarded loops restored.
+// Round 141: Coordinated inline-noinline
+// startup/listener/reset/channel/voice/effects-loader/effects-setup/impulse declarations
+// 165/165/165/165/165/165/333/165. All providers restored; success/type/first-channel homes remain.
+// Round 141: Canonical inline-only
+// startup/listener/reset/channel/voice/effects-loader/effects-setup/impulse declarations 165 each. All
+// providers and original declarations restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

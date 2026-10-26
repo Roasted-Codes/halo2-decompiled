@@ -1182,6 +1182,8 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
 // early final fade 529/2196; second scale at use 529/2189 kept.
 // Final fade with late second scale 541/2175 (restored).
+// Complete RGB sample/lower/both/upper/sample-upper/lower-upper/all captures 634/655/774/664/810/730/913 (upper
+// forms lose caller); read-only selected parameters 529. Original helper and body restored.
 // Captured normal with existing squared-length helper 508 plain (rejected: caller 442); final selected-pointer result
 // 570; captured normal plus final pointer 561; completion-assigned result 572 and with normal 573
 // (both lose caller); early color declarations 529; declaration/completion forms 572/573.

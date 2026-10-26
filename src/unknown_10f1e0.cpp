@@ -1412,6 +1412,8 @@ bool __stdcall function_110ab0(long unit_index)
 // Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Byte return with byte result 482; byte return alone 450; byte return/result with Boolean overlay 482;
 // with controlling field at use 482; with separate final overlay byte 482. Original Boolean interface retained.
+// Native signed count/slot/both fields 450/450/450; read-only receivers alone/with count/with slots/with both
+// 450 each; typed read-only inputs plus native result 554. Original record and body restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2273,6 +2275,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // cases first 674; internal validity linkage 674. Original helper declaration restored.
 // Forced validity on late-result body 707; reversed validity fields 722; fallback vector memcpy 674;
 // current-frame request/workspace names 674; shared channel flag word 674. Opening body and helper retained.
+// Validity tag/index scalars 702; native identifier value/reference 820/699; scalar independent tests 729;
+// scalar/value/reference forced expansion 707/868/707; identifier-first scalar formals 702. Original helper and
+// twelve calls restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

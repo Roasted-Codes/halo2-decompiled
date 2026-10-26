@@ -616,6 +616,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // real/double scale then point addition 232/251; real scale with point/velocity
 // value inputs 306/242; double scale with both value inputs 353. All restored;
 // frame and protected child-initializer register contract remain.
+// Round 143: occupied/empty Boolean and byte results on retained AND graph 232 each;
+// both byte results with AND 232/232; twice-used child-player input with count/occupied 202/233.
+// Original count/AND body restored; protected child-iterator contract remains.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

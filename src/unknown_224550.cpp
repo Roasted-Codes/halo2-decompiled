@@ -149,6 +149,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // shared bitmap sequence clamp count 427. All restored; frame 0x50 versus 0x60.
 // UV output-first 421; cache/definition-first tint contract 421; complete bounds snapshot 656;
 // UV output-pointer return 421; reference bounds formal 421. Original helpers and body retained.
+// In-place clamp pointer/reference and both forced forms 421 each; pointer clamp plus plain geometry
+// table/native UV member copy 421/421; plain geometry table/native UV member copy alone 421/421. Original
+// helpers restored.
 // Native in-place UV pointer/reference 421/421; by-value result 494; UV-first pointer/reference 421/421;
 // force-inline in-place pointer/reference/value 421/421/738. Original helper and all alias-safe captures restored.
 // Definition at every use 462; shared cache value array 421; both 462; shared pivot weight 421;

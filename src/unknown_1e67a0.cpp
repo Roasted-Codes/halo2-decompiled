@@ -703,6 +703,8 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 
 // score 155 (was 155): Frame 0x18 agrees; sampled-vector slot and rotation/output scheduling remain.
 // movement/rotation homes and cross/result lifetimes still differ.
+// Frame 0x18 agrees; sampled movement/rotation homes and SSE/output scheduling still differ.
+// Earlier: movement/rotation homes and cross/result lifetimes still differ.
 // early side products 249f; single turn cross 249f.
 // rotation cross as old 155f; rotation cross as new 153f.
 // one rotation cross for both 245f; saved forward reads 220f.
@@ -733,6 +735,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Cross before/between trigonometric values 202/200; direct axis fields 247; immutable rotation scalars 155; native scaled velocity 214; with early cross 238; early/mid cross plus direct axis 261/236.
 // Projection through private dot / uniform private sums / uniform shared dot / shared turn
 // dot 185/185/185/155; those four with all three shared crosses 185/185/185/157. All restored.
+// All-row cosine/axis/sine multiplicand orders, seven nonempty combinations, 155 each; rate-first
+// rotation product 155. Existing private dot/cross/both force-inline declarations 155/155/155,
+// without replacing the rotation cross. Original products, helpers and declarations retained.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,
