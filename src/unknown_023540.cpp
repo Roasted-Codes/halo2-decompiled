@@ -2554,7 +2554,10 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
 
-// score 544 (was 554): Frame 0x214 versus 0x200; stack order, coefficient homes and shared sample paths remain.
+// score 544 (was 544): Frame 0x214 versus 0x200; order, coefficient homes and sample paths remain.
+// Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
+// unsigned handle 544; native bucket fields 544.
+// Earlier 544 (was 554): Frame 0x214 versus 0x200; stack order, coefficient homes and shared sample paths remain.
 // Full-width order 578; byte sample 575; bucket cursor 580; bucket rotation scope 575;
 // found-index search 572; long found-index 603.
 // Native cache cursor 590; bounded sample while 575; bounded bucket while 575;

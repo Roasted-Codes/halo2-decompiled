@@ -148,7 +148,10 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
-// score 134 (was 149): Frame 0xa8 and request EAX agree; first class lookup expansion and flag/result homes remain.
+// score 118 (was 134): Frame 0xa8 agrees; first class lookup expansion and flags/result homes remain.
+// Word flags 158; index-order variant guards 134; flag11 field store 134; combined location mask 118 kept
+// plain; original priority observation 133.
+// Earlier 134 (was 149): Frame 0xa8 and request EAX agree; first class lookup expansion and flag/result homes remain.
 // Earlier 149 (was 167): Frame 0xa8 and request EAX agree; first class query still expands and flag/result homes differ.
 // priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
 // base-first flags 178 (caller losses), role names 182, source snapshot 178,
@@ -225,7 +228,7 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 				s_looping_sound_globals *globals = g_4ed288;
 
 				globals->value20 = end_time > globals->value20 ? end_time : globals->value20;
-				if (state.location.flag8 || TEST_FIELD_BIT(state.location.flag11) || !state.location.audible)
+				if ((state.location.flags & 0x900) || !state.location.audible)
 				{
 					globals->value24 = end_time > globals->value24 ? end_time : globals->value24;
 				}
