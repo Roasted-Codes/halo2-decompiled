@@ -439,6 +439,8 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Explicit source bit 243; unsigned input ordinal 237; word side states 263; retained signed distance 273; parallel edge scales 243.
 // signed side-presence words 248; signed current-side byte 256; double equality tolerance 302; native equality references 237; ordinary unsigned previous-side byte 278.
 // Round 212: Current-side unsigned word/native long 257/250; input ordinal name 237; true-first current side 341; positive-first final policy 236. Count/stride/prior homes and shared publication remain.
+// Previous-point, distance, positive-state, negative-state and result names 237 each;
+// status declaration order 264; previous-point address 237; displacement order 237.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
