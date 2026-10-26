@@ -171,19 +171,22 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 }
 
 /* the distance sound travels between two clusters */
-#pragma optimize("s", on)
-// score 65 (was 76): entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
-// Maximum sentinel first 88; interior interval first 82 kept; integer sample 88; read-only audibility 88;
-// ordered cluster parameters 91; named pair index/range 88/88; direct fallback 84; both boundaries 82.
-// Unequal-cluster scope 81; fallback first 81; total result assignment 82; zero/upper
-// result defaults 80/80; word/short samples 76/76; native count observation 82.
-// Existing minimum/maximum/both/index force-inline declarations 82/82/82/82;
-// fallback inline/noinline 82/82; extrema before receiver 81 (below gate); high before low 82.
-// Named fraction/span-first/bounds-after-sample/bounds-before-table 82/82/82/82;
-// full/final interpolation expressions 82/82; native endpoint tests with/without fraction 85/85.
-// Sample offset long/short/word 78/65/77; direct receiver 65 kept; table-operation first 65;
-// explicit endpoint results 79; word-path returns 65; shared index row parts 76.
-// Direct receiver: plain 65; active 171 bytes unchanged, raw differing rows remain 65.
+// score 60 (was 65): retail tests the byte for 0 first, then 0xff, keeps a 255 default in XMM0
+// and a shared zero in XMM1; ours tests the word interior first and builds each zero. Kept: no
+// size pragma and the audibility record in a named pointer (60). Pragma removed with the
+// direct reads 65; byte tests (0, 0xff, else) 76; byte tests under the pragma 88; byte tests
+// with an always-true `value < 0xff` interpolation test 47 (it keeps the 255 default and a
+// redundant jae). On the kept form: byte value 64; if/else for the ternary 60; tests 0 / 0xff /
+// else on the word 71; `value != 0 && value != 0xff` 70, with a byte 75. Earlier: maximum sentinel first 88; interior interval first 82 kept;
+// integer sample 88; read-only audibility 88; ordered cluster parameters 91; named pair
+// index/range 88/88; direct fallback 84; both boundaries 82; unequal-cluster scope 81; fallback
+// first 81; total result assignment 82; zero/upper result defaults 80/80; word/short samples
+// 76/76; native count observation 82; existing minimum/maximum/both/index force-inline
+// declarations 82/82/82/82; fallback inline/noinline 82/82; extrema before receiver 81; high
+// before low 82; named fraction/span-first/bounds-after-sample/bounds-before-table
+// 82/82/82/82; full/final interpolation expressions 82/82; native endpoint tests with/without
+// fraction 85/85; sample offset long/short/word 78/65/77; direct receiver 65; table-operation
+// first 65; explicit endpoint results 79; word-path returns 65; shared index row parts 76.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {
@@ -192,13 +195,14 @@ real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 		local_0 = 0.0f;
 	else if (bsp->audibility_count > 0)
 	{
+		s_structure_audibility *audibility = bsp->audibility;
 		long low = cluster_minimum(cluster_a, cluster_b);
 		long high = cluster_maximum(cluster_a, cluster_b);
-		word value = bsp->audibility->cluster_pair_distances[cluster_pair_index(low, high, bsp->cluster_count)];
+		word value = audibility->cluster_pair_distances[cluster_pair_index(low, high, bsp->cluster_count)];
 		if (value > 0 && value < 0xff)
 		{
-			real local_1 = bsp->audibility->distance_lower;
-			real local_2 = bsp->audibility->distance_upper;
+			real local_1 = audibility->distance_lower;
+			real local_2 = audibility->distance_upper;
 			local_0 = (real)(value - 1) * (1.0f / 253.0f);
 			local_2 -= local_1;
 			local_0 *= local_2;
@@ -211,4 +215,3 @@ real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 		local_0 = (real)(function_249ed0((short)cluster_a, (short)cluster_b, bsp) & ~0x80) * (256.0f / 127.0f);
 	return local_0;
 }
-#pragma optimize("", on)

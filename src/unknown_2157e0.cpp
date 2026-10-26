@@ -56,7 +56,9 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 // score 91 (was 91): adjusted-table spill, retained pre-copy clears and current-index allocation differ;
 // complete cache fields, native location/table types, both together, native value initialization,
 // real table subobject reference, type comparison reversed, readonly native table and
-// native terminator library clears each 91.
+// native terminator library clears each 91; memcpy for the copy 91; table pointer taken before the
+// drive query 91 (with memcpy 91); copy straight from the table element 106; current declared
+// before the loop 91.
 // @retail 0x2170e0
 long function_2170e0(long file_index)
 {
