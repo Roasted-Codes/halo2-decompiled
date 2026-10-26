@@ -51,8 +51,7 @@ struct c_aggregate : c_child
 
 };
 
-
-// score 92 (was 104): frame and request/cursor registers agree; output homes,
+// score 92 (was 92): frame and request/cursor registers agree; output homes,
 // dispatch layout and release global reload differ. Cleanup block/item/both cursors
 // 104/104/104; child-boundary cursor 99; indexed child/range 106; shared child base
 // 133, with range 153; collection rejection 116; read-only range 99; range-array bound
@@ -61,6 +60,10 @@ struct c_aggregate : c_child
 // request/cursor registers and produced/release scratch homes differ;
 // count name 104; release-output name 104; both names 104; result-first 104;
 // arrays swapped 104; collection cursor 105; indexed dispatch 104; allocator capture 115.
+// produced after arrays 105; produced after counters 105; information after arrays 99; both after
+// arrays 110; collection boundary cursor 148; shared boundary cursor 148; paired collection cursors
+// 132; boundary lifetime 92. Scalar output homes, dispatch ownership and release observations
+// remain.
 // @retail 0x97d80
 long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 {
