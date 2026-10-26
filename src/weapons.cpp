@@ -3010,14 +3010,16 @@ struct s_ammo_conversion_entry
     long definition_index;
 };
 
-// score 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
+// score 203 (was 203): Frame 0x20 agrees; destination EDI/EBP, source/tag allocation and conversion entry staging remain.
+// Earlier 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
-// score 203 (was 203): frame agrees; destination/tag and search carriers remain.
+// Earlier 203 (was 203): frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
 // direct retention predicate 213; loaded value clamp 203. Original body restored.
-// score 203 (was 203): Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
+// Earlier 203 (was 203): Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
 // Conversion ordinal 203; same-definition carrier 224; destination object reference 203; magazine
 // reference 203; source sum order 203; native conversion fields 203.
+// Round 109: Entry-result/ordinal join 206; ordinal-only scan 219; remaining transfer accumulator 203; both objects before tags 215; retained-rounds truth accumulation 203 (731 bytes).
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3373,23 +3375,25 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
+// score 1436 (was 1436): Frame 0x3c versus 0x38; pool/offset ownership and dual/scalar homes remain.
+// Earlier 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
-// score 1475 (was 1500): frame 0x38 agrees; pool/index roles and scalar homes remain.
+// Earlier 1475 (was 1500): frame 0x38 agrees; pool/index roles and scalar homes remain.
 // Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
 // input-array names 1507; barrel completion case order 1507. Full-width result kept.
 // Own plain 1476; later table relocation 1450 with identical normalized code.
-// score 1436 (was 1475): frame 0x3c versus 0x38; pool/offset roles and scalar homes remain. Trials:
+// Earlier 1436 (was 1475): frame 0x3c versus 0x38; pool/offset roles and scalar homes remain. Trials:
 // word result 1474; word dual 1464; word inputs 1447; cooling arms 1481; shared complement 1442;
 // long ticks 1477; long direction 1476; complement plus bits 1441; complement plus tag arms 1441;
 // double tests 1480; float multiplier 1442; upper ternary 1478; complement plus word inputs 1436;
 // packed bits/tag arms 1438; packed bool result 1477; packed word result 1436.
-// score 1436 (was 1475): barrel/input setup still differs. Coefficient lifetime trials: before
+// Earlier 1436 (was 1475): barrel/input setup still differs. Coefficient lifetime trials: before
 // magazines 1446; before barrels 1447; per barrel 1447; before blend 1447.
-// score 1436 (was 1436): Frame 0x3c versus 0x38 and pool/offset roles remain. Native trigger input
+// Earlier 1436 (was 1436): Frame 0x3c versus 0x38 and pool/offset roles remain. Native trigger input
 // 1447; native barrel selectors 1630; word input tables 1439; call-free blend tick sample 1440;
 // weapon object reference 1436.
+// Round 109: Dual query before lookups 1466; tag after dual query 1448; query outputs without defaults 1455; state-one outputs before blocked test 1436; native flag27 only 1435, flag10 only 1436, both 1435; long result declared first 1436.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
