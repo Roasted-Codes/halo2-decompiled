@@ -100,10 +100,13 @@ static inline s_actor_view *clump_actor_iterator_advance_1b57f0(s_clump_iterator
 
 /* sends the nearest clump member at the actor's prop (in slot group 0x22 or
    0x1b) to slot 0xb, unless a near one is already in it */
-// score 111 (was 137): saved-register staging and member/index homes differ. Tried shared neutral exit 111; index after prop gates 137; native walk role homes 137; nested source view gates 137; nested nearby candidate 137; shared exit late index 111; shared exit member scope 111; shared exit native homes 111.
-// score 111 (was 111): late EBP save and first-entry/backedge homes remain.
+// score 111 (was 111): saved-register staging and member/index homes differ. Tried shared neutral exit 111; index after prop gates 137; native walk role homes 137; nested source view gates 137; nested nearby candidate 137; shared exit late index 111; shared exit member scope 111; shared exit native homes 111.
+// Earlier 111 (was 111): late EBP save and first-entry/backedge homes remain.
 // Shared iterator, native state, late selection, denominator, compound weight,
 // key-first selection and forceinline shared iterator each 111; source-key-first 108 (rejected).
+// Next/current field order, actual member output, completed-path output,
+// output plus field order and selected/current dword handles each 111;
+// clump gate first 121; positive member eligibility 111.
 // @retail 0x1b57f0
 short __stdcall function_1b57f0(long actor_index, s_slot *slot)
 {

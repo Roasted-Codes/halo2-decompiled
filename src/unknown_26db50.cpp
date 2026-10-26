@@ -501,6 +501,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // frame 0xd8 agrees; entry-table scheduling, ring conversion and rotation homes differ.
 // Early object/record-pool producers 123/123 (exact-only); real ring/spoke 273/195;
 // short remaining count 125; unsigned/double ring 248/261; real ring and spoke 201.
+// Helper-owned angle/trigonometry 236; cosine first 237; early direction inputs 236;
+// early projection or projection plus inputs 239; byte ring 161, remaining count 120,
+// both byte states 161. Existing helper and all ring/trace inputs restored.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
