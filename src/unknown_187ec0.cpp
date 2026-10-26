@@ -556,13 +556,16 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // frame and array homes agree; input registers and the first scan counter differ;
 // paired initialization 326, effect cursor 91, sound cursor 100, both cursors 103,
 // paired/effect cursor 328, paired/sound cursor 335, paired/both cursors 344, shared scan index 89.
-// This round:
+// Earlier counter-width forms:
 // Narrow first short/word/byte 120/120/120; narrow second short/word/byte 77/77/77;
 // both short/word 126/126; signed-short second scan 77 plain, 337/336 bytes.
 // First/second/both array library fills 99/102/101;
 // local defaults/library defaults before point 77/101;
 // compression before point copy 75; location before velocity 76;
 // both sound copy orders 74 (three-point gain, rejected).
+// Exact-end sound scans dword/long/short 89/89/77; exact-end effect scan 84;
+// shared complete offset scale 125; sound point setter 106;
+// native velocity/location field copies 89/96.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)
