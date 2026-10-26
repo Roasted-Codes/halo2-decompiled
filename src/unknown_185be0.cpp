@@ -120,9 +120,7 @@ __forceinline bool function_185be3(long arg_0)
 }
 __forceinline void function_185be4(dword *arg_0, dword arg_1, bool arg_2)
 {
-    dword flags = *arg_0;
-    if (arg_2) flags |= arg_1;
-    else flags &= ~arg_1;
+    dword flags = arg_2 ? (*arg_0 | arg_1) : (*arg_0 & ~arg_1);
     *arg_0 = flags;
 }
 __forceinline void function_185be5(s_186ab2 *arg_0)
@@ -142,7 +140,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 1013 (was 1023): frame 0xe8 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// score 989 (was 1017): frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
@@ -152,6 +150,10 @@ union s_185be7
 // common flag store with indexed mask 1013.
 // Shared curve inputs 1043; late input buffers 1074; active-branch pointers 1075;
 // native clear mask 1023; retained response predicate 1023.
+// Round 126: Paired output branch 994; complete flag result 1002; false-first flags 1016; ordinary clamp
+// inline 1017; no outer zero-mask guard 1018; second-copy continue/final input ternary/const settings 1017
+// each; paired branch with complete flags 989 (plain kept); paired branch with external state reference
+// 994; combined with promoted component 1010, word copy ordinal 989, input-first mask 1016 (fast).
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
@@ -330,8 +332,16 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         }
         function_185be4((dword *)&arg_5->field_1c, 4, local_10);
         function_185be4((dword *)&arg_5->field_1c, 8, local_3[11] != 0);
-        arg_5->field_8 = local_2.field_4e ? local_2.field_30 : local_2.field_34;
-        arg_5->field_c = local_2.field_4e ? local_2.field_34 : local_2.field_30;
+        if (local_2.field_4e)
+        {
+            arg_5->field_8 = local_2.field_30;
+            arg_5->field_c = local_2.field_34;
+        }
+        else
+        {
+            arg_5->field_8 = local_2.field_34;
+            arg_5->field_c = local_2.field_30;
+        }
         byte local_11 = local_3[local_2.field_4c];
         byte *local_12 = &local_3[local_2.field_4c];
         if (local_1->field_0 != NONE && function_185be2(local_1->field_0)[0x212] != 0xff && function_185be2(local_1->field_0)[0x213] != 0xff)
