@@ -1289,7 +1289,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 269 (was 269): Frame 0x28 and sampler agree; captured descriptors and
+// score 267 (was 269): Frame 0x28 and sampler agree; captured descriptors and
 // destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;
 // aggregate colors both/direct/mapped 273/273/269; aggregates with unsigned/signed formal 291/291;
 // aggregates with long source 283.
