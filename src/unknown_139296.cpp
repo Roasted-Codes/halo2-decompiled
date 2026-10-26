@@ -355,6 +355,9 @@ bool function_22acb4(long player_index);
 // score 190 (was 190): second-mask spill and constant homes remain.
 // First enum order one/zero/NONE 189 (below gate), zero/NONE/one 195, zero/one/NONE 195,
 // NONE/one/zero 197; native fourth on current enums 299; signed third/fourth/both 271/299/285.
+// score 190 (was 190): second-mask spill and persistent constant homes remain.
+// Individual redundant clears removed: first16 284; second16 281; both16 290;
+// first2/4/8 286/286/290; first2+16 301; initial third128 249. All restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

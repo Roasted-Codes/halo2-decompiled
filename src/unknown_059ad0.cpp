@@ -3623,9 +3623,11 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 120 (was 120): frame agrees; timeout owner spill and identity load order differ;
+// score 115 (was 120): frame agrees; timeout owner spill and identity load order differ;
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
+// Direct leave predicate 115; retained host-query result 137; narrower host-result
+// scope 125; flags before identifier 120; early nonpeer return 123.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -3656,8 +3658,7 @@ bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *addr
     memcpy(&message.identity, session->members[member].words, sizeof(message.identity));
     network_session_send_to_members(session, 0, 0x13, sizeof(message), &message);
     was_host = true;
-    if (session->state == 7 && *(byte *)&session->value7420)
-     leave = true;
+    leave = session->state == 7 && *(byte *)&session->value7420;
    }
    session->member_index = member;
    session->value44 = NONE;
@@ -4301,9 +4302,11 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 407 (was 434): frame agrees; sender/identity homes and acknowledgement placement differ;
+// score 396 (was 434): frame and sender/identity homes agree; Boolean homes and acknowledgement placement differ;
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
+// Member pointers before received copy 396; host workspaces swapped 413;
+// isolated sender rename 407; preference results first 407; old version first 407.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4375,9 +4378,9 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  }
  {
   byte received[0xc0];
-  memcpy(received, (const byte *)message + 8, sizeof(received));
   s_session_member_header *remote = (s_session_member_header *)&session->members[sender];
   s_session_member_header *local = (s_session_member_header *)&session->members[session->current_member];
+  memcpy(received, (const byte *)message + 8, sizeof(received));
   s_session_peer_transition *transition = (s_session_peer_transition *)&session->value7420;
   s_session_peer_map *map = (s_session_peer_map *)transition->map;
   bool better = false;

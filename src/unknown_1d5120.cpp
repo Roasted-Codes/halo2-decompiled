@@ -103,6 +103,12 @@ void function_1d56f0(s_havok_component *component)
 // Two-use body/motion sources 223/215; output columns 021/102/201/210 78/80/80/79;
 // translation publication/input before rotation 84/83. Frame and callback homes stay correct.
 // score 77 (was 77): first difference is still the lookup's `[base+index]` against retail's `[index+base]`; the tail waits on BLOCKED-BY 0x1d0cf0 (retail passes transform in EAX, component in EBX, index in ECX, plain ret). Body pointer local 77; filter first 102; shape before the transform copy 77; direct rigid_bodies indexing 77; transform by assignment 77; a harness keeps base first for every entry statement order and lookup spelling.
+// lookup address operands and setter input convention remain; count publication after
+// rotation columns 0/1/2, translation construction and pose copy 77 each; query-derived success 110;
+// derived success with late count 110; collision-first branch 77. Correct frame homes preserved on restore.
+// score 77 (was 77): lookup address operands and setter component convention remain;
+// shape/filter/both/reversed fields before lookup 110/109/107/105; shape/filter/both
+// before snapshot 77/102/84; pose before input construction 217.
 // @retail 0x1d5120
 bool function_1d5120(s_havok_component *arg_0, long arg_1, long arg_2, long arg_3,
  real arg_4, long *arg_5, long arg_6)

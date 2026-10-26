@@ -306,6 +306,12 @@ s_object_gc_entry_ab g_440570[6] =
 
 // score 110 (was 110): the size constant is 0x2a08 where retail uses 0x2a04 and the prologue pushes
 // EBP where retail pushes EBX.
+// score 110 (was 110): our loop is rotated (the action test copied to the bottom); retail's stays
+// top-tested, re-reads the state at its top and duplicates the loop setup into each level path.
+// Only nested loops (outer per entry, inner `do ... while (again)`) stay top-tested here: 171, with
+// the one exit goto to a shared final clear 192. `again` uninitialised + `if (again) continue` 134
+// (gives retail's +8 entry pointer); `next = !again` flag 122 (393 bytes, retail's sete); single
+// state variable with the exit goto 161.
 // @retail 0xbf380
 void function_bf380()
 {
