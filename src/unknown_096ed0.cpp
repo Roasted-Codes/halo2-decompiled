@@ -752,7 +752,7 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 185 (was 193): frame 0x98 agrees; decoded-kind width, scalar homes and callback setup differ.
+// score 185 (was 185): frame 0x98 agrees; decoded-kind width, scalar homes and callback setup differ.
 // Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
 // Native kind 211; role-named scalars 204; shared callback arm 222;
 // library descriptor/payload copies 204; pretested item while 220.
@@ -771,6 +771,8 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // unsigned error 193; word kind 204; default first 193; reverse cases 211;
 // all cursors with full-width kind 204.
 // Paired cursors with native kind 203; paired/native kind with pretested for 217.
+// Round 157: Range-first byte/native kind 232/198; count-default byte/native 232/218; terminal-test
+// count byte/native 214/219; test-count pretested while byte/native 214/215.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {

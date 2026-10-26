@@ -83,6 +83,8 @@ public:
 // Consistent live pool/direct location/both 215/215/215; all squared terms 215;
 // live pool with squared terms/selected influence 215/238; native element index
 // alone/with live pool 215/215.
+// Round 157: Outcome-arm activation publication, active byte/bool 220/220; with early head 219/219;
+// inactive byte/bool 224/224; with early head 223/223.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
