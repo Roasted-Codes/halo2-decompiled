@@ -2030,13 +2030,16 @@ long voice_players_share_team(long other, long player)
 	return false;
 }
 
-// score 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
+// score 34 (was 34): Mode/mask saves precede acceptance and cold exits differ; peer loop agrees.
+// Earlier 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
 // Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
 // team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
 // bit addition 59; signed result 55; initial guard 121; conditional/late mask 46/46; direct outputs 141/144.
-// score 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
+// Earlier 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
 // Mode with complete mask 46; shared team/all-peer modes 148/148; team acceptance first 46;
 // mask before mode 34; equality with other/selected validity 117/118; unsigned peer ordinal 130.
+// Accepted/available/filter output arms 124/117/119; filter arms with live mode 119;
+// accepted-only mode capture 34 (exact-only); entry players/team/both declarations 34/34/34. Restored.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
@@ -2504,7 +2507,8 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
  return result;
 }
 
-// score 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
+// score 124 (was 124): Frame 0x14 agrees; capacity/preserve homes, preferred index/bit and helper setup differ.
+// Earlier 124 (was 124): capacity/preserve homes, preferred-bit scheduling and session-field load differ.
 // Capacity named slots 124; native long preserve 144; final preferred-bit recomputation 161;
 // non-preservation-first finish 131; separate entry guards 124.
 // Preserve declared before capacity 124; complete output fill 146; later preferred-bit lifetime 124;
@@ -2512,6 +2516,8 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
 // Boolean role names 124; entry-scope workspaces 124; guarded preferred/mode values 154;
 // shared final selected bit 189; direct blocked assignment 165.
 // Capacity/preserve and preferred-bit homes remain; original body retained.
+// Captured/working capacity after guard/preserve/preferred/mode/members 127/147/158/147/147;
+// entry working declaration 127; derived capacity before admission/in routing scope 147/130. Restored.
 // @retail 0x565c0
 void __stdcall function_565c0(s_voice_routing *routing, dword remaining, s_voice_route *output)
 {
@@ -2911,12 +2917,15 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 }
 #pragma function(_ReadWriteBarrier)
 
-// score 56 (was 95): mode load and output cursor/store scheduling differ; direct formal 95;
+// score 56 (was 56): Mode load and final record cursor/store order differ; frame 0xcc agrees.
+// Earlier 56 (was 95): mode load and output cursor/store scheduling differ; direct formal 95;
 // unsigned index 95; short/byte 107; early choices 95; early unsigned/short 95/107; direct unsigned 95.
 // mode load and record-store scheduling differ; real record
 // receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
 // outer route 95; actual count 96; conditional mode-result combinations all 92;
 // direct talker parameter with early player 56.
+// Immediate final-route alias 60; evaluated/request-result declaration scopes 56/56;
+// route role names 56; complete active arms 56; wide active/complete active/validity 79/79/81. Restored.
 // @retail 0x56df0
 void __stdcall function_56df0(s_voice_player_settings *settings, long talker, long mode)
 {
