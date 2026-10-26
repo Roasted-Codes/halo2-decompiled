@@ -48,6 +48,9 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 // x-first deltas with full denominator 107.
 // Shared difference/projection/both 109/101/109; actual output cursor 256;
 // difference/projection with output cursor 256/256; natural previous update 101; cursor with previous update 256.
+// Second/both input records 163/247; complete/staged projection numerator 101/103;
+// parallel output offsets 101; second record with offsets 163; numerator with offsets
+// 101; nested eligibility/capacity scopes 101. Original helper and body restored.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)

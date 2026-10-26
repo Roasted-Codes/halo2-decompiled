@@ -550,6 +550,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Request class/mode/type 399; fallback class/mode/type 544; inherited ordinal scope 403; inherited while 403; ordinary group inline 1794; request class/type/mode 399 kept; request mode/type/class 419; request type/mode/class 403.
 // Output mode/class/type receivers 399/435/420; mode-class/mode-type/class-type/all receivers
 // 435/420/435/435; all receivers after record copy 421.
+// Existing grouping-helper role orders mode/class/type/graph, graph/class/mode/type,
+// graph/type/class/mode and mode/graph/class/type 399 each; the same four leaf-helper
+// orders 399 each with the bool return contract (fast). Helpers and body restored.
 // First/fallback/both native result-field copies 518/499/546; their immediate-index
 // forms 518/499/546; mutable result fields 546; shared query workspace 597. Frame remains eight in separate-copy forms.
 // Primary/fallback/both library result publication 415/431/483; name library copy 399;

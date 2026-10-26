@@ -64,17 +64,22 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 646 (was 646): Frame 0xf8 versus 0x108; success, basis and rotation homes remain.
-// frame 0xf8 versus 0x108; result/basis/rotation homes differ.
+// score 646 (was 646): frame 0xf8 versus 0x108; result/basis/rotation homes differ.
 // Frame pointer 960; size preference 1163; cosine-difference carrier 652;
 // cross before trigonometry 655; inline depth one 652.
-// Frame 0xf8 versus 0x108 and basis/root/rotation homes remain. Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652; clamp input order 652; direction value with per-ray sample 703 (fast).
-// Frame 0xf8 versus 0x108 and basis/rotation homes remain.
+// Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652;
+// clamp input order 652; direction value with per-ray sample 703 (fast).
 // native rotation return 666; native origin return 695; native cross return 864;
 // short ray ordinal 712; active minimum lifetime 646 (fast).
-// Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
 // ray length through hit 661; hit clear per ray 719; angle limit observed once 647; ray length array
 // initializer 646; joined output zero 648.
+// Native object/settings/both record references 646; live length field reference alone
+// or with object/settings/both 686; collision inline declaration 646. All eight restored.
+// Frame 0xf8 versus 0x108; success, basis and rotation homes remain.
+// frame 0xf8 versus 0x108; result/basis/rotation homes differ.
+// Frame 0xf8 versus 0x108 and basis/root/rotation homes remain. Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652; clamp input order 652; direction value with per-ray sample 703 (fast).
+// Frame 0xf8 versus 0x108 and basis/rotation homes remain.
+// Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
 // Rotation input snapshot 661; axis snapshot 705; both input snapshots 772;
 // native point/direction snapshots 776; projection axis fields at use 646.
 // @retail 0x2922b0

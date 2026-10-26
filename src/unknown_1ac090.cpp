@@ -284,7 +284,7 @@ short __stdcall function_1ac3f0(long actor_index)
 	return result;
 }
 
-// score 35 (was 43): frame four agrees; scale is popped at the first timer multiply and stores differ;
+// score 35 (was 35): frame four agrees; scale is popped at the first timer multiply and stores differ;
 // tried first timer shared conversion direct 114; first timer shared conversion named seconds 103;
 // second timer shared conversion 49; both timers shared conversion 121; integral tick rate 47;
 // shared timer homes at entry 49; scale first timer product 43; chained boolean resets 46;
@@ -296,6 +296,8 @@ short __stdcall function_1ac3f0(long actor_index)
 // after 12 kept at 317 bytes; seed reload and non-popping multiply still differ.
 // Scale-first product update 47; duration-owned product 43; first output/input guard scope
 // 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
+// Native character readonly/reference/value 35/35/82; double scale/delay/both 35/74/74;
+// character reference/value plus double scale 35/82. Seed reload and scale pop remain.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -633,6 +635,8 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // Separate continuation, word/native with arms/conditional: branch 55/58/56/59; entry
 // 55/58/56/59 (three-point gain rejected). Tag/prop/state inline and noinline declarations,
 // singly and together, 58 each. Independent default reload and saved roles still differ.
+// Actor readonly/reference, element readonly/reference, readonly pair, native input
+// pair, state reference and all record references: 58 each; default reload and saved roles remain.
 // @retail 0x1ad5b0
 short __stdcall function_1ad5b0(long actor_index, s_slot *slot, bool active)
 {
@@ -1014,7 +1018,7 @@ struct s_1ac9e1
 	bool field_2e;
 };
 
-// score 48 (was 60): shared result exit restores the blocked-output CL read; count in AL,
+// score 48 (was 48): shared result exit restores the blocked-output CL read; count in AL,
 // immediate completion store and tail join differ. Literal query returns 63; native history points
 // 60; both 63; common result exit 48; native points and common exit 48; workspace names 60;
 // literal returns and names 63; ordinary completion local 75.
@@ -1023,6 +1027,9 @@ struct s_1ac9e1
 // Native/byte common result 121/110; ordinary common completion 60; result initializes
 // completion 48; result clears history 48; both phases 48; completion entry scope 48;
 // completion from unblocked query 58. Count/initialization scheduling still differs.
+// Actor readonly/reference 48/48; readonly location and direct reference comparison 48/48;
+// query-outcome flags alone/with actor record 88/88; nested endpoint guards and named
+// direction length 48/48. Count/completion and history exit reload still differ.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)

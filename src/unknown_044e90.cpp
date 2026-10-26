@@ -4,6 +4,7 @@
 
 // score 434 (was 434): aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
 // Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // Entry/tag-table registers and plane/list homes remain.
 // Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
@@ -20,6 +21,9 @@
 // captured frustum/view bounds 481/483; entry data plus inverse 525; complete matrix value 527.
 // Destination cursor 444; both plane cursors 484; destination/both with full publication
 // 444/444; destination/both with outer plane 444/484; destination/both with normal declaration 444/484.
+// Native input plane subobjects 468; separate shared-scaler normal output 476;
+// multi-use distance scalar 453; input plus normal/distance 438/468;
+// normal plus distance 471; all three 438; dword plane ordinal 434 (fast). All restored.
 // DL131: Entry/tag-table registers and plane/list homes remain; existing geometry resolver
 // before/after entry 443 each; native geometry record 434; resolver with native record in either
 // entry order 443; resolver with shared normal scaling 443; native geometry with shared normal
