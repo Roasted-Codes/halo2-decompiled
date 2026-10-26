@@ -1667,6 +1667,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // homes and helper expansion remain; original complete body and both helpers restored.
 // Native part/index/section records 790/790/790; part/index, part/section, index/section 790/790/790;
 // all three 790; all three with result declared first 790. Real metadata layouts canonicalize.
+// Decoder output reference 790; decoder output pointer result 823; ordinary decoder/color/both
+// 1143/1084/1478; separate noinline decoder/color/both 1140/1597/1958.
+// Frame agrees; status/mesh/sample homes and shared external call boundaries remain. All restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

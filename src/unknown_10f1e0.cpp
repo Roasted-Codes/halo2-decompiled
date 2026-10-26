@@ -1266,6 +1266,9 @@ bool function_c70b0(long unit_index);
 // combined native fields 164; existing channel-state member 164.
 // Complete first/second/both depletion selections 314/357/357; rejection predicates
 // first/second/both 164/164/164; canonical true return 205; selections with true return 355. All restored.
+// Explicit name default/definite result 354/354; native/unsigned-word/signed-word
+// result 381/377/377; separate overlay byte 183; natural overlay exits 302;
+// definite result plus overlay exits 475. Entry pool/state allocation and normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1648,6 +1651,10 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // (frame 0xd4); float bound fields 841; byte overlay ordinal 841; joined bound receiver 912;
 // named blend scalars 841. Opening body and both helpers retained.
 // native projection inputs by value 1112; native projection output reference 841; native bounds-screen reference 841; signed-word activity 844; readonly retained tag 841.
+// Shared dot products with basis/direction first 841/841 (match-only grouping);
+// uniform running projection sums 841; output-first 841; native input references 841;
+// references plus output-first 841; running sums plus output-first/references 841/841.
+// Frame 0xc8 versus 0xd4 and first angle expansion remain. Body and helper restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
