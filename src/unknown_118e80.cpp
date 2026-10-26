@@ -948,6 +948,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // root accessor 151; candidate accessor 151; selected accessor 151; root candidate accessors 151; root
 // selected accessors 151; candidate selected accessors 151; all object accessors 151; all native header
 // 151.
+// Round 332: Candidate/collision/eligibility inline contracts, each and every
+// combination, 151; candidate/collision noinline pair 151. All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

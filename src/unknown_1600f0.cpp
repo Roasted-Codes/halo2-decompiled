@@ -1256,6 +1256,8 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 126: External flag reference 801; reused no-team result 802; player/team/both output cursors
 // 811/834/842; chained RGB stores 801; native team-color output 835; existing string-list forceinline 801
 // (fast); all restored.
+// Round 332: Existing table/list copy helpers, ordinary/inline/force-inline 801 each;
+// new table/list helper boundaries with reused local-user index 836 each. All restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

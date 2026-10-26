@@ -733,6 +733,8 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Round 330: Native rotation 155; paired double trig 281; rotation plus trig 281; double projection 276;
 // rotation/projection 276; trig/projection 281; all native precision 281; native output velocity sampling
 // 246. Exact-match-only forms restored.
+// Round 332: Sample-angle, turn-angle and paired trig scalar home names, each
+// and every combination, 155; all with projected-axis scalar home 155. All restored.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

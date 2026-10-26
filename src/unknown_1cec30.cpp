@@ -2648,6 +2648,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 323 (reduced control 128): common norm 139; common scale 128; real limit
 // literals 128; common norm/scale 139; norm/limits 139; scale/limits 128; all 139;
 // all with body-index name 139. Full-image save staging and paired getter homes remain.
+// Round 332 (reduced control 128): active/notification/impulse inline boundaries and
+// all their combinations 128 each; state/change inline boundaries 132/678. All restored.
+// Joint active/notification/impulse inline boundaries plain 168/677; restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
