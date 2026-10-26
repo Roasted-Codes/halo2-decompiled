@@ -733,6 +733,8 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // Admission word/mask 136/166; native output byte 95; shared counter and output decision 123;
 // shared counter carrier 95; byte with shared counter 95; reversed adjacent output publications
 // 95; final native word 102. Word/Boolean allocation and final store width remain.
+// Direct builder handle/flag/both 127/129/127; state before counters 114; direct handle and earlier state
+// 128; supported/unsupported/both increments before dispatch 99/107/104. All restored.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -879,6 +881,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Private unscaled input/native in-place copy/shared in-place scale 337 each; point/location
 // between words 162/164; second word then point 161; identifier declarations 151; timer home name
 // 151. Quotient/sweep/impact homes and protected owner-call setup remain.
+// Candidate index short/word 366/366; native query count 153; reflection conditional 151; with native count
+// 153; ordinary while scan 151; fraction-first comparison 151; nested candidate admission 151. All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1053,6 +1057,9 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // Bitfield store with the NONE reset 108; branch store 119; ternary store 119.
 // Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
 // each; conditional orientation success 112; short activity 168.
+// Word force with ordered squares/native publication/output receiver 14/16/16; squares and
+// publication/squares and output/output and publication 14/14/16; all three 14; ordered squares with final
+// mask setter 14. Changed single-use word carrier is exact-only; all restored.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

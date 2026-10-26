@@ -134,10 +134,13 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 }
 
 
-// score 55 (was 134): frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
+// score 55 (was 55): frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
 // Byte result first 150; Boolean early-success result 152; long result 135; independent type tests 170;
 // excluded-class exit 165; long result first 134 kept (plain).
 // Root output at entry 134; forward at entry 134; direct successful completion 185; machine arm first 134; CRT location publication 134; existing normal helper input values 55 kept (plain).
+// Recovered normal body: Boolean first 76; byte first 73; Boolean after lookup 78; long after lookup 56;
+// direct class receiver 55; direct class with Boolean 76; native workspace names 55; success before
+// publication 55.
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
