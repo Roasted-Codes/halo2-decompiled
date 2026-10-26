@@ -283,7 +283,7 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
-// score 199 (was 199): Frame 0x38 agrees; scale callee EBX/EAX and constant-push construction remain.
+// score 186 (was 199): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
 // Earlier 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
 // adds a save and shifts settings homes; constant argument pushes also differ.
 // Native zero initialization 199; complete aggregate values 307; grouped
@@ -291,9 +291,12 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Native settings memset 203; Boolean fields first 200; shared type-four
 // workspace 206; equal-place assignment chain 199; team case first 218.
 // Round 109: Type-four padding-only clear 272; team padding-only clear 204; complete type-five assignment 228; all three forms 301; distinct native case settings names 199.
+// Round 111: Type-five/team/place native scopes 189/196/199; reverse type-four stores 204; type-four cases first 220; combined native scopes 186 kept; type-five value initialization alone/combined 193/190; combined lexical home 186; combined reversed stores 191.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
+	s_variant_type5_settings type5_settings;
+	s_variant_team_settings team_settings;
 	memset(variant, 0, sizeof(*variant));
 	switch (index)
 	{
@@ -349,32 +352,32 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 4:
 	{
-		s_variant_type5_settings settings = {0};
-		settings.team_size = 2;
-		settings.first_team = 3;
-		settings.last_team = 4;
-		settings.field_c = 0;
-		function_193c00(variant, 0x1a0007ac, 0x200007ad, 0x19, &settings, 0x1d4c0);
+		memset(&type5_settings, 0, sizeof(type5_settings));
+		type5_settings.team_size = 2;
+		type5_settings.first_team = 3;
+		type5_settings.last_team = 4;
+		type5_settings.field_c = 0;
+		function_193c00(variant, 0x1a0007ac, 0x200007ad, 0x19, &type5_settings, 0x1d4c0);
 		break;
 	}
 	case 5:
 	{
-		s_variant_type5_settings settings = {0};
-		settings.team_size = 2;
-		settings.first_team = 6;
-		settings.last_team = 8;
-		settings.field_c = 2;
-		function_193c00(variant, 0x180007ae, 0x1e0007af, 0x1a, &settings, 0x1d4c0);
+		memset(&type5_settings, 0, sizeof(type5_settings));
+		type5_settings.team_size = 2;
+		type5_settings.first_team = 6;
+		type5_settings.last_team = 8;
+		type5_settings.field_c = 2;
+		function_193c00(variant, 0x180007ae, 0x1e0007af, 0x1a, &type5_settings, 0x1d4c0);
 		break;
 	}
 	case 6:
 	{
-		s_variant_team_settings settings = {0};
-		settings.team_size = 2;
-		settings.first_team = 2;
-		settings.last_team = 4;
-		settings.flag_c = true;
-		function_193b30(variant, 0x190007b0, 0x1f0007b1, 5, 0x7530, &settings, 0x249f0);
+		memset(&team_settings, 0, sizeof(team_settings));
+		team_settings.team_size = 2;
+		team_settings.first_team = 2;
+		team_settings.last_team = 4;
+		team_settings.flag_c = true;
+		function_193b30(variant, 0x190007b0, 0x1f0007b1, 5, 0x7530, &team_settings, 0x249f0);
 		break;
 	}
 	}

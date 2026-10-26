@@ -1164,7 +1164,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 165 (was 172): frame 0x1144 agrees; file-displacement register,
+// score 165 (was 165): Frame 0x1144 and length agree; file displacement and request/I-O setup differ.
 // task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
 // completion scope 172; output scopes 172; slot equality 393;
 // equal-size arm first 209.
@@ -1177,6 +1177,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // completed-write result in both arms 172; reversed header string stores 172.
 // Direct write count 171; late expected-size query 288; signed-word ordinal 257;
 // validity from handle/header tests 165 kept; nested failed-write close 172.
+// Round 111: Redundant request zeros omitted 225; shared handle-field pointer 165; iteration-scope write/read headers 165/165; request path after access fields 169.
 // @retail 0x213970
 void function_213970(void)
 {
