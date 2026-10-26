@@ -272,7 +272,10 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 226 (was 226): unsigned-zero branch and pass-call boundaries differ;
+// score 226 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
+// Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
+// 254/300/226; noinline with short/byte 254/226.
+// unsigned-zero branch and pass-call boundaries differ;
 // unsigned-zero branch and pass-call boundaries remain.
 // unsigned-zero branch and pass-call boundaries differ;
 // Unsigned-zero admission, setup/result joins and clear-call transport remain.
@@ -288,7 +291,7 @@ bool function_404b0(long mode)
 // Conditional cull calls first/third/both 226/226/226; native Boolean cull tests first/third/both 226/226/226; signed/unsigned short pass result 255/255.
 // Inline cull/stencil/first-flush/second-flush/state-pair/flush-pair/all-four
 // declarations 226 each; noinline all-four 226. All declarations restored.
-// score 226 (was 226): unsigned-zero branch, pass-result stores and call joins remain.
+// unsigned-zero branch, pass-result stores and call joins remain.
 // Late single/third/both success publication 220/212/210; single/third/conditional
 // result arms 232/214/226; all result arms 204 at 1217 bytes;
 // ordered conditional result 221. All unmatched flag-publication forms restored.

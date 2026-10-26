@@ -536,19 +536,22 @@ void function_118e80(long object_index, vector3f *forward);
 real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
-// score 273 (was 273): frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
+// score 273 (was 273): frame 0x8c versus 0x90, early NONE and held-direction byte home remain.
+// frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
 // direct actor receiver 371; forward scalar names 371; sampled radius 371;
 // word/native plane key 308/308; plain word 385, early result 379, native key 385.
 // frame 0x8c versus 0x90; early NONE and held-bit byte home differ;
 // frame pointer 468; inline depth zero 608; index-clear schedule fast 376/plain 272;
 // direct plane result 418; named held-direction result 371 (fast control 371).
-// score 273 (was 273): frame and held-direction byte home remain.
+// frame and held-direction byte home remain.
 // Field-zero chains 272; sentinel chains 273; signed mode range 343;
 // native seat index 322; early holder output 350 (all plain scores).
-// score 273 (was 273): frame 0x8c versus 0x90 and held-direction byte home remain.
+// frame 0x8c versus 0x90 and held-direction byte home remain.
 // Byte plane result 273; left/actor references 273/273;
 // motion-direction reference 277; up reference 273 (plain).
+// Flag-range memset 441; movement-mode branches 369; named activity time 371;
+// per-use geometry fields 371; predicate/index role names 371 (fast control 371).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -738,7 +741,9 @@ short ai_player_index_get(long player_index);
 void function_10e9f0(long object_index, short channel, real value, real time);
 bool function_1a8220(long index, short a, short b, long unknown, short c, short d, short e);
 
-// score 32 (was 32): actor-base LEA and child scratch allocation differ; amount admission 239;
+// score 17 (was 17): amount-phase pool ESI/ADD versus ECX/LEA remains.
+// Earlier score 32 (was 32): actor-base LEA and child scratch allocation differ; amount admission 239;
+// actor-base LEA and child scratch allocation differ; amount admission 239;
 // independent refresh 32; combined admission 239; child receiver 32/32; timestamp result 234; first-definition capture 32; refresh/timestamp 234.
 // actor-base LEA and child lookup scratch remain; native timestamp/amount/interval/all
 // fields 32/32/32/32; clock object 32; count/limit/first-child homes 32/32/32.
@@ -746,7 +751,12 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // typed actor 32; earlier actor workspace 32; both 32; native tick interval 36;
 // shared rounding helper 215; typed child cursor 32; attachment scalar homes 66;
 // complete optional view selection 186.
-// score 17 (was 32): the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
+// Earlier score 17 (was 32): the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
+// Amount predicate 112; actor fields at use 280; pooled actor references 17;
+// direction inline/noinline 17/17; channel/activation/reference inline-noinline 17 each.
+// the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
+// Previous timestamp 17; event unit 17; both 17; recent timestamp test 17; snapshot recent test 17;
+// early event unit 98; early unit and timestamp 98; complete interval predicate 22.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -860,8 +870,12 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 }
 
 #include "unknown_1fb7e0.h"
+// score 44 (was 44): actor/old-weapon register pair and early player construction remain.
 // Round 36: the corrected forwarding call keeps 0x1ca260 matched; this body remains 48 differences.
 // Retail 0x1e18f0
+// Earlier: No frame gap; incoming actor/old-weapon ownership and early player address differ.
+// No frame gap; incoming actor/old-weapon ownership and early player address differ.
+// Earlier: the corrected forwarding call kept 0x1ca260 matched; this body then scored 48.
 // score 44 (was 44): No frame gap; actor/old-weapon ownership and early player construction still differ.
 // Earlier at 44 (was 44): No frame gap; incoming actor/old-weapon ownership and early player address differ.
 // Earlier: no frame gap; actor/old-weapon registers and early player address differ.
@@ -875,6 +889,11 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 // inline/noinline 44/44; late actor receiver 44; word event result 123.
 // Object global 44; both lookup globals 43; indexed native headers 44; native player 44;
 // global tables/native entry player 85; native entry player 81; player fields at use 128; native item/header chain 44.
+// Six coherent formal/caller orders 44 each; pair order with early player 81,
+// plus tag fields at use 75; stdcall/cdecl 44/59, cdecl also loses the forwarding caller.
+// Increase result 44; both comparison results 109; results before unit 121; results and entry player
+// 104; results with unit guard 90; early results and guard 94; complete event predicates 153; entry
+// player with guard 85.
 // Previous/replacement/both property inputs 116/119/164; tag objects 130/133/181;
 // both property/tag inputs with early player 163/188.
 // @retail 0x1e18f0
@@ -950,7 +969,10 @@ void function_a7b30(long index);
 void __stdcall swarm_delete(long perception_index);
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type);
 
-// score 345 (was 364): frame 0x11c versus 0x118; sentinel and success blocks differ.
+// score 320 (was 320): frame 0x118 agrees; entry sentinel, squad and substitution/result homes differ.
+// Earlier form: frame 0x11c versus 0x118; sentinel and success blocks differ.
+// Frame 0x118 agrees; entry sentinel EDI/ESI and squad/settings/substitution homes remain.
+// frame 0x11c versus 0x118; sentinel and success blocks differ.
 // Facing products 345/1272; split squad lookup 388; direct substitution gates 369;
 // guarded Boolean 384; typed actor fields 364.
 // frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
@@ -962,12 +984,15 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // count reads 350; both 352; selected-character local 380; outer creation buffer 348;
 // base read plus Boolean predicate 365, shifted Boolean 364, combined loop guard 438,
 // or full-width shifted predicate 350.
-// score 320 (was 345): frame 0x118 agrees; sentinel and later register homes differ.
+// Earlier form: frame 0x118 agrees; sentinel and later register homes differ.
 // Base reads with explicit success/cleanup 320; positive flags guard 342;
 // complete equipment arms 346; squad-mode word 342; guarded long predicate 350.
 // Frame 0x11c versus 0x118 and missing-index homes remain; repaired frame with vertical-first, second-horizontal-first, vector initializer, word creation or word request each 342; three-point gains rejected.
-// score 320 (was 320): Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
-// score 320 (was 320): Frame 0x118 agrees; sentinel and settings/squad homes remain.
+// Earlier form: Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
+// Earlier form: Frame 0x118 agrees; sentinel and settings/squad homes remain.
+// frame 0x118 agrees; sentinel and later register homes differ.
+// Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
+// Frame 0x118 agrees; sentinel and settings/squad homes remain.
 // Native Boolean flag 357; guarded Boolean flag 356; late cleanup indices 365; entry placement
 // view 320; complete replacement arms 358; late actor result 367; zero grenade guards 339;
 // short grenade result 338.
@@ -976,6 +1001,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // both with outer index 347; late actor result 345; Boolean creation mode 378; late unit sentinel 356; perception
 // first cleanup 320; independent perception first 337; independent unit first 337; perception first with Boolean
 // mode 357.
+// Chained cleanup defaults/all three defaults/reverse chain/perception-first defaults 320 each;
+// unsigned actor/cleanup/all handles and unsigned chained defaults 320 each.
+// Short squad admission 382; identity first 360; horizontal/vertical/both angle inputs 337/321/338; angles plus admission 383; vertical-first inputs 338; angle-home names 338.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -1533,10 +1561,11 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
-// score 299 (was 308): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
+// score 288 (was 299): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
+// Round 115: Probability field reads 288 kept (plain); delay field reads 292; weapon array initializer 299; initial lookup scope 299; increased-probability selection 299; both field clamps 291.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1555,8 +1584,8 @@ void function_1e2a90(long actor_index)
 			real probability = 0.1f;
 			if (weapon_options)
 			{
-				real value = *(real *)(weapon_options + 0x58);
-				probability = value < 0.1f ? 0.1f : (value > 0.6f ? 0.6f : value);
+				probability = *(real *)(weapon_options + 0x58) < 0.1f ? 0.1f :
+					(*(real *)(weapon_options + 0x58) > 0.6f ? 0.6f : *(real *)(weapon_options + 0x58));
 			}
 			if (actor->unknown225 || (*(short *)((byte *)actor + 0x722) > 0 &&
 				*(real *)((byte *)actor + 0x764) < 3.0f))

@@ -167,17 +167,20 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
-// score 649 (was 649): frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
-// score 613 (was 656): frame/type agree; state/player/unit allocation remains.
+// score 645 (was 645): Frame 0x54/type EDX agree; state, player and unit homes remain.
+// frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
+// frame/type agree; state/player/unit allocation remains.
 // Direct state receiver 656; unsigned unit carrier 656; early blocked local 656;
 // multi-use magazine view 656; seat-before-parent acquisition 656; all restored.
-// score 649 (was 649): Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
-// score 649 (was 658): Frame 0x54 agrees; state/player/unit homes remain. Shared seat fields kept 658 to 651, 2300/2308 bytes. Captured seat flags 658; short selector slot 662; typed object headers 658; magazine capacity 658 (plain).
 // Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
-// score 645 (was 645): Frame 0x54 and EDX type agree; state/player/unit homes remain. Long seat index 647; early child iterator 645; seat disqualifier predicate 645; pooled seat reference 645; function-scope unit index 645 (plain).
-// score 645 (was 645): Frame 0x54/type EDX agree; state/player/unit homes remain. Shared primary weapon 653;
+// Frame 0x54 agrees; state/player/unit homes remain. Shared seat fields kept 658 to 651, 2300/2308 bytes. Captured seat flags 658; short selector slot 662; typed object headers 658; magazine capacity 658 (plain).
+// Frame 0x54 agrees; state/player/unit homes remain. Native word 649; bits 650; call groups 656; reset groups 771; plain player/status 768 (frame and state/player agree); with selector inline 946, native word 768, bits 768 or index join 790 (plain).
+// Frame 0x54 and EDX type agree; state/player/unit homes remain. Long seat index 647; early child iterator 645; seat disqualifier predicate 645; pooled seat reference 645; function-scope unit index 645 (plain).
+// Frame 0x54/type EDX agree; state/player/unit homes remain. Shared primary weapon 653;
 // secondary 655; status weapon 645; all three observations 688; native input state fields 645 (fast); matched
 // sibling preserved.
+// Result after lookup 654; unsigned player identifier 645; selector unit field at use 645;
+// pooled recorded-type reference 645; selector without inline keyword 645.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

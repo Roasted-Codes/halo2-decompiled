@@ -74,6 +74,8 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // balance test outcomes 449; readiness at outcome 450; reset at outcome 481; unsigned found count 449.
 // Ratings count, group-size cursor, player-rating cursor, combined ratings inputs, readiness-output
 // lifetime, native identifier, paired outputs and combined inputs/outputs all 449.
+// player scan while 449; assignment while 449; paired counted whiles 449; capacity admission scopes 449; roster
+// admission stages 449; countdown expression homes 449; valid input work scope 449; future deadline first 449.
 // Native producer ratings type 449; signed reset/balance/both decision bytes 464/461/483; signed
 // transition/advance bytes 468/449; native property clear 454; native ratings plus reset byte 464.
 // All forms restored; frame 0x3e8 versus 0x3e4, secondary-state/getter boundary and result home

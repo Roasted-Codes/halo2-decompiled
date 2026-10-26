@@ -407,7 +407,8 @@ void *function_1e5240(long actor_index);
 real function_2683f0(long actor_index, long node_index, short type);
 void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *sample, s_2640c0 *motion);
 
-// score 420 (was 420): Frame 0xa4 versus 0xa0; stacked actor and node/workspace homes still differ.
+// score 420 (was 420): frame 0xa4 versus 0xa0; actor input and workspaces differ.
+// Frame 0xa4 versus 0xa0; stacked actor and node/workspace homes still differ.
 // Earlier at 426 (was 426): frame 0xa4 versus 0xa0; actor input and workspaces differ.
 // Wide prior state and byte sampling flags 426; byte sampled-one 426;
 // native for traversal 436; later update init 427; later flag inits 426;
@@ -416,15 +417,19 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // frame 0xa4 versus 0xa0, actor stacked versus EAX/EBX;
 // initial update predicate 441 (frame 0xa0); counter word snapshot 426;
 // prior-state word 426; case-one tracking scope 426; separate final guards 426.
-// Earlier at 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
+// frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
 // kept; word update/sample/sampled count 430/449/449; native view 426; later view lifetime 426;
 // word maximum plus native view/later view/update 420/420/424.
+// frame 0xa4 versus 0xa0, actor input and workspace homes remain.
+// Earlier at 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
 // Earlier at 420 (was 420): frame 0xa4 versus 0xa0, actor input and workspace homes remain.
 // Native signed maximum 420; signed maximum/original loads 420; later maximum/signed
 // maximum 422/422; signed counter/original and signed maximum 420/420;
 // later counter/original and signed maximum 422/422. Each fast and plain.
 // Existing sampling-helper automatic, inline and force-inline boundaries 486 each;
 // all declarations restored after the force-inline form lost a checked caller.
+// Sample after counter/maximum 437/437 (retail frame and length); split true flags 424;
+// test-derived sample 434; timeout conditional 420; decrement branches 420; common maximum exit 437; nested sample-success scope 420.
 // Shared long/word actor slots 444/441; node slots 429/438; both long 439;
 // long actor/word node 423 (frame 0xa0, exact length); word actor/long node 440; both word 456.
 // On the repaired frame: long/short update 430/429; update predicate 430; single exit 433.

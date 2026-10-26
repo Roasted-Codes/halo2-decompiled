@@ -156,6 +156,8 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 }
 
 // score 626 (was 626): ESP realignment and mode convention still differ; native pair results improve length.
+// Frame 0x1490 versus aligned 0x1474 and stacked mode versus CL remain; reduced control differs.
+// ESP realignment and mode convention still differ; native pair results improve length.
 // Midpoint pair 718; first-phase pair 709; fused output walk 754; sample pointers 735; accumulated pair 702;
 // sample and midpoint pairs 693; all three pairs 661 (not kept: the running sum's pair is a one-use copy).
 // Independent pass indices 720; additive phase samples 638 kept; curve count-first 693;
@@ -167,6 +169,10 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // Direct phase masks 1..7: fast 622/634/620/653/608/611/662; native output
 // pointers all phases 651 (fast control 680). Both additive phases 691/2306 plain;
 // all phases 729/2260 plain. Original computed pairs and body restored.
+// computed interpolation pair kept; frame 0x1490 versus 0x1474, alignment/mode differ.
+// Reduced control 680: upper endpoint at use 701; both endpoint fields at use 686;
+// normalized result pair 704; aggregate computed pairs 680; computed accumulation pair 755.
+// All fast forms restored.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,

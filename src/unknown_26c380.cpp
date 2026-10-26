@@ -152,6 +152,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // magnitude value input 556; unsigned success 435; normal length result 435.
 // Final blocked output 658; signed result byte 460; endpoint array index 443; direct node flags 435;
 // vertex base 458; accepted distance 476; vertex base plus distance 501; endpoint index plus distance 432.
+// nonempty edge while 435; rejected hit reset 460; blocked success test 529; count first progress guard 435;
+// edge endpoint homes 435; iterator storage lifetime 435; paired edge workspace 435; overshoot expression 434.
 // Iterator native node/first seed/both 433/435/433; count traversal scope 419 kept (plain);
 // progress-history scope 433; native planar/full-normal copies 490/505; planar input order 435.
 // Only constant counter initialization moves into the valid-normal walk. Frame 0x5c versus 0x64

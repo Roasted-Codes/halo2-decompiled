@@ -1217,6 +1217,11 @@ struct s_index_pair
 bool function_0b6760(s_index_pair const *pair);
 
 // score 303 (was 303): Frame 0x1c versus 0x20; index/header and state/result homes remain.
+// Frame 0x1c versus 0x20; index/header/state/result homes remain. Ordinary
+// index 389; ordinary saved pointer 378; both 421; ordinary index with header ordinal 389; both
+// with ordinal 421; both with byte result 413; ordinary saved pointer/index with byte result
+// 386/385. Acceleration producers preserved.
+// Frame 0x1c versus 0x20; index/header and state/result homes remain.
 // Acceleration products 303; speed products 316; both pairs 341; both plus complement 341;
 // delay product 310; acceleration plus delay 303; both plus delay 341; ordinary receiver plus both 378;
 // position/remaining product names 303, plain 303 kept. Sum grouping, fields, calls and existing qualifiers
