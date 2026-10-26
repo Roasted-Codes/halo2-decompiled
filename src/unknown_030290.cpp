@@ -71,7 +71,8 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
-// score 112 (was 164): coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
+// score 112 (was 112): frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes differ.
+// coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
 // Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
 // tangent names 209; shared root/ratio/tangent workspaces 209.
 // In-place displacements 257; depth-radius product 233; deferred second
@@ -88,6 +89,8 @@ long g_4ba134;
 // horizontal pair early 247; vertical pair early 241; coordinate-before-depth pairs 112;
 // early depths with guarded coordinates 197; inline first coordinates 209.
 // On early coordinate/depth pairs: direct radius 205; coordinate role names 112.
+// Early-pair context: vertical coefficient names 112; vertical edge names 112; vertical-first coefficients 118;
+// coefficient fields at use 252; viewport first 130; later vertical viewport 217; later vertical coefficients 180; both later 217.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {

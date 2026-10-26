@@ -1247,16 +1247,19 @@ real g_467484 = 15.0f;
 real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
-// score 364 (was 429): frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// score 364 (was 364): frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
+// frame 0x4c versus 0x40 and normal/color scheduling still differ;
 // copied limited color kept; early squared length 428, decoded-color names 429,
 // in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
 // Base clamped in place 444; outer limited-color lifetime 364; copied color plus
 // in-place rotation 435 (retail length); scales at first use 381; shared surface clamp 481;
 // shared axis view 515, with in-place rotation 463, with in-place base clamp 542
 // (all three axis views lose the matched caller). Original helper and bodies restored.
-// score 364 (was 364): rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
+// rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
 // shared negate then native output 460; scoped turned vector 364; single-result normalizer 380;
 // ordinary rotation inline 364.
+// Normal consumer before rotation 476; before limited color 508; early primary record 500; direct mobile result 480.
+// Complete color result 440; blend complement 451; early normal with complement 479, with complete color result 500.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

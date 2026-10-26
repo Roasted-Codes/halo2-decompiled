@@ -11,7 +11,8 @@ void function_1fe410(point3f *arg_0, real arg_1);
 
 static __forceinline long real_to_long(real value);
 
-// score 373 (was 373): frame 0x4c versus 0x48; third input and random-state register lifetimes differ.
+// score 373 (was 373): frame 0x4c versus 0x48; early third-input/random-state carriers and scalar homes differ.
+// frame 0x4c versus 0x48; third input and random-state register lifetimes differ.
 // point resolver 445; scale snapshot 430; spread snapshot 437; later second trig pair 379; doubled bound 431; local output sums 429; force-inline resolver 466.
 // frame 0x4c versus 0x48 and early settings/seed register allocation remain; native
 // initializer forms tie and scale loops regress; tried first native output vector 373; second native output
@@ -19,18 +20,20 @@ static __forceinline long real_to_long(real value);
 // output vectors 373; native side first output 373; all native motion vectors 373.
 // first cosine/sine/pair and second cosine/sine/pair through real trig APIs 378;
 // both real trig pairs 373; native side-negation loop 382; all restored.
-// score 373 (was 373): frame 0x4c versus 0x48 and settings/random-state homes still differ.
+// frame 0x4c versus 0x48 and settings/random-state homes still differ.
 // Immutable third input/actor/state/seed 373 each; signed seed 417;
 // immutable bounds/trig results/point receiver 373 each.
 // Shared first/second/both planar zero products 373/373/373; shared vertical
 // zero product and all repeated zero products 373/373; shared normalization
 // boundaries 378/378; shared displacement magnitude 388 (fast control 373).
 // Frame 0x4c and early third-input/random-state allocation remain; all restored.
-// score 373 (was 373): frame 0x4c versus 0x48 and early third-input/random-state homes remain. Fast
+// frame 0x4c versus 0x48 and early third-input/random-state homes remain. Fast
 // trials: published magnitude reads 430; timer field reads 378; published magnitude and timer reads
 // 430; first cap scope 373; second cap scope 373; both cap scopes 373; full signed timer 427;
 // published magnitude with full timer 434. All restored.
 // Published magnitude reads recover frame 0x48 at fast 430/1869, but early input ownership still differs.
+// Existing state-copy owner 380; published sign-state test 373; native long adjustment result 408.
+// Double first/second/both positive angular bounds 414/412/468; double negated bounds 431; all angular bounds double 466.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {
