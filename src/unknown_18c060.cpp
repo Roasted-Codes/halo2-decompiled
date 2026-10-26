@@ -77,6 +77,27 @@ bool function_b9d20(long arg_0);
 // object/exit combinations and repeated cluster index: eight forms 94, all 486/486.
 // Coupled occupancy while 117; high-water per use 94; bitmap per use 94;
 // coupled/high-water 133; coupled/bitmap 117; both fields per use 94;
+// BLOCKED-BY 0xba300: retail's root-location helper returns its location
+// pointer, so it takes the object in ECX and the location in EAX; ours takes EAX/ESI, which
+// takes ESI from this loop, so the pool is not kept in EBX (retail reloads it only after
+// 0x18a7b0) and the iterator pool is not kept in EBP. With a returning stand-in for 0xba300
+// this body is 21 (fast), the only difference being retail's flag store (or [ecx+eax*8+4]
+// first, then a dead lea of the same address; ours lea first and or [eax]).
+// The volatile iterator-pool read removed (107; it was 94 only through the volatile).
+// Flag store forms with the stand-in, all 21: plain field, element pointer, byte reference,
+// conditional set, byte bitfield, iterator datum store, assigned pointer, reused datum.
+// Earlier: the pool global read at each use 94; an element pointer for the flag store 94;
+// the flag byte as bitfields 94; the local pool with the iterator set from the global 135;
+// the existing inlined datum iterator with the pragma removed 269 (LTCG then inlines
+// 0xbadc0/0xb9d20, which noinline declarations here do not stop; under inline_depth(0) even
+// __forceinline is called); shared absolute scan 153; native inline iterator 174; existing
+// datum iterator 170; separate scan admissions 106; guarded bitmap for 106; word division 142;
+// readonly bitmap 106; repeated current handle 106; inline/noinline update, link, object and
+// query declarations 106; native flag bit alone/with sound boundaries 106/106; ordinary
+// iterator read 131; current-datum consumer 106; pool/datum names 106; ordinary named carriers
+// 131; ordinary scoped datum 131; native two-use object index, completed update/release
+// continues, object/exit combinations and repeated cluster index 94; coupled occupancy while
+// 117; high-water/bitmap/both fields per use 94; coupled/high-water 133; coupled/bitmap 117;
 // coupled/both fields 133; iterator ordinal published before datum 94.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
@@ -105,7 +126,7 @@ void __stdcall function_18c060(real arg_0)
 	{
 		long local_9 = local_2.index + 1;
 		long local_10 = NONE;
-		s_record_pool *local_11 = *(s_record_pool *volatile *)&local_2.data;
+		s_record_pool *local_11 = local_2.data;
 		if (local_9 >= 0 && local_9 < local_11->high_water_index)
 		{
 			long local_12 = local_11->high_water_index;

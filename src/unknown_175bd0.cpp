@@ -1915,8 +1915,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 }
 
 // score 130 (was 130): Frame 0x40 versus 0x44; early color spill, cursor/query homes and zone-base scheduling remain.
-// Earlier 130 (was 130): frame 0x40 versus 0x44; early color slot, cursor/query homes and zone-base scheduling remain.
-// frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
+// Earlier forms: frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
 // frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
@@ -1937,6 +1936,11 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // query receiver scope/enduring query outputs 130/130; signed node domain/sign after NONE 151/135;
 // condition-local location 130. Original stores, query scopes and node predicate restored.
 // Round 116: Unsigned-byte placement 130; signed-word placement 165; signed-byte zone selector 130; true-default placement 130; private zone failure guards 172. Opening body and helper restored.
+// Round 88: an inline color helper (particle system, both colors; lookup, tinted, multiplied() as the
+// argument) shared with 0x177040 gives frame 0x44 and retail's early color loads but 177 (the particle
+// system in EDI, retail ESI; color B in EBX, retail EDI; tinted spilled, retail BL); its colors named
+// to sort after location_index 177; parameters reordered 177; colors read from the effect inside 177;
+// const color parameters 177.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2209,7 +2213,14 @@ event_done:
 
 #pragma inline_depth()
 
-// score 109 (was 109): Object-index reload and visibility joins still differ. Update word 109; response
+// score 87 (was 109): Object-index reload (BLOCKED-BY 0xbadc0: retail reloads the index after it, so
+// retail's 0xbadc0 is not read-only to LTCG) and the merged destruction call's place (ours keeps the
+// invisible arm's copy before the visible tests, retail the visible arm's copy) still differ.
+// Round 88: invisible arm's flag test the other way round (call to 0x177260 first) 87 (kept);
+// with the visible arm written first 183; with the visible arm's flag test also swapped 163;
+// visible arm first, invisible arm unswapped 163; only the visible arm's flag test swapped 178;
+// visible arm as `flag2 && flag4` then `flag2` 138.
+// Earlier: object-index reload and visibility joins differ. Update word 109; response
 // word 119; both words 119; native missing location 204; root location value 194; root velocity value 198;
 // both root values 218; origin value 109.
 // object index remains cached across the validity call; visibility blocks differ.
@@ -2269,13 +2280,13 @@ bool __stdcall function_1794e0(long effect_index)
 			}
 			if (!visible)
 			{
-				if (TEST_FIELD_BIT(definition->flag0))
+				if (!TEST_FIELD_BIT(definition->flag0))
 				{
-					if (function_177610(effect_index))
-						{ effect = 0; goto effect_done; }
+					if (!TEST_FIELD_BIT(effect->flag2))
+						function_177260(effect_index, false);
 				}
-				else if (!TEST_FIELD_BIT(effect->flag2))
-					function_177260(effect_index, false);
+				else if (function_177610(effect_index))
+					{ effect = 0; goto effect_done; }
 			}
 			else if (TEST_FIELD_BIT(effect->flag2))
 			{
@@ -2752,24 +2763,26 @@ void __stdcall function_17a380(s_effect_datum *effect)
 	}
 }
 
-// score 96 (was 96): the frame is eight bytes smaller and the two globals are loaded into the other registers
-// tried transform name 109; query results, particle cursor and colors at entry 109; read-only settings 109;
-// immutable mode once 96 (kept); size policy 146; inline depth zero 109.
-// the frame is eight bytes smaller and the two globals are loaded into the other registers
-// Deferred particle cursor 125; active-only effect cursor 125; particle-location
-// record 109; system/definition/type/effect records 109 each; exhausted-particle
-// continue 109. Frame remains eight bytes small; pool/register and cursor homes differ.
-// score 96 (was 96): frame 0x4c versus 0x54, pool/settings homes and color staging remain.
-// Type query, color update, matrix query and location update noinline declarations 96 each;
-// signed-byte flag 108; word flag 106; unsigned successor 96; read-only transform result 96.
-// score 96 (was 96): unsigned-byte location flag 108; frame and color staging still differ.
-// Frame remains eight bytes small; pool/system allocation, query/color carriers and cursor homes
-// differ. mode after color 112; late signed mode 112; late effect cursor home 112; late particle
-// cursor home 112; early mode traversal transform 96; early mode node observation 96; early mode
-// transform home 96; early mode query scope 96.
-// score 96 (was 96): current frame 0x50 versus 0x54, system/cursor homes and color staging remain;
-// native mode 96; entry word/native mode 108/109; unsigned particle cursor alone/with native mode 96/96;
-// node predicate at use 109, with native mode 110; late native mode 106. Opening body restored.
+// score 96 (was 96): frame 0x50 versus 0x54 (retail spills the definition and keeps two more
+// dwords), the particle system in EDI (retail ESI), color B spilled (retail EDI) and the cached
+// mode differ. Tried: transform name 109; query results, particle cursor and colors at entry 109;
+// read-only settings 109; immutable mode once 96 (kept); size policy 146; inline depth zero 109;
+// deferred particle cursor 125; active-only effect cursor 125; particle-location record 109;
+// system/definition/type/effect records 109 each; exhausted-particle continue 109; type query,
+// color update, matrix query and location update noinline declarations 96 each; signed-byte flag
+// 108; word flag 106; unsigned successor 96; read-only transform result 96; unsigned-byte location
+// flag 108; mode after color 112; late signed mode 112; late effect cursor home 112; late particle
+// cursor home 112; early mode traversal transform/node observation/transform home/query scope 96
+// each; native mode 96; entry word/native mode 108/109; unsigned particle cursor alone/with native
+// mode 96/96; node predicate at use 109, with native mode 110; late native mode 106.
+// Round 88: the next index without `volatile` 122 (the effect index moves to ECX and caller
+// 0x176f60 stops matching: the volatile is what keeps it on the stack); mode read per call 108;
+// the effect index read once through its address with a plain next index 105; multiplied() in
+// the call's argument list (retail pushes it from EAX) 103, with per-call mode 110; an inline
+// color helper taking the particle system and both colors (retail reads both colors before the
+// definition lookup; same block in 0x178c80) 102, with the address-read effect index 92 (retail's
+// two exits; not kept without a match), with per-call mode 127, particle system declared first
+// 113, helper parameters reordered 92, helper fed from the color locals 93.
 // @retail 0x177040
 long __stdcall function_177040(long particle_system_index, long effect_index)
 {

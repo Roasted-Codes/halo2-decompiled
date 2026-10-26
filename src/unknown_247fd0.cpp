@@ -113,6 +113,33 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // Complete reconciliation before final draw 133 (plain); aligned edits 54 versus 42, restored.
 // sample output 142; age after sample 239; time after sample 153; sample late age 239; sample late time
 // 153; late age time 236; sample late age time 236; sample value 142.
+// frame 0x10 agrees; the cached-pointer comparison loads the field into EAX where
+// retail compares it in memory (compile-only: the x87 `* (1.f / 65535.f)` scale stored just before
+// keeps the load apart; without the scale, or with the field_10 store after it, it folds), which
+// shifts the rest, including the child loop's alignment.
+// Round 88: retail inlines the type lookup at the loop's re-fetch: function_137bd0_inline there 134;
+// with the child call taking the child-settings query in its argument list (retail pushes the four
+// stack arguments before the query) 133 (not kept: a copy of 0x137bd0's body, kept only with a match); argument list alone 160; comparison operands swapped
+// 133; child datum through DATUM 133; 0x175610's cache-update body 133; record datum through DATUM 133. Compile-only: record-typed cache field, cache store order of 0x175610, an inline cache-update
+// helper, the scale through the shared word wrapper or a named temporary: no fold.
+// Earlier: size optimization 525; inline depth one 142; current-record update argument 142;
+// child-input scope 142; metadata read order 142; direct child getter 160; early result declaration
+// 142; word flag update 244; reciprocal default first 142; cache slot/early flags/both/cache reference
+// 142; reciprocal input 143; global optimization off 433; frame pointer 314; depth two 142; read-only
+// settings view 142; spawn type at use 254; shared parent datum accessor 246; shared child datum
+// accessor 146; both datum accessors 298; native child ordinal 142; immutable creation inputs 142;
+// reciprocal before child link 143; native cache pointer 142; changed-record predicate 142; actual
+// head field 142; unsigned child handle 142; shared bounded selector 142; word flags 142; word flags
+// with bounded selector 142; child zero-age before enable 142; cache mask field/compare 142/142;
+// existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result
+// declaration home 142; live lifetime field 142; mask/lifetime fields 142; common pointer/flags/both
+// stores 159/140/158; conditional mask 282; immutable allocated handle/settings 142; common
+// current-record stores and combined immutable bindings 158; common flags with current receiver 158;
+// external parent/allocated record/settings/child references 142 each; parent with record/settings,
+// record with child, all four references 142 each; parent/settings/both metadata fields, first/last/both
+// list fields, metadata with list fields, metadata with cache slot 161/160/167/142/142/142/167/167;
+// declared sample array/loop 142/435; immutable record/spawn/both 142 each; child identity order 142;
+// earlier enable 142; earlier age 143.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)

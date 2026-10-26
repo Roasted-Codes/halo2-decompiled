@@ -3323,6 +3323,11 @@ void __stdcall function_1264c0(dword arg_0);
 // both admissions with native tick/index 113/113.
 // Masked slot copied before the fade call 83 at retail length (a one-use copy, not kept);
 // next slot 86; with both inline lookups 111/117, initial inline lookup 90/96, next inline lookup 101/104.
+// Round 88: a wait loop run by a `waiting` flag cleared in its else arm gives retail's top-tested
+// SSE wait (alone 113); with data_datum_index and the `index == NONE ? 0 : (index & 0xffff) + 1`
+// next search (retail's masked-slot reuse) 9; plus a memset of the impulse ids 6 (its pointer in
+// ECX, retail EAX). Not kept without a match. Next search alone 85; deadline in the loop condition
+// 107; local-pointer, loop, chained and helper id stores 9; struct copy of the ids 114.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
