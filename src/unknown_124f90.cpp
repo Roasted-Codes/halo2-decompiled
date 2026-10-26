@@ -3024,6 +3024,9 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // score 86 (was 86): Loop-entry playback/clock loads and mode comparison remain.
 // pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
 // promoted voice 132; shared absolute index 162; mode with entry reason 127.
+// Loop-end search seed/explicit cases 86/86; first search result/both boundaries 86/86; existing tail
+// search/seed plus search 86/86; first/both salt producers 183/203. Original body restored; playback/clock and
+// native mode scheduling remain.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
