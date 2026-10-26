@@ -574,6 +574,9 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 // Earlier: the post-loop pointer/index restores remain reversed.
 // Final count and entry divisor 2/2; low-bit clear/remainder 64/63; endpoint
 // parts/start-first 2/2; step cursor 10; parity first 6; polygon/index names 2/2.
+// NONE arm first 60; inline validity helper 2; count at the top 2; no half local 2;
+// validity bool 2; loop index outside 2; parameter copies 2; callee parameters swapped 2;
+// modulo parity 19; half before the count store 59; while loop 2; count stored after the loop 57.
 // Local count/divisor/index role names singly, in pairs and together 9 fast each;
 // unsigned ordinal 23 fast. Reduced baseline 9; full baseline 2.
 // Consumed count 9 fast; initialized divisor 61; shared start numerator 9;

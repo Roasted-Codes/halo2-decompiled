@@ -2686,7 +2686,8 @@ struct s_unit_flags_14d8b0
 
 // score 128 (was 128): iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
-// low-time arm first 179; inline depth one 155. Damage call convention differs.
+// low-time arm first 179; inline depth one 155. Damage call convention differs: BLOCKED-BY 0xd66d0
+// (retail pushes both arguments; ours passes the object in eax).
 // Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
 // native reset timer 155; both native long/short fields 155; signed native countdowns 155;
 // all native countdown fields 155; full native current-player record 153.
@@ -2715,6 +2716,10 @@ struct s_unit_flags_14d8b0
 // Initial/all native flag references 126/126; shared high-byte reference 128;
 // all-flags with tick pointer 126, direct tick product 228, float/count roles 126/126,
 // admitted expiry 199. Two-point forms dropped; original body retained.
+// Long user index in the expired-ticks arm 125 (retail movsx + cmp eax, -1; that arm then differs only in
+// register rotation; under the keep threshold alone); with the tick stored before the rate read 233 (rate folded
+// into mulss), rate named after the increment 233; trigger test as one condition 125; datum index read from
+// the iterator at each use 125.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
