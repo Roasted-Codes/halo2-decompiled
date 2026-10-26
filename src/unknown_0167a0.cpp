@@ -74,7 +74,8 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 153 (was 153): Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
+// score 153 (was 153): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
+// Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
 // logarithm factor width and restore allocation remain; frame and numeric/reset sequence agree.
@@ -133,6 +134,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // readonly metadata objects 153.
 // Final change/tag/mask test orders 155/158/159/158/159; reversed early test 155,
 // reversed middle test 175, both reversed 177.
+// entry at use 153; chain at use 153; previous tag at use 153; entry chain at use 153; entry tag at use
+// 153; chain tag at use 153; all field observations 153; fields old record at use 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

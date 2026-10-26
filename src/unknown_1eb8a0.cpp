@@ -186,6 +186,7 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 
 // score 642 (was 642): Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
 // Frame 0x24 and clock EDI agree; direction/sample homes and coefficient schedules remain.
+// Frame 0x24 and clock EDI agree; direction/sample homes and scalar schedules remain.
 // Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
 // frame 0x24 and clock EDI agree; vector argument homes, scalar schedules and counter return differ.
 // clock register recovered by capped-use coefficient lifetimes; vector argument homes,
@@ -228,6 +229,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // 648/694/716/695/648/692/716/695; original counter and caller preserved.
 // Readonly input d/q/both/a/b/pos/b-pos/all contracts: eight forms 642 each.
 // Initial component orders ikj/jik/jki/kij/kji 639/642/637/644/642; scale orders ikj/jik/jki 642/642/642.
+// Round 324: shared ramp time 665; third time 642; ramp/third 665; remaining distance 683; ramp/remaining 682;
+// third/remaining 683; all scalar workspaces 682; displacement workspace 665.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

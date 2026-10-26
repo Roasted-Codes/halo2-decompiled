@@ -747,6 +747,8 @@ real normalize2d(point2f *v);
 
 // score 172 (was 172): frame 0x48 agrees; query-byte zero and trajectory call/output homes remain.
 // Frame 0x48 agrees; fast-byte zero, protected trajectory convention and retry/output homes remain.
+// frame 0x48 agrees; fast-byte zero source and protected trajectory convention remain.
+// Earlier 172 (was 191): fast-byte initialization and trajectory call convention;
 // search then selection 172; unsigned scan 178; fixed do/while 191;
 // types arm first 191; fallback setters 195; split plus unsigned scan 223.
 // signed-long search 192; signed-byte search 188; exact exhaustion 210;
@@ -798,6 +800,8 @@ real normalize2d(point2f *v);
 // trajectory convention remain.
 // Post-query force OR/guarded/conditional/complete arms 303/197/172/273; exact search bound 211;
 // mask-first search 228; complete requested-byte snapshot 240; snapshot plus force OR 300.
+// Shared validation/query result 172; two-use unit index 172; native origin value 229; result+index 172;
+// result+origin 229; index+origin 229; all 229; complete origin memcpy 229. All restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

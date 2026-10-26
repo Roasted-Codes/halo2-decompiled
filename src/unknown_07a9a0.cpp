@@ -1073,6 +1073,8 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Frame 0xd4 versus 0xb4 and session/lookup homes remain. Machine-ID library copy 777; entry word histogram 855;
 // shared rating observation 831; chained group clears 777; Boolean balance accumulation 766 kept at retail length;
 // split lower-bound guard 777 (fast).
+// Consistent player/group/type observations 854/832/847; player+group 886; player+type 828;
+// group+type 948; all 833; full unsigned type 833. Original body and selectors restored.
 // Round 155: retained native output-array bases, then group rated-count base: groups 847; identities 870; groups identities 889; ratings 913; groups ratings 863; identities ratings 912; groups identities ratings 864; group rated array 867. All restored.
 // Identity/party/both/excess/identity-excess/party-excess/all test-result accumulation 897/869/856/772/888/861/848; all with logical identity 908 (fast).
 // Original complete body restored; frame 0xd4/0xb4, stacked session and opening lookup expansion remain.

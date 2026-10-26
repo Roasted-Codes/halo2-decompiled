@@ -322,6 +322,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 
 /* fills one of the seven built-in variants */
 // score 186 (was 186): frame 0x38 agrees; scale builder EBX/EAX, shifted settings homes and constant pushes remain.
+// Frame 0x38 agrees; scale builder EBX/EAX, settings homes and constant pushes remain.
+// Frame 0x38 agrees; scale builder EBX/EAX, shifted settings homes and constant pushes remain.
 // Earlier 186 (was 186): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes remain.
 // Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
 // frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
@@ -363,6 +365,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // second+team/all settings, then all with implicit type-five zero default
 // 235/228/259/190/239/237/263/267. All regress; original native workspaces, clears and
 // builder arguments restored.
+// Round 324: memset destination result 186; implicit type-four zero defaults 211; destination/type-four 211;
+// implicit type-five zero default 180 (below gate); destination/type-five 180; both default kinds 215;
+// destination/both 215; destination/defaults/native place values 215.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

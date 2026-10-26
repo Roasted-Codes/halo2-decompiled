@@ -1385,6 +1385,10 @@ struct s_rating_summary
 // entry statistic receiver 202. Seven-point gain rejected; original body and types restored.
 // Round 130: stored summary change/count-set/level consumers, individually and all
 // combinations, 202 each; complete stored consumers with word character 206.
+// Native fifteen-bit fields with one player/team ordinal: late receiver with dword/word character
+// 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
+// completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
+// the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

@@ -659,6 +659,7 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 }
 
 // score 573 (was 573): Frame 0x85c agrees; EBP bias 0x70, flag/time/state homes and timing-result schedule remain.
+// Frame 0x85c agrees; EBP bias 0x70, flags/time/state homes and status-helper transport remain.
 // Earlier: frame 0x85c agrees; EBP bias and flag/time/state
 // frame 0x85c agrees; EBP bias and flag/time/state
 // Frame 0x85c agrees; EBP bias 0x70 and early flags/time/state homes remain.
@@ -698,6 +699,8 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // Separate time dividend/results in both arms, immutable results and clock-role homes 573/573/573;
 // with native campaign/count/both/state-fields/session-test 605/594/623/623/621. All executable forms restored.
 // Round 161: clock at every use 642; table at entry/pre-query/pre-widget 619/618/601; those three with consistent clock reads 654/654/643; read-only local table 573. All restored.
+// flags inline 699; flags noinline 573; flags inline noinline 573; user inline 573; user noinline 573; user
+// inline noinline 573; both inline noinline 573; both inline 699.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

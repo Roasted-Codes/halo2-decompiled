@@ -175,6 +175,9 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
 // force-inline second/both/first rounding results 85/70/68; native result with both 78.
 // Zero-frame forms regress allocation or expansion.
+// Round 323: long/word/dword/real delay with second writer 88/85/105/105;
+// the same delay carriers with native second output 88/85/105/105. Conversion-input packing
+// restores zero frame in some forms but regresses allocation; original body restored.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -781,6 +784,9 @@ bool function_1f8660(long arg_0);
 // every component product/status 173/173; both shared differences 172/172. Gains of one/two restored.
 // Round 197: read-only actor/state/both views 174/174/174; distinct selection/validation
 // reference lifetimes alone/actor/state/both 174/174/174/174; actor lookup at every use 230.
+// Round 323: vehicle field at each use 174; radius read once 191; shared projections
+// 194; vehicle/radius 191; vehicle/projections 194; radius/projections 213; all 213; radius
+// and projections with native vehicle index 213. Original actor/result/count and direction homes remain.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1248,6 +1254,9 @@ struct s_1acda0
 // 159/159/159; child result publication and direct return 118; request entry lifetime 118;
 // result/search role names 114; plain result 206. Early ESI, Boolean test and exit traffic remain;
 // all restored.
+// Round 323: existing actor getter 193; prop-index observation 114; common empty
+// reference 124; getter/index 193; getter/reference 188; index/reference 124; all 188;
+// all with conditional prop selection 187. Early ESI and Boolean/result traffic remain.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {

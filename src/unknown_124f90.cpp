@@ -3603,6 +3603,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // snapshots, expressions, helper contract and body restored.
 // Rotation output orders ikj/jik/jki/kij/kji 545/560/554/541/550;
 // uniform projection/scaled-input/cross-scale multiply operand orders 535/535/535.
+// publication aggregate 535; fallback entry lifetime 558; aggregate entry lifetime 558; environment
+// observations 537; listener observations 586; record observations 619; aggregate record observations 619;
+// forced existing rotation 535. All restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

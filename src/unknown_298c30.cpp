@@ -300,6 +300,8 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Rotation output reference 767; endpoint output reference 767; endpoint input references 767;
 // rotation height-source input 767; endpoint pointer result 767; native settings member 767 (fast).
 // Original helper contracts and settings storage restored.
+// Native rotation/endpoint/direction results 928/910/805; rotation+endpoint 1050;
+// rotation+direction 978; endpoint+direction 966; all 1101; result memcpy 1050. All restored.
 // Round 155: actual state-field references, then obstacle-element reference: side 749; angle 840; side angle 840; clearance 793; side clearance 793; angle clearance 845; side angle clearance 845; obstacle element reference 749. All restored.
 // rotation-products 749; normalization-products 749.
 // distance-products 749; rotation-normalization-products 749.

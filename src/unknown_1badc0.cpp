@@ -24,6 +24,9 @@ real normalize2d(point2f *arg_0);
 // No output self-address access 295; copied input/native object/both 281/295/281;
 // shared collision storage alone/with input/object/both 295/282/295/282;
 // copied input with entry/after-actor common result 287/287.
+// frame 0x90 agrees; output EBX/EBP, vector homes and SSE scheduling differ.
+// Vector/center/point/direction names 277 each; named clearance 277; shared actor-to-object difference
+// 274; center memcpy 277; names/clearance/difference 274. Three-point gains rejected.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

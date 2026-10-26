@@ -207,7 +207,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
-// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
+// score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain.
+// frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
 // Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
 // or capacities 194/194; indexed geometry input 229; memory bound/center copies 196/196;
@@ -249,6 +250,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Selector read-only input 190; packed-flags value alone/with read-only input 236/236; selector
 // tag value alone/with read-only input 190/190; both metadata values 236, with read-only input
 // 236, with one final geometry result 236. Entry/index and point homes remain.
+// Round 324: index/radius/center contract 192; radius/index/center 192; center/index/radius 190;
+// radius/center/index 192; the same orders with a full absolute ordinal 193/193/191/193.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

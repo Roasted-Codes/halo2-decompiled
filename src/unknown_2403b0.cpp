@@ -82,6 +82,8 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Native flag-array and actual flag-element reference predicate inputs, each
 // with logical/complement extraction: bool results 190, long results 189;
 // all eight restored, one-point gains below threshold.
+// noinline 101280 190; noinline 15b2f0 190; noinline 138880 190; noinline 138860 190; noinline 15fe70 190;
+// noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

@@ -910,7 +910,8 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 
-// score 151 (was 151): Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
+// score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Earlier: Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // Complete request type 278; scale at each use 278; aggregate sweep 278;
@@ -956,6 +957,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // collision record 345 at retail length, with wrong entry frame. All restored.
 // Probe/input/both workspace scopes 151/175/175; complete request library copies 151;
 // probe/input/both scopes with request copies 151/175/175; actual selected-header byte 151.
+// root accessor 151; candidate accessor 151; selected accessor 151; root candidate accessors 151; root
+// selected accessors 151; candidate selected accessors 151; all object accessors 151; all native header
+// 151.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

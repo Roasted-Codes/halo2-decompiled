@@ -1653,7 +1653,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 790 (was 790): Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
+// score 790 (was 790): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
+// Earlier: Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
 // remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
 // block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
 // Boolean/word/byte capability 790/802/790.
@@ -1686,6 +1687,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // texture plus sample/texture plus combined/sample plus combined/all three 790/796/796/796;
 // all three at function entry 793. Frame/result/mesh and external helper boundaries remain.
 // Round 181 material noinline 807; native status/mesh, vector, color, barycentric sample and combined role homes 790/790/790/790/790; single result exit 834; combined homes with material noinline 807 (fast); all restored. Frame 0x90 agrees; result/mesh/sample/UV homes and material/magnitude expansion remain.
+// Round 327: status tests 800; phase failure default 796; current group/index/data fields
+// 801/811/819; status tests with group/index 802/816; phase default with group and indices 815.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

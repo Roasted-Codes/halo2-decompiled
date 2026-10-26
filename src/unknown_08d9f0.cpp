@@ -152,6 +152,8 @@ void function_8dd70(void);
 // Round 164: Plain first-two session cohort long/short/word/byte ordinal
 // 249/251/251/237; last-two cohort long/short/word/byte 241/251/251/234.
 // All regress; original three-call chain, short stage results and clear restored.
+// long link 232; long observer 228; long link observer 230; long sessions 231; long link sessions 231; long
+// observer sessions 229; long all 231; word entry 230.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
