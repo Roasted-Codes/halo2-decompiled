@@ -95,6 +95,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // partition 252; slot/opaque datum 250. Separate pool/iterator and successor homes remain.
 // Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
 // Round 123: Native force-inline member 164; member pointer result 164; ordinary inline member 281; current-handle for 190; force-inline member with current-handle for 190.
+// Native byte/signed-byte/Boolean high-bit fields with Boolean tests 164/164/164; direct tests 164/164/164; native bit values 164/187. Record size stayed 0x98; original flag byte restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

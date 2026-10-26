@@ -177,14 +177,14 @@ bool function_262890(long actor_index, s_reference reference);
 bool function_1f8660(long actor_index);
 real function_1e3920(long actor_index);
 
-// score 168 (was 168): slot load, actor/permission/index/scratch homes and cold reference arms still differ.
+// score 164 (was 164): slot load, actor/permission/index/scratch homes and cold reference arms still differ.
 // Early invalid copy 168; early mode copy 140; both copies 140 (nonmatches dropped);
 // unsigned actor handle 168; byte permission 195; reference receiver order 170;
 // request mode first 168; permission first 168; shared active mode 168/635.
-// score 164 (was 168): early ESI slot load, scalar homes and cold reference arms still differ.
+// early ESI slot load, scalar homes and cold reference arms still differ.
 // Native request byte 168; earlier scratch 164; result before scratch 168; both 167 (dropped);
 // permission success/failure arms 183/183; reference-test result 168; request byte/scratch 164.
-// score 164 (was 164): early slot load, scalar homes and cold reference joins remain.
+// early slot load, scalar homes and cold reference joins remain.
 // slot reference 164; actor reference 164; both references 164;
 // const actor pointer 164; declared request byte 164; slot/request byte 164;
 // actor/request byte 164; both/request byte 164.
@@ -192,30 +192,31 @@ real function_1e3920(long actor_index);
 // reference before request/index/guard 203/203/201; late output index 163;
 // selection flag before clear 168; scratch before fields/clear 164/181;
 // early reference/scratch with late index 204.
-// score 164 (was 164): delayed ESI slot, scalar homes and cold reference arms remain.
+// delayed ESI slot, scalar homes and cold reference arms remain.
 // Short-circuit invalid result 166; empty-reference first 166; mode-first guard 163;
 // copied initial reference 139 (dropped); target reference 162; request permission 165;
 // short-circuit/mode-first 166; both reference copies 143 (dropped);
 // declared-field equality 196; actual pooled-field reference 164.
-// score 164 (was 164): delayed ESI slot, scalar homes and cold reference arms remain.
+// delayed ESI slot, scalar homes and cold reference arms remain.
 // Common scratch release 162f; later selection flag / acceptance / request predicates 164f;
 // release combinations and release with late output index 162f (two-point gain dropped).
 // early ESI slot, scalar homes and fallback arms remain;
 // shared defaults / native mode with defaults / native mode 168/168/164f on earlier scratch;
 // consumed request scope / scope with defaults / unsigned output handle / fallback result / combined 164/168/164/164/168f.
-// score 164 (was 164): early slot ESI, scalar homes and cold reference arms remain.
+// early slot ESI, scalar homes and cold reference arms remain.
 // Mixed pre-scratch request enable/permission/both/byte/enable-byte/permission-byte
 // stores 165/168/165/166/165/165; outer actor join 166; inactive return 164.
 // early ESI slot, scalar homes and cold reference arms remain;
 // branch-only reference on earlier scratch 211; with read-only actor / slot reference 211/211;
 // common release / request scope / late handle / early permission / release plus late handle 181/211/207/211/178.
-// score 164 (was 164): delayed ESI slot, saved scalar homes and cold reference joins remain.
+// delayed ESI slot, saved scalar homes and cold reference joins remain.
 // Signed permission byte/short 197/200; entry mode shared by two tests 193;
 // rejection-first fallback 164; failure-first acceptance 169; request eligibility exit 164;
 // eligibility/fallback 164; short permission with failure-first acceptance 200.
-// score 164 (was 164): delayed slot ESI, scalar homes and cold reference arms remain;
+// delayed slot ESI, scalar homes and cold reference arms remain;
 // explicit mode assignments 164; native reference initializer 220; library reference copy 164;
 // reference/actor/scratch/selection noinline contracts 164 each; mode/reference initializers 220.
+// Native Boolean invalid flag 164; two chained late request flags 164; three chained late/early flags 167/167; Boolean slot with those chains 164/167/167; immutable permission with Boolean slot 164.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
