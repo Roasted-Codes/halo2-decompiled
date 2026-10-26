@@ -306,6 +306,10 @@ PRIVATE __forceinline bool function_2959c1(short arg_0, short arg_1, long arg_2,
 }
 #pragma inline_depth(255)
 
+// score 92 (was 92): same length, but retail reloads the game-time pointer
+// inside the switch and keeps the timer value in edx, ours forwards the
+// earlier load of that pointer across the entry request and ends up with
+// different registers and stack slots.
 // @retail 0x2959c0
 void function_2959c0()
 {

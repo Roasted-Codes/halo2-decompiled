@@ -381,6 +381,10 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // score 404 (was 404): Camera/points saved registers and initial stores remain; scalar normal inputs do not recover them.
 // Camera/points saved registers and initial stores remain; input distance/whole-plane ownership does not qualify.
 // Earlier: Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
+
+// score 412 (was 412): frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
+// YZX normal inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
+// Camera/point saved registers and initial stores differ; complete buffered normal rows require an exact match.
 // Earlier: Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
 // Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
 // inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
@@ -419,6 +423,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // point first 1182/1170/1170/1182; point last 1182/1168/1168/1182.
 // Scalar normal arguments XYZ/XZY/YXZ/YZX/ZXY/ZYX 697/697/697/697/697/697;
 // scalar XYZ/ZYX with matrix reference 697/697.
+// Complete depth snapshot 733; all depth fields 667; identifier before rectangle 431; input rectangle
+// value 686; depth snapshot/identifier 733; fields/identifier 682; rectangle/snapshot 699;
+// rectangle/fields 683.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

@@ -1324,6 +1324,7 @@ struct s_rating_summary
 // Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
 // Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 
+// Earlier 202 (was 202): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
 // Earlier: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
 // Earlier: Key/statistic homes, cursor and grouped team dispatch remain; live
 // key/player/team/both skills 348/320/199/317; key plus player/team/both 379/374/388; player-only
@@ -1378,8 +1379,16 @@ struct s_rating_summary
 // Native unsigned masked statistics 202; shared player/team ordinal 220 (key home recovered);
 // contiguous summary prefix fill 217; counts/ordinal 220; counts/prefix 217; ordinal/prefix 214;
 // all three 214; read-only query table 202.
+// Round 366: Native fifteen-bit player/team/both statistic fields 195/207/200 fast;
+// word/short player results 279/279, with both arrays 283/283; native statistic receiver 199.
+// On the recovered +0xf44 cursor: native player indexing/shared counts/query-key name 195/195/195;
+// entry statistic receiver 202. Seven-point gain rejected; original body and types restored.
 // Round 130: stored summary change/count-set/level consumers, individually and all
 // combinations, 202 each; complete stored consumers with word character 206.
+// Native fifteen-bit fields with one player/team ordinal: late receiver with dword/word character
+// 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
+// completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
+// the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1583,7 +1592,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 }
 #pragma optimize("", on)
 
-// score 754 (was 770): frame 0xc0 agrees; user/identity and request homes remain.
+// score 739 (was 739): Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
+// Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
 // user-cursor and identity-word homes differ;
 // long validity 770; pending read guard first 786; timestamp before
@@ -1599,9 +1609,16 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // All five-group word ordinals 741 (frame 0xc8; rejected); byte clear ordinals 770;
 // read-submission failure first 770; common delay default 769; clamp bounds 769;
 // request/completion/offline word group 775/754/775; completion-only 754 plain, frame 0xc0.
+// direct records 754; direct properties 754.
+// direct destinations 772; record/property accesses 754.
+// record/destination accesses 772; property/destination accesses 772.
+// all three accesses 772; accumulated failure 739.
 // Native duplicate index 761; request/completion/both direct player fields 794/754/794;
 // signed/unsigned word completion-player ordinals 755/755; unsigned word completion group
 // 754; duplicate index with unsigned word group 761. Original body retained.
+// Admission-test result 739; eager failure OR 753; positive completion 739;
+// player-result-first OR 739; accumulated signed/unsigned failure 761/761;
+// signed positive completion 759; admission plus positive completion 739.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
@@ -1767,8 +1784,8 @@ void function_074aa0(void)
                             {
                                 if (player->state == 2) player->state = 1;
                                 else if (player->state == 5) player->state = 4;
-                                failed = true;
                             }
+                            failed = failed || received != 6;
                         }
                     function_80aa0(g_50c474, g_50c470);
                 }

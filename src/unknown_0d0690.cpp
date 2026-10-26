@@ -51,6 +51,9 @@ real function_30bf0(vector3f *vector);
 // Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
 // 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
+// Existing scalar color/blend/both 213/213/213; existing color helper and helper plus blend 213/213;
+// entry strength snapshot alone/with scalar clamps/with color helper 225/225/225. All restored.
+// Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1169,7 +1172,7 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
     return 0.0f;
 }
 
-// score 529 (was 529): Frame 0x2c versus 0x28, stored result and block/query carriers remain.
+// score 529 (was 529): Frame 0x2c versus 0x28, stored selection result and block/query carriers remain.
 // Selected ordinal 587; combined admission mask 570; unsigned scan 529; shared bias local 559
 // (caller lost); common blend weight 533.
 // frame 0x2c versus 0x28, stored result and block/query registers differ.
@@ -1180,12 +1183,20 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
 // early final fade 529/2196; second scale at use 529/2189 kept.
 // Final fade with late second scale 541/2175 (restored).
+// Complete RGB sample/lower/both/upper/sample-upper/lower-upper/all captures 634/655/774/664/810/730/913 (upper
+// forms lose caller); read-only selected parameters 529. Original helper and body restored.
 // Captured normal with existing squared-length helper 508 plain (rejected: caller 442); final selected-pointer result
 // 570; captured normal plus final pointer 561; completion-assigned result 572 and with normal 573
 // (both lose caller); early color declarations 529; declaration/completion forms 572/573.
 // Native normal copy and its name/scope combinations 613 (caller 510; matched caller lost);
 // captured-normal role names, entry color declarations and entry length 508 (caller 442);
 // inline/noinline declarations 508 (caller 442). Restore original body to preserve caller 364.
+// Round 222: native query-vector field 529; field at every use 567; native query copy 578; original-query squared-length helper 529; native-query length before copy 528; all RGB first products 530; all RGB illumination terms 577; normal memcpy 578.
+// Negative selection bool/byte/short/long 534/534/567/565; with uniform live block count
+// 561/561/531/533. Original selection, count snapshot and every math/helper form restored.
+// Incoming lightmap value before normal: native/component/library copy 551/546/551;
+// after length: native/component/library copy 556/554/556;
+// reused channel scalars 555; native adjusted-value construction 551. All restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1287,6 +1298,7 @@ real function_30bf0(vector3f *vector);
 // limited-normal/turned-normal/all homes 364/364/364; outer rotation workspace 364.
 // All original normal, copied color and rotation values and helper boundaries retained.
 // Round 152: All rotation-row partial sums/products 364/438; all normalizer products 430 (retail frame/length); normalizer with rotation partials/products 430/449; all RGB blend products 429 (retail frame/length); blend/rotation partials 443; all parallel products 429.
+// Color clamp orders 102/210/201/012/021 386/377/393/393/387; first color scale orders rbg/grb/gbr 364/363/362.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1641,7 +1653,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 790 (was 790): Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
+// score 790 (was 790): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
+// Earlier: Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
 // remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
 // block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
 // Boolean/word/byte capability 790/802/790.
@@ -1667,6 +1680,15 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // homes and helper expansion remain; original complete body and both helpers restored.
 // Native part/index/section records 790/790/790; part/index, part/section, index/section 790/790/790;
 // all three 790; all three with result declared first 790. Real metadata layouts canonicalize.
+// Decoder output reference 790; decoder output pointer result 823; ordinary decoder/color/both
+// 1143/1084/1478; separate noinline decoder/color/both 1140/1597/1958.
+// Frame agrees; status/mesh/sample homes and shared external call boundaries remain. All restored.
+// Late model texture outputs/sample color/combined color at model entry 790/790/796;
+// texture plus sample/texture plus combined/sample plus combined/all three 790/796/796/796;
+// all three at function entry 793. Frame/result/mesh and external helper boundaries remain.
+// Round 181 material noinline 807; native status/mesh, vector, color, barycentric sample and combined role homes 790/790/790/790/790; single result exit 834; combined homes with material noinline 807 (fast); all restored. Frame 0x90 agrees; result/mesh/sample/UV homes and material/magnitude expansion remain.
+// Round 327: status tests 800; phase failure default 796; current group/index/data fields
+// 801/811/819; status tests with group/index 802/816; phase default with group and indices 815.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

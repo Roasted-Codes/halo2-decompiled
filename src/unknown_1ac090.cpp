@@ -175,6 +175,9 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
 // force-inline second/both/first rounding results 85/70/68; native result with both 78.
 // Zero-frame forms regress allocation or expansion.
+// Round 323: long/word/dword/real delay with second writer 88/85/105/105;
+// the same delay carriers with native second output 88/85/105/105. Conversion-input packing
+// restores zero frame in some forms but regresses allocation; original body restored.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -777,6 +780,13 @@ bool function_1f8660(long arg_0);
 // Round 358: Entry selection outputs 174; complete vector role names with cross output 174; failure-default
 // success paths 215; combined work guard 174; positive tag work 174. Actor/result/count and direction homes
 // remain in frame 0x80c; opening body restored.
+// Round 195: complete k-j-i projections/status 174/174; both shared differences 172/172;
+// every component product/status 173/173; both shared differences 172/172. Gains of one/two restored.
+// Round 197: read-only actor/state/both views 174/174/174; distinct selection/validation
+// reference lifetimes alone/actor/state/both 174/174/174/174; actor lookup at every use 230.
+// Round 323: vehicle field at each use 174; radius read once 191; shared projections
+// 194; vehicle/radius 191; vehicle/projections 194; radius/projections 213; all 213; radius
+// and projections with native vehicle index 213. Original actor/result/count and direction homes remain.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1235,13 +1245,18 @@ struct s_1acda0
     byte unknown3c[0x40 - 0x3c];
 };
 
-// score 114 (was 114): frame 0x764 agrees; slot ESI arrives late, boolean test and exit traffic differ.
+// score 68 (was 114): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
+// Round 195: retained/default-false active result 139/106; each with direct child result 129/68;
+// complete timer predicate with those four 139/129/106/68. Default-false publication and child result kept.
 // Round 128: native data member 114; receiver before result/before actor/before first exit
 // 159/159/159; child result publication and direct return 118; request entry lifetime 118;
 // result/search role names 114; plain result 206. Early ESI, Boolean test and exit traffic remain;
 // all restored.
+// Round 323: existing actor getter 193; prop-index observation 114; common empty
+// reference 124; getter/index 193; getter/reference 188; index/reference 124; all 188;
+// all with conditional prop selection 187. Early ESI and Boolean/result traffic remain.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {
@@ -1269,9 +1284,11 @@ bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
     }
     if (!local_1->unknown0d)
     {
+        bool active = false;
         if (((s_actor_view *)g_4f55f0->data)[arg_0 & 0xffff].unknown504 == 2)
         {
-            if (!local_1->unknown10 &&
+            active = local_1->unknown10;
+            if (!active &&
                 (!local_1->unknown25 || local_1->unknown3a && !function_110ab0(local_0->unknown018)))
             {
                 if (local_3)
@@ -1281,18 +1298,18 @@ bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
                     function_e68c0(0, local_0->unknown018);
                     local_1->unknown3b = true;
                 }
-                local_1->unknown10 = true;
+                active = true;
             }
         }
-        else
-            local_1->unknown10 = false;
+        local_1->unknown10 = active;
     }
     if (local_0->unknown040)
     {
         if (local_1->unknown0d)
         {
-            local_2 = function_1acb50(arg_0, (s_slot *)local_1);
-            return local_2;
+            bool child_result = function_1acb50(arg_0, (s_slot *)local_1);
+            local_2 = child_result;
+            return child_result;
         }
         if (function_1f8660(arg_0) && !REFERENCE_EQUAL(local_0->unknown418, g_470fa0))
         {

@@ -778,13 +778,15 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 }
 
 /* the camera director of scripted cameras: fills the observer's command */
-// score 245 (was 245): frame 0x48 agrees; direction preload, length/zero
+// score 245 (was 245): frame 72 agrees; direction preload, length/zero XMM roles and flag stores differ.
+// frame 0x48 agrees; direction preload, length/zero
 // registers and memory flag updates remain.
 // Earlier 241 (from 241): frame 72 agrees; direction preload, length/zero XMM roles and flag stores differ.
 // Source-field reference 245; copied-normal squared length 258; adjacent trig factors 246;
 // native pan point 290; separate final state pointer 245 (unchanged reduced preview 245).
 // frame 0x48 agrees; direction preload and length/zero XMM roles, flag RMWs and interpolation differ.
 // Entry flag result 459; depth one 245; native plane construction 248; matrix return 326; point-category conditionals 272.
+// Earlier 244 (was 246): direction preload, length/zero registers and flag stores still differ.
 // Earlier 244 (from 246): direction preload, length/zero registers and flag stores still differ.
 // native point state 401p; native pan state 246p.
 // final result local scope 246p; reuse clamped pan fraction 312p.
@@ -793,6 +795,7 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // direction preload, length/zero XMM roles, flag stores and timer differ.
 // Forced dot/plane/tick expansion 247 each; each pair and all three 247;
 // all three plus immutable command pointer and scale 253 (fast base 247).
+// Earlier 245 (was 245): frame 0x48 agrees; projection preload, length/zero
 // Earlier 245 (from 245): frame 0x48 agrees; projection preload, length/zero
 // registers and flag stores remain. Intrinsic copies of the normal 245, basis 401,
 // output axes 245, pan axes 245, position 245, animation 245; projection copies
@@ -800,9 +803,13 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // frame 0x48 agrees; direction preload, XMM roles and flag updates remain.
 // Existing line helpers 368p/371p; fraction-home and output-record combinations 368p/367p/367p.
 // External command record 236p (one executable row); pan/view fraction homes 245/245.
-// Earlier 245 (from 245): direction preload, length/zero registers and memory flag updates remain.
+// Earlier 245 (was 245): direction preload, length/zero registers and memory flag updates remain.
 // Projected output orders yxz/zxy/yzx/zyx/xzy 245/245/388/388/245;
 // default basis up-left-forward/left-forward-up/forward-left-up 248/248/247 (fast).
+// All three reused direction scalar components, six observation orders 473 each
+// (frame 0x4c, 1724 bytes); complete normal from those scalars, ijk/jik orders 487/487
+// (1664 bytes). Original field observations, plane copy, helpers and float groups restored.
+// Earlier 245 (from 245): direction preload, length/zero registers and memory flag updates remain.
 // Native projection/position/animation flag bit views, alone and all
 // combinations, 245 each (233 executable rows); full dword bitfield 401
 // (382 executable rows). Original dword field, complete body and helpers restored.
