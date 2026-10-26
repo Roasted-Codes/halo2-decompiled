@@ -1172,7 +1172,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 112 (was 165): frame 0x1144 and extent agree; file displacement, request-copy and validity joins remain.
+// score 112 (was 112): frame 0x1144 and extent agree; file displacement, request-copy and validity joins remain.
 // Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
 // frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
@@ -1223,6 +1223,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Round 183 request output address with path first / after access metadata / after access rights /
 // before buffering 117/116/116/114; separate reused slot long/dword/short/word
 // 112/112/286/286 (fast). All restored; file displacement, task copy and validity joins remain.
+// Round 185 resize-derived write success bool/byte/short/long 112/112/203/185; complementary
+// failure 200/200/205/205 (fast). All restored; displacement, request copy and validity joins
+// remain.
 // @retail 0x213970
 void function_213970(void)
 {

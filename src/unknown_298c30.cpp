@@ -308,6 +308,8 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Round 180 trace-clear states reverse/forward/center/both edges/reverse-center/forward-center/all/byte
 // center 802/802/778/754/771/764/782/778 (fast); all restored. Frame 0x11c/0x114, eager radius and
 // trace/pivot homes remain.
+// Round 185 obstacle-facing result bool/byte/short/long 749/749/775/777; complementary result
+// 749/749/775/777 (fast). All restored; frame 0x11c/0x114 and radius/trace/pivot homes remain.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

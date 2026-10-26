@@ -150,7 +150,7 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 231 (was 266): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
+// score 158 (was 231): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
@@ -176,6 +176,9 @@ void player_action_initialize(s_player_action *arg_0);
 // declaration fallback with short/bool 255/379; combined permission 376; snapshot after object lookup 258;
 // after selection stores with short/bool/byte 252/231/231; late snapshot plus bool/short fallback 366/369.
 // Late coherent request and Boolean permission 231 plain; selection/count and cold output scheduling remain.
+// Round 185 late complete flags byte/word/short/signed byte with bool permission 158/319/319/158;
+// with short permission 279/246/246/288 (fast). Native unsigned byte flags with bool permission
+// kept at 158 plain; every value, observation boundary and call tuple unchanged.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
@@ -208,7 +211,7 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
         s_186ab5 *local_4 = ((s_186ab6 *)g_4e0300->data)[local_1->field_0 & 0xffff].field_8;
         if (local_1->field_28 != local_4->field_214)
             *(long *)&local_1->field_28 = *(long *)&local_4->field_214;
-        dword request_flags = local_3.field_1c;
+        byte request_flags = local_3.field_1c;
         bool local_5 = (request_flags & 1) != 0;
         char local_6 = local_1->field_2a;
         if (local_4->field_213 != NONE)
