@@ -165,9 +165,13 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 	*timer = (short)ticks;
 }
 
-// score 68 (was 80): frame eight versus retail zero; mode compare and entry scheduling remain.
+// score 68 (was 68): frame eight versus retail zero; mode compare and entry scheduling remain.
 // Both timer helpers 85; add helper 68 plain kept; set helper 80; native tick outputs
 // both 72, first 70, second 80; shared random index 80; library slot copy 80.
+// Round 138: mode predicate/shared clock/both 68/68/68; shared rate 84; second rounding-result
+// helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
+// force-inline second/both/first rounding results 85/70/68; native result with both 78.
+// Zero-frame forms regress allocation or expansion.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -296,6 +300,9 @@ short __stdcall function_1ac3f0(long actor_index)
 // 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
 // Native character readonly/reference/value 35/35/82; double scale/delay/both 35/74/74;
 // character reference/value plus double scale 35/82. Seed reload and scale pop remain.
+// Round 138: shared seed pointer/record 58/58; shared clock alone/with seed 35/46; common rate
+// alone/with seed 86/91; first conversion input and second output entry homes 35/35.
+// Intermediate seed store and early scale pop remain.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -752,7 +759,6 @@ s_slot_handler_2 g_47dc88 =
 void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
-
 // score 174 (was 174): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
 // Result first 203; request outer scope 187; role names 181; shared point differences 179;
 // failure result before release 207; shared cross product 174.
@@ -762,6 +768,9 @@ bool function_1f8660(long arg_0);
 // Short/native-long success 232/228; unsigned selection count 174; native zero/kind request
 // initialization 172/173; status-output name 174; const tag input 174; request through validation 174;
 // success from availability 217; direct exits with failure retained through release 232.
+// Round 358: Entry selection outputs 174; complete vector role names with cross output 174; failure-default
+// success paths 215; combined work guard 174; positive tag work 174. Actor/result/count and direction homes
+// remain in frame 0x80c; opening body restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1068,6 +1077,9 @@ struct s_1ac9e1
 // Actor readonly/reference 48/48; readonly location and direct reference comparison 48/48;
 // query-outcome flags alone/with actor record 88/88; nested endpoint guards and named
 // direction length 48/48. Count/completion and history exit reload still differ.
+// Round 138: query-only output scope 126; entry result 48; both 126; fallback result flags 48;
+// query scope with result flags 126; explicit direction stores 50; scope/direction 136; entry
+// result/direction 50. Count and completion byte lifetimes remain.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)

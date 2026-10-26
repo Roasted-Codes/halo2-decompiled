@@ -406,7 +406,7 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	}
 	return result;
 }
-// score 58 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
+// score 58 (was 58): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
 
 // seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
 // Shared rounding 66; direct scaled rounding 74; separate scaled timer 63; result-first rounding 66;
@@ -421,6 +421,10 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 // const receivers 63; input names 63; actor clear before timer store/conversion 63/63.
 // Native flag memset/value reset 63/58; late receiver with either 63/58; final-accessor resets
 // 60/64; late final-accessor resets 60/64.
+// Native record clear before slot stores/after zero pair/after property/before tick product
+// 58/58/58/58; those placements with shared conversion 64/61/62/61. Opening body restored.
+// Native flag fields/chain, direct/member receivers at final reset 63/63/63/63;
+// the same complete field resets before tick conversion 63/63/63/63.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
@@ -624,6 +628,10 @@ short actor_behavior_find_level(long owner_index, short type);
 // Round 110: radius aggregate 140 plain; redundant zero stores omitted 167; selected actor name 144; movement scope 144; search construction scope 144.
 // Library source clear 144; complete source aggregate 219; unsigned candidate 140, with clear 144;
 // slot state view 140, with clear 144; captured successor 143; aggregate and unsigned candidate 219.
+// Admission-result join 166; typed search buffer 140; both 166; candidate-first distance comparison 140;
+// comparison with admission/buffer/both 166/140/166; native settings initialization 215.
+// Native start/candidate/both/selected location receivers 159/139/161/139;
+// start-selected/candidate-selected/all receivers 158/138/160; all with query-output scope 160.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

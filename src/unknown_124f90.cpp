@@ -1226,7 +1226,7 @@ long function_2197f0(real gain);
 
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
-// score 162 (was 162): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
+// score 149 (was 162): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
 // Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
 // Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
 // shared fade-in duration 162; distinct-ambience case first 163.
@@ -1236,17 +1236,19 @@ long function_2197f0(real gain);
 // shared fade time 162; both fade workspaces 162.
 // Hold duration snapshot 165; ambience time snapshot 173; ducking gain snapshot 165;
 // upper-first release clamp 162; all three snapshots 178 (fast); all restored.
+// Both ambience indices 170; readonly fade 162; equality-first admission 198; shared ducking pointer 162; native class ordinal 149 kept plain; int ordinal 149; ordinal with unsigned gain 149; ordinal with common gain result 157.
 // @retail 0x127010
 long function_127010(short class_index)
 {
-	s_sound_class_fade *fade = &g_502118[class_index];
+	long index = class_index;
+	s_sound_class_fade *fade = &g_502118[index];
 	long gain = fade->current;
 
 	if ((byte)~fade->flags & 1)
 	{
 /* retail calls the class lookup out of line here */
 #pragma inline_depth(0)
-		s_sound_promotion_view *sound_class = (s_sound_promotion_view *)function_221810(class_index);
+		s_sound_promotion_view *sound_class = (s_sound_promotion_view *)function_221810(index);
 #pragma inline_depth(255)
 		s_sound_system_view *sound_system = SOUND_SYSTEM;
 
@@ -3382,6 +3384,7 @@ struct s_128ca0
 // pitch-range rereads 258; existing-stream branch first 235; recovered-frame form with shared scale 237.
 // Definition after packet initialization 237; branch gain writeback 234; current-chunk candidate 234;
 // sequential gain workspace 234; direct processed-gain initialization 234 (fast); all restored.
+// Pitch lower snapshot 273; native flag3 view 236; pitch workspace subtraction 234; zero-default controller gain 267; readonly parameter/range views 234 (fast); all restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3574,6 +3577,7 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // quaternion 551; entry queried position 551.
 // Weighted cross terms 596; projection products 596; scaled-input terms 590; rotation subtotals 596;
 // vector-first publication 535 (fast); all restored.
+// Shared handle query 575; complete rotation outputs 1050; quaternion cross helper 1050; unsigned listener ordinal 557; plain environment cursor 649; positive entry scope 535 (fast); all restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {
