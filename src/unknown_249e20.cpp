@@ -172,7 +172,12 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 
 /* the distance sound travels between two clusters */
 #pragma optimize("s", on)
-// score 65 (was 76): entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
+
+// score 65 (was 65): No frame; entry zero/default constants and branch-only saves differ.
+// Minimum/maximum/both first-input results 65/65/65; minimum/maximum/both return paths 63/66/63;
+// conditional extrema 63; byte sample with first-input extrema 75. Sub-four gains and
+// matched-neighbor losses rejected.
+// entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
 // Maximum sentinel first 88; interior interval first 82 kept; integer sample 88; read-only audibility 88;
 // ordered cluster parameters 91; named pair index/range 88/88; direct fallback 84; both boundaries 82.
 // Unequal-cluster scope 81; fallback first 81; total result assignment 82; zero/upper

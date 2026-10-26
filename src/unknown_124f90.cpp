@@ -3021,7 +3021,10 @@ struct s_animation_ref;
 void function_219310(s_animation_state *state, s_animation_ref *ref, short value);
 long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 
-// score 86 (was 86): playback base/clock scheduling and promoted mode remain; acquisition/free/load
+// score 86 (was 86): Frame 8 agrees; playback base, clock scheduling and promoted mode remain.
+// Retained clock receiver 163; voice record reference 86; combined receivers 163; role names 86;
+// native update/mode/both flag words 86/86/86; receiver plus native flags 163.
+// playback base/clock scheduling and promoted mode remain; acquisition/free/load
 // inline combinations and stdcall acquisition 86 each; declared mode/flags/both 86 each; shared datum
 // iterator 196.
 // Loop-entry playback/clock loads and mode comparison remain.

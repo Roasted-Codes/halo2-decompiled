@@ -2401,7 +2401,11 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
-// score 59 (was 181): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
+// score 59 (was 59): Frame 0x74 agrees; early I retention, normalized stores and final output
+// home remain. Pointer/void results 59/59; vector value result 315; separate normalized
+// direction/alias/distinct outputs 196/199/185; vector reference 59; separate reference output
+// 196.
+// frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
 // Earlier 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
 // Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
 // early missing-object return 181; separate impulse buffer 251.
@@ -2937,7 +2941,10 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
-// score 88 (was 112): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
+// score 88 (was 88): Frame 0x94 agrees; early scale/default branch and point SSE/render setup
+// remain. Point/normal/both reverse captures 308/187/202; shared color scale 325; existing point
+// operation 548; color with point/normal/both captures 324/327/327.
+// frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
 // lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
 // initialization 112.
 // Readonly tag/event/part/all metadata 112 each; location cursor home 112; vector homes 112;
