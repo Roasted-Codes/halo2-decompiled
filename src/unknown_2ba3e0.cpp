@@ -338,7 +338,7 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
     }
 }
 
-// score 249 (was 249): frame 0xb8/0xb4, scalar/vector homes and staged stores differ;
+// score 249 (was 249): Frame 0xb8 versus 0xb4; cache/steering/estimate/inverse homes and staged stores remain.
 // component loops: velocity plus change 248; velocity plus previous 288;
 // attraction addition 280; change scale 269; maximum-change scale 269.
 // Shared inverse 249; shared squared length 277; both carriers 276; unsigned handle 249; attraction scale loop 269.
@@ -351,6 +351,8 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // frame 0xb8/0xb4 and scalar/vector/cache homes remain;
 // Round 342: later nearest-result lifetime 360; successor after nearest 320; property-field
 // rereads 324; shared previous-velocity scale 249; shared final speed scales 269.
+// Round 215: independent minimum/maximum/change limits 278/270/280;
+// independent minimum+maximum limits 274; minimum+change limits 264.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

@@ -17,8 +17,8 @@ real function_30bf0(vector3f *v);
 PRIVATE __forceinline void function_120221(vector3f const *a, vector3f const *b, vector3f *out)
 {
 	real k = a->i * b->j - a->j * b->i;
-	real j = a->k * b->i - a->i * b->k;
 	real i = a->j * b->k - a->k * b->j;
+	real j = a->k * b->i - a->i * b->k;
 	out->i = i;
 	out->j = j;
 	out->k = k;
@@ -149,11 +149,8 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 /* two-bone inverse kinematics: moves the middle node so that the chain from
    the root reaches the target (clamped to the chain's reach), rebuilds the
    root and middle axes and copies the target into the end node */
-// score 26 (was 232): what still differs is operand order. In the four
-// cross products on the node axes retail loads a->j before b->i in k and a->k
-// before b->i in j, where ours loads b->i first; new_mid.x is
-// `movaps xmm1, xmm0; mulss xmm1, [ebp]` in retail and the 1-byte-longer
-// `movss xmm1, [ebp]; mulss xmm1, xmm0` in ours.
+// score 2 (was 26): one product's operand order remains: in the second root cross
+// product (up x forward into left) retail loads up->k before forward->j.
 // Tried: lift as a vector (232) or three scalars (216); the direction kept in
 // a delta vector (215); u = inverse * delta, u in k-i-j order, vector3f_scale
 // (215-223); delta scaled in place (308); 1 / root_target written inline
@@ -161,9 +158,14 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 // directly, cross3f (174), with its components in i-j-k, j-i-k or j-k-i order
 // (50; k-j-i, k-i-j and i-k-j give 26), or with each product's operands
 // swapped (26); new_mid.x as root_forward->i * mid_root (26); the node axes
-// written as root->forward etc. without the pointer locals (59).
-// score 26 (was 26): frame 0x30 agrees; cross-product operand loads and the extra midpoint MOVSS byte remain.
-// Six product values 28; cross accumulators 34; first/second/both input copies 512/565/741; returned cross value 462; cross reference parameters 26; local interpolation helper 28.
+// written as root->forward etc. without the pointer locals (59); six product
+// values 28; cross accumulators 34; first/second/both input copies 512/565/741;
+// returned cross value 462; cross reference parameters 26; local interpolation
+// helper 28. Round 69: k-i-j components with root_left declared after
+// root_forward and mid_up before mid_forward 2; then height as a ternary 2;
+// i-k-j components 2; root_up before root_left 2; new_mid declared at the top 2;
+// new_mid.x as root_forward->i * mid_root 2; any one node pointer local dropped
+// 18-39; new_mid computed earlier 31-52; other component store orders 8-29.
 // @retail 0x120220
 void function_120220(
 	transform4x3f *target,
@@ -217,9 +219,9 @@ void function_120220(
 		else
 			height = 0.f;
 
-		vector3f *root_left = &root->left;
 		vector3f *mid_left = &mid->left;
 		vector3f *root_forward = &root->forward;
+		vector3f *root_left = &root->left;
 		vector3f *root_up = &root->up;
 
 		root_forward->i = along * u.i + e.i * height;
@@ -237,8 +239,8 @@ void function_120220(
 		new_mid.y = root_forward->j * mid_root + root->position.y;
 		new_mid.z = root_forward->k * mid_root + root->position.z;
 
-		vector3f *mid_forward = &mid->forward;
 		vector3f *mid_up = &mid->up;
+		vector3f *mid_forward = &mid->forward;
 
 		mid_forward->i = remaining * u.i - e.i * height;
 		mid_forward->j = remaining * u.j - e.j * height;
