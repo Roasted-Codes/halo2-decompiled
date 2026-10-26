@@ -1742,15 +1742,19 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 
 /* samples a weapon's animation, its overlays and its sway into the user's
    orientations, then builds the weapon's node matrices */
-// score 455 (was 468): root/channel homes still overlap in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
+// score 455 (was 455): frame 0x58 versus 0x78; root/channel overlap and copy/sway homes remain.
+// root/channel homes still overlap in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // blend time true arm 506; ammo nonnegative path first 463; adjustment flag from index 460; arms model read
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
 // read first 478; ammo channel before lookups 526; ammo channel before state view 470
-// score 455 (was 455): Frame 0x58 versus 0x78; root/channel overlap and copy/sway allocation remain. Model count snapshot 556; vector adjustment helper 471; negative sway first 465; ammo-count boundary 459; early magazine maximum 462 (plain).
-// score 455 (was 455): Frame 0x58 versus 0x78 and copy/sway homes remain. Zero-initialized root 602 (frame 0x78); direct blend time 455; conditional weight 497; adjustment index 464; native orientation copy 455 (plain).
+// Frame 0x58 versus 0x78; root/channel overlap and copy/sway allocation remain. Model count snapshot 556; vector adjustment helper 471; negative sway first 465; ammo-count boundary 459; early magazine maximum 462 (plain).
+// Frame 0x58 versus 0x78 and copy/sway homes remain. Zero-initialized root 602 (frame 0x78); direct blend time 455; conditional weight 497; adjustment index 464; native orientation copy 455 (plain).
 // root/channel overlap leaves frame 0x58 versus 0x78; channel after initial
 // sample 525; root before state bit 455; transform memcpy 455; node count before root 455;
 // conditional ammo cap 455 (plain).
+// Root after initial animated fill 597; orientation count retained 560; final
+// component subtraction loop 488; model component memcpy 456; promoted map result 474
+// (fast; unchanged preview 456/2166 versus full baseline 455/2154).
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
