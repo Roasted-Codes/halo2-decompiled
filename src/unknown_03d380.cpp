@@ -594,6 +594,9 @@ void __stdcall function_1889d0(dword flags)
 // Tag/volume/reset/final-callback inline-noinline declarations 62 each; tag iterator/global receiver/both names 62 each; composite release predicate 151.
 // Tag field reads 62; flag word reads 110; both reads 110; native bitfield snapshot 128;
 // direct snapshot bits 154; snapshot plus tag reads 128; per-use bits 110; bits plus tag reads 110.
+// Active-state-first/pool for/release continue/active for 62/62/62/62;
+// whole record input 195; active record input 183;
+// record pool for/release continue 195/195.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {

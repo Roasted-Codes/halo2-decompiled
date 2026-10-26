@@ -117,6 +117,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Native entry/chain/both descriptors,
 // First/second/both native mask loops 152/180/180; published table/record/both field lifetimes
 // 289/283/307; native signed packed carriers 153; signed carriers with table field 289.
+// Readonly definition/pass/both 153/153/153; first/second/both native record copies
+// 153/153/153; range publication at consumer 153; copies with late publication 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -677,6 +679,8 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 // zero/one and interval SSE carriers, then remap-spill scheduling differ;
 // bound declaration order 22; lower/upper names 22; sample name 22; named span 22;
 // bounds after clamp 25; reversed remap cases 231; separate remap result 22; color first 154.
+// Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
+// native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
 // @retail 0x1b580
 bool function_1b580(byte const *definition, long component, long unused, long mode, real *out)
 {

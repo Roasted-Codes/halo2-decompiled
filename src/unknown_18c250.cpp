@@ -143,6 +143,8 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 // Recovered normal body: Boolean first 76; byte first 73; Boolean after lookup 78; long after lookup 56;
 // direct class receiver 55; direct class with Boolean 76; native workspace names 55; success before
 // publication 55.
+// native byte type after normal gain 113; readonly object 55; readonly matrix 55; named machine row 55; native
+// row first 55; high location fields first 65; cluster-derived result 197; eligibility-derived result 199.
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {

@@ -100,6 +100,10 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
 // diagnostic/enumeration scratch rotation remain. Post-copy success/early-capacity exits 54/54;
 // wide result 51; list/entry/both references 32/32/32; count plus array pointer/reference inputs
 // 32/32.
+// diagnostic, append and enumeration scratch-register rotation remains; root library clear
+// 207f; full character value 39f; character read at each use 73f; earlier ASCII buffer declaration 32f;
+// append record value 89f; clear/full character 209f; full character/buffer 39f; clear/direct reads/buffer
+// 211f.
 // diagnostic arguments, append count/result and enumeration registers differ.
 // File path/directory/both receivers 51/51/51; conditional character store 69;
 // capacity first 54; capacity nonzero 51; short type index 189; no parameter address 51.

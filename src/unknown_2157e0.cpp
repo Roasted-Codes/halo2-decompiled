@@ -53,7 +53,11 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 	return (handle << 8) | (type & 15);
 }
 
-// score 91 (was 91): adjusted-table spill, retained pre-copy clears and current-index allocation differ;
+// score 91 (was 91): adjusted-table spill, removed pre-copy clears and current-index spill remain;
+// progression after copy 139f; direct copy with late progression 139f; source before index 139f; unsigned
+// current with late progression 139f; role homes 91f; late progression/role homes 139f; library copy/late
+// progression 139f; single real index 122f.
+// adjusted-table spill, retained pre-copy clears and current-index allocation differ;
 // complete cache fields, native location/table types, both together, native value initialization,
 // real table subobject reference, type comparison reversed, readonly native table and
 // native terminator library clears each 91.

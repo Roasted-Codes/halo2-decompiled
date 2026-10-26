@@ -901,6 +901,10 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Complete speed square/all component squares 151/151; each with saved-word lexical homes
 // 151/151; each with scalar homes 151/151; complete magnitude with both home groups 151;
 // complete speed square with existing out-of-place scale 151 (fast).
+// response flag result arms 361; complete reflection dot 151; shared reflection products 164; native reflection
+// vector 164; complete response vector 185; existing rounding helper 151; response arms and collision fill 361;
+// dot with native reflection vector 164; rounding with reflection products 163; rounding with reflection vector
+// 163; rounding with native query count 154; rounding/count/reflection products 166.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1084,6 +1088,9 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // mask setter 14. Changed single-use word carrier is exact-only; all restored.
 // Direct force query 101; velocity-input/complete-input/nested-input scopes 94/94/94; direct query
 // with those input scopes 101/101/101; direct query with reversed orientation result 101 (fast).
+// existing rounding helper 101; chained sentinel words 96; native sentinel library fill 278; byte parent
+// countdown 94; postfix parent countdown 100; shared final flag clear 94; signed short force 16; rounding helper
+// with signed force 62.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

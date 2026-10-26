@@ -2571,7 +2571,8 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup remain.
+// score 313 (was 313): frame 0x104 versus 0x100, incoming point/up eligibility and record/call setup remain.
+// frame 0x104 versus 0x100; point/up eligibility and record/call setup remain.
 // Placement name 345; request name 345; retained decal seed pointer 313;
 // direct case returns 345; failed-placement guard 345.
 // Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
@@ -2581,7 +2582,10 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // scale 313.
 // Shared damage direction 313; retained light object 313; retained sound object 313;
 // object-case random record 313; full-width sound node 313.
+// Word flags/admission 319/319; word flags/direct radius 309 plain (caller 200 versus 166, rejected); admission/chained copies/shared seed 313 each; word flags/shared seed 319; vector CRT copies 313; byte detached with word flags/direct radius 309 (caller 200).
 // Native velocity loop 313; native placement component loop 342; detached flag first 318; separate character guards 313; location-before-owner copy 319.
+// Decal velocity at entry/created-object guard/native node admission/active cases by value/immutable sound
+// record 313 each; direct default flag 322; position before origin/case order plus velocity lifetime 313/313.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2728,6 +2732,8 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Detached signed byte 163 (three-point gain dropped); word/long 378/380; reversed signed byte/word
 // 166/288; mode result byte and creation result long 166 each; detached/mode bytes 163;
 // detached byte with two-use lower bound 163. All executable forms restored.
+// Live mode/reversal/location fields 342/240/166; live location plus mode 371;
+// conditional scale initializer 170; random-result lifetime 167; native tag record 166; live fields plus scale 375.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2876,6 +2882,8 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Unsigned effect/player/both indices 176/176/176; native result byte 176;
 // condition-local location 176; entry unit/scan player lifetimes 176/176;
 // readonly effect metadata 176. Original body, native widths and metadata restored.
+// Accumulated/selected test result 184/176; result after pool query/signed-byte result/function delta 176 each;
+// live tag radius/live unit fields 254/254; live tag with accumulated result 258.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

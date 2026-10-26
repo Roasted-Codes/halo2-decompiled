@@ -33,6 +33,9 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 
 // score 21 (was 21): single late retained object load and five-byte extent gap remain.
 // Earlier: retail reads the object index once, after the playback call, into
+// late object carrier/reload still adds five bytes; qualified object refresh 100f/85p;
+// playback then refresh 101f/35p; chained request zeros 121f; initial result 118f; refresh with zeros
+// 103f/85p; object-first admission 118f; byte positioned state 118f; refreshed nested admission 100f/85p.
 // retail reads the object index once, after the playback call, into
 // ebx and copies it to esi for the call; ours reads it into esi at the call and again
 // into ebx for the started test (526 bytes). Argument-list assignment 85; plain reads

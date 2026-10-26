@@ -74,6 +74,8 @@ public:
 // Round 201: Activation positions 1/3/4/5/6 221 each; reused influence 240; complete viewer arms 238; chained initialization 221; count/handle lexical pair 221; conditional accumulator update 276.
 // Round 113: Native viewer state member 221; early child head with shared-index/falloff context 222; child metadata byte cursor 221; default-first reused override float 221; separate allocation handle 228.
 // Round 117: Activation in viewer loop 247; child while 221; range-success first 221; native child table 221; reused range limits 243.
+// Activation after copy 224; early head with late activation 223; count after position 221;
+// combined entry publications 223; named scaled distance 221; coordinate names 221; NONE links first 221; predecessor before head 221.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

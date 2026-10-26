@@ -156,6 +156,9 @@ public:
 // Pointer-derived indices: range-first-return 46; range-completed-test 70; range-native-result 91;
 // range-exhausted-exit 75; range-ordered-bound 46; range-local-object 92; range-computed-index 97;
 // range-result-from-count 84.
+// Descriptor base before cursor/bound/after cursor 39/39/33; live count 39;
+// base with entry short/word/wide result 41/39/41; positive-domain base 32.
+// All include the aligned upstream caller; preliminary one-source scores excluded.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {
