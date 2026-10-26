@@ -45,6 +45,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // bytes but regress.
 // Round 357: Simple pending/masked-active/both arms first 248/216/246; all query kinds
 // after their queries 275; single-handle counts after callbacks 275. Opening body restored.
+// Enabled/nonempty count initialization 230/219; narrow pending/active array names
+// 217/217; pending-before-ready/active-before-waiting names 217/217; enabled count
+// with pending-before-ready 230; nonempty count with active-before-waiting 219.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

@@ -1580,7 +1580,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 }
 #pragma optimize("", on)
 
-// score 739 (was 754): Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
+// score 739 (was 739): Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
 // user-cursor and identity-word homes differ;
@@ -1604,6 +1604,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Native duplicate index 761; request/completion/both direct player fields 794/754/794;
 // signed/unsigned word completion-player ordinals 755/755; unsigned word completion group
 // 754; duplicate index with unsigned word group 761. Original body retained.
+// Admission-test result 739; eager failure OR 753; positive completion 739;
+// player-result-first OR 739; accumulated signed/unsigned failure 761/761;
+// signed positive completion 759; admission plus positive completion 739.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
