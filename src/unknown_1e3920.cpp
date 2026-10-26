@@ -1586,7 +1586,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
-// score 270 (was 270): Frame 0x14 and actor ESI agree; index/pool roles and scalar/ammunition homes remain.
+// score 270 (was 270): Frame 0x14 and actor ESI agree; input/pool roles and scalar/ammunition homes remain.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
@@ -1608,6 +1608,9 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // remain.
 // Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
+// Round 145: Both ammunition bounds captured, lower/upper/ordinal short-short-short 326, short-
+// short-long 339, long-short-short 333, long-short-long 347, short-long-short 332, short-long-long
+// 340, long-long-short 334, long-long-long 348; all restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
