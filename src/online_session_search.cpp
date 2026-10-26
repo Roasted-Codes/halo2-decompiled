@@ -205,7 +205,12 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 46 (was 46): Frame/length agree; current/bound carriers and request field scheduling still differ.
+// score 36 (was 46): Frame/length and the whole request fill agree; the bound and score section is retail's
+// with EAX and ECX exchanged (current ECX, clamp temporaries/total EAX, score EAX where retail has EDX).
+// Round 87: request filled x, y, count, maximum pair, minimum pair 36 (screen of all 120 orders after x, y:
+// 36..54); with each-use loose read 50; current as field/local, upper first, flags first, ternary clamps on
+// the new order 36/38/36/36.
+// Earlier at 46 (was 50): current/bound carriers and request field scheduling differed.
 // Earlier helper current/total/both inputs 103/51/51; standard lower/upper/both clamps 50;
 // combined inputs/clamps 51; field current 50; shared bound workspace 50; default score first 98;
 // invalid score inputs first 50.
@@ -255,11 +260,11 @@ void function_90b30(s_session_search *search)
 	memset(&input, 0, sizeof(input));
 	input.x = SEARCH_LONG(search, 0x10);
 	input.y = SEARCH_LONG(search, 0x4c);
-	input.has_min = SEARCH_FLAG(search, 0x2c);
-	input.min = SEARCH_LONG(search, 0x30);
+	input.count = SEARCH_LONG(search, 0x38);
 	input.has_max = SEARCH_FLAG(search, 0x24);
 	input.max = SEARCH_LONG(search, 0x28);
-	input.count = SEARCH_LONG(search, 0x38);
+	input.has_min = SEARCH_FLAG(search, 0x2c);
+	input.min = SEARCH_LONG(search, 0x30);
 	memset(search->results, 0, search->unknown88);
 	memset(search->unknown90, 0, search->unknown88);
 	input.has_count = true;

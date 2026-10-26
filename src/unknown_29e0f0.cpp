@@ -237,6 +237,7 @@ struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long f
 // long result 360; library fallback/output record copies 332/332; unsigned primary index 332;
 // inline out-of-line location declaration 392. Original body and shared declaration kept.
 // Round 212: Word path/extra states 364/350; signed-byte append ordinal 333; real counter field 332; fallback-point library copy 332. Frame, request convention and location expansion remain.
+// Round 214: unsigned-byte extra state 332; signed-byte extra state 332; signed-byte path state 338; unsigned-word append ordinal 332; successful exit before failure counter 332.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,

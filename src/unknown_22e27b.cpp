@@ -166,7 +166,12 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
-// score 96 (was 96): Frame 0x10 and timing setup agree; advancing-frame and interpolation carriers differ.
+// score 96 (was 96): Frame 0x10 and timing setup agree; the advance loop is retail's with EAX, ECX and
+// EDX rotated (direction EAX for ECX, frame/flags ECX for EDX, the flag-2 test EDX for EAX), and retail
+// divides the fraction before the key differences. Round 87: fraction before the keys/between keys and
+// delta with every loop-end order 205..207 (next time leaves its stack home for EBX, though the loop
+// registers then rotate to retail's); loop-end orders with the fraction after delta 96/100; no per-pass
+// disposal reset 96; flags word local for the disposal/restart tests 96; direction-first frame sum 96.
 // Earlier at 100 (was 106): frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
 // frame 0x10 agrees; quotient/next-time setup and frame/index registers differ.
 // frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
