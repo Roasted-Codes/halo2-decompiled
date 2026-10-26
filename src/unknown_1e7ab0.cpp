@@ -167,7 +167,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
-// score 631 (was 631): Frame 0x54/type EDX agree; state/player/unit homes remain.
+// score 627 (was 627): Frame 0x54/type EDX agree; state/player/unit homes remain.
 // Earlier 631 from 645: frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // Earlier 649 from 649: frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
@@ -196,6 +196,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // exit 631; flag/empty cases first 631; flag/input-state cases first 653; flag/health cases first 643;
 // flag/weapon-test cases first 653 (fast). All restored.
 // Complete eligibility assigned to returned result in reset cases 10/11/12/13/2/16 632/632/640/640/627/643; all six 693; success result after reset 630. Case 2 kept, plain 627.
+// Non-reset test-produced results: case 14 666; case 9 665; primary tests 664;
+// local-state/vehicle tests 649; direct capability calls 643; health tests 653;
+// status/child results 683; all non-reset groups 697. Original result graph restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

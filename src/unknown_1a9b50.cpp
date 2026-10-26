@@ -659,6 +659,9 @@ static __forceinline long real_to_long(real value);
 // value alone/with distance/with rate/with both 516/575/565/586; complete
 // observations plus paired query names 586. Opening 0x58 frame/body restored;
 // early rejection and magnitude/object/query homes remain.
+// Native predicted point/shared difference 451; x/y/z order and aggregate point 447/447;
+// point plus shared squared length 447; query output scope, scalar names, declaration
+// order and their combination on the point graph 451/451/451/451. Original body restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
