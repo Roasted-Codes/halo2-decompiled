@@ -652,10 +652,13 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 
 long function_1469f0(real seconds);
 
-// score 290 (was 302): First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
+// score 279 (was 279): frame 4/12 and slot/state/transition/flag homes remain.
+// Query, cancellation and execution separate inline/noinline declarations, individually
+// and together, all 280 fast, tying the unchanged preview (full 279). All restored.
+// First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
 // Native signed-word slot 283 fast/290 plain; full-width difficulty 308; shared elapsed 309;
 // cooldown-first 296; fixed initial do scan 340; slot plus cooldown-first 281.
-// score 279 (was 288): frame 4/12 and slot/transition/flag homes remain; cooldown case first reaches retail length.
+// frame 4/12 and slot/transition/flag homes remain; cooldown case first reaches retail length.
 // Selected-state orders 01324/02134/03124/02314/03214/04213/04312/40123: 292/287/280/293/298/302/277/280 fast; last order 279 plain.
 // Byte/word request value 298/293; missing-bit test 317; final byte scan 304 (fast control 293).
 // frame 4 versus 12 and slot/state/flag homes remain.
