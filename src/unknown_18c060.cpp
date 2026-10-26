@@ -57,6 +57,8 @@ bool function_b9d20(long arg_0);
 // shared absolute scan 153; native inline iterator 174; existing datum iterator 170;
 // separate scan admissions 106; guarded bitmap for 106; word division 142;
 // readonly bitmap 106; repeated current handle 106.
+// Inline update/link/object/query declarations 106 each; paired sound/all boundaries 106/106;
+// noinline update/all boundaries 106/106; native flag bit alone/with sound boundaries 106/106.
 // pool retention, datum/scan/handle carriers and location call differ.
 // Ordinary iterator read 131; current-datum consumer 106; both 131; pool names 106;
 // pool/datum names 106; ordinary named carriers 131; ordinary scoped datum 131;

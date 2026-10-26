@@ -1715,11 +1715,9 @@ static __forceinline void first_person_orientations_from_model_16760c(s_16760c_r
 
 		if (graph_node_index != NONE)
 		{
-			s_16760c_orientation *orientation = &orientations[graph_node_index];
-
-			orientation->rotation = node->default_rotation;
-			orientation->position = node->default_translation;
-			orientation->scale = 1.0f;
+			orientations[graph_node_index].rotation = node->default_rotation;
+			orientations[graph_node_index].position = node->default_translation;
+			orientations[graph_node_index].scale = 1.0f;
 		}
 	}
 }
@@ -1742,7 +1740,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 
 /* samples a weapon's animation, its overlays and its sway into the user's
    orientations, then builds the weapon's node matrices */
-// score 455 (was 455): frame 0x58 versus 0x78; root/channel overlap and copy/sway homes remain.
+// score 411 (was 455): frame 0x58 versus 0x78; root/channel overlap and later sway homes remain.
 // root/channel homes still overlap in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // blend time true arm 506; ammo nonnegative path first 463; adjustment flag from index 460; arms model read
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
@@ -1755,6 +1753,10 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Root after initial animated fill 597; orientation count retained 560; final
 // component subtraction loop 488; model component memcpy 456; promoted map result 474
 // (fast; unchanged preview 456/2166 versus full baseline 455/2154).
+// Indexed orientation field outputs 412f/411p; model fields 523f, both receivers 514f;
+// sway weapon input 439f, external scalar reference 456f, both 439f; readonly definition
+// 456f; root-fill inline/noinline 456f; indexed outputs plus weapon input 395f/437p rejected.
+// f: reduced control 456/2166; p: ordinary baseline 455/2154.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

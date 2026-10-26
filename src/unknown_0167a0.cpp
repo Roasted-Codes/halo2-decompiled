@@ -74,7 +74,9 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 153 (was 153): logarithm factor width and restore allocation remain; frame and numeric/reset sequence agree.
+// score 153 (was 153): Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
+// Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
+// logarithm factor width and restore allocation remain; frame and numeric/reset sequence agree.
 // logarithm width/reset schedule and restore/final pointer allocation;
 // frame and numeric/reset sequence agree; logarithm factor width and restore allocation differ.
 // final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
@@ -85,21 +87,27 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Logarithm width and reset/restore scheduling remain;
 // rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
 // record reload after render call 192; raw global-first unions 167.
+// Earlier 167 from 167: Frame and entry agree; logarithm operand width/reset and restore allocation
 // Frame and entry agree; logarithm operand width/reset and restore allocation
 // differ. Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
 // Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
 // record 167; conditional reciprocal 167 (fast).
 // early dirty mask, update byte or late counter pair each 296; first published range 167;
 // second published range 187.
-// logarithm width/reset and restore allocation remain;
+// Earlier 162 from 167: logarithm width/reset and restore allocation remain;
 // final consumers read the actual published record field. Entry-only read 169; pass-only read 167;
 // early saved-tag predicate 298; published-record field reference 162 (plain); equality arms 167.
-// logarithm/reset schedule and restore/final allocation remain.
+// Earlier 162 from 162: logarithm/reset schedule and restore/final allocation remain.
 // Record-field pointer 162; signed entry/pass/both carriers 163/163/164;
 // negated equalities 162; saved tag at both tests 246; dirty-mask cursor 161; both cursors 161 (one-point gains dropped).
-// dirty-word library clear recovers numeric/reset scheduling;
+// Earlier 153 from 162: dirty-word library clear recovers numeric/reset scheduling;
 // logarithm width and restore allocation remain. Native entry/chain/both descriptors,
 // const record and signed change forms 162; update/counter/all/reset-last clears 287/258/307/157.
+// Actual entry offset, chain index, pass index, range index, offset/chain, offset/pass,
+// chain/pass/range and all four named computations each 153.
+// logarithm width/reset and restore allocation remain;
+// logarithm/reset schedule and restore/final allocation remain.
+// dirty-word library clear recovers numeric/reset scheduling;
 // Native entry/pass/range/all word pointers 153/153/153/153;
 // readonly entry words 153; chained counter resets 155;
 // unqualified float-input logarithm 152; reciprocal default first 157.
@@ -109,6 +117,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Native entry/chain/both descriptors,
 // First/second/both native mask loops 152/180/180; published table/record/both field lifetimes
 // 289/283/307; native signed packed carriers 153; signed carriers with table field 289.
+// Readonly definition/pass/both 153/153/153; first/second/both native record copies
+// 153/153/153; range publication at consumer 153; copies with late publication 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -663,9 +673,14 @@ struct s_tag_data;
 dword function_13bc00(s_tag_data const *function, real input);
 color3f *unpack_color3f(dword pixel, color3f *color);
 
-// score 22 (was 22): zero/one and interval SSE carriers, then remap-spill scheduling differ;
+// score 22 (was 22): Frame and calls agree; zero/one/bound registers and remap spill differ.
+// Interpolation arms 76; lower/both field observations 136/136; trig/all arms 203/203;
+// shared trig clamp/arms 219/219; named clamped input 66.
+// zero/one and interval SSE carriers, then remap-spill scheduling differ;
 // bound declaration order 22; lower/upper names 22; sample name 22; named span 22;
 // bounds after clamp 25; reversed remap cases 231; separate remap result 22; color first 154.
+// Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
+// native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
 // @retail 0x1b580
 bool function_1b580(byte const *definition, long component, long unused, long mode, real *out)
 {
@@ -829,6 +844,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
 // Branch entry lifetimes 234; actual remapping-field reference 161; direct completion 155;
 // early mapped index 206; signed value table 155 (fast, with body entry steps). Two-point gains dropped.
+// Direct/mapped signed selector 157/157; special category first 170;
+// ordinary/special bank-one-first arms 159/167.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -914,21 +931,6 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
     }
 }
 
-// score 212 (was 218): component remains stacked instead of incoming EDI;
-// extra EDI save and ret 12 versus ret 8 remain. Native color fields 229;
-// complete dimension initialization paths 212; both 221; scalar case order 218;
-// texture case order 217.
-// score 2 (was 212): entry registers, cleanup and retail length recovered; output-2/3 zero-store pair remains.
-// Component-first signature 212; color-first 224; conditional dimensions 222; scalar tests 210;
-// dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
-// both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
-// shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
-// score 2 (was 2): width-family zero-store pair remains; entry and 704-byte extent agree.
-// Later width/height case owner 2/2; mixed-before-pair 2; unit/zero before mixed 2/111;
-// adjacent dimension families 30; dimension/zero families first 48/61.
-// Final zero-store pair remains reversed. Isolated width chain 6; shared width
-// chain 25; shared width/height cases 21/27; mixed-pair clear 85; width clear/loop 74/95; height
-// clear 61; zero-family clear 93.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {
@@ -981,11 +983,23 @@ bool function_1b2c0(byte const *state, long index, long component, long texture,
         case 11: out[0] = out[1] = 0.0f; break;
         case 12: out[3] = out[2] = 0.0f; break;
         case 13: out[0] = width; out[1] = height; out[3] = out[2] = 0.0f; break;
-        case 14: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 14: {
+            real *zero = out + 1;
+            out[0] = width;
+            zero[0] = 0.0f;
+            zero[2] = zero[1] = 0.0f;
+            break;
+        }
         case 15: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
         case 16: out[0] = width; out[1] = height; out[2] = 1.0f; break;
         case 17: out[0] = out[1] = out[2] = 0.0f; break;
-        case 18: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 18: {
+            real *zero = out + 1;
+            out[0] = width;
+            zero[0] = 0.0f;
+            zero[2] = zero[1] = 0.0f;
+            break;
+        }
         case 19: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
         case 20: out[0] = out[1] = out[3] = out[2] = 0.0f; break;
         default: __assume(0);
@@ -1275,7 +1289,12 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 269 (was 311): Frame and sampler carriers agree; captured descriptors and store scheduling remain.
+// score 267 (was 269): Frame 0x28 and sampler agree; captured descriptors and
+// destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;
+// aggregate colors both/direct/mapped 273/273/269; aggregates with unsigned/signed formal 291/291;
+// aggregates with long source 283.
+// Frame and sampler carriers agree; captured descriptors and store scheduling remain.
+// Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native
@@ -1288,6 +1307,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // shared sampler selector 246; descending component rescale 262 (fast).
 // Recovered sampler with early component mask 269 (plain); interleaved color fields 332;
 // combined component processing 268 (one-point addition dropped); conditional stores/shared counter 269/269.
+// Direct descriptor fields 265 (plain 265, 1198/1225); mapped fields 284; both fields 279;
+// native descriptors 265; separate output descriptors 269; fields/native/separate RGB copies
+// 309/312/315; direct fields plus native mapped descriptors 265 (1197/1225).
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
@@ -1311,8 +1333,7 @@ void function_19ca0(byte *state, word const *range)
             color4f color;
             color.red = values[0]; color.green = values[1]; color.blue = values[2]; color.alpha = values[3];
             dword value = pack_color4f(&color);
-            dword packed = *(word const *)entry;
-            store_shader_mask(state, packed, (packed >> 6) & 15, mask, value);
+            store_shader_mask(state, *(word const *)entry, (*(word const *)entry >> 6) & 15, mask, value);
             entry += 4;
         }
     }

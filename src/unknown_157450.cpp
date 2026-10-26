@@ -3846,13 +3846,17 @@ static __forceinline long nonnegative_15ce70(long value)
 	return value < 0 ? 0 : value;
 }
 
-// score 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
+// score 480 (was 480): Frame 0xe4 versus 0xe0, eager attacker, category/NONE and predicate/event homes remain.
+// Earlier 480 (was 480): frame 0xe4 versus 0xe0; attacker loading and category versus NONE register lifetime differ
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
-// score 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
-// score 480 (was 480): frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
+// Earlier 480 (was 480): Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
+// Earlier 480 (was 480): frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
 // scope 480; decoding before lookup 481; different-player arm first 490; override selection 480; shared
 // message formulas 575.
 // Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
+// Round 201: One reused event 485; distinct inner event names 480; byte different-player 480; byte same-team 480; long different-player 543.
+// Conversion spill names 480; complete special comparisons 577; category-only word 570; modifier-only word 579;
+// plain timed-step for 480. Frame/NONE and event homes remain; helper and body restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4082,14 +4086,18 @@ struct s_score_zone_view
     short count;
 };
 
-// score 481 (was 544): scalar homes now agree; text-workspace and later call/store allocation differ.
+// score 472 (was 472): Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
+// Earlier 481 (was 544): scalar homes now agree; text-workspace and later call/store allocation differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
-// score 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
-// score 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
+// Earlier 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
+// Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
 // differ. Individual palette lifetime 472; exact format mode set 480; common zone maximum scan 886; byte
 // weapon slot 476; early weapon lifetime 689.
 // Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
+// Round 201: Shared team text 469 (three-point gain rejected); shared team color 484; shared iterator after copy recovery 472; native word presence mask 472; short score selectors 608; charge qualifier removed after copy recovery 495.
+// Team color library copies 472; individual iterator chained reset 473; zone iterator chained reset 472; shared
+// zone output index 522; common zone count clear 472. Text/color homes and native zone/charge allocation remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -5037,18 +5045,17 @@ void function_36580(void);
 void function_36880(s_short_rectangle const *rectangle, color4f const *color);
 void function_161420(long player_index, real alpha);
 
-// score 24 (was 24): state/user EDI/EBP swap and final x87 argument scheduling remain.
+// score 2 (was 2): final player register setup precedes the x87 argument store; frame and other instructions agree.
 // value-initialized iterator 158; entry workspaces 42; draw dimensions 24; immutable user 24;
 // frame pointer 173; global optimization disabled 242; float consistency 42; force-inline fraction 24.
 // Double power expression/result 24/51; shared RGB setter 130; alpha-last 24;
 // rectangle-first 118; setter/power 130; branch-assigned intensity 62; combined output fill 130.
-// score 24 (was 24): state/user saved registers and final x87 scheduling remain.
 // Actual flag/tick/both lvalues, timer receiver/receiver with lvalues, shared mask,
 // mask with lvalues/mask with receiver 24/24/24/24/24/164/164/164.
-// score 2 (was 24): only `mov edx, ebx` ahead of the power's fstp before 0x161420 (retail after).
 // Fade by if 127; nested target test 24; power into intensity 2; float pow overload 2;
 // early return for no intensity 4; fraction straight into intensity 52; noinline
 // 0x161420 declaration 2; a 600 s permuter run (39 tries), none below 2.
+// Wide fraction/intensity/both 101/136/136; independent clamps 2; upper first 8; entry intensity/both scalars 2/2; wide upper-first 136.
 // score 2 (was 2): final fstp/player order remains; force-inline panel declaration 2;
 // power-base/fraction names 2/2; const alpha 2; intensity declared first 2; scoped power 2;
 // power into alpha/assignment expression 2/2; terminal player guard 2; power declared first 2.
@@ -5123,7 +5130,8 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 167 (was 167): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// score 167 (was 167): Frame 0x14 versus 0x18 and timer/base homes remain.
+// Earlier 167 (was 167): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
 // reset/scheduling/both displacement producers 175/167/175; outer short index 167; outer countdown
 // pointer 167; pointer with reset/scheduling/both 175/167/175.
 // frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
@@ -5136,6 +5144,9 @@ void __stdcall function_d6bc0(long object_index);
 // Round 173 on the retained query-result order: external entry reference 221; mode if dispatch
 // 164 (three-point gain rejected); conditional reset counter 195; long modifier 184; byte kind 168.
 // Frame 0x14 versus 0x18 and timer/base homes remain.
+// Round 201: Reset-only entry pointer 190; later timer after query recovery 166 (one-point gain rejected); native bool schedule after query recovery 184; type result before slice 223; scenario global at use 231.
+// Native scheduling/activity/both bits 167/204/204; full native object fields 204;
+// Boolean schedule with bits 216; bits with late timer 204; full fields/late timer 204; direct countdown/bits 214.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

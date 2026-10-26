@@ -1216,7 +1216,11 @@ struct s_index_pair
 };
 bool function_0b6760(s_index_pair const *pair);
 
-// score 303 (was 347): Frame 0x1c versus 0x20; index/header and state/result homes remain.
+// score 303 (was 303): Frame 0x1c versus 0x20; index/header/state/result homes remain. Ordinary
+// index 389; ordinary saved pointer 378; both 421; ordinary index with header ordinal 389; both
+// with ordinal 421; both with byte result 413; ordinary saved pointer/index with byte result
+// 386/385. Acceleration producers preserved.
+// Frame 0x1c versus 0x20; index/header and state/result homes remain.
 // Acceleration products 303; speed products 316; both pairs 341; both plus complement 341;
 // delay product 310; acceleration plus delay 303; both plus delay 341; ordinary receiver plus both 378;
 // position/remaining product names 303, plain 303 kept. Sum grouping, fields, calls and existing qualifiers unchanged.
@@ -1233,6 +1237,7 @@ bool function_0b6760(s_index_pair const *pair);
 // Ordinary saved pointer with shared previous 381 at retail length; original qualifiers kept.
 // frame 0x1c versus 0x20 and index/state homes remain; byte result 351;
 // word result 358; shared position complement 347; common group receiver 347; clamp arms 352.
+// Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303; both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c versus 0x20 and index/header/state/result homes remain; all helper declarations restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

@@ -721,6 +721,8 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // forced pitch pin 244; forced bound approach 244.
 // all four forced expansions 244; immutable wrapped range 244.
 // read-only settings 244; native pitch trig input 248.
+// Constant bounds before entry lookup 244; shared clamp early returns/default result/upper result
+// 261/314/285; each with earlier bounds 261/314/285; exhaustively assigned result 313.
 // Shared yaw/pitch minimum 296; shared maximum 297; both 311; readonly seat/camera/unit
 // views 244/244/244, together 244; both shared bounds with readonly views 311.
 // Settings at use 335; settings after camera 262; native pitch interval aggregate/assignments
