@@ -291,18 +291,20 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
-// score 186 (was 199): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
+// score 186 (was 186): frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
 // Earlier 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
 // adds a save and shifts settings homes; constant argument pushes also differ.
 // Native zero initialization 199; complete aggregate values 307; grouped
 // place cases 204; case returns 203; zero initialization and grouping 206.
-// score 186 (was 199): extra EBX save and settings homes remain; native leading
+// Extra EBX save and settings homes remain; native leading
 // defaults for type-four/type-five/both/team/type-four-team/type-five-team/all
 // 229/216/241/204/233/224/249; longer type-four prefix 258.
 // Native settings memset 203; Boolean fields first 200; shared type-four
 // workspace 206; equal-place assignment chain 199; team case first 218.
 // Round 109: Type-four padding-only clear 272; team padding-only clear 204; complete type-five assignment 228; all three forms 301; distinct native case settings names 199.
 // Round 111: Type-five/team/place native scopes 189/196/199; reverse type-four stores 204; type-four cases first 220; combined native scopes 186 kept; type-five value initialization alone/combined 193/190; combined lexical home 186; combined reversed stores 191.
+// Shared place/type-four/type-five case bodies 224/245/227; paired families 250/236/269;
+// all shared case bodies 268; all shared with native type-four zero value 249.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

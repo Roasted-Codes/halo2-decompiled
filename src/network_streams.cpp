@@ -1162,6 +1162,9 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // scalar names/failure join 172; scope/success join/scalar names 271.
 // On the shared failure-result body, byte/bool/signed-byte/long results give 193/219/193/238;
 // native initial-window count/first with short/bool/byte/signed-byte results give 269/278/274/274.
+// Existing release-helper composition 221; reused fragment data 213; terminal loop condition 191;
+// first-sequence/saved-CRC homes 172/172; failure result before payload/after copy 250/224;
+// failure publication order 172; data and terminal lifetimes 254.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {

@@ -921,26 +921,28 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	}
 }
 
-// score 208 (was 208): eight-byte frame and inherited x87 send sums differ.
+// score 200 (was 200): frame 0x10 versus incoming-slot reuse; inherited x87 send sums remain.
 // Levels before flag 208; scalar names 208; depth one 208;
 // size preference 449; shared gain loop 384.
 // With a per-function precision pragma (173, not kept: pragmas other than a file-scope inline_depth
 // steer the compiler) the frame is four bytes and the late level sum remains.
 // Native channel bit 208; const samples 208; immutable input 208; bit/input 208;
 // scoped precision pragma 173; global optimization off 229; frame pointer 225; precision/early sum 224.
-// score 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
+// Earlier: frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
 // Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
 // samples 208/212/206/202; all samples with early send sum 215.
-// score 200 (was 200): frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// Earlier: frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
 // sum after rear pair 212; accumulated sum 212; read-only input contract 200; rear reads reversed
 // 200; rear before levels 201; signed-byte selector 200; unsigned-word selector 197 (three-point
 // gain dropped).
-// score 200 (was 200): Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
+// Earlier: Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
 // left/right after first 206/206; early sum with first/front/staggered rear samples 217/222/225; staggered
 // rear samples 208 (fast).
-// score 200 (was 200): frame 0x10 and inherited x87 sums remain; native input
+// Earlier: frame 0x10 and inherited x87 sums remain; native input
 // assignment or memcpy, each with late/early level sums and rear samples/direct
 // rear fields, all 240. Copies grow the frame to 0x28; original inputs restored.
+// Live offset/base/both levels 208/208/221; live channel flag 199 (one-point gain dropped);
+// live flag with offset/base/both levels 208/208/223; live levels and native flag bit 205.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
