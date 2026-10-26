@@ -49,7 +49,7 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 221 (was 221): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
+// score 221 (was 221): Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata, viewer and child homes differ.
 // Prior shared position base 256; child byte stride 258; direct input 265; radius expression 256;
 // selected influence 259; active first 253; stored gate 256; activation default 284.
 // Early activation 246 with inherited address read rejected; scalar homes 256; short viewer 299;
@@ -66,6 +66,7 @@ public:
 // Shared point setter 287; complete position value 282; persistent override influence 289;
 // viewer-row cursor 281; library position copy 252.
 // Round 111: Per-viewer Boolean override 210 (its 1/0 value written out at each use, not kept); unsigned-word viewer 249; readonly metadata 221; activation-byte contract 221; Boolean/word combination 232; Boolean/late activation 243; Boolean/closed doubles 210.
+// Round 113: Native viewer state member 221; early child head with shared-index/falloff context 222; child metadata byte cursor 221; default-first reused override float 221; separate allocation handle 228.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
