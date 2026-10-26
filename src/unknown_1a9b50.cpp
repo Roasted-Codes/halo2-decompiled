@@ -406,7 +406,8 @@ real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
-// score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
+// score 375 (was 375): frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
+// Earlier: frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // actor-table/result/prop carriers still differ; first
 // actor-table/result/prop carriers still differ; first
 // prediction loop 391; second prediction loop 391; planar reverse loop 391;
@@ -440,6 +441,8 @@ extern point2f *g_468778;
 // branch-derived prop receiver 399; read-only actor 375; final rejection expression 375; nested admission 374; prop result with later direction 404.
 // Actor lookup at use 524; velocity/position/both values 405/417/406;
 // all projection products 375; products with live actor 516; clock at use 391; products with prediction values 406.
+// Target velocity/position/both pointers at prediction 397/377/392; at receiver 434/383/425;
+// position/both with separate second time 377/425.
 // Earlier at 375 (was 379): frame 0x40 agrees; early actor/settings/prop carriers remain.
 // Existing point-difference helper at primary/secondary/both predictions 375/375/375; native predicted
 // point at primary/secondary/both 375/375/375; unary planar negation 390; earlier uninitialized
@@ -611,7 +614,8 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 386 (was 410): Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
+// score 386 (was 386): frame 0x58 and length agree; early rejection and query scalar/object homes remain.
+// Earlier: Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // Earlier forms: prediction loop 482; initial velocity snapshot 538; direct
 // early false exit, frame 0x54 versus 0x58 and scratch
 // homes differ; prediction loop 482; initial velocity snapshot 538; direct
@@ -631,6 +635,8 @@ static __forceinline long real_to_long(real value);
 // Target velocity view 487; object velocity view 386; both 384 (two-point increment rejected);
 // byte readiness 410; target/object/both views with byte 487/386/384; native readiness 422.
 // Direct six-use object velocity field producer 386 kept (plain), removing the one-use object pointer.
+// Actor/target/both position receivers 443/451/461; both at receiver 441; actor at entry 463;
+// positions with direct rejection 493, named query scalars 461, named query direction 461.
 // Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
 // frame 0x54 versus 0x58, early rejection and query homes remain.
 // query output names 410; native request clear 474; positive mode arms 483; far prediction first 413; request

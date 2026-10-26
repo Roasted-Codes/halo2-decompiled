@@ -404,6 +404,8 @@ PRIVATE inline long polygon_round_19f(real value)
 // All restored: the matched caller differs by 2 without the original parameter home.
 // Earlier: Frame 0x40/0x30 and qword spills remain; ordinary variant/body step with vertex sqrt result 400, top aggregate 430, word table offsets 400, material result 373 (plain; caller loses 2), direct-reference arm first 400.
 // AC338: ordinary variant/body pointer step with entry render-state/bottom/top/period lifetimes 400 each; previous-vertex pointer 400; center length retest 400 excluded. All lose matched caller by 2.
+// Round 211: Ordinary variant/body step with unsigned UV/current ordinals 400/400; top memcpy 400; ordinal
+// predecessor 381; predecessor result-first 378. Original frame/spills and callee conventions remain.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

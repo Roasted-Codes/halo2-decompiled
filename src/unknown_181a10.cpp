@@ -515,7 +515,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 	return limited != shape->data;
 }
 
-// score 321 (was 321): frame 0x48 versus 0x44 and plane/output homes;
+// score 321 (was 321): Frame 0x48 versus 0x44; classifier, transformed-plane and output homes remain.
+// Earlier 321 (was 321): frame 0x48 versus 0x44; classifier, plane and output homes remain.
+// frame 0x48 versus 0x44 and plane/output homes;
 // frame 0x48 versus 0x44; classifier, plane and output homes remain.
 // normal component loop 319; material-output scope 319; direct validity 351;
 // key-clamp result arms 319; optional entity result 319.
@@ -537,6 +539,7 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Origin fields at uses 318 (three-count gain rejected); hit fields at publication 329; both 366;
 // first/second node at uses 379/357; byte/long classifier results 321/321;
 // classifier reference input 321. All existing input snapshots and helper contracts restored.
+// Round 152: All normal-row partial sums/products 321/321; normal with distance products/stages 321/321; native normal library copy 321; copy with all row products/partials 321/321; all distance products 321.
 // Component result 370; search index 338; property cursor 336; cursor result 338;
 // bounded search condition 327; output index homes 321; hit distance home 321;
 // component result with output homes 370. Original entry scan and scalar homes restored.

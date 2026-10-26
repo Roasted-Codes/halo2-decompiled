@@ -149,6 +149,12 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 // native slot formal 146; readonly direction 146; fallback native record copy 146; directed native record copy
 // 146; both native record copies 146; native yz distance part 146; native direction field 146; native direction
 // field at use 211.
+// Probe target address 314; directed target address 146; both 314; unsigned native category 192; addresses/category 324; shared squared length/dot 146/146; trace fallback first 146.
+// Actor/node/view/all receiver names 146 each; signed native category and late producer 192/192;
+// reused actor-position address 152; native category with actor-position address 198.
+// Completion receiver/result/trace names 146/146/146; geometry origin before trace 241;
+// early origin with trace name 241; full category at producer 146; result producer scope 146;
+// early origin with native category 237.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
