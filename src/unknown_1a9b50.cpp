@@ -596,7 +596,7 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 466 (was 478): early false exit, frame 0x54 versus 0x58 and scratch
+// score 410 (was 410): early false exit, frame 0x54 versus 0x58 and scratch
 // homes differ; prediction loop 482; initial velocity snapshot 538; direct
 // eligibility 484; full-width readiness 495; fallback copy loops 541.
 // j92: actor/settings registers agree; frame 0x54 versus 0x58, early false exit and speed/object homes remain; retain facing view and native planar copy.
@@ -604,13 +604,15 @@ static __forceinline long real_to_long(real value);
 // 476; direction length by arm 482; facing position view 471; facing prediction seconds 472; facing planar
 // copy 466; facing direction length 473; planar speed homes 466; planar position view 464; planar position
 // speed homes 464; planar position late 466.
-// score 410 (was 466): Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
 // late object receiver 470; trajectory planar view 466; direct request view 466;
 // test-derived readiness 410; conditional approach factor 466 (fast).
-// score 410 (was 410): frame 0x54 versus 0x58, early rejection and query homes remain.
+// frame 0x54 versus 0x58, early rejection and query homes remain.
 // Separate query in/out scalar 494; wider output scope 410; wider trajectory scope 410;
 // scalar/output and scalar/trajectory scopes 494 each; output/trajectory scopes 410;
 // all query homes 494; all homes with earlier query-scalar declaration 494.
+// query output names 410; native request clear 474; positive mode arms 483; far prediction first 413; request
+// mode first 522; relative velocity expression 413; direct facing field 524; deadline mode first 510.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

@@ -2778,6 +2778,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // 407; shifted property flags 428.
 // Early/default activity classification 404/406; suppressed admission 421;
 // identifier partitions 0xbffffff/0x10000573/0x11ffffff/0x13ffffff/0x16ffffff 459/418/435/418/434.
+// readonly activity inputs 407; normalization parts 407; elapsed tick expression 407; inventory case exit 407;
+// progress field admission 407; progress case exits 407; magazine case exits 407; decimal digit expressions
+// 407.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
