@@ -536,19 +536,22 @@ void function_118e80(long object_index, vector3f *forward);
 real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
-// score 273 (was 273): frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
+// score 273 (was 273): frame 0x8c versus 0x90, early NONE and held-direction byte home remain.
+// frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
 // direct actor receiver 371; forward scalar names 371; sampled radius 371;
 // word/native plane key 308/308; plain word 385, early result 379, native key 385.
 // frame 0x8c versus 0x90; early NONE and held-bit byte home differ;
 // frame pointer 468; inline depth zero 608; index-clear schedule fast 376/plain 272;
 // direct plane result 418; named held-direction result 371 (fast control 371).
-// score 273 (was 273): frame and held-direction byte home remain.
+// frame and held-direction byte home remain.
 // Field-zero chains 272; sentinel chains 273; signed mode range 343;
 // native seat index 322; early holder output 350 (all plain scores).
-// score 273 (was 273): frame 0x8c versus 0x90 and held-direction byte home remain.
+// frame 0x8c versus 0x90 and held-direction byte home remain.
 // Byte plane result 273; left/actor references 273/273;
 // motion-direction reference 277; up reference 273 (plain).
+// Flag-range memset 441; movement-mode branches 369; named activity time 371;
+// per-use geometry fields 371; predicate/index role names 371 (fast control 371).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {

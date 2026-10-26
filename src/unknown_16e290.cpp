@@ -1435,12 +1435,11 @@ struct s_camera_clip_reference_16ebf0
 	byte field_14[4];
 };
 
-// score 229 (was 234): frame 0x9c versus 0x98 and vector/state homes differ;
+// score 223 (was 223): frame 0x9c versus 0x98 and direction/predicate homes remain.
 // shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
 // aggregate copies with shared cross product 249, role names 249, combined scope 249.
 // Frame 0x9c versus 0x98; vector-copy homes and narrow/fraction convention differ.
 // Direct view call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode branch 240.
-// score 223 (was 229): frame 0x9c versus 0x98 and vector/state homes remain; existing point setter recovers retail length.
 // State first 253; early native declarations 229; split input/output vectors 229; scalar position 223;
 // full-width narrow 231 (frame 0x98); point setter 223; setter with wide predicate 253; combined native copies 287.
 // Scalar-workspace role names 229; scale assigned after copies 229; later position pointer 226;
@@ -1448,6 +1447,8 @@ struct s_camera_clip_reference_16ebf0
 // later position pointer with native direction copies 237. Three-point gain rejected.
 // Complete direction memcpy 237; direct input cross with late workspaces 244;
 // later up pointer 253; native point carried through composition 229; matrix-axis cross with late workspaces 241.
+// Adjustment memcpy 223; native directions with point setter 251; fraction-only scope 223;
+// location-only scope 223; geometry fields at each use 223.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
