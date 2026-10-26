@@ -45,7 +45,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 
-// score 164 (was 164): frame 0x28 agrees; separate pool/iterator homes,
+// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, null timing and successor residency remain.
+// frame 0x28 agrees; separate pool/iterator homes,
 // null-result timing and actor-successor residency remain. Inactive early exit
 // 164; native flag mask 164; successful inner-update continue 164; pointer-result
 // for loop 275; early-exit/mask/continue combination 164.
@@ -58,6 +59,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // active count before timestamp 166; nested source-squad validation 164; per-squad pool observation 231.
 // Ordinary private next 281; private next out of line 281; separate reacquired actor 164;
 // closed initial-actor scope 164; ordinary private next/separate reacquired actor 281.
+// Private step byte/signed-byte/short/long results 164 each; inactive index initialization 164;
+// inactive index with byte/short/long results 164 each.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
