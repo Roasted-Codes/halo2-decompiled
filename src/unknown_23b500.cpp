@@ -68,6 +68,8 @@ struct s_spawn_scenario_23aea0
 // destination pointer replaces the retail integer table offset;
 // flat index 254; zero-based batches 139; typed records 137; flat typed records 121;
 // unsigned indices 141; batch steps 139; const records 137; full source table 139.
+// Default/override/both memcpy 145/140/172; native scalar defaults 105; shared tuple address 123; raw word
+// array/seven-word records 121/121; shared override type 122.
 // @retail 0x23aea0
 void function_23aea0()
 {

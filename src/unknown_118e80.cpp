@@ -712,20 +712,22 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
 
-// score 95 (was 99): frame 0x6c agrees; flag/handle carriers and final state stores differ.
+// score 95 (was 95): frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.
 // Word-flag/handle registers and call Boolean roles still differ.
 // absent-component exit 99; signed flags with early Boolean 99; long state with early Boolean 135;
 // counter reset before increment 103; threshold default and override 99.
-// score 95 (was 95): Frame agrees; word/Boolean carriers and final state width remain. Snapshot after word 95; earlier threshold 129; unsigned saturation 97; unsupported counter first 106; valid byte last 96 (fast).
+// Frame agrees; word/Boolean carriers and final state width remain. Snapshot after word 95; earlier threshold 129; unsigned saturation 97; unsupported counter first 106; valid byte last 96 (fast).
 // flag-word/handle registers and final flag-store width still differ.
 // native word field 95; native counters 95; both native fields 95; returned position 144
 // active-query result 95; native source receiver 95; definition subrecord at use 95
 // inactive-body exit 95.
-// score 95 (was 95): Flag/handle carriers and final state width remain; native flag snapshot 129;
+// Flag/handle carriers and final state width remain; native flag snapshot 129;
 // low parent bit first 95; absent-state arm first 98; split Boolean output tests 99;
 // copied position 162; shared threshold product 101; existing definition view 95; counter names 95.
+// Existing mask setter 112; result through setter 95; setter with split output tests/direct threshold
+// 106/101; short query 124; builder scope 98; direct parent/read-only tag receivers 95/95.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -1024,16 +1026,16 @@ void function_1e6120(s_biped_physics_output *arg_0, void *arg_1, real arg_2, boo
     bool arg_5, real arg_6);
 void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped_physics_output *arg_2);
 
-// score 98 (was 98): MOV/LEA call setup, movement flag merge, force argument and activity register still differ;
+// score 94 (was 94): MOV/LEA setup, component loads and force-byte publication still differ;
 // stationary/byte/word movement result 107/98/111; complete flag value 98;
 // initial-state/parent/update/countdown activity values 265/119/98/101. Original body restored.
-// Frame 0x1f0 agrees; call setup, flag merge, component loads and final result
-// homes differ. Branch flag store 131; long force 130; native velocity copy 131; long activity
+// Earlier frame-correct forms targeted call setup, flag merge, component loads and result homes.
+// Branch flag store 131; long force 130; native velocity copy 131; long activity
 // 164; reversed result OR 131; parent result earlier 123; update/countdown result earlier 131.
 // With original flag store, early parent result 109; long force 101; both 110.
 // Native motion/input/state fields 98 each; request/output/all basis copies 98 each;
 // movement-output and orientation-output scopes 98 each.
-// score 94 (was 98): BLOCKED-BY 0x1c4b00: retail's body tests its last parameter as a
+// BLOCKED-BY 0x1c4b00: retail's body tests its last parameter as a
 // byte (a bool), so retail keeps the found flag in a stack byte and pushes the dword;
 // our declaration is a long (definition in a file this lane may not edit), so ours
 // zero-extends and every later instruction is one line off. The flag-4 store through
@@ -1042,6 +1044,8 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // Still differs: MOV/LEA order at the first 0x1e5af0 call (a named output pointer 92).
 // Squared length summed k, j, i as statements gives retail's load order but only 2.
 // Bitfield store with the NONE reset 108; branch store 119; ternary store 119.
+// Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
+// each; conditional orientation success 112; short activity 168.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {
