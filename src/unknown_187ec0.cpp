@@ -441,6 +441,9 @@ bool function_172750(long mode, point3f const *point, real radius);
 // This round:
 // First/second/both/all default chains 119/119/120/120;
 // first/second/both tag-test results 150/162/162; both results and default chain 160.
+// Round 147: existing index getter 210; distance-reject exit 118; variant-first guards 188; equality
+// membership 144; reverse cases 118; nested guards 118; selected first-table index 188; second-case
+// branches 151.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)
@@ -566,6 +569,8 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // Exact-end sound scans dword/long/short 89/89/77; exact-end effect scan 84;
 // shared complete offset scale 125; sound point setter 106;
 // native velocity/location field copies 89/96.
+// Round 147: two-phase offset 125; origin accumulation 142; all named products 77; origin-first adds 77;
+// effect/sound/both continues 77/77/77; signed short bound 77.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)

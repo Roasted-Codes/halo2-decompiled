@@ -84,6 +84,8 @@ static __forceinline long marker_viewer_unit(void)
 // Immutable outcome 99; signed-byte outcome 99; coordinate names/order 99/99;
 // directional-product names 99; unshadowed extents/immutable extents 99/99;
 // forward stores after offset 114.
+// Round 147: direct position fields 286; native center sums 99; named divisors 99; two-phase lift 268;
+// origin accumulation 264; collision field result 283; shared lift/direct-output scale 268/268.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
