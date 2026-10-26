@@ -2762,17 +2762,21 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 		}
 	}
 	real value = *(real *)((byte *)weapon + 0x180) * *(real *)((byte *)definition + 0x164);
-	return result > value ? result : value;
+	if (!(result > value)) result = value;
+	return result;
 }
 
-// score 407 (was 407): frame 8 versus 4; activity/dispatch registers and tag spill differ.
+// score 398 (was 407): Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
+// maximum 398; barrel read 422; scale reads 422; property bits 420; branch maxima 404; all maxima
+// 398; joined scale 423; wide selector 424.
+// Earlier: frame 8 versus 4; activity/dispatch registers and tag spill differ.
 // direct barrel maximum 413; helper maximum branches 409; independent loop indices 407;
 // final accumulated maximum 409; size optimization 672.
-// score 407 (was 407): Frame 8 versus 4 and activity/dispatch homes remain. Helper input order 407; bool selector 408; tag-only helper lookup 407; object/tag homes 407; barrel bound sample 407 (fast).
-// score 407 (was 407): activity/dispatch registers and pointer homes differ. Trials: published
+// Earlier: Frame 8 versus 4 and activity/dispatch homes remain. Helper input order 407; bool selector 408; tag-only helper lookup 407; object/tag homes 407; barrel bound sample 407 (fast).
+// Earlier: activity/dispatch registers and pointer homes differ. Trials: published
 // output test 407; scalar clamp 407; unsigned word selector 407; shared progress guard 413; shared
 // barrel read 414; typed flags field 407.
-// score 407 (was 407): Frame eight versus four bytes and activity/tag homes remain. Descending
+// Earlier: Frame eight versus four bytes and activity/tag homes remain. Descending
 // progress classifier 407; direct short selectors 407; shared threshold 407; normalization range
 // 407; shifted property flags 428.
 // @retail 0xff5f0
@@ -2783,7 +2787,12 @@ bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *a
 	s_weapon_definition *definition = WEAPON_DEFINITION(weapon);
 	real result = 0.0f;
 	short index;
-	switch (name)
+	if (name == 0x1d0007ba || name == 0x0c000569)
+	{
+		if (name != 0x1d0007ba || !((byte *)g_4de2f4)[0x82])
+			result = weapon_activity_value(weapon_index, weapon, definition);
+	}
+	else switch (name)
 	{
 	case 0x03000577: result = weapon->heat; break;
 	case 0x04000567: result = *(real *)((byte *)weapon + 0x180); break;
@@ -2799,11 +2808,6 @@ bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *a
 				(1.0f - *(real *)((byte *)definition + 0x150));
 		break;
 	case 0x0b0005a9: result = (real)((byte *)weapon)[0x175] * (1.0f / 255.0f); break;
-	case 0x1d0007ba:
-		if (((byte *)g_4de2f4)[0x82]) break;
-	case 0x0c000569:
-		result = weapon_activity_value(weapon_index, weapon, definition);
-		break;
 	case 0x0d0006e7:
 	case 0x0e0006e6:
 	case 0x0f0006e5:

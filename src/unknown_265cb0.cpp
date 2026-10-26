@@ -1564,7 +1564,10 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 684 (was 684): frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// score 684 (was 684): Frame 0x7c versus 0x80; sentinel/link homes and expanded tick conversions
+// remain. Pointer player-table walk 685; forward library copy 684; velocity library copy 684;
+// parallel matrix pair sums 684; native actor fields 684 (calibrated fast).
+// Earlier: frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
 // frame 0x7c versus 0x80; saved link/predicate homes and expanded conversion calls remain.
 // Conditional facing 731; wide best level 701; direct parameter 701; shared difference 705;
 // wide retention 704; live relative inputs 695; native velocity copy 695; early defaults 755;
