@@ -1297,7 +1297,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 265 (was 265): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
+// score 267 (was 265): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // Frame 0x28 and sampler agree; captured descriptors and
 // destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;

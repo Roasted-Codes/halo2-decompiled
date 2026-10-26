@@ -590,7 +590,7 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 211 (was 211): frame 0x50/0x54, early EBX and child-iterator convention remain.
+// score 201 (was 211): frame 0x50/0x54, early EBX and child-iterator convention remain.
 // Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
 // frame 0x50/0x54 and child-iterator registers differ;
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;

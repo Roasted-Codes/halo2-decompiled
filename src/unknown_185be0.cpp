@@ -140,7 +140,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 1017 (was 1017): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
+// score 989 (was 1017): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
 // frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
