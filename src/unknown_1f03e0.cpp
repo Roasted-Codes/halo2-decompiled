@@ -405,7 +405,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 177 (was 181): Frame 0x14 agrees; request/count registers, cross publication and projection schedule remain.
+// score 177 (was 177): Frame 0x14 agrees; request/count registers, cross publication and projection schedule remain.
 // Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
@@ -435,6 +435,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // 177; original layout/private cross with both results initialized first 177 (975/977 bytes, plain
 // confirmed and kept). Only the two constant initializations move; every memory read and call stays in
 // place.
+// Round 163: Direct averaged support, shared branch direction, both, entry support,
+// direct+entry, shared+entry, all, and all with shared cross 235/194/235/177/235/194/235/235.
+// Original pair-result join, two entry constants and private products restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -948,7 +951,7 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
     out->k = product_forward_k + product_left_k + product_up_k;
 }
 
-// score 50 (was 54): Frame 0x58 agrees; final override load order and rotation coefficient residency remain.
+// score 50 (was 50): Frame 0x58 agrees; final override load order and rotation coefficient residency remain.
 // Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // final override load order and rotation input/coefficient schedule differ.
@@ -999,6 +1002,10 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // left/up/forward 54; up/forward/left 53; up/left/forward 53; matrix-first named products 54; immutable
 // named products 54; named products with all partial sums 59. Forward/left/up kept at 1040/1043 bytes;
 // plain confirmed.
+// Round 163: Complete-product row scopes/entry carriers/axis-first names 50/50/50;
+// deferred publication 93; row accumulators 59; forced expansion 50; existing final add
+// 163; existing result setter 93. All on the retained nine-product graph; original
+// helper, alias copy and every operation restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {
@@ -1115,6 +1122,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Earlier: frame 0x64 agrees; persistent zero and count/component homes remain.
 // Byte/unsigned-word accepted count 462/426; unsigned fixed pass 421; separate entry
 // desired/direction storage 421/421.
+// Round 163: Local speed/object/both/surface/speed+surface/object+surface/all
+// scalar outputs and complete output/Boolean join 554/499/554/570/621/622/613/547.
+// All regress; original direct publications, qualified count and cursor restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)

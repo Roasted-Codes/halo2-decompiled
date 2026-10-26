@@ -346,6 +346,10 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // 196/190; type-four plus type-five 192; all pairs 198; alternate presets before base presets 206. Frame 0x38
 // agrees; scale EBX/EAX and constant pushes remain.
 // Round 317: Mixed complete-case orders 1023456 196; 0142356 197; 0124356 200; 0123645 188; 0126345 198; 0412356 205; 4012365 214; 0214356 206.
+// Round 163: Complete immutable first/second/both type-four/team/first+team/
+// second+team/all settings, then all with implicit type-five zero default
+// 235/228/259/190/239/237/263/267. All regress; original native workspaces, clears and
+// builder arguments restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
