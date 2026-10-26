@@ -171,7 +171,8 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 }
 
 /* the distance sound travels between two clusters */
-// score 60 (was 65): retail tests the byte for 0 first, then 0xff, keeps a 255 default in XMM0
+// score 60 (was 60): No local frame; shared zero/default entry values and native endpoint/exit ownership remain.
+// retail tests the byte for 0 first, then 0xff, keeps a 255 default in XMM0
 // and a shared zero in XMM1; ours tests the word interior first and builds each zero. Kept: no
 // size pragma and the audibility record in a named pointer (60). Pragma removed with the
 // direct reads 65; byte tests (0, 0xff, else) 76; byte tests under the pragma 88; byte tests
@@ -191,6 +192,8 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // zero/upper defaults with byte offset 75/78; fraction/production exits 78/79;
 // fallback masked byte/word/long/dword carriers 78/78/78/78; lower field observations 77;
 // produced span 65; both bound fields 77; byte sample with direct bounds 83.
+// Real-sample lower/upper/both/endpoint/lower+endpoint/upper+endpoint/all predicates 68/82/76/74/73/82/76; all-real with direct bound span 78.
+// Ordered zero/upper guards word/byte/long/short 71/76/76/71; upper-first word/byte 71/76; nested sub-upper range word/byte 67/71.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {

@@ -188,7 +188,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// score 153 (was 153): frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
+// Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
 // 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
 // color/both 246 each; alpha with edges 322; native color reference 276; color copies after
@@ -227,6 +229,14 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // native channel packing 238; chained descriptor counts 162 (fast control 162). Frame and
 // reservation scheduling remain.
 // Round 212: Immutable bitmap pointers/repeated texture coordinates 162/162; chained RGB/alpha outputs 165; shared color output with word alpha 162; center snapshot at first final vertex 296 (fast control 162). Frame and reservation scheduling remain.
+// Word-alpha context: color pointer/object reference 349/349 fast; immutable alpha/alpha
+// lexical home 162/162; native texture pair/bounds 149/369 (unmatched grouped storage
+// restored); bounds with color pointer/reference 373/373; immutable scalar coordinates 162;
+// color scope 162; scoped lower-first coordinates 372; scoped immutable scalars 162. Reduced
+// control 162, full baseline 153.
+// Word-alpha pointer/shared-color helper 349; direct consumer query/helper 378; late query/helper 378;
+// immutable query/helper 349; pointer/direct helper with scalar size 349/378;
+// lower-first helper coordinates 372; symmetric role-named lower-first coordinates 372 (fast control 162).
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
