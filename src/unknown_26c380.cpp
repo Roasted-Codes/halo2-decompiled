@@ -161,6 +161,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Existing point producer output return alone/with forced point expansion/with magnitude/with point and
 // magnitude/with cross/with point and cross/with magnitude and cross/with all three 419 each; every sibling
 // retains its preview baseline. Original helpers restored.
+// Edge-test / iterator / passability call boundaries, ordinary inline versus noinline,
+// eight combinations 419/435/460/460/435/435/460/460. All contracts and bodies restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

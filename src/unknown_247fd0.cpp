@@ -246,7 +246,7 @@ vector3f *function_143070(matrix3x3 const *arg_1, vector3f const *arg_0, vector3
 void placement_set(s_placement *arg_0, vector3f const *arg_1, point3f const *arg_2, vector3f const *arg_3, short arg_4);
 void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_object_246eb0 const *arg_3, long arg_4);
 
-// score 380 (was 380): Frame 0xbc versus 0xb0; entry EBP preservation and random/geometry homes remain.
+// score 368 (was 380): Frame 0xb0 agrees; entry EBP preservation and random/geometry/getter homes remain.
 // Earlier form: exact 0xb0 frame; late EBP save, random stores/getter expansion differ.
 // Interpolation remainder 415; child-duration default 411; failed-child continue 408;
 // overwritten placement default removed 409; definition reads at use 449.
@@ -277,6 +277,10 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // velocity at admission 395; after rotations 382. Frame 0xbc versus 0xb0 for the retained native velocity.
 // Complete velocity arms 411; entry velocity declaration 380; both 411; per-use velocity fields 467;
 // separate real spatial objects 433; with velocity arms/entry declaration/per-use fields 438/433/487. All restored.
+// Independent collision/placement/both 377/380/376; first sample alone/with collision/with placement/all
+// 429/436/429/436; collision and placement with velocity source 368; collision/source alone 368
+// kept (plain), placement/source 389; branch collision/source 372; late placement 399;
+// shared effect receiver with velocity source/value 434/435. Frame 0xb0; body 1643/1652.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)
@@ -286,10 +290,10 @@ void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition
 		point3f field_0;
 		point3f field_c;
 		vector3f field_18;
-		s_collision_result_1697c0 field_24;
 		s_placement field_70;
 		real field_98;
 	} local_23;
+	s_collision_result_1697c0 collision;
 	volatile bool local_18;
 	long local_0 = arg_2->effect_index;
 	if (local_0 != NONE)
@@ -335,7 +339,7 @@ void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition
 		local_2->field_08 += arg_5 * arg_6 * local_2->field_0c;
 		if (local_3->unknown0c == 0)
 		{
-			vector3f local_5 = local_0 != NONE ? DATUM(g_4ea93c, s_effect_datum, arg_2->effect_index)->velocity : *g_4687a4;
+			vector3f const *velocity = local_0 != NONE ? &DATUM(g_4ea93c, s_effect_datum, arg_2->effect_index)->velocity : g_4687a4;
 			local_23.field_0.x = arg_1->field_34.x * arg_5 + arg_1->field_40.x * (1.f - arg_5);
 			local_23.field_0.y = arg_1->field_40.y * (1.f - arg_5) + arg_1->field_34.y * arg_5;
 			local_23.field_0.z = arg_1->field_40.z * (1.f - arg_5) + arg_1->field_34.z * arg_5;
@@ -351,13 +355,13 @@ void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition
 				local_23.field_18.j = 0.f;
 				local_23.field_18.k = -1.f;
 				local_23.field_c.z += 1.f;
-				local_23.field_24.unknown24 = NONE;
-				if (function_1697c0(0x800005, &local_23.field_c, &local_23.field_18, NONE, NONE, &local_23.field_24))
+				collision.unknown24 = NONE;
+				if (function_1697c0(0x800005, &local_23.field_c, &local_23.field_18, NONE, NONE, &collision))
 				{
-					vector3f const *local_10 = (vector3f const *)((byte const *)&local_23.field_24 + 0x28);
-					local_2->field_1c.x = local_10->i * 0.005f + local_23.field_24.point.x;
-					local_2->field_1c.y = local_10->j * 0.005f + local_23.field_24.point.y;
-					local_2->field_1c.z = local_10->k * 0.005f + local_23.field_24.point.z;
+					vector3f const *local_10 = (vector3f const *)((byte const *)&collision + 0x28);
+					local_2->field_1c.x = local_10->i * 0.005f + collision.point.x;
+					local_2->field_1c.y = local_10->j * 0.005f + collision.point.y;
+					local_2->field_1c.z = local_10->k * 0.005f + collision.point.z;
 					local_2->field_02 |= 0xa;
 					local_2->field_28 = *local_10;
 				}
@@ -366,9 +370,9 @@ void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition
 			}
 			if ((bool)((*(byte const *)((byte const *)local_3 + 0x16) >> 4) & 1))
 			{
-				local_2->field_28.i += local_5.i;
-				local_2->field_28.j = local_5.j + local_2->field_28.j;
-				local_2->field_28.k = local_5.k + local_2->field_28.k;
+				local_2->field_28.i += velocity->i;
+				local_2->field_28.j = velocity->j + local_2->field_28.j;
+				local_2->field_28.k = velocity->k + local_2->field_28.k;
 			}
 		}
 		else

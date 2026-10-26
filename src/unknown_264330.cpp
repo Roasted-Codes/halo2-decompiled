@@ -436,6 +436,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Sampled-once acquisition after startup/at traversal/before actor 422/422/420; startup plus later
 // node flags 422; completed-sample name 420; separate/reversed node flag declarations 420/422;
 // startup plus reversed flags 424.
+// Initial refresh, spatial startup, node refresh and progress call declarations, each ordinary
+// inline/noinline 420/420; all eight compiled forms and every separate declaration restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
