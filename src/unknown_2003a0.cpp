@@ -8,6 +8,7 @@
 #include "object_iterator.h"
 #include "unit_requests.h"
 #include "unknown_11cc90.h"
+#include "data_iterator.h"
 
 // @flags /O2 /Gr /arch:SSE
 
@@ -56,6 +57,9 @@ extern short const g_44aee8[20] =
 // score 82 (was 82): word mask/RMW and sentinel/array-base registers remain.
 // Late next-link/word/long sentinel subsets 82,82,82,82,82,82,82;
 // native-short five-handle counter 99. Initializer body restored.
+// score 82 (was 82): narrow mask/RMW and sentinel/base registers remain.
+// Boolean first/second/both bits 107/88/112; conditional second bit 88;
+// library clear with first/both bits 124/127; counted pointer fill 82, with Boolean bits 112.
 // @retail 0x200c20
 void function_200c20(byte const *definition)
 {
@@ -279,71 +283,68 @@ void __stdcall function_202570(long group_index)
 	group->active = active;
 }
 
-/* the group walk of 0x202370 and 0x2024c0 */
+/* the group walk of 0x202720 */
 PRIVATE __forceinline s_squad_group_datum *next_group_record_202370(s_group_record_iterator *iterator)
 {
 	return iterator->group = g_4f55d0->active ? (s_squad_group_datum *)data_iterator_next_inlined(&iterator->records) : NULL;
 }
 
-// score 57 (was 57): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
-// count and the bit mask take the other two registers.
-// const record 57; existing bool iterator 126; existing search boundary 123.
-// bool iterator size 147; one inline level 57; frame pointer 64.
-// global optimization 102; size preference 145.
-// Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
-// typed parent lookup 78; retained handle lookup 78; root predicate 57;
-// sentinel cursor with typed parent 65. Null-result lifetime still differs.
-// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
-// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
-// actual parent-field reference 57; actual record reference 57. Null-result join remains.
-// @retail 0x202370
-void function_202370(void)
+/* walks the squad groups of g_51e9dc, only while the ai is active */
+struct s_group_datum_walk
 {
-	s_group_record_iterator iterator = {0};
+	s_data_datum_iterator iterator;
+	long group_index;
+};
+
+static inline void group_datum_walk_new(s_group_datum_walk *walk)
+{
 	if (g_4f55d0->active)
 	{
-		iterator.records.data = g_51e9dc;
-		iterator.records.index = NONE;
-	}
-	s_squad_group_datum *group;
-	while ((group = next_group_record_202370(&iterator)) != NULL)
-	{
-		if (group->parent_index == NONE)
-			function_202420(iterator.records.datum_index);
+		walk->iterator.data = g_51e9dc;
+		walk->iterator.index = NONE;
+		walk->iterator.datum_index = NONE;
 	}
 }
 
-// score 57 (was 62): the record pool's pointer is kept in EBX where retail keeps it in EDI, so the
-// count and the bit mask take the other two registers.
-// const record 62; existing bool iterator 154; existing search boundary 134.
-// value initializer 57; zero initialization call 60; frame pointer 55.
-// global optimization 124; size preference 158.
-// Cursor initializer 85; pool initializer 85; ready iterator 103; invalid handle 84;
-// typed parent lookup 78; retained handle lookup 78; root predicate 57;
-// sentinel cursor with typed parent 65. Null-result lifetime still differs.
-// score 57 (was 57): nullable search result and pool/mask register lifetimes remain.
-// Guarded zero/native/member/library initialization 63/82/82/63;
-// inactive early return with each initialization 63/82/82/63.
-// Native cursor copy 84; two-use active initializer 83; split active cursor 61;
-// cursor-only memset 84; cursor value initialization 85; complete iterator copy 65;
-// actual parent-field reference 57; actual record reference 57. Null-result join remains.
-// score 57 (was 57): null-result join and pool/index/mask allocation remain.
-// Direct native cursor, zero/member/ready/conditional initialization with ternary
-// tests 97/97/117/97; conjunction tests 80/100/99/95. Original wrapper retained.
+/* the next squad group while the ai is active, or NULL */
+PRIVATE __forceinline s_squad_group_datum *group_datum_walk_next(s_group_datum_walk *walk, bool active)
+{
+	s_squad_group_datum *group = NULL;
+
+	if (active)
+	{
+		if (data_datum_iterator_next_inlined(&walk->iterator))
+			group = (s_squad_group_datum *)walk->iterator.datum;
+		walk->group_index = walk->iterator.datum_index;
+	}
+	return group;
+}
+
+/* runs 0x202420 for each squad group without a parent */
+// @retail 0x202370
+void function_202370(void)
+{
+	s_group_datum_walk groups;
+	group_datum_walk_new(&groups);
+	s_squad_group_datum *group;
+	while ((group = group_datum_walk_next(&groups, g_4f55d0->active)) != NULL)
+	{
+		if (group->parent_index == NONE)
+			function_202420(groups.group_index);
+	}
+}
+
+/* runs 0x202570 for each squad group without a parent */
 // @retail 0x2024c0
 void function_2024c0(void)
 {
-	s_group_record_iterator iterator = {0};
-	if (g_4f55d0->active)
-	{
-		iterator.records.data = g_51e9dc;
-		iterator.records.index = NONE;
-	}
+	s_group_datum_walk groups;
+	group_datum_walk_new(&groups);
 	s_squad_group_datum *group;
-	while ((group = next_group_record_202370(&iterator)) != NULL)
+	while ((group = group_datum_walk_next(&groups, g_4f55d0->active)) != NULL)
 	{
 		if (group->parent_index == NONE)
-			function_202570(iterator.records.datum_index);
+			function_202570(groups.group_index);
 	}
 }
 
@@ -804,6 +805,7 @@ done:
 // Conditional next publication 218; definition mode first 211; current-field result 223;
 // size preference 285; zero inline depth 232. Original kept.
 // score 176 (was 176): round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
+// score 176 (was 176): round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -1463,6 +1465,9 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
 // score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
 // score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
+// score 120 (was 120): extra frame dword and x87 shared tail remain.
+// Unused mode address removed/read-only mode 120/120; in-place transform 123;
+// noinline, staged subtraction and fallback memcpy each 120; nonpositive-first 119; failure exits 118.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1734,6 +1739,7 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // score 305 (was 305): Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // Pooled reference 323; entry-block reuse 323; delta workspace 305; shared scan cursor 305; valid
 // actor continue 305.
+// score 264 (was 305): round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -1768,7 +1774,7 @@ void function_204450(long definition_index, long squad_index)
         real nearest = 3.402823466e+38F;
         squad[0x30] = 0;
         function_b9dd0(*(long *)(squad + 0x80), &point);
-        byte *entries = definition + (squad[0x60] ? 0x5c : 0x54);
+        byte *entries = squad[0x60] ? definition + 0x5c : definition + 0x54;
         if (*(long *)entries > 0)
         {
             for (short i = 0; i < *(long *)entries && (signed char)squad[0x30] < 10; i++)
@@ -1856,6 +1862,13 @@ bool function_1e11b0(long actor_index, bool active);
 // Actual squad/actor/both record references 64/64/64;
 // result from update 79; retained Boolean guard/result 70; proven success exit 79;
 // update result with squad reference 79; Boolean result with actor reference 70.
+// score 64 (was 64): the squad pointer stays in EBX where retail keeps the handle in EBP and spills
+// the pointer to the handle's argument slot; loop rotation and return width as above. Inlined
+// actor step under the depth-zero pragma (stays a call) 100; the step inlined with the pragma
+// dropped and the two callees declared noinline 78 (184 bytes; unrotated loop and the or-byte
+// flag store as in retail, structural 16 against 19); that with no parameter address 78, an actor
+// index local 78, both 78, the squad getter 78, the iterator's handle stored 85, the squad
+// re-fetched after the loop 76.
 // @retail 0x203bf0
 bool function_203bf0(long squad_index)
 {
@@ -2817,6 +2830,7 @@ void function_2011f0(long arg_0);
 // Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
 // repeated signed category 387; function-scope workspaces 387; case two first 387.
 // score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
+// score 383 (was 383): round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

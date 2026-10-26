@@ -94,12 +94,13 @@ void function_119250(long object_index)
 	flags->flag6 = true;
 }
 
-PRIVATE __forceinline void object_flag_set_118fe0(s_forward_flags *flags, bool enabled)
+/* sets or clears the given bits of an object's flags */
+PRIVATE __forceinline void forward_flags_set(s_forward_flags *flags, word mask, bool enabled)
 {
 	if (enabled)
-		flags->flag0 = true;
+		flags->value |= mask;
 	else
-		flags->flag0 = false;
+		flags->value &= ~mask;
 }
 
 // @retail 0x118fe0
@@ -108,7 +109,7 @@ void function_118fe0(long object_index, bool enabled)
 	s_forward_object *object = ((s_forward_object_header *)g_4e0300->data)[object_index & 0xffff].object;
 	if (TEST_FIELD_BIT(object->frozen))
 		enabled = false;
-	object_flag_set_118fe0(&object->flags, enabled);
+	forward_flags_set(&object->flags, 1, enabled);
 }
 
 __declspec(noinline) bool function_119bc0(long object_index);
@@ -866,6 +867,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // second identifier first 149; location home name 151; native request after lifetime gains 151; distinct
 // up after lifetime gains 180; location before identifiers 218; long first with second first 154; long
 // second with second first 154; both long with second first 150.
+// score 151 (was 151): quotient spill, sweep/impact/location homes and owner-call setup remain.
+// Repeated quotient after query 287; native sweep array loop 731; exhausted-selection exit 290;
+// selected handle after tuple 162; normal before point 160.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1029,6 +1033,15 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // With original flag store, early parent result 109; long force 101; both 110.
 // Native motion/input/state fields 98 each; request/output/all basis copies 98 each;
 // movement-output and orientation-output scopes 98 each.
+// score 94 (was 98): BLOCKED-BY 0x1c4b00: retail's body tests its last parameter as a
+// byte (a bool), so retail keeps the found flag in a stack byte and pushes the dword;
+// our declaration is a long (definition in a file this lane may not edit), so ours
+// zero-extends and every later instruction is one line off. The flag-4 store through
+// the shared flags setter, the countdown reset stored as NONE (EBX holds NONE as in
+// retail) and the countdown decremented on the field give retail's code there.
+// Still differs: MOV/LEA order at the first 0x1e5af0 call (a named output pointer 92).
+// Squared length summed k, j, i as statements gives retail's load order but only 2.
+// Bitfield store with the NONE reset 108; branch store 119; ternary store 119.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {
@@ -1086,7 +1099,7 @@ bool __stdcall function_118700(long arg_0)
         }
         vector3f *local_12 = (vector3f *)((byte *)&local_3 + 0x138);
         bool local_13 = local_12->k * local_12->k + local_12->j * local_12->j + local_12->i * local_12->i > 0.0f;
-        local_0->flags.flag4 = local_13;
+        forward_flags_set(&local_0->flags, 0x10, local_13);
         bool local_14 = function_119bc0(arg_0);
         s_forward_object *local_15 = ((s_forward_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
         *(vector3f *)((byte *)local_15 + 0x88) = local_11.field_c;
@@ -1098,7 +1111,7 @@ bool __stdcall function_118700(long arg_0)
             function_119c10(arg_0);
         if (local_0->parent_index != NONE)
         {
-            if (!--*((byte *)local_0 + 0x204))
+            if (!--*((char *)local_0 + 0x204))
             {
                 function_11a140(arg_0);
                 real local_16 = g_510c54->field_2_3 * 0.2f;
@@ -1108,24 +1121,21 @@ bool __stdcall function_118700(long arg_0)
                     fld local_16
                     fistp local_17
                 }
-                *((byte *)local_0 + 0x204) = (byte)local_17;
+                *((char *)local_0 + 0x204) = (char)local_17;
             }
             local_4 = true;
         }
         else
-            *((byte *)local_0 + 0x204) = 0xff;
+            *((char *)local_0 + 0x204) = NONE;
         if (!TEST_FIELD_BIT(local_0->frozen) || !(*((byte *)local_0 + 0xc1) & 1))
         {
             *(long *)((byte *)local_0 + 0xbc) = g_510c54->game_time;
             function_bba20(arg_0);
             local_4 = true;
         }
-        long local_18 = *(word *)((byte *)local_0 + 0x206);
-        if ((short)local_18)
+        if (*(short *)((byte *)local_0 + 0x206))
         {
-            local_18--;
-            *(short *)((byte *)local_0 + 0x206) = (short)local_18;
-            if ((short)local_18 <= 0)
+            if (--*(short *)((byte *)local_0 + 0x206) <= 0)
                 function_d6bc0(arg_0);
             local_4 = true;
         }

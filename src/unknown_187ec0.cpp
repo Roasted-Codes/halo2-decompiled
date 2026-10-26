@@ -141,6 +141,8 @@ public:
 // score 33 (was 42): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
 // Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
+// Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
+// inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {
@@ -323,7 +325,11 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 	return seat_animation_entry_find(tag_index, index, type, element_index);
 }
 
-// score 22 (was 22): initial word load, requested-index/table register ownership and lookup schedule still differ.
+// score 22 (was 22): EBP holds the table instead of the requested index; native walk index 21, direct input 33;
+// native parent assignment 21; native requested index 22; both indices 21, direct input 33; native hit return 21; result first 21.
+// Native parent/request/both formals 22/14/14; register parameter second/third/last 22/22/22;
+// native parent with register last 22; native indices with register second 14. All restored: unmatched index wrappers rejected.
+// initial word load, requested-index/table register ownership and lookup schedule still differ.
 // This round: success before parent 28; native carry with alias 30; initial negative guard 73; signed loop admission 79; walking formal 38; direct native carry 35; complete per-tag result 56; success inside tag arm 28.
 // initial short load and global-table/entry-index register lifetimes differ.
 // Earlier requested-index snapshot 22; parent snapshot 28; explicit lookup 22; found return 22;
@@ -424,6 +430,13 @@ bool function_172750(long mode, point3f const *point, real radius);
 /* element_index starts the parent walk of 0x1882d0's fallback lookup, and
    entry_element_index (the fifth argument, which retail reads into esi) is
    the element whose values and seat entries are looked up */
+// score 118 (was 118): frame 0x1c agrees; tag/remapped-index registers and output homes remain.
+// Defaults before element 175; index before element 165; both before element 151;
+// read-only element 118; narrowed element index 118; shared special-index test 167;
+// explicit output defaults 118; read-only element and entries 118.
+// tag and remapped-index register/stack roles and result homes still differ;
+// index at use 160, branch index 118, update index 118, guarded index 124, entry scope 172,
+// named outputs 118, entry fields first 176, conditional second lookup 156.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)
@@ -531,6 +544,12 @@ dword vector3d_compress(vector3f const *vector);
 #include "unknown_1765e0.h"
 long function_189400(s_sound_position const *position, long object_index, long tag_index, real scale);
 
+// score 89 (was 89): frame 0x48 agrees; effect/forward registers and first-counter spill remain.
+// Point setter 89; component loop 317; origin value 150; description position 105;
+// late description 89; result-array names 89; query-owned defaults 122; facing value 149.
+// frame and array homes agree; input registers and the first scan counter differ;
+// paired initialization 326, effect cursor 91, sound cursor 100, both cursors 103,
+// paired/effect cursor 328, paired/sound cursor 335, paired/both cursors 344, shared scan index 89.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)

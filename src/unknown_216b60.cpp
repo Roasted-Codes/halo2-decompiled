@@ -58,7 +58,14 @@ bool __stdcall function_215f40(long type, byte *buffer)
 	return name[0] != 0;
 }
 
-// score 20 (was 20): formatted-name address reuse and the resulting short branch remain; ordinary
+// score 20 (was 20): post-call name-address reuse still shortens the first branch;
+// separate noinline name builder 20; validation-result lifetime 124; complete create predicate 50;
+// aggregate path initializer 20; name initialized before path 20; success-scoped root 20;
+// create rejection exit 34; formatting-result carry 22.
+// score 20 (was 20): post-call name-address reload and shortened entry branch remain;
+// short success 51; caller inline contract 20; drive-root noinline 20; API status local 20;
+// creation-failure clear 71; validation noinline 20; conditional success 20; short/clear 57.
+// formatted-name address reuse and the resulting short branch remain; ordinary
 // type input 20; direct api status result 21; function scope drive root 20; role named buffer homes
 // 20; explicit library path clear 58; byte status result 54; drive before status lifetime 20; query
 // failure returns 63.
@@ -70,6 +77,10 @@ bool __stdcall function_215f40(long type, byte *buffer)
 // where ours copies EDI. Path and name in one struct 58; (void)&name in 0x216da0 20; 0x216da0
 // reading name through its address 39; noinline declarations of 0x216da0/0x217a80 20; 0x216da0
 // result variable 20.
+// The post-format name address is still reused and the first branch is short.
+// Signed success byte 54; native status result 55; branch-owned result 61; failure-selected result
+// 55; input validation carry 61; success/drive homes 20; initialized drive 20; direct success exit
+// 62.
 // @retail 0x216120
 bool function_216120(word *string, long type)
 {
