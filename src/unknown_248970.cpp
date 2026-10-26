@@ -83,6 +83,9 @@ public:
 // Consistent live pool/direct location/both 215/215/215; all squared terms 215;
 // live pool with squared terms/selected influence 215/238; native element index
 // alone/with live pool 215/215.
+// Native Boolean activation destination, published gate, live child count and both 215/251/247/265;
+// the same four with read-only metadata 215/251/247/265. Boolean published gate with one actual
+// location-parameter-slot read 232 (exact-only, reverted).
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

@@ -306,7 +306,7 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 	return function_991d0(arg_0, local_1, local_0, arg_2);
 }
 
-// score 115 (was 116): the case 1/3 loop still differs in registers: retail keeps the items
+// score 115 (was 115): the case 1/3 loop still differs in registers: retail keeps the items
 // pointer in eax and the data pointer in edx and enters the loop past the items reload; ours uses
 // ecx for data and moves the handle into edx. The count == 1 branch now loads and spills like retail.
 // The volatile reads keep the loop pointers on the stack as retail does; without them the handle
@@ -316,6 +316,9 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 // Tried additionally: call-first logical accumulation 191, compound accumulation 197, conditional
 // accumulation 215, failure result 124, named cursors 115, named cursors/logical accumulation 191,
 // named helper inputs 115, named cursors/failure result 124; original body restored at 115.
+// Direct case scopes in validation/chain/notify, chain/validation/notify, notify/validation/chain,
+// and notify/chain/validation orders 115/162/212/186; ordinary inline producer with those orders
+// 115/162/212/186. Existing dispatch and producer restored.
 // @retail 0x98fb0
 void c_handle_table_450cd0::v6(s_request_450cd0 *a1)
 {
