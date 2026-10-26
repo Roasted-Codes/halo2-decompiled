@@ -146,7 +146,7 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 	return result;
 }
 
-// score 126 (was 164): Frame 0x88 agrees; point-velocity and nonrotating scale/add
+// score 126 (was 126): Frame 0x88 agrees; point-velocity and nonrotating scale/add
 // scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
 // 128/1015 to 164/1018 and aligned differences 66 to 40; second call schedule recovered.
 // First point-velocity and nonrotating difference/add schedules remain. external motion record 164;
@@ -168,6 +168,11 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // Native clock short/long/double 179/175/193; native difference initializer 164;
 // separate displacement/scaled-change vectors 126 (kept); with short/long/double clock
 // 173/168/199. The actual scaled change remains used by the addition and delta outputs.
+// native scaled change initialized by value then scaled 243; native scaled change assigned by component
+// 126; clock conversion after completed native displacement 168; shared point difference with separate
+// scaled change 125; plain component loop for separate scaled change 164; scaled change workspace declared
+// before displacement 126; immutable completed displacement and scaled change 126; complete native delta
+// value before output copy 174.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

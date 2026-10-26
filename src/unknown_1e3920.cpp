@@ -1569,24 +1569,17 @@ PRIVATE inline long equipment_current_weapon_r21(long unit_index)
 {
 	s_ai_object *unit = ai_object_get(unit_index);
 	short slot = unit->current_weapon;
-	long result = NONE;
-
-	if (slot != NONE)
-		result = unit->weapons[slot];
-	return result;
+	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
 PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 {
 	s_ai_object *unit = ai_object_get(unit_index);
 	short slot = *((signed char *)unit + 0x213);
-	long result = NONE;
-	if (slot != NONE)
-		result = unit->weapons[slot];
-	return result;
+	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
-// score 279 (was 284): Frame 0x14 agrees; actor/pool roles and scalar/ammunition homes remain.
+// score 270 (was 279): Frame 0x14 and actor ESI agree; index/pool roles and scalar/ammunition homes remain.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
@@ -1598,6 +1591,10 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // settings initialization 317; word admission minimum 288; magazine memset 282; complete probability
 // initialization 309; memset with long ordinal 328 or word minimum 279 (plain kept); combined candidate
 // with long ordinal 300 or weapon entry 279 (fast).
+// force-inline existing pair of equipment queries 279; native byte current equipment slot 296; native
+// signed byte secondary equipment slot 296; both native byte equipment slots 299; both equipment query
+// conditional results 270; both equipment query rejection returns 275; existing equipment queries consume
+// actual unit record 279; actor record lexical identity on native frame 279.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
