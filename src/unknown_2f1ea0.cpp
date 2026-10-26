@@ -69,6 +69,8 @@ public:
 // (the centre the other way round), body B's motion in the inside branch
 // takes esi where retail has edx, and the collector's table and the record's
 // address (and the end mark's time) have eax and edx swapped.
+// Complete box frame 207; box motion 214; sphere motion 206; both motions 239;
+// late box frame 221; both frames 240; box value 217; sphere value 202.
 // @retail 0x2f1ea0
 void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *input, void *collector)
 {
@@ -77,6 +79,8 @@ void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *inp
 
 // the same as a function
 // score 20 (was 38): as 0x2f1ea0.
+// Vector face depths 179; selected face pointer 68; sign operand order 24;
+// rotation accumulation/product order 20/20; vector root/sum 156/33; direction steps 20.
 // @retail 0x2f2130
 void __cdecl function_2f2130(void const *a, void const *b, void const *input, void *collector)
 {

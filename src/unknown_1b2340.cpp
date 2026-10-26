@@ -261,6 +261,8 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 // score 66 (was 66): frame 0x14 versus 0x10; early slot EBX and rounding scratch reuse differ.
 // Duration-only native/word values 128/111; reused character flags 66; actor guard 66;
 // character exits 66; view admission 66; duration/view admission 128; actor/view guards 66.
+// Direct slot 66; shared period input 119; both 119; native point setter 113;
+// idle/character store orders 67/67, both 68; period with point setter 97.
 // @retail 0x1b2bb0
 void __stdcall function_1b2bb0(long actor_index, s_slot *slot)
 {
