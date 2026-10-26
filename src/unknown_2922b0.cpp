@@ -70,7 +70,7 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 646 (was 646): Frame 0xf8 versus 0x108, early success BL/EBX and basis/ray/root/rotation homes remain.
+// score 641 (was 641): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Earlier: frame 0xf8 versus 0x108; result/basis/rotation homes differ.
 // frame 0x108 agrees; success/basis/rotation homes differ.
 // Frame pointer 960; size preference 1163; cosine-difference carrier 652;
@@ -83,9 +83,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // initializer 646; joined output zero 648.
 // Native object/settings/both record references 646; live length field reference alone
 // or with object/settings/both 686; collision inline declaration 646. All eight restored.
-// Earlier score 652 (was 652): Frame 0xf8 versus 0x108 and basis/root/rotation homes remain. Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652; clamp input order 652; direction value with per-ray sample 703 (fast).
-// Earlier score 646 (was 652): Frame 0xf8 versus 0x108 and basis/rotation homes remain.
-// Earlier score 646 (was 646): Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
+// Earlier (652 from 652): Frame 0xf8 versus 0x108 and basis/root/rotation homes remain. Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652; clamp input order 652; direction value with per-ray sample 703 (fast).
+// Earlier (646 from 652): Frame 0xf8 versus 0x108 and basis/rotation homes remain.
+// Earlier (646 from 646): Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
 // Existing rotation angle as a double formal or a twice-used double local,
 // with original/angle-first/output-first/output-before-angle layouts: all 733.
 // Original helpers, input/component snapshots and in-place calls restored.
@@ -107,6 +107,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Complete collision output extent/native output type/named material reset 641/641/641;
 // with byte/long/word success 714/714/714; native hit bytes 641; active success 646.
 // Original result, hit flags, math helpers and in-place copies retained.
+// Native coordinate-array output contracts for cross/point/rotation alone, all
+// pairs and all three 641 each; all outputs with native point input arrays 641.
+// Every input/result copy and original helper contract restored; frame already agrees.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

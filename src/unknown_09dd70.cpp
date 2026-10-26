@@ -467,6 +467,10 @@ static __forceinline byte *function_9d952(long arg_0)
 // Object receiver at each call-free use: player stores 226; parent stores 230;
 // packed stores 249; marked stores 226; player/parent 238; parent/packed 247;
 // packed/marked 256; all four 239 (869 bytes). Original receivers restored.
+
+// Round 199: Native packed packet cell 196; with word copy ordinal 197; captured low-word publication
+// 223; both 196; unsigned copied cell and the same three combinations 196/197/223/196 (fast). All
+// restored.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

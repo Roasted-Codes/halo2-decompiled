@@ -1301,7 +1301,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 267 (was 265): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
+// score 267 (was 267): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // Frame 0x28 and sampler agree; captured descriptors and
 // destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;
@@ -1325,6 +1325,8 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // 309/312/315; direct fields plus native mapped descriptors 265 (1197/1225).
 // Actual four-byte entry fields, input bitfields, rescale bit and native signed mapping records:
 // eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
+// Round 197: complete definition/remapping/source observations and their four combinations
+// 267 each; all observations with a common genuine color workspace 267. Original writer/body restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

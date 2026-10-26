@@ -2019,12 +2019,17 @@ void function_269250(long clump_index, long actor_index)
 // changed-reference count 246; category at uses 195; member header getter 189; removal
 // inline/forced expansion 189/460; complete unit predicate 243; count plus removal boundary 246.
 // frame/current/object/replacement homes remain.
+// Earlier: Frame/current/object/replacement homes remain; unchanged result 189;
+// Earlier: frame/current/object/replacement homes remain.
 // Shared datum/calling walks 216/188; with group getter 216/188; native iterator index 189/237;
 // current-head/read-only object 241/216. Shared walk recovers frame 0x24 at 216/765 bytes.
 // On that frame: member while 216; tested category 219; both 219; category names 216;
 // names with while/test/both 216/219/219. One-point calling-walk gain rejected; body restored.
 // Round 368: non-unit bool/byte 219/219; non-group bool/byte 190/190;
 // joint absence domains bool/bool, byte/byte, bool/byte, byte/bool 220/220/220/220.
+// Current-member identity before lookup 204; successor published on continuation 200;
+// original-object accessor at every use 262; identity/successor, identity/accessor, successor/accessor,
+// all three 200/261/262/262; all with conditional unit admission 263. Original body restored.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

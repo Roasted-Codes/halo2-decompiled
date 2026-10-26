@@ -77,6 +77,7 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // metadata read order 142; direct child getter 160; early result declaration
 // 142; word flag update 244; reciprocal default first 142.
 // cached-pointer compare and selective lookup expansion remain;
+// Earlier: cached-pointer compare and selective lookup expansion remain;
 // cache slot/early flags/both/cache reference 142; reciprocal input 143;
 // global optimization off 433; frame pointer 314; depth two 142.
 // read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
@@ -87,6 +88,8 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // unsigned child handle 142; shared bounded selector 142; word flags 142;
 // word flags with bounded selector 142; child zero-age before enable 142.
 // cached-pointer memory compare, child pushes and in-loop lookup remain.
+// Earlier: cached-pointer compare, child-input spills and loop lookup remain.
+// Earlier: cached-pointer memory compare, child pushes and in-loop lookup remain.
 // Cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime field 142; mask/lifetime fields 142.
 // Cached-pointer comparison and loop lookup remain. Common pointer/flags/both stores
 // 159/140/158f; conditional mask 282f; immutable allocated handle/settings 142f; common current-record
@@ -96,6 +99,7 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // parent with record / settings, record with child, all four references 142/142/142/142.
 // Cached-pointer comparison and selective loop lookup expansion remain.
 // cached-pointer compare, creation pushes and loop lookup remain.
+// Earlier: cached-pointer compare, creation pushes and loop lookup remain.
 // Parent/settings/both metadata fields, first/last/both list fields, metadata with list fields,
 // metadata with cache slot 161/160/167/142/142/142/167/167.
 // cached-pointer comparison, child pushes and selective lookup expansion remain.
@@ -103,6 +107,9 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // child identity order 142; earlier enable 142; earlier age 143.
 // Round 368: child effect/tag/settings home names, each pair and all three, then
 // allocation/spawn names with all metadata 142/142/142/142/142/142/142/142.
+// Early cache predicate/masked flags/both across final draw 157/153/177;
+// final sample store after reconciliation 140, with early predicate/flags/both 138/149/160.
+// Complete reconciliation before final draw 133 (plain); aligned edits 54 versus 42, restored.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)
@@ -248,7 +255,7 @@ vector3f *function_143070(matrix3x3 const *arg_1, vector3f const *arg_0, vector3
 void placement_set(s_placement *arg_0, vector3f const *arg_1, point3f const *arg_2, vector3f const *arg_3, short arg_4);
 void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_object_246eb0 const *arg_3, long arg_4);
 
-// score 368 (was 380): Frame 0xb0 agrees; entry EBP preservation and random/geometry/getter homes remain.
+// score 368 (was 368): Frame 0xb0 agrees; entry EBP preservation and random/geometry/getter homes remain.
 // Frame 0xbc/0xb0, entry EBP save and random/geometry/getter scheduling remain.
 // Earlier: Frame 0xbc versus 0xb0; entry EBP preservation and random/geometry homes remain.
 // Earlier form: exact 0xb0 frame; late EBP save, random stores/getter expansion differ.
@@ -288,6 +295,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Native flag four 393; with velocity pointer/admitted pointer/pointer arms/value arms
 // 394/393/394/410; with complete blend products/duration/all-four scalar draws 393/392/428.
 // Native flag declaration and every body form restored.
+// Round 197: independent blend/probe-point/probe-direction objects 428/368/368;
+// blend-point/probe-point, blend-point/direction, both probe objects, all three 428/428/368/428;
+// full independent native objects on the recovered collision/velocity-source frame 466. All restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

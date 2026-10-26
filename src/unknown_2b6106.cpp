@@ -680,6 +680,8 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // activity at uses 573 kept; native ages 577; native flag byte 630; combined native observations 574.
 // Entry-owned formatting 605; with key 605, activity 601, both 601; original formatting restored.
 // EBP bias and initial flags/timestamp homes remain; original frame, loops and all call arguments retained.
+// Native real payload fields: state/activity, count, selection/totals, keys, timers, game/team,
+// score arrays and the complete view 573 each; native declaration restored. EBP bias remains.
 // Unsigned/signed word and signed-long flags 574/574/574; word flags with
 // long local/activity/joinability results 650/584/583; local/activity pair 653;
 // all native truth results 653. EBP bias and initial carriers still differ;

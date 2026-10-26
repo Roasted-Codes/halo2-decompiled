@@ -3394,6 +3394,9 @@ struct s_128ca0
 // Shared sum accumulator 234; commuted sum 233; returned bit home 234; native sum
 // inputs 234; native inputs plus bit home 234; early raw gain with accumulator,
 // commuted sum or native inputs 268 each (frame 0x494, worse count).
+// Native nested packet with original/part/whole/aggregate clears 234/304/316/309;
+// reverse part clears/entry declaration/late packet/entry with part clears 304/234/283/304.
+// Original packet view and clear boundaries restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

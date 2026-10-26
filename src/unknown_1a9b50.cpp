@@ -665,6 +665,9 @@ static __forceinline long real_to_long(real value);
 // Native memcpy: full facing fallbacks 386; actor/constant query fallbacks
 // 386/386; facing-test planar initializer 386; request planar publication 386;
 // request fallbacks 386; queried planar publication 386; all copies 386.
+// Native predicted point/shared difference 451; x/y/z order and aggregate point 447/447;
+// point plus shared squared length 447; query output scope, scalar names, declaration
+// order and their combination on the point graph 451/451/451/451. Original body restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

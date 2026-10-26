@@ -2424,6 +2424,9 @@ dword __cdecl function_131fc0(real alpha);
 // Unsigned/signed byte flag formals for inverse, inverse plus blend, all flags,
 // and inverse plus combiner flags: 335 each (fast control 335). Original
 // Boolean definition and every declaration restored; no call argument or order changed.
+// Round 195: explicit output nibble shift 348 fast; full EFG/ABCD/both 442/434/441;
+// single-bit output shift 333; full EFG/ABCD/both 444/439/443 (fast control 335).
+// The two-point selector gain and all packed-field forms restored; full baseline remains 331.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,

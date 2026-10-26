@@ -3869,6 +3869,7 @@ static __forceinline long nonnegative_15ce70(long value)
 // body and shared award update restored.
 // Round 364: Native chain/streak/both statistics fields 470/470/470; fresh victim 615;
 // fresh output state 548; both fresh bases 639; native fields plus fresh victim/state 615/548.
+// Clock/round/options base snapshots 566/481/487; clock-round/clock-options/round-options/all 492/558/548/496; role-named marker and both events 470. Frame and attacker/NONE homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

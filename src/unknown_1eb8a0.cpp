@@ -220,6 +220,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // copy/mode 670; copy/coefficients 824; mode/coefficients 812; all three 807; fallback memcpy 642.
 // Shared activation/direction/sample/settling dot products 642/643/676/640; all products 667;
 // complete shared squared lengths 664; products with lengths 665, with initial point difference 719.
+// Named acceleration terms 716; three clamp assignments 664; normalization length first 675;
+// terms/clamps 763; terms/length 738; clamps/length 695; all 781; clamped headroom 751 (fast).
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

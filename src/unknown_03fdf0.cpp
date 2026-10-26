@@ -198,6 +198,10 @@ void function_402b0(long cache_index, long mode)
 // Native actual light definition/parent/node/camera fields 202f each; all fields 202f;
 // external native record reference 202f; native definition receiver 202f; both receivers 202f.
 // Unchanged reduced control 202f/946, ordinary baseline 183/947; frame and helper/API gaps remain.
+// Native pass flags first/second/third/final 215/214/214/215; first pair 220; first three 227; all
+// four 233; all with byte result 231. Fast control 202. Native flag header restored.
+// Round 199: Plain shared 12..13 pass loop, long ordinal with long/bool/byte/short result
+// 296/282/282/287; short ordinal with those results 293/279/279/284 (fast control 202). All restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

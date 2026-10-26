@@ -771,6 +771,10 @@ bool function_1f8660(long arg_0);
 // Round 358: Entry selection outputs 174; complete vector role names with cross output 174; failure-default
 // success paths 215; combined work guard 174; positive tag work 174. Actor/result/count and direction homes
 // remain in frame 0x80c; opening body restored.
+// Round 195: complete k-j-i projections/status 174/174; both shared differences 172/172;
+// every component product/status 173/173; both shared differences 172/172. Gains of one/two restored.
+// Round 197: read-only actor/state/both views 174/174/174; distinct selection/validation
+// reference lifetimes alone/actor/state/both 174/174/174/174; actor lookup at every use 230.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1229,9 +1233,11 @@ struct s_1acda0
     byte unknown3c[0x40 - 0x3c];
 };
 
-// score 114 (was 114): frame 0x764 agrees; slot ESI arrives late, boolean test and exit traffic differ.
+// score 68 (was 114): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
+// Round 195: retained/default-false active result 139/106; each with direct child result 129/68;
+// complete timer predicate with those four 139/129/106/68. Default-false publication and child result kept.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {
@@ -1259,9 +1265,11 @@ bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
     }
     if (!local_1->unknown0d)
     {
+        bool active = false;
         if (((s_actor_view *)g_4f55f0->data)[arg_0 & 0xffff].unknown504 == 2)
         {
-            if (!local_1->unknown10 &&
+            active = local_1->unknown10;
+            if (!active &&
                 (!local_1->unknown25 || local_1->unknown3a && !function_110ab0(local_0->unknown018)))
             {
                 if (local_3)
@@ -1271,18 +1279,18 @@ bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
                     function_e68c0(0, local_0->unknown018);
                     local_1->unknown3b = true;
                 }
-                local_1->unknown10 = true;
+                active = true;
             }
         }
-        else
-            local_1->unknown10 = false;
+        local_1->unknown10 = active;
     }
     if (local_0->unknown040)
     {
         if (local_1->unknown0d)
         {
-            local_2 = function_1acb50(arg_0, (s_slot *)local_1);
-            return local_2;
+            bool child_result = function_1acb50(arg_0, (s_slot *)local_1);
+            local_2 = child_result;
+            return child_result;
         }
         if (function_1f8660(arg_0) && !REFERENCE_EQUAL(local_0->unknown418, g_470fa0))
         {

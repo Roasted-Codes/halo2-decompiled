@@ -1293,6 +1293,9 @@ struct s_player_properties
 // Unsigned/signed byte name count 185/185; prefix-bytes-tail, bytes-tail-prefix,
 // tail-prefix-bytes payload copies 184 each; all payload copies before name output 242,
 // with unsigned/signed byte count 241/241. Owner/count allocation and requested cursor remain.
+// Native requested name/payload/metadata/all 184 each; native current receiver and both receivers
+// 184/184; all current at use and both native observations 198/198. Session-root scores; real
+// player header and property type restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
