@@ -455,9 +455,19 @@ hsv3f *function_1318d0(color3f const *rgb, hsv3f *hsv);
 color3f *function_131a00(hsv3f const *hsv, color3f *rgb);
 void function_3dd10(long object_index, bool force);
 
-// score 84 (was 84): Blend and cached-choice homes, signed scan exits, inverse placement and constant reload still differ.
-// Frame 0x54 agrees; remainder publication/home, signed scan exits and fallback one reload remain.
+// score 84 (was 84): the first scan's `!=` exits (retail's signed `<` loop unrolls by 4 in every
+// for/while/field/shared-counter form, 637-647; short counter 252; a compile-only probe shows the
+// unroll comes from the float weight sum and survives every counter, bound and accumulator
+// spelling), blend's stack slot, the inverse subtraction (retail's is in the blend block, with 1.0
+// reloaded at the not-found exit) and the 1.0/0.0 load order.
+// Round 53: the inverse at the top of the found block gives retail's blend slot, subtraction and
+// 1.0/0.0 order but loses the 1.0 reload at the not-found exit (one instruction short) 132f; with
+// the variant byte read before the blend value 123f, read at its uses 134f; with a pre-incremented
+// selection test 132f; 30 declaration/clamp orders with it 120-134 (screened); seed names and a
+// named choices pointer (screened) don't move the slots.
 // Earlier 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// Blend and cached-choice homes, signed scan exits, inverse placement and constant reload still differ.
+// Frame 0x54 agrees; remainder publication/home, signed scan exits and fallback one reload remain.
 // Frame 0x54 agrees; blend/choice homes, signed scan exits, inverse placement and fallback one reload remain.
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;

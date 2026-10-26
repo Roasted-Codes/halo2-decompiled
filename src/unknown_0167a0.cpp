@@ -74,7 +74,8 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 153 (was 153): Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
+// score 153 (was 153): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
+// Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
 // logarithm factor width and restore allocation remain; frame and numeric/reset sequence agree.
@@ -122,12 +123,21 @@ PRIVATE inline byte const *material_parameters(long tag)
 // early record-table/selected-record/both pointer homes 153/153/153; complete native declaration block 153.
 // Readonly definition/pass/both 153/153/153; first/second/both native record copies
 // 153/153/153; range publication at consumer 153; copies with late publication 153.
+// Entry/pass/both/range/record/entry-pass-range/all base-first pointers 153 each; all bases with
+// ordinary log input 152 (one-point gain dropped).
 // Actual table header / five-word entry / three-word range / table-entry /
 // table-range / entry-range / all metadata records / all readonly records 153 each.
 // Distinct restore word/input/entry/all carrier lifetimes 153 each; initial/restore/both
 // metadata graph scopes 153 each; full restore graph with separate upload record 153.
 // Existing lookup single-result homes/uninitialized/group-first/default-first 153/153/153/153;
 // same graph with group fields at every test 153/153/153; direct conditional lookup 153. Original helper restored.
+// Round 226: selected-record prefix 153; record-block header 153; pass-input prefix 153; record
+// and block 153; record and pass 153; block and pass 153; all three metadata objects 153; all
+// readonly metadata objects 153.
+// Final change/tag/mask test orders 155/158/159/158/159; reversed early test 155,
+// reversed middle test 175, both reversed 177.
+// entry at use 153; chain at use 153; previous tag at use 153; entry chain at use 153; entry tag at use
+// 153; chain tag at use 153; all field observations 153; fields old record at use 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -681,6 +691,7 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 // 229/30/81/81; shared data-field reference 22; data before component dispatch 70.
 // Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
 // native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
+// Entry color/interval/data declarations, paired/all scopes and entry sample: eight forms 22 each.
 // @retail 0x1b580
 bool function_1b580(long unused, byte const *definition, long component, long mode, real *out)
 {
@@ -835,7 +846,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): Frame 0xc versus 0x10 and deferred descriptor rereads remain.
+// score 157 (was 157): Frame 0xc versus 0x10; entry/value homes and deferred descriptor rereads remain.
+// Earlier: Frame 0xc versus 0x10 and deferred descriptor rereads remain.
 // frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
 // alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
@@ -856,6 +868,12 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // ordinary/special bank-one-first arms 159/167.
 // Actual value/entry/remap table fields singly, all three pairs and all together 157 each;
 // all native table fields with native entry bits and body cursor steps 155; two-point gain dropped.
+// Round 226: ordinary bank-zero output pointer 157; ordinary bank-one output pointer 157; special
+// bank-zero output pointer 157; special bank-one output pointer 157; both ordinary destinations
+// 157; both special destinations 157; all four destinations 157; all destinations with named
+// masked value 202.
+// Complete mapping-root observation alone/with value table/with remapping word/both 159/197/160/212;
+// the same four graphs with native unsigned slot 159/197/160/212 (all with ordinary body steps).
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -1303,7 +1321,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 267 (was 265): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
+// score 267 (was 267): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
+// Frame and sampler agree; captured descriptor/index and post-store rereads remain.
+// Earlier: Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // Frame 0x28 and sampler agree; captured descriptors and
 // destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;
@@ -1327,6 +1347,20 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // 309/312/315; direct fields plus native mapped descriptors 265 (1197/1225).
 // Actual four-byte entry fields, input bitfields, rescale bit and native signed mapping records:
 // eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
+// Round 197: complete definition/remapping/source observations and their four combinations
+// 267 each; all observations with a common genuine color workspace 267. Original writer/body restored.
+// Round 161: Complete paired clamp results both/direct/mapped 382/356/291;
+// all results before sample publication both/direct/mapped 380/356/291; native color
+// results before sample publication both/direct 375/356. Original sample writes,
+// shared writer, sampler and executable body restored.
+// Round 185 indexed-first reversed constant/indexed/both bank arms 267/267/267; constant-first four
+// bank orders 265 each; bank-first 242 plain (dropped for shared-writer regression). On bank-first:
+// XOR 245; common masked value 290; masked XOR 290; dword packed 258; dword XOR 263; dword
+// masked/both 320/320; signed packed 258 (fast). Original helper and body restored; descriptor
+// capture and dirty-store scheduling remain.
+// Shared writer reference 267; masked value 302; split stores 267; reference/mask 302;
+// reference/split 267; mask/split and all three 302; named destination values 267.
+// Native external indexed banks/constants/dirty words and their pairs/all 267 each; all fields with packed reference 267.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

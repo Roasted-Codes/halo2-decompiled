@@ -38,81 +38,6 @@ __declspec(noinline) void function_268840();
 
 static __forceinline long real_to_long(real value);
 
-// score 144 (was 144): frame 0x18 versus 0x20; first-pass pointer/datum homes and slice-call interface differ.
-// Native budget with retained helper/count 146; slice datum result with long count 192; stored counter 149; maximum result 143; count arm first 144.
-// Depth one 144; unsigned maximum 146; word update state 155; first datum API 272; calling scan 208.
-// Activity-controlled first/slice/both loops 158/156/168; signed byte update with short/long maximum 146/152.
-// score 144 (was 144): frame 0x18 versus 0x20; current/datum homes and slice-step interface still differ.
-// Cursor/tick names 144/144; entry budget 164; grouped unsigned maximum 144;
-// grouped long update/maximum 154/152; word counter workspace 149; early update state 144.
-// native separate slice 192; native slice with short count 189, long maximum 200;
-// both budget fields long 162; single rate input 180; byte update 144; early count skip 144; typed clumps 144.
-// Native current-pointer/cursor view 132; with Boolean slice API 127; independent
-// long budget 114; separate native cursors 178; native first only 198; short
-// increment 121; Boolean branch 130; handle snapshots 127. Cursor views rejected.
-// score 144 (was 144): frame 0x18 versus 0x20; current/datum homes and slice-step interface still differ.
-// Real counter/global/both members 144/144/144; native member word comparison 149;
-// direct budget members 144; per-record threshold 144; inactive-record continue 144;
-// budget initialized after cursor 155. Body and member declarations restored.
-// score 144 (was 144): frame 0x18/0x20 and current/datum homes remain.
-// Shared record result 144; with separate native/long budget 146/152;
-// member initialization 144; direct modulo clock 144; shared result/clock 144;
-// native counter snapshot 149; update-state-first count path 149.
-// @retail 0x268510
-void function_268510()
-{
-	short interval = (short)real_to_long((real)g_510c54->field_2_3);
-	short slice_interval = (short)real_to_long((real)g_510c54->field_2_3 * 0.1f);
-	s_record_pool_iterator iterator;
-	if (g_4f55d0->active)
-	{
-		iterator.data = g_502420;
-		iterator.index = iterator.datum_index = NONE;
-	}
-	for (;;)
-	{
-		byte *clump = g_4f55d0->active ? data_iterator_next_inlined(&iterator) : NULL;
-		if (!clump) break;
-		if (clump[0x1c]) function_268700(iterator.datum_index);
-	}
-	long time = g_510c54->game_time;
-	if (time % interval == 0) function_268840();
-	else if (time % slice_interval == 0)
-	{
-		struct slice_budget { short maximum; bool updated; } budget = { 0, false };
-		short &maximum = budget.maximum;
-		bool &updated = budget.updated;
-		if (g_4f55d0->active)
-		{
-			iterator.data = g_502420;
-			iterator.index = iterator.datum_index = NONE;
-		}
-		for (;;)
-		{
-			byte *clump = g_4f55d0->active ? record_pool_iterator_step(&iterator) : NULL;
-			if (!clump) break;
-			if (clump[0x1c])
-			{
-				if (*(short *)(clump + 0x1e) == *(long *)((byte *)g_4f55d0 + 0x18) && !updated)
-				{
-					function_269870(iterator.datum_index);
-					function_26a210(iterator.datum_index);
-					function_26b290(iterator.datum_index);
-					*(short *)(clump + 0x1e) = 0;
-					updated = true;
-				}
-				else
-				{
-					long count = ++*(short *)(clump + 0x1e);
-					if (count > maximum) maximum = count;
-				}
-			}
-			else *(short *)(clump + 0x1e) = 0;
-		}
-		*(long *)((byte *)g_4f55d0 + 0x18) = maximum;
-	}
-}
-
 /* walks the clumps of g_502420, only while the ai is active (0x255d60's walk) */
 struct s_clump_datum_walk
 {
@@ -156,6 +81,69 @@ PRIVATE __forceinline byte *clump_datum_walk_next_calling(s_clump_datum_walk *it
 		iterator->clump_index = iterator->iterator.datum_index;
 	}
 	return clump;
+}
+
+/* likewise, calling the iterator step itself */
+PRIVATE __forceinline byte *clump_datum_walk_step(s_clump_datum_walk *iterator, bool active)
+{
+	byte *clump = NULL;
+
+	if (active)
+	{
+		if (data_datum_iterator_next(&iterator->iterator))
+			clump = iterator->iterator.datum;
+		iterator->clump_index = iterator->iterator.datum_index;
+	}
+	return clump;
+}
+
+// @retail 0x268510
+void function_268510()
+{
+	short interval = (short)real_to_long((real)g_510c54->field_2_3);
+	short slice_interval = (short)real_to_long((real)g_510c54->field_2_3 * 0.1f);
+	s_clump_datum_walk clumps;
+	byte *clump;
+
+	clump_datum_walk_new(&clumps);
+	while ((clump = clump_datum_walk_next(&clumps, g_4f55d0->active)) != NULL)
+	{
+		if (clump[0x1c])
+			function_268700(clumps.clump_index);
+	}
+	long time = g_510c54->game_time;
+	if (time % interval == 0)
+		function_268840();
+	else if (time % slice_interval == 0)
+	{
+		short maximum = 0;
+		bool updated = false;
+
+		clump_datum_walk_new(&clumps);
+		while ((clump = clump_datum_walk_step(&clumps, g_4f55d0->active)) != NULL)
+		{
+			if (clump[0x1c])
+			{
+				if (*(short *)(clump + 0x1e) == *(long *)((byte *)g_4f55d0 + 0x18) && !updated)
+				{
+					function_269870(clumps.clump_index);
+					function_26a210(clumps.clump_index);
+					function_26b290(clumps.clump_index);
+					*(short *)(clump + 0x1e) = 0;
+					updated = true;
+				}
+				else
+				{
+					short count = ++*(short *)(clump + 0x1e);
+					if (count > maximum)
+						maximum = count;
+				}
+			}
+			else
+				*(short *)(clump + 0x1e) = 0;
+		}
+		*(long *)((byte *)g_4f55d0 + 0x18) = maximum;
+	}
 }
 
 /* runs 0x2687a0 and 0x268900 for each clump whose byte at +0x1c is set, then
@@ -218,6 +206,8 @@ void function_268840()
 // Recovered-frame expiry byte/long/signed byte 246/250/246; complete expiry result arms 246;
 // byte/signed-byte child result 246/246; unsigned/signed-word retention 247/247. Original
 // body retained.
+// Iterator pointer order, expiry/successor names, retention scope, extra/player comparisons,
+// child positive arm and player while 246 each.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2019,6 +2009,8 @@ void function_269250(long clump_index, long actor_index)
 // changed-reference count 246; category at uses 195; member header getter 189; removal
 // inline/forced expansion 189/460; complete unit predicate 243; count plus removal boundary 246.
 // frame/current/object/replacement homes remain.
+// Earlier: Frame/current/object/replacement homes remain; unchanged result 189;
+// Earlier: frame/current/object/replacement homes remain.
 // Shared datum/calling walks 216/188; with group getter 216/188; native iterator index 189/237;
 // current-head/read-only object 241/216. Shared walk recovers frame 0x24 at 216/765 bytes.
 // On that frame: member while 216; tested category 219; both 219; category names 216;
@@ -2028,6 +2020,9 @@ void function_269250(long clump_index, long actor_index)
 // Round 373: shared member walk ordinary/inline/forced 183/183/183; entry member
 // workspace with the same boundaries 183/183/183; uniform original-object reads
 // with ordinary/forced member walk 243/243. Six-point gain restored.
+// Current-member identity before lookup 204; successor published on continuation 200;
+// original-object accessor at every use 262; identity/successor, identity/accessor, successor/accessor,
+// all three 200/261/262/262; all with conditional unit admission 263. Original body restored.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

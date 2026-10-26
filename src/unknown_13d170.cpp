@@ -170,7 +170,7 @@ struct s_block_candidate
 	long pages;
 };
 
-// score 370 (was 370): frame 0x1050 versus 0x1054; retail spills the ring
+// score 370 (was 370): Frame 0x1050 versus 0x1054; page-offset/ring-tail allocation and policy blocks differ.
 // tail and keeps page offset in EBX. Limit-first guard 385; oldest timestamp
 // initialised 381; enclosing inner-next scope 370; short ring endpoints 392;
 // candidate copy through memcpy 370.
@@ -192,6 +192,8 @@ struct s_block_candidate
 // Round 214: byte insertion successor 375; byte inner successor 383; byte inner ordinal 389; byte best-present state 370; byte policy state 370.
 // Native pointer ring: indexed-source-equivalent for/while, mutable/immutable successor and branch/function
 // array lifetimes 382/382/380/380/382/382/380/380. Original body and helpers restored.
+// Negative best-candidate bool/byte/short/long in admitted scope 371/371/373/373;
+// the same carriers from entry 379/379/380/380. Original positive best state and body restored.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

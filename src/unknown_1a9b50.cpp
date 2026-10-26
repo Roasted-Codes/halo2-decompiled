@@ -253,6 +253,8 @@ bool __stdcall function_1aa990(long actor_index, s_slot *slot)
 // score 17 (was 17): retail loads the prop pool pointer into EAX, one byte
 // shorter than our ECX, and passes entry->unknown24 in ECX where we pass it in
 // EDX; the one-byte difference moves every later jump target.
+// Tried (r35): prop_ref_get and the real record types 17; the state assigned after declaration 17;
+// prop_node_state 17; the reversed probability comparison 35; const entry, state, or actor/unit 17.
 // @retail 0x1aa9f0
 short __stdcall function_1aa9f0(long actor_index)
 {
@@ -665,6 +667,12 @@ static __forceinline long real_to_long(real value);
 // Native memcpy: full facing fallbacks 386; actor/constant query fallbacks
 // 386/386; facing-test planar initializer 386; request planar publication 386;
 // request fallbacks 386; queried planar publication 386; all copies 386.
+// Native predicted point/shared difference 451; x/y/z order and aggregate point 447/447;
+// point plus shared squared length 447; query output scope, scalar names, declaration
+// order and their combination on the point graph 451/451/451/451. Original body restored.
+// Entry/eligibility/final-approach/deadline Boolean reductions 506/493/407/440;
+// all mode reductions 510; entry plus modes 477; early test-derived eligibility
+// on the native velocity receiver 393; entry reduction plus that result 505.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
