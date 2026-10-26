@@ -748,7 +748,7 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // reversed adjacent output publications 95; final native word 102.
 
 // Previous forms at 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
-// score 95 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// Earlier note: Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
@@ -782,6 +782,8 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // bool-result-byte-state 111; word-result 84.
 // word-result-byte-state 102; byte-state-shifted-scale 96.
 // bool-result-byte-state-shifted-scale 111; word-result-byte-state-shifted-scale 102.
+// Common counter-output stores with branch saturation, long/dword/short/word 93/93/93/93;
+// common counter-output stores with completion saturation, long/dword/short/word 93/93/93/93.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {

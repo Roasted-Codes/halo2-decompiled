@@ -145,6 +145,9 @@ struct s_cache_property_record
 // field/end 105; field/ordinals 104; end/ordinals 105; all three 105; named activation ordinals 104.
 // On the capacity-delta graph: short/word scalar ordinals 141/141; short/word identifiers
 // 133/133; long/short/word ordinal do-loops 142/141/141; long identifier do-loop 134.
+// On the three-use element graph: native record/property/both totals 132/136/135;
+// native buffer/record-buffer/property-buffer totals 109/128/131;
+// unused record-address declaration removed 132, with native property total 136.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -486,6 +489,8 @@ void function_1537f0(s_profile_record *record);
 // Complete destination clear 73; contiguous destination-tail clear 67 kept; destination first/after identity 75/75; links before view 98; tail before view 95; direct indexed destination 73; tail fill with early links 100.
 // Ordinary record inline/native identity 67/67; immutable source/identity/both once 95/83/86;
 // immutable source with native identity 95; split source-tail fills 115, with native identity 115.
+// Contiguous link fill 67; link fill with native identity/late identity/intermediate identity 67/67/67;
+// link fill with outer source/lexical source/unsigned ordinal/NONE byte 67/67/87/67.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -600,6 +605,8 @@ bool function_7fb50(void)
 // Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
 // Native identifier field 111; source-array end 90 kept; activation ordinal 111;
 // field/end 90; field/ordinal 111; end/ordinal 90; all three 90; named end ordinal 90.
+// On source-end traversal: long ordinal/packed values/both 92/90/92; scalar element 90;
+// element with long ordinal/packed values/both 92/90/92; word ordinal 90.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
