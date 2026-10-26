@@ -1207,6 +1207,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Split file-base/element advance 165; file pointer name 165; wait/header/both forceinline 165/165/165;
 // empty path 205; initialized write count 204; initialized resize result 215. File-displacement and
 // request/I-O setup remain.
+// Native output handle/by-value handles/both/header/output plus header/values plus header/all views
+// 165/165/165/165/165/165/165; all views with initialized completion 224. Opening body restored.
 // @retail 0x213970
 void function_213970(void)
 {

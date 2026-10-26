@@ -799,6 +799,9 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
 // Frame 0xc agrees; removed-index EDX/ESI and upper ECX/EAX remain. Direction value 342; signed-byte direction
 // 243; range role names 243; direct indexed repair 243; signed min/max with long adjustment 370.
+// Insertion destination before shifts 384; earlier view 243; both addresses 384;
+// insertion/time role names 243; early destination with names 384; both with names 384;
+// early destination/time workspace 393; all lifetimes/names 393. Original body restored.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

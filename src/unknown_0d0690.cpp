@@ -1180,6 +1180,12 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
 // early final fade 529/2196; second scale at use 529/2189 kept.
 // Final fade with late second scale 541/2175 (restored).
+// Captured normal with existing squared-length helper 508 plain (rejected: caller 442); final selected-pointer result
+// 570; captured normal plus final pointer 561; completion-assigned result 572 and with normal 573
+// (both lose caller); early color declarations 529; declaration/completion forms 572/573.
+// Native normal copy and its name/scope combinations 613 (caller 510; matched caller lost);
+// captured-normal role names, entry color declarations and entry length 508 (caller 442);
+// inline/noinline declarations 508 (caller 442). Restore original body to preserve caller 364.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)

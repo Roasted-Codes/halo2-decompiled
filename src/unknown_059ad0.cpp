@@ -3623,7 +3623,7 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 101 (was 115): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
+// score 101 (was 101): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
 // Earlier: Frame agrees; timeout owner spill and native identity/reply load order differ.
 // frame agrees; timeout owner spill and identity load order differ;
 // Frame agrees; timeout owner spill and native identity/reply load order differ.
@@ -3639,6 +3639,8 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 // actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;
 // native workspace names 115; chained message flags 115; peer result with chained flags 101; host
 // result at send 113.
+// Guarded/nested/state-gated/conditional leave with the retained peer result 131/131/132/126;
+// those forms with the actual host-query result 148/148/151/143. Opening body restored.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -4332,6 +4334,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Word identity result 384; word preference/equality states 396/396; local member first 386;
 // selection flags after map updates 384; word reachability counts 383.
 // Round 356: Byte acceptance 387; word acceptance 394; paired byte selection 384; complete version admission 410; admission with byte selection 410; isolated invalid-state/role/missing-selection exits 386 each.
+// Native received/stored/both map records 384/412/412; native input alone/with stored fields
+// 384/412; native output/both assignments 412/412; native records with identity equality 420.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

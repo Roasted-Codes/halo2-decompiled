@@ -53,7 +53,7 @@ long __stdcall function_18d1c0(long arg_0);
 bool function_b9d20(long arg_0);
 
 #pragma inline_depth(0)
-// score 94 (was 106): the pool is not kept in EBX across the loop (retail reloads it only after
+// score 94 (was 94): the pool is not kept in EBX across the loop (retail reloads it only after
 // 0x18a7b0), so the scan/datum/handle registers differ; the root-location call differs.
 // The pool global read at each use 94 (kept; the local copy was rematerialised from the
 // global); then a plain iterator read 107; an element pointer for the flag store 94; the flag
@@ -71,6 +71,8 @@ bool function_b9d20(long arg_0);
 // pool/datum names 106; ordinary named carriers 131; ordinary scoped datum 131;
 // ordinary named current consumer 131. The dead parameter address statement compiled
 // identically and was dropped.
+// Earlier 94 (was 106). Native two-use object index; completed update/release continues;
+// object/exit combinations and repeated cluster index: eight forms 94, all 486/486.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
 {
