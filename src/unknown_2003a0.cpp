@@ -2069,6 +2069,7 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // score 275 (was 275): Frame 0x48 versus 0x54, iterator/point homes and intersection spill remain; original body and declarations restored.
 // Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
 // unsigned current handle 275; declared word bitfield 294.
+// Long overlap 321; raised-component loop 275; shared current-handle scope 275; per-squad area scope 275; long actor wake 301.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2682,6 +2683,7 @@ static __forceinline long real_to_long(real value);
 // first squad-phase lifetime 227.
 // Native group both/first/root 250/272/282; native squads 258; both native walks 256; group
 // workspace lexical order 250; both workspace lexical order 256.
+// Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -2827,15 +2829,16 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
-// score 387 (was 387): frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
+// score 383 (was 383): frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
 // Direct low-word index 387; other direct parameters 387; all direct reads 387;
 // workspace role names 387; one shared native request 399. Pool-first lookup
 // on low-word inputs 387; scalar masks 387; countdown while 388; zero inline
 // depth 387; frame pointer 481.
 // Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
 // repeated signed category 387; function-scope workspaces 387; case two first 387.
-// score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
-// score 383 (was 383): round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
+// round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
+// round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
+// Short countdown 389; long reuse result 389; loop-scope seat output 383; loop-scope separate actor/object/seat results 383; traversal-scope selected entry 383.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

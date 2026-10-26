@@ -370,6 +370,7 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
 // Advancing output cursor 664; segment/camera-delta/plus-minus point names 615/615/615; second
 // position copied from first 629; byte state flags 615; true result and one exit 647.
+// Paired displacement loop 615; side scaling loop 615; normal scaling loops 615; RGB tint loop 615; planar geometry cases first 615.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {
