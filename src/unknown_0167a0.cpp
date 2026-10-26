@@ -339,22 +339,28 @@ struct s_2f6b0_point
 	short x, y;
 };
 
-// score 29 (was 29): initial rectangle loads, origin/step registers and two narrow additions remain; frame 0x18 and incoming contract agree.
-// Earlier: initial rectangle loads, origin/step registers and two narrow additions still differ.
-// Earlier at 94: frame 0x1c versus 0x18; position/output argument homes and rectangle loads differ.
-// Rectangle/origin names 94/94; horizontal/vertical/both origins in place 100/92/115; native step initializer 94;
-// shared output assignment 94; workspace names plus short origin 113; native frame with scalar steps 118, short origin 91.
-// Earlier at 29: frame 0x18 and incoming/output contract recovered; initial rectangle loads
-// and origin/step allocation still differ. Direct horizontal/vertical/both origins 99/29/102; output readback/native 94/94.
-// Both direct origins with readback/native/late full 102/102/102; on vertical-direct,
-// rectangles swapped/late full/global vertical value/global horizontal value 101/102/67/101.
-// Separate short steps 109; const short steps 109; early/late step names 29/29; const full snapshot 29; const
-// native step 29; both const 29; early horizontal origin 29.
-// Horizontal pipeline 102; vertical step first 102; vertical coordinates first 38; shared column/row/both
-// 29/29/29; horizontal origin consumed 78; vertical pipeline 100. Entry body restored.
-// score 29 (was 29): initial rectangle load order and origin/step registers remain.
-// Full/bounds/both library copies 29/29/29; native edge construction 129;
-// snapshot vertical origin 105; recovered-frame rectangle names 29; short horizontal origin 113; native step construction 29.
+// score 29 (was 29): frame 0x18 and the incoming contract agree; retail loads the
+// rectangles' high halves first, reads the horizontal origin back from the copied
+// bounds (EDI) and keeps the copy's low dword (ECX) for the vertical origin; ours
+// shifts the horizontal origin out of the bounds register and adds the vertical
+// one in 16 bits. Earlier at 94: frame 0x1c versus 0x18; position/output argument
+// homes and rectangle loads differ. Rectangle/origin names 94/94;
+// horizontal/vertical/both origins in place 100/92/115; native step initializer 94;
+// shared output assignment 94; workspace names plus short origin 113; native frame
+// with scalar steps 118, short origin 91. At 29: direct horizontal/vertical/both
+// origins 99/29/102; output readback/native 94/94. Both direct origins with
+// readback/native/late full 102/102/102; on vertical-direct, rectangles swapped/late
+// full/global vertical value/global horizontal value 101/102/67/101. Separate short
+// steps 109; const short steps 109; early/late step names 29/29; const full snapshot
+// 29; const native step 29; both const 29; early horizontal origin 29. Horizontal
+// pipeline 102; vertical step first 102; vertical coordinates first 38; shared
+// column/row/both 29/29/29; horizontal origin consumed 78; vertical pipeline 100.
+// Full/bounds/both library copies 29/29/29; native edge construction 129; snapshot
+// vertical origin 105; recovered-frame rectangle names 29; short horizontal origin
+// 113; native step construction 29. Both origins as long/short/word locals from the
+// bounds 105/113/113; both origins read before the steps and used by them, short or
+// long, 106/102. Product operand order, sum order, step declared first, const
+// origins and the edge sums swapped make no difference.
 // @retail 0x2f6b0
 void function_2f6b0(s_2f6b0_point const *position, s_2f6b0_point const *grid,
 	s_2f6b0_point const *span, short_rect *outer, short_rect *inner)

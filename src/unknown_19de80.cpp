@@ -327,6 +327,9 @@ static inline bool teams_enabled_19e1c0()
 // Ordinary short/long return forms 430/432; both small gains discarded.
 // Player-name/team-name/score-format/time-format inline and noinline declarations
 // 433 each (eight fast forms); all declarations and the original body restored.
+// Immutable capacity/comparison length/both 433/433/433; ordinary result with both 701;
+// valid-team-first/inherited and ordinary result 441/729;
+// word/native exact-end team loop 433/444.
 // frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
 // frame 0x208 versus 0x204 and result/copy tails remain.
 // Candidate score reuse 445; existing score formatter 492; both 502; their ordinary-result

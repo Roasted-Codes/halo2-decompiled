@@ -379,6 +379,9 @@ __forceinline void function_183672(point3f *arg_0, point3f const *arg_1, __m128 
 }
 
 // score 8 (was 8): the three values of the query loop are kept in the stack slots in the
+// opposite order (retail j, first, i; ours first, i, j). Shared component base 8; i, j, k
+// declared at the top 8; chained FLT_MAX stores 8; contact pointer walk 8; shape calls
+// through the field pointers 168; about 300 natural forms compiled alone keep the slot order.
 // opposite order.
 // First component/outer index/inner index spill cycle remains. Indexed second/first/both shape reads
 // fast 24/79/8; indexed second kind 24; both/second entry shape reads 135/135;

@@ -149,7 +149,7 @@ long function_155760(long arg_0);
 void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
-// score 306 (was 323): frame 0x54 agrees; protected selection call widths/registers and cyclic-search alignment differ.
+// score 279 (was 279): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
 #pragma inline_depth(0)
 // score 306 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
@@ -161,6 +161,11 @@ void player_action_initialize(s_player_action *arg_0);
 // Unsigned word/dword request 323/331; signed-byte/word/dword reset 323 each;
 // late object pointer fields 306 plain kept (1500/1515); mode-state pointer 323;
 // unsigned word request plus late object fields 306. Keep only late field observations.
+// First/second/both scalar before pair 306/306/306; library angle/scalar/whole-request copies 306/279/321;
+// native output pair/with scalar phase 306/306. Scalar-pair library copy 279 plain kept (1489/1515).
+// Packed source/destination/both selection words 279/279/279; selection memcpy 279;
+// native destination plus final word copy 279; both native words plus final copy 279;
+// native three-word source/output fields 279; native fields with packed selection words 279.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
@@ -310,8 +315,7 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
     memcpy(local_1->field_44, &local_3.field_28, sizeof(local_1->field_44));
     local_1->field_4 = local_3.field_18;
     local_1->field_18 = local_3.field_0;
-    local_1->field_20 = local_3.field_8;
-    local_1->field_24 = local_3.field_c;
+    memcpy(&local_1->field_20, &local_3.field_8, 2 * sizeof(real));
     if (local_1->field_0 != NONE)
     {
         s_186ab6 *local_4 = (s_186ab6 *)g_4e0300->data + (local_1->field_0 & 0xffff);
