@@ -21,31 +21,34 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0);
 bool __stdcall function_71d70(c_session_state_matchmaking *arg_0);
 bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 
-// score 182 (was 243): frame and length agree; primary-session EBP versus ESI, mode joins
+// score 182 (was 182): primary-session ESI joins and byte return normalization remain.
+// Earlier: frame and length agree; primary-session EBP versus ESI, mode joins
 // and final Boolean normalization differ; byte return result 182; word return result 275;
 // long return result 258; unsigned return result 258; independent mode gates 243;
 // mode flag else 243; member gates with retained frame 243; terminal gates with retained frame 243.
-// score 182 (was 182): primary-session EBP/ESI joins and return normalization remain; signed-byte
+// Earlier: primary-session EBP/ESI joins and return normalization remain; signed-byte
 // result and readiness, update, mode-value and two dispatch noinline declarations 185 each in the
 // reduced image; unchanged preview 185 (full 182).
 // primary-session join carrier and return normalization remain;
 // secondary consumer scope / state phases / byte result after state / after sessions 182/182/185/185f;
 // scoped dispatch / member receiver / both lifetimes / with dispatch 183/182/182/183f.
-// score 182 (was 182): Primary-session join carriers and Boolean normalization remain. final existing state query 182; initial
+// Earlier: Primary-session join carriers and Boolean normalization remain. final existing state query 182; initial
 // existing state query 182; both existing state queries 182; dispatch result accumulation 182; state
 // queries and accumulation 182; result after owner capture 184; native state object receiver 182; native
 // signed state and ordinal 182.
 // primary-session ESI joins and canonical return normalization remain;
 // low-bit / true-equality return 184/212; primary object reference 182, with those returns 184/212;
 // owner plus primary references 182; primary reference with native dispatch / low-bit return 183/185.
-// score 182 (was 182): primary-session ESI joins remain; actual search-status member cursor
+// Earlier: primary-session ESI joins remain; actual search-status member cursor
 // at its two consumers / at entry 182/182. Original byte-result body restored.
-// score 182 (was 182): primary session join registers and result normalization remain; cleanup
+// Earlier: primary session join registers and result normalization remain; cleanup
 // interval/exception-first/nested gate 202/234/202; initial/final/both state orders 186/182/186; native ready
 // byte 182; secondary half-open range 182.
 // primary-session ESI joins and return normalization remain.
 // Tested dispatch results in cases 6..13 separately 209/209/209/209/209/208/207/206;
 // all eight tested results 243. All original byte assignments restored.
+// Initial/type/final direct field observations 182/182/182; initial+type/initial+final/type+final/all
+// 182/182/182/182; all with the two-use secondary state 182. Original byte-result body restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

@@ -2120,6 +2120,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
 // unsigned current handle 275; declared word bitfield 294.
 // Long overlap 321; raised-component loop 275; shared current-handle scope 275; per-squad area scope 275; long actor wake 301.
+// Squad/area/both iterator value initialization 298/333/337; rounding scratch role names 275;
+// double rounding input 298 (frame 0x54); native integer result 275; all-row displacement 320;
+// live state getter 275. Original body and rounding helper restored; early saves and intersection spill remain.
 // Exact tick result 312; native word index/actor type 275/275; complete point value 275;
 // value/lexical order 275; failed-team result 275; first-overlap exit 305; early output object 275.
 // @retail 0x201ea0
@@ -2741,6 +2744,7 @@ static __forceinline long real_to_long(real value);
 // workspace lexical order 250; both workspace lexical order 256.
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
 // Round 117: Activity input group/squad/both 227/227/227; conversion-workspace names 227; factor-first periods 227; ordinary inline group/squad 227/227.
+// Round 121: Boolean group-step contract 227; unused group/squad/both suffix words removed 228/228/228; typed squad-step return 227. Original records and helper contracts restored.
 // @retail 0x202720
 void function_202720(void)
 {

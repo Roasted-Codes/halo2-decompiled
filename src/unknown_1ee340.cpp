@@ -162,6 +162,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // native ray start 251; early edge vectors 257.
 // Native full/geometry/polygon vertex records 250/250/250; native-record plain projection loop
 // 260; late hit lifetime 251; late hit with full/geometry/polygon records 251/251/251.
+// Round 210: Word hit result 259; native byte result 262; normal memcpy 263; scoped edge-vector
+// lifetimes 250; direct origin fields 282. Frame 0x78 versus 0x90 and ray/normal/polygon homes
+// remain.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

@@ -205,7 +205,7 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 46 (was 50): Frame/length agree; current/bound carriers and request field scheduling still differ.
+// score 46 (was 46): Frame/length agree; current/bound carriers and request field scheduling still differ.
 // Earlier helper current/total/both inputs 103/51/51; standard lower/upper/both clamps 50;
 // combined inputs/clamps 51; field current 50; shared bound workspace 50; default score first 98;
 // invalid score inputs first 50.
@@ -223,6 +223,11 @@ extern "C" void _ReadWriteBarrier(void);
 // Kept the loose endpoint for interpolation and fallback; plain check 46 at 336/336 bytes.
 // Returned/result/conditional score helper 99/99/99; enabled/disabled/both chained flags 48/48/50; shared
 // result-buffer size 93; request workspace name 46. Current/bound allocation and request scheduling remain.
+// Upper bound first 50; paired bound production 63; flags before bounds 46; flags from current 104;
+// native bound integers 46; strict/loose/both helper endpoint inputs 46/50/50. Opening body and
+// helper restored; current/bound carriers and request scheduling remain.
+// Shared valid progress predicate with live/current/total/both score inputs 105/105/108/108;
+// shared invalid predicate with those inputs 105/105/108/108. Original helper and body restored.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -345,13 +350,18 @@ static inline void release_block(void *block, long *info)
 
 /* stops a session search: cancels its online task and its QoS lookups and
    releases its buffers */
-// score 87 (was 87): extra save, sentinel/zero and rolled handle loop differ; existing local-output release
+// score 87 (was 87): extra save, sentinel/zero and rolled handle loop remain.
+// Earlier: extra save, sentinel/zero and rolled handle loop differ; existing local-output release
 // for buffer masks 1/2/4/3/5/6/7, then shared size output: 96, 96, 96, 92, 96, 96, 92, 96.
 // Task handle 91; two query-handle snapshots 91; plain handle-table loop 87;
 // first/results/seen buffer snapshots 106/105/98; all buffers 116; table plus buffers 113.
 // Handle-table loop kept: plain 87, 252/261 bytes; receiver/allocator now EBP/EDI.
 // Round 164: pointer range 91; entry handle cursor 91; entry handle end 91; counted cursor 87;
 // unsigned counter 87; word counter 87; counted handle value 87; pointer task lifetime 91.
+// Round 167: task/handle postconditions 87/87; first/all buffer postconditions 86/87;
+// task+handles/handles+buffers/all/task+buffers 87/87/87/87. Original body restored.
+// Exact handle endpoint/short exact/byte exact/signed-byte bound 87/87/87/87;
+// direct fixed do loop/byte do loop 87/87; existing release forced/implicit inline 87/87.
 // @retail 0x90c80
 void __stdcall function_090c80(byte *p)
 {
@@ -705,6 +715,10 @@ done:
 // Round 164: native detail inputs 128; full results lifetime 182; native full results 182;
 // entry input scope 128; loop input scope 128; entry scope results 182; native loop scope 128;
 // native entry results 182.
+// Round 167: complete typed details pointer/direct fields 128/213;
+// pointer with signed difference/range step/both 128/128/128;
+// pointer with full results lifetime 182; direct difference/range step 213/213.
+// Original results observation and details/kind/count homes remain.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

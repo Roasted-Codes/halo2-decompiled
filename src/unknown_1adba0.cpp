@@ -299,14 +299,28 @@ local_0:
 	return result;
 }
 
-#pragma optimize("g", off)
 PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 {
     return arg_0 + (arg_1 - arg_0) * AI_RANDOM_REAL();
 }
-#pragma optimize("", on)
 
-// score 61 (was 61): first range still fuses its x87 add; native interval fields 61;
+// score 61 (was 61): frame and both tick conversions agree; the only difference is the first
+// range's final add: ours fuses it (faddp) where retail keeps the lower bound live and drops it
+// afterwards (fxch/fadd st(1)/fxch/fstp st(0), 6 bytes). Our build fuses whenever the range's
+// result stays on the x87 stack; the second range (stored) already matches.
+// Round 49: helper without the global-optimisation-off pragma 61 (kept: identical code); result
+// local in the helper 61; the existing slot_random_range 68; named random in the helper 77 (SSE
+// range, 285 bytes); ranges written out in place 90.
+// Earlier: native interval fields 61; interval by value/reference/pointer 94/84/84; value with
+// result 94; reference/pointer input copies 64/64; value with named sample 95; shared delay/
+// duration/both range helpers 74/77/68; ordinary/direct/test-derived success 91; state at stores
+// 61; shared ranges ordinary result 91; rounding boundary for delay/duration/both, shared short/
+// real clock, first output before duration, early output with rounding and shared clock with
+// rounding 68, 65, 71, 75, 75, 79, 100, 89; in-place delay/duration/both products 61; operand
+// orders 61; entry failure guard 85; earlier state initialization 61; the existing 0x259d0 with
+// file and line 67 (SSE ranges; round 49 with its object linked: 73 instructions, NULL file or a
+// seed local the same).
+// first range still fuses its x87 add; native interval fields 61;
 // interval by value/reference/pointer 94/84/84; value with result 94; reference/pointer
 // input copies 64/64; value with named sample 95. All interval and helper forms restored.
 // first range add still fuses; shared delay/duration/both range helpers 74/77/68; ordinary/direct/test-derived success 91; state at stores 61; shared ranges ordinary result 91 (round 117).
@@ -654,24 +668,12 @@ bool function_270640(s_type_f17a25 *arg_0, s_type_c3b527 const *arg_1,
 bool function_2715a0(byte *arg_0);
 bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void const *arg_4);
 
-// score 102 (was 102): ESI is still saved around the middle region; result/index registers differ;
-// result first 110, point scope 112, settings scope 112, source scope 112, workspace scope 112,
-// result first/workspace scope 110, named result 112, named workspaces 112, prop index once 229.
-// frame 0x88 agrees; ESI save/restore and query-copy carriers remain.
-// Point/valid/both output receivers 230/112/230; common terminal result 112;
-// point/valid/both with common result 230/112/230; both plus native source 230.
-// Source/query/both publication orders 102/111/101; query-only one-point gain rejected.
-// Native source alone/with source order/with both orders 114/104/103.
-// Library source/query/published copies and all combinations 102 (seven forms);
-// existing conversion return as copy source 218. ESI save and query carriers remain.
-// Native actor/slot/prop record references and their pairs/all 102 (seven forms);
-// native query record reference 102; entry-wide ESI save and query-copy carriers remain.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {
 	s_actor_view *local_0 = actor_get(arg_0);
-	short local_1 = g_46fbe4;
 	s_1adff0 *local_2 = (s_1adff0 *)((byte *)local_0 + 0x9c + arg_1 * 0x40);
+	short local_1 = g_46fbe4;
 	local_0->unknown449 = true;
 	if (local_2->field_0 > 0)
 		local_2->field_0--;
@@ -693,18 +695,19 @@ short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 		local_8.radius = local_3->field_4;
 		local_8.unknown04 = false;
 		local_8.object_index = local_7;
+		local_8.unknown4c = 0.0f;
 		local_8.has_point = true;
 		*(s_type_c3b527 *)&local_8.point = local_5->unknown48;
 		local_8.unknown24 = *(long *)((byte *)local_5 + 0x44);
 		local_8.unknown0c = local_0->unknown018;
-		local_8.unknown4c = 0.0f;
 		byte *local_9 = ai_scratch_buffer_get();
 		function_271300((s_type_f17a25 *)local_9, NULL, &local_6, &local_8, 0);
 		function_26c180(arg_0);
 		s_1adff2 *local_10 = (s_1adff2 *)local_9;
+		long local_18 = local_0->unknown27c.unknown10;
 		local_10->field_54 = true;
 		local_10->field_58 = local_0->unknown27c.point;
-		local_10->field_68 = local_0->unknown27c.unknown10;
+		local_10->field_68 = local_18;
 		local_10->field_6c = 0.0f;
 		if (function_2715a0(local_9))
 		{

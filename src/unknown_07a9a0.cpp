@@ -556,31 +556,17 @@ bool function_7df00(s_bitstream *stream, s_session_message_values *values)
 	return false;
 }
 
-// score 40 (was 40): retail keeps the data pointer in esi and pushes it in the prologue,
-// ours keeps it in eax and pushes esi later.
 // @retail 0x7e080
 bool function_7e080(const byte *data, long size, s_session_message_values *values)
 {
-	const byte *buffer = data;
 	bool result = false;
-	s_session_message_values *const *values_reference = &values;
-	if (buffer && size > 0)
+	if (size > 0 && data)
 	{
 		s_bitstream stream;
 		stream.unknown08 = 1;
-		stream.data = (byte *)buffer;
-		stream.size_in_bytes = size;
-		stream.mode = 0;
-		stream.bit_position = 0;
-		stream.checkpoint_count = 0;
-		stream.error = false;
+		stream_set_buffer(&stream, data, size);
 		function_1947a0(&stream);
-		if (function_7df00(&stream, *values_reference))
-		{
-			if (stream.bit_position <= (stream.size_in_bytes << 3) && !stream.error)
-				return true;
-		}
-		result = false;
+		result = function_7df00(&stream, values) && stream.bit_position <= (stream.size_in_bytes << 3) && !stream.error;
 	}
 	return result;
 }

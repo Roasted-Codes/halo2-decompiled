@@ -1606,6 +1606,9 @@ void function_b7360(long object_index);
 // Native actor/command/both references 482; state and state+actor/command/both 473,
 // rejected without an exact match; output direction reference 534. Canonical state type
 // and canonical direct output 482/482 (companion 478/478). All ten forms restored.
+// Native unsigned object bits 482; initial/command/location point memcpy 482/482/482;
+// both table/all native point copies 482/482; native clear/set updates 482; movement outcomes 530.
+// Copies and bit updates preserve the complete executable prefix; original body restored.
 // Existing actor/command/both lookups 482 each; direct output uses alone and with
 // each/both lookups 482 each; actor-object value begun at its producer 524.
 // Four explicit pool/data orders 482 each; native pool headers in either order 482/482; headers plus native
@@ -2018,6 +2021,8 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Native actor/command/state record references, their pairs and all three 478 each;
 // actor/command/state pointer role names 478. All eight restored. Canonical state type
 // and canonical direct output in both callbacks 478/478, restored.
+// Native actor scalar/vector/both members 484/478/484; shared short/native command selector 583/552;
+// post-dispatch result 646; shared length producer 478 (grouping diagnostic restored); complete facing mask 609.
 // Uninitialized first point, case-four point/vector, both groups, all spatial buffers,
 // planar buffers, first plus planar, iterator and all workspaces at entry: 478 each.
 // Complete facing CRT copy, twice-used selected target and consistent vector-before-enable publication: seven

@@ -1185,6 +1185,11 @@ void function_7e100(long current, const s_member_quality_collection *collection,
 long function_1931a0(long count, s_surface_description *variant);
 
 #pragma inline_depth(0)
+// score 30 (was 30): frame 0x370 agrees; elapsed-store order, rating-call
+// transport, summary loads and copy-tail alignment differ. Fast control 32;
+// native rating record, native role names, native capacity expression, native
+// minimum observations, array minimum observations, capacity expression,
+// inline rating declaration and inline quality declaration 32/32/60/32/32/60/32/32.
 // @retail 0x73530
 void function_73530(c_helper_a *helper, void *description)
 {
