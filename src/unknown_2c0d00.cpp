@@ -1106,7 +1106,10 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
 
-// score 478 (was 478): frame 0x104 versus 0x10c; radius/index and metadata homes remain.
+// score 469 (was 478): Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
+// word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
+// output slot 469; with unsigned outer 470 (frame 0x10c); unsigned next 493.
+// frame 0x104 versus 0x10c; radius/index and metadata homes remain.
 // frame 0x104 versus 0x10c; metadata result homes recover 0x10c at 482 but radius, index and branch allocation still differ.
 // metadata common emission 482; metadata long type 482; metadata long link 483; metadata both long 482;
 // metadata outer index 482; metadata radius home 482; metadata ordinary output 513; metadata index register
@@ -1145,6 +1148,7 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
             for (long index = 0; index < count; )
             {
                 s_path_step_view const *entry = &points[index];
+                s_path_step_view *out = &result[used];
                 short next = NONE;
                 long edge = 0xffff;
                 bool found = false;
@@ -1236,7 +1240,6 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                     next = index + 1;
                 }
             emit:
-                s_path_step_view *out = &result[used];
                 out->node_index = sector;
                 out->point.point.x = origin.x;
                 out->point.point.y = origin.y;
