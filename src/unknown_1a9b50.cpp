@@ -406,29 +406,44 @@ real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
-// score 379 (was 384): actor-table/result/prop carriers still differ; first
+// score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
+// actor-table/result/prop carriers still differ; first
+// actor-table/result/prop carriers still differ; first
 // prediction loop 391; second prediction loop 391; planar reverse loop 391;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
-// score 379 (was 379): Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
+// Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
+// Earlier at 379 (was 379): Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
 // 408; integer clock 413; conditional threshold 389; aggregate request 379; branch-derived
 // prediction weight 385 (fast).
 // Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
 // inner threshold 388; entry planar workspace 379. Actor/settings/prop carriers still differ.
 // Round 310: eligibility result 432; double clock 413; prop handle snapshot 379;
 // read-only prop payload 379; weight after magnitude 379. Early actor/settings/prop homes remain.
-// score 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
+// actor/settings/prop carriers differ; request direction at use 379; request
 // validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
-// score 379 (was 379): Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
+// Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
+// Earlier at 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
+// Earlier at 379 (was 379): Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
 // result 379; unit field pointer 379; external state byte reference 390; position pointer 387;
 // velocity pointer 424.
 // Round 173: external actor / guarded slot / combined references 379/379/379;
 // external facing reference 379; prediction-path velocity reference 395. Frame 0x40 agrees;
 // early actor/settings/prop carriers remain. Original body retained.
-// score 375 (was 379): frame 0x40 agrees; early actor/settings/prop carriers remain.
+// frame 0x40 agrees; early actor/settings/prop carriers remain.
 // Failure guard with direct result 440; primary components i/j/k 379; earlier normalization
 // distance 375 kept (plain); double distance 406; named facing projection 387.
+// Early-distance context: distance/weight/time scalar names 375 each; combined scalar names 375; chained defaults 375.
+// Distance at common direction scope 410; prediction-default order 375; complete weight result 388.
+// Direct parent-to-direction handoff 375; direction after admission 378; named velocity alignment 375;
+// branch-derived prop receiver 399; read-only actor 375; final rejection expression 375; nested admission 374; prop result with later direction 404.
+// Actor lookup at use 524; velocity/position/both values 405/417/406;
+// all projection products 375; products with live actor 516; clock at use 391; products with prediction values 406.
+// Earlier at 375 (was 379): frame 0x40 agrees; early actor/settings/prop carriers remain.
+// Existing point-difference helper at primary/secondary/both predictions 375/375/375; native predicted
+// point at primary/secondary/both 375/375/375; unary planar negation 390; earlier uninitialized
+// prediction-time storage 375. Actor/settings/prop carriers remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -596,7 +611,9 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 466 (was 478): early false exit, frame 0x54 versus 0x58 and scratch
+// score 386 (was 410): Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
+// Earlier forms: prediction loop 482; initial velocity snapshot 538; direct
+// early false exit, frame 0x54 versus 0x58 and scratch
 // homes differ; prediction loop 482; initial velocity snapshot 538; direct
 // eligibility 484; full-width readiness 495; fallback copy loops 541.
 // j92: actor/settings registers agree; frame 0x54 versus 0x58, early false exit and speed/object homes remain; retain facing view and native planar copy.
@@ -604,13 +621,20 @@ static __forceinline long real_to_long(real value);
 // 476; direction length by arm 482; facing position view 471; facing prediction seconds 472; facing planar
 // copy 466; facing direction length 473; planar speed homes 466; planar position view 464; planar position
 // speed homes 464; planar position late 466.
-// score 410 (was 466): Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// Previous form: Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
 // late object receiver 470; trajectory planar view 466; direct request view 466;
 // test-derived readiness 410; conditional approach factor 466 (fast).
-// score 410 (was 410): frame 0x54 versus 0x58, early rejection and query homes remain.
+// Previous form: frame 0x54 versus 0x58, early rejection and query homes remain.
 // Separate query in/out scalar 494; wider output scope 410; wider trajectory scope 410;
 // scalar/output and scalar/trajectory scopes 494 each; output/trajectory scopes 410;
 // all query homes 494; all homes with earlier query-scalar declaration 494.
+// Target velocity view 487; object velocity view 386; both 384 (two-point increment rejected);
+// byte readiness 410; target/object/both views with byte 487/386/384; native readiness 422.
+// Direct six-use object velocity field producer 386 kept (plain), removing the one-use object pointer.
+// Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// frame 0x54 versus 0x58, early rejection and query homes remain.
+// query output names 410; native request clear 474; positive mode arms 483; far prediction first 413; request
+// mode first 522; relative velocity expression 413; direct facing field 524; deadline mode first 510.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
@@ -669,7 +693,7 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 			else
 			{
 				real local_12 = (real)sqrt(local_8->field_1c.i * local_8->field_1c.i + local_8->field_1c.j * local_8->field_1c.j + local_8->field_1c.k * local_8->field_1c.k);
-				s_ai_object *local_13 = ai_object_get(local_1->unknown018);
+				vector3f const *object_velocity = &ai_object_get(local_1->unknown018)->velocity;
 				real local_14 = 0.0f;
 				if (local_12 > 0.0f)
 					local_14 = (1.0f + (local_8->field_1c.k * facing->k + local_8->field_1c.j * facing->j + local_8->field_1c.i * facing->i) / local_12) * 0.5f;
@@ -720,10 +744,10 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 				else if (local_0->field_2e)
 				{
 					local_10 = local_0->field_34 > local_17 || (0.0f > local_17 &&
-						(local_8->field_1c.k - local_13->velocity.k) * local_11.k + (local_8->field_1c.j - local_13->velocity.j) * local_11.j + (local_8->field_1c.i - local_13->velocity.i) * local_11.i > 0.7f);
+						(local_8->field_1c.k - object_velocity->k) * local_11.k + (local_8->field_1c.j - object_velocity->j) * local_11.j + (local_8->field_1c.i - object_velocity->i) * local_11.i > 0.7f);
 				}
 				else
-					local_10 = 0.5f > local_17 - (local_13->velocity.k * local_11.k + local_13->velocity.j * local_11.j + local_11.i * local_13->velocity.i) * local_15 * g_510c54->rate;
+					local_10 = 0.5f > local_17 - (object_velocity->k * local_11.k + object_velocity->j * local_11.j + local_11.i * object_velocity->i) * local_15 * g_510c54->rate;
 			}
 		local_18:
 			if (local_0->field_18 || (local_10 && !local_0->field_2e))

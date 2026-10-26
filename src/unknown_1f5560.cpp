@@ -636,10 +636,21 @@ struct s_1f9762
 	s_actor_point_entry field_30[4];
 };
 
-// score 108 (was 108): ours is five bytes longer than retail: the value that
+// score 67 (was 67): Frame 0x1c agrees; fallback approach placement and scalar registers still differ.
+// Earlier: ours is five bytes longer than retail: the value that
 // is compared is loaded into another register and the call that follows takes
 // its argument from another stack slot.
-// score 67 (was 108): approach as its own statement after the arms (no gotos), struct copy of the direction and `remaining <` on the left give retail's length and code; left: retail lays the previous-point false arm and the approach call after the first return (a jump-threaded copy) with the last-path projection falling into the shared test. Direction-first dots 67/67; `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
+// Earlier: approach as its own statement after the arms (no gotos), struct copy of the direction and `remaining <` on the left give retail's length and code; left: retail lays the previous-point false arm and the approach call after the first return (a jump-threaded copy) with the last-path projection falling into the shared test. Direction-first dots 67/67; `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
+// Normal admission first 111; admitted last result 125; combined forced/last result 208;
+// path-defined validity 131; true-default validity 135; path-defined reached 149;
+// path-defined projection 67; admitted last with complete validity 149.
+// frame 0x1c and entry agree; deferred approach block placement differs.
+// The earlier longer body also differed in the compared-value register and call argument home.
+// approach as its own statement after the arms (no gotos), struct copy of the direction and `remaining <` on the left give retail's length and code; left: retail lays the previous-point false arm and the approach call after the first return (a jump-threaded copy) with the last-path projection falling into the shared test. Direction-first dots 67/67; `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
+// Separate approach body: first/last/both normalized-result assignments 111/105/116; entry valid default
+// 127; long validity/last/both 161/161/173; conditional last projection 67.
+// Reached word/native 110/111; short validity/last/both 163/164/178; direction-publication-first
+// 67; publication-first with word reached 110; readonly actor/path receivers 67 (fast).
 // @retail 0x1f9760
 bool function_1f9760(long actor_index, long object_index, point3f const *point, real distance,
 	bool *last_out, bool *direction_valid_out, vector3f *direction_out)

@@ -186,6 +186,10 @@ void c_widget::v16()
 // native object type and direct method boundaries do not recover the delayed save; native
 // traversal 20; native entry scan 42; native repeat scan 20; native next cursors 20; native
 // candidate 20; direct existing methods 20; native selected lifetime 26; native success tail 47.
+// score 20 (was 20): the head copy is propagated into the body, so the candidate takes ESI.
+// Walk from a widget = this cursor with separate entry/step results 42 (90 bytes); prev link per
+// branch 21; NULL-initialized widget 20; own prev local with the scan in the entry variable 21;
+// forceinline previous-or-last helper at entry and step 42 (90 bytes).
 // Eligibility used for admission and focus: bool/byte/short/long at iteration 20/20/42/40;
 // the same carriers at entry 20/20/42/40. Delayed ESI save still differs.
 // @retail 0x22ec1b
@@ -231,46 +235,40 @@ bool window_manager_channel_window_in_use(long channel, long index);
 // @retail 0x22ef1b
 bool c_widget::function_22ef1b()
 {
+	bool result;
 	c_class_1473c9 *screen = (c_class_1473c9 *)function_22eeee();
 	long index = screen->v21();
 
 	switch (screen->v20())
 	{
-	case 0:
-		break;
-	case 1:
-		return window_manager_channel_window_in_use(0, index);
-	case 2:
-		if (window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next)
-		{
-			return true;
-		}
-		break;
 	case 3:
-		if (window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next ||
-			window_manager_channel_window_in_use(2, 4))
-		{
-			return true;
-		}
-		break;
-	case 4:
-		if (window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next ||
-			window_manager_channel_window_in_use(3, index) || window_manager_channel_window_in_use(2, 4))
-		{
-			return true;
-		}
+		result = window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next ||
+			window_manager_channel_window_in_use(2, 4);
 		break;
 	case 5:
 	case 6:
-		if (window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next ||
+		result = window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next ||
 			window_manager_channel_window_in_use(3, index) || window_manager_channel_window_in_use(4, index) ||
-			window_manager_channel_window_in_use(2, 4))
-		{
-			return true;
-		}
+			window_manager_channel_window_in_use(2, 4);
+		break;
+	case 4:
+		result = window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next ||
+			window_manager_channel_window_in_use(3, index) || window_manager_channel_window_in_use(2, 4);
+		break;
+	case 2:
+		result = window_manager_channel_window_in_use(1, index) || g_54d598.window_0.current || g_54d598.window_0.next;
+		break;
+	case 1:
+		result = window_manager_channel_window_in_use(0, index);
+		break;
+	case 0:
+		result = false;
+		break;
+	default:
+		result = false;
 		break;
 	}
-	return false;
+	return result;
 }
 
 // @retail 0x24c024

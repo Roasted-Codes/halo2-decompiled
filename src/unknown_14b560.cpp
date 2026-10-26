@@ -2115,7 +2115,9 @@ static __forceinline long player_round_ticks(real value)
     return result;
 }
 
-// score 701 (was 701): Frame 0x4c versus 0x74; request/pointer homes and selective expansion remain.
+// score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion remain.
+// frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
+// Frame 0x4c versus 0x74; request/pointer homes and selective expansion remain.
 // Slot helper ordinary inline 723; view helper ordinary inline 812; sentinel result join 710;
 // absent-slot exit 701; word hand selector 701.
 // Earlier: frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
@@ -2125,6 +2127,9 @@ static __forceinline long player_round_ticks(real value)
 // native activity results 707; native permission 701. Original body kept.
 // Cooldown scalar names 701; rest-first clamp stores 706; gated idle cap 705;
 // separate melee button tests 709; target-age store before test 701.
+// Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
+// Branch-local separate requests 804; live movement fields 701; joined cooldown clamp 707;
+// non-primary melee arm first 701; target completion returns 701.
 // Earlier: Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)

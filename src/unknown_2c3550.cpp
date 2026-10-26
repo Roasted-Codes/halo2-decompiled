@@ -605,6 +605,9 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Short/signed byte result 740/788; long/byte inserted count 730/741; word flags 742.
 // Long inserted count has retail frame but 2965 bytes; native reverse index 770/2925 bytes; original length preserved.
 // Round 121: Byte last-step predicate 735 kept; insertion-only/all avoidance storage scopes 742/763; Boolean enable bit 740; word retry 740; bit plus retry 742; byte-last plus bit/retry/both 735/737/734. Extra one-point combination rejected.
+// Shared slot predicate 782; chained list resets 742; complete step memcpy transfers 753;
+// unsigned word result 740 (two-point gain rejected); direct search decision 742 (fast).
+// Original complete body and existing insertion helper call restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,

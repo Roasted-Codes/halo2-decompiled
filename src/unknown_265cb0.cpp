@@ -1564,7 +1564,10 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 684 (was 684): Frame 0x7c versus 0x80; sentinel/link homes and expanded tick conversions
+// score 684 (was 684): frame 0x7c versus 0x80; saved links and conversion expansion remain.
+// frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// Frame 0x7c versus 0x80; sentinel/link homes and expanded tick conversions
 // remain. Pointer player-table walk 685; forward library copy 684; velocity library copy 684;
 // parallel matrix pair sums 684; native actor fields 684 (calibrated fast).
 // Earlier: frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
@@ -1584,6 +1587,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 // direct score result 695; direct retention result 705 (plain).
 // Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
 // Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
+// Word level with long established/plus long player slot/long visible/long retain/
+// long established and visible 696/724/706/706/699; recovered-frame early selection
+// defaults 684, early successor cursor 712, scalar-first strongest comparison 696 (calibrated fast).
 // Matrix component loop 721; direction component loop 711; relative component loop 696; traversal-scope contact handle 702; traversal-scope tick threshold 702 (fast control 702); relative loop 714 plain, rejected.
 // Earlier 684 (was 695): Frame, saved-link homes and expanded tick conversions remain.
 // Earlier 684 (was 684): Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).

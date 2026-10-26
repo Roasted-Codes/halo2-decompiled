@@ -538,6 +538,13 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // direct planar commit 182; planar memcpy 152; original horizontal fallback 162; fallback plus
 // planar copy 157; native turn plus fallback 162; normalized point 237; both points 253;
 // normalized point plus direct commit 166.
+// score 130 (was 136): the normalized planar components read into named x/y (used by both tests)
+// give retail's square order in the planar normalization. Still differs: retail multiplies the
+// facing components as registers (`movss reg, [field]; mulss reg, y`) and tests the length after
+// the scale products with 0.0 in xmm0; the inlined rotation's loads and registers; the output.
+// y declared first 136; named dot 130; direct output stores 147 (828 bytes); side before the
+// turned copy 136 (862 bytes); sine as a ternary of constants 149. Fast checks build this one
+// differently (rotation helper left out of the reduced image): use plain checks.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {
@@ -565,10 +572,12 @@ long function_1ff360(long actor_index, point3f const *target, vector3f *velocity
 		point2f horizontal;
 		memcpy(&horizontal, &direction, sizeof(horizontal));
 		real magnitude = normalize2d_fast((vector2f *)&horizontal);
-		if (magnitude > 0.0f && actor->unknown290.j * horizontal.y + actor->unknown290.i * horizontal.x < 0.0f)
+		real x = horizontal.x;
+		real y = horizontal.y;
+		if (magnitude > 0.0f && actor->unknown290.j * y + actor->unknown290.i * x < 0.0f)
 		{
 			vector3f turned = actor->unknown290;
-			bool left = actor->unknown290.i * horizontal.y - actor->unknown290.j * horizontal.x > 0.0f;
+			bool left = actor->unknown290.i * y - actor->unknown290.j * x > 0.0f;
 			real sine = (left ? 1 : -1) * 0.5f;
 			rotate_direction(&turned, g_4687b0, sine, 0.0f);
 			if (normalize2d((point2f *)&turned) > 0.0f)
