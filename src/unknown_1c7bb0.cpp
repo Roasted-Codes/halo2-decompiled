@@ -77,6 +77,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // active-aware shared step 240; native datum initialization 252.
 // Native step reference 164; unsigned-word completion 164; shared absolute ordinal 250;
 // native record-array view 180; cleanup inline declaration 164; reference/word contract 164.
+// Round 211: Masked squad slot 250; opaque datum 164; unsigned ordinal member 164; slot/full-width
+// partition 252; slot/opaque datum 250. Separate pool/iterator and successor homes remain.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
