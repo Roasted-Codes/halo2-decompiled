@@ -797,13 +797,17 @@ done:
 	return result;
 }
 
-// score 176 (was 176): frame 8 agrees; next stays in CX and the sentinel takes EBX.
+// score 176 (was 176): Frame 8 and length agree; entry next-word cache and sentinel register remain.
+// Earlier: frame 8 agrees; next stays in CX and the sentinel takes EBX.
 // Full-width result 211; full-width entries 214; full-width palettes 186;
 // result plus entries 214; selection role names 176. Natural while scans 174;
 // common output exit 227; exhausted-entry return 228; frame pointer 221;
 // global optimization off 533.
 // Conditional next publication 218; definition mode first 211; current-field result 223;
 // size preference 285; zero inline depth 232. Original kept.
+// Earlier: round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
+// Earlier: round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
+// AC338: accept-all snapshot 192; requested-bit snapshot 191; both flags 191; fallback mode first 187; read-only squad 176.
 // round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
 // round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
 // round 108: frame 8 agrees; next-word/sentinel allocation remains.
@@ -1469,7 +1473,10 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
 // score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
 // score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
-// score 120 (was 120): extra frame dword and x87 shared tail remain.
+// score 120 (was 120): frame 0x2c versus 0x28, pool/save allocation and shared Y-tail SSE handling remain.
+// Native actor getter 120; native source-point snapshot 150; source-field reference 120;
+// distance workspace names 120; in-place nonnegative distance before minimum 122.
+// extra frame dword and x87 shared tail remain.
 // Unused mode address removed/read-only mode 120/120; in-place transform 123;
 // noinline, staged subtraction and fallback memcpy each 120; nonpositive-first 119; failure exits 118.
 // @retail 0x204950
@@ -1733,16 +1740,22 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
     }
 }
 
-// score 264 (was 264): frame 0x3c agrees; definition/count/best/point homes, entry reloads and packed references differ.
+// score 264 (was 264): Frame 0x3c agrees; squad-offset/definition/count/best/point homes and entry reads remain.
+// Earlier: frame 0x30 versus 0x3c; packed references and entry-index schedules differ.
 // Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
 // native reference indices 350; entry fields at use 344; inline distance call 678.
-// Frame 0x3c agrees; stack homes, entry loads and packed reference tests
+// Earlier: Frame 0x3c agrees; stack homes, entry loads and packed reference tests
 // differ. Native player iterator 305; native entry cursor 316; word validation 305; matching-area
 // result 315; distance home names 305; field-initialized best 357; area-entry name 305;
 // player-record name 305.
-// Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
+// Earlier: Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // Pooled reference 323; entry-block reuse 323; delta workspace 305; shared scan cursor 305; valid
 // actor continue 305.
+// Earlier: round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
+// AC338: typed count pointer 264; per-iteration table choice 323; long validation 264; entry best 264; entry nearest 264; earlier player home 264.
+// frame 0x3c agrees; definition/count/best/point homes, entry reloads and packed references differ.
+// Frame 0x3c agrees; stack homes, entry loads and packed reference tests
+// Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
 // Round 110: branch table with native selection 323; actual palette field reference 279; reference with branch table 301; split point scopes on native iterator/count frame 264; early actor iterator workspace 264.
 // @retail 0x204450
@@ -1910,17 +1923,25 @@ extern s_record_pool *g_5044c8;
 bool function_1e1de0(long actor_index);
 bool function_1df5d0(short team_a, short team_b);
 
-// score 179 (was 179): frame 0x14 agrees; iterator index is cached and the flag clear splits.
+// score 179 (was 179): Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
+// Earlier: frame 0x14 agrees; iterator index is cached and the flag clear splits.
+// frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // Earlier iterator declaration 242; iterator/count role names 242; natural for
 // walks 348; unsigned full-width count 242; delayed flag clear 242. Shared
 // iterator helpers 242; marked iterator calls 350; branch-assigned count 179;
 // frame pointer 218; global optimization off 472; branch-assigned word 183.
-// Frame 0x14 agrees; next-index memory home, contribution register and entry
+// Earlier: Frame 0x14 agrees; next-index memory home, contribution register and entry
 // flag clear differ. Word hostility 233; separate position iterator 235; branch-assigned health
 // 179; position component loop 221; scale component loop 218.
-// Frame 0x14 agrees; next-cursor storage, contribution register and flag
+// Earlier: Frame 0x14 agrees; next-cursor storage, contribution register and flag
 // clear remain. Long hostility 179; contribution from test 241; absent-tracking continue 179;
 // early centroid pointer 179; unit count before health 179.
+// Earlier: frame 0x14 agrees; cursor memory home, contribution and split flag clear remain.
+// Shared unit handle 179; shared perception handle 234; native swarm member 179;
+// health clamp assignments 179; shared centroid setter 179.
+// AC338: signed-word contribution 183; entry count 179; entry health 179; absent-definition exit 179; disabled-definition exit 179.
+// Frame 0x14 agrees; next-index memory home, contribution register and entry
+// Frame 0x14 agrees; next-cursor storage, contribution register and flag
 // Round 110: delayed long count from native population 235; known native squad fields 179; direct hostility OR 238; hostility first 179; native point memcpy 179.
 // @retail 0x203360
 void function_203360(long squad_index)
@@ -2072,6 +2093,13 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
     return result;
 }
 
+// score 275 (was 275): frame 0x48 versus 0x54; iterator/point homes, early saves
+// and intersection spill remain. Native workspace names 275; shared point setter 275;
+// separate squad-phase scope 275; forward bitmap scan 298; Boolean overlap OR 303.
+// Frame 0x48 versus 0x54, iterator/point homes and intersection spill remain; original body and declarations restored.
+// Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
+// unsigned current handle 275; declared word bitfield 294.
+// Long overlap 321; raised-component loop 275; shared current-handle scope 275; per-squad area scope 275; long actor wake 301.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2677,12 +2705,15 @@ static __forceinline long real_to_long(real value);
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // Single-result squad step 298; zero inline depth 584; global optimization off 439;
 // frame pointer 258; size preference 633. Original kept.
-// score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
+// Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
 // squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
 // positive-timer continues 227.
-// score 227 (was 227): Frame 0x30 agrees; active/pool observations and zero-result joins remain.
+// Frame 0x30 agrees; active/pool observations and zero-result joins remain.
 // Native zero initialization 255; timer addresses 227; final group for 289; final squad for 329;
 // first squad-phase lifetime 227.
+// Native group both/first/root 250/272/282; native squads 258; both native walks 256; group
+// workspace lexical order 250; both workspace lexical order 256.
+// Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -2828,13 +2859,16 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
-// score 387 (was 387): frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
+// score 383 (was 383): frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
 // Direct low-word index 387; other direct parameters 387; all direct reads 387;
 // workspace role names 387; one shared native request 399. Pool-first lookup
 // on low-word inputs 387; scalar masks 387; countdown while 388; zero inline
 // depth 387; frame pointer 481.
 // Native-word count-up 387; repeated scenario reads 404 (frame 0x138);
 // repeated signed category 387; function-scope workspaces 387; case two first 387.
+// round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
+// round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
+// Short countdown 389; long reuse result 389; loop-scope seat output 383; loop-scope separate actor/object/seat results 383; traversal-scope selected entry 383.
 // score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
 // score 383 (was 383): round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
 // score 383 (was 383): round 108: frame 0x13c/0x134 and spawn/definition homes remain.

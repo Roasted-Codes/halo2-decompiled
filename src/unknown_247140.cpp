@@ -252,7 +252,8 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 194 (was 194): frame 0x1c versus 0x20, input registers and final
+// score 194 (was 194): frame/input registers, range-header lowering and final selector expansion still differ.
+// frame 0x1c versus 0x20, input registers and final
 // selector expansion differ. Per-iteration definition 196; conditional
 // accumulation 194; flag-first cleanup 196; lower-first bounds 202;
 // upper range first 194.
@@ -271,6 +272,14 @@ public:
 // Origin-field pointer 194; reused native center 170; shared point setter 197; native origin/direct receiver 170.
 // Persistent definition cursor 213; closed bounds lifetime 194; scalar displacement 194;
 // output center subobject 194; shared traversal handle 194.
+// Shared definition base 200; selector input snapshot 182 (match-only);
+// definition base with selector input 185 (match-only); count snapshot 179 (match-only);
+// Y/Z-first input intervals 194/194; origin fields at consumers 201; unsigned cleanup handle 194.
+// Origin memcpy 170 (same held code); two-use origin scalars 205; shared magnitude 194;
+// expansion product 194; unsigned first handle 194.
+// Independent range/ordinal/bounds homes 194 each; shared emitter cursor 194; shared cursor with
+// range/ordinal homes 194 each; native upper-point difference helper 198, with shared emitter
+// 198.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

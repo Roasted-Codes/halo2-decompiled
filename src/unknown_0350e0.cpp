@@ -1223,7 +1223,7 @@ long function_0209b0(s_slot_key *key, void const *data, long size);
 void function_020b40(long value, long index);
 
 // @retail 0x2dba0
-bool function_2dba0(long tag, vector3f const *direction, long c, long d, long e, point3f const *position, color3f const *color, real alpha, real amount, real scale, bool alternate)
+bool function_2dba0(long tag, vector3f const *direction, bool alternate, long c, long d, long e, point3f const *position, color3f const *color, real alpha, real amount, real scale)
 {
     bool const volatile *alternate_input = &alternate;
     bool result_value = 0;
@@ -1918,7 +1918,7 @@ void function_3eec0()
                 basis[0].k = 0.0f - direction.k;
                 function_11d000(&basis[0], &basis[2]);
                 function_30bf0(&basis[2]);
-                function_2dba0(tag, basis, 3, 0, i, &position, (color3f const *)((byte const *)g_4686cc + 4), 1.0f - g_4b9f58, 1.0f, 1.0f, false);
+                function_2dba0(tag, basis, false, 3, 0, i, &position, (color3f const *)((byte const *)g_4686cc + 4), 1.0f - g_4b9f58, 1.0f, 1.0f);
             }
         }
     }
@@ -2699,7 +2699,7 @@ void __stdcall function_41980(short type, long object_index)
                         {
                             byte *tag = g_4e3b44[entry->tag & 0xffff].bytes;
                             real scale = (tag[0x28] & 0x40) ? matrix->scale : 1.0f;
-                            function_2dba0(entry->tag, &matrix->forward, 0, object_index & 0xffff, added, &matrix->position, &scratch_r16.color, 1.0f, scratch_r16.amount, scale, function_3e9c0(object_index));
+                            function_2dba0(entry->tag, &matrix->forward, function_3e9c0(object_index), 0, object_index & 0xffff, added, &matrix->position, &scratch_r16.color, 1.0f, scratch_r16.amount, scale);
                             ++added;
                         }
                         else if (!g_55e6c7)
