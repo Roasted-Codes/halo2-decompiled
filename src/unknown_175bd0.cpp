@@ -2525,18 +2525,17 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 313 (was 345): frame 0x104 versus 0x100; point/up argument eligibility and record copies differ.
+// score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup remain.
 // Placement name 345; request name 345; retained decal seed pointer 313;
 // direct case returns 345; failed-placement guard 345.
-// score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup still differ.
 // Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
 // sound aggregate 313; direct radius on the seed-pointer body 344 (frame 0x100).
-// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility differ. Shared direction output 313;
+// Shared direction output 313;
 // owner/location CRT copies 313; sound stores before compression 313; detached arms first 318; early damage
 // scale 313.
-// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility remain.
 // Shared damage direction 313; retained light object 313; retained sound object 313;
 // object-case random record 313; full-width sound node 313.
+// Native velocity loop 313; native placement component loop 342; detached flag first 318; separate character guards 313; location-before-owner copy 319.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2665,17 +2664,16 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 166 (was 166): radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
+// score 166 (was 166): frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
-// Round 173: part-scope radius 166; radius product 166; product with lower bound 352;
-// full-width location index 352; positive mode scope 166. Scalar homes and flag/random lifetimes remain.
-// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
+// part-scope radius 166; radius product 166; product with lower bound 352;
+// full-width location index 352; positive mode scope 166.
 // Two-use lower 163 (three-point gain dropped); span/lower plus span 167/349;
 // entry cursor/event record/read-only tag 166/166/166; cursor plus lower 163; event plus span 167.
-// score 166 (was 166): scalar homes, flag reloads and random-product lifetime remain.
 // Full-width explicitly wrapping counter 361; per-part point 179; direct creation predicate 166;
 // early suppressed-part guard 166; per-part forward 166.
+// Counter declared before tag 166; part-scope up 166; part-scope matrix 166; native fallback CRT copies 166; separate location/tag guards 168.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2812,15 +2810,15 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 	return next_index;
 }
 
-// score 176 (was 189): frame 0x50 agrees; early false-result and player-pool registers differ.
+// score 176 (was 176): frame 0x50 agrees; early false-result, player bitmap/count carriers and point scheduling remain.
 // Persistent effect pool 194; persistent player pool 189; outer for 189;
 // squared distance compared first 176; player slot/unit names 189.
-// score 176 (was 176): frame 0x50 agrees; early BL result and player-pool/count registers differ. Unit-skip
+// Unit-skip
 // guard 176; vector walk lifetime 176; retained radius 275; location for 390; shared point-transform call
 // 392.
-// score 176 (was 176): early BL result and player-pool/count carriers remain.
 // Full-width result 176; per-unit matrix 176; named squared radius 176;
 // absent-node point memcpy 176; nested eligibility tests 176.
+// Point at function entry 176; matrix at function entry 176; effect/tag/cursor role names 176; native disabled-bit mask 251; positive player guard 176.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
