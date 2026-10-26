@@ -776,6 +776,15 @@ struct s_signed_file_write_parameters
 };
 #pragma pack(pop)
 
+// score 134 (was 134): retail keeps every `parameters` load after the scratch getter's
+// stores, as if the scratch object were address-taken (its 0x8000-byte storage at
+// 0x4fa0c8 sits right before the owner/pointer/size words and the flag byte); ours
+// hoists the loads. Storage as the object's first member, init `pointer = storage`
+// 132; flag byte folded in as well 131 (0x2ad7c0 173); then the getter as size,
+// owner, flag returning a fresh read of the pointer: later cases' registers all
+// retail's but two copies per getter site, 279 at 944 bytes (0x2ad7c0 63); split
+// size/claim helpers 131/139; write count declared before the getter 147; named
+// body offset in the extend sum 131.
 // @retail 0x2adb10
 PRIVATE long __stdcall signed_file_write_work(s_async_task *task, s_signed_file_write_parameters *parameters, long parameters_size)
 {
