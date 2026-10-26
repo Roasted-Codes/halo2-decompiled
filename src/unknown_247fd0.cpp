@@ -70,23 +70,24 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 	arg_1 = function_x82e52f(arg_0, 0, 0);
 }
 
-// score 142 (was 142): frame 0x10 agrees; cached-pointer comparison, child-call
+// score 142 (was 142): Frame 0x10 agrees; cached-pointer comparison, child pushes and selective loop lookup expansion remain.
+// Earlier: frame 0x10 agrees; cached-pointer comparison, child-call
 // pushes and loop lookup expansion differ; size optimization 525; inline depth one 142;
 // current-record update argument 142; child-input scope 142; both 142.
 // cached-pointer compare and in-loop lookup differ;
 // metadata read order 142; direct child getter 160; early result declaration
 // 142; word flag update 244; reciprocal default first 142.
-// score 142 (was 142): cached-pointer compare and selective lookup expansion remain;
+// Earlier: cached-pointer compare and selective lookup expansion remain;
 // cache slot/early flags/both/cache reference 142; reciprocal input 143;
 // global optimization off 433; frame pointer 314; depth two 142.
 // read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
 // child datum accessor 146; both datum accessors 298; native child ordinal 142; immutable
 // creation inputs 142; reciprocal before child link 143.
-// score 142 (was 142): cached-pointer compare, child-input spills and loop lookup remain.
+// Earlier: cached-pointer compare, child-input spills and loop lookup remain.
 // Native cache pointer 142; changed-record predicate 142; actual head field 142;
 // unsigned child handle 142; shared bounded selector 142; word flags 142;
 // word flags with bounded selector 142; child zero-age before enable 142.
-// score 142 (was 142): cached-pointer memory compare, child pushes and in-loop lookup remain.
+// Earlier: cached-pointer memory compare, child pushes and in-loop lookup remain.
 // Cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime field 142; mask/lifetime fields 142.
 // Cached-pointer comparison and loop lookup remain. Common pointer/flags/both stores
 // 159/140/158f; conditional mask 282f; immutable allocated handle/settings 142f; common current-record
@@ -95,12 +96,14 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // External parent / allocated record / settings / child references 142/142/142/142;
 // parent with record / settings, record with child, all four references 142/142/142/142.
 // Cached-pointer comparison and selective loop lookup expansion remain.
-// score 142 (was 142): cached-pointer compare, creation pushes and loop lookup remain.
+// Earlier: cached-pointer compare, creation pushes and loop lookup remain.
 // Parent/settings/both metadata fields, first/last/both list fields, metadata with list fields,
 // metadata with cache slot 161/160/167/142/142/142/167/167.
 // cached-pointer comparison, child pushes and selective lookup expansion remain.
 // Declared sample array/loop 142/435; immutable record/spawn/both 142/142/142;
 // child identity order 142; earlier enable 142; earlier age 143.
+// sample output 142; age after sample 239; time after sample 153; sample late age 239; sample late time
+// 153; late age time 236; sample late age time 236; sample value 142.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)
