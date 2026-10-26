@@ -64,6 +64,9 @@ bool function_2161d0(long file_index, void *buffer, long size)
 // bounded copy 10; append result local/expression 27/27;
 // bounded copy plus append result 27/27; location result 53;
 // copy result with original/returned read path 85/85.
+// Cached direct return 89; function-scope files 17; late path pointer 10;
+// append/copy first-element forms 10/10; result after done 19; state before done 12;
+// shared location type 10.
 // @retail 0x2162b0
 bool function_2162b0(long file_index, void *buffer, long size, s_saved_game_file_task *task)
 {
