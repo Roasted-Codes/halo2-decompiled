@@ -3867,6 +3867,8 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 358: Category-only byte 545; modifier-only byte 530; modifier after category predicate 543;
 // exhaustive subtype result 566; entry statistics ordinal 557. Frame/NONE and decision homes remain; opening
 // body and shared award update restored.
+// Round 364: Native chain/streak/both statistics fields 470/470/470; fresh victim 615;
+// fresh output state 548; both fresh bases 639; native fields plus fresh victim/state 615/548.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4118,6 +4120,8 @@ struct s_score_zone_view
 // Round 358: Four distinct entry text outputs 507; complete text role names 472; both selection defaults
 // before samples 614; format-mode reads at every use 472; plain team while 472. Reversed text/color homes and
 // zone/charge allocation remain; opening executable body restored.
+// Round 364: Native player/team/both statistics arrays 472/472/472; fresh statistics 686;
+// fresh player 790; both fresh bases 792; native arrays plus fresh statistics/player 686/790.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

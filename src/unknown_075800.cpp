@@ -1018,6 +1018,8 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // all 191 fast, tying preview; no declaration or handler-body change retained.
 // Dispatcher inline/noinline/forceinline/inline-outofline declarations all 191 fast, tying reduced control 191;
 // direct orders 0,2,4,3 / 0,3,2,4 / 0,3,4,2 / 2,0,3,4 give 193/193/194/196 fast.
+// Round 364: Shared lookup inside the connection cases: retained phases 261; unified direct/numeric/
+// observed orders 272/272/271; residual group last 252; failure break 261; observed failure/scoped result 271/271.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
