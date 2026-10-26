@@ -723,7 +723,8 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     long arg_2, long arg_3, long arg_4, bool arg_5, bool arg_6, bool arg_7,
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
-// score 78 (was 87): the builder now gets retail's values (0xc0 bit 8 as its first flag, the
+// score 78 (was 78): Frame 0x6c and builder setup agree; literal-one test allocation, separate result mask and final byte stores remain.
+// Earlier: the builder now gets retail's values (0xc0 bit 8 as its first flag, the
 // 0x12c bit 5 as its second; they were in the first and fourth places) and the parent handle is
 // chosen in an if/else. Left: retail loads the definition word with `mov al, 1; test al, cl`,
 // tests the result bit and its copy separately (`test cl, 1`, then `mov al, cl; and al, 1`),
@@ -775,6 +776,10 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // metadata-flags-result-byte 89; independent-output-tests 78.
 // metadata-flags-independent-output-tests 99; result-byte-independent-output-tests 78.
 // metadata-flags-result-byte-independent-output-tests 99; metadata-before-builder 114.
+// bool-result 93; byte-state 96.
+// bool-result-byte-state 111; word-result 84.
+// word-result-byte-state 102; byte-state-shifted-scale 96.
+// bool-result-byte-state-shifted-scale 111; word-result-byte-state-shifted-scale 102.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {

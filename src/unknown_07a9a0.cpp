@@ -1051,7 +1051,8 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	}
 }
 
-// score 766 (was 766): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
+// score 766 (was 766): Frame 0xd4 versus 0xb4, session input and initial lookup expansion remain.
+// Earlier: frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
 // private histogram 852; wide group decision 840; shared group total base 879; native group identity copy
 // 918; membership native maximum 834.
 // frame 0xd4 versus 0xb4; session entry and lookup differ.
@@ -1073,6 +1074,10 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // split lower-bound guard 777 (fast).
 // Identity/party/both/excess/identity-excess/party-excess/all test-result accumulation 897/869/856/772/888/861/848; all with logical identity 908 (fast).
 // Original complete body restored; frame 0xd4/0xb4, stacked session and opening lookup expansion remain.
+// minimum-result 808; maximum-result 814.
+// spread-result 820; minimum-maximum-result 816.
+// minimum-spread-result 813; maximum-spread-result 835.
+// minimum-maximum-spread-result 820; switch-selector-results 766.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

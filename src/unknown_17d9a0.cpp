@@ -518,7 +518,8 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 749 (was 749): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
+// score 749 (was 749): Self-aligned frame 0x2204 versus 0x21dc, definition/output carriers and angle equality homes remain.
+// Earlier: frame 0x2204 versus 0x21dc; definition/output carriers still differ.
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.
 // Long emission index 763; tag-pointer rename/lifetime 774/774; group-first plus offset 786; plus long emission 747 (alignment worse).
@@ -540,6 +541,10 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Original complete body and helpers restored; frame 0x2204/0x21dc, definition/output and angle equality homes remain.
 // Alias-free single angle exit 796; word edge-side predicate 807; unsigned-word list ordinals 773;
 // native mesh reference 796; native rotation-basis references 796 (fast). Original body/helpers restored.
+// angle-products 781; axis-products 748.
+// sign-products 748; angle-axis-products 805.
+// angle-sign-products 804; axis-sign-products 770.
+// angle-axis-sign-products 795; diagonal-axis-squares 800.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

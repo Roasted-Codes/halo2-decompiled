@@ -8,7 +8,9 @@ struct s_fog_cluster_distance
 {
 	long cluster_index;
 	real distance;
-	byte unknown08[0xc];
+	long source_kind;
+	long source_index;
+	real source_weight;
 	long previous_index;
 };
 
@@ -131,7 +133,8 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 687 (was 692): Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
+// score 683 (was 687): Frame 0x4820 and clear scheduling agree; output cursor +0x10 versus +8 and palette/cluster homes remain.
+// Earlier: Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
 // Earlier at 692: Frame 0x4820 agrees; clear scheduling and output cursor +0x10 versus +8
 // Frame 0x4820 agrees; clear setup and +0x10/+8 output induction remain.
 // Earlier 692 (was 725): frame 0x4820 agrees; clear scheduling, output cursor
@@ -152,6 +155,11 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // 6-5-7-8-9-10: 687/723/720/771/774/729/770/708 (fast).
 // Final two clears swapped: 687 plain, same length, first +0x15f; retained.
 // Round 150: native color input 692; native six-field output 692; both 692; wide best weight 827; word cluster ordinal 768; color with wide weight 827; native output with word ordinal 768; wide weight with word ordinal 868 (fast).
+// native-source-012 683; native-source-021 682.
+// native-source-102 694; native-source-120 694.
+// native-source-201 685; native-source-210 685.
+// source-record-012 683; source-record-021 682.
+// Single-caller source writer 682/681/693/693/684/684; ordinary writer 682/684, all reverted.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {
@@ -186,10 +194,9 @@ void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_
 		long local_14 = NONE;
 		long local_15 = function_130f60((s_palette_owner const *)local_13, &local_14);
 		bool local_16 = false;
-		long *local_17 = (long *)local_12->unknown08;
-		local_17[0] = 0;
-		local_17[1] = NONE;
-		*(real *)&local_17[2] = 0.0f;
+		local_12->source_kind = 0;
+		local_12->source_index = NONE;
+		local_12->source_weight = 0.0f;
 		if (*(char *)(local_13 + 0x6f) != NONE)
 		{
 			s_12eb00 *local_18 = NULL;
@@ -225,9 +232,9 @@ void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_
 					}
 					if (local_19[0x38] > 0.0f)
 						function_12efb5(&local_9, local_19 + 0x38, local_21);
-					local_17[0] = 2;
-					local_17[1] = *(char *)(local_13 + 0x6f);
-					*(real *)&local_17[2] = local_21;
+					local_12->source_kind = 2;
+					local_12->source_index = *(char *)(local_13 + 0x6f);
+					local_12->source_weight = local_21;
 				}
 			}
 			else
@@ -263,9 +270,9 @@ void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_
 				}
 				if (*(real *)(local_23 + 0x68) > 0.0f)
 					function_12efb5(&local_9, (real const *)(local_23 + 0x68), local_25);
-				local_17[0] = 3;
-				local_17[1] = local_14;
-				*(real *)&local_17[2] = local_25;
+				local_12->source_kind = 3;
+				local_12->source_index = local_14;
+				local_12->source_weight = local_25;
 			}
 		}
 		else
@@ -278,9 +285,9 @@ local_30:
 			local_7.weight += local_31;
 			local_8.weight += local_31;
 			local_10.weight += local_31;
-			local_17[0] = 1;
-			local_17[1] = NONE;
-			*(real *)&local_17[2] = local_31;
+			local_12->source_kind = 1;
+			local_12->source_index = NONE;
+			local_12->source_weight = local_31;
 		}
 		if (!local_16)
 		{
