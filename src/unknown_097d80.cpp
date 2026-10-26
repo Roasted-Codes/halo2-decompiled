@@ -52,9 +52,15 @@ struct c_aggregate : c_child
 };
 
 
-// score 85 (was 92): frame 0x8024 against 0x8020 (retail packs the completion output with two later
+// score 85 (was 85): frame 0x8024 against 0x8020 (retail packs the completion output with two later
 // spills), the dispatch loop (retail: index in ebp, child cursor and inner count spilled) and one
 // allocator reload (retail loads the global again for the release, into eax then edi) still differ.
+// Round 53: compiled without /GL (screen only) this body gets retail's 0x8020 frame and slots
+// (completion output at the bottom, error and release output above it) and a matching first loop;
+// every /GL form screened keeps 0x8024. Release through the file-local release helper of
+// unknown_096ed0.cpp (global read again after the query) 102f, with an indexed dispatch 119f, with
+// a child cursor 119f; completion output at loop scope 113f; helper with an object local 102f;
+// output/error names and scopes (36 screened) don't move the frame.
 // Kept: item test on the field and the allocator global held across the release 85.
 // Global held across the release only 100; indexed dispatch 104, with the hold 115; class operator
 // delete 100, with indexed dispatch 115; release through a local helper taking the globals 103;

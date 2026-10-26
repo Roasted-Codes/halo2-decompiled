@@ -455,7 +455,17 @@ hsv3f *function_1318d0(color3f const *rgb, hsv3f *hsv);
 color3f *function_131a00(hsv3f const *hsv, color3f *rgb);
 void function_3dd10(long object_index, bool force);
 
-// score 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// score 84 (was 84): the first scan's `!=` exits (retail's signed `<` loop unrolls by 4 in every
+// for/while/field/shared-counter form, 637-647; short counter 252; a compile-only probe shows the
+// unroll comes from the float weight sum and survives every counter, bound and accumulator
+// spelling), blend's stack slot, the inverse subtraction (retail's is in the blend block, with 1.0
+// reloaded at the not-found exit) and the 1.0/0.0 load order.
+// Round 53: the inverse at the top of the found block gives retail's blend slot, subtraction and
+// 1.0/0.0 order but loses the 1.0 reload at the not-found exit (one instruction short) 132f; with
+// the variant byte read before the blend value 123f, read at its uses 134f; with a pre-incremented
+// selection test 132f; 30 declaration/clamp orders with it 120-134 (screened); seed names and a
+// named choices pointer (screened) don't move the slots.
+// Earlier 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
@@ -472,7 +482,7 @@ void function_3dd10(long object_index, bool force);
 // Variant between native remainder and rounding 213; variant assigned at metadata test 134;
 // immutable early variant 122; output element reference 131; metadata entry reference 122;
 // twice-used choice key 131; late mixed HSV workspace 122; selected choice reference 122.
-// score 122 (was 122): remainder publication, saved color roles and signed scan exits still differ.
+// Earlier 122 (was 122): remainder publication, saved color roles and signed scan exits still differ.
 // lower HSV reused 199f; upper HSV reused 203f.
 // weighted selection reused 122f; cumulative weight reused 122f.
 // shared scan ordinal 122f; short variant ordinal 263f.
@@ -485,15 +495,15 @@ void function_3dd10(long object_index, bool force);
 // both 149; early presence predicate 131; default/supplied/final color
 // memcpy 213/213/213; base-color name 122; model-first guard 150; shared
 // model handle with that guard 232. Original copies and observations retained.
-// score 122 (was 122): variant/remainder publication, saved roles and scan exits differ.
+// Earlier 122 (was 122): variant/remainder publication, saved roles and scan exits differ.
 // Live choice count 122; choice-count field reference 213; signed weight bound 630;
 // unequal-end for 122; inverse blend at uses 168; eligibility equality first 122;
 // eligibility predicate value 213; actual object variant field 122. Opening body retained.
-// score 122 (was 122): output/delta roles, variant timing, scan exits and one reload differ.
+// Earlier 122 (was 122): output/delta roles, variant timing, scan exits and one reload differ.
 // Full-width variant 273; eligibility first 122; early choice weight 131; complete clamp value
 // with output reload/direct dual publication 341/341; separate wrapped hue 218; unsigned choice
 // token declaration and receiver 122; weighted upper-channel scalar values 134.
-// score 84 (was 122): variant byte read after the blend value (registers now retail's), last
+// Earlier 84 (was 122): variant byte read after the blend value (registers now retail's), last
 // before weight, inverse computed at the top of the blend branch. Still differs: the first scan's
 // `!=` exits (retail's signed `<` loop unrolls by 4 in every for/while/field/shared-counter form,
 // 637-647; short counter 252), blend's stack slot, the inverse subtraction (retail's is in the

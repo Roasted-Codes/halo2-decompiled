@@ -364,19 +364,14 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 	}
 }
 
-// score 43 (was 43): spline/index/points entry convention and first source-address lifetimes remain.
-// Indexed sums/scales/both 41/41/41; native sum/scale setters with index home 135/43;
-// native middle copies 83; previous/both wrapped pointers from current 41/82. All restored.
-// index remains stacked instead of spline; first average
-// address/register schedule differs. With direct index: first/last/both shared
-// scales, first/both point setters, source role names, late second-segment
-// addresses and read-only source points 64/64/64/102/134/64/79/64.
+// the four control points of segment n of a closed spline: the segment's two
+// points and the midpoints with their outer neighbours
 // @retail 0x2bdd70
 void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points)
 {
-	long const *index_reference = &n;
-	long i = *index_reference * 2;
+	long i = n * 2;
 	long previous = i - 1;
+	long following = i + 1;
 	long next = i + 2;
 
 	if (previous < 0)
@@ -387,7 +382,7 @@ void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points
 	point3f &first_output = out[0];
 	point3f *a = &points[previous];
 	point3f *b = &points[i];
-	point3f *c = &points[i + 1];
+	point3f *c = &points[following];
 	point3f *d = &points[next];
 	first_output.x = b->x + a->x;
 	first_output.y = b->y + a->y;
