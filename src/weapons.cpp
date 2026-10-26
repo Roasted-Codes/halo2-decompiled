@@ -3039,10 +3039,12 @@ struct s_ammo_conversion_entry
     byte unknown02[6];
     long definition_index;
 };
+
 // score 198 (was 198): Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
+// Earlier: Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 
-// score 198 (was 198): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
+// Earlier: frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
 // Earlier: frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
@@ -3071,6 +3073,9 @@ struct s_ammo_conversion_entry
 // Round 318: actual unloaded/loaded/both source-count values 207/201/202;
 // native source state 236; capacity arm 197 (gain 1, rejected); values/state with capacity arm
 // 202/236; both values with Boolean acquisition 220. Frame and saved roles remain; all restored.
+// Early unloaded publication after/before remaining calculation 198/198; with candidate entry 217/217;
+// early publication with conversion quantity 198; numeric home names 198; wide loaded quantity 198;
+// numeric names/conversion quantity/earliest publication 198. Original body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3429,7 +3434,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1436 (was 1436): frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
+// score 1436 (was 1436): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
+// Earlier: frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
 // Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
@@ -3460,6 +3466,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Existing header getter initially/throughout 1436/1436; header-data receiver 1447;
 // long masked slot 1470; header receiver plus slot 1459; getter plus slot 1470;
 // dword/word masked slot 1470/1434. Two-point word gain rejected; original lookups restored.
+// Branch-owned three query outputs 1436; direct barrel selectors 1537; direct input selector 1448;
+// all direct tag selectors 1542; integer input tables 1457; branch outputs/all selectors 1540;
+// unsigned-byte effect decisions 1436; branch outputs/integer tables 1457. Original body restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

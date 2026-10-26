@@ -4333,7 +4333,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 370 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
+
+// score 370 (was 370): Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
+// Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
 // Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
@@ -4358,6 +4360,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 356: Byte acceptance 387; word acceptance 394; paired byte selection 384; complete version admission 410; admission with byte selection 410; isolated invalid-state/role/missing-selection exits 386 each.
 // Native received/stored/both map records 384/412/412; native input alone/with stored fields
 // 384/412; native output/both assignments 412/412; native records with identity equality 420.
+// Native identifier initialization/high-word-first construction 370/370; direct host-channel fields 376;
+// direct fields with high-word-first identifier 376; equality on direct-acknowledgement base 382;
+// equality with native identifier/high-word-first/both direct fields 382/382/383. Original body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
