@@ -152,7 +152,7 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 172 (was 172): Frame 0x40c versus 0x408; tag spill and language/string-cursor homes remain.
+// score 172 (was 172): Frame 0x40c versus 0x408; tag spill and language/range/cursor homes remain.
 // String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
 // Frame 0x40c versus 0x408 and tag/language/cursor homes remain; intermediate ownership does not remove the spill.
 // Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
@@ -200,6 +200,8 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Outer/inner/both actual lookup output results 172/172/172; native range value 217;
 // outer tag-output-string/string-output-tag/output-string-tag orders 172 each;
 // range value with both output results 217. Complete original helpers restored.
+// Native table member long scalars/range pointer/range reference/short scalars 172 each;
+// the same four receiver contracts with native fixed-array output 172 each. Original helpers restored.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

@@ -133,7 +133,7 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 616 (was 683): Frame 0x4820, clears, metadata cursor and cluster EDI agree; palette/accumulator scheduling differ.
+// score 616 (was 616): Frame 0x4820 and metadata cursor agree; native palette width and accumulator carriers differ.
 // Earlier: Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
 // Earlier at 692: Frame 0x4820 agrees; clear scheduling and output cursor +0x10 versus +8
 // Frame 0x4820 agrees; clear setup and +0x10/+8 output induction remain.
@@ -165,6 +165,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // Consistent palette slot char/short/long, mutable or readonly record: 705/616/713;
 // inverse weighted-state with char/long palette slot: 705/713 (fast).
 // One signed-short palette observation retained at all five uses: 616 plain, 3839/3817 bytes.
+// Native member scalar/merge/publication operations singly 615/616/615;
+// scalar+merge/scalar+publication/merge+publication 617/615/616; all three/all four 617/616.
+// One-point leads dropped; original complete free-function helpers restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

@@ -165,6 +165,9 @@ union s_185be7
 // Native value-result flag helper in all six formal orders 979 each; complete
 // branch-result and negative enabled input 979/979. Six-point reduction dropped;
 // 3760/3777 bytes. Original pointer-input helper and every call restored.
+// State root at every field use 987; with reset output result/flag value/both 987/988/999;
+// state and settings roots at each use 1048; with reset result/flag value/both 1048/1026/1014.
+// Original root snapshots, reset, pointer-input flag helper and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
