@@ -22,6 +22,9 @@ real normalize2d(point2f *arg_0);
 // 240/273; copied-point staged second/both/center pair 231/262/276. Opening directions restored.
 // Expanded radius and existing point-setter first/second/both combinations all 220;
 // native squared-vector helper 273. Original point construction restored.
+// Round 204: shared far-output store 252; native collision-test result 282; both 284;
+// later adjusted-point copy 267; with shared far store/collision result/both 272/283/285;
+// all with clean output access 301. Original output, spill and point lifetime restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)
