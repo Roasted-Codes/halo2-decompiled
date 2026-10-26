@@ -517,10 +517,12 @@ void __stdcall function_26c2d0(long prop_index);
 bool function_1fef40(s_type_c3b527 const *target, long actor_index);
 extern vector3f *g_4687b0;
 void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real cosine); /* forced inline in src/unknown_1eb8a0.cpp */
+// score 130 (was 130): Frame 0x20 agrees; magnitude/zero residency, rotation schedule and final publication remain.
 
 // score 130 (was 130): frame 0x20 agrees; magnitude/zero, facing and rotation/output schedules remain.
 // Earlier: horizontal homes and initial copy registers recovered; planar/turn schedules and
 // horizontal homes and initial copy registers recovered; planar/turn schedules and
+// Earlier 136 (was 153): horizontal homes and initial copy registers recovered; planar/turn schedules and
 // output length still differ; tried planar scale loop 153; direction branch update 204; horizontal native
 // copy 142; rotation native copy 153; real signed sine 170; horizontal shared facing base 195; horizontal
 // facing rotation copy 195; horizontal native vector copy 142; horizontal rotation copy 142.
@@ -585,6 +587,7 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // dot/determinant product pairs 141; both input/product forms 177; facing/magnitude/side/all zero-first
 // comparisons 130/130/130/130; native output copy then component scales 145. Magnitude/zero, facing, rotation
 // and output schedules remain.
+// Round 317: Guard-scoped normalized scalars 130; native planar input 130; both 130; all speed-field reads 140; scalar declarations at planar entry 130; adjusted turn name 130; requested direction name 130; native guarded input plus field reads 131.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {

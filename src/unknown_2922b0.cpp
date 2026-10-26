@@ -13,13 +13,19 @@ struct s_2922b0
 	byte field_34[0x14];
 	real field_48;
 };
-struct s_2922b1
+struct s_collision_result_1697c0
 {
 	long field_0;
 	real field_4;
-	byte field_8[0x4c - 8];
+	byte field_8[0x24 - 8];
+	short field_24;
+	byte field_26[0x4c - 0x26];
+	long field_4c[3];
+	byte field_58[2];
+	short field_5a;
 };
-struct s_collision_result_1697c0;
+typedef char assert_collision_result_2922b0_size[(sizeof(s_collision_result_1697c0) == 0x5c) ? 1 : -1];
+
 bool __stdcall function_1697c0(long arg_0, point3f const *arg_1, vector3f const *arg_2,
 	long arg_3, long arg_4, s_collision_result_1697c0 *arg_5);
 real function_30bf0(vector3f *arg_0);
@@ -66,6 +72,7 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 
 // score 646 (was 646): Frame 0xf8 versus 0x108, early success BL/EBX and basis/ray/root/rotation homes remain.
 // Earlier: frame 0xf8 versus 0x108; result/basis/rotation homes differ.
+// frame 0x108 agrees; success/basis/rotation homes differ.
 // Frame pointer 960; size preference 1163; cosine-difference carrier 652;
 // cross before trigonometry 655; inline depth one 652.
 // Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652;
@@ -97,6 +104,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // byte-logical-clearance 648; byte-compound-clearance 660.
 // short-logical-clearance 644; short-compound-clearance 655.
 // long-logical-clearance 645; long-compound-clearance 702.
+// Complete collision output extent/native output type/named material reset 641/641/641;
+// with byte/long/word success 714/714/714; native hit bytes 641; active success 646.
+// Original result, hit flags, math helpers and in-place copies retained.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)
@@ -153,8 +163,8 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 		local_14[2] = local_2->field_14 + local_6;
 		local_14[3] = local_2->field_14 + local_6;
 		real local_15[4];
-		s_2922b1 local_16;
-		*(short *)((byte *)&local_16 + 0x24) = NONE;
+		s_collision_result_1697c0 local_16;
+		local_16.field_24 = NONE;
 		long local_17 = 0;
 		long remaining = 4;
 		do
@@ -164,7 +174,7 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 			local_18.i = local_10->i * ray_length;
 			local_18.j = local_10->j * ray_length;
 			local_18.k = local_10->k * ray_length;
-			if (function_1697c0(0x1808c2d, &local_13[local_17], &local_18, arg_1, NONE, (s_collision_result_1697c0 *)&local_16))
+			if (function_1697c0(0x1808c2d, &local_13[local_17], &local_18, arg_1, NONE, &local_16))
 			{
 				real local_19 = local_14[local_17] * local_16.field_4 - local_2->field_14;
 				if (0.1f > local_19 / local_6)

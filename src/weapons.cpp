@@ -3064,6 +3064,9 @@ struct s_ammo_conversion_entry
 // Existing object getter for destination/source/both/all lookups 198/198/198/198;
 // both objects before tags with word acquisition 208; source-first pairs 211;
 // source then destination then tags 209; source-first shared getters 210.
+// Round 318: actual unloaded/loaded/both source-count values 207/201/202;
+// native source state 236; capacity arm 197 (gain 1, rejected); values/state with capacity arm
+// 202/236; both values with Boolean acquisition 220. Frame and saved roles remain; all restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

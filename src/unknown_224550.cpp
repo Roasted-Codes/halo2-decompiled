@@ -132,6 +132,8 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX homes remain.
 // Earlier: Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX remain.
 // frame 0x50 versus 0x60; tint/second-UV homes and cache register remain.
+// Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX remain.
+// frame 0x50 versus 0x60; tint/second-UV homes and cache register remain.
 // frame 0x50 versus 0x60; tint/second-UV homes and cache register differ.
 // Frame pointer 597; size optimization 990; tint input-array parameter 435;
 // direct packed-tint return 435; byte flip selector 538.
@@ -142,6 +144,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Earlier 435 (was 435): Frame 0x50/0x60 and tint/second-UV homes remain; UV result by value 553; bounds input by value 687; short sequence count 441; unsigned flip mask 435; paired UV defaults 439.
 // Round 112: By-value input color 547; packed seed input 439; both inputs 550 (seed forms
 // exact-only); redundant flip clear removed 481; bitmap arm first 508.
+// Bitmap field at every use 421; frame-array field at use 442; both 442;
+// immutable frame count once 479; with bitmap/frame fields/both 479/479/479;
+// shared bitmap sequence clamp count 427. All restored; frame 0x50 versus 0x60.
 // UV output-first 421; cache/definition-first tint contract 421; complete bounds snapshot 656;
 // UV output-pointer return 421; reference bounds formal 421. Original helpers and body retained.
 // Native in-place UV pointer/reference 421/421; by-value result 494; UV-first pointer/reference 421/421;

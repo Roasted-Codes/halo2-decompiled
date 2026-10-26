@@ -431,6 +431,10 @@ void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points
 // weighted-sum registers differ. Immutable coefficients/powers 87/87;
 // table/power/all role names 87/87/87; direct output with immutable
 // storage/role names 109/109; complete symmetric channel products 94.
+// Round 318: delayed output home/scoped output phase 97/97 (438 bytes);
+// native initial copy 106, delayed copy 98, delayed point setter 109, delayed immutable table 97,
+// delayed weights 100, scoped weights with copy 81 (449 bytes, frame 0x50; parameter alias, not kept).
+// Direct weights/copy and coefficient phase with copy/assignment 110/110/110 (425 bytes). All restored.
 // @retail 0x2bde90
 void function_2bde90(real t, point3f *out, point3f *points)
 {
@@ -470,6 +474,7 @@ void function_2bde90(real t, point3f *out, point3f *points)
 
 // score 25 (was 25): frame 0x110 agrees; control/sampling conventions, radius base and marker registers differ.
 // Earlier: control-call convention and scan induction differ;
+// control-call convention and scan induction differ;
 // segment control scope 141 fast; sample point scope 141 fast; late marker
 // array 141 fast; unsigned edges 142 fast; separate marker counters 141 fast.
 // Control/sampling calls and scan induction remain; center/radius/both values 171/169/185;
@@ -480,6 +485,8 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // Earlier at 130 (was 130): Protected control/sampling conventions and scan induction remain. external center binding 130; external
 // Earlier: protected control/sampling calls and scan induction remain;
 // Earlier: Protected control/sampling conventions and scan induction remain. external center binding 130; external
+// Earlier 130 (was 134): protected control/sampling calls and scan induction remain;
+// Earlier 130 (was 130): Protected control/sampling conventions and scan induction remain. external center binding 130; external
 // radius binding 131; center radius bindings 131; external height bindings 151; native scan ordinal 130;
 // center library initialization 137; marker library input 130; independent point ordinals 158.
 // Protected control/sampling conventions and scan induction still differ.
@@ -495,6 +502,7 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // (all plain). Original arithmetic, scans and helper calls restored.
 // Earlier at 25 (was 130): the calls to 0x2bdd70 (index in a stack slot, retail EDX) and 0x2bde90
 // Earlier: the calls to 0x2bdd70 (index in a stack slot, retail EDX) and 0x2bde90
+// Earlier 25 (was 130): the calls to 0x2bdd70 (index in a stack slot, retail EDX) and 0x2bde90
 // (t in XMM3, retail XMM2), the radius loop's pointer base and the marker loop's registers differ.
 // Element pointer for both radius components 22 (gain 3, not kept); marker index zeroed before its
 // guard 20 (not kept); marker loop as a for 582 (unrolled); globals local in/before the marker loop
@@ -511,6 +519,10 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // immutable marker point 74 fast;
 // one marker-entry array observation 81 fast;
 // entry array with shared point 81 fast;
+// Round 318, rolled-scan body: shared displacement 75f; main height 80f;
+// marker field reads at every use 77f; displacement/height 81f, displacement/marker 78f,
+// height/marker 97f, all three 98f; direct marker reads with a plain for 460f.
+// Reduced control 74 versus full 25; helper conventions and radius/marker homes remain. All restored.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

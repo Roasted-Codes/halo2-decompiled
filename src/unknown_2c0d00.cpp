@@ -1161,6 +1161,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Trace endpoint names 478; first trace at entry 478; target at entry 478;
 // outer candidate point 478; complete path-record memcpy 478.
 // Target Z once/shared endpoint zero initialization 470/470; one sector-trace output 466; avoidance at entry/iteration 469/469; sector pair before attempts 469; outer direction 469; outer tangents 469.
+// Round 318, early-output-pointer body: signed-word outer 485; unsigned/native output count
+// 469/522; native attempt 470; native end/candidate/both 500/472/516;
+// word outer with native attempt 486. All bounded domains and trace inputs retained; all restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

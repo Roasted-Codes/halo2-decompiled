@@ -851,6 +851,8 @@ public:
 // native-definition-shared-velocity-address 308; readonly-particle 308.
 // native-definition-readonly-particle 308; shared-velocity-address-readonly-particle 308.
 // native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
+// Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
+// canonical results 374/374/308/375 on the recovered frame. Original body restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

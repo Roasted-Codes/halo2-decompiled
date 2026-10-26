@@ -168,6 +168,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // existing cross-producer output reference 419. Original helpers and body restored.
 // Complete named products: planar/cross/magnitude 421/455/421; planar and cross 453;
 // planar and magnitude 419; cross and magnitude 453; all three 455; point offsets 418. All restored.
+// Edge-test / iterator / passability call boundaries, ordinary inline versus noinline,
+// eight combinations 419/435/460/460/435/435/460/460. All contracts and bodies restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,
