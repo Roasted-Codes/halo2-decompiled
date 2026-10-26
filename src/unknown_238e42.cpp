@@ -889,15 +889,18 @@ bool __stdcall function_2399da(long controller_index)
 }
 
 /* sets the selected player's rank in the clan (NONE removes them) */
-// score 90 (was 90): identity/rank registers and the extra move before removal remain; selection guard,
+// score 90 (was 90): frame 0xf00 agrees; selected identity ECX/rank EAX and the extra removal move remain.
+// Earlier 90 (was 90): identity/rank registers and the extra move before removal remain; selection guard,
 // permission guard and both 90 each; update-first branch with neither/either/both guards 92 each;
 // requested-rank lifetime 90. Frame and all call arguments preserved on restore.
 // selected identity ECX/rank EAX and extra remove-call copy remain.
 // Producer pointer scope/name, parameter-only rank name/both names 90/90/90/90;
 // own-rank/task lifetime, immutable pointer and native Boolean homes 90/90/90/90.
-// score 90 (was 90): selected identity ECX/rank EAX and extra remove-call copy remain.
+// Earlier 90 (was 90): selected identity ECX/rank EAX and extra remove-call copy remain.
 // Membership inline/outline/both 90/90/90; remove inline/outline/both 90/90/90;
 // paired inline and paired inline/outline contracts 90/90.
+// Permission operands reversed at the conjunction/outer disjunction/both 92/95/94;
+// library identity copy 90; copy plus those orders 92/95/94; native own-rank value 90.
 // @retail 0x2393ae
 void __stdcall function_2393ae(long controller_index, long rank)
 {

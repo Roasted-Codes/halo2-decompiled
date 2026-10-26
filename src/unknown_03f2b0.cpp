@@ -1300,6 +1300,8 @@ short function_4bcc0(byte *output, long object_index, real distance, long overri
 // default count and selector scheduling remain. Native definition/library clear/both 43/43/43;
 // defaults first 99; default pointers 54; native level/result 83/100; typed default pointers 54.
 // Cache/selector inline, outline and combined call contracts: six further trials at 43.
+// Entry inline/stdcall/cdecl 43/43/44; byte return 43; final false/true exits 64;
+// fallback failure exit 100; both failure exits 119; inline final exits 64.
 // @retail 0x4c190
 bool function_4c190(long *count, long object_index, bool defaults, long tag,
     short *level, signed char fallback_level, signed char *sections, bool *fallback)

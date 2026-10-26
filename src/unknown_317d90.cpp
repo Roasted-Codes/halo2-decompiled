@@ -119,6 +119,8 @@ public:
 // cdecl append 59; append member 59; renamed full-width counters 106;
 // distinct outer counters with short scan 59; break scan 147;
 // one element loop 216. Initial count load and scan allocation remain.
+// Separate constructor/destructor/both definitions 59/59/59; capacity check then append 191;
+// with wide scan 202; slot before size store 59, with wide scan 192; abstract fill 59.
 // @retail 0x317d90
 void class_317d90::function_317d90(id_pairs_317d90 *pairs) const
 {

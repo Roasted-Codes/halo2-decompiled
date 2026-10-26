@@ -458,14 +458,17 @@ static inline vector3f *effect_matrix_transform_normal_179880(transform4x3f cons
 
 static inline real effect_normalize(vector3f *v)
 {
-	real magnitude = (real)sqrt(v->k * v->k + v->j * v->j + v->i * v->i);
+	real i = v->i;
+	real j = v->j;
+	real k = v->k;
+	real magnitude = (real)sqrt(k * k + j * j + i * i);
 
 	if (fabs(magnitude) < 0.0001f)
 		return 0.0f;
 	real inverse = 1.0f / magnitude;
-	v->i = inverse * v->i;
-	v->j = v->j * inverse;
-	v->k = v->k * inverse;
+	v->i = inverse * i;
+	v->j = j * inverse;
+	v->k = k * inverse;
 	return magnitude;
 }
 
@@ -1765,18 +1768,21 @@ long function_1785c0(s_effect_object_marker const *marker, s_effect_datum *effec
 	return index;
 }
 
-// score 77 (was 94): the point computed into position, normalize3d and cross3f give retail's
+// score 77 (was 94): node/matrix read order, marker base and forward/up register homes remain; frame 0x1c agrees.
+// Earlier 77 (was 94): the point computed into position, normalize3d and cross3f give retail's
 // early up.j/up.k loads; left: node index read after the matrix (retail first), the forward
 // and up components in other xmm registers (retail forward i/j/k xmm4/2/3, up i/j xmm5/1).
 // Node index first 107 (marker index sign extension hoisted); forward without locals 132;
 // locals k,j,i 80, j,k,i 81; dot3f for forward 132, for position 82; written cross 119;
 // marker pointer in the else branch 198.
-// score 94 (was 94): Frame agrees; node/matrix and marker receivers, early normalization loads still differ.
+// Earlier 94 (was 94): Frame agrees; node/matrix and marker receivers, early normalization loads still differ.
 // Shared difference 187; shared scale 94; both helpers 186; separate point workspace 125;
 // normalized workspace 164; scale snapshot 185; marker vector snapshot 184; point setters 227.
-// score 77 (was 77): node/matrix order and marker/forward/up register homes remain.
+// Earlier 77 (was 77): node/matrix order and marker/forward/up register homes remain.
 // Native node copy 77; copy first 107; complete/immutable/shared marker inputs 212/212/208;
 // node-first marker value 211; direction results 77; results with node first 107. Marker values lose the matched caller.
+// Direction inputs i,k,j / j,i,k / k,i,j 79/80/81; with node copied first 109/110/111.
+// Read-only node-matrix input and marker-array input 77/77; matched controls unchanged.
 // @retail 0x1786f0
 void function_1786f0(s_effect_object_marker *out, s_effect_marker_source const *source, short marker_index)
 {
@@ -2388,24 +2394,29 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
-// score 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
+// score 59 (was 181): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
+// Earlier 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
 // Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
 // early missing-object return 181; separate impulse buffer 251.
-// score 83 (was 181): frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
+// Earlier 83 (was 181): frame 0x74 and point/normal transforms now agree; normalization and final impulse scheduling differ.
 // Existing snapshot-normal helper 177; direction lifetime 181; point lifetime 181; returned-record for 346;
 // saved short marker 182; existing point plus snapshot-normal helpers 83 kept.
-// score 83 (was 83): normalization component retention and the final scale register still differ.
+// Earlier 83 (was 83): normalization component retention and the final scale register still differ.
 // Common normalizer 33 and header normalizer 81 (changed grouping, exact-only);
 // early magnitude 259; scale before owner stores 83; both 259; force-inline normalization 83;
 // impulse name 83; point/axis homes 83; common normalizer with separate output 251,
 // with direct scale-result consumption 33. Original body retained.
-// score 74 (was 83): One direction workspace reaches retail length; frame 0x68 versus 0x74 and normalization scheduling differ.
+// Earlier 74 (was 83): One direction workspace reaches retail length; frame 0x68 versus 0x74 and normalization scheduling differ.
 // original scale-result consumer 120; in-place random direction 112 fast, 74 plain kept;
 // copied random input 205; separate impulse 225; direct impulse consumer 225; in-place/direct consumer 112;
 // read-only event 120; record/index names 120 (unchanged fast control 120, full 83).
 // normalization component retention and final scale copy remain.
 // Fast control 120; object before normalize 259; magnitude at scale 119; normalize after owner 260;
 // owner memory order/read-only acceleration/read-only object tag/location continue 120 each; shared iterator 120.
+// Random result to original direction output/direct consumer 63/63; normalized/random result
+// copies 144/117; shared scale/void result 74/74, paired result forms 76/117.
+// On the separate result form, scalar inputs k,j,i 63; j,k,i / i,j,k / j,k 59/59/59.
+// Final result reused 79/79; result exit 59; vector output 201; separate impulse 214.
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2442,8 +2453,10 @@ void function_179fb0(s_effect_datum *effect)
 						point = location->matrix.position;
 						direction = location->matrix.forward;
 					}
-					random_vector_in_cone(&direction, &direction, &g_4e7408->unknown0, acceleration->inner_cone_angle, acceleration->outer_cone_angle);
-					effect_normalize(&direction);
+					vector3f random_direction;
+
+					random_vector_in_cone(&direction, &random_direction, &g_4e7408->unknown0, acceleration->inner_cone_angle, acceleration->outer_cone_angle);
+					effect_normalize(&random_direction);
 
 					real magnitude = acceleration->acceleration * object_definition->unknown14;
 					s_effect_object *object = OBJECT_GET(effect->object_index);
@@ -2451,7 +2464,7 @@ void function_179fb0(s_effect_datum *effect)
 					object->owner_unknown4 = effect->owner.unknown4;
 					object->owner_unknown0 = effect->owner.unknown0;
 					object->owner_unknown8 = effect->owner.unknown8;
-					vector3f_scale(&direction, magnitude, &direction);
+					vector3f_scale(&random_direction, magnitude, &direction);
 					function_b7880(effect->object_index, NONE, &point, &direction, NULL);
 				}
 			}
