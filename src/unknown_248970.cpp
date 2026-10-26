@@ -49,7 +49,7 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 215 (was 221): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
+// score 215 (was 215): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
 // Prior shared position base 256; child byte stride 258; direct input 265; radius expression 256;
 // selected influence 259; active first 253; stored gate 256; activation default 284.
 // Early activation 246 with inherited address read rejected; scalar homes 256; short viewer 299;
@@ -71,6 +71,9 @@ public:
 // Override domain, squared magnitude, child zero chain, early zeros, override/zeros and
 // magnitude/zeros 221 each; active arm with zeros 215; all three domains 221; isolated active arm
 // 215 plain.
+// Consistent live pool/direct location/both 215/215/215; all squared terms 215;
+// live pool with squared terms/selected influence 215/238; native element index
+// alone/with live pool 215/215.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
