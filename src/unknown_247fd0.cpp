@@ -70,13 +70,13 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 	arg_1 = function_x82e52f(arg_0, 0, 0);
 }
 
-// score 133 (was 142): frame 0x10 agrees; the cached-pointer comparison loads the field into EAX where
+// score 142 (was 142): frame 0x10 agrees; the cached-pointer comparison loads the field into EAX where
 // retail compares it in memory (compile-only: the x87 `* (1.f / 65535.f)` scale stored just before
 // keeps the load apart; without the scale, or with the field_10 store after it, it folds), which
 // shifts the rest, including the child loop's alignment.
 // Round 88: retail inlines the type lookup at the loop's re-fetch: function_137bd0_inline there 134;
 // with the child call taking the child-settings query in its argument list (retail pushes the four
-// stack arguments before the query) 133 (kept); argument list alone 160; comparison operands swapped
+// stack arguments before the query) 133 (not kept: a copy of 0x137bd0's body, kept only with a match); argument list alone 160; comparison operands swapped
 // 133; child datum through DATUM 133; 0x175610's cache-update body 133; record datum through DATUM 133. Compile-only: record-typed cache field, cache store order of 0x175610, an inline cache-update
 // helper, the scale through the shared word wrapper or a named temporary: no fold.
 // Earlier: size optimization 525; inline depth one 142; current-record update argument 142;
@@ -138,9 +138,12 @@ void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 		c_248228 *local_4 = (c_248228 *)function_137bd0(local_2->tag_index);
 		for (long local_5 = 0; local_5 < local_4->function_24822e(); ++local_5)
 		{
-			long local_6 = function_173fd0(local_4->function_24822f((word)local_5), arg_2->effect_index,
-				local_2->tag_index, (short)local_5, NONE);
-			local_4 = (c_248228 *)function_137bd0_inline(local_2->tag_index);
+			long effect_index = arg_2->effect_index;
+			long tag_index = local_2->tag_index;
+			s_effect_particle_system_definition *child_settings = local_4->function_24822f((word)local_5);
+			long local_6 = function_173fd0(child_settings, effect_index,
+				tag_index, (short)local_5, NONE);
+			local_4 = (c_248228 *)function_137bd0(local_2->tag_index);
 			if (local_6 != NONE)
 			{
 				s_particle_system_datum *local_7 = &((s_particle_system_datum *)g_510c74->data)[local_6 & 0xffff];
