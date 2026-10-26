@@ -1493,18 +1493,23 @@ void function_2036c0(long definition_index, short mode, bool *enabled, bool *for
 bool function_1df560(short team_a, short team_b);
 bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
-// score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
-// score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
-// score 120 (was 120): frame 0x2c versus 0x28, pool/save allocation and shared Y-tail SSE handling remain.
-// Native actor getter 120; native source-point snapshot 150; source-field reference 120;
-// distance workspace names 120; in-place nonnegative distance before minimum 122.
-// extra frame dword and x87 shared tail remain.
-// Unused mode address removed/read-only mode 120/120; in-place transform 123;
-// noinline, staged subtraction and fallback memcpy each 120; nonpositive-first 119; failure exits 118.
+// score 58 (was 120): entry register roles differ (retail saves ebx/ebp/edi first and keeps the
+// actor pool data in ebx, ours saves esi early for the squad pool data and ebx late); the loop forms
+// the entry pointer after its first use through an edi temporary; fallback copy registers differ.
+// Tried: common y tail 122; native subtraction 121; early workspace 124; direct minimum 122;
+// late result 124; common tail with direct minimum 120; common tail with explicit clamp 122;
+// branch workspace, scalar order, native actor position, staged partial products, position base,
+// late minimum on common tail, shared scalar scope, float root, native actor getter,
+// source-field reference, distance workspace names, read-only mode, noinline, staged subtraction,
+// fallback memcpy each 120; native source-point snapshot 150; in-place nonnegative distance 122;
+// in-place transform 123; nonpositive-first 119; failure exits 118; full sum in each branch with
+// shared deltas 123; zero-default clamp 123; reordered sum terms or declarations identical;
+// accumulated sums with x,z,y deltas 124 (whole sum merged); deltas x,y,z with accumulated sums
+// 58 (kept); squad before actor 59 (index registers swap); named marker 58; offset-first entry 58;
+// branch-scoped transformed point 58; permuter 600 s found nothing.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
-    (void)&mode;
     real result = 3.402823466e+38F;
     byte *actor = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
     byte *squad = (byte *)squad_get(squad_index);
@@ -1520,32 +1525,32 @@ real function_204950(long actor_index, long squad_index, short mode)
             point3f const *point = (point3f const *)(entry + 0x24);
             point3f transformed;
             real squared;
-            real y;
             if (*(short *)(entry + 0x30) == NONE)
             {
                 real x = *(real *)(actor + 0x238) - point->x;
+                real y = *(real *)(actor + 0x23c) - point->y;
                 real z = *(real *)(actor + 0x240) - point->z;
-                y = *(real *)(actor + 0x23c) - point->y;
-                squared = x * x + z * z;
+                squared = x * x;
+                squared += z * z;
+                squared += y * y;
             }
             else
             {
                 if (!function_2104b0(*(short *)(entry + 0x30), point, &transformed))
                     transformed = *point;
-                real z = *(real *)(actor + 0x240) - transformed.z;
                 real x = *(real *)(actor + 0x238) - transformed.x;
-                y = *(real *)(actor + 0x23c) - transformed.y;
-                squared = z * z + x * x;
+                real y = *(real *)(actor + 0x23c) - transformed.y;
+                real z = *(real *)(actor + 0x240) - transformed.z;
+                squared = z * z;
+                squared += x * x;
+                squared += y * y;
             }
-            squared += y * y;
             real distance = (real)sqrt(squared) - *(real *)(entry + 0x34);
+            real clamped = 0.0f;
             if (distance > 0.0f)
-            {
-                if (distance < result)
-                    result = distance;
-            }
-            else
-                result = 0.0f;
+                clamped = distance;
+            if (clamped < result)
+                result = clamped;
         }
     }
     return result;
