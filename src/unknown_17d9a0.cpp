@@ -157,6 +157,11 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 // Distance-only plane scope 143; second-edge squared result 146; both 147; external basis
 // references 152; first/all bound-first products 138/138; basis plus lengths 154; completed
 // Y/X projected values plus lengths 158.
+// score 138 (was 138): plane-distance store base, product operand order and the positive register differ.
+// Plane pointer for the normal copy/dot/store 157 (store base as retail, dot operands flip); point-first
+// dot through it 153; pointer for copy and store only 151; projected y stored first 138; the existing
+// function_120810 for each corner projection 189 at 966 bytes, though its inlined lookup is retail's
+// exact sequence (start from it: the products then reorder).
 // @retail 0x17d9a0
 void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_quad_17d9a0 *quad)
 {

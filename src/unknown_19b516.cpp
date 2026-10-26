@@ -178,6 +178,10 @@ void c_widget::v16()
 // native object type and direct method boundaries do not recover the delayed save; native
 // traversal 20; native entry scan 42; native repeat scan 20; native next cursors 20; native
 // candidate 20; direct existing methods 20; native selected lifetime 26; native success tail 47.
+// score 20 (was 20): the head copy is propagated into the body, so the candidate takes ESI.
+// Walk from a widget = this cursor with separate entry/step results 42 (90 bytes); prev link per
+// branch 21; NULL-initialized widget 20; own prev local with the scan in the entry variable 21;
+// forceinline previous-or-last helper at entry and step 42 (90 bytes).
 // @retail 0x22ec1b
 void c_widget::v17()
 {

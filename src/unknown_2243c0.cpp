@@ -251,6 +251,10 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // saved table ownership and native lookup addresses remain.
 // Forced stride template 167; with root/word ordinals/root and words 171/167/171;
 // with const input/direct ordinal/late mask/root and late mask 167/167/165/165.
+// score 136 (was 136): unfused element addresses, arg/temporary registers and the zero stores remain.
+// Tag index read once (table moves to retail's EDI, first difference +0xe) 135; plus flags read at
+// the call 162; plus lookups in the record_material shape 135; plus all four zero stores after the
+// lookups 163; plus a tag entry pointer for the group tests 152; pointer and late zeros 149.
 // @retail 0x224db0
 void __stdcall function_224db0(s_interface_definition *arg_0, long arg_1, long arg_2,
 	long arg_3, long arg_4)
