@@ -265,7 +265,10 @@ done:
 // buffer register and selector/tag scheduling remain different.
 // Numeric case order 49; descending 52; native copy 54; direct selector 57 at 171 bytes;
 // const variant 54; scalar names 54; entry variant/tag declarations 54/54.
-// score 49 (was 49): Extra EBX buffer cache and tag/selector schedule remain. Native buffer
+// score 49 (was 49): extra buffer EBX cache and selector/tag schedule remain.
+// Coordinated getter inline/inline-noinline/noinline 49/49/49; parser inline 49; null-definition exit 72;
+// native tag member 49; native member with null exit 72; terminal case first 54.
+// Extra EBX buffer cache and tag/selector schedule remain. Native buffer
 // object 49; seven adjacent case-pair layouts 48/49/51/51/51/51/50. Best executable reduction is
 // one row.
 // extra EBX buffer cache and selector/tag scheduling remain.

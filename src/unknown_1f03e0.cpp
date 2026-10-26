@@ -908,6 +908,8 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 }
 
 // score 87 (was 87): frame 0x58 agrees; final override loads and rotation coefficient/input scheduling remain.
+// Frame 0x58 agrees; override load order and rotation coefficient residency remain.
+// Earlier: final override load order and rotation input/coefficient schedule differ.
 // Rotation pointer/reference results 101/101; matrix reference 101; remaining helper orders 101/101/101.
 // Deferred rotation stores 102; left-coefficient snapshots 102; original alias copy and arithmetic restored.
 // Partial component reads 76-82; the alias copy protects both in-place inputs.
@@ -922,6 +924,14 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // Initialized alias copy 118; memcpy copy 87; shared copy setter 84 (three-count gain rejected);
 // alias-copy name 87; value input 110; reference input with copy 110; value matrix 201;
 // unconditional input copy 109. All eight helper/call forms restored.
+// Earlier: the rotation reads each input component at its use, as retail
+// does (re-reading after every store); that is correct in place, since the alias copy
+// points the input at the copy when it is the output. Override additions still load
+// the velocity before the position, and the rotations' term order and operand roles
+// differ. Components accumulated by statements in retail's term order 86; matrix-first
+// Axis-record values forward/left/up/all outline the helper, 418 each; output/matrix-output references and
+// trailing-component loops 87 each; force-inline axis values 141/148/146/246; force-inline loop/reference
+// loop 87/87.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

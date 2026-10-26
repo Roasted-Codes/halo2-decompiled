@@ -408,6 +408,11 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 // score 63 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
+
+// score 63 (was 63): seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
+// Shared rounding 66; direct scaled rounding 74; separate scaled timer 63; result-first rounding 66;
+// range/fraction/both force-inline declarations 63/63/63; both with shared rounding 66.
+// seed/actor scheduling, folded random scale and slot EBP lifetime remain;
 // duration and timer names, ticks first, timer scope, named ticks first, named
 // timer scope, direct slot and named direct slot each 63. Opening body restored.
 // Accessor receivers 61; distinct scaled input 63; native conversion output 63; entry success with

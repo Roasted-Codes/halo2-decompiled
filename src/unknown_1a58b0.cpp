@@ -1828,6 +1828,11 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // score 85 (was 85): frame 0xf0 agrees; query carriers and optional matrix conversion remain;
 // native marker value before/after query 100/110; library copies 100/110; native query width
 // 126/128; shared descriptor 100; late copy with shared outputs 110.
+// score 85 (was 85): query base/offset and accepted-count/selector registers remain.
+// Complete query inline 85; nullable-record query inline/outlined, geometry/weight/both/all/outlined contracts 13 each;
+// loop/iteration list 165/11; shared candidate 13; iteration/loop list with candidate 11/165; const/native query list 11/11; native query candidate 13;
+// list accepted count after/before 11/11; list next count 127; post-query marker advance 11, with accepted counts 11/11;
+// marker advance with next count/candidate-next 123/127. Loop-wide lists lose the matched caller; every nullable selector remains exact-only and is rejected.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)
