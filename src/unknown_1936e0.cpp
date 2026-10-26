@@ -174,6 +174,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // original lookup/table/both ordinary inline 481/194/481; readonly language inputs 194;
 // native wide workspace 194. Original lookup helpers, contracts and body restored.
 // Round 201: Outer lookup output-first 194; existing bounded copy 194; unsigned string ordinals 194; entry point-destination cursor 223; intermediate buffer lexical order 194.
+// Round 210: Native wide-array helper outputs 194; signed-byte string ordinals 194; direct table
+// root 194; native table-reference input 194; unsigned language ordinal 194. Extra tag spill and
+// language/cursor homes remain.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

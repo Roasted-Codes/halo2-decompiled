@@ -342,10 +342,12 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // component loops: velocity plus change 248; velocity plus previous 288;
 // attraction addition 280; change scale 269; maximum-change scale 269.
 // Shared inverse 249; shared squared length 277; both carriers 276; unsigned handle 249; attraction scale loop 269.
-// score 249 (was 249): frame 0xb8/0xb4 and scalar/vector/cache homes remain;
+// Frame 0xb8/0xb4 and scalar/vector/cache homes remain;
 // independent delta/previous 281; independent change/previous 293; all vectors independent 303;
 // property-array field reference 324; complete cache zero aggregate 410 (fast).
 // Frame 0xb8 versus 0xb4 and cache/scratch homes remain; hoisted origin pointer 249; previous library copy 249; change library clear 297; both serial additions 286; both additions plus library copy 286.
+// Round 210: Direct scalar members 277; direct change/delta/previous members 313/324/274; all
+// vector members direct 349. Frame 0xb8 versus 0xb4 and cache/estimate/inverse homes remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

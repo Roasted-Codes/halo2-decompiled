@@ -178,6 +178,8 @@ struct s_block_candidate
 // zero inline depth 418; size preference 643 (fast).
 // Native busy result 370; native selection result 373; gap endpoint snapshot 370;
 // page cursor published first 372; byte ring tail 432 (fast).
+// Round 210: Word best-present/busy/policy states 372/373/374; byte ring head 393; function-
+// scope deletion iterator 370. Frame 0x1050 versus 0x1054 and page/tail allocation remain.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {
