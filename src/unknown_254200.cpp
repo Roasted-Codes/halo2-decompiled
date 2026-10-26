@@ -237,6 +237,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Word-alpha pointer/shared-color helper 349; direct consumer query/helper 378; late query/helper 378;
 // immutable query/helper 349; pointer/direct helper with scalar size 349/378;
 // lower-first helper coordinates 372; symmetric role-named lower-first coordinates 372 (fast control 162).
+// Round 224: Entry color/phase scalar/joint declaration ownership 162/162/162; later color lexical
+// home and separate native assignment 162/162; pure half-span before color/commit/entry 405/403/527
+// (fast control 162). Frame and reservation homes remain.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

@@ -1579,7 +1579,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
-// score 270 (was 279): Frame 0x14 and actor ESI agree; index/pool roles and scalar/ammunition homes remain.
+// score 270 (was 270): Frame 0x14 and actor ESI agree; index/pool roles and scalar/ammunition homes remain.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
@@ -1595,6 +1595,10 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // signed byte secondary equipment slot 296; both native byte equipment slots 299; both equipment query
 // conditional results 270; both equipment query rejection returns 275; existing equipment queries consume
 // actual unit record 279; actor record lexical identity on native frame 279.
+// Round 224: Native/unsigned-word ordinal 318/270; complete output initialization 271; consistent
+// delay-field reads 282; settings default after query 272; signed-word duration 270; branch-owned
+// probability 279; native ordinal with delay reads 295. Frame agrees; index/pool and scalar homes
+// remain.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

@@ -1266,6 +1266,9 @@ bool function_c70b0(long unit_index);
 // combined native fields 164; existing channel-state member 164.
 // Complete first/second/both depletion selections 314/357/357; rejection predicates
 // first/second/both 164/164/164; canonical true return 205; selections with true return 355. All restored.
+// Round 224: First/second/both query scopes 164/164/164; state/channel/both identifier lexical homes
+// 164/164/164; identifier homes with first/both scopes 164/164. Frame eight agrees; pool/state roles,
+// count joins and normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1410,6 +1413,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Byte return with byte result 482; byte return alone 450; byte return/result with Boolean overlay 482;
 // with controlling field at use 482; with separate final overlay byte 482. Original Boolean interface retained.
 // Round 222: retained slot-owner 450; controlling field at both uses 450; Boolean depletion/overlay/both 482/466/482; both with retained owner/entry result 482/482; pointer-home names 450.
+// Round 224: First/second/both query scopes and branch-entry output declarations 450/450/450/450;
+// branch-owned status defaults alone/with first/second/both scopes 485/485/485/485. Frame eight versus
+// twelve and requested/state/result homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
