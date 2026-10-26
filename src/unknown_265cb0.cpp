@@ -365,6 +365,7 @@ real function_30bf0(vector3f *vector);
 
 // score 195 (was 195): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
 // the register allocation differs from the first block
+// the register allocation differs from the first block
 // on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
 // round), and our seat loop keeps secondary and primary in xmm1/xmm2 across
 // iterations where retail compares them in memory and reloads them after the
@@ -387,6 +388,10 @@ real function_30bf0(vector3f *vector);
 // Direct secondary/primary/both query outputs 230/229/214; previous-value order 215;
 // previous values before basis 230; loop-scoped previous values 214;
 // up after normalization 221; direct outputs with later up 214. All with body cursor step.
+// Earlier trial set: Frame/result and inverse SIMD homes remain. Ordinary short result 250; ordinary long result 250; delta initializer 221; motion initializer 221; plane scope 221 (fast, each with the seat increment in the body).
+// Earlier trial set: Frame/result and inverse SIMD homes remain. Fraction reuse 211; plane distance first 304; cursor displacement 271; threshold defaults 265; reverse delta assignments 233 (fast; seat increments in body).
+// Earlier trial set: Frame 0x350 agrees; result/range homes, inverse SIMD groups and threshold reloads remain. Early range square 266; scaled-range square 221; threshold maxima 221; bounded seat end 245; plane initializer 221 (fast; seat increments in body).
+// Round 138: clipped vector/in-place/receiver 276/276/276; read-only actor/occupant 195/195; facing value 258; both values 311; motion square 229.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {

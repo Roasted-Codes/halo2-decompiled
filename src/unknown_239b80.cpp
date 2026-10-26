@@ -390,6 +390,8 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 // Promoted current index 31; plain while 31; explicit wrap assignment 44;
 // modulo wrap 42; signed area 31; first/second/both product parts 31/31/31;
 // reused short/native bound values 43/47.
+// Test-point value 97; function-scope vectors 31; edge before offset 31; role names 31;
+// difference helper y-first/output-first/base-first/vector result 31/31/31/144.
 // @retail 0x23a220
 bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
 {

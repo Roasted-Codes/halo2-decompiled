@@ -3024,6 +3024,10 @@ struct s_ammo_conversion_entry
 // Conversion ordinal 203; same-definition carrier 224; destination object reference 203; magazine
 // reference 203; source sum order 203; native conversion fields 203.
 // Round 109: Entry-result/ordinal join 206; ordinal-only scan 219; remaining transfer accumulator 203; both objects before tags 215; retained-rounds truth accumulation 203 (731 bytes).
+// frame 0x20 agrees; destination/tag roles and conversion-entry staging remain.
+// Reusable magazine count 211; read-only tag receivers/result names/outer ordinal/conversion
+// scope 203/203/203/203; result-conditioned search 202 (below gate); plain while 203;
+// source-count store order 203. Opening body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

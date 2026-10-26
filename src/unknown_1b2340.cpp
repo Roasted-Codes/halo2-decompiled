@@ -143,6 +143,24 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 // existing point setter 232; far failure arm first 232; movement success return 232.
 // Outer trace lifetime 232; direct native categories 236; plain coordinate loop 232;
 // cluster result arms 232; probe declarations reversed 232; inactive actor return 232.
+// frame 0x48 agrees; entry pool/view carriers and movement/failure placement remain.
+// Tried native type width 611; common success exit 595 (multi-goto form discarded); lookups after actor
+// guards 616; tracked type first 619; bounded trace distance 620; visibility result 620; single exit native
+// category 584 (multi-goto form discarded); successful move guard 584 (multi-goto form discarded); supported
+// category guard 588 (multi-goto form discarded); near target arm first 586 (multi-goto form discarded);
+// structured actor gates 584; native supported category guard 621; native near target first 617; structured
+// supported categories 588.
+// Outlined-query trials: caller noinline declaration 620;
+// callee noinline declaration 236; shared magnitude 236; shared point 236;
+// destination name 236; long result 233; point/name/magnitude together 236.
+// Category short outlined query 338; completion
+// early return 232; category short completion 236; movement result first 232; movement workspace
+// scope 232; probe frame names 232; existing point setter 232; far failure arm first 232;
+// movement success return 232.
+// Source target/output point pointers 208/232; source point/record values 237/247;
+// outlined visibility result 238; failure expression/read-only view/remaining distance
+// 232/232/232; shared trace origin 238; geometry-only origin 153 kept;
+// geometry setter/native category 153/195. Plain 153, 1080/1077, no trailing fill.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
@@ -210,9 +228,10 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 				if (distance > 1.5f)
 					distance = 1.5f;
 				distance -= 0.3f;
-				target.point.x = direction->i * distance + prop_entry->unknown48.point.x;
-				target.point.y = direction->j * distance + prop_entry->unknown48.point.y;
-				target.point.z = direction->k * distance + prop_entry->unknown48.point.z;
+				point3f const *origin = &prop_entry->unknown48.point;
+				target.point.x = direction->i * distance + origin->x;
+				target.point.y = direction->j * distance + origin->y;
+				target.point.z = direction->k * distance + origin->z;
 				target.output_index = prop_entry->unknown48.output_index;
 				result = function_1f4460(actor_index, &target, trace.sector_index, NONE, false);
 			}
@@ -321,6 +340,9 @@ void function_1f86a0(long actor_index);
 // frame eight agrees; pool-load order, slot EBP and view spill differ.
 // Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
 // word duration ticks 144; ordinary result 203.
+// score 131 (was 131): initial pool order, slot EBP and view spill still differ.
+// Readonly actor/view/both 131 each; force-inline actor/node/view/state boundaries
+// 131 each; readonly records with the view boundary 131.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {

@@ -41,6 +41,9 @@ public:
 // Scalar loads 159; direct/shared vector shuffles 157/157; dot accumulator 7;
 // wide selected scalar 7; output vector 86; coordinate-array loop 4; indexed blocks 166;
 // coordinate loop with scalar-value/shared broadcasts 4/4.
+// x/z scalar transfers and the final coordinate/tag order differ.
+// Scalar input/output/both 7/7/7; typed input array 7; broadcast names 7;
+// scalar input/typed array/named scalar input with coordinate traversal 4/4/4.
 // @retail 0x2fd260
 void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *support) const
 {

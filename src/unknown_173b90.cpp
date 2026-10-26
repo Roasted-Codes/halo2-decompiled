@@ -1140,7 +1140,10 @@ bool function_17afd0(long effect_index, long value);
 // set) 101 plain, kept; stack-bool rename 102; bit 9 as a named bitfield 102; nested
 // attached else-if 102; wide view 102; wide effect index 102; two-step same-view 102;
 // flag as false-init plus conditional set 144 (fast previews 107/102/144).
-// score 101 (was 101): NONE/owner coalescing, BL availability and Boolean homes remain.
+// score 101 (was 101): NONE/owner coalescing and Boolean homes remain; fast control 102.
+// Implied owner validity/availability-first equality 170/172; classification scope 102; scope
+// with implied validity 170; short/signed-byte availability 147/102; combined forms 148/102.
+// NONE/owner coalescing, BL availability and Boolean homes remain.
 // View-query inline/noinline, attachment noinline, draw inline/noinline,
 // scan inline/noinline and paired predicate boundaries all 102 fast, tying preview.
 // NONE/owner sharing and availability/Boolean homes remain.

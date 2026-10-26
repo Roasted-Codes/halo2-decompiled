@@ -111,9 +111,12 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 113 (was 121): frame 0x0c versus 0x10 and properties/buffer
+// score 109 (was 113): frame 0x0c versus 0x10 and properties/buffer
 // register/stack split remain. Entry cursor 125; property cursor 135;
 // per-record property counts 113; count homes 121; cursor/count combination 132.
+// Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
+// short property ordinal 114; ordinal names 113; early four-property accounting 109 kept;
+// split first/three accounting 109. Reported length is now 352/352.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -145,6 +148,8 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 			buffers += 0x40;
 			buffer_capacity--;
 			buffers_used++;
+			property_capacity -= 4;
+			properties_used += 4;
 			for (long j = 0; j < 3; j++)
 			{
 				*(short *)&properties[j].unknown00 = (short)(j + 2);
@@ -152,8 +157,6 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 				properties[j].unknown08 = 0;
 			}
 			properties += 3;
-			property_capacity -= 4;
-			properties_used += 4;
 		}
 	}
 	if (record_count)

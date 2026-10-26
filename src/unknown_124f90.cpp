@@ -1428,7 +1428,10 @@ void looping_sound_controller_release(long index);
 
 /* deletes a playing sound, letting go of its looping sound's controller */
 #pragma inline_depth(0)
-// score 5 (was 5): playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
+// score 5 (was 5): Pool save remains EBP versus EBX; void tail result 5, inline release declaration 5,
+// noinline declaration 5, controller workspace first 5, byte count workspace 5, complete decrement
+// predicate 5, signed count view 5, indexed controller 5.
+// playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
 // Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
 // scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
 // @retail 0x127390
@@ -2801,7 +2804,10 @@ void function_129380(vector3f const *const *voice_values, vector3f const *const 
 	}
 }
 
-// score 3 (was 3): frame 0xc and length agree; fade-call EDI/EAX/EBX setup order differs.
+// score 3 (was 3): Fade-call EDI/EAX/EBX setup remains; pool scope 3, metadata scope 3, fixed receiver
+// 3, direct pool 3, listener home names 3, stored location reference 3, distance outcomes 23, index
+// workspace first 3.
+// frame 0xc and length agree; fade-call EDI/EAX/EBX setup order differs.
 // Clear helper/listener declaration/query test 3 each; accepted listener first 34;
 // shared playback flags/direct location flags 3 each; fading field 8; fading helper 3;
 // shared next-index helper 3; shared slot index 176.
@@ -3006,6 +3012,9 @@ struct s_animation_ref;
 void function_219310(s_animation_state *state, s_animation_ref *ref, short value);
 long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 
+// score 86 (was 86): Loop-entry playback/clock loads and mode comparison remain.
+// pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
+// promoted voice 132; shared absolute index 162; mode with entry reason 127.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3281,6 +3290,13 @@ void __stdcall function_1264c0(dword arg_0);
 // Absolute search cursor 91; with initial/next/both inline reconstruction 105/110/127;
 // cursor with early deadline 90; native int tick 91; early real start 96; traversal-only cursor 86.
 // Entry source and every shared operation restored.
+// Early EDI save, reconstruction calls and signed-clock wait remain.
+// Earlier 102 (from 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// Earlier 87 (from 102): reconstruction calls, clock conversion and wait layout remain;
+// Earlier 87 (from 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// Earlier 87 (from 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// initial/next/both valid-search conditionals 98/103/113; initial/next/both result arms 98/103/113;
+// both admissions with native tick/index 113/113.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
