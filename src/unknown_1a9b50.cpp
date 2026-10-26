@@ -453,6 +453,9 @@ extern point2f *g_468778;
 // state plus rate 403f; all three 401f; actual distance value 403f.
 // Early actor acquisition with the new unit/state/rate/all-three/distance values
 // 395/424/406/410/410f. All native scalar captures and lookup changes restored.
+// Native memcpy for the facing-test planar initializer 384; with request, actor
+// fallback, both, constant fallback, request/constant, both fallbacks and all
+// three request transfers 384 each. Original planar transfers restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -659,6 +662,9 @@ static __forceinline long real_to_long(real value);
 // value alone/with distance/with rate/with both 516/575/565/586; complete
 // observations plus paired query names 586. Opening 0x58 frame/body restored;
 // early rejection and magnitude/object/query homes remain.
+// Native memcpy: full facing fallbacks 386; actor/constant query fallbacks
+// 386/386; facing-test planar initializer 386; request planar publication 386;
+// request fallbacks 386; queried planar publication 386; all copies 386.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

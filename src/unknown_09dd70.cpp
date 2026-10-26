@@ -464,7 +464,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // Primary word flags 241; explicit missing-player guard 252; shifted primary bool 227;
 // both bit extractions 252; byte slot 196; direct missing-parent slot 241;
 // primary word plus byte slot 241; word two-byte-copy ordinal 197 (828 bytes).
-
+// Object receiver at each call-free use: player stores 226; parent stores 230;
+// packed stores 249; marked stores 226; player/parent 238; parent/packed 247;
+// packed/marked 256; all four 239 (869 bytes). Original receivers restored.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {
