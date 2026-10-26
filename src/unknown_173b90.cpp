@@ -746,12 +746,15 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 	spawn->location_index = particle_location->next_index;
 }
 
-// score 17 (was 29): the untinted half-path exit is a long jump to the last
+// score 17 (was 17): Frame and entry agree; half-path buffer/result ownership and the distant untinted exit remain.
+// Earlier 17 (was 29): the untinted half-path exit is a long jump to the last
 // epilogue where retail's short jump joins the half path's own; the half path
 // reads the unpacked color through the returned pointer where retail reads the
 // buffer and pushes the returned pointer. Store per path (retail's entry
 // registers) 41; returned pointer packed only 41; one shared buffer 17;
 // early untinted return 17; tinted tested first 37.
+// Update inline/noinline declarations 17/17; packing noinline 17; paired update-inline/packing-noinline 17.
+// Plain product loop with long/short/byte ordinals 21/45/45; shared native product-loop storage 23.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
