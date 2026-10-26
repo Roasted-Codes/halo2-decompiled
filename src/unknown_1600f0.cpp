@@ -1499,7 +1499,8 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
     }
 }
 
-// score 122 (was 219): background address scheduling agrees after the consistent rectangle-first
+// score 122 (was 122): Team-text induction base and receiver scheduling remain.
+// Earlier 122 (from 219): background address scheduling agrees after the consistent rectangle-first
 // draw interface; team/player text induction bases and scratch-register scheduling still differ.
 // Earlier at 219 (from 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation
 // remain. Persistent row cursors: team background 305; player background 257; team text 219 (plain kept);
@@ -1508,6 +1509,8 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // rectangle/generic-text/both input contracts and unsigned offsets 219 each. On the new interface:
 // indexed team text 148; both text cursors 150; player cursor with indexed team 139; explicit
 // justification arms 122. Original team-text cursor retained.
+// typed text 1411; team reference 120; advanced cursor 282; typed reference 1411; native text
+// inputs bounds/receiver/validity/color first 150 each.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {

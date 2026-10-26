@@ -3006,6 +3006,9 @@ struct s_animation_ref;
 void function_219310(s_animation_state *state, s_animation_ref *ref, short value);
 long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 
+// score 86 (was 86): Loop-entry playback/clock loads and mode comparison remain.
+// pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
+// promoted voice 132; shared absolute index 162; mode with entry reason 127.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3264,19 +3267,22 @@ void function_125d60(void)
 
 void __stdcall function_1264c0(dword arg_0);
 
-// score 102 (was 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// score 87 (was 87): Early EDI save, reconstruction calls and signed-clock wait remain.
+// Earlier 102 (from 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
 // Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
 // pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.
 // Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
-// score 87 (was 102): reconstruction calls, clock conversion and wait layout remain;
+// Earlier 87 (from 102): reconstruction calls, clock conversion and wait layout remain;
 // reconstruction force/plain inline 102/102; with shared fade 87 plain; with flag/gain/deadline/reset
 // 102/102/102/102 fast; ordinary inline plus fade 107 fast; shared fade without declaration 87 plain.
-// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// Earlier 87 (from 87): early EDI save, reconstruction calls and signed-clock wait remain;
 // shared inline reconstruction both/first/next 123/120/108; calling iterator with fade 101;
 // expanded tick names/lexical homes/wait/fill 123/123/123/124.
-// score 87 (was 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// Earlier 87 (from 87): reconstruction expansion and signed-clock wait remain; shared fade with
 // native/full-inline/Boolean iterators 113/112/118; native integer tick 113; iterator workspace
 // before clock inline/Boolean 111/118; early real tick native/inline 113/113.
+// initial/next/both valid-search conditionals 98/103/113; initial/next/both result arms 98/103/113;
+// both admissions with native tick/index 113/113.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
