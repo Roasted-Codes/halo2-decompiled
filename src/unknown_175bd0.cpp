@@ -1928,7 +1928,8 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
-// score 130 (was 130): frame 0x40 versus 0x44; early color slot, cursor/query homes and zone-base scheduling remain.
+// score 130 (was 130): Frame 0x40 versus 0x44; early color spill, cursor/query homes and zone-base scheduling remain.
+// Earlier 130 (was 130): frame 0x40 versus 0x44; early color slot, cursor/query homes and zone-base scheduling remain.
 // frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
@@ -1941,6 +1942,13 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
 // Native spawn initialization/query outputs first/both 130 each; complete placement helper 375;
 // returned-location for 379; placement output first/rejection guard 130 each; native spawn with for 379.
+// Existing tint result unsigned byte/unsigned word/signed word 139/189/189;
+// multiplication result unsigned byte/unsigned word/signed word 163/137/137;
+// both unsigned byte/word 169/192. Early color frame home and native query pushes remain.
+// Spawn location first/middle 130/130; unknown before scale 127 (three-count gain rejected);
+// query receiver scope/enduring query outputs 130/130; signed node domain/sign after NONE 151/135;
+// condition-local location 130. Original stores, query scopes and node predicate restored.
+// Round 116: Unsigned-byte placement 130; signed-word placement 165; signed-byte zone selector 130; true-default placement 130; private zone failure guards 172. Opening body and helper restored.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2401,7 +2409,12 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
-// score 59 (was 181): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
+// score 59 (was 59): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
+// Frame 0x74 agrees; early I retention, normalized stores and final output
+// home remain. Pointer/void results 59/59; vector value result 315; separate normalized
+// direction/alias/distinct outputs 196/199/185; vector reference 59; separate reference output
+// 196.
+// frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
 // Earlier 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
 // Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
 // early missing-object return 181; separate impulse buffer 251.
@@ -2431,6 +2444,9 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // Final result reused 79/79; result exit 59; vector output 201; separate impulse 214.
 // Fast: single-direction matrix loop/entry 112/112; point/direction entry 112/112; both/all output lifetimes
 // 112/112; common/header normalizers 112/116 (grouping, exact-only).
+// Fast control 100; remaining snapshot orders IKJ/JIK/KIJ 104/100/104; uniform inverse/input
+// products 100/100; independent stores JKI/KJI 104/102; admitted normalization 100;
+// owner-first normalization/magnitude-first 251/250; early final scale 100. Squared-length float 100 (precision diagnostic only).
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2863,6 +2879,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Full-width result 176; per-unit matrix 176; named squared radius 176;
 // absent-node point memcpy 176; nested eligibility tests 176.
 // Point at function entry 176; matrix at function entry 176; effect/tag/cursor role names 176; native disabled-bit mask 251; positive player guard 176.
+// Unsigned effect/player/both indices 176/176/176; native result byte 176;
+// condition-local location 176; entry unit/scan player lifetimes 176/176;
+// readonly effect metadata 176. Original body, native widths and metadata restored.
 // Accumulated/selected test result 184/176; result after pool query/signed-byte result/function delta 176 each;
 // live tag radius/live unit fields 254/254; live tag with accumulated result 258.
 // @retail 0x1778d0
@@ -2945,7 +2964,11 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
-// score 88 (was 112): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
+// score 88 (was 88): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
+// Frame 0x94 agrees; early scale/default branch and point SSE/render setup
+// remain. Point/normal/both reverse captures 308/187/202; shared color scale 325; existing point
+// operation 548; color with point/normal/both captures 324/327/327.
+// frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
 // lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
 // initialization 112.
 // Readonly tag/event/part/all metadata 112 each; location cursor home 112; vector homes 112;
@@ -2953,6 +2976,8 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 // Frame 0x94 agrees; scale initialization branch, point SSE setup and later call setup remain.
 // After the consistent call contract: default-first scale 272; default after point 270;
 // default before color 270. Conditional scale and the 88-point body retained.
+// Fast control 416 (reduced call/global caveats); scale workspace/test arms 416/416;
+// default before inputs 425; conditional before inputs/after point/after forward/before color 416/416/416/416; B-first product 416.
 // @retail 0x179880
 void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 {

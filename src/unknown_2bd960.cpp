@@ -455,6 +455,12 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // Frame 0x110 and protected helper conventions remain; independent center publication
 // xzy/yxz/yzx/zxy/zyx 134/134/134/134/134; center scale xzy/yxz/zyx 130/130/130
 // (all plain). Original arithmetic, scans and helper calls restored.
+// score 25 (was 130): the calls to 0x2bdd70 (index in a stack slot, retail EDX) and 0x2bde90
+// (t in XMM3, retail XMM2), the radius loop's pointer base and the marker loop's registers differ.
+// Element pointer for both radius components 22 (gain 3, not kept); marker index zeroed before its
+// guard 20 (not kept); marker loop as a for 582 (unrolled); globals local in/before the marker loop
+// 20/22; callee 0x2bdd70 without its index address read 43 -> 64 (index in ECX); (spline, points,
+// n, out) order with an indexed body 86 (points on the stack).
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
@@ -496,15 +502,12 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 	*(point3f *)&hill->center_x = *g_468788;
 	if (count > 0)
 	{
-		i = 0;
-		do
+		for (i = 0; i != count; i++)
 		{
 			hill->center_x = points[i].x + hill->center_x;
 			hill->center_y = points[i].y + hill->center_y;
 			hill->center_z = points[i].z + hill->center_z;
-			i++;
 		}
-		while (i < count);
 	}
 	real scale = 1.0f / (real)count;
 	point3f *center = (point3f *)&hill->center_x;
@@ -514,31 +517,31 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 	hill->radius = 0.0f;
 	if (count > 0)
 	{
-		i = 0;
-		do
+		for (i = 0; i != count; i++)
 		{
 			real dx = points[i].x - center->x;
 			real dy = points[i].y - center->y;
 			real distance_squared = dy * dy + dx * dx;
 
 			hill->radius = hill->radius > distance_squared ? hill->radius : distance_squared;
-			i++;
 		}
-		while (i < count);
 	}
 	hill->radius = (real)sqrt(hill->radius);
 	hill->z_min = hill->center_z;
 	hill->z_max = hill->center_z;
-	for (i = 0; i < hill->count; i++)
+	count = hill->count;
+	if (count > 0)
 	{
-		real height = points[i].z;
-		if (hill->z_min > height)
+		for (i = 0; i != count; i++)
 		{
-			hill->z_min = height;
-		}
-		if (!(hill->z_max > height))
-		{
-			hill->z_max = height;
+			if (hill->z_min > points[i].z)
+			{
+				hill->z_min = points[i].z;
+			}
+			if (!(hill->z_max > points[i].z))
+			{
+				hill->z_max = points[i].z;
+			}
 		}
 	}
 	count = function_19ec40(0, 0.0f, (short)(index + 11), NONE, 1, 8, marker_ids, 0.0f);
@@ -561,9 +564,12 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 
 /* sets up the hill of the index: its markers, the vertices each spline
    segment gets (32 in all), and its polygon */
-// score 2 (was 2): the post-loop pointer/index restores remain reversed.
+// score 2 (was 2): Post-loop pointer/index restores remain reversed; eight compiled source trials restored.
+// Earlier: the post-loop pointer/index restores remain reversed.
 // Final count and entry divisor 2/2; low-bit clear/remainder 64/63; endpoint
 // parts/start-first 2/2; step cursor 10; parity first 6; polygon/index names 2/2.
+// Local count/divisor/index role names singly, in pairs and together 9 fast each;
+// unsigned ordinal 23 fast. Reduced baseline 9; full baseline 2.
 // Consumed count 9 fast; initialized divisor 61; shared start numerator 9;
 // compound step 9; nested validation 9; division normalization 56;
 // common exit 9; parallel endpoint numerators 9. Fast baseline 9, full 2.

@@ -51,7 +51,8 @@ static __forceinline long marker_viewer_unit(void)
 	return unit_index;
 }
 
-// score 105 (was 105): projection-status store, normalized coordinate XMM homes and late scheduling remain;
+// score 99 (was 105): projection-result store, coordinate registers and later helper scheduling differ;
+// projection-status store, normalized coordinate XMM homes and late scheduling remain;
 // native projected scalar pair 105f; pair/native extents 231f; coordinate product operands 105f; extent
 // product operands 105f; both operand forms 105f; live up fields 105f; shared double lift limit 165f;
 // limit/projected pair 165f.
@@ -64,6 +65,7 @@ static __forceinline long marker_viewer_unit(void)
 // existing projection output 123 (match-only, reverted); placement memcpy 123;
 // collision record at file scope 123; direct collision result 281; double rounding result 180.
 // Plain list position (no list_reference) 120.
+// Earlier: projection-result store, coordinate homes and helper scheduling still differ.
 // projection-result store, coordinate homes and helper scheduling still differ.
 // native byte projection result 123f; native horizontal half extent 216f.
 // native vertical half extent 215f; value initialized placement 263f.
@@ -73,6 +75,7 @@ static __forceinline long marker_viewer_unit(void)
 // Failure predicate 280; sequential word normalization 222; named ellipse predicate 123;
 // outside-first ellipse arms 123; failure/sequential 249; named/sequential 222;
 // outside-first/sequential 222; failure/outside-first/sequential 249.
+// Earlier: the viewer unit chosen in an if/else (retail's `or eax, -1` arm) 105 kept. On
 // the viewer unit chosen in an if/else (retail's `or eax, -1` arm) 105 kept. On
 // top of it: the rounding result scaled as a float (retail's dword constant) 104; the ellipse test
 // as `half_extents * half_extents > ...` 104, outside arm first with `<=` 103 (retail's comiss order);
@@ -80,6 +83,10 @@ static __forceinline long marker_viewer_unit(void)
 // all of those and the flag set true before the projection call (retail's two byte stores), only the
 // projected block (retail computes nx/ny in xmm0/xmm1 and copies them), one fmul and the final
 // fmul/fstp schedule differ; named numerators, a point2f and inline extents leave that block as is.
+// Fade factor before center 278; height adjustment before size 167;
+// size field stages 99 fast / 99 plain; height between stages 104 (one-point gain rejected);
+// factor with size field 278; projection/vector noinline declarations 105/105;
+// early coordinate declarations 105.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
@@ -181,7 +188,8 @@ void __stdcall function_24e59f(s_marker_list *list)
 		t = 0.0f;
 	else if (t > 1.0f)
 		t = 1.0f;
-	placement.scale = (real)(function_2b460((1.0f - t) * 24.0f + t * 16.0f + 0.5f) * 0.03125f);
+	placement.scale = (real)function_2b460((1.0f - t) * 24.0f + t * 16.0f + 0.5f);
+	placement.scale *= 0.03125f;
 	placement.position.y -= list->r1c;
 
 	real marker_offset = function_24e9c7((s_24e9c7_marker const *)list, (s_24e9c7_placement const *)&placement);

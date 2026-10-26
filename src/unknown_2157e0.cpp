@@ -61,6 +61,14 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 // complete cache fields, native location/table types, both together, native value initialization,
 // real table subobject reference, type comparison reversed, readonly native table and
 // native terminator library clears each 91.
+// Cache global at consumers 47 fast / 90 plain (one-point gain rejected); direct copy/global direct copy 106/100;
+// location/zero-index scope 91/123; file-type name 91;
+// global location/global copy index scope 90/124;
+// global direct library copy/address addition 100/100;
+// source-subscript progression/with library copy 109/109;
+// short/word successful index 131/131.
+// Compound match 133; nested match 133; complete match result 116; type match result 133; reversed
+// comparison inputs with those four forms 133/133/116/133.
 // @retail 0x2170e0
 long function_2170e0(long file_index)
 {

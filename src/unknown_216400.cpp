@@ -95,7 +95,12 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
     return result;
 }
 
-// score 32 (was 32): diagnostic, append and enumeration scratch-register rotation remains; root library clear
+// score 32 (was 32): diagnostic arguments, append count/result and enumeration registers differ.
+// Frame 0x8ac and extent agree; append count/result/list and
+// diagnostic/enumeration scratch rotation remain. Post-copy success/early-capacity exits 54/54;
+// wide result 51; list/entry/both references 32/32/32; count plus array pointer/reference inputs
+// 32/32.
+// diagnostic, append and enumeration scratch-register rotation remains; root library clear
 // 207f; full character value 39f; character read at each use 73f; earlier ASCII buffer declaration 32f;
 // append record value 89f; clear/full character 209f; full character/buffer 39f; clear/direct reads/buffer
 // 211f.
@@ -105,6 +110,7 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
 // conversion addresses, append list/count/result and final call registers differ.
 // Existing root/path helpers 51/51; file-reference/all helpers 233/233;
 // append names/force-inline and buffer names 51/51/51; source step at character read 72.
+// Earlier: conversion addresses, append and enumeration registers still differ.
 // conversion addresses, append and enumeration registers still differ.
 // Const handle/unsigned conversion capacity 51; indexed conversion 63; full path copy 110;
 // aggregate-zero file 53; unsigned append count/entry memcpy/enumeration names 51.
@@ -113,12 +119,16 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
 // success result 54; capacity return 54; counted conversion 229; conversion end pointer 58;
 // entry lifetime 51; entry zero initializer 199; file lifetime 51; drive-validation return 51;
 // shared character conversion 51.
+// Earlier: the append's count/result/list registers (ours eax/cl/edx, retail esi/al/ecx,
 // the append's count/result/list registers (ours eax/cl/edx, retail esi/al/ecx,
 // new count stored before the copy) and the two scratch pairs before 0x13fb70 and
 // XFindNextSaveGame differ. The append's memcpy into `&entries[count++]` gives retail's index copy
 // (51 -> 32); an element pointer for the slot 32; post-increment index local 51; index then
 // count store 51; found flag with the found arm first 51/32; helper parameters swapped 32;
 // force-inline helper 32.
+// Explicit count/publication memcpy 51; list increment with old count 51;
+// count success/failure results 54/54; capacity first 41; character first 32;
+// native file length 131; root aggregate zero 32.
 // @retail 0x2164c0
 void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
 {

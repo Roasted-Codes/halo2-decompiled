@@ -31,7 +31,8 @@ struct s_motion_adjustment_result
 	vector3f velocity;
 };
 
-// score 73 (was 73): frame 0x24 agrees; early J/K loads and the tick clamp still differ.
+// score 73 (was 73): retail loads normalized j/k into xmm1/xmm0 before fsqrt and multiplies them in
+// frame 0x24 agrees; early J/K loads and the tick clamp still differ.
 // Earlier at 73: retail loads normalized j/k into xmm1/xmm0 before fsqrt and multiplies them in
 // retail loads normalized j/k into xmm1/xmm0 before fsqrt and multiplies them in
 // place (i stays a memory operand), which also moves two j products earlier and costs 8 bytes; the tick
@@ -50,6 +51,13 @@ struct s_motion_adjustment_result
 // 96.
 // Raw-delta name 86; unit-direction name 86; combined-vector name 86; two offset names 86; entry
 // length 86; entry step 86; both scalar declarations 86; normalization scope 86.
+// Round 132: left/up/both in-place scale [95, 109, 109]; left/up/both native weighted values
+// [95, 109, 108]; mixed in-place/value scales [109, 109]. Early normalization J/K loads and
+// tick clamp remain.
+// Shared unit-scale difference 71; immutable raw offset 73; normalized motion initializer 73;
+// normalizer forceinline declaration 73; complete velocity publication 111;
+// difference plus motion initializer 71; immutable offset plus motion initializer 73;
+// difference plus normalizer declaration 71 (two-point gains restored).
 // Normalized output 81; selected pointer 100; conditional scale result 108; branch scale receiver 105;
 // normalized/motion/both library copies 73/73/73; normalized output with tick clamp 80.
 // Round 138: left i/j/k product parts 73/73/73; up i/j/k parts 73/73/73; up at offset 99; with left j part 102.

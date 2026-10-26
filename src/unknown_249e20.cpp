@@ -172,7 +172,13 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 
 /* the distance sound travels between two clusters */
 #pragma optimize("s", on)
-// score 65 (was 65): entry constants, branch-only record saves and native sample/return ownership differ; eleven fill bytes.
+// score 65 (was 65): entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
+
+// score 65 (was 65): No frame; entry zero/default constants and branch-only saves differ.
+// Minimum/maximum/both first-input results 65/65/65; minimum/maximum/both return paths 63/66/63;
+// conditional extrema 63; byte sample with first-input extrema 75. Sub-four gains and
+// matched-neighbor losses rejected.
+// entry constants, branch-only record saves and native sample/return ownership differ; eleven fill bytes.
 // entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
 // Maximum sentinel first 88; interior interval first 82 kept; integer sample 88; read-only audibility 88;
 // ordered cluster parameters 91; named pair index/range 88/88; direct fallback 84; both boundaries 82.
@@ -185,6 +191,11 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // Sample offset long/short/word 78/65/77; direct receiver 65 kept; table-operation first 65;
 // explicit endpoint results 79; word-path returns 65; shared index row parts 76.
 // Direct receiver: plain 65; active 171 bytes unchanged, raw differing rows remain 65.
+// Wrapped byte offset/native byte pair/record receiver 78/81/80; byte endpoints 83;
+// zero/upper defaults with byte offset 75/78; fraction/production exits 78/79. Entry constants and branch saves remain.
+// Fallback masked byte/word/long/dword carriers 78/78/78/78;
+// lower field observations 77; produced span 65;
+// both bound fields 77; byte sample with direct bounds 83.
 // Direct short/long/word offset 66/76/76; record reference 76; table pointer 65; distance scalar names 65; record/short offset 65; byte record sample 82.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)

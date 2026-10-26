@@ -50,6 +50,9 @@ public:
 };
 
 // score 215 (was 215): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
+// Frame 0x10/0x14, stacked activation versus AL and metadata/viewer/child homes remain.
+// Earlier 221 (was 221): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
+// Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata, viewer and child homes differ.
 // Prior shared position base 256; child byte stride 258; direct input 265; radius expression 256;
 // selected influence 259; active first 253; stored gate 256; activation default 284.
 // Early activation 246 with inherited address read rejected; scalar homes 256; short viewer 299;
@@ -66,6 +69,12 @@ public:
 // Shared point setter 287; complete position value 282; persistent override influence 289;
 // viewer-row cursor 281; library position copy 252.
 // Round 111: Per-viewer Boolean override 210 (its 1/0 value written out at each use, not kept); unsigned-word viewer 249; readonly metadata 221; activation-byte contract 221; Boolean/word combination 232; Boolean/late activation 243; Boolean/closed doubles 210.
+// Direct sqrt/single-use maximum 221/221; selected falloff expression 241;
+// immutable coordinates 221; entry metadata lifetime 221; immutable pool/location receivers
+// 221/221; child age initialization first 221. Original arithmetic, receivers and stores restored.
+// Round 201: Activation positions 1/3/4/5/6 221 each; reused influence 240; complete viewer arms 238; chained initialization 221; count/handle lexical pair 221; conditional accumulator update 276.
+// Round 113: Native viewer state member 221; early child head with shared-index/falloff context 222; child metadata byte cursor 221; default-first reused override float 221; separate allocation handle 228.
+// Round 117: Activation in viewer loop 247; child while 221; range-success first 221; native child table 221; reused range limits 243.
 // Activation after copy 224; early head with late activation 223; count after position 221;
 // combined entry publications 223; named scaled distance 221; coordinate names 221; NONE links first 221; predecessor before head 221.
 // Override domain, squared magnitude, child zero chain, early zeros, override/zeros and

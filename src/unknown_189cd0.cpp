@@ -31,7 +31,9 @@ long function_18d5b0(long label);
 long function_189fe0(s_sound_request const *request, long tag_index);
 long function_189340(long object_index, long tag_index, long audible, s_sound_marker const *marker, s_sound_source_callbacks const *source, real scale, long platform_playback, char const *variant);
 
-// score 21 (was 21): late object carrier/reload still adds five bytes; qualified object refresh 100f/85p;
+// score 21 (was 21): single late retained object load and five-byte extent gap remain.
+// Earlier: retail reads the object index once, after the playback call, into
+// late object carrier/reload still adds five bytes; qualified object refresh 100f/85p;
 // playback then refresh 101f/35p; chained request zeros 121f; initial result 118f; refresh with zeros
 // 103f/85p; object-first admission 118f; byte positioned state 118f; refreshed nested admission 100f/85p.
 // retail reads the object index once, after the playback call, into
@@ -52,6 +54,14 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 // direct duration 35; duration with argument playback 85; shared permutation 123;
 // permutation with argument playback 123; completion result 55; request variant first 41;
 // callback fields first 60; separate standard noinline declaration 35 (ordinary scores).
+// Shared spatial query 134f; native positioned value 114f/109p; both 143f;
+// outer description/priority scale 118f each; spatial/playback/request call summaries 118f each.
+// Native description bit 141f; native positioned bit 118f; both bits 141f; request workspace 118f;
+// request and native bit 141f; native bit and result scope 141f; native bit and request admission
+// 141f; native bit with both workspaces 141f (fast scores; unchanged fast 118).
+// Post-playback notification object 118f; two-phase object 118f; full source-result join 118f;
+// result with notification object 118f; positioned-source-first admission 118f; admission with
+// notification 118f; admission with result 118f; all source/object lifetimes 118f (control 118f).
 // @retail 0x189cd0 standard
 void __stdcall function_189cd0(long tag_index, long object_index, real scale, long a, long b, long label, long duration_address)
 {

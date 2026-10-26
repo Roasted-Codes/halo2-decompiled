@@ -157,6 +157,11 @@ PRIVATE inline void decal_project_corner_17d9a0(transform4x3f const *matrix, rea
 // Distance-only plane scope 143; second-edge squared result 146; both 147; external basis
 // references 152; first/all bound-first products 138/138; basis plus lengths 154; completed
 // Y/X projected values plus lengths 158.
+// score 138 (was 138): plane-distance store base, product operand order and the positive register differ.
+// Plane pointer for the normal copy/dot/store 157 (store base as retail, dot operands flip); point-first
+// dot through it 153; pointer for copy and store only 151; projected y stored first 138; the existing
+// function_120810 for each corner projection 189 at 966 bytes, though its inlined lookup is retail's
+// exact sequence (start from it: the products then reorder).
 // @retail 0x17d9a0
 void function_17d9a0(transform4x3f const *matrix, real const *bounds, s_decal_quad_17d9a0 *quad)
 {
@@ -522,6 +527,10 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Native initial face cursor 752; group-search cursor 785; candidate cursor 786;
 // native bounds-component access 753; angle-input memcpy 749; single cosine clamp 803.
 // Round 151: Alias-free pivot helper 753; native axis/offset 796/796; complete rotation row parts/products 788/798; fallback quad memcpy 796; native basis values 796; pivot helper plus row parts 764.
+// frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
+// Without parameter-address aliases: reversed equality buffers 796; native plane result 925;
+// rotation pointer result 796; native rotation output reference 796; native angle input 796 (fast).
+// Original complete body and all helpers restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
