@@ -664,7 +664,13 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 
 long function_1469f0(real seconds);
 
-// score 279 (was 279): frame 4/12 and slot/state/transition/flag homes remain.
+// score 279 (was 279): Frame 4/12, early slot spill and state/transition/flag homes remain.
+// Earlier: frame 4/12 and slot/state/transition/flag homes remain.
+// frame four/twelve and slot/state/transition homes remain.
+// Integer query 358; three/four indexed timers 342/342; three/four timer cursors 296/291;
+// query with four/three indexed timers 361/361, four cursor timers 311.
+// Reduced control 280; all restored.
+// frame 4/12 and slot/state/transition/flag homes remain.
 // Query, cancellation and execution separate inline/noinline declarations, individually
 // and together, all 280 fast, tying the unchanged preview (full 279). All restored.
 // First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
@@ -676,6 +682,12 @@ long function_1469f0(real seconds);
 // frame 4 versus 12 and slot/state/flag homes remain.
 // Restriction result 293; selection-field references 290; state reference 290;
 // initial state gates 288; byte scan 319; gates with native slot 307 (plain).
+// Shared state displacement late/early/direct flags/with native difficulty 347/353/347/359 fast;
+// entry selected/shared transition/entry descriptor workspaces 280/280/280; native difficulty 286.
+// Unchanged fast control 280 versus plain 279; all executable forms restored.
+// Selected workspace orders entry/current/transition 285, current/entry/transition 287,
+// transition/current/entry 280, entry/transition/current 285, transition/entry/current 280;
+// promoted slot alone/with entry-first 291/296; final post-tested scan 280 (fast control 280). All restored.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {

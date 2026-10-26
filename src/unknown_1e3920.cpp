@@ -874,7 +874,22 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 }
 
 #include "unknown_1fb7e0.h"
-// score 44 (was 44): actor/old-weapon register pair and early player construction remain.
+// score 44 (was 44): retail keeps the plain __fastcall convention (actor in ECX, old weapon in
+// EDX, player and new weapon on the stack); LTCG gives ours the old weapon in ECX and the actor
+// in EDX, and 0x1ca260 passes its first two arguments swapped to fit. With the standard marker
+// and 0x1ca260 passing (arg_0, arg_1, arg_2, arg_3), 0x1ca260 matches and this body scores: as
+// written 87; player address first 82; a volatile read of new_weapon at entry 52 (left: retail
+// copies the second masked index before the multiply, and the middle arm's player field goes
+// through EAX). Without the marker: player first 48, player after snapshots 28 (both break
+// 0x1ca260). Earlier: inline/noinline 44/44; direct player/replacement only 82/55;
+// replacement-first 86; late replacement zero 44; old-greater first 47; early unit observation 91;
+// shared object lookup 44; direct tag reads 43; early player with shared lookup 75; direct
+// parameters 82; conditional values 81; shared target 79; eligibility tests 45; value homes 44;
+// old/new default arms 45/44; shared player lookup late/entry 44/81; late actor receiver 44; word
+// event result 123; object global 44; both lookup globals 43; indexed native headers 44; native
+// player 44; global tables/native entry player 85; native entry player 81; player fields at use
+// 128; native item/header chain 44.
+// actor/old-weapon register pair and early player construction remain.
 // Round 36: the corrected forwarding call keeps 0x1ca260 matched; this body remains 48 differences.
 // Retail 0x1e18f0
 // Earlier: No frame gap; incoming actor/old-weapon ownership and early player address differ.

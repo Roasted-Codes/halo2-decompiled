@@ -74,7 +74,8 @@ void function_2232a0(void)
 	function_2c8a0((byte const *)function_2232a1(&g_47f0f8[0]));
 }
 
-// score 151 (was 151): count-one paths still bypass the common count/layout join; tail call differs.
+// score 151 (was 151): One-dword frame agrees; common count/layout join, terminal registers and tail convention remain.
+// Earlier 151 (was 151): count-one paths still bypass the common count/layout join; tail call differs.
 // Signed-byte count alone/with player value 169; signed-word layout alone/with normalized selection 174;
 // native selected-player value, normalized selection and their combination 151; redundant scan test removed 154.
 // count-one join, slot predicate and terminal/callee registers differ;
@@ -84,6 +85,7 @@ void function_2232a0(void)
 // slot-predicate materialization and final initializer residences differ.
 // Mode/options receivers, mode result, external count/slot references, typed selected
 // record, terminal record reference and both record receivers each 151 (575 bytes).
+// Earlier 151 (was 151): common count/layout join, slot predicate and terminal registers remain.
 // common count/layout join, slot predicate and terminal registers remain.
 // Total before layout/scan 172/152; total scan bound 162; two-use mode 151;
 // conditional slot result 157; separate scan/result 158; mode/total 162; scan-result/total 156.
@@ -95,9 +97,11 @@ void function_2232a0(void)
 // allocation gaps. unsigned selected slot 151; word selected slot 157; word view ordinal 201; byte
 // view ordinal 167; exact scan bound 175; existing initializer inline 151; completed search result
 // 180; word scan and ordinal 157; byte selected slot 164.
-// count/layout join still threads. First/second/both native
+// Earlier 151 (was 151): count/layout join still threads. First/second/both native
 // countdown scalars 151/151/151; prefix countdown publication 151/151/151;
 // paired countdowns with int count or int ordinals 151/151. Original body retained.
+// Round 150: chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
+// count/layout join still threads. First/second/both native
 // Nested slot admission/sentinel continue/selected-source value 151/151/151; source admission before normalization 158; nested source 151; continued source 158; sole output cursor 232; native entry address 151 (restored).
 // @retail 0x2234e0
 void function_2234e0(void)

@@ -73,7 +73,6 @@ short __stdcall function_2551c0(long actor_index)
 
 // score 43 (was 43): cross-product schedule and score-dot registers still differ.
 // Earlier allocation: retail computes the second products of the j and k cross terms before
-// retail computes the second products of the j and k cross terms before
 // the call's pushes (ours the first j product: 2 bytes longer, j/k cross registers swapped) and
 // sums the score's dot product j, k, i (ours k, i, j). Kept: the rotation as projection first, then
 // three named cross terms, each output `v * cos + projection * axis - cross * sin` (frame now
@@ -93,6 +92,11 @@ short __stdcall function_2551c0(long actor_index)
 // Output base sums i/j/k 109/109/109; all base sums 68; success word/long 106/76;
 // signed/unsigned byte direction counters 43/43.
 // Round 138: axis value 233; input value 213; projection i/j/k parts 109/109/124; transverse i/j/k parts 109/109/109.
+// Round 85: about 90 helper forms screened (cross order, product operand order, output form,
+// projection form): VC canonicalizes the product and sum forms, so only the cross statement
+// order and the output term order change code. Cross i/k/j 49; projection (1 - cosine) first
+// 72; dot3f(axis, vector) 72; outputs v*cos - cross*sin + projection*axis 133 (814 bytes);
+// score as the distance part times the dot part 43.
 // @retail 0x2551f0
 bool __stdcall function_2551f0(long actor_index, s_slot *slot)
 {

@@ -652,7 +652,11 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 290 (was 290): frame 0x20 agrees; early actor displacement, cleanup and slot homes remain.
+// score 290 (was 290): Frame 0x20, early actor offset and cleanup/scan homes remain; slot element
+// 290; scan for-header 338; repeated input predicate 305; retained reference pool 290; word slot
+// with fresh lookup 304.
+// frame 0x20 agrees; actor-offset storage, cleanup counter and slot reloads differ.
+// frame 0x20 agrees; early actor displacement, cleanup and slot homes remain.
 // frame 0x20 agrees; early actor-offset retention and cleanup/slot homes differ.
 // Final actor lifetime 290; actor/prop-handle names 290/290; byte/signed-byte cleanup 301/301;
 // native memory cursor with fresh lookup 344; final lifetime plus actor name 290; direct stop member 290.
@@ -665,6 +669,8 @@ void swarm_leader_detach(long actor_index);
 // direct current-slot store 290; ancestor failure-first continuation 290. Original body retained.
 // Fresh-lookup live slots 300; unsigned cleanup index 290; iterator local home 290; Boolean bit
 // test 290; native masked slot 308.
+// Round 122: Shared marked scan 289; native actor for 290; ancestor cursor scope 290; empty-memory
+// continue 290; exact cleanup endpoint 290.
 // Guarded-callback/direct-parameter context: word slot at memory/prop/early/tag/all
 // resolutions 302/312/327/313/301;
 // natural long slot at all/early/memory resolutions 307/314/311;

@@ -518,14 +518,19 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 749 (was 749): Frame 0x2204/0x21dc, definition/output carriers and angle equality homes remain.
-// Earlier 753 (was 890): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
+// score 749 (was 749): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.
 // Long emission index 763; tag-pointer rename/lifetime 774/774; group-first plus offset 786; plus long emission 747 (alignment worse).
-// Earlier 749 (was 753): frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
+// frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
 // Native initial face cursor 752; group-search cursor 785; candidate cursor 786;
 // native bounds-component access 753; angle-input memcpy 749; single cosine clamp 803.
+// Alias-free plane memcpy 798; rotated-result memcpy 796; both transfers 798; second angle-input
+// memcpy 872; all copy boundaries 872. Original body and all helpers restored; frame 0x2204 versus
+// 0x21dc and definition/output/equality homes remain.
+// Frame 0x2204/0x21dc, definition/output carriers and angle equality homes remain.
+// Earlier 753 (was 890): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
+// Earlier 749 (was 753): frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
 // Round 151: Alias-free pivot helper 753; native axis/offset 796/796; complete rotation row parts/products 788/798; fallback quad memcpy 796; native basis values 796; pivot helper plus row parts 764.
 // frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
 // Without parameter-address aliases: reversed equality buffers 796; native plane result 925;
@@ -533,6 +538,8 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Original complete body and all helpers restored.
 // Alias-free projection-plane/source-matrix/both/orientation-bounds/plane-bounds/matrix-bounds/all/group-plane receivers 892/791/859/791/859/795/892/847 (fast).
 // Original complete body and helpers restored; frame 0x2204/0x21dc, definition/output and angle equality homes remain.
+// Alias-free single angle exit 796; word edge-side predicate 807; unsigned-word list ordinals 773;
+// native mesh reference 796; native rotation-basis references 796 (fast). Original body/helpers restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

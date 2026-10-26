@@ -367,7 +367,11 @@ PRIVATE inline void transform_plane_163db0(transform4x3f const *matrix, s_plane 
 	plane->normal.i = matrix->up.i * z + matrix->left.i * y + matrix->forward.i * x;
 	plane->normal.j = matrix->up.j * z + matrix->left.j * y + matrix->forward.j * x;
 	plane->normal.k = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x;
-	plane->d = matrix->position.y * plane->normal.j + plane->d * matrix->scale + matrix->position.z * plane->normal.k + matrix->position.x * plane->normal.i;
+	real distance = matrix->position.y * plane->normal.j;
+	distance += plane->d * matrix->scale;
+	distance += matrix->position.z * plane->normal.k;
+	distance += matrix->position.x * plane->normal.i;
+	plane->d = distance;
 }
 
 PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *point)
@@ -375,7 +379,10 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
 
-// score 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
+// score 412 (was 423): Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
+// inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
+// native float error with distance 412.
+// Earlier 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
 // corner loop 432; side-plane loop 1154; reverse direction loop 423;
 // default plane first 423; direct first-diagnostic expression 423.
 // Native matrix snapshot 778; input-rectangle products 446; coordinate-pair
@@ -386,10 +393,10 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // j92: camera/points saved registers remain exchanged; corner order and diagnostic/lifetime forms do not improve the frameless entry.
 // corners in index order 426; diagnostic result chain 423; plane tests result 671; camera plane predicate 669;
 // far depth snapshot 646.
-// score 423 (was 423): Camera/points saved registers and initial store schedule remain.
+// Earlier 423 (was 423): Camera/points saved registers and initial store schedule remain.
 // corner point setters 622; rectangle CRT copy 423; plane array receiver 761;
 // native plane return 700; late right/top products 682 (fast).
-// score 423 (was 423): camera/point homes and plane input/product residency remain.
+// Earlier 423 (was 423): camera/point homes and plane input/product residency remain.
 // Scaled distance 469; normal inputs KJI 433; normal names 423; helper order 422;
 // scaled distance/KJI 474; first slope before constants 478; all side slopes 618; last corner XYZ 424.
 // @retail 0x163db0
