@@ -436,6 +436,9 @@ PRIVATE byte const g_saved_game_image[4096] =
 // This round: signed admission 72; unsigned ordinal 87; signed valid scope 72; unsigned valid scope 82; upper-clamp result 79; signed-range result 85; ordinal result 88; assigned upper clamp result 79.
 // failure spans, buffer/size setup and shared byte exits remain; shared reference initializer 26; earlier reference/error workspaces 26/26; initializer return consumed directly 26; zero reference/path aggregates 28/93; header aggregate 62; all workspaces before path 26.
 // Direct close/writer inline, outline and combined contracts 19 each (eight trials).
+// score 19 (was 19): shared close/success exit and writer setup remain; close-only result 50;
+// direct-close separate failures/nesting 25/19; complete logical return 26;
+// negative chain 19; close outcome test 19; byte close result 76; shared close exit 50.
 // @retail 0x216f80
 bool saved_game_file_write_save_image(long type, s_saved_game_file_location *location)
 {

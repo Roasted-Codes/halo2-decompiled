@@ -405,19 +405,26 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 203 (was 203): frame 0x14 agrees; request/count registers and cross scheduling differ.
+// score 181 (was 198): Frame 0x14 agrees; request/count/table registers and cross publication still differ.
+// Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
 // reversed independent dot order 203; stepping snapshot 303.
-// score 203 (was 203): frame 0x14 agrees; request/count/table registers and cross-result stores still differ.
+// frame 0x14 agrees; request/count/table registers and cross-result stores still differ.
 // Shape pointer 329 (not matched); read-only scan and natural while 203/203; desired copy 271;
 // double height comparison 309; size policy 374; floating consistency 314; native default copies 203.
-// score 198 (was 203): frame 0x14 agrees; request/count/table homes and cross stores remain.
+// frame 0x14 agrees; request/count/table homes and cross stores remain.
 // Cases 3/1/2 226; second normal first 246; average ikj/jik/jki/kij/kji
 // 201/200/198/203/203; native masked handle 203. Average j/k/i kept after full check.
 // frame agrees; request/count/table registers and cross-result stores remain;
 // selected normal from existing pair 233; direct pair cross inputs 209; first normal reference 203;
 // second normal reference 203; both normal references 203; output record reference 226; lower
 // height bound first 211; complete average initializer 203.
+// Native first/second/both normal values 261/293/334; average initialized from second/first
+// normal 285/288; first-value/second-average 315; second-value/first-average 301; both-
+// values/second-average 341.
+// Separate projection results both/first/second 297/288/288; shared projection result 273;
+// common complete pair result 181 at 975 bytes (plain confirmed); swapped dot comparison 198;
+// negated average-default arm 198; common pair result with swapped comparison 181.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -448,15 +455,16 @@ void function_1f2a80(byte const *request, bool moving,
         {
             vector3f const *a = (vector3f *)(*(byte **)(component + 0x88) + indices[0] * 0x48 + 0x28);
             vector3f const *b = (vector3f *)(*(byte **)(component + 0x88) + indices[1] * 0x48 + 0x28);
+            vector3f support;
             if (selected != NONE)
             {
                 vector3f const *normal = (vector3f *)(*(byte **)(component + 0x88) + indices[selected] * 0x48 + 0x28);
                 vector3f axis;
                 contact_cross(a, b, &axis);
                 if (selected == 0)
-                    contact_cross(&axis, normal, out);
+                    contact_cross(&axis, normal, &support);
                 else
-                    contact_cross(normal, &axis, out);
+                    contact_cross(normal, &axis, &support);
             }
             else
             {
@@ -468,10 +476,11 @@ void function_1f2a80(byte const *request, bool moving,
                 real dot_a = a->i * desired->i + desired->k * a->k + a->j * desired->j;
                 real dot_average = desired->i * average.i + desired->k * average.k + desired->j * average.j;
                 if (dot_average > dot_a)
-                    *out = *a;
+                    support = *a;
                 else
-                    *out = average;
+                    support = average;
             }
+            *out = support;
         }
         break;
     case 3:
@@ -511,7 +520,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 	return (arg_0 >> 3) & 1;
 }
 
-// score 182 (was 195): state/forward registers agree; rotation scheduling differs.
+// score 182 (was 182): frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
+// Earlier 182 (was 195): state/forward registers agree; rotation scheduling differs.
 // Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
 // Direct state dot loads still cost six bytes; cross before trig 247; late limited snapshot 190;
@@ -519,7 +529,7 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
-// score 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
+// Earlier 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
 // scaled cross 264; scaled limited input 241; scaled axis projection 267;
 // full component rotation 239; accumulated alignment 245; normalization decision 183;
 // scaled-cross scalars 186; projected-plus-cosine sums 186.
@@ -538,6 +548,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Rotation publication ijk/ikj/jik/jki/kji 242/241/244/247/244; cross between trig 247;
 // accepted-up library copy 182; deferred k/i results 247; native state/workspace/both
 // array views 182/182/182. Original scalar expressions, shared helpers and outputs restored.
+// Native dot/up/orientation/full input fields 182/182/182/182; test-produced rotation 183;
+// inactive forward/active forward/both active output library copies 182/182/182.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -883,6 +895,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // score 614 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
 // 614; normal-only value 685; facing-only value 641; up-only value 632; damping/gravity/direct order 614
 // (fast).
+// score 614 (was 614): frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
+// 627; direct clipping scope 614; general clipping scope 614; scalar history change 741
+// (frame 0x30, 2920 bytes); shared cross products 626 (fast).
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -904,25 +919,28 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
     out->k = input->i * matrix->forward.k + input->j * matrix->left.k + input->k * matrix->up.k;
 }
 
-// score 87 (was 87): Frame 0x58 agrees; override load order and rotation coefficient residency remain.
+// score 87 (was 87): frame 0x58 agrees; final override loads and rotation coefficient/input scheduling remain.
+// Frame 0x58 agrees; override load order and rotation coefficient residency remain.
 // Earlier: final override load order and rotation input/coefficient schedule differ.
 // Rotation pointer/reference results 101/101; matrix reference 101; remaining helper orders 101/101/101.
 // Deferred rotation stores 102; left-coefficient snapshots 102; original alias copy and arithmetic restored.
-// reading the input vector's components at each use in shape_rotate_vector scores
-// 76-82, but both calls rotate in place (input and out are the same vector), so every input component
-// must be read before the first store; that form is not kept.
-// Final override load order and rotation input/coefficient allocation still differ.
+// Partial component reads 76-82; the alias copy protects both in-place inputs.
 // Final point setter 104; completed translation 189; translation record 102;
 // rotation result 175; direction snapshot 187; orientation snapshot 193;
 // point/rotation results 177; translation/orientation snapshots 301.
+// All current input reads use the protected copy when input and output alias.
+// Components accumulated by statements in retail's term order 86; matrix-first
+// products 86; the 0x2477b1 helper's form 88; typed position/velocity pointers 86;
+// swapped operands 86; through shape_add 164 (position first, as retail, plus a copy);
+// typed pointers with explicit sums 86.
+// Initialized alias copy 118; memcpy copy 87; shared copy setter 84 (three-count gain rejected);
+// alias-copy name 87; value input 110; reference input with copy 110; value matrix 201;
+// unconditional input copy 109. All eight helper/call forms restored.
 // Earlier: the rotation reads each input component at its use, as retail
 // does (re-reading after every store); that is correct in place, since the alias copy
 // points the input at the copy when it is the output. Override additions still load
 // the velocity before the position, and the rotations' term order and operand roles
 // differ. Components accumulated by statements in retail's term order 86; matrix-first
-// products 86; the 0x2477b1 helper's form 88; typed position/velocity pointers 86;
-// swapped operands 86; through shape_add 164 (position first, as retail, plus a copy);
-// typed pointers with explicit sums 86.
 // Axis-record values forward/left/up/all outline the helper, 418 each; output/matrix-output references and
 // trailing-component loops 87 each; force-inline axis values 141/148/146/246; force-inline loop/reference
 // loop 87/87.
@@ -1027,6 +1045,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // value subtraction 445; dual preferred/search cursors 434; response-scoped indices 428; native
 // component/scoped indices 428; dual cursors with projection helper 454; dual cursors with entry count 433
 // (fast).
+// score 421 (was 428): frame 0x64 agrees; persistent zero and count/component homes remain.
+// Two-contact response first 421 kept; entry index array 428; dynamic preferred bound 428;
+// fallback-only shared negative scale 428; byte pass ordinal 434 (fast).
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1143,13 +1164,7 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
             *surface = selected;
             indices[count++] = selected;
             byte *contact = *(byte **)(component + 0x88) + selected * 0x48;
-            if (count == 1)
-            {
-                direction.i = desired.i - *(real *)(contact + 0x28) * minimum;
-                direction.j = desired.j - *(real *)(contact + 0x2c) * minimum;
-                direction.k = desired.k - *(real *)(contact + 0x30) * minimum;
-            }
-            else if (count == 2)
+            if (count == 2)
             {
                 byte *contacts = *(byte **)(component + 0x88);
                 vector3f tangent;
@@ -1157,6 +1172,12 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
                     (vector3f *)(contacts + indices[1] * 0x48 + 0x28), &tangent);
                 contact_normalize(&tangent);
                 vector3f_scale(&tangent, dot3f(&tangent, &desired), &direction);
+            }
+            else if (count == 1)
+            {
+                direction.i = desired.i - *(real *)(contact + 0x28) * minimum;
+                direction.j = desired.j - *(real *)(contact + 0x2c) * minimum;
+                direction.k = desired.k - *(real *)(contact + 0x30) * minimum;
             }
         }
         function_1f2a80(request, moving, &desired, indices, count, out, velocity);
@@ -1196,6 +1217,9 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // score 230 (was 230): Frame 0x28 agrees; real-zero load, reset/selection homes and second material-call
 // expansion remain. Native component 230; flag after supported 355; long moving 300; long saved supported
 // 293; long saved flag 296 (fast).
+// score 230 (was 230): frame 0x28 agrees; zero width, selection homes and material-call expansion
+// remain. Separate inline declaration 230; entry normal workspace 230; unsigned highest 234;
+// native-long flying 306; final cleanup exit 230; normal/ordinal combination 232 (fast).
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

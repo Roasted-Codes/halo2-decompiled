@@ -207,7 +207,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
-// score 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
+// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
+// Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
 // or capacities 194/194; indexed geometry input 229; memory bound/center copies 196/196;
 // radius before displacements 196; both list initialization chains 190.
@@ -216,7 +217,7 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // common sphere radius 227; bound center at use 203.
 // bound radius before node query 204; unsigned node cache 196.
 // radius plus geometry guard 227; list field initialization 194.
-// score 190 (was 190): entry/index spill and sphere/position homes still differ.
+// Earlier 190 (was 190): entry/index spill and sphere/position homes still differ.
 // Aligned split center, both points or bound alone 199/199/199; aligned bound with
 // the original query 197; ordinary query with aligned center 199; complete native
 // query with aligned center, bound or both 205/205/205.
@@ -226,10 +227,12 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Entry/index and sphere/position homes remain; node-count branch/entry homes
 // 190/190; both list entry lifetimes 191; bound reference 198; completed distance/radius/both
 // squares 190/190/190; count/cache boundary 190.
-// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and point homes remain.
+// Earlier 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and point homes remain.
 // Both buffer pointers first 194; second pointer first 194; capacities/counts before pointers 188
 // (two-point gain rejected); counts/pointers/capacities 192; large radius first 193; native query
 // alignment 190; direct object-index field 190; read-only bound source 190. Opening body restored.
+// Indexed mark/tag/link/read-only receivers 228/271/271/271; large center aggregate copy 202;
+// signed-short node cache 216, with byte node 234, with selective indexed reads 285.
 // score 190 (was 190): entry/index spill and sphere/position homes remain.
 // Native bound sphere with branch/entry count homes 196/196; aligned bound 203/203.
 // Native bound with split center/query 197 for both count homes and either bound alignment.

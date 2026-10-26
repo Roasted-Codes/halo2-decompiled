@@ -268,6 +268,9 @@ done:
 // score 49 (was 49): extra buffer EBX cache and selector/tag schedule remain.
 // Coordinated getter inline/inline-noinline/noinline 49/49/49; parser inline 49; null-definition exit 72;
 // native tag member 49; native member with null exit 72; terminal case first 54.
+// extra buffer save and selector/tag schedule remain; name-block order 54;
+// reverse/encoded name order 51/51; entry/middle/tail name pairs 55/53/53;
+// tail/middle groups first 53/54. Executable rows do not improve; original cases restored.
 // Extra EBX buffer cache and tag/selector schedule remain. Native buffer
 // object 49; seven adjacent case-pair layouts 48/49/51/51/51/51/50. Best executable reduction is
 // one row.

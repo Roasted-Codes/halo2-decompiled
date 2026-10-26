@@ -81,6 +81,10 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // Complete endpoint consumer 297; distance-input consumer 332; complete edge consumer 297;
 // difference input reference 65; complete plane input 392; current/prior classifications
 // at use 1268/455; retained-side classifications 469.
+// score 65 (was 65): same XMM homes (ours delta z takes xmm2 and receives the z product).
+// Loop-carried updates as distance/inside/point and inside/distance/point 65/65; z product
+// written k * t 65; current distance as two statements like the previous one 83; span
+// before delta with t passed inline 65.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,

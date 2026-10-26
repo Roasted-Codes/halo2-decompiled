@@ -938,6 +938,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // score 200 (was 200): Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
 // left/right after first 206/206; early sum with first/front/staggered rear samples 217/222/225; staggered
 // rear samples 208 (fast).
+// score 200 (was 200): frame 0x10 and inherited x87 sums remain; native input
+// assignment or memcpy, each with late/early level sums and rear samples/direct
+// rear fields, all 240. Copies grow the frame to 0x28; original inputs restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

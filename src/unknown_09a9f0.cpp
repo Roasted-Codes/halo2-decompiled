@@ -241,6 +241,9 @@ void c_turret_entity_definition::v21(s_entity *entity)
 // native header acceptance 65; native rejection first 52; combined native acceptance 67.
 // Signed-byte/unsigned-word/unsigned-native validity 76/52/49; shared success exit bool/long/byte
 // 75/67/70; shared validity exit native/word 52/55.
+// score 49 (was 49): EBP result, early false lifetime and shared header lookup remain.
+// Result declaration first, output role name, both, native-result header record 49 each;
+// shared header/object/both getters 49/49/49; both getters with early Boolean success 77.
 // @retail 0xa5a60
 bool c_object_type_definition::v22(s_entity *entity, long b, s_entity_info *info, long d, long e, long f)
 {

@@ -347,6 +347,12 @@ s_seat_animation_entry *function_188130(long tag_index, long index, long type, s
 // native entry formal 22; native parent formal 22; both native formals 22;
 // direct tag field 22; current-element traversal 141; separate inline declaration 22;
 // separate noinline declaration 22; existing element query 59.
+// score 22 (was 22): long requested index 22; both indices as a block-index class 11 (word load,
+// requested index in EBP, the table reloaded per tag; only `lea ebx, [ecx+edx]; test ebx, ebx`
+// left); with 0x1883e0's two material parameters of the same class too, 0x1883e0 matches and
+// 0x188180 drops 89 -> 70, but 0x1883e0's callers in held/contributor files declare short/long;
+// requested index only as the class 11; without the element reference 23; declaration orders,
+// names, loop guard 11; early-return or ternary lookup helper 12 (0x188690/0x188130 lose).
 // @retail 0x1882d0
 s_seat_animation_entry *function_1882d0(long type, short element_index, long index, short entry_element_index)
 {

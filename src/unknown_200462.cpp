@@ -47,7 +47,10 @@ real function_2008fc(s_interface_pulse const *arg_0, bool arg_1);
 void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
     long arg_2, long arg_3, long arg_4);
 
-// score 70 (was 103): frame 0x50 agrees; pulse/entry setup and second-pass
+// score 14 (was 14): draw bounds source ADD/LEA and occupied-width/half-height XMM homes differ.
+// Earlier at 70 (from 103): frame 0x50 agrees; pulse/entry setup and second-pass
+// the copy source address and occupied-width/height registers still differ.
+// Earlier: frame 0x50 agrees; pulse/entry setup and second-pass
 // tag/index and row-X scheduling differ; aggregate quad 103;
 // half-height first 103; signed mask 103; shared ordinal word 229, byte 229.
 // shared resolved result 103; shared tag 103; shared pulse receiver 103;
@@ -58,37 +61,45 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // First-pass coordinate value 250; coordinate library copy 250; first entry value 239; draw entry value
 // 164; both entries 243; horizontal real array 203; width sprite value 189; draw sprite value 174. Pulse
 // setup, draw carriers and running-X allocation remain.
-// score 70 (was 70): native pulse row, first/draw/both pulse receivers, occupied-width
+// Earlier at 70 (from 70): native pulse row, first/draw/both pulse receivers, occupied-width
+// Earlier: native pulse row, first/draw/both pulse receivers, occupied-width
 // accumulation and half-width/half-height/both product chains all 70. Pulse-base setup,
 // draw tag/sequence homes and running-X scheduling remain different.
 // pulse-base setup and draw-pass row/sequence homes remain;
 // scalar row X/Y/both 89/87/89; native rectangle library copy 70;
 // pulse array after user base/base before row offset/named row offset 70/70/70; sequence count once 161.
-// score 70 (was 70): pulse/table entry schedule and draw-pass carriers remain;
+// Earlier at 70 (from 70): pulse/table entry schedule and draw-pass carriers remain;
 // pulse/image/sprite reads at use 224/155/137; pulse guard first 78;
 // first sequence count once 209; positive draw arm 70; occupied width first 70; exhaustive bitmap result 148.
-// score 70 (was 70): pulse/table setup and draw-pass register scheduling still differ.
+// Earlier at 70 (from 70): pulse/table setup and draw-pass register scheduling still differ.
 // selected-entry scope 81; live draw sequence 70; live first sequence 70; both sequence bindings 70
 // native first entry 70; native draw entry 70; both entry references 70; native dimension inputs 70.
-// score 70 (was 70): pulse/table setup, draw-pass carriers and running-X scheduling remain.
+// Earlier at 70 (from 70): pulse/table setup, draw-pass carriers and running-X scheduling remain.
+// Earlier: pulse/table entry schedule and draw-pass carriers remain;
+// Earlier: pulse/table setup and draw-pass register scheduling still differ.
+// Earlier: pulse/table setup, draw-pass carriers and running-X scheduling remain.
 // Complete first index 209; absent-index guard 70; both 209; bit after query 70;
 // first/draw/both image field bindings 70/70/70; complete first index with both fields 209.
 // pulse/table setup, row X and query/width scheduling remain.
 // Half-height after center advance 39; chained quad stores 86; center scalar/point 134/190;
 // completed bounds 133; bounds with late half-height 62; center and bounds 137; center through draw 134.
-// score 39 (was 39): table/pulse setup, row-X carrier and query/width schedule remain;
+// Earlier at 39 (from 39): table/pulse setup, row-X carrier and query/width schedule remain;
+// Earlier: table/pulse setup, row-X carrier and query/width schedule remain;
 // query before sprite 39; horizontal/vertical/both coordinate spans 39/39/39;
 // direct query product right/left 39/39; query with spans 39; spans/direct query 39.
 // Round 277: draw-shared quad/rectangle/both and pre-center quad/rectangle/both 39 each;
 // signed-word selection mask 169; read-only computed draw scalars 39.
-// score 29 (was 39): pulse/table setup, rectangle source address and occupied/height registers differ.
+// Earlier at 29 (from 39): pulse/table setup, rectangle source address and occupied/height registers differ.
 // Two-use width/query operands 35; height before advance with those operands 29 kept;
 // horizontal/vertical output phases 112/111; operands with horizontal phase 109;
 // coordinate source base 37 (rejected); native output names 39; operands with names 35.
-// score 29 (was 29): table/pulse setup, rectangle source and occupied/height registers remain;
+// Earlier at 29 (from 29): table/pulse setup, rectangle source and occupied/height registers remain;
 // rectangle memcpy 29; native zero rectangle 132; both 132; occupied result 70; copy/result 70;
 // zero/result 156; all boundaries and native quad 156/156.
-// score 14 (was 29): the prologue now matches (per-player record base with the
+// Earlier at 14 (from 29): the prologue now matches (per-player record base with the
+// Earlier: pulse/table setup, rectangle source address and occupied/height registers differ.
+// Earlier: table/pulse setup, rectangle source and occupied/height registers remain;
+// Earlier: the prologue now matches (per-player record base with the
 // pulses at +0x2c); the draw pass's bounds source (ADD/LEA) and the advance/half-height
 // XMM3/XMM4 roles remain. Bounds record pointer local 12 (once-used, not kept);
 // query-first advance 12; half-height first 24; named advance 53; advance as
@@ -101,6 +112,11 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // pulse/table setup, rectangle source and occupied/height homes remain;
 // dimension names, entry height/width, height/width at use and vertical/horizontal/early vertical bounds
 // 29, 29, 29, 35, 200, 47, 54, 40.
+// Native first/draw/both sequence records and full image-group fields 14 each; occupied width
+// before half-height 28; combined draw/both/group source types with early occupied width 28 each.
+// source fields 144; native quad 14; fields and quad 144; initialized quad 14;
+// fields and initialized quad 144; input record fields 152; input record and quad 152;
+// input record and initialized quad 152.
 // @retail 0x200462
 void function_200462(long arg_0)
 {
