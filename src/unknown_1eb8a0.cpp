@@ -183,8 +183,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 		result->position.k += object_velocity.k;
 	}
 }
-
-// score 642 (was 648): Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
+// score 642 (was 642): Frame 0x24 and clock EDI agree; direction/sample homes and coefficient schedules remain.
+// Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
 // frame 0x24 and clock EDI agree; vector argument homes, scalar schedules and counter return differ.
 // clock register recovered by capped-use coefficient lifetimes; vector argument homes,
 // Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
@@ -218,6 +218,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // live clock with normalized/remaining/both values 700/662/700; entry normalizer workspace 660.
 // Native fallback vector assignment 642 kept; activation mode once 684; conditional coefficients 824;
 // copy/mode 670; copy/coefficients 824; mode/coefficients 812; all three 807; fallback memcpy 642.
+// Round 134: final flag-word workspace with early coefficient masks 0/1/2/3/4/5/6/7
+// 648/694/716/695/648/692/716/695; original counter and caller preserved.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
