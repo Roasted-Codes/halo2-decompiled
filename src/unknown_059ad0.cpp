@@ -4366,6 +4366,11 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 225: On direct acknowledgement base, all returns raw/equality 395/408; identity-output returns
 // 374/386; completed-success returns 389/402; direct selection results 377/383. Acceptance/identity homes
 // remain.
+// Round 227: Newer preference from predicate 386; equality from predicate 363 (seven-point gain
+// dropped); both 385; tie preference from predicate 368 (two-point gain dropped); all three 380; single
+// long/byte/short selection status 396/404/394.
+// Round 227: Follow-up equality plus tie predicates 372; newer plus tie predicates 371. Neither
+// combination improves the original 370; original body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

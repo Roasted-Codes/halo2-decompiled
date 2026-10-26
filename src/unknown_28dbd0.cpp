@@ -70,7 +70,8 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 	return local_1;
 }
 
-// score 213 (was 213): 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
+// score 213 (was 213): Frame 0x11c versus retail 0x118 and rotation cross scalar homes remain.
+// Earlier: 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
 // frame 0x11c versus 0x118 and rotation cross homes;
 // named request word 213; complete creation-stage scope 213; random arm first
 // 284; shared rotation output setter 226; size optimization 563.
@@ -92,6 +93,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 225: Native vector result pointer/pointer, value/pointer, pointer/value, value/value,
 // reference/pointer, pointer/reference, reference/reference 296/372/325/409/296/296/296; distinct input/output
 // 296. Frames 12c/134; original restored.
+// Round 227: Distinct shared-scale cosine/projection/cross outputs 241/224/233; paired outputs
+// 246/252/225; all three 246; all three with native component output loop 246. Original helper, body
+// and includes restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {
