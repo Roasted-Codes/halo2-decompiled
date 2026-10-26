@@ -958,6 +958,8 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 
 // score 320 (was 320): frame 0x118 agrees; entry sentinel, squad and substitution/result homes differ.
 // Earlier form: frame 0x11c versus 0x118; sentinel and success blocks differ.
+// Frame 0x118 agrees; entry sentinel EDI/ESI and squad/settings/substitution homes remain.
+// frame 0x11c versus 0x118; sentinel and success blocks differ.
 // Facing products 345/1272; split squad lookup 388; direct substitution gates 369;
 // guarded Boolean 384; typed actor fields 364.
 // frame 0x11c versus 0x118; missing-index register and squad/settings homes differ.
@@ -975,6 +977,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Frame 0x11c versus 0x118 and missing-index homes remain; repaired frame with vertical-first, second-horizontal-first, vector initializer, word creation or word request each 342; three-point gains rejected.
 // Earlier form: Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
 // Earlier form: Frame 0x118 agrees; sentinel and settings/squad homes remain.
+// frame 0x118 agrees; sentinel and later register homes differ.
+// Frame 0x118 agrees; sentinel and scalar homes remain. Unit-first repaired join 354; null-first squad 344; group/settings names 320; shared object getters 320; early equipment count 332.
+// Frame 0x118 agrees; sentinel and settings/squad homes remain.
 // Native Boolean flag 357; guarded Boolean flag 356; late cleanup indices 365; entry placement
 // view 320; complete replacement arms 358; late actor result 367; zero grenade guards 339;
 // short grenade result 338.
@@ -985,6 +990,7 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // mode 357.
 // Chained cleanup defaults/all three defaults/reverse chain/perception-first defaults 320 each;
 // unsigned actor/cleanup/all handles and unsigned chained defaults 320 each.
+// Short squad admission 382; identity first 360; horizontal/vertical/both angle inputs 337/321/338; angles plus admission 383; vertical-first inputs 338; angle-home names 338.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

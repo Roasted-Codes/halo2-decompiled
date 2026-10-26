@@ -1251,6 +1251,7 @@ real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
 // score 364 (was 364): frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
+// Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
 // frame 0x4c versus 0x40 and normal/color scheduling still differ;
 // copied limited color kept; early squared length 428, decoded-color names 429,
 // in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
@@ -1263,6 +1264,7 @@ real function_30bf0(vector3f *vector);
 // ordinary rotation inline 364.
 // Normal consumer before rotation 476; before limited color 508; early primary record 500; direct mobile result 480.
 // Complete color result 440; blend complement 451; early normal with complement 479, with complete color result 500.
+// Shared dot/length-square/primary RGB scale 364/364/364; secondary/reflected/all RGB scales 452/450/465; dot/all and square/all 465/465.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

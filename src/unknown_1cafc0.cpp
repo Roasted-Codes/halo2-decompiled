@@ -802,7 +802,11 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 	}
 }
 
-// score 251 (was 273): frame 0x38 agrees; ID slots, result/loop byte homes,
+// score 251 (was 251): Frame 0x38 agrees; ID/result/loop homes and protected query lifetime remain.
+// Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
+// 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
+// Two-point gains dropped.
+// frame 0x38 agrees; ID slots, result/loop byte homes,
 // blend reloads and the frame clamp differ. Success after setup 251; loop
 // state width 283; channel state width 314; name aggregate 322; flag mask 353
 // (six match losses). On 251: logical channel 287; logical offset 248 (gain

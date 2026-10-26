@@ -1479,7 +1479,10 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
-// score 46 (was 46): slot/lookup scheduling, retained identifier and full-width return tails differ;
+// score 46 (was 46): playback/tag scheduling and full-width return tails remain; shared playback base
+// 46; base with retained other tag 44; success-live result 44; storage/tag/result 44; distance result
+// 88; class-field reads 74; class/storage/tag 73; class/success result 78.
+// slot/lookup scheduling, retained identifier and full-width return tails differ;
 // long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
 // index input with long result 46; existing class operation 169; priority difference 71;
 // class-index input with retained other identifier 44 (two-point gain excluded).
@@ -3022,7 +3025,13 @@ struct s_animation_ref;
 void function_219310(s_animation_state *state, s_animation_ref *ref, short value);
 long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 
-// score 86 (was 86): Loop-entry playback/clock loads and mode comparison remain.
+// score 86 (was 86): Frame 8 agrees; playback base, clock scheduling and promoted mode remain.
+// Retained clock receiver 163; voice record reference 86; combined receivers 163; role names 86;
+// native update/mode/both flag words 86/86/86; receiver plus native flags 163.
+// playback base/clock scheduling and promoted mode remain; acquisition/free/load
+// inline combinations and stdcall acquisition 86 each; declared mode/flags/both 86 each; shared datum
+// iterator 196.
+// Loop-entry playback/clock loads and mode comparison remain.
 // pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
 // promoted voice 132; shared absolute index 162; mode with entry reason 127.
 // @retail 0x1282d0
@@ -3283,7 +3292,10 @@ void function_125d60(void)
 
 void __stdcall function_1264c0(dword arg_0);
 
-// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain; frame eight agrees.
+// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain; coordinated
+// reconstruction inline/forced 123/123; search inline 87; reconstruction/search 123;
+// reconstruction/fade 123; search/fade 87; all inline 123; forced reconstruction/fade 123.
+// early EDI save, reconstruction calls and signed-clock wait remain; frame eight agrees.
 // Earlier: shared invalid register, fade-store schedule and signed-tick/wait code differ.
 // Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
 // pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.

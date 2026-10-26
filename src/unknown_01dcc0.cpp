@@ -215,6 +215,8 @@ dword function_1d6f0(bool linear, bool alternate, dword format, long width, long
 long g_55e6c0;
 
 // score 115 (was 115): Incoming data home, delayed saves and header bias still differ.
+// incoming data, delayed saves, packed-size folding and level-header bias remain.
+// Earlier: Incoming data home, delayed saves and header bias still differ.
 // Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
 // Earlier: incoming data home, saved-register timing and level-header bias remain.
 // Shared primary header 161; walking level pointer 135; Boolean packed-word product 152;
@@ -233,6 +235,10 @@ long g_55e6c0;
 // This round:
 // Unsigned offset/level/both 115/116/116; const byte count/output pointer 115/115;
 // paired/all reset chains 117/118; bounded level and paired chain 118.
+// native primary 115; native surfaces 115; native headers 115; typed kind 115; typed byte total 115;
+// primary/kind 115; primary/total 115; native headers and fields 115; stored packing inputs 115;
+// stored byte inputs 139; stored packing and bytes 139; stored dimensions throughout 151;
+// published data input 115; native published inputs 151.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {

@@ -372,6 +372,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
 // score 236 (was 236): region scheduling and model/range/vertex homes remain.
+// Frame 0x58 agrees; region scheduling and range/vertex homes remain. Split
+// region/transform receivers 236; early section groups 254; both 254; byte return with
+// split/groups/both 237/255/255; signed-byte result with split/groups 236/254.
 // region scheduling and model/range/vertex homes remain.
 // Region scheduling and model/range/vertex homes remain; staged region base
 // 236; library point copy 236; both 236; false result at first failure 242; read-only

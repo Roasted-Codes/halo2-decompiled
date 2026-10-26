@@ -74,6 +74,10 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 }
 
 // score 389 (was 389): frame 0x2c and length agree; early J load and magnitude/angle homes differ; K first 389, shared axis cross 409, magnitude return 406, global optimization off 2150, float consistency 656, K first plus return 399.
+// early J preload and magnitude/yaw home remain; indexed long/short normalization
+// loops 417/421; pointer loop 423; loop common result 423; real absolute first/both 399/395; loop with
+// real absolute first/both 421/416.
+// Earlier: frame 0x2c and length agree; early J load and magnitude/angle homes differ; K first 389, shared axis cross 409, magnitude return 406, global optimization off 2150, float consistency 656, K first plus return 399.
 // scalar XY inputs 401 (sibling 10); epsilon failure first 398; geometry before trig 398;
 // ordinary inline 389; single dot clamp 396. Early J and scalar homes still differ.
 // J snapshot 395; I/J snapshots 392; axis by value 502; destination first 389; XY common result 389.
