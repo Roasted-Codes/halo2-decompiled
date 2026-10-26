@@ -916,12 +916,23 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
         copy = *input;
         input = &copy;
     }
-    out->i = input->j * matrix->left.i + input->k * matrix->up.i + input->i * matrix->forward.i;
-    out->j = input->i * matrix->forward.j + input->j * matrix->left.j + input->k * matrix->up.j;
-    out->k = input->i * matrix->forward.k + input->j * matrix->left.k + input->k * matrix->up.k;
+    real product_left_i = input->j * matrix->left.i;
+    real product_forward_i = input->i * matrix->forward.i;
+    real product_up_i = input->k * matrix->up.i;
+    out->i = product_left_i + product_up_i + product_forward_i;
+    real product_left_j = input->j * matrix->left.j;
+    real product_forward_j = input->i * matrix->forward.j;
+    real product_up_j = input->k * matrix->up.j;
+    out->j = product_forward_j + product_left_j + product_up_j;
+    real product_left_k = input->j * matrix->left.k;
+    real product_forward_k = input->i * matrix->forward.k;
+    real product_up_k = input->k * matrix->up.k;
+    out->k = product_forward_k + product_left_k + product_up_k;
 }
 
-// score 87 (was 87): Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
+// score 54 (was 87): frame 0x58 agrees; final override load order and rotation coefficient residency remain.
+
+// Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // final override load order and rotation input/coefficient schedule differ.
 // Rotation pointer/reference results 101/101; matrix reference 101; remaining helper orders 101/101/101.
@@ -959,6 +970,14 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // trailing-component loops 87 each; force-inline axis values 141/148/146/246; force-inline loop/reference
 // loop 87/87.
 // Partial sums i/j/k 93 each, ij/ik/jk/all 87 each; first lateral product named in the i row only 59 (1040/1043 bytes; not kept: one of three parallel rows). Original grouping and alias copy retained.
+// left products in every row 86 fast;
+// forward products in every row 90 fast;
+// up products in every row 87 fast;
+// left/forward products in every row 86 fast;
+// left/up products in every row 86 fast;
+// forward/up products in every row 87 fast;
+// all three products in every row 54 fast;
+// first syntactic product in every row 90 fast;
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

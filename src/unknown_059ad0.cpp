@@ -3623,7 +3623,9 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 101 (was 115): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
+
+// score 101 (was 101): frame 0x3c agrees; missing timeout owner spill and announcement/reply scheduling remain.
+// Earlier: Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
 // Earlier: Frame agrees; timeout owner spill and native identity/reply load order differ.
 // frame agrees; timeout owner spill and identity load order differ;
 // Frame agrees; timeout owner spill and native identity/reply load order differ.
@@ -3639,6 +3641,14 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 // actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;
 // native workspace names 115; chained message flags 115; peer result with chained flags 101; host
 // result at send 113.
+// complete native announcement construction 132 fast;
+// native announcement flag-array initialization 129 fast;
+// direct owning-array reply fields 101 fast;
+// byte actual peer result 104 fast;
+// long actual peer result 101 fast;
+// native announcement with direct reply fields 129 fast;
+// native flag array with direct reply fields 132 fast;
+// native announcement and long peer result 128 fast;
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
