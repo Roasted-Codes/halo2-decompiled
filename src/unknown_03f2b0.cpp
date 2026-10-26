@@ -1380,12 +1380,19 @@ struct s_batch_cache_4b5d0
 
 struct s_133f70;
 
-// score 213 (was 213): frame 0x33f8 agrees; distance staging, nullable entry and cache scheduling remain;
+// score 213 (was 213): Full frame 0x33f8 agrees; distance staging, nullable-entry and cache/result scheduling remain.
+// Earlier: distance load, nullable-entry address and cache/level scheduling differ;
 // distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
-// Earlier at 213 (from 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
+// Earlier 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
 // Native reuse 330; native level change 291; short entry index 352; late success 262; short builder
 // result 216.
+// Earlier 213 (was 213): distance staging, nullable entry and cache/result homes remain.
+// frame 0x33f8 agrees; distance staging, nullable entry and cache scheduling remain;
+// Earlier at 213 (from 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
 // Earlier at 213 (from 213): distance staging, nullable entry and cache/result homes remain.
+// Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result schedule remain.
+// Earlier at 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
+// Earlier at 213 (was 213): distance staging, nullable entry and cache/result homes remain.
 // Direct successful-output slot, entry lifetime: long/long 379, long/short 371,
 // short/long 354, short/short 350; loop lifetime 360,372,374,375.
 // distance input, nullable-entry address and cache/result scheduling remain.
@@ -1396,9 +1403,16 @@ struct s_133f70;
 // Plain signed-byte/short/word success 213/265/265; short/word reuse 370/370;
 // signed-byte level change 213; unsigned failures 213; word entry ordinal 352.
 // All eight also checked plain because the reduced frame differs; original restored.
+// Round 225: Entry query flags/nodes/count and their seven combinations 356f each; all outputs with later
+// constant failure-count lifetime 371f. Reduced control 356f versus full 213; original body restored.
+// Round 227: Native output short/Boolean/dword fields and their seven combinations 356f each; all
+// fields with current-level reference 356f. Reduced control 356f versus full 213; original metadata,
+// body and declarations restored.
 // Native pooled record at level/batch/usage boundaries 213/213/213; level+batch,
 // level+usage, batch+usage, all members and native const level elements each 213 plain
 // (all eight 356 fast). Original record access and body restored.
+// Round 330: Query/builder/output-query/lighting inline and noinline declarations: eight at 356f, matching
+// reduced control (frame 0x3400), versus full 213. All declarations restored; no reduced-only candidate.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

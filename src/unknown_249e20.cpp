@@ -32,7 +32,10 @@ long function_249e20(s_structure_bsp_view *bsp, long index)
 // direct table fields 44f; direct row expressions 38f.
 // entry saves/index load and audibility EDI allocation differ;
 // shared bit test/read-only bits 9/9; second-arm cursor 44; category loops
-// indexed/shared test/cursor/mask 58/58/46/45; final result selection 37.
+// indexed/shared test/cursor/mask 58/58/46/45; final result selection 37;
+// word and mask locals first 45 (bsp moves to the stack); word/mask after the row 45;
+// word local after the stride 9; mask local after the stride 47; row declared last 21;
+// permuter 600 s found nothing.
 // @retail 0x249e60
 long function_249e60(long cluster_index, s_structure_bsp_view *bsp, long index)
 {
@@ -194,6 +197,8 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // produced span 65; both bound fields 77; byte sample with direct bounds 83.
 // Real-sample lower/upper/both/endpoint/lower+endpoint/upper+endpoint/all predicates 68/82/76/74/73/82/76; all-real with direct bound span 78.
 // Ordered zero/upper guards word/byte/long/short 71/76/76/71; upper-first word/byte 71/76; nested sub-upper range word/byte 67/71.
+// Round 186 complete conditional result word/byte/short/long 73/78/73/79;
+// the same result returned at its table boundary 73/78/73/79. Original float tree preserved.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {

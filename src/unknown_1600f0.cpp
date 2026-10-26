@@ -1005,45 +1005,30 @@ struct s_game_engine_globals_connections_view
 };
 
 /* builds a player's row of the scoreboard at a position */
-// score 184 (was 184): deferred icon tail and time/connection register schedule;
-// default-zero byte icon 230, native integer 184; parsed-name scope 184;
-// separate connection rectangle 206; both name buffers scoped 184.
-// score 184 (was 184): deferred icon tail and time/connection coordinate registers remain;
-// whole-row reference 184; column reference 184.
-// input-color reference 184; color snapshot 309.
-// channel samples 323; direct right edges 306.
-// trailing right edges 297; row reference with trailing edges 297.
-// Test-derived glyph 182 fast/plain (two-point gain rejected); separately gated query 204;
-// query Boolean 205; hidden-first with test/query values 229/249;
-// column observations 184; columns with test/query values 182/204.
-// Direct icon zero default 192; initializer zero default 208; separate place/icon/name
-// rectangles 184/229/222; place and icon rectangles 184; scoped numeric buffers 225;
-// scoped numeric buffers plus direct icon default 188 (all plain).
-// score 184 (was 184): deferred icon tail and time/connection registers remain;
-// arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
-// receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
-// score 184 (was 184): Deferred icon tail and time/connection coordinate registers remain. place
-// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
-// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
-// rectangle aggregates 320; trailing rectangle aggregates 306.
-// icon tail and time/connection register schedule still differ.
-// icon tail and time/connection register schedule still differ.
-// entry icon zero 261f; outer icon scope 184f.
-// zero before icon init 205f; zero before place format 248f.
-// signed word result 184f; unsigned native result 184f.
-// signed result before icon init 205f; native result before icon init 205f.
-// deferred icon tail and time/connection homes still differ.
-// Positive place visibility 318; horizontal/vertical/both live origin fields 184/184/184;
-// completed color alpha 184; visibility with origins 318; horizontal/both origins
-// with completed color alpha 184/184. Widget-root control equals the full baseline.
-// score 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain.
-// Dim-default glyph 183 (one-point gain rejected); glyph-last/icon-alpha-first metadata 184/184;
-// connection alpha first 185; two-use numeric width 281; time/connection bottom first 184/184;
-// dim default plus numeric width 281. Opening body restored.
-// Deferred icon tail and time/connection coordinate registers remain. place
-// rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
-// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
-// rectangle aggregates 320; trailing rectangle aggregates 306.
+// score 184 (was 184): frame 0x6d8 agrees; retail stores the icon value in each arm (1, or the
+// dim value via neg/sbb/and) and places the else arm and the player-index/alpha tail after the score
+// column, jumping back to the name; the time/connection sums add name_width before score_width.
+// Tried: default-zero byte icon 230; native integer 184; parsed-name scope 184; separate connection
+// rectangle 206; both name buffers scoped 184; whole-row reference 184; column reference 184;
+// input-color reference 184; color snapshot 309; channel samples 323; direct right edges 306;
+// trailing right edges 297; row reference with trailing edges 297; test-derived glyph 182 (two-point
+// gain rejected); separately gated query 204; query Boolean 205; hidden-first with test/query values
+// 229/249; column observations 184; columns with test/query values 182/204; direct icon zero default
+// 192; initializer zero default 208; separate place/icon/name rectangles 184/229/222; place and icon
+// rectangles 184; scoped numeric buffers 225; scoped numeric buffers plus direct icon default 188;
+// arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection receivers
+// 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317; rectangle
+// aggregates for place/icon/name/score/time/connection 206/230/213/239/237/229; all of them 320;
+// trailing rectangle aggregates 306; entry icon zero 261; outer icon scope 184; zero before icon init
+// 205; zero before place format 248; signed word result 184; unsigned native result 184; signed result
+// before icon init 205; native result before icon init 205; positive place visibility 318;
+// horizontal/vertical/both live origin fields 184/184/184; completed color alpha 184; visibility with
+// origins 318; horizontal/both origins with completed color alpha 184/184; dim-default glyph 183
+// (one-point gain rejected); glyph-last/icon-alpha-first metadata 184/184; connection alpha first 185;
+// two-use numeric width 281; time/connection bottom first 184/184; dim default plus numeric width 281.
+// Round 71 (full relink; --fast builds this one differently): width declarations in any order and
+// width sums written with score_width first compile identically; icon if/else storing 1 or
+// `dim ? 2 : 0` +4; nested icon ternary +9 (1226 bytes); score_width-first sums with the if/else +4.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1259,6 +1244,12 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 126: External flag reference 801; reused no-team result 802; player/team/both output cursors
 // 811/834/842; chained RGB stores 801; native team-color output 835; existing string-list forceinline 801
 // (fast); all restored.
+// Round 166: Separate score/time/both caption-list results 801/801/801; scoped name
+// lookup alone/with score/with time/with both 801 each; all three separate immutable
+// caption results 801. Each result has its validity test and lookup use; original shared
+// list and every header/row operation restored.
+// External flag reference 801; reused no-team result 802; player/team/both output cursors
+// Isolated score-table, row-total, height, fade-row, viewport-height, points-width, clock-width and label-width names 801 each.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

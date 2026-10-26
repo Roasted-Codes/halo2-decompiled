@@ -117,11 +117,22 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Long/read-only-byte/read-only-long source elements 155 each; direct
 // long/read-only-long source handles 155; dword optional index alone or
 // with long/read-only-long source elements 155. Original typing restored.
+// First/second/both conditional source bits 155/155/155; complete mask branches/source-order
+// reversal 196/196; all mask parts named 155; independent word features 207; mask branches with
+// word features 215.
 // Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
 // ordinal 223; wide optional index 214; wide composite mask 192; word cursor
 // before packed mask 154. One-point reduction rejected; original body retained.
+// Actual low-byte independent/common/equality feature access 206/210/221; low-word
+// access 158/204/220; byte/word access with native copied-field store order 206/158.
+// Round 225: Signed-word outer/decoded/paired/inner/outer-inner/decoded-inner/all carriers [185, 189, 192,
+// 195, 182, 197, 193]; unsigned-word outer 196. Early source/count and feature homes remain.
 // Common disabled bool/byte/short/long with positive/negative feature results [192, 193, 192, 193, 201, 207, 192, 193].
 // Original body, word cursor and inherited qualifiers restored.
+// Entry count/selection/word-row offset lifetimes 156/154/154; count-selection/count-word/selection-word/all 156/156/156/156;
+// all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
+// Count/word/byte, byte/count/word, byte/word/count and word/count/byte
+// declaration orders 154/155/154/155; same offset-step orders 155/156/156/155.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

@@ -405,7 +405,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 181 (was 181): Frame 0x14 agrees; request/count/table registers, cross publication and projection schedule remain.
+// score 177 (was 177): Frame 0x14 agrees; request/count registers, cross publication and projection schedule remain.
 // Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
@@ -430,14 +430,25 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Fallback pointer/value 244/266; selected contact index 276, with pointer/value 309/299;
 // per-case defaults 269; complete normalized result 239, with fallback pointer 310.
 // Height-expression and full eligibility values 215/215; nested height filter 181; component fields at uses 370, with height/eligibility/nesting 368/368/370; signed valid-selection range 209. Original pair-result join restored.
+// Round 159: Shared cross, native component, native contact, combined native layout and their three
+// shared-cross combinations 181 each; native layout/shared cross with selected/lowest initialized first
+// 177; original layout/private cross with both results initialized first 177 (975/977 bytes, plain
+// confirmed and kept). Only the two constant initializations move; every memory read and call stays in
+// place.
+// Round 163: Direct averaged support, shared branch direction, both, entry support,
+// direct+entry, shared+entry, all, and all with shared cross 235/194/235/177/235/194/235/235.
+// Original pair-result join, two entry constants and private products restored.
+// Round 166: Corresponding projection products named on both compared dots: i/k/j
+// 194/194/194; ik/ij/kj 197/197/197; all 194; all with both first sums 194. Original
+// expressions, early constants and pair-result join restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
 {
-    long component_index = *(long *)(request + 0x40) & 0xffff;
-    byte *component = g_51e9b8->data + component_index * 0xa0;
     long selected = NONE;
     real lowest = 0.0f;
+    long component_index = *(long *)(request + 0x40) & 0xffff;
+    byte *component = g_51e9b8->data + component_index * 0xa0;
     for (long i = 0; i < count; i++)
     {
         byte *entry = *(byte **)(component + 0x88) + indices[i] * 0x48;
@@ -525,7 +536,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 	return (arg_0 >> 3) & 1;
 }
 
-// score 182 (was 182): frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
+// score 182 (was 182): Frame 0x28 and state/output registers agree; initial dot displacement bytes and rotation schedule remain.
+// Earlier: frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
 // Earlier 182 (was 195): state/forward registers agree; rotation scheduling differs.
 // Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
@@ -555,6 +567,13 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // array views 182/182/182. Original scalar expressions, shared helpers and outputs restored.
 // Native dot/up/orientation/full input fields 182/182/182/182; test-produced rotation 183;
 // inactive forward/active forward/both active output library copies 182/182/182.
+// Initial/all snapshot-safe crosses 182/182; ordinary cross inlining 182; both one-use aliases removed 180;
+// fallback axis/default library copies 182/182; initial snapshot with aliases removed 182;
+// all snapshots with fallback copies 182; settings-only/forward-only alias removal 291/291;
+// up-field reference on combined alias removal 195. Two-point gain rejected; original body/helper restored.
+// Round 183 complementary skip decision bool/byte/short/long 182 each; each with consistent
+// old-up field pointer 309 (fast), losing the caller match. All restored; initial dot
+// displacement bytes and rotation schedule remain with EDI state/EBX forward preserved.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -874,7 +893,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 }
 #undef settings
 
-// score 582 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain.
+// score 582 (was 582): Frame 0x34 versus 0x30, direct-mode carrier and vector homes remain.
+// Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain.
+// Frame 0x34 versus 0x30 and direct/vector homes remain.
 // Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
 // Frame 0x34 versus 0x30; direct-mode carrier and original/limited vector homes remain.
 // Earlier: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
@@ -913,6 +934,13 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
 // Earlier: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
 // Horizontal delta on retained join 614; signed-word direct/damping/gravity/flying 622/622/624/616.
+// Unsigned-byte gravity/direct/damping/all states each 582; input squared-length helper 582;
+// consistent active direct crosses 580; in-place history addition 641 (frame 0x30, 2981 bytes);
+// byte states with direct crosses 580; flying-only/ground-only direct crosses 580/582.
+// Two-point cross gain rejected; original private implementation and inherited qualifiers restored.
+// Round 183 existing returned-vector cross for first flying / remaining flying / ground / all flying
+// 607/659/590/694; first flying plus ground / remaining flying plus ground / all active / all paths
+// 637/689/724/834 (fast). All restored; extra frame dword, direct bit and vector homes remain.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -929,22 +957,21 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
         copy = *input;
         input = &copy;
     }
-    real product_left_i = input->j * matrix->left.i;
     real product_forward_i = input->i * matrix->forward.i;
+    real product_left_i = input->j * matrix->left.i;
     real product_up_i = input->k * matrix->up.i;
     out->i = product_left_i + product_up_i + product_forward_i;
-    real product_left_j = input->j * matrix->left.j;
     real product_forward_j = input->i * matrix->forward.j;
+    real product_left_j = input->j * matrix->left.j;
     real product_up_j = input->k * matrix->up.j;
     out->j = product_forward_j + product_left_j + product_up_j;
-    real product_left_k = input->j * matrix->left.k;
     real product_forward_k = input->i * matrix->forward.k;
+    real product_left_k = input->j * matrix->left.k;
     real product_up_k = input->k * matrix->up.k;
     out->k = product_forward_k + product_left_k + product_up_k;
 }
 
-// score 54 (was 87): frame 0x58 agrees; final override load order and rotation coefficient residency remain.
-
+// score 50 (was 50): Frame 0x58 agrees; final override load order and rotation coefficient residency remain.
 // Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // Earlier: Frame 0x58 agrees; final override loads and rotation coefficient residency remain.
 // final override load order and rotation input/coefficient schedule differ.
@@ -991,6 +1018,17 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // forward/up products in every row 87 fast;
 // all three products in every row 54 fast;
 // first syntactic product in every row 90 fast;
+// Round 159: Complete named-product declaration orders forward/left/up 50; forward/up/left 54;
+// left/up/forward 54; up/forward/left 53; up/left/forward 53; matrix-first named products 54; immutable
+// named products 54; named products with all partial sums 59. Forward/left/up kept at 1040/1043 bytes;
+// plain confirmed.
+// Round 163: Complete-product row scopes/entry carriers/axis-first names 50/50/50;
+// deferred publication 93; row accumulators 59; forced expansion 50; existing final add
+// 163; existing result setter 93. All on the retained nine-product graph; original
+// helper, alias copy and every operation restored.
+// Round 166: Complete vector-return ownership, matrix/input pointer-pointer, reference-pointer,
+// value-pointer, pointer-reference, reference-reference, value-reference, pointer-value,
+// reference-value 127/127/223/127/127/223/161/161. Original two-use output helper restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {
@@ -1076,7 +1114,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
     return length;
 }
 
-// score 421 (was 421): Frame 0x64 agrees; persistent zero, count/component homes and direction residency remain.
+// score 421 (was 421): Frame 0x64 agrees; persistent zero and count/component homes remain.
+// Frame 0x64 agrees; persistent zero and count/component homes remain.
+// Frame 0x64 agrees; persistent zero, count/component homes and direction residency remain.
 // Earlier 428 from 489: frame now 0x64; count/component and vector homes still differ.
 // Frame 0x64 agrees; persistent zero, count/component homes and direction retention differ.
 // Earlier: frame now 0x64; count/component and vector homes still differ.
@@ -1101,12 +1141,22 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Request flags once 494; flight once 531; preferred surface once 467; complete contact-base snapshot
 // 587; signed contact-bound snapshot 496; flags/flight 596; base/bound 651; flags/flight/preferred 659
 // (fast). All restored.
+// Round 361: native contact records in preferred/candidate/response/final scans 421/421/421/421;
+// preferred plus candidate, response plus final, all scans and all read-only records 421/421/421/421
+// (fast). Existing record layout and complete body restored.
 // Earlier: Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
 // Earlier: persistent zero and accepted-count/component homes still differ.
 // Earlier: Frame 0x64 agrees; zero/count/component homes remain. Native component 428; stepping
 // Earlier: frame 0x64 agrees; persistent zero and count/component homes remain.
 // Byte/unsigned-word accepted count 462/426; unsigned fixed pass 421; separate entry
 // desired/direction storage 421/421.
+// Round 163: Local speed/object/both/surface/speed+surface/object+surface/all
+// scalar outputs and complete output/Boolean join 554/499/554/570/621/622/613/547.
+// All regress; original direct publications, qualified count and cursor restored.
+// Round 166: Whole squared/absolute/both magnitude names in both normalizations
+// 421/422/422; desired-length result alone/with square/with absolute/with both
+// 421/421/422/422 (one-use return forms match-only); existing squared-length helper 421;
+// Boolean flight expressions at both tests 466. Original helper, expressions and body restored.
 // Existing selection/tangent/speed dot inputs reversed independently, in all seven combinations,
 // and together with the accepted-count lexical home: 421 each. Helpers and body restored.
 // @retail 0x1f2250

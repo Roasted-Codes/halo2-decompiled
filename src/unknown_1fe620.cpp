@@ -37,6 +37,9 @@ static __forceinline long real_to_long(real value);
 // Later second bound / initial speed / both 389/388/390 (frame 0x48); cap before ranges 389.
 // Distance before side normalization/cross 427 each; cap after first draw 370 (three-count gain rejected); trig reuse 384.
 // Middle cap with later bound/speed/both/trig reuse 390/389/391/381.
+// Point-owner, complete output-phase and normalization-scratch scopes each 373;
+// owner/output, owner/scratch, output/scratch and all three 373; all three with
+// initial-conversion scope 373. Frame remains 0x4c; original lifetimes restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

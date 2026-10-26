@@ -195,6 +195,16 @@ void function_402b0(long cache_index, long mode)
 // selection and both 202f each; unchanged reduced preview 202f, full 183.
 // Entry native selection/flags+selection/parent/ordinal/all declarations 202f each;
 // counter+selection/flags+parent+resource/entry coordinated roles 202f each, unchanged control 202f.
+// Native actual light definition/parent/node/camera fields 202f each; all fields 202f;
+// external native record reference 202f; native definition receiver 202f; both receivers 202f.
+// Unchanged reduced control 202f/946, ordinary baseline 183/947; frame and helper/API gaps remain.
+// Native pass flags first/second/third/final 215/214/214/215; first pair 220; first three 227; all
+// four 233; all with byte result 231. Fast control 202. Native flag header restored.
+// Round 199: Plain shared 12..13 pass loop, long ordinal with long/bool/byte/short result
+// 296/282/282/287; short ordinal with those results 293/279/279/284 (fast control 202). All restored.
+// Round 161: Actual low-word shape kind with shared long/bool/signed-byte/short
+// pass carriers 202f/231f/231f/248f; separate pass lifetimes 202f/231f/231f/248f.
+// Unchanged reduced control 202f; full baseline 183. Actual shape type and body restored.
 // Inline/noinline state-helper declaration with shared long/bool/byte/short pass
 // carriers 319f/290f/290f/285f; independent carriers 319f/290f/290f/285f.
 // Reduced control 202f; full baseline 183. All declarations and body restored.
@@ -304,6 +314,12 @@ bool function_404b0(long mode)
 // Earlier 226 (from 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
 // native masks for passes 16/1/3/8/20/7 give 226/226/226/230/226/226; all masks 230; with byte
 // lower-bound admission 229.
+// Round 165: Two-use setup setting captured within single/third/conditional/
+// twentieth/seventh passes 226 each; all five captures 226; both actual cull-setting
+// observations once 226; all setting captures 226. Original reads and body restored.
+// Formal-address removal, pass-phase false result, entry result and entry false result
+// 226/226/226/226; removal with pass false/entry/entry false 226/226/226;
+// isolated unsigned-byte lower-bound admission 225. Original body restored.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

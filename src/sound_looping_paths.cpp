@@ -174,9 +174,14 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // word choice-conversion ordinal 923; word duplicate ordinal 929 (retail length); all four word ordinals 894.
 // Unsigned word query/choice/both counts 886 each; dword/byte/word inside result 921/886/910;
 // unsigned first-query/duplicate ordinals 886/886. Original executable source restored.
+// Choice/primary flag observations 886/886; shared neighboring gain 959; both flags 886;
+// choice flags+gain 959; primary flags+gain 959; all 959; early choice flags with all 953. All restored.
 // Round 126: Named squared blend term 886; repeated portal endpoint 909; existing pin/get forceinline
 // 886/886; single successful allocation guard 905; choice-cap test first 932; accumulated target gain 886;
 // default-first detail result 884 (fast, gain below threshold); all restored.
+// Round 180 current gain active/inactive/outside state/both gains/active-outside/inactive-outside/all/byte
+// outside 890/889/887/893/891/890/894/887 (fast); all restored. Frame 0x4e0 agrees; entry zero,
+// query-array/count and primary homes remain.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
@@ -449,6 +454,7 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Environment-table lifetime 273; direct duration source 223; cue location subobject 250;
 // shared caller cue workspace 229; unsigned query index 223; table/direct duration 273;
 // shared workspace/location 233; table/workspace 254 (fast). Shared cue workspace gives frame 0xf4, not retail 0x148.
+// Earlier: BSP/camera/query homes, duration spill and cue zero carrier remain.
 // BSP/camera/query homes, duration spill and cue zero carrier remain.
 // Native BSP view 223; multi-use environment row 267; initialized query count 296;
 // duration interval/sign arms 231/229 (frame 0x148); BSP/count 296;
@@ -456,8 +462,13 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Native cluster word 287; readonly camera 223; angle-output name 223;
 // early fade/tag stores 270; cluster/camera 287; cluster/angle 287;
 // camera/angle 223; combined input/output and earlier stores 285.
+// Round 164: Paired tag/transition result arms, tag after magnitude, paired
+// defaults and defaults/tag-after 223/275/233/276; outer duration workspace
+// 223/275/233/276. Original separate metadata graph and all helpers restored.
 // Transition after angles with original arms, deferred metadata/direct angles/both 271/290/282/330;
 // same four forms with default-first duration 263/278/309/323. Original observation timing, output copies and helpers restored.
+// global bsp 275; point setter 240; bsp point setter 296; current at use 225; bsp current 274; setter current
+// 318; bsp setter current 305; point initializer 239.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

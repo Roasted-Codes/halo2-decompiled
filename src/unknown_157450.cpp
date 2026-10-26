@@ -3845,7 +3845,8 @@ static __forceinline long nonnegative_15ce70(long value)
 {
 	return value < 0 ? 0 : value;
 }
-// score 470 (was 470): frame 0xe4 versus 0xe0; attacker/category/NONE and decision-byte homes differ.
+// score 470 (was 470): frame 0xe4 versus 0xe0; attacker/category/NONE and decision homes remain.
+// Earlier: frame 0xe4 versus 0xe0; attacker/category/NONE and decision-byte homes differ.
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
 // frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
@@ -3864,9 +3865,19 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 201: One reused event 485; distinct inner event names 480; byte different-player 480; byte same-team 480; long different-player 543.
 // Conversion spill names 480; complete special comparisons 577; category-only word 570; modifier-only word 579;
 // plain timed-step for 480. Frame/NONE and event homes remain; helper and body restored.
+// Round 128: attacker read at each use 563; native penalty/elapsed/both fields 470/470/470;
+// penalty/both with fresh attacker 563/563; shared victim ordinal 571, plus fresh attacker 574;
+// classifier/notification/both Boolean virtual parameters 543/542/544. Frame,
+// attacker/category/NONE and decision-byte homes remain; all restored.
 // Round 358: Category-only byte 545; modifier-only byte 530; modifier after category predicate 543;
 // exhaustive subtype result 566; entry statistics ordinal 557. Frame/NONE and decision homes remain; opening
 // body and shared award update restored.
+// Round 364: Native chain/streak/both statistics fields 470/470/470; fresh victim 615;
+// fresh output state 548; both fresh bases 639; native fields plus fresh victim/state 615/548.
+// Clock/round/options base snapshots 566/481/487; clock-round/clock-options/round-options/all 492/558/548/496; role-named marker and both events 470. Frame and attacker/NONE homes remain.
+// Round 131: word special/different/both/team/special-team/different-team/all
+// decision carriers 477/528/540/470/477/528/540; dword subtype 470.
+// Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4118,6 +4129,8 @@ struct s_score_zone_view
 // Round 358: Four distinct entry text outputs 507; complete text role names 472; both selection defaults
 // before samples 614; format-mode reads at every use 472; plain team while 472. Reversed text/color homes and
 // zone/charge allocation remain; opening executable body restored.
+// Round 364: Native player/team/both statistics arrays 472/472/472; fresh statistics 686;
+// fresh player 790; both fresh bases 792; native arrays plus fresh statistics/player 686/790.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -5150,7 +5163,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 157 (was 163): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// score 153 (was 153): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5179,6 +5192,12 @@ void __stdcall function_d6bc0(long object_index);
 // Round 138: word kind 157 plain kept; native int delay 163; signed/unsigned byte schedule
 // 180/180; word kind with either byte schedule 168/168; readonly preset 163; word kind and
 // readonly preset 157. Frame 0x14 versus 0x18 and timer/base homes remain.
+// Round 323: complete staged sums 166; all named squares 157; named squares with
+// staged sums 168; displacement role names with sums 166; common sum workspace 166; common
+// squares and sum 168; shared point differences with staged sums 153; common vector and sum
+// 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
+// Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
+// all five call boundaries inline/noinline: all 153; every declaration restored.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5207,10 +5226,12 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                 bool reset = function_158ff0(index);
                 if (!reset)
                 {
-                    real z = *(real *)(placement + 0x48) - *(real *)(object + 0x38);
-                    real y = *(real *)(placement + 0x44) - *(real *)(object + 0x34);
-                    real x = *(real *)(placement + 0x40) - *(real *)(object + 0x30);
-                    if (z*z + y*y + x*x > 100.0f)
+                    vector3f displacement;
+                    vector3d_from_points3d((point3f *)(object + 0x30), (point3f *)(placement + 0x40), &displacement);
+                    real distance_squared = displacement.k * displacement.k;
+                    distance_squared += displacement.j * displacement.j;
+                    distance_squared += displacement.i * displacement.i;
+                    if (distance_squared > 100.0f)
                         reset = function_15f060((point3f *)(object + 0x30), *(real *)(preset + 0x28));
                     else
                         reset = true;
@@ -5232,10 +5253,12 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                         if (((1 << object[0xaa]) & 0x1c) && (object[0x12c] & 3)) schedule = true;
                         else
                         {
-                            real z = *(real *)(object + 0x38) - *(real *)(placement + 0x48);
-                            real y = *(real *)(object + 0x34) - *(real *)(placement + 0x44);
-                            real x = *(real *)(object + 0x30) - *(real *)(placement + 0x40);
-                            schedule = z*z + y*y + x*x > 1.0f;
+                            vector3f displacement;
+                            vector3d_from_points3d((point3f *)(placement + 0x40), (point3f *)(object + 0x30), &displacement);
+                            real distance_squared = displacement.k * displacement.k;
+                            distance_squared += displacement.j * displacement.j;
+                            distance_squared += displacement.i * displacement.i;
+                            schedule = distance_squared > 1.0f;
                         }
                     }
                     break;

@@ -111,52 +111,39 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 /* slot type 0x24's update: moves the actor to its prop (to the point the
    prop names, or along its direction) and flags the slot when it is there
    or cannot get there (always returns true) */
-// score 146 (was 146): frame 0x48 and length 1077 agree; entry pool/view carriers and movement/failure placement remain.
-// Frame 0x48 agrees; actor/view registers, trace carriers and
-// movement/failure block placement remain. Native type width 611; common success exit 595
-// (multiple-goto form discarded); lookups after actor guards 616; tracked type first 619;
-// bounded trace distance 620; visibility result 620; single exit native category 584
-// (multiple-goto form discarded); successful move guard 584 (multiple-goto form discarded);
-// supported category guard 588 (multiple-goto form discarded); near target arm first 586
-// (multiple-goto form discarded); structured actor gates 584; native supported category
-// guard 621; native near target first 617; structured supported categories 588.
-// Caller noinline declaration 620; callee noinline declaration 236; shared magnitude 236;
-// shared point 236; destination name 236; long result 233; point/name/magnitude together 236.
-// Category short outlined query 338; completion early return 232; category short completion 236;
-// movement result first 232; movement workspace scope 232; probe frame names 232;
-// existing point setter 232; far failure arm first 232; movement success return 232.
-// Outer trace lifetime 232; direct native categories 236; plain coordinate loop 232;
-// cluster result arms 232; probe declarations reversed 232; inactive actor return 232.
-// frame 0x48 agrees; entry pool/view carriers and movement/failure placement remain.
-// Tried native type width 611; common success exit 595 (multi-goto form discarded); lookups after actor
-// guards 616; tracked type first 619; bounded trace distance 620; visibility result 620; single exit native
-// category 584 (multi-goto form discarded); successful move guard 584 (multi-goto form discarded); supported
-// category guard 588 (multi-goto form discarded); near target arm first 586 (multi-goto form discarded);
-// structured actor gates 584; native supported category guard 621; native near target first 617; structured
-// supported categories 588.
-// Outlined-query trials: caller noinline declaration 620;
-// callee noinline declaration 236; shared magnitude 236; shared point 236;
-// destination name 236; long result 233; point/name/magnitude together 236.
-// Category short outlined query 338; completion
-// early return 232; category short completion 236; movement result first 232; movement workspace
-// scope 232; probe frame names 232; existing point setter 232; far failure arm first 232;
-// movement success return 232.
-// Source target/output point pointers 208/232; source point/record values 237/247;
-// outlined visibility result 238; failure expression/read-only view/remaining distance
-// 232/232/232; shared trace origin 238; geometry-only origin 153 kept;
-// geometry setter/native category 153/195. Plain 153, 1080/1077, no trailing fill.
-// Direct slot/actor reference/node reference/both 153 each; direction before query 146 kept; full result 150; direct slot/entry trace with direction 146/146.
-// native slot formal 146; readonly direction 146; fallback native record copy 146; directed native record copy
-// 146; both native record copies 146; native yz distance part 146; native direction field 146; native direction
-// field at use 211.
-// Probe target address 314; directed target address 146; both 314; unsigned native category 192; addresses/category 324; shared squared length/dot 146/146; trace fallback first 146.
-// Actor/node/view/all receiver names 146 each; signed native category and late producer 192/192;
-// reused actor-position address 152; native category with actor-position address 198.
-// Completion receiver/result/trace names 146/146/146; geometry origin before trace 241;
+// score 146 (was 146): frame 0x48 and length 1077 agree; the entry registers (actor offset in
+// EBP, ours, against EAX plus lea), the actor index kept in ESI (retail reloads it from its
+// stack slot), the prop type tested as long (retail 16-bit), and the block layout: retail puts
+// the type 1 arm and the unsupported-type return after the result check (type 0 falls into it,
+// type 1 jumps back); ours puts them between the type 0 arm and the result check.
+// Tried: short type 192 (aligned 109 against 101: the 16-bit tests agree but the target point
+// stores reschedule); the result check copied into both arms 408 (no tail merge); a switch on
+// the type 249 (sub eax,0/dec eax); state declared first 144; scalars first 146; state before
+// view 146; the result check inside a type 0 or 1 block 211 (aligned 99, same layout); type 0
+// as the else of a nonzero-type block 226. Earlier (611-232 on older bodies): native type width
+// 611; common success exit 595; lookups after actor guards 616; tracked type first 619; bounded
+// trace distance 620; visibility result 620; single exit native category 584; successful move
+// guard 584; supported category guard 588; near target arm first 586; structured actor gates
+// 584; native supported category guard 621; native near target first 617; structured
+// supported categories 588; caller noinline declaration 620; callee noinline declaration 236;
+// shared magnitude/point 236/236; destination name 236; long result 233; category short
+// outlined query 338; completion early return 232; category short completion 236; movement
+// result first 232; movement workspace scope 232; probe frame names 232; existing point setter
+// 232; far failure arm first 232; movement success return 232; outer trace lifetime 232; direct
+// native categories 236; plain coordinate loop 232; cluster result arms 232; probe declarations
+// reversed 232; inactive actor return 232; source target/output point pointers 208/232; source
+// point/record values 237/247; outlined visibility result 238; shared trace origin 238;
+// geometry-only origin 153 (kept); geometry setter/native category 153/195; direction before
+// query 146 (kept); full result 150; direct slot/entry trace with direction 146/146; native slot
+// formal, readonly direction, native record copies, native yz distance part and native
+// direction field 146; native direction field at use 211; probe target address 314; directed
+// target address 146; unsigned native category 192; addresses/category 324; shared squared
+// length/dot 146/146; trace fallback first 146; receiver names 146; signed native category and
+// late producer 192/192; reused actor-position address 152; native category with actor-position
+// address 198; completion receiver/result/trace names 146; geometry origin before trace 241;
 // early origin with trace name 241; full category at producer 146; result producer scope 146;
-// early origin with native category 237.
-// Complete squared direction, every scaled target product, both, and every target coordinate 146 each;
-// each form with consistent actor getter observations 399/399/399/399 (1148 bytes).
+// early origin with native category 237; complete squared direction, scaled target products and
+// target coordinates 146 each (399 with consistent actor getter observations).
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {

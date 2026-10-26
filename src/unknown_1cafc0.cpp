@@ -855,6 +855,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // First logical blend 311; query-first logical blend 310; both logical 318; staged channel
 // admission 248 (gain three, dropped); logical staged 315; named readiness 254;
 // logical named readiness 312; lookup-owned work 251.
+// Round 167: Three separate name-change predicates on the late-success body, logical/bitwise joins:
+// bool 260/254, byte 260/254, short 280/272, long 277/267.
+// All three comparisons precede the original four name stores; original combined predicate restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

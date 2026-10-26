@@ -75,6 +75,8 @@ void function_2232a0(void)
 }
 
 // score 151 (was 151): One-dword frame agrees; common count/layout join, slot predicate and terminal/tail transport remain.
+// One-dword frame agrees; count/layout join, slot predicate and terminal/tail allocation still differ.
+// Earlier: One-dword frame agrees; common count/layout join, terminal registers and tail convention remain.
 // Earlier 151 (was 151): count-one paths still bypass the common count/layout join; tail call differs.
 // Signed-byte count alone/with player value 169; signed-word layout alone/with normalized selection 174;
 // native selected-player value, normalized selection and their combination 151; redundant scan test removed 154.
@@ -100,9 +102,13 @@ void function_2232a0(void)
 // Earlier 151 (was 151): count/layout join still threads. First/second/both native
 // countdown scalars 151/151/151; prefix countdown publication 151/151/151;
 // paired countdowns with int count or int ordinals 151/151. Original body retained.
-// Round 150: chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
+// chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
 // count/layout join still threads. First/second/both native
 // Nested slot admission/sentinel continue/selected-source value 151/151/151; source admission before normalization 158; nested source 151; continued source 158; sole output cursor 232; native entry address 151 (restored).
+// sentinels/mode/rectangles 151; rectangles/sentinels/mode 151.
+// rectangles/mode/sentinels 151; mode/sentinels/rectangles 151.
+// mode/rectangles/sentinels 151; reversed rectangle pair 151.
+// sentinels/mode/reversed pair 151; reversed pair/sentinels/mode 151.
 // wide source count 138; wide count result 215; wide layout 174;
 // wide selected slot 227; wide output ordinal 195; unsigned byte layout 189;
 // unsigned native layout 151; immutable native source count 151. Wide source count worsens aligned rows.
@@ -113,6 +119,11 @@ void function_2232a0(void)
 // Original timer order, count/layout producers, shared initializer and body restored.
 // Negative world-rejection bool/byte/short/long in multiple-first layout 151 each;
 // single-first layout on those negative-result graphs 168 each. All restored.
+// Contiguous eight-byte sentinel fill 152; fill with native rectangle value/library rectangle copies 152/152;
+// fill with existing slot predicate alone/rectangle value/copies 151/151/151; fill with plain pretest 170; all 178.
+// Every sentinel-fill form also loses the matched initializer caller in the reduced image; all restored.
+// Layout field-test orders flag/state/index, index/flag/state, index/state/flag,
+// state/flag/index, state/index/flag and three global-first orders 151 each.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

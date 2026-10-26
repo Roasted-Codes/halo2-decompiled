@@ -459,7 +459,8 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 	vector->k = axis->k * along + k * cosine - (axis->j * i - axis->i * j) * sine;
 }
 
-// score 90 (was 120): frame 0xd8 agrees; x87 ring conversion and rotation component spill/register scheduling remain.
+// score 90 (was 90): frame 0xd8 agrees; ring conversion (fild where retail converts in SSE) and the
+// frame 0xd8 agrees; x87 ring conversion and rotation component spill/register scheduling remain.
 // rotation schedule (one spilled component) differ; 1085 bytes against 1089.
 // Round 50: conditional sector store with the field read back as short (120 -> 109) and the
 // sector index read after the radius (-> 90) kept. Rotation with cross j, k before i 100
@@ -512,9 +513,19 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Helper-owned angle/trigonometry 236; cosine first 237; early direction inputs 236;
 // early projection or projection plus inputs 239; byte ring 161, remaining count 120,
 // both byte states 161. Existing helper and all ring/trace inputs restored.
+// Round 141: Native axis before/after projection 298/293; native direction before/after projection
+// 253/259; both inputs before/after projection 306/312; axis with real ring 298; both inputs with
+// double base distance 313. Original helper/body restored; SSE ring conversion and rotation spill
+// remain.
+// Round 141: Component, projection, combined input/projection, formal, complete rotation, radius,
+// native-index and all-scalar lexical homes 90 each. All original names, input copies and statements
+// restored.
 // Sine-scaled cross 215; with projected-axis/cosine terms 215/215; all terms 90;
 // projection plus cosine 215; projection/cross/cosine and cosine/cross/projection orders 90/90;
 // all terms with cosine complement 90. Uniform rows; opening helper and body restored.
+// Parallel displacement/elevation/both product parts 215/90/215; collision-offset parts 90;
+// displacement with collision parts 215; elevation with collision parts 90; all parts 215;
+// native point aggregate initializer 90. Original body and rotation helper retained.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {

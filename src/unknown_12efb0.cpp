@@ -134,6 +134,8 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 }
 
 // score 616 (was 616): Frame 0x4820 and metadata cursor agree; native palette width and accumulator carriers differ.
+// Frame 0x4820, clears and metadata cursor agree; cluster-index EDI, palette carriers and helper update scheduling differ.
+// Earlier: Frame 0x4820 and clear scheduling agree; output cursor +0x10 versus +8 and palette/cluster homes remain.
 // Earlier: Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
 // Earlier at 692: Frame 0x4820 agrees; clear scheduling and output cursor +0x10 versus +8
 // Frame 0x4820 agrees; clear setup and +0x10/+8 output induction remain.
@@ -168,6 +170,8 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // Native member scalar/merge/publication operations singly 615/616/615;
 // scalar+merge/scalar+publication/merge+publication 617/615/616; all three/all four 617/616.
 // One-point leads dropped; original complete free-function helpers restored.
+// Separate clamped weight in scalar/merge/color helpers 684/683/683; scalar-merge/scalar-color/merge-color/all 684/684/683/684;
+// normalized contribution before destination stores 742. Original input captures and helper bodies restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

@@ -1289,6 +1289,16 @@ struct s_player_properties
 // all overwritten defaults 296. Original initialization retained.
 // Count at entry/before getter/before cache compare/after mask 225/191/265/184;
 // chained byte/long/short/all sentinel groups 184 each with session roots; narrow control 211.
+// Unsigned/signed byte name count 185/185; prefix-bytes-tail, bytes-tail-prefix,
+// tail-prefix-bytes payload copies 184 each; all payload copies before name output 242,
+// with unsigned/signed byte count 241/241. Owner/count allocation and requested cursor remain.
+// Native requested name/payload/metadata/all 184 each; native current receiver and both receivers
+// 184/184; all current at use and both native observations 198/198. Session-root scores; real
+// player header and property type restored.
+// Round 161: Startup state at use; collected-name table at entry/before getter;
+// those table scopes with state at use; table lexical name; entry table plus name;
+// entry table plus name and state at use: all eight 184 with session roots.
+// Original table, state snapshot, defaults and executable body restored.
 // First/second/both actual default-array cursor walks 240/240/235; chained zero
 // bytes 184; first/second/both cursors plus byte chain 240/240/235; both cursor
 // declarations before clear with chain 235. Original defaults and body restored.

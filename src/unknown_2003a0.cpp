@@ -937,7 +937,7 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// score 13 (was 69): the merged index is now the first record index's own register as in
+// score 13 (was 13): the merged index is now the first record index's own register as in
 // retail; the fallback index and its promoted copy sit in SI/EBP where retail has BP/ESI, and
 // the fallback's result is tested before its copy into the merged index (retail copies, then
 // tests). Round 87: index read into the result before the first check 13 (kept); both checks
@@ -950,6 +950,8 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 // 109; long result/ordinal 119/108; existing bounded-length call 69; native candidate
 // invalidation 75; invalidation plus bounded call 75; negated success 75/75; candidate
 // selection 75/75 (manual/shared length); signed count 76.
+// Round 186 seeded-first validator: promoted ordinal 103; input-default native result 13;
+// long return/input 121/98; signed/word scan counts 16/174; immutable index 13; equality bound 178.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
@@ -1491,18 +1493,23 @@ void function_2036c0(long definition_index, short mode, bool *enabled, bool *for
 bool function_1df560(short team_a, short team_b);
 bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
-// score 120 (was 124): round 312: frame 0x2c versus 0x28 and pool allocation differ; common y tail 122; native subtraction 121; early workspace 124; direct minimum 122; late result 124; common tail with direct minimum 120 plain; common tail with explicit clamp 122.
-// score 120 (was 120): frame 0x2c versus 0x28 and pool/result allocation remain; branch workspace, scalar order, native actor position, staged partial products, position base, late minimum on common tail, shared scalar scope and float root each 120.
-// score 120 (was 120): frame 0x2c versus 0x28, pool/save allocation and shared Y-tail SSE handling remain.
-// Native actor getter 120; native source-point snapshot 150; source-field reference 120;
-// distance workspace names 120; in-place nonnegative distance before minimum 122.
-// extra frame dword and x87 shared tail remain.
-// Unused mode address removed/read-only mode 120/120; in-place transform 123;
-// noinline, staged subtraction and fallback memcpy each 120; nonpositive-first 119; failure exits 118.
+// score 58 (was 120): entry register roles differ (retail saves ebx/ebp/edi first and keeps the
+// actor pool data in ebx, ours saves esi early for the squad pool data and ebx late); the loop forms
+// the entry pointer after its first use through an edi temporary; fallback copy registers differ.
+// Tried: common y tail 122; native subtraction 121; early workspace 124; direct minimum 122;
+// late result 124; common tail with direct minimum 120; common tail with explicit clamp 122;
+// branch workspace, scalar order, native actor position, staged partial products, position base,
+// late minimum on common tail, shared scalar scope, float root, native actor getter,
+// source-field reference, distance workspace names, read-only mode, noinline, staged subtraction,
+// fallback memcpy each 120; native source-point snapshot 150; in-place nonnegative distance 122;
+// in-place transform 123; nonpositive-first 119; failure exits 118; full sum in each branch with
+// shared deltas 123; zero-default clamp 123; reordered sum terms or declarations identical;
+// accumulated sums with x,z,y deltas 124 (whole sum merged); deltas x,y,z with accumulated sums
+// 58 (kept); squad before actor 59 (index registers swap); named marker 58; offset-first entry 58;
+// branch-scoped transformed point 58; permuter 600 s found nothing.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
-    (void)&mode;
     real result = 3.402823466e+38F;
     byte *actor = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
     byte *squad = (byte *)squad_get(squad_index);
@@ -1518,32 +1525,32 @@ real function_204950(long actor_index, long squad_index, short mode)
             point3f const *point = (point3f const *)(entry + 0x24);
             point3f transformed;
             real squared;
-            real y;
             if (*(short *)(entry + 0x30) == NONE)
             {
                 real x = *(real *)(actor + 0x238) - point->x;
+                real y = *(real *)(actor + 0x23c) - point->y;
                 real z = *(real *)(actor + 0x240) - point->z;
-                y = *(real *)(actor + 0x23c) - point->y;
-                squared = x * x + z * z;
+                squared = x * x;
+                squared += z * z;
+                squared += y * y;
             }
             else
             {
                 if (!function_2104b0(*(short *)(entry + 0x30), point, &transformed))
                     transformed = *point;
-                real z = *(real *)(actor + 0x240) - transformed.z;
                 real x = *(real *)(actor + 0x238) - transformed.x;
-                y = *(real *)(actor + 0x23c) - transformed.y;
-                squared = z * z + x * x;
+                real y = *(real *)(actor + 0x23c) - transformed.y;
+                real z = *(real *)(actor + 0x240) - transformed.z;
+                squared = z * z;
+                squared += x * x;
+                squared += y * y;
             }
-            squared += y * y;
             real distance = (real)sqrt(squared) - *(real *)(entry + 0x34);
+            real clamped = 0.0f;
             if (distance > 0.0f)
-            {
-                if (distance < result)
-                    result = distance;
-            }
-            else
-                result = 0.0f;
+                clamped = distance;
+            if (clamped < result)
+                result = clamped;
         }
     }
     return result;
@@ -1761,7 +1768,7 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
     }
 }
 
-// score 257 (was 264): Frame 0x3c agrees; count/definition/best/point homes, entry loads and packed reference tests remain.
+// score 257 (was 257): Frame 0x3c agrees; count/definition/best/point homes, entry loads and packed reference tests remain.
 // Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
 // native reference indices 350; entry fields at use 344; inline distance call 678.
 // Native player iterator 305; native entry cursor 316; word validation 305; matching-area
@@ -1783,6 +1790,8 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
 // Round 110: branch table with native selection 323; actual palette field reference 279; reference with branch table 301; split point scopes on native iterator/count frame 264; early actor iterator workspace 264.
+// Round 186 actual native records: definition 321; entry 257; both 321; area 257;
+// definition/area 321; entry/area 257; all 321; all read-only 321. Strides and field widths preserved.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
