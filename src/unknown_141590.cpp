@@ -128,7 +128,8 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 }
 
 /* the rotation that takes one unit vector to another */
-// score 237 (was 237): frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
+// score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross spill overlap remain.
+// frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
 // quaternion scale loop 302; shared axis scale loop 294.
 // shared rotation cross 241; shared cross scale loop 294.
 // shared cross both phases 281; identity library copy 237.
@@ -139,6 +140,8 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Frame 0x1c versus 0x24 and quaternion/cross spills remain; construction scope 237; vector-first helper 240; output-middle helper 290; cross i/k/j 284, j/i/k 235 (only -2), k/i/j 284. Both helpers restored.
 // Sine-branch construction j/k/i 327, k/i/j 240; initial dot products
 // named 324; both half-angle radicands named 251; orthogonal early exit 237.
+// Native vector input contract 403; quaternion/vector reference formals 237/237;
+// projection sum named 246; both half-angle sum/difference parts named 281. Body and helpers restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,
