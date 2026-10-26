@@ -723,9 +723,7 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
     if (!(flags & 1))
     {
         vector3f left;
-        left.i = facing.k * up.j - up.k * facing.j;
-        left.j = up.k * facing.i - up.i * facing.k;
-        left.k = up.i * facing.j - up.j * facing.i;
+        contact_cross(&up, &facing, &left);
         real scale = *(real *)(arg_3 + 0x20);
         real local_0 = input.i * scale;
         real local_1 = input.j * scale;
@@ -873,33 +871,37 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 }
 #undef settings
 
-// score 621 (was 625): frame 0x34 versus 0x30; direct-bit and vector homes still differ.
+// score 582 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain.
+// Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
 // Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
 // Ordinary gravity with shared normalization 622; cached mode 648; limited-first 625;
 // request bitfields 621; global optimization off 2562; direct scalar lifetimes 623; bitfields plus scalars 626.
 // Request-record snapshot 625; inline depth two 621; ordinary gravity on native flags 621;
 // shared direct/general delta 621; complete horizontal point copies 630.
-// score 614 (was 621): frame 0x34 versus 0x30 and vector homes still differ.
+// Earlier 614 from 621: frame 0x34 versus 0x30 and vector homes still differ.
 // Native enabled test 626; byte flag view 619; low-normal first 618; current-velocity snapshot 625;
 // repeated damping 624; native enabled/byte view 629; gravity first 616; byte view/low-normal 616;
 // gravity/low-normal 614 kept; gravity/byte view 618.
-// score 614 (was 614): Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
+// Earlier 614 from 614: Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
 // direct 626; damping 619; gravity 619; all predicates 627; later input magnitude 619 (fast).
 // frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
 // Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
 // general distance result 614; masked final gravity word 634.
-// score 614 (was 614): frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
+// Earlier 614 from 614: frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
 // direct gravity 618; ordinary local output stores 634; native direct damping gravity 615; native direct
 // gravity damping 615; history time snapshot 614; ground vertical value 614; ground vector arm first 629.
 // frame 0x34 versus 0x30; direct-mode carrier and vector homes remain.
 // Basis capture on current join 631; desired/delta scope 614; scale/subtract value helpers 681;
 // later history maximum 614; shared lateral workspace 616.
-// score 614 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
+// Earlier 614 from 614: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
 // 614; normal-only value 685; facing-only value 641; up-only value 632; damping/gravity/direct order 614
 // (fast).
-// score 614 (was 614): frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
+// Earlier 614 from 614: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
 // 627; direct clipping scope 614; general clipping scope 614; scalar history change 741
 // (frame 0x30, 2920 bytes); shared cross products 626 (fast).
+// General/history/both value-add publications 659/641/690; disabled-input shared cross 582 (plain,
+// kept); final direct reuse 620; final mode/direct reuse 631; per-use flight field 623; four Boolean-
+// role names 614 (fast). Keep only the existing cross helper with the distinct local output.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1044,7 +1046,8 @@ PRIVATE inline real contact_normalize(vector3f *vector)
     return length;
 }
 
-// score 428 (was 489): frame now 0x64; count/component and vector homes still differ.
+// score 421 (was 421): Frame 0x64 agrees; persistent zero and count/component homes remain.
+// Earlier 428 from 489: frame now 0x64; count/component and vector homes still differ.
 // Three-pass countdown 490; preferred-contact cursor 527; search cursor 428;
 // inline depth one 489; existing snapshot cross helper 488.
 // Byte flag helper 471; shared adjustment join 437; final contact cursor 595;
@@ -1052,17 +1055,20 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Ordinary count with search cursor 525; candidate countdown 474; fixed-pass do loop 427;
 // snapshot projection helper 428; native relative-velocity subtraction 642.
 // Frame pointer 692; depth zero 967; size preference 1011; moving arm first 449; native component subtraction loops 427 (one-point gain rejected).
-// score 428 (was 428): Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
-// score 428 (was 428): persistent zero and accepted-count/component homes still differ.
+// Earlier 428 from 428: Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
+// Earlier 428 from 428: persistent zero and accepted-count/component homes still differ.
 // Entry count/result interaction 528; contact-base field reference 428; count-field references 428;
 // entry count/result plus base reference 528; entry count/result plus count references 528.
-// score 428 (was 428): Frame 0x64 agrees; zero/count/component homes remain. Native component 428; stepping
+// Earlier 428 from 428: Frame 0x64 agrees; zero/count/component homes remain. Native component 428; stepping
 // value subtraction 445; dual preferred/search cursors 434; response-scoped indices 428; native
 // component/scoped indices 428; dual cursors with projection helper 454; dual cursors with entry count 433
 // (fast).
-// score 421 (was 428): frame 0x64 agrees; persistent zero and count/component homes remain.
+// Earlier 421 from 428: frame 0x64 agrees; persistent zero and count/component homes remain.
 // Two-contact response first 421 kept; entry index array 428; dynamic preferred bound 428;
 // fallback-only shared negative scale 428; byte pass ordinal 434 (fast).
+// Request flags once 494; flight once 531; preferred surface once 467; complete contact-base snapshot
+// 587; signed contact-bound snapshot 496; flags/flight 596; base/bound 651; flags/flight/preferred 659
+// (fast). All restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
