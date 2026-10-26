@@ -780,7 +780,7 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 243 (was 243): Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy induction differ.
+// score 243 (was 243): Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
 // Paired range arms 373;
 // frame 0x0c agrees; removed-index registers, upper
 // bound selection and copy-loop induction remain. Paired range arms 373;
@@ -802,6 +802,9 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Insertion destination before shifts 384; earlier view 243; both addresses 384;
 // insertion/time role names 243; early destination with names 384; both with names 384;
 // early destination/time workspace 393; all lifetimes/names 393. Original body restored.
+// Round 124: No-removal-first range 371; uninitialized time output 385; packed metadata memcpy 257;
+// real-array repair bound 375; consistent table base 394; first/second/both removal inline declarations 243/243/243.
+// All five body forms and all three declaration trials restored.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

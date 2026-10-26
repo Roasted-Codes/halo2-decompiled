@@ -2725,7 +2725,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 166 (was 166): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
+// score 153 (was 166): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
 // frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
@@ -2747,6 +2747,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Round 123: Corrected-frame orientation/scatter/both Boolean producers 165/163/155; both plus two-use lower 145; both plus signed detached 147 (one-use flags rejected); two-use vector selections and detached propagation 245; unsigned mode 166; native reversal 236.
 // Live mode/reversal/location fields 342/240/166; live location plus mode 371;
 // conditional scale initializer 170; random-result lifetime 167; native tag record 166; live fields plus scale 375.
+// Mode-first admission 358; joint outer spatial outputs 179; parent conditional 163; compound scale 166; tag-first eligibility 222.
+// Parent conditional with two-use lower 156, signed detached state 159, both 153 kept plain;
+// on both: unsigned mode 153, part point 166, conditional scale 156 (fast); follow-ups restored.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2771,7 +2774,7 @@ void __stdcall function_17a380(s_effect_datum *effect)
 
 		while ((location = effect_location_next(effect, &next_index, 0)) != 0)
 		{
-			bool detached = TEST_FIELD_BIT(part->flag2);
+			signed char detached = TEST_FIELD_BIT(part->flag2);
 			point3f point;
 			vector3f forward;
 			vector3f up;
@@ -2799,11 +2802,11 @@ void __stdcall function_17a380(s_effect_datum *effect)
 			}
 			if (TEST_FIELD_BIT(part->flag1))
 			{
-				real radius = part->radius_lower + (part->radius_upper - part->radius_lower) * function_x82e52f(&g_4e7408->seed, __FILE__, __LINE__);
+				real lower = part->radius_lower;
+				real radius = lower + (part->radius_upper - lower) * function_x82e52f(&g_4e7408->seed, __FILE__, __LINE__);
 				long object_index = effect->object_index;
 
-				if (object_index != NONE)
-					object_index = function_baf40(object_index);
+				object_index = object_index != NONE ? function_baf40(object_index) : NONE;
 				function_16a8e0(0xd800005, &point, radius, object_index, NONE, &point, &radius);
 				detached = true;
 			}

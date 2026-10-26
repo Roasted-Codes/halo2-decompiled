@@ -758,6 +758,10 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // and live settings records 264/264; primary-output pair 272; full left 275; settings-direct pair 271.
 // Earlier 258 (was 258). Dword right/rear-left/both 258/255/259; rear-right 255;
 // right/rear-right 259, both rear 256, all spilled 260, all destinations 268 on gain-first source.
+// Round 127: inline/noinline 254/254; native routing bit 251 (three-point gain rejected); complete
+// input/settings/both copies 282/238/277 (dispatcher lost); Boolean/dword predicates with native
+// endpoints 274/273; native bit plus native endpoints/Boolean predicate 273/260. Frame 0x1c and
+// mode/level homes remain.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

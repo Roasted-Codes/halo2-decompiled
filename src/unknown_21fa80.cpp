@@ -93,6 +93,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Native sixteen-byte speaker copy 529 fast; distinct scalar math names 532; early selected gain
 // 577; copy/names 529; copy/early gain 561; names/early gain 577; all three 561;
 // send-scope zero energy 533 (reduced control 532). Three-point reductions rejected.
+// Round 127: changed/both word predicates 556/574; complete input record 620 (sibling lost); pin
+// default-input/early returns 534/537; default level/bounded amplitude 543/530; combined default
+// producers 552 (fast control 532). Every source form restored.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)
