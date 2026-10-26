@@ -75,6 +75,7 @@ PRIVATE inline byte const *material_parameters(long tag)
 }
 
 // score 153 (was 153): Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
+// Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
 // logarithm factor width and restore allocation remain; frame and numeric/reset sequence agree.
 // logarithm width/reset schedule and restore/final pointer allocation;
@@ -117,6 +118,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Native entry/chain/both descriptors,
 // First/second/both native mask loops 152/180/180; published table/record/both field lifetimes
 // 289/283/307; native signed packed carriers 153; signed carriers with table field 289.
+// Early changed/tag/both declaration homes 153/153/153; separate record publication 153;
+// early record-table/selected-record/both pointer homes 153/153/153; complete native declaration block 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -671,12 +674,15 @@ struct s_tag_data;
 dword function_13bc00(s_tag_data const *function, real input);
 color3f *unpack_color3f(dword pixel, color3f *color);
 
-// score 22 (was 22): Frame and calls agree; zero/one/bound registers and remap spill differ.
+// score 22 (was 22): Frame and calls agree; zero/one/bound registers and remap spill remain.
+// Earlier: Frame and calls agree; zero/one/bound registers and remap spill differ.
 // Interpolation arms 76; lower/both field observations 136/136; trig/all arms 203/203;
 // shared trig clamp/arms 219/219; named clamped input 66.
 // zero/one and interval SSE carriers, then remap-spill scheduling differ;
 // bound declaration order 22; lower/upper names 22; sample name 22; named span 22;
 // bounds after clamp 25; reversed remap cases 231; separate remap result 22; color first 154.
+// Native color library/record copies 109/109; remap case orders 23451/12435/24135/35124
+// 229/30/81/81; shared data-field reference 22; data before component dispatch 70.
 // @retail 0x1b580
 bool function_1b580(byte const *definition, long component, long unused, long mode, real *out)
 {
@@ -1286,7 +1292,8 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 265 (was 269): Frame and sampler carriers agree; captured descriptors and store scheduling remain.
+// score 265 (was 265): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
+// Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native
@@ -1302,6 +1309,8 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Direct descriptor fields 265 (plain 265, 1198/1225); mapped fields 284; both fields 279;
 // native descriptors 265; separate output descriptors 269; fields/native/separate RGB copies
 // 309/312/315; direct fields plus native mapped descriptors 265 (1197/1225).
+// Actual four-byte entry fields, input bitfields, rescale bit and native signed mapping records:
+// eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

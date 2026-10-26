@@ -368,7 +368,8 @@ struct s_1f8a70_actor
 	s_1f8a70_frame frame;
 };
 
-// score 399 (was 399): frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
+// score 399 (was 399): Frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
+// Earlier: frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
 // Returned immediate/arrival/mode tests 437/437/450; pairs 441/432/458;
 // all tests 439; initial decision ladder 436. All restored.
 // frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
@@ -385,6 +386,8 @@ struct s_1f8a70_actor
 // reference/query case layout still differs at the shared route tail.
 // Destination orders 234675 437; 235674 440; 452367 419; 243567 418;
 // 234657 412; 235746 453; 456723 415; 246357 433. Opening case order retained.
+// Entry parameter-only path conversion, uninitialized unit-mode/route homes and their four
+// combinations each 399; complete entry/reference/root/position declaration homes 399.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
