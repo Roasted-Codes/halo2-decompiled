@@ -4,6 +4,7 @@
 #include "globals.h"
 #include <math.h>
 #include "vector_products.h"
+#include "normalize3d.h"
 
 struct s_28dbd3
 {
@@ -41,16 +42,19 @@ void swarm_creature_initialize(s_object_ai_data *arg_0);
 bool function_28e320(long arg_0, long arg_1);
 void swarm_creature_reset_position(long arg_0, s_object_ai_data *arg_1);
 
-__forceinline void function_28dbd2(real arg_0, vector3f const *arg_1, vector3f *arg_2)
+__forceinline void function_28dbd2(real arg_0, vector3f *arg_1, vector3f *arg_2)
 {
 	real local_0 = (real)sin(arg_0);
 	real local_1 = (real)cos(arg_0);
 	real local_2 = dot3f(arg_1, arg_2) * (1.0f - local_1);
 	vector3f local_3;
 	cross3f(arg_2, arg_1, &local_3);
-	arg_2->i = arg_2->i * local_1 + arg_1->i * local_2 - local_3.i * local_0;
-	arg_2->j = arg_2->j * local_1 + arg_1->j * local_2 - local_3.j * local_0;
-	arg_2->k = arg_2->k * local_1 + arg_1->k * local_2 - local_3.k * local_0;
+	vector3f_scale(arg_1, local_2, arg_1);
+	vector3f_scale(&local_3, local_0, &local_3);
+	vector3f_scale(arg_2, local_1, arg_2);
+	arg_2->i = arg_2->i + arg_1->i - local_3.i;
+	arg_2->j = arg_2->j + arg_1->j - local_3.j;
+	arg_2->k = arg_2->k + arg_1->k - local_3.k;
 }
 
 __forceinline void function_28dbd4(s_type_c3b527 const *arg_0, point3f *arg_1)
@@ -61,16 +65,16 @@ __forceinline void function_28dbd4(s_type_c3b527 const *arg_0, point3f *arg_1)
 
 __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 {
-	long const *local_0 = (long const *)((byte *)arg_0 + 0x134);
 	s_object_ai_data *local_1;
-	if (!*local_0)
+	if (!arg_0->flags134)
 		local_1 = (s_object_ai_data *)((byte *)arg_0 + arg_0->ai_offset);
 	else
 		local_1 = NULL;
 	return local_1;
 }
 
-// score 213 (was 213): 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
+// score 186 (was 213): Frame 0x11c versus 0x118; request home is four bytes late and rotation scalar homes differ.
+// 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
 // frame 0x11c versus 0x118 and rotation cross homes;
 // named request word 213; complete creation-stage scope 213; random arm first
 // 284; shared rotation output setter 226; size optimization 563.
@@ -80,15 +84,18 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Shared-cross scalar captures 226; axis value 293; post-trig alignment 234;
 // launch-speed name 213; tilt name 213; jitter base value 231;
 // two offset component loops 479; transform memcpy 213.
-// score 213 (was 213): frame 0x11c versus 0x118 and rotation scalar homes remain;
+// frame 0x11c versus 0x118 and rotation scalar homes remain;
 // in-place input scale 260; in-place cross scale 229; both scales 232;
 // ordinary rotation inline 213; forced shared cross 213; output-pointer result 213;
 // result plus forced cross 213; result plus both scales 232.
-// score 213 (was 213): frame 0x11c/0x118 and rotation cross homes remain; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj 223/195/222/237/216; double angle 216; output-angle-axis helper 213 (fast).
+// frame 0x11c/0x118 and rotation cross homes remain; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj 223/195/222/237/216; double angle 216; output-angle-axis helper 213 (fast).
 // rotation cross spills and the extra frame dword remain;
 // sine-weighted cross products 226; cosine-plus-projection sums 226;
 // axis projection products 226; cosine products 226; rotation-helper names 213;
 // cross/projection lexical homes 213; sine/cosine products 227; launch-offset products 213.
+// Consumed-axis projection 222; with cross scale 222; with direction scale 200;
+// all three shared scales 186 plain; corresponding native loops 230/229/231/235.
+// Direct named pooled flag field 186 plain; the consumed axis is dead after its sole call.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

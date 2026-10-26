@@ -39,7 +39,8 @@ PRIVATE __forceinline long sky_surface_tag(short index)
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
+// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trig/color homes remain.
+// Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
 // Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
 // light/value fields 213; both views 213; frame pointer 296; status enum 213.
@@ -51,6 +52,8 @@ real function_30bf0(vector3f *vector);
 // Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
 // 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
+// Native contribution aggregate with cached/direct angles 236/235;
+// native direct component fill 235; cached component orders ikj/jik/jki/kij/kji 219/212/221/216/219.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1263,6 +1266,7 @@ real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
 // score 364 (was 364): Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
+// Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
 // Earlier 364 (was 364): frame 0x4c versus 0x40; normal-copy and native color/rotation homes remain.
 // frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
 // Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
@@ -1287,6 +1291,8 @@ real function_30bf0(vector3f *vector);
 // limited-normal/turned-normal/all homes 364/364/364; outer rotation workspace 364.
 // All original normal, copied color and rotation values and helper boundaries retained.
 // Round 152: All rotation-row partial sums/products 364/438; all normalizer products 430 (retail frame/length); normalizer with rotation partials/products 430/449; all RGB blend products 429 (retail frame/length); blend/rotation partials 443; all parallel products 429.
+// Independent lower/upper bound records at entry, before fallback and original final phase:
+// all eight non-original phase pairs 364; original final-bound lifetimes restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
