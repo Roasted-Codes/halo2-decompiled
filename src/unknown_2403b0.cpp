@@ -63,6 +63,8 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // default-NONE team plus negative-three addition 191. Opening body and existing helper restored.
 // Round 364: Fresh player/unit/slot reads 254/190/271; player-unit/player-slot/
 // unit-slot/all three 254/329/271/329; unit-index field at each use 195.
+// Round 366: Team-first existing predicate with original/const/native-team/both inputs 190 each;
+// long/short/byte/signed-byte results 189/190/190/190. One-point reduction rejected.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

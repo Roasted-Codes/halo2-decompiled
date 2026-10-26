@@ -1020,6 +1020,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // direct orders 0,2,4,3 / 0,3,2,4 / 0,3,4,2 / 2,0,3,4 give 193/193/194/196 fast.
 // Round 364: Shared lookup inside the connection cases: retained phases 261; unified direct/numeric/
 // observed orders 272/272/271; residual group last 252; failure break 261; observed failure/scoped result 271/271.
+// Round 366: Common direct exit/residual returns/failure breaks/case-local results 216 each;
+// common-exit nested defaults last/first 191/191 fast (ties reduced control);
+// complete common-exit switch retained/observed handler orders 208/218. Original phases restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
