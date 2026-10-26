@@ -92,7 +92,7 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 	g_5047f8[arg_0].field_18 = arg_0;
 }
 
-// score 408 (was 433): Frame 0x64 agrees; entry loads, normalization homes and 0x18 versus 0x1c cleanup differ.
+// score 408 (was 408): Frame 0x64 agrees; entry loads, normalization homes and 0x18 versus 0x1c cleanup differ.
 // Earlier shared normalizer 433; unsigned count 437; unsigned endpoint 433; both 437; angle end pointer 457.
 // frame now 0x64; entry load schedule, point/magnitude homes
 // and candidate arithmetic differ. Byte candidate count 417; byte endpoint 427;
@@ -109,6 +109,9 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Existing endpoint helper at negative/positive/both outputs 408/409/409; rounded distance/projection/ratio
 // in double 442/444/445; native velocity fields 408; indexed endpoint observations 458. Entry loads,
 // XY/magnitude homes and 0x18 versus 0x1c cleanup remain.
+// Normalizer input snapshots 448; native normalizer/distance/both roots 443/408/448; snapshots with
+// native distance root 448; void normalizer alone/with snapshots/with native roots 408/448/448.
+// Original helper and body restored; entry loads, XY/magnitude homes and return cleanup remain.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)

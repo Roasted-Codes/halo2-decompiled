@@ -205,7 +205,7 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 46 (was 50): Frame/length agree; current/bound carriers and request field scheduling still differ.
+// score 46 (was 46): Frame/length agree; current/bound carriers and request field scheduling still differ.
 // Earlier helper current/total/both inputs 103/51/51; standard lower/upper/both clamps 50;
 // combined inputs/clamps 51; field current 50; shared bound workspace 50; default score first 98;
 // invalid score inputs first 50.
@@ -223,6 +223,9 @@ extern "C" void _ReadWriteBarrier(void);
 // Kept the loose endpoint for interpolation and fallback; plain check 46 at 336/336 bytes.
 // Returned/result/conditional score helper 99/99/99; enabled/disabled/both chained flags 48/48/50; shared
 // result-buffer size 93; request workspace name 46. Current/bound allocation and request scheduling remain.
+// Upper bound first 50; paired bound production 63; flags before bounds 46; flags from current 104;
+// native bound integers 46; strict/loose/both helper endpoint inputs 46/50/50. Opening body and
+// helper restored; current/bound carriers and request scheduling remain.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {

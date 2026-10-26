@@ -2101,6 +2101,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
 // unsigned current handle 275; declared word bitfield 294.
 // Long overlap 321; raised-component loop 275; shared current-handle scope 275; per-squad area scope 275; long actor wake 301.
+// Squad/area/both iterator value initialization 298/333/337; rounding scratch role names 275;
+// double rounding input 298 (frame 0x54); native integer result 275; all-row displacement 320;
+// live state getter 275. Original body and rounding helper restored; early saves and intersection spill remain.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
