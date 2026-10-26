@@ -214,13 +214,14 @@ struct s_physics_component_walk : s_havok_component
         char *output, long *output_count, void *other_context, dword *visited, bool *active);
 };
 
-// score 275 (was 275): frame 0x1c versus 0x18; current/entry roles and next-group spill differ.
+// score 275 (was 275): Frame 0x1c versus 0x18; current/entry/status homes and next-group spill remain.
+// Earlier: frame 0x1c versus 0x18; current/entry roles and next-group spill differ.
 // Reduced trials: availability first 303; immutable policy 275; read-only model 275; read-only body 275;
 // native availability 297; native application 305; byte first body 298; read-only sections 275.
 // frame 0x1c versus 0x18, current/entry homes and group
 // spill differ; direct receiver 275; signed-word next 310; byte body 319;
 // direct model uses 275; conditional first body 300. Original body kept.
-// score 275 (was 275): extra frame word and group/current homes remain;
+// Earlier: extra frame word and group/current homes remain;
 // resolved group index 385; outer entry counter 275; promoted replacement 336;
 // explicit output advance 275; branched body lookup 285.
 // frame 0x1c versus 0x18; current/entry roles and group spill differ.
@@ -230,12 +231,14 @@ struct s_physics_component_walk : s_havok_component
 // Body-byte cursor 323; edge-group array 275; separate body rejections 275;
 // native section result 275; native replacement policy 307 (frame 0x18,
 // 898 bytes); policy and cursor 300 (930 bytes). Original body kept.
-// score 275 (was 275): extra frame word and current/entry/group homes remain.
+// Earlier: extra frame word and current/entry/group homes remain.
 // Combined status mask 307; direct body fields 320; section callback guards 275;
 // entry eligibility guards 275; next-count snapshot 301. Original body restored.
-// score 275 (was 275): frame 0x1c versus 0x18 and status/group homes remain.
+// Earlier: frame 0x1c versus 0x18 and status/group homes remain.
 // Byte availability/application/pair 275/275/275; body/entry references 275/275;
 // ordinary body while scan 275 (plain).
+// Signed-word policy/availability/application 298/297/293 (frame 0x18); repeated upper clamp bound
+// 279; paired signed-word statuses 285.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,
