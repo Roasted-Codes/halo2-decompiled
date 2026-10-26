@@ -23,24 +23,27 @@ struct plane2f
 PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane,
 	point2f const *first, point2f const *second, long count, short capacity, point2f *output)
 {
-	real dy = first->y - second->y;
+	real fraction = 0.0f;
 	real dx = first->x - second->x;
-	real denominator = plane->n.i * dx;
-	denominator += plane->n.j * dy;
+	real dy = first->y - second->y;
+	real denominator = plane->n.i * dx + plane->n.j * dy;
 	if ((denominator < -0.0001f || denominator > 0.0001f) && count < capacity)
 	{
-		real fraction = (plane->n.j * first->y + plane->n.i * first->x - plane->d) / denominator;
-		dx *= fraction;
-		output->x = first->x - dx;
-		dy *= fraction;
-		output->y = first->y - dy;
+		fraction = (plane->n.j * first->y + plane->n.i * first->x - plane->d) / denominator;
+		output->x = first->x - dx * fraction;
+		output->y = first->y - dy * fraction;
 		return true;
 	}
 	return false;
 }
 
-// score 101 (was 101): frame 0x618 agrees; result/cursor initialization and displacement/fraction SSE homes still differ.
-// Earlier: frame 0x618 agrees; cursor/result initialization, delta XMM
+// score 5 (was 101): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// intersection's x product loads the plane before the point. The fraction defaulted first,
+// x-first displacements and the scale inside the output expressions gave retail's XMM homes
+// and length (101 -> 5). Then: current declared before previous 5; named current/previous
+// point pointers 28; dot_product2d numerator 5; fraction shared with the classification
+// distance 5; previous updated at the loop end 5; staged/reversed denominators and helper
+// parameter orders screened compile-only without change. Earlier: frame 0x618 agrees; cursor/result initialization, delta XMM
 // homes and extra fraction copies remain. X-first deltas 109; full denominator 103;
 // scales before stores 101; first input record 207; Boolean helper result 101;
 // aggregate intersection 152; capacity-first gate 108; native input count 153;
