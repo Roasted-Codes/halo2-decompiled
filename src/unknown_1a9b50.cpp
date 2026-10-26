@@ -641,6 +641,8 @@ static __forceinline long real_to_long(real value);
 // frame 0x54 versus 0x58, early rejection and query homes remain.
 // query output names 410; native request clear 474; positive mode arms 483; far prediction first 413; request
 // mode first 522; relative velocity expression 413; direct facing field 524; deadline mode first 510.
+// Complete slot/target/both layouts 386/386/386; paired approach projections 386;
+// slot/target/both layouts with projections 386/386/386; both layouts with early rejection 511.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

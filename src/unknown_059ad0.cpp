@@ -4313,7 +4313,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
+// score 384 (was 384): Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
+// Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
 // Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
@@ -4330,6 +4331,7 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // direct state observations 387; result after state 384. Frame/Boolean homes and block placement remain.
 // Word identity result 384; word preference/equality states 396/396; local member first 386;
 // selection flags after map updates 384; word reachability counts 383.
+// Round 356: Byte acceptance 387; word acceptance 394; paired byte selection 384; complete version admission 410; admission with byte selection 410; isolated invalid-state/role/missing-selection exits 386 each.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

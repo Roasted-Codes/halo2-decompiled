@@ -13,7 +13,8 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 217 (was 217): Frame 0x48 agrees; receiver and aggregate/blocked homes remain.
+// score 217 (was 217): Frame 0x48 agrees; receiver EDI/EBP and callback/output/blocked homes remain.
+// Earlier 217 from 217: Frame 0x48 agrees; receiver and aggregate/blocked homes remain.
 // Earlier 217 from 217: frame 0x48 agrees; receiver EDI/EBP and count,
 // priority, size and blocked homes remain. Both redundant count guards removed
 // 249; separate native arrays 249; distinct counter names 249; result-home names
@@ -39,6 +40,11 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 217/217/217/217/217; receiver and callback-output homes remain.
 // Round 115: Guarded distinct indices 217; separate blocked names 217; separate callback-output names 217; aggregate declarations first 217; guarded index/blocked names together 217. Opening body restored.
 // Pending/active/both invalid-query continues 229/217/229; zero-state exit 217; output-failure exit 217; initialized handle arrays 297; pending/active selector after lookup 219/217. Receiver and callback/output/blocked homes remain.
+// Disabled-entry exit 239; empty-list exit 239; both admission exits with later count 246; those
+// exits with advancing cursor 244; those exits with active zero-priority join 243. All reach 814
+// bytes but regress.
+// Round 357: Simple pending/masked-active/both arms first 248/216/246; all query kinds
+// after their queries 275; single-handle counts after callbacks 275. Opening body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

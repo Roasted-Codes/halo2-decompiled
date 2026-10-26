@@ -167,7 +167,8 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
-// score 631 (was 645): frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
+// score 631 (was 631): Frame 0x54/type EDX agree; state/player/unit homes remain.
+// Earlier 631 from 645: frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // Earlier 649 from 649: frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
 // Earlier 613 from 656: frame/type agree; state/player/unit allocation remains.
 // Direct state receiver 656; unsigned unit carrier 656; early blocked local 656;
@@ -190,6 +191,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Frame 0x54/type EDX agree; state/player/unit homes remain. Shared primary weapon 653;
 // Result after lookup 654; unsigned player identifier 645; selector unit field at use 645;
 // pooled recorded-type reference 645; selector without inline keyword 645.
+// Paired Boolean-role names 631; player/unit handle names 631; receiver-role names 631; one failure
+// exit 631; flag/empty cases first 631; flag/input-state cases first 653; flag/health cases first 643;
+// flag/weapon-test cases first 653 (fast). All restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
