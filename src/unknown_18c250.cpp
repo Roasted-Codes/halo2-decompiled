@@ -540,6 +540,7 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Tag-first declaration 293; explicit failure arms 309; word cluster 294; CRT velocity copy 293; owner value conditional 301.
 // Effect axis at entry 293; audibility output at entry 293; direct late tag flag 323 (frame 0x80);
 // readonly datum 293; CRT marker position 293.
+// signed-word effect failure 293; unsigned native cluster 293; unsigned marker handle 293; immutable datum pointer 293; native clear-output reference 293; unsigned-byte effect failure 293.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
