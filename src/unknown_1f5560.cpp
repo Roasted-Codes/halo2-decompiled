@@ -639,6 +639,7 @@ struct s_1f9762
 // score 108 (was 108): ours is five bytes longer than retail: the value that
 // is compared is loaded into another register and the call that follows takes
 // its argument from another stack slot.
+// score 67 (was 108): approach as its own statement after the arms (no gotos), struct copy of the direction and `remaining <` on the left give retail's length and code; left: retail lays the previous-point false arm and the approach call after the first return (a jump-threaded copy) with the last-path projection falling into the shared test. Direction-first dots 67/67; `direction_valid && !last` 191 and nested `direction_valid` then `!last` 198 (the direction pointer stays live in EDI); per-path projections 320; `!last` then `direction_valid` nesting 67.
 // @retail 0x1f9760
 bool function_1f9760(long actor_index, long object_index, point3f const *point, real distance,
 	bool *last_out, bool *direction_valid_out, vector3f *direction_out)
@@ -651,7 +652,7 @@ bool function_1f9760(long actor_index, long object_index, point3f const *point, 
 	bool direction_valid = false;
 	vector3f direction;
 	vector3f approach;
-	vector3f const *projection_direction;
+	vector3f const *projection_direction = NULL;
 	if (actor->unknown456)
 	{
 		direction_valid = false;
@@ -662,16 +663,7 @@ bool function_1f9760(long actor_index, long object_index, point3f const *point, 
 		s_type_c3b527 *next = &path->field_30[path->field_2e + 1].point;
 		function_210be0(&path->field_30[path->field_2e].point, next, &direction);
 		if (function_30bf0(&direction) > 0.0001f)
-		{
 			direction_valid = true;
-			s_type_c3b527 *previous = path->field_2e > 0 ? &path->field_30[path->field_2e - 1].point : (s_type_c3b527 *)path->field_1c;
-			function_210be0(previous, &path->field_30[path->field_2e].point, &approach);
-			if (function_30bf0(&approach) > 0.0f)
-			{
-				projection_direction = &approach;
-				goto projection;
-			}
-		}
 	}
 	else
 	{
@@ -684,28 +676,28 @@ bool function_1f9760(long actor_index, long object_index, point3f const *point, 
 		if (function_1e3920(actor_index) > distance)
 			reached = true;
 		else if (direction_valid && actor->unknown4d4)
-		{
 			projection_direction = &direction;
-			goto projection;
-		}
 	}
-	goto finish;
-projection:
+	if (!last && direction_valid)
+	{
+		s_type_c3b527 *previous = path->field_2e > 0 ? &path->field_30[path->field_2e - 1].point : (s_type_c3b527 *)path->field_1c;
+		function_210be0(previous, &path->field_30[path->field_2e].point, &approach);
+		if (function_30bf0(&approach) > 0.0f)
+			projection_direction = &approach;
+	}
+	if (projection_direction)
 	{
 		real remaining = dot3f((vector3f *)&path->field_30[path->field_2e].point.point, projection_direction) - dot3f((vector3f const *)point, projection_direction);
-		if (*(real *)(definition + 4) * 1.2f > remaining)
+		if (remaining < *(real *)(definition + 4) * 1.2f)
 			reached = true;
 	}
-finish:
 	*last_out = last;
 	if (last && !actor->unknown4d5)
 		*direction_valid_out = false;
 	else
 	{
 		*direction_valid_out = direction_valid;
-		direction_out->i = direction.i;
-		direction_out->j = direction.j;
-		direction_out->k = direction.k;
+		*direction_out = direction;
 	}
 	return reached;
 }
@@ -1252,7 +1244,7 @@ real normalize2d(point2f *v);
 
 PRIVATE inline real movement_normalize2d(point2f *v)
 {
-    real length = (real)sqrt(v->x * v->x + v->y * v->y);
+    real length = (real)sqrt((double)v->x * v->x + (double)v->y * v->y); // retail sums on the x87 stack
     if (!(fabs(length) < 0.0001f))
     {
         real inverse = 1.0f / length;
@@ -1267,7 +1259,7 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 {
     real local_0 = arg_0->x;
     real local_1 = arg_0->y;
-    real local_2 = (real)sqrt(local_0 * local_0 + local_1 * local_1);
+    real local_2 = (real)sqrt((double)local_0 * local_0 + (double)local_1 * local_1); // retail sums on the x87 stack
     if (!(fabs(local_2) < 0.0001f))
     {
         real local_3 = 1.0f / local_2;

@@ -320,6 +320,20 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 // orders 61; entry failure guard 85; earlier state initialization 61; the existing 0x259d0 with
 // file and line 67 (SSE ranges; round 49 with its object linked: 73 instructions, NULL file or a
 // seed local the same).
+// first range still fuses its x87 add; native interval fields 61;
+// interval by value/reference/pointer 94/84/84; value with result 94; reference/pointer
+// input copies 64/64; value with named sample 95. All interval and helper forms restored.
+// first range add still fuses; shared delay/duration/both range helpers 74/77/68; ordinary/direct/test-derived success 91; state at stores 61; shared ranges ordinary result 91 (round 117).
+// first range FADDP remains fused; frame and tick-conversion tail agree.
+// Existing rounding boundary for delay/duration/both, shared short/real clock, first output before
+// duration, early output with rounding and shared clock with rounding 68, 65, 71, 75, 75, 79, 100, 89.
+// score 61 (was 61): first range still fuses; frame and later tick conversion agree.
+// In-place delay/duration/both products 61/61/61; delay/duration/both operand orders 61/61/61;
+// entry failure guard 85; earlier state initialization 61.
+// score 61 (was 61): first interval still fuses; frame and ret 8 agree.
+// Reversed scalar inputs 64; lower/upper names 61; both 64;
+// shared draw in private producer 68; reversed shared draw 87;
+// reversed product/add operand ownership 64/64; named reversed shared draw 87.
 // @retail 0x1aded0
 bool __stdcall function_1aded0(long actor_index, s_slot *slot)
 {
@@ -662,6 +676,8 @@ bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void cons
 // point/valid/both with common result 230/112/230; both plus native source 230.
 // Source/query/both publication orders 102/111/101; query-only one-point gain rejected.
 // Native source alone/with source order/with both orders 114/104/103.
+// Library source/query/published copies and all combinations 102 (seven forms);
+// existing conversion return as copy source 218. ESI save and query carriers remain.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {

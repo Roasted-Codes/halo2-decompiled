@@ -154,12 +154,14 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Hit point setter 250; component normalization loop 250; short projection side 255;
 // direct hit result 251; ray before origin with float setters 251.
 // Early offset 259; late ray direction 264; squared-normal value 250; descending projection 358; offset/direction combination 264.
-// score 250 (was 250): Frame 0x78 versus 0x90 and normal/ray/polygon homes remain. Native ray 266
+// Frame 0x78 versus 0x90 and normal/ray/polygon homes remain. Native ray 266
 // (frame 0x88); separate unscaled normal 307 (0x84); both 311 (0x94); projected initializer 250;
 // both with plain projection loop 278 (0x90).
 // Frame, ray/normal homes and polygon input registers still differ. Tried native plane 257;
 // early distance 260; entry plane 257; early hit result 257; plain plane projection 259; plane normal copy 262;
 // native ray start 251; early edge vectors 257.
+// Native full/geometry/polygon vertex records 250/250/250; native-record plain projection loop
+// 260; late hit lifetime 251; late hit with full/geometry/polygon records 251/251/251.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

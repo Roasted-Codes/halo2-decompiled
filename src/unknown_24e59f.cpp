@@ -37,13 +37,15 @@ void function_24f0fc(s_marker_list const *list, s_24ecae_placement const *placem
 /* the unit of the view's local player (its outermost parent), NONE without one */
 static __forceinline long marker_viewer_unit(void)
 {
-	long unit_index = NONE;
+	long unit_index;
 
 	if (function_14ddc0(g_4b9ed8))
 	{
 		long player_index = function_14de70(g_4b9ed8);
 		unit_index = ((s_player_datum *)(g_4e8c24->data + (player_index & 0xffff) * sizeof(s_player_datum)))->unit_index;
 	}
+	else
+		unit_index = NONE;
 	if (unit_index != NONE)
 		unit_index = function_baf80(unit_index);
 	return unit_index;
@@ -67,6 +69,13 @@ static __forceinline long marker_viewer_unit(void)
 // Failure predicate 280; sequential word normalization 222; named ellipse predicate 123;
 // outside-first ellipse arms 123; failure/sequential 249; named/sequential 222;
 // outside-first/sequential 222; failure/outside-first/sequential 249.
+// score 105 (was 120): the viewer unit chosen in an if/else (retail's `or eax, -1` arm) 105 kept. On
+// top of it: the rounding result scaled as a float (retail's dword constant) 104; the ellipse test
+// as `half_extents * half_extents > ...` 104, outside arm first with `<=` 103 (retail's comiss order);
+// the extents product first 219 and long half extents 232 (both retail's code, one line off). With
+// all of those and the flag set true before the projection call (retail's two byte stores), only the
+// projected block (retail computes nx/ny in xmm0/xmm1 and copies them), one fmul and the final
+// fmul/fstp schedule differ; named numerators, a point2f and inline extents leave that block as is.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {

@@ -800,7 +800,7 @@ color4f *g_4686d8;
 color4f *g_4686dc;
 color4f *g_4686e8;
 
-void function_36880(color4f const *color, s_short_rectangle const *rectangle);
+void function_36880(s_short_rectangle const *rectangle, color4f const *color);
 
 /* draws a connection quality widget: a frame and one bar per quality step */
 // @retail 0x1634d0
@@ -832,7 +832,7 @@ void connection_widget_draw(s_text_widget_c const *widget)
 		color.alpha = widget->color_b.alpha;
 		bounds.top = widget->bounds.bottom - 0x12;
 		bounds.bottom = widget->bounds.bottom - 1;
-		function_36880(&color, &bounds);
+		function_36880(&bounds, &color);
 
 		bounds.left = widget->bounds.left + 1;
 		bounds.right = widget->bounds.right - 1;
@@ -853,7 +853,7 @@ void connection_widget_draw(s_text_widget_c const *widget)
 		color.alpha = widget->color_b.alpha;
 		for (i = bar_count; i > 0; i--)
 		{
-			function_36880(&color, &bounds);
+			function_36880(&bounds, &color);
 			bounds.top -= 3;
 			bounds.bottom -= 3;
 		}
