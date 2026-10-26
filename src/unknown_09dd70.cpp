@@ -456,7 +456,10 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 196 (was 196): flags/packet/object registers and attachment call conventions differ.
+// score 196 (was 196): flags/packet/object registers and attachment call conventions differ;
+// retail keeps the flags in ebx (reloaded from the parameter after calls), the weapon-slot loop
+// counter as a 32-bit value (inc/cmp 4/jb, no separate down counter) and the slot bit as the
+// masked flags value (and/test, not setne).
 // External packet/attachment/both references 196/224/224; shared shift ordinal 238;
 // named parent-kind mask 196; parent-validity predicate 196; packet plus ordinal 238;
 // attachment reference, ordinal and parent predicate 226.
@@ -464,6 +467,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // Primary word flags 241; explicit missing-player guard 252; shifted primary bool 227;
 // both bit extractions 252; byte slot 196; direct missing-parent slot 241;
 // primary word plus byte slot 241; word two-byte-copy ordinal 197 (828 bytes).
+// Round 71: dword or long slot counter 234 (814 bytes; the loop control then matches);
+// masked slot bit 228; masked bit with dword counter 246 (804 bytes); flags parameter
+// used directly instead of the local copy 196 (identical code).
 
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)

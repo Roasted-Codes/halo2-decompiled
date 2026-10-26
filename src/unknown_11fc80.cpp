@@ -149,7 +149,7 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 /* two-bone inverse kinematics: moves the middle node so that the chain from
    the root reaches the target (clamped to the chain's reach), rebuilds the
    root and middle axes and copies the target into the end node */
-// score 2 (was 26): one product's operand order remains: in the second root cross
+// score 2 (was 2): one product's operand order remains: in the second root cross
 // product (up x forward into left) retail loads up->k before forward->j.
 // Tried: lift as a vector (232) or three scalars (216); the direction kept in
 // a delta vector (215); u = inverse * delta, u in k-i-j order, vector3f_scale
@@ -166,6 +166,8 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 // i-k-j components 2; root_up before root_left 2; new_mid declared at the top 2;
 // new_mid.x as root_forward->i * mid_root 2; any one node pointer local dropped
 // 18-39; new_mid computed earlier 31-52; other component store orders 8-29.
+// Round 71: cross helper taking (out, a, b) 2; its locals declared up front 2;
+// the other 23 orders of the four node pointer declarations 7-24.
 // @retail 0x120220
 void function_120220(
 	transform4x3f *target,
