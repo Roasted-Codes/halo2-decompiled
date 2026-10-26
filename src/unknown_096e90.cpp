@@ -433,6 +433,8 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 // flags-array local (13), dword index (13).
 // read-only table 13; signed flag byte 13; native index 13; required-bit equality 21;
 // mask-proved lower/upper bounds 25/29; slot pointer expression 13; complete required-bit predicate 28.
+// World member pointer local 13; block and table pointer locals 13; member pointer, index, then table 28;
+// handle on the left of the identity test 14; long flags 17 (and 48 more declaration/width orders, 13-15).
 // @retail 0x979f0
 bool function_979f0(s_world_450cb8 *world, long handle)
 {

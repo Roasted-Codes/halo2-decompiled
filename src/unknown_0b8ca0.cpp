@@ -1565,6 +1565,13 @@ void function_1d96d0(long index);
 // Byte result/parent reference 13; byte result/constant stores 20. A byte-wide store of the flag through a
 // local overlay of the object scored 7 (not kept: a cast to a made-up layout); the view's flag bits at
 // +0xc0 declared as byte bit fields (same bits) are the form to try.
+// Constant arms through a ternary 20; raw byte or/and arms 20; byte pointer to the flags at the join 22
+// (the hoisted common load stops the threading but loses the memory or/and); flags pointer at function
+// scope 20; ternary of bit-field stores 20; an inline parent test with a result variable 138 (object
+// moves to ebx, the result to the stack); early-return parent test 14; the whole update as a
+// force-inline helper 14/8. A byte bit-field store is branchless too (12), so byte fields alone do not
+// give the arms; retail's join keeps `mov bl, 1` unthreaded, which in matched code (0x59780) comes from
+// a result that stays live after its test.
 // @retail 0xbc5e0
 void __stdcall function_bc5e0(long index)
 {

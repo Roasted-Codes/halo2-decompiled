@@ -170,6 +170,8 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 // input/output role names, returned output pointer and all axis-pointer role names 2 each.
 // Twice-used first-input scalar i/j/k 138/133/133; second-input i/j/k
 // 124/121/136; complete first/second scalar inputs 240/273.
+// Round 71: cross helper taking (out, a, b) 2; its locals declared up front 2;
+// the other 23 orders of the four node pointer declarations 7-24.
 // @retail 0x120220
 void function_120220(
 	transform4x3f *target,

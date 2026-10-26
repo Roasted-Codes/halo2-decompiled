@@ -42,6 +42,9 @@ struct s_emitter_248340
 // unsigned-int group home 4; wide tag home 57.
 // Direct nested queries 27; split tag assignment 4; split tag with direct group 8;
 // split group assignment 4; both assignments split 4; outer callee inline/noinline/both 4/4/4.
+// Volatile tag at function scope 4; all three locals at function scope 4; group declared before the
+// volatile tag 4; without the volatile, (void)&tag 27 and tag at function scope 27 (particle moves to
+// the stack and caller 0x247140 138).
 // @retail 0x248340
 void function_248340(s_particle_system_datum *system, s_object_246eb0 *particle,
 	s_emitter_248340 *emitter)
