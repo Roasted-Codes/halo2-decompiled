@@ -1159,6 +1159,8 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 
 // score 172 (was 172): Frame and length agree; oldest/false carriers, copy-loop entry and allocator save still differ.
 // Earlier: Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
+// Frame 0x10048 agrees; oldest/false carriers, copy-loop entry and allocator save remain.
+// Earlier 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Frame and length agree; oldest/false carriers and copy-loop entry still differ.
 // Earlier at 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Earlier: retained oldest/false registers and copy-loop entry differ;
@@ -1176,6 +1178,10 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // native initial-window count/first with short/bool/byte/signed-byte results give 269/278/274/274.
 // Single-result reset at payload/copy/CRC phases and validation tests, short
 // 256/231/214/255, Boolean 229/268/265/276. All restored.
+// Existing release-helper composition 221; reused fragment data 213; terminal loop condition 191;
+// first-sequence/saved-CRC homes 172/172; failure result before payload/after copy 250/224;
+// failure publication order 172; data and terminal lifetimes 254.
+// Round 152: Per-fragment terminal bool/header byte 192/250; conditional size with bool/byte 192/250; default size with bool/byte 244/251; native result with terminal bool/byte 266/218.
 // Independent bool/byte/short/long completion with literal returns 210/210/193/255;
 // with separate callback results 206/206/189/253. All reverted.
 // On common-failure result: oldest after/before result and result before receiver 229/229/229;

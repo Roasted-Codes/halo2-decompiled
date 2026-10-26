@@ -681,6 +681,9 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 // Frame, state and user read directly 97 (kept: callers still match); channel also direct 113; plain callback
 // read at the first dispatch 133 (callback held in ebx from entry); shared inline dispatch helper for the
 // three dispatches 140, with the first callback read kept 126; channel read directly for the first flags 97.
+// Chained/reversed event-word resets 99/99; unsigned mask 97; index-first identity 161; sampled
+// callback parameter with/without chaining 132/132; first-pair callback with/without chaining
+// 138/138.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)

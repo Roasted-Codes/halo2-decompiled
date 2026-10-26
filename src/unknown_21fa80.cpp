@@ -85,6 +85,7 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Real gain value 545; native linear return 545; unsigned pin bits 545; exponential input 561;
 // native return/input 561; logarithm/root results 551/549; combined math results 554, frame 0x230.
 // Original body and helper contracts restored; frame 0x22c and stream/gain homes remain.
+// Native gain read/routing cache/all reads 532/532/532 fast (control 532); native gain/all publication 540/540; common status/buffer volume/stream volume 549/543/566. Full baseline remains 545.
 // Linear input pointer 544; native speaker array 545; array plus input pointer 544; known-clear
 // send bits 547; send field order 545; routing flag publication last 545; cache from produced send
 // fields 545; direct output level 545. One-point reductions dropped; all body/type/helper forms

@@ -943,6 +943,7 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // score 200 (was 200): Frame 0x10 and x87 tail sums remain; level/rear/all references 221/208/231,
 // pointers 221/208/231; reference early sums 212/222, all restored.
 // Earlier: eight-byte frame and inherited x87 send sums differ.
+// frame 0x10 versus incoming-slot reuse; inherited x87 send sums remain.
 // Levels before flag 208; scalar names 208; depth one 208;
 // size preference 449; shared gain loop 384.
 // With a per-function precision pragma (173, not kept: pragmas other than a file-scope inline_depth
@@ -962,6 +963,8 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Earlier: frame 0x10 and inherited x87 sums remain; native input
 // assignment or memcpy, each with late/early level sums and rear samples/direct
 // rear fields, all 240. Copies grow the frame to 0x28; original inputs restored.
+// Live offset/base/both levels 208/208/221; live channel flag 199 (one-point gain dropped);
+// live flag with offset/base/both levels 208/208/223; live levels and native flag bit 205.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

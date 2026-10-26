@@ -420,9 +420,9 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	}
 	return result;
 }
-// score 63 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
+// score 58 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
 
-// score 63 (was 63): seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
+// seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
 // Shared rounding 66; direct scaled rounding 74; separate scaled timer 63; result-first rounding 66;
 // range/fraction/both force-inline declarations 63/63/63; both with shared rounding 66.
 // seed/actor scheduling, folded random scale and slot EBP lifetime remain;
@@ -433,6 +433,8 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 // scaled input with accessor receivers 61. Seed/slot allocation and unfolded range remain.
 // Reset flag/pair/property postconditions 63/80/68; notification inline 63;
 // const receivers 63; input names 63; actor clear before timer store/conversion 63/63.
+// Native flag memset/value reset 63/58; late receiver with either 63/58; final-accessor resets
+// 60/64; late final-accessor resets 60/64.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
@@ -453,7 +455,7 @@ bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 		fistp ticks
 	}
 	state->unknown12 = (short)ticks;
-	*(dword *)&actor->unknown314 = 0;
+	actor->unknown314 = s_actor_flags314();
 	return true;
 }
 
@@ -621,7 +623,7 @@ long function_1e4a50(long index);
 void function_26c180(long actor_index);
 short actor_behavior_find_level(long owner_index, short type);
 
-// score 140 (was 144): frame 0x84 versus 0x88 and actor/scratch homes differ;
+// score 140 (was 140): frame 0x84 versus 0x88 and actor/scratch homes differ;
 // source store order 145, movement result 142, positive membership scope 161,
 // role names 144, native zero initialization 144, combined setup/result 141.
 // frame 0x84 versus 0x88 and actor/scratch/best homes remain.
@@ -634,6 +636,8 @@ short actor_behavior_find_level(long owner_index, short type);
 // distance before initial member lookup 144.
 // frame 0x84 versus 0x88 and actor/scratch/best homes remain.
 // Round 110: radius aggregate 140 plain; redundant zero stores omitted 167; selected actor name 144; movement scope 144; search construction scope 144.
+// Library source clear 144; complete source aggregate 219; unsigned candidate 140, with clear 144;
+// slot state view 140, with clear 144; captured successor 143; aggregate and unsigned candidate 219.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

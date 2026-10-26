@@ -86,6 +86,7 @@ void function_2232a0(void)
 // Mode/options receivers, mode result, external count/slot references, typed selected
 // record, terminal record reference and both record receivers each 151 (575 bytes).
 // Earlier 151 (was 151): common count/layout join, slot predicate and terminal registers remain.
+// common count/layout join, slot predicate and terminal registers remain.
 // Total before layout/scan 172/152; total scan bound 162; two-use mode 151;
 // conditional slot result 157; separate scan/result 158; mode/total 162; scan-result/total 156.
 // the common count/layout join, slot predicate and terminal reset still differ.
@@ -100,6 +101,8 @@ void function_2232a0(void)
 // countdown scalars 151/151/151; prefix countdown publication 151/151/151;
 // paired countdowns with int count or int ordinals 151/151. Original body retained.
 // Round 150: chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
+// count/layout join still threads. First/second/both native
+// Nested slot admission/sentinel continue/selected-source value 151/151/151; source admission before normalization 158; nested source 151; continued source 158; sole output cursor 232; native entry address 151 (restored).
 // @retail 0x2234e0
 void function_2234e0(void)
 {

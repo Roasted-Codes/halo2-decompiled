@@ -528,6 +528,10 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Alias-free plane memcpy 798; rotated-result memcpy 796; both transfers 798; second angle-input
 // memcpy 872; all copy boundaries 872. Original body and all helpers restored; frame 0x2204 versus
 // 0x21dc and definition/output/equality homes remain.
+// Frame 0x2204/0x21dc, definition/output carriers and angle equality homes remain.
+// Earlier 753 (was 890): frame 0x2204 versus 0x21dc; definition/output carriers still differ.
+// Earlier 749 (was 753): frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
+// Round 151: Alias-free pivot helper 753; native axis/offset 796/796; complete rotation row parts/products 788/798; fallback quad memcpy 796; native basis values 796; pivot helper plus row parts 764.
 // frame 0x2204 versus 0x21dc; definition/output homes and angle equality differ.
 // Without parameter-address aliases: reversed equality buffers 796; native plane result 925;
 // rotation pointer result 796; native rotation output reference 796; native angle input 796 (fast).
