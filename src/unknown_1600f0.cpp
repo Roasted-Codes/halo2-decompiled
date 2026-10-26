@@ -1256,6 +1256,10 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 126: External flag reference 801; reused no-team result 802; player/team/both output cursors
 // 811/834/842; chained RGB stores 801; native team-color output 835; existing string-list forceinline 801
 // (fast); all restored.
+// Round 166: Separate score/time/both caption-list results 801/801/801; scoped name
+// lookup alone/with score/with time/with both 801 each; all three separate immutable
+// caption results 801. Each result has its validity test and lookup use; original shared
+// list and every header/row operation restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

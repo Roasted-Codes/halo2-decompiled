@@ -438,6 +438,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Round 163: Direct averaged support, shared branch direction, both, entry support,
 // direct+entry, shared+entry, all, and all with shared cross 235/194/235/177/235/194/235/235.
 // Original pair-result join, two entry constants and private products restored.
+// Round 166: Corresponding projection products named on both compared dots: i/k/j
+// 194/194/194; ik/ij/kj 197/197/197; all 194; all with both first sums 194. Original
+// expressions, early constants and pair-result join restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -1006,6 +1009,9 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // deferred publication 93; row accumulators 59; forced expansion 50; existing final add
 // 163; existing result setter 93. All on the retained nine-product graph; original
 // helper, alias copy and every operation restored.
+// Round 166: Complete vector-return ownership, matrix/input pointer-pointer, reference-pointer,
+// value-pointer, pointer-reference, reference-reference, value-reference, pointer-value,
+// reference-value 127/127/223/127/127/223/161/161. Original two-use output helper restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {
@@ -1125,6 +1131,10 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Round 163: Local speed/object/both/surface/speed+surface/object+surface/all
 // scalar outputs and complete output/Boolean join 554/499/554/570/621/622/613/547.
 // All regress; original direct publications, qualified count and cursor restored.
+// Round 166: Whole squared/absolute/both magnitude names in both normalizations
+// 421/422/422; desired-length result alone/with square/with absolute/with both
+// 421/421/422/422 (one-use return forms match-only); existing squared-length helper 421;
+// Boolean flight expressions at both tests 466. Original helper, expressions and body restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
