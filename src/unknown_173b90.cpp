@@ -1129,7 +1129,14 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
 long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
-// score 101 (was 106): frame 0x14 agrees; owner/NONE coalescing and Boolean homes differ.
+// score 101 (was 101): frame 0x14 agrees; retail keeps the NONE sentinel and the owner in ebp
+// (coalesced; later NONE tests use immediates) and the availability flag in bl; ours keeps the
+// sentinel in ebx, the owner in edi and the flag in al, and tests the definition's bit 9 as a
+// byte instead of a shifted word. Owner/NONE coalescing and Boolean homes differ.
+// View read from the global at each use 143 (gives the reload after the attachment query);
+// bit 9 as (word >> 9) & 1 102 (still a byte test), with view at use 143; view at use with the
+// flag false-then-set 148 (flag in a stack byte) or as view != NONE && !query 146; owner as a
+// conditional expression 149, with view at use 143, plus the && flag 144.
 // Next-slot assignments 107; word absolute slot 158; separate scan result 107;
 // shared datum conversion 199; long attachment 120; short same-view 145; byte draw 107;
 // long camera-relative 144 (fast preview 107, full 106). Original body retained.
@@ -1140,7 +1147,7 @@ bool function_17afd0(long effect_index, long value);
 // set) 101 plain, kept; stack-bool rename 102; bit 9 as a named bitfield 102; nested
 // attached else-if 102; wide view 102; wide effect index 102; two-step same-view 102;
 // flag as false-init plus conditional set 144 (fast previews 107/102/144).
-// score 101 (was 101): NONE/owner coalescing and Boolean homes remain; fast control 102.
+// NONE/owner coalescing and Boolean homes remain; fast control 102.
 // Implied owner validity/availability-first equality 170/172; classification scope 102; scope
 // with implied validity 170; short/signed-byte availability 147/102; combined forms 148/102.
 // NONE/owner coalescing, BL availability and Boolean homes remain.
@@ -1150,9 +1157,6 @@ bool function_17afd0(long effect_index, long value);
 // Next-used helper entry/advance/both 200/202/244; native draw/query+draw bits 101/128;
 // native bits with entry/advance helper 195/198; inline/outline-inline query 101/101.
 // @retail 0x174220
-// score 101 (was 106): retail keeps the NONE sentinel and the owner in ebp and the
-// availability flag in bl; ours keeps the sentinel in ebx, the owner in esi and the flag
-// in al, and it tests the definition's bit 9 as a byte instead of a shifted word.
 void __stdcall function_174220(bool view_pass)
 {
     s_record_pool *systems = g_510c74;
