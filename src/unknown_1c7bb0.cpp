@@ -85,6 +85,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Existing iterator member orders datum/index/records, records/datum/index, records/index/datum,
 // index/datum/records and index/records/datum each 164; original layout restored.
 // Separate inline/noinline declarations for eligibility, location update, detach, actor test, attach, transfer, partition update and final update each 164. All eight original declarations and both traversals restored.
+// Native step reference 164; unsigned-word completion 164; shared absolute ordinal 250;
+// native record-array view 180; cleanup inline declaration 164; reference/word contract 164.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

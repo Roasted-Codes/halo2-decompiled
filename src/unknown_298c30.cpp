@@ -271,15 +271,18 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Shared endpoint setters 767; center CRT copy 767; step CRT copies 767;
 // obstacle-radius observation 813; requested-angle observation 796; all restored.
 // Trace-field forward sector 772, reverse 776, both 774; settings radius rereads 812; short-index obstacle cursor 814.
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Early settings radius 800; const center 767; early selector 847; final-angle selection first 798; reverse component assignments 767 (fast).
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain.
+// Frame 0x11c versus 0x114 and radius/trace homes remain. Early settings radius 800; const center 767; early selector 847; final-angle selection first 798; reverse component assignments 767 (fast).
+// Frame 0x11c versus 0x114 and radius/trace homes remain.
 // native endpoint return 947; native rotated-point return 961; endpoint input order 767;
 // two-coordinate pivot 767; side transform first 822 (fast).
 // Frame 0x11c versus 0x114 and radius/trace homes remain. One sector sample 809; cosine first 767; signed step branches 848; normalization result 839; maximum rejection guard 767 (fast).
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Absent-obstacle exit 768; positive center clearance 820; direct edge distances 916; early annular bounds 767; reverse-vector component loop 839 (fast).
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Selected obstacle pointer 802;
+// Frame 0x11c versus 0x114 and radius/trace homes remain. Absent-obstacle exit 768; positive center clearance 820; direct edge distances 916; early annular bounds 767; reverse-vector component loop 839 (fast).
+// Frame 0x11c versus 0x114 and radius/trace homes remain. Selected obstacle pointer 802;
 // forward state on hit 771; reverse state on hit 771; both states on hit 784; active edge updates 857;
 // in-place initial endpoint 850 (fast).
+// Rotation output reference 767; endpoint output reference 767; endpoint input references 767;
+// rotation height-source input 767; endpoint pointer result 767; native settings member 767 (fast).
+// Original helper contracts and settings storage restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

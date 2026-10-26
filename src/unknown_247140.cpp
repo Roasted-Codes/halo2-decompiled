@@ -269,6 +269,7 @@ public:
 // Y/Z-first input intervals 194/194; origin fields at consumers 201; unsigned cleanup handle 194.
 // Origin memcpy 170 (same held code); two-use origin scalars 205; shared magnitude 194;
 // expansion product 194; unsigned first handle 194.
+// Bounds-after-displacement name 194; displacement-before-bounds name 194; head-before-ordinal 194; outer cleanup handle 194; complete magnitude before selector 194 (exact-only).
 // Independent range/ordinal/bounds homes 194 each; shared emitter cursor 194; shared cursor with
 // range/ordinal homes 194 each; native upper-point difference helper 198, with shared emitter
 // 198.

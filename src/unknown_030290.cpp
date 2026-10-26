@@ -275,6 +275,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
 // 423/376/529/359/538/536/718; all with local inline declaration 718.
 // All nonexact shared-transform forms restored, including their floating sum order; no external change remains.
+// Native point input/output/camera references 195/195/195; paired point/all references 195/195;
+// parallel named pre-translation sums 263.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

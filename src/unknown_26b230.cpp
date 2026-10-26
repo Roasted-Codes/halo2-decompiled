@@ -181,19 +181,22 @@ void function_268840()
 // score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and protected child-call carriers differ.
 // Player-pool/NONE allocation and current/successor homes remain.
 // Earlier score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
+// Frame 0x50 agrees; player-pool/NONE registers, clump/successor homes and child-call carriers remain.
+// Current-datum iterator 314; scoped keep 314;
+// frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
 // frame 0x48 versus 0x50; iterator result/exhaustion and
 // player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
 // (the latter four use the current-datum iterator). All body forms restored.
-// frame 0x48 versus 0x50; iterator result and pool homes differ;
 // outer while 296; player while 296; actor for-loop 331; native handle parts 327;
 // proxy-before-unit loads 296. Original body retained.
 // Round 156: depth zero 426; depth one 296; target size 546; byte retention 317;
 // iterator role names 296. Original frame and child traversal retained.
-// the clump datum walk gives retail's loop head; NONE kept in ebx
-// where retail keeps the player pool in ebp, and the current clump's slot differs.
 // Round 173: long expiry result 315; long child-step result 295 (one-point gain rejected);
 // retention if/else 302; existing typed actor fields 296; external player-pool reference 296.
+// Per-clump player pool 258; child-result for-loop 246; integer-byte retention in frame 0x50 247; actor-scope child iterator 246; successor scalar lexical home 246.
+// the clump datum walk gives retail's loop head; NONE kept in ebx
+// where retail keeps the player pool in ebp, and the current clump's slot differs.
 // Frame 0x48 versus 0x50 and current/exhaustion/player homes remain; child-call carriers differ.
 // In the recovered 0x50 frame: entry player pool 302; Boolean retention 247; both 302;
 // direct expiry admission 246/893 bytes; pool/Boolean/both plus direct expiry 314/256/314;
