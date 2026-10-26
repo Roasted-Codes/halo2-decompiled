@@ -226,9 +226,18 @@ void function_16f60(byte *state, word const *range)
     }
 }
 
-// score 93 (was 93): BX dispatch agrees; selective setter expansion and shared tails remain.
-// Earlier 103 from 117: frameless BX entry agrees; dispatch span and selective setter expansion differ.
+// score 93 (was 93): frameless BX entry agrees; dispatch span and selective setter expansion
+// differ. Retail lays out separate mode 3 and mode 4 bodies in mode order (no mode compare) and
+// inlines fewer setter calls (mode 3 six, modes 4/5 two, mode 6 one, the rest call 0x222d0).
 // Complete case orders 0/12/34/6/5 114; 0/12/5/34/6 119; 0/12/6/34/5 103 kept;
+// 0/34/12/5/6 158; 0/5/12/34/6 151; 0/6/12/34/5 167; 0/34/5/6/12 224; 0/6/5/34/12 165.
+// Code rows 91 to 80; 780/772 bytes.
+// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison
+// 103/103; early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
+// common exit 99; sixth exit 93; comparison exit 93; fifth exit 93; sixth comparison exit 93; fifth
+// sixth exit 93; explicit default common exit 99; fourth comparison first 93.
+// BX dispatch agrees; selective setter expansion and shared tails remain.
+// Earlier 103 from 117: frameless BX entry agrees; dispatch span and selective setter expansion differ.
 // 0/34/12/5/6 158; 0/5/12/34/6 151; 0/6/12/34/5 167;
 // 0/34/5/6/12 224; 0/6/5/34/12 165. Code rows 91 to 80; 780/772 bytes.
 // Earlier 93 from 103: dispatch span and selective setter expansion still differ.
@@ -239,9 +248,7 @@ void function_16f60(byte *state, word const *range)
 // frameless BX entry agrees; dispatch span and selective setter expansion
 // differ.
 // dispatch span and selective setter expansion still differ.
-// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison
 // 103/103;
-// common exit 99; sixth exit 93; comparison exit 93; fifth exit 93; sixth comparison exit 93; fifth
 // sixth exit 93; explicit default common exit 99; fourth comparison first 93. Selective setter
 // expansion and shared tails remain.
 // frameless BX entry agrees; dispatch span and selective setter expansion differ.
@@ -250,6 +257,9 @@ void function_16f60(byte *state, word const *range)
 // complete group orders 0/12/34/5/6, 0/12/5/6/34, 0/34/6/12/5 105/106/197.
 // Shared keep-pass group/conditional comparison/mask-call branches 282/270/207;
 // shared first one/two/three calls 188/235/292; first one/three with group 313/368.
+// Round 85: separate mode 3 and 4 bodies in mode order 196 (860 bytes: modes 3 and 4 inline
+// more calls than retail); orders 0/12/6/3/4/5 154 (824), 12/3/4/5/6/0 307, 0/12/3/4/6/5 235;
+// break with one selector store after the switch 279.
 // @retail 0x15370
 void function_15370(short mode)
 {

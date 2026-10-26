@@ -583,6 +583,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // recovered-frame front/rear snapshots 546. Original loops and native workspaces kept.
 // Word ordinals 464; word routing table 454; last-two scopes 498;
 // front-only snapshot 502; word ordinals with first/third scopes 479 (fast).
+// Fast control 453 versus full 463. Current-loop first/second scopes 497 (frame 0x94); both
+// level snapshots 502; scopes with snapshots 545; unsigned ordinals 453; direct shared appends
+// 463. Full frame 0xdc versus 0x94 and repeated-conversion homes remain.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -714,21 +717,29 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
-// score 254 (was 258): frame 0x1c/0x18 and mode/input-level homes remain.
+// score 258 (was 258): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// selected/input/offset references 294/291/272, pairs 311/311/307, three/four references 326/340.
+// All restored.
+// Earlier: frame 0x1c versus 0x18; mode occupies EBP.
+// Front pair loop 308; rear pair loop 323; both 363; all short/word
+// selectors 274; byte selectors 275; only spilled short/word selectors 280.
+// Earlier: frame 0x1c versus 0x18 and input-level/mode homes remain.
+// Shared append front 392, rear 394, tail 430 (dispatcher lost in all three);
+// whole-function depth zero 673 (dispatcher lost), depth one 274.
+// Earlier: frame and input-level/mode homes remain;
+// front setting snapshot 270; rear 279; both 275; frame pointer 312;
+// global optimization off 281 (dispatcher lost).
+// Earlier: frame 0x1c versus 0x18 and input-level/mode homes remain;
+// word routing predicate 264; named routing reads 270; native-word home names 270;
+// front field reference 267 and both field references 267 (three-point gains rejected).
+// Earlier: frame 0x1c versus 0x18; mode/level homes and x87 tail sums remain.
+// frame 0x1c/0x18 and mode/input-level homes remain.
 // Scalars before selectors 258; front/gain/both/all before selection 262/254/254/254;
 // phase scope 264; inner/outer parts 258/263. Gain-first plain 254, 819/853 bytes.
 // frame 0x1c versus 0x18; mode occupies EBP.
-// Front pair loop 308; rear pair loop 323; both 363; all short/word
-// selectors 274; byte selectors 275; only spilled short/word selectors 280.
 // frame 0x1c versus 0x18 and input-level/mode homes remain.
-// Shared append front 392, rear 394, tail 430 (dispatcher lost in all three);
-// whole-function depth zero 673 (dispatcher lost), depth one 274.
 // frame and input-level/mode homes remain;
-// front setting snapshot 270; rear 279; both 275; frame pointer 312;
-// global optimization off 281 (dispatcher lost).
 // frame 0x1c versus 0x18 and input-level/mode homes remain;
-// word routing predicate 264; named routing reads 270; native-word home names 270;
-// front field reference 267 and both field references 267 (three-point gains rejected).
 // frame 0x1c versus 0x18; mode/level homes and x87 tail sums remain.
 // Left/right/both gain snapshots 258/262/266; input level/offset cursors 313/281;
 // gains with level/offset/both cursors 274/261/291 (fast). Paired gains lose dispatcher.
@@ -929,26 +940,31 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	}
 }
 
-// score 208 (was 208): eight-byte frame and inherited x87 send sums differ.
+// score 200 (was 200): Frame 0x10 and x87 tail sums remain; level/rear/all references 221/208/231,
+// pointers 221/208/231; reference early sums 212/222, all restored.
+// Earlier: eight-byte frame and inherited x87 send sums differ.
+// frame 0x10 versus incoming-slot reuse; inherited x87 send sums remain.
 // Levels before flag 208; scalar names 208; depth one 208;
 // size preference 449; shared gain loop 384.
 // With a per-function precision pragma (173, not kept: pragmas other than a file-scope inline_depth
 // steer the compiler) the frame is four bytes and the late level sum remains.
 // Native channel bit 208; const samples 208; immutable input 208; bit/input 208;
 // scoped precision pragma 173; global optimization off 229; frame pointer 225; precision/early sum 224.
-// score 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
+// Earlier: frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
 // Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
 // samples 208/212/206/202; all samples with early send sum 215.
-// score 200 (was 200): frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// Earlier: frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
 // sum after rear pair 212; accumulated sum 212; read-only input contract 200; rear reads reversed
 // 200; rear before levels 201; signed-byte selector 200; unsigned-word selector 197 (three-point
 // gain dropped).
-// score 200 (was 200): Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
+// Earlier: Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
 // left/right after first 206/206; early sum with first/front/staggered rear samples 217/222/225; staggered
 // rear samples 208 (fast).
-// score 200 (was 200): frame 0x10 and inherited x87 sums remain; native input
+// Earlier: frame 0x10 and inherited x87 sums remain; native input
 // assignment or memcpy, each with late/early level sums and rear samples/direct
 // rear fields, all 240. Copies grow the frame to 0x28; original inputs restored.
+// Live offset/base/both levels 208/208/221; live channel flag 199 (one-point gain dropped);
+// live flag with offset/base/both levels 208/208/223; live levels and native flag bit 205.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

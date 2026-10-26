@@ -53,15 +53,21 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 /* the next recent player after the iterator's: a valid, online, known player
    with a name; iterator starts at the first entry and ends at NONE */
 // score 43 (was 43): early ESI save, EBX successor, mask hoist and loop exit differ;
+// retail lets the entry pointer reuse the index register (imul esi, esi) and keeps the
+// successor apart in EBX (back-edge mov esi, ebx), which leaves AL free for the & 3 mask;
+// ours shares one register for index and successor.
 // native successor 51; persistent entry while/for 57; complete admission 43; identity predicate 53;
 // native player assignment 43; native successor with identity 57; admission result 59.
-// successor register, exclusion mask and loop rotation still differ; 127/127 bytes.
 // Native identity OR/logical OR 83/78; each with native name 83/78; native name alone 43;
-// shared player receiver 43, with native OR/name 83, with native logical OR/name 78; all restored.
-// Early index save, next-index register, loop rotation and hoisted mask still differ.
-// existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
-// score 43 (was 43): iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;
+// shared player receiver 43, with native OR/name 83, with native logical OR/name 78.
+// existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50;
+// direct exclusion bits 43; current-index name 43; rejected entries continue 43.
+// iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;
 // result-terminated loop 52; iterator result termination 44; output outcomes 68; native termination 47.
+// Round 85: successor local with early returns 49; every field read through the table index
+// (no entry pointer) 71; iterator store re-read as the index 51; loop over *iterator 71;
+// successor read through the table after the entry 60 (EBX successor as retail, 137 bytes);
+// short index 64 (entry reuses the index register as retail, 138 bytes).
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {
@@ -114,6 +120,7 @@ struct s_cache_property_record
 // score 104 (was 109): frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
 // remain. Prior frame 0x0c; entry cursor 125; property cursor 135;
 // frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
 // Earlier: frame 0x0c versus 0x10 and properties/buffer
 // frame 0x0c versus 0x10 and property/buffer carriers remain; shared record/buffer total
 // 125f; property total from records 113f; property total from buffers 113f; admission accounting 108f (below
@@ -121,6 +128,8 @@ struct s_cache_property_record
 // phases 125f; derived property/entry cursor 113f.
 // frame 0x0c versus 0x10 and properties/buffer
 // register/stack split remain. Entry cursor 125; property cursor 135;
+// frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
+// remain. Prior frame 0x0c; entry cursor 125; property cursor 135;
 // per-record property counts 113; count homes 121; cursor/count combination 132.
 // Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
 // short property ordinal 114; ordinal names 113; early four-property accounting 109 kept;
@@ -455,6 +464,8 @@ void function_1537f0(s_profile_record *record);
 // score 73 (was 73): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
+// Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // Existing record initializer with zero tail 130; short/word counters 133/133;
 // counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
@@ -787,6 +798,9 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // long direction flag 244; equality-first cases 243; forward CRT memmove 385.
 // Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
 // Paired signed min/max 302; independent bound overrides 362; forward entry cursor 369; reverse entry cursor 394; both entry cursors 406.
+// Branch-produced removed index 390; neutral lower/both bounds 309/243; shared signed direction 343;
+// identity memcpy 243; chained sentinel stores 243; new-entry predicate 381; branch/native bounds 390;
+// signed link values 815 (repair unrolling lost); original body restored.
 // Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
 // Frame 0xc agrees; removed-index EDX/ESI and upper ECX/EAX remain. Direction value 342; signed-byte direction
 // 243; range role names 243; direct indexed repair 243; signed min/max with long adjustment 370.

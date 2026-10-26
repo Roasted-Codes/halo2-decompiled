@@ -6,6 +6,8 @@
 // Entry/tag-table registers and plane/list homes remain.
 // Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
+// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
@@ -20,6 +22,11 @@
 // Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
 // 436; query result with products 440; const query 434; query result/products with const query
 // 438/436. All product regroupings restored.
+// Destination cursor 444; both plane cursors 484; destination/both with full publication
+// 444/444; destination/both with outer plane 444/484; destination/both with normal declaration 444/484.
+// Native input plane subobjects 468; separate shared-scaler normal output 476;
+// multi-use distance scalar 453; input plus normal/distance 438/468;
+// normal plus distance 471; all three 438; dword plane ordinal 434 (fast). All restored.
 // DL131: Entry/tag-table registers and plane/list homes remain; existing geometry resolver
 // before/after entry 443 each; native geometry record 434; resolver with native record in either
 // entry order 443; resolver with shared normal scaling 443; native geometry with shared normal
@@ -30,6 +37,9 @@
 // Round 171 reduced control 434: direct entry 472; output planes 459; live transform pointer 434;
 // entry/output planes 449; entry/live transform 472; planes/live transform 459; all three boundaries 449;
 // entry/live selection flags 575.
+// Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
+// 436; query result with products 440; const query 434; query result/products with const query
+// 438/436. All product regroupings restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {
