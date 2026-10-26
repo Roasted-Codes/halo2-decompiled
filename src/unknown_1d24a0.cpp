@@ -64,7 +64,7 @@ PRIVATE __forceinline real function_1d24a6(vector3f const *arg_0, vector3f const
 }
 PRIVATE __forceinline vector3f *function_1d24a2(vector3f const *arg_0, real arg_1, vector3f *arg_2)
 {
- for (long component = 0; component < 3; ++component)
+ for (short component = 0; component < 3; ++component)
   arg_2->n[component] = arg_0->n[component] * arg_1;
  return arg_2;
 }
@@ -105,18 +105,21 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  return function_30bf0(arg_3);
 }
 
-// score 1218 (was 1259): frame agrees; early EBX save, array/entry allocation and delta reloads differ.
+// score 983 (was 1016): Frame 0x1ec versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// Earlier 1218 from 1259: frame agrees; early EBX save, array/entry allocation and delta reloads differ.
 // Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
 // inline depth one 1259; counted angular residual 1218, kept after plain check.
-// score 1214 (was 1218): frame 0x1d0 versus 0x1d4; early EBX/entry allocation and vector reloads differ.
+// Earlier 1214 from 1218: frame 0x1d0 versus 0x1d4; early EBX/entry allocation and vector reloads differ.
 // Direct radial residual loop 1282; planar residual loop 1261; angular residual loop 1214, kept;
 // displacement loop 1246; all three residual loops 1227.
-// score 1207 (was 1214): frame 0x1d4 restored; early EBX, entry homes and vector reloads remain.
+// Earlier 1207 from 1214: frame 0x1d4 restored; early EBX, entry homes and vector reloads remain.
 // Record-scope angular residual 1214; function-scope angular change 1214; early angular axis 1214;
 // native removed-slot element 1214; one record option-word read for all four flags 1207, kept.
-// score 1016 (was 1207): frame 0x1e8 versus 0x1d4; early EBX, entry homes and vector reloads remain. Plain
+// Earlier 1016 from 1207: frame 0x1e8 versus 0x1d4; early EBX, entry homes and vector reloads remain. Plain
 // scale helper loop 1016 kept; add loop 1233; subtract loop 1126; all three 1328; shared planar difference
 // 1207; scale/subtract 1123; scale/add 1261; add/subtract 1201.
+// Scale helper void result 1016; unsigned/signed-word ordinal 1016/983 plain; counted while
+// 1016; equality termination 1016. Word counter fully unrolls; frame grows four bytes.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

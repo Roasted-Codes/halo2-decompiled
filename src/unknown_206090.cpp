@@ -117,19 +117,22 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
-// score 1600 (was 1600): frame 0x580 versus 0x58c; velocity homes and contact induction differ;
+// score 1596 (was 1596): Frame 0x58c agrees; component home +0xb4 versus +0xcc, velocity homes and contact induction remain.
+// Earlier 1600 from 1600: frame 0x580 versus 0x58c; velocity homes and contact induction differ;
 // frame pointer 2092; inline depth zero 3049, eight 1600; point/contact row tables 1600/1600;
 // double magnitude accumulator 1654.
 // frame 0x580 versus 0x58c; velocity homes and indexed contact records differ.
 // Function-scope impact record 1655; function-scope contact direction 1600; function-scope projection 1600;
 // short fixed initialization index 1664; duplicate search in loop condition 1600.
-// score 1600 (was 1600): frame 0x580 versus 0x58c and indexed contact homes remain.
+// Earlier 1600 from 1600: frame 0x580 versus 0x58c and indexed contact homes remain.
 // Shared point subtraction first/contact/both 1625/1656/1676;
 // indexed normalized-direction copy 1645; indexed tangential-velocity copy 1638.
-// score 1596 (was 1600): frame 0x58c recovered; velocity homes and indexed contacts differ. Contact velocity
+// Earlier 1596 from 1600: frame 0x58c recovered; velocity homes and indexed contacts differ. Contact velocity
 // 1604; point velocity 1663; both 1659; result normalizers 1641; cross j/k/i 1642. On contact form:
 // normalizers 1646; scale loop 1596 kept; cross order 1608; velocity names 1604; add loop 1622; scale/add
 // loops 1618. Original-frame scale loop 1626.
+// On recovered frame: entry return result 1599; native query records 1596; both configuration
+// counts read once 1644 (frame 0x590); shared first/contact point subtraction 1620/1616.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
