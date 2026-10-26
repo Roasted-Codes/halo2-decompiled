@@ -592,6 +592,7 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 
 // score 211 (was 211): frame 0x50/0x54, early EBX and child-iterator convention remain.
 // Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
+// frame 0x50/0x54 and child-iterator registers differ;
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
 // child category equality 251; dword friendliness plus speed snapshot 229.
 // Predicted-point force-inline 232; depth zero 510; size policy 355;
@@ -608,6 +609,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Native signed/word/short unit counts 211/210/210f; count/friendly/both defaults after
 // child initialization 211/211/211f; word count with later defaults 210f;
 // native friendliness with actual unit count 230f. One-point gains rejected; all restored.
+// Count-first friendliness AND/logical/conditional/explicit forms 201/232/211/211;
+// count-last counterparts 223/233/252/252. Boolean AND keeps every qualifying-child
+// team test and counter; 201 kept after ordinary check. Frame/child convention remain.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {
@@ -643,9 +647,8 @@ void function_23b500(long player_index, s_spawn_influence_list *list)
 				if ((1 << child->type) & 1)
 				{
 					++unit_count;
-					if (child->player_index != NONE &&
-						((s_spawn_player_view *)g_4e8c24->data)[child->player_index & 0xffff].team != player->team)
-						friendly = false;
+					friendly &= child->player_index == NONE ||
+						((s_spawn_player_view *)g_4e8c24->data)[child->player_index & 0xffff].team == player->team;
 				}
 			}
 			if (unit_count == 0)

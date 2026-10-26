@@ -1246,6 +1246,9 @@ bool function_0b6760(s_index_pair const *pair);
 // Native device/power-group/position-group record references and their pairs/all 303
 // (seven forms); real tag fields 351. All receivers and the original tag type restored.
 // Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303; both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c versus 0x20 and index/header/state/result homes remain; all helper declarations restored.
+// Round 148: Explicit absent-state else 309; false result after flag clear 302; both joins 308; zero-first
+// direction/activity 303/303; state else plus direction 309; later false result plus activity 302; all
+// joins/zero tests 308. One-point gains dropped; frame/index/header/state/result homes remain.
 // Motion-helper inline/noinline 303/303; named derivative numerator 303; direct second completion test 303;
 // both 303; named wait predicate 303; outer direction storage 303; previous-velocity name 303. Frame 0x1c
 // versus 0x20 and index/header/state/result homes remain; all helper declarations restored.

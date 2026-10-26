@@ -520,6 +520,7 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 
 // score 130 (was 130): frame 0x20 agrees; magnitude/zero, facing and rotation/output schedules remain.
 // Earlier: horizontal homes and initial copy registers recovered; planar/turn schedules and
+// horizontal homes and initial copy registers recovered; planar/turn schedules and
 // output length still differ; tried planar scale loop 153; direction branch update 204; horizontal native
 // copy 142; rotation native copy 153; real signed sine 170; horizontal shared facing base 195; horizontal
 // facing rotation copy 195; horizontal native vector copy 142; horizontal rotation copy 142.
@@ -530,6 +531,8 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // shared direct scale 154; depth one 142; size policy 366; shared output-vector
 // scale 142; native turn side 145. Planar copy/rotation scheduling still differs.
 // Earlier: horizontal/rotation and final output scheduling still differ.
+// Earlier 142 (was 142): with the native horizontal copy, direct final products 154;
+// Earlier 142 (was 142): horizontal/rotation and final output scheduling still differ.
 // Length in predicate 142; adjustment test result 142; direct side expression 142;
 // turn-test result 139; original direction object 185; shared output in place 206;
 // native output in place 206; facing object reference 153.
@@ -539,6 +542,7 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // named length with word side 143, direct output 146, shared scale 146.
 // Horizontal product/rotation schedules and output length remain.
 // Earlier: Frame 0x20 agrees; horizontal copies, square products, rotation schedule
+// Earlier 136 (was 142): Frame 0x20 agrees; horizontal copies, square products, rotation schedule
 // and output length still differ. Forced rotation declaration 142; inline declaration 142; planar
 // facing snapshot 220; named dot 142; named determinant 142; combined planar result lifetimes 142;
 // planar scale operand order 142; planar completion copy 146.
@@ -549,6 +553,7 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // inline 142; earlier turn length result 136; earlier turn product input order 136; earlier
 // turn shared result scale 136; earlier turn shared direct scale 160.
 // Earlier: Horizontal square/copy order, rotation and output scheduling remain. combined memmove 191; immutable real
+// Earlier 136 (was 136): Horizontal square/copy order, rotation and output scheduling remain. combined memmove 191; immutable real
 // results 136; byte turn truth 136; horizontal memmove 184; turn memmove 168; output memmove 140; external
 // speed binding 147; external side components 136; native planar initializer 161; early turn memcpy 136;
 // completed output memcpy 136.
@@ -565,6 +570,8 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // planar copy 157; native turn plus fallback 162; normalized point 237; both points 253;
 // normalized point plus direct commit 166.
 // Earlier: the normalized planar components read into named x/y (used by both tests)
+// Earlier 136 (was 136): horizontal square/copy order, rotation and output scheduling remain;
+// Earlier 130 (was 136): the normalized planar components read into named x/y (used by both tests)
 // give retail's square order in the planar normalization. Still differs: retail multiplies the
 // facing components as registers (`movss reg, [field]; mulss reg, y`) and tests the length after
 // the scale products with 0.0 in xmm0; the inlined rotation's loads and registers; the output.
@@ -574,6 +581,10 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // Normalized scalar declaration priority 130; immutable normalized pair 130; planar pair names 130;
 // length/pair names 130; second length in normalized-pair context 131; named integer sign 130;
 // declaration priority plus planar names 130; sine result arms 149.
+// Round 148: Complete helper-context preview agrees at 130. Complete planar facing capture 177; both
+// dot/determinant product pairs 141; both input/product forms 177; facing/magnitude/side/all zero-first
+// comparisons 130/130/130/130; native output copy then component scales 145. Magnitude/zero, facing, rotation
+// and output schedules remain.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {
