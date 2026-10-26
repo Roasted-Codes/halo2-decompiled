@@ -254,6 +254,9 @@ long g_55e6c0;
 // byte total 192; level/offset names 115; size after format 190; named aligned width 115;
 // element before size 123; linear size branches 174.
 // Clamped count before kind/after kind/between dimensions 103/103/99; early resource resets 38; data before dimensions 31; height before width 30; early linear flag/common word 44/31.
+// Packing accumulator pitch/width/height, height/pitch/width, height/width/pitch,
+// width/pitch/height, width/height/pitch 29 each; complete integer OR height/pitch/width,
+// width/height/pitch, pitch/width/height 29 each. Unsigned packing still folds.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {
