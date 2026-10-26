@@ -70,7 +70,10 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 641 (was 641): Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
+// score 641 (was 641): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
+// Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
+// Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
+// Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes differ.
 // Earlier: frame 0xf8 versus 0x108; result/basis/rotation homes differ.
 // frame 0x108 agrees; success/basis/rotation homes differ.
 // Frame pointer 960; size preference 1163; cosine-difference carrier 652;
@@ -83,9 +86,12 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // initializer 646; joined output zero 648.
 // Native object/settings/both record references 646; live length field reference alone
 // or with object/settings/both 686; collision inline declaration 646. All eight restored.
-// Earlier score 652 (was 652): Frame 0xf8 versus 0x108 and basis/root/rotation homes remain. Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652; clamp input order 652; direction value with per-ray sample 703 (fast).
-// Earlier score 646 (was 652): Frame 0xf8 versus 0x108 and basis/rotation homes remain.
-// Earlier score 646 (was 646): Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
+// Earlier (652 from 652): Frame 0xf8 versus 0x108 and basis/root/rotation homes remain. Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652; clamp input order 652; direction value with per-ray sample 703 (fast).
+// Earlier (646 from 652): Frame 0xf8 versus 0x108 and basis/rotation homes remain.
+// Earlier (646 from 646): Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
+// Earlier 652 from 652: Frame 0xf8 versus 0x108 and basis/root/rotation homes remain. Inverse length 651; separate roots 652; remaining fraction 653; cosine first 652; clamp input order 652; direction value with per-ray sample 703 (fast).
+// Earlier 646 from 652: Frame 0xf8 versus 0x108 and basis/rotation homes remain.
+// Earlier 646 from 646: Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
 // Existing rotation angle as a double formal or a twice-used double local,
 // with original/angle-first/output-first/output-before-angle layouts: all 733.
 // Original helpers, input/component snapshots and in-place calls restored.
@@ -107,8 +113,17 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Complete collision output extent/native output type/named material reset 641/641/641;
 // with byte/long/word success 714/714/714; native hit bytes 641; active success 646.
 // Original result, hit flags, math helpers and in-place copies retained.
+// Native coordinate-array output contracts for cross/point/rotation alone, all
+// pairs and all three 641 each; all outputs with native point input arrays 641.
+// Every input/result copy and original helper contract restored; frame already agrees.
+// Round 162: Native hit/length/both/point/hit+point/length+point/all array loops
+// 731/730/748/667/721/643/723; shared cross producer on the complete frame 659.
+// All regress; original arrays, private producers and in-place snapshots restored.
 // Complementary ray-miss bool/byte/word/long arrays 642/642/676/708; active-phase
 // arrays 708/708/682/724. Original hit flags, success result and math helpers restored.
+// Negative failure result bool/byte/short/long, conditional store: 712/712/713/712;
+// negative failure with reused close-hit logical accumulation: 679/679/674/673 (fast).
+// Original result, hit arrays and all in-place math snapshots restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

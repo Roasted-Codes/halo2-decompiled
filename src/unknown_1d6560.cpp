@@ -243,6 +243,9 @@ struct s_physics_component_walk : s_havok_component
 // unsigned-word policy 298; policy field at each body use 325.
 // Round 188 connection ordinal, neighbor group/body, section ordinals, their three
 // pairs, all three, and all plus body ordinal renamed: 275 each; frame/group spill unchanged.
+// Round 167: Signed-word first/current-side/next-side group body identities, individually
+// and in all combinations, 275 each; signed-word output body index 317 at 898/922,
+// frame 0x18 recovered but saved roles still differ. All eight forms restored.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,
@@ -439,6 +442,8 @@ PRIVATE __forceinline void physics_mass_copy(byte const *body, s_physics_mass_ar
 
 // score 4 (was 4): retail loads the 1.0f constant after it stores the array pointer, and
 // loads the allocator global before it stores the centre; ours does both the other way round.
+// Vector set 454; repeated zero intrinsic 4; explicit quad stores 197; direct lane stores 4;
+// explicit centre store 4; centre memcpy 125; plain copy inline 4; const centre 4; transform set 4.
 // @retail 0x1d5ec0
 c_havok_reference_counted *__stdcall function_1d5ec0(s_havok_component *component,
     s_physics_model_owner *owner, char const *kinds, char *output, long *output_count,

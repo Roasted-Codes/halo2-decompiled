@@ -1768,9 +1768,13 @@ long function_242ef0(s_242ef1 arg_0, long team)
 	return function_242ef4(g_51ec80, arg_0, team);
 }
 
+// score 53 (was 53): ours keeps the engine type in ebp (one more callee-save), retail reuses ebx, so every
+// event slot is four bytes off and the type is computed and stored first. Compiled without LTCG the same
+// source reuses ebx, and with the event sent through an opaque function ours still takes ebp.
+// Earlier: the fields of the event are written in the opposite order and the argument is passed in the
+// other register. Options pointer local: the player index moves to edi (44-58); subtype/type locals in
+// either order 51; game time read into a local before the sum: retail's tail, 53 (67/65).
 // @retail 0x2430a0
-// score 53 (was 53): the fields of the event are written in the opposite order and the argument is
-// passed in the other register.
 void function_2430a0(long player_index, bool flag)
 {
 	long absolute_index = player_index & 0xffff;

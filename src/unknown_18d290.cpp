@@ -36,6 +36,11 @@ static inline s_looping_sound_datum *looping_sound_get(long index)
 	return (s_looping_sound_datum *)g_4ed28c->data + (index & 0xffff);
 }
 
+// score 10 (was 10): the second lookup scales ESI directly; retail copies it to EAX first.
+// Ordinary/unsigned index copies 9 each (copy fixed, saved registers swapped); direct formal
+// second index 39; call-first/split declarations 9/9; local rename, const local/parameters,
+// first-record reference and reversed tag tests 9 each; second plain copy/guard 10 each;
+// force-inline/array/result getter forms 10 each; getter slot local 10 (sibling two worse).
 // @retail 0x18d290
 void function_18d290(long looping_sound_index, long tag_index)
 {

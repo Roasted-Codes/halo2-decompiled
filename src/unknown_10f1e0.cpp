@@ -1241,7 +1241,8 @@ PRIVATE __forceinline long held_object_110ab0(long unit_index, short slot)
 
 bool function_c70b0(long unit_index);
 
-// score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization remain.
+// score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization differ.
+// Earlier at 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization remain.
 // Earlier: overlay/frame and depletion/interruptibility homes differ;
 // direct parameter plus word/native interruptibility 376/378, second depletion 337
 // (plain: thirteen caller matches lost), native result 382, held helper inline 358.
@@ -1266,6 +1267,15 @@ bool function_c70b0(long unit_index);
 // combined native fields 164; existing channel-state member 164.
 // Complete first/second/both depletion selections 314/357/357; rejection predicates
 // first/second/both 164/164/164; canonical true return 205; selections with true return 355. All restored.
+// Explicit name default/definite result 354/354; native/unsigned-word/signed-word
+// result 381/377/377; separate overlay byte 183; natural overlay exits 302;
+// definite result plus overlay exits 475. Entry pool/state allocation and normalization remain.
+// Round 224: First/second/both query scopes 164/164/164; state/channel/both identifier lexical homes
+// 164/164/164; identifier homes with first/both scopes 164/164. Frame eight agrees; pool/state roles,
+// count joins and normalization remain.
+// On the retained success-byte graph: short/long depletion 200/173; short/long
+// interruptibility 304/172; paired short-short/short-long/long-short/long-long
+// 309/201/304/174. Original canonical predicates and inherited argument handling restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1387,7 +1397,7 @@ bool __stdcall function_110ab0(long unit_index)
 }
 
 
-// score 450 (was 450): Frame eight versus twelve and requested/state homes remain.
+// score 450 (was 450): Frame eight versus twelve, requested/state ownership and result joins remain.
 // Earlier 453 (was 478): frame 8 versus 12 and requested/state registers still differ.
 // Predicate names 478; byte result 538; byte depleted/overlay 453; global optimization off 1195;
 // merged interruptible cases 473; byte depleted alone 458; byte overlay alone 477; merged cases with bytes 456.
@@ -1409,6 +1419,15 @@ bool __stdcall function_110ab0(long unit_index)
 // Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Byte return with byte result 482; byte return alone 450; byte return/result with Boolean overlay 482;
 // with controlling field at use 482; with separate final overlay byte 482. Original Boolean interface retained.
+// Native signed count/slot/both fields 450/450/450; read-only receivers alone/with count/with slots/with both
+// 450 each; typed read-only inputs plus native result 554. Original record and body restored.
+// Round 222: retained slot-owner 450; controlling field at both uses 450; Boolean depletion/overlay/both 482/466/482; both with retained owner/entry result 482/482; pointer-home names 450.
+// Round 224: First/second/both query scopes and branch-entry output declarations 450/450/450/450;
+// branch-owned status defaults alone/with first/second/both scopes 485/485/485/485. Frame eight versus
+// twelve and requested/state/result homes remain.
+// Round 226: Shared held-query conditional/rejection returns 450/450; native signed-byte slot 451;
+// byte slot with conditional/rejection returns 451/451; ordinary inline conditional/rejection
+// returns 450/450, with byte conditional result 451. Frame/request/state homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1650,6 +1669,10 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // (frame 0xd4); float bound fields 841; byte overlay ordinal 841; joined bound receiver 912;
 // named blend scalars 841. Opening body and both helpers retained.
 // native projection inputs by value 1112; native projection output reference 841; native bounds-screen reference 841; signed-word activity 844; readonly retained tag 841.
+// Shared dot products with basis/direction first 841/841 (match-only grouping);
+// uniform running projection sums 841; output-first 841; native input references 841;
+// references plus output-first 841; running sums plus output-first/references 841/841.
+// Frame 0xc8 versus 0xd4 and first angle expansion remain. Body and helper restored.
 // Round 181 direction input value/native copy 810/810; basis values/native copies 1067/1073;
 // all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166.
 // Direction copied once inside projection retained (plain 810, 3403/3403); frame 0xcc versus 0xd4.
@@ -2255,7 +2278,8 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
-// score 674 (was 674): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
+// score 666 (was 666): frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// Earlier at 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
 // frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
 // requested-name snapshots 709; inline plus native final/validity 696/707.
@@ -2274,6 +2298,16 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // cases first 674; internal validity linkage 674. Original helper declaration restored.
 // Forced validity on late-result body 707; reversed validity fields 722; fallback vector memcpy 674;
 // current-frame request/workspace names 674; shared channel flag word 674. Opening body and helper retained.
+// Validity tag/index scalars 702; native identifier value/reference 820/699; scalar independent tests 729;
+// scalar/value/reference forced expansion 707/868/707; identifier-first scalar formals 702. Original helper and
+// twelve calls restored.
+// Round 222: word transition/override 672/714; byte permission/activity 694/674; separate final accumulator 666 kept plain; logical final OR 680; both native validity tests 716, with word transition 714; call-first/combined accumulator 666/666; byte activity with accumulator 669.
+// Round 226: Boolean transition 710; byte override 666; byte permission 693; transition with
+// override 710; transition with permission 662; both byte inputs 693; Boolean transition with both
+// bytes 662; word transition with both bytes 704.
+// Complete request value after/before initial activity 689/706; with all three request results
+// constructed directly 705/712; complete library input copy after/before 689/706,
+// with direct results 705/712. Native request record and copies restored; original interface retained.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2546,9 +2580,10 @@ bool __stdcall function_111650(long arg_0, long *arg_1)
                 local_10 = true;
         }
     }
-    bool vibration_active = function_10dc70(arg_0);
-    bool blend_active = function_10eaf0(arg_0);
-    return local_10 | vibration_active | blend_active;
+    bool active = local_10;
+    active |= function_10dc70(arg_0);
+    active |= function_10eaf0(arg_0);
+    return active;
 }
 
 void function_e70b0(long unit_index, short *value);

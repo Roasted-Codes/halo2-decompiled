@@ -392,6 +392,15 @@ real function_30bf0(vector3f *vector);
 // Earlier trial set: Frame/result and inverse SIMD homes remain. Fraction reuse 211; plane distance first 304; cursor displacement 271; threshold defaults 265; reverse delta assignments 233 (fast; seat increments in body).
 // Earlier trial set: Frame 0x350 agrees; result/range homes, inverse SIMD groups and threshold reloads remain. Early range square 266; scaled-range square 221; threshold maxima 221; bounded seat end 245; plane initializer 221 (fast; seat increments in body).
 // Round 138: clipped vector/in-place/receiver 276/276/276; read-only actor/occupant 195/195; facing value 258; both values 311; motion square 229.
+// Shared scaled differences for delta/motion/both 234/233/225; shared magnitudes 221;
+// with delta/motion/both shared producers 234/265/257; staged native inputs with both helpers 366.
+// Seat cursor advanced in body for each trial; all original producers, grouping and cursor restored.
+// Round 166: Corresponding squared components named at both motion/delta magnitudes:
+// k/j/i 226/226/226; kj/ki/ji/all 221 each; all with complete plane-product names 221.
+// Each trial advances the seat cursor in the body. Original expressions and cursor restored.
+// Round 71: renaming result/secondary/primary/range and a long result compile identically (slot order is not
+// name-driven here); separate `result = K; return result;` exits 269 (1333 bytes), with a long result 269;
+// if/else 3-or-2 with a long result 259; separate exits with a plain short result 328.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {

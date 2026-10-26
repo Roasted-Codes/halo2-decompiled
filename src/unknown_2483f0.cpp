@@ -30,9 +30,16 @@ struct s_particle_location_datum
 	short salt;
 	byte unknown02;
 	byte random;
-	long first_emitter_index;
-	long last_emitter_index;
-	long next_index;
+	union
+	{
+		struct
+		{
+			long first_emitter_index;
+			long last_emitter_index;
+			long next_index;
+		};
+		long link_indices[3];
+	};
 	point3f position;
 	real unknown1c;
 	vector3f vector;
@@ -205,13 +212,21 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
-// score 13 (was 13): link-store effective address and late seed/constant schedule remain;
+// score 5 (was 13): the frame-count load is still hoisted above the float stores;
+// pool local 13; byte-offset record 13; native vector assignment 13; function-scope record 13;
+// unsigned location 13; link array loop 5 (plain 5); plain frame store 6; frame-count local 5;
+// plain float stores 6.
 // tried native record receiver 14f; shared position setter 45f; shared vector setter 47f; both shared setters 49f;
 // scalars before copies 33f; links reverse order 14f; allocation failure return 48f; origin value 61f;
 // immutable allocation index 14f; seed input lifetime 14f.
-// link-store base formation and seed/constant scheduling remain;
+// Earlier link-store base and seed/constant scheduling:
 // link assignment chain 13; forward link chain 13; native link fill 50; shared origin pointer
 // 13; position memcpy 13; vector memcpy 13; both copies 13; native fill and both copies 50.
+// Without the three volatile casts 14 (the frame-count load and store move above the two float
+// stores; a pool data pointer local with indexed link stores 20; the data pointer before the
+// location pointer 14; the frame count stored first 14; 1c before 2c 13 by position only). The
+// frame counter defined in a /GL- file changes nothing. Retail keeps that load after the float
+// stores but hoists the random-seed pointer above them.
 // @retail 0x248620
 long function_248620()
 {
@@ -221,9 +236,8 @@ long function_248620()
 	{
 		s_particle_location_datum *particle_location = &((s_particle_location_datum *)g_51ec8c->data)[location_index & 0xffff];
 
-		particle_location->first_emitter_index = NONE;
-		particle_location->last_emitter_index = NONE;
-		particle_location->next_index = NONE;
+		for (long link_index = 0; link_index < 3; link_index++)
+			particle_location->link_indices[link_index] = NONE;
 		particle_location->position = *g_468788;
 		*(point3f *)&particle_location->vector = *g_468788;
 		*(real volatile *)&particle_location->unknown2c = 0.5f;

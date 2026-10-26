@@ -103,9 +103,19 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // null and successor EBP remain; opening body and private iterator restored. Repeated standalone word form
 // 218 excluded.
 // Native byte/signed-byte/Boolean high-bit fields with Boolean tests 164/164/164; direct tests 164/164/164; native bit values 164/187. Record size stayed 0x98; original flag byte restored.
+// Scalarized iterator datum/record/ordinal member names, their three pairs and all three 164 each;
+// complete member names with outer iterator name 164. Separate pool/iterator and successor homes remain.
+// Round 141: Coordinated provider/caller inline-noinline declarations for eligibility, location update,
+// detach, actor test, attach, transfer, partition update and final update 164 each. Original providers
+// and declarations restored; pool/iterator and successor homes remain.
+// Round 141: Canonical inline-only provider/caller declarations at the same eight boundaries also give
+// 164 each; every provider and original declaration restored.
+// Round 222: split iterator plus datum/index outputs 164; split pointer result 164; returned datum with ordinal output 164; outputs-first contract 164; typed split datum 164; split completion result first 165; split byte completion 164; internal split-step linkage 164.
 // Round 187 twice-used absolute actor slot long/dword/word/outer long with original view
 // 188/188/168/188; same four with full native actor accessor 188/188/168/188 (fast).
 // All restored; separate pool/iterator, early null and successor EBP remain.
+// Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
+// shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

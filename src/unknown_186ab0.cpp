@@ -151,6 +151,8 @@ void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
 // score 135 (was 158): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
+// frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
+// frame 0x54 agrees; request/choice carriers, protected input convention and cyclic alignment differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
@@ -183,6 +185,8 @@ void player_action_initialize(s_player_action *arg_0);
 // test-derived latch publication 135, with two masks 175; two-use pulse plus publication
 // with union/two masks 172/175. Keep direct latch publication; protected input, count,
 // cold clear and output/angle scheduling remain.
+// Direct selection fallback 327; cyclic result/start/both at long width 289/327/326; high-first
+// saturation 316; logical availability 279; fallback/result 323; cyclic/saturation/availability 331.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {

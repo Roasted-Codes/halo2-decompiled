@@ -32,7 +32,10 @@ long function_249e20(s_structure_bsp_view *bsp, long index)
 // direct table fields 44f; direct row expressions 38f.
 // entry saves/index load and audibility EDI allocation differ;
 // shared bit test/read-only bits 9/9; second-arm cursor 44; category loops
-// indexed/shared test/cursor/mask 58/58/46/45; final result selection 37.
+// indexed/shared test/cursor/mask 58/58/46/45; final result selection 37;
+// word and mask locals first 45 (bsp moves to the stack); word/mask after the row 45;
+// word local after the stride 9; mask local after the stride 47; row declared last 21;
+// permuter 600 s found nothing.
 // @retail 0x249e60
 long function_249e60(long cluster_index, s_structure_bsp_view *bsp, long index)
 {

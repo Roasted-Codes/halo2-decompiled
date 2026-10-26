@@ -2061,7 +2061,8 @@ long voice_players_share_team(long other, long player)
 	return false;
 }
 
-// score 25 (was 34): retail tests the mode in eax before saving ebx/esi and copies it
+// score 25 (was 25): mode save boundary differs; the complete peer loop and exits agree.
+// Earlier at 25 (was 34): retail tests the mode in eax before saving ebx/esi and copies it
 // to esi afterwards; ours loads it straight into esi, so both saves come first. Exits agree.
 // Mode/mask saves precede acceptance and cold exits differ; peer loop agrees.
 // early mode/mask saves and cold exits remain; 368/368 bytes.
@@ -2086,6 +2087,8 @@ long voice_players_share_team(long other, long player)
 // Mode/mask saves still precede acceptance; cold exits differ; peer loop agrees.
 // Live mode 34; function-scope mask before/after result 54/54; signed mask 34;
 // enclosing mask with live mode 54; signed live mask 34; rejection to sole exit 34; enclosing exit 54.
+// Accepted-boundary mask zero with signed equalities/range 56/125; unsigned 56/125;
+// complete-query mask with signed equalities/range 47/51; unsigned 47/51. Shared getter retained.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
@@ -2872,7 +2875,8 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
+// score 363 (was 394): frame 0x54 and scalar homes agree; entry registers and unrolled cursor bias differ.
+// Earlier at 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
 // Earlier: frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
 // byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
@@ -2898,11 +2902,14 @@ struct s_voice_route_choice
 // nearest-distance-bool 572; nearest-distance-word 533.
 // nearest-distance-descriptor 538; candidate-distance-bool 572.
 // candidate-distance-word 525; candidate-distance-native-mixer 576.
+// Radio predicate accumulation, bitwise long with either comparison order 436/436;
+// bitwise Boolean 363/363; logical long 1082/1082;
+// logical Boolean 1087/1087. Byte bitwise accumulation 363 plain kept; original indexed nearest selection retained.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
 {
-	long radio = 0;
+	bool radio = false;
 	long nearest = NONE;
 	dword headset = 0;
 	for (long i = 0; i < count; i++)
@@ -2915,9 +2922,8 @@ void function_57eb0(s_voice_player_settings *settings, long talker,
 		if (choices[i].mode == 2 || choices[i].mode == 3)
 		{
 			settings->unknownc8[player] |= 1 << talker;
-			if (choices[i].mode == 2)
-				radio = true;
-			else if (!radio && choices[i].mode == 3 &&
+			radio |= choices[i].mode == 2;
+			if (!radio && choices[i].mode == 3 &&
 				(nearest == NONE || choices[nearest].distance > choices[i].distance))
 				nearest = i;
 		}
@@ -3088,6 +3094,11 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
 
 // score 139 (was 139): channel/cursor/count registers and route homes differ;
 // frame pointer 188; short stride 163; short index 139; recipient-bit reuse 161; route name 139.
+// Round 53: retail keeps the channel in ebp from entry (its home then holds the route) and spills
+// the current member; ours gives the member ebp and reloads the channel. A packet cursor beside the
+// consumed count (retail keeps both) declared first 141f, after the count 164f, before the count
+// 139f; with an if-set stride 165f; member at loop scope 141f; 36 cursor/stride/member forms
+// screened, none puts the channel in a register.
 // frame and extent agree; channel/cursor/count registers and route homes differ.
 // Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
 // entry route lifetime 139; ordinary delivery arm first 162.

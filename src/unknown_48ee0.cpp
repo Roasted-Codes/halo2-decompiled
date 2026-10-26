@@ -51,6 +51,10 @@ extern real g_4c9798[36];
 // Round 188 complete sizing scope, unsigned-word mode, depth-bound scope, their
 // pairs/all, and signed-word mode with sizing scope: 300/291/295/297/300/291/297/297.
 // All original scalar lifetimes, native mode, geometry and protected interfaces retained.
+// Round 167: Individual or mixed bounded dimension carriers:
+// width short 296; width word 296; height short 324; height word 324;
+// short/word 325; word/short 325; short/int 296; int/word 324.
+// Original native limits, far-normal copy and all protected call interfaces restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {
