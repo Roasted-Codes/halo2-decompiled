@@ -1275,7 +1275,11 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 269 (was 311): Frame and sampler carriers agree; captured descriptors and store scheduling remain.
+// score 269 (was 269): Frame 0x28 and sampler agree; captured descriptors and
+// destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;
+// aggregate colors both/direct/mapped 273/273/269; aggregates with unsigned/signed formal 291/291;
+// aggregates with long source 283.
+// Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native
