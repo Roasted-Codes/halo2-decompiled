@@ -45,6 +45,9 @@
 // second displacement 661/670/675; both scalers with shared integer truncation
 // 683, with separate displacement 704. Second-scaler forms recover frame 0x60
 // (first +6), but regress; original shared scalers and all values restored.
+// Round 197: complete first/second input field reads 674/671; both camera offsets at each use 700;
+// both inputs 694; first/second input with offsets 661/661; all inputs/offsets 692;
+// all observations with read-only secondary shape 692. All retain frame 0x64; original body restored.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

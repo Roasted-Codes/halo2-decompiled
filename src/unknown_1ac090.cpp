@@ -773,6 +773,8 @@ bool function_1f8660(long arg_0);
 // remain in frame 0x80c; opening body restored.
 // Round 195: complete k-j-i projections/status 174/174; both shared differences 172/172;
 // every component product/status 173/173; both shared differences 172/172. Gains of one/two restored.
+// Round 197: read-only actor/state/both views 174/174/174; distinct selection/validation
+// reference lifetimes alone/actor/state/both 174/174/174/174; actor lookup at every use 230.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {

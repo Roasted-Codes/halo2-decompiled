@@ -199,6 +199,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Non-reset test-produced results: case 14 666; case 9 665; primary tests 664;
 // local-state/vehicle tests 649; direct capability calls 643; health tests 653;
 // status/child results 683; all non-reset groups 697. Original result graph restored.
+// Round 197: direct-flag cases after case 18, retained case-two result: original local
+// qualifications 656; plain player/result/blocked 769/651/656; player+result, player+blocked,
+// result+blocked, all plain 701/785/665/736. All original cases, qualifications and bodies restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

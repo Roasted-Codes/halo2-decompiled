@@ -246,7 +246,7 @@ vector3f *function_143070(matrix3x3 const *arg_1, vector3f const *arg_0, vector3
 void placement_set(s_placement *arg_0, vector3f const *arg_1, point3f const *arg_2, vector3f const *arg_3, short arg_4);
 void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_object_246eb0 const *arg_3, long arg_4);
 
-// score 368 (was 380): Frame 0xb0 agrees; entry EBP preservation and random/geometry/getter homes remain.
+// score 368 (was 368): Frame 0xb0 agrees; entry EBP preservation and random/geometry/getter homes remain.
 // Frame 0xbc/0xb0, entry EBP save and random/geometry/getter scheduling remain.
 // Earlier: Frame 0xbc versus 0xb0; entry EBP preservation and random/geometry homes remain.
 // Earlier form: exact 0xb0 frame; late EBP save, random stores/getter expansion differ.
@@ -286,6 +286,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Native flag four 393; with velocity pointer/admitted pointer/pointer arms/value arms
 // 394/393/394/410; with complete blend products/duration/all-four scalar draws 393/392/428.
 // Native flag declaration and every body form restored.
+// Round 197: independent blend/probe-point/probe-direction objects 428/368/368;
+// blend-point/probe-point, blend-point/direction, both probe objects, all three 428/428/368/428;
+// full independent native objects on the recovered collision/velocity-source frame 466. All restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)
