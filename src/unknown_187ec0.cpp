@@ -548,7 +548,7 @@ dword vector3d_compress(vector3f const *vector);
 #include "unknown_1765e0.h"
 long function_189400(s_sound_position const *position, long object_index, long tag_index, real scale);
 
-// score 77 (was 89): frame 0x48 agrees; first counter spill recovered; effect/forward inputs and second scan differ.
+// score 77 (was 77): frame 0x48 agrees; first counter spill recovered; effect/forward inputs and second scan differ.
 // Earlier forms and observations:
 // frame 0x48 agrees; effect/forward registers and first-counter spill remain.
 // Point setter 89; component loop 317; origin value 150; description position 105;
@@ -559,6 +559,10 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // This round:
 // Narrow first short/word/byte 120/120/120; narrow second short/word/byte 77/77/77;
 // both short/word 126/126; signed-short second scan 77 plain, 337/336 bytes.
+// First/second/both array library fills 99/102/101;
+// local defaults/library defaults before point 77/101;
+// compression before point copy 75; location before velocity 76;
+// both sound copy orders 74 (three-point gain, rejected).
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)

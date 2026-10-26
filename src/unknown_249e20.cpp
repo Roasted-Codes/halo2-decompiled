@@ -186,6 +186,9 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // Direct receiver: plain 65; active 171 bytes unchanged, raw differing rows remain 65.
 // Wrapped byte offset/native byte pair/record receiver 78/81/80; byte endpoints 83;
 // zero/upper defaults with byte offset 75/78; fraction/production exits 78/79. Entry constants and branch saves remain.
+// Fallback masked byte/word/long/dword carriers 78/78/78/78;
+// lower field observations 77; produced span 65;
+// both bound fields 77; byte sample with direct bounds 83.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {
