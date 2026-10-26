@@ -1247,28 +1247,31 @@ PRIVATE __forceinline long held_object_110ab0(long unit_index, short slot)
 
 bool function_c70b0(long unit_index);
 
-// score 347 (was 347): overlay/frame and depletion/interruptibility homes differ;
+// score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization remain.
+// Earlier: overlay/frame and depletion/interruptibility homes differ;
 // direct parameter plus word/native interruptibility 376/378, second depletion 337
 // (plain: thirteen caller matches lost), native result 382, held helper inline 358.
-// score 194 (was 347): frame 8 and depleted BL recovered; object/header/state registers
+// Earlier: frame 8 and depleted BL recovered; object/header/state registers
 // and count-result materialization differ. Second predicate 194; native interruptible 341;
 // status names 347; size policy 602; overlay-first exits 415; conditional first 336;
 // conditional first with native interruptible 335.
-// score 164 (was 194): retail length recovered; object/header/state registers and count joins differ.
+// Earlier: retail length recovered; object/header/state registers and count joins differ.
 // Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
 // byte result 164; unsigned identifiers 218.
-// score 164 (was 164): entry receiver/count joins remain; byte interruptible 164;
+// Earlier: entry receiver/count joins remain; byte interruptible 164;
 // signed-byte depletion 164; state-first receiver 164; direct interruptibility 348; query result first 332.
-// score 164 (was 164): entry pool/state and count joins remain; direct-parameter forms:
+// Earlier: entry pool/state and count joins remain; direct-parameter forms:
 // signed-byte result 322; short result 355; entry held outputs 322; state-switch default 370;
 // branch-local status defaults 253. Opening argument handling restored.
-// score 164 (was 164): Frame eight agrees; entry pool/state registers and count joins remain. Entry byte result 164; valid first count 328; guarded second clear 328; signed-byte result 164; state identifier before overlay 164 (fast).
-// score 164 (was 164): entry pool/state registers, count joins and result normalization remain.
+// Earlier: Frame eight agrees; entry pool/state registers and count joins remain. Entry byte result 164; valid first count 328; guarded second clear 328; signed-byte result 164; state identifier before overlay 164 (fast).
+// Earlier: entry pool/state registers, count joins and result normalization remain.
 // Shared held query at both/first/second sites 164 each; signed-byte/native helper slot 169/327;
 // helper result selection 363; selection with byte/native slot 357/348.
 // entry pool/state and signed-count result joins remain;
 // native first/second/both slots 164 each; native first/second/both counts 164 each;
 // combined native fields 164; existing channel-state member 164.
+// Complete first/second/both depletion selections 314/357/357; rejection predicates
+// first/second/both 164/164/164; canonical true return 205; selections with true return 355. All restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {

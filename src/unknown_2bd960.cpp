@@ -364,6 +364,9 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 	}
 }
 
+// score 43 (was 43): spline/index/points entry convention and first source-address lifetimes remain.
+// Indexed sums/scales/both 41/41/41; native sum/scale setters with index home 135/43;
+// native middle copies 83; previous/both wrapped pointers from current 41/82. All restored.
 // @retail 0x2bdd70
 void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points)
 {
@@ -399,6 +402,9 @@ void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points
 	last_output.z *= 0.5f;
 }
 
+// score 87 (was 87): frame 0x54/0x50, incoming fraction XMM3/XMM2 and coefficient homes remain.
+// Flat coefficient table 87; flat/direct output 109; flat row for 200; component
+// output alone/flat/direct 170/170/110; coefficient accumulation 89; flat row accumulation 185. All restored.
 // @retail 0x2bde90
 void function_2bde90(real t, point3f *out, point3f *points)
 {

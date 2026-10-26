@@ -305,7 +305,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
-// score 186 (was 186): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes remain.
+// score 186 (was 186): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
+// Frame 0x38 agrees; scale callee EBX/EAX and constant pushes remain.
 // Earlier: Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
 // Frame 0x38 agrees; scale callee EBX/EAX and constant-argument pushes still differ.
 // Earlier 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
@@ -320,6 +321,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // workspace 206; equal-place assignment chain 199; team case first 218.
 // Round 109: Type-four padding-only clear 272; team padding-only clear 204; complete type-five assignment 228; all three forms 301; distinct native case settings names 199.
 // Round 111: Type-five/team/place native scopes 189/196/199; reverse type-four stores 204; type-four cases first 220; combined native scopes 186 kept; type-five value initialization alone/combined 193/190; combined lexical home 186; combined reversed stores 191.
+// Complete type-four team/flag, output-first, equal-first/equal-last schedules
+// on first case 186/193/192/193; on both cases 187/193/198/199. All restored.
 // Builder scale/type-four/type-five/team inline-noinline declarations 186 each; place workspace beside retained pair 186; type-four workspace beside pair 203; type-five-first/separate-place-first cases 213/192.
 // Round 113: Shared type-five overwritten clear omitted 224; equal team-field chain 185 (one-point gain dropped); type-four memset with shared workspaces 203; shared declarations reversed 186; complete shared-record entry initialization 237.
 // Type-four native value reset 216; first-case shared three/four 193/193; second-case shared five 192; all

@@ -43,7 +43,8 @@ const dword g_455978[81] = {
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
 
-// score 350 (was 350): Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
+// score 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
+// Earlier: Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
 // frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
 // both path lifetimes 485; count just before scan 366; read-only body 370; native transform copies 370.
@@ -57,6 +58,10 @@ const dword g_455978[81] = {
 // translation loop 350 kept (plain); radial scaling/blend loops 354/354; combined producers 492.
 // Direction/radial/both/endpoint/ray/all spatial declaration scopes 350 each;
 // complete native endpoint value 403; paired bounds-axis producer 466. All restored.
+// Complete candidate/blend/both product phases 350/350/350; both radial square terms 391;
+// radial terms with candidate/all phases 391/391; six-use bounds origin 492, with candidate products 492. All restored.
+// Complete lower/upper/both bound selections 413/466/484; complete horizontal square 350;
+// bounds plus square 484; callback ending before cleanup 350; bounds/callback 484; square/callback 350. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

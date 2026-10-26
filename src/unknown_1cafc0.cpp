@@ -538,7 +538,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 	graph_weapon_type_request(graph, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 }
 
-// score 399 (was 399): frame 8 versus 12 and hidden-result homes still differ.
+// score 399 (was 399): frame eight versus twelve and hidden query-result homes still differ.
+// Earlier: frame 8 versus 12 and hidden-result homes still differ.
+// frame 8 versus 12 and hidden-result homes still differ.
 // Byte success 403; fallback fields at use 551; request fields at use 639;
 // library record move 628; outer name-snapshot declarations 444. Byte success kept.
 // Round 303: graph after resolution 621; fallback snapshot order 544; request snapshot order 419;
@@ -546,6 +548,8 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // hidden-result homes and frame eight versus twelve remain; word success 533;
 // shared request guard 403; resource-array base 426; urgent-array base 508; both bases 599.
 // Request class/mode/type 399; fallback class/mode/type 544; inherited ordinal scope 403; inherited while 403; ordinary group inline 1794; request class/type/mode 399 kept; request mode/type/class 419; request type/mode/class 403.
+// Output mode/class/type receivers 399/435/420; mode-class/mode-type/class-type/all receivers
+// 435/420/435/435; all receivers after record copy 421.
 // First/fallback/both native result-field copies 518/499/546; their immediate-index
 // forms 518/499/546; mutable result fields 546; shared query workspace 597. Frame remains eight in separate-copy forms.
 // Primary/fallback/both library result publication 415/431/483; name library copy 399;

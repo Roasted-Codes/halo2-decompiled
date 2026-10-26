@@ -1148,7 +1148,9 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
-// score 172 (was 172): Frame and length agree; oldest/false carriers and copy-loop entry still differ.
+// score 172 (was 172): Frame and length agree; oldest/false carriers, copy-loop entry and allocator save still differ.
+// Earlier: Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
+// Frame and length agree; oldest/false carriers and copy-loop entry still differ.
 // Earlier at 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Earlier: retained oldest/false registers and copy-loop entry differ;
 // scan getter 302; copy getter 325; both getters 361; unsigned byte progress 215; decode buffer first 213; forced-inline getters 223.
@@ -1163,6 +1165,8 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // scalar names/failure join 172; scope/success join/scalar names 271.
 // On the shared failure-result body, byte/bool/signed-byte/long results give 193/219/193/238;
 // native initial-window count/first with short/bool/byte/signed-byte results give 269/278/274/274.
+// Single-result reset at payload/copy/CRC phases and validation tests, short
+// 256/231/214/255, Boolean 229/268/265/276. All restored.
 // Independent bool/byte/short/long completion with literal returns 210/210/193/255;
 // with separate callback results 206/206/189/253. All reverted.
 // On common-failure result: oldest after/before result and result before receiver 229/229/229;

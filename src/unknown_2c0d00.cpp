@@ -874,15 +874,19 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
     return (node->flags & 1) && (!(node->flags & 2) || !function_1fa6b0(node, data));
 }
 
-// score 385 (was 385): Frame 0x28 agrees; radius/zero schedule, edge/history homes and indexed node selection remain.
+// score 385 (was 385): frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
+// Earlier: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
+// Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
+// Earlier: ordinary previous/first/both history 399/401/400;
+// word node index 408; alternate normalizer 401; indexed node pair 428;
+// indexed pair with ordinary previous history 438. Frame and edge/history homes remain.
+// Earlier: frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
+// Frame 0x28 agrees; radius/zero schedule, edge/history homes and indexed node selection remain.
 // Radius/zero schedule, edge/history homes and node selection remain.
 // frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
 // frame 0x28 and length agree; zero register, edge/history homes and indexed node loads differ.
 // Earlier context: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
-// Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
 // ordinary previous/first/both history 399/401/400;
-// word node index 408; alternate normalizer 401; indexed node pair 428;
-// indexed pair with ordinary previous history 438. Frame and edge/history homes remain.
 // frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
 // Earlier context: frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
 // Reduced trials: direct dot predicate 401; shared dot product 401; immutable predicates 401; geometry
@@ -891,16 +895,20 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // j91: frame 0x30 versus 0x28; edge/history homes and indexed node selection differ; origin snapshots gain only one and grow frame to 0x38.
 // first offset in place 401; second offset in place 401; both offsets in place 401; first offset origin
 // snapshot 400; second offset origin snapshot 400
+// Earlier: frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
 // frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
 // Earlier context: frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
 // Node fields at use 420; vertex words at use 414; endpoint values 432; normal assignments 401;
 // split crossing phases 399; late second workspace 399; split phases/ordinary previous history 397;
 // Boolean ring direction 399; vertex words/ordinary previous, first, both history 414,415,415;
 // vertex words/Boolean ring direction 408. Retained code 1307/1312, checker extent 1312/1312.
-// frame 0x28 and length agree; zero register,
+// Earlier: frame 0x28 and length agree; zero register,
 // edge/history homes and indexed node loads differ. Later first/second/both
 // differences in place 397/397/397; one displacement 397; one radial offset
 // 385; offset with shared displacement 385; phase scopes 397; offset/scopes 385.
+// Native/promoted cached flags 385/401; explicit flag guards 414/409;
+// node fields at use 384; native/promoted flags with receiver at use 384/383; flag-word single result 406.
+// frame 0x28 and length agree; zero register,
 // DL131: Radius/zero schedule, edge/history homes and node selection remain; result-first query
 // 441; nested query result 448; overall single result 394; overall/query result 414; indexed nodes
 // 430; indexed/result query 396; indexed/nested query 427; overall/indexed/query result 450.
