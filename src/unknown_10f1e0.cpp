@@ -14,6 +14,7 @@
 #include <xmmintrin.h>
 #include <math.h>
 #include "unknown_11cc90.h"
+#include "bit_vector.h"
 
 /* the unit (a view of the object data) */
 struct s_unit_animation_object
@@ -390,43 +391,36 @@ bool function_1d9320(s_1d9240 *slot);
 void function_1d90e0(long render_model_index, long node_index, transform4x3f *nodes, transform4x3f const *marker_matrix,
 	transform4x3f const *target_matrix, real weight, long node_count);
 
-// score 42 (was 42): frame 0x104 agrees; visited update still loads, ORs and stores.
-// Branch-local graph 42; saved mode 74; const model 42; visited base 42;
-// iterator-result scope 42; unsigned source 42; unsigned target 42; both handles 42.
-// score 42 (was 42): model member and external model/unit/definition references 42;
-// shared entry count 42; entry graph query 42; all graph queries 42; typed model plus graph queries 42.
-// Source continue 42; visited continue 42; three lookup continues 42; shared lookup count 42; class
-// value 89; visited extent 42; target-object lifetime 42; blend-weight lifetime 42.
-// Round 127: shared visited-word address 105; unsigned-int words 42; both 105;
-// class iterator noinline 42; mode iterator noinline 42; both noinline 42;
-// marker query noinline 42; transform noinline 42.
-// score 42 (was 42): address-first memory OR and second-call staging remain; mask-first assignment 42;
-// source/target/both Boolean lookup results 42; shared node mask 118; shared word index 109;
-// source/target Boolean results with mask-first assignment 42.
-// score 37 (was 42): the shift-form visited test gives retail's memory OR update but retail tests a
-// mask; back-edge reload order and the 0x1d90e0/second-lookup staging registers still differ.
-// Shared bit-vector setter 42; iterator stores before the graph 99; graph_tag_get 42; call results > 0 38;
-// iterator a before b 41; arms swapped 40; markers in the loop 41; visited declared first 37.
-// score 37 (was 37): the mask/shift test, back-edge reloads and later call staging differ.
-// Marker/transform/both inline declarations 37; shared exit 37; exit plus each/both declarations 37; iterator inline declarations 37.
-// shift test, back-edge reload order and second-call/transform staging remain.
-// State pair helper 148; all state graph queries 37; both 148; entry state query 37;
-// mode/graph/class 105, graph/class/mode 44, class/graph/mode 106, class/mode/graph 110.
-// Frame agrees; the shift test versus retail mask, state/table reload order and
-// second lookup/transform staging still differ; shifted word expression 37; clear before object
-// chain 191; shift and clear order 191; entry marker workspaces 37; entry markers and shift 37;
-// entry markers and clear 191; complete workspace boundaries 191; model after clear 191.
+// score 37 (was 37): frame 0x104 agrees. Retail tests the visited bit with a mask and still ORs
+// it into memory after computing the word address; with the shift-form test ours gets that update
+// but not the test, and with a mask test (the existing bit_vector_test) the update becomes
+// load/OR/store and two call setups change registers (42, 545 bytes). The back-edge reloads of
+// state and the tag table run in the other order, and the second lookup and 0x1d90e0 argument
+// setups use other scratch registers.
+// Round 49: bit_vector_test with/without bit_vector_set 42/42; mask test with 1UL, dword, `x = x |`
+// or divide/modulo sets 42-47 (screened); the state's existing pairs method for the alternate arm
+// much worse; node count tested inline 33 aligned (worse); do/while and while loops 37; the
+// iterator self-reference and the count reference removed 37; the existing bit_vector_set 37
+// (kept with the removals).
+// Earlier (37-191): branch-local graph; saved mode 74; const model; visited base; iterator-result
+// scope; unsigned source/target/handles; model member and external model/unit/definition
+// references; shared entry count; entry/all graph queries; typed model; source/visited/lookup
+// continues; shared lookup count; class value 89; visited extent; target-object and blend-weight
+// lifetimes; shared visited-word address 105; unsigned-int words; class/mode iterator noinline;
+// marker query/transform noinline and inline; mask-first assignment 42; Boolean lookup results;
+// shared node mask 118; shared word index 109; iterator stores before the graph 99; graph_tag_get
+// 42; call results > 0 38; iterator a before b 41; arms swapped 40; markers in the loop 41; visited
+// declared first 37; shared exit 37; state pair helper 148; state graph queries 37; mode/graph/
+// class orders 44-110; shifted word expression 37; clear before object chain 191; entry marker
+// workspaces 37; complete workspace boundaries 191; model after clear 191.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
 {
-	// The iterator pointer remains a stack argument in retail.
-	s_graph_pair_iterator *const *iterator_reference = &iterator;
-	iterator = *iterator_reference;
 	if (object_index != NONE && target_index != NONE && weight > 0.0f)
 	{
 		s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
-		long const &initial_node_count = graph ? (long)(short)graph->node_count : 0;
+		long initial_node_count = graph ? (long)(short)graph->node_count : 0;
 		if (graph && initial_node_count != 0)
 		{
 			s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(object_index);
@@ -463,7 +457,7 @@ void __stdcall function_113980(long object_index, long target_index, bool altern
 					{
 						function_1d90e0(*(long *)(model + 4), marker.node_index, nodes, &marker.node_matrix,
 							&target.matrix, weight, node_count);
-						visited[marker.node_index >> 5] |= 1 << (marker.node_index & 31);
+						bit_vector_set(visited, marker.node_index, true);
 					}
 				}
 			}
