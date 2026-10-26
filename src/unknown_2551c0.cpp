@@ -253,9 +253,9 @@ struct s_2556c0
 // score 1 (was 1): the byte test uses the other SIB base and index slot;
 // the address is the same. Immutable index 1; index predeclared/read before the blocked test 1 each;
 // edge predeclaration, a post-bounds edges base, a field-base flag pointer and an exact flag pointer 1 each;
-// scoped favor-speed-off 37.
+// scoped favor-speed-off 37; bool return, as its caller's tests of al show, 1 (kept).
 // @retail 0x2556b0
-long function_2556b0(point3f const *arg_0, vector3f const *arg_1, long arg_2, real *arg_3)
+bool function_2556b0(point3f const *arg_0, vector3f const *arg_1, long arg_2, real *arg_3)
 {
 	s_pathfinding_data *local_0 = NULL;
 	s_2556b0 *local_1 = (s_2556b0 *)g_4e0348;
@@ -529,31 +529,25 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 	return local_0;
 }
 
-// score 200 (was 205): first length, extent and radius homes still differ;
-// fallback timing initialized before query 200; later heading vector 219;
-// later object lookup 223; shared reverse scale 223; entry vector homes 205.
-// Frame and first-length/radius homes still differ;
-// exhaustive timing branches 205; trace distances after location 213; first length in guard 200;
-// completed direction reused 200; timing and trace lifetimes 206.
-// score 151 (was 200): frame 0x58 versus 0x54 and first-length/radius homes remain;
-// earlier interval lifetime 151; earlier request 226; earlier side 200;
-// nested normalizations 200; later radius on fallback body 203.
-// score 151 (was 151): frame 0x58 versus 0x54; first-length/radius homes remain.
-// Early-declared exhaustive interval 205; entry first length 151; trace/location names 151;
-// pre-normalization interval 149; byte side 220. Original body retained.
-// score 143 (was 151): frame 0x58/0x54 and first-length/radius homes remain.
-// Actor/target/both references 151/151/151; unit handle/radius values 245/232;
-// actor/target point values 240/249; heading-length result/reduced guard 143/143, latter retained.
-// Interval role name 151; entry interval lifetime 168; reversed aggregate 151;
-// first/second planar memcpy 151/151.
-// score 143 (was 143): Frame and scalar homes remain; normalized direction/heading/both
-// 243/243/269; immutable first length 143; total reach 145; combined range guard 143; separate
-// original/adjusted projection 151; with normalized direction 245.
-// score 143 (was 143): frame and scalar homes remain; interval shares first timing output
-// early-initialized/declared/conditional/late 142/205/142/205; second output 205/205/205/205.
-// score 143 (was 143): frame 0x58/0x54 and first-length/radius homes remain;
-// direction/heading/side/reverse vector names 143 each; location/request names 143/143;
-// combined vector/all workspace names 143/143.
+// score 141 (was 143): frame 0x58 versus 0x54 and first-length/radius homes remain; retail keeps
+// the radius in the argument home and adds the object size only after the projection test.
+// Fallback timing initialized before query 200; later heading vector 219; later object lookup 223;
+// shared reverse scale 223; entry vector homes 205; exhaustive timing branches 205; trace distances
+// after location 213; first length in guard 200; completed direction reused 200; timing and trace
+// lifetimes 206; earlier interval lifetime 151; earlier request 226; earlier side 200; nested
+// normalizations 200; later radius on fallback body 203; early-declared exhaustive interval 205;
+// entry first length 151; trace/location names 151; pre-normalization interval 149; byte side 220;
+// actor/target/both references 151/151/151; unit handle/radius values 245/232; actor/target point
+// values 240/249; heading-length result/reduced guard 143/143, latter retained; interval role name 151;
+// entry interval lifetime 168; reversed aggregate 151; first/second planar memcpy 151/151;
+// normalized direction/heading/both 243/243/269; immutable first length 143; total reach 145;
+// combined range guard 143; separate original/adjusted projection 151; with normalized direction 245;
+// interval shares first timing output early-initialized/declared/conditional/late 142/205/142/205;
+// second output 205/205/205/205; direction/heading/side/reverse vector names 143 each;
+// location/request names 143/143; combined vector/all workspace names 143/143.
+// Default duration in an if/else or ternary after the query 205/205 (frame 0x54, 954 bytes);
+// with the radius sum after the projection test 211 (the 0x1e4a50 call then sinks too);
+// 0x2556b0 returning bool, as retail's tests of al show 141 (kept); with the if/else 205.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {

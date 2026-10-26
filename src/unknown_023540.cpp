@@ -2566,7 +2566,7 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
 
-// score 530 (was 544): Frame 0x214 versus 0x200; order, coefficient homes and sample paths remain.
+// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 // Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
 // unsigned handle 544; native bucket fields 544.
 // Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
@@ -2583,6 +2583,9 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Native sample arrays 554; byte output cursor 554; exact determinant tree 554; unsigned byte size 554; signed-byte success 563 (fast).
 // Next matrix at loop tail 586; sample input cursor 552; short count override 554; entry direction workspace 554; positive allocation scope 544 kept (plain); scope plus sample cursor 542, extra two rejected.
 // Round 151: Live structure 561; live cache entry 530 kept; both live 544; six determinant terms 544; terms with structure/cache/both 561/530/544; direct bucket input 544.
+// Short/word eligibility 537/537; short/word cache hit 534/534; sampled-transform,
+// inverse-rotation and both workspace names 530/530/530; inverse declared at sample
+// entry 530; Boolean success with live cache observations 535.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2825,6 +2828,10 @@ struct s_2a2f0_record
 };
 
 #pragma inline_depth(0)
+// score 145 (was 145): one missing register copy of the bitmap count before the bounds compare
+// (retail inlines the bitmap lookup 0x137550); everything else aligns. Swapped bounds compare 145;
+// the existing lookup called in a full-depth window 258 (out of line); plain count read 167;
+// separate count copy 145 (propagated); file-local forced lookup 258/297 (in a window, spills).
 // @retail 0x2a2f0
 void __stdcall function_2a2f0(long tag, real alpha)
 {
@@ -3037,6 +3044,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // round 106: Frame 0x2c agrees; capability/save and state expansion remain. Packed range clamp 1199; early exponent lifetime 1201; shared gain divisor 1194; late input selectors 1204; late clipped width 970 (one-point gain rejected).
 // Negative permission at use 1187 (retail length); small permission at use 1192; both at use 1190;
 // native permission bit mask 1183; shared clamp early returns 971.
+// Mode cases 1/0/2/3, 2/0/1/3 and 0/2/1/3 971 each; 0/1/3/2 and
+// 2/3/0/1 973 each; function-scope color inputs 971; shared upper/lower
+// quantizer scope 971; native long success 1194.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

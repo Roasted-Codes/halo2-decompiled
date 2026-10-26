@@ -222,17 +222,21 @@ struct s_weapon_definition_view
  byte *barrels;
 };
 
-// score 149 (was 149): frame 0x20 versus 0x1c; weapon-table CSE and
-// sentinel/trigger homes differ; invalid weapon initialization 149; flat
-// fallbacks 149; unsigned hand 149; typed trigger state 149; state at use 149.
-// score 149 (was 149): selector/frame interference remains; barrel field at use 159;
-// selector inside positive guard 159; native mode 149; read-only tag 149;
-// read-only trigger 149; active interval 150; shared false stores 155;
-// selector declared before receiver 149.
-// score 149 (was 149): Frame 0x20 versus 0x1c, initial sentinel and second-slot pool load still
-// differ. Separate bounded result 149; direct native bounds 188; flag field at store 149; direct
-// mode-two result 178; shared mode-one stores 149; trigger fields at use 175; native weapon
-// receiver 149; handle workspace name 149.
+// score 149 (was 149): frame 0x20 versus 0x1c; retail reloads the object table for the second weapon
+// slot query (ours shares one lookup), clamps an int barrel with no count guard (in eax/ecx, keeping
+// the result pointer in ebx and the trigger-state cursor in the result parameter's home) and tests
+// the trigger count twice before the trigger loop.
+// Earlier: invalid weapon initialization 149; flat fallbacks 149; unsigned hand 149; typed trigger
+// state 149; state at use 149; barrel field at use 159; selector inside positive guard 159; native
+// mode 149; read-only tag 149; read-only trigger 149; active interval 150; shared false stores 155;
+// selector declared before receiver 149; separate bounded result 149; direct native bounds 188; flag
+// field at store 149; direct mode-two result 178; shared mode-one stores 149; trigger fields at use 175;
+// native weapon receiver 149; handle workspace name 149.
+// Round 69: long barrel without the count guard 180 (618 bytes; frame 0x1c, retail's clamp and
+// parameter-home reuse, but the shared lookup shifts the rest); short barrel without the guard 159;
+// long barrel with the guard 176; the existing 0xcbd50 for both queries 149 (identical code); long
+// barrel without the guard plus a short hand index 218. Unit pointer local, a pointer to the
+// workspace, scalar results copied in, NONE stores first and a trigger-count guard compile identically.
 // @retail 0x82d20
 void function_82d20(long object_index, s_object_relevance_source *source, s_weapon_activity_result *result)
 {

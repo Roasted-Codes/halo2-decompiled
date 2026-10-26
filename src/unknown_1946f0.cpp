@@ -128,11 +128,14 @@ void function_194d30(s_bitstream *stream, vector3f const *up, vector3f const *fo
 	function_195720(stream, q, 8);
 }
 
+// score 96 (was 96): retail keeps 1/63 in xmm2 and 2 in xmm3 and finishes x (both products) before
+// converting y; ours keeps 1/63 in xmm0 and scales x and y by two late. Retail also pops the decoded k
+// and sums i, k, j from memory (a block boundary before the normalization), and scales the normalized
+// vector in place. Single-expression grid values 126 (1/63*2 folds into one constant); x finished
+// before y 96; `vector3f_scale` with the magnitude call 96; the existing decode_direction_194d30
+// helper 114 (aligned 34 -> 26: the final scale then matches retail and the hand-written decode copy
+// goes; the decode registers and x87 reload remain); that helper as plain inline 344 (not inlined).
 // @retail 0x195070
-// score 96 (was 96): retail multiplies the two scale factors in the other
-// order, by two first, and keeps them in xmm2 and xmm3 with the two components
-// in xmm0 and xmm1; ours keeps the first factor in xmm0 and the components in
-// xmm1 and xmm2
 void function_195070(s_bitstream *stream, vector3f *out, real lo, real hi, long bits)
 {
 	if (!function_1957d0(stream))

@@ -591,6 +591,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 }
 
 // score 201 (was 201): Frame 0x50/0x54 and protected child-iterator register contract remain.
+// frame 0x50/0x54, early EBX and child-iterator convention remain.
+// Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
+// frame 0x50/0x54 and child-iterator registers differ;
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
 // child category equality 251; dword friendliness plus speed snapshot 229.
 // Predicted-point force-inline 232; depth zero 510; size policy 355;
@@ -604,6 +607,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // bytes 232. Frame 0x50/0x54 and protected child-iterator register contract remain; original body restored.
 // Point helper output return 232; point value return 232; output-first helper 231 (one-point gain rejected);
 // complete vehicle velocity 238; speed guard 232. Frame/child convention remains; original body/helper restored.
+// Native signed/word/short unit counts 211/210/210f; count/friendly/both defaults after
+// child initialization 211/211/211f; word count with later defaults 210f;
+// native friendliness with actual unit count 230f. One-point gains rejected; all restored.
 // Count-first friendliness AND/logical/conditional/explicit forms 201/232/211/211;
 // count-last counterparts 223/233/252/252. Boolean AND keeps every qualifying-child
 // team test and counter; 201 kept after ordinary check. Frame/child convention remain.

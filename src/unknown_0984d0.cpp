@@ -71,7 +71,7 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 }
 
 /* kind 3: creation of an entity and the entities linked to it */
-// score 18 (was 22): the callback setup still differs: our table/owner/vtable loads are hoisted
+// score 18 (was 18): the callback setup still differs: our table/owner/vtable loads are hoisted
 // above the argument pushes, where retail loads them after the entry value (all in ecx). The loop
 // on `result && i < count` with the nested status test and its else spills the index around the
 // call as retail does, with no volatile reads, goto or self reference; without the outer else the
@@ -90,6 +90,9 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 // status, failure first, common rollback, element pointers, argument record, array names/order,
 // append increment, array initialization, unsigned count, callback index name, status
 // declaration order, inline depth zero.
+// Round 318: on the natural index-spill body, long/short status 148/142;
+// status after header 72; late long/short status 142/142; twice-used release mask 18;
+// one status exit 18; late status with mask 72. Frame and callback setup remain. All restored.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {
@@ -313,6 +316,9 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 // Actual invalid counts: inherited/while/for/early cursor steps 171/212/213/211;
 // actual valid counts with visited-count comparison 194/211/212/212. Items/data
 // validation carriers and loop-entry reload remain; opening body and helper restored.
+// Direct case scopes in validation/chain/notify, chain/validation/notify, notify/validation/chain,
+// and notify/chain/validation orders 115/162/212/186; ordinary inline producer with those orders
+// 115/162/212/186. Existing dispatch and producer restored.
 // Consistent existing helper input orders 115 (five forms); entry validity 143;
 // entry cursor declarations 115; both entry storage lifetimes 143. Original body restored.
 // Plain pretested for with both/size/handle/no helper producers 195,210,212,212; corresponding while

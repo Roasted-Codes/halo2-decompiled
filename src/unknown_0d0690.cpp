@@ -1180,6 +1180,12 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
 // early final fade 529/2196; second scale at use 529/2189 kept.
 // Final fade with late second scale 541/2175 (restored).
+// Captured normal with existing squared-length helper 508 plain (rejected: caller 442); final selected-pointer result
+// 570; captured normal plus final pointer 561; completion-assigned result 572 and with normal 573
+// (both lose caller); early color declarations 529; declaration/completion forms 572/573.
+// Native normal copy and its name/scope combinations 613 (caller 510; matched caller lost);
+// captured-normal role names, entry color declarations and entry length 508 (caller 442);
+// inline/noinline declarations 508 (caller 442). Restore original body to preserve caller 364.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1635,7 +1641,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 790 (was 819): Frame 0x90 now agrees; mesh, UV/color homes and material/magnitude expansion
+// score 790 (was 790): Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
 // remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
 // block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
 // Boolean/word/byte capability 790/802/790.
@@ -1659,6 +1665,8 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Native packed input record 819; unpack output first 819; decoded sample value return 945;
 // color value contract 1350; native color reference output 819. Frame/mesh/sample/color/UV
 // homes and helper expansion remain; original complete body and both helpers restored.
+// Native part/index/section records 790/790/790; part/index, part/section, index/section 790/790/790;
+// all three 790; all three with result declared first 790. Real metadata layouts canonicalize.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

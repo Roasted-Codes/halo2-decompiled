@@ -1243,6 +1243,7 @@ PRIVATE inline long score_string_list_1608e0()
 }
 
 // score 801 (was 801): Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
+// Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
 // player register and scalar homes; scalar names 817;
 // header/name reuse 818; header/decoder reuse 818; both short team walks 811;
 // short player walk 835; short outer team walk 818; short rank search 810.
@@ -1255,6 +1256,9 @@ PRIVATE inline long score_string_list_1608e0()
 // dword flag carrier 808; foreground aggregate construction 805.
 // Short/word total rows 843/843; native viewport height 815; existing horizontal/vertical/both position components 820/814/808;
 // native team index 803; short team and row total 826. Original executable source restored.
+// Round 126: External flag reference 801; reused no-team result 802; player/team/both output cursors
+// 811/834/842; chained RGB stores 801; native team-color output 835; existing string-list forceinline 801
+// (fast); all restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1503,7 +1507,12 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
     }
 }
 
-// score 122 (was 122): Team-text induction and receiver setup remain.
+// score 122 (was 122): Team-text induction base and receiver scheduling remain.
+// Round 50: indexed team text 148 (retail's 0x2ec base, but 12 bytes long: each widget's rectangle
+// temporary rotates ecx/eax/edx where retail keeps edx and loads the receiver before the push);
+// text helper as plain inline 148/122; receiver named before the color call 148; per-iteration
+// team row pointer 120.
+// Team-text induction and receiver setup remain.
 // Earlier score 122 (was 122): Team-text induction base and receiver scheduling remain.
 // Earlier 122 (from 219): background address scheduling agrees after the consistent rectangle-first
 // draw interface; team/player text induction bases and scratch-register scheduling still differ.

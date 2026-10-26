@@ -406,7 +406,9 @@ real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
-// score 375 (was 375): frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
+// score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
+// Earlier at 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
+// frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
 // Earlier: frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // actor-table/result/prop carriers still differ; first
 // actor-table/result/prop carriers still differ; first
@@ -447,6 +449,10 @@ extern point2f *g_468778;
 // Existing point-difference helper at primary/secondary/both predictions 375/375/375; native predicted
 // point at primary/secondary/both 375/375/375; unary planar negation 390; earlier uninitialized
 // prediction-time storage 375. Actor/settings/prop carriers remain.
+// Native unit/state/rate values 393/405/380f; unit plus state/rate 406/395f;
+// state plus rate 403f; all three 401f; actual distance value 403f.
+// Early actor acquisition with the new unit/state/rate/all-three/distance values
+// 395/424/406/410/410f. All native scalar captures and lookup changes restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -614,7 +620,9 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 386 (was 386): Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
+// score 386 (was 386): frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// Earlier: frame 0x58 and length agree; early rejection and query scalar/object homes remain.
+// Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // frame 0x58 and length agree; early rejection and query scalar/object homes remain.
 // Earlier: Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // Earlier forms: prediction loop 482; initial velocity snapshot 538; direct
@@ -642,6 +650,11 @@ static __forceinline long real_to_long(real value);
 // frame 0x54 versus 0x58, early rejection and query homes remain.
 // query output names 410; native request clear 474; positive mode arms 483; far prediction first 413; request
 // mode first 522; relative velocity expression 413; direct facing field 524; deadline mode first 510.
+// Complete slot/target/both layouts 386/386/386; paired approach projections 386;
+// slot/target/both layouts with projections 386/386/386; both layouts with early rejection 511.
+// On the direct velocity producer: false-default result 497; completion-time success 511;
+// byte/word results 431/447; early rejection 511; single-exit admission 497;
+// completion-time byte/word results 505/510.
 // Native distance/rate/both observations 470/495/487; complete actor-facing
 // value alone/with distance/with rate/with both 516/575/565/586; complete
 // observations plus paired query names 586. Opening 0x58 frame/body restored;
