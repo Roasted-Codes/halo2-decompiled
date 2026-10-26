@@ -2086,6 +2086,8 @@ long voice_players_share_team(long other, long player)
 // enclosing mask with live mode 54; signed live mask 34; rejection to sole exit 34; enclosing exit 54.
 // Accepted-boundary mask zero with signed equalities/range 56/125; unsigned 56/125;
 // complete-query mask with signed equalities/range 47/51; unsigned 47/51. Shared getter retained.
+// Round 136: defining-unit inline membership/players/both 25,25,25;
+// with separate noinline 25,25,25; mode force-inline alone/with both outlined queries 25,25.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {

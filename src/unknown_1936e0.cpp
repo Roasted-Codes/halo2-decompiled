@@ -202,6 +202,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // range value with both output results 217. Complete original helpers restored.
 // Native table member long scalars/range pointer/range reference/short scalars 172 each;
 // the same four receiver contracts with native fixed-array output 172 each. Original helpers restored.
+// Round 136: defining-unit search/conversion/both inline 271,172,271;
+// the same with separate noinline 172,172,172;
+// outlined inline search with outlined conversion/both noinline 172,172.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
