@@ -5135,6 +5135,8 @@ void __stdcall function_d6bc0(long object_index);
 // Round 173 on the retained query-result order: external entry reference 221; mode if dispatch
 // 164 (three-point gain rejected); conditional reset counter 195; long modifier 184; byte kind 168.
 // Frame 0x14 versus 0x18 and timer/base homes remain.
+// Native scheduling/activity/both bits 167/204/204; full native object fields 204;
+// Boolean schedule with bits 216; bits with late timer 204; full fields/late timer 204; direct countdown/bits 214.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
