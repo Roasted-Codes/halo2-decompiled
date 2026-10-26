@@ -1599,6 +1599,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // delay-field reads 282; settings default after query 272; signed-word duration 270; branch-owned
 // probability 279; native ordinal with delay reads 295. Frame agrees; index/pool and scalar homes
 // remain.
+// Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
+// unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

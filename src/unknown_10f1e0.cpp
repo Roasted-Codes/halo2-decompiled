@@ -1416,6 +1416,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 224: First/second/both query scopes and branch-entry output declarations 450/450/450/450;
 // branch-owned status defaults alone/with first/second/both scopes 485/485/485/485. Frame eight versus
 // twelve and requested/state/result homes remain.
+// Round 226: Shared held-query conditional/rejection returns 450/450; native signed-byte slot 451;
+// byte slot with conditional/rejection returns 451/451; ordinary inline conditional/rejection
+// returns 450/450, with byte conditional result 451. Frame/request/state homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2254,7 +2257,7 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
-// score 666 (was 674): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
+// score 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
 // frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
 // requested-name snapshots 709; inline plus native final/validity 696/707.
@@ -2274,6 +2277,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Forced validity on late-result body 707; reversed validity fields 722; fallback vector memcpy 674;
 // current-frame request/workspace names 674; shared channel flag word 674. Opening body and helper retained.
 // Round 222: word transition/override 672/714; byte permission/activity 694/674; separate final accumulator 666 kept plain; logical final OR 680; both native validity tests 716, with word transition 714; call-first/combined accumulator 666/666; byte activity with accumulator 669.
+// Round 226: Boolean transition 710; byte override 666; byte permission 693; transition with
+// override 710; transition with permission 662; both byte inputs 693; Boolean transition with both
+// bytes 662; word transition with both bytes 704.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

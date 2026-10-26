@@ -126,6 +126,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // ordinary log input 152 (one-point gain dropped).
 // Actual table header / five-word entry / three-word range / table-entry /
 // table-range / entry-range / all metadata records / all readonly records 153 each.
+// Round 226: selected-record prefix 153; record-block header 153; pass-input prefix 153; record
+// and block 153; record and pass 153; block and pass 153; all three metadata objects 153; all
+// readonly metadata objects 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -852,6 +855,10 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // 158; source-kind memory first 155; all with body entry steps.
 // Direct/mapped signed selector 157/157; special category first 170;
 // ordinary/special bank-one-first arms 159/167.
+// Round 226: ordinary bank-zero output pointer 157; ordinary bank-one output pointer 157; special
+// bank-zero output pointer 157; special bank-one output pointer 157; both ordinary destinations
+// 157; both special destinations 157; all four destinations 157; all destinations with named
+// masked value 202.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
