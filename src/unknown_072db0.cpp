@@ -1314,7 +1314,8 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 206 (was 206): frame 0xfc agrees; key/statistic homes and grouped team dispatch remain.
+// score 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
+// Earlier: frame 0xfc agrees; key/statistic homes and grouped team dispatch remain.
 // key/statistic homes, statistic cursor and grouped team dispatch differ.
 // frame 0xfc agrees; key/statistic homes, six-byte statistic cursor shift and grouped dispatch remain.
 // Earlier: key/statistic homes, statistic cursor and grouped team dispatch differ.
@@ -1343,9 +1344,13 @@ struct s_rating_summary
 // Bounded character countdown 326; group guards 206; player admission scope 206; team guards 206;
 // group guards plus character countdown 326; player/team admission 206; all admissions plus character countdown 326;
 // negative-first lower selection 212.
+// Unsigned name capacity 207; capacity-first continuation 216; ordinary-slot-first output 213;
+// capacity/continuation, capacity/output, continuation/output, all three 241/214/220/248;
+// copied-character ordinal with native pointers 207.
 // Earlier trial set: key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
 // Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.
+// Summary count/lookup/formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three 316. Full-width character retained at 1167/1212 after plain whole-image confirmation.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1405,7 +1410,7 @@ void __stdcall function_741f0(s_match_player_rating_collection *collection, s_qu
                 const word *source = (const word *)((const byte *)player + 0x10);
                 char *destination = summary.name;
                 long remaining = 64;
-                word character;
+                dword character;
                 do
                 {
                     character = *source;

@@ -969,6 +969,7 @@ struct s_item_flags_view_10b850
 
 // score 813 (was 821): Frame 0x154 versus 0x12c and Boolean/vector homes remain.
 // frame 0x154 versus 0x12c; direction workspace 861;
+// frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
 // correction assigned by branch 861. Original body retained.
 // j91: frame 0x154 versus 0x12c and Boolean homes remain; native rotation copies reach 0x148 but regress.
@@ -984,6 +985,12 @@ struct s_item_flags_view_10b850
 // flow-side assignment 858; support test before slow 821; reversed rotation input copies 858;
 // ordinary cross inline 970; float absolute alone 873; support test plus float absolute 837.
 // Round 349: Weighted cross terms 821; per-row cosine products 813 (plain); weighted terms before projection 822; both 813; later angular snapshot 819 (fast).
+// Complete rotation-axis snapshot 953; named one-minus-cosine term 821; per-row direct sums 824; axis snapshot
+// plus scale term 951; signed-byte floor and slow results 821. Frame 0x154 versus 0x12c and original
+// Boolean/vector homes remain; all private helpers restored.
+// Rotation helper explicit axis 853; explicit trigonometric inputs 893; all rotation inputs 892;
+// native reference output 821; output return 821; ordinary rotation inline 1926.
+// Frame/Boolean/native workspace homes remain; original body and every helper restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

@@ -1501,7 +1501,8 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
     }
 }
 
-// score 122 (was 122): Team-text induction base and receiver scheduling remain.
+// score 122 (was 122): Team-text induction and receiver setup remain.
+// Earlier score 122 (was 122): Team-text induction base and receiver scheduling remain.
 // Earlier 122 (from 219): background address scheduling agrees after the consistent rectangle-first
 // draw interface; team/player text induction bases and scratch-register scheduling still differ.
 // Earlier at 219 (from 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation
@@ -1513,6 +1514,15 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // justification arms 122. Original team-text cursor retained.
 // typed text 1411; team reference 120; advanced cursor 282; typed reference 1411; native text
 // inputs bounds/receiver/validity/color first 150 each.
+// Text-state store orders SJF/FSJ/FJS/JSF/JFS 122/130/130/122/130;
+// last-widget cursor/with justification first 122/122; default justification 436.
+// DL131: Team-text induction and receiver setup remain; compile-time validity 1411, ordinary inline
+// text 122, indexed byte team/player/both rows 120/148/146; validity with team/player/both
+// 1411/1414/1414; coordinated inline draw/color/both 122 each. Two-point form rejected; original
+// executable source and all outside declarations restored.
+// Existing default text drawer 475; byte offset 475; indexed team 466; player row 490; both rows 481;
+// validity exit 475; mutable panel 475; both rows and byte offset 481. The shared drawer stays out of
+// line.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {

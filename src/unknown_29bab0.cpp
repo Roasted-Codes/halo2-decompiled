@@ -75,6 +75,11 @@ PRIVATE __forceinline real function_29bab4(vector3f const *arg_0, vector3f const
 // Direct-input short correction sign 840; blocked-direction predicate 805; opposite side 804;
 // unsigned-word response mode 804; short sign plus blocked direction 841. Original body and helpers
 // restored.
+// Direct-input dot-product terms 804; complete velocity snapshot 870; output addition loop 824; positive
+// configuration guard 831; fallback vector memcpy 804. Extra all-square-terms control 748 is excluded from the
+// five new trials and gains only two. Frame/input/heading and normalization homes remain; original body/helpers
+// Direct-input normalizer native input/output contracts 859/856; native normalizer reference 804;
+// upper-bound-first clamp 803; native projection references 804 (fast). Original complete body/helpers restored.
 // @retail 0x29bab0
 void __stdcall function_29bab0(long arg_0, long arg_1, vector3f const *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

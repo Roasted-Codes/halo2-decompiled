@@ -1113,6 +1113,12 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // iterator/request and iterator/cache pairs 828 each; chained output defaults 828; chained native
 // null entries 828.
 // Round 349: Explicit returned copy 828; reverse output defaults 828; shorter candidate scope 828; scope plus return copy 828; defaults plus return copy 828 (fast).
+// Per-attempt constructor expression 828; native candidate reset 980; candidate reset/latch 980; paired native
+// transfers 988; result constructed after outputs 1004. Native reset aligns initial result home at +0x14, but
+// iterator-output/candidate homes and later zero carrier remain.
+// Pre-lookup native default conditional 951; class key first 828; type key first 978; index-first
+// native transfers 846; sorted lookup noinline 828; type/class/mode output defaults 828.
+// Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1192,6 +1198,12 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Loop-scoped returned entry 828; entry resolved outputs after result 979; all requested keys via iterator 1016;
 // native candidate field copies 922 at retail length; exhausted-result exit 1012 (fast).
 // Round 349: Explicit returned copy 828; reverse output defaults 828; shorter candidate scope 828; scope plus return copy 828; defaults plus return copy 828 (fast).
+// Per-attempt constructor expression 828; native candidate reset 980; candidate reset/latch 980; paired native
+// transfers 988; result constructed after outputs 1004. Native reset aligns initial result home at +0x14, but
+// iterator-output/candidate homes and later zero carrier remain.
+// Pre-lookup native default conditional 951; class key first 828; type key first 978; index-first
+// native transfers 846; type/class/mode output defaults 828; sorted lookup noinline 828.
+// Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

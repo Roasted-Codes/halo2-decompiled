@@ -46,6 +46,12 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 }
 
 // score 164 (was 164): frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
+// Frame 0x28 agrees; separate pool/iterator homes, early null publication and successor EBP remain.
+// Earlier: Frame 0x28 agrees; separate pool/iterator homes, null timing and successor residency remain.
+// frame 0x28 agrees; separate pool/iterator homes,
+// frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
+// Frame 0x28 agrees; separate pool/iterator storage, early null publication and successor EBP remain.
+// Earlier 164 (was 164): frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
 // null-result timing and actor-successor residency remain. Inactive early exit
 // 164; native flag mask 164; successful inner-update continue 164; pointer-result
 // for loop 275; early-exit/mask/continue combination 164.
@@ -57,6 +63,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive
 // continue 164; direct datum 164; unsigned successor 164.
 // traversal phase lifetimes do not recover separate pool
+// Earlier: traversal phase lifetimes do not recover separate pool
+// Earlier 164 (was 164): traversal phase lifetimes do not recover separate pool
 // storage or the actor successor register. Squad/actor/both phase scopes 164/164/164;
 // squad/both scopes with actor for-loop 164/164; squad/both scopes with read-only
 // first acquisition 164/164; both scopes with read-only acquisition and for-loop 164.
@@ -65,6 +73,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // 231.
 // Ordinary private next 281; private next out of line 281; separate reacquired actor 164;
 // closed initial-actor scope 164; ordinary private next/separate reacquired actor 281.
+// Private step byte/signed-byte/short/long results 164 each; inactive index initialization 164;
+// inactive index with byte/short/long results 164 each.
 // begin expansion 164; actor next expansion 164; actor accessor expansion 164; pool next expansion
 // 164; actor iterator expansion 164; actor next accessor expansion 164; begin pool expansion 164;
 // all shared expansions 164. Separate pool residency, early null publication and successor EBP
@@ -77,6 +87,10 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // index/datum/records and index/records/datum each 164; original layout restored.
 // Private absolute-index ordinal 217; native ordinal member 218; exhaustion result 164;
 // inactive step early return 165; native ordinal/exhaustion result 218.
+// Separate inline/noinline declarations for eligibility, location update, detach, actor test, attach, transfer, partition update and final update each 164. All eight original declarations and both traversals restored.
+// Native step reference 164; unsigned-word completion 164; shared absolute ordinal 250;
+// native record-array view 180; cleanup inline declaration 164; reference/word contract 164.
+// Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
