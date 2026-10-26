@@ -608,6 +608,8 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Shared slot predicate 782; chained list resets 742; complete step memcpy transfers 753;
 // unsigned word result 740 (two-point gain rejected); direct search decision 742 (fast).
 // Original complete body and existing insertion helper call restored.
+// Late constant success 771; early completion observation 740; unsigned-word input ordinal 775;
+// word truncation result 754; unsigned-word inserted count 742 (fast). Two-point gain rejected.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,

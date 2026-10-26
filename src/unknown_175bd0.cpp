@@ -1942,6 +1942,8 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
 // Native spawn initialization/query outputs first/both 130 each; complete placement helper 375;
 // returned-location for 379; placement output first/rejection guard 130 each; native spawn with for 379.
+// Zone cluster input 130; direct leaf result 173; live zone base 130; native byte result 152; point-first
+// input 130; cluster/direct result 173; live-base/direct result 173; cluster/byte result 152.
 // Existing tint result unsigned byte/unsigned word/signed word 139/189/189;
 // multiplication result unsigned byte/unsigned word/signed word 163/137/137;
 // both unsigned byte/word 169/192. Early color frame home and native query pushes remain.
@@ -2409,12 +2411,14 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
-// score 59 (was 59): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
+// score 59 (was 59): Frame 0x74 and transforms agree; early I capture, normalized stores and final output home remain.
+// Earlier: Frame 0x74 and transforms agree; early I load, normalized stores and final output home differ.
+// Earlier 59 (was 181): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
+// frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
 // Frame 0x74 agrees; early I retention, normalized stores and final output
 // home remain. Pointer/void results 59/59; vector value result 315; separate normalized
 // direction/alias/distinct outputs 196/199/185; vector reference 59; separate reference output
 // 196.
-// frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
 // Earlier 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
 // Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
 // early missing-object return 181; separate impulse buffer 251.
@@ -2444,6 +2448,11 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // Final result reused 79/79; result exit 59; vector output 201; separate impulse 214.
 // Fast: single-direction matrix loop/entry 112/112; point/direction entry 112/112; both/all output lifetimes
 // 112/112; common/header normalizers 112/116 (grouping, exact-only).
+// Scalar inputs/vector output 105; scalar references/pointers 59/59; scalar inputs/vector
+// reference or value output 105/315; scalar-reference result arms 59; early impulse
+// under scalar contract 105; scalar-input distinct normalization output 65. All restored.
+// Native shared/indexed rescale 63/63; separate-result home names 59/59; result with
+// location outputs/across accelerations/at entry/with matrix lifetime 59/59/59/59.
 // Fast control 100; remaining snapshot orders IKJ/JIK/KIJ 104/100/104; uniform inverse/input
 // products 100/100; independent stores JKI/KJI 104/102; admitted normalization 100;
 // owner-first normalization/magnitude-first 251/250; early final scale 100. Squared-length float 100 (precision diagnostic only).
@@ -2885,6 +2894,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // absent-node point memcpy 176; nested eligibility tests 176.
 // Point at function entry 176; matrix at function entry 176; effect/tag/cursor role names 176; native disabled-bit mask 251; positive player guard 176.
 // Round 123: Effect rejection in natural for 176; current-player while/unit skip 176; both traversal joins 176; guarded tag lifetime in natural for 176; guarded tag/current-player traversal 176.
+// Actual byte/signed-byte return 176/176; signed/unsigned word return 179/179; signed/unsigned long return
+// 179/179; byte-return tested result 176; signed-byte status/return 176. Wider returns lose both checked
+// callers; all declarations restored.
 // Unsigned effect/player/both indices 176/176/176; native result byte 176;
 // condition-local location 176; entry unit/scan player lifetimes 176/176;
 // readonly effect metadata 176. Original body, native widths and metadata restored.
@@ -2970,11 +2982,13 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
-// score 88 (was 88): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
+// score 88 (was 88): Frame 0x94 agrees; scale-default/branch, point SSE copies and render input roles remain.
+// Earlier: Frame 0x94 agrees; scale constant/branch, point SSE copies and render input roles differ.
+// Earlier 88 (was 112): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
+// frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
 // Frame 0x94 agrees; early scale/default branch and point SSE/render setup
 // remain. Point/normal/both reverse captures 308/187/202; shared color scale 325; existing point
 // operation 548; color with point/normal/both captures 324/327/327.
-// frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
 // lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
 // initialization 112.
 // Readonly tag/event/part/all metadata 112 each; location cursor home 112; vector homes 112;
@@ -2982,6 +2996,11 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 // Frame 0x94 agrees; scale initialization branch, point SSE setup and later call setup remain.
 // After the consistent call contract: default-first scale 272; default after point 270;
 // default before color 270. Conditional scale and the 88-point body retained.
+// Consistent tag/direction formal positions: 82/81/81/414/414/83/82/88; none recovers
+// tag ECX/position stack. Native position/forward/up/color 331/329/323/321; both directions
+// 361; spatial inputs 392; point/color 328; all inputs 396. All source/contracts restored.
+// Indexed point/directions/spatial/separate-spatial copies 323/331/352/511;
+// the same copies with native default-first scale 313/333/344/498. All restored.
 // Fast control 416 (reduced call/global caveats); scale workspace/test arms 416/416;
 // default before inputs 425; conditional before inputs/after point/after forward/before color 416/416/416/416; B-first product 416.
 // @retail 0x179880

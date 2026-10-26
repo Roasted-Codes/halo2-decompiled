@@ -658,7 +658,8 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
     widget->function_22f52e()->set_text(text);
 }
 
-// score 577 (was 577): Frame 0x85c agrees; EBP bias and flags/time/state homes remain. Guard-owned state
+// score 573 (was 577): frame 0x85c agrees; EBP bias and flag/time/state
+// Frame 0x85c agrees; EBP bias and flags/time/state homes remain. Guard-owned state
 // 576; session before elapsed test 578; word team scan 574 (three-point gain rejected); conditional
 // maxima 577; shared state formatting 717.
 // Earlier 577 (was 598): frame 0x85c agrees; EBP bias and flag/time/state
@@ -671,6 +672,10 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // Data-branch format buffer 644; both data-branch buffers 644; word widget index 631;
 // branch-assigned score maximum 575 (below threshold, frame 0x860); row increment after
 // publication 577; auxiliary-buffer role names 577.
+// Player/team/both candidate score values 577/577/577; key at uses 574 (below threshold);
+// activity at uses 573 kept; native ages 577; native flag byte 630; combined native observations 574.
+// Entry-owned formatting 605; with key 605, activity 601, both 601; original formatting restored.
+// EBP bias and initial flags/timestamp homes remain; original frame, loops and all call arguments retained.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {
@@ -814,11 +819,10 @@ void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const
                 show_friend_detail(text[row++], message);
             }
             state = *(short *)(details + 0xa62);
-            short activity = *(short *)(details + 0xa60);
-            if (state != 8 && state != 3 && activity)
+            if (state != 8 && state != 3 && *(short *)(details + 0xa60))
             {
-                ((c_widget *)this)->function_230134(campaign ? 0xe000276 : activity == 1 ? 0x12000273 :
-                               activity == 3 ? 0xe000274 : 0xf000275, message);
+                ((c_widget *)this)->function_230134(campaign ? 0xe000276 : *(short *)(details + 0xa60) == 1 ? 0x12000273 :
+                               *(short *)(details + 0xa60) == 3 ? 0xe000274 : 0xf000275, message);
                 show_friend_detail(text[row++], message);
             }
             if (*(short *)(details + 0xa62) == 8 || *(short *)(details + 0xa62) == 3 || *(short *)(details + 0xa60) == 1)

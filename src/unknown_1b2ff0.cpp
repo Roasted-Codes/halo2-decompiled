@@ -228,6 +228,9 @@ real function_1f8940(long actor_index);
 // failed result first 34; failed result chain 27; shared cancellation count 27;
 // native cancellation limit 89; const reference and count 27; result chain and count 27;
 // cancel completion test 27; named cancel result 27.
+// Round 85: reference assigned inside the sentinel test 27; result/active stores swapped 34;
+// other index and flag declared before the scratch 27; follow-and-cancel as a forceinline
+// helper 27 (plain inline stays out of line); actor pointer for the active store 130.
 // Request clear before scratch 71; all constants before scratch 76; full request before scratch 75;
 // kind/numerics/flags before scratch 68/68/77; choice fields before constants 30;
 // constant prefix with range before choice 77. Scratch/request staging restored.
