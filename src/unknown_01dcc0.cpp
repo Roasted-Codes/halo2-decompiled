@@ -214,7 +214,8 @@ bool function_01de20(long index)
 dword function_1d6f0(bool linear, bool alternate, dword format, long width, long height);
 long g_55e6c0;
 
-// score 115 (was 115): incoming data, delayed saves, packed-size folding and level-header bias remain.
+// score 115 (was 115): Incoming data home, delayed saves and header bias still differ.
+// incoming data, delayed saves, packed-size folding and level-header bias remain.
 // Earlier: Incoming data home, delayed saves and header bias still differ.
 // Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
 // Earlier: incoming data home, saved-register timing and level-header bias remain.
@@ -223,6 +224,17 @@ long g_55e6c0;
 // Earlier: incoming data home, delayed saves and level-header bias remain.
 // Inline/noinline format declarations 115/115; published byte total 192; level/offset names 115;
 // size after format 190; named aligned width 115; element before size 123; linear size branches 174.
+// Data after/before primary format 155/155; primary common after format 161;
+// data/common after format 142 (both common-word forms lose matched callers);
+// primary format result 115; level parent/count before format 121/131;
+// data after primary format with early level parent 148. All publication forms restored.
+// incoming data home, delayed saves and level-header bias remain.
+// Earlier forms and observations:
+// Incoming data home, delayed saves and header bias still differ.
+// incoming data home, saved-register timing and level-header bias remain.
+// This round:
+// Unsigned offset/level/both 115/116/116; const byte count/output pointer 115/115;
+// paired/all reset chains 117/118; bounded level and paired chain 118.
 // native primary 115; native surfaces 115; native headers 115; typed kind 115; typed byte total 115;
 // primary/kind 115; primary/total 115; native headers and fields 115; stored packing inputs 115;
 // stored byte inputs 139; stored packing and bytes 139; stored dimensions throughout 151;

@@ -73,7 +73,8 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
     arg_3->k = local_6;
 }
 
-// score 389 (was 389): early J preload and magnitude/yaw home remain; indexed long/short normalization
+// score 389 (was 389): frame 0x2c and length agree; early J load and magnitude/angle homes differ; K first 389, shared axis cross 409, magnitude return 406, global optimization off 2150, float consistency 656, K first plus return 399.
+// early J preload and magnitude/yaw home remain; indexed long/short normalization
 // loops 417/421; pointer loop 423; loop common result 423; real absolute first/both 399/395; loop with
 // real absolute first/both 421/416.
 // Earlier: frame 0x2c and length agree; early J load and magnitude/angle homes differ; K first 389, shared axis cross 409, magnitude return 406, global optimization off 2150, float consistency 656, K first plus return 399.
@@ -84,6 +85,8 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // weighted axis/cross/both/input vectors 431/427/420/423; all restored;
 // matched sibling and both matched callees preserved throughout.
 // Earlier: frame 0x2c agrees; early J load and magnitude/angle homes still differ.
+// frame 0x2c agrees; early J load and magnitude/angle homes still differ.
+// Earlier at 389 (was 389): frame 0x2c agrees; early J load and magnitude/angle homes still differ.
 // Complete input for length 497; input for normalization 496; point input 419; both inputs 513;
 // immutable one/both magnitudes 389/389; earlier length publication 396; immutable rotation outputs 389.
 // Widened first/point/both numeric returns 407/410/412; widened optional
@@ -92,10 +95,21 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // First-return widening loses the matched sibling to 45; all helper contracts
 // and normalization order restored. Early J and magnitude/yaw homes remain.
 // Earlier: early J preload and shared magnitude/yaw home remain. Fast trials: vector
+// early J preload and shared magnitude/yaw home remain. Fast trials: vector
+// Earlier at 389 (was 389): early J preload and shared magnitude/yaw home remain. Fast trials: vector
 // input/output split 389; first external vector input 441; second external vector input 410; both
 // external vector inputs 452; point input/output split 389; both normalizer splits 389; both splits
 // and first external input 441; both splits and both external inputs 452. All restored.
 // External first-input forms lose the matched sibling in the reduced image; all contracts restored.
+// Vector/point/both squared-length arguments 389 each; rotation alignment 389;
+// cosine remainder 389; both projection parts 389; clamp parameter result 391;
+// squared argument plus clamp parameter 391. Original expressions and helper contracts restored.
+// Shared normalizer scale 399; common result 398; early length publication 409;
+// nonnegative vector/point/both magnitude tests 382/399/352, shared scale with
+// nonnegative vector/point 362/390. Vector-test forms lose the matched sibling; all restored.
+// Native real vector/point/both roots 399/401/395; exact-factor shared scale 414, with both real roots 412
+// (sibling 59 in both); all-row axis/input/both terms 401/394/389. Original helpers and bodies restored; early
+// J and magnitude/yaw homes remain.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

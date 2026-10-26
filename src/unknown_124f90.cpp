@@ -1230,6 +1230,10 @@ long function_2197f0(real gain);
 // Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
 // Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
 // shared fade-in duration 162; distinct-ambience case first 163.
+// Forced interpolation inline 162; direct fade-table fields 169; readonly class views 162; system rereads 162;
+// short-duration exit 162.
+// Release fraction term 163; ducking-field rereads 313; shared fade fraction 162;
+// shared fade time 162; both fade workspaces 162.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -1479,6 +1483,7 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 // 46; base with retained other tag 44; success-live result 44; storage/tag/result 44; distance result
 // 88; class-field reads 74; class/storage/tag 73; class/success result 78.
 // slot/lookup scheduling, retained identifier and full-width return tails differ;
+// Frame/length agree; playback/header scheduling, retained identifier and full-width exits differ.
 // long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
 // index input with long result 46; existing class operation 169; priority difference 71;
 // class-index input with retained other identifier 44 (two-point gain excluded).
@@ -1488,6 +1493,9 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 // integer result 123; this definition read at its priority use 94.
 // Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
 // readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
+// Equal-priority first 82; its direct distance result 119; loudness discriminator 79;
+// equal-first discriminator 99; loudness difference 66; equal-first difference 124;
+// complete decision predicate 113; complete equal-first result 73.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
@@ -3030,6 +3038,12 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // Loop-entry playback/clock loads and mode comparison remain.
 // pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
 // promoted voice 132; shared absolute index 162; mode with entry reason 127.
+// Failed-acquisition first 127; pending-chunk first 131; retained callback source 86;
+// previous voice owner 86; mode zero guard 155; separate update guard 86;
+// range pointer addition 86; callback-availability first 85 (one point, rejected).
+// Loop-end search seed/explicit cases 86/86; first search result/both boundaries 86/86; existing tail
+// search/seed plus search 86/86; first/both salt producers 183/203. Original body restored; playback/clock and
+// native mode scheduling remain.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3378,10 +3392,14 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 234 (was 241): Frame 0x49c versus 0x494; initial gain argument homes and clamp stores still differ.
+// score 234 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and clamp stores still differ.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
 // long next-chunk candidate 254; completed-chunk early exit 241.
+// Shared clamp common result 255; forced gain-add inline 234; gain before packet 234; long controller count 235; named
+// flag masks 234.
+// Both branch gain names 234; raw gain before pitch 268 (frame 0x494); playback-bound rereads 234;
+// pitch-range rereads 258; existing-stream branch first 235; recovered-frame form with shared scale 237.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3552,20 +3570,26 @@ struct s_127403
 
 PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *arg_1, vector3f *arg_2)
 {
-	real local_0 = 2.0f * arg_0->w * arg_0->w - 1.0f;
-	real local_1 = 2.0f * (arg_0->j * arg_1->j + arg_0->k * arg_1->k + arg_0->i * arg_1->i);
-	real local_2 = 2.0f * arg_0->w;
-	arg_2->i = (arg_0->j * arg_1->k - arg_0->k * arg_1->j) * local_2 + arg_0->i * local_1 + local_0 * arg_1->i;
-	arg_2->j = (arg_0->k * arg_1->i - arg_0->i * arg_1->k) * local_2 + arg_0->j * local_1 + local_0 * arg_1->j;
-	arg_2->k = (arg_0->i * arg_1->j - arg_0->j * arg_1->i) * local_2 + arg_0->k * local_1 + local_0 * arg_1->k;
+	real rotation_i = arg_0->i;
+	real rotation_j = arg_0->j;
+	real rotation_k = arg_0->k;
+	real rotation_w = arg_0->w;
+	real local_0 = 2.0f * rotation_w * rotation_w - 1.0f;
+	real local_1 = 2.0f * (rotation_j * arg_1->j + rotation_k * arg_1->k + rotation_i * arg_1->i);
+	real local_2 = 2.0f * rotation_w;
+	arg_2->i = (rotation_j * arg_1->k - rotation_k * arg_1->j) * local_2 + rotation_i * local_1 + local_0 * arg_1->i;
+	arg_2->j = (rotation_k * arg_1->i - rotation_i * arg_1->k) * local_2 + rotation_j * local_1 + local_0 * arg_1->j;
+	arg_2->k = (rotation_i * arg_1->j - rotation_j * arg_1->i) * local_2 + rotation_k * local_1 + local_0 * arg_1->k;
 }
 
-// score 551 (was 551): Frame 0x12c versus 0xe8; native vector, environment and listener-index homes differ.
+// score 535 (was 551): Frame 0x130 versus 0xe8; native vector, environment and listener-index homes differ.
 // Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
 // Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
 // Static const fallback 727 (frame 0xec); spatial role names 551; long success workspace 551;
 // short listener counter 581; outer spatial workspace 551; interpolated point setter 615;
 // position-zero setter 616.
+// Quaternion input values 535 kept (plain, frame 0x130); vector input values 647; both input sets 1057; entry
+// quaternion 551; entry queried position 551.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

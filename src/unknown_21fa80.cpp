@@ -85,6 +85,10 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Real gain value 545; native linear return 545; unsigned pin bits 545; exponential input 561;
 // native return/input 561; logarithm/root results 551/549; combined math results 554, frame 0x230.
 // Original body and helper contracts restored; frame 0x22c and stream/gain homes remain.
+// Linear input pointer 544; native speaker array 545; array plus input pointer 544; known-clear
+// send bits 547; send field order 545; routing flag publication last 545; cache from produced send
+// fields 545; direct output level 545. One-point reductions dropped; all body/type/helper forms
+// restored. Frame 0x22c versus 0x224 and stream/gain/math homes remain.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

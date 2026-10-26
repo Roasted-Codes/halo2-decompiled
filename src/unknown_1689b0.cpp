@@ -1548,7 +1548,7 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 			prism->plane.n.n[indices[1]] * point->y) / prism->plane.n.n[axis];
 }
 
-// score 552 (was 552): frame 0xb964 agrees; sum homes and EBX/ESI zero carrier remain.
+// score 552 (was 552): Frame 0xb964 agrees; sum homes and EBX/ESI zero carrier remain.
 // sum homes and zero register; accumulation loops 597;
 // average loops 554; midpoint loop 554; branch-local ray results 552;
 // face classification from normal selection 553.
@@ -1561,6 +1561,8 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // sum memcpy 552; full-width reconstruction axis 593 at retail length.
 // DL134: short/long projection indices 621/553; polygon count 555; normal component 647;
 // axis at use 744; coordinate inputs 651; short indices/inputs 686; polygon/plane inputs 660.
+// Native projected point, relative/edge vectors, side, perpendicular, candidate,
+// separation vector, contact midpoint/half and all native producers: 552 each. All restored.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

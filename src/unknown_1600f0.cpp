@@ -1242,14 +1242,17 @@ PRIVATE inline long score_string_list_1608e0()
 	return result;
 }
 
-// score 810 (was 817): player register and scalar homes; scalar names 817;
+// score 801 (was 805): Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
+// player register and scalar homes; scalar names 817;
 // header/name reuse 818; header/decoder reuse 818; both short team walks 811;
 // short player walk 835; short outer team walk 818; short rank search 810.
 // explicit scroll clamp 810; title workspace scope 810; bounds-field arithmetic 810;
 // global optimization off 2237; size optimization 1348.
 // viewer pointer name 810; viewer lookup at first scroll use 848; short displayed-row number 811;
 // short row rank 810; direct team activity predicate 826.
-// score 805 (was 810): frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
+// frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
+// Viewer field at use 808; team score fields at use 805; player score fields at use 801 (plain);
+// dword flag carrier 808; foreground aggregate construction 805.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1447,15 +1450,14 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 			*(short *)(player + 0x1ac) == 0);
 		work.position[1] += 0x14;
 		bool show_icon = team != NONE && *(long *)(player + 0x2c) == NONE && !(flags & 2);
-		byte *entry = scores + (index & 0xffff) * 0x1c;
 		short seconds;
 		if (g_4e6948->flag1128)
-			seconds = *(short *)(entry + 6);
+			seconds = *(short *)(scores + (index & 0xffff) * 0x1c + 6);
 		else
-			seconds = *(short *)(entry + 4);
+			seconds = *(short *)(scores + (index & 0xffff) * 0x1c + 4);
 		s_player_row_columns *columns = (s_player_row_columns *)panel;
 		game_engine_player_row_build(work.position, row_alpha, index, (word *)(player + 0x44), place,
-			*(short *)(entry + 0x12), seconds, (bool)((flags >> 1) & 1), show_icon, team == NONE,
+			*(short *)(scores + (index & 0xffff) * 0x1c + 0x12), seconds, (bool)((flags >> 1) & 1), show_icon, team == NONE,
 			&color, dim, &panel->players[player_row].row, columns);
 		panel->players[player_row].selected = index == player_index;
 	}
@@ -1512,10 +1514,15 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // justification arms 122. Original team-text cursor retained.
 // typed text 1411; team reference 120; advanced cursor 282; typed reference 1411; native text
 // inputs bounds/receiver/validity/color first 150 each.
+// Text-state store orders SJF/FSJ/FJS/JSF/JFS 122/130/130/122/130;
+// last-widget cursor/with justification first 122/122; default justification 436.
 // DL131: Team-text induction and receiver setup remain; compile-time validity 1411, ordinary inline
 // text 122, indexed byte team/player/both rows 120/148/146; validity with team/player/both
 // 1411/1414/1414; coordinated inline draw/color/both 122 each. Two-point form rejected; original
 // executable source and all outside declarations restored.
+// Existing default text drawer 475; byte offset 475; indexed team 466; player row 490; both rows 481;
+// validity exit 475; mutable panel 475; both rows and byte offset 481. The shared drawer stays out of
+// line.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {

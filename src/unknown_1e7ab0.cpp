@@ -182,6 +182,14 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // DL134: byte state view 645; entry first 646; status/child/workspace cases first
 // 642/641/642; direct flag cases first 631 kept; communication first 633; byte/status 642;
 // flags with child/status first 647/631. Both keepers plain-confirmed; the latter tie is restored.
+// Frame 0x54/type EDX agree; state, player and unit homes remain.
+// frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
+// frame/type agree; state/player/unit allocation remains.
+// Frame 0x54 agrees; state/player/unit homes remain. Shared seat fields kept 658 to 651, 2300/2308 bytes. Captured seat flags 658; short selector slot 662; typed object headers 658; magazine capacity 658 (plain).
+// Frame 0x54 and EDX type agree; state/player/unit homes remain. Long seat index 647; early child iterator 645; seat disqualifier predicate 645; pooled seat reference 645; function-scope unit index 645 (plain).
+// Frame 0x54/type EDX agree; state/player/unit homes remain. Shared primary weapon 653;
+// Result after lookup 654; unsigned player identifier 645; selector unit field at use 645;
+// pooled recorded-type reference 645; selector without inline keyword 645.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

@@ -194,7 +194,10 @@ bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 
 real function_1f8940(long actor_index);
 
-// score 27 (was 27): frame and prologue agree; selected-reference transfer and follow setup remain.
+// score 27 (was 27): frame and active-getter prefix agree; selected reference enters EBX before validation.
+// Earlier forms and observations:
+// actor-data load and early selected-reference transfer still differ.
+// frame and prologue agree; selected-reference transfer and follow setup remain.
 // Earlier forms:
 // the selected reference still enters EBX before its validity comparison.
 // Earlier: actor-data load and early selected-reference transfer still differ.
@@ -211,16 +214,23 @@ real function_1f8940(long actor_index);
 // Earlier actor/reference forms:
 // Actor object reference/const view 44/44; candidate/flag/index/joint names 44/44/44/44;
 // result from reference validity 116; successful-selection arm first 71.
-// Earlier request/reference forms:
+// actor-data load and selected-reference transfer still differ.
 // Const reference/early reference/output-first declarations/const scratch 44;
 // choice failure from test 123; nested reference gate 44; inclusive cancel limits 48;
 // aggregate-zero request 89 (446 bytes).
+// This round:
+// Member equality low/high first 92/92; combined follow/cancel 27; native follow result 27;
+// nested count domain 33; owner/path/both output defaults 113/63/120.
+// Earlier request/reference forms:
 // Selection/follow inline states 27/27/27; noinline states 27/27/27;
 // mixed inline/noinline states 27/27. Original declarations restored.
 // Earlier: actor-data load and selected-reference transfer still differ.
 // failed result first 34; failed result chain 27; shared cancellation count 27;
 // native cancellation limit 89; const reference and count 27; result chain and count 27;
 // cancel completion test 27; named cancel result 27.
+// Request clear before scratch 71; all constants before scratch 76; full request before scratch 75;
+// kind/numerics/flags before scratch 68/68/77; choice fields before constants 30;
+// constant prefix with range before choice 77. Scratch/request staging restored.
 // @retail 0x1b3380
 bool __stdcall function_1b3380(long actor_index, s_slot *slot)
 {
