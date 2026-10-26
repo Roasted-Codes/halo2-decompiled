@@ -1335,6 +1335,7 @@ bool function_1e1de0(long arg_0);
 // Round 127: isolated actor-index admission 247; readiness failure tests 165; both 247; native
 // observed-bit conversion 165; admission/bit 247; readiness/bit 165; all 247; immutable actor-index
 // producer 219. All restored; early ESI and computed result remain.
+// Round 161: category/root/observed-state producers 165/165/279; category-root/category-observed/root-observed/all 165/279/279/279; character-observed branch publication 165. All restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

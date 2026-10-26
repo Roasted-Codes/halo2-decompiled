@@ -1620,6 +1620,7 @@ void function_b7360(long object_index);
 // all motion values and separate duration 507. Native dispatch/register gap remains.
 // Shared duration conversions, moving/direct/combined/point/moving+point/direct+point/all 493/482/491/482/491/480/493;
 // two-use rate at duration producer 540. Two-point combined conversion gain rejected; original conversions restored.
+// Round 161: movement/selection/recording completion 533/528/529; paired movement-selection/movement-recording/selection-recording 524/523/533; all outcome completion 528; orientation branch store 525. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

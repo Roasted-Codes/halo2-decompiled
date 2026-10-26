@@ -690,6 +690,7 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // tables-score-values 592; early-tables-score-values 592.
 // State/count/both at every use 572/594/594; flags/truth/row/all scalar role names
 // 573/573/573/573; all observations with role names 594. Original body restored.
+// Round 161: clock at every use 642; table at entry/pre-query/pre-widget 619/618/601; those three with consistent clock reads 654/654/643; read-only local table 573. All restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {
