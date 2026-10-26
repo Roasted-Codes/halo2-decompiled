@@ -312,6 +312,8 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 // named helper inputs 115, named cursors/failure result 124; original body restored at 115.
 // Consistent existing helper input orders 115 (five forms); entry validity 143;
 // entry cursor declarations 115; both entry storage lifetimes 143. Original body restored.
+// Plain pretested for with both/size/handle/no helper producers 195,210,212,212; corresponding while
+// 195,210,212,212. Items/data carriers remain; full opening helper and body restored.
 // @retail 0x98fb0
 void c_handle_table_450cd0::v6(s_request_450cd0 *a1)
 {

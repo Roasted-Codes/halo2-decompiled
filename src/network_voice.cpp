@@ -1236,6 +1236,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Direct validation exits rolled/counted 303/120; counted exits with runtime width,
 // full identity, inline declaration or int ordinal 181/145/120/120; success total
 // before query rolled/counted 303/119. Expanded forms still lose caller 0x54990.
+// Out-of-line rolled 281; counted with out-of-line/read-only element/both 112/112/112, each loses the
+// checked caller; fixed equality bound alone/read-only/out-of-line/both 281 each. The equality bound
+// prevents four-way expansion; all original code restored.
 // Unsigned total 281; unsigned total with counted walk 112; direct-receiver word ordinal 281;
 // word ordinal with unsigned total 281; unsigned counted ordinal 112. Expanded forms lose 0x54990.
 // @retail 0x56220
@@ -2855,6 +2858,9 @@ struct s_voice_route_choice
 // Native Boolean/word radio with choice receiver 410/392; Boolean with three pairs 397;
 // plain pair loop 394, with Boolean 411; native descriptor alone 394 (retail length),
 // with native choice/Boolean 411; native choice/Boolean mixer-workspace names 410.
+// Headset rejection first 394, with native Boolean radio 411; selected nearest result 1101, with native
+// radio 1103, with both 1103; late mixer descriptor 394, with native radio 411; all three with native radio
+// 1103. Selected results prevent four-way expansion; all original code restored.
 // Per-choice pointer 393; signed-word radio 393; signed headset 394;
 // function-scope descriptor only 402; function-scope pairs only 401.
 // @retail 0x57eb0

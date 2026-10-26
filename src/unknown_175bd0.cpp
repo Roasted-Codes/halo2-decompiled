@@ -1942,6 +1942,8 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
 // Native spawn initialization/query outputs first/both 130 each; complete placement helper 375;
 // returned-location for 379; placement output first/rejection guard 130 each; native spawn with for 379.
+// Zone cluster input 130; direct leaf result 173; live zone base 130; native byte result 152; point-first
+// input 130; cluster/direct result 173; live-base/direct result 173; cluster/byte result 152.
 // Existing tint result unsigned byte/unsigned word/signed word 139/189/189;
 // multiplication result unsigned byte/unsigned word/signed word 163/137/137;
 // both unsigned byte/word 169/192. Early color frame home and native query pushes remain.
@@ -2892,6 +2894,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // absent-node point memcpy 176; nested eligibility tests 176.
 // Point at function entry 176; matrix at function entry 176; effect/tag/cursor role names 176; native disabled-bit mask 251; positive player guard 176.
 // Round 123: Effect rejection in natural for 176; current-player while/unit skip 176; both traversal joins 176; guarded tag lifetime in natural for 176; guarded tag/current-player traversal 176.
+// Actual byte/signed-byte return 176/176; signed/unsigned word return 179/179; signed/unsigned long return
+// 179/179; byte-return tested result 176; signed-byte status/return 176. Wider returns lose both checked
+// callers; all declarations restored.
 // Unsigned effect/player/both indices 176/176/176; native result byte 176;
 // condition-local location 176; entry unit/scan player lifetimes 176/176;
 // readonly effect metadata 176. Original body, native widths and metadata restored.

@@ -826,12 +826,15 @@ public:
 // Frame 0x60 now agrees; flag transfer, child carriers and selective calls
 // remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
 // 308 (plain verified); child for-loop 338.
-// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native orientation result 373, with shared cross 373.
+// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native
+// orientation result 373, with shared cross 373.
 // frame 0x60 agrees; early long-result store, flag transfer and child/call homes remain.
 // Ordinary local parent 366; word result 338; direct final result 388; direct parent color
 // Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
 // child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
 // Original entry result, ordinary pooled flags and all child calls restored.
+// Flag-stage long result/native bitfield transfer/direct visibility and combinations
+// 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

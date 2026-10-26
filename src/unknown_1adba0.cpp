@@ -680,12 +680,13 @@ bool function_114b60(short arg_0, short arg_1, long arg_2, long arg_3, void cons
 // existing conversion return as copy source 218. ESI save and query carriers remain.
 // Native actor/slot/prop record references and their pairs/all 102 (seven forms);
 // native query record reference 102; entry-wide ESI save and query-copy carriers remain.
+// Matches retail byte for byte: slot/result declaration order, source zero, early query input word.
 // @retail 0x1adff0
 short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 {
 	s_actor_view *local_0 = actor_get(arg_0);
-	short local_1 = g_46fbe4;
 	s_1adff0 *local_2 = (s_1adff0 *)((byte *)local_0 + 0x9c + arg_1 * 0x40);
+	short local_1 = g_46fbe4;
 	local_0->unknown449 = true;
 	if (local_2->field_0 > 0)
 		local_2->field_0--;
@@ -707,18 +708,19 @@ short __stdcall function_1adff0(long arg_0, short arg_1, bool arg_2)
 		local_8.radius = local_3->field_4;
 		local_8.unknown04 = false;
 		local_8.object_index = local_7;
+		local_8.unknown4c = 0.0f;
 		local_8.has_point = true;
 		*(s_type_c3b527 *)&local_8.point = local_5->unknown48;
 		local_8.unknown24 = *(long *)((byte *)local_5 + 0x44);
 		local_8.unknown0c = local_0->unknown018;
-		local_8.unknown4c = 0.0f;
 		byte *local_9 = ai_scratch_buffer_get();
 		function_271300((s_type_f17a25 *)local_9, NULL, &local_6, &local_8, 0);
 		function_26c180(arg_0);
 		s_1adff2 *local_10 = (s_1adff2 *)local_9;
+		long local_18 = local_0->unknown27c.unknown10;
 		local_10->field_54 = true;
 		local_10->field_58 = local_0->unknown27c.point;
-		local_10->field_68 = local_0->unknown27c.unknown10;
+		local_10->field_68 = local_18;
 		local_10->field_6c = 0.0f;
 		if (function_2715a0(local_9))
 		{

@@ -553,6 +553,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Existing grouping-helper role orders mode/class/type/graph, graph/class/mode/type,
 // graph/type/class/mode and mode/graph/class/type 399 each; the same four leaf-helper
 // orders 399 each with the bool return contract (fast). Helpers and body restored.
+// Byte/signed-byte returns with byte or Boolean status 447/447/447/447; byte return with long/word
+// status 489/517; byte return plus group/leaf graph-last formals 447/447. Original Boolean return,
+// byte status, helper roles and class declaration restored; frame eight and hidden-result homes remain.
 // First/fallback/both native result-field copies 518/499/546; their immediate-index
 // forms 518/499/546; mutable result fields 546; shared query workspace 597. Frame remains eight in separate-copy forms.
 // Primary/fallback/both library result publication 415/431/483; name library copy 399;

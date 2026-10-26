@@ -166,7 +166,7 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
-// score 96 (was 100): Frame 0x10 and timing setup agree; advancing-frame and interpolation carriers differ.
+// score 96 (was 96): Frame 0x10 and timing setup agree; advancing-frame and interpolation carriers differ.
 // Earlier at 100 (was 106): frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
 // frame 0x10 agrees; quotient/next-time setup and frame/index registers differ.
 // frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
@@ -198,6 +198,11 @@ static inline real interpolate_linear(real a, real b, real t)
 // names 96/96; live key table 96; key records on recovered timing 217; advance/lookahead direction
 // retention 96/96. All forms restored; native direction/frame and lookahead/fraction carriers
 // remain.
+// Indexed/forced/indexed-forced interpolation 244/96/244; point return alone/with loop 96/138;
+// advancing-iteration flags/count/both 214/96/214. Original interpolation helper and body restored;
+// frame/timing agree, direction/frame and lookahead/fraction carriers remain.
+// Existing point interpolation helper: eight point/vector/ratio/output parameter
+// orders all 96; original helper, calls and timing stream restored.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
