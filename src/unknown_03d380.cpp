@@ -588,6 +588,8 @@ void __stdcall function_1889d0(dword flags)
 // scoped tag for-loop 62; paired zero chain/fill 64/123; Boolean parameter mask 62; late global declaration 62.
 // Native raw word/signed word/flag object 62/62/62; masked dword 61;
 // const word 62; masked byte 155; parameter bit pair 173; typed word with pair 173.
+// Tag field reads 62; flag word reads 110; both reads 110; native bitfield snapshot 128;
+// direct snapshot bits 154; snapshot plus tag reads 128; per-use bits 110; bits plus tag reads 110.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {

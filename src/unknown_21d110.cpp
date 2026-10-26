@@ -310,7 +310,7 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 #define sound_effect_delete function_21dcf1
 // score 204 (was 204): frame eight versus four and opposite start/delete expansion;
 
-// score 204 (was 204): frame eight versus four and opposite start/delete expansion remain; closer flag forms lose matched callers.
+// frame eight versus four and opposite start/delete expansion remain; closer flag forms lose matched callers.
 // Earlier: frame eight versus four and opposite start/delete expansion;
 // joined query/allocation 220, unforced failure-first 221, effect pointer scope 220,
 // shifted platform flag 220, inline depth zero 391.
@@ -338,6 +338,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // query-owned handle with those availability forms 204/204/204; preserved class bit 180 plain (eight caller losses);
 // logical/masked/clear-only flag 165/215/174; scoped logical flag 165;
 // at-use record getters with compound/logical/masked/clear-only flags 185/164/220/177 (all gains lose callers).
+// Listener/stage/both outputs initialized absent or zero 204 each; per-use playback selection
+// alone/with absent outputs 199, rejected for matched-caller losses.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

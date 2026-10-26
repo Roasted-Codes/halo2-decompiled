@@ -138,11 +138,14 @@ public:
 	short m_index;
 };
 
-// score 33 (was 42): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
+// score 33 (was 33): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
 // Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
 // Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
 // inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
+// Pointer-derived indices: range-first-return 46; range-completed-test 70; range-native-result 91;
+// range-exhausted-exit 75; range-ordered-bound 46; range-local-object 92; range-computed-index 97;
+// range-result-from-count 84.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {

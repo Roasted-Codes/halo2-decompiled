@@ -1286,7 +1286,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 269 (was 311): Frame and sampler carriers agree; captured descriptors and store scheduling remain.
+// score 265 (was 269): Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native
@@ -1299,6 +1299,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // shared sampler selector 246; descending component rescale 262 (fast).
 // Recovered sampler with early component mask 269 (plain); interleaved color fields 332;
 // combined component processing 268 (one-point addition dropped); conditional stores/shared counter 269/269.
+// Direct descriptor fields 265 (plain 265, 1198/1225); mapped fields 284; both fields 279;
+// native descriptors 265; separate output descriptors 269; fields/native/separate RGB copies
+// 309/312/315; direct fields plus native mapped descriptors 265 (1197/1225).
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
@@ -1322,8 +1325,7 @@ void function_19ca0(byte *state, word const *range)
             color4f color;
             color.red = values[0]; color.green = values[1]; color.blue = values[2]; color.alpha = values[3];
             dword value = pack_color4f(&color);
-            dword packed = *(word const *)entry;
-            store_shader_mask(state, packed, (packed >> 6) & 15, mask, value);
+            store_shader_mask(state, *(word const *)entry, (*(word const *)entry >> 6) & 15, mask, value);
             entry += 4;
         }
     }

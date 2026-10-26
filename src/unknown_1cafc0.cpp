@@ -826,6 +826,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Optional blend-ID initialization 289; transition-set lookup scope 251; both 289; channel-state
 // initialization 251; positive channel flag 254; reversed independent clears 251;
 // state/flag/clear combination 254; native ID/set/state combination 289.
+// First logical blend 311; query-first logical blend 310; both logical 318; staged channel
+// admission 248 (gain three, dropped); logical staged 315; named readiness 254;
+// logical named readiness 312; lookup-owned work 251.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
