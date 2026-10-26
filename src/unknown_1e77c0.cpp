@@ -380,6 +380,11 @@ void function_1e6b00(long player_index, s_request_source *source)
 // pair 77, both through the state array 77-80, mask local / term order /
 // `21 == index` / limit or next locals / swapped arms 51-52.
 // Earlier: retail saves the pointer argument in EBX and shifts the mask in EBP.
+// Round 129: flag view declared after both value terms read from the array 77 (state
+// moves to EAX); unsigned index 51; explicit else arm 51; constant update before the output
+// stores 54; `limit > 0` 51. Screened: array/element-address flag views, the transition
+// slot for the recursion, a next-value local, the absent-entry arm last, output stores
+// swapped, call before the stores, all 45-78 in screen terms (base 45).
 // score 51 (was 51): index/mask roles and the output join remain; tested completion
 // with separate/state/ticks/both stores 116/112/114/120; shared setter variants
 // 83/111/108/109. Original early-result body restored.

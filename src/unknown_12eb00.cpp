@@ -49,7 +49,11 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : (x) > (hi) ? (hi) : (x))
 
 // score 21 (was 21): the count/cursor homes and the two index pins still differ, and the
-// blend store addresses [esi + eax] for [eax + esi]. The product update written out fixed
+// blend store addresses [esi + eax] for [eax + esi]. Index pins only as x <= hi ? x : hi or
+// x < hi ? x : hi 21/21 (arm order never moves the result register); hi >= x ? x : hi or
+// hi < x ? hi : x 19/19 (compare order only); indexed for loop over clusters[i] 27, with the
+// count guard 23; for loop stepping the cursor 23; named contribution 20; hi < x pins with the
+// named contribution 18. The product update written out fixed
 // the blend's operand order (40 -> 21). Tried: an interpolation helper for the blend 40;
 // no element pointer 215; long index locals 259; count declared after the table pointer 82;
 // the running sum written out 21; a 600 s permuter run, none below 21.
@@ -69,7 +73,7 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 // after table 82; earlier table-receiver scope with unchanged load point 21.
 // Entry/ramp/both bound expressions 49/199/200; input/output/both cursors
 // initialized before the table 78/78/317; const element view 21; int result 21.
-// score 21 (was 21): count/cursor homes, pin-result registers and blend address remain.
+// Count/cursor homes, pin-result registers and blend address remain.
 // Accumulation row cursor 116; blend row cursor 91; both row cursors 142;
 // accumulation short ordinal 159; blend short ordinal 110; both short ordinals 178;
 // unsigned output count 21; unsigned remaining count 21. Restored.

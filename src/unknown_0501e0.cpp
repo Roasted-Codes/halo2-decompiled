@@ -52,7 +52,8 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Value direction 348; reference direction/output 221/221; input-first scale products 221;
 // selected scaled inputs 275; short offset counters 277; byte transform counter 394;
 // value direction with reference output 348. Retained separate offset loops and cursor restored.
-// score 221 (was 221): extra frame dword and coefficient/result/tail homes remain.
+// Earlier: extra frame dword and coefficient/result/tail homes remain.
+// Earlier at 221 (was 221): extra frame dword and coefficient/result/tail homes remain.
 // On the output-cursor form: forward/up/right snapshots 275/275/269;
 // all coefficients before/after scale 453/448; shared scale 252 at 1136 bytes;
 // early/late coefficients with shared scale 478/477.
@@ -63,6 +64,10 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // First/second/both endpoint clip results 262/280/278; first clip before second view 282;
 // second clip first 282; incremental clip result 222; both view/clip boundaries 285;
 // cone rejection results 278. Clip-result forms restored.
+// Shared origin on separate-offset/output-cursor body 290; first/second/both endpoint
+// memcpy producers 298/297/334; both inputs before offsets 335; both input copies with
+// origin 287; first/second input copy with origin 264/266 (both at 1136 bytes). All restored.
+// Descending first/second/both displacement indices 220/260/260; first/second/both displacement destination cursors 224/224/226; all axis products 221; scalar-role homes 221. Extra frame dword and coefficient/result homes remain; one-point descending-first form rejected.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

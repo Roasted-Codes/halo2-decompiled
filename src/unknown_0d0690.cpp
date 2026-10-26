@@ -39,7 +39,8 @@ PRIVATE __forceinline long sky_surface_tag(short index)
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
+// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
+// Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
 // light/value fields 213; both views 213; frame pointer 296; status enum 213.
 // selector complete validation 213; selector result join 213; collision value initialization 238; direct
@@ -47,6 +48,7 @@ real function_30bf0(vector3f *vector);
 // preference 380; float consistency 302.
 // Selector failing-range returns 213; explicit selector context 213; direct collision predicate 213;
 // ordinary while light traversal 213; independent blend bounds 213; constant output first 213.
+// Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1250,16 +1252,26 @@ real g_467484 = 15.0f;
 real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
-// score 364 (was 429): frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// score 364 (was 364): frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
+// Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
+// frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// frame 0x4c versus 0x40 and normal/color scheduling still differ;
 // copied limited color kept; early squared length 428, decoded-color names 429,
 // in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
 // Base clamped in place 444; outer limited-color lifetime 364; copied color plus
 // in-place rotation 435 (retail length); scales at first use 381; shared surface clamp 481;
 // shared axis view 515, with in-place rotation 463, with in-place base clamp 542
 // (all three axis views lose the matched caller). Original helper and bodies restored.
-// score 364 (was 364): rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
+// rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
 // shared negate then native output 460; scoped turned vector 364; single-result normalizer 380;
 // ordinary rotation inline 364.
+// Normal consumer before rotation 476; before limited color 508; early primary record 500; direct mobile result 480.
+// Complete color result 440; blend complement 451; early normal with complement 479, with complete color result 500.
+// Shared dot/length-square/primary RGB scale 364/364/364; secondary/reflected/all RGB scales 452/450/465; dot/all and square/all 465/465.
+// Earlier: rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
+// Native rotation input snapshot 490; cosine-first evaluation 364; live axis fields 528 (caller lost);
+// input snapshot with cosine order/in-place output/live axis 490/487/487 (live-axis caller lost);
+// input snapshot with bounded-color home/radians producer 490/490.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1391,6 +1403,9 @@ bool __stdcall function_1d2f0(D3DSurface *surface, byte *bitmap);
 dword function_1362b0(s_type_7ba8e9 const *bitmap, point2f const *uv, real detail);
 dword function_015cd0(long index, dword entry);
 
+// score 4 (was 4): the conversion destination uses ECX rather than EAX; the UV address uses EDX rather than ECX.
+// Scoped/entry two-use conversion pointers 4/4; multiuse UV pointer with and without it 4/4;
+// direct success return 93; UV/storage names 4/4; getter noinline 4; both/sample noinline 4/4.
 // @retail 0xd2f90
 long function_d2f90(long flags, short bitmap_index, long palette_index, real u, real v, color3f *out)
 {
@@ -1611,7 +1626,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 819 (was 835): the long per-vertex flag and the sample points declared at the top of
+// score 819 (was 819): the long per-vertex flag and the sample points declared at the top of
 // their scope; mesh, UV and color homes and helper expansion still differ (frame 0xa8 versus 0x90).
 // Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
 // metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
@@ -1621,12 +1636,15 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Dynamic validity long 863; base validity short 819; accumulated sampled color 828;
 // weighted normal loop 892; both lengths before scaling 837; one broad sample scope
 // with the other two narrowed (first/second/third) 831/831/831.
-// score 819 (was 819): frame 0xa8 versus 0x90; mesh, UV and sample homes remain.
+// frame 0xa8 versus 0x90; mesh, UV and sample homes remain.
 // Only third/second/first sample narrowed 828/828/828 (frame 0x9c);
 // byte per-vertex capability 825; function-scope samples 819. Original body retained.
-// score 819 (was 819): frame 0xa8 versus 0x90, mesh/sample/UV homes and helper expansion remain.
+// frame 0xa8 versus 0x90, mesh/sample/UV homes and helper expansion remain.
 // Presence-branch samples 831 (frame 0x90); later vertex pointer 853; common base/normal outputs 825;
 // direct static material use 859; base-only fallback first 818. Original body retained.
+// Native packed input record 819; unpack output first 819; decoded sample value return 945;
+// color value contract 1350; native color reference output 819. Frame/mesh/sample/color/UV
+// homes and helper expansion remain; original complete body and both helpers restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

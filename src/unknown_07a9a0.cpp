@@ -1051,23 +1051,26 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	}
 }
 
-// score 834 (was 834): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
+// score 766 (was 777): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
 // private histogram 852; wide group decision 840; shared group total base 879; native group identity copy
 // 918; membership native maximum 834.
 // frame 0xd4 versus 0xb4; session entry and lookup differ.
 // Reduced preview 864 (754 code); ID phase 864; phased dword histogram 885;
 // histogram phase 934; bound snapshots 936; split guards 864; capacity inline 920.
-// score 830 (was 842): frame/session/lookup still differ; reduced preview 864.
+// frame/session/lookup still differ; reduced preview 864.
 // Early team scalars 896; early party scalars 922; group observation 865;
 // member-rating observation 864; allowed-imbalance observation 956; all restored.
-// score 828 (was 829): word histogram initialized at declaration; frame 0xd4 versus 0xb4 remains.
+// word histogram initialized at declaration; frame 0xd4 versus 0xb4 remains.
 // Fast long result 873; byte result 868; later group decision 884; word initialization 848;
 // final spread 873. Code-plus-extent 804/798/806/777/792 versus preview 788.
-// score 777 (was 777): Frame 0xd4 versus 0xb4 and session/lookup homes remain; scalar machine ID copy 840; player identity memmove 855; chained initial extrema 777; shared limited predicate 928; shared team-mode predicate 786 (fast).
-// score 777 (was 777): Frame 0xd4 versus 0xb4 and session/lookup homes remain. Shared player rating 831;
+// Frame 0xd4 versus 0xb4 and session/lookup homes remain; scalar machine ID copy 840; player identity memmove 855; chained initial extrema 777; shared limited predicate 928; shared team-mode predicate 786 (fast).
+// Frame 0xd4 versus 0xb4 and session/lookup homes remain. Shared player rating 831;
 // descending rating scan 850; group scalar accumulators 868; group mask accumulator 804 (plain); histogram
 // count cursor 836; common mask publication 798; shared mask spread 881; complete add-mask accumulator 817
 // (fast).
+// Frame 0xd4 versus 0xb4 and session/lookup homes remain. Machine-ID library copy 777; entry word histogram 855;
+// shared rating observation 831; chained group clears 777; Boolean balance accumulation 766 kept at retail length;
+// split lower-bound guard 777 (fast).
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {
@@ -1211,9 +1214,8 @@ bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 	if (variant->type == 5 || variant->type == 3 || variant->type == 4)
 	{
 		bool use_parties = variant->type == 5 || variant->type == 2 || variant->type == 4;
-		if (!balance_teams_by_count(out->player_count, out->groups, teams, team_size,
-			ratings_party_limited(variant), ratings_party_minimum(variant), ratings_party_maximum(variant), use_parties, &out->imbalance))
-			result = false;
+		result &= balance_teams_by_count(out->player_count, out->groups, teams, team_size,
+			ratings_party_limited(variant), ratings_party_minimum(variant), ratings_party_maximum(variant), use_parties, &out->imbalance);
 	}
 	else out->imbalance = 0;
 	if (!adding_group)

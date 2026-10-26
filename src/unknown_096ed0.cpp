@@ -32,6 +32,10 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // separate chain size 239; capacity/count/size combination 272.
 // Pending/active/both counted while 217/217/294; pending/active unsigned chain index 217/217; shared dispatch and chain aggregation 340.
 // Round 111: Positive pending/active/both equality termination 217/217/217; active state first 253; Boolean-OR blocked reduction 264.
+// Pending/active/both separate chain lengths 219/219/221;
+// pre-query peer flags 229; flags plus separate lengths 254.
+// Round 115: Guarded distinct indices 217; separate blocked names 217; separate callback-output names 217; aggregate declarations first 217; guarded index/blocked names together 217. Opening body restored.
+// Pending/active/both invalid-query continues 229/217/229; zero-state exit 217; output-failure exit 217; initialized handle arrays 297; pending/active selector after lookup 219/217. Receiver and callback/output/blocked homes remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -745,11 +749,16 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 204 (was 204): Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
+// score 193 (was 204): frame 0x98 agrees; decoded-kind width, scalar homes and callback setup differ.
+// Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
 // Native kind 211; role-named scalars 204; shared callback arm 222;
 // library descriptor/payload copies 204; pretested item while 220.
 // Unsigned native item total 204; joint count/error item guard 220; direct local output cursor 211;
 // pair-pointer cleanup 206; payload-before-info declaration 204.
+// Round 132: count after block publication 193 plain kept (688/692 bytes); frame 0x98,
+// count/kind/callback homes still differ. Entry decision/common exit/path results 271/248/206;
+// native-kind pairs 271/236/223; native kind plus count publication 204; both cursors after
+// publication 208; indexed post-publication output 212.
 // Count-bearing descriptor aggregate 208; update case first 211; persistent descriptor 204;
 // native high nibble 207; total-only lexical order 204.
 // Count-first declarations 205; entry-scope advancing cursor 217; produced before descriptor clear
@@ -841,12 +850,12 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 			{
 				s_handle_block *block = cursor;
 				cursor++;
-				count++;
 				block->type = type;
 				block->index = info.items[0];
 				block->info = info;
 				block->count = produced;
 				block->data = data;
+				count++;
 			}
 			else
 			{

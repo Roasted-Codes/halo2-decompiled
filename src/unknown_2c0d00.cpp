@@ -215,7 +215,7 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
     s_path_settings const *settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
     point3f const *position, real radius, vector3f const *direction, long unit_index, long ignore_index);
 
-// score 866 (was 866): frame 0x2cb8 versus 0x2cac and actor/unit retention;
+// score 866 (was 866): frame 0x2cb8 versus 0x2cac; actor/unit retention and priority/query/marker homes remain.
 // point workspace names 866; initial actor value 869; query index value 916;
 // conditional self-unit 911; wide initial predicates 1011; native location copy 911.
 // Frame pointer 1207; size preference 1436; native object fields 866;
@@ -230,12 +230,14 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Native category on retained homes 910 (frame 0x2cb4); direct query
 // members 911; current priority long 894; relationship results long 893;
 // sphere flag byte 917 (frame 0x2cb4). Original body kept.
-// score 866 (was 866): Frame 0x2cb8 versus 0x2cac; actor/unit and query/marker homes remain.
+// Frame 0x2cb8 versus 0x2cac; actor/unit and query/marker homes remain.
 // category switch 948; shared marker workspace 914; object matrix across iterations 866; sphere radius
 // before transform 878; flags at ordinary insertion 910; motion enabled guard 866.
 // frame 0x2cb8 versus 0x2cac and actor/unit homes remain. Plain direct sphere differences
 // 881; direct object differences 866; both 881; shared raised-point setter 866; ordered sphere-filter join
 // 866. Fast scores 927/916/927/916/916; full control 866.
+// Separate first/second/third marker ordinals long 913f/934f/916f; object ordinal alone
+// 897f/924 plain; only marker counts long 914f (control 916f). Original bounded traversals restored.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -879,6 +881,14 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // word node index 408; alternate normalizer 401; indexed node pair 428;
 // indexed pair with ordinary previous history 438. Frame and edge/history homes remain.
 // Earlier: frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
+// Frame 0x28 agrees; radius/zero schedule, edge/history homes and indexed node selection remain.
+// Radius/zero schedule, edge/history homes and node selection remain.
+// frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
+// frame 0x28 and length agree; zero register, edge/history homes and indexed node loads differ.
+// Earlier context: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
+// ordinary previous/first/both history 399/401/400;
+// frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
+// Earlier context: frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
 // Reduced trials: direct dot predicate 401; shared dot product 401; immutable predicates 401; geometry
 // names 401; output memcpy 401; earlier offset workspaces 401; native first-open 416; word selected vertex
 // 404.
@@ -886,6 +896,8 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // first offset in place 401; second offset in place 401; both offsets in place 401; first offset origin
 // snapshot 400; second offset origin snapshot 400
 // Earlier: frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
+// frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
+// Earlier context: frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
 // Node fields at use 420; vertex words at use 414; endpoint values 432; normal assignments 401;
 // split crossing phases 399; late second workspace 399; split phases/ordinary previous history 397;
 // Boolean ring direction 399; vertex words/ordinary previous, first, both history 414,415,415;
@@ -897,6 +909,13 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Complete geometry before predicates 397; with shared dot 397, symmetric cross parts 402,
 // named projection 397, both named products 402, equivalent orientation 421, postincrement count 396,
 // separate ring guards 397. Original single radial workspace and predicate phases restored.
+// frame 0x28 and length agree; zero register,
+// DL131: Radius/zero schedule, edge/history homes and node selection remain; result-first query
+// 441; nested query result 448; overall single result 394; overall/query result 414; indexed nodes
+// 430; indexed/result query 396; indexed/nested query 427; overall/indexed/query result 450.
+// Original body, both private helpers and complete shared header restored.
+// Predicate inline declarations 433; ordinary ring history 404; ring/incoming/both history names 385/385/385; declaration order 385; ordinary names/order 404/404; names plus order 385.
+// Native helper side/promoted node/both 385/385/385; word/unsigned node input 409/385; byte/long openness result 417/410; native side and word node 409.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1027,10 +1046,12 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // frame pointer 458; shared side dot products 384.
 // Nested expansion zero 1163, one 342; global optimization off 2011; size policy 518;
 // ordinary signed-angle inline 342.
-// score 342 (was 342): Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
-// score 342 (was 342): frame 0x3c versus 0x34 and angular homes remain;
+// Frame 0x3c versus 0x34 and angular homes remain; direct perpendicular inputs 383; existing shared angle target pair 403, all four 419, endpoint pair 385; all shared angles plus direct perpendicular inputs 440 (fast).
+// frame 0x3c versus 0x34 and angular homes remain;
 // early endpoint wrap 365; target-angles first 387; endpoint direction reuse angular 374,
 // distance 360, both 376; angular reuse with direction or projection names each 374 (fast).
+// Round 342: first-clamp tests 342; second-clamp tests 342; separate second-clamp scalar 410;
+// second angular endpoint reuse 373; second distance endpoint reuse 360.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)

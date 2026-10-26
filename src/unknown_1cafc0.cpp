@@ -538,7 +538,7 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 	graph_weapon_type_request(graph, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 }
 
-// score 399 (was 403): frame 8 versus 12 and hidden-result homes still differ.
+// score 399 (was 399): frame 8 versus 12 and hidden-result homes still differ.
 // Byte success 403; fallback fields at use 551; request fields at use 639;
 // library record move 628; outer name-snapshot declarations 444. Byte success kept.
 // Round 303: graph after resolution 621; fallback snapshot order 544; request snapshot order 419;
@@ -546,6 +546,10 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // hidden-result homes and frame eight versus twelve remain; word success 533;
 // shared request guard 403; resource-array base 426; urgent-array base 508; both bases 599.
 // Request class/mode/type 399; fallback class/mode/type 544; inherited ordinal scope 403; inherited while 403; ordinary group inline 1794; request class/type/mode 399 kept; request mode/type/class 419; request type/mode/class 403.
+// First/fallback/both native result-field copies 518/499/546; their immediate-index
+// forms 518/499/546; mutable result fields 546; shared query workspace 597. Frame remains eight in separate-copy forms.
+// Primary/fallback/both library result publication 415/431/483; name library copy 399;
+// complete library publication 483; unstreamed continue 399; leaf inline/automatic 1622/1622.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
@@ -802,7 +806,13 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 	}
 }
 
-// score 251 (was 251): Frame 0x38 agrees; identifier/result/loop homes and protected query lifetime remain.
+// score 251 (was 251): Frame 0x38 agrees; ID/result/loop homes and protected query lifetime remain.
+// Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
+// 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
+// Two-point gains dropped.
+// frame 0x38 agrees; ID slots, result/loop byte homes,
+// blend reloads and the frame clamp differ. Success after setup 251; loop
+// Frame 0x38 agrees; identifier/result/loop homes and protected query lifetime remain.
 // Success after setup 251; loop
 // state width 283; channel state width 314; name aggregate 322; flag mask 353
 // (six match losses). On 251: logical channel 287; logical offset 248 (gain

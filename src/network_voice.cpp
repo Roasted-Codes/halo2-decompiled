@@ -1233,6 +1233,8 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Early channel-array base with counted traversal 111; base after validation 111;
 // early base with pointer traversal 301; signed-word ordinal 296;
 // early base with validation returns 113. All lose the matched caller; original retained.
+// Unsigned total 281; unsigned total with counted walk 112; direct-receiver word ordinal 281;
+// word ordinal with unsigned total 281; unsigned counted ordinal 112. Expanded forms lose 0x54990.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -1434,6 +1436,14 @@ static __forceinline bool function_57d63(long arg_0, long arg_1);
 // Rejected set 100; rejected set with wide bit 168; indexed rejection bit 99;
 // allowed result 107; signed allowed result 107; allowed result with wide bit 130;
 // candidate snapshot 97; candidate snapshot with wide bit 119. Frame/spill and flag-query expansion remain.
+// Retail shape (for-statement counter, dword bit and muted, store only for active players, plain
+// availability tests with 0x56b70's active/passive mode flags, `1 << j` in the inner loop) 85, but
+// the mode flags are set inside a test (kept only on a match); without them 104; with the counter
+// declared first 117; volatile muted/mode/both tests 103/99/142; counter in the for statement alone
+// 125. With the first port-flag query on the plain
+// availability test and the second inlined, a one-file LTCG build is byte-identical to retail
+// only when voice_get_membership's call chain may write arbitrary memory; ours is known to write
+// only its own local, which leaves the second availability byte loaded lazily.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {
@@ -2030,13 +2040,20 @@ long voice_players_share_team(long other, long player)
 	return false;
 }
 
-// score 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
+// score 34 (was 34): early mode/mask saves and cold exits remain; 368/368 bytes.
+// Earlier 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
 // Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
 // team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
 // bit addition 59; signed result 55; initial guard 121; conditional/late mask 46/46; direct outputs 141/144.
-// score 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
+// Earlier 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
 // Mode with complete mask 46; shared team/all-peer modes 148/148; team acceptance first 46;
 // mask before mode 34; equality with other/selected validity 117/118; unsigned peer ordinal 130.
+// Deferred mask initialization 55; complete query arms/selection 46/46;
+// deferred live/native mode 55/55; accepted team predicate 127;
+// deferred default output 53; deferred initial exit 55.
+// Mode/mask saves still precede acceptance; cold exits differ; peer loop agrees.
+// Live mode 34; function-scope mask before/after result 54/54; signed mask 34;
+// enclosing mask with live mode 54; signed live mask 34; rejection to sole exit 34; enclosing exit 54.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
@@ -2512,6 +2529,7 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
 // Boolean role names 124; entry-scope workspaces 124; guarded preferred/mode values 154;
 // shared final selected bit 189; direct blocked assignment 165.
 // Capacity/preserve and preferred-bit homes remain; original body retained.
+// Round 117: Plain availability fields 162; joint workspace names 124; full final mask 143; mode observation first 130; existing preferred getter 124; byte preserve 146; unsigned preferred 124.
 // Definite blocked path result 165; shared mode-two capacity 160; direct session query 188;
 // early allowed-member query 124 (exact-only); mode-two admission first 137;
 // preferred eligibility first 142; complete blocked-preservation arm 124; path result plus arm 165.
@@ -2816,7 +2834,7 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 394 (was 400): frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// score 394 (was 394): frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
 // byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
 // Scalar role names 394; rejected-mode first 394; signed while traversal 394;
@@ -2825,6 +2843,8 @@ struct s_voice_route_choice
 // Boolean radio with unsigned nearest index 411; three mixer pairs 394;
 // conditional headset assignment 394; split initial/replacement nearest 412;
 // repeated player-field reads 472. Frame and route homes still differ; original retained.
+// Per-choice pointer 393; signed-word radio 393; signed headset 394;
+// function-scope descriptor only 402; function-scope pairs only 401.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
@@ -2914,12 +2934,18 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 }
 #pragma function(_ReadWriteBarrier)
 
-// score 56 (was 95): mode load and output cursor/store scheduling differ; direct formal 95;
+// score 56 (was 56): mode load and output cursor/store scheduling differ; direct formal 95;
+// Frame agrees; mode-load and output cursor/store scheduling still differ.
+// Earlier direct formal 95.
 // unsigned index 95; short/byte 107; early choices 95; early unsigned/short 95/107; direct unsigned 95.
 // mode load and record-store scheduling differ; real record
 // receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
 // outer route 95; actual count 96; conditional mode-result combinations all 92;
 // direct talker parameter with early player 56.
+// Shared route result/default arms 60/84; completed-player forms 94/85;
+// shared input bit 60/84; both computed bit parts 60/84.
+// Output mode owns result before timestamp, early/late player 127/112;
+// mode store before distance, early/late player 112/112; after distance 95/95; after flags 95/95.
 // @retail 0x56df0
 void __stdcall function_56df0(s_voice_player_settings *settings, long talker, long mode)
 {

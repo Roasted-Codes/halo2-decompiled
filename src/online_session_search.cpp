@@ -197,14 +197,18 @@ bool function_90160(long task_index, s_match_result_data *result)
    score to the loosest as the search widens */
 static inline void session_search_set_minimum_score(s_session_search *search)
 {
+	long loose_score = g_network_configuration.value1ec;
 	if (search->unknown1c != NONE && search->unknown20 > 0)
-		search->minimum_score = (long)((real)g_network_configuration.value1e8 + ((real)search->unknown1c / (real)search->unknown20) * ((real)g_network_configuration.value1ec - (real)g_network_configuration.value1e8));
+		search->minimum_score = (long)((real)g_network_configuration.value1e8 + ((real)search->unknown1c / (real)search->unknown20) * ((real)loose_score - (real)g_network_configuration.value1e8));
 	else
-		search->minimum_score = g_network_configuration.value1ec;
+		search->minimum_score = loose_score;
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 50 (was 50): current/bound registers and request fill differ; explicit helper current 103, total 51, both 51; standard lower/upper/both clamps 50; combined 51; field current 50 (round 117).
+// score 46 (was 50): Frame/length agree; current/bound carriers and request field scheduling still differ.
+// Earlier helper current/total/both inputs 103/51/51; standard lower/upper/both clamps 50;
+// combined inputs/clamps 51; field current 50; shared bound workspace 50; default score first 98;
+// invalid score inputs first 50.
 // current/bound registers and request scheduling differ; native field layout,
 // typed bound/flag/request groups 0..7: 50, 50, 50, 50, 50, 50, 50, 50.
 // frame 0x20 agrees; ECX/EAX allocation and request clear/fill scheduling differ;
@@ -213,8 +217,12 @@ extern "C" void _ReadWriteBarrier(void);
 // bound result homes declared together 50; task result used for store and test 50;
 // explicit clock selection 53; direct zero initialized request 87;
 // current snapshot inside active guard 50; both bounds declared before current 50. Restored.
-// score 50 (was 50): shared bound workspace 50; default score first 98; invalid score inputs first 50;
 // named progress 50; lower/upper/both output clamps 105/104/98; inactive current first 58.
+// Strict/loose/both endpoints 50/46/46; converted strict alone/with loose 50/46;
+// endpoints with total/current/both progress snapshots 46/46/46; count-first/observed fill 50/48.
+// Kept the loose endpoint for interpolation and fallback; plain check 46 at 336/336 bytes.
+// Returned/result/conditional score helper 99/99/99; enabled/disabled/both chained flags 48/48/50; shared
+// result-buffer size 93; request workspace name 46. Current/bound allocation and request scheduling remain.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -596,14 +604,7 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
-// score 21 (was 21): shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
-// score 21 (was 21): shared true exit remains late; reversed signed operands at primary 25, latency 21, tertiary 21, key pairs 21/25, all keys 25 (round 117).
-// shared true return remains late; real final-key table trials:
-// local long decisions/relation 81/109, short 99/118; static long 48/85, short 70/94.
-// shared true return remains after later tests, first +0x17;
-// cached primary keys 21; latency keys 21; third keys 21; primary/latency 21;
-// primary/third 21; latency/third 21; all repeated keys 21; primary-test result 46.
-// shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
+/* the order of the search results: whether a sorts before b */
 // @retail 0x90f10
 bool __stdcall session_search_result_precedes(void const *a, void const *b, void const *context)
 {
@@ -611,22 +612,23 @@ bool __stdcall session_search_result_precedes(void const *a, void const *b, void
 	s_search_result const *second = (s_search_result const *)b;
 	if (first->field1f8 < second->field1f8)
 		return true;
-	if (first->field1f8 <= second->field1f8)
+	if (first->field1f8 > second->field1f8)
+		return false;
+	if (first->unknown74)
 	{
-		if (first->unknown74)
-		{
-			if (first->qos.rtt_median > second->qos.rtt_median)
-				return true;
-			if (first->qos.rtt_median < second->qos.rtt_median)
-				return false;
-		}
-		if (first->field1fc > second->field1fc)
+		if (first->qos.rtt_median > second->qos.rtt_median)
 			return true;
-		if (first->field1fc < second->field1fc)
+		if (first->qos.rtt_median < second->qos.rtt_median)
 			return false;
-		if (first->field10c > second->field10c)
-			return true;
 	}
+	if (first->field1fc > second->field1fc)
+		return true;
+	if (first->field1fc < second->field1fc)
+		return false;
+	if (first->field10c > second->field10c)
+		return true;
+	if (first->field10c < second->field10c)
+		return false;
 	return false;
 }
 

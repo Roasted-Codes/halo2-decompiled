@@ -120,6 +120,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // 289/283/307; native signed packed carriers 153; signed carriers with table field 289.
 // Early changed/tag/both declaration homes 153/153/153; separate record publication 153;
 // early record-table/selected-record/both pointer homes 153/153/153; complete native declaration block 153.
+// Readonly definition/pass/both 153/153/153; first/second/both native record copies
+// 153/153/153; range publication at consumer 153; copies with late publication 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -683,6 +685,8 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 // bounds after clamp 25; reversed remap cases 231; separate remap result 22; color first 154.
 // Native color library/record copies 109/109; remap case orders 23451/12435/24135/35124
 // 229/30/81/81; shared data-field reference 22; data before component dispatch 70.
+// Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
+// native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
 // @retail 0x1b580
 bool function_1b580(byte const *definition, long component, long unused, long mode, real *out)
 {
@@ -846,6 +850,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
 // Branch entry lifetimes 234; actual remapping-field reference 161; direct completion 155;
 // early mapped index 206; signed value table 155 (fast, with body entry steps). Two-point gains dropped.
+// Direct/mapped signed selector 157/157; special category first 170;
+// ordinary/special bank-one-first arms 159/167.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -931,21 +937,6 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
     }
 }
 
-// score 212 (was 218): component remains stacked instead of incoming EDI;
-// extra EDI save and ret 12 versus ret 8 remain. Native color fields 229;
-// complete dimension initialization paths 212; both 221; scalar case order 218;
-// texture case order 217.
-// score 2 (was 212): entry registers, cleanup and retail length recovered; output-2/3 zero-store pair remains.
-// Component-first signature 212; color-first 224; conditional dimensions 222; scalar tests 210;
-// dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
-// both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
-// shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
-// score 2 (was 2): width-family zero-store pair remains; entry and 704-byte extent agree.
-// Later width/height case owner 2/2; mixed-before-pair 2; unit/zero before mixed 2/111;
-// adjacent dimension families 30; dimension/zero families first 48/61.
-// Final zero-store pair remains reversed. Isolated width chain 6; shared width
-// chain 25; shared width/height cases 21/27; mixed-pair clear 85; width clear/loop 74/95; height
-// clear 61; zero-family clear 93.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {
@@ -998,11 +989,23 @@ bool function_1b2c0(byte const *state, long index, long component, long texture,
         case 11: out[0] = out[1] = 0.0f; break;
         case 12: out[3] = out[2] = 0.0f; break;
         case 13: out[0] = width; out[1] = height; out[3] = out[2] = 0.0f; break;
-        case 14: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 14: {
+            real *zero = out + 1;
+            out[0] = width;
+            zero[0] = 0.0f;
+            zero[2] = zero[1] = 0.0f;
+            break;
+        }
         case 15: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
         case 16: out[0] = width; out[1] = height; out[2] = 1.0f; break;
         case 17: out[0] = out[1] = out[2] = 0.0f; break;
-        case 18: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 18: {
+            real *zero = out + 1;
+            out[0] = width;
+            zero[0] = 0.0f;
+            zero[2] = zero[1] = 0.0f;
+            break;
+        }
         case 19: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
         case 20: out[0] = out[1] = out[3] = out[2] = 0.0f; break;
         default: __assume(0);
@@ -1294,6 +1297,11 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 // score 265 (was 265): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
+// Frame 0x28 and sampler agree; captured descriptors and
+// destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;
+// aggregate colors both/direct/mapped 273/273/269; aggregates with unsigned/signed formal 291/291;
+// aggregates with long source 283.
+// Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // short counter 246; byte counter 282; source index long 248; selector byte 246;
 // pack result at store 344; existing clamp calls 318. Frame pointer 365;
 // zero inline depth 652; global optimization off 1687; size 517; native

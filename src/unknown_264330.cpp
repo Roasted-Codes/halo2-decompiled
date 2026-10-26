@@ -408,6 +408,8 @@ real function_2683f0(long actor_index, long node_index, short type);
 void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *sample, s_2640c0 *motion);
 
 // score 420 (was 420): frame 0xa4 versus 0xa0; actor input and workspaces differ.
+// Frame 0xa4 versus 0xa0; stacked actor and node/workspace homes still differ.
+// Earlier at 426 (was 426): frame 0xa4 versus 0xa0; actor input and workspaces differ.
 // Wide prior state and byte sampling flags 426; byte sampled-one 426;
 // native for traversal 436; later update init 427; later flag inits 426;
 // for plus wide update/sample/both 439/437/429; release noinline with
@@ -419,6 +421,10 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // kept; word update/sample/sampled count 430/449/449; native view 426; later view lifetime 426;
 // word maximum plus native view/later view/update 420/420/424.
 // Earlier: frame 0xa4 versus 0xa0, actor input and workspace homes remain.
+// frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
+// frame 0xa4 versus 0xa0, actor input and workspace homes remain.
+// Earlier at 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
+// Earlier at 420 (was 420): frame 0xa4 versus 0xa0, actor input and workspace homes remain.
 // Native signed maximum 420; signed maximum/original loads 420; later maximum/signed
 // maximum 422/422; signed counter/original and signed maximum 420/420;
 // later counter/original and signed maximum 422/422. Each fast and plain.
@@ -426,6 +432,14 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // all declarations restored after the force-inline form lost a checked caller.
 // Round 166: typed actor startup/admission/tracking/completion/all 420 each; native actor
 // getter, native node fields and both 420 each. Actual shared type layout restored.
+// Sample after counter/maximum 437/437 (retail frame and length); split true flags 424;
+// test-derived sample 434; timeout conditional 420; decrement branches 420; common maximum exit 437; nested sample-success scope 420.
+// Shared long/word actor slots 444/441; node slots 429/438; both long 439;
+// long actor/word node 423 (frame 0xa0, exact length); word actor/long node 440; both word 456.
+// On the repaired frame: long/short update 430/429; update predicate 430; single exit 433.
+// Sampled-once acquisition after startup/at traversal/before actor 422/422/420; startup plus later
+// node flags 422; completed-sample name 420; separate/reversed node flag declarations 420/422;
+// startup plus reversed flags 424.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
