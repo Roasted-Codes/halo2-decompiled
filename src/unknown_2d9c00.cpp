@@ -63,13 +63,7 @@ buffered_2d9c00::buffered_2d9c00(referenced_2d88a0 *source_, long size_)
 	buffer = g_memory_2d88a0->allocate_aligned(0x40, size_, 0x15);
 }
 
-class reader_2d9c80 : public referenced_2d88a0
-{
-public:
-	virtual void slot_1() {}
-	virtual long read(void *buffer, long size) { return 0; }
-	long skip(long count);
-};
+#include "stream_reader_2d9c80.h"
 
 // @retail 0x2d9c80
 long reader_2d9c80::skip(long count)
