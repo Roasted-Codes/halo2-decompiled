@@ -1144,6 +1144,8 @@ struct s_squad_tree_definition
 // parent local beside the double read 31; no inline_depth pragma 175 (0x205280 inlines). Third pass: a
 // long parent_index local 63; the field read twice by index 63; one child variable reused for the
 // parent index 60 (as an assignment in the condition 60).
+// Native group/squad parent-field references 37/31; child-head reference 34; group+squad 37;
+// group+head 37, squad+head 34, all three 37; append inline declaration 31. All restored.
 // @retail 0x2009d0
 void function_2009d0(void)
 {

@@ -1757,6 +1757,8 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // sway weapon input 439f, external scalar reference 456f, both 439f; readonly definition
 // 456f; root-fill inline/noinline 456f; indexed outputs plus weapon input 395f/437p rejected.
 // f: reduced control 456/2166; p: ordinary baseline 455/2154.
+// Fill/blend-update/blend-query/ammo-query inline or noinline declarations all 412 fast,
+// equal to the reduced control; all declarations restored. Frame remains 0x58.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
