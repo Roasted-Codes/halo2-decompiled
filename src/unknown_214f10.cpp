@@ -52,15 +52,18 @@ PRIVATE __forceinline long function_214f83(char const *arg_0, s_file_handle *arg
     return function_120ba0(6, &local_0, 8, function_1a08f0, arg_2);
 }
 
-// score 42 (was 55): handle register, success-byte reload and resize/wait scheduling differ.
-// Full-width open result 42; first/second/both waits and shared opener/combined helpers 55;
-// branched success 50; local role names 55; native/early/named result and late success 42.
-// typed open outcome 42; typed success update/complete outcomes 44/42;
-// early outcome home 42; positive outcome/byte admission 43/55;
-// initialized success output/byte declaration order 83/42.
-// score 42 (was 42): Handle ECX and success-byte reload remain unresolved. Long ordinal 111;
-// word/byte ordinals 42/42; path/status lifetimes 42/42; long ordinal with all
-// workspaces/failure continue 111/111; short endpoint equality 42.
+// score 42 (was 55): handle ECX and the success-byte store and memory re-test differ; retail
+// re-tests the byte the way a volatile flag would (with one, everything after the open
+// matches but retail's `xor edx, edx`: 48, not kept). Full-width open result 42;
+// first/second/both waits and shared opener/combined helpers 55; branched success 50;
+// local role names 55; native/early/named result and late success 42; typed open outcome 42;
+// typed success update/complete outcomes 44/42; early outcome home 42; positive outcome/byte
+// admission 43/55; initialized success output/byte declaration order 83/42; long ordinal
+// 111; word/byte ordinals 42/42; path/status lifetimes 42/42; long ordinal with all
+// workspaces/failure continue 111/111; short endpoint equality 42; handle test and call on
+// the array element with the long result 44; element copy inside the branch 42; element
+// pointer for open/test/call with the long result 44, with a bool result 55; handle tested
+// again at the branch 53.
 // @retail 0x214f80
 void game_state_cache_files_open(void)
 {
