@@ -122,6 +122,8 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // 1016; equality termination 1016. Word counter fully unrolls; frame grows four bytes.
 // Complete linear coefficient observations 966; angular pair 953 kept (plain); shared limits 1011;
 // linear/angular 980; linear/limits 1065; angular/limits 979; all 1065; all/read-only record 1065.
+// Round 155: five alternate scale formal orders, source-first add/subtract and all three
+// helper orders together 953 each; every definition and call restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
