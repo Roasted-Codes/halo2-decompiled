@@ -791,7 +791,7 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
-// score 225 (was 225): Large table clear retains aligned EBP frame 0x8b4 versus direct 0x8ac; scalar homes remain.
+// score 225 (was 225): Aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes remain.
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
 // indexed batch-entry pointer 225; previous-gain snapshot 262.
 // Earlier: aligned clear still owns EBP and shifts the scalar homes;
@@ -805,6 +805,8 @@ real function_18cac0(long arg_0);
 // door cluster 237; countdown/membership parts 238. Aligned-clear frame and receiver homes remain.
 // Gain after mask queries 251; global BSP receiver 227; audibility-bound receiver reread 244;
 // unsigned membership masks 246; pretested cluster while walk 225.
+// Round 215: unsigned-word selector 229; read-only audibility receiver 225;
+// mask declaration before gain 225; chained small-mask zero 245; branch-derived gain result 229.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

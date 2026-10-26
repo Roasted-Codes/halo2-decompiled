@@ -239,6 +239,8 @@ struct s_physics_component_walk : s_havok_component
 // ordinary body while scan 275 (plain).
 // Signed-word policy/availability/application 298/297/293 (frame 0x18); repeated upper clamp bound
 // 279; paired signed-word statuses 285.
+// Round 215: signed-byte availability/application/policy 275/275/275;
+// unsigned-word policy 298; policy field at each body use 325.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,
