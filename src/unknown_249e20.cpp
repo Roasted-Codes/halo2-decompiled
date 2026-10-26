@@ -172,15 +172,18 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 
 /* the distance sound travels between two clusters */
 #pragma optimize("s", on)
-// score 82 (was 88): 165/182 bytes; default float loads and merged exits differ.
+// score 65 (was 76): entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
 // Maximum sentinel first 88; interior interval first 82 kept; integer sample 88; read-only audibility 88;
 // ordered cluster parameters 91; named pair index/range 88/88; direct fallback 84; both boundaries 82.
-// score 82 (was 82): entry float values, saved-register ownership and merged exits remain.
+// Unequal-cluster scope 81; fallback first 81; total result assignment 82; zero/upper
+// result defaults 80/80; word/short samples 76/76; native count observation 82.
 // Existing minimum/maximum/both/index force-inline declarations 82/82/82/82;
 // fallback inline/noinline 82/82; extrema before receiver 81 (below gate); high before low 82.
-// default float loads, saved registers and merged exits remain.
 // Named fraction/span-first/bounds-after-sample/bounds-before-table 82/82/82/82;
 // full/final interpolation expressions 82/82; native endpoint tests with/without fraction 85/85.
+// Sample offset long/short/word 78/65/77; direct receiver 65 kept; table-operation first 65;
+// explicit endpoint results 79; word-path returns 65; shared index row parts 76.
+// Direct receiver: plain 65; active 171 bytes unchanged, raw differing rows remain 65.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {
@@ -189,14 +192,13 @@ real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 		local_0 = 0.0f;
 	else if (bsp->audibility_count > 0)
 	{
-		s_structure_audibility *audibility = bsp->audibility;
 		long low = cluster_minimum(cluster_a, cluster_b);
 		long high = cluster_maximum(cluster_a, cluster_b);
-		byte value = audibility->cluster_pair_distances[cluster_pair_index(low, high, bsp->cluster_count)];
+		word value = bsp->audibility->cluster_pair_distances[cluster_pair_index(low, high, bsp->cluster_count)];
 		if (value > 0 && value < 0xff)
 		{
-			real local_1 = audibility->distance_lower;
-			real local_2 = audibility->distance_upper;
+			real local_1 = bsp->audibility->distance_lower;
+			real local_2 = bsp->audibility->distance_upper;
 			local_0 = (real)(value - 1) * (1.0f / 253.0f);
 			local_2 -= local_1;
 			local_0 *= local_2;

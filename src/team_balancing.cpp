@@ -583,6 +583,9 @@ bool balance_teams_by_count(long player_count, long const *party_indices, long t
 // total after copy 74; phase-accumulated total 74; shared party value 73;
 // strict maximum update 35; early imbalance 66; explicit excess clamp 46;
 // result from combined tests 67; separate noinline declaration 34.
+// score 34 (was 34): the body, not the parameter order, gives player count EDX: with the caller
+// updated, orders (extra, parties, player) 35, (player, extra, parties) 34, (parties, player,
+// extra) 34, (parties, extra, player) 35, (extra, player, parties) 35; extra-first sum 35.
 // @retail 0x91f00
 bool balance_teams_can_add(long player_count, long const *party_indices, long extra_count, long team_count,
 	long maximum_team_size, bool flag_parties, long flag_minimum, long flag_maximum, bool use_parties,

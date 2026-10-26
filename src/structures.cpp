@@ -371,7 +371,11 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
-// score 236 (was 240): 0x58 frame; region scheduling/model spill remain.
+// score 236 (was 236): region scheduling and model/range/vertex homes remain.
+// Region scheduling and model/range/vertex homes remain; staged region base
+// 236; library point copy 236; both 236; false result at first failure 242; read-only
+// reference/range 236/236; late false with reference 242; chained part resets 238.
+// 0x58 frame; region scheduling/model spill remain.
 // Retained mesh 258; unsigned node ordinal 240; masked plane snapshot 264;
 // native surface-table view 240; relative range ordinal 252.
 // Region scheduling and model/node storage still differ;
@@ -382,12 +386,14 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Region base at each use 268; surface lookup name 236; local point name 236; triangle vertex name
 // 236; node/corner scalar names 236; node count at uses 236; native part-bound locals 236;
 // section field at early uses 236.
-// score 236 (was 236): region scheduling and model/range/vertex homes remain. Fast trials: separate
+// region scheduling and model/range/vertex homes remain. Fast trials: separate
 // NONE result 269; separate count result 262; unsigned candidate and NONE result 269; unsigned
 // candidate and count result 262; entry NONE-result lifetime 269; entry count-result lifetime 262;
 // node pointer search 270; bounded mismatch scan 236. All restored.
 // Model lookups at uses 298; refreshed model 284; read-only nodes 236; extraction-output lifetime 236;
 // strip cursor 242; read-only strip 236; output lifetime plus strip 242; model uses plus strip 300.
+// Cache inline/noinline, lookup inline/noinline, both inline/noinline, and
+// mixed inline/noinline pairs 236 each; all declaration metadata restored.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

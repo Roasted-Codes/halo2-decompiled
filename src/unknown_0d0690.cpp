@@ -1010,6 +1010,9 @@ PRIVATE __forceinline bool surface_status_failed(long status)
 // score 2 (was 2): retry AND still follows the object-index push. XOR 2; subtract 18; clear
 // extracted bit 2; subtract extracted bit 133; retry status scope 2; one failure store 98; long
 // failure 83; entry status 2.
+// score 2 (was 2): retry AND still follows the object-index push; mask assignment in the call 2;
+// nested retry status predicate 2; direct status initialization 2; two-call index local 2;
+// read-only point 2; byte failure 2; negated return 2; guarded mask assignment 87.
 // @retail 0xd1850
 long function_d1850(long object_index, bool value, s_effect_color_query *query)
 {

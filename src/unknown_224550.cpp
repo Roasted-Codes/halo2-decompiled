@@ -135,6 +135,10 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Frame 0x50/0x60 and tint/second-UV homes remain; UV result by value 553; bounds input by value 687; short sequence count 441; unsigned flip mask 435; paired UV defaults 439.
 // Extended tint lifetime 544; shared flip flags 435; UV extents stored first 435;
 // positive-count interval scope 421 (plain); branch-owned blend defaults 508.
+// frame 0x50 versus 0x60; tint/second-UV homes, cache carrier and later scalar homes remain.
+// Earlier 435 (was 435): Frame 0x50/0x60 and tint/second-UV homes remain; UV result by value 553; bounds input by value 687; short sequence count 441; unsigned flip mask 435; paired UV defaults 439.
+// Round 112: By-value input color 547; packed seed input 439; both inputs 550 (seed forms
+// exact-only); redundant flip clear removed 481; bitmap arm first 508.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

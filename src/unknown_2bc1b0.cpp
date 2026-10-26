@@ -233,7 +233,11 @@ struct s_item_object_2bc1
 /* updates a team's item each tick: how long it has been away from home, its
    return home once it has waited too long, and the points of the player
    holding it */
-// score 97 (was 97): team/entry registers and timer/tally schedule remain; conditional tick
+// score 97 (was 97): team/entry saved registers, timer decrement and tally address remain.
+// Standard marker with direct input 97; with the conditional tick clamp 93 (not kept: the marker
+// needs a matched body); absent holder 98/94; native timer forms 110/108/111/109; direct second
+// lookup/test and native/constant team index 93 each.
+// team/entry registers and timer/tally schedule remain; conditional tick
 // publication 93 (plain 93, rejected: inherited self-address input); publication arms 147;
 // direct timer 108; inactive/absent-holder/unexpired exits 97/98/97; split tick increment 97;
 // conditional ticks with direct input 156.

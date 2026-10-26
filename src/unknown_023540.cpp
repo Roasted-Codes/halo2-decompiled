@@ -371,21 +371,26 @@ extern real g_4b8940[9], g_4b8964[9], g_4b8988[9];
 void function_022750(real const *a, long size, real const *b, real *out, real t);
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result);
 
-// score 252 (was 258): frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
+// score 237 (was 237): frame 0x80/0x68, axis/trig homes and rolled coefficient calls remain.
+// Earlier trials: frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
 // Sample cursor 258; sine-scaled axis 259; diagonals first 288; elapsed snapshot 258; size optimization 397.
 // frame 0x7c versus 0x68; axis/trigonometric homes and rotation-call layout differ.
 // Complement at use 264; reused axis squares 252; coefficient countdown 273;
 // contiguous payload reset 286; conditional phase clamp 258.
-// score 243 (was 252): frame, axis/trigonometric homes and rotation-call layout remain;
+// Earlier trials: frame, axis/trigonometric homes and rotation-call layout remain;
 // native coefficient array 258; payload clears first 257; late axis squares 258;
 // reused mixed-axis products 243; entry result buffer 252; source pointer before reset 250.
-// score 237 (was 243): Frame 0x80 versus 0x68, axis/trigonometric homes and rolled
+// Earlier trials: Frame 0x80 versus 0x68, axis/trigonometric homes and rolled
 // coefficient calls remain. squares between trig 256; paired mixed products 265; cosine
 // before sine 242; scalar sine products 237; single sample exit 243; sines with squares
 // between trig 272; sines with paired mixed products 242; sines with cosine before sine 239;
 // short table field 243; sines with axis field reference 255; sines with angle field
 // reference 257; sines with input field references 273.
 // Frame 0x7c versus 0x68 and axis/trig/call homes remain; on reused square/mixed products: direct axis 300; direct angle 264; both 284; native coefficient index 257; geometry scalar scope 243. Reduced callee caveat; no keeper.
+// Selective sine i/j/k at uses 245/235/243; pairs ij/ik/jk 243/249/243;
+// selective mixed ji/ki/jk 248/248/231; sine-j with mixed ji/ki/jk 229/250/245.
+// (sine-j and mixed-ji written out at their matrix uses gave 229; not kept: two of six parallel locals inlined.)
+// Direct axis/angle/both on this product context 274/252/274 fast (callee caveat).
 // @retail 0x22850
 void function_22850(void)
 {
@@ -2395,12 +2400,13 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 424 (was 424): frame 0x24 versus 0x28, early saves and float-call setup differ;
+// score 344 (was 424): Frame 0x24 versus 0x28; early inverse save, local dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
 // distinct final alpha 427; separate clamped strength 428. Original body restored.
-// score 424 (was 424): Frame 0x24 versus 0x28 and dimension homes remain. Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
-// score 424 (was 424): Frame 0x24 versus 0x28; dimension homes and early saves remain. Fast control 427; early fallback rectangles 438; early source rectangle 442; early reciprocals 439; blend-operation snapshot 438; late strength clamp removed 461 (fast).
-// score 424 (was 424): Frame 0x24 versus 0x28, early saves and dimension homes remain. Fast control 427; long pixel dimensions 433; short dimensions 456; simple combiner first 427; immutable bitmap views 427; explicit bitmap validity 432.
+// Fast control 427; rectangle clear 433; shared alpha clamp 427; shared strength clamp 427; vertical sample 427; reciprocals before Begin 433.
+// Fast control 427; early fallback rectangles 438; early source rectangle 442; early reciprocals 439; blend-operation snapshot 438; late strength clamp removed 461 (fast).
+// Fast control 427; long pixel dimensions 433; short dimensions 456; simple combiner first 427; immutable bitmap views 427; explicit bitmap validity 432.
+// Height-first acquisition 427; paired dimensions 427; alpha clamp branches 427; combiner output branches 427; destination fallback first 348 fast, 344 plain kept.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2492,14 +2498,6 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     function_1ccf0(&g_484f68);
     function_1cc30(12);
     function_1c710(g_51f0f0);
-    if (!source)
-    {
-        default_source[0] = 0.0f;
-        default_source[1] = width;
-        default_source[2] = 0.0f;
-        default_source[3] = height;
-        source = default_source;
-    }
     if (!destination)
     {
         default_destination[0] = 320.0f - width * 0.5f;
@@ -2507,6 +2505,14 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
         default_destination[2] = 240.0f - height * 0.5f + arg_af5a49;
         default_destination[3] = arg_af5a49 + height * 0.5f + 240.0f;
         destination = default_destination;
+    }
+    if (!source)
+    {
+        default_source[0] = 0.0f;
+        default_source[1] = width;
+        default_source[2] = 0.0f;
+        default_source[3] = height;
+        source = default_source;
     }
     D3DDevice_Begin(D3DPT_TRIANGLEFAN);
     real inverse_width = 1.0f / width;
@@ -2548,18 +2554,18 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
 
-// score 575 (was 575): frame 0x208 versus 0x200; coefficient homes and shared sample paths differ.
+// score 544 (was 554): Frame 0x214 versus 0x200; stack order, coefficient homes and shared sample paths remain.
 // Full-width order 578; byte sample 575; bucket cursor 580; bucket rotation scope 575;
 // found-index search 572; long found-index 603.
 // Native cache cursor 590; bounded sample while 575; bounded bucket while 575;
 // per-bucket transformed buffers 575; inclusive level cap 575.
-// score 570 (was 575): frame 0x214 versus 0x200; coefficient homes and sample paths differ.
 // Long result 570 kept; outer rotated buffers 575; accumulated search 573; word sample count 576;
 // depth one 575; long result/search 575; short result 570; byte result 596.
-// score 570 (was 570): Frame 0x214 versus 0x200; order, coefficient and sample homes remain. Indexed matrix copies 758; structure reload 588; long eligibility 572; layout-order sample 589; long cache-hit result 570 (fast).
-// score 561 (was 570): Frame 0x214 versus 0x200; coefficient homes, stack order and sample paths remain. Cache index 575; in-place inverse 584; capped short sample count 561 kept (plain); delayed default coefficients 576; failure-first result 589 (fast).
-// score 554 (was 561): Frame 0x214 versus 0x200, stack order and coefficient/sample homes remain. Shared cache helper 718; explicit eligibility 560; entry matrix 561; short bounded sample loop 606; post-metadata defaults 554 (plain).
-// score 554 (was 554): Frame 0x214 versus 0x200, stack order and coefficient/sample homes remain. Native sample arrays 554; byte output cursor 554; exact determinant tree 554; unsigned byte size 554; signed-byte success 563 (fast).
+// Indexed matrix copies 758; structure reload 588; long eligibility 572; layout-order sample 589; long cache-hit result 570 (fast).
+// Cache index 575; in-place inverse 584; capped short sample count 561 kept (plain); delayed default coefficients 576; failure-first result 589 (fast).
+// Shared cache helper 718; explicit eligibility 560; entry matrix 561; short bounded sample loop 606; post-metadata defaults 554 (plain).
+// Native sample arrays 554; byte output cursor 554; exact determinant tree 554; unsigned byte size 554; signed-byte success 563 (fast).
+// Next matrix at loop tail 586; sample input cursor 552; short count override 554; entry direction workspace 554; positive allocation scope 544 kept (plain); scope plus sample cursor 542, extra two rejected.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2593,50 +2599,56 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         }
         if (!bytes) goto done;
         long next = g_487b18.size + bytes;
-        if (next > 0x27000) { result = false; goto done; }
-        long handle = g_487b18.size & 0x0fffffff;
-        g_487b18.size = next;
-        entry->data_handle = handle;
-        real *output = (real *)(g_487b18.data + handle);
-        for (long bucket = 0; bucket < count; ++bucket)
+        if (next <= 0x27000)
         {
-            byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-            word available_samples = *(word const *)(pair + 2);
-            short samples = available_samples > 2 ? 2 : available_samples;
-            if (!samples) continue;
-            real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
-            transform4x3f matrix;
-            function_0235a0(source, &matrix);
-            for (short sample = 0; sample < samples; ++sample)
+            long handle = g_487b18.size & 0x0fffffff;
+            g_487b18.size = next;
+            entry->data_handle = handle;
+            real *output = (real *)(g_487b18.data + handle);
+            for (long bucket = 0; bucket < count; ++bucket)
             {
-                if (sample) function_0235a0(source + 12, &matrix);
-                if (use_samples)
+                byte const *pair = (byte const *)vertices + 4 + bucket * 4;
+                word available_samples = *(word const *)(pair + 2);
+                short samples = available_samples > 2 ? 2 : available_samples;
+                if (!samples) continue;
+                real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
+                transform4x3f matrix;
+                function_0235a0(source, &matrix);
+                for (short sample = 0; sample < samples; ++sample)
                 {
-                    point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, sample);
-                    if (position)
+                    if (sample) function_0235a0(source + 12, &matrix);
+                    if (use_samples)
                     {
-                        byte *bsp = *(byte **)(structure + 0x84);
-                        function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
-                            (byte)layout->order, &entry->scale, position);
+                        point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, sample);
+                        if (position)
+                        {
+                            byte *bsp = *(byte **)(structure + 0x84);
+                            function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
+                                (byte)layout->order, &entry->scale, position);
+                        }
                     }
+                    real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
+                    determinant += matrix.forward.k * matrix.up.j * matrix.left.i;
+                    determinant += matrix.up.k * matrix.left.j * matrix.forward.i;
+                    determinant -= matrix.forward.i * matrix.left.k * matrix.up.j;
+                    determinant -= matrix.forward.j * matrix.left.i * matrix.up.k;
+                    determinant -= matrix.forward.k * matrix.left.j * matrix.up.i;
+                    matrix3x3 rotation;
+                    function_142bf0((matrix3x3 const *)&matrix.forward, determinant, &rotation);
+                    real rotated_red[16], rotated_green[16], rotated_blue[16];
+                    function_143600((real const *)&rotation, 3, red, rotated_red);
+                    function_143600((real const *)&rotation, 3, green, rotated_green);
+                    function_143600((real const *)&rotation, 3, blue, rotated_blue);
+                    function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                    output += stride;
                 }
-                real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
-                determinant += matrix.forward.k * matrix.up.j * matrix.left.i;
-                determinant += matrix.up.k * matrix.left.j * matrix.forward.i;
-                determinant -= matrix.forward.i * matrix.left.k * matrix.up.j;
-                determinant -= matrix.forward.j * matrix.left.i * matrix.up.k;
-                determinant -= matrix.forward.k * matrix.left.j * matrix.up.i;
-                matrix3x3 rotation;
-                function_142bf0((matrix3x3 const *)&matrix.forward, determinant, &rotation);
-                real rotated_red[16], rotated_green[16], rotated_blue[16];
-                function_143600((real const *)&rotation, 3, red, rotated_red);
-                function_143600((real const *)&rotation, 3, green, rotated_green);
-                function_143600((real const *)&rotation, 3, blue, rotated_blue);
-                function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
-                output += stride;
             }
+            ++g_5093e8;
         }
-        ++g_5093e8;
+        else
+        {
+            result = false;
+        }
         goto done;
     }
 done:
@@ -2652,11 +2664,14 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 348 (was 374): frame 0x58 agrees; stage-call convention and constants differ.
+// score 348 (was 348): Frame 0x58 agrees; stage constants/call convention and UV/trig homes still differ.
+// Existing helper producers: x rotation 348; y rotation 424; both 464; x scaled 348;
+// y scaled 424; both scaled 464; both biased 465; output-first rotations 464. Original helper retained.
+// frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
-// score 348 (was 348): Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
-// score 348 (was 348): Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
+// Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
+// Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
 // dimensions 460; long dimensions 478; word width 444; word height 430; height first 352; word dimensions height
 // first 460; long dimensions height first 478; word width height first 444.
 // @retail 0x29b00

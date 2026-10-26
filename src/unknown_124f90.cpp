@@ -1430,7 +1430,10 @@ void looping_sound_controller_release(long index);
 
 /* deletes a playing sound, letting go of its looping sound's controller */
 #pragma inline_depth(0)
-// score 5 (was 5): playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
+// score 5 (was 5): Pool save remains EBP versus EBX; void tail result 5, inline release declaration 5,
+// noinline declaration 5, controller workspace first 5, byte count workspace 5, complete decrement
+// predicate 5, signed count view 5, indexed controller 5.
+// playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
 // Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
 // scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
 // @retail 0x127390
@@ -1474,6 +1477,16 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
+// score 46 (was 46): slot/lookup scheduling, retained identifier and full-width return tails differ;
+// long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
+// index input with long result 46; existing class operation 169; priority difference 71;
+// class-index input with retained other identifier 44 (two-point gain excluded).
+// frame and length agree; lookup scheduling, retained identifier and return tails differ.
+// Other identifier retained 44; both identifiers 44; normalized slots with other identifier 44;
+// this priority first 87; direct comparison results 107; short priorities 45;
+// integer result 123; this definition read at its priority use 94.
+// Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
+// readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
@@ -2799,7 +2812,10 @@ void function_129380(vector3f const *const *voice_values, vector3f const *const 
 	}
 }
 
-// score 3 (was 3): frame 0xc and length agree; fade-call EDI/EAX/EBX setup order differs.
+// score 3 (was 3): Fade-call EDI/EAX/EBX setup remains; pool scope 3, metadata scope 3, fixed receiver
+// 3, direct pool 3, listener home names 3, stored location reference 3, distance outcomes 23, index
+// workspace first 3.
+// frame 0xc and length agree; fade-call EDI/EAX/EBX setup order differs.
 // Clear helper/listener declaration/query test 3 each; accepted listener first 34;
 // shared playback flags/direct location flags 3 each; fading field 8; fading helper 3;
 // shared next-index helper 3; shared slot index 176.
@@ -3004,6 +3020,9 @@ struct s_animation_ref;
 void function_219310(s_animation_state *state, s_animation_ref *ref, short value);
 long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 
+// score 86 (was 86): Loop-entry playback/clock loads and mode comparison remain.
+// pool playback 104; promoted mode 127; entry/loop reason 86/86; native record reference 86;
+// promoted voice 132; shared absolute index 162; mode with entry reason 127.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3262,19 +3281,32 @@ void function_125d60(void)
 
 void __stdcall function_1264c0(dword arg_0);
 
-// score 102 (was 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain; frame eight agrees.
+// Earlier: shared invalid register, fade-store schedule and signed-tick/wait code differ.
 // Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
 // pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.
 // Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
-// score 87 (was 102): reconstruction calls, clock conversion and wait layout remain;
+// Earlier: reconstruction calls, clock conversion and wait layout remain;
 // reconstruction force/plain inline 102/102; with shared fade 87 plain; with flag/gain/deadline/reset
 // 102/102/102/102 fast; ordinary inline plus fade 107 fast; shared fade without declaration 87 plain.
-// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// Earlier: early EDI save, reconstruction calls and signed-clock wait remain;
 // shared inline reconstruction both/first/next 123/120/108; calling iterator with fade 101;
 // expanded tick names/lexical homes/wait/fill 123/123/123/124.
-// score 87 (was 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// Earlier: reconstruction expansion and signed-clock wait remain; shared fade with
 // native/full-inline/Boolean iterators 113/112/118; native integer tick 113; iterator workspace
 // before clock inline/Boolean 111/118; early real tick native/inline 113/113.
+// Absolute search cursor 91; with initial/next/both inline reconstruction 105/110/127;
+// cursor with early deadline 90; native int tick 91; early real start 96; traversal-only cursor 86.
+// Entry source and every shared operation restored.
+// Early EDI save, reconstruction calls and signed-clock wait remain.
+// Earlier 102 (from 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// Earlier 87 (from 102): reconstruction calls, clock conversion and wait layout remain;
+// Earlier 87 (from 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// Earlier 87 (from 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// initial/next/both valid-search conditionals 98/103/113; initial/next/both result arms 98/103/113;
+// both admissions with native tick/index 113/113.
+// Masked slot copied before the fade call 83 at retail length (a one-use copy, not kept);
+// next slot 86; with both inline lookups 111/117, initial inline lookup 90/96, next inline lookup 101/104.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
