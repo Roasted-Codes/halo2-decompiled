@@ -5150,7 +5150,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 153 (was 157): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// score 153 (was 153): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5183,6 +5183,8 @@ void __stdcall function_d6bc0(long object_index);
 // staged sums 168; displacement role names with sums 166; common sum workspace 166; common
 // squares and sum 168; shared point differences with staged sums 153; common vector and sum
 // 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
+// Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
+// all five call boundaries inline/noinline: all 153; every declaration restored.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

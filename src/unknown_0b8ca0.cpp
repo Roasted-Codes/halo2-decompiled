@@ -630,7 +630,7 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
     return (*(short *)(data->data + data->size * absolute) << 16) | absolute;
 }
 
-// score 231 (was 231): caller-dependent alignment and scalar/angle homes remain.
+// score 231 (was 231): Caller-dependent alignment and scalar/angle homes remain.
 // caller-dependent frame alignment and scalar homes differ;
 // Caller-dependent eight-byte alignment and scalar/angle homes remain.
 // Earlier 231 (from 231): caller-dependent frame alignment and scalar homes differ;
@@ -659,6 +659,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // inherited radius alias and snapshot).
 // inline 231; noinline 231; inline noinline 231; inline direct radius 239; noinline direct radius 239; inline
 // noinline direct radius 239; cdecl direct radius 239; stdcall direct radius 239.
+// Round 329: native position/radius fields, readonly object and direct center 239/239/239;
+// direct marker/both points 266/266; shared differences/readonly 239/239; native root observations 252.
+// All use ordinary direct radius operands; both known callers included. Original type and body restored.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {

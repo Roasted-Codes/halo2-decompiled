@@ -824,7 +824,7 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 308 (was 308): Frame 0x60 agrees; early result zero, byte flag clear, location transport and selective child-tag expansion remain.
+// score 308 (was 308): Frame 0x60 agrees; result/flag clear, child homes and selective tag expansion remain.
 // Earlier: frame agrees; byte flag clear, child carriers and selective inlining differ.
 // Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
 // perpendicular call 394; inline depth one 394, zero 517.
@@ -853,6 +853,8 @@ public:
 // native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
 // Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
 // canonical results 374/374/308/375 on the recovered frame. Original body restored.
+// Round 329: cleanup/count/spawn/unlink inline or outlined inline: all 308; full-EAX
+// return with long/bool/complete-arm results 405/371/405. All declarations and return types restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1032,8 +1034,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
     result->k = a->i * b->j - a->j * b->i;
 }
 
-// score 213 (was 213): frame and length agree; early EDI and tag carriers differ. Native draw 354; native
-// membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
+// score 213 (was 213): Frame/length agree; early EDI, tag/mask and child-render homes remain.
+// Native draw 354; native membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
 // native request initialization 211; immutable render inputs 213; native definition bit five 317; native
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
 // preference 646; child constant bit stores 220.
@@ -1044,6 +1046,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // predicates 287; signed render mask 213. Original source restored.
 // Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
 // availability result before the work guard 355. Early EDI/tag lifetimes remain.
+// Round 329: shared pool/data 339/354; group/render-mask/both observations 222/331/331;
+// pool with group/mask/both 275/364/364. Original receivers and every memory observation restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

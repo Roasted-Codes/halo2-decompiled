@@ -134,6 +134,9 @@ void function_14bac0()
 // scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
 // root slot 239; visit count 234; root slot visit 239; native root table 234; native root slot 239; native
 // root visit 234; native root slot visit 239; readonly scenario 234.
+// Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
+// pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
+// Original receivers and the shared iterator body restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
