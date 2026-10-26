@@ -548,6 +548,8 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // audibility-first guard 292 (one-point gain dropped); ordinary clear inline 412.
 // Datum/tag lexical names 293; direct success predicate 293; cluster selection tests 293;
 // object property base reread 560; const retained tag bytes 293.
+// Cases zero/three/two 293, two/zero/three 296, three/zero/two 293;
+// direct effect/impact flag masks 345; final native flag mask 300.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
