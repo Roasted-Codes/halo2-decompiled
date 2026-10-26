@@ -596,6 +596,8 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // 253/233/254; external child record and positive-results combination 232/232.
 // Settings at use 233; player-team lookup at use 264; signed-byte empty 232; signed-byte friendly 232; both signed
 // bytes 232. Frame 0x50/0x54 and protected child-iterator register contract remain; original body restored.
+// Point helper output return 232; point value return 232; output-first helper 231 (one-point gain rejected);
+// complete vehicle velocity 238; speed guard 232. Frame/child convention remains; original body/helper restored.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

@@ -3855,6 +3855,8 @@ static __forceinline long nonnegative_15ce70(long value)
 // message formulas 575.
 // Frame 0xe4 versus 0xe0 and attacker/category/NONE homes remain; elapsed scalar reuse 480; delay conditional 611; total before delay 600; byte classification then full override 484; byte award 584; early message result 480 (fast).
 // Round 201: One reused event 485; distinct inner event names 480; byte different-player 480; byte same-team 480; long different-player 543.
+// Conversion spill names 480; complete special comparisons 577; category-only word 570; modifier-only word 579;
+// plain timed-step for 480. Frame/NONE and event homes remain; helper and body restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4094,6 +4096,8 @@ struct s_score_zone_view
 // weapon slot 476; early weapon lifetime 689.
 // Frame 0x48c and early scalar homes agree; team text/color/limit allocation remains; team path text scope 478; individual path text scope 478; team helper output copies 570; word progress 715; regrouped integer limit maximum 480 (fast control 478).
 // Round 201: Shared team text 469 (three-point gain rejected); shared team color 484; shared iterator after copy recovery 472; native word presence mask 472; short score selectors 608; charge qualifier removed after copy recovery 495.
+// Team color library copies 472; individual iterator chained reset 473; zone iterator chained reset 472; shared
+// zone output index 522; common zone count clear 472. Text/color homes and native zone/charge allocation remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

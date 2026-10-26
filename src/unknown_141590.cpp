@@ -139,6 +139,9 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Frame 0x1c versus 0x24 and quaternion/cross spills remain; construction scope 237; vector-first helper 240; output-middle helper 290; cross i/k/j 284, j/i/k 235 (only -2), k/i/j 284. Both helpers restored.
 // Per-row projection terms 311; scaled-input terms 282; scaled-cross terms 292; named direct sums 278; named
 // scalar square 288. Frame/half-angle/quaternion spill sharing remains; both original helpers restored.
+// Native quaternion snapshot 458 (frame 0x24); all dot products named 288; all cross input products named 292;
+// sine-branch construction j/i/k 310, i/k/j 240. Frame/quaternion spill reuse remains; body and both helpers
+// restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

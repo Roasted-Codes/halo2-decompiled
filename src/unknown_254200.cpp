@@ -215,6 +215,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Current native-color/byte-alpha frame: scoped color 166 fast; scalar half-size 166; disabled return 166; full
 // readiness guards 166; lower coordinate first 378 (control 166). Pointer/byte controls 342 and value-half/pointer
 // 342 reproduce older configurations and are excluded.
+// Current byte-alpha frame: color after Begin 192; color after commit 168; C++ color entry 166; first position C++
+// entry 166; second quad real-table loop 412 (fast control 166). Frame/color/reservation homes remain; complete
+// opening body restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
