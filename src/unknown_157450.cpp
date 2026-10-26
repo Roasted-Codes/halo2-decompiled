@@ -5150,7 +5150,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 157 (was 163): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// score 153 (was 157): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5179,6 +5179,10 @@ void __stdcall function_d6bc0(long object_index);
 // Round 138: word kind 157 plain kept; native int delay 163; signed/unsigned byte schedule
 // 180/180; word kind with either byte schedule 168/168; readonly preset 163; word kind and
 // readonly preset 157. Frame 0x14 versus 0x18 and timer/base homes remain.
+// Round 323: complete staged sums 166; all named squares 157; named squares with
+// staged sums 168; displacement role names with sums 166; common sum workspace 166; common
+// squares and sum 168; shared point differences with staged sums 153; common vector and sum
+// 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5207,10 +5211,12 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                 bool reset = function_158ff0(index);
                 if (!reset)
                 {
-                    real z = *(real *)(placement + 0x48) - *(real *)(object + 0x38);
-                    real y = *(real *)(placement + 0x44) - *(real *)(object + 0x34);
-                    real x = *(real *)(placement + 0x40) - *(real *)(object + 0x30);
-                    if (z*z + y*y + x*x > 100.0f)
+                    vector3f displacement;
+                    vector3d_from_points3d((point3f *)(object + 0x30), (point3f *)(placement + 0x40), &displacement);
+                    real distance_squared = displacement.k * displacement.k;
+                    distance_squared += displacement.j * displacement.j;
+                    distance_squared += displacement.i * displacement.i;
+                    if (distance_squared > 100.0f)
                         reset = function_15f060((point3f *)(object + 0x30), *(real *)(preset + 0x28));
                     else
                         reset = true;
@@ -5232,10 +5238,12 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                         if (((1 << object[0xaa]) & 0x1c) && (object[0x12c] & 3)) schedule = true;
                         else
                         {
-                            real z = *(real *)(object + 0x38) - *(real *)(placement + 0x48);
-                            real y = *(real *)(object + 0x34) - *(real *)(placement + 0x44);
-                            real x = *(real *)(object + 0x30) - *(real *)(placement + 0x40);
-                            schedule = z*z + y*y + x*x > 1.0f;
+                            vector3f displacement;
+                            vector3d_from_points3d((point3f *)(placement + 0x40), (point3f *)(object + 0x30), &displacement);
+                            real distance_squared = displacement.k * displacement.k;
+                            distance_squared += displacement.j * displacement.j;
+                            distance_squared += displacement.i * displacement.i;
+                            schedule = distance_squared > 1.0f;
                         }
                     }
                     break;

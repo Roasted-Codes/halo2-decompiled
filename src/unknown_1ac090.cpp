@@ -172,6 +172,9 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
 // force-inline second/both/first rounding results 85/70/68; native result with both 78.
 // Zero-frame forms regress allocation or expansion.
+// Round 323: long/word/dword/real delay with second writer 88/85/105/105;
+// the same delay carriers with native second output 88/85/105/105. Conversion-input packing
+// restores zero frame in some forms but regresses allocation; original body restored.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -771,6 +774,9 @@ bool function_1f8660(long arg_0);
 // Round 358: Entry selection outputs 174; complete vector role names with cross output 174; failure-default
 // success paths 215; combined work guard 174; positive tag work 174. Actor/result/count and direction homes
 // remain in frame 0x80c; opening body restored.
+// Round 323: vehicle field at each use 174; radius read once 191; shared projections
+// 194; vehicle/radius 191; vehicle/projections 194; radius/projections 213; all 213; radius
+// and projections with native vehicle index 213. Original actor/result/count and direction homes remain.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1232,6 +1238,9 @@ struct s_1acda0
 // score 114 (was 114): frame 0x764 agrees; slot ESI arrives late, boolean test and exit traffic differ.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
+// Round 323: existing actor getter 193; prop-index observation 114; common empty
+// reference 124; getter/index 193; getter/reference 188; index/reference 124; all 188;
+// all with conditional prop selection 187. Early ESI and Boolean/result traffic remain.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {
