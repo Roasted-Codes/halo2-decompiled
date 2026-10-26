@@ -568,7 +568,8 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 463 (was 463): Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
+// score 449 (was 463): Frame 0xec versus 0x94, workspace homes and repeated-conversion residency remain.
+// Earlier: Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Automatic routing storage and word ordinals retained; frame 0xec versus 0x94 and repeated conversions remain.
 // Earlier: Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
@@ -603,6 +604,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // last-two and all workspace scopes 454/460/475/520 fast; with word ordinals 436 fast, 449 plain (kept).
 // Automatic table with first rear call or copied levels 456/466 fast. Table after settings copy or at first
 // traversal 427/428 fast, 455/450 plain; with word ordinals 437/438 fast. Original table producer kept.
+// Automatic routing word/byte/short tables with word ordinals; word/byte/short tables with long ordinals;
+// long/word tables with byte ordinals: 435/427/435/424/419/424/436/435 (fast); all restored. Ordinary t05
+// 455, t02 458, t04 456, t06 456; no qualifying gain.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -746,7 +750,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
-// score 238 (was 254): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// score 238 (was 254): Frame 0x20 versus 0x18, mode/input-level homes and the second x87 tail sum remain.
+// Earlier: Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
 // selected/input/offset references 294/291/272, pairs 311/311/307, three/four references 326/340.
 // All restored.
 // Earlier: frame 0x1c versus 0x18; mode occupies EBP.
@@ -791,6 +796,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // live front/native widths and native-bit widths 256/256; input level/offset fields 322;
 // selected-field reference with live front, without/with native bit 312/312 (dispatcher lost).
 // Unqualified right/rear-left/both/rear-right/right+rear-right/both-rear/all words 267/261/266/262/267/261/267; all with native routing bit 265. Every right-word removal loses dispatcher; other subsets regress. Frame 0x1c/0x18, mode/level homes and tail sums remain.
+// Uniform gain/setting/both/inner-level/gain-inner/setting-inner/all sum operand orders; paired tail
+// operand order: 238/238/238/238/238/238/238/238 (fast); all restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

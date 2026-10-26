@@ -2275,7 +2275,8 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
-// score 666 (was 666): frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// score 666 (was 666): Frame 0x80 agrees; request/control homes, validity expansion and ret 4 versus ret 8 remain.
+// Earlier: frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
 // Earlier at 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
 // frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
@@ -2305,6 +2306,8 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Complete request value after/before initial activity 689/706; with all three request results
 // constructed directly 705/712; complete library input copy after/before 689/706,
 // with direct results 705/712. Native request record and copies restored; original interface retained.
+// Late changed/forced status byte-bool, word-bool, bool-byte, bool-word, byte-byte, byte-word, word-byte,
+// word-word: 666/676/666/693/666/693/676/682 (fast); all restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
