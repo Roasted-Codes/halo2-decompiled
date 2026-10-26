@@ -1031,12 +1031,12 @@ bool __stdcall function_107ed0(long device_index, long name, real seconds)
 						real speed = 0.0f;
 						transform4x3f original;
 						transform4x3f adjusted;
-						transform4x3f sampled;
 						transform4x3f start;
 						function_1420f0(&original, &device->field_xcc658c, &device->forward, &device->up);
 						adjusted = original;
 						if (device->flags & 8)
 						{
+							transform4x3f sampled;
 							c_type_709360 animation = device->channels[0].animation_id;
 							real time = device->channels[0].frame_position * (1.0f / 30.0f);
 							state->animation_matrix_get(animation, 0.0f, render_model, &start);

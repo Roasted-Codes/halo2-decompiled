@@ -134,10 +134,16 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 }
 
 
-// score 55 (was 134): frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
+// score 55 (was 55): BLOCKED-BY 0xba300: our object_get_root_location takes the object in eax and the output in esi,
+// retail's the output in eax and the object in ecx, so the object index can't stay in esi as in retail. Retail keeps a
+// bool result in bl (xor bl, bl at entry) and returns through tail copies (mov al, 1 / mov al, bl); the final location
+// copy stores its second dword first. Frame 0x18 and normal-transform block agree.
 // Byte result first 150; Boolean early-success result 152; long result 135; independent type tests 170;
 // excluded-class exit 165; long result first 134 kept (plain).
 // Root output at entry 134; forward at entry 134; direct successful completion 185; machine arm first 134; CRT location publication 134; existing normal helper input values 55 kept (plain).
+// Word/unsigned long/signed char result 55/55/73; named location fields 65; invalid-cluster common exit 55;
+// bool result 76 (xor bl, bl agrees; the object index moves to ebp), set before the location copy 76, set after the
+// audible store 181; long result set after the audible store 53; cluster index sum operands swapped 55.
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
