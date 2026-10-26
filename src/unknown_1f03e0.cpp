@@ -1077,6 +1077,7 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 }
 
 // score 421 (was 421): Frame 0x64 agrees; persistent zero and count/component homes remain.
+// Frame 0x64 agrees; persistent zero and count/component homes remain.
 // Earlier 428 from 489: frame now 0x64; count/component and vector homes still differ.
 // Frame 0x64 agrees; persistent zero, count/component homes and direction retention differ.
 // Earlier: frame now 0x64; count/component and vector homes still differ.
@@ -1101,6 +1102,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Request flags once 494; flight once 531; preferred surface once 467; complete contact-base snapshot
 // 587; signed contact-bound snapshot 496; flags/flight 596; base/bound 651; flags/flight/preferred 659
 // (fast). All restored.
+// Round 361: native contact records in preferred/candidate/response/final scans 421/421/421/421;
+// preferred plus candidate, response plus final, all scans and all read-only records 421/421/421/421
+// (fast). Existing record layout and complete body restored.
 // Earlier: Frame 0x64 agrees; persistent zero and count/component homes remain. Cursor-context entry count 427; entry result 425; entry desired/direction 428; short pass counter 428; final speed eligibility 430 (fast).
 // Earlier: persistent zero and accepted-count/component homes still differ.
 // Earlier: Frame 0x64 agrees; zero/count/component homes remain. Native component 428; stepping

@@ -1590,7 +1590,7 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 476 (was 482): Actor/output registers, dispatch layout and rounding homes still differ.
+// score 476 (was 476): Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output acquisition, dispatch layout and forty missing bytes remain.
 // Earlier 482 (was 482): Actor/output registers, dispatch layout and rounding homes still differ; eight source trials restored.
 // Earlier: actor/output and dispatch registers still differ; multi-use actor handle kept.
@@ -1620,6 +1620,9 @@ void function_b7360(long object_index);
 // all motion values and separate duration 507. Native dispatch/register gap remains.
 // Shared duration conversions, moving/direct/combined/point/moving+point/direct+point/all 493/482/491/482/491/480/493;
 // two-use rate at duration producer 540. Two-point combined conversion gain rejected; original conversions restored.
+// Native command scalar, command point, state point variant and command location
+// point 476 each; scalar+command point, scalar+state point, both point destinations
+// and all four native payloads 476 each.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

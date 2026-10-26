@@ -1226,7 +1226,7 @@ long function_2197f0(real gain);
 
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
-// score 149 (was 162): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
+// score 149 (was 149): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
 // Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
 // Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
 // shared fade-in duration 162; distinct-ambience case first 163.
@@ -1237,6 +1237,12 @@ long function_2197f0(real gain);
 // Hold duration snapshot 165; ambience time snapshot 173; ducking gain snapshot 165;
 // upper-first release clamp 162; all three snapshots 178 (fast); all restored.
 // Both ambience indices 170; readonly fade 162; equality-first admission 198; shared ducking pointer 162; native class ordinal 149 kept plain; int ordinal 149; ordinal with unsigned gain 149; ordinal with common gain result 157.
+// Shared sum operand order 174; interpolation start snapshot/accumulator 149/149;
+// addition accumulator 147; start snapshot plus sum order 174; native endpoints 149;
+// both accumulators 147; integer result home 149.
+// Existing shared sum 173; shared sum with live gain/common result/readonly fade 188/142/173;
+// live gain with value sum 211; shared common result with readonly fade/shared workspaces 142/142;
+// shared live gain with direct table 188. Seven-point result forms and unmatched reference forms restored.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -3385,6 +3391,9 @@ struct s_128ca0
 // Definition after packet initialization 237; branch gain writeback 234; current-chunk candidate 234;
 // sequential gain workspace 234; direct processed-gain initialization 234 (fast); all restored.
 // Pitch lower snapshot 273; native flag3 view 236; pitch workspace subtraction 234; zero-default controller gain 267; readonly parameter/range views 234 (fast); all restored.
+// Shared sum accumulator 234; commuted sum 233; returned bit home 234; native sum
+// inputs 234; native inputs plus bit home 234; early raw gain with accumulator,
+// commuted sum or native inputs 268 each (frame 0x494, worse count).
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

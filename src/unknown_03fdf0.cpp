@@ -195,6 +195,9 @@ void function_402b0(long cache_index, long mode)
 // selection and both 202f each; unchanged reduced preview 202f, full 183.
 // Entry native selection/flags+selection/parent/ordinal/all declarations 202f each;
 // counter+selection/flags+parent+resource/entry coordinated roles 202f each, unchanged control 202f.
+// Native actual light definition/parent/node/camera fields 202f each; all fields 202f;
+// external native record reference 202f; native definition receiver 202f; both receivers 202f.
+// Unchanged reduced control 202f/946, ordinary baseline 183/947; frame and helper/API gaps remain.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

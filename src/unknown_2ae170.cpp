@@ -569,6 +569,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 }
 
 // score 463 (was 463): Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
+// Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Earlier 463 from 463: frame 0xdc versus 0x94 and repeated-conversion homes remain.
 // First-buffer input 578; late workspaces 583; muted-send loop 576;
 // native rear predicate 584; workspace role names 583; input plus loop 565
@@ -590,6 +591,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Fast control 453 versus full 463. All buffer arguments 460; input setting fields 453; both inputs
 // 478; buffer record 459; reused buffer handles 487; plain table while loops 453; while/input fields
 // 453; paired actual setting references 453. No preview beats its control; all restored.
+// Round 361: first shared rear call on paired-table graph 488; with first/third, first/second,
+// last-two and all scopes 515/514/535/572; with both repeated levels 535; levels plus first/third
+// or all scopes 563/618 (fast control 453). Frame 0x94 in pair scopes but complete scores regress.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {

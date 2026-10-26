@@ -2770,7 +2770,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 	return result;
 }
 
-// score 398 (was 398): Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
+// score 398 (was 398): Frame eight versus four; activity/dispatch and object/tag homes remain.
+// Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
+// Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
 // Frame eight versus four and object/tag/activity/dispatch homes remain.
 // Earlier: Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
 // maximum 398; barrel read 422; scale reads 422; property bits 420; branch maxima 404; all maxima
@@ -2795,6 +2797,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // readonly activity inputs 407; normalization parts 407; elapsed tick expression 407; inventory case exit 407;
 // progress field admission 407; progress case exits 407; magazine case exits 407; decimal digit expressions
 // 407.
+// Round 361: caller-seeded activity accumulator 398; entry result 399; barrel/trigger/both
+// while traversals 398/398/398; entry result with barrel/trigger/both while traversals 399/399/399
+// (fast). Existing helper and body restored.
 // Separate activity/sparse tag lifetimes with result/helper variants 411 each;
 // direct unknown-name exits 434 each (four of each). Entry/activity tag lookups
 // with early/native activity dispatch 398/409; full object lookups 411/419.

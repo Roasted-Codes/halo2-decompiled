@@ -143,6 +143,8 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 150: const input/output/both tables 165/165/165; early input/output/both tables 253/371/312; early const tables 312; early tables with reset state 327; unified native byte 368; unified byte across reset 257 (fast).
 // Native-byte return 165; with final byte/allocation bool/both 169/169/169;
 // native-byte return across reset 280; with final byte/allocation bool/both 290/290/290.
+// Joint final/allocation failure carriers: bool-byte/byte-byte/bool-bool/byte-bool 168/167/167/167;
+// the same four spanning reset 308/303/303/303. Original positive results and guarded loops restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

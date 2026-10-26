@@ -944,6 +944,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Immutable speed/radius/quotient/all scalars 151/151/151/151; native entry success 397;
 // speed-test-produced success 317; immutable query count and candidate 151; native selected
 // collision record 345 at retail length, with wrong entry frame. All restored.
+// Probe/input/both workspace scopes 151/175/175; complete request library copies 151;
+// probe/input/both scopes with request copies 151/175/175; actual selected-header byte 151.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

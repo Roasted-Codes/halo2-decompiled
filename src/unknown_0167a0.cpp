@@ -124,6 +124,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // 153/153/153; range publication at consumer 153; copies with late publication 153.
 // Actual table header / five-word entry / three-word range / table-entry /
 // table-range / entry-range / all metadata records / all readonly records 153 each.
+// Distinct restore word/input/entry/all carrier lifetimes 153 each; initial/restore/both
+// metadata graph scopes 153 each; full restore graph with separate upload record 153.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -850,6 +852,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // 158; source-kind memory first 155; all with body entry steps.
 // Direct/mapped signed selector 157/157; special category first 170;
 // ordinary/special bank-one-first arms 159/167.
+// Actual value/entry/remap table fields singly, all three pairs and all together 157 each;
+// all native table fields with native entry bits and body cursor steps 155; two-point gain dropped.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

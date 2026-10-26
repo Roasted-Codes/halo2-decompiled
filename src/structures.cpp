@@ -401,6 +401,8 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Safe signed transform count and direct region-record expression 236 each;
 // section/range/reference/index/parts storage names and combined signed-count homes 236 each.
 // Extraction-helper inline/noinline 236/236; unsigned/short/word vertex ordinal 236/248/248; initialized vertices/node/both 303/243/304. All helper declarations restored. Region schedule and model/range/vertex homes remain.
+// Bounds/node/part table fields at every use 284/236/243; bounds-node/bounds-part/node-part
+// graphs 258/286/243; all three/all three plus part-count field 239/239. All restored.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)
