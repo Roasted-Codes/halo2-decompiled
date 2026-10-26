@@ -337,7 +337,7 @@ struct s_unit_state_0f
 
 static __forceinline long real_to_long(real value);
 
-// score 49 (was 79): Frame agrees; actor/index ECX/EDX and final call setup differ.
+// score 49 (was 49): Frame agrees; actor/index ECX/EDX and final call setup differ.
 // Earlier: the argument is read into ECX and the other value into EDX; retail reads them
 // in the opposite order.
 // Earlier: ecx and edx are swapped through the whole body (retail: index edx, actor ecx);
@@ -347,7 +347,9 @@ static __forceinline long real_to_long(real value);
 // Native countdown/mode/both 134/80/138; shared range 49; its native countdown/mode/both 127/64/129; unit
 // reference 49; short/early short countdown 49/123; actor reference and read-only node/unit/actor/all
 // views 49 each; final guard 49; direct shared product/conversion 49/49; shared low-half index with
-// pointer/reference 127/127.
+// pointer/reference 127/127. Timer test combined as in 0x1b7c70 49; `--state->ticks <= 0` 49;
+// slot cast declared first 49; constant first in the time test 49; timer record by pointer
+// addition 49 (the same code each time).
 // @retail 0x1afb30
 void __stdcall function_1afb30(long actor_index, s_slot *slot)
 {
