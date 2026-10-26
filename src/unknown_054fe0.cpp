@@ -1279,7 +1279,6 @@ struct s_player_properties
 // owner/count/zero homes and requested cursor remain.
 // Current fields at use all/names 198/184; metadata/all with live mask/all with late count 234/198/198;
 // all with owner at use/second index/both indices 207/198/198.
-// Earlier: owner/name-count/zero allocation and requested cursor remain.
 // Seven nonempty byte/long/short native aggregate-default groups 339 each;
 // full native defaults with redundant zero stores retained 375. Original initialization restored.
 // owner/count/zero allocation and requested cursor remain.
@@ -1293,6 +1292,9 @@ struct s_player_properties
 // First/second/both actual default-array cursor walks 240/240/235; chained zero
 // bytes 184; first/second/both cursors plus byte chain 240/240/235; both cursor
 // declarations before clear with chain 235. Original defaults and body restored.
+// Existing player getter in collection/update/both phases 222/215/219;
+// update getter with word/short collection mask 216/216; native word/short masks
+// alone 184/184; both getters with bounded byte name count 218. All restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
