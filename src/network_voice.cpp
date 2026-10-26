@@ -2846,7 +2846,8 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 394 (was 394): frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// score 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
+// Earlier: frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
 // byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
 // Scalar role names 394; rejected-mode first 394; signed while traversal 394;
@@ -2863,6 +2864,10 @@ struct s_voice_route_choice
 // 1103. Selected results prevent four-way expansion; all original code restored.
 // Per-choice pointer 393; signed-word radio 393; signed headset 394;
 // function-scope descriptor only 402; function-scope pairs only 401.
+// nearest-distance 534; candidate-distance 526.
+// nearest-distance-bool 572; nearest-distance-word 533.
+// nearest-distance-descriptor 538; candidate-distance-bool 572.
+// candidate-distance-word 525; candidate-distance-native-mixer 576.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
