@@ -117,7 +117,7 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 109 (was 109): frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// score 104 (was 109): frame 0x0c versus 0x10 and property/buffer register-stack split remain.
 // Earlier: frame 0x0c versus 0x10 and properties/buffer
 // frame 0x0c versus 0x10 and property/buffer carriers remain; shared record/buffer total
 // 125f; property total from records 113f; property total from buffers 113f; admission accounting 108f (below
@@ -125,26 +125,29 @@ struct s_cache_property_record
 // phases 125f; derived property/entry cursor 113f.
 // frame 0x0c versus 0x10 and properties/buffer
 // register/stack split remain. Entry cursor 125; property cursor 135;
+// frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
+// remain. Prior frame 0x0c; entry cursor 125; property cursor 135;
 // per-record property counts 113; count homes 121; cursor/count combination 132.
 // Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
 // short property ordinal 114; ordinal names 113; early four-property accounting 109 kept;
 // split first/three accounting 109. Reported length is now 352/352.
-// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
-// Entry cursor 125; property cursor 135;
 // Count-indexed record/buffer/both outputs 129/113/128; scalar-identifier induction 113;
 // identifier with record/buffer/both indices 114/114/113 (each 352 bytes); shared final total 151.
 // Three-use scalar property element 114 (frame 0x10); unsigned/byte/signed-byte ordinal 109/110/110;
 // unsigned property/all totals 109/109; flat entry admission 109; property element with unsigned ordinal 114.
+// Round 167: record/property/buffer capacity-derived totals 137/136/116;
+// paired totals 132/132/132; all totals 142; all totals with three-use property
+// element 104 kept, plain and complete inventory confirmed; 352/352 bytes.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
 	byte *buffers, long *record_count, long *property_count, long *buffer_count)
 {
+	long const initial_record_capacity = record_capacity;
+	long const initial_property_capacity = property_capacity;
+	long const initial_buffer_capacity = buffer_capacity;
 	/* retail passes the records on the stack */
 	s_cache_property_record *const *records_reference = &records;
-	long records_used = 0;
-	long properties_used = 0;
-	long buffers_used = 0;
 	for (long i = 0; i < g_4cf978; i++)
 	{
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
@@ -158,31 +161,29 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 			records->properties = properties;
 			records++;
 			record_capacity--;
-			records_used++;
 			*(short *)&properties->unknown00 = -3;
 			properties->type = 4;
 			properties->unknown08 = (long)buffers;
 			properties++;
 			buffers += 0x40;
 			buffer_capacity--;
-			buffers_used++;
 			property_capacity -= 4;
-			properties_used += 4;
 			for (long j = 0; j < 3; j++)
 			{
-				*(short *)&properties[j].unknown00 = (short)(j + 2);
-				properties[j].type = 1;
-				properties[j].unknown08 = 0;
+				s_cache_property *property = &properties[j];
+				*(short *)&property->unknown00 = (short)(j + 2);
+				property->type = 1;
+				property->unknown08 = 0;
 			}
 			properties += 3;
 		}
 	}
 	if (record_count)
-		*record_count = records_used;
+		*record_count = initial_record_capacity - record_capacity;
 	if (property_count)
-		*property_count = properties_used;
+		*property_count = initial_property_capacity - property_capacity;
 	if (buffer_count)
-		*buffer_count = buffers_used;
+		*buffer_count = initial_buffer_capacity - buffer_capacity;
 }
 
 void function_80d70(s_cache_property_record *records, long count);
@@ -459,6 +460,7 @@ void function_1537f0(s_profile_record *record);
 
 // score 73 (was 73): frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // Existing record initializer with zero tail 130; short/word counters 133/133;
 // counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
@@ -469,6 +471,9 @@ void function_1537f0(s_profile_record *record);
 // With contiguous tail reset: identity/source/both names 73 each; signed byte sentinel 73;
 // word ordinal 94; record/view/both force-inline declarations 73 each.
 // Immutable identity with tail clear 74; source-before-identity names 73; source-only outer scope 73; identity between initializer and tail 73; tail-clear entry-end traversal 94.
+// Round 167: actual initializer record 73; native identity in that record context 74;
+// source function scope/declaration-first 73/73; ordinary inline view on native/original
+// source 73/73; out-of-line view on native/original source 80/79. Original body restored.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -579,6 +584,9 @@ bool function_7fb50(void)
 // Unsigned short ordinal 111; selected property pointer 111; early remaining-property accounting 137; scalar while 111; cache scan while 111 (fast, retained values-cursor form).
 // Paired source/destination cursors 129; direct property identifier 116; paired cursors with native ordinal 130; complete property-array indexing 152; short-ordinal advancing buffer 116.
 // Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
+// Round 167: native player view 111; native view/wide ordinal 112;
+// view with record/property/both capacity deltas 125/141/134; original view
+// with record/property/both deltas 125/141/134. Frame 0x1c agrees; input homes remain.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -785,6 +793,9 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // long direction flag 244; equality-first cases 243; forward CRT memmove 385.
 // Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
 // Paired signed min/max 302; independent bound overrides 362; forward entry cursor 369; reverse entry cursor 394; both entry cursors 406.
+// Branch-produced removed index 390; neutral lower/both bounds 309/243; shared signed direction 343;
+// identity memcpy 243; chained sentinel stores 243; new-entry predicate 381; branch/native bounds 390;
+// signed link values 815 (repair unrolling lost); original body restored.
 // Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
 // Frame 0xc agrees; removed-index EDX/ESI and upper ECX/EAX remain. Direction value 342; signed-byte direction
 // 243; range role names 243; direct indexed repair 243; signed min/max with long adjustment 370.

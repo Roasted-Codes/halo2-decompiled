@@ -1143,7 +1143,7 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
-// score 31 (was 43): frame and first two passes agree. In the third and fourth passes retail loads the
+// score 31 (was 31): frame and first two passes agree. In the third and fourth passes retail loads the
 // parent field into ECX through [eax+edx+offset] and still forms the record pointer (add eax,edx) before
 // the compare, then copies the value to EAX; ours forms the pointer first and loads through it into EAX.
 // Tried: const current group 43; unsigned squad parent 43; unsigned group parent 63; unsigned sibling 43;
@@ -1156,6 +1156,11 @@ struct s_squad_tree_definition
 // parent local beside the double read 31; no inline_depth pragma 175 (0x205280 inlines). Third pass: a
 // long parent_index local 63; the field read twice by index 63; one child variable reused for the
 // parent index 60 (as an assignment in the condition 60).
+// Native group/squad parent-field references 37/31; child-head reference 34; group+squad 37;
+// group+head 37, squad+head 34, all three 37; append inline declaration 31. All restored.
+// Native parent field 31; shared squad-data base 118; nonempty list arm first 59;
+// native field plus data/arm 118/59; data plus arm 127; all three 127;
+// definition observed at every use 31 (fast). Opening body and record type restored.
 // @retail 0x2009d0
 void function_2009d0(void)
 {
@@ -2126,6 +2131,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
 // unsigned current handle 275; declared word bitfield 294.
 // Long overlap 321; raised-component loop 275; shared current-handle scope 275; per-squad area scope 275; long actor wake 301.
+// Squad/area/both iterator value initialization 298/333/337; rounding scratch role names 275;
+// double rounding input 298 (frame 0x54); native integer result 275; all-row displacement 320;
+// live state getter 275. Original body and rounding helper restored; early saves and intersection spill remain.
 // Exact tick result 312; native word index/actor type 275/275; complete point value 275;
 // value/lexical order 275; failed-team result 275; first-overlap exit 305; early output object 275.
 // @retail 0x201ea0
@@ -2747,6 +2755,7 @@ static __forceinline long real_to_long(real value);
 // workspace lexical order 250; both workspace lexical order 256.
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
 // Round 117: Activity input group/squad/both 227/227/227; conversion-workspace names 227; factor-first periods 227; ordinary inline group/squad 227/227.
+// Round 121: Boolean group-step contract 227; unused group/squad/both suffix words removed 228/228/228; typed squad-step return 227. Original records and helper contracts restored.
 // @retail 0x202720
 void function_202720(void)
 {

@@ -17,7 +17,7 @@ long link_connection_owner_active(s_link_connection *arg_0);
 
 struct s_75fc0
 {
-	byte field_0[0x518];
+	byte field_0[0x470];
 	long field_470;
 	byte field_474[4];
 	__int64 field_478;
@@ -72,6 +72,11 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
 }
 #pragma optimize("", on)
 
+// score 415 (was 443): frame 0x38/0x34; entry saves and channel/result homes remain.
+// Native channel 434; primary/both counter products 448/419; native products 446/423;
+// native live flag/callback/both 441/439/432; direct counter product 419;
+// both/primary word concatenation 423/431; native both/primary concatenation 415/441.
+// Native both concatenation plain 415 at 1350/1369 bytes; products add a call and are restored.
 // @retail 0x75fc0
 bool s_network_observer::connection_v05(long arg_1,
 	bool arg_2, bool arg_3, bool arg_4, bool *arg_5, bool *arg_6,
@@ -83,7 +88,7 @@ bool s_network_observer::connection_v05(long arg_1,
 	if (local_0 == NONE)
 		return local_2;
 	s_link_connection *local_3 = link_connection_get(arg_1);
-	s_75fc0 *local_4 = (s_75fc0 *)((byte *)arg_0 + local_0 * sizeof(arg_0->channels[0]));
+	s_75fc0 *local_4 = (s_75fc0 *)&arg_0->channels[local_0];
 	long local_5 = NONE;
 	long local_6 = NONE;
 	bool local_7 = false;
@@ -96,8 +101,7 @@ bool s_network_observer::connection_v05(long arg_1,
 	long local_9;
 	bool local_10 = function_76520(local_0, false, &local_9);
 	long local_11 = g_510548 ? g_51054c : GetTickCount();
-	s_75fc2 local_12;
-	local_12.field_0 = g_4e6398;
+	__int64 counter_snapshot = (__int64)(((unsigned __int64)g_4e6398.high << 32) | (dword)g_4e6398.low);
 	long local_13 = NONE;
 	bool local_14 = (local_3->callback || local_10) && !local_8;
 	bool local_15 = local_4->field_48c;
@@ -155,9 +159,7 @@ bool s_network_observer::connection_v05(long arg_1,
 		local_24 = 60;
 	if (local_23 < 0)
 	{
-		s_75fc2 local_25;
-		local_25.field_0 = g_4e6398;
-		local_4->field_478 = local_25.field_8;
+		local_4->field_478 = (__int64)(((unsigned __int64)g_4e6398.high << 32) | (dword)g_4e6398.low);
 		local_4->field_470 = local_11;
 		local_23 = 0;
 	}
@@ -183,8 +185,8 @@ bool s_network_observer::connection_v05(long arg_1,
 	{
 		local_4->field_470 = local_11;
 		local_4->field_478 += local_13;
-		if (local_4->field_478 + local_13 <= local_12.field_8)
-			local_4->field_478 = local_12.field_8;
+		if (local_4->field_478 + local_13 <= counter_snapshot)
+			local_4->field_478 = counter_snapshot;
 	}
 	local_2 = true;
 	if (local_16)
