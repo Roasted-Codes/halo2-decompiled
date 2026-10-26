@@ -99,20 +99,22 @@ PRIVATE inline vector3f *transform_vector_into_frame_205be0(transform4x3f const 
     return result;
 }
 
-// score 127 (was 238): retail loads all three components before the scale test (ours sinks
+// score 11 (was 11): Entry object/carrier scheduling remains at the exact retail frame and length.
+// Earlier 127 (was 238): retail loads all three components before the scale test (ours sinks
 // the j load into the unscaled path), and homes the component, marker pointer and byte table
 // at 0x14/0x18/0x1c below the vector at 0x20 (ours: vector at 0x14); the 0x11a offset is read
 // after the division; the rigid-body index 0 is loaded after the component.
 // Tried: components copied before the scale test (266: right frame, but j gets an extra
 // register and two movaps), in-place vector3f_scale on the vector (188), declaration and
 // multiply orders of i/j/k (264-271), object pointer recomputed from arg_1 (216).
-// score 11 (was 127): the region table through the existing 0xba690 (retail inlines it), the
+// Earlier 11 (was 127): the region table through the existing 0xba690 (retail inlines it), the
 // rigid-body inertia and mass getters as s_havok_component members (every retail call site loads
 // the index before the component), the transform helper in 0x1427f0's statement shape (retail
 // inlines that function here; a local forceinline declaration keeps it out of line, and inline on
 // its definition also inlines it into matched 0x210770) and the component index read before the
 // definition. Still differs: the object pointer takes eax where retail gives it ecx (the table
 // register). Typed component index or byte/dword offset forms 11; definition first 23.
+// Round 186: Availability result 183; validation result 334; read-only byte/native objects 11/11; present/usable/both success regions 11/11/11; native success regions 11.
 // @retail 0x205be0
 bool __stdcall function_205be0(s_vehicle_physics_state *arg_0, long arg_1)
 {
