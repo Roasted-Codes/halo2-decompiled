@@ -1265,6 +1265,11 @@ static inline s_players_globals *players_globals_14f2e0()
 // Shared direction helper for reuse/create/both 251/201/276; creation/colors/both entry scopes
 // 152/114/152; native/byte success 174/177; sentinel clears 114;
 // representation inline/out-of-line declarations 114/114.
+// score 114 (was 114): BLOCKED-BY 0x152bf0, whose retail body takes the loadout in eax and the unit in
+// esi (ours ecx/eax): without that call the unit takes retail's esi (diagnostic). `result = true`
+// before the user-index calls gives retail's bl result but 147 (one-line shift); at the tail start
+// 147; globals and reuse flag declared before the guard 114; chained NONE outputs 116; unit index
+// initialised NONE 114.
 // @retail 0x14f2e0
 bool __stdcall function_14f2e0(long player_index)
 {

@@ -1445,6 +1445,10 @@ void online_presence_get_latest(long task_index, DWORD group_id, DWORD count, XO
 // 151/151; existing member-bit/friend-byte/both eligibility 186/117/189; independent
 // merge/friend ordinals 117; immutable count storage 117. Count homes, delayed count loads
 // and memory flag updates still differ.
+// score 117 (was 117): clan count renamed to sort after the friend count 117; friend count read
+// first 124 (its home stays ebp-8, loaded into esi at once); both 124; both counts before the
+// arrays 124; both list-contains helpers declared inline 117. Ours keeps flags20 in a register
+// across those helpers (they write no memory here); retail tests and updates it in memory.
 // @retail 0x1a3dfe
 void friends_lists_update_presence()
 {

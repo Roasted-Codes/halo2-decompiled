@@ -523,6 +523,11 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // Nullable value selection 68; inactive step exit 71; null step failure exit 94; word/byte
 // success result 94/68; native step state value 123; shared step expansion 68; native selected
 // index 68.
+// score 68 (was 68): a fifth iterator word (as the clump walk of 0x1c9830 keeps) 66, stored
+// team in it 92, long team local 92, existing clump_get with long team 92, out-of-line pool step
+// 122 (270 bytes), step through the current field 92 (292 bytes). A NULL-initialised result in the
+// shared calling step moves current to edi (60, diagnostic): retail keeps the loop-top NULL live
+// through the step's not-found arm and copies the found pointer from ecx.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
