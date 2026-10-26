@@ -1391,6 +1391,9 @@ bool __stdcall function_1d2f0(D3DSurface *surface, byte *bitmap);
 dword function_1362b0(s_type_7ba8e9 const *bitmap, point2f const *uv, real detail);
 dword function_015cd0(long index, dword entry);
 
+// score 4 (was 4): the conversion destination uses ECX rather than EAX; the UV address uses EDX rather than ECX.
+// Scoped/entry two-use conversion pointers 4/4; multiuse UV pointer with and without it 4/4;
+// direct success return 93; UV/storage names 4/4; getter noinline 4; both/sample noinline 4/4.
 // @retail 0xd2f90
 long function_d2f90(long flags, short bitmap_index, long palette_index, real u, real v, color3f *out)
 {

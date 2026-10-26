@@ -1549,7 +1549,7 @@ void function_bffa0()
 
 
 // @retail 0xc1720
-long __stdcall function_c1720(long object_index, long remove_from_partition, long update)
+long __stdcall function_c1720(long object_index, byte remove_from_partition, byte update)
 {
     long count = 0;
     s_data_datum_iterator iterator;
