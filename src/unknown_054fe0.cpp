@@ -1259,7 +1259,8 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
-// score 184 (was 184): frame 0xe4 agrees; owner/count registers and requested cursor differ.
+// score 184 (was 184): frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// Earlier: frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
 // Session-root control 199; owner at use 239; empty name table 222; first name unit 240; requested name
@@ -1287,6 +1288,8 @@ struct s_player_properties
 // Overwritten byte/long/short sentinel defaults omitted 199/199/201;
 // byte+long/byte+short/long+short 226/228/230; all sentinels 246;
 // all overwritten defaults 296. Original initialization retained.
+// Count at entry/before getter/before cache compare/after mask 225/191/265/184;
+// chained byte/long/short/all sentinel groups 184 each with session roots; narrow control 211.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

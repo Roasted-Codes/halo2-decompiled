@@ -381,12 +381,16 @@ struct s_1f8a70_actor
 // frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
 // Earlier: frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
 // Earlier at 408 (was 418): frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
+// frame 0x80 agrees; pool/data, unit-mode and result/route homes remain.
+// Returned immediate/arrival/mode tests 437/437/450; pairs 441/432/458;
+// all tests 439; initial decision ladder 436. All restored.
 // Reduced trials: typed scratch only 415; byte scratch only 415; immutable path 415; read-only tags 415;
 // reference expression 419; chained reset 415; context branches 415; reference branches 427.
 // Native active flag 411; native reset member 411; native mode member 411; native source metadata
 // 411; native point source 411; all native actor members 411; paired metadata null guards 410
 // (plain 413); case order two/six/three/seven/four/five 438. Reduced control 411; full baseline 414.
 // Earlier score 399 (was 408): frame 0x80 agrees; pool/data schedule, unit-mode boundary and result/route homes remain; point node first 433; point radius first 399 plain; target node first 434; target radius first 399; moving node first 428; immediate records last 412; target records last 407; moving record last 428.
+// frame 0x80 agrees; pool/data schedule, unit-mode boundary and result/route homes remain; point node first 433; point radius first 399 plain; target node first 434; target radius first 399; moving node first 428; immediate records last 412; target records last 407; moving record last 428.
 // reference/query case layout still differs at the shared route tail.
 // Destination orders 234675 437; 235674 440; 452367 419; 243567 418;
 // 234657 412; 235746 453; 456723 415; 246357 433. Opening case order retained.

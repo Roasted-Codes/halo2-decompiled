@@ -425,6 +425,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // frame 0xa4 versus 0xa0, actor input and workspace homes remain.
 // Earlier at 420 (was 426): frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
 // Earlier at 420 (was 420): frame 0xa4 versus 0xa0, actor input and workspace homes remain.
+// Earlier: frame 0xa4 versus 0xa0 and actor input/home still differ. Word maximum 420
+// Earlier: frame 0xa4 versus 0xa0, actor input and workspace homes remain.
 // Native signed maximum 420; signed maximum/original loads 420; later maximum/signed
 // maximum 422/422; signed counter/original and signed maximum 420/420;
 // later counter/original and signed maximum 422/422. Each fast and plain.
@@ -438,6 +440,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Sampled-once acquisition after startup/at traversal/before actor 422/422/420; startup plus later
 // node flags 422; completed-sample name 420; separate/reversed node flag declarations 420/422;
 // startup plus reversed flags 424.
+// Round 166: typed actor startup/admission/tracking/completion/all 420 each; native actor
+// getter, native node fields and both 420 each. Actual shared type layout restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
