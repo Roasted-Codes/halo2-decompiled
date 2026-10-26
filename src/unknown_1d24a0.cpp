@@ -105,7 +105,7 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  return function_30bf0(arg_3);
 }
 
-// score 983 (was 1016): Frame 0x1ec versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// score 953 (was 983): Frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
 // Earlier 1218 from 1259: frame agrees; early EBX save, array/entry allocation and delta reloads differ.
 // Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
 // inline depth one 1259; counted angular residual 1218, kept after plain check.
@@ -120,6 +120,8 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // 1207; scale/subtract 1123; scale/add 1261; add/subtract 1201.
 // Scale helper void result 1016; unsigned/signed-word ordinal 1016/983 plain; counted while
 // 1016; equality termination 1016. Word counter fully unrolls; frame grows four bytes.
+// Complete linear coefficient observations 966; angular pair 953 kept (plain); shared limits 1011;
+// linear/angular 980; linear/limits 1065; angular/limits 979; all 1065; all/read-only record 1065.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
@@ -282,7 +284,9 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
     if (local_12->field_c != 0x7000001)
      function_b8d30(arg_0->object_index, local_12->field_c, &local_24, 1, false);
     vector3f local_59 = *g_4687a4;
-    if (local_12->field_58 != 0.0f && local_12->field_5c != 0.0f)
+    real coefficient_58 = local_12->field_58;
+    real coefficient_5c = local_12->field_5c;
+    if (coefficient_58 != 0.0f && coefficient_5c != 0.0f)
     {
      transform4x3f local_60;
      local_14->rigid_body_matrix_get(local_10->field_1, &local_60);
@@ -296,14 +300,14 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
      real local_65 = function_1d24a1(&local_63, &local_29);
      real local_66;
      real local_67 = function_1d2280(true, local_18, havok_component_rigid_body_mass_get(local_10->field_1, local_14),
-      local_64, local_12->field_58 * arg_1, local_65, local_12->field_5c, 0.0f,
+      local_64, coefficient_58 * arg_1, local_65, coefficient_5c, 0.0f,
       local_12->field_54, local_23, &local_66);
      function_1d24a2(&local_63, local_67, &local_59);
      vector3f local_68;
      function_1d24a2(&local_63, local_65, &local_68);
      for (long axis = 0; axis < 3; ++axis)
       local_68.n[axis] = local_29.n[axis] - local_68.n[axis];
-     function_a75d0(&local_68, g_510c54->rate * local_12->field_58);
+     function_a75d0(&local_68, g_510c54->rate * coefficient_58);
      for (long component = 0; component < 3; ++component)
       local_59.n[component] = local_68.n[component] * -1.0f + local_59.n[component];
      if (!(local_3 > local_66)) local_3 = local_66;

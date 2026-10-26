@@ -155,6 +155,8 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // counts read once 1644 (frame 0x590); shared first/contact point subtraction 1620/1616.
 // Round 357: Typed contact/point/both records 1612/1596/1612; indexed typed contacts
 // 1585 kept (plain), indexed typed point/contact records 1593 (three-point gain rejected).
+// Native configuration header/point rows/contact rows 1585 each; header/point, header/contact,
+// both row tables and all layouts 1585 each; all layouts with both tables indexed at each use 1640.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
