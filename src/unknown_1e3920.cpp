@@ -1530,10 +1530,11 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
-// score 299 (was 308): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
+// score 288 (was 299): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
+// Round 115: Probability field reads 288 kept (plain); delay field reads 292; weapon array initializer 299; initial lookup scope 299; increased-probability selection 299; both field clamps 291.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1552,8 +1553,8 @@ void function_1e2a90(long actor_index)
 			real probability = 0.1f;
 			if (weapon_options)
 			{
-				real value = *(real *)(weapon_options + 0x58);
-				probability = value < 0.1f ? 0.1f : (value > 0.6f ? 0.6f : value);
+				probability = *(real *)(weapon_options + 0x58) < 0.1f ? 0.1f :
+					(*(real *)(weapon_options + 0x58) > 0.6f ? 0.6f : *(real *)(weapon_options + 0x58));
 			}
 			if (actor->unknown225 || (*(short *)((byte *)actor + 0x722) > 0 &&
 				*(real *)((byte *)actor + 0x764) < 3.0f))

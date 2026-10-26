@@ -3150,6 +3150,7 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // reference 565. Existing call inputs and random sequence retained.
 // Magazine selector 624/622; accumulated-shot snapshot 629/583 (fast/plain);
 // shared player lookup 642; later tag outputs 639; later scale outputs 653 (fast, control 637).
+// Round 115: Later failure lifetime 636; reversed tag defaults 637; interval field reads 634; positive magazine arm first 637; byte selected marker 638 (fast, control 637). Three-point preview gain rejected; opening body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3407,6 +3408,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Earlier 1436 (was 1436): Frame 0x3c versus 0x38 and pool/offset roles remain. Native trigger input
 // 1447; native barrel selectors 1630; word input tables 1439; call-free blend tick sample 1440;
 // Round 109: Dual query before lookups 1466; tag after dual query 1448; query outputs without defaults 1455; state-one outputs before blocked test 1436; native flag27 only 1435, flag10 only 1436, both 1435; long result declared first 1436.
+// Round 115: Native status fields 1470; native input fields 1455; both 1466; magazine activity from its test 1455; dual/owner setup scope 1436; signed trigger/barrel/both state bytes 1436/1436/1436 (fast). Opening body/type declarations restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
