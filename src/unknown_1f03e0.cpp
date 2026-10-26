@@ -429,6 +429,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // First-normal i/k/j product and partial sum 198 each; average i/k/j product and partial sum 198 each, all 983/977 bytes. Original projection expressions and pair-result join restored.
 // Fallback pointer/value 244/266; selected contact index 276, with pointer/value 309/299;
 // per-case defaults 269; complete normalized result 239, with fallback pointer 310.
+// Height-expression and full eligibility values 215/215; nested height filter 181; component fields at uses 370, with height/eligibility/nesting 368/368/370; signed valid-selection range 209. Original pair-result join restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)

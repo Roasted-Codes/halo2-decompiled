@@ -1591,6 +1591,8 @@ void function_b7360(long object_index);
 
 #pragma inline_depth(2)
 // score 476 (was 482): Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output acquisition, dispatch layout and forty missing bytes remain.
+// Earlier 482 (was 482): Actor/output registers, dispatch layout and rounding homes still differ; eight source trials restored.
 // Earlier: actor/output and dispatch registers still differ; multi-use actor handle kept.
 // actor/output registers, branch layout and rounding homes differ;
 // direct entry guard 631 fast; notification ranges 642 fast; selection-result field 597 plain
@@ -1616,6 +1618,8 @@ void function_b7360(long object_index);
 // Velocity-first native dot loads 476 plain (kept); two-use motion angle 502; radius 491;
 // dot/angle 502; angle/radius and all motion values 498; separate duration 493;
 // all motion values and separate duration 507. Native dispatch/register gap remains.
+// Shared duration conversions, moving/direct/combined/point/moving+point/direct+point/all 493/482/491/482/491/480/493;
+// two-use rate at duration producer 540. Two-point combined conversion gain rejected; original conversions restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2006,7 +2010,8 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
-// score 478 (was 478): Frame 0x1c agrees; actor/state registers and first point home still differ; eight scope trials restored.
+// score 478 (was 478): Frame 0x1c agrees; actor/state registers and the first point home remain.
+// Earlier 478 (was 478): Frame 0x1c agrees; actor/state registers and first point home still differ; eight scope trials restored.
 // Earlier: frame 28 agrees; actor/state registers and first point home still differ.
 // Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;
 // deferred completion else block 505 (unchanged reduced preview 505).
@@ -2027,6 +2032,7 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Complete facing CRT copy, twice-used selected target and consistent vector-before-enable publication: seven
 // separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
 // actor/state registers and first point home remain.
+// Position/distance/motion/alternate-motion helper inline and noinline declarations 478 each.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

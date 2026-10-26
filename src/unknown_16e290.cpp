@@ -344,11 +344,14 @@ struct s_word_bit_iterator
 
 bool function_44690(s_word_bit_iterator *iterator, long *out);
 
-// score 125 (was 142): retail keeps count + 31 in EBX (word count shifted from it after the copies),
+// score 125 (was 125): Frame 0xf0 agrees; padded-count/byte-count lifetime, scalar homes and memcmp carriers remain.
+// Earlier 125 (was 142): retail keeps count + 31 in EBX (word count shifted from it after the copies),
 // bytes in EDI and base in ESI; ours keeps bytes in EBX, so the spill homes and memcmp registers differ.
 // Bytes as words * sizeof(dword) 237; rounded-count local for all three 209; masked rounded count
 // 252 (822 bytes); bytes >> 2 125; word count declared before the arrays 125; byte-wide or bitfield
 // portal flags 142 each (retail's byte load into BL stays a memory test).
+// Count/cluster/portal field references and paired element references 125 each;
+// cluster/portal/all element fields at uses 125 each; count reference with direct elements 125. All restored.
 // @retail 0x16de20
 void function_16de20(short index, s_16e150_bits const *table, dword *output)
 {
@@ -1440,7 +1443,8 @@ struct s_camera_clip_reference_16ebf0
 	byte field_14[4];
 };
 
-// score 209 (was 209): Frame 0x98 now agrees; saved-state/direction homes and narrow/fraction convention differ.
+// score 209 (was 209): Frame 0x98 agrees; saved-state and native direction/point homes plus the held narrow/fraction convention remain.
+// Earlier 209 (was 209): Frame 0x98 now agrees; saved-state/direction homes and narrow/fraction convention differ.
 // Earlier forms on frame 0x9c:
 // shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
 // aggregate copies with shared cross product 249, role names 249, combined scope 249.
@@ -1463,6 +1467,8 @@ struct s_camera_clip_reference_16ebf0
 // Recovered-frame forward-only copy 217; up-only copy 217; shared cross product 209; saved-state
 // alias removed 254; split high-bit predicate 209. Frame 0x98 agrees; saved-state and direction
 // homes plus clipping convention remain.
+// Native player receiver 209; input/basis/composition/publication component loops 1165/1161/1157/265;
+// native receiver with input/composition loops 1165/1157; all native copy phases 1210. All restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

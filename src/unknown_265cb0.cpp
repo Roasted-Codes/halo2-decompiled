@@ -1598,6 +1598,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Round 112: Long visible 683 (one-point gain dropped); long positive 710; long close 727; long
 // very-close 699; combined state/view guard 705; ordinary actor input in all.
 // Round 150: wide maximum 739; long queried level 684; both 739; sentinel declaration order 684; shared relative difference 692; nested maximum guards 684; direct proximity result 711; wide maximum with sentinel order 739 (calibrated fast).
+// Round 155: native field references (alias-free), then notification fields at uses: selection 684; elapsed 684; selection elapsed 684; grace 684; selection grace 684; elapsed grace 684; selection elapsed grace 684; notification fields at uses 682. All restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

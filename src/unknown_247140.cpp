@@ -245,6 +245,9 @@ public:
 
 // score 174 (was 174): Frame/input carriers, range lowering and selective selector expansion remain; caller preserved.
 // Earlier 174 (was 174): Frame/input registers and selective selector expansion remain.
+// Frame 0x1c versus 0x20, input registers, range classification and final selector expansion remain.
+// Earlier 174 (was 174): Frame/input registers and final selector expansion still differ; eight new reader trials restored.
+// Frame/input registers and selective selector expansion remain.
 // Earlier: Frame/input registers and final selector expansion still differ; eight new reader trials restored.
 // Earlier: frame/input registers, range-header lowering and final selector expansion still differ.
 // frame 0x1c versus 0x20, input registers and final
@@ -280,6 +283,7 @@ public:
 // 174 (507/541, plain). Range field remains at +0x50; sibling exact and caller unchanged.
 // Per-use upper reader ordinary inline 174; early lower/upper/both 174/174/192;
 // per-use default lower/upper/both 174/174/192; complete reader results 174.
+// Lower/upper/both native range references 174 each; one shared pool pointer 183; lower/upper/both references plus pool 183 each; three endpoint/result role names 174.
 // Shared classification through existing range readers byte/long/dword/bool 201/189/189/189;
 // shared header plus classification byte/long/dword/bool 202/201/201/190. All restored.
 // Native location position/direct receiver/center 174/174/174, with const receiver
