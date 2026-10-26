@@ -82,6 +82,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Frame 0x22c versus 0x224 and stream/gain homes remain. Redundant level clamp removed: 575 to 545, 1901/1901 bytes. Voice output reuse 575; query output scope 572; complete flag projection 572; output stream observation 614 (plain).
 // Voice selector snapshot 572 fast; level-offset snapshot 557 fast; entry status,
 // initial voice output and initial settings 532 fast each (unchanged preview 532).
+// Real gain value 545; native linear return 545; unsigned pin bits 545; exponential input 561;
+// native return/input 561; logarithm/root results 551/549; combined math results 554, frame 0x230.
+// Original body and helper contracts restored; frame 0x22c and stream/gain homes remain.
 // Linear input pointer 544; native speaker array 545; array plus input pointer 544; known-clear
 // send bits 547; send field order 545; routing flag publication last 545; cache from produced send
 // fields 545; direct output level 545. One-point reductions dropped; all body/type/helper forms
