@@ -1526,7 +1526,10 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
-// score 308 (was 314): actor/object-pool registers and scalar/ammo homes differ. Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
+// score 299 (was 308): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
+// Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
+// Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
+// word two-weapon counter 299 kept (plain); promoted minimum 316.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1587,7 +1590,7 @@ void function_1e2a90(long actor_index)
 			*(short *)(unit + 0x23e) = 0;
 		if (weapon_options)
 		{
-			long i = 0;
+			short i = 0;
 			do
 			{
 				if (weapons[i] != NONE)

@@ -3129,18 +3129,17 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
     return unit ? unit->player_index : NONE;
 }
 
-// score 565 (was 565): frame 0x1c64 vs 0x1c60; weapon/barrel roles and unit/definition homes differ.
+// score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain.
 // Plain single-store unit 637; later effect locals 659; long marker count 607;
 // CRT marker copies 565; long fired 582.
-// score 565 (was 565): extra frame word and weapon/barrel roles remain.
 // Owner getter 563; scale names 565; direct barrel uses 641; const barrel tag 565;
 // effect cursor before snapshot 565 (all plain). Original body restored.
-// score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel roles, scalar homes and effect
 // copy differ. Trials: word fired 627; word failure 648; native original index 641; native interval
 // bounds 623; word selected marker 565; later fired lifetime 573.
-// score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain. Native
-// effect entry 565; byte fired 565; byte failure 565; unsigned selected marker 565; barrel element
+// Native effect entry 565; byte fired 565; byte failure 565; unsigned selected marker 565; barrel element
 // reference 565. Existing call inputs and random sequence retained.
+// Magazine selector 624/622; accumulated-shot snapshot 629/583 (fast/plain);
+// shared player lookup 642; later tag outputs 639; later scale outputs 653 (fast, control 637).
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3373,23 +3372,22 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1500 (was 1496): frame now 0x38; entry header/index roles and scalar homes still differ.
+// score 1436 (was 1436): Frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
-// score 1475 (was 1500): frame 0x38 agrees; pool/index roles and scalar homes remain.
 // Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
 // input-array names 1507; barrel completion case order 1507. Full-width result kept.
 // Own plain 1476; later table relocation 1450 with identical normalized code.
-// score 1436 (was 1475): frame 0x3c versus 0x38; pool/offset roles and scalar homes remain. Trials:
+// Trials:
 // word result 1474; word dual 1464; word inputs 1447; cooling arms 1481; shared complement 1442;
 // long ticks 1477; long direction 1476; complement plus bits 1441; complement plus tag arms 1441;
 // double tests 1480; float multiplier 1442; upper ternary 1478; complement plus word inputs 1436;
 // packed bits/tag arms 1438; packed bool result 1477; packed word result 1436.
-// score 1436 (was 1475): barrel/input setup still differs. Coefficient lifetime trials: before
-// magazines 1446; before barrels 1447; per barrel 1447; before blend 1447.
-// score 1436 (was 1436): Frame 0x3c versus 0x38 and pool/offset roles remain. Native trigger input
-// 1447; native barrel selectors 1630; word input tables 1439; call-free blend tick sample 1440;
+// Coefficient lifetimes: before magazines 1446; before barrels 1447; per barrel 1447; before blend 1447.
+// Native trigger input 1447; native barrel selectors 1630; word input tables 1439; call-free blend tick sample 1440;
 // weapon object reference 1436.
+// Pool retained 1460; readonly tags 1436; long overheat on word-input/coefficient frame 1439;
+// word/long barrel activity on that frame 1445/1445. Wide loop counters 1439/1680/1442 rejected (input range).
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

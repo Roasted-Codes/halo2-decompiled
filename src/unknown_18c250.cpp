@@ -533,11 +533,13 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 	location->spatial.compressed_forward = vector3d_compress(g_4687b0);
 }
 
-// score 293 (was 293): frame 0x84 versus 0x80; saved tag pointer and datum/root-location carriers remain.
+// score 293 (was 293): Frame 0x84 versus 0x80; datum/tag and root-location carriers remain.
 // marker outer scope 309; direct failure predicate 293 kept (plain); stored-scale arm first 314; ascending cases 311; failure exit 314.
 // Long failure result 293; marker consumption scope 293; shared scale object index 339;
 // force-inline object-index query 293; marker/axis/audibility role names 293.
 // Tag-first declaration 293; explicit failure arms 309; word cluster 294; CRT velocity copy 293; owner value conditional 301.
+// Effect axis at entry 293; audibility output at entry 293; direct late tag flag 323 (frame 0x80);
+// readonly datum 293; CRT marker position 293.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
