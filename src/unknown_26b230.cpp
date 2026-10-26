@@ -2015,14 +2015,16 @@ void function_269250(long clump_index, long actor_index)
 // final tracking guard 189; complete unit arms 193; unsigned replacement 189; word category mask 192.
 // Read-only object/external object reference/read-only member/extensions 189/189/189/189.
 // Ordinary prop/node/both iterator inline and separate removal noinline 189/189/189/189.
-// score 189 (was 189): Frame/current/object/replacement homes remain; unchanged result 189;
+// Frame/current/object/replacement homes remain; unchanged result 189;
 // changed-reference count 246; category at uses 195; member header getter 189; removal
 // inline/forced expansion 189/460; complete unit predicate 243; count plus removal boundary 246.
-// score 189 (was 189): frame/current/object/replacement homes remain.
+// frame/current/object/replacement homes remain.
 // Shared datum/calling walks 216/188; with group getter 216/188; native iterator index 189/237;
 // current-head/read-only object 241/216. Shared walk recovers frame 0x24 at 216/765 bytes.
 // On that frame: member while 216; tested category 219; both 219; category names 216;
 // names with while/test/both 216/219/219. One-point calling-walk gain rejected; body restored.
+// Round 368: non-unit bool/byte 219/219; non-group bool/byte 190/190;
+// joint absence domains bool/bool, byte/byte, bool/byte, byte/bool 220/220/220/220.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
@@ -2176,6 +2178,8 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 342: candidate-count lifetime at collection 383; invalid-cluster reset first 322;
 // fallback initialization first 322; observed-state CRT copy 322; shared visibility test 322.
 // Readonly candidate 322; priority/type/both samples 331/357/369; readonly samples 369; selected threshold first 372; threshold with samples 361; readonly structure 322.
+// Round 368: joint selection-phase counter lifetime, short/long cursor and total
+// 360/352/361/352; the same four with indexed candidate advancement 382/372/365/371.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

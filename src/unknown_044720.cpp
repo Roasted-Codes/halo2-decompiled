@@ -241,6 +241,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // All three point setters 246; native bound-point initializer 204.
 // Round 366: Native link/part/transform records and their pair/all combinations each 190;
 // all records with uniform node-byte observations 219. Entry spill and point homes remain.
+// Round 368: first/second list alignment 16/8, 8/16, 8/8, 16/4, 4/16,
+// 8/4, 4/8, 4/4 with aligned query 190/190/190/190/190/190/190/190.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {
