@@ -369,7 +369,7 @@ struct s_1f8a70_actor
 };
 // score 399 (was 399): Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
 
-// score 399 (was 399): frame 0x80 agrees; pool/data entry order, unit-mode boundary and result/route homes remain.
+// Earlier at 399 (was 399): frame 0x80 agrees; pool/data entry order, unit-mode boundary and result/route homes remain.
 // Earlier forms and observations:
 // frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
 // pool/data load schedule, unit-mode call and result/route homes differ;
@@ -400,6 +400,8 @@ struct s_1f8a70_actor
 // Earlier at 399 (was 408): frame 0x80 agrees; pool/data schedule, unit-mode boundary and result/route homes remain; point node first 433; point radius first 399 plain; target node first 434; target radius first 399; moving node first 428; immediate records last 412; target records last 407; moving record last 428.
 // Five independent reset orders 399 each; initial/success/paired status publication 399/399/399. Original body
 // restored; pool/data entry and protected unit-mode/result homes remain.
+// Request/location/reference receivers 449/399/449/450/449/450/449; route-only request 449 (fast).
+// Original complete body restored; pool/data entry and protected unit-mode/result storage remain.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

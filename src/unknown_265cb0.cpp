@@ -1596,6 +1596,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Earlier 684 (was 684): Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
 // Round 112: Long visible 683 (one-point gain dropped); long positive 710; long close 727; long
 // very-close 699; combined state/view guard 705; ordinary actor input in all.
+// Independent pre-clear best/strongest/both/strength/best-strength/strongest-strength/all-three/level results 695/685/685/684/695/685/685/695 (calibrated fast).
+// Original result lifetimes restored; frame 0x7c/0x80, saved links and expanded conversions remain.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

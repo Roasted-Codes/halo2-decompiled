@@ -131,7 +131,8 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 692 (was 692): Frame 0x4820 agrees; clear scheduling and output cursor +0x10 versus +8
+// score 687 (was 692): Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
+// Earlier at 692: Frame 0x4820 agrees; clear scheduling and output cursor +0x10 versus +8
 // remain. Redundant weight guard removed 1080; chained remainder defaults 698; merge failed-weight
 // exit 692; const selected record 692; named uncovered fractions 692.
 // Earlier: frame 0x4820 agrees; clear scheduling, output cursor
@@ -142,6 +143,10 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // Earlier: clear schedule and output cursor +0x10 versus +8 remain;
 // native output clear 742; output clear before palette lookup 790; previous index 692;
 // cluster-distance snapshot 762; zero accumulator copies 835.
+// Library clear orders 5-6-7-8-10-9 / 5-6-7-9-8-10 / 5-6-7-9-10-8 /
+// 5-6-7-10-8-9 / 5-6-7-10-9-8 / 10-5-6-7-8-9 / 5-6-10-7-8-9 /
+// 6-5-7-8-9-10: 687/723/720/771/774/729/770/708 (fast).
+// Final two clears swapped: 687 plain, same length, first +0x15f; retained.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {
@@ -161,8 +166,8 @@ void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_
 	memset(&local_6, 0, sizeof(local_6));
 	memset(&local_7, 0, sizeof(local_7));
 	memset(&local_8, 0, sizeof(local_8));
-	memset(&local_9, 0, sizeof(local_9));
 	memset(&local_10, 0, sizeof(local_10));
+	memset(&local_9, 0, sizeof(local_9));
 	local_5.remaining = 1.0f;
 	local_6.remaining = 1.0f;
 	local_7.remaining = 1.0f;

@@ -531,6 +531,8 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Without parameter-address aliases: reversed equality buffers 796; native plane result 925;
 // rotation pointer result 796; native rotation output reference 796; native angle input 796 (fast).
 // Original complete body and all helpers restored.
+// Alias-free projection-plane/source-matrix/both/orientation-bounds/plane-bounds/matrix-bounds/all/group-plane receivers 892/791/859/791/859/795/892/847 (fast).
+// Original complete body and helpers restored; frame 0x2204/0x21dc, definition/output and angle equality homes remain.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
