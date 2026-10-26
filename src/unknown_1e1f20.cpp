@@ -664,7 +664,7 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 290 (was 290): frame 0x20 agrees; early actor displacement, cleanup counter and slot reloads remain.
+// score 282 (was 290): frame 0x20 agrees; early actor displacement, cleanup counter and slot reloads remain.
 // Earlier: Frame 0x20, early actor offset and cleanup/scan homes remain; slot element
 // 290; scan for-header 338; repeated input predicate 305; retained reference pool 290; word slot
 // Frame 0x20 agrees; early actor displacement, cleanup countdown and scan homes remain.
@@ -696,24 +696,24 @@ void swarm_leader_detach(long actor_index);
 // Real signed-word memory field with promoted/native/per-use slot 290/304/300;
 // promoted/native slot before entry 288/304; per-use slot plus entry stop ordinal 300;
 // direct entry query with promoted/per-use field 290/300. Two-point gain rejected; record declaration restored.
+// Complete actor getter observations, full-handle/native-slot 283/314; with shared prop
+// byte displacement 282/315; with live count record 283/314; both additions 282/315.
+// Full-handle actor getter plus reused prop displacement kept; getter alone gains only seven.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
-	s_actor_view *actor;
-	unsigned short actor_slot = (unsigned short)actor_index;
-	actor = actor_get(actor_slot);
-	for (short slot_index = 0; slot_index <= actor->current; ++slot_index)
+	for (short slot_index = 0; slot_index <= actor_get(actor_index)->current; ++slot_index)
 	{
-		t_slot_proc stop = g_46eeb8[actor->slots[slot_index].type]->stop;
+		t_slot_proc stop = g_46eeb8[actor_get(actor_index)->slots[slot_index].type]->stop;
 		if (stop)
-			stop(actor_index, slot_index < 4 ? &actor->slots[slot_index] : NULL);
+			stop(actor_index, slot_index < 4 ? &actor_get(actor_index)->slots[slot_index] : NULL);
 	}
-	*(word *)&actor->current = 0xffff;
+	*(word *)&actor_get(actor_index)->current = 0xffff;
 	function_258600(actor_index);
 	long memory_index = 0;
 	do
 	{
-		s_slot_memory_entry *memory = &actor->memory[memory_index];
+		s_slot_memory_entry *memory = &actor_get(actor_index)->memory[memory_index];
 		if (memory->type != NONE)
 		{
 			memory = &actor_get(actor_index)->memory[memory_index];
@@ -724,26 +724,25 @@ void __stdcall function_1e1a00(long actor_index, long value)
 			memory->type = NONE;
 		}
 	} while (++memory_index < 4);
-	if (*((byte *)actor + 0xa))
+	if (*((byte *)actor_get(actor_index) + 0xa))
 		function_203fb0(actor_index);
 	else
 		function_203ed0(actor_index, (byte)value != 0);
-	if (actor->unknown07c != NONE)
-		function_2694d0(actor->unknown07c, actor_index);
+	if (actor_get(actor_index)->unknown07c != NONE)
+		function_2694d0(actor_get(actor_index)->unknown07c, actor_index);
 	long prop_index = actor_get(actor_index)->first_prop_index;
 	while (prop_index != NONE)
 	{
 		long current = prop_index;
-		byte *prop = g_502418->data + (current & 0xffff) * 0x3c;
-		prop_index = *(long *)(prop + 0x2c);
+		long prop_offset = (current & 0xffff) * 0x3c;
+		prop_index = *(long *)((g_502418->data + prop_offset) + 0x2c);
 		function_1e2150(actor_index, current);
-		prop = g_502418->data + (current & 0xffff) * 0x3c;
-		long view_index = *(long *)(prop + 0x14);
+		long view_index = *(long *)((g_502418->data + prop_offset) + 0x14);
 		if (view_index != NONE)
 			record_pool_release(g_502414, view_index);
 		record_pool_release(g_502418, current);
 	}
-	actor->first_prop_index = NONE;
+	actor_get(actor_index)->first_prop_index = NONE;
 	long index = NONE;
 	while ((index = data_next_absolute_index_inlined(g_50241c, index + 1)) != NONE)
 	{
@@ -758,24 +757,24 @@ void __stdcall function_1e1a00(long actor_index, long value)
 	s_actor_view *other;
 	while ((other = (s_actor_view *)function_1e46c0(&iterator)) != NULL)
 	{
-		if (other != actor)
+		if (other != actor_get(actor_index))
 			function_1e1740(iterator.actor_index, actor_index);
 	}
 	function_2628f0(actor_index, g_470fa0);
-	if (*(long *)((byte *)actor + 0x3f4) != NONE)
+	if (*(long *)((byte *)actor_get(actor_index) + 0x3f4) != NONE)
 		function_26dc20(actor_index);
-	if (actor->unknown007)
+	if (actor_get(actor_index)->unknown007)
 	{
-		if (*(long *)((byte *)actor + 0x1c) != NONE)
+		if (*(long *)((byte *)actor_get(actor_index) + 0x1c) != NONE)
 			swarm_leader_detach(actor_index);
 	}
 	else
 	{
-		if (actor->unknown018 != NONE)
+		if (actor_get(actor_index)->unknown018 != NONE)
 		{
-			byte *unit = (byte *)ai_object_get(actor->unknown018);
+			byte *unit = (byte *)ai_object_get(actor_get(actor_index)->unknown018);
 			if (*(byte *)(unit + 0xaa) == 0)
-				*(long *)(unit + 0x3d8) = actor->unknown054;
+				*(long *)(unit + 0x3d8) = actor_get(actor_index)->unknown054;
 		}
 		function_1e1250(actor_index);
 	}
@@ -810,11 +809,10 @@ void __stdcall function_1e1a00(long actor_index, long value)
 			}
 		} while (++i < 3);
 	}
-	actor = actor_get(actor_index);
-	if (actor->unknown009)
+	if (actor_get(actor_index)->unknown009)
 	{
-		actor->unknown009 = false;
-		*(long *)((byte *)actor + 0x10) = g_510c54->game_time;
+		actor_get(actor_index)->unknown009 = false;
+		*(long *)((byte *)actor_get(actor_index) + 0x10) = g_510c54->game_time;
 		--*(short *)((byte *)g_4f55d0 + 0x36a);
 	}
 	record_pool_release(g_4f55f0, actor_index);

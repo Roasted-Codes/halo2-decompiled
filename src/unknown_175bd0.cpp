@@ -2828,6 +2828,8 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // readonly effect metadata 176. Original body, native widths and metadata restored.
 // Accumulated/selected test result 184/176; result after pool query/signed-byte result/function delta 176 each;
 // live tag radius/live unit fields 254/254; live tag with accumulated result 258.
+// Current effect observed at every use 276; with live tag/unit/both 295/272/297;
+// those four effect-root graphs with the existing point producer forced inline 276/295/272/297.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
