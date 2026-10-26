@@ -90,6 +90,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Separate inline/noinline declarations for eligibility, location update, detach, actor test, attach, transfer, partition update and final update each 164. All eight original declarations and both traversals restored.
 // Native step reference 164; unsigned-word completion 164; shared absolute ordinal 250;
 // native record-array view 180; cleanup inline declaration 164; reference/word contract 164.
+// Round 211: Masked squad slot 250; opaque datum 164; unsigned ordinal member 164; slot/full-width
+// partition 252; slot/opaque datum 250. Separate pool/iterator and successor homes remain.
 // Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()

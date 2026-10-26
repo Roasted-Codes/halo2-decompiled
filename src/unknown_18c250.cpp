@@ -547,6 +547,7 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Tag-first declaration 293; explicit failure arms 309; word cluster 294; CRT velocity copy 293; owner value conditional 301.
 // Effect axis at entry 293; audibility output at entry 293; direct late tag flag 323 (frame 0x80);
 // readonly datum 293; CRT marker position 293.
+// signed-word effect failure 293; unsigned native cluster 293; unsigned marker handle 293; immutable datum pointer 293; native clear-output reference 293; unsigned-byte effect failure 293.
 // Named location fields 293; failure-first common return 296; cases two/three/zero 296; entry marker-name workspace
 // 293; native flag0 view 293.
 // Tag acquisition after returning kinds 305; conditional failure 309; conditional marker selection 293;

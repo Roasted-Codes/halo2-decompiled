@@ -1626,7 +1626,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * v->k + up->j * v->j + up->i * v->i;
 }
 
-// score 833 (was 833): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
+// score 841 (was 841): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
 // two inline levels 833, sequential channel construction 833, activity byte 833,
@@ -1634,18 +1634,19 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // seat-weight branches 874, overlay pointer countdown 863, refreshed object 833,
 // direct bounds fallback 859, size preference 1557, object pointer name 833,
 // control-first declaration 833.
-// score 833 (was 833): unit/state homes and first angle expansion remain. Primary direction
+// Earlier: unit/state homes and first angle expansion remain. Primary direction
 // snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
 // centered predicate after channel preparation 871.
-// score 875 (was 879): frame 0xc4 versus 0xd4 and angle expansion remain; partial j/k inputs 919;
+// Earlier: frame 0xc4 versus 0xd4 and angle expansion remain; partial j/k inputs 919;
 // partial i input 899; early screen pointers 934; named state predicate 873; unsigned counter 879;
 // direct eligibility accumulation 875 kept; state-guard accumulation 892.
-// score 841 (was 875): frame and first angle expansion remain; entry blend channels 1057;
+// Earlier: frame and first angle expansion remain; entry blend channels 1057;
 // yaw/pitch values 875; centered tests at use 866; early blend products 853;
 // whole projection output 880; centered tests plus early products 841.
-// score 841 (was 841): Frame and first angle expansion remain; native projection return 889
+// Earlier: Frame and first angle expansion remain; native projection return 889
 // (frame 0xd4); float bound fields 841; byte overlay ordinal 841; joined bound receiver 912;
 // named blend scalars 841. Opening body and both helpers retained.
+// native projection inputs by value 1112; native projection output reference 841; native bounds-screen reference 841; signed-word activity 844; readonly retained tag 841.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

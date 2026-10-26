@@ -266,11 +266,13 @@ void function_264940(long actor_index, long prop_ref_index)
 // j92: frame 0x24 versus 0x20 and object/view homes remain; real object/header types and selection inline declarations tie; expiry snapshot regresses.
 // typed object view 358; typed header lookup 358; typed object header 358; tracking expiry snapshot 385;
 // selection inline declarations 358.
-// score 358 (was 358): frame 0x24 versus 0x20 and object/view homes remain.
+// Earlier: frame 0x24 versus 0x20 and object/view homes remain.
 // Shared state/related/both distances 358/359/359; native actor/datum/origin references
 // 358/358/358; shared direction setter 358; reused byte approach category 370.
 // Round 310: state word snapshot 358; long state snapshot 365; long update 434;
 // entry vector workspaces 358; speed category result 358. Frame 0x24/0x20 and object/view homes remain.
+// Round 211: Direct time 442; signed-byte/word update 358/429; word approach category 360; named expiration
+// 358. Frame and object/view homes remain.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)

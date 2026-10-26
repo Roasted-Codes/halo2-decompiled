@@ -1021,6 +1021,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // ordinary while location traversal 213; camera up copied first 213.
 // Negative visibility 287; exclusion membership 213; opposite-view classification 213; three negative
 // predicates 287; signed render mask 213. Original source restored.
+// Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
+// availability result before the work guard 355. Early EDI/tag lifetimes remain.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {
