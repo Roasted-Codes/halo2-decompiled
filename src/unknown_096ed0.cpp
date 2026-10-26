@@ -30,6 +30,8 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // pre-query peer flags 229; flags plus separate lengths 254.
 // Pending/active/both callback outputs before traversal 217/217/217; both with guarded
 // output cursor 250; both with emitted-count output indexing 250 (fast); all restored.
+// Guarded aggregate priority/size/emitted-count/query-count names and all four together
+// 217/217/217/217/217; receiver and callback-output homes remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
