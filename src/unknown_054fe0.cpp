@@ -1290,6 +1290,9 @@ struct s_player_properties
 // all overwritten defaults 296. Original initialization retained.
 // Count at entry/before getter/before cache compare/after mask 225/191/265/184;
 // chained byte/long/short/all sentinel groups 184 each with session roots; narrow control 211.
+// Native requested name/payload/metadata/all 184 each; native current receiver and both receivers
+// 184/184; all current at use and both native observations 198/198. Session-root scores; real
+// player header and property type restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
