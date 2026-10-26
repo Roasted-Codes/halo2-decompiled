@@ -2525,18 +2525,17 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 313 (was 345): frame 0x104 versus 0x100; point/up argument eligibility and record copies differ.
+// score 313 (was 313): frame 0x104 versus 0x100, incoming point/up eligibility and record/call setup remain.
 // Placement name 345; request name 345; retained decal seed pointer 313;
 // direct case returns 345; failed-placement guard 345.
-// score 313 (was 313): frame 0x104 versus 0x100; point/up eligibility and record/call setup still differ.
 // Radius case lifetime 313; shared light call 380; initialized node masks 411; damage-output reuse 313;
 // sound aggregate 313; direct radius on the seed-pointer body 344 (frame 0x100).
-// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility differ. Shared direction output 313;
+// Shared direction output 313;
 // owner/location CRT copies 313; sound stores before compression 313; detached arms first 318; early damage
 // scale 313.
-// score 313 (was 313): frame 0x104 versus 0x100 and point/up eligibility remain.
 // Shared damage direction 313; retained light object 313; retained sound object 313;
 // object-case random record 313; full-width sound node 313.
+// Word flags/admission 319/319; word flags/direct radius 309 plain (caller 200 versus 166, rejected); admission/chained copies/shared seed 313 each; word flags/shared seed 319; vector CRT copies 313; byte detached with word flags/direct radius 309 (caller 200).
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {

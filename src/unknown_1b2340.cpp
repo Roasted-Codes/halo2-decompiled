@@ -128,7 +128,8 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 /* slot type 0x24's update: moves the actor to its prop (to the point the
    prop names, or along its direction) and flags the slot when it is there
    or cannot get there (always returns true) */
-// score 153 (was 232): frame 0x48 agrees; entry pool/view carriers and movement/failure placement remain.
+// score 146 (was 153): frame 0x48 and length 1077 agree; entry pool/view carriers and movement/failure placement remain.
+// frame 0x48 agrees; entry pool/view carriers and movement/failure placement remain.
 // Tried native type width 611; common success exit 595 (multi-goto form discarded); lookups after actor
 // guards 616; tracked type first 619; bounded trace distance 620; visibility result 620; single exit native
 // category 584 (multi-goto form discarded); successful move guard 584 (multi-goto form discarded); supported
@@ -146,6 +147,7 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 // outlined visibility result 238; failure expression/read-only view/remaining distance
 // 232/232/232; shared trace origin 238; geometry-only origin 153 kept;
 // geometry setter/native category 153/195. Plain 153, 1080/1077, no trailing fill.
+// Direct slot/actor reference/node reference/both 153 each; direction before query 146 kept; full result 150; direct slot/entry trace with direction 146/146.
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
@@ -199,8 +201,8 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 		type = view->unknown70;
 		if (type == 0)
 		{
-			s_prop_state_view *prop_entry = prop_node_state(node);
 			vector3f *direction = (vector3f *)((byte *)view + 0x94);
+			s_prop_state_view *prop_entry = prop_node_state(node);
 			s_sector_trace_result trace;
 
 			if ((real)sqrt(direction->i * direction->i + direction->j * direction->j + direction->k * direction->k) > 0.0f &&
@@ -318,16 +320,18 @@ done:
 bool function_2601f0(long actor_index, s_type_c3b527 const *point, long sector, real radius, real path_distance);
 void function_1f86a0(long actor_index);
 
-// score 131 (was 144): shared range generation recovers the random-first x87 sequence;
+// score 131 (was 131): frame eight agrees; initial pool order, slot EBP, view spill and nine-byte deficit remain.
+// shared range generation recovers the random-first x87 sequence;
 // initial pool order, slot/view homes and nine-byte deficit remain. Shared range 131;
 // chained ticks 144; both 131; state query noinline 144; early short/long defaults 147/179;
 // native duration fields 144; native fields with shared range 131.
 // frame eight agrees; pool-load order, slot EBP and view spill differ.
 // Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
 // word duration ticks 144; ordinary result 203.
-// score 131 (was 131): initial pool order, slot EBP and view spill still differ.
+// initial pool order, slot EBP and view spill still differ.
 // Readonly actor/view/both 131 each; force-inline actor/node/view/state boundaries
 // 131 each; readonly records with the view boundary 131.
+// Direct slot stores/actor reference/node reference/both/absent-view return 131 each; success publication 145; native slot fields/direct native slot fields 131/131.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {
