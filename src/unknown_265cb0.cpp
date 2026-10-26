@@ -1125,6 +1125,10 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // decay result 398; delta before conversion 100; smoothing value samples 345; sampled early delta
 // 389; native rounded count 99; stored width rounded count 396; branch decay late delta 394;
 // sampled branch decay 402; ordinary conversion inline 373; branch exponent result 416.
+// score 99 (was 99): the tick-rate conversion is hoisted above the decay test (both arms start the
+// same); the vector homes offset/ahead/target/direction are offset/direction/ahead/target here.
+// Ticks ternary 99; rounding of a ternary 170; 0.25 first 99; negated test 103; a seconds-to-ticks
+// helper for both or one arm 99; vector local names 99; vector declarations moved 99.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
