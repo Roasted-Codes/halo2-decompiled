@@ -1601,6 +1601,9 @@ void function_b7360(long object_index);
 // Size optimization 775 fast; depth two 561 fast, 532 plain, 1808/1848 bytes.
 // Command type short/long 530/533; actor object snapshot 482 plain (kept);
 // single-result completion 588; shared entry failure 515 (fast; existing depth two).
+// Native unsigned object bits 482; initial/command/location point memcpy 482/482/482;
+// both table/all native point copies 482/482; native clear/set updates 482; movement outcomes 530.
+// Copies and bit updates preserve the complete executable prefix; original body restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2001,6 +2004,8 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // unit plus iterator 490; facing plus unit 486; facing plus iterator 486.
 // Actor-position cursor 478; actor-facing cursor 574; facing-output cursor 573; state-flag cursor 510;
 // actor handle 478; position/facing 574; position/flags 510; combined subobjects 597.
+// Native actor scalar/vector/both members 484/478/484; shared short/native command selector 583/552;
+// post-dispatch result 646; shared length producer 478 (grouping diagnostic restored); complete facing mask 609.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

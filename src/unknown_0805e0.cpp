@@ -766,6 +766,9 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // long direction flag 244; equality-first cases 243; forward CRT memmove 385.
 // Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
 // Paired signed min/max 302; independent bound overrides 362; forward entry cursor 369; reverse entry cursor 394; both entry cursors 406.
+// Branch-produced removed index 390; neutral lower/both bounds 309/243; shared signed direction 343;
+// identity memcpy 243; chained sentinel stores 243; new-entry predicate 381; branch/native bounds 390;
+// signed link values 815 (repair unrolling lost); original body restored.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
