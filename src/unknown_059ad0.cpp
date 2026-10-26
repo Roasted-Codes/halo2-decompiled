@@ -4334,7 +4334,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
 
-// score 370 (was 370): Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
+// score 370 (was 370): Aligned frame 0xd8 agrees; acceptance/identity/selection homes and acknowledgement placement remain.
+// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
 // Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
 // Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
@@ -4371,6 +4372,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // long/byte/short selection status 396/404/394.
 // Round 227: Follow-up equality plus tie predicates 372; newer plus tie predicates 371. Neither
 // combination improves the original 370; original body restored.
+// Round 229: Signed-byte acceptance/preference/equality/paired selection/all results 401/370/370/370/401;
+// identity equality with signed-byte preference/equality/all results 382/382/392. Original body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
