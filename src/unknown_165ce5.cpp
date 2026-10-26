@@ -1,6 +1,7 @@
 // @flags /O1 /Oi /arch:SSE /Gr
 #include "orientations_storage.h"
 #include "view_context_storage.h"
+#include "hud_messages.h"
 /* UNKNOWN_165CE5.CPP: the first person weapons of the four local
    users (0x165ce5..0x1689a6, built for size; the same object as
    unknown_165cc3.cpp, unknown_16658d.cpp and lane R's unknown_166244.cpp).
@@ -2072,28 +2073,26 @@ void function_168644(long user_index, s_first_person_model *arms, s_first_person
 }
 
 transform4x3f *function_b8c00(long object_index, long *node_count);
-extern bool g_4f55e2;
 
 /* the render models a user's first person view draws: the arms, each
    active weapon and the unit's own body; returns how many */
-// score 20 (was 20): the game state check is tested as a byte here and and-ed with the flag mask
-// in retail, and the second condition is combined with it as a word here and as a byte in retail.
-// Retail's `active` is a byte that starts as the masked flag itself (al, no zeroing): writing
-// `bool active = state == 1 ? g_4f55e2 : false;` and testing `!active` builds that loop exactly, but
-// the and becomes `and al, byte ptr` without retail's `and eax, dword ptr` + `test al, al`, so the
-// function is 2 bytes short (236). Tried: bool active = false (23, an extra xor al, al); the reused
-// local as char/byte, with `: 0`, with a (long) cast (all 236); `!= 0` of a long ternary (249); a
-// nodes local in the second loop (20).
+// score 9 (was 20): retail loads the representation table before the character index's sign
+// test (ours after it), and the second weapon loop's call forms the nodes pointer first and the
+// node map from it (lea edi, [edx - 0x20c]); ours forms each from the weapon. The flag test reads
+// the hud message table through its accessor (retail's dword and), and `active` is a byte that
+// reuses al. Tried before: the flag as a separate bool global with bool active = false (23); the
+// reused local as char/byte, with `: 0`, with a (long) cast (all 236); `!= 0` of a long ternary
+// (249); a nodes local in the second loop (20).
 // @retail 0x165f16
 long __stdcall first_person_weapons_get_models(long user_index, long unit_index, long maximum_count,
 	s_first_person_model *models)
 {
 	long count = 0;
 
-	if (!(g_4e6948->state == 1 ? g_4f55e2 : false) && user_index != NONE)
+	if (!function_2ac270_get(6) && user_index != NONE)
 	{
 		s_first_person_user *user = &first_person_users[user_index];
-		long active = 0;
+		bool active = false;
 		bool armed = false;
 		long field_x11c898;
 

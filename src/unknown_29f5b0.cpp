@@ -9,6 +9,7 @@
 #include "globals.h"
 #include "unknown_123b30.h"
 #include "unknown_29f5b0.h"
+#include "hud_messages.h"
 #include "kill_volumes.h"
 #include "unknown_1fb360.h"
 #include "timed_effect.h"
@@ -10466,13 +10467,6 @@ void __stdcall function_2ac1f0(short function_index, long thread_index, bool ini
 }
 
 s_type_f4462a const g_44f400 = { _hs_type_void, 0, function_2ac1f0, NULL, 1, { _hs_type_boolean } };
-
-inline bool function_2ac270_get(long index)
-{
-	if (index >= 0 && index < 15 && g_4e6948->state == 1)
-		return g_4f55dc[index];
-	return false;
-}
 
 void hud_message_show_once(long value);
 

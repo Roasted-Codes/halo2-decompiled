@@ -53,15 +53,21 @@ static inline bool player_configuration_is_excluded(s_recent_player const *playe
 /* the next recent player after the iterator's: a valid, online, known player
    with a name; iterator starts at the first entry and ends at NONE */
 // score 43 (was 43): early ESI save, EBX successor, mask hoist and loop exit differ;
+// retail lets the entry pointer reuse the index register (imul esi, esi) and keeps the
+// successor apart in EBX (back-edge mov esi, ebx), which leaves AL free for the & 3 mask;
+// ours shares one register for index and successor.
 // native successor 51; persistent entry while/for 57; complete admission 43; identity predicate 53;
 // native player assignment 43; native successor with identity 57; admission result 59.
-// successor register, exclusion mask and loop rotation still differ; 127/127 bytes.
 // Native identity OR/logical OR 83/78; each with native name 83/78; native name alone 43;
-// shared player receiver 43, with native OR/name 83, with native logical OR/name 78; all restored.
-// Early index save, next-index register, loop rotation and hoisted mask still differ.
-// existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50; direct exclusion bits 43; current-index name 43; rejected entries continue 43.
-// score 43 (was 43): iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;
+// shared player receiver 43, with native OR/name 83, with native logical OR/name 78.
+// existing iterator while 79; iterator for 56; shared identity 50; shared admission flags 43; combined mask 50;
+// direct exclusion bits 43; current-index name 43; rejected entries continue 43.
+// iterator-owned walk 71; iterator success exit 73; native/byte results 57/61;
 // result-terminated loop 52; iterator result termination 44; output outcomes 68; native termination 47.
+// Round 85: successor local with early returns 49; every field read through the table index
+// (no entry pointer) 71; iterator store re-read as the index 51; loop over *iterator 71;
+// successor read through the table after the entry 60 (EBX successor as retail, 137 bytes);
+// short index 64 (entry reuses the index register as retail, 138 bytes).
 // @retail 0x805e0
 bool player_configuration_cache_next_recent_player(s_recent_player *player, long *iterator)
 {
