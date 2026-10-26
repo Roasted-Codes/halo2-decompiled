@@ -1108,6 +1108,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Round 112: Iterator, animation-request and cache-request inline declarations 828 each;
 // iterator/request and iterator/cache pairs 828 each; chained output defaults 828; chained native
 // null entries 828.
+// Per-attempt constructor expression 828; native candidate reset 980; candidate reset/latch 980; paired native
+// transfers 988; result constructed after outputs 1004. Native reset aligns initial result home at +0x14, but
+// iterator-output/candidate homes and later zero carrier remain.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1186,6 +1189,9 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Frame 0x2c agrees; result/output/candidate homes remain. Entry iterator after result 1004; missing-name continue 991; returned-object library copy 828; entry iterator before result 993; shared success predicate 992 (fast).
 // Loop-scoped returned entry 828; entry resolved outputs after result 979; all requested keys via iterator 1016;
 // native candidate field copies 922 at retail length; exhausted-result exit 1012 (fast).
+// Per-attempt constructor expression 828; native candidate reset 980; candidate reset/latch 980; paired native
+// transfers 988; result constructed after outputs 1004. Native reset aligns initial result home at +0x14, but
+// iterator-output/candidate homes and later zero carrier remain.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

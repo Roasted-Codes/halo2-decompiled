@@ -959,7 +959,7 @@ struct s_item_flags_view_10b850
     byte flag7 : 1;
 };
 
-// score 819 (was 819): frame 0x154 versus 0x12c; direction workspace 861;
+// score 821 (was 821): frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
 // correction assigned by branch 861. Original body retained.
 // j91: frame 0x154 versus 0x12c and Boolean homes remain; native rotation copies reach 0x148 but regress.
@@ -970,10 +970,13 @@ struct s_item_flags_view_10b850
 // Normal value copy 882 (frame 0x15c); point value copy 852; marker
 // matrix memcpy 819; settled result long 844; position decision long 887.
 // Original body and helper operands kept.
-// score 821 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
+// Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
 // Direct byte saturation 878; fixed before vector copies 858; matrix assignment 858;
 // flow-side assignment 858; support test before slow 821; reversed rotation input copies 858;
 // ordinary cross inline 970; float absolute alone 873; support test plus float absolute 837.
+// Complete rotation-axis snapshot 953; named one-minus-cosine term 821; per-row direct sums 824; axis snapshot
+// plus scale term 951; signed-byte floor and slow results 821. Frame 0x154 versus 0x12c and original
+// Boolean/vector homes remain; all private helpers restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
