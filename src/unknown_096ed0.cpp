@@ -45,6 +45,12 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // bytes but regress.
 // Round 357: Simple pending/masked-active/both arms first 248/216/246; all query kinds
 // after their queries 275; single-handle counts after callbacks 275. Opening body restored.
+// Round 165: Pending/active/both byte blocked predicates 217/217/217;
+// pending/active/both dword 247/228/247; mixed dword/byte and byte/dword 247/228.
+// Original Boolean predicates, all guards and executable body restored.
+// Round 165 follow-up: Unsigned handle/link/both domains 217/217/217; readonly
+// entry/peer/both views 217/217/217; unsigned handle with both readonly views 217;
+// all domains/views 217. Original signed locals and mutable views restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

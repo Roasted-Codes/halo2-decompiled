@@ -2828,6 +2828,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // readonly effect metadata 176. Original body, native widths and metadata restored.
 // Accumulated/selected test result 184/176; result after pool query/signed-byte result/function delta 176 each;
 // live tag radius/live unit fields 254/254; live tag with accumulated result 258.
+// Round 165: Readonly player/unit/both receivers 176/176/176; each with readonly
+// metadata and both with metadata 176/176/176; squared distance at comparison 176;
+// all readonly receivers plus distance boundary 176. Original receivers and body restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
