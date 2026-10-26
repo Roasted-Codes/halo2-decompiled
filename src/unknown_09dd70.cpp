@@ -465,6 +465,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // both bit extractions 252; byte slot 196; direct missing-parent slot 241;
 // primary word plus byte slot 241; word two-byte-copy ordinal 197 (828 bytes).
 
+// Round 199: Native packed packet cell 196; with word copy ordinal 197; captured low-word publication
+// 223; both 196; unsigned copied cell and the same three combinations 196/197/223/196 (fast). All
+// restored.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

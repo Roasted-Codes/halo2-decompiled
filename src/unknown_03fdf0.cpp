@@ -197,6 +197,8 @@ void function_402b0(long cache_index, long mode)
 // counter+selection/flags+parent+resource/entry coordinated roles 202f each, unchanged control 202f.
 // Native pass flags first/second/third/final 215/214/214/215; first pair 220; first three 227; all
 // four 233; all with byte result 231. Fast control 202. Native flag header restored.
+// Round 199: Plain shared 12..13 pass loop, long ordinal with long/bool/byte/short result
+// 296/282/282/287; short ordinal with those results 293/279/279/284 (fast control 202). All restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

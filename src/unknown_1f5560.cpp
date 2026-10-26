@@ -745,7 +745,7 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 
 real normalize2d(point2f *v);
 
-// score 172 (was 172): fast-byte initialization and trajectory call convention;
+// score 172 (was 172): frame 0x48 agrees; query-byte zero and trajectory call/output homes remain.
 // search then selection 172; unsigned scan 178; fixed do/while 191;
 // types arm first 191; fallback setters 195; split plus unsigned scan 223.
 // signed-long search 192; signed-byte search 188; exact exhaustion 210;
@@ -782,6 +782,9 @@ real normalize2d(point2f *v);
 // Both lookup globals at each use 172; request point setter 175; entry direction workspace 172;
 // globals/setter 175; globals/workspace 172; setter/workspace 175; all 175; word trajectory
 // result 211 (fast).
+// Round 199: Initial/retry/both scalar outputs at method entry 172 each; retry outputs at valid scope
+// 172; first entry plus retry valid 172; both entry with false validity return 172; retry valid with
+// false validity return 172; false validity return alone 172 (fast). All restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
