@@ -198,6 +198,10 @@ void function_402b0(long cache_index, long mode)
 // Native actual light definition/parent/node/camera fields 202f each; all fields 202f;
 // external native record reference 202f; native definition receiver 202f; both receivers 202f.
 // Unchanged reduced control 202f/946, ordinary baseline 183/947; frame and helper/API gaps remain.
+// Light-pool receiver at every use 253f; with direct tag 242f; Boolean selection
+// 283f; tag plus Boolean 275f; byte setup 256f; tag plus byte 242f;
+// Boolean plus byte 286f; all three 276f (control 202f, full 183).
+// Boolean receiver forms recover frame 0x88 but regress; original pooled observations restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

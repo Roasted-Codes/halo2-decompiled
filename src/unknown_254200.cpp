@@ -237,6 +237,10 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Word-alpha pointer/shared-color helper 349; direct consumer query/helper 378; late query/helper 378;
 // immutable query/helper 349; pointer/direct helper with scalar size 349/378;
 // lower-first helper coordinates 372; symmetric role-named lower-first coordinates 372 (fast control 162).
+// Complete first draw expiry at End/before End and coordinate-only expiry at either
+// boundary 162f each; complete draw with alpha packing/program expiry 162f each;
+// coordinate-vertex plus alpha packing and complete-vertex plus program expiry 162f each.
+// Reduced control 162, full 153; original complete phase lifetimes and directives restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

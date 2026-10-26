@@ -994,6 +994,9 @@ struct s_item_flags_view_10b850
 // Round 126: Native dot/scaled-add pointer inputs 813/813; complete rotation outputs 813 at retail length;
 // component cross-result fill 813; ordinary dot inline 813; reused geometry predicate 858; reused contact
 // kind 878; all velocity copies by memcpy 813 (fast); all restored.
+// First-computation cosine 845; first-output sine 844; both 828; actual axis-field
+// pointer 849; axis with cosine/sine/both 823/889/870; entry trigonometric declarations
+// with unchanged late assignments 828 at retail length. Original helper and body restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1258,6 +1261,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // common contact/event point at entry or active scope 201;
 // native tag plus common point 201. Complete tag, helper and body restored.
 // Native state-byte/countdown/both field references 200/200/200; damage-key reference 154; state/key, countdown/key and all three 200 each; surface-contact expression 200. Original release and event code restored.
+// Complete scalar release-product lifetimes before ijk vector publication, all six
+// computation orders 200 each; immutable products 200; genuine output declaration
+// before inputs with full product staging 200. Frame 0xac remains; original producer restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

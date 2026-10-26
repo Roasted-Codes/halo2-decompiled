@@ -853,6 +853,9 @@ public:
 // native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
 // Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
 // canonical results 374/374/308/375 on the recovered frame. Original body restored.
+// Native memcpy forward/up/left/position transfers 308/308/308/308; all basis,
+// forward plus position, up plus left and all transfers 308 each. Native copy boundaries
+// leave early result/flag allocation and child transport unchanged; original aggregates restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
