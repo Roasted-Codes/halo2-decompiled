@@ -2030,13 +2030,17 @@ long voice_players_share_team(long other, long player)
 	return false;
 }
 
-// score 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
+// score 34 (was 34): early mode/mask saves and cold exits remain; 368/368 bytes.
+// Earlier 46 (was 55): early mode save and exit layout differ; 377/368 bytes.
 // Complete mask arms 46; mask-first output arms 118; result before filter 53; mode guard 118;
 // team guard 140; byte teams 76; continues 55; membership first 89; shared bit 103;
 // bit addition 59; signed result 55; initial guard 121; conditional/late mask 46/46; direct outputs 141/144.
-// score 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
+// Earlier 34 (was 46): early mode/mask saves and cold exit placement remain; peer loop agrees.
 // Mode with complete mask 46; shared team/all-peer modes 148/148; team acceptance first 46;
 // mask before mode 34; equality with other/selected validity 117/118; unsigned peer ordinal 130.
+// Deferred mask initialization 55; complete query arms/selection 46/46;
+// deferred live/native mode 55/55; accepted team predicate 127;
+// deferred default output 53; deferred initial exit 55.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
@@ -2911,12 +2915,14 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 }
 #pragma function(_ReadWriteBarrier)
 
-// score 56 (was 95): mode load and output cursor/store scheduling differ; direct formal 95;
+// score 56 (was 56): mode load and output cursor/store scheduling differ; direct formal 95;
 // unsigned index 95; short/byte 107; early choices 95; early unsigned/short 95/107; direct unsigned 95.
 // mode load and record-store scheduling differ; real record
 // receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
 // outer route 95; actual count 96; conditional mode-result combinations all 92;
 // direct talker parameter with early player 56.
+// Shared route result/default arms 60/84; completed-player forms 94/85;
+// shared input bit 60/84; both computed bit parts 60/84.
 // @retail 0x56df0
 void __stdcall function_56df0(s_voice_player_settings *settings, long talker, long mode)
 {
