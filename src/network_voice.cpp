@@ -1233,6 +1233,8 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Early channel-array base with counted traversal 111; base after validation 111;
 // early base with pointer traversal 301; signed-word ordinal 296;
 // early base with validation returns 113. All lose the matched caller; original retained.
+// Unsigned total 281; unsigned total with counted walk 112; direct-receiver word ordinal 281;
+// word ordinal with unsigned total 281; unsigned counted ordinal 112. Expanded forms lose 0x54990.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2813,7 +2815,7 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 394 (was 400): frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// score 394 (was 394): frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
 // byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
 // Scalar role names 394; rejected-mode first 394; signed while traversal 394;
@@ -2822,6 +2824,8 @@ struct s_voice_route_choice
 // Boolean radio with unsigned nearest index 411; three mixer pairs 394;
 // conditional headset assignment 394; split initial/replacement nearest 412;
 // repeated player-field reads 472. Frame and route homes still differ; original retained.
+// Per-choice pointer 393; signed-word radio 393; signed headset 394;
+// function-scope descriptor only 402; function-scope pairs only 401.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

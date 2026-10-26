@@ -254,6 +254,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // frame 0x30 versus 0x2c and projected-point/factor homes differ;
 // role-named points 195; displaced transform first 250; orthographic defaults first 261;
 // shared point initializer 195; single result 280.
+// Native transform input/result/both by value 402/314/288; helper-local
+// scale observation 225; orthographic arm first 215. Frame and point/factor homes remain.
 // Origin/camera/scale fallback selections, all three paired selections and all together 195 each;
 // native floating factor admission 195. Complete original body restored.
 // Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;

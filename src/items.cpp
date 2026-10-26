@@ -556,13 +556,15 @@ struct s_item_collision_bsp
 	s_item_collision_instance *instances;
 };
 
-// score 249 (was 253): plane-index width, plane-join registers and spin stores differ;
+// score 249 (was 249): plane-index width, plane-join registers and spin stores differ;
 // seed before square root 249; fallback input copy 364; up pointer 253;
 // plane input scalars 254; angular output initializer 253.
 // Shared input/output scaling 249; transform value 350; linear/angular loops 249/249; normal-row loop 250.
-// score 249 (was 249): plane-index width, plane-join homes and spin stores remain.
+// plane-index width, plane-join homes and spin stores remain.
 // Item/transform references 249/249; surface selector 250;
 // speed-role names 249; current-spin reference 249 (plain).
+// Round 342: linear-output aggregate 249; native axis CRT copies 249; direct effect-flag read
+// 249; shared fallback-only spin scale 249; direct offset expression 249.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
@@ -941,9 +943,12 @@ static __forceinline void item_spin_vector(vector3f *vector, s_item const *item)
     real cross_i = j*item->spin_axis.k - k*item->spin_axis.j;
     real cross_j = k*item->spin_axis.i - i*item->spin_axis.k;
     real cross_k = i*item->spin_axis.j - j*item->spin_axis.i;
-    vector->i = i*item->spin_cosine + projection*item->spin_axis.i - cross_i*item->spin_sine;
-    vector->j = j*item->spin_cosine + projection*item->spin_axis.j - cross_j*item->spin_sine;
-    vector->k = k*item->spin_cosine + projection*item->spin_axis.k - cross_k*item->spin_sine;
+    real direct_i = i*item->spin_cosine;
+    vector->i = direct_i + projection*item->spin_axis.i - cross_i*item->spin_sine;
+    real direct_j = j*item->spin_cosine;
+    vector->j = direct_j + projection*item->spin_axis.j - cross_j*item->spin_sine;
+    real direct_k = k*item->spin_cosine;
+    vector->k = direct_k + projection*item->spin_axis.k - cross_k*item->spin_sine;
 }
 
 struct s_item_flags_view_10b850
@@ -959,7 +964,8 @@ struct s_item_flags_view_10b850
     byte flag7 : 1;
 };
 
-// score 819 (was 819): frame 0x154 versus 0x12c; direction workspace 861;
+// score 813 (was 821): Frame 0x154 versus 0x12c and Boolean/vector homes remain.
+// frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
 // correction assigned by branch 861. Original body retained.
 // j91: frame 0x154 versus 0x12c and Boolean homes remain; native rotation copies reach 0x148 but regress.
@@ -970,10 +976,11 @@ struct s_item_flags_view_10b850
 // Normal value copy 882 (frame 0x15c); point value copy 852; marker
 // matrix memcpy 819; settled result long 844; position decision long 887.
 // Original body and helper operands kept.
-// score 821 (was 858): Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
+// Frame 0x154 versus 0x12c and Boolean/vector homes remain; native contact fields 907; plus float absolute 880, shared addition loop 900, by-value cross inputs 928, named turn weight 907; contact pointers/float absolute 873 (fast).
 // Direct byte saturation 878; fixed before vector copies 858; matrix assignment 858;
 // flow-side assignment 858; support test before slow 821; reversed rotation input copies 858;
 // ordinary cross inline 970; float absolute alone 873; support test plus float absolute 837.
+// Round 349: Weighted cross terms 821; per-row cosine products 813 (plain); weighted terms before projection 822; both 813; later angular snapshot 819 (fast).
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

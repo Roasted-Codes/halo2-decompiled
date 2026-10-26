@@ -178,7 +178,7 @@ void function_268840()
 	function_268c90();
 }
 
-// score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
+// score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and protected child-call carriers differ.
 // frame 0x48 versus 0x50; iterator result/exhaustion and
 // player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
@@ -196,6 +196,8 @@ void function_268840()
 // In the recovered 0x50 frame: entry player pool 302; Boolean retention 247; both 302;
 // direct expiry admission 246/893 bytes; pool/Boolean/both plus direct expiry 314/256/314;
 // entry pool and Boolean retention with full-width child result 301.
+// Native player record/datum walks 264/264; entry pool with record/datum walks 312/312;
+// Boolean retention with native datum walk 264. Original player traversal restored.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2138,6 +2140,8 @@ void *actor_get_character_situation_entry(long actor_index);
 // Scoped first distance iterator 322; two-use candidate-distance sample 326; readonly
 // settings view 322; first scope plus sample 326; separate marking result 322; first
 // scope plus marking result 322; chained reset fields 322, plus marking result 322.
+// Round 342: candidate-count lifetime at collection 383; invalid-cluster reset first 322;
+// fallback initialization first 322; observed-state CRT copy 322; shared visibility test 322.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

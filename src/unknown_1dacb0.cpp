@@ -1083,7 +1083,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 	return result;
 }
 
-// score 828 (was 828): frame 0x2c agrees; class/NONE registers, result/output/candidate homes and later zero carrier remain.
+// score 828 (was 828): Frame 0x2c agrees; class/NONE, result/output/candidate homes and later zero carrier remain.
+// result/output homes and initial ECX/EDX differ;
+// frame 0x2c agrees; class/NONE registers, result/output/candidate homes and later zero carrier remain.
 // original selectors via iterator 1016; failed-result exit 1012; zero
 // iterator 996; two-pass requests 2187; inline depth two 828 (fast counts).
 // Mode initialized only by iterator 828; retained native selected index 838; library candidate copy 828;
@@ -1100,6 +1102,8 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // carrier remain. Candidate before iterator 967; post-search result copy 998; earlier candidate/native
 // iterator 965; post-search copy with saved mode 998; with saved type 998 (fast).
 // Frame 0x2c agrees; result/output/candidate homes remain. Entry iterator after result 1004; missing-name continue 991; returned-object library copy 828; entry iterator before result 993; shared success predicate 992 (fast).
+// Native iterator with mode default omitted 826; that form with named-entry latch 826;
+// with candidate field copies 920; with retained requested result 994; with result-driven while 826.
 // frame 0x2c agrees; class/NONE, result/output homes and later zero remain.
 // Tight iterator scope 828; entry output declarations 828; combined scopes 828; native-long
 // selected index 990; all original keys retained jointly 828 (fast).
@@ -1108,6 +1112,7 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Round 112: Iterator, animation-request and cache-request inline declarations 828 each;
 // iterator/request and iterator/cache pairs 828 each; chained output defaults 828; chained native
 // null entries 828.
+// Round 349: Explicit returned copy 828; reverse output defaults 828; shorter candidate scope 828; scope plus return copy 828; defaults plus return copy 828 (fast).
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1186,6 +1191,7 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Frame 0x2c agrees; result/output/candidate homes remain. Entry iterator after result 1004; missing-name continue 991; returned-object library copy 828; entry iterator before result 993; shared success predicate 992 (fast).
 // Loop-scoped returned entry 828; entry resolved outputs after result 979; all requested keys via iterator 1016;
 // native candidate field copies 922 at retail length; exhausted-result exit 1012 (fast).
+// Round 349: Explicit returned copy 828; reverse output defaults 828; shorter candidate scope 828; scope plus return copy 828; defaults plus return copy 828 (fast).
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

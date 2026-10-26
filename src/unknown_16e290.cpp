@@ -1435,12 +1435,12 @@ struct s_camera_clip_reference_16ebf0
 	byte field_14[4];
 };
 
-// score 229 (was 234): frame 0x9c versus 0x98 and vector/state homes differ;
+// score 209 (was 223): Frame 0x98 now agrees; saved-state/direction homes and narrow/fraction convention differ.
+// Earlier forms on frame 0x9c:
 // shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
 // aggregate copies with shared cross product 249, role names 249, combined scope 249.
-// Frame 0x9c versus 0x98; vector-copy homes and narrow/fraction convention differ.
+// Earlier vector-copy homes and narrow/fraction convention trials:
 // Direct view call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode branch 240.
-// score 223 (was 229): frame 0x9c versus 0x98 and vector/state homes remain; existing point setter recovers retail length.
 // State first 253; early native declarations 229; split input/output vectors 229; scalar position 223;
 // full-width narrow 231 (frame 0x98); point setter 223; setter with wide predicate 253; combined native copies 287.
 // Scalar-workspace role names 229; scale assigned after copies 229; later position pointer 226;
@@ -1448,6 +1448,11 @@ struct s_camera_clip_reference_16ebf0
 // later position pointer with native direction copies 237. Three-point gain rejected.
 // Complete direction memcpy 237; direct input cross with late workspaces 244;
 // later up pointer 253; native point carried through composition 229; matrix-axis cross with late workspaces 241.
+// Adjustment memcpy 223; native directions with point setter 251; fraction-only scope 223;
+// location-only scope 223; geometry fields at each use 223.
+// Interpolation setter 223; transformation scope 223; branch-assigned narrow 220;
+// transformation names 223; direction fields at use 213; native copies with branch-assigned narrow 240;
+// direction fields with branch-assigned narrow 209 (plain).
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
@@ -1476,21 +1481,19 @@ void function_16ebf0(long user_index)
 			}
 		}
 	}
-	vector3f *original_forward = (vector3f *)(state + 0xd8);
-	vector3f *original_up = (vector3f *)(state + 0xe4);
 	point3f *original_position = (point3f *)(state + 0xb8);
 	vector3f forward;
-	forward.i = original_forward->i;
-	forward.j = original_forward->j;
-	forward.k = original_forward->k;
+	forward.i = ((vector3f *)(state + 0xd8))->i;
+	forward.j = ((vector3f *)(state + 0xd8))->j;
+	forward.k = ((vector3f *)(state + 0xd8))->k;
 	vector3f up;
-	up.i = original_up->i;
-	up.j = original_up->j;
-	up.k = original_up->k;
+	up.i = ((vector3f *)(state + 0xe4))->i;
+	up.j = ((vector3f *)(state + 0xe4))->j;
+	up.k = ((vector3f *)(state + 0xe4))->k;
 	transform4x3f matrix;
 	matrix.scale = 1.0f;
-	matrix.forward = *original_forward;
-	matrix.up = *original_up;
+	matrix.forward = *((vector3f *)(state + 0xd8));
+	matrix.up = *((vector3f *)(state + 0xe4));
 	real_point3d_set(&matrix.position, original_position->x, original_position->y, original_position->z);
 	matrix.left.i = forward.k * up.j - up.k * forward.j;
 	matrix.left.j = up.k * forward.i - forward.k * up.i;
@@ -1513,7 +1516,7 @@ void function_16ebf0(long user_index)
 	{
 		s_location location;
 		function_11bed0(&location, &point);
-		bool narrow = false;
+		bool narrow;
 		if (location.cluster_index != NONE)
 		{
 			s_16e210_match_view *geometry = (s_16e210_match_view *)g_4e0348;
@@ -1527,8 +1530,11 @@ void function_16ebf0(long user_index)
 					narrow = !(reference & 0x80) ||
 						entry->plane.j * point.y + entry->plane.k * point.z + entry->plane.i * point.x - entry->plane.d < 0.0f;
 				}
+				else narrow = false;
 			}
+			else narrow = false;
 		}
+		else narrow = false;
 		real fraction;
 		point3f *original = original_position;
 		if (function_171d00(original, &point, &fraction, narrow))
@@ -1541,8 +1547,8 @@ void function_16ebf0(long user_index)
 		}
 	}
 	*original_position = point;
-	*original_forward = forward;
-	*original_up = up;
+	*((vector3f *)(state + 0xd8)) = forward;
+	*((vector3f *)(state + 0xe4)) = up;
 }
 void function_3f450(long cluster_index);
 void function_3f500(long cluster_index);

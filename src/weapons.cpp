@@ -3139,7 +3139,7 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
     return unit ? unit->player_index : NONE;
 }
 
-// score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain.
+// score 565 (was 565): frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain.
 // Plain single-store unit 637; later effect locals 659; long marker count 607;
 // CRT marker copies 565; long fired 582.
 // Owner getter 563; scale names 565; direct barrel uses 641; const barrel tag 565;
@@ -3150,6 +3150,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // reference 565. Existing call inputs and random sequence retained.
 // Magazine selector 624/622; accumulated-shot snapshot 629/583 (fast/plain);
 // shared player lookup 642; later tag outputs 639; later scale outputs 653 (fast, control 637).
+// Admission scope 637f; rounds before independent owner/default stores 632f/607 plain;
+// owner lifetime at entry 637f; entry marker workspaces 637f; unsigned-word mode 637f
+// (control 637f). Original body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3382,7 +3385,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1436 (was 1436): Frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
+// score 1436 (was 1436): frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
 // Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
@@ -3407,6 +3410,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Earlier 1436 (was 1436): Frame 0x3c versus 0x38 and pool/offset roles remain. Native trigger input
 // 1447; native barrel selectors 1630; word input tables 1439; call-free blend tick sample 1440;
 // Round 109: Dual query before lookups 1466; tag after dual query 1448; query outputs without defaults 1455; state-one outputs before blocked test 1436; native flag27 only 1435, flag10 only 1436, both 1435; long result declared first 1436.
+// Input/trigger phase scope, phase-scoped target outputs, function-scoped target outputs,
+// signed-byte input tables and persistent role names each 1436. Original body restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

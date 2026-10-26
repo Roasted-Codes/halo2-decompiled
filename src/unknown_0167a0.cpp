@@ -829,6 +829,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Frame 0xc versus 0x10 and selector reloads remain; mapped rejection/body step 155; bank-first writer 196; XOR masked store 201; separate clear/merge 157; empty-range exit 210 (fast).
 // Branch entry lifetimes 234; actual remapping-field reference 161; direct completion 155;
 // early mapped index 206; signed value table 155 (fast, with body entry steps). Two-point gains dropped.
+// Direct/mapped signed selector 157/157; special category first 170;
+// ordinary/special bank-one-first arms 159/167.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
