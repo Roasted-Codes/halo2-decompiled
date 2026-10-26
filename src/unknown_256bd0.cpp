@@ -61,9 +61,12 @@ struct s_object_flags_256bd0
 // angle field before sign adjustment 230.
 // Helper state pointer in two orders 211/211; state reference 211/211;
 // activity value 211/211; external activity reference 211/211. Cached byte/frame remain.
-// score 211 (was 211): frame 0x114 versus 0x110 and cached activity byte remain.
+// frame 0x114 versus 0x110 and cached activity byte remain.
 // Actual datum cursor with separate index output: pointer in both orders, void result
 // in both orders, read-only result in both orders, reference output in both orders all 211.
+// Shared native datum result/position value/read-only result/read-only position value
+// 211/260/211/260; caller-only native result/position value 211/260;
+// complete native/read-only datum values 257/257.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
