@@ -43,7 +43,8 @@ const dword g_455978[81] = {
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
 
-// score 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
+// score 350 (was 350): Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and selective helper expansion remain.
+// Earlier 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Earlier: Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
 // frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
@@ -62,6 +63,9 @@ const dword g_455978[81] = {
 // radial terms with candidate/all phases 391/391; six-use bounds origin 492, with candidate products 492. All restored.
 // Complete lower/upper/both bound selections 413/466/484; complete horizontal square 350;
 // bounds plus square 484; callback ending before cleanup 350; bounds/callback 484; square/callback 350. All restored.
+// Sample-element reference 350; object-index field reference 357; both references 357;
+// world snapshot alone/with sample 484/484; with object field/with both references 483/483;
+// body/shape declaration homes at entry 350. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
