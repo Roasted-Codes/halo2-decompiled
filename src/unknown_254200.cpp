@@ -144,6 +144,9 @@ void function_254200(void)
 // shared right/bottom edge lifetimes 142;
 // shared left/right/bottom edge lifetimes 189;
 // read-only point and extent snapshots 4;
+// second-vertex point after/before the texture call 133/138; scoped point 133;
+// position helper for vertices 2 and 3/all four 8/8;
+// texture-position helper for vertices 2 and 3/all four 4/4; comma-sequenced pair 4.
 // @retail 0x254490
 void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, color3f const *arg_3, bool arg_4)
 {
