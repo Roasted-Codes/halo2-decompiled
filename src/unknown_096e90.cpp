@@ -421,11 +421,13 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 	if (handle != NONE)
 		function_82a40(handle, (s_relevance_observers const *)a2, a3, a4);
 }
-// score 13 (was 13): table and masked index exchange ECX/EDX from +0x4;
+// score 2 (was 13): the false-result zero precedes the mask; retail forms the mask first;
+// flags declared first 13; flag/result carrier 31; no index local 2 (plain 2);
+// split result init 2; result after bounds 25; early returns 26; no-index flags-first 2;
+// byte result 28; result on each path 25; single-exit goto 2.
 // wide flags 17; short index 31; word index 17; active result first 24;
 // selected result first 22; slot-array base 13; independent failure guards 27; identity result first 25.
-// only registers differ: retail keeps the table in ecx and the index in edx, ours
-// the reverse. Tried: result declared first (15, moves caller 0x8b2a0), early returns (26, caller 86),
+// Earlier table/index tie: result declared first (15, moves caller 0x8b2a0), early returns (26, caller 86),
 // index before table (28), block local (26), no table local (27), flag entry pointer (21),
 // else-false default (22), (flags & 2) != 0 (13), one combined condition (13), nested ifs (13),
 // flags-array local (13), dword index (13).
@@ -435,11 +437,10 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 bool function_979f0(s_world_450cb8 *world, long handle)
 {
 	s_table_450cb8 *table = &world->a->block->table;
-	long index = handle & 0x3ff;
 	bool result = false;
-	if (index >= 0 && (dword)index < 0x400 && table->slots[index].handle == handle)
+	if ((handle & 0x3ff) >= 0 && (dword)(handle & 0x3ff) < 0x400 && table->slots[handle & 0x3ff].handle == handle)
 	{
-		byte flags = table->flags->entries[index].flags;
+		byte flags = table->flags->entries[handle & 0x3ff].flags;
 		if (flags & 4)
 			result = (flags >> 1) & 1;
 	}
