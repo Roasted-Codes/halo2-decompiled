@@ -1500,6 +1500,10 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 }
 
 // score 122 (was 122): Team-text induction base and receiver scheduling remain.
+// Round 50: indexed team text 148 (retail's 0x2ec base, but 12 bytes long: each widget's rectangle
+// temporary rotates ecx/eax/edx where retail keeps edx and loads the receiver before the push);
+// text helper as plain inline 148/122; receiver named before the color call 148; per-iteration
+// team row pointer 120.
 // Earlier 122 (from 219): background address scheduling agrees after the consistent rectangle-first
 // draw interface; team/player text induction bases and scratch-register scheduling still differ.
 // Earlier at 219 (from 255): Frame 0x293c agrees; background address scheduling and scratch-register rotation

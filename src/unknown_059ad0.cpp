@@ -4503,9 +4503,13 @@ bool __stdcall function_05d9e0(c_class_58d20 *session, const void *message_)
 
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update);
 
-// score 122 (was 122): missing owner spill leaves frame 0x9148 versus 0x914c;
+// score 122 (was 122): missing owner spill leaves frame 0x9148 versus 0x914c (BLOCKED-BY 0x76930:
+// retail passes the owner to the mark-message call as an unused argument; its file is held);
 // mask/counter role names 122, first-loop cursor 122, eligibility guard 122,
 // member bit live across readiness 159, named readiness result 122.
+// Round 50: early continues for the eligibility tests 122; sequence tests swapped 121;
+// channel/observer/sequence read before the tests 136; ready test negated with the mark
+// call in the else arm 119; empty arm for the state-8 test 122.
 // @retail 0x62640
 void function_62640(c_class_58d20 *session)
 {

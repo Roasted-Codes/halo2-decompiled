@@ -1009,6 +1009,12 @@ bool __stdcall function_be8e0(long object_index);
 struct s_havok_component;
 void function_1ced00(s_havok_component *component);
 
+// score 1 (was 122): the not-awake exit returns false as `xor al, al` where retail returns the result
+// register (`mov al, bl`); retail saves ebp only after the two header gates, as ours now does.
+// Round 50: object read through the table before the flags clear (object in ebp, header in the
+// parameter slot) 123; with the result returned at the end of the awake branch 1 (kept); not-awake
+// test as an early return 114; result declared before the header or assigned after its declaration 1;
+// result declared inside the awake branch 30; inverted final test with an early return 122.
 // @retail 0xbc470
 bool __stdcall function_bc470(long object_index)
 {
@@ -1018,8 +1024,8 @@ bool __stdcall function_bc470(long object_index)
     {
         if (header->flags & 0x20)
             return true;
+        s_post_physics_object_ab *object = ((s_post_physics_header_ab *)g_4e0300->data)[object_index & 0xffff].object;
         header->flags &= ~4;
-        s_post_physics_object_ab *object = header->object;
         if (TEST_FIELD_BIT(object->flag2))
             function_bba20(object_index);
         long mode = g_4e6948->mode;
@@ -1049,8 +1055,9 @@ bool __stdcall function_bc470(long object_index)
         }
         if (!active && !(header->flags & 4))
             header->flags &= ~2;
+        return active;
     }
-    return active;
+    return false;
 }
 
 
