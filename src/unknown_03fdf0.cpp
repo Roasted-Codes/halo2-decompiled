@@ -195,6 +195,9 @@ void function_402b0(long cache_index, long mode)
 // selection and both 202f each; unchanged reduced preview 202f, full 183.
 // Entry native selection/flags+selection/parent/ordinal/all declarations 202f each;
 // counter+selection/flags+parent+resource/entry coordinated roles 202f each, unchanged control 202f.
+// Round 161: Actual low-word shape kind with shared long/bool/signed-byte/short
+// pass carriers 202f/231f/231f/248f; separate pass lifetimes 202f/231f/231f/248f.
+// Unchanged reduced control 202f; full baseline 183. Actual shape type and body restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

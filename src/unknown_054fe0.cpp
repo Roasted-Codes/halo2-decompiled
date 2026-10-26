@@ -1290,6 +1290,10 @@ struct s_player_properties
 // all overwritten defaults 296. Original initialization retained.
 // Count at entry/before getter/before cache compare/after mask 225/191/265/184;
 // chained byte/long/short/all sentinel groups 184 each with session roots; narrow control 211.
+// Round 161: Startup state at use; collected-name table at entry/before getter;
+// those table scopes with state at use; table lexical name; entry table plus name;
+// entry table plus name and state at use: all eight 184 with session roots.
+// Original table, state snapshot, defaults and executable body restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

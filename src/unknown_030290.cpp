@@ -292,6 +292,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 117: Transformed storage first 195; chained inverse defaults 195; complete inverse results 296; helper coordinate homes 195; depth-first inputs 225; output-pointer result 195.
 // Both inverse defaults after origin/camera/all fallbacks 195/203/202; displaced-only/origin-
 // only default after all fallbacks 204/204. All retain frame 0x30.
+// Round 161: Complete translated-row results in all six row computation orders
+// 195 each; those results with shared helper-local scale, x/y/z and z/y/x,
+// 252/252. Original helper snapshots, row trees and executable body restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

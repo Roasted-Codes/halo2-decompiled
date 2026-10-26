@@ -791,6 +791,10 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // Round 159: Second-only/first-only callback cursors with byte kind 218/218; native kind 219/219;
 // second-plus-item/first-plus-item cursors with byte kind 218/218 and native kind 219/219. All 704/692
 // bytes, frame 0x9c versus 0x98. Original paired cursors, item indexing, copies and cleanup restored.
+// Round 161: Failure-first 193; native kind 208; direct cleanup-array reads 178;
+// native kind plus array reads 202; metadata before copies 181; failure-first metadata
+// 193; failure-first native metadata 208; failure-first descriptor before index 193.
+// Seven/four-point previews rejected by minimum gain; original body restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
