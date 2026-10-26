@@ -117,7 +117,7 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 104 (was 109): frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
+// score 104 (was 104): frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
 // remain. Prior frame 0x0c; entry cursor 125; property cursor 135;
 // frame 0x0c versus 0x10 and property/buffer register-stack split remain.
 // frame 0x0c versus 0x10 and property/buffer register-stack split remain.
@@ -141,6 +141,8 @@ struct s_cache_property_record
 // element 104 kept, plain and complete inventory confirmed; 352/352 bytes.
 // Three-use scalar property element 114 (frame 0x10); unsigned/byte/signed-byte ordinal 109/110/110;
 // unsigned property/all totals 109/109; flat entry admission 109; property element with unsigned ordinal 114.
+// Native identifier field 104; scalar-array end bound 105; activation ordinals 104;
+// field/end 105; field/ordinals 104; end/ordinals 105; all three 105; named activation ordinals 104.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -580,7 +582,7 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 111 (was 111): frame 0x1c agrees; records/properties registers, counter homes and ret 0x18 versus 0x1c remain.
+// score 90 (was 111): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // Frame 0x1c agrees; records/buffers register contract and cursor/count
 // scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
@@ -592,6 +594,8 @@ bool function_7fb50(void)
 // view with record/property/both capacity deltas 125/141/134; original view
 // with record/property/both deltas 125/141/134. Frame 0x1c agrees; input homes remain.
 // Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
+// Native identifier field 111; source-array end 90 kept; activation ordinal 111;
+// field/end 90; field/ordinal 111; end/ordinal 90; all three 90; named end ordinal 90.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -625,7 +629,7 @@ void function_80bf0(long record_capacity, s_cache_property_record *records,
 			properties_used++;
 			buffers_used++;
 			long const *value = values;
-			for (short j = 0; j < 3; j++)
+			for (short j = 0; value < values + 3; j++)
 			{
 				*(short *)&properties[j].unknown00 = (short)(j + 2);
 				properties[j].type = 1;
