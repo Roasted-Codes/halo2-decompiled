@@ -214,7 +214,7 @@ bool function_01de20(long index)
 dword function_1d6f0(bool linear, bool alternate, dword format, long width, long height);
 long g_55e6c0;
 
-// score 115 (was 115): Incoming data home, delayed saves and header bias still differ.
+// score 29 (was 29): One-slot frame and late level loop agree; count/height homes and folded unsigned pitch/height packing remain.
 // incoming data, delayed saves, packed-size folding and level-header bias remain.
 // Earlier: Incoming data home, delayed saves and header bias still differ.
 // Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
@@ -253,6 +253,7 @@ long g_55e6c0;
 // delayed clamped-count publication 148; inline/noinline format declarations 115/115; published
 // byte total 192; level/offset names 115; size after format 190; named aligned width 115;
 // element before size 123; linear size branches 174.
+// Clamped count before kind/after kind/between dimensions 103/103/99; early resource resets 38; data before dimensions 31; height before width 30; early linear flag/common word 44/31.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {
