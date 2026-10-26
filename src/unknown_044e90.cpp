@@ -27,6 +27,9 @@
 // body unchanged.
 // Signed 32-bit flags 434; named section/both indices 455/455; structure-first/instance-first/
 // combined selection 453/434/453; native normal/distance publication 441; source-plane cursor 445.
+// Round 171 reduced control 434: direct entry 472; output planes 459; live transform pointer 434;
+// entry/output planes 449; entry/live transform 472; planes/live transform 459; all three boundaries 449;
+// entry/live selection flags 575.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

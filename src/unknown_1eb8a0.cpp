@@ -184,7 +184,7 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 	}
 }
 
-// score 660 (was 660): Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
+// score 648 (was 660): Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
 // selected vector 689; selected vector arms 674; workspace role names 660; wide failure on guarded
 // coefficients 671; native counter increment 665.
 // Earlier: clock register recovered by capped-use coefficient lifetimes; vector argument homes,
@@ -205,6 +205,9 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Earlier: Frame 0x24 and clock EDI agree; vector homes and scalar schedules remain. Shared
 // output counter 706; computed activation alignment 710; impulse-add loop 687; active target advance loop
 // 698; active target extension loop 700 (fast); matched caller preserved.
+// Round 171 reduced/plain control 660: target cursor 708; direction cursor 701; impulse cursor 666;
+// target/direction 735; target/impulse 711; direction/impulse 698; all state cursors 722; activation limit
+// once 648 (plain, kept).
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
@@ -226,9 +229,10 @@ long function_1eb8a0(
 		{
 			if (dt > 0.001f)
 			{
+				real limit = s->limit;
 				real step = dt;
-				if (s->limit != 0.f && step > s->limit)
-					step = s->limit;
+				if (limit != 0.f && step > limit)
+					step = limit;
 
 				real t = step * 0.375f;
 				real e = 0.001f;
@@ -276,8 +280,8 @@ long function_1eb8a0(
 
 				real len2 = (real)sqrt(delta.i * delta.i + delta.k * delta.k + delta.j * delta.j);
 				real len3;
-				if (s->limit != 0.f && len2 > s->limit)
-					len3 = s->limit;
+				if (limit != 0.f && len2 > limit)
+					len3 = limit;
 				else
 					len3 = len2;
 
@@ -299,9 +303,9 @@ long function_1eb8a0(
 				if (e2 > 0.001f)
 					n2 = rem2 / e2 + 6.f;
 
-				s->limited = s->limit != 0.f && len2 > s->limit;
+				s->limited = limit != 0.f && len2 > limit;
 				s->start = *pos;
-				s->distance = s->limited ? s->limit : len2;
+				s->distance = s->limited ? limit : len2;
 				s->active = true;
 				s->duration = (long)((s->fast ? 7 : 1) + n2);
 				if (len2 > 0.001f)

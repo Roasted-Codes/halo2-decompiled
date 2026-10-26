@@ -168,6 +168,9 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // Reduced control 680: upper endpoint at use 701; both endpoint fields at use 686;
 // normalized result pair 704; aggregate computed pairs 680; computed accumulation pair 755.
 // All fast forms restored.
+// Round 171 reduced control 680: short exponent 699; coefficient aggregate 680; symmetric weighted products
+// 691; short/aggregate 699; short/products 698; aggregate/products 691; all native boundaries 698; readonly
+// coefficients/native boundaries 698.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,
