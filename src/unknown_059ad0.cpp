@@ -3623,7 +3623,8 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 115 (was 115): Frame agrees; timeout owner spill and native identity/reply load order differ.
+// score 101 (was 115): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
+// Earlier: Frame agrees; timeout owner spill and native identity/reply load order differ.
 // Earlier: frame agrees; timeout owner spill and identity load order differ;
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
@@ -3631,6 +3632,9 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 // scope 125; flags before identifier 120; early nonpeer return 123.
 // Native identity assignment 115; identity before identifier 115; announcement/reply/both named identifier stores 115/115/115;
 // entry result lifetimes 120; separate host initialization 118; host result before message 113.
+// actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;
+// native workspace names 115; chained message flags 115; peer result with chained flags 101; host
+// result at send 113.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -3671,7 +3675,8 @@ bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *addr
     function_612c0(session);
   }
  }
- if (network_session_address_is_peer(session, address))
+ bool result = network_session_address_is_peer(session, address);
+ if (result)
  {
   s_session_id id = *(s_session_id *)&session->unknown1c;
   s_network_session_member_state *member_state = &session->member_states[session->member_index];
@@ -3680,9 +3685,8 @@ bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *addr
     false, 0x14, sizeof(id), &id);
   if (leave)
    session->leave(false);
-  return true;
  }
- return false;
+ return result;
 }
 #pragma inline_depth()
 
