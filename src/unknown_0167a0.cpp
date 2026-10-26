@@ -126,6 +126,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // table-range / entry-range / all metadata records / all readonly records 153 each.
 // Distinct restore word/input/entry/all carrier lifetimes 153 each; initial/restore/both
 // metadata graph scopes 153 each; full restore graph with separate upload record 153.
+// Existing lookup single-result homes/uninitialized/group-first/default-first 153/153/153/153;
+// same graph with group fields at every test 153/153/153; direct conditional lookup 153. Original helper restored.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

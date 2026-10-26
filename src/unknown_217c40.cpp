@@ -101,13 +101,15 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
    self-aligning functions showed this). Retail holds no reference to its
    address, and its caller 0x12b450 is LTCG code. With the marker 0x12b450 and
    0x12b690 match; without it they don't. The body itself doesn't match yet. */
-// score 541 (was 541): Frame 0x38 versus 0x40; angle homes and snap-work lifetimes still differ.
+// score 501 (was 541): Frame 0x38 versus 0x40; angle homes and snap-work lifetimes still differ.
 // Role names 564; four-controller bound 541; ordinary snap inline 1438; short quadrant 564; shared default 548; combined 562.
 // Iteration-wide axes 541; direct double-angle helper 541; offset before magnitude 556;
 // shared axis signs 735; reverse layout-case order 541.
 // Native short coordinates 603; native long coordinates 551; quadrant through tests 555;
 // preference rereads 543; late preference/output bases 598.
 // Snap magnitude value parameter 541; snap axes by value 541; short four-controller ordinal 554; byte selected button 539; shared mapping index 541.
+// Shared coordinate/trig/coordinate-trig workspaces 541/541/540; shared normalization scale 501;
+// coordinates-scale 541; trig-scale 501; all scratch values/scoped normalization 540/540. Scale workspace retained.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {
@@ -125,17 +127,17 @@ void function_217c40(void)
             double local_4 = atan2(local_3, local_2);
             real local_6 = (real)fabs(sin(local_4));
             real local_7 = (real)fabs(cos(local_4));
-            real local_8 = 1.0f / (local_6 > local_7 ? local_6 : local_7);
-            real local_9 = function_217c41(local_2 * local_8 * 0.000030518509447574615f);
-            real local_10 = function_217c41(local_3 * local_8 * 0.000030518509447574615f);
+            real axis_scale = 1.0f / (local_6 > local_7 ? local_6 : local_7);
+            real local_9 = function_217c41(local_2 * axis_scale * 0.000030518509447574615f);
+            real local_10 = function_217c41(local_3 * axis_scale * 0.000030518509447574615f);
             real local_12 = (real)*(short *)((byte *)local_1 + 0x46);
             real local_11 = (real)*(short *)((byte *)local_1 + 0x44);
             double local_13 = atan2(local_12, local_11);
             real local_15 = (real)fabs(sin(local_13));
             real local_16 = (real)fabs(cos(local_13));
-            real local_17 = 1.0f / (local_15 > local_16 ? local_15 : local_16);
-            real local_18 = function_217c41(local_11 * local_17 * 0.000030518509447574615f);
-            real local_19 = function_217c41(local_12 * local_17 * 0.000030518509447574615f);
+            axis_scale = 1.0f / (local_15 > local_16 ? local_15 : local_16);
+            real local_18 = function_217c41(local_11 * axis_scale * 0.000030518509447574615f);
+            real local_19 = function_217c41(local_12 * axis_scale * 0.000030518509447574615f);
             for (long local_22 = 0; local_22 < 16; local_22++)
             {
                 long local_23 = (byte)local_20->button_map[local_22];

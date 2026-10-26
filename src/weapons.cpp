@@ -2806,6 +2806,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Four-byte frames regress; opening early-activity/final-maximum body restored at 398.
 // Trigger fields at use/table pointer/table field reference 398/422/398; selected magazine pointer 398;
 // with each trigger form 398/422/398; barrel array and direct maximum 423. All restored.
+// Actual trigger-scale/threshold/capacity field references, pair/all combinations and readonly activity
+// receivers 423/398/423/396/420/396/420/420. Original body and helpers restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
