@@ -138,6 +138,8 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 // Byte result first 150; Boolean early-success result 152; long result 135; independent type tests 170;
 // excluded-class exit 165; long result first 134 kept (plain).
 // Root output at entry 134; forward at entry 134; direct successful completion 185; machine arm first 134; CRT location publication 134; existing normal helper input values 55 kept (plain).
+// Word result 55; unsigned long result 55; signed char result 73; named location fields 65; invalid-cluster common exit
+// 55.
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
@@ -540,6 +542,8 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Tag-first declaration 293; explicit failure arms 309; word cluster 294; CRT velocity copy 293; owner value conditional 301.
 // Effect axis at entry 293; audibility output at entry 293; direct late tag flag 323 (frame 0x80);
 // readonly datum 293; CRT marker position 293.
+// Named location fields 293; failure-first common return 296; cases two/three/zero 296; entry marker-name workspace
+// 293; native flag0 view 293.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
