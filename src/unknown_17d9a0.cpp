@@ -548,6 +548,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // sign-products 748; angle-axis-products 805.
 // angle-sign-products 804; axis-sign-products 770.
 // angle-axis-sign-products 795; diagonal-axis-squares 800.
+// Round 180 alias-free scalar names: selected distances, candidate distances, endpoint distances, axis,
+// rotation, angle cosine, all distances, all scalars; scores 796/796/796/796/796/796/796/796 (fast); all
+// restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

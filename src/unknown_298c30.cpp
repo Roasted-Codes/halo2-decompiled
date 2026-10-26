@@ -307,6 +307,22 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // distance-products 749; rotation-normalization-products 749.
 // rotation-distance-products 749; normalization-distance-products 749.
 // rotation-normalization-distance-products 749; obstacle-rotation-products 749.
+// Round 141: Native point input, vector input and both 749/749/749; direct actor center 815;
+// point/vector/both native inputs with direct center 815 each; readonly actor with native inputs/direct
+// center 815. Frame 0x11c versus 0x114 and eager radius remain.
+// Round 141: Shared transform/index/both/trace/transform-trace/index-trace/all inline and transform
+// noinline 749 each (3383 with transform or index; otherwise 3372). The inline forms recover
+// branch-time radius loads but frame 0x11c remains. In that context: ordinary/after-actor/after-sector
+// result 778/778/814; state names 749; ordinary state names 778; positive sector/common exit/common
+// exit with names 762 each. All headers/providers/body restored.
+// Round 180 trace-clear states reverse/forward/center/both edges/reverse-center/forward-center/all/byte
+// center 802/802/778/754/771/764/782/778 (fast); all restored. Frame 0x11c/0x114, eager radius and
+// trace/pivot homes remain.
+// Round 185 obstacle-facing result bool/byte/short/long 749/749/775/777; complementary result
+// 749/749/775/777 (fast). All restored; frame 0x11c/0x114 and radius/trace/pivot homes remain.
+// Rotation publication xzy/yxz/yzx/zxy/zyx 749/749/748/749/748;
+// endpoint yx alone/with yxz rotation 811/811; normalized kij publication 749.
+// One-point forms rejected; original helper stores and body restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

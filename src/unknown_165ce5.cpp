@@ -1379,20 +1379,23 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 252 (was 252): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// score 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
-// score 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// frame 0x28 vs 0x2c and unit/mode/look homes remain.
 // Entry unit capture 252; const unit/primary weapon/weapon object/look receivers 252 each;
 // look interval capture 417; combined readers 252; readers plus interval 417 (fast base 252).
 // frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
-// score 250 (was 250): Frame 0x28 versus 0x2c and unit/mode/look homes remain.
+// Frame 0x28 versus 0x2c and unit/mode/look homes remain.
 // Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407; all
 // receivers/direct velocity 617/617 (fast preview 252).
 // frame 0x28/0x2c and unit/mode/look homes remain.
 // External user/unit/weapon records and user-unit pair 252 each; native dword
 // index/mode, callback at update, and unit-weapon-index combination 252 each (fast base 252).
+// Complete entry spring phase, override-only receiver, entry look outputs and both 250 each;
+// narrower aiming pair within that phase, with the same four storage combinations, 254 each
+// (fast control 250, full baseline 248). Original phase scopes and all five smoothing calls restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1785,6 +1788,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // byte-logical-query-eligibility 422; byte-compound-query-eligibility 430.
 // word-logical-query-eligibility 448; word-compound-query-eligibility 448.
 // long-logical-query-eligibility 451; long-compound-query-eligibility 446.
+// Native packed animation flags, logical result at bool/byte/word/long width 411/411/443/443; conditional result 446/446/442/443 (fast control 411/2166; full 410/2154). Frame 0x78 agrees; early blend byte and later receiver/sway homes remain.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

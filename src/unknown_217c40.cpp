@@ -108,6 +108,9 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // Native short coordinates 603; native long coordinates 551; quadrant through tests 555;
 // preference rereads 543; late preference/output bases 598.
 // Snap magnitude value parameter 541; snap axes by value 541; short four-controller ordinal 554; byte selected button 539; shared mapping index 541.
+// Separate rounded-angle double formal 541; paired clamps before stores 548;
+// reversed final axis stores 541 at retail length; double/paired, double/reversed,
+// paired/reversed, all three and native quadrant on all three 548/541/548/548/548.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {

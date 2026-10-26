@@ -214,52 +214,30 @@ bool function_01de20(long index)
 dword function_1d6f0(bool linear, bool alternate, dword format, long width, long height);
 long g_55e6c0;
 
-// score 29 (was 29): One-slot frame and late level loop agree; count/height homes and folded unsigned pitch/height packing remain.
-// incoming data, delayed saves, packed-size folding and level-header bias remain.
-// pitch/height packing is folded and height/count registers differ;
-// frame, incoming data, delayed saves and level-header bias now agree.
-// Earlier: Incoming data home, delayed saves and header bias still differ.
-// Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
-// Earlier: incoming data home, saved-register timing and level-header bias remain.
-// Shared primary header 161; walking level pointer 135; Boolean packed-word product 152;
-// byte-count expression in the level loop 115; delayed clamped-count publication 148.
-// Earlier: incoming data home, delayed saves and level-header bias remain.
-// Inline/noinline format declarations 115/115; published byte total 192; level/offset names 115;
-// size after format 190; named aligned width 115; element before size 123; linear size branches 174.
-// Data after/before primary format 155/155; primary common after format 161;
-// data/common after format 142 (both common-word forms lose matched callers);
-// primary format result 115; level parent/count before format 121/131;
-// data after primary format with early level parent 148. All publication forms restored.
-// incoming data home, delayed saves and level-header bias remain.
-// Earlier forms and observations:
-// Incoming data home, delayed saves and header bias still differ.
-// incoming data home, saved-register timing and level-header bias remain.
-// This round:
-// Unsigned offset/level/both 115/116/116; const byte count/output pointer 115/115;
-// paired/all reset chains 117/118; bounded level and paired chain 118.
-// native primary 115; native surfaces 115; native headers 115; typed kind 115; typed byte total 115;
-// primary/kind 115; primary/total 115; native headers and fields 115; stored packing inputs 115;
-// stored byte inputs 139; stored packing and bytes 139; stored dimensions throughout 151;
-// published data input 115; native published inputs 151.
-// retail keeps the size packing unfolded (shl/sub, lea/shr/shl/sub) where
-// /Og folds it ((h+0xfffff)<<12, (w<<20)&mask); height/count then take the other register.
-// Kept: the offset declared after the kind store (it reuses the data argument's home, so data
-// stays in EBP) 107, plus one result variable with the busy entry inside an if/else 40, plus
-// the level headers written in full (elements[i][k], retail's +4 bias) 33/29. Then: the clamp as
-// an if/else 168; packing from the stored fields 29; call from the stored fields 29; offset first
-// in the block 29; one packing expression 29; an explicit shift 121; a named level size 120;
-// offset before the entry 109; the whole function without global optimisation (diagnostic) 336.
-// Earlier forms (131/122/115): nested result 136; absent-data guard 156; common result exit 131;
-// level-index shift 122; role-named workspaces 136; shared primary header 161; walking level
-// pointer 135; Boolean packed-word product 152; byte-count expression in the level loop 115;
-// delayed clamped-count publication 148; inline/noinline format declarations 115/115; published
-// byte total 192; level/offset names 115; size after format 190; named aligned width 115;
-// element before size 123; linear size branches 174.
-// Clamped count before kind/after kind/between dimensions 103/103/99; early resource resets 38; data before dimensions 31; height before width 30; early linear flag/common word 44/31.
-// Packing accumulator pitch/width/height, height/pitch/width, height/width/pitch,
-// width/pitch/height, width/height/pitch 29 each; complete integer OR height/pitch/width,
-// width/height/pitch, pitch/width/height 29 each. Unsigned packing still folds.
-// Named byte pitch 87; all packing parts 29; height part first 29; all parts early 47; unsigned-int packing 29; shared clamped count 154; selected packed result 119; linear-only packing 145.
+// score 29 (was 29): frame, incoming data in EBP, delayed saves and the level loop agree; retail
+// keeps the size packing unfolded (lea/shr 6/shl 24/sub, shl 12/sub) where /Og folds it
+// ((w<<20)&mask, (h+0xfffff)<<12), and height/count then take each other's register.
+// Kept: the offset declared after the kind store (data stays in EBP) 107; one result variable
+// with the busy entry inside an if/else 40; the level headers written in full 33/29.
+// Tried (all reverted): pitch multiply 28; pitch and height multiplies 28; height multiply 29;
+// minus-one multiplies 97; negative addends 28; clamp as an if/else 168; packing or call from
+// the stored fields 29/29; offset first in the block 29; one packing expression 29; explicit
+// shift 121; named level size 120; offset before the entry 109; whole function without global
+// optimisation (diagnostic) 336; nested result 136; absent-data guard 156; common result exit
+// 131; level-index shift 122; role-named workspaces 136; shared primary header 161; walking
+// level pointer 135; Boolean packed-word product 152; byte count in the level loop 115; delayed
+// clamped-count publication 148; inline/noinline format declarations 115/115; published byte
+// total 192; level/offset names 115; size after format 190; named aligned width 115; element
+// before size 123; linear size branches 174; data after/before primary format 155/155; primary
+// common after format 161; data/common after format 142; primary format result 115; level
+// parent/count before format 121/131; unsigned offset/level/both 115/116/116; const byte
+// count/output pointer 115/115; paired/all reset chains 117/118; native parameter and field
+// types 115-151; clamped count before kind/after kind/between dimensions 103/103/99; early
+// resource resets 38; data before dimensions 31; height before width 30; early linear
+// flag/common word 44/31; every packing accumulator order and complete OR expression 29;
+// named byte pitch 87; all packing parts early 47; unsigned-int packing 29; shared clamped
+// count 154; selected packed result 119; linear-only packing 145. A compile-only screen folds
+// every shape of the packing (casts, 64-bit, helpers, multiplies) under /Og.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {

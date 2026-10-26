@@ -366,11 +366,17 @@ bool function_22acb4(long player_index);
 // Earlier 190 (was 190): second-mask spill and constant homes remain.
 // Fourth-mask code/side/flag-a/flag-b/flag-c observations once: 190/260/209/209/209;
 // all five/code plus flag-a/flag-b plus flag-c: 271/209/287. Second-mask spill remains.
+// second-mask spill and persistent constant homes remain.
 // Earlier 190 (was 190): second-mask spill and persistent constant homes remain.
 // Individual redundant clears removed: first16 284; second16 281; both16 290;
 // first2/4/8 286/286/290; first2+16 301; initial third128 249. All restored.
 // False-first total setters: first/second/third/fourth 190/190/248/207;
 // first-second/all 190/260. Clear-before-guarded-set second/all 259/340.
+// Round 364: Native enum/source-flags/first-bytes/fourth-bytes reads 190/190/190/190;
+// enum plus flags/first bytes 190/190; all scalar fields/all fields plus native items 190/190.
+// Round 366: Joint item/type-mask selection 298; mask-first stores 298; zero result 300;
+// initialized absent outputs 278; early first seed 298; signed third/native fourth/native second 316/308/285.
+// First/second enum observations once 292/284; flags at each use 190; both enum observations 284; first/second/both with live flags 292/284/284; unsigned-word enums with live flags 284. Extra second-mask spill and persistent constant homes remain.
 // Third-mask type order 132/213/231/312/321 190/273/165/251/190; item bits
 // 132 196; item bits 213 196; item bits 321 196. Keep type order 231, plain 165.
 // Round 331, retained third-type order 231: first-enum orders 248/284/428/482/842

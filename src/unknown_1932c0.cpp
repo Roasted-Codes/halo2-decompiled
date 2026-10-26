@@ -452,7 +452,7 @@ struct s_game_variants_file
 /* size before buffer: the order the arguments are set up in */
 PRIVATE inline bool file_write_sized(s_type_acf665 *file, dword size, void const *buffer)
 {
-	return function_136d00(file, buffer, size);
+	return function_136d00(file, size, buffer);
 }
 
 // @retail 0x193ff0

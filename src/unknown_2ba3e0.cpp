@@ -353,6 +353,8 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // rereads 324; shared previous-velocity scale 249; shared final speed scales 269.
 // Round 215: independent minimum/maximum/change limits 278/270/280;
 // independent minimum+maximum limits 274; minimum+change limits 264.
+// Nearest, delta, previous-velocity, requested-mask and cursor names 249 each; cache/cursor
+// declaration and cache initialization order 249; redundant cache reset removed 366.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

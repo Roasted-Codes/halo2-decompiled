@@ -3642,6 +3642,8 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 // actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;
 // native workspace names 115; chained message flags 115; peer result with chained flags 101; host
 // result at send 113.
+// Deferred-leave/announcement/both Boolean home names 101/101/101; byte/word host result 101/137;
+// byte/word leave result 101/130; reverse protocol-byte stores 101.
 // Guarded/nested/state-gated/conditional leave with the retained peer result 131/131/132/126;
 // those forms with the actual host-query result 148/148/151/143. Opening body restored.
 // complete native announcement construction 132 fast;
@@ -4331,7 +4333,11 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 384 (was 384): Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
+
+// score 370 (was 370): Aligned frame 0xd8 agrees; acceptance/identity/selection homes and acknowledgement placement remain.
+// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
+// Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
+// Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
 // Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
 // Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
@@ -4349,9 +4355,25 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // direct state observations 387; result after state 384. Frame/Boolean homes and block placement remain.
 // Word identity result 384; word preference/equality states 396/396; local member first 386;
 // selection flags after map updates 384; word reachability counts 383.
+// Negative identity predicate 396; signed-byte/unsigned raw identity result 384/384; direct
+// map/transition/peer fields 384/384/370; preferred-first processing 384; selection declaration
+// order 384.
 // Round 356: Byte acceptance 387; word acceptance 394; paired byte selection 384; complete version admission 410; admission with byte selection 410; isolated invalid-state/role/missing-selection exits 386 each.
 // Native received/stored/both map records 384/412/412; native input alone/with stored fields
 // 384/412; native output/both assignments 412/412; native records with identity equality 420.
+// Native identifier initialization/high-word-first construction 370/370; direct host-channel fields 376;
+// direct fields with high-word-first identifier 376; equality on direct-acknowledgement base 382;
+// equality with native identifier/high-word-first/both direct fields 382/382/383. Original body restored.
+// Round 225: On direct acknowledgement base, all returns raw/equality 395/408; identity-output returns
+// 374/386; completed-success returns 389/402; direct selection results 377/383. Acceptance/identity homes
+// remain.
+// Round 227: Newer preference from predicate 386; equality from predicate 363 (seven-point gain
+// dropped); both 385; tie preference from predicate 368 (two-point gain dropped); all three 380; single
+// long/byte/short selection status 396/404/394.
+// Round 227: Follow-up equality plus tie predicates 372; newer plus tie predicates 371. Neither
+// combination improves the original 370; original body restored.
+// Round 229: Signed-byte acceptance/preference/equality/paired selection/all results 401/370/370/370/401;
+// identity equality with signed-byte preference/equality/all results 382/382/392. Original body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4494,16 +4516,15 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
 acknowledge:
  {
   s_session_id id = *(s_session_id *)&session->unknown1c;
-  s_network_session_member_state *peer = &session->member_states[sender];
-  if (peer->flag1)
+  if (session->member_states[sender].flag1)
   {
-   if (session->observer->channels[peer->unknown04].state == 7)
-    network_observer_send_message(session->observer, session->value10, peer->unknown04, false, 18, sizeof(id), &id);
-   network_observer_send_message(session->observer, session->value10, peer->unknown04, true, 18, sizeof(id), &id);
+   if (session->observer->channels[session->member_states[sender].unknown04].state == 7)
+    network_observer_send_message(session->observer, session->value10, session->member_states[sender].unknown04, false, 18, sizeof(id), &id);
+   network_observer_send_message(session->observer, session->value10, session->member_states[sender].unknown04, true, 18, sizeof(id), &id);
   }
-  peer->unknown08 = NONE;
-  peer->unknown0c = NONE;
-  peer->flag3 = true;
+  session->member_states[sender].unknown08 = NONE;
+  session->member_states[sender].unknown0c = NONE;
+  session->member_states[sender].flag3 = true;
   if (session->state == 7)
    network_session_clear_peer(session, sender);
   result = true;

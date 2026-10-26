@@ -129,7 +129,7 @@ inline void function_xbb02d2(s_type_acf665 *file, const char *path)
 /* Bungie's argument order */
 inline bool function_xe8ca68(s_type_acf665 *file, dword size, const void *buffer)
 {
-	return function_136d00(file, buffer, size);
+	return function_136d00(file, size, buffer);
 }
 
 inline bool function_xab2909(s_type_acf665 *file, dword size, bool silent, void *buffer)

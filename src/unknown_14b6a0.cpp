@@ -132,6 +132,11 @@ void function_14bac0()
 // names/native recipient 257. Frame, iterator sharing and result homes remain.
 // Round 215: function-scope shared iterator 234; readiness declaration order 233;
 // scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
+// Shared marker query output/pointer-result/reference 332/332/332, each
+// with native recipient 321; native point result 303, with native recipient 280.
+// Forced output/pointer-result/reference 234/234/234, each with native recipient
+// 257; forced point result 269, with native recipient 302. Original restored;
+// query/recipient overlap, result-byte homes and frame 0x34/0x3c remain.
 // root slot 239; visit count 234; root slot visit 239; native root table 234; native root slot 239; native
 // root visit 234; native root slot visit 239; readonly scenario 234.
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
