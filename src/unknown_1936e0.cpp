@@ -150,7 +150,8 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 194 (was 229): frame 0x40c versus 0x408; string zero, cursor and
+// score 194 (was 194): frame 0x40c versus 0x408 and tag/language/string-cursor homes remain.
+// Earlier: frame 0x40c versus 0x408; string zero, cursor and
 // counter allocation remain. Shared output cursor 221; native array cursors 229;
 // independent string counters 221; direct countdown points copy 226;
 // shared cursor, independent counters and countdown copy 194.
@@ -159,9 +160,12 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // variant EBP); existing shared lookup 327.
 // Separate points input cursor 228; direct string countdowns 194; both 228;
 // independent countdown output cursors 228; shared remaining-string counter 228.
-// score 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
+// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Tried string workspace scope 211; masked list index 217; byte string counters 194; independent
 // score counters 194; score upper clamps 226; unsigned score counter 194.
+// Explicit language last/first 194/194; explicit-language ordinary inline 433;
+// original lookup/table/both ordinary inline 481/194/481; readonly language inputs 194;
+// native wide workspace 194. Original lookup helpers, contracts and body restored.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

@@ -231,7 +231,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): frame 0x30 versus 0x2c and inverse-depth/point homes
+// score 195 (was 195): frame 0x30 versus 0x2c and inverse-depth/point homes remain.
+// Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
 // remain. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
@@ -244,9 +245,12 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // frame 0x30 versus 0x2c and projected-point/factor homes differ;
 // role-named points 195; displaced transform first 250; orthographic defaults first 261;
 // shared point initializer 195; single result 280.
-// score 195 (was 195): frame 0x30 versus 0x2c remains; initial/reversed/both
+// Earlier: frame 0x30 versus 0x2c remains; initial/reversed/both
 // component loops 195/195/195; forced existing transform with no/initial/reversed/
 // both loops 195/195/195/195; component loops with displaced storage reused 195.
+// Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
+// 423/376/529/359/538/536/718; all with local inline declaration 718.
+// All nonexact shared-transform forms restored, including their floating sum order; no external change remains.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
