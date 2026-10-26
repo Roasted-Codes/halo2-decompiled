@@ -1709,7 +1709,8 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 	return function_26a780(clump, &candidate);
 }
 
-// score 128 (was 192): frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
+// score 128 (was 128): retail caches the generation in ebx (reloaded after each mark store and call) and reloads the prop pool at each use; ours caches the prop pool in ebx and loads the generation at each use.
+// frame 0xd8; entry generation scheduling, child-next register and count/end traversal differ; fresh destination head 171f; short plus fresh head 167 plain; short/end 216f; typed object views 192f; delayed source base 219f; source first 211f; masked slots 198f.
 // Round 280: remaining-count traversal 128 plain; current-child handle 164; collection write cursor 172; array scope 167; early active flag 199.
 // Child/countdown 125; short remaining 125; unsigned remaining 125 (each only three below the retained countdown).
 // Frame pointer 198; depth zero 313; later generation increment 130; native source slot 175; size preference 360; first-walk generation snapshot 178.
@@ -1718,6 +1719,9 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // Entry group helper 128; fresh-head group helper 128; native prop field 128;
 // prop handle at use 128; child extension at use 128; owner extension at use 130;
 // native entry slots 219; direct populated-array index 160.
+// Round 69: existing inline datum lookup in the collected pass 288 (generation then cached as retail, but the
+// object query inlines there); short/long index loops 161/160; child next into the walking index 165;
+// child next with an else arm 167.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1829,13 +1833,17 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
-// score 134 (was 134): frame 0x38 versus 0x3c; pool/selection homes and threaded exhaustion differ.
-// Retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133; size preference 338.
-// frame 0x38 versus 0x3c; pool register and common null-current join differ.
-// Double candidate/both scores 157/158; activity while 160; role-based scalar names 134; inline depth two 134.
-// score 126 (was 134): the clump datum walk with a cached activity flag gives retail's frame;
-// retail keeps the pool in ebx through the scan and the selection only on the stack.
-// Selection stored before the best score 126.
+// score 126 (was 126): retail hoists the walk's pool load into ebx and keeps the selection
+// only on the stack (stored from esi, best stored in a tail shared with the initialisation);
+// ours keeps the pool in memory and the selection in edi.
+// Earlier: retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133;
+// size preference 338; double candidate/both scores 157/158; activity while 160; role-based scalar
+// names 134; inline depth two 134; the clump datum walk with a cached activity flag 126 (retail's frame);
+// selection stored before the best score 126; selection from the iterator's datum index 128 (selection
+// on the stack and pool hoisted, but the null-current join is threaded); creation arm first 130;
+// walk declared after the selection locals 129; actor index local 126; early continue on a
+// non-improving score 128; declaration orders, scopes, cached or global activity flag, team test as
+// continue or nested if, and inline/forceinline walk helpers all compile identically.
 // @retail 0x2689d0
 void function_2689d0(void)
 {
