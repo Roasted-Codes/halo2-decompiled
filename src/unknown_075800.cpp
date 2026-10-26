@@ -1018,6 +1018,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // all 191 fast, tying preview; no declaration or handler-body change retained.
 // Dispatcher inline/noinline/forceinline/inline-outofline declarations all 191 fast, tying reduced control 191;
 // direct orders 0,2,4,3 / 0,3,2,4 / 0,3,4,2 / 2,0,3,4 give 193/193/194/196 fast.
+// One-root family orders connection/peer/query/session and connection/peer/session/query
+// 204/205; session/connection/query/peer 207; session/query/peer/connection,
+// session/peer/query/connection and session/peer/connection/query 220/220/220;
+// peer/connection/query/session and peer/connection/session/query 206/207. All restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

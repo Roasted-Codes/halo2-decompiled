@@ -96,6 +96,9 @@ public:
 // override-receiver-head-link 215; tail-link 215.
 // override-receiver-tail-link 215; head-link-tail-link 215.
 // override-receiver-head-link-tail-link 215; links-before-index-helper 215.
+// Getter inline/noinline/inline-noinline/force-inline declarations 215/215/215/397;
+// child updater inline/noinline/inline-noinline/force-inline declarations 215 each.
+// Getter force-inline grows to 875 bytes and loses the child match; all declarations restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
