@@ -649,6 +649,9 @@ void c_network_reliable_stream::mark_received(long sequence)
 // original flag type alone/with time 113/143; native type byte with time 142; direct publication/time 143.
 // Read-only first message, fixed first/loop/both pointers, live original flags, live flags with fixed pointers, immutable flag stages and retained-value names all 7.
 // Full-width original signed/unsigned 8/8; both signed/unsigned 9/8; separate flag copy/update 7; one word/dword flags value 68/69; named repeated predicate 7.
+// Default previous 17; reversed message guard 38; in-place previous 7; early message declaration/
+// previous before message 7/7; reset before/after lookup 39/138; reversed fallback order 10;
+// default type 82; field/direct publication 70/70.
 // @retail 0x96910
 long c_network_reliable_stream::function_96910(long sequence, long bit_count, dword const *bits, bool complete)
 {
