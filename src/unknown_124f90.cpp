@@ -1470,6 +1470,9 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
+// score 46 (was 46): playback/tag scheduling and full-width return tails remain; shared playback base
+// 46; base with retained other tag 44; success-live result 44; storage/tag/result 44; distance result
+// 88; class-field reads 74; class/storage/tag 73; class/success result 78.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
@@ -3000,6 +3003,9 @@ struct s_animation_ref;
 void function_219310(s_animation_state *state, s_animation_ref *ref, short value);
 long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 
+// score 86 (was 86): playback base/clock scheduling and promoted mode remain; acquisition/free/load
+// inline combinations and stdcall acquisition 86 each; declared mode/flags/both 86 each; shared datum
+// iterator 196.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3258,17 +3264,20 @@ void function_125d60(void)
 
 void __stdcall function_1264c0(dword arg_0);
 
-// score 102 (was 139): shared invalid register, fade-store schedule and signed-tick/wait code differ.
+// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain; coordinated
+// reconstruction inline/forced 123/123; search inline 87; reconstruction/search 123;
+// reconstruction/fade 123; search/fade 87; all inline 123; forced reconstruction/fade 123.
+// Earlier: shared invalid register, fade-store schedule and signed-tick/wait code differ.
 // Boolean datum iterator 134; existing datum reconstruction 102; inline absolute search 139;
 // pool reads at use 139; retained playback base 137; cleanup exit 139; native flags 139; direct impulse members 139.
 // Shared invalid register and timer conversion remain; availability call 139, chained resets 139, array fill 140, unsigned handle 139, outer deadline 139.
-// score 87 (was 102): reconstruction calls, clock conversion and wait layout remain;
+// Earlier: reconstruction calls, clock conversion and wait layout remain;
 // reconstruction force/plain inline 102/102; with shared fade 87 plain; with flag/gain/deadline/reset
 // 102/102/102/102 fast; ordinary inline plus fade 107 fast; shared fade without declaration 87 plain.
-// score 87 (was 87): early EDI save, reconstruction calls and signed-clock wait remain;
+// Earlier: early EDI save, reconstruction calls and signed-clock wait remain;
 // shared inline reconstruction both/first/next 123/120/108; calling iterator with fade 101;
 // expanded tick names/lexical homes/wait/fill 123/123/123/124.
-// score 87 (was 87): reconstruction expansion and signed-clock wait remain; shared fade with
+// Earlier: reconstruction expansion and signed-clock wait remain; shared fade with
 // native/full-inline/Boolean iterators 113/112/118; native integer tick 113; iterator workspace
 // before clock inline/Boolean 111/118; early real tick native/inline 113/113.
 // @retail 0x1257b0

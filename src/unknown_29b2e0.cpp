@@ -73,14 +73,17 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
     arg_3->k = local_6;
 }
 
-// score 389 (was 393): frame 0x2c and length agree; early J load and magnitude/angle homes differ; K first 389, shared axis cross 409, magnitude return 406, global optimization off 2150, float consistency 656, K first plus return 399.
+// score 389 (was 389): early J preload and magnitude/yaw home remain; indexed long/short normalization
+// loops 417/421; pointer loop 423; loop common result 423; real absolute first/both 399/395; loop with
+// real absolute first/both 421/416.
+// Earlier: frame 0x2c and length agree; early J load and magnitude/angle homes differ; K first 389, shared axis cross 409, magnitude return 406, global optimization off 2150, float consistency 656, K first plus return 399.
 // scalar XY inputs 401 (sibling 10); epsilon failure first 398; geometry before trig 398;
 // ordinary inline 389; single dot clamp 396. Early J and scalar homes still differ.
 // J snapshot 395; I/J snapshots 392; axis by value 502; destination first 389; XY common result 389.
 // real sine/cosine/pair 395/395/389; real yaw inverse cosine 401; shared
 // weighted axis/cross/both/input vectors 431/427/420/423; all restored;
 // matched sibling and both matched callees preserved throughout.
-// score 389 (was 389): frame 0x2c agrees; early J load and magnitude/angle homes still differ.
+// Earlier: frame 0x2c agrees; early J load and magnitude/angle homes still differ.
 // Complete input for length 497; input for normalization 496; point input 419; both inputs 513;
 // immutable one/both magnitudes 389/389; earlier length publication 396; immutable rotation outputs 389.
 // Widened first/point/both numeric returns 407/410/412; widened optional
@@ -88,7 +91,7 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // independent normalization order 411, with widened output 415 (control 389).
 // First-return widening loses the matched sibling to 45; all helper contracts
 // and normalization order restored. Early J and magnitude/yaw homes remain.
-// score 389 (was 389): early J preload and shared magnitude/yaw home remain. Fast trials: vector
+// Earlier: early J preload and shared magnitude/yaw home remain. Fast trials: vector
 // input/output split 389; first external vector input 441; second external vector input 410; both
 // external vector inputs 452; point input/output split 389; both normalizer splits 389; both splits
 // and first external input 441; both splits and both external inputs 452. All restored.

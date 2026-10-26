@@ -337,7 +337,10 @@ struct s_unit_state_0f
 
 static __forceinline long real_to_long(real value);
 
-// score 49 (was 79): Frame agrees; actor/index ECX/EDX and final call setup differ.
+// score 49 (was 49): actor/index ECX/EDX and final setup remain; existing state query
+// ordinary/inline/forced 138 each; query with long timer 143; timer/mode 143; mode 137; readonly actor
+// 138; readonly records 138.
+// Earlier: Frame agrees; actor/index ECX/EDX and final call setup differ.
 // Earlier: the argument is read into ECX and the other value into EDX; retail reads them
 // in the opposite order.
 // Earlier: ecx and edx are swapped through the whole body (retail: index edx, actor ecx);
