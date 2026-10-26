@@ -12,6 +12,10 @@ struct s_1badc0
 
 real normalize2d(point2f *arg_0);
 
+// score 277 (was 277): Output EBX/EBP, point/vector homes and SSE scheduling remain.
+// No output self-address access 295; copied input/native object/both 281/295/281;
+// shared collision storage alone/with input/object/both 295/282/295/282;
+// copied input with entry/after-actor common result 287/287.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

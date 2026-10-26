@@ -94,6 +94,7 @@ public:
 // override-receiver-head-link 215; tail-link 215.
 // override-receiver-tail-link 215; head-link-tail-link 215.
 // override-receiver-head-link-tail-link 215; links-before-index-helper 215.
+// Activation bool/byte/long/inverse carriers 215/215/229/231; the same carriers with position-boundary publication 252/252/251/231. Frame 0x10/0x14 and activation/metadata/viewer/child homes remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
