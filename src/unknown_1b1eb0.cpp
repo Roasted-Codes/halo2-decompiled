@@ -189,7 +189,7 @@ struct s_slot_05_data
     byte unknown0c[0x34 - 0xc];
 };
 
-// score 91 (was 105): saved scalar homes and cold reference joins remain; early slot ESI now agrees.
+// score 91 (was 91): saved scalar homes and cold reference joins remain; early slot ESI now agrees.
 // Earlier: slot load, actor/permission/index/scratch homes and cold reference arms still differ.
 // Early invalid copy 168; early mode copy 140; both copies 140 (nonmatches dropped);
 // unsigned actor handle 168; byte permission 195; reference receiver order 170;
@@ -235,6 +235,9 @@ struct s_slot_05_data
 // Round 183 retail-timed scratch after request fields 91; positive permission short/long/signed-byte/byte
 // 180/180/185/185; timing with branch reference/early selection output/default helper 117/113/91
 // (fast). Keep only scratch timing; scalar homes and cold reference joins remain.
+// Round 186 on native payload/late scratch: common release 151; flag before acquisition 95;
+// both 152; late output handle 112; release/handle 108; flag/handle 112; all three 109;
+// declared request byte 91; conditional reference with selection result 151, with common release 128.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
