@@ -675,6 +675,9 @@ long function_1469f0(real seconds);
 // Shared state displacement late/early/direct flags/with native difficulty 347/353/347/359 fast;
 // entry selected/shared transition/entry descriptor workspaces 280/280/280; native difficulty 286.
 // Unchanged fast control 280 versus plain 279; all executable forms restored.
+// Selected workspace orders entry/current/transition 285, current/entry/transition 287,
+// transition/current/entry 280, entry/transition/current 285, transition/entry/current 280;
+// promoted slot alone/with entry-first 291/296; final post-tested scan 280 (fast control 280). All restored.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {

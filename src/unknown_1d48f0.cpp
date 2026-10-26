@@ -60,6 +60,8 @@ const dword g_455978[81] = {
 // complete native endpoint value 403; paired bounds-axis producer 466. All restored.
 // Complete candidate/blend/both product phases 350/350/350; both radial square terms 391;
 // radial terms with candidate/all phases 391/391; six-use bounds origin 492, with candidate products 492. All restored.
+// Complete lower/upper/both bound selections 413/466/484; complete horizontal square 350;
+// bounds plus square 484; callback ending before cleanup 350; bounds/callback 484; square/callback 350. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
