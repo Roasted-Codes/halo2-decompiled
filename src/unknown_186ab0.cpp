@@ -149,9 +149,9 @@ long function_155760(long arg_0);
 void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
-// score 279 (was 279): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
+// score 279 (was 323): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
 #pragma inline_depth(0)
-// score 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
+// Earlier 279 from 323: frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
 // Native request bit/all request fields 323/323; native clear fields 387; direct held-state output 323, with request bit 323; native reset bit 323; request/clear fields 387; all fields/state output 381.
@@ -166,6 +166,8 @@ void player_action_initialize(s_player_action *arg_0);
 // Packed source/destination/both selection words 279/279/279; selection memcpy 279;
 // native destination plus final word copy 279; both native words plus final copy 279;
 // native three-word source/output fields 279; native fields with packed selection words 279.
+// Output angle/vector/scalar pair library copies, each pairwise combination
+// and all three pairs 279 each; angle pair plus complete four-float control copy 314.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {

@@ -71,6 +71,9 @@ bool function_b9d20(long arg_0);
 // pool/datum names 106; ordinary named carriers 131; ordinary scoped datum 131;
 // ordinary named current consumer 131. The dead parameter address statement compiled
 // identically and was dropped.
+// Coupled occupancy while 117; high-water per use 94; bitmap per use 94;
+// coupled/high-water 133; coupled/bitmap 117; both fields per use 94;
+// coupled/both fields 133; iterator ordinal published before datum 94.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
 {
