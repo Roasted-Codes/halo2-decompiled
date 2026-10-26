@@ -120,6 +120,7 @@ void function_1a6340(vector3f const *b, vector3f const *a, point3f *out, point3f
 
 // score 32 (was 32): the arguments are pushed in a different order and one of the values is passed
 // in a register here and on the stack in retail.
+// Object-second/third interfaces 32/32; unsigned object index 32; original interface restored.
 // @retail 0x1a62e0
 bool function_1a62e0(long object_index, point3f const *origin, vector3f const *direction, point3f *out)
 {
@@ -1676,6 +1677,9 @@ struct s_candidate_unit_definition
 // Query noinline 11; combined rejection/acceptance 18 each; output/marker references 11 each;
 // named type mask 11; result after initialization 16; direction producer home 196;
 // unconditional successful tail 11. Experimental declaration and receiver aliases restored.
+// Object-second/third query interfaces 12/13; twice-used query index 11;
+// read-only object view/pointer/index 11/11/11; unsigned query index 11;
+// candidate-index query 11. Original interfaces and values restored.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,

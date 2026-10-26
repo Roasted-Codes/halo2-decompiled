@@ -1020,6 +1020,10 @@ void function_1ced00(s_havok_component *component);
 // Countdown common/separate/paired result exits 27/28/28; reused countdown predicate 43;
 // countdown activity accumulation 41; one done exit 27; positive call contributions 148;
 // positive contributions with countdown result 145. Original body retained.
+// Round 34: both activity exits returning active 1; one fallthrough activity return or an explicit
+// done join 123 each; countdown assignment-return with one activity return 123; inactive result
+// ORed with the awake bit, logically or bitwise, 1 each; inactive result ANDed with that bit 1;
+// double-negated inactive result 1.
 // @retail 0xbc470
 bool __stdcall function_bc470(long object_index)
 {

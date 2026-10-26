@@ -1411,6 +1411,9 @@ void function_170630(long player_index);
 // scalar channel addresses 7; timer cursor after delta 11; countdown for 7;
 // inline/noinline delta declarations 7/7; noinline update declaration 7;
 // shifted command bit 33; branch timer stores 27.
+// Single current/previous/delta pointers 7/7/7; direct observer array 36;
+// scoped state/time 18; command flags snapshot 7; countdown entry/before delta/split 7/7/7;
+// fixed base pointers 7.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {

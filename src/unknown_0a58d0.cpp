@@ -316,6 +316,9 @@ bool function_a9820(long *block, long index)
 	return result;
 }
 
+// score 11 (was 11): the database pointer takes ECX, so the active byte cannot fold into the scaled address.
+// Early definitions 31; direct dispatch 13; const record 11; record reference 11; separate index mask 11;
+// short type 22; definitions first 13; definition local 13; function-scope database 11; function-scope type 11.
 // @retail 0xa99f0
 void function_a99f0(long index, long *block)
 {
@@ -866,6 +869,10 @@ PRIVATE inline bool z_state_real_valid(real value)
 // a long mask local 45; without the stream self-reference 9.
 // Native tail fields/word array/full state/full state array/tail reference 9 each;
 // native tail/full-state mask loops 53/53; native-state count reference 44.
+// First/two decoded-word locals 9/9; count reference 13; word count 36; word-array
+// destination 8 (first store fixed); byte count plus array 6 (ESI); first-count split/guard
+// 8/8; remaining-bits bound 9; two-value loop 31; short/implicit word arrays 8/8;
+// named bound inputs 8.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {
