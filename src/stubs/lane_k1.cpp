@@ -238,13 +238,6 @@ void class_3193c0::function_319740(unsigned long value)
 
 // Havok round 23: callees of the functions this round writes
 
-// the C++ library's string length, out of line
-// @stub 0x2d8d80
-unsigned int __cdecl string_length_2d8d80(char const *string)
-{
-	return 0;
-}
-
 // orders each pair by the second words of its two objects, then the pairs
 // @stub 0x372b50
 void __cdecl function_372b50(pair_30d870 *pairs, long count)
