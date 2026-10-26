@@ -493,6 +493,8 @@ void function_1537f0(s_profile_record *record);
 // link fill with outer source/lexical source/unsigned ordinal/NONE byte 67/67/87/67.
 // Complete zero suffix at field44/field40/field48/unknown50 67/67/67/67;
 // suffixes at field70/field74/field78 give 99/89/83; whole source suffix 125. Frame remains 0x90.
+// Native header zero fields 40/44/40+44/48/40+48/44+48/all 74/90/87/67/74/90/87;
+// complete sixteen-byte header fill 154; source/identity homes remain unchanged.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -611,6 +613,8 @@ bool function_7fb50(void)
 // element with long ordinal/packed values/both 92/90/92; word ordinal 90.
 // Two-use selected buffer 90; with record/property/both capacity deltas 120/135/129;
 // with word record/property/both totals 91/91/94; with native scalar ordinal 92.
+// Record header property-first/reverse/remaining orders 90 each (five forms);
+// name-property buffer-first/type-first/rotated stores 90 each (three forms).
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
