@@ -1053,6 +1053,10 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // Bitfield store with the NONE reset 108; branch store 119; ternary store 119.
 // Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
 // each; conditional orientation success 112; short activity 168.
+// Squared length in i, j, k order, through the shared squared-length or dot helper 94 each;
+// a vector3f field at 0x138 of the output read directly 92 (retail's k, j, i loads); with a
+// word force result 14 (the rest is the force push and the MOV/LEA order). Named output, up and
+// forward pointers 94/92 with the field.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {
