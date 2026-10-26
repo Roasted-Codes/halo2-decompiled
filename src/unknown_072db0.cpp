@@ -1354,6 +1354,9 @@ struct s_rating_summary
 // Summary count/lookup/formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three 316. Full-width character retained at 1167/1212 after plain whole-image confirmation.
 // Player-change/rating/group-add/group-set inline and noinline call declarations 202 each
 // (eight forms); all declarations restored; key/statistic homes and cursor remain.
+// Signed full-width character 203; entry query-table workspace 202; test-derived translated
+// character 264; signed character plus query workspace 203; signed/entry/both with
+// translation 264/264/264; entry name-capacity workspace 202 (fast). All restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

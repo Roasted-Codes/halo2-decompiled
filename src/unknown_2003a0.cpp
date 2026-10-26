@@ -1131,7 +1131,7 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
-// score 31 (was 43): frame and first two passes agree. In the third and fourth passes retail loads the
+// score 31 (was 31): frame and first two passes agree. In the third and fourth passes retail loads the
 // parent field into ECX through [eax+edx+offset] and still forms the record pointer (add eax,edx) before
 // the compare, then copies the value to EAX; ours forms the pointer first and loads through it into EAX.
 // Tried: const current group 43; unsigned squad parent 43; unsigned group parent 63; unsigned sibling 43;
@@ -1146,6 +1146,9 @@ struct s_squad_tree_definition
 // parent index 60 (as an assignment in the condition 60).
 // Native group/squad parent-field references 37/31; child-head reference 34; group+squad 37;
 // group+head 37, squad+head 34, all three 37; append inline declaration 31. All restored.
+// Native parent field 31; shared squad-data base 118; nonempty list arm first 59;
+// native field plus data/arm 118/59; data plus arm 127; all three 127;
+// definition observed at every use 31 (fast). Opening body and record type restored.
 // @retail 0x2009d0
 void function_2009d0(void)
 {
