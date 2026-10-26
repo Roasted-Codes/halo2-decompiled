@@ -1598,6 +1598,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Round 112: Long visible 683 (one-point gain dropped); long positive 710; long close 727; long
 // very-close 699; combined state/view guard 705; ordinary actor input in all.
 // Round 150: wide maximum 739; long queried level 684; both 739; sentinel declaration order 684; shared relative difference 692; nested maximum guards 684; direct proximity result 711; wide maximum with sentinel order 739 (calibrated fast).
+// Native cursor/selection/all datum handles 684/684/684; existing prop receiver 707;
+// single strength observation 685; all handles with prop/strength/both 707/685/732.
+// Original complete body and all inherited input/helper declarations restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

@@ -838,6 +838,8 @@ public:
 // Original entry result, ordinary pooled flags and all child calls restored.
 // Flag-stage long result/native bitfield transfer/direct visibility and combinations
 // 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
+// Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
+// canonical results 374/374/308/375 on the recovered frame. Original body restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

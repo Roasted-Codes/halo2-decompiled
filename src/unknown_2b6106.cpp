@@ -658,7 +658,7 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
     widget->function_22f52e()->set_text(text);
 }
 
-// score 573 (was 577): frame 0x85c agrees; EBP bias and flag/time/state
+// score 573 (was 573): frame 0x85c agrees; EBP bias and flag/time/state homes differ.
 // Frame 0x85c agrees; EBP bias and flags/time/state homes remain. Guard-owned state
 // 576; session before elapsed test 578; word team scan 574 (three-point gain rejected); conditional
 // maxima 577; shared state formatting 717.
@@ -676,6 +676,8 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // activity at uses 573 kept; native ages 577; native flag byte 630; combined native observations 574.
 // Entry-owned formatting 605; with key 605, activity 601, both 601; original formatting restored.
 // EBP bias and initial flags/timestamp homes remain; original frame, loops and all call arguments retained.
+// State/count/both at every use 572/594/594; flags/truth/row/all scalar role names
+// 573/573/573/573; all observations with role names 594. Original body restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

@@ -601,7 +601,7 @@ void obstacle_list_group(s_obstacle_list *obstacles, real radius);
 
 bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center, long object_index, real radius);
 
-// score 735 (was 742): frame 0x1f8c versus 0x1f88; result/path pointer and obstacle/search/step homes differ.
+// score 711 (was 735): frame 0x1f88 agrees; result/path pointer and obstacle/search/step homes differ.
 // Short/signed byte result 740/788; long/byte inserted count 730/741; word flags 742.
 // Long inserted count has retail frame but 2965 bytes; native reverse index 770/2925 bytes; original length preserved.
 // Round 121: Byte last-step predicate 735 kept; insertion-only/all avoidance storage scopes 742/763; Boolean enable bit 740; word retry 740; bit plus retry 742; byte-last plus bit/retry/both 735/737/734. Extra one-point combination rejected.
@@ -610,6 +610,10 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Original complete body and existing insertion helper call restored.
 // Late constant success 771; early completion observation 740; unsigned-word input ordinal 775;
 // word truncation result 754; unsigned-word inserted count 742 (fast). Two-point gain rejected.
+// Settings mask/cache/both at uses 735/736/736; all five forward obstacle indices 711;
+// byte truncation 735; mask with indices 711; cache with indices 719; all observations/indices/byte 719.
+// Native index in obstacle-transform/blocking-transform/retry/failure/ignored loops alone
+// 735/756/723/735/735. Uniform native forward indices selected; reverse/output/step indices unchanged.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,
@@ -702,7 +706,7 @@ bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short cou
    *(short *)blocking.unknown08 = 0;
    function_2c0d60(actor ? &previous_direction : NULL, actor_index, (byte)flags, &state->settings,
     obstacles, &blocking, &world_start, maximum_height, &direction, state->source.object_index, state->source.unknown0c);
-   for (short i = 0; i < obstacles->count; ++i)
+   for (long i = 0; i < obstacles->count; ++i)
    {
     point3f transformed;
     transformed.x = obstacles->obstacles[i].center.x;
@@ -712,7 +716,7 @@ bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short cou
     obstacles->obstacles[i].center.x = transformed.x;
     obstacles->obstacles[i].center.y = transformed.y;
    }
-   for (short i = 0; i < blocking.count; ++i)
+   for (long i = 0; i < blocking.count; ++i)
    {
     point3f transformed;
     transformed.x = blocking.obstacles[i].center.x;
@@ -752,7 +756,7 @@ bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short cou
       retry = retry || (obstacles->flag3_count > 0 && search->result != NONE);
       if (retry)
       {
-       for (short i = 0; i < obstacles->count; ++i)
+       for (long i = 0; i < obstacles->count; ++i)
        {
         s_obstacle *entry = &obstacles->obstacles[i];
         if (entry->group == search->result && (entry->flags & 8)) entry->flags |= 1;
@@ -771,7 +775,7 @@ bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short cou
       input->node_index, last, true))
      {
       if (step == count - 1 && flag)
-       for (short i = 0; i < obstacles->count; ++i) if (obstacles->obstacles[i].flags & 2) *flag = true;
+       for (long i = 0; i < obstacles->count; ++i) if (obstacles->obstacles[i].flags & 2) *flag = true;
       result = false; goto done;
      }
     }
@@ -815,7 +819,7 @@ bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short cou
    {
     if (ignored != NONE)
     {
-     for (short i = 0; i < obstacles->count; ++i)
+     for (long i = 0; i < obstacles->count; ++i)
      {
       s_obstacle *entry = &obstacles->obstacles[i];
       if (entry->group != ignored) continue;
