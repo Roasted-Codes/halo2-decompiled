@@ -37,6 +37,8 @@ struct s_emitter_248340
 // descriptive group and system names 4;
 // descriptive query and group names 4;
 // all three descriptive stack candidate names 4;
+// Direct nested queries 27; split tag assignment 4; split tag with direct group 8;
+// split group assignment 4; both assignments split 4; outer callee inline/noinline/both 4/4/4.
 // @retail 0x248340
 void function_248340(s_particle_system_datum *system, s_object_246eb0 *particle,
 	s_emitter_248340 *emitter)

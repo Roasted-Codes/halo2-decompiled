@@ -95,6 +95,8 @@ bool cache_header_verify(s_cache_header const *header);
 // Fast: empty path value 82; normalizer-owned path 54; initialized read count 33;
 // success before read 16; result in each outcome 60; immutable handle 4;
 // file-path observation 4; native read result 4.
+// Path helper inline, noinline and both 4/4/4; scoped path value 4; open sequencing 4;
+// open-condition assignment 4; handle before the call and before the path 4/4.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {
