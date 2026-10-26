@@ -71,8 +71,7 @@ public:
 };
 void c_278370::function_a9ef0(void *arg_0) {}
 
-// @stub 0x2d8890
-void __cdecl function_2d8890() {}
+
 
 class c_library_30c470
 {
