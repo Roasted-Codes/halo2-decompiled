@@ -120,6 +120,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
 // ordinal 223; wide optional index 214; wide composite mask 192; word cursor
 // before packed mask 154. One-point reduction rejected; original body retained.
+// Entry count/selection/word-row offset lifetimes 156/154/154; count-selection/count-word/selection-word/all 156/156/156/156;
+// all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

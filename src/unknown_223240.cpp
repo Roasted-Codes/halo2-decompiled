@@ -111,6 +111,9 @@ void function_2232a0(void)
 // wide source count 138; wide count result 215; wide layout 174;
 // wide selected slot 227; wide output ordinal 195; unsigned byte layout 189;
 // unsigned native layout 151; immutable native source count 151. Wide source count worsens aligned rows.
+// Contiguous eight-byte sentinel fill 152; fill with native rectangle value/library rectangle copies 152/152;
+// fill with existing slot predicate alone/rectangle value/copies 151/151/151; fill with plain pretest 170; all 178.
+// Every sentinel-fill form also loses the matched initializer caller in the reduced image; all restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
