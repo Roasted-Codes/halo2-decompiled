@@ -874,7 +874,10 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
 // Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
 // general distance result 614; masked final gravity word 634.
-// score 614 (was 614): frame 0x34 versus 0x30; direct-mode carrier and vector homes remain.
+// score 614 (was 614): frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
+// direct gravity 618; ordinary local output stores 634; native direct damping gravity 615; native direct
+// gravity damping 615; history time snapshot 614; ground vertical value 614; ground vector arm first 629.
+// frame 0x34 versus 0x30; direct-mode carrier and vector homes remain.
 // Basis capture on current join 631; desired/delta scope 614; scale/subtract value helpers 681;
 // later history maximum 614; shared lateral workspace 616.
 // score 614 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope

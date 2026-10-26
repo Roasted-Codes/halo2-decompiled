@@ -152,6 +152,10 @@ static __forceinline long float_to_int_nearest(real value)
 // priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
 // base-first flags 178 (caller losses), role names 182, source snapshot 178,
 // object snapshot 183, priority after flags 192.
+// score 167 (was 182): frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
+// Conditional flags then priority 187; deferred flags publication 176; location first with copied
+// audible priority 167 kept (full); location memcpy 182; conditional end-time publications 175.
+// Outer state scope 167; early optional-size default 164 (below threshold); size before marker copy 167; nested class tests 167; platform-flags block first 167; opening 167 restored.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -161,8 +165,9 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 	{
 		s_sound_play_tag *sound = (s_sound_play_tag *)g_4e3b44[tag_index & 0xffff].bytes;
 		s_sound_play_state state;
+		state.location = request->location;
 		// Retail also clears the padding after the priority field.
-		*(long *)&state.priority = request->location.audible ? 3 : 1;
+		*(long *)&state.priority = state.location.audible ? 3 : 1;
 		dword flags = (request->source ? 0x20 : 0) + 5;
 
 		if (request->object_index != NONE)
@@ -182,7 +187,6 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 			flags &= ~0x100;
 		}
 		state.flags = flags;
-		state.location = request->location;
 		state.object_index = request->object_index;
 		state.source = request->source;
 		state.platform_playback = request->platform_playback;
@@ -523,6 +527,12 @@ long function_1891d0(long object_index, long marker_name, s_sound_label_play con
 // score 51 (was 51): frame agrees; saved registers, root-location contract and stacked play differ.
 // Plain workspace order 51; workspace names 51; zero initialization 99; aggregate construction 64;
 // native point copy 51; compression first 52; velocity first 49; separate location output 73.
+// score 51 (was 51): root-location convention still adds saves and stacks the play pointer.
+// Shared point setter 63; native velocity copy 51; both 63; marker scope 51;
+// late playback record 69; pre-query playback record 64; root before velocity/compression 52/52.
+// score 51 (was 51): root-location registers and stacked playback input remain.
+// Entry/post-marker playback records 82/63; entry tag/scale/both 64/64/54;
+// root before marker/point 60/52; entry record with root first 82.
 // @retail 0x189210
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play)
 {

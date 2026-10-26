@@ -519,7 +519,10 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // score 68 (was 68): Frame and nullable-current lifetime remain; current datum 68;
 // success-controlled loop 68; selected datum 132; node/prop inline 68/68; forced node/prop
 // expansion 246/158; datum plus success loop 68.
-// score 68 (was 68): frame 0x1c/0x20, first team sign extension and nullable current remain.
+// score 68 (was 68): frame, first team extension and nullable-current EDI lifetime remain;
+// native clean success 102; optimistic result 113; initial success return 135; found success return 147;
+// returned current pointer 68; existing record step 122; inline record step 119; entry side scope 68.
+// frame 0x1c/0x20, first team sign extension and nullable current remain.
 // Nullable value selection 68; inactive step exit 71; null step failure exit 94; word/byte
 // success result 94/68; native step state value 123; shared step expansion 68; native selected
 // index 68.
@@ -1981,6 +1984,11 @@ void function_269250(long clump_index, long actor_index)
 // score 189 (was 189): Frame/current/object/replacement homes remain; unchanged result 189;
 // changed-reference count 246; category at uses 195; member header getter 189; removal
 // inline/forced expansion 189/460; complete unit predicate 243; count plus removal boundary 246.
+// score 189 (was 189): frame/current/object/replacement homes remain.
+// Shared datum/calling walks 216/188; with group getter 216/188; native iterator index 189/237;
+// current-head/read-only object 241/216. Shared walk recovers frame 0x24 at 216/765 bytes.
+// On that frame: member while 216; tested category 219; both 219; category names 216;
+// names with while/test/both 216/219/219. One-point calling-walk gain rejected; body restored.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
@@ -2121,6 +2129,7 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 156, caller context: depth zero 505; depth one 322; target size 517;
 // wide cluster selectors 356; retained generation slot 322. Original body retained.
 // score 322 (was 322): round 312: reset/cursor allocation remains; selected byte 332; generation publication first 338; short visibility count 355; cluster-count snapshot 374; shared iterator initializer 322.
+// score 322 (was 322): Frame 0x6a4 agrees; reset-word SI, marking registers and selection/cleanup placement remain. Existing creation helper 322; exhaustive successor 324; native clump heads 373; generation value 332; shared state fallthrough 322; visibility pointers 374.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
