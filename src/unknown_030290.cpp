@@ -71,7 +71,8 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
-// score 112 (was 112): Frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes still differ.
+// score 86 (was 86): Frame 0x34 and half-box homes agree; horizontal/depth XMM roles
+// and vertical tangent scheduling still differ.
 // Earlier: frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes differ.
 // coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
 // Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
@@ -108,6 +109,8 @@ long g_4ba134;
 // entry projection declarations 112; shared tangent declarations 149; both declarations 149; radial
 // values first 222; both radial squares first 227; viewport after discriminant 214; coefficients after
 // discriminant 137; shared difference helper 112.
+// Shared displacement 86; scaled difference 239; both differences 252; native row dots
+// either operand order 307; difference plus dots 293; real roots 86; real roots plus dots 307.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {

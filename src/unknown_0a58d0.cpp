@@ -847,7 +847,7 @@ PRIVATE inline bool z_state_real_valid(real value)
  return (*(long *)&value & 0x7f800000) != 0x7f800000;
 }
 
-// score 9 (was 146): the two mask-count arguments are extended into ECX/EDX where retail
+// score 9 (was 9): the two mask-count arguments are extended into ECX/EDX where retail
 // uses EAX (so the first word store comes after the second count load), and the bound test
 // holds the size in EAX where retail uses ECX. Earlier forms (before the 0x195240 argument
 // fix, at 154/146): scoped inline depth zero 610; scoped global optimization off 368; decode
@@ -864,6 +864,8 @@ PRIVATE inline bool z_state_real_valid(real value)
 // the result 9 each, `return a && b` 16; mask test `if (state[0x61])` 10; a byte mask local
 // for every use 6 (keeps it in ESI; retail reads the field again), for the tests only 9;
 // a long mask local 45; without the stream self-reference 9.
+// Native tail fields/word array/full state/full state array/tail reference 9 each;
+// native tail/full-state mask loops 53/53; native-state count reference 44.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {
