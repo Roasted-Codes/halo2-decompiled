@@ -544,6 +544,8 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // readonly datum 293; CRT marker position 293.
 // Named location fields 293; failure-first common return 296; cases two/three/zero 296; entry marker-name workspace
 // 293; native flag0 view 293.
+// Tag acquisition after returning kinds 305; conditional failure 309; conditional marker selection 293;
+// audibility-first guard 292 (one-point gain dropped); ordinary clear inline 412.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

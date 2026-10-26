@@ -218,7 +218,7 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 	}
 }
 
-// score 235 (was 235): frame 0x78 versus 0x6c; early ESI save and position home differ.
+// score 220 (was 220): frame 0x78 versus 0x6c; early ESI save and position home differ.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
 // shared-left output with one exit 233 (two-point gain dropped).
 // Branch-scoped velocity 248; scalar point setter 255; parent-transform first 237;
@@ -226,11 +226,11 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Frame and basis/position homes still differ.
 // normalized forward shared 265; basis scratch roles reused 269; velocity/basis scratch shared 252;
 // shared forward and scoped velocity 257; early position snapshot 263.
-// score 226 (was 235): Frame 0x78 versus 0x6c; basis/position homes remain. Shared speed scale 226 kept; left/velocity scratch 252; zero-source memcpy 235; angle-limit lifetime 233; accepted-up first 255 (plain).
-// score 220 (was 226): Frame 0x78 versus 0x6c; basis/position homes remain. Speed-arm scalars 270;
+// Frame 0x78 versus 0x6c; basis/position homes remain. Shared speed scale 226 kept; left/velocity scratch 252; zero-source memcpy 235; angle-limit lifetime 233; accepted-up first 255 (plain).
+// Frame 0x78 versus 0x6c; basis/position homes remain. Speed-arm scalars 270;
 // acceleration first 226; scalar names 226; early turn-velocity capture 226; zero velocity after
 // world-up 220 kept (plain).
-// score 220 (was 220): Frame 0x78 versus 0x6c and basis/position homes remain. Selected up buffer
+// Frame 0x78 versus 0x6c and basis/position homes remain. Selected up buffer
 // 269; normalized forward at third call 222; at second call 265; all calls with retained scale
 // and late zero 265; selected up plus shared normalized forward 301 (plain).
 // Frame 0x78 versus 0x6c and basis/position homes remain.
@@ -240,6 +240,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Frame 0x78 versus 0x6c; velocity/basis/position homes remain.
 // zero after first basis 240; zero after second basis 240; turn velocity before guard 274; basis role
 // reuse with scale 260; turn zero before guard 220.
+// Existing world-up object input 269; header-base input 220; vector return 285; real rotation member 247;
+// position aggregate initializer 242.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
