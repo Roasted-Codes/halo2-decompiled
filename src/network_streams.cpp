@@ -1145,14 +1145,17 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
-// score 211 (was 215): retained oldest/false registers and copy-loop entry differ;
+// score 172 (was 193): retained oldest/false registers and copy-loop entry differ;
 // scan getter 302; copy getter 325; both getters 361; unsigned byte progress 215; decode buffer first 213; forced-inline getters 223.
 // readonly decode records 215; native stream value initialization 254; native copy size bits 215; native
 // fragment result selection 213; frame pointer 289; global optimization 297; size preference 571; existing
 // window helper boundary 215; fragment result buffer publication 211.
-// score 193 (was 211): oldest/false carriers and copy-loop entry remain.
+// Earlier: oldest/false carriers and copy-loop entry remain.
 // Signed-byte/short/word results 210/193/193; read-only scan/copy entries 211/211;
 // oldest with direct fragment selection 232, plus signed byte 234 or read-only scan 232.
+// Shared failure result 172 at 805 bytes; shared success exit 224; nonempty scope 211;
+// scope/failure join 262; byte-total name 193; copy-sequence name 193;
+// scalar names/failure join 172; scope/success join/scalar names 271.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {
@@ -1227,7 +1230,7 @@ bool __stdcall function_095840(s_network_stream_header *header, long *message_ty
 				}
 			}
 			self->m_unknown05 = true;
-			return false;
+			result = false;
 		}
 	}
 	return result;

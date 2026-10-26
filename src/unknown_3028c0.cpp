@@ -95,7 +95,7 @@ public:
 	void function_3028c0(input_3028c0 const *input_, long arg_1, long arg_2);
 };
 
-// score 42 (was 48): the walk's last field is cleared before the direction
+// score 42 (was 42): the walk's last field is cleared before the direction
 // is built, the direction and the segment's start are multiplied with the
 // vector first, and the grid's origin is read once for both ends. What is
 // left is the two call arguments, which retail pushes late and ours still
@@ -111,6 +111,8 @@ public:
 // Further trials: sum by value 40; staged sum 42; vector sum result 56;
 // direct splat 65; forced inline math 42; whole query initializer 48;
 // sum through output 44; size preference 121; value sum with late clears 43.
+// Cell-size value 49; origin field reference 57; both 65; segment initializer 42;
+// cell/segment 49; origin/segment 57; cell/origin/segment 65; cell-size reference 42.
 // @retail 0x3028c0
 void walker_3028c0::function_3028c0(input_3028c0 const *input_, long arg_1, long arg_2)
 {
