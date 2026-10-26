@@ -53,6 +53,10 @@ long __stdcall function_18d1c0(long arg_0);
 bool function_b9d20(long arg_0);
 
 #pragma inline_depth(0)
+// score 106 (was 106): pool retention, datum/scan/handle carriers and location call differ.
+// Ordinary iterator read 131; current-datum consumer 106; both 131; pool names 106;
+// pool/datum names 106; ordinary named carriers 131; ordinary scoped datum 131;
+// ordinary named current consumer 131. Original body retained.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
 {

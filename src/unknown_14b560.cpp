@@ -2671,16 +2671,16 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
-// score 155 (was 155): iterator store/test and rate/tick scheduling differ;
+// score 128 (was 128): iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
 // low-time arm first 179; inline depth one 155. Damage call convention differs.
 // Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
 // native reset timer 155; both native long/short fields 155; signed native countdowns 155;
 // all native countdown fields 155; full native current-player record 153.
-// score 155 (was 155): iterator publication, rate/store, damage-call and trigger allocation remain.
+// Earlier: iterator publication, rate/store, damage-call and trigger allocation remain.
 // Separate effect/tick/root/trigger receivers 155/155/155/155; combined receivers 155;
 // incremented-tick snapshot 155; stored absence scalar 155; decoded volume kind 155.
-// score 128 (was 155): native root-bit observation recovers SHR/TEST; iterator and tick scheduling remain.
+// Earlier: native root-bit observation recovers SHR/TEST; iterator and tick scheduling remain.
 // Wide user/table entry/both 157/158/162; wide/entry/both with first flag 155/156/160;
 // root with both 129, plus first flag 127; root alone 128 plain; root with wide/entry 125/132.
 // Three-point wide-user addition dropped; only the root-bit expression retained.
@@ -2692,13 +2692,16 @@ struct s_unit_flags_14d8b0
 // remain. current record consumer 155; successful current publication 155; explicit iterator
 // initialization 155; defined current at advance 155; saturating source expression 254; saturate
 // before increment 224; native flag boolean 264; publication with native results 300.
-// score 128 (was 128): iterator/tick scheduling, damage transport and trigger registers remain.
+// Earlier: iterator/tick scheduling, damage transport and trigger registers remain.
 // Native trigger record ordinary/const 128/128; each with native point member 128/128;
 // native first-word flag with those four interfaces 126/126/126/126. Two-point forms dropped.
-// score 128 (was 128): iterator/tick schedule, damage transport and trigger homes remain.
+// Earlier: iterator/tick schedule, damage transport and trigger homes remain.
 // Existing Boolean datum API 128; iteration receiver scope 128; input-only iterator
 // initialization 128; called datum API 395; existing parent query 197; both APIs 197;
 // Boolean iterator with native first flag 126; parent query with native first flag 195.
+// Initial/all native flag references 126/126; shared high-byte reference 128;
+// all-flags with tick pointer 126, direct tick product 228, float/count roles 126/126,
+// admitted expiry 199. Two-point forms dropped; original body retained.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

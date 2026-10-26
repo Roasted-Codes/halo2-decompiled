@@ -1177,6 +1177,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // completed-write result in both arms 172; reversed header string stores 172.
 // Direct write count 171; late expected-size query 288; signed-word ordinal 257;
 // validity from handle/header tests 165 kept; nested failed-write close 172.
+// Existing open API, file-element reference, both 165/165/165; open API with
+// constructed write/read/both headers 165/165/165; handle-field pointer 165;
+// native file and both headers 165. Shared API emits the same request code.
 // @retail 0x213970
 void function_213970(void)
 {

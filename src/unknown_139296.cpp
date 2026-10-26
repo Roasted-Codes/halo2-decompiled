@@ -1087,6 +1087,8 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // Positive-count for kept after whole-program validation; all draw call tuples unchanged.
 // Original positive guard before positive/nonzero counted walk 1/1; both redundant-guard diagnostics
 // restored because they are nonexact. The ordinary positive-count for remains the plain-validated keeper.
+// Repaired-countdown mask chain 5; offset mask producer 5; late result 1; subject,
+// descriptor, input and mask lexical roles 1/1/1/1; mask chain with native roles 5.
 // @retail 0x13a3c6
 bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
 {
