@@ -555,6 +555,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // array views 182/182/182. Original scalar expressions, shared helpers and outputs restored.
 // Native dot/up/orientation/full input fields 182/182/182/182; test-produced rotation 183;
 // inactive forward/active forward/both active output library copies 182/182/182.
+// Round 183 complementary skip decision bool/byte/short/long 182 each; each with consistent
+// old-up field pointer 309 (fast), losing the caller match. All restored; initial dot
+// displacement bytes and rotation schedule remain with EDI state/EBX forward preserved.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -874,7 +877,7 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 }
 #undef settings
 
-// score 582 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain.
+// score 582 (was 582): Frame 0x34 versus 0x30 and direct/vector homes remain.
 // Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
 // Frame 0x34 versus 0x30; direct-mode carrier and original/limited vector homes remain.
 // Earlier: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
@@ -913,6 +916,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
 // Earlier: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
 // Horizontal delta on retained join 614; signed-word direct/damping/gravity/flying 622/622/624/616.
+// Round 183 existing returned-vector cross for first flying / remaining flying / ground / all flying
+// 607/659/590/694; first flying plus ground / remaining flying plus ground / all active / all paths
+// 637/689/724/834 (fast). All restored; extra frame dword, direct bit and vector homes remain.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {

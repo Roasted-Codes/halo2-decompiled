@@ -189,7 +189,7 @@ struct s_slot_05_data
     byte unknown0c[0x34 - 0xc];
 };
 
-// score 105 (was 164): saved scalar homes and cold reference joins remain; early slot ESI now agrees.
+// score 91 (was 105): saved scalar homes and cold reference joins remain; early slot ESI now agrees.
 // Earlier: slot load, actor/permission/index/scratch homes and cold reference arms still differ.
 // Early invalid copy 168; early mode copy 140; both copies 140 (nonmatches dropped);
 // unsigned actor handle 168; byte permission 195; reference receiver order 170;
@@ -232,6 +232,9 @@ struct s_slot_05_data
 // Native Boolean invalid flag 164; two chained late request flags 164; three chained late/early flags 167/167; Boolean slot with those chains 164/167/167; immutable permission with Boolean slot 164.
 // Native slot payload 105 (kept); payload with native short/early receiver/read-only actor 105/105/105; payload with branch reference/shared defaults/shared mode/role names 121/104/157/105. Early ESI recovered; saved scalar homes and cold reference joins remain.
 // Round 181 complementary permission bool/byte/short/long 185/185/180/180; field permission at every use 184; complementary permission with native short/default helper/branch reference 185/185/211 (fast); all restored. Frame 0x76c agrees; saved scalar homes and cold reference joins remain.
+// Round 183 retail-timed scratch after request fields 91; positive permission short/long/signed-byte/byte
+// 180/180/185/185; timing with branch reference/early selection output/default helper 117/113/91
+// (fast). Keep only scratch timing; scalar homes and cold reference joins remain.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
@@ -271,10 +274,10 @@ bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
             request.type = 4;
             request.unknown015 = true;
             request.unknown69a = *(short *)state->unknown02;
-            byte *scratch = ai_scratch_buffer_get();
             request.unknown698 = true;
             request.unknown69c = allowed;
             *((byte *)&request + 0x59) = true;
+            byte *scratch = ai_scratch_buffer_get();
             bool unknown = false;
             s_reference reference = actor->unknown418;
             if (state->unknown00)

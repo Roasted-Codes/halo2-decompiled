@@ -1220,6 +1220,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // entry-scope header pair 165; header/path/task entry workspaces 165; signed-byte slot 254.
 // Every request, header initialization, wait, validity assignment and I/O tuple restored.
 // Round 181 complementary invalidity/write failure/cleanup-once 196/112/115; invalidity-write/invalidity-cleanup/write-cleanup/all 196/199/115/199; byte invalidity 196 (fast); all restored. Frame 0x1144 agrees; file displacement, request-copy and validity joins remain.
+// Round 183 request output address with path first / after access metadata / after access rights /
+// before buffering 117/116/116/114; separate reused slot long/dword/short/word
+// 112/112/286/286 (fast). All restored; file displacement, task copy and validity joins remain.
 // @retail 0x213970
 void function_213970(void)
 {
