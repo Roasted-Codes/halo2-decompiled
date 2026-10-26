@@ -628,6 +628,9 @@ void function_1a6d80(void)
 
 // score 6 (was 6): the two output pointers are loaded one after the other here and both before the
 // first store in retail, and the word is written after the stack is restored in retail.
+// Nested count assignment/return count expression/full return expression 6/6/6;
+// comma output statement/indexed and offset returns 6/6/6;
+// const node-list pointer/handler local 6/6.
 // @retail 0x1a73c0
 s_action_node **function_1a73c0(long owner_index, short id, bool *valid, short *count)
 {

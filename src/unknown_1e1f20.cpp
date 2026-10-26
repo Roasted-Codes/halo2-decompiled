@@ -497,6 +497,9 @@ PRIVATE inline s_prop_node_view *prop_list_take_next(long *prop_index)
 // slot cursor/cursor callback at use 115/115; signed slot type 7;
 // direct actor index 7; inclusive current count 99; empty callback continue 7;
 // counter lifetime from entry 30; callback declared before slot 7.
+// Direct lookup with slot callback 10; pointer arithmetic/scaled offset 7/7;
+// later index reference/per-iteration index snapshot 7/7;
+// slot/callback/both outside the loop 7/7/7; inverted slot test 7.
 // @retail 0x1e23c0
 void function_1e23c0(long actor_index)
 {
