@@ -427,6 +427,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // common complete pair result 181 at 975 bytes (plain confirmed); swapped dot comparison 198;
 // negated average-default arm 198; common pair result with swapped comparison 181.
 // First-normal i/k/j product and partial sum 198 each; average i/k/j product and partial sum 198 each, all 983/977 bytes. Original projection expressions and pair-result join restored.
+// Height-expression and full eligibility values 215/215; nested height filter 181; component fields at uses 370, with height/eligibility/nesting 368/368/370; signed valid-selection range 209. Original pair-result join restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)

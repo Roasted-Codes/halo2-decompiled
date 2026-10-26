@@ -1187,6 +1187,7 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // On common-failure result: oldest after/before result and result before receiver 229/229/229;
 // shared initial newest with oldest-first/newest-first 202/202; oldest plus readonly types/stream
 // helper/unsigned byte total 229/229/229.
+// Read-only availability accumulation: short logical OR 244; bitwise OR and normalized terminal bit 229/229; incomplete-only assignment 252; Boolean logical/bitwise OR 262/220; byte logical/bitwise OR 227/235. Original scan and short common-failure result restored.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {
