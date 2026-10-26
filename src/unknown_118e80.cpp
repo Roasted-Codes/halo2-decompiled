@@ -218,7 +218,7 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 	}
 }
 
-// score 220 (was 220): frame 0x78 versus 0x6c; early ESI save and position home differ.
+// score 220 (was 220): frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
 // shared-left output with one exit 233 (two-point gain dropped).
 // Branch-scoped velocity 248; scalar point setter 255; parent-transform first 237;
@@ -241,6 +241,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // zero after first basis 240; zero after second basis 240; turn velocity before guard 274; basis role
 // reuse with scale 260; turn zero before guard 220.
 // Round 110: direct scale on late-zero frame 232; native velocity aggregate 237; const metadata 220; inline basis 220; inline forward 220 with caller loss; symmetric angle order 218 (two-point gain dropped).
+// Round 112: First left/output shared 259; later shared 260; all shared 262; second only 258;
+// third only 219 (one-point gain dropped); shared default velocity 242; native world-up input 295.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
