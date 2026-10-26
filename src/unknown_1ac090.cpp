@@ -165,9 +165,12 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 	*timer = (short)ticks;
 }
 
-// score 68 (was 80): frame eight versus retail zero; mode compare and entry scheduling remain.
+// score 68 (was 68): frame eight versus retail zero; mode compare and entry scheduling remain.
 // Both timer helpers 85; add helper 68 plain kept; set helper 80; native tick outputs
 // both 72, first 70, second 80; shared random index 80; library slot copy 80.
+// Round 128: native slot data block/full native copy 91/91; data with second timer writer/native
+// output 80/80; one unit receiver 91; branch-assigned default 103; uniform unit reads 76; uniform
+// reads plus branch default 104. Original eight-byte frame and mode scheduling remain.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -296,6 +299,9 @@ short __stdcall function_1ac3f0(long actor_index)
 // 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
 // Native character readonly/reference/value 35/35/82; double scale/delay/both 35/74/74;
 // character reference/value plus double scale 35/82. Seed reload and scale pop remain.
+// Round 128: native slot data block 35; data block with early draws 43; first/second/both timer
+// writers 70/35/70; early data receiver 46; initialized early exit 48; later initialized
+// publication 38. Seed retention and first scale pop remain.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -1217,6 +1223,10 @@ struct s_1acda0
 // score 114 (was 114): frame 0x764 agrees; slot ESI arrives late, boolean test and exit traffic differ.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
+// Round 128: native data member 114; receiver before result/before actor/before first exit
+// 159/159/159; child result publication and direct return 118; request entry lifetime 118;
+// result/search role names 114; plain result 206. Early ESI, Boolean test and exit traffic remain;
+// all restored.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {

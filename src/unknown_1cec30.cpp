@@ -2164,9 +2164,13 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
     vector->m_quad = _mm_setzero_ps();
 }
 
-// score 137 (was 211): the velocity sums in the material loop load the
+// score 137 (was 137): the velocity sums in the material loop load the
 // running sum second in retail, and the final scale and its stores are
-// scheduled differently; not worked on yet.
+// scheduled differently.
+// Round 128: shared dot input order 137; consistent inverse-first/inverse-last products 137/137;
+// dot with either product form 137/137; mode snapshot 192; snapshot plus dot 192; sample default
+// before matched query 208. Frame and sample boundary preserved; normal/velocity XMM roles and
+// final zero remain.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {
