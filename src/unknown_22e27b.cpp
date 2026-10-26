@@ -166,7 +166,8 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
-// score 100 (was 106): frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
+// score 100 (was 100): Frame 0x10 and timing setup agree; advancing-frame and interpolation carriers differ.
+// Earlier at 100 (was 106): frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
 // Next time before elapsed with separate assignments on frame 0x10: 100.
 // Earlier at 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.
 // Next time before elapsed 206; fraction after delta 106 kept (plain); on that frame,
@@ -180,6 +181,8 @@ static inline real interpolate_linear(real a, real b, real t)
 // wide lookahead with short wrapping 248; conditional elapsed clamp 106; opening body restored.
 // Active time anchor 106; next-time anchor before/after division 114/114;
 // late const fraction 106; entry time anchor 114; current-frame/direction values 108/106.
+// Current-based short accumulation in advance/lookahead/both 100/100/100;
+// direction-based accumulation 100/100/100; shared/lookahead playback-mode values 100/174.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {

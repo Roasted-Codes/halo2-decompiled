@@ -861,7 +861,8 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 #include "unknown_1fb7e0.h"
 // Round 36: the corrected forwarding call keeps 0x1ca260 matched; this body remains 48 differences.
 // Retail 0x1e18f0
-// score 44 (was 44): No frame gap; incoming actor/old-weapon ownership and early player address differ.
+// score 44 (was 44): No frame gap; actor/old-weapon ownership and early player construction still differ.
+// Earlier at 44 (was 44): No frame gap; incoming actor/old-weapon ownership and early player address differ.
 // Earlier: no frame gap; actor/old-weapon registers and early player address differ.
 // Inline/noinline 44/44; direct player/replacement only 82/55; replacement-first 86;
 // late replacement zero 44; old-greater first 47; early unit observation 91.
@@ -873,6 +874,8 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 // inline/noinline 44/44; late actor receiver 44; word event result 123.
 // Object global 44; both lookup globals 43; indexed native headers 44; native player 44;
 // global tables/native entry player 85; native entry player 81; player fields at use 128; native item/header chain 44.
+// Previous/replacement/both property inputs 116/119/164; tag objects 130/133/181;
+// both property/tag inputs with early player 163/188.
 // @retail 0x1e18f0
 void __fastcall function_1e18f0(long actor_index, long old_weapon, long player_index, long new_weapon)
 {
