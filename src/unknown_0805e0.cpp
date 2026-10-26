@@ -436,11 +436,14 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 122 (was 129): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// score 73 (was 122): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // Existing record initializer with zero tail 130; short/word counters 133/133;
 // counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
 // Array-end bound 129; workspace names 129; native identity zero 129; signed induction 122; array-end/native zero 129; signed/native zero 122; signed identity-array fill 122.
+// Contiguous tail clear with sentinel restored 73; identity after record helper 122;
+// fixed do loop with record helper 122; tail clear plus late identity 73;
+// function-scope identity with record helper 122 (fast); tail clear 73 plain.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -457,8 +460,8 @@ void function_7f930(void)
 		memset(&identity, 0, sizeof(identity));
 		s_cached_player_source source;
 		function_1537f0((s_profile_record *)&source);
-		memset(source.unknown7c, 0, sizeof(source.unknown7c));
-		memset(source.unknown80, 0, sizeof(source.unknown80));
+		memset(source.unknown7c, 0, sizeof(source.unknown7c) + sizeof(source.field7f) + sizeof(source.unknown80));
+		source.field7f = 0xff;
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
 		function_7f8b0((s_cached_player_view *)&entry->player, &identity, &source, NULL);
 		entry->next = entry->next_other = entry->unknown58 = entry->previous_other = NONE;
@@ -542,12 +545,13 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 111 (was 132): frame 0x1c agrees; records/properties registers, counter homes and ret 0x18 versus 0x1c remain.
+// score 111 (was 111): frame 0x1c agrees; records/properties registers, counter homes and ret 0x18 versus 0x1c remain.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // Frame 0x1c agrees; records/buffers register contract and cursor/count
 // scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
 // 132; per record totals 150; entry pointer walk 132; three properties do loop 132; frame role
 // names 132.
+// Unsigned short ordinal 111; selected property pointer 111; early remaining-property accounting 137; scalar while 111; cache scan while 111 (fast, retained values-cursor form).
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -741,13 +745,14 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 243 (was 368): frame 0x0c agrees; removed-index registers, upper
+// score 243 (was 243): frame 0x0c agrees; removed-index registers, upper
 // bound selection and copy-loop induction remain. Paired range arms 373;
 // native FILETIME 314; short adjustment 300; unsigned repair counter 364;
 // range/time/short combination 375; native time and short adjustment 357.
 // Three relative-position cases 243; early bounds 377; explicit upper bound 361;
 // forward destination index 366; reverse destination index 360; widened
 // global-index adjustment 358.
+// Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

@@ -1088,20 +1088,21 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // iterator 996; two-pass requests 2187; inline depth two 828 (fast counts).
 // Mode initialized only by iterator 828; retained native selected index 838; library candidate copy 828;
 // shared graph receiver 828; requested-class snapshot 828. Frame 0x2c agrees; homes remain.
-// score 828 (was 828): class/NONE registers, result/output/candidate homes and later zero carrier differ.
+// class/NONE registers, result/output/candidate homes and later zero carrier differ.
 // Named-entry latch 828; direct result with entry latch 1000; iterator mode/class keys 1016;
 // iterator mode/type keys 837; entry latch with native initialization 826 (two-point gain rejected);
 // combined continuation while 828.
 // frame 0x2c agrees; result/output homes and initial ECX/EDX remain. Existing complete
 // helper for original request 2287; resolved request 2208; both 3530; immutable requested mode/type 828/828.
 // Shared iterator and helper bodies unchanged.
-// score 828 (was 828): Frame 0x2c agrees; class/NONE and result/output/candidate homes plus later zero
+// Frame 0x2c agrees; class/NONE and result/output/candidate homes plus later zero
 // carrier remain. Candidate before iterator 967; post-search result copy 998; earlier candidate/native
 // iterator 965; post-search copy with saved mode 998; with saved type 998 (fast).
 // Frame 0x2c agrees; result/output/candidate homes remain. Entry iterator after result 1004; missing-name continue 991; returned-object library copy 828; entry iterator before result 993; shared success predicate 992 (fast).
-// score 828 (was 828): frame 0x2c agrees; class/NONE, result/output homes and later zero remain.
+// frame 0x2c agrees; class/NONE, result/output homes and later zero remain.
 // Tight iterator scope 828; entry output declarations 828; combined scopes 828; native-long
 // selected index 990; all original keys retained jointly 828 (fast).
+// Requested-mode output initialization 833; returned constructor expression 828; condition-declared named lookup 828; retained class/type key pair 828; mode initialization plus native iterator 831 (fast).
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
