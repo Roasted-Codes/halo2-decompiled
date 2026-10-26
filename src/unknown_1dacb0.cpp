@@ -1111,6 +1111,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Per-attempt constructor expression 828; native candidate reset 980; candidate reset/latch 980; paired native
 // transfers 988; result constructed after outputs 1004. Native reset aligns initial result home at +0x14, but
 // iterator-output/candidate homes and later zero carrier remain.
+// Pre-lookup native default conditional 951; class key first 828; type key first 978; index-first
+// native transfers 846; sorted lookup noinline 828; type/class/mode output defaults 828.
+// Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1192,6 +1195,9 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Per-attempt constructor expression 828; native candidate reset 980; candidate reset/latch 980; paired native
 // transfers 988; result constructed after outputs 1004. Native reset aligns initial result home at +0x14, but
 // iterator-output/candidate homes and later zero carrier remain.
+// Pre-lookup native default conditional 951; class key first 828; type key first 978; index-first
+// native transfers 846; type/class/mode output defaults 828; sorted lookup noinline 828.
+// Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

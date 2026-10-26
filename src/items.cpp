@@ -977,6 +977,9 @@ struct s_item_flags_view_10b850
 // Complete rotation-axis snapshot 953; named one-minus-cosine term 821; per-row direct sums 824; axis snapshot
 // plus scale term 951; signed-byte floor and slow results 821. Frame 0x154 versus 0x12c and original
 // Boolean/vector homes remain; all private helpers restored.
+// Rotation helper explicit axis 853; explicit trigonometric inputs 893; all rotation inputs 892;
+// native reference output 821; output return 821; ordinary rotation inline 1926.
+// Frame/Boolean/native workspace homes remain; original body and every helper restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

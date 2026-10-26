@@ -4305,7 +4305,7 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 384 (was 396): Frame 0xd8 agrees; result/identity homes and block placement remain.
+// score 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
@@ -4315,6 +4315,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Result byte +9 versus +b, identity/host homes and early acknowledgement/rejection remain. Raw multi-use
 // comparison 384 kept; preference-only long 405; equality-only long 405; integer acceptance 395; peer before
 // identifier 396; chained peer clears 396.
+// Raw-comparison slot name 384; reversed comparison buffers 384; library identity outputs 384;
+// direct state observations 387; result after state 384. Frame/Boolean homes and block placement remain.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

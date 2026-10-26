@@ -1611,7 +1611,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 819 (was 835): the long per-vertex flag and the sample points declared at the top of
+// score 819 (was 819): the long per-vertex flag and the sample points declared at the top of
 // their scope; mesh, UV and color homes and helper expansion still differ (frame 0xa8 versus 0x90).
 // Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
 // metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
@@ -1621,12 +1621,15 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Dynamic validity long 863; base validity short 819; accumulated sampled color 828;
 // weighted normal loop 892; both lengths before scaling 837; one broad sample scope
 // with the other two narrowed (first/second/third) 831/831/831.
-// score 819 (was 819): frame 0xa8 versus 0x90; mesh, UV and sample homes remain.
+// frame 0xa8 versus 0x90; mesh, UV and sample homes remain.
 // Only third/second/first sample narrowed 828/828/828 (frame 0x9c);
 // byte per-vertex capability 825; function-scope samples 819. Original body retained.
-// score 819 (was 819): frame 0xa8 versus 0x90, mesh/sample/UV homes and helper expansion remain.
+// frame 0xa8 versus 0x90, mesh/sample/UV homes and helper expansion remain.
 // Presence-branch samples 831 (frame 0x90); later vertex pointer 853; common base/normal outputs 825;
 // direct static material use 859; base-only fallback first 818. Original body retained.
+// Native packed input record 819; unpack output first 819; decoded sample value return 945;
+// color value contract 1350; native color reference output 819. Frame/mesh/sample/color/UV
+// homes and helper expansion remain; original complete body and both helpers restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
