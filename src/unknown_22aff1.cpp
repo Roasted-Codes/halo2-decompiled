@@ -69,7 +69,7 @@ PRIVATE __forceinline real function_22aff5(real arg_0)
 }
 
 #pragma intrinsic(memcpy)
-// score 121 (was 141): frame homes differ: retail keeps vertical_scale at +0x08
+// score 121 (was 121): frame homes differ: retail keeps vertical_scale at +0x08
 // (vertices at +0x0c), horizontal_scale in height's slot, the vertical offset in
 // width's and the horizontal offset in arg_3's; ours swaps the two axes and the
 // height/width homes and puts vertical_scale in arg_3's slot. Retail also reads both
@@ -78,6 +78,9 @@ PRIVATE __forceinline real function_22aff5(real arg_0)
 // declarations reordered (axes, height/width, vertical_scale before the vertices)
 // 121 each; locals renamed 121; scales computed inside the loop 120, as a point2f
 // 138; offset x before y 466; offset at loop or function scope 121; vertex pointer 121.
+// Native offset vector 121; destination cursor 423; vector plus cursor 423;
+// vertical/horizontal/both full-width side predicates 447/138/450; bounded short
+// vertex ordinal 431; native vector plus short ordinal 431. Original body retained.
 // @retail 0x22aff1
 void function_22aff1(long arg_0, byte const *arg_1, byte const *arg_2, real const *arg_3)
 {
