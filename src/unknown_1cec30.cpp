@@ -2163,6 +2163,7 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 {
     vector->m_quad = _mm_setzero_ps();
 }
+// score 137 (was 137): aligned frame 0x34 agrees; normal/velocity XMM roles, early velocity loads and property-zero retention remain.
 
 // score 137 (was 137): the velocity sums in the material loop load the
 // running sum second in retail, and the final scale and its stores are
@@ -2171,6 +2172,17 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // dot with either product form 137/137; mode snapshot 192; snapshot plus dot 192; sample default
 // before matched query 208. Frame and sample boundary preserved; normal/velocity XMM roles and
 // final zero remain.
+// Earlier: the velocity sums in the material loop load the
+// Round 187: complete contact input/normal sum/both 220/267/463; complete velocity sum 283;
+// symmetric scaled components, separate speed product, material count after store and corrected-boundary speed-first each 137;
+// fallback-first 150; separate normal/velocity/both normalization inputs 443/232/478. All restored.
+// scheduled differently; initial normal XMM roles also differ.
+// Round 138: native flag byte, signed index, both fields, native bit, bit/index, Boolean bit,
+// Boolean bit/index and readonly native contacts all 137. Normal/velocity XMM roles and
+// property-zero retention remain; frame 0x34 agrees.
+// Aligned frame 0x34 agrees; normal/velocity XMM roles and final property-zero retention differ.
+// Corrected-boundary compound sums 137; plain axis accumulation 184; byte material count 451;
+// unsigned other count 137; corrected-boundary final shared scale 214.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {
@@ -2621,19 +2633,22 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-
-// score 175 (was 175): staggered register saves and paired velocity homes differ;
+// score 168 (was 175): staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
 // Force-inline linear/angular/both getter declarations 175 each; initialized linear/angular outputs 199 each;
 // initialized pair 219; initialized pair with getter declarations 219; live external array receiver 175
 // (plain scores; reduced preview 135). Staggered saves and paired getter allocation still differ.
-// score 175 (was 175): Staggered saves and paired velocity homes remain; reversed getter
+// Staggered saves and paired velocity homes remain; reversed getter
 // order 178; linear norm before angular read 176; angular read/norm before linear read 186;
 // native simulation result 180; post-update body receiver 187 (plain). Opening body retained.
 // staggered saves and paired velocity homes remain;
 // linear / angular / both component loops 175/175/175; horizontal initialization 173;
 // linear / angular / both loops with horizontal initialization 173/173/175;
 // direct component pointers 183 (plain; original double products and component order retained).
+// Round 358: Paired named magnitudes 135; direct shared scale outputs 175; compound clamp components 135;
+// original-order real accumulations 128 reduced, 168 plain; nested post-update guards 135 (control 135). Keep
+// the seven-point full-image accumulation gain at retail length; frame 0x30, staggered saves and paired
+// getter homes remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2654,7 +2669,9 @@ void function_1ced00(s_havok_component *component)
                 vector3f linear, angular;
                 rigid_body_linear_velocity_get(component, i, &linear);
                 rigid_body_angular_velocity_get(component, i, &angular);
-                real speed_squared = linear.k * linear.k + linear.j * linear.j + linear.i * linear.i;
+                real speed_squared = linear.k * linear.k;
+                speed_squared += linear.j * linear.j;
+                speed_squared += linear.i * linear.i;
                 if (speed_squared > 10000.0f)
                 {
                     double scale = 100.0 / sqrt(speed_squared);
@@ -2663,7 +2680,9 @@ void function_1ced00(s_havok_component *component)
                     linear.k = (real)(linear.k * scale);
                     havok_component_rigid_body_linear_velocity_set(i, component, &linear);
                 }
-                real angular_squared = angular.k * angular.k + angular.j * angular.j + angular.i * angular.i;
+                real angular_squared = angular.k * angular.k;
+                angular_squared += angular.j * angular.j;
+                angular_squared += angular.i * angular.i;
                 if (angular_squared > 2500.0f)
                 {
                     double scale = 50.0 / sqrt(angular_squared);

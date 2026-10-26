@@ -51,46 +51,6 @@ static __forceinline long marker_viewer_unit(void)
 	return unit_index;
 }
 
-// score 99 (was 99): projection-result store, coordinate registers and later helper scheduling differ;
-// projection-result store, coordinate registers and later helper scheduling differ;
-// projection-status store, normalized coordinate XMM homes and late scheduling remain;
-// native projected scalar pair 105f; pair/native extents 231f; coordinate product operands 105f; extent
-// product operands 105f; both operand forms 105f; live up fields 105f; shared double lift limit 165f;
-// limit/projected pair 165f.
-// bool result 231; early placement 233; position snapshot 282; late collision 237;
-// final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
-// projected endpoints 123; word centers 225; final endpoints 123; native direction 264; distance lifetime 141.
-// Branch status with word/native extents 218/212 (match-only, reverted); numerator lifetimes 123; viewer exits 123; earlier extent product 213.
-// Native point initialization 123; up-vector snapshot 294; ellipse bounds 241;
-// existing projection output 123 (match-only, reverted); placement memcpy 123;
-// collision record at file scope 123; direct collision result 281; double rounding result 180.
-// Plain list position (no list_reference) 120.
-// Earlier: projection-result store, coordinate homes and helper scheduling still differ.
-// projection-result store, coordinate homes and helper scheduling still differ.
-// native byte projection result 123f; native horizontal half extent 216f.
-// native vertical half extent 215f; value initialized placement 263f.
-// viewer index read once 123f; explicit viewer selector 123f.
-// viewer result at query 123f; byte result native placement 263f.
-// projection-status store, coordinate registers and helper scheduling remain.
-// Failure predicate 280; sequential word normalization 222; named ellipse predicate 123;
-// outside-first ellipse arms 123; failure/sequential 249; named/sequential 222;
-// outside-first/sequential 222; failure/outside-first/sequential 249.
-// Earlier: the viewer unit chosen in an if/else (retail's `or eax, -1` arm) 105 kept. On
-// the viewer unit chosen in an if/else (retail's `or eax, -1` arm) 105 kept. On
-// top of it: the rounding result scaled as a float (retail's dword constant) 104; the ellipse test
-// as `half_extents * half_extents > ...` 104, outside arm first with `<=` 103 (retail's comiss order);
-// the extents product first 219 and long half extents 232 (both retail's code, one line off). With
-// all of those and the flag set true before the projection call (retail's two byte stores), only the
-// projected block (retail computes nx/ny in xmm0/xmm1 and copies them), one fmul and the final
-// fmul/fstp schedule differ; named numerators, a point2f and inline extents leave that block as is.
-// Fade factor before center 278; height adjustment before size 167;
-// size field stages 99 fast / 99 plain; height between stages 104 (one-point gain rejected);
-// factor with size field 278; projection/vector noinline declarations 105/105;
-// early coordinate declarations 105.
-// Signed/unsigned word status 243/243; placement fill/flags after projection 223/111; chained flags 103; immutable ellipse products 99; shared ellipse squares 263; ellipse ratio lifetime 99 (last two exact-only).
-// Immutable outcome 99; signed-byte outcome 99; coordinate names/order 99/99;
-// directional-product names 99; unshadowed extents/immutable extents 99/99;
-// forward stores after offset 114.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
@@ -132,33 +92,46 @@ void __stdcall function_24e59f(s_marker_list *list)
 	function_30bf0((vector3f *)&transformed);
 
 	point2f offset;
-	real nx, ny;
-	bool on_screen = function_30710(&g_4b9e14, 0, (vector3f const *)&transformed, &offset, (s_view const *)&g_camera_storage);
-	if (on_screen)
+	point2f normalized;
+	bool on_screen = true;
+	if (function_30710(&g_4b9e14, 0, (vector3f const *)&transformed, &offset, (s_view const *)&g_camera_storage))
 	{
-		short half_width = (g_4b9dd6 - g_4b9dd2) / 2;
-		short half_height = (g_4b9dd4 - g_4b9dd0) / 2;
-		nx = (offset.x - (real)(g_4b9dd2 + half_width)) / (real)half_width;
-		ny = (offset.y - (real)(g_4b9dd0 + half_height)) / (real)half_height;
+		normalized.x = offset.x - (real)(g_4b9dd2 + (g_4b9dd6 - g_4b9dd2) / 2);
+		normalized.y = offset.y - (real)(g_4b9dd0 + (g_4b9dd4 - g_4b9dd0) / 2);
+		normalized.x /= (real)((g_4b9dd6 - g_4b9dd2) / 2);
+		normalized.y /= (real)((g_4b9dd4 - g_4b9dd0) / 2);
 	}
 	else
 	{
-		nx = transformed.x;
-		ny = 0.0f - transformed.y;
+		normalized.x = transformed.x;
+		normalized.y = 0.0f - transformed.y;
+		on_screen = false;
 	}
 
 	real half_width = (real)(g_4b9dd8.right - g_4b9dd8.left) * 0.5f;
 	real half_height = (real)(g_4b9dd8.bottom - g_4b9dd8.top) * 0.5f;
-	real ex = half_height * nx;
-	real ey = half_width * ny;
 	real half_extents = half_height * half_width;
+	real ex = half_height * normalized.x;
+	real ey = half_width * normalized.y;
 
-	if (on_screen && ey * ey + ex * ex < half_extents * half_extents)
+	if (!on_screen || half_extents * half_extents <= ey * ey + ex * ex)
+	{
+		placement.size = 1.0f;
+		placement.hidden = true;
+		placement.unknown15 = 1;
+		real scale = (real)sqrt((double)(half_extents * half_extents) / (ey * ey + ex * ex));
+		offset.x = scale * normalized.x;
+		offset.y = scale * normalized.y;
+		placement.forward_i = offset.x;
+		placement.forward_j = offset.y;
+		normalize2d((point2f *)&placement.forward_i);
+	}
+	else
 	{
 		placement.forward_i = 0.0f;
 		placement.forward_j = 1.0f;
-		offset.x = (real)((g_4b9dd6 - g_4b9dd2) / 2) * nx;
-		offset.y = (real)((g_4b9dd4 - g_4b9dd0) / 2) * ny;
+		offset.x = (real)((g_4b9dd6 - g_4b9dd2) / 2) * normalized.x;
+		offset.y = (real)((g_4b9dd4 - g_4b9dd0) / 2) * normalized.y;
 		if (function_24e554(list))
 		{
 			s_marker_collision_result collision;
@@ -167,18 +140,6 @@ void __stdcall function_24e59f(s_marker_list *list)
 			if (function_16a040(0x16808c2d, &g_4b9da0, &point, unit_index, list->l20, (s_collision_result_1697c0 *)&collision))
 				placement.alternate = true;
 		}
-	}
-	else
-	{
-		placement.size = 1.0f;
-		placement.hidden = true;
-		placement.unknown15 = 1;
-		real scale = (real)sqrt(half_extents * half_extents / (ey * ey + ex * ex));
-		offset.x = scale * nx;
-		offset.y = scale * ny;
-		placement.forward_i = offset.x;
-		placement.forward_j = offset.y;
-		normalize2d((point2f *)&placement.forward_i);
 	}
 
 	offset.x += (real)((g_4b9dd6 - g_4b9dd2) / 2);

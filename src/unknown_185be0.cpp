@@ -140,7 +140,8 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 989 (was 1017): frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// score 989 (was 1017): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
+// frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
@@ -150,6 +151,8 @@ union s_185be7
 // common flag store with indexed mask 1013.
 // Shared curve inputs 1043; late input buffers 1074; active-branch pointers 1075;
 // native clear mask 1023; retained response predicate 1023.
+// Round 357: Settings read at each use 1021 (frame 0xe0); four byte predicates 1017;
+// output copy cursors 1016; stepped copy bit 1017; settings/cursor combination 1019.
 // Round 126: Paired output branch 994; complete flag result 1002; false-first flags 1016; ordinary clamp
 // inline 1017; no outer zero-mask guard 1018; second-copy continue/final input ternary/const settings 1017
 // each; paired branch with complete flags 989 (plain kept); paired branch with external state reference

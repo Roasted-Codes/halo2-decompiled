@@ -3869,6 +3869,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // penalty/both with fresh attacker 563/563; shared victim ordinal 571, plus fresh attacker 574;
 // classifier/notification/both Boolean virtual parameters 543/542/544. Frame,
 // attacker/category/NONE and decision-byte homes remain; all restored.
+// Round 358: Category-only byte 545; modifier-only byte 530; modifier after category predicate 543;
+// exhaustive subtype result 566; entry statistics ordinal 557. Frame/NONE and decision homes remain; opening
+// body and shared award update restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4095,8 +4098,8 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-
-// score 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
+// score 472 (was 472): Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
+// Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
@@ -4116,6 +4119,10 @@ struct s_score_zone_view
 // Round 201: Shared team text 469 (three-point gain rejected); shared team color 484; shared iterator after copy recovery 472; native word presence mask 472; short score selectors 608; charge qualifier removed after copy recovery 495.
 // Team color library copies 472; individual iterator chained reset 473; zone iterator chained reset 472; shared
 // zone output index 522; common zone count clear 472. Text/color homes and native zone/charge allocation remain.
+// Round 356: Team color declarations first 472; individual palettes first 472; both declaration orders 472; byte return 507; byte rounds 472.
+// Round 358: Four distinct entry text outputs 507; complete text role names 472; both selection defaults
+// before samples 614; format-mode reads at every use 472; plain team while 472. Reversed text/color homes and
+// zone/charge allocation remain; opening executable body restored.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -5148,7 +5155,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 163 (was 163): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// score 157 (was 163): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5174,6 +5181,9 @@ void __stdcall function_d6bc0(long object_index);
 // Round 201: Reset-only entry pointer 190; later timer after query recovery 166 (one-point gain rejected); native bool schedule after query recovery 184; type result before slice 223; scenario global at use 231.
 // Native scheduling/activity/both bits 167/204/204; full native object fields 204;
 // Boolean schedule with bits 216; bits with late timer 204; full fields/late timer 204; direct countdown/bits 214.
+// Round 138: word kind 157 plain kept; native int delay 163; signed/unsigned byte schedule
+// 180/180; word kind with either byte schedule 168/168; readonly preset 163; word kind and
+// readonly preset 157. Frame 0x14 versus 0x18 and timer/base homes remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5241,7 +5251,7 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
             {
                 long delay = function_15ac50(i);
                 short modifier = 0;
-                long kind = *(signed char *)(placement + 0x14);
+                short kind = *(signed char *)(placement + 0x14);
                 if (kind == 0) modifier = *(signed char *)((byte *)g_4e6948 + 0x211);
                 else if (kind >= 1 && kind <= 7) modifier = *(signed char *)((byte *)g_4e6948 + 0x208);
                 switch (modifier)

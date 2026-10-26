@@ -172,7 +172,7 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // samples 626/626 full; native delta/direct seed offset fast 680/681; all workspaces 631 full;
 // smaller-frame exponent input/full-mode-first 641/627 full. Shared samples reach frame
 // 0x1478 in the full image but tie; reduced gains do not qualify in the full image.
-// Earlier score 626 (was 638): computed interpolation pair kept; frame 0x1490 versus 0x1474, alignment/mode differ.
+// Earlier 626 from 638: computed interpolation pair kept; frame 0x1490 versus 0x1474, alignment/mode differ.
 // Direct phase masks 1..7: fast 622/634/620/653/608/611/662; native output
 // pointers all phases 651 (fast control 680). Both additive phases 691/2306 plain;
 // all phases 729/2260 plain. Original computed pairs and body restored.
@@ -180,9 +180,15 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // Reduced control 680: upper endpoint at use 701; both endpoint fields at use 686;
 // normalized result pair 704; aggregate computed pairs 680; computed accumulation pair 755.
 // All fast forms restored.
+// Immutable curve data pointer 702 fast; active-level body guard 683; ordinary level 702;
+// data/guard 685; data/ordinary 705; guard/ordinary 702; all three 705; named real falloff
+// 688 (reduced control 680). Original body and producer restored.
 // Round 127: native basis/output/both 680/680/680; shared displacement helper 694, with native
 // position setter 711; sum/weight/both alignments 680/680/680 (reduced control 680). All restored;
 // full frame 0x1490 and stacked mode remain.
+// Round 171 reduced control 680: short exponent 699; coefficient aggregate 680; symmetric weighted products
+// 691; short/aggregate 699; short/products 698; aggregate/products 691; all native boundaries 698; readonly
+// coefficients/native boundaries 698.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,

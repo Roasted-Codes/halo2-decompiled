@@ -171,6 +171,10 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // Round 128: native slot data block/full native copy 91/91; data with second timer writer/native
 // output 80/80; one unit receiver 91; branch-assigned default 103; uniform unit reads 76; uniform
 // reads plus branch default 104. Original eight-byte frame and mode scheduling remain.
+// Round 138: mode predicate/shared clock/both 68/68/68; shared rate 84; second rounding-result
+// helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
+// force-inline second/both/first rounding results 85/70/68; native result with both 78.
+// Zero-frame forms regress allocation or expansion.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -302,6 +306,9 @@ short __stdcall function_1ac3f0(long actor_index)
 // Round 128: native slot data block 35; data block with early draws 43; first/second/both timer
 // writers 70/35/70; early data receiver 46; initialized early exit 48; later initialized
 // publication 38. Seed retention and first scale pop remain.
+// Round 138: shared seed pointer/record 58/58; shared clock alone/with seed 35/46; common rate
+// alone/with seed 86/91; first conversion input and second output entry homes 35/35.
+// Intermediate seed store and early scale pop remain.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -654,6 +661,9 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // Separate continuation, word/native with arms/conditional: branch 55/58/56/59; entry
 // 55/58/56/59 (three-point gain rejected). Tag/prop/state inline and noinline declarations,
 // singly and together, 58 each. Independent default reload and saved roles still differ.
+// No else (entry default kept) 55; invalid test first without else 55; slot cast at each use 58;
+// split 0xe tests 58; nested property/element tests 58; result first 58; state first 58;
+// inverted tick test 60.
 // Actor readonly/reference, element readonly/reference, readonly pair, native input
 // pair, state reference and all record references: 58 each; default reload and saved roles remain.
 // @retail 0x1ad5b0
@@ -755,7 +765,6 @@ s_slot_handler_2 g_47dc88 =
 void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
-
 // score 174 (was 174): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
 // Result first 203; request outer scope 187; role names 181; shared point differences 179;
 // failure result before release 207; shared cross product 174.
@@ -765,6 +774,9 @@ bool function_1f8660(long arg_0);
 // Short/native-long success 232/228; unsigned selection count 174; native zero/kind request
 // initialization 172/173; status-output name 174; const tag input 174; request through validation 174;
 // success from availability 217; direct exits with failure retained through release 232.
+// Round 358: Entry selection outputs 174; complete vector role names with cross output 174; failure-default
+// success paths 215; combined work guard 174; positive tag work 174. Actor/result/count and direction homes
+// remain in frame 0x80c; opening body restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
@@ -1071,6 +1083,9 @@ struct s_1ac9e1
 // Actor readonly/reference 48/48; readonly location and direct reference comparison 48/48;
 // query-outcome flags alone/with actor record 88/88; nested endpoint guards and named
 // direction length 48/48. Count/completion and history exit reload still differ.
+// Round 138: query-only output scope 126; entry result 48; both 126; fallback result flags 48;
+// query scope with result flags 126; explicit direction stores 50; scope/direction 136; entry
+// result/direction 50. Count and completion byte lifetimes remain.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)

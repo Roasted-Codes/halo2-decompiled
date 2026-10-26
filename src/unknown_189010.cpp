@@ -148,7 +148,8 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
-// score 118 (was 118): Frame 0xa8 and EAX request agree; first class lookup expansion and flag/result homes remain.
+// score 118 (was 118): Frame 0xa8 agrees; first class lookup expansion and flags/result homes remain.
+// Frame 0xa8 and EAX request agree; first class lookup expansion and flag/result homes remain.
 // Word flags 158; index-order variant guards 134; flag11 field store 134; combined location mask 118 kept
 // plain; original priority observation 133.
 // Earlier 134 (was 149): Frame 0xa8 and request EAX agree; first class lookup expansion and flag/result homes remain.
@@ -170,6 +171,8 @@ static __forceinline long float_to_int_nearest(real value)
 // Late tag receiver 184; branch-assigned result 193; shared marker observation 167;
 // absent-marker-first 165 (below threshold); native short priority and padding memset 176.
 // Round 116: Whole source flags 149; clean state flags 169 (eight caller losses); variant fields before flag 149; audible-first admission 149; post-query marker default 134 kept plain; size conditional 147; looping global reads 130 fast/135 plain rejected; time-global reads 134; size override before copy 134. All 10640 matches preserved by keeper.
+// Earlier 118 (was 134). Whole request/tag/class records and combinations
+// 181/196/228/146/197/215/247; first class record 165. Request/tag copies lose eight callers.
 // Round 124: Consistent variant-pointer field reads 118; disjoint source mask OR 118;
 // conditional optional flags 161 and full flag expression 162 (each loses eight callers, rejected);
 // nested class admission 118; real class-word mask with direct query 135. All body/type trials restored.

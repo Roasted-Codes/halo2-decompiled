@@ -278,20 +278,6 @@ short __stdcall function_1b39e0(long actor_index)
 	return (short)result;
 }
 
-// score 1 (was 1): literal target differs (1.5 versus 1.0); one result 1;
-// result supplies flags 1; byte expression 36; flags after unit 35; unit before copy 46;
-// clear return receiver 63; first/second shared timer rounding 86/63.
-// Before the result, the object-flag byte register and shared tail zero differed.
-// Chained flags 36; direct object flag 93; const property state 36; flags before link 37;
-// flag-pair memset 61; target memcpy 36; duration names 36; accepted state scope 115.
-// score 1 (was 1): only the constant target differs; retained property 155; joint admission 154;
-// admission result 1; retained admission 156; selection result 151; retained selection 144;
-// native state clear 180; constant before timers 35. Numerical value preserved.
-// Separate real timers 8; separate tick results/both pairs/pair scopes 1/1/1;
-// unsigned identifiers 1; long result 149; current-id lifetime 1; early result 27.
-// score 1 (was 1): constant between timers 13; after timers before link 2;
-// after selected call 6; after mode/state/link stores 7/18/21; after flags 23;
-// after unit notification 60. Original constant site restored; numerical value preserved.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
@@ -336,7 +322,7 @@ bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
         }
         local_0->field_4 = (short)local_7;
         local_0->field_0 = local_2;
-        local_0->field_24 = 1.5f;
+        local_0->field_24 = 1.0f;
         function_26c2d0(local_2);
         local_0->field_8 = 2;
         local_0->field_10 = local_4->unknown48;
@@ -420,7 +406,7 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	}
 	return result;
 }
-// score 58 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
+// score 58 (was 58): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
 
 // seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
 // Shared rounding 66; direct scaled rounding 74; separate scaled timer 63; result-first rounding 66;
@@ -435,6 +421,10 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 // const receivers 63; input names 63; actor clear before timer store/conversion 63/63.
 // Native flag memset/value reset 63/58; late receiver with either 63/58; final-accessor resets
 // 60/64; late final-accessor resets 60/64.
+// Native record clear before slot stores/after zero pair/after property/before tick product
+// 58/58/58/58; those placements with shared conversion 64/61/62/61. Opening body restored.
+// Native flag fields/chain, direct/member receivers at final reset 63/63/63/63;
+// the same complete field resets before tick conversion 63/63/63/63.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
@@ -638,6 +628,10 @@ short actor_behavior_find_level(long owner_index, short type);
 // Round 110: radius aggregate 140 plain; redundant zero stores omitted 167; selected actor name 144; movement scope 144; search construction scope 144.
 // Library source clear 144; complete source aggregate 219; unsigned candidate 140, with clear 144;
 // slot state view 140, with clear 144; captured successor 143; aggregate and unsigned candidate 219.
+// Admission-result join 166; typed search buffer 140; both 166; candidate-first distance comparison 140;
+// comparison with admission/buffer/both 166/140/166; native settings initialization 215.
+// Native start/candidate/both/selected location receivers 159/139/161/139;
+// start-selected/candidate-selected/all receivers 158/138/160; all with query-output scope 160.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {
