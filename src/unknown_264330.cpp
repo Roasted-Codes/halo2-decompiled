@@ -428,6 +428,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Shared long/word actor slots 444/441; node slots 429/438; both long 439;
 // long actor/word node 423 (frame 0xa0, exact length); word actor/long node 440; both word 456.
 // On the repaired frame: long/short update 430/429; update predicate 430; single exit 433.
+// Sampled-once acquisition after startup/at traversal/before actor 422/422/420; startup plus later
+// node flags 422; completed-sample name 420; separate/reversed node flag declarations 420/422;
+// startup plus reversed flags 424.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {

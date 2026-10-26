@@ -1165,6 +1165,9 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // native initial-window count/first with short/bool/byte/signed-byte results give 269/278/274/274.
 // Independent bool/byte/short/long completion with literal returns 210/210/193/255;
 // with separate callback results 206/206/189/253. All reverted.
+// On common-failure result: oldest after/before result and result before receiver 229/229/229;
+// shared initial newest with oldest-first/newest-first 202/202; oldest plus readonly types/stream
+// helper/unsigned byte total 229/229/229.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {

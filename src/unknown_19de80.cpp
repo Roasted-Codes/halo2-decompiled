@@ -326,6 +326,9 @@ static inline bool teams_enabled_19e1c0()
 // Ordinary short/long return forms 430/432; both small gains discarded.
 // Private player/team/all-name/all-text buffers 434/433/412/433; the 412 form
 // adds 512 frame bytes and is rejected. Ordinary result with those scopes 692/692/686/701.
+// Name event-first/player complete guards/all event-first/all complete event guards
+// 475/460/430/480; ordinary result with the same four dispatch forms 716/680/718/697. The
+// three-point 430 form is ineligible; all restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {
