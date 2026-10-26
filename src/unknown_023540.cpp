@@ -371,21 +371,26 @@ extern real g_4b8940[9], g_4b8964[9], g_4b8988[9];
 void function_022750(real const *a, long size, real const *b, real *out, real t);
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result);
 
-// score 252 (was 258): frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
+// score 237 (was 237): frame 0x80/0x68, axis/trig homes and rolled coefficient calls remain.
+// Earlier trials: frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
 // Sample cursor 258; sine-scaled axis 259; diagonals first 288; elapsed snapshot 258; size optimization 397.
 // frame 0x7c versus 0x68; axis/trigonometric homes and rotation-call layout differ.
 // Complement at use 264; reused axis squares 252; coefficient countdown 273;
 // contiguous payload reset 286; conditional phase clamp 258.
-// score 243 (was 252): frame, axis/trigonometric homes and rotation-call layout remain;
+// Earlier trials: frame, axis/trigonometric homes and rotation-call layout remain;
 // native coefficient array 258; payload clears first 257; late axis squares 258;
 // reused mixed-axis products 243; entry result buffer 252; source pointer before reset 250.
-// score 237 (was 243): Frame 0x80 versus 0x68, axis/trigonometric homes and rolled
+// Earlier trials: Frame 0x80 versus 0x68, axis/trigonometric homes and rolled
 // coefficient calls remain. squares between trig 256; paired mixed products 265; cosine
 // before sine 242; scalar sine products 237; single sample exit 243; sines with squares
 // between trig 272; sines with paired mixed products 242; sines with cosine before sine 239;
 // short table field 243; sines with axis field reference 255; sines with angle field
 // reference 257; sines with input field references 273.
 // Frame 0x7c versus 0x68 and axis/trig/call homes remain; on reused square/mixed products: direct axis 300; direct angle 264; both 284; native coefficient index 257; geometry scalar scope 243. Reduced callee caveat; no keeper.
+// Selective sine i/j/k at uses 245/235/243; pairs ij/ik/jk 243/249/243;
+// selective mixed ji/ki/jk 248/248/231; sine-j with mixed ji/ki/jk 229/250/245.
+// (sine-j and mixed-ji written out at their matrix uses gave 229; not kept: two of six parallel locals inlined.)
+// Direct axis/angle/both on this product context 274/252/274 fast (callee caveat).
 // @retail 0x22850
 void function_22850(void)
 {
@@ -2659,11 +2664,14 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 348 (was 374): frame 0x58 agrees; stage-call convention and constants differ.
+// score 348 (was 348): Frame 0x58 agrees; stage constants/call convention and UV/trig homes still differ.
+// Existing helper producers: x rotation 348; y rotation 424; both 464; x scaled 348;
+// y scaled 424; both scaled 464; both biased 465; output-first rotations 464. Original helper retained.
+// frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
-// score 348 (was 348): Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
-// score 348 (was 348): Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
+// Frame 0x58 and retail length agree; stage constants/call convention and UV/trig homes remain. Early texture scales 416; native UV pairs 348; conditional dimensions 395; shared alpha clamp 348; unsigned-word stage 493 (fast).
+// Frame 0x58 agrees; stage constants, bitmap call and UV/trig homes differ. Tried word
 // dimensions 460; long dimensions 478; word width 444; word height 430; height first 352; word dimensions height
 // first 460; long dimensions height first 478; word width height first 444.
 // @retail 0x29b00
@@ -2976,22 +2984,25 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 978 (was 978): frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
+// score 971 (was 971): Frame 0x2c agrees; capability/save roles and state expansion remain.
+// frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
 // eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
-// score 971 (was 978): frame 0x2c agrees; saved registers, mode flags and state expansion differ.
+// frame 0x2c agrees; saved registers, mode flags and state expansion differ.
 // Inner depth pairs removed 1212; direct texture API 983; dispatch defaults 1224;
 // normalization after dispatch 984; four-use alpha snapshot 971.
 // Byte capabilities 1086; rescale-state name 978; case three first 978;
 // short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
-// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
-// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Initial state helper 1179; normalized bounds 985; split zero defaults 942 discarded; dispatch lifetimes 971; branched depth result 971; shared cutoff default 1055 (fast).
-// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Shared mode-
+// Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
+// Frame 0x2c agrees; capability/save and state expansion remain. Initial state helper 1179; normalized bounds 985; split zero defaults 942 discarded; dispatch lifetimes 971; branched depth result 971; shared cutoff default 1055 (fast).
+// Frame 0x2c agrees; capability/save and state expansion remain. Shared mode-
 // two/three tail 1153; redundant case defaults removed 1193; common exponent outputs 1365; second
 // packed color shared 1101; byte fraction 971 (fast).
 // Frame 0x2c agrees; capability/save roles, state expansion and
 // color/quantizer homes differ. Word success 1194; unsigned exponent 1197; mode decision chain
 // 1084; word color input 971; word alpha input 1181 at retail length.
+// Capability declaration/name order 971/971; late rescaling flag 971; native color aggregates 971;
+// conditional-update shared clamp 1207 (fast). Original body and shared clamp retained.
 // score 971 (was 971): round 106: Frame 0x2c agrees; capability/save and state expansion remain. Packed range clamp 1199; early exponent lifetime 1201; shared gain divisor 1194; late input selectors 1204; late clipped width 970 (one-point gain rejected).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,

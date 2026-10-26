@@ -28,12 +28,20 @@ static inline long unit_get_current_weapon(long unit_index)
 	return result;
 }
 
-// score 22 (was 22): primary compare/load sharing and fallback handle transfer differ.
+// score 22 (was 22): primary link observation and fallback handle transfer still differ.
+// Earlier: primary compare/load sharing and fallback handle transfer differ.
 // ordinary shared weapon query/nested gate 37/37; primary expression/index 36/37;
 // fallback index/direct exit 37/45; force-inline private query/read-only actor 37/37.
 // primary link compare/reread and fallback handle transfer differ.
 // Ordinary primary reads 37; ordinary guard/lookup alone 22/22; conditional primary 28;
 // direct fallback output 49; primary success output 45; success before fallback 34; integer result 22.
+// Earlier: primary observation and fallback register transfer remain.
+// Inner result first with ordinary/original reads 39/22; native/unsigned
+// inner result 37/37; wide slot 47; inner both arms/selection 47/47;
+// inner entry result with direct fallback 45.
+// object input 37; readonly object input 37; object reference input 37; native slot 44;
+// reference and native slot 44; object result arms 47; object result first 37;
+// reference result first 37.
 // @retail 0x1e1f20
 long function_1e1f20(long actor_index)
 {
@@ -69,6 +77,9 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 // Inner entry result/both-arm assignment 20/20; absent slot return 19;
 // inner slot selection 20; inner sentinel early exit 19; readonly unit 20;
 // two result lifetimes 24; absent unit input return 22.
+// score 20 (was 20): base folding and separate outer sentinel remain.
+// Actor/object/both query force-inline 20/20/20; separate secondary call 66;
+// native outer/inner result 20/20; unsigned inner/outer result 20/20.
 // Unit pointer/readonly boundary 20/20; actor query boundary 27; actor result
 // first/from tests 30/27; slot sentinel result 27; actor slot sentinel 27;
 // unit and slot sentinel results 31.
@@ -636,9 +647,16 @@ void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
 // score 290 (was 290): frame 0x20 agrees; actor-offset storage, cleanup counter and slot reloads differ.
+// frame 0x20 agrees; early actor-offset retention and cleanup/slot homes differ.
+// Final actor lifetime 290; actor/prop-handle names 290/290; byte/signed-byte cleanup 301/301;
+// native memory cursor with fresh lookup 344; final lifetime plus actor name 290; direct stop member 290.
+// frame 0x20 agrees; actor-offset storage, cleanup counter and slot reloads differ.
 // Ordinary actor/iterator locals 330; direct parameters 330; guarded callback 324; fresh memory lookup 291;
 // live memory-slot reads 326; slot reuse at lookups 301; callback plus fresh lookup 290; direct combined
 // parameters 290.
+// score 290 (was 290): actor offset retention, fresh memory-slot reads and cleanup homes remain.
+// Short cleanup index 301; pretested cleanup loop 560; entry iterator declaration 290;
+// direct current-slot store 290; ancestor failure-first continuation 290. Original body retained.
 // Fresh-lookup live slots 300; unsigned cleanup index 290; iterator local home 290; Boolean bit
 // test 290; native masked slot 308.
 // @retail 0x1e1a00

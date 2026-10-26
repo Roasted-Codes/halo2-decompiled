@@ -363,7 +363,9 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
-// score 195 (was 226): the register allocation differs from the first block
+// score 195 (was 195): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// the register allocation differs from the first block
+// the register allocation differs from the first block
 // on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
 // round), and our seat loop keeps secondary and primary in xmm1/xmm2 across
 // iterations where retail compares them in memory and reloads them after the
@@ -380,9 +382,16 @@ real function_30bf0(vector3f *vector);
 // and `secondary < a` compares (no change).
 // Tried at 226 (lane): qualified long result 226; qualified byte result 232; long seat count 240;
 // long seat index 226; shared seat-element pointer 226.
-// score 195 (was 195): Frame/result and inverse SIMD homes remain. Ordinary short result 250; ordinary long result 250; delta initializer 221; motion initializer 221; plane scope 221 (fast, each with the seat increment in the body).
-// score 195 (was 195): Frame/result and inverse SIMD homes remain. Fraction reuse 211; plane distance first 304; cursor displacement 271; threshold defaults 265; reverse delta assignments 233 (fast; seat increments in body).
-// score 195 (was 195): Frame 0x350 agrees; result/range homes, inverse SIMD groups and threshold reloads remain. Early range square 266; scaled-range square 221; threshold maxima 221; bounded seat end 245; plane initializer 221 (fast; seat increments in body).
+// Frame/result and inverse SIMD homes remain. Ordinary short result 250; ordinary long result 250; delta initializer 221; motion initializer 221; plane scope 221 (fast, each with the seat increment in the body).
+// Frame/result and inverse SIMD homes remain. Fraction reuse 211; plane distance first 304; cursor displacement 271; threshold defaults 265; reverse delta assignments 233 (fast; seat increments in body).
+// Frame 0x350 agrees; result/range homes, inverse SIMD groups and threshold reloads remain. Early range square 266; scaled-range square 221; threshold maxima 221; bounded seat end 245; plane initializer 221 (fast; seat increments in body).
+// Direct secondary/primary/both query outputs 230/229/214; previous-value order 215;
+// previous values before basis 230; loop-scoped previous values 214;
+// up after normalization 221; direct outputs with later up 214. All with body cursor step.
+// Earlier trial set: Frame/result and inverse SIMD homes remain. Ordinary short result 250; ordinary long result 250; delta initializer 221; motion initializer 221; plane scope 221 (fast, each with the seat increment in the body).
+// Earlier trial set: Frame/result and inverse SIMD homes remain. Fraction reuse 211; plane distance first 304; cursor displacement 271; threshold defaults 265; reverse delta assignments 233 (fast; seat increments in body).
+// Earlier trial set: Frame 0x350 agrees; result/range homes, inverse SIMD groups and threshold reloads remain. Early range square 266; scaled-range square 221; threshold maxima 221; bounded seat end 245; plane initializer 221 (fast; seat increments in body).
+// Round 138: clipped vector/in-place/receiver 276/276/276; read-only actor/occupant 195/195; facing value 258; both values 311; motion square 229.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1121,6 +1130,10 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // decay result 398; delta before conversion 100; smoothing value samples 345; sampled early delta
 // 389; native rounded count 99; stored width rounded count 396; branch decay late delta 394;
 // sampled branch decay 402; ordinary conversion inline 373; branch exponent result 416.
+// score 99 (was 99): the tick-rate conversion is hoisted above the decay test (both arms start the
+// same); the vector homes offset/ahead/target/direction are offset/direction/ahead/target here.
+// Ticks ternary 99; rounding of a ternary 170; 0.25 first 99; negated test 103; a seconds-to-ticks
+// helper for both or one arm 99; vector local names 99; vector declarations moved 99.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
@@ -1552,6 +1565,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 }
 
 // score 684 (was 684): frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// frame 0x7c versus 0x80; saved link/predicate homes and expanded conversion calls remain.
 // Conditional facing 731; wide best level 701; direct parameter 701; shared difference 705;
 // wide retention 704; live relative inputs 695; native velocity copy 695; early defaults 755;
 // phase defaults 752.
@@ -1568,6 +1582,11 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
 // Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
 // Matrix component loop 721; direction component loop 711; relative component loop 696; traversal-scope contact handle 702; traversal-scope tick threshold 702 (fast control 702); relative loop 714 plain, rejected.
+// Earlier 684 (was 695): Frame, saved-link homes and expanded tick conversions remain.
+// Earlier 684 (was 684): Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
+// Earlier 684 (was 684): Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
+// Round 112: Long visible 683 (one-point gain dropped); long positive 710; long close 727; long
+// very-close 699; combined state/view guard 705; ordinary actor input in all.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

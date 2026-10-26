@@ -150,7 +150,10 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 194 (was 229): frame 0x40c versus 0x408; string zero, cursor and
+// score 194 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
+// Earlier 194 (was 229): frame 0x40c versus 0x408; string zero, cursor and
+// frame 0x40c versus 0x408 and tag/language/string-cursor homes remain.
+// Earlier: frame 0x40c versus 0x408; string zero, cursor and
 // counter allocation remain. Shared output cursor 221; native array cursors 229;
 // independent string counters 221; direct countdown points copy 226;
 // shared cursor, independent counters and countdown copy 194.
@@ -161,8 +164,14 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // independent countdown output cursors 228; shared remaining-string counter 228.
 // Simultaneous output cursors 226; native string-array end bounds 263; shared increasing counter 194; score-array cursor 210; points-array end bound 191; shared counter/end bound 191; simultaneous cursors/end bound 222.
 // score 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
+// Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Tried string workspace scope 211; masked list index 217; byte string counters 194; independent
 // score counters 194; score upper clamps 226; unsigned score counter 194.
+// Round 109: Complete point memcpy 217; role-named buffer/counters 194; whole wide-buffer zero 248 (three sibling losses); direct list field 212; independent named cursors 194.
+// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
+// Explicit language last/first 194/194; explicit-language ordinary inline 433;
+// original lookup/table/both ordinary inline 481/194/481; readonly language inputs 194;
+// native wide workspace 194. Original lookup helpers, contracts and body restored.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -282,15 +291,23 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
-// score 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
+// score 186 (was 199): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
+// Earlier 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
 // adds a save and shifts settings homes; constant argument pushes also differ.
 // Native zero initialization 199; complete aggregate values 307; grouped
 // place cases 204; case returns 203; zero initialization and grouping 206.
+// score 186 (was 199): extra EBX save and settings homes remain; native leading
+// defaults for type-four/type-five/both/team/type-four-team/type-five-team/all
+// 229/216/241/204/233/224/249; longer type-four prefix 258.
 // Native settings memset 203; Boolean fields first 200; shared type-four
 // workspace 206; equal-place assignment chain 199; team case first 218.
+// Round 109: Type-four padding-only clear 272; team padding-only clear 204; complete type-five assignment 228; all three forms 301; distinct native case settings names 199.
+// Round 111: Type-five/team/place native scopes 189/196/199; reverse type-four stores 204; type-four cases first 220; combined native scopes 186 kept; type-five value initialization alone/combined 193/190; combined lexical home 186; combined reversed stores 191.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
+	s_variant_type5_settings type5_settings;
+	s_variant_team_settings team_settings;
 	memset(variant, 0, sizeof(*variant));
 	switch (index)
 	{
@@ -346,32 +363,32 @@ void function_193c70(s_built_variant *variant, long index)
 	}
 	case 4:
 	{
-		s_variant_type5_settings settings = {0};
-		settings.team_size = 2;
-		settings.first_team = 3;
-		settings.last_team = 4;
-		settings.field_c = 0;
-		function_193c00(variant, 0x1a0007ac, 0x200007ad, 0x19, &settings, 0x1d4c0);
+		memset(&type5_settings, 0, sizeof(type5_settings));
+		type5_settings.team_size = 2;
+		type5_settings.first_team = 3;
+		type5_settings.last_team = 4;
+		type5_settings.field_c = 0;
+		function_193c00(variant, 0x1a0007ac, 0x200007ad, 0x19, &type5_settings, 0x1d4c0);
 		break;
 	}
 	case 5:
 	{
-		s_variant_type5_settings settings = {0};
-		settings.team_size = 2;
-		settings.first_team = 6;
-		settings.last_team = 8;
-		settings.field_c = 2;
-		function_193c00(variant, 0x180007ae, 0x1e0007af, 0x1a, &settings, 0x1d4c0);
+		memset(&type5_settings, 0, sizeof(type5_settings));
+		type5_settings.team_size = 2;
+		type5_settings.first_team = 6;
+		type5_settings.last_team = 8;
+		type5_settings.field_c = 2;
+		function_193c00(variant, 0x180007ae, 0x1e0007af, 0x1a, &type5_settings, 0x1d4c0);
 		break;
 	}
 	case 6:
 	{
-		s_variant_team_settings settings = {0};
-		settings.team_size = 2;
-		settings.first_team = 2;
-		settings.last_team = 4;
-		settings.flag_c = true;
-		function_193b30(variant, 0x190007b0, 0x1f0007b1, 5, 0x7530, &settings, 0x249f0);
+		memset(&team_settings, 0, sizeof(team_settings));
+		team_settings.team_size = 2;
+		team_settings.first_team = 2;
+		team_settings.last_team = 4;
+		team_settings.flag_c = true;
+		function_193b30(variant, 0x190007b0, 0x1f0007b1, 5, 0x7530, &team_settings, 0x249f0);
 		break;
 	}
 	}

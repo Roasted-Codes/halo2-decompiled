@@ -111,9 +111,16 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 113 (was 121): frame 0x0c versus 0x10 and properties/buffer
+// score 109 (was 113): frame 0x0c versus 0x10 and properties/buffer
 // register/stack split remain. Entry cursor 125; property cursor 135;
 // per-record property counts 113; count homes 121; cursor/count combination 132.
+// Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
+// short property ordinal 114; ordinal names 113; early four-property accounting 109 kept;
+// split first/three accounting 109. Reported length is now 352/352.
+// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// Entry cursor 125; property cursor 135;
+// Count-indexed record/buffer/both outputs 129/113/128; scalar-identifier induction 113;
+// identifier with record/buffer/both indices 114/114/113 (each 352 bytes); shared final total 151.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -145,6 +152,8 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 			buffers += 0x40;
 			buffer_capacity--;
 			buffers_used++;
+			property_capacity -= 4;
+			properties_used += 4;
 			for (long j = 0; j < 3; j++)
 			{
 				*(short *)&properties[j].unknown00 = (short)(j + 2);
@@ -152,8 +161,6 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 				properties[j].unknown08 = 0;
 			}
 			properties += 3;
-			property_capacity -= 4;
-			properties_used += 4;
 		}
 	}
 	if (record_count)
@@ -748,13 +755,17 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 243 (was 243): frame 0x0c agrees; removed-index registers, upper
+// score 243 (was 243): Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy induction differ.
+// Paired range arms 373;
+// frame 0x0c agrees; removed-index registers, upper
 // bound selection and copy-loop induction remain. Paired range arms 373;
 // native FILETIME 314; short adjustment 300; unsigned repair counter 364;
 // range/time/short combination 375; native time and short adjustment 357.
 // Three relative-position cases 243; early bounds 377; explicit upper bound 361;
 // forward destination index 366; reverse destination index 360; widened
 // global-index adjustment 358.
+// First removal-call acquisition 243; real repair-table cursor 819; short repair counter 819;
+// long direction flag 244; equality-first cases 243; forward CRT memmove 385.
 // Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
 // Paired signed min/max 302; independent bound overrides 362; forward entry cursor 369; reverse entry cursor 394; both entry cursors 406.
 // Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
