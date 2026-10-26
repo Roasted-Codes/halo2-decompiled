@@ -106,6 +106,9 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // On recovered frame: unused/direction/both formal carrier removals 409/408/409; normalized-point
 // name/all point homes 408/408; early evaluation/angle workspace 408/408; dead-carrier removal with
 // point names 409.
+// Existing endpoint helper at negative/positive/both outputs 408/409/409; rounded distance/projection/ratio
+// in double 442/444/445; native velocity fields 408; indexed endpoint observations 458. Entry loads,
+// XY/magnitude homes and 0x18 versus 0x1c cleanup remain.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)

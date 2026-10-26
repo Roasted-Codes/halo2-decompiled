@@ -1187,6 +1187,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Existing open API, file-element reference, both 165/165/165; open API with
 // constructed write/read/both headers 165/165/165; handle-field pointer 165;
 // native file and both headers 165. Shared API emits the same request code.
+// Split file-base/element advance 165; file pointer name 165; wait/header/both forceinline 165/165/165;
+// empty path 205; initialized write count 204; initialized resize result 215. File-displacement and
+// request/I-O setup remain.
 // @retail 0x213970
 void function_213970(void)
 {

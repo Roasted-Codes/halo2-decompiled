@@ -221,6 +221,8 @@ extern "C" void _ReadWriteBarrier(void);
 // Strict/loose/both endpoints 50/46/46; converted strict alone/with loose 50/46;
 // endpoints with total/current/both progress snapshots 46/46/46; count-first/observed fill 50/48.
 // Kept the loose endpoint for interpolation and fallback; plain check 46 at 336/336 bytes.
+// Returned/result/conditional score helper 99/99/99; enabled/disabled/both chained flags 48/48/50; shared
+// result-buffer size 93; request workspace name 46. Current/bound allocation and request scheduling remain.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
