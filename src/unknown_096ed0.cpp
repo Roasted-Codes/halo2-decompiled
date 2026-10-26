@@ -24,6 +24,7 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // index 217; shared callback outputs 224; all-ready predicate 220.
 // Remaining capacity 262; failed-query counts 239; size accumulation first 229;
 // separate chain size 239; capacity/count/size combination 272.
+// Pending/active/both counted while 217/217/294; pending/active unsigned chain index 217/217; shared dispatch and chain aggregation 340.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -744,6 +745,8 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // pair-pointer cleanup 206; payload-before-info declaration 204.
 // Count-bearing descriptor aggregate 208; update case first 211; persistent descriptor 204;
 // native high nibble 207; total-only lexical order 204.
+// Count-first declarations 205; entry-scope advancing cursor 217; produced before descriptor clear
+// 205; existing release helper 207; native kind with both initialization changes 212.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {

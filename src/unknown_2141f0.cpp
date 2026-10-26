@@ -79,16 +79,17 @@ void cache_copy_forget(char const *map_name);
 bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
-// score 374 (was 471): Frame 0x110 agrees; request-copy homes and by-value write-option setup still differ.
+// score 367 (was 367): Frame 0x110 agrees; request-copy homes and by-value write-option setup still differ.
 // Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion states 433.
 // Signed-word dependency index 446; unsigned index 446; explicit existing write flags 453;
 // terminal snapshot assignment 433; adjacent write-header cases 434.
 // Completed-request/result names 433; direct selected-file calls 440; direct size predicate 374;
 // header-result branches 413; terminal disposition tests 434; adjacent state clears 439;
 // direct size predicate plus header-result branches 382.
-// score 367 (was 374): frame 0x110 agrees; request-copy homes and outgoing write options remain.
+// frame 0x110 agrees; request-copy homes and outgoing write options remain.
 // Direct initial slot 393; failed publication first 473; terminal case first 467; signed-word
 // state 572; dependency-time cursor 367 kept (1712/1720 bytes); cursor-end bound 375.
+// Cursor/count while 469; unsigned cursor ordinal 367; native unsigned state 367; dependency file pointer 445; pointer plus while 479.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
