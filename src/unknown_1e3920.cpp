@@ -1561,11 +1561,14 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return result;
 }
 
-// score 288 (was 299): Frame 0x18 versus 0x14; actor/pool registers and scalar/ammunition homes remain.
+// score 284 (was 288): Frame 0x18 versus 0x14; actor/pool roles and scalar/ammunition homes remain.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
 // Round 115: Probability field reads 288 kept (plain); delay field reads 292; weapon array initializer 299; initial lookup scope 299; increased-probability selection 299; both field clamps 291.
+// Round 124: Signed tick result 288; weapon-array cursor 302; empty-weapon continue 288; group handle 290;
+// consistent minimum field reads 284 kept plain; with word random or unsigned-word ordinal 284/284;
+// with native long ordinal 328; lower-default probability join 288, with minimum reads 284.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1639,11 +1642,10 @@ void function_1e2a90(long actor_index)
 							fraction *= 0.5f;
 						function_101a10(weapons[i], fraction);
 					}
-					short minimum = *(short *)(weapon_options + 0x94);
-					if (minimum > 0 || *(short *)(weapon_options + 0x96) > 0)
+					if (*(short *)(weapon_options + 0x94) > 0 || *(short *)(weapon_options + 0x96) > 0)
 					{
 						dword random = _random(&g_4e7408->unknown0, NULL, 0);
-						short rounds[2] = { (short)((((short)(*(short *)(weapon_options + 0x96) + 1) - minimum) * random >> 16) + minimum), 0 };
+						short rounds[2] = { (short)((((short)(*(short *)(weapon_options + 0x96) + 1) - *(short *)(weapon_options + 0x94)) * random >> 16) + *(short *)(weapon_options + 0x94)), 0 };
 						if (g_4e6948->state == 1 && g_4f55e0)
 							rounds[0] = (short)(rounds[0] * 0.5f);
 						function_1018b0(weapons[i], rounds);
