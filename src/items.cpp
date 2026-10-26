@@ -1215,7 +1215,8 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 	function_10cf80(&velocity, object_index, false);
 }
 
-// score 154 (was 154): frame 0xac agrees; release RMW/tail, event homes and location-call setup remain.
+// score 154 (was 154): Frame 0xac agrees; release-byte RMW/tail, event homes and protected location-call setup remain.
+// Earlier 154 (was 154): frame 0xac agrees; release RMW/tail, event homes and location-call setup remain.
 // Earlier 182 (was 182): frame 0xac agrees; release-byte clears, vector-tail sharing
 // and event-point homes differ; impulse loop 182; damping loop 182; both loops 182;
 // source-vector reference 182; owner/request at entry 184.
@@ -1258,6 +1259,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // common contact/event point at entry or active scope 201;
 // native tag plus common point 201. Complete tag, helper and body restored.
 // Native state-byte/countdown/both field references 200/200/200; damage-key reference 154; state/key, countdown/key and all three 200 each; surface-contact expression 200. Original release and event code restored.
+// Round 140: eight caller-only declaration/canonical-call forms tie 154 and are excluded diagnostics. Eight
+// coordinated callee declarations (point, matrix, owner, parent, effect and combinations) all 154; owner forms
+// lose a reduced control. Every caller/provider declaration and executable body restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

@@ -227,9 +227,9 @@ public:
     virtual real function_248763() = 0;
 };
 
-PRIVATE __forceinline real function_248765(s_function_data const *arg_1)
+PRIVATE __forceinline real function_248765(s_function_header arg_1)
 {
-    return arg_1->header->type == 0 ? arg_1->header->minimum : 0.0f;
+    return arg_1.type == 0 ? arg_1.minimum : 0.0f;
 }
 
 PRIVATE __forceinline real function_248766(s_function_data const *arg_1)
@@ -243,7 +243,8 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 174 (was 174): Frame/input carriers, range lowering and selective selector expansion remain; caller preserved.
+// score 163 (was 174): Frame 0x28 versus 0x20, input carriers and selective selector expansion remain; caller preserved.
+// Earlier 174 (was 174): Frame/input carriers, range lowering and selective selector expansion remain; caller preserved.
 // Earlier 174 (was 174): Frame/input registers and selective selector expansion remain.
 // Frame 0x1c versus 0x20, input registers, range classification and final selector expansion remain.
 // Earlier 174 (was 174): Frame/input registers and final selector expansion still differ; eight new reader trials restored.
@@ -295,6 +296,9 @@ public:
 // Lower-preserving, upper-preserving and explicit two-arm range results, both reader orders, 174 each;
 // single shared accumulated-maximum conditionals, both reader orders, 174 each. Direct selected-branch
 // updates 169/169 rejected for duplicate update code. Original shared reduction restored.
+// Round 140: native range values lower/upper/both 166/182/178; native header values lower/upper/both
+// 163/177/152; both range/header inputs with ordinary inline 178/152. Both-header 152 forms reject for caller
+// 308 to 369; lower-header-only kept, plain 163 with caller 308.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
@@ -312,7 +316,7 @@ void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte 
         if (local_2 < arg_0->unknown30)
         {
             s_247143 const *local_5 = &(*(s_247143 const **)arg_0->unknown34)[local_2];
-            real local_8 = function_248765(&local_5->range);
+            real local_8 = function_248765(*local_5->range.header);
             real local_9 = function_248766(&local_5->range);
             real local_10 = local_8 > local_9 ? local_8 : local_9;
             if (local_10 > local_0)

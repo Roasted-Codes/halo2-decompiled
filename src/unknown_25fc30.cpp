@@ -189,23 +189,27 @@ bool __stdcall function_25dd30(long a, long b)
 	return a == b;
 }
 
-// score 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
-// score 175 (was 175): first vector schedule, geometry registers and score adds remain;
+// score 175 (was 175): Frame 0x30 agrees; initial offset/segment schedule and protected geometry carriers remain.
+// Earlier 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
+// Earlier 175 (was 175): first vector schedule, geometry registers and score adds remain;
 // shared displacement/geometry displacement/bonus result 310/310/313;
 // geometry/sphere/cone score observations 337/310/310; all score observations 337; actual view reference 310.
-// score 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
+// Earlier 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
 // shared component difference at offset/segment/both/fallback 334/343/343/343;
 // sphere/cone/all displacements 368/277/392; existing magnitude helper 175.
-// score 175 (was 175): initial offset schedule and protected geometry carriers remain;
+// Earlier 175 (was 175): initial offset schedule and protected geometry carriers remain;
 // read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
 // 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
-// score 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
+// Earlier 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
 // signed sphere ordinal 1031; unsigned sphere ordinal 1031; count snapshot 175; snapshot with signed
 // ordinal 1031; snapshot with unsigned ordinal 1031; final unit cap 352; final cap with signed ordinal
 // 1023; final cap with count snapshot 352. All restored.
-// score 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
+// Earlier 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
 // sphere 182; readonly cone 175; required-flags field 325; offset/minimum scopes 175/175; enabled-mask gate
 // 175; position and sphere fields 410.
+// Round 140: repeated segment-origin/actor-position/both receivers 356/311/357; sphere-radius receiver 175;
+// radius plus origin/position/both 356/311/357; all three native references 357. Original executable source
+// restored; earlier stacked notes merged.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
