@@ -1253,9 +1253,10 @@ PRIVATE inline long score_string_list_1608e0()
 // frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
 // Viewer field at use 808; team score fields at use 805; player score fields at use 801 (plain);
 // dword flag carrier 808; foreground aggregate construction 805.
-// Round 126: External flag reference 801; reused no-team result 802; player/team/both output cursors
+// External flag reference 801; reused no-team result 802; player/team/both output cursors
 // 811/834/842; chained RGB stores 801; native team-color output 835; existing string-list forceinline 801
 // (fast); all restored.
+// Isolated score-table, row-total, height, fade-row, viewport-height, points-width, clock-width and label-width names 801 each.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

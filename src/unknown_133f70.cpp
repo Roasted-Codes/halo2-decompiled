@@ -120,6 +120,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
 // ordinal 223; wide optional index 214; wide composite mask 192; word cursor
 // before packed mask 154. One-point reduction rejected; original body retained.
+// Count/word/byte, byte/count/word, byte/word/count and word/count/byte
+// declaration orders 154/155/154/155; same offset-step orders 155/156/156/155.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

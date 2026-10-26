@@ -105,7 +105,7 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  return function_30bf0(arg_3);
 }
 
-// score 953 (was 983): Frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// score 953 (was 953): Frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
 // Earlier 1218 from 1259: frame agrees; early EBX save, array/entry allocation and delta reloads differ.
 // Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
 // inline depth one 1259; counted angular residual 1218, kept after plain check.
@@ -122,6 +122,8 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // 1016; equality termination 1016. Word counter fully unrolls; frame grows four bytes.
 // Complete linear coefficient observations 966; angular pair 953 kept (plain); shared limits 1011;
 // linear/angular 980; linear/limits 1065; angular/limits 979; all 1065; all/read-only record 1065.
+// Earlier declarations of vector workspaces local_75, local_37, local_40, local_43, local_50,
+// local_52, local_53 and local_58 each 953.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

@@ -124,6 +124,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // 153/153/153; range publication at consumer 153; copies with late publication 153.
 // Actual table header / five-word entry / three-word range / table-entry /
 // table-range / entry-range / all metadata records / all readonly records 153 each.
+// Final change/tag/mask test orders 155/158/159/158/159; reversed early test 155,
+// reversed middle test 175, both reversed 177.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
