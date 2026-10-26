@@ -1701,14 +1701,15 @@ void __stdcall function_2628f0(long actor_index, s_reference reference);
 
 PRIVATE __forceinline byte *squad_area_get(short palette_index, short area_index)
 {
+    byte *result = NULL;
     byte *scenario = (byte *)g_4e0350;
     if (palette_index >= 0 && palette_index < *(long *)(scenario + 0x168))
     {
         byte *palette = *(byte **)(scenario + 0x16c) + (word)palette_index * 0x38;
         if (area_index >= 0 && area_index < *(long *)(palette + 0x30))
-            return *(byte **)(palette + 0x34) + area_index * 0x88;
+            result = *(byte **)(palette + 0x34) + area_index * 0x88;
     }
-    return NULL;
+    return result;
 }
 
 PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definition, byte *area,
@@ -1729,17 +1730,16 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
     }
 }
 
-// score 344 (was 344): frame 0x30 versus 0x3c; packed references and entry-index schedules differ.
+// score 257 (was 264): Frame 0x3c agrees; count/definition/best/point homes, entry loads and packed reference tests remain.
 // Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
 // native reference indices 350; entry fields at use 344; inline distance call 678.
-// score 305 (was 344): Frame 0x3c agrees; stack homes, entry loads and packed reference tests
-// differ. Native player iterator 305; native entry cursor 316; word validation 305; matching-area
+// Native player iterator 305; native entry cursor 316; word validation 305; matching-area
 // result 315; distance home names 305; field-initialized best 357; area-entry name 305;
 // player-record name 305.
-// score 305 (was 305): Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // Pooled reference 323; entry-block reuse 323; delta workspace 305; shared scan cursor 305; valid
 // actor continue 305.
-// score 264 (was 305): round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
+// Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
+// Lookup result-first single exit 257 plain kept; count-block lexical home 264; definition lexical home 264; outer copied-reference scope 264; byte bounded reference search 274.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2839,6 +2839,7 @@ void function_2011f0(long arg_0);
 // round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
 // round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
 // Short countdown 389; long reuse result 389; loop-scope seat output 383; loop-scope separate actor/object/seat results 383; traversal-scope selected entry 383.
+// Late chain head 385; late accumulated reuse result 390; shared difficulty-zero/one arm 383; first request payload before type 383; chain scalar lexical home 383.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

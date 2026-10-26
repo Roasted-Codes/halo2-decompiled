@@ -178,20 +178,17 @@ void function_268840()
 	function_268c90();
 }
 
-// score 296 (was 296): frame 0x48 versus 0x50; iterator result/exhaustion and
-// player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
+// score 246 (was 246): Frame 0x50 agrees; player-pool/NONE registers, clump/successor homes and child-call carriers remain.
+// Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
 // (the latter four use the current-datum iterator). All body forms restored.
-// frame 0x48 versus 0x50; iterator result and pool homes differ;
 // outer while 296; player while 296; actor for-loop 331; native handle parts 327;
 // proxy-before-unit loads 296. Original body retained.
 // Round 156: depth zero 426; depth one 296; target size 546; byte retention 317;
 // iterator role names 296. Original frame and child traversal retained.
-// score 246 (was 296): the clump datum walk gives retail's loop head; NONE kept in ebx
-// where retail keeps the player pool in ebp, and the current clump's slot differs.
 // Round 173: long expiry result 315; long child-step result 295 (one-point gain rejected);
 // retention if/else 302; existing typed actor fields 296; external player-pool reference 296.
-// Frame 0x48 versus 0x50 and current/exhaustion/player homes remain; child-call carriers differ.
+// Per-clump player pool 258; child-result for-loop 246; integer-byte retention in frame 0x50 247; actor-scope child iterator 246; successor scalar lexical home 246.
 // @retail 0x268c90
 void function_268c90()
 {
