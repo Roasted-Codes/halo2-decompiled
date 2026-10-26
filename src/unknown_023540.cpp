@@ -2420,6 +2420,9 @@ dword __cdecl function_131fc0(real alpha);
 // Unsigned/signed byte flag formals for inverse, inverse plus blend, all flags,
 // and inverse plus combiner flags: 335 each (fast control 335). Original
 // Boolean definition and every declaration restored; no call argument or order changed.
+// Round 164: Common initial alpha packing with ternary/conditional-update/complete
+// raw-result/shared-clamp producers 435/435/431/435; function-entry workspace
+// 435/435/431/435. All regress against fast control 335; original shader graph restored.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
