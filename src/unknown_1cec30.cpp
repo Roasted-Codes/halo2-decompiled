@@ -2163,15 +2163,17 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 {
     vector->m_quad = _mm_setzero_ps();
 }
-// score 137 (was 137): aligned frame 0x34 agrees; normal/velocity XMM roles, early velocity loads and property-zero retention remain.
-
+// score 109 (was 137): aligned frame 0x34 agrees; the normal's loop registers (retail keeps the inverse in
+// xmm1 and scales j, k in place), velocity j/k loaded before its length test, and the property value 0
+// kept in edi across the erase remain.
+// Earlier at 137: aligned frame 0x34 agreed; normal/velocity XMM roles, early velocity loads and property-zero retention.
 // Earlier: the velocity sums in the material loop load the
 // running sum second in retail, and the final scale and its stores are
 // scheduled differently.
 // Round 187: complete contact input/normal sum/both 220/267/463; complete velocity sum 283;
 // symmetric scaled components, separate speed product, material count after store and corrected-boundary speed-first each 137;
 // fallback-first 150; separate normal/velocity/both normalization inputs 443/232/478. All restored.
-// score 137 (was 137): the velocity sums in the material loop load the
+// Earlier at 137: the velocity sums in the material loop load the
 // scheduled differently; initial normal XMM roles also differ.
 // Round 138: native flag byte, signed index, both fields, native bit, bit/index, Boolean bit,
 // Boolean bit/index and readonly native contacts all 137. Normal/velocity XMM roles and
@@ -2179,6 +2181,10 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // Aligned frame 0x34 agrees; normal/velocity XMM roles and final property-zero retention differ.
 // Corrected-boundary compound sums 137; plain axis accumulation 184; byte material count 451;
 // unsigned other count 137; corrected-boundary final shared scale 214.
+// Round 53: velocity sums as running sum plus material vector 131 kept; speed sum declared before
+// the velocity 127 kept; normal scaled j, k, i 109 kept (k, j, i 110; i, k, j 121; j, i, k 124;
+// k, i, j 122; all in place 109); velocity scaled j, k, i as well 109; inlined property setter
+// passing the value as the 0x1cf3b0 setter does 216.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {
@@ -2222,9 +2228,9 @@ void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_ind
     if (!(fabs(length) < 0.0001f))
     {
         real inverse = 1.0f / length;
-        normal.i = inverse * normal.i;
         normal.j = normal.j * inverse;
         normal.k = normal.k * inverse;
+        normal.i = inverse * normal.i;
     }
     else
         normal = *g_4687b0;
@@ -2235,16 +2241,16 @@ void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_ind
             dot3f(&contact->normal, &normal) > 0.25f)
             ++other_contacts;
     }
-    vector3f velocity = *g_4687a4;
     real speed_sum = 0.0f;
+    vector3f velocity = *g_4687a4;
     for (long i = 0; i < material_count; ++i)
     {
         vector3f local_c7c2ff;
         if (!function_181db0(materials[i], &local_c7c2ff))
             local_c7c2ff = *g_4687a4;
-        velocity.i = local_c7c2ff.i + velocity.i;
-        velocity.j = local_c7c2ff.j + velocity.j;
-        velocity.k = local_c7c2ff.k + velocity.k;
+        velocity.i = velocity.i + local_c7c2ff.i;
+        velocity.j = velocity.j + local_c7c2ff.j;
+        velocity.k = velocity.k + local_c7c2ff.k;
         speed_sum += component_surface_length(&local_c7c2ff);
     }
     real velocity_length = component_surface_length(&velocity);
