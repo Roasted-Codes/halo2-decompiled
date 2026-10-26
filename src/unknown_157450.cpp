@@ -946,19 +946,22 @@ bool function_159610(void)
 
 	if (game_engine_get())
 	{
-		double timer = 1.0;
+		real timer = 1.0f;
 
 		if (g_4b9ed8 != NONE)
 		{
 			timer = function_xaee93d()->timers[g_4b9ed8];
 		}
-		if (timer >= 1.0)
+
+		long local_user = g_4b9ed8;
+
+		if (timer >= 1.0f)
 		{
 			long player_index = NONE;
 
-			if (g_4b9ed8 != NONE)
+			if (local_user != NONE)
 			{
-				player_index = g_4e8c20->entries[g_4b9ed8];
+				player_index = g_4e8c20->entries[local_user];
 			}
 			result = true;
 			if (player_index != NONE && engine_player_get(player_index)->unit_index != NONE)
@@ -2419,6 +2422,11 @@ void function_1e9ce0(long player_index, long counter, s_statborg *statistics, lo
 // statistics setup, event scratch rotation and cached options remain;
 // statistics reference/narrow delta 44/44; event-only delta 116; event-mode snapshot 44;
 // combined selection 78; aggregate if arms 50 (retail length); shared index initialization 44; improvement value 57.
+// score 44 (was 44): BLOCKED-BY 0x1e9df0 (its first reads, counter/field/statistics, set the
+// ecx/eax/edx load order here) and BLOCKED-BY 0x1967d0 (the options reload after it follows
+// what the compiler thinks 0x1967d0 writes: a 0x4e6948 store there gives the reload).
+// Statistics getter at the call 109; old score through the getter 111; named score-to-win 44;
+// one change local for all calls 125; early equal-score return 44.
 // @retail 0x15b650
 void __stdcall function_15b650(long team, long delta)
 {
@@ -5040,6 +5048,9 @@ void function_161420(long player_index, real alpha);
 // early return for no intensity 4; fraction straight into intensity 52; noinline
 // 0x161420 declaration 2; a 600 s permuter run (39 tries), none below 2.
 // Wide fraction/intensity/both 101/136/136; independent clamps 2; upper first 8; entry intensity/both scalars 2/2; wide upper-first 136.
+// score 2 (was 2): final fstp/player order remains; force-inline panel declaration 2;
+// power-base/fraction names 2/2; const alpha 2; intensity declared first 2; scoped power 2;
+// power into alpha/assignment expression 2/2; terminal player guard 2; power declared first 2.
 // @retail 0x159880
 void function_159880(void)
 {
@@ -5111,11 +5122,14 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 175 (was 175): frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
+// score 167 (was 167): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// reset/scheduling/both displacement producers 175/167/175; outer short index 167; outer countdown
+// pointer 167; pointer with reset/scheduling/both 175/167/175.
+// frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
 // reset-counter pointer 198; scalar reset counter 204; two-mode if dispatch 172;
 // nonpositive countdown skip 175; size optimization 298; if dispatch with bool schedule 195.
-// score 175 (was 175): Frame 0x14 versus 0x18; timer/base homes and scheduling joins remain. Native placement record 175; named time slice 175; mode case order 175; explicit real defaults 175; positive slice guard 175 (fast).
-// score 167 (was 175): frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
+// Frame 0x14 versus 0x18; timer/base homes and scheduling joins remain. Native placement record 175; named time slice 175; mode case order 175; explicit real defaults 175; positive slice guard 175 (fast).
+// frame 0x14 versus 0x18, timer/base homes and schedule joins remain;
 // type result before engine 167f/plain; engine consumer scope 167f;
 // timer reference / read-only object / scheduling handle / entry-test result / distance results / combined 175/175/175/175/175/175f.
 // Round 173 on the retained query-result order: external entry reference 221; mode if dispatch

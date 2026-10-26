@@ -1188,6 +1188,9 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
 // Round 127: validated query index 99; sampled-point result 128; both 136;
 // enclosing point lifetime 128; branch-local last body 2; last body with query index 99;
 // named validation 2; validation with query index 99.
+// score 2 (was 2): returned EAX/body-load order remains; const point 18; returned reference 128;
+// address of returned point/direct body 2/2; clamped body 99; early normal 2; workspace fields 5;
+// samples name 2; early normal with const point/direct body 18/18.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {
@@ -1661,7 +1664,10 @@ struct s_candidate_unit_definition
 // geometry-call convention and exchanged failure exits remain; native
 // flag/limit/adjacent clears 216/152/199; direction memcpy 18; clear plus copy 216/152/199;
 // branch-zero clear 199.
-// score 11 (was 11): frame 0x10 and length agree; geometry query takes a stacked object instead of ECX.
+// score 11 (was 11): query stack/register boundary remains; object-last interface 15;
+// object-last stdcall/inline/both 15/15/15; original inline/stdcall 11/11;
+// reordered query outcome/entry axis 126/15. All query interfaces restored.
+// frame 0x10 and length agree; geometry query takes a stacked object instead of ECX.
 // Query noinline 11; combined rejection/acceptance 18 each; output/marker references 11 each;
 // named type mask 11; result after initialization 16; direction producer home 196;
 // unconditional successful tail 11. Experimental declaration and receiver aliases restored.
@@ -1828,6 +1834,11 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // score 85 (was 85): frame 0xf0 agrees; query carriers and optional matrix conversion remain;
 // native marker value before/after query 100/110; library copies 100/110; native query width
 // 126/128; shared descriptor 100; late copy with shared outputs 110.
+// score 85 (was 85): query base/offset and accepted-count/selector registers remain.
+// Complete query inline 85; nullable-record query inline/outlined, geometry/weight/both/all/outlined contracts 13 each;
+// loop/iteration list 165/11; shared candidate 13; iteration/loop list with candidate 11/165; const/native query list 11/11; native query candidate 13;
+// list accepted count after/before 11/11; list next count 127; post-query marker advance 11, with accepted counts 11/11;
+// marker advance with next count/candidate-next 123/127. Loop-wide lists lose the matched caller; every nullable selector remains exact-only and is rejected.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)

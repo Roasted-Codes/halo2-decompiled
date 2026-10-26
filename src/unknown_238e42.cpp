@@ -353,7 +353,8 @@ extern long g_51ec0c;
 
 /* joins the friend's game (mode 1 to 4: how a squad already formed comes
    along) */
-// score 80 (was 80): Cold state/mode blocks precede the main join block; body remains twelve bytes short.
+// score 80 (was 80): frame 0x14 agrees; cold dialog blocks precede the main join path, twelve bytes short.
+// Cold state/mode blocks precede the main join block; body remains twelve bytes short.
 // state ranges 125; cold range first 99; availability gate 126; common switch exits 80;
 // later join-type lifetime 155; timestamp workspace 80; gate/common exits 126; ranges/lifetime 137.
 // matching 0x14 frame; cold state/mode block placement still differs,
@@ -361,9 +362,12 @@ extern long g_51ec0c;
 // tried cold cases first 80; state nine first 80; entry join result 96; shared player gate 104;
 // leave from join result 123; positive title gate 101; zero-time initializer 80;
 // query declarations first 80.
-// score 80 (was 80): native/numeric mode switches 116/116; mode-one rejection first 81;
+// native/numeric mode switches 116/116; mode-one rejection first 81;
 // leave/screen mode first 79/112; screen-first mode switch 116; non-three state outcome first 95;
 // invitation test outcome 103. One-point leave-first gain rejected; body restored.
+// Explicit unsupported-state exit, actual squad predicate and both 80/80/80;
+// leave action from original inputs with neither/either/both boundaries 104 each at 479 bytes;
+// precomputed complete leave expression 147 at 495 bytes.
 // @retail 0x2395dc
 void __stdcall function_2395dc(XONLINE_FRIEND *friend_, long controller_index, long mode)
 {
@@ -889,12 +893,22 @@ bool __stdcall function_2399da(long controller_index)
 }
 
 /* sets the selected player's rank in the clan (NONE removes them) */
-// score 90 (was 90): identity/rank registers and the extra move before removal remain; selection guard,
+// score 90 (was 90): frame 0xf00 agrees; selected identity ECX/rank EAX and the extra removal move remain.
+// Earlier 90 (was 90): identity/rank registers and the extra move before removal remain; selection guard,
+// frame 0xf00 agrees; selected identity ECX/rank EAX and extra removal move remain.
+// identity/rank registers and the extra move before removal remain; selection guard,
 // permission guard and both 90 each; update-first branch with neither/either/both guards 92 each;
 // requested-rank lifetime 90. Frame and all call arguments preserved on restore.
 // selected identity ECX/rank EAX and extra remove-call copy remain.
 // Producer pointer scope/name, parameter-only rank name/both names 90/90/90/90;
 // own-rank/task lifetime, immutable pointer and native Boolean homes 90/90/90/90.
+// Earlier 90 (was 90): selected identity ECX/rank EAX and extra remove-call copy remain.
+// Membership inline/outline/both 90/90/90; remove inline/outline/both 90/90/90;
+// paired inline and paired inline/outline contracts 90/90.
+// Permission operands reversed at the conjunction/outer disjunction/both 92/95/94;
+// library identity copy 90; copy plus those orders 92/95/94; native own-rank value 90.
+// Task result from complete dispatch 139 at 464 bytes; with named removal/rank tests or
+// selected-validity expression in all seven combinations 139 each at 464 bytes.
 // @retail 0x2393ae
 void __stdcall function_2393ae(long controller_index, long rank)
 {

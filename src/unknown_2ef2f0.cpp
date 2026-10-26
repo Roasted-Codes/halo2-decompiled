@@ -236,7 +236,11 @@ public:
 
 // the two boxes grown by their radii, and the pair passed on when they
 // overlap
-// score 6 (was 6): Second-radius load remains late; second radius first 24, both radii first 24, first
+// score 6 (was 6): the second radius load still follows the first vector store.
+// Second vector first 32; declarations before assignments 6; memory broadcasts 78;
+// shared broadcaster 72; first/second/both shape values 99/103/127;
+// four-lane value broadcasts 137.
+// Second-radius load remains late; second radius first 24, both radii first 24, first
 // extent with radii 24, separate splats 29, mutable extents 76, const extents 6, native scalar vector
 // load 62, extent role names 9.
 // @retail 0x2ef6e0
@@ -259,7 +263,11 @@ void box_pair_2ef6e0::function_2ef6e0(description_2ed170 const *a, description_2
 }
 
 // the same as a function
-// score 6 (was 6): Second-radius load remains late; second radius first 24, both radii first 24, first
+// score 6 (was 6): the second radius load still follows the first vector store.
+// Second vector first 32; declarations before assignments 6; memory broadcasts 78;
+// shared broadcaster 72; first/second/both shape values 99/103/127;
+// four-lane value broadcasts 137.
+// Second-radius load remains late; second radius first 24, both radii first 24, first
 // extent with radii 24, separate splats 29, mutable extents 76, const extents 6, native scalar vector
 // load 63, extent role names 9.
 // @retail 0x2ef7f0

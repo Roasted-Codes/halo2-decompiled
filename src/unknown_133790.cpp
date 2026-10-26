@@ -135,7 +135,14 @@ void function_133720(s_bit_vector_pool *arg_1, bool arg_2)
 }
 #pragma inline_depth(255)
 
-// score 13 (was 13): early radius/point acquisition and index/radius store scheduling differ.
+// score 13 (was 108): the radius load and point/index store schedule still differs.
+// Earlier projection operand/sum order 95; radius local 30; multiply from the
+// object 32; radius copy first 19; depth as one expression 19-30;
+// record fields read directly 28; position pointer local 172.
+// Native point value 168; point/radius values 173; existing point setter 172;
+// setter with shared radius 173; radius before setter 173; contiguous copy 107;
+// point value shared with distance 177; native vector copy 219.
+// early radius/point acquisition and index/radius store scheduling differ.
 // Earlier comparison: the float multiply reads its operands from the other two globals and the sum is added in the other order
 // Earlier forms: retail loads the radius into xmm2 before the point copy (and the copy's last
 // load before its middle store); ours loads it after the copy. Radius local 30; multiply from the

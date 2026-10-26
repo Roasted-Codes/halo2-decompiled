@@ -166,16 +166,25 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
-// score 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.
+// score 100 (was 106): frame 0x10 agrees; quotient/next-time setup and frame/index registers differ.
+// frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
+// Next time before elapsed with separate assignments on frame 0x10: 100.
+// Earlier at 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.
 // Next time before elapsed 206; fraction after delta 106 kept (plain); on that frame,
 // frame index outer scope 106, wrap case first 106, type-first disposal 272.
 // Fraction just before delta 204; explicit interval divisor 106; duration-first next-time sum 106; outer delta scope 106; direction-first short sum 106; opening 106 restored.
-// Frame 0xc versus 0x10; next time stays in EBX instead of its retail stack home.
+// Before the later fraction: frame 0xc versus 0x10; next time in EBX instead of its stack home.
 // Entry disposal 205; shared boundaries 251; shared hold cases 238; final branch order 210; interpolation helper 210; native restart 227.
 // Flags snapshot 205; initial frame count 205; unsigned duration 214; key pointers 222; disposal exit 223.
-// score 106 (was 106): frame 0x10 agrees; division setup, quotient and frame/index registers differ.
+// Earlier forms at 106 targeted division setup, quotient and frame/index registers.
 // Short interval count 215; stepped next-time accumulator 106; shared high-boundary reversals 193;
 // wide lookahead with short wrapping 248; conditional elapsed clamp 106; opening body restored.
+// Elapsed before division 111; signed int duration/timing names 106/106; long disposal/restart 191/228;
+// quotient assigned inside the next-time sum 100 (an embedded assignment, not kept); converted fraction divisor/negative hold case
+// order 106/106.
+// Earlier at 106: frame 0x10 agrees; division setup, quotient and frame/index registers differ.
+// Active time anchor 106; next-time anchor before/after division 114/114;
+// late const fraction 106; entry time anchor 114; current-frame/direction values 108/106.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
@@ -189,8 +198,8 @@ void c_class_1a2c81::update(dword time)
 		long frame_time;
 
 		frame_time = animation.value20 / (animation.value8 - 1);
-		elapsed = time - animation.end_time;
 		next_time = animation.end_time + frame_time;
+		elapsed = time - animation.end_time;
 		dispose = false;
 
 		while (time >= next_time)

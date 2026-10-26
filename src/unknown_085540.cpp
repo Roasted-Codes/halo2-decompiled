@@ -728,6 +728,11 @@ struct s_85650
 // score 100 (was 100): Frame 24/28 and child/distribution/callback homes remain; count predicate/empty
 // arm 100/100; sender/baseline zero chains 100/100; array-wise clears 104; sequence value 100; sender
 // scope/owner boundary 100/100.
+// score 141 (was 154): frame 0x24 against 0x28 (the distribution spill reuses the channel index's
+// home) and the callback is taken from the initializer's eax where retail keeps it in ebp; retail
+// also passes `active` as a 32-bit 0/1. Count defaulted before the type test 151; bool active 144;
+// both 141 (kept); active as a direct argument 141; active cleared in an if 138 (flag form);
+// active through a state local 141; distribution declared after the storage 142.
 // @retail 0x85650
 void function_85650(c_simulation_view *view, s_network_observer *observer, const XNADDR *address, long channel_index)
 {
@@ -785,16 +790,14 @@ void function_85650(c_simulation_view *view, s_network_observer *observer, const
  }
  dword types[4];
  c_connection_client *clients[4];
- long count;
+ long count = 0;
  if (view->type == 3 || view->type == 4)
  {
   types[0] = 0x1a;
   clients[0] = (c_connection_client *)&((c_replication_view_storage *)view->data)->aggregate;
   count = 1;
  }
- else
-  count = 0;
- long active = view->world->state != 3 && view->world->state != 5;
+ bool active = view->world->state != 3 && view->world->state != 5;
  s_connection_callback *callback = (s_connection_callback *)view->unknown44;
  link_connection_callback_initialize(callback, clients, view,
   (void (__stdcall *)(void *))function_68550, count, types, active);
@@ -980,6 +983,10 @@ bool function_68670(byte *source, long size, void *block);
 
 // score 97 (was 97): the two fields of the record are read into the registers in the opposite
 // order (+0x1c before +0x18), so the rest of the block follows differently.
+// score 97 (was 97): a `used = next - end` local gives retail's window test exactly (135 from the
+// listing shift); retail also reloads the buffer start after each read call and loads the header
+// size after the start store, as if the call might touch the buffer. Window as shift 97; window
+// pointer 97; inline read method 135; header size per use 135; buffer hoisted out of the loop 204.
 // @retail 0x865d0
 void __stdcall function_865d0(c_simulation_view *view)
 {

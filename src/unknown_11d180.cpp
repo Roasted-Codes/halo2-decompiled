@@ -139,7 +139,17 @@ void function_11d610(quaternionf *q)
 	}
 }
 
-// score 11 (was 11): cross-product multiply and root reload scheduling remain; dot product and frame agree.
+// score 11 (was 15): output-first parameters recover the call setup and dot product;
+// the cross-product multiply and reciprocal reload schedule still differs.
+// Earlier at 15: cross i,j,k 23; reciprocal after cross 36; j as a.k*b.i-a.i*b.k 15;
+// separate square root 15; clamp s<=0 17. With output first: cross k,i,j or i,k,j 11;
+// j,k,i / j,i,k / i,j,k 19; reciprocal after cross 32; w store first 21;
+// stores k,j,i 20; products straight into output 32; shared cross into a local 24,
+// into output then scaled 74; branches swapped 38; separate square root, ternary
+// clamp, sqrtf, or i/k product operands swapped 11 each. Arithmetic body unchanged.
+// Minimal two-use input captures: a.i 36; b.k 32; a.j 36; b.i 15;
+// a.i/b.k 34; a.j/b.k 37; a.k/b.j 35; b.i/a.k 37.
+// cross-product multiply and root reload scheduling remain; dot product and frame agree.
 // Earlier forms: retail emits the dot product's j term first (ours i first) and
 // hoists one more cross product multiply before the first subtract; the source order
 // of the terms does not change our schedule. The corrected output-first interface gives 11 (caller stays 551): retail's dot product and operand

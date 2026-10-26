@@ -129,6 +129,21 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
    prop names, or along its direction) and flags the slot when it is there
    or cannot get there (always returns true) */
 // score 146 (was 153): frame 0x48 and length 1077 agree; entry pool/view carriers and movement/failure placement remain.
+// Frame 0x48 agrees; actor/view registers, trace carriers and
+// movement/failure block placement remain. Native type width 611; common success exit 595
+// (multiple-goto form discarded); lookups after actor guards 616; tracked type first 619;
+// bounded trace distance 620; visibility result 620; single exit native category 584
+// (multiple-goto form discarded); successful move guard 584 (multiple-goto form discarded);
+// supported category guard 588 (multiple-goto form discarded); near target arm first 586
+// (multiple-goto form discarded); structured actor gates 584; native supported category
+// guard 621; native near target first 617; structured supported categories 588.
+// Caller noinline declaration 620; callee noinline declaration 236; shared magnitude 236;
+// shared point 236; destination name 236; long result 233; point/name/magnitude together 236.
+// Category short outlined query 338; completion early return 232; category short completion 236;
+// movement result first 232; movement workspace scope 232; probe frame names 232;
+// existing point setter 232; far failure arm first 232; movement success return 232.
+// Outer trace lifetime 232; direct native categories 236; plain coordinate loop 232;
+// cluster result arms 232; probe declarations reversed 232; inactive actor return 232.
 // frame 0x48 agrees; entry pool/view carriers and movement/failure placement remain.
 // Tried native type width 611; common success exit 595 (multi-goto form discarded); lookups after actor
 // guards 616; tracked type first 619; bounded trace distance 620; visibility result 620; single exit native
@@ -263,6 +278,11 @@ bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 	return true;
 }
 
+// score 66 (was 66): frame 0x14 versus 0x10; early slot EBX and rounding scratch reuse differ.
+// Duration-only native/word values 128/111; reused character flags 66; actor guard 66;
+// character exits 66; view admission 66; duration/view admission 128; actor/view guards 66.
+// Direct slot 66; shared period input 119; both 119; native point setter 113;
+// idle/character store orders 67/67, both 68; period with point setter 97.
 // @retail 0x1b2bb0
 void __stdcall function_1b2bb0(long actor_index, s_slot *slot)
 {
@@ -323,15 +343,18 @@ void function_1f86a0(long actor_index);
 // score 131 (was 131): frame eight agrees; initial pool order, slot EBP, view spill and nine-byte deficit remain.
 // shared range generation recovers the random-first x87 sequence;
 // initial pool order, slot/view homes and nine-byte deficit remain. Shared range 131;
+// frame eight agrees; initial pool order, slot EBP/view spill and nine-byte deficit remain.
+// Shared range 131;
 // chained ticks 144; both 131; state query noinline 144; early short/long defaults 147/179;
 // native duration fields 144; native fields with shared range 131.
-// frame eight agrees; pool-load order, slot EBP and view spill differ.
 // Common result exit 153; nonzero-state path first 179; role-named workspaces 144;
 // word duration ticks 144; ordinary result 203.
 // initial pool order, slot EBP and view spill still differ.
 // Readonly actor/view/both 131 each; force-inline actor/node/view/state boundaries
 // 131 each; readonly records with the view boundary 131.
 // Direct slot stores/actor reference/node reference/both/absent-view return 131 each; success publication 145; native slot fields/direct native slot fields 131/131.
+// Named duration product 131; flag-pair/elapsed-word/both library clears 135/131/135;
+// product with both clears 135; shared sector 131; supported-view scope 149; sector with scope 149.
 // @retail 0x1b23c0
 bool __stdcall function_1b23c0(long actor_index, s_slot *slot)
 {

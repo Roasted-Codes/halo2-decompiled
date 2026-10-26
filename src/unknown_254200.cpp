@@ -184,7 +184,15 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 		}
 	}
 }
-// score 237 (was 237): frame 0x14 versus 0x10; color/coordinate spills and reservation scheduling remain.
+
+// score 237 (was 237): Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
+// 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
+// color/both 246 each; alpha with edges 322; native color reference 276; color copies after
+// Begin/commit 293/311.
+// frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// Frame 0x14 versus 0x10; coordinate spills and first reservation scheduling remain.
+// Earlier 237 (was 276): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// frame 0x14 versus 0x10; color/coordinate spills and reservation scheduling remain.
 // Native color value 246 fast / 237 plain; value half-size 276; replicated alpha 349;
 // alpha after clear 265; second coordinate C entry 403; color with later alpha 252;
 // memcpy color 246. Only the native color value is kept.
@@ -197,6 +205,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // shared resource pointer 511; dword alpha carrier 276.
 // First coordinate C entry 373; folded half-span with inline reservations 276;
 // delayed lower coordinate 387; delayed upper coordinate 384; lower initialized first 359.
+// Round 109: Fast: native color/coordinate names 246; color phase scope 246; final half-size value with native color 246; color after texture commit 248; immutable native color 246 (opening fast 246, plain 237).
 // Result pointer 276; color query after Begin 263; function color lifetime/immutable alpha/
 // chained descriptor counts/final short-coordinate API/half-scale product order/
 // upper-coordinate term order 246/246/246/246/246/246 (opening fast 246, plain 237).
