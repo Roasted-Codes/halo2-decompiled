@@ -522,6 +522,8 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Without parameter-address aliases: reversed equality buffers 796; native plane result 925;
 // rotation pointer result 796; native rotation output reference 796; native angle input 796 (fast).
 // Original complete body and all helpers restored.
+// Alias-free single angle exit 796; word edge-side predicate 807; unsigned-word list ordinals 773;
+// native mesh reference 796; native rotation-basis references 796 (fast). Original body/helpers restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
