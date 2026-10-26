@@ -1219,6 +1219,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Round 124: Sole native file cursor with array ordinal 262; zero-member initialization phase 171;
 // entry-scope header pair 165; header/path/task entry workspaces 165; signed-byte slot 254.
 // Every request, header initialization, wait, validity assignment and I/O tuple restored.
+// Round 181 complementary invalidity/write failure/cleanup-once 196/112/115; invalidity-write/invalidity-cleanup/write-cleanup/all 196/199/115/199; byte invalidity 196 (fast); all restored. Frame 0x1144 agrees; file displacement, request-copy and validity joins remain.
 // @retail 0x213970
 void function_213970(void)
 {

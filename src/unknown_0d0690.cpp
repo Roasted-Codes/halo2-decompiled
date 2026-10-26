@@ -51,6 +51,7 @@ real function_30bf0(vector3f *vector);
 // Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
 // 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
+// Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1667,6 +1668,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // homes and helper expansion remain; original complete body and both helpers restored.
 // Native part/index/section records 790/790/790; part/index, part/section, index/section 790/790/790;
 // all three 790; all three with result declared first 790. Real metadata layouts canonicalize.
+// Round 181 material noinline 807; native status/mesh, vector, color, barycentric sample and combined role homes 790/790/790/790/790; single result exit 834; combined homes with material noinline 807 (fast); all restored. Frame 0x90 agrees; result/mesh/sample/UV homes and material/magnitude expansion remain.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

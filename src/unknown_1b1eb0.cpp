@@ -231,6 +231,7 @@ struct s_slot_05_data
 // reference/actor/scratch/selection noinline contracts 164 each; mode/reference initializers 220.
 // Native Boolean invalid flag 164; two chained late request flags 164; three chained late/early flags 167/167; Boolean slot with those chains 164/167/167; immutable permission with Boolean slot 164.
 // Native slot payload 105 (kept); payload with native short/early receiver/read-only actor 105/105/105; payload with branch reference/shared defaults/shared mode/role names 121/104/157/105. Early ESI recovered; saved scalar homes and cold reference joins remain.
+// Round 181 complementary permission bool/byte/short/long 185/185/180/180; field permission at every use 184; complementary permission with native short/default helper/branch reference 185/185/211 (fast); all restored. Frame 0x76c agrees; saved scalar homes and cold reference joins remain.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
