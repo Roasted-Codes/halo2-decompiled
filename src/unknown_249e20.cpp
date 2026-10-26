@@ -172,7 +172,7 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 
 /* the distance sound travels between two clusters */
 #pragma optimize("s", on)
-// score 65 (was 76): entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
+// score 65 (was 65): entry constants, branch saves and returns differ; reported 182 includes eleven fill bytes.
 // Maximum sentinel first 88; interior interval first 82 kept; integer sample 88; read-only audibility 88;
 // ordered cluster parameters 91; named pair index/range 88/88; direct fallback 84; both boundaries 82.
 // Unequal-cluster scope 81; fallback first 81; total result assignment 82; zero/upper
@@ -184,6 +184,8 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // Sample offset long/short/word 78/65/77; direct receiver 65 kept; table-operation first 65;
 // explicit endpoint results 79; word-path returns 65; shared index row parts 76.
 // Direct receiver: plain 65; active 171 bytes unchanged, raw differing rows remain 65.
+// Wrapped byte offset/native byte pair/record receiver 78/81/80; byte endpoints 83;
+// zero/upper defaults with byte offset 75/78; fraction/production exits 78/79. Entry constants and branch saves remain.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {
