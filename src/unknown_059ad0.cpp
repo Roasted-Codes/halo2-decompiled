@@ -4363,6 +4363,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Native identifier initialization/high-word-first construction 370/370; direct host-channel fields 376;
 // direct fields with high-word-first identifier 376; equality on direct-acknowledgement base 382;
 // equality with native identifier/high-word-first/both direct fields 382/382/383. Original body restored.
+// Round 225: On direct acknowledgement base, all returns raw/equality 395/408; identity-output returns
+// 374/386; completed-success returns 389/402; direct selection results 377/383. Acceptance/identity homes
+// remain.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

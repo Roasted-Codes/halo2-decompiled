@@ -123,6 +123,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
 // ordinal 223; wide optional index 214; wide composite mask 192; word cursor
 // before packed mask 154. One-point reduction rejected; original body retained.
+// Round 225: Signed-word outer/decoded/paired/inner/outer-inner/decoded-inner/all carriers [185, 189, 192,
+// 195, 182, 197, 193]; unsigned-word outer 196. Early source/count and feature homes remain.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {
