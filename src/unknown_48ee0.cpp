@@ -18,7 +18,8 @@ extern byte g_485a47;
 extern real g_485a0c[8];
 extern real g_4c9798[36];
 
-// score 295 (was 295): frame 0x20/0x28 and state/matrix/rounding homes remain.
+// score 295 (was 295): frame 0x20 versus 0x28; input registers and rounding-call scalar reloads remain.
+// frame 0x20/0x28 and state/matrix/rounding homes remain.
 // Radius/scaled-radius/padded-radius parts 295/295/295; size accumulation 295;
 // width/height/both producers 295/295/295; consecutive clamp bounds 301.
 // The one-use radius call result is restored; matched storage-provider root resolves all trials.
@@ -33,6 +34,8 @@ extern real g_4c9798[36];
 // Frame 0x20 versus 0x28, input registers and rounding reloads remain. Tried texture row
 // memset 300; whole table memcpy 361; two vector memcpy calls 295; row clear and whole copy 366; row clear and
 // vector copies 300; near normal memcpy 295; far normal memcpy 295; both normal memcpy calls 295.
+// Five consistent formal permutations 295 each; native byte mode 332; unsigned mode 295;
+// signed-byte mode 331.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {

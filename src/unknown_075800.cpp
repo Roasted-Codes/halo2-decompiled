@@ -961,7 +961,8 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 
 /* the out-of-band messages: those that arrive from an address rather than on
    an established channel */
-// score 193 (was 193): incoming selector/message/address allocation and dispatch root remain.
+// score 193 (was 193): selector/message/address convention and dispatch root remain.
+// incoming selector/message/address allocation and dispatch root remain.
 // Single-root family orders query/connection/session/peer 210; query/session/connection/peer 219;
 // query/peer/connection/session 211; connection/query/session/peer 207; connection/session/query/peer 208;
 // session/query/connection/peer 220; session/connection/peer/query 216; peer/query/session/connection 222.
@@ -970,6 +971,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Unified switch 208; retail-order switch with lookup exits 218; missing-connection exits 196; inline depth
 // one 196; size preference 243.
 // selector/message/address allocation and dispatch root remain.
+// No local frame; selector/message/address allocation and dispatch root differ.
+// Earlier: selector/message/address convention differs; full baseline 198, fast preview 196.
+// Earlier: selector/message/address allocation and dispatch root remain.
 // Isolated endpoint/leave/query cases 195p/198p/206p; separate connection phase 258p;
 // two session cases first 199p; connection order reversed 198p; direct lookup guard 198p;
 // residual phase reversed 207p. All eight plain checked; fast preview 196 versus full 198.
@@ -979,6 +983,7 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // typed session payload 196; session cases before lookup cases 210; reversed direct
 // cases 195; adjacent lookup range after direct phase 205 (fast control 196).
 // selector/message/address allocation still differs.
+// Earlier: selector/message/address allocation still differs.
 // Lookup inline/noinline 198/198; direct refusal 198/198; direct query 198/198;
 // direct information 198/198, all plain-confirmed. Fast control 195 versus full 198.
 // Original bodies, signatures, declarations and every game-call tuple restored.
@@ -1001,11 +1006,18 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 2,3,4,0 / 3,0,2,4 / 4,0,2,3 / 4,2,0,3 give 194/193/193/191 fast.
 // Last order is 193 plain, tying baseline; fast control 191. All rejected.
 // incoming selector/message/address allocation remains.
+// Earlier: selector/message/address convention still differs; executable rows 155 to 150.
+// Earlier: selector/message/address allocation and dispatch root remain.
+// Earlier: incoming selector/message/address allocation remains.
 // Connection refusal/establishment/closure inline and noinline declarations,
 // individually and as a group, all 191 fast, tying preview. All restored.
 // selector/message/address convention and dispatch root remain.
 // Residual session/peer/numeric/session-reverse/24-first/23-first orders 189/189/191/191/189/191 fast;
 // lookup orders 6,5,7 and 5,7,6 191/191; session-ordinal order 193 plain, tying baseline.
+// Leave/acknowledgment/abort inline and noinline declarations, singly and together,
+// all 191 fast, tying preview; no declaration or handler-body change retained.
+// Dispatcher inline/noinline/forceinline/inline-outofline declarations all 191 fast, tying reduced control 191;
+// direct orders 0,2,4,3 / 0,3,2,4 / 0,3,4,2 / 2,0,3,4 give 193/193/194/196 fast.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

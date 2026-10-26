@@ -148,14 +148,20 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
-// score 182 (was 182): first class lookup expands; flag and result homes differ;
+// score 167 (was 167): Frame agrees; first lookup expansion and flag/result homes remain;
+// location/priority phase after flags/header 188/194; first/shared class receiver 167/167;
+// seconds/ticks terms 167/167; phase with seconds 188; shared receiver with seconds 167.
+// first class lookup expands; flag and result homes differ;
 // priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
 // base-first flags 178 (caller losses), role names 182, source snapshot 178,
 // object snapshot 183, priority after flags 192.
-// score 167 (was 182): frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
+// frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
 // Conditional flags then priority 187; deferred flags publication 176; location first with copied
 // audible priority 167 kept (full); location memcpy 182; conditional end-time publications 175.
 // Outer state scope 167; early optional-size default 164 (below threshold); size before marker copy 167; nested class tests 167; platform-flags block first 167; opening 167 restored.
+// score 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
+// Late tag receiver 184; branch-assigned result 193; shared marker observation 167;
+// absent-marker-first 165 (below threshold); native short priority and padding memset 176.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -524,13 +530,22 @@ long function_1891d0(long object_index, long marker_name, s_sound_label_play con
 	return function_1890c0(play, object_index, marker.node_index, &marker.node_matrix.position, &marker.node_matrix.forward);
 }
 
-// score 51 (was 51): frame agrees; saved registers, root-location contract and stacked play differ.
+// score 51 (was 51): Root-location registers, saves and stacked play remain; matrix
+// pointer/reference/mutable bindings 51 each; complete submission copy 87; matrix with submission
+// copy 87; library submission copy 87; matrix with velocity copy 51; reference with submission copy
+// 87.
+// frame agrees; saved registers, root-location contract and stacked play differ.
 // Plain workspace order 51; workspace names 51; zero initialization 99; aggregate construction 64;
 // native point copy 51; compression first 52; velocity first 49; separate location output 73.
 // Earlier: root-location convention still adds saves and stacks the play pointer.
 // Shared point setter 63; native velocity copy 51; both 63; marker scope 51;
 // late playback record 69; pre-query playback record 64; root before velocity/compression 52/52.
 // Earlier: root-location registers and stacked playback input remain.
+// root-location setup, saved registers and stacked play remain.
+// Marker value/clear 99/89; position clear 101; transform value/library copy 78/78;
+// forward value 86; marker array 51; initialized marker array 99.
+// root-location convention still adds saves and stacks the play pointer.
+// root-location registers and stacked playback input remain.
 // Entry/post-marker playback records 82/63; entry tag/scale/both 64/64/54;
 // root before marker/point 60/52; entry record with root first 82.
 // Post-marker tag/scale/both 52/63/53; post-compression 52/63/52;
@@ -559,6 +574,9 @@ long function_1895f0(s_sound_position const *position, real scale, long tag_inde
 // forward/velocity/location library copies 2/2/2; location before velocity 23;
 // read-only camera 2; forward assignment 2.
 // success result/pop order remains; positive eligibility 157; nested eligibility 157; shared point difference 170; vector names 2; request lifetime 2; distance declaration 2; shared point setter 73; shared length 162; all scores plain.
+// score 2 (was 2): success result/pop order remains; camera helper 34; result/scalar names 2/2;
+// length squared first 2; entry maximum/outer owner index 2/2; distance before position 2;
+// submission name 2; delayed false initialization 5; inverted success 2; all scores plain.
 // @retail 0x1897c0
 bool function_1897c0(long local_player_index, long unit_index, long tag_index, s_location const *location, point3f const *origin, vector3f const *direction)
 {

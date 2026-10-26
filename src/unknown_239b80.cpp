@@ -242,6 +242,7 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 /* gift wrapping: the indices of the convex hull of the points, starting from
    the lowest */
 // score 250 (was 261): scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
+// Full count tests 274; current-point snapshot 271; byte start state 250; float workspace names 250; still-at-origin state 264; inline classifier declaration 250; forced equality declaration 250.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -337,7 +338,12 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 	result->j = a->y - b->y;
 }
 
-// score 50 (was 50): entry count load, word loop tail and offset/edge SSE homes still differ.
+// score 50 (was 50): entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
+// score 50 (was 50): entry count load, word tail and XMM edge/offset homes remain.
+// Current point value 111; advancing point cursor 58 at 184 bytes; ordinary while 50;
+// named edge squares/cross products/both 50/50/50; point value with edge squares/both 111/111.
+// The initial count load, widened loop tail and XMM edge/offset homes still
+// entry count load, word loop tail and offset/edge SSE homes still differ.
 // Earlier: entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // Earlier: The initial count load, widened loop tail and XMM edge/offset homes still
 // differ. Byte/short/native result 102/104/102; unsigned-short induction 50; early cross 58; distance
@@ -374,9 +380,18 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 	return result;
 }
 
-// score 31 (was 31): The induction is carried at native width; point and wrap-register homes still
+// score 31 (was 31): short body index/tail width and point/wrap homes remain.
+// Difference helper ordinary inline/pointer result/input references 31/31/31;
+// input values 161; staged differences 31; output reference 31;
+// current point value 82; advancing current-point cursor 42.
+// The induction is carried at native width; point and wrap-register homes still
 // differ. Direct rejection 45; short/native result 68/66; rejection result 80; short next 43;
 // unsigned-short induction 31; negative threshold 38; result from cross test 39.
+// Promoted current index 31; plain while 31; explicit wrap assignment 44;
+// modulo wrap 42; signed area 31; first/second/both product parts 31/31/31;
+// reused short/native bound values 43/47.
+// Test-point value 97; function-scope vectors 31; edge before offset 31; role names 31;
+// difference helper y-first/output-first/base-first/vector result 31/31/31/144.
 // @retail 0x23a220
 bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
 {
@@ -404,6 +419,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 }
 
 // score 243 (was 243): count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
+// Native current ordinal 249; long side states 264; prior-point ordinal 288; ordered fraction clamp 243; clear-mask arm first 243; shared normalized count 275; existing point difference 243.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

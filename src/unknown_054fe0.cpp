@@ -1598,6 +1598,12 @@ static __forceinline bool function_65341(c_class_58d20 **out)
 
 // score 114 (was 120): retail picks the observer pointer with a conditional move
 // after the flag test; ours computes the same value with a negation and a test.
+// score 118 (was 118): retail builds this body with SSE (cmovne, movss, cvttss2si), which this
+// file lacks, and inlines the session-a/b getters there (their static inline bodies live in
+// unknown_058ee0.cpp). In a new /arch:SSE file: as written 136; if-form state with the variant
+// getter 142 at retail's length; existing getters with forceinline declarations 162 (kept out of
+// line); per-case getter copies 155 and switch in the body 155 (the session then goes through a
+// stack slot); existing getters without /Ob1 173; per-case result assignments 149.
 // @retail 0x65340
 void function_065340(void)
 {

@@ -1394,6 +1394,11 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // score 116 (was 116): query/count homes and scalar tail fills still differ.
 // Branch-shared session count 138; with library/range tails 201/160;
 // selection initialization 162; completed total 134; word scans 160; comparator/open-row forms 139/137.
+// score 116 (was 116): index fills as `for (i = index_count; i < 16; i++)` give retail's guarded
+// rep stosd 162; with item_count shared by the mode-one query (frame 0x54) 161; plus indices[i]
+// rows without the cursor 171; block-scoped fill index 161/162. Those keep index_count in EBX for
+// the whole body and move mode to the stack, where retail keeps mode in EBX, index_count in EDI
+// only in the scans, and reloads player_count after calls (its address escapes in retail).
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {
@@ -2414,6 +2419,9 @@ static __forceinline long local_player_find(long const *local_list, long player)
 // the count at ebp-8 and the flags byte at ebp-0xc while retail keeps them at
 // ebp-0xc and ebp-8, and the switch's table and the words it loads sit in
 // the other order
+// score 111 (was 111): retail sign-extends the bitmap index before find_bitmap (a long parameter,
+// like find_text), and reloads players[i] after the voice-state query; named pointer to
+// players[i] in the first loop 111; renamed count, flag, player and slot locals 111.
 // @retail 0x25042d
 void function_25042d(c_session_lobby_screen *screen, long valid, s_session_flags_view *session, long *players, long *local_list, long count)
 {
@@ -2774,6 +2782,13 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 // widget lifetimes 164; all widget phase lifetimes 159; map lifetimes bitmap guards 175; selected
 // squad role 156; search result from acceptance 156; offline native animation bit 115; offline
 // native text index 116; offline row lifetimes 100; offline native bit index 120.
+// frame 0x754 agrees; item-loop receiver reload, bitmap arm placement and row/animation homes remain.
+// item-loop screen reload, bitmap case placement and row/animation register homes still
+// differ. Tried category descending 237; title default first 244; bitmap index long 237; title widget scopes
+// Frame 0x754 agrees; item-loop receiver reload, bitmap case placement and
+// row/animation homes remain. Tried item pointer walk 301; game result width 309; row counter
+// Name/appearance/team/all item operations force-inline 156 each; unsigned word rows 203;
+// loop-scoped row widgets 157; bitmap category order 156; player-item array home name 156.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {

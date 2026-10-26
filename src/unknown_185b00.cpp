@@ -723,6 +723,11 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // read-only settings 244; native pitch trig input 248.
 // Constant bounds before entry lookup 244; shared clamp early returns/default result/upper result
 // 261/314/285; each with earlier bounds 261/314/285; exhaustively assigned result 313.
+// Shared yaw/pitch minimum 296; shared maximum 297; both 311; readonly seat/camera/unit
+// views 244/244/244, together 244; both shared bounds with readonly views 311.
+// Settings at use 335; settings after camera 262; native pitch interval aggregate/assignments
+// 267/267; native yaw interval 267; pitch/yaw interval with settings at use 335/335; both
+// intervals with settings at use 339.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

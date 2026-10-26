@@ -265,7 +265,10 @@ done:
 // buffer register and selector/tag scheduling remain different.
 // Numeric case order 49; descending 52; native copy 54; direct selector 57 at 171 bytes;
 // const variant 54; scalar names 54; entry variant/tag declarations 54/54.
-// score 49 (was 49): extra buffer save and selector/tag schedule remain; name-block order 54;
+// score 49 (was 49): extra buffer EBX cache and selector/tag schedule remain.
+// Coordinated getter inline/inline-noinline/noinline 49/49/49; parser inline 49; null-definition exit 72;
+// native tag member 49; native member with null exit 72; terminal case first 54.
+// extra buffer save and selector/tag schedule remain; name-block order 54;
 // reverse/encoded name order 51/51; entry/middle/tail name pairs 55/53/53;
 // tail/middle groups first 53/54. Executable rows do not improve; original cases restored.
 // Extra EBX buffer cache and tag/selector schedule remain. Native buffer
