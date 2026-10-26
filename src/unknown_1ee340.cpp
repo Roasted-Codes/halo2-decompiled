@@ -150,7 +150,7 @@ c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, lon
 short function_120850(const vector3f *vector);
 bool function_23a220(const point2f *point, short count, const point2f *points, real epsilon);
 
-// score 250 (was 250): frame 0x78 versus 0x90, normal/ray homes and polygon input registers differ.
+// score 253 (was 250): frame 0x78 versus 0x90, normal/ray homes and polygon input registers differ.
 // Hit point setter 250; component normalization loop 250; short projection side 255;
 // direct hit result 251; ray before origin with float setters 251.
 // Early offset 259; late ray direction 264; squared-normal value 250; descending projection 358; offset/direction combination 264.
@@ -165,6 +165,7 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 210: Word hit result 259; native byte result 262; normal memcpy 263; scoped edge-vector
 // lifetimes 250; direct origin fields 282. Frame 0x78 versus 0x90 and ray/normal/polygon homes
 // remain.
+// Round 214: signed-byte hit state 262; unsigned-word hit state 259; byte projection side 253; unsigned-word projection side 255; byte dominant axis 251.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

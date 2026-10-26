@@ -1387,19 +1387,26 @@ bool __stdcall function_110ab0(long unit_index)
 }
 
 
-// score 450 (was 450): Frame 8 versus 12, requested/state carriers and result joins remain.
-// frame 8 versus 12 and requested/state registers still differ.
+// score 450 (was 450): Frame eight versus twelve and requested/state homes remain.
+// Earlier 453 (was 478): frame 8 versus 12 and requested/state registers still differ.
 // Predicate names 478; byte result 538; byte depleted/overlay 453; global optimization off 1195;
 // merged interruptible cases 473; byte depleted alone 458; byte overlay alone 477; merged cases with bytes 456.
-// frame 8 versus 12 and requested/state homes remain.
+// Earlier 451 (was 451): frame 8 versus 12 and requested/state homes remain.
 // Byte-context word/native interruptible 456/453; named channel words 453;
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
-// Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
-// Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
+// Earlier 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
+// Earlier 430 (was 453): Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Frame 8 versus 12 and requested/state homes remain;
 // byte result 506; byte interruptibility 453; separate overlay result 508;
 // direct inner membership 486; held-index names 451 (fast control 451). Opening body retained.
+// Explicit true initialization / isolated two-request override / both 450/470/470;
+// overlay-time control alone/with true initialization/with override/with both 513/513/530/530; entry result with both 530.
+// Frame 8 versus 12, requested/state carriers and result joins remain.
+// frame 8 versus 12 and requested/state registers still differ.
+// frame 8 versus 12 and requested/state homes remain.
+// Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
+// Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Byte return with byte result 482; byte return alone 450; byte return/result with Boolean overlay 482;
 // with controlling field at use 482; with separate final overlay byte 482. Original Boolean interface retained.
 // @retail 0x1103a0

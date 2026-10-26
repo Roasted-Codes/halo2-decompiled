@@ -392,7 +392,8 @@ PRIVATE inline long polygon_round_19f(real value)
     return result;
 }
 
-// score 393 (was 393): Frame 0x40 versus 0x30, promoted loop spills and protected callee conventions remain.
+// score 393 (was 393): Frame 0x40 versus 0x30, promoted loop spills and protected callee boundaries remain.
+// Earlier 393 from 393: Frame 0x40 versus 0x30, promoted loop spills and protected callee conventions remain.
 // Earlier: frame 0x40 versus 0x30; qword loop spills and callee
 // convention/expansion differ. Real radius-range lifetime 397; type-pointer
 // step in the body 393; explicit closing index 393; shared bottom-point setter
@@ -404,6 +405,9 @@ PRIVATE inline long polygon_round_19f(real value)
 // All restored: the matched caller differs by 2 without the original parameter home.
 // Earlier: Frame 0x40/0x30 and qword spills remain; ordinary variant/body step with vertex sqrt result 400, top aggregate 430, word table offsets 400, material result 373 (plain; caller loses 2), direct-reference arm first 400.
 // AC338: ordinary variant/body pointer step with entry render-state/bottom/top/period lifetimes 400 each; previous-vertex pointer 400; center length retest 400 excluded. All lose matched caller by 2.
+// Ordinary variant/body pointer step with fade bounds, original-step predecessor result, earlier
+// vertex/edge double declarations and shorter emitted-point scopes: all 400; matched caller
+// loses by 2 in each.
 // Round 211: Ordinary variant/body step with unsigned UV/current ordinals 400/400; top memcpy 400; ordinal
 // predecessor 381; predecessor result-first 378. Original frame/spills and callee conventions remain.
 // @retail 0x19f680

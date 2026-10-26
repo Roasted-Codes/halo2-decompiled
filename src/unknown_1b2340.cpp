@@ -155,6 +155,8 @@ bool function_1f4460(long actor_index, s_type_c3b527 const *point, long target_i
 // Completion receiver/result/trace names 146/146/146; geometry origin before trace 241;
 // early origin with trace name 241; full category at producer 146; result producer scope 146;
 // early origin with native category 237.
+// Complete squared direction, every scaled target product, both, and every target coordinate 146 each;
+// each form with consistent actor getter observations 399/399/399/399 (1148 bytes).
 // @retail 0x1b2770
 bool __stdcall function_1b2770(long actor_index, s_slot *slot)
 {
