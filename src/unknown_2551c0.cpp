@@ -86,6 +86,8 @@ short __stdcall function_2551c0(long actor_index)
 // Named second j/k products 109/109; both second products 65; both first products 65;
 // named j/k cosine products 120/109; both cosine products 61;
 // second products plus cosine parts 139.
+// Output base sums i/j/k 109/109/109; all base sums 68; success word/long 106/76;
+// signed/unsigned byte direction counters 43/43.
 // @retail 0x2551f0
 bool __stdcall function_2551f0(long actor_index, s_slot *slot)
 {

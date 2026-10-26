@@ -572,6 +572,8 @@ void __stdcall function_1889d0(dword flags)
 // common final flag publication 72; existing sound table helpers 62.
 // Masked tag declaration/flag iteration scope 62/62; dword parameter mask 83;
 // scoped tag for-loop 62; paired zero chain/fill 64/123; Boolean parameter mask 62; late global declaration 62.
+// Zero-or-one parameter byte/short/word/long 62/125/125/141; query/update noinline
+// declarations 62/62; signature-first initializer 64; signed byte table ordinal 62.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {
