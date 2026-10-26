@@ -1590,7 +1590,8 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 482 (was 534): actor/output and dispatch registers still differ; multi-use actor handle kept.
+// score 482 (was 482): Actor/output registers, dispatch layout and rounding homes still differ; eight source trials restored.
+// Earlier: actor/output and dispatch registers still differ; multi-use actor handle kept.
 // actor/output registers, branch layout and rounding homes differ;
 // direct entry guard 631 fast; notification ranges 642 fast; selection-result field 597 plain
 // (only three lower, rejected); actor pointer name 618 fast; tail case order 639 fast;
@@ -1601,6 +1602,17 @@ void function_b7360(long object_index);
 // Size optimization 775 fast; depth two 561 fast, 532 plain, 1808/1848 bytes.
 // Command type short/long 530/533; actor object snapshot 482 plain (kept);
 // single-result completion 588; shared entry failure 515 (fast; existing depth two).
+// Native actor/command/both references 482; state and state+actor/command/both 473,
+// rejected without an exact match; output direction reference 534. Canonical state type
+// and canonical direct output 482/482 (companion 478/478). All ten forms restored.
+// Native unsigned object bits 482; initial/command/location point memcpy 482/482/482;
+// both table/all native point copies 482/482; native clear/set updates 482; movement outcomes 530.
+// Copies and bit updates preserve the complete executable prefix; original body restored.
+// Existing actor/command/both lookups 482 each; direct output uses alone and with
+// each/both lookups 482 each; actor-object value begun at its producer 524.
+// Four explicit pool/data orders 482 each; native pool headers in either order 482/482; headers plus native
+// offsets in either data order 480/480. Two-point gains and match-only memory snapshots rejected; original
+// body restored. Pool/actor/output acquisition and forty missing bytes remain.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -1991,7 +2003,8 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
-// score 478 (was 502): frame 28 agrees; actor/state registers and first point home still differ.
+// score 478 (was 478): Frame 0x1c agrees; actor/state registers and first point home still differ; eight scope trials restored.
+// Earlier: frame 28 agrees; actor/state registers and first point home still differ.
 // Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;
 // deferred completion else block 505 (unchanged reduced preview 505).
 // actor/state registers and the first point home differ;
@@ -2001,6 +2014,16 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // unit plus iterator 490; facing plus unit 486; facing plus iterator 486.
 // Actor-position cursor 478; actor-facing cursor 574; facing-output cursor 573; state-flag cursor 510;
 // actor handle 478; position/facing 574; position/flags 510; combined subobjects 597.
+// Native actor/command/state record references, their pairs and all three 478 each;
+// actor/command/state pointer role names 478. All eight restored. Canonical state type
+// and canonical direct output in both callbacks 478/478, restored.
+// Native actor scalar/vector/both members 484/478/484; shared short/native command selector 583/552;
+// post-dispatch result 646; shared length producer 478 (grouping diagnostic restored); complete facing mask 609.
+// Uninitialized first point, case-four point/vector, both groups, all spatial buffers,
+// planar buffers, first plus planar, iterator and all workspaces at entry: 478 each.
+// Complete facing CRT copy, twice-used selected target and consistent vector-before-enable publication: seven
+// separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
+// actor/state registers and first point home remain.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

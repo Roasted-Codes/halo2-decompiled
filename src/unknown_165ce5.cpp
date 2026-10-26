@@ -1,6 +1,7 @@
 // @flags /O1 /Oi /arch:SSE /Gr
 #include "orientations_storage.h"
 #include "view_context_storage.h"
+#include "hud_messages.h"
 /* UNKNOWN_165CE5.CPP: the first person weapons of the four local
    users (0x165ce5..0x1689a6, built for size; the same object as
    unknown_165cc3.cpp, unknown_16658d.cpp and lane R's unknown_166244.cpp).
@@ -1715,11 +1716,9 @@ static __forceinline void first_person_orientations_from_model_16760c(s_16760c_r
 
 		if (graph_node_index != NONE)
 		{
-			s_16760c_orientation *orientation = &orientations[graph_node_index];
-
-			orientation->rotation = node->default_rotation;
-			orientation->position = node->default_translation;
-			orientation->scale = 1.0f;
+			orientations[graph_node_index].rotation = node->default_rotation;
+			orientations[graph_node_index].position = node->default_translation;
+			orientations[graph_node_index].scale = 1.0f;
 		}
 	}
 }
@@ -1742,7 +1741,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 
 /* samples a weapon's animation, its overlays and its sway into the user's
    orientations, then builds the weapon's node matrices */
-// score 455 (was 455): frame 0x58 versus 0x78; root/channel overlap and copy/sway homes remain.
+// score 410 (was 411): frame 0x58 versus 0x78; root/channel overlap and later sway homes remain.
 // root/channel homes still overlap in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // blend time true arm 506; ammo nonnegative path first 463; adjustment flag from index 460; arms model read
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms
@@ -1755,6 +1754,16 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Root after initial animated fill 597; orientation count retained 560; final
 // component subtraction loop 488; model component memcpy 456; promoted map result 474
 // (fast; unchanged preview 456/2166 versus full baseline 455/2154).
+// Indexed orientation field outputs 412f/411p; model fields 523f, both receivers 514f;
+// sway weapon input 439f, external scalar reference 456f, both 439f; readonly definition
+// 456f; root-fill inline/noinline 456f; indexed outputs plus weapon input 395f/437p rejected.
+// f: reduced control 456/2166; p: ordinary baseline 455/2154.
+// Fill/blend-update/blend-query/ammo-query inline or noinline declarations all 412 fast,
+// equal to the reduced control; all declarations restored. Frame remains 0x58.
+// Blend result initialized before sample/channel/identity/entry/definition/first model/
+// validity/second model: 359/548/450/527/541/435/367/405 fast (control 412/2166);
+// conditional-flag forms rejected without a match. Direct logical/compound eligibility
+// before sample or channel: 423/446 each; frame 0x58 and root/channel overlap remain.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
@@ -2064,28 +2073,26 @@ void function_168644(long user_index, s_first_person_model *arms, s_first_person
 }
 
 transform4x3f *function_b8c00(long object_index, long *node_count);
-extern bool g_4f55e2;
 
 /* the render models a user's first person view draws: the arms, each
    active weapon and the unit's own body; returns how many */
-// score 20 (was 20): the game state check is tested as a byte here and and-ed with the flag mask
-// in retail, and the second condition is combined with it as a word here and as a byte in retail.
-// Retail's `active` is a byte that starts as the masked flag itself (al, no zeroing): writing
-// `bool active = state == 1 ? g_4f55e2 : false;` and testing `!active` builds that loop exactly, but
-// the and becomes `and al, byte ptr` without retail's `and eax, dword ptr` + `test al, al`, so the
-// function is 2 bytes short (236). Tried: bool active = false (23, an extra xor al, al); the reused
-// local as char/byte, with `: 0`, with a (long) cast (all 236); `!= 0` of a long ternary (249); a
-// nodes local in the second loop (20).
+// score 9 (was 20): retail loads the representation table before the character index's sign
+// test (ours after it), and the second weapon loop's call forms the nodes pointer first and the
+// node map from it (lea edi, [edx - 0x20c]); ours forms each from the weapon. The flag test reads
+// the hud message table through its accessor (retail's dword and), and `active` is a byte that
+// reuses al. Tried before: the flag as a separate bool global with bool active = false (23); the
+// reused local as char/byte, with `: 0`, with a (long) cast (all 236); `!= 0` of a long ternary
+// (249); a nodes local in the second loop (20).
 // @retail 0x165f16
 long __stdcall first_person_weapons_get_models(long user_index, long unit_index, long maximum_count,
 	s_first_person_model *models)
 {
 	long count = 0;
 
-	if (!(g_4e6948->state == 1 ? g_4f55e2 : false) && user_index != NONE)
+	if (!function_2ac270_get(6) && user_index != NONE)
 	{
 		s_first_person_user *user = &first_person_users[user_index];
-		long active = 0;
+		bool active = false;
 		bool armed = false;
 		long field_x11c898;
 

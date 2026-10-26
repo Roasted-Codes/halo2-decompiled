@@ -79,6 +79,10 @@ struct s_spawn_scenario_23aea0
 // native source groups 121; readonly source groups 121; real source groups 121; native destination
 // records 121; native tuple assignment 143; complete source table 103; native group owner 121;
 // native record range 154. Integer destination induction remains; two-point table gain rejected.
+// Unsigned outer counter 141; outer do-while 105; inner do-while 242; table pointer as the
+// globals' last member (retail's memset clears it) 102; running destination index 120.
+// No-link compiles of 1728 loop shapes, counter types and destination forms all fold the
+// global into a pointer induction variable; retail keeps the integer offset 0x18..0xa8.
 // @retail 0x23aea0
 void function_23aea0()
 {
@@ -586,14 +590,20 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 232 (was 232): frame 0x50/0x54 and child-iterator registers differ;
+// score 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
 // child category equality 251; dword friendliness plus speed snapshot 229.
 // Predicted-point force-inline 232; depth zero 510; size policy 355;
 // global optimization off 629; projectile category first 242.
-// score 232 (was 232): frame 0x50/0x54 and child-iterator register contract remain.
+// frame 0x50/0x54 and child-iterator register contract remain.
 // Positive occupied/hostile/both results 232/232/232; word empty/friendly/both
 // 253/233/254; external child record and positive-results combination 232/232.
+// Nonunit/playerless/both child exits 232/232/232;
+// actual unit-child count 211 kept (plain); hostile-child count 233.
+// Settings at use 233; player-team lookup at use 264; signed-byte empty 232; signed-byte friendly 232; both signed
+// bytes 232. Frame 0x50/0x54 and protected child-iterator register contract remain; original body restored.
+// Point helper output return 232; point value return 232; output-first helper 231 (one-point gain rejected);
+// complete vehicle velocity 238; speed guard 232. Frame/child convention remains; original body/helper restored.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {
@@ -618,7 +628,7 @@ void function_23b500(long player_index, s_spawn_influence_list *list)
 		{
 			if ((bool)((object->unit_flags >> 2) & 1) || (bool)((object->flags >> 26) & 1))
 				continue;
-			bool empty = true;
+			dword unit_count = 0;
 			bool friendly = true;
 			s_object_child_iterator children;
 			function_d0620(objects.iterator.object_index, &children);
@@ -628,13 +638,13 @@ void function_23b500(long player_index, s_spawn_influence_list *list)
 					((s_spawn_object_header_view *)g_4e0300->data)[children.child_index & 0xffff].object;
 				if ((1 << child->type) & 1)
 				{
-					empty = false;
+					++unit_count;
 					if (child->player_index != NONE &&
 						((s_spawn_player_view *)g_4e8c24->data)[child->player_index & 0xffff].team != player->team)
 						friendly = false;
 				}
 			}
-			if (empty)
+			if (unit_count == 0)
 				function_23ba10(4, list, &object->position);
 			else if (friendly)
 				function_23ba10(3, list, &object->position);

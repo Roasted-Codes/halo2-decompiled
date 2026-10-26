@@ -48,6 +48,10 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 // x-first deltas with full denominator 107.
 // Shared difference/projection/both 109/101/109; actual output cursor 256;
 // difference/projection with output cursor 256/256; natural previous update 101; cursor with previous update 256.
+// Second/both input records 163/247; complete/staged projection numerator 101/103;
+// parallel output offsets 101; second record with offsets 163; numerator with offsets
+// 101; nested eligibility/capacity scopes 101. Original helper and body restored.
+// Immutable displacements 101; both projection products 101; plane value 269; word output/classification/clipping ordinals 231/220/202; common output result 138; current before previous 101.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)
@@ -255,8 +259,12 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 
 /* gift wrapping: the indices of the convex hull of the points, starting from
    the lowest */
-// score 250 (was 261): scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
+// score 203 (was 208): scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
 // Full count tests 274; current-point snapshot 271; byte start state 250; float workspace names 250; still-at-origin state 264; inline classifier declaration 250; forced equality declaration 250.
+// Unsigned word result 275; unsigned first/candidate ordinals 247/209 (caller lost); native compaction ordinals 285;
+// monotonic departure 263; compaction shared exit 279; heading initialized after lowest scan 234.
+// signed-word departure state 208; native selected-next index 273; departure before classifier 218; unsigned compaction ordinals 248; lowest constants after current index 234.
+// Round 212: Unsigned-word/native-long departure 208/203; result lexical home 208; native lowest-scan ordinal 612; entry heading lifetime 237. Result/departure slots, bound and compaction boundary remain.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -264,8 +272,7 @@ short function_239e50(short count, point2f const *points, short *indices)
 
 	if (function_239b80(count, points) == 2)
 	{
-		real previous_angle = 0.f;
-		bool left_start = false;
+		long left_start = false;
 		real lowest_x = FLT_MAX;
 		real lowest_y = FLT_MAX;
 		short current = count;
@@ -282,6 +289,7 @@ short function_239e50(short count, point2f const *points, short *indices)
 			}
 		}
 
+		real previous_angle = 0.f;
 		while ((short)hull_count < count)
 		{
 			real best_distance = -FLT_MAX;
@@ -417,6 +425,7 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 // reused short/native bound values 43/47.
 // Test-point value 97; function-scope vectors 31; edge before offset 31; role names 31;
 // difference helper y-first/output-first/base-first/vector result 31/31/31/144.
+// Early short successor with vertex pointer/value 58/103; separate current/successor 63; advanced short wrap 50; advance before rejection 43; result-controlled traversal 49; native/word equality wrap 44/45.
 // @retail 0x23a220
 bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
 {
@@ -443,8 +452,11 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 243 (was 243): count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
+// score 237 (was 237): count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
 // Native current ordinal 249; long side states 264; prior-point ordinal 288; ordered fraction clamp 243; clear-mask arm first 243; shared normalized count 275; existing point difference 243.
+// Explicit source bit 243; unsigned input ordinal 237; word side states 263; retained signed distance 273; parallel edge scales 243.
+// signed side-presence words 248; signed current-side byte 256; double equality tolerance 302; native equality references 237; ordinary unsigned previous-side byte 278.
+// Round 212: Current-side unsigned word/native long 257/250; input ordinal name 237; true-first current side 341; positive-first final policy 236. Count/stride/prior homes and shared publication remain.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
@@ -463,7 +475,7 @@ short function_23a6f0(point2f *output, short count, point2f const *points,
 	}
 	point2f const *previous = &points[count - 1];
 	volatile bool previous_inside = previous->y * plane->n.j + previous->x * plane->n.i - plane->d >= 0.f;
-	for (short i = 0; i < count; i++)
+	for (unsigned short i = 0; i < count; i++)
 	{
 		point2f const *current = &points[i];
 		real distance = current->y * plane->n.j + plane->n.i * current->x - plane->d;

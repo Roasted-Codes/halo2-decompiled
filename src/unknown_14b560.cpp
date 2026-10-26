@@ -2115,14 +2115,22 @@ static __forceinline long player_round_ticks(real value)
     return result;
 }
 
-// score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
+// score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion remain.
+// frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
+// Frame 0x4c versus 0x74; request/pointer homes and selective expansion remain.
+// Slot helper ordinary inline 723; view helper ordinary inline 812; sentinel result join 710;
+// absent-slot exit 701; word hand selector 701.
+// Earlier: frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
 // Frame pointer 816; native input fields 701; native player cooldown fields 701;
 // direct permission result 707; combined native fields and direct result 707.
 // Native unit view 701; candidate reference 701; request at dispatch 701;
 // native activity results 707; native permission 701. Original body kept.
 // Cooldown scalar names 701; rest-first clamp stores 706; gated idle cap 705;
 // separate melee button tests 709; target-age store before test 701.
-// score 701 (was 701): Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
+// Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
+// Branch-local separate requests 804; live movement fields 701; joined cooldown clamp 707;
+// non-primary melee arm first 701; target completion returns 701.
+// Earlier: Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
@@ -2678,7 +2686,8 @@ struct s_unit_flags_14d8b0
 
 // score 128 (was 128): iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
-// low-time arm first 179; inline depth one 155. Damage call convention differs.
+// low-time arm first 179; inline depth one 155. Damage call convention differs: BLOCKED-BY 0xd66d0
+// (retail pushes both arguments; ours passes the object in eax).
 // Native tick field 155; native tick and typed first flag 153; immutable native-field rate 155;
 // native reset timer 155; both native long/short fields 155; signed native countdowns 155;
 // all native countdown fields 155; full native current-player record 153.
@@ -2707,6 +2716,10 @@ struct s_unit_flags_14d8b0
 // Initial/all native flag references 126/126; shared high-byte reference 128;
 // all-flags with tick pointer 126, direct tick product 228, float/count roles 126/126,
 // admitted expiry 199. Two-point forms dropped; original body retained.
+// Long user index in the expired-ticks arm 125 (retail movsx + cmp eax, -1; that arm then differs only in
+// register rotation; under the keep threshold alone); with the tick stored before the rate read 233 (rate folded
+// into mulss), rate named after the increment 233; trigger test as one condition 125; datum index read from
+// the iterator at each use 125.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

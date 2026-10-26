@@ -108,6 +108,9 @@ static inline vector3f *function_x84d9e8(vector3f *vector, vector3f const *axis,
 // shared cross product and cosine vector 35;
 // shared cross product and rotation output 136;
 // shared cross product with distinct rotation input and output 134;
+// void rotation return 6; cosine-in-place i/j/k/i+j/i+k/j+k 12 each;
+// sine-in-place cross i 15; single-precision trig 46; scalar trig results 6;
+// value-returning cross 123; reference cross interface 6; array component cross 6.
 // @retail 0x18c250
 bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
@@ -134,10 +137,24 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 }
 
 
-// score 55 (was 134): frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
+// score 55 (was 55): BLOCKED-BY 0xba300: our object_get_root_location takes the object in eax and the output in esi,
+// retail's the output in eax and the object in ecx, so the object index can't stay in esi as in retail. Retail keeps a
+// bool result in bl (xor bl, bl at entry) and returns through tail copies (mov al, 1 / mov al, bl); the final location
+// copy stores its second dword first. Frame 0x18 and normal-transform block agree.
 // Byte result first 150; Boolean early-success result 152; long result 135; independent type tests 170;
 // excluded-class exit 165; long result first 134 kept (plain).
 // Root output at entry 134; forward at entry 134; direct successful completion 185; machine arm first 134; CRT location publication 134; existing normal helper input values 55 kept (plain).
+// Word/unsigned long/signed char result 55/55/73; named location fields 65; invalid-cluster common exit 55;
+// bool result 76 (xor bl, bl agrees; the object index moves to ebp), set before the location copy 76, set after the
+// audible store 181; long result set after the audible store 53; cluster index sum operands swapped 55.
+// frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
+// Word result 55; unsigned long result 55; signed char result 73; named location fields 65; invalid-cluster common exit
+// 55.
+// Recovered normal body: Boolean first 76; byte first 73; Boolean after lookup 78; long after lookup 56;
+// direct class receiver 55; direct class with Boolean 76; native workspace names 55; success before
+// publication 55.
+// native byte type after normal gain 113; readonly object 55; readonly matrix 55; named machine row 55; native
+// row first 55; high location fields first 65; cluster-derived result 197; eligibility-derived result 199.
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
@@ -533,13 +550,22 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 	location->spatial.compressed_forward = vector3d_compress(g_4687b0);
 }
 
-// score 293 (was 293): Frame 0x84 versus 0x80; datum/tag and root-location carriers remain.
+// score 293 (was 293): Frame 0x84 versus 0x80; datum/tag allocation and protected root-location convention remain.
 // marker outer scope 309; direct failure predicate 293 kept (plain); stored-scale arm first 314; ascending cases 311; failure exit 314.
 // Long failure result 293; marker consumption scope 293; shared scale object index 339;
 // force-inline object-index query 293; marker/axis/audibility role names 293.
 // Tag-first declaration 293; explicit failure arms 309; word cluster 294; CRT velocity copy 293; owner value conditional 301.
 // Effect axis at entry 293; audibility output at entry 293; direct late tag flag 323 (frame 0x80);
 // readonly datum 293; CRT marker position 293.
+// signed-word effect failure 293; unsigned native cluster 293; unsigned marker handle 293; immutable datum pointer 293; native clear-output reference 293; unsigned-byte effect failure 293.
+// Named location fields 293; failure-first common return 296; cases two/three/zero 296; entry marker-name workspace
+// 293; native flag0 view 293.
+// Tag acquisition after returning kinds 305; conditional failure 309; conditional marker selection 293;
+// audibility-first guard 292 (one-point gain dropped); ordinary clear inline 412.
+// Datum/tag lexical names 293; direct success predicate 293; cluster selection tests 293;
+// object property base reread 560; const retained tag bytes 293.
+// Cases zero/three/two 293, two/zero/three 296, three/zero/two 293;
+// direct effect/impact flag masks 345; final native flag mask 300.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

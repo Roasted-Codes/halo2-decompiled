@@ -435,9 +435,14 @@ void __fastcall function_24cdaf(void)
 	}
 }
 
-// @retail 0x24cdd8
 // score 6 (was 6): the tick counter's address is kept in ECX where retail keeps it in EAX, so the
 // counter is read into EAX and written back from there.
+// register value/ticks/both 6 each; const value/ticks/player 6 each;
+// existing player accessor 6; function-scope message/index 6 each; short index 6.
+// Indexed player fields 26; tick address from state and index 16; tick address from global 56;
+// tick pointer name 6; increment result name 6; both role names 6; minimum intrinsic 6;
+// nested countdown guards 6.
+// @retail 0x24cdd8
 void function_24cdd8(long player_index)
 {
 	s_hud_globals_definition *view = function_24c80b();

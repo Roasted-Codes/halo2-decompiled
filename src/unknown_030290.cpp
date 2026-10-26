@@ -71,8 +71,18 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
-// score 112 (was 164): coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
+// score 112 (was 112): Frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes still differ.
+// Earlier: frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes differ.
+// coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
 // Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
+// only an XMM0/XMM1 colouring swap remains (retail keeps the horizontal
+// coordinate in XMM0 and the depth in XMM1, ours the other way round, through the whole body).
+// The half-viewport values as a local box2f 86 (kept: retail keeps them in four adjacent
+// slots, left/right/top/bottom); then depth first 85; r2 inline 86; coefficients after the box
+// 109; ratio before root 101; coordinates as a vector3f 86; cy/cz/cx order 117; a forceinline
+// per-axis helper 118; a 600 s permuter run, none below 86. No-link screens of every operand
+// and term order, names, vector locals and displacement forms keep the same colouring.
+// Earlier forms (164/112): coefficient names 209; viewport names 209; vertical coordinate first 211;
 // tangent names 209; shared root/ratio/tangent workspaces 209.
 // In-place displacements 257; depth-radius product 233; deferred second
 // tangents 164; near-plane early exit 240; shared depth square 209.
@@ -82,17 +92,22 @@ long g_4ba134;
 // Direct-radius failed-discriminant arms first 185; behind-plane arm first
 // 213; named tangent quotients 193; ratio before root 193; earlier radius
 // square 193; shared root products 212.
-// score 112 (was 164): viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
+// Earlier: viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
 // Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
-// eager first tangent coordinates 164; in-place tangent projection 164. Original body retained.
-// Frame 0x34 and coordinate prefix agree; viewport conversion and
-// root/ratio/tangent homes remain. Tried split viewport conversions 164; viewport conversions
-// Split viewport conversions 164; viewport conversions
-// first 176; horizontal tangent scope 164; tangent blend weights 164; horizontal root name 164.
+// eager first tangent coordinates 164; in-place tangent projection 164.
+// Split viewport conversions 164; viewport conversions first 176; horizontal tangent scope 164;
+// tangent blend weights 164; horizontal root name 164.
 // Second depths early 197; second coordinates early 232; second pairs early 209;
 // horizontal pair early 247; vertical pair early 241; coordinate-before-depth pairs 112;
 // early depths with guarded coordinates 197; inline first coordinates 209.
 // On early coordinate/depth pairs: direct radius 205; coordinate role names 112.
+// Early-pair context: vertical coefficient names 112; vertical edge names 112; vertical-first coefficients 118;
+// coefficient fields at use 252; viewport first 130; later vertical viewport 217; later vertical coefficients 180; both later 217.
+// Coordinate accumulator x/depth/all 112 each; horizontal/depth/all leading products 112 each;
+// shared camera scale 245; branch-defined scaled components 137.
+// entry projection declarations 112; shared tangent declarations 149; both declarations 149; radial
+// values first 222; both radial squares first 227; viewport after discriminant 214; coefficients after
+// discriminant 137; shared difference helper 112.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
@@ -119,10 +134,11 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 		real m98 = camera->unknown98;
 		real m8c = camera->unknown8c;
 		real m9c = camera->unknown9c;
-		real left = view->bounds.left * 0.5f;
-		real top = view->bounds.top * 0.5f;
-		real right = view->bounds.right * 0.5f;
-		real bottom = view->bounds.bottom * 0.5f;
+		box2f half;
+		half.x0 = view->bounds.left * 0.5f;
+		half.y0 = view->bounds.top * 0.5f;
+		half.x1 = view->bounds.right * 0.5f;
+		half.y1 = view->bounds.bottom * 0.5f;
 
 		real xz = cx * cx + cz * cz;
 		real r2 = radius_value * radius_value;
@@ -138,14 +154,14 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			{
 				real xa = cx - (cx * radius_value + root * cz) * k;
 				real n = xa / za * m78 + m98;
-				bounds->x0 = (1.f - n) * left + (n + 1.f) * right;
+				bounds->x0 = (1.f - n) * half.x0 + (n + 1.f) * half.x1;
 			}
 			else
 				bounds->x0 = -k_real_max;
 			if (zb > 0.01f)
 			{
 				real n = xb / zb * m78 + m98;
-				bounds->x1 = (1.f - n) * left + (n + 1.f) * right;
+				bounds->x1 = (1.f - n) * half.x0 + (n + 1.f) * half.x1;
 			}
 			else
 				bounds->x1 = k_real_max;
@@ -169,14 +185,14 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 			{
 				real ya = cy - (cy * radius_value + root * cz) * k;
 				real n = ya / za * m8c + m9c;
-				bounds->y0 = (1.f - n) * top + (n + 1.f) * bottom;
+				bounds->y0 = (1.f - n) * half.y0 + (n + 1.f) * half.y1;
 			}
 			else
 				bounds->y0 = -k_real_max;
 			if (zb > 0.01f)
 			{
 				real n = yb / zb * m8c + m9c;
-				bounds->y1 = (1.f - n) * top + (n + 1.f) * bottom;
+				bounds->y1 = (1.f - n) * half.y0 + (n + 1.f) * half.y1;
 			}
 			else
 				bounds->y1 = k_real_max;
@@ -238,7 +254,7 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): frame 0x30 versus 0x2c, inverse defaults and displaced point/factor spill homes remain.
+// score 195 (was 195): Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
 // frame 0x30 versus 0x2c and inverse-depth/point homes
 // frame 0x30 versus 0x2c and inverse-depth/point homes remain.
 // Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
@@ -254,6 +270,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // frame 0x30 versus 0x2c and projected-point/factor homes differ;
 // role-named points 195; displaced transform first 250; orthographic defaults first 261;
 // shared point initializer 195; single result 280.
+// Native transform input/result/both by value 402/314/288; helper-local
+// scale observation 225; orthographic arm first 215. Frame and point/factor homes remain.
 // Origin/camera/scale fallback selections, all three paired selections and all together 195 each;
 // native floating factor admission 195. Complete original body restored.
 // Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;
@@ -264,6 +282,10 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
 // 423/376/529/359/538/536/718; all with local inline declaration 718.
 // All nonexact shared-transform forms restored, including their floating sum order; no external change remains.
+// Native point input/output/camera references 195/195/195; paired point/all references 195/195;
+// parallel named pre-translation sums 263.
+// Round 115: Origin/displaced/both reciprocal selections 195/195/195; guarded helper coordinate initialization 293; negate selections 195; initial displacement scope ends after transforms 195. Opening body/helper restored.
+// Round 117: Transformed storage first 195; chained inverse defaults 195; complete inverse results 296; helper coordinate homes 195; depth-first inputs 225; output-pointer result 195.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

@@ -52,7 +52,16 @@ struct c_aggregate : c_child
 };
 
 
-// score 92 (was 92): error/completion/information homes and dispatch/release registers still differ.
+// score 85 (was 92): frame 0x8024 against 0x8020 (retail packs the completion output with two later
+// spills), the dispatch loop (retail: index in ebp, child cursor and inner count spilled) and one
+// allocator reload (retail loads the global again for the release, into eax then edi) still differ.
+// Kept: item test on the field and the allocator global held across the release 85.
+// Global held across the release only 100; indexed dispatch 104, with the hold 115; class operator
+// delete 100, with indexed dispatch 115; release through a local helper taking the globals 103;
+// field test with indexed dispatch 119; completion output at loop scope 113; completion output
+// renamed 92 (frame unchanged); held global with the item test on the local 106. On the kept
+// body: indexed dispatch 115, reading the child at each use 128; completion output at loop or
+// function scope 96/96 (frame stays 0x8024); total declared before error 85.
 // Cleanup block/item/both cursors
 // frame and request/cursor registers agree; output homes,
 // Frame 0x8020 agrees; output homes, dispatch and release allocation remain.
@@ -114,15 +123,16 @@ long c_aggregate_450cf4::function_97d80(dword *source, s_request *request)
 		s_block *block = &blocks[k];
 		for (long j = 0; j < block->count; j++)
 		{
-			c_child *object = block->items[j].object;
-			if (object != 0)
+			if (block->items[j].object != 0)
 			{
+				c_child *object = block->items[j].object;
+				s_allocator_globals *globals = g_4d87f8;
 				long result;
-				if (!g_4d87f8->allocator->get_info(object, &result))
+				if (!globals->allocator->get_info(object, &result))
 					result = NONE;
-				g_4d87f8->allocator->release(object, NONE);
+				globals->allocator->release(object, NONE);
 				if (object != 0)
-					g_4d87f8->count--;
+					globals->count--;
 				block->items[j].object = 0;
 			}
 		}

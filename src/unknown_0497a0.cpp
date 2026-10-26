@@ -14,19 +14,22 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 647 (was 647): frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
+// score 599 (was 604): frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
+// Earlier 647 from 647: frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
 // primary output scale 744; default depth scale 743; alternate depth scales 727; product scale workspaces 734;
 // late wave lifetime 743; wave offset workspaces 660; inverse before basis 765; direct integer component 743;
 // complete shape branches 743; wave alternate scales 695; wave product scales 692; wave primary scales 659;
 // wave basis copy blocks 806; shape discriminant 776; wave shape discriminant 696
 // Ordinary camera reads with early/late special cross products 737/747;
 // early sine amplitude 738; accumulated maxima 796; common mode publication 743.
-// score 604 (was 647): Frame 0x60 agrees; scalar/basis scheduling and final integer conversion remain.
+// Earlier 604 from 647: Frame 0x60 agrees; scalar/basis scheduling and final integer conversion remain.
 // wave with conditional shapes fixed 738; wave with camera offsets 634; wave with early projection
 // scales 672; wave with phased cross results 691; shared wave offset 667; camera with early projection
 // scales 630; camera with phased cross results 620; camera with shared wave offset 604; camera with late
 // inverse 648; shared camera early scales 631; shared camera phased cross 620; shared camera early
 // phased 625; shared camera late inverse 618.
+// DL134: existing wave origin 599 kept; coordinate/point inputs 631/720; first phase 604;
+// first/second/both saved-axis copies 604/604/604; phase with native origin 620.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -64,8 +67,8 @@ void function_0497a0(
 	{
 		vector3f c;
 		cross3f(&v4, &v2, &c);
-		real s1 = (real)sin(g_4b9da0.x * 5.6f + g_4b9da0.y);
-		real s0 = (real)((sin(g_4b9da0.x * 8.2f) * cos(g_4b9da0.y * 7.8f) * sin(g_4b9da0.x) + cos(g_4b9da0.y * 7.75f)) * 0.5f);
+		real s1 = (real)sin(v1.x * 5.6f + v1.y);
+		real s0 = (real)((sin(v1.x * 8.2f) * cos(v1.y * 7.8f) * sin(v1.x) + cos(v1.y * 7.75f)) * 0.5f);
 		real amp = s0 * 0.03f;
 		vector3f wave_shift;
 		vector3f_scale(&v4, amp, &wave_shift);
@@ -361,21 +364,32 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
     return pixel;
 }
 
-// score 615 (was 615): Frame 0xac agrees; definition/output carriers, endpoint placement and color/vector homes remain.
+// score 615 (was 615): Frame 0xac and extent agree; definition/output carriers, endpoint placement and color/vector homes remain.
+// frame 0xac agrees; definition/vertex registers, endpoint-first loop layout and
+// color/vector homes differ. Tried definition first 620; paired vertex store order 636; zero color record
+// Frame 0xac agrees; definition/output carriers, endpoint placement and color/vector homes remain.
 // Tried definition first 620; paired vertex store order 636; zero color record
 // 626; shared position setters 621; second output element 640; single result exit 631; plain point chain for
 // 620; color factor result 626; shared cross products 615; shared direction difference 620; native vector
 // role homes 620; native point initialization 623; loop vertex store order 620; shared geometry helpers 615;
 // shared cross position setters 617; shared cross zero color 622.
+// round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
+// Iteration geometry scratch 615; iteration tint output 615; shared transition value 630;
+// width after initial color 616; live input definition reads 626.
 // Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
 // Advancing output cursor 664; segment/camera-delta/plus-minus point names 615/615/615; second
 // position copied from first 629; byte state flags 615; true result and one exit 647.
 // Paired displacement loop 615; side scaling loop 615; normal scaling loops 615; RGB tint loop 615; planar geometry cases first 615.
 // Width-path result 626; scale override 622; unsigned point handle 615; final endpoint base 634; two-use packed pixel 615.
-// score 615 (was 615): round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
-// score 615 (was 615): round 108: definition/output carriers, endpoint placement and color/vector homes remain.
+// Earlier score 615 (was 615): round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
+// Earlier score 615 (was 615): round 108: definition/output carriers, endpoint placement and color/vector homes remain.
 // Persistent workspaces 620; fused color-component loop 643; shared geometry neighbor 620;
 // half-width before tint 620; valid-state-first arms 616.
+// Current position field pointer with read-only point/state/source contracts,
+// all eight combinations 647; frame 0xac and 2632 bytes. Original body restored.
+// round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
+// round 108: definition/output carriers, endpoint placement and color/vector homes remain.
+// Round 349: Conversion-local names 615; source pointer rereads 624; normal-output flag 642; position memcpy 615; shared in-place scales 615 (fast).
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

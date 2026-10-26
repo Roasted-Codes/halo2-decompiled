@@ -185,7 +185,8 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 237 (was 237): Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
+// score 153 (was 153): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
 // 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
 // color/both 246 each; alpha with edges 322; native color reference 276; color copies after
 // Begin/commit 293/311.
@@ -205,11 +206,24 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // shared resource pointer 511; dword alpha carrier 276.
 // First coordinate C entry 373; folded half-span with inline reservations 276;
 // delayed lower coordinate 387; delayed upper coordinate 384; lower initialized first 359.
+// Shared color output 246; pointer/helper 276 (exact-only); consumer query/helper 305; byte alpha 166 fast / 157 plain; SDK packing 170; texture-mode-first stores 246 (fast control 246).
 // Round 109: Fast: native color/coordinate names 246; color phase scope 246; final half-size value with native color 246; color after texture commit 248; immutable native color 246 (opening fast 246, plain 237).
 // Result pointer 276; color query after Begin 263; function color lifetime/immutable alpha/
 // chained descriptor counts/final short-coordinate API/half-scale product order/
 // upper-coordinate term order 246/246/246/246/246/246 (opening fast 246, plain 237).
 // Opening executable body and all inherited directives restored.
+// Current native-color/byte-alpha frame: scoped color 166 fast; scalar half-size 166; disabled return 166; full
+// readiness guards 166; lower coordinate first 378 (control 166). Pointer/byte controls 342 and value-half/pointer
+// 342 reproduce older configurations and are excluded.
+// Current byte-alpha frame: color after Begin 192; color after commit 168; C++ color entry 166; first position C++
+// entry 166; second quad real-table loop 412 (fast control 166). Frame/color/reservation homes remain; complete
+// opening body restored.
+// Native memcpy in byte-alpha frame 166; complete component initializer 171; shared color helper with byte alpha 166;
+// word alpha 162 fast / 153 plain (kept); explicit half-size assignments with word alpha 162 fast.
+// Round 210: Signed-word alpha 162; coordinate lexical homes 162; immutable value half-size 162;
+// native channel packing 238; chained descriptor counts 162 (fast control 162). Frame and
+// reservation scheduling remain.
+// Round 212: Immutable bitmap pointers/repeated texture coordinates 162/162; chained RGB/alpha outputs 165; shared color output with word alpha 162; center snapshot at first final vertex 296 (fast control 162). Frame and reservation scheduling remain.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
@@ -320,7 +334,7 @@ void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 			function_0224f0(0, D3DTSS_ALPHAKILL, 0);
 			function_0222d0((D3DRENDERSTATETYPE)0x3e, 1);
 			function_0222d0((D3DRENDERSTATETYPE)0x3f, 0x303);
-			dword local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
+			word local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
 			memset(&g_484f68, 0, sizeof(g_484f68));
 			g_484f68.PSConstant0[0] = (((((dword)local_6 << 8) | local_6) << 8 | local_6) << 8) | local_6;
 			g_484f68.PSCombinerCount = 1;
