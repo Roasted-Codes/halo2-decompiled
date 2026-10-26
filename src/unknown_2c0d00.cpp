@@ -1243,8 +1243,8 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                         break;
                     }
                 }
-                s_path_step_view const *next_entry = &points[next];
-                if (edge != 0xffff && next_entry->type == NONE)
+                s_path_step_view const *next_step = &points[next];
+                if (edge != 0xffff && next_step->type == NONE)
                 {
                     point2f corners[2];
                     bool left = function_2c3030((s_pathfinding_data *)query->pathfinding,
@@ -1255,7 +1255,7 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                     {
                         point2f const *previous = next > 0 ? (point2f *)&points[next - 1].point.point :
                             (point2f *)&query->source.point.point;
-                        point2f const *endpoint = (point2f *)&next_entry->point.point;
+                        point2f const *endpoint = (point2f *)&next_step->point.point;
                         bool side = function_2c2a70(previous, endpoint, &corners[0], &corners[1], &origin);
                         point3f start = { origin.x, origin.y, 0.0f };
                         for (short attempt = 0; attempt < 2; ++attempt)
@@ -1271,13 +1271,13 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                             function_26c4e0((s_type_c3b527 *)&start, (s_type_c3b527 *)&target,
                                 &first, data, sector, NONE, (long)&query->location);
                             if (!((s_sector_trace_result *)&first)->blocked &&
-                                !function_26c4e0((s_type_c3b527 *)&target, &next_entry->point,
+                                !function_26c4e0((s_type_c3b527 *)&target, &next_step->point,
                                     &second, data, ((s_sector_trace_result *)&first)->sector_index,
-                                    next_entry->node_index, (long)&query->location))
+                                    next_step->node_index, (long)&query->location))
                             {
                                 sector = ((s_sector_trace_result *)&first)->sector_index;
                                 origin = candidate;
-                                output_index = next_entry->point.output_index;
+                                output_index = next_step->point.output_index;
                                 goto emit;
                             }
                         }
@@ -1291,9 +1291,9 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                 }
                 else
                 {
-                    origin = *(point2f *)&next_entry->point.point;
-                    sector = next_entry->node_index;
-                    output_index = next_entry->point.output_index;
+                    origin = *(point2f *)&next_step->point.point;
+                    sector = next_step->node_index;
+                    output_index = next_step->point.output_index;
                     next = index + 1;
                 }
             emit:
