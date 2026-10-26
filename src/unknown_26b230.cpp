@@ -2133,7 +2133,8 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
+// score 322 (was 322): Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
+// frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
 // Round 156, caller context: depth zero 505; depth one 322; target size 517;
@@ -2143,6 +2144,7 @@ void *actor_get_character_situation_entry(long actor_index);
 // Scoped first distance iterator 322; two-use candidate-distance sample 326; readonly
 // settings view 322; first scope plus sample 326; separate marking result 322; first
 // scope plus marking result 322; chained reset fields 322, plus marking result 322.
+// Readonly candidate 322; priority/type/both samples 331/357/369; readonly samples 369; selected threshold first 372; threshold with samples 361; readonly structure 322.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
