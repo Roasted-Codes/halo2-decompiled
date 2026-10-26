@@ -1180,6 +1180,8 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
 // early final fade 529/2196; second scale at use 529/2189 kept.
 // Final fade with late second scale 541/2175 (restored).
+// Complete RGB sample/lower/both/upper/sample-upper/lower-upper/all captures 634/655/774/664/810/730/913 (upper
+// forms lose caller); read-only selected parameters 529. Original helper and body restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)

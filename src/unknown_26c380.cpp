@@ -161,6 +161,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Existing point producer output return alone/with forced point expansion/with magnitude/with point and
 // magnitude/with cross/with point and cross/with magnitude and cross/with all three 419 each; every sibling
 // retains its preview baseline. Original helpers restored.
+// Native cross axis/direction/both values 522/522/579; planar point2 input 419; planar plus axis/direction/both
+// 522/522/579; orientation at every use 418 (one-point gain rejected).
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

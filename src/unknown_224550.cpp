@@ -142,6 +142,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // exact-only); redundant flip clear removed 481; bitmap arm first 508.
 // UV output-first 421; cache/definition-first tint contract 421; complete bounds snapshot 656;
 // UV output-pointer return 421; reference bounds formal 421. Original helpers and body retained.
+// In-place clamp pointer/reference and both forced forms 421 each; pointer clamp plus plain geometry
+// table/native UV member copy 421/421; plain geometry table/native UV member copy alone 421/421. Original
+// helpers restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)
