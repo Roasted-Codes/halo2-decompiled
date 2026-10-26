@@ -102,6 +102,11 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // null and successor EBP remain; opening body and private iterator restored. Repeated standalone word form
 // 218 excluded.
 // Native byte/signed-byte/Boolean high-bit fields with Boolean tests 164/164/164; direct tests 164/164/164; native bit values 164/187. Record size stayed 0x98; original flag byte restored.
+// Round 141: Coordinated provider/caller inline-noinline declarations for eligibility, location update,
+// detach, actor test, attach, transfer, partition update and final update 164 each. Original providers
+// and declarations restored; pool/iterator and successor homes remain.
+// Round 141: Canonical inline-only provider/caller declarations at the same eight boundaries also give
+// 164 each; every provider and original declaration restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
