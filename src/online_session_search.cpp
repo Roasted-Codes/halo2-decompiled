@@ -337,11 +337,13 @@ static inline void release_block(void *block, long *info)
 
 /* stops a session search: cancels its online task and its QoS lookups and
    releases its buffers */
-// score 87 (was 91): extra save, sentinel/zero and rolled handle loop differ; existing local-output release
+// score 87 (was 87): extra save, sentinel/zero and rolled handle loop differ; existing local-output release
 // for buffer masks 1/2/4/3/5/6/7, then shared size output: 96, 96, 96, 92, 96, 96, 92, 96.
 // Task handle 91; two query-handle snapshots 91; plain handle-table loop 87;
 // first/results/seen buffer snapshots 106/105/98; all buffers 116; table plus buffers 113.
 // Handle-table loop kept: plain 87, 252/261 bytes; receiver/allocator now EBP/EDI.
+// Round 164: pointer range 91; entry handle cursor 91; entry handle end 91; counted cursor 87;
+// unsigned counter 87; word counter 87; counted handle value 87; pointer task lifetime 91.
 // @retail 0x90c80
 void __stdcall function_090c80(byte *p)
 {
@@ -698,6 +700,9 @@ done:
 // Equality input orientation 128; kind field at scoring 197; value field at distance 128;
 // individual field-selection results 128; details field at each use 195;
 // ordinary invalid-entry continue 128; changed-results scope 128; ordinary-fields arm first 128.
+// Round 164: native detail inputs 128; full results lifetime 182; native full results 182;
+// entry input scope 128; loop input scope 128; entry scope results 182; native loop scope 128;
+// native entry results 182.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

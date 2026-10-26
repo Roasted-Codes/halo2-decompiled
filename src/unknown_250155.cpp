@@ -2792,6 +2792,8 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 // Native/promoted retained item count 100/100; count-tested item while 100;
 // independent item admissions 100; name-only item continue 100; current array-item pointer 294;
 // complete bitmap/title guards on the offline-first body 100/100. Original body retained.
+// Round 164: row generic query 235; direct text queries 235; game at use 322; team availability 294;
+// native item flags 100; row game observations 314; row team availability 304; row native game 314.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {

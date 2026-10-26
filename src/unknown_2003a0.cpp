@@ -1943,6 +1943,8 @@ bool function_1df5d0(short team_a, short team_b);
 // Frame 0x14 agrees; next-index memory home, contribution register and entry
 // Frame 0x14 agrees; next-cursor storage, contribution register and flag
 // Round 110: delayed long count from native population 235; known native squad fields 179; direct hostility OR 238; hostility first 179; native point memcpy 179.
+// Round 164: shared swarm input 179; shared pool getter 179; aggregation phase 235; phase swarm 235;
+// phase pool getter 235; iteration actor scope 182; actor scope swarm 182; all native scopes 235.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
