@@ -1169,7 +1169,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 165 (was 165): frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
+// score 112 (was 165): frame 0x1144 and extent agree; file displacement, request-copy and validity joins remain.
+// Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file displacement and request/I-O setup differ.
 // task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
 // completion scope 172; output scopes 172; slot equality 393;
@@ -1207,6 +1208,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Split file-base/element advance 165; file pointer name 165; wait/header/both forceinline 165/165/165;
 // empty path 205; initialized write count 204; initialized resize result 215. File-displacement and
 // request/I-O setup remain.
+// Explicit native write-options construction 112 (kept); complete task value 227; all output lifetimes 165; options/task 218, options/outputs 112, task/outputs 227, all three 218; complete data-member memset 165.
 // @retail 0x213970
 void function_213970(void)
 {
@@ -1255,7 +1257,7 @@ void function_213970(void)
                     s_cache_header empty_header;
                     cache_header_initialize_strings(&empty_header);
                     dword bytes_written;
-                    function_1a1050(*(s_file_handle *)&file->handle, &empty_header, 0x800, 0, 0, 0, 6, &bytes_written, &done);
+                    function_1a1050(*(s_file_handle *)&file->handle, &empty_header, 0x800, 0, s_file_write_flags(0), 0, 6, &bytes_written, &done);
                     cache_wait_for_completion(&done);
                     written = bytes_written == 0x800;
                 }

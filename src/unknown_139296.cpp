@@ -366,11 +366,12 @@ bool function_22acb4(long player_index);
 // Earlier 190 (was 190): second-mask spill and constant homes remain.
 // Fourth-mask code/side/flag-a/flag-b/flag-c observations once: 190/260/209/209/209;
 // all five/code plus flag-a/flag-b plus flag-c: 271/209/287. Second-mask spill remains.
-// score 190 (was 190): second-mask spill and persistent constant homes remain.
+// second-mask spill and persistent constant homes remain.
 // Individual redundant clears removed: first16 284; second16 281; both16 290;
 // first2/4/8 286/286/290; first2+16 301; initial third128 249. All restored.
 // False-first total setters: first/second/third/fourth 190/190/248/207;
 // first-second/all 190/260. Clear-before-guarded-set second/all 259/340.
+// First/second enum observations once 292/284; flags at each use 190; both enum observations 284; first/second/both with live flags 292/284/284; unsigned-word enums with live flags 284. Extra second-mask spill and persistent constant homes remain.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
