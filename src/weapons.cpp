@@ -3035,6 +3035,7 @@ struct s_ammo_conversion_entry
 // Reusable magazine count 211; read-only tag receivers/result names/outer ordinal/conversion
 // scope 203/203/203/203; result-conditioned search 202 (below gate); plain while 203;
 // source-count store order 203. Opening body restored.
+// Success-path return 209; source from each path/after conversion 204/219; conversion count/table/both at use 197/198/198; short current/successor 205; combined ownership 205. One-point gain rejected.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

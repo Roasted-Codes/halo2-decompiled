@@ -80,6 +80,7 @@ static __forceinline long marker_viewer_unit(void)
 // size field stages 99 fast / 99 plain; height between stages 104 (one-point gain rejected);
 // factor with size field 278; projection/vector noinline declarations 105/105;
 // early coordinate declarations 105.
+// Signed/unsigned word status 243/243; placement fill/flags after projection 223/111; chained flags 103; immutable ellipse products 99; shared ellipse squares 263; ellipse ratio lifetime 99 (last two exact-only).
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
