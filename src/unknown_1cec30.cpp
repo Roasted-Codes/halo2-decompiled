@@ -2736,8 +2736,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     havok_from_vector3d(&position, (vector3f const *)&matrix->position);
     frame->m_translation = position;
 }
-
-// score 206 (was 206): body/stride registers and relative-call input differ;
+// score 206 (was 206): Frame 0xb4 agrees; stride/base and relative-call input registers remain.
+// Earlier: body/stride registers and relative-call input differ;
 // body getters 206; first count after lookup 205 (below gate), both 275;
 // node streams 336; streams with getters 336 (plain scores). Original kept.
 // body stride/base registers and transform call differ;
@@ -2747,12 +2747,15 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // entry relative transform 206; fallback first 206 (plain scores).
 // Round 303: first mapped byte 299; second mapped byte 213; first node at use 338;
 // second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
-// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
-// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
-// score 206 (was 206): frame 0xb4 agrees; stride/base and relative-call registers remain.
+// Earlier: Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
+// Earlier: Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
+// Earlier: frame 0xb4 agrees; stride/base and relative-call registers remain.
 // Reduced search operand order first/second/both 346/346/346; frame-test operands
 // first/second/both 346/346/346; first mapped-index result 345; with search operands 345
 // (control 346; one-point reductions excluded).
+// Round 130: existing frame converter with matrix/output/both references 206/206/206; direct translation, with matrix/output/both
+// references and actual output return 367/367/367/367/367 (plain scores).
+// The original aligned translation temporary and all interfaces are restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

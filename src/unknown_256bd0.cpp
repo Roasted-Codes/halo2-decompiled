@@ -49,8 +49,8 @@ struct s_object_flags_256bd0
 	word unknown0 : 6;
 	word bit6 : 1;
 };
-
-// score 211 (was 211): frame 0x114 versus 0x110 and hoisted active byte remain;
+// score 211 (was 211): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
+// Earlier: frame 0x114 versus 0x110 and hoisted active byte remain;
 // native placement fields 213; actor getter 212.
 // slot reference 211; native fields with getter 214.
 // const entry result 211; condition-local entry 211.
@@ -61,9 +61,12 @@ struct s_object_flags_256bd0
 // angle field before sign adjustment 230.
 // Helper state pointer in two orders 211/211; state reference 211/211;
 // activity value 211/211; external activity reference 211/211. Cached byte/frame remain.
-// score 211 (was 211): frame 0x114 versus 0x110 and cached activity byte remain.
+// Earlier: frame 0x114 versus 0x110 and cached activity byte remain.
 // Actual datum cursor with separate index output: pointer in both orders, void result
 // in both orders, read-only result in both orders, reference output in both orders all 211.
+// Round 130: CRT position/direction/both copies 211/211/211; placement
+// copy alone/with position/with direction/all copies 211/211/211/211; all copies
+// with reused actor offset 254. Original copies and receiver are restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
