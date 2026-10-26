@@ -717,7 +717,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
-// score 258 (was 258): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// score 254 (was 254): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
 // selected/input/offset references 294/291/272, pairs 311/311/307, three/four references 326/340.
 // All restored.
 // Earlier: frame 0x1c versus 0x18; mode occupies EBP.
@@ -747,6 +747,10 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // frame 0x1c/0x18 and input-level/mode homes remain.
 // Primary routing 272; signed word route 264; direct left 275; external output
 // and live settings records 264/264; primary-output pair 272; full left 275; settings-direct pair 271.
+// Round 127: inline/noinline 254/254; native routing bit 251 (three-point gain rejected); complete
+// input/settings/both copies 282/238/277 (dispatcher lost); Boolean/dword predicates with native
+// endpoints 274/273; native bit plus native endpoints/Boolean predicate 273/260. Frame 0x1c and
+// mode/level homes remain.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

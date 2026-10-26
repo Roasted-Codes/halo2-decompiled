@@ -180,6 +180,9 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // Reduced control 680: upper endpoint at use 701; both endpoint fields at use 686;
 // normalized result pair 704; aggregate computed pairs 680; computed accumulation pair 755.
 // All fast forms restored.
+// Round 127: native basis/output/both 680/680/680; shared displacement helper 694, with native
+// position setter 711; sum/weight/both alignments 680/680/680 (reduced control 680). All restored;
+// full frame 0x1490 and stacked mode remain.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,
