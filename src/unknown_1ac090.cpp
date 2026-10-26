@@ -749,7 +749,6 @@ s_slot_handler_2 g_47dc88 =
 void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
-
 // score 174 (was 174): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
 // Result first 203; request outer scope 187; role names 181; shared point differences 179;
 // failure result before release 207; shared cross product 174.
@@ -759,6 +758,9 @@ bool function_1f8660(long arg_0);
 // Short/native-long success 232/228; unsigned selection count 174; native zero/kind request
 // initialization 172/173; status-output name 174; const tag input 174; request through validation 174;
 // success from availability 217; direct exits with failure retained through release 232.
+// Round 358: Entry selection outputs 174; complete vector role names with cross output 174; failure-default
+// success paths 215; combined work guard 174; positive tag work 174. Actor/result/count and direction homes
+// remain in frame 0x80c; opening body restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
