@@ -61,6 +61,9 @@ PRIVATE __forceinline long texture_floor(real value)
 // the final bit-clear mask uses EDX instead of EAX. Lowest-bit clear 19;
 // early clear 111; entry lifetime 4; scan-index lifetime 4; level lifetime 4; integral
 // level clamp 86; short bitmap 4; typed texture entry 4.
+// score 4 (was 4): Guarded do continuation 4; reversed mask assignment 4; complement by -1 xor 4;
+// masked xor clear 4; short stage 4; entry tag local 4; existing bit setter 132;
+// callee inline declarations 4.
 // @retail 0x1b0a0
 void __stdcall function_1b0a0(byte *state)
 {

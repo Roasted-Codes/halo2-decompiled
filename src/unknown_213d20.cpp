@@ -384,6 +384,9 @@ long map_location_get(char const *map_name)
 // Symmetric comparison 39; named comparison 3; named symmetric comparison 39;
 // path array loop with per-path clear 48, preclear 59; path pointer loop with per-path clear 69,
 // preclear 102; path array while traversal 48.
+// score 3 (was 3): later element address 3; whole-array pointer 3; two-dimensional paths 3;
+// path callee noinline/inline declarations 3; call element address 3; call-output pointer 3;
+// later comparison pointer 3; later whole-array comparison pointer 3.
 // @retail 0x214e40
 bool map_names_equal(char const *map_name, char const *other_map_name)
 {

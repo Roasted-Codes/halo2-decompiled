@@ -916,21 +916,6 @@ void function_176a0(byte *state, s_packed_shader_range const *range)
     }
 }
 
-// score 212 (was 218): component remains stacked instead of incoming EDI;
-// extra EDI save and ret 12 versus ret 8 remain. Native color fields 229;
-// complete dimension initialization paths 212; both 221; scalar case order 218;
-// texture case order 217.
-// score 2 (was 212): entry registers, cleanup and retail length recovered; output-2/3 zero-store pair remains.
-// Component-first signature 212; color-first 224; conditional dimensions 222; scalar tests 210;
-// dimension names/order 212; shared output index 71; default dimensions 130; color fields 116;
-// both 6; explicit zeros 6; inner chains 3; complete chains 6; zero-chain orders 3/2/2;
-// shared point setter 6; partial chains 6/6. Shared index with native color fields/defaults kept.
-// score 2 (was 2): width-family zero-store pair remains; entry and 704-byte extent agree.
-// Later width/height case owner 2/2; mixed-before-pair 2; unit/zero before mixed 2/111;
-// adjacent dimension families 30; dimension/zero families first 48/61.
-// Final zero-store pair remains reversed. Isolated width chain 6; shared width
-// chain 25; shared width/height cases 21/27; mixed-pair clear 85; width clear/loop 74/95; height
-// clear 61; zero-family clear 93.
 // @retail 0x1b2c0
 bool function_1b2c0(byte const *state, long index, long component, long texture, long mode, real *out)
 {
@@ -983,11 +968,23 @@ bool function_1b2c0(byte const *state, long index, long component, long texture,
         case 11: out[0] = out[1] = 0.0f; break;
         case 12: out[3] = out[2] = 0.0f; break;
         case 13: out[0] = width; out[1] = height; out[3] = out[2] = 0.0f; break;
-        case 14: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 14: {
+            real *zero = out + 1;
+            out[0] = width;
+            zero[0] = 0.0f;
+            zero[2] = zero[1] = 0.0f;
+            break;
+        }
         case 15: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
         case 16: out[0] = width; out[1] = height; out[2] = 1.0f; break;
         case 17: out[0] = out[1] = out[2] = 0.0f; break;
-        case 18: out[0] = width; out[2] = out[3] = out[1] = 0.0f; break;
+        case 18: {
+            real *zero = out + 1;
+            out[0] = width;
+            zero[0] = 0.0f;
+            zero[2] = zero[1] = 0.0f;
+            break;
+        }
         case 19: out[1] = height; out[0] = out[3] = out[2] = 0.0f; break;
         case 20: out[0] = out[1] = out[3] = out[2] = 0.0f; break;
         default: __assume(0);

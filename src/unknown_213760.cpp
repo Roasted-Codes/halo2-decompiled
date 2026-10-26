@@ -98,6 +98,8 @@ bool cache_header_verify(s_cache_header const *header);
 // Post-call path address still reuses EBX. Library empty string/buffer address/both fast 4/4/4;
 // verification result 38; staged read/transfer results 25/36; verification-failure exit 26;
 // native transfer result with verification assignment 38; all new scores reduced.
+// Path helper inline, noinline and both 4/4/4; scoped path value 4; open sequencing 4;
+// open-condition assignment 4; handle before the call and before the path 4/4.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {
