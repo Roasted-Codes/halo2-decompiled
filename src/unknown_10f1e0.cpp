@@ -1241,7 +1241,8 @@ PRIVATE __forceinline long held_object_110ab0(long unit_index, short slot)
 
 bool function_c70b0(long unit_index);
 
-// score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization remain.
+// score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization differ.
+// Earlier at 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization remain.
 // Earlier: overlay/frame and depletion/interruptibility homes differ;
 // direct parameter plus word/native interruptibility 376/378, second depletion 337
 // (plain: thirteen caller matches lost), native result 382, held helper inline 358.
@@ -1269,6 +1270,9 @@ bool function_c70b0(long unit_index);
 // Round 224: First/second/both query scopes 164/164/164; state/channel/both identifier lexical homes
 // 164/164/164; identifier homes with first/both scopes 164/164. Frame eight agrees; pool/state roles,
 // count joins and normalization remain.
+// On the retained success-byte graph: short/long depletion 200/173; short/long
+// interruptibility 304/172; paired short-short/short-long/long-short/long-long
+// 309/201/304/174. Original canonical predicates and inherited argument handling restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -2257,7 +2261,8 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
-// score 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
+// score 666 (was 666): frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// Earlier at 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
 // frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
 // requested-name snapshots 709; inline plus native final/validity 696/707.
@@ -2280,6 +2285,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Round 226: Boolean transition 710; byte override 666; byte permission 693; transition with
 // override 710; transition with permission 662; both byte inputs 693; Boolean transition with both
 // bytes 662; word transition with both bytes 704.
+// Complete request value after/before initial activity 689/706; with all three request results
+// constructed directly 705/712; complete library input copy after/before 689/706,
+// with direct results 705/712. Native request record and copies restored; original interface retained.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
