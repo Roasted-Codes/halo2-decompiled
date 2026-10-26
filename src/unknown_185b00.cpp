@@ -711,7 +711,7 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 244 (was 272): pitch-bound/settings/direction/turn-difference homes differ within
+// score 244 (was 244): pitch-bound/settings/direction/turn-difference homes differ within
 // frame 0xa8 (retail: maximum 4, minimum 8, direction 0x10, settings 0x1c); retail keeps the
 // full turn in xmm3 and spills the range; the step pins get other registers.
 // Tried: interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280;
@@ -721,6 +721,8 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // forced pitch pin 244; forced bound approach 244.
 // all four forced expansions 244; immutable wrapped range 244.
 // read-only settings 244; native pitch trig input 248.
+// Shared yaw/pitch minimum 296; shared maximum 297; both 311; readonly seat/camera/unit
+// views 244/244/244, together 244; both shared bounds with readonly views 311.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
