@@ -303,7 +303,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
-// score 186 (was 186): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes remain.
+// score 186 (was 186): Frame 0x38 agrees; scale builder EBX/EAX, shifted settings homes and constant pushes remain.
+// Earlier 186 (was 186): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes remain.
 // Earlier: Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
 // Frame 0x38 agrees; scale callee EBX/EAX and constant-argument pushes still differ.
 // Earlier 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
@@ -323,6 +324,7 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Type-four native value reset 216; first-case shared three/four 193/193; second-case shared five 192; all
 // equal type-four values chained 199; type-five range/full reversed stores 186/186; descending cases 228.
 // Scale EBX/EAX and constant pushes remain.
+// Round 317: Mixed complete-case orders 1023456 196; 0142356 197; 0124356 200; 0123645 188; 0126345 198; 0412356 205; 4012365 214; 0214356 206.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

@@ -1314,7 +1314,8 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
+// score 202 (was 202): Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
+// Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Earlier: frame 0xfc agrees; key/statistic homes and grouped team dispatch remain.
 // key/statistic homes, statistic cursor and grouped team dispatch differ.
 // frame 0xfc agrees; key/statistic homes, six-byte statistic cursor shift and grouped dispatch remain.
@@ -1351,6 +1352,7 @@ struct s_rating_summary
 // Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.
 // Summary count/lookup/formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three 316. Full-width character retained at 1167/1212 after plain whole-image confirmation.
+// Round 317: Late player/team/both statistic producers 199/207/204; late player plus native indexing 199; ascending/descending reads on late player 203/201; both late with ascending/native indexing 208/204. On late player: key first 199; shared carrier names 199; word character 203; positive character-budget for 320. Three-point reduction excluded.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
