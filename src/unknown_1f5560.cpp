@@ -745,7 +745,7 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 
 real normalize2d(point2f *v);
 
-// score 172 (was 191): fast-byte initialization and trajectory call convention;
+// score 172 (was 172): Frame 0x48 agrees; fast-byte zero, protected trajectory convention and retry/output homes remain.
 // search then selection 172; unsigned scan 178; fixed do/while 191;
 // types arm first 191; fallback setters 195; split plus unsigned scan 223.
 // signed-long search 192; signed-byte search 188; exact exhaustion 210;
@@ -756,11 +756,11 @@ real normalize2d(point2f *v);
 // planar component stores 265; native masks/metadata snapshot 172 each;
 // retry requirement 196; first type from bits 277. Fast-byte zero and trajectory convention
 // still differ; original body restored.
-// score 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// Earlier 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
 // result homes differ. Validity initialized in typed arm 241; first type initialized by branch
 // 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
 // movement flag stores 174; retry speed first 172; native planar output copies 172.
-// score 172 (was 172): frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Earlier 172 (was 172): frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
 // Query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
 // first-type state 172/208; decisions after query 177; both byte decisions 172.
 // Word validity reaches 935 bytes but gains only two points and is restored.
@@ -769,7 +769,7 @@ real normalize2d(point2f *v);
 // minimum after speed query 228; first type after speed query 175.
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
-// score 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
+// Earlier 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
 // retry/movement/both threshold products 172/172/172; clamped upward result
 // 172, with both products 172; retry/movement/both eligibility results 172/172/172.
 // frame 0x48 agrees; fast-byte zero and trajectory convention remain.
@@ -779,6 +779,8 @@ real normalize2d(point2f *v);
 // Fast-byte memset 172; actual actor/requested-type/maximum-type references 172 each;
 // actual destination/origin references 172 each; read-only unit view 172;
 // native two-component normalization workspace 206. Zero source and trajectory convention remain.
+// Post-query force OR/guarded/conditional/complete arms 303/197/172/273; exact search bound 211;
+// mask-first search 228; complete requested-byte snapshot 240; snapshot plus force OR 300.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

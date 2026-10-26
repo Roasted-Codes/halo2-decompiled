@@ -154,7 +154,7 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 	return index;
 }
 
-// score 886 (was 886): Frame 0x4e0 agrees; entry zero, count/primary/query-array homes and choice carriers remain.
+// score 886 (was 886): Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice carriers remain.
 // Earlier 919 (was 919): count/array homes and choice registers differ in the 0x4e0 frame;
 // count/array homes and choice registers differ in the 0x4e0 frame;
 // Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice registers remain.
@@ -172,6 +172,8 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // First/second/both query pointer walks 944/941/951; duplicate/conversion choice pointer walks 947/1008; target pointer walk 899; existing-index pointer walk 919; unused local mask removed 904.
 // With retained short query count: word first query ordinal 915; word second query ordinal 898;
 // word choice-conversion ordinal 923; word duplicate ordinal 929 (retail length); all four word ordinals 894.
+// Unsigned word query/choice/both counts 886 each; dword/byte/word inside result 921/886/910;
+// unsigned first-query/duplicate ordinals 886/886. Original executable source restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

@@ -590,7 +590,7 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 201 (was 211): frame 0x50/0x54 and child-iterator registers differ;
+// score 201 (was 201): Frame 0x50/0x54 and protected child-iterator register contract remain.
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
 // child category equality 251; dword friendliness plus speed snapshot 229.
 // Predicted-point force-inline 232; depth zero 510; size policy 355;
@@ -607,6 +607,8 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Count-first friendliness AND/logical/conditional/explicit forms 201/232/211/211;
 // count-last counterparts 223/233/252/252. Boolean AND keeps every qualifying-child
 // team test and counter; 201 kept after ordinary check. Frame/child convention remain.
+// Retained count/AND graph: outer/child/both workspace names 201/201/201; friendly name/all names 201/201;
+// child workspace first/friendly before count/both with role names 201/201/201.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {
