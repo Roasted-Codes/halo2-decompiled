@@ -5041,6 +5041,9 @@ void function_161420(long player_index, real alpha);
 // Fade by if 127; nested target test 24; power into intensity 2; float pow overload 2;
 // early return for no intensity 4; fraction straight into intensity 52; noinline
 // 0x161420 declaration 2; a 600 s permuter run (39 tries), none below 2.
+// score 2 (was 2): final fstp/player order remains; force-inline panel declaration 2;
+// power-base/fraction names 2/2; const alpha 2; intensity declared first 2; scoped power 2;
+// power into alpha/assignment expression 2/2; terminal player guard 2; power declared first 2.
 // @retail 0x159880
 void function_159880(void)
 {

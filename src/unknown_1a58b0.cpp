@@ -1188,6 +1188,9 @@ PRIVATE __forceinline void function_1a68a2(vector3f const *arg_0, real arg_1, ve
 // Round 127: validated query index 99; sampled-point result 128; both 136;
 // enclosing point lifetime 128; branch-local last body 2; last body with query index 99;
 // named validation 2; validation with query index 99.
+// score 2 (was 2): returned EAX/body-load order remains; const point 18; returned reference 128;
+// address of returned point/direct body 2/2; clamped body 99; early normal 2; workspace fields 5;
+// samples name 2; early normal with const point/direct body 18/18.
 // @retail 0x1a68a0
 void function_1a68a0(long object_index, vector3f *velocity)
 {
