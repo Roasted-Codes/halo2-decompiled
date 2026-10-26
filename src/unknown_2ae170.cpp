@@ -858,6 +858,11 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 // score 137 (was 137): source/bin allocation, runtime attenuation and mode dispatch remain.
 // Selected mode-two range with speaker cases 123: long/captured 159, long/direct 184,
 // byte/captured 162, byte/direct 177; cases 321 give 159/184/162/177. Original loops retained.
+// score 137 (was 137): the zero gain (retail keeps it in EDI and pushes EDI) and the run-time
+// attenuation remain. Built with /Op (pragma diagnostic, or a /O2 /Op /arch:SSE /Gr file of its
+// own) the attenuation becomes retail's run-time subss through the rear slot, 146 at 408 bytes;
+// there the switch with explicit calls is 203 at 306 bytes (32-bit bin selections as retail). An
+// empty case 0 switch 151; explicit calls 233; direct capacity tests 163.
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {

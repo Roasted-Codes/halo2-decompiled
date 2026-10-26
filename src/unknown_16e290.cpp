@@ -344,6 +344,11 @@ struct s_word_bit_iterator
 
 bool function_44690(s_word_bit_iterator *iterator, long *out);
 
+// score 125 (was 142): retail keeps count + 31 in EBX (word count shifted from it after the copies),
+// bytes in EDI and base in ESI; ours keeps bytes in EBX, so the spill homes and memcmp registers differ.
+// Bytes as words * sizeof(dword) 237; rounded-count local for all three 209; masked rounded count
+// 252 (822 bytes); bytes >> 2 125; word count declared before the arrays 125; byte-wide or bitfield
+// portal flags 142 each (retail's byte load into BL stays a memory test).
 // @retail 0x16de20
 void function_16de20(short index, s_16e150_bits const *table, dword *output)
 {
@@ -357,7 +362,7 @@ void function_16de20(short index, s_16e150_bits const *table, dword *output)
 		memcpy(output, function_16e150(table, index), bytes);
 		memcpy(expanded, output, bytes);
 		memset(visited, 0, ((table->portal_count + 31) >> 5) * sizeof(dword));
-		long word_count = (table->count + 31) >> 5;
+		long word_count = bytes / sizeof(dword);
 		for (;;)
 		{
 			s_word_bit_iterator iterator;
