@@ -128,15 +128,25 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 }
 
 /* the rotation that takes one unit vector to another */
-// score 237 (was 237): frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
+// score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross spill overlap remain.
+// frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
 // quaternion scale loop 302; shared axis scale loop 294.
 // shared rotation cross 241; shared cross scale loop 294.
 // shared cross both phases 281; identity library copy 237.
 // per component scale ratio 290; scaled axis before stores 289.
-// score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross-term spill reuse remain.
+// Frame 0x1c versus 0x24 and quaternion/cross-term spill reuse remain.
 // rotation output ikj 283; rotation output jik 287; rotation output jki 288; rotation output
 // kij 290; rotation output kji 290.
 // Frame 0x1c versus 0x24 and quaternion/cross spills remain; construction scope 237; vector-first helper 240; output-middle helper 290; cross i/k/j 284, j/i/k 235 (only -2), k/i/j 284. Both helpers restored.
+// Sine-branch construction j/k/i 327, k/i/j 240; initial dot products
+// named 324; both half-angle radicands named 251; orthogonal early exit 237.
+// Native vector input contract 403; quaternion/vector reference formals 237/237;
+// projection sum named 246; both half-angle sum/difference parts named 281. Body and helpers restored.
+// Per-row projection terms 311; scaled-input terms 282; scaled-cross terms 292; named direct sums 278; named
+// scalar square 288. Frame/half-angle/quaternion spill sharing remains; both original helpers restored.
+// Native quaternion snapshot 458 (frame 0x24); all dot products named 288; all cross input products named 292;
+// sine-branch construction j/i/k 310, i/k/j 240. Frame/quaternion spill reuse remains; body and both helpers
+// restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,
@@ -704,19 +714,20 @@ void function_143250(
 	}
 }
 
-// score 2265 (was 2265): frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
+// score 2265 (was 2265): Frame 0x300 agrees; rotation input and basis/matrix homes remain.
 // Frame pointer 3182; separate adjacent basis pairs [0,1] 2278, [2,3] 2320,
 // [4,5] 2286, [6,7] 2329.
 // Round 310: second-band product trees 2265; second-band full trees 2265; third-band
 // products 2272; third-band full trees 2273; both full trees 2273 (plain). Input and matrix homes remain.
-// score 2265 (was 2265): Frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
+// Frame 0x300 agrees; rotation input and basis/matrix spill homes differ.
 // Independent snapshots [1,5,6] 2302; [0,2,7] 2309; [3,4] 2286; [0,4,5] 2286; [3,5,7] 2276 (plain).
-// score 2265 (was 2265): frame 0x300 agrees; rotation admission and matrix homes differ.
+// frame 0x300 agrees; rotation admission and matrix homes differ.
 // Independent basis pairs [0,5] 2275; [1,6] 2320; [2,4] 2325; [3,6] 2317; subset [0,2,4,6] 2367
 // (plain).
-// score 2265 (was 2265): Frame 0x300 agrees; rotation still arrives on the stack and
+// Frame 0x300 agrees; rotation still arrives on the stack and
 // basis/matrix homes differ. independent basis 0 6 2311; independent basis 1 7 2293;
 // independent basis 2 5 2320; independent basis 4 7 2298; independent basis 0 3 5 7 2299.
+// Round 349: Independent basis pairs [1,2] 2323; [2,6] 2355; [0,7] 2287; [3,7] 2290; [5,6] 2317 (fast; control 2266).
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {

@@ -1095,6 +1095,10 @@ PRIVATE inline void z_orientation_matrix(vector3f const *forward, vector3f const
  matrix->up = *up;
 }
 
+// score 4 (was 4): both extraction calls form the angle address before the axis address.
+// Reused axis/angle output pointers 10; reused angle output pointer 6; saved/current output
+// pointer pairs 10/10; extraction calls swapped 7; axis declarations swapped 4; axis names 4;
+// forced orientation inline 4.
 // @retail 0xa9b40
 void function_a9b40(long index, s_z_copy_state *state)
 {

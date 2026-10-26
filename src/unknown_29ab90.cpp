@@ -59,13 +59,21 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 	arg_2->k = arg_0->k * arg_1;
 }
 
-// score 434 (was 434): frame 0x5c versus 0x64, input registers and x87 lifetimes differ;
+// score 428 (was 428): Frame 0x5c versus 0x64, input convention and x87 homes remain.
+// Earlier 434 from 434: frame 0x5c versus 0x64, input registers and x87 lifetimes differ;
 // double input components 437; scalar component parameters 469; double product lifetimes 437; repeated field access 434; size optimization 802.
 // Degenerate normal first 434; independent speed components 434; initial/requested/output memcpy 434/434/434;
 // fallback direction at use 441; shared initial vector value 434; native sign word 440.
-// score 434 (was 434): frame/input ownership and x87 result homes remain.
+// Earlier 434 from 434: frame/input ownership and x87 result homes remain.
 // Double magnitude/planar/both returns 434/434/434; double magnitude carrier 471;
 // named full squared sums magnitude/planar/both 434/437/437; planar input/output 434.
+// DL131: Frame 0x5c versus 0x64, input convention and x87 homes remain; native actor view 434;
+// shared history weight 428; named current weight 434; both weights 428; native actor with
+// history/current/both 428/434/428; actor/weights/shared fallback 428. Keep the history coefficient
+// once for all six original uses; original arithmetic grouping, source vectors, stores, helpers and
+// call arguments remain unchanged.
+// DL134: unrounded magnitude/planar/both root boundaries 428/433/433; real sign 432;
+// named correction root/term 428/428; scale output return 428; ordered clamp returns 428.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
@@ -147,9 +155,10 @@ void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 			long local_26 = local_25 < 0.0f ? -1 : 1;
 			local_22.i = (real)(sqrt(fabs((double)local_25)) * local_2->field_6c * local_26 + local_22.i);
 		}
-		local_5.i = (local_6.i + local_22.i) * (1.0f - local_2->field_64) + *(real *)(local_0 + 0x678) * local_2->field_64;
-		local_5.j = (local_6.j + local_22.j) * (1.0f - local_2->field_64) + *(real *)(local_0 + 0x67c) * local_2->field_64;
-		local_5.k = (local_6.k + local_22.k) * (1.0f - local_2->field_64) + *(real *)(local_0 + 0x680) * local_2->field_64;
+		real history_weight = local_2->field_64;
+		local_5.i = (local_6.i + local_22.i) * (1.0f - history_weight) + *(real *)(local_0 + 0x678) * history_weight;
+		local_5.j = (local_6.j + local_22.j) * (1.0f - history_weight) + *(real *)(local_0 + 0x67c) * history_weight;
+		local_5.k = (local_6.k + local_22.k) * (1.0f - history_weight) + *(real *)(local_0 + 0x680) * history_weight;
 		local_5.i = function_29ab93(local_5.i, -1.0f, 1.0f);
 		local_5.j = function_29ab93(local_5.j, -1.0f, 1.0f);
 		local_5.k = function_29ab93(local_5.k, -1.0f, 1.0f);

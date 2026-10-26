@@ -623,21 +623,25 @@ void c_network_reliable_stream::mark_received(long sequence)
 	}
 }
 
-// score 81 (was 81): frame 0x14 agrees; derived bit start, current/message/type homes and zero-extension remain.
-// the getter inlined (0x966d0 marked inline) and previous set
-// in an if/else fix the head; retail computes the bit index's start as
-// (acknowledged - 1) - acknowledged, ours stores -1, and keeps current in edi and
-// the message in ebx (ours swapped). Bit index derived from current in four
-// spellings 81 (folded to -1); `(local_1 & 8) ? 5 : 4` 118 (current/message
-// registers then as retail, but no movzx and the first lookup in eax); bit as the
-// loop variable 144; loop over the sequence parameter 174; type after the flag
-// store 120; message variable reused in the loop 81.
+// score 7 (was 81): the first lookup's pointer is in EAX (retail EDX), the flags OR is done in
+// place and copied (retail copies, then ORs: mov eax, edx; or eax, 1), and the last delivery
+// test branches to the skip arm (retail jumps to the delivery arm). Kept: the bit index as a
+// named base minus current (retail's unfolded lea/sub start; every spelling of
+// acknowledged - current - 1 folds it to -1) and the type as an if/else (current EDI and the
+// entry EBX as retail, movzx edi, al). Tried after: type as a ternary 21, as 4 + shift 21
+// (lookup in EDX, type arithmetic differs), from (byte)local_1 86, through the field 93;
+// flags value after the OR as dword 16 (lookup in EDX, movzx eax, dx); previous as a ternary 7;
+// delivery test as an else-if 86, as a pending flag or !(a && b) 7-84; word/short flag types,
+// statement orders and type polarity 7.
+// Earlier at 81: the getter inlined (0x966d0 marked inline) and previous set in an if/else fix
+// the head. Bit index derived from current in four spellings 81 (folded to -1);
+// `(local_1 & 8) ? 5 : 4` 118 (current/message registers then as retail, but no movzx and the
+// first lookup in eax); bit as the loop variable 144; loop over the sequence parameter 174;
+// type after the flag store 120; message variable reused in the loop 81.
 // Earlier at 94, the slot address is kept in EAX here and in EDX in
 // retail, and ours zeroes EAX before the range test, so the loop head differs.
-// score 81 (was 81): bit-index setup and current/message/type registers remain.
 // Native message-bit predicate/publication/both 117/113/80; native repeated-bit type
 // alone/with predicate/with publication/all 119/127/119/123; arithmetic native type 119.
-// the bit-index start and current/message saved registers remain;
 // acknowledged/undelivered/both skips, fallback exit and ordinary while 81; iteration-bit value
 // alone/with skips 105/105/105.
 // Actual time operand 142; two-use elapsed 84; later type with actual time/reused elapsed 148/121;
@@ -664,9 +668,10 @@ long c_network_reliable_stream::function_96910(long sequence, long bit_count, dw
 	}
 	else
 	{
-		long bit = -1;
-		for (long current = acknowledged; current > m_message_window.oldest; current--, bit++)
+		long newest_bit = acknowledged - 1;
+		for (long current = acknowledged; current > m_message_window.oldest; current--)
 		{
+			long bit = newest_bit - current;
 			s_reliable_message *entry = reliable_stream_get_message(this, current);
 			word local_0 = entry->flags;
 			if (!(local_0 & 1))
@@ -682,7 +687,11 @@ long c_network_reliable_stream::function_96910(long sequence, long bit_count, dw
 				{
 					long start = entry->time;
 					word local_1 = local_0 | 1;
-					long type = (((byte)local_1 & 8) | 0x20) >> 3;
+					long type;
+					if (local_1 & 8)
+						type = 5;
+					else
+						type = 4;
 					entry->flags = local_1;
 					entry->unknown08 = network_time_now() - start;
 					update_round_trip(type, entry->unknown08, current, network_time_now());
@@ -1148,7 +1157,12 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
-// score 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
+// score 172 (was 172): Frame and length agree; oldest/false carriers, copy-loop entry and allocator save still differ.
+// Earlier: Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
+// Frame 0x10048 agrees; oldest/false carriers, copy-loop entry and allocator save remain.
+// Earlier 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
+// Frame and length agree; oldest/false carriers and copy-loop entry still differ.
+// Earlier at 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Earlier: retained oldest/false registers and copy-loop entry differ;
 // scan getter 302; copy getter 325; both getters 361; unsigned byte progress 215; decode buffer first 213; forced-inline getters 223.
 // readonly decode records 215; native stream value initialization 254; native copy size bits 215; native
@@ -1162,6 +1176,17 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // scalar names/failure join 172; scope/success join/scalar names 271.
 // On the shared failure-result body, byte/bool/signed-byte/long results give 193/219/193/238;
 // native initial-window count/first with short/bool/byte/signed-byte results give 269/278/274/274.
+// Single-result reset at payload/copy/CRC phases and validation tests, short
+// 256/231/214/255, Boolean 229/268/265/276. All restored.
+// Existing release-helper composition 221; reused fragment data 213; terminal loop condition 191;
+// first-sequence/saved-CRC homes 172/172; failure result before payload/after copy 250/224;
+// failure publication order 172; data and terminal lifetimes 254.
+// Round 152: Per-fragment terminal bool/header byte 192/250; conditional size with bool/byte 192/250; default size with bool/byte 244/251; native result with terminal bool/byte 266/218.
+// Independent bool/byte/short/long completion with literal returns 210/210/193/255;
+// with separate callback results 206/206/189/253. All reverted.
+// On common-failure result: oldest after/before result and result before receiver 229/229/229;
+// shared initial newest with oldest-first/newest-first 202/202; oldest plus readonly types/stream
+// helper/unsigned byte total 229/229/229.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {

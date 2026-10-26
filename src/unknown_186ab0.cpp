@@ -149,13 +149,23 @@ long function_155760(long arg_0);
 void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
-// score 323 (was 323): frame 0x54 agrees; protected selection call widths/registers and cyclic-search alignment differ.
+// score 279 (was 279): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
 #pragma inline_depth(0)
+// score 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
+// Native request bit/all request fields 323/323; native clear fields 387; direct held-state output 323, with request bit 323; native reset bit 323; request/clear fields 387; all fields/state output 381.
 // Cyclic result after start 330; candidate before result 331; explicit cyclic step 326;
 // start from field selection 324; traversal storage identities 323; final memcpy 323;
 // native context initializer 323; result lifetime with explicit step 332. All eight forms restored.
+// Unsigned word/dword request 323/331; signed-byte/word/dword reset 323 each;
+// late object pointer fields 306 plain kept (1500/1515); mode-state pointer 323;
+// unsigned word request plus late object fields 306. Keep only late field observations.
+// First/second/both scalar before pair 306/306/306; library angle/scalar/whole-request copies 306/279/321;
+// native output pair/with scalar phase 306/306. Scalar-pair library copy 279 plain kept (1489/1515).
+// Packed source/destination/both selection words 279/279/279; selection memcpy 279;
+// native destination plus final word copy 279; both native words plus final copy 279;
+// native three-word source/output fields 279; native fields with packed selection words 279.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
@@ -305,22 +315,20 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
     memcpy(local_1->field_44, &local_3.field_28, sizeof(local_1->field_44));
     local_1->field_4 = local_3.field_18;
     local_1->field_18 = local_3.field_0;
-    local_1->field_20 = local_3.field_8;
-    local_1->field_24 = local_3.field_c;
+    memcpy(&local_1->field_20, &local_3.field_8, 2 * sizeof(real));
     if (local_1->field_0 != NONE)
     {
         s_186ab6 *local_4 = (s_186ab6 *)g_4e0300->data + (local_1->field_0 & 0xffff);
         if ((1 << local_4->field_3) & 1)
         {
-            s_186ab5 *local_5 = local_4->field_8;
-            if ((bool)((local_5->field_348 >> 5) & 1))
+            if ((bool)((local_4->field_8->field_348 >> 5) & 1))
             {
-                local_1->field_10 = (real)atan2((double)local_5->field_16c, (double)local_5->field_168);
-                local_1->field_14 = (real)atan2((double)local_5->field_170,
-                    sqrt((double)local_5->field_16c * local_5->field_16c + (double)local_5->field_168 * local_5->field_168));
+                local_1->field_10 = (real)atan2((double)local_4->field_8->field_16c, (double)local_4->field_8->field_168);
+                local_1->field_14 = (real)atan2((double)local_4->field_8->field_170,
+                    sqrt((double)local_4->field_8->field_16c * local_4->field_8->field_16c + (double)local_4->field_8->field_168 * local_4->field_8->field_168));
                 local_1->field_10 = (real)fmod((double)(local_1->field_10 + 6.2831854820251465f), 6.2831854820251465);
                 local_1->field_14 = (real)fmod((double)(local_1->field_14 + 9.424777984619141f), 6.2831854820251465) - 3.1415927410125732f;
-                local_5->field_348 &= ~0x20;
+                local_4->field_8->field_348 &= ~0x20;
             }
         }
     }

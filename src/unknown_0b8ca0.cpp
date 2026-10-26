@@ -1053,9 +1053,9 @@ static __forceinline void b98e0_basis(transform4x3f *out, vector3f const *forwar
     real k = up->i * forward->j - up->j * forward->i;
     real j = up->k * forward->i - up->i * forward->k;
     real i = up->j * forward->k - up->k * forward->j;
-    out->left.k = k;
-    out->left.j = j;
     out->left.i = i;
+    out->left.j = j;
+    out->left.k = k;
     out->up = *up;
     out->position.x = 0.0f;
     out->position.y = 0.0f;
@@ -1077,11 +1077,6 @@ static __forceinline void b98e0_translation(transform4x3f *out, point3f const *p
     out->position = *position;
 }
 
-// score 65 (was 69): scheduling only. Ours hoists the cross product's loads above the translation's stores and sinks
-// the translation's zero stores after the orientation; retail builds the translation (ones, zeros, position) first,
-// then the orientation in order (xorps is its first instruction). Tried: the matched 0x1416c0 and 0x141710 called
-// instead (not inlined, 319); plain inline helpers 69; orientation built first 98, declared first 71; components
-// stored i, j, k 66; 0x141710's operand order 66; the translation's ones stored before its zeros 65.
 // @retail 0xb98e0
 void __stdcall function_b98e0(long object_index, transform4x3f const *matrix)
 {
@@ -1640,24 +1635,21 @@ void function_b8840(long index);
 long function_baf80(long index);
 void function_bba20(long index);
 
-// score 319 (was 319): pool/permission registers and transform scheduling differ;
-// native point snapshot 385; native orientation snapshots 341; all snapshots 362;
-// inverse workspace scope 319; spatial workspace names 319.
-// byte permission 319; byte activity 319; both byte carriers 319;
-// vector transforms before point 385; byte permission with vectors first 385.
-// score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward 319; direct node array 323.
-// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
-// scheduling remain. Unsigned header offset 319; short permission 320; native location fields 330;
-// pooled root reference 319; guarded native cluster 319.
-// score 319 (was 319): Frame 0x64 agrees; pool/permission homes and SIMD scheduling remain. Native
-// child 319; native parent 319; both native views 319; header flag pointer 402; object flag pointer
-// 330.
-// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetime and SIMD
-// scheduling remain. Positive acceptance scope 358; sibling-first sentinels 319; hidden Boolean
-// shift 318; connection Boolean shift 318; unsigned masks 319; both Boolean shifts 323.
-// Frame 0x64 agrees; pool/permission homes and parent/SIMD lifetimes remain. Dead parent lookup removed 319; header-data base 336; node before link 319; separate output phases 319; bitset indexing 319 (fast).
-// Offset before pool 322; pool at use 325; computed type mask 330;
-// six-byte sentinel fill 318; isolated byte-bit-six test 319; pool at use with unsigned offset 325.
+// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetimes and SIMD scheduling differ.
+// native point snapshot 385; native orientation snapshots 341; all snapshots 362; inverse
+// workspace scope 319; spatial workspace names 319. byte permission 319; byte activity 319; both
+// byte carriers 319; vector transforms before point 385; byte permission with vectors first 385.
+// Ancestry before permission 335; long node index 335; guarded long cluster 324; up before forward
+// 319; direct node array 323. Unsigned header offset 319; short permission 320; native location
+// fields 330; pooled root reference 319; guarded native cluster 319. Native child 319; native
+// parent 319; both native views 319; header flag pointer 402; object flag pointer 330. Positive
+// acceptance scope 358; sibling-first sentinels 319; hidden Boolean shift 318; connection Boolean
+// shift 318; unsigned masks 319; both Boolean shifts 323. Dead parent lookup removed 319;
+// header-data base 336; node before link 319; separate output phases 319; bitset indexing 319
+// (fast). Offset before pool 322; pool at use 325; computed type mask 330; six-byte sentinel fill
+// 318; isolated byte-bit-six test 319; pool at use with unsigned offset 325. Permission scope 319;
+// complete attachment scope 358; entry permission declaration 319; entry activity declaration 319;
+// root-cluster scope 319 (fast).
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

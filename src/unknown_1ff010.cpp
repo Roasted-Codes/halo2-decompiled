@@ -25,9 +25,25 @@ struct s_weapon_aim_ranges
 	real maximum_fraction;
 };
 
-// score 139 (was 139): frame agrees; actor/tag EDI/ESI homes and folded projectile flag test differ.
+/* a projectile definition, as the aiming code reads it */
+struct s_projectile_aim_view
+{
+	byte unknown00[0xbc];
+	dword flag0 : 1;
+	dword flag1 : 1;
+	dword unknownbc : 30;
+	byte unknownc0[0x164 - 0xc0];
+	real unknown164;
+};
+
+// score 135 (was 139): frame agrees; actor in edi and definition/projectile in esi (retail the reverse); retail
+// materializes the barrel pointer before reading its projectile index and loads edx before eax for the aim call.
 // Full-scope fraction 153; native fraction predicate 138; adjusted point construction 140;
-// inline depth zero 195; native barrel ordinal 186.
+// inline depth zero 195; native barrel ordinal 186. Kept: the projectile flag through a dword bitfield
+// (retail's shr/test), the aim call's pointers in retail's slots (unknown0 pushed, unknown1 in edx, unknown2 in
+// eax), the definition pointer declared after the fraction locals. Actor lookup before the projectile index
+// 139, before the barrel 139; typed barrel view 135; use_fraction declared first 135; actor_get at each use 143;
+// definition index renamed 135.
 // @retail 0x1ffbd0
 bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	point3f const *origin, point3f const *target, bool flag, vector3f *direction,
@@ -38,18 +54,18 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	bool result = false;
 	if (ranges)
 	{
-		byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 		real fraction = 0.0f;
 		bool use_fraction = false;
+		byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 		if (barrel_index >= 0 && barrel_index < *(long *)(definition + 0x2d0))
 		{
 			byte *barrel = *(byte **)(definition + 0x2d4) + barrel_index * 0xec;
 			long projectile_index = *(long *)(barrel + 0x90);
 			s_actor_view *actor = actor_get(actor_index);
-			byte *projectile;
+			s_projectile_aim_view *projectile;
 			if (projectile_index != NONE &&
-				((*(long *)((projectile = g_4e3b44[projectile_index & 0xffff].bytes) + 0xbc) >> 1) & 1) &&
-				*(real *)(projectile + 0x164) > 0.0f)
+				TEST_FIELD_BIT((projectile = (s_projectile_aim_view *)g_4e3b44[projectile_index & 0xffff].bytes)->flag1) &&
+				projectile->unknown164 > 0.0f)
 			{
 				real distance = distance3d(origin, target);
 				real upper = 1.0f - (0.0f > ranges->maximum_fraction ? 0.0f : ranges->maximum_fraction > 1.0f ? 1.0f : ranges->maximum_fraction);
@@ -68,10 +84,10 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 				point3f adjusted_origin = actor->position;
 				adjusted_origin.z = origin->z;
 				return weapon_barrel_aim(weapon_index, barrel_index, &adjusted_origin, target, NULL, flag,
-					direction, (real *)unknown1, (real *)unknown0, (real *)unknown2, (bool *)unknown3);
+					direction, (real *)unknown0, (real *)unknown2, (real *)unknown1, (bool *)unknown3);
 			}
 			result = weapon_barrel_aim(weapon_index, barrel_index, origin, target, use_fraction ? &fraction : NULL, flag,
-				direction, (real *)unknown1, (real *)unknown0, (real *)unknown2, (bool *)unknown3);
+				direction, (real *)unknown0, (real *)unknown2, (real *)unknown1, (bool *)unknown3);
 		}
 	}
 	return result;
@@ -538,6 +554,13 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // direct planar commit 182; planar memcpy 152; original horizontal fallback 162; fallback plus
 // planar copy 157; native turn plus fallback 162; normalized point 237; both points 253;
 // normalized point plus direct commit 166.
+// score 130 (was 136): the normalized planar components read into named x/y (used by both tests)
+// give retail's square order in the planar normalization. Still differs: retail multiplies the
+// facing components as registers (`movss reg, [field]; mulss reg, y`) and tests the length after
+// the scale products with 0.0 in xmm0; the inlined rotation's loads and registers; the output.
+// y declared first 136; named dot 130; direct output stores 147 (828 bytes); side before the
+// turned copy 136 (862 bytes); sine as a ternary of constants 149. Fast checks build this one
+// differently (rotation helper left out of the reduced image): use plain checks.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {
@@ -565,10 +588,12 @@ long function_1ff360(long actor_index, point3f const *target, vector3f *velocity
 		point2f horizontal;
 		memcpy(&horizontal, &direction, sizeof(horizontal));
 		real magnitude = normalize2d_fast((vector2f *)&horizontal);
-		if (magnitude > 0.0f && actor->unknown290.j * horizontal.y + actor->unknown290.i * horizontal.x < 0.0f)
+		real x = horizontal.x;
+		real y = horizontal.y;
+		if (magnitude > 0.0f && actor->unknown290.j * y + actor->unknown290.i * x < 0.0f)
 		{
 			vector3f turned = actor->unknown290;
-			bool left = actor->unknown290.i * horizontal.y - actor->unknown290.j * horizontal.x > 0.0f;
+			bool left = actor->unknown290.i * y - actor->unknown290.j * x > 0.0f;
 			real sine = (left ? 1 : -1) * 0.5f;
 			rotate_direction(&turned, g_4687b0, sine, 0.0f);
 			if (normalize2d((point2f *)&turned) > 0.0f)

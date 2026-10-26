@@ -43,13 +43,25 @@ const dword g_455978[81] = {
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
 
-// score 366 (was 370): frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
+// score 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
+// Earlier: Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
+// frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
 // both path lifetimes 485; count just before scan 366; read-only body 370; native transform copies 370.
-// score 361 (was 366): the presence callback at its retail 12-byte size, initialised by its constructor.
-// score 361 (was 361): Frame 0x1d4 agrees; optional input/scalar homes and helper expansion differ. Tried early
+// the presence callback at its retail 12-byte size, initialised by its constructor.
+// Frame 0x1d4 agrees; optional input/scalar homes and helper expansion differ. Tried early
 // bounds filter 430; early transform filter 361; both early filters 423; reset at query 361; direct ray rejection
 // 393; per query callback 376; callback and direct ray 376; early filters and reset 423.
+// Native callback context: conditional count 389; earlier conditional 495; earlier arithmetic count 354 kept (plain).
+// Exact sample end 361; transform slot names 361; native ray endpoint 394; expanded radius name 361; unsigned sample ordinal 361.
+// Candidate/endpoint/ray component loops 382/354/354; basis loop 524;
+// translation loop 350 kept (plain); radial scaling/blend loops 354/354; combined producers 492.
+// Direction/radial/both/endpoint/ray/all spatial declaration scopes 350 each;
+// complete native endpoint value 403; paired bounds-axis producer 466. All restored.
+// Complete candidate/blend/both product phases 350/350/350; both radial square terms 391;
+// radial terms with candidate/all phases 391/391; six-use bounds origin 492, with candidate products 492. All restored.
+// Complete lower/upper/both bound selections 413/466/484; complete horizontal square 350;
+// bounds plus square 484; callback ending before cleanup 350; bounds/callback 484; square/callback 350. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
@@ -78,6 +90,7 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   if (arg_10 != NONE) local_2 = havok_object_get(arg_10)->havok_component_index;
  }
  bool local_0 = false;
+ long local_6 = 18 + 9 * arg_8;
  hkTransform local_7;
  c_contact_query_transform_volume *local_8;
  {
@@ -93,7 +106,6 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
  }
  ((c_contact_query_world *)g_51e9a4)->add(local_8);
  c_contact_presence local_12;
- long local_6 = 18 + 9 * arg_8;
  for (long local_13 = 0; local_13 < local_6; ++local_13)
  {
   vector3f local_14 = ((vector3f const *)g_455978)[local_13];
@@ -150,9 +162,8 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   local_21.up.i = local_7.m_rotation.m_col2(0);
   local_21.up.j = local_7.m_rotation.m_col2(1);
   local_21.up.k = local_7.m_rotation.m_col2(2);
-  local_21.position.x = local_7.m_translation(0);
-  local_21.position.y = local_7.m_translation(1);
-  local_21.position.z = local_7.m_translation(2);
+  for (long component = 0; component < 3; ++component)
+   local_21.position.n[component] = local_7.m_translation(component);
   function_1d43d0(arg_0, &local_21, &local_22);
   *arg_11 = local_22.position;
   function_11bed0(arg_5, arg_11);

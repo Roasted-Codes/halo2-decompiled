@@ -23,20 +23,21 @@ real function_30bf0(vector3f *v);
 real magnitude3d(vector3f const *v);
 extern vector3f *g_4687bc;
 
-// score 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
+// score 170 (was 170): Frame 0x8c/0x94, raw secondary-result home and common probe tail remain.
+// Earlier 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
 // Word category 225; native clear state 170; direct origin 172; distance category 175; side workspace 175.
 // Native clear with direct origin 171, word category 234, short return result 178.
-// score 170 (was 170): frame 0x8c versus 0x94; secondary-result home and probe tail differ.
+// Earlier 170 (was 170): frame 0x8c versus 0x94; secondary-result home and probe tail differ.
 // Native clear with byte probe result 74 (not matched); fraction/index names 170/170;
 // earlier native clear declaration 170; short clear state 237; short clear with byte result 240 (not matched).
-// score 170 (was 170): frame 0x8c versus 0x94; raw secondary-result home and common probe tail still differ.
+// Earlier 170 (was 170): frame 0x8c versus 0x94; raw secondary-result home and common probe tail still differ.
 // Early clear/blocked/triple test results 221/173/179; all early test results 241;
 // shared preliminary predicate 186; floating consistency 415; size policy 402; target pointer 187.
 // frame 0x8c versus 0x94; secondary byte and quarter-point scheduling remain.
 // Shared byte plus product-first X/Z/XZ/XYZ/Y 241 each; native point 241;
 // axis-wise points 250; offset vector 244; original-arm publication 26 (not matched);
 // native category with publication 28; probe/result names 26/26 (not matched).
-// score 170 (was 170): frame 0x8c versus 0x94 and secondary-result/point schedules remain;
+// Earlier 170 (was 170): frame 0x8c versus 0x94 and secondary-result/point schedules remain;
 // first-point copy/add 273; displacement then add 5.
 // center then add 5; first-point initializer 26.
 // shared scalar offsets 47; external origin reference 26.
@@ -55,18 +56,19 @@ extern vector3f *g_4687bc;
 // Staged byte-flow positive/negative/both point names 5/5/5; native positive/
 // negative component arrays 5/5; existing shared scale for positive/both points
 // 276/210; direct quarter constant 5. All unmatched added-byte forms restored.
-// score 170 (was 170): Frame 0x8c/0x94 and secondary-result tail remain; byte-flow quarter-point
+// Earlier 170 (was 170): Frame 0x8c/0x94 and secondary-result tail remain; byte-flow quarter-point
 // XZY/YXZ/YZX/ZXY/ZYX completion 12/23/20/21/18; XYZ products then XYZ/ZXY centers 36/37; ZYX
 // products then XYZ centers 47. All added-byte forms restored without a match.
-// score 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
+// Earlier 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
 // staged-byte negative point first 230; negative XZY/YXZ/YZX/ZXY/ZYX 11/17/14/18/18;
 // staged paired axes 53; both points staged 5. All added-byte forms restored.
-// score 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
+// Earlier 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
 // staged-byte center-left completion X/Z/XZ/Y 5/5/5/5; constant-left products X/Z/XZ 5/5/5;
 // both operand affinities on XZ 5. All unmatched added-byte forms restored.
 __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
 
+// Round 151: Retained ray 192; with native side/mode/both 192/191/191; Boolean primary with ray/side/mode/both 186/186/185/185.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

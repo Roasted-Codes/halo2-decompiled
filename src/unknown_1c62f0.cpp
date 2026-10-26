@@ -666,7 +666,7 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 	return events;
 }
 
-/* Parameter access through local pointers preserves the stack-only entry convention. */
+/* Channel and callback access through local pointers preserves the stack-only entry convention. */
 // score 97 (was 97): adjacent flag load/byte clear and callback reload still differ; direct parameters
 // 139; direct channel/state/user 113, with word events 113; word/short events 97/97; separate bit clears
 // 126; clears spanning clamp 136, with word events 136. Original body and parameter accesses restored.
@@ -678,15 +678,18 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 // Direct callback with user/frame/state/frame-user/state-user/frame-state 125 each; callback with
 // channel/channel-user 139 each. Entry convention shifts and matched callers regress; original
 // callback and argument homes restored. Word-load schedule and callback reload remain.
+// Frame, state and user read directly 97 (kept: callers still match); channel also direct 113; plain callback
+// read at the first dispatch 133 (callback held in ebx from entry); shared inline dispatch helper for the
+// three dispatches 140, with the first callback read kept 126; channel read directly for the first flags 97.
+// Chained/reversed event-word resets 99/99; unsigned mask 97; index-first identity 161; sampled
+// callback parameter with/without chaining 132/132; first-pair callback with/without chaining
+// 138/138.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)
 {
 	c_animation_channel *const *local_0 = &channel;
-	real const *local_1 = &frame;
-	s_animation_state *const *local_2 = &state;
 	animation_event_callback const *local_3 = &callback;
-	long const *local_4 = &user;
 	c_type_709360 animation_id = (*local_0)->animation_id;
 	s_graph_tag *graph = c_animation_channel_get_graph(*local_0);
 	s_animation *animation = (*local_0)->function_1c6440();
@@ -697,20 +700,20 @@ void __stdcall c_animation_channel_advance(c_animation_channel *channel, real fr
 
 	(*local_0)->unknown14 = 0;
 	(*local_0)->unknown16 = 0;
-	next_frame = *local_1;
+	next_frame = frame;
 	last_frame = (real)animation->frame_count - 0.0001f;
 	if (0.0f > next_frame)
 	{
 		next_frame = 0.0f;
 	}
 	(*local_0)->unknown11 &= ~0xe;
-	events = animation_events_dispatch(graph, animation, (*local_0)->flags, position, next_frame, *(animation_event_callback volatile *)local_3, *local_4);
+	events = animation_events_dispatch(graph, animation, (*local_0)->flags, position, next_frame, *(animation_event_callback volatile *)local_3, user);
 	if (animation_id.graph_index == (*local_0)->animation_id.graph_index && animation_id.index == (*local_0)->animation_id.index)
 	{
 		(*local_0)->unknown14 |= events;
 		if (next_frame >= last_frame)
 		{
-			events = animation_events_dispatch(graph, animation, (*local_0)->flags, position, FLT_MAX, *local_3, *local_4);
+			events = animation_events_dispatch(graph, animation, (*local_0)->flags, position, FLT_MAX, *local_3, user);
 			if (animation_id.graph_index == (*local_0)->animation_id.graph_index && animation_id.index == (*local_0)->animation_id.index)
 			{
 				(*local_0)->unknown14 |= events;
@@ -718,7 +721,7 @@ void __stdcall c_animation_channel_advance(c_animation_channel *channel, real fr
 				{
 					if (((*local_0)->flags & 0x20) && animation->loop_frame_index == 0)
 					{
-						animation_id = (*local_2)->variant_get((*local_0)->animation_id);
+						animation_id = state->variant_get((*local_0)->animation_id);
 						(*local_0)->animation_id = animation_id;
 						if ((*local_0)->flags & 8)
 						{
@@ -728,7 +731,7 @@ void __stdcall c_animation_channel_advance(c_animation_channel *channel, real fr
 					}
 					position = (real)animation->loop_frame_index;
 					next_frame = next_frame - last_frame + position;
-					events = animation_events_dispatch(graph, animation, (*local_0)->flags, position, next_frame, *local_3, *local_4);
+					events = animation_events_dispatch(graph, animation, (*local_0)->flags, position, next_frame, *local_3, user);
 					if (animation_id.graph_index == (*local_0)->animation_id.graph_index && animation_id.index == (*local_0)->animation_id.index)
 					{
 						(*local_0)->unknown14 |= events;

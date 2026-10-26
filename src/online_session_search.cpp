@@ -197,14 +197,18 @@ bool function_90160(long task_index, s_match_result_data *result)
    score to the loosest as the search widens */
 static inline void session_search_set_minimum_score(s_session_search *search)
 {
+	long loose_score = g_network_configuration.value1ec;
 	if (search->unknown1c != NONE && search->unknown20 > 0)
-		search->minimum_score = (long)((real)g_network_configuration.value1e8 + ((real)search->unknown1c / (real)search->unknown20) * ((real)g_network_configuration.value1ec - (real)g_network_configuration.value1e8));
+		search->minimum_score = (long)((real)g_network_configuration.value1e8 + ((real)search->unknown1c / (real)search->unknown20) * ((real)loose_score - (real)g_network_configuration.value1e8));
 	else
-		search->minimum_score = g_network_configuration.value1ec;
+		search->minimum_score = loose_score;
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 50 (was 50): current/bound registers and request fill differ; explicit helper current 103, total 51, both 51; standard lower/upper/both clamps 50; combined 51; field current 50 (round 117).
+// score 46 (was 46): Frame/length agree; current/bound carriers and request field scheduling still differ.
+// Earlier helper current/total/both inputs 103/51/51; standard lower/upper/both clamps 50;
+// combined inputs/clamps 51; field current 50; shared bound workspace 50; default score first 98;
+// invalid score inputs first 50.
 // current/bound registers and request scheduling differ; native field layout,
 // typed bound/flag/request groups 0..7: 50, 50, 50, 50, 50, 50, 50, 50.
 // frame 0x20 agrees; ECX/EAX allocation and request clear/fill scheduling differ;
@@ -213,8 +217,17 @@ extern "C" void _ReadWriteBarrier(void);
 // bound result homes declared together 50; task result used for store and test 50;
 // explicit clock selection 53; direct zero initialized request 87;
 // current snapshot inside active guard 50; both bounds declared before current 50. Restored.
-// score 50 (was 50): shared bound workspace 50; default score first 98; invalid score inputs first 50;
 // named progress 50; lower/upper/both output clamps 105/104/98; inactive current first 58.
+// Strict/loose/both endpoints 50/46/46; converted strict alone/with loose 50/46;
+// endpoints with total/current/both progress snapshots 46/46/46; count-first/observed fill 50/48.
+// Kept the loose endpoint for interpolation and fallback; plain check 46 at 336/336 bytes.
+// Returned/result/conditional score helper 99/99/99; enabled/disabled/both chained flags 48/48/50; shared
+// result-buffer size 93; request workspace name 46. Current/bound allocation and request scheduling remain.
+// Upper bound first 50; paired bound production 63; flags before bounds 46; flags from current 104;
+// native bound integers 46; strict/loose/both helper endpoint inputs 46/50/50. Opening body and
+// helper restored; current/bound carriers and request scheduling remain.
+// Shared valid progress predicate with live/current/total/both score inputs 105/105/108/108;
+// shared invalid predicate with those inputs 105/105/108/108. Original helper and body restored.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -337,8 +350,18 @@ static inline void release_block(void *block, long *info)
 
 /* stops a session search: cancels its online task and its QoS lookups and
    releases its buffers */
-// score 91 (was 91): receiver, sentinel and release registers differ; existing local-output release
+// score 87 (was 87): extra save, sentinel/zero and rolled handle loop remain.
+// Earlier: extra save, sentinel/zero and rolled handle loop differ; existing local-output release
 // for buffer masks 1/2/4/3/5/6/7, then shared size output: 96, 96, 96, 92, 96, 96, 92, 96.
+// Task handle 91; two query-handle snapshots 91; plain handle-table loop 87;
+// first/results/seen buffer snapshots 106/105/98; all buffers 116; table plus buffers 113.
+// Handle-table loop kept: plain 87, 252/261 bytes; receiver/allocator now EBP/EDI.
+// Round 164: pointer range 91; entry handle cursor 91; entry handle end 91; counted cursor 87;
+// unsigned counter 87; word counter 87; counted handle value 87; pointer task lifetime 91.
+// Round 167: task/handle postconditions 87/87; first/all buffer postconditions 86/87;
+// task+handles/handles+buffers/all/task+buffers 87/87/87/87. Original body restored.
+// Exact handle endpoint/short exact/byte exact/signed-byte bound 87/87/87/87;
+// direct fixed do loop/byte do loop 87/87; existing release forced/implicit inline 87/87.
 // @retail 0x90c80
 void __stdcall function_090c80(byte *p)
 {
@@ -352,15 +375,13 @@ void __stdcall function_090c80(byte *p)
 		function_6b640(search->task_index);
 		search->task_index = NONE;
 	}
-	if (search->qos_handles[0] != NONE)
+	for (long i = 0; i < 2; i++)
 	{
-		qos_release(search->qos_handles[0]);
-		search->qos_handles[0] = NONE;
-	}
-	if (search->qos_handles[1] != NONE)
-	{
-		qos_release(search->qos_handles[1]);
-		search->qos_handles[1] = NONE;
+		if (search->qos_handles[i] != NONE)
+		{
+			qos_release(search->qos_handles[i]);
+			search->qos_handles[i] = NONE;
+		}
 	}
 	if (search->unknown90)
 	{
@@ -588,14 +609,7 @@ void session_search_get_progress(s_session_search *search, long *first, long *la
 	}
 }
 
-// score 21 (was 21): shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
-// score 21 (was 21): shared true exit remains late; reversed signed operands at primary 25, latency 21, tertiary 21, key pairs 21/25, all keys 25 (round 117).
-// shared true return remains late; real final-key table trials:
-// local long decisions/relation 81/109, short 99/118; static long 48/85, short 70/94.
-// shared true return remains after later tests, first +0x17;
-// cached primary keys 21; latency keys 21; third keys 21; primary/latency 21;
-// primary/third 21; latency/third 21; all repeated keys 21; primary-test result 46.
-// shared true return still follows the later keys; standard signed predicate boundaries at primary 67/75, latency 81/63/89, tertiary 89, final 32, all 138 (round 115).
+/* the order of the search results: whether a sorts before b */
 // @retail 0x90f10
 bool __stdcall session_search_result_precedes(void const *a, void const *b, void const *context)
 {
@@ -603,22 +617,23 @@ bool __stdcall session_search_result_precedes(void const *a, void const *b, void
 	s_search_result const *second = (s_search_result const *)b;
 	if (first->field1f8 < second->field1f8)
 		return true;
-	if (first->field1f8 <= second->field1f8)
+	if (first->field1f8 > second->field1f8)
+		return false;
+	if (first->unknown74)
 	{
-		if (first->unknown74)
-		{
-			if (first->qos.rtt_median > second->qos.rtt_median)
-				return true;
-			if (first->qos.rtt_median < second->qos.rtt_median)
-				return false;
-		}
-		if (first->field1fc > second->field1fc)
+		if (first->qos.rtt_median > second->qos.rtt_median)
 			return true;
-		if (first->field1fc < second->field1fc)
+		if (first->qos.rtt_median < second->qos.rtt_median)
 			return false;
-		if (first->field10c > second->field10c)
-			return true;
 	}
+	if (first->field1fc > second->field1fc)
+		return true;
+	if (first->field1fc < second->field1fc)
+		return false;
+	if (first->field10c > second->field10c)
+		return true;
+	if (first->field10c < second->field10c)
+		return false;
 	return false;
 }
 
@@ -694,6 +709,16 @@ done:
 // Initial snapshot plus persistent details cursor 190; with invalid-entry continue 199;
 // early details-state observation 196; count/value/kind read order 128;
 // ordinary-field defaults before details 173. Original body retained.
+// Equality input orientation 128; kind field at scoring 197; value field at distance 128;
+// individual field-selection results 128; details field at each use 195;
+// ordinary invalid-entry continue 128; changed-results scope 128; ordinary-fields arm first 128.
+// Round 164: native detail inputs 128; full results lifetime 182; native full results 182;
+// entry input scope 128; loop input scope 128; entry scope results 182; native loop scope 128;
+// native entry results 182.
+// Round 167: complete typed details pointer/direct fields 128/213;
+// pointer with signed difference/range step/both 128/128/128;
+// pointer with full results lifetime 182; direct difference/range step 213/213.
+// Original results observation and details/kind/count homes remain.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

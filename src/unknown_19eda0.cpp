@@ -257,6 +257,10 @@ void __stdcall function_b8540(long object_index);
 // score 9 (was 9): function_cd0c0's calling convention differs: retail pushes 1, the
 // argument and the third value, ours pushes 1 and the argument and moves the third value
 // into the argument's register.
+// Frame agrees; unit argument still moves to ESI instead of being pushed for function_cd0c0.
+// Placement field library clear fast 9; choice-entry traversal 78; short/unsigned choice indices 121/10;
+// unsigned creation index 9; choice output workspace 9; chained selection clear 11;
+// placement lifetime ending before the unit test 9. All new scores reduced; callee untouched.
 // @retail 0x19ef40
 void __stdcall function_19ef40(long unit_index, long *first_count, long *second_count)
 {
@@ -400,6 +404,8 @@ PRIVATE inline long polygon_round_19f(real value)
 // All restored: the matched caller differs by 2 without the original parameter home.
 // Earlier: Frame 0x40/0x30 and qword spills remain; ordinary variant/body step with vertex sqrt result 400, top aggregate 430, word table offsets 400, material result 373 (plain; caller loses 2), direct-reference arm first 400.
 // AC338: ordinary variant/body pointer step with entry render-state/bottom/top/period lifetimes 400 each; previous-vertex pointer 400; center length retest 400 excluded. All lose matched caller by 2.
+// Round 211: Ordinary variant/body step with unsigned UV/current ordinals 400/400; top memcpy 400; ordinal
+// predecessor 381; predecessor result-first 378. Original frame/spills and callee conventions remain.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,
