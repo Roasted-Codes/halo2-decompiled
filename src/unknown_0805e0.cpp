@@ -111,9 +111,11 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 113 (was 121): frame 0x0c versus 0x10 and properties/buffer
-// register/stack split remain. Entry cursor 125; property cursor 135;
+// score 113 (was 113): frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// Entry cursor 125; property cursor 135;
 // per-record property counts 113; count homes 121; cursor/count combination 132.
+// Count-indexed record/buffer/both outputs 129/113/128; scalar-identifier induction 113;
+// identifier with record/buffer/both indices 114/114/113 (each 352 bytes); shared final total 151.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,

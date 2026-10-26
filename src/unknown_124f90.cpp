@@ -1470,10 +1470,12 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
-// score 46 (was 46): entry lookup scheduling and full-width return tails differ.
+// score 46 (was 46): frame and length agree; lookup scheduling, retained identifier and return tails differ.
 // Other identifier retained 44; both identifiers 44; normalized slots with other identifier 44;
 // this priority first 87; direct comparison results 107; short priorities 45;
 // integer result 123; this definition read at its priority use 94.
+// Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
+// readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
