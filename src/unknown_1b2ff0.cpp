@@ -98,6 +98,15 @@ s_slot_handler_2 g_47e1c0 =
 // Shared normalizers 160/107; existing magnitude 182; squared-length helper 107;
 // projection products 109; side projection part 109; distance penalty 109; winning score first 109.
 // All changed-sum helpers restored; the two-point gains are ineligible.
+// Round 50: explicit dot with swapped product operands 109 (retail's x87 dot order); existing subtraction
+// helper in both point paths 107 (retail's square/store interleave); with existing normalize3d and dot3f 108
+// (dot and squares as retail; left: retail scales j and k in place, ours copies j); subtraction helper and
+// dot3f with the written-out normalize 107; the helper forms, and the normalize3d.h include alone,
+// move unmatched 0x1c4590 from 6 to 11 under LTCG (a comment edit does not), so none was kept.
+// j/k scale component-first, all eight operand orders 124; normalize_inline 132; forceinline local
+// normalizer 108; direction/point at loop or function scope 108; point inside the transform branch 108;
+// forceinline declaration of the existing direction helper 310 (stays out of line); reversed or
+// explicit dot sums 111/107.
 // @retail 0x1b3070
 bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 {

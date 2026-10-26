@@ -2828,6 +2828,10 @@ struct s_2a2f0_record
 };
 
 #pragma inline_depth(0)
+// score 145 (was 145): one missing register copy of the bitmap count before the bounds compare
+// (retail inlines the bitmap lookup 0x137550); everything else aligns. Swapped bounds compare 145;
+// the existing lookup called in a full-depth window 258 (out of line); plain count read 167;
+// separate count copy 145 (propagated); file-local forced lookup 258/297 (in a window, spills).
 // @retail 0x2a2f0
 void __stdcall function_2a2f0(long tag, real alpha)
 {

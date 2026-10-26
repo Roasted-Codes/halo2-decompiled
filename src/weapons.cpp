@@ -1937,7 +1937,8 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 }
 /* takes rounds from a weapon's reserve for a magazine: first its own, then
    the reserves of the holder's other weapons of the same kind */
-// score 124 (was 124): frame eight bytes agrees; magazine, available and taken registers and pool reloads differ
+// score 124 (was 124): frame eight bytes agrees; magazine, available and taken registers and pool reloads differ;
+// retail holds the object pool in ebp across the four unrolled slots, the full image reloads it per slot.
 // tried all lookups pool value 124; needed result first 171; positive take continue 124; availability before update 124; first reserve field reference 123.
 // tried return from test 181; other reserve reference 123; weapon record reference 124.
 // tried read-only settings 124; reserve publication 124; storage names 124.
@@ -1946,12 +1947,15 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 // need before holder 125; request-first clamp 182; upper bound first 124;
 // actual tag reference 124; unsigned slot counter 124. Magazine/transfer
 // registers and pooled receiver homes still differ.
-// score 124 (was 124): magazine/available/taken registers and pool reloads remain; original getter,
-// per-slot getters, all object getters and header getters 124 each; first/other/both magazine references
-// 124 each; unit reference 124.
+// Original getter, per-slot getters, all object getters and header getters 124 each; first/other/both
+// magazine references 124 each; unit reference 124.
 // Round 127: single unavailable-reserve exit 124; signed-byte result 200;
 // signed/unsigned halfword results 204/204; int slot index 124;
 // state query, reserve notification and transfer noinline 124 each.
+// Round 50: no definition-index local with taken declared in the transfer block 183 (574 bytes; the
+// reduced image builds retail's shape at 585 bytes, the full image reloads the pool per slot);
+// the same with a pool local for the holder loop 183; with an other-weapon local and continue 165
+// (fast, as the previous); with `return true` on success 179 (fast); `return true` on success alone 124.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
