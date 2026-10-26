@@ -372,10 +372,12 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // position copied from first 629; byte state flags 615; true result and one exit 647.
 // Paired displacement loop 615; side scaling loop 615; normal scaling loops 615; RGB tint loop 615; planar geometry cases first 615.
 // Width-path result 626; scale override 622; unsigned point handle 615; final endpoint base 634; two-use packed pixel 615.
-// score 615 (was 615): round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
-// score 615 (was 615): round 108: definition/output carriers, endpoint placement and color/vector homes remain.
+// Earlier score 615 (was 615): round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
+// Earlier score 615 (was 615): round 108: definition/output carriers, endpoint placement and color/vector homes remain.
 // Persistent workspaces 620; fused color-component loop 643; shared geometry neighbor 620;
 // half-width before tint 620; valid-state-first arms 616.
+// Current position field pointer with read-only point/state/source contracts,
+// all eight combinations 647; frame 0xac and 2632 bytes. Original body restored.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

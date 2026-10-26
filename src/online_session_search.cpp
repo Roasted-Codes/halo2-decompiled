@@ -226,6 +226,8 @@ extern "C" void _ReadWriteBarrier(void);
 // Upper bound first 50; paired bound production 63; flags before bounds 46; flags from current 104;
 // native bound integers 46; strict/loose/both helper endpoint inputs 46/50/50. Opening body and
 // helper restored; current/bound carriers and request scheduling remain.
+// Shared valid progress predicate with live/current/total/both score inputs 105/105/108/108;
+// shared invalid predicate with those inputs 105/105/108/108. Original helper and body restored.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
