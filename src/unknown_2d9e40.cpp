@@ -86,6 +86,9 @@ buffered_writer_2d9e40::~buffered_writer_2d9e40()
 // or complete initialization 33; capacity before allocation 31; empty size
 // before allocation 28; both buffer fields before allocation 38; stream
 // base with late ownership 34/33. Stream reload and count register differ.
+// Held-stream value 30; count += or explicit update 30/30; requested-capacity
+// value 30; input names 30; explicit shared base 30; declaration/definition
+// order 30/30; body stream store with held value 28 (discarded).
 // @retail 0x2d9f80
 buffered_writer_2d9e40::buffered_writer_2d9e40(referenced_2d88a0 *stream_, long capacity_)
 	: stream(stream_), owns_buffer(true)
