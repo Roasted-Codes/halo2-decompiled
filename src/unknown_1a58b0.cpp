@@ -120,6 +120,7 @@ void function_1a6340(vector3f const *b, vector3f const *a, point3f *out, point3f
 
 // score 32 (was 32): the arguments are pushed in a different order and one of the values is passed
 // in a register here and on the stack in retail.
+// Object-second/third interfaces 32/32; unsigned object index 32; original interface restored.
 // @retail 0x1a62e0
 bool function_1a62e0(long object_index, point3f const *origin, vector3f const *direction, point3f *out)
 {
@@ -1676,6 +1677,9 @@ struct s_candidate_unit_definition
 // Query noinline 11; combined rejection/acceptance 18 each; output/marker references 11 each;
 // named type mask 11; result after initialization 16; direction producer home 196;
 // unconditional successful tail 11. Experimental declaration and receiver aliases restored.
+// Object-second/third query interfaces 12/13; twice-used query index 11;
+// read-only object view/pointer/index 11/11/11; unsigned query index 11;
+// candidate-index query 11. Original interfaces and values restored.
 // @retail 0x1a5e40
 bool function_1a5e40(long object_index, bool alternate, long marker_index, s_target_marker const *marker,
 	transform4x3f const *first, transform4x3f const *second,
@@ -2190,21 +2194,28 @@ long function_cb6d0(long unit_index);
 bool function_cb810(long unit_index, vector3f *vector);
 long function_baf40(long object_index);
 
-// score 177 (was 177): frame 0xb4 versus 0xb8; output record uses stack/EBP, retail EBX.
+// score 4 (was 140): at retail's length; only the x87 dot product's term order differs (ours the i
+// term first, retail the j term).
+// Round 88: the relative velocity through vector3d_from_points3d (retail's three-float spill) 63, with
+// the player view formed between the pitch cosine and the yaw terms 19, with an offset pointer for
+// the candidate's offset 4 (kept). Offset product operands swapped 63; planar length terms reversed
+// 65; player view after the facing vector 141; relative declared first 19; cross-product operands
+// swapped 19; planar length before the difference 22; a 600 s permuter run on the 19 form, none below
+// 19; on the 4 form: dot terms or operands swapped 4/4/4; offset pointer declared earlier or const 4/4;
+// a 2-D dot-product helper 4.
+// Earlier: frame 0xb4 versus 0xb8; output record uses stack/EBP, retail EBX.
 // Full-width selector 203; later player view 200; wide secondary selector 177;
 // native vector/workspace role names 177; outer return guard 177.
 // Reversed velocity lexical homes 177; x/y/z scalar names 177; combined 177;
 // geometry-only scope 177; target frame pointer 264.
-// Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225; candidate score tests 186; retained direction unit index 210.
+// Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225;
+// candidate score tests 186; retained direction unit index 210.
 // Depth zero 280; target size 280; global optimization off 672;
 // record defaults before vector zeroing 179; planar length before velocity differences 181.
-// score 177 (was 177): Frame 0xb4 versus 0xb8 and record convention remain; controlled-unit snapshot 209; persistent score pair 186; weight/candidate guards 177/177; nested selection 185.
-// Frame 0xb4 versus 0xb8; output record and relative-scalar homes differ.
-// Trials: selector interval 181; chained sentinels 177; chained score zero 177; component order
-// 177; native score clear 201.
-// score 177 (was 177): Frame 0xb4 versus 0xb8 and the output-record convention remain. Output
-// record reference 177; selected-object snapshot 177; native offset copy 242; guarded relative
-// components 211; empty planar path first 194. Contributor callees unchanged.
+// Controlled-unit snapshot 209; persistent score pair 186; weight/candidate guards 177/177; nested selection 185.
+// Selector interval 181; chained sentinels 177; chained score zero 177; component order 177; native score
+// clear 201. Output record reference 177; selected-object snapshot 177; native offset copy 242; guarded
+// relative components 211; empty planar path first 194. Contributor callees unchanged.
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {
@@ -2246,9 +2257,9 @@ void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 			if (arg_0 != NONE)
 				local_21 = g_4e8c20->entries[arg_0];
 
-			s_player_view *local_6 = &((s_player_view *)g_4e8c24->data)[local_21 & 0xffff];
 			s_view_angles const *local_7 = &g_4ed284->entries[arg_0].angles;
 			real local_8 = (real)cos(local_7->pitch);
+			s_player_view *local_6 = &((s_player_view *)g_4e8c24->data)[local_21 & 0xffff];
 			vector3f local_9;
 
 			local_9.i = (real)cos(local_7->yaw) * local_8;
@@ -2271,18 +2282,20 @@ void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 				function_1a68a0(local_1->unit_index, &local_11);
 				function_1a68a0(local_10.object_index, &local_12);
 
-				real local_13 = local_12.k - local_11.k;
-				real local_14 = local_12.i - local_11.i;
-				real local_15 = local_12.j - local_11.j;
-				real local_16 = local_10.offset.i * local_10.offset.i + local_10.offset.j * local_10.offset.j;
+				vector3f const *offset = &local_10.offset;
+				vector3f relative;
+
+				vector3d_from_points3d((point3f const *)&local_11, (point3f const *)&local_12, &relative);
+
+				real local_16 = offset->i * offset->i + offset->j * offset->j;
 
 				if (local_16 > 0.0001f)
 				{
 					real local_17 = (real)sqrt(local_16);
 
-					arg_2->i = (local_10.offset.i * local_15 - local_10.offset.j * local_14) / local_16;
-					arg_2->j = (local_13 * local_17 - (local_10.offset.j * local_15 + local_10.offset.i * local_14) / local_17 * local_10.offset.k) /
-						(local_10.offset.k * local_10.offset.k + local_16);
+					arg_2->i = (offset->i * relative.j - offset->j * relative.i) / local_16;
+					arg_2->j = (relative.k * local_17 - (offset->j * relative.j + offset->i * relative.i) / local_17 * offset->k) /
+						(offset->k * offset->k + local_16);
 				}
 				else
 				{

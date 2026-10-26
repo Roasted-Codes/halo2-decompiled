@@ -143,6 +143,11 @@ struct s_cache_property_record
 // unsigned property/all totals 109/109; flat entry admission 109; property element with unsigned ordinal 114.
 // Native identifier field 104; scalar-array end bound 105; activation ordinals 104;
 // field/end 105; field/ordinals 104; end/ordinals 105; all three 105; named activation ordinals 104.
+// On the capacity-delta graph: short/word scalar ordinals 141/141; short/word identifiers
+// 133/133; long/short/word ordinal do-loops 142/141/141; long identifier do-loop 134.
+// On the three-use element graph: native record/property/both totals 132/136/135;
+// native buffer/record-buffer/property-buffer totals 109/128/131;
+// unused record-address declaration removed 132, with native property total 136.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -463,7 +468,7 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 67 (was 73): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// score 67 (was 67): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
@@ -482,6 +487,16 @@ void function_1537f0(s_profile_record *record);
 // word ordinal 94; record/view/both force-inline declarations 73 each.
 // Immutable identity with tail clear 74; source-before-identity names 73; source-only outer scope 73; identity between initializer and tail 73; tail-clear entry-end traversal 94.
 // Complete destination clear 73; contiguous destination-tail clear 67 kept; destination first/after identity 75/75; links before view 98; tail before view 95; direct indexed destination 73; tail fill with early links 100.
+// Ordinary record inline/native identity 67/67; immutable source/identity/both once 95/83/86;
+// immutable source with native identity 95; split source-tail fills 115, with native identity 115.
+// Contiguous link fill 67; link fill with native identity/late identity/intermediate identity 67/67/67;
+// link fill with outer source/lexical source/unsigned ordinal/NONE byte 67/67/87/67.
+// Complete zero suffix at field44/field40/field48/unknown50 67/67/67/67;
+// suffixes at field70/field74/field78 give 99/89/83; whole source suffix 125. Frame remains 0x90.
+// Native header zero fields 40/44/40+44/48/40+48/44+48/all 74/90/87/67/74/90/87;
+// complete sixteen-byte header fill 154; source/identity homes remain unchanged.
+// Entry zero/first sentinel pair/second pair chains and all pair subsets 67 each;
+// complete endpoint sentinel chain 67. Frame 0x90 and packed source spills remain.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -582,7 +597,7 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 90 (was 111): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
+// score 90 (was 90): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // Frame 0x1c agrees; records/buffers register contract and cursor/count
 // scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
@@ -596,6 +611,16 @@ bool function_7fb50(void)
 // Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
 // Native identifier field 111; source-array end 90 kept; activation ordinal 111;
 // field/end 90; field/ordinal 111; end/ordinal 90; all three 90; named end ordinal 90.
+// On source-end traversal: long ordinal/packed values/both 92/90/92; scalar element 90;
+// element with long ordinal/packed values/both 92/90/92; word ordinal 90.
+// Two-use selected buffer 90; with record/property/both capacity deltas 120/135/129;
+// with word record/property/both totals 91/91/94; with native scalar ordinal 92.
+// Record header property-first/reverse/remaining orders 90 each (five forms);
+// name-property buffer-first/type-first/rotated stores 90 each (three forms).
+// On source-end traversal: chained emitted zeros 92; complete late record commit 90;
+// scalar-loop accounting 120; chained zeros with early scalar accounting 126;
+// completed record/buffer totals 115; chained zeros with record commit 92;
+// scalar accounting with record commit 120, with chained zeros 122. Input homes remain.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -789,7 +814,8 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 243 (was 243): Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
+// score 238 (was 243): frame 0xc agrees; removed-index EDX/ESI and upper-bound ECX/EAX still differ.
+// Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
 // Paired range arms 373;
 // frame 0x0c agrees; removed-index registers, upper
 // bound selection and copy-loop induction remain. Paired range arms 373;
@@ -808,6 +834,9 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
 // Frame 0xc agrees; removed-index EDX/ESI and upper ECX/EAX remain. Direction value 342; signed-byte direction
 // 243; range role names 243; direct indexed repair 243; signed min/max with long adjustment 370.
+// Upper-first repair tests 375; nested tests 243; four head values 238 kept; branch-produced bounds
+// 243; signed-byte adjustment 445; upper-first/head values 377; bounds/byte 445; nested/head values
+// 238.
 // Insertion destination before shifts 384; earlier view 243; both addresses 384;
 // insertion/time role names 243; early destination with names 384; both with names 384;
 // early destination/time workspace 393; all lifetimes/names 393. Original body restored.
@@ -873,10 +902,14 @@ long function_7fe90(const s_cached_player_identity *identity, long position, con
 			if (entry->unknown58 >= lower && entry->unknown58 <= upper) entry->unknown58 += change;
 			if (entry->next >= lower && entry->next <= upper) entry->next += change;
 		}
-		if (g_4cf97c >= lower && g_4cf97c <= upper) g_4cf97c += change;
-		if (g_4cf980 >= lower && g_4cf980 <= upper) g_4cf980 += change;
-		if (g_4cf984 >= lower && g_4cf984 <= upper) g_4cf984 += change;
-		if (g_4cf988 >= lower && g_4cf988 <= upper) g_4cf988 += change;
+		long first_other = g_4cf97c;
+		if (first_other >= lower && first_other <= upper) g_4cf97c = first_other + change;
+		long last_other = g_4cf980;
+		if (last_other >= lower && last_other <= upper) g_4cf980 = last_other + change;
+		long first_cached = g_4cf984;
+		if (first_cached >= lower && first_cached <= upper) g_4cf984 = first_cached + change;
+		long last_cached = g_4cf988;
+		if (last_cached >= lower && last_cached <= upper) g_4cf988 = last_cached + change;
 	}
 	s_player_configuration_cache_entry *entry = &g_4cf98c[position];
 	entry->next_other = (short)g_4cf97c;

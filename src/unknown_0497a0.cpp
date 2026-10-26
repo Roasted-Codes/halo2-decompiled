@@ -14,7 +14,12 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 594 (was 594): Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
+// score 594 (was 594): frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
+// Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
+// Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
+// Frame 0x64 versus 0x60, primary-shape/basis homes and wave scheduling still differ.
+// Earlier: Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
+// frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
 // Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
 // Earlier: frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
 // Earlier 647 from 647: frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
@@ -41,9 +46,22 @@
 // bool-shape-domain 633; word-shape-domain 645.
 // consumer-shape-wide-special 599; direct-primary-field-wide-special 662.
 // bool-shape-domain-wide-special 654; word-shape-domain-wide-special 642.
+// Shared double-factor wave scalers first/second/both 671/671/669; with separate
+// second displacement 661/670/675; both scalers with shared integer truncation
+// 683, with separate displacement 704. Second-scaler forms recover frame 0x60
+// (first +6), but regress; original shared scalers and all values restored.
+// Round 197: complete first/second input field reads 674/671; both camera offsets at each use 700;
+// both inputs 694; first/second input with offsets 661/661; all inputs/offsets 692;
+// all observations with read-only secondary shape 692. All retain frame 0x64; original body restored.
 // Round 162: Secondary shape null-first/present-first/zero-arm/present-arm forms
 // 676/671/594/676; reciprocal constant after the shape 679/672/596/678.
 // Original shape selection and reciprocal lifetime restored; frame 0x64 remains.
+// Ordinary decision bool/byte/short/long 595/595/605/600; before shape selection
+// 721/721/714/727. Original decision polarity, shape scope and arithmetic restored.
+// named trig factors 673; projection terms 673.
+// camera offset terms 594; trig/projection terms 594.
+// trig/camera terms 673; projection/camera terms 673.
+// all three term families 594; named modulation 673.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

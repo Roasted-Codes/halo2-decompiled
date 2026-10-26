@@ -21,7 +21,9 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0);
 bool __stdcall function_71d70(c_session_state_matchmaking *arg_0);
 bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 
-// score 182 (was 182): primary-session ESI joins and byte return normalization remain.
+// score 182 (was 182): Frame 0x10 agrees; primary-session ESI joins and byte-return normalization remain.
+// Earlier 182 (was 182): primary-session ESI joins and byte return normalization remain.
+// Frame 0x10 agrees; primary-session ESI joins and byte normalization remain.
 // Earlier: frame and length agree; primary-session EBP versus ESI, mode joins
 // and final Boolean normalization differ; byte return result 182; word return result 275;
 // long return result 258; unsigned return result 258; independent mode gates 243;
@@ -49,9 +51,22 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // all eight tested results 243. All original byte assignments restored.
 // Initial/type/final direct field observations 182/182/182; initial+type/initial+final/type+final/all
 // 182/182/182/182; all with the two-use secondary state 182. Original byte-result body restored.
+// Inline live-state predicate at secondary/primary/both 227/223/227; existing live-state function
+// at secondary/primary/both 227/223/227; mixed helper boundaries 227/227. All fast.
+// Omit initial unused state store 226; omit final 219; phase result initialization 220; omit both
+// 249; omit initial with phase result 239; omit final with phase result 248; omit both with phase
+// result 265; member skip guard 182 (fast).
 // Round 165: At-use owner/primary/secondary pointer fields and their three pairs/all
 // 267/269/224/246/239/251/250; two-use optional-host state observation 182.
 // Original pointer snapshots, local state stores and complete body restored.
+// Round 140: four caller-only declarations tie 182 and are excluded diagnostics. Callee
+// reset/member/value/search/host declarations 280/182/182/182/182; member plus value 182; reset plus host and
+// all five 280. Reset forms lose matched callers; combined forms lose reduced controls. All declarations and
+// executable code restored.
+// Negative update-result bool/byte/short/long from entry 296/296/297/305;
+// after the reset exit 307/307/292/299. Original positive byte-result body restored.
+// On the byte-result graph: native owner/primary/secondary lexical homes, all
+// pairs, all three, and complete role-correct workspaces 182 each (eight forms).
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

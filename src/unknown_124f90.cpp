@@ -1226,7 +1226,8 @@ long function_2197f0(real gain);
 
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
-// score 149 (was 149): Frame 0xc agrees; early fade-table load, entry gain home, delayed ESI save and fade scheduling remain.
+// score 149 (was 149): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
+// Frame 0xc agrees; early fade-table load, entry gain home, delayed ESI save and fade scheduling remain.
 // Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
 // Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
 // shared fade-in duration 162; distinct-ambience case first 163.
@@ -1237,6 +1238,12 @@ long function_2197f0(real gain);
 // Hold duration snapshot 165; ambience time snapshot 173; ducking gain snapshot 165;
 // upper-first release clamp 162; all three snapshots 178 (fast); all restored.
 // Both ambience indices 170; readonly fade 162; equality-first admission 198; shared ducking pointer 162; native class ordinal 149 kept plain; int ordinal 149; ordinal with unsigned gain 149; ordinal with common gain result 157.
+// Shared sum operand order 174; interpolation start snapshot/accumulator 149/149;
+// addition accumulator 147; start snapshot plus sum order 174; native endpoints 149;
+// both accumulators 147; integer result home 149.
+// Existing shared sum 173; shared sum with live gain/common result/readonly fade 188/142/173;
+// live gain with value sum 211; shared common result with readonly fade/shared workspaces 142/142;
+// shared live gain with direct table 188. Seven-point result forms and unmatched reference forms restored.
 // Round 160: Interpolation input orders a/t/b 149, b/a/t 148, b/t/a 148, t/a/b 149, t/b/a 148; immutable
 // base plus release gain 149; interpolation/addition home names 149/149. All executable lines and helper
 // contracts restored. One-point previews excluded by the minimum-gain rule.
@@ -3316,6 +3323,11 @@ void __stdcall function_1264c0(dword arg_0);
 // both admissions with native tick/index 113/113.
 // Masked slot copied before the fade call 83 at retail length (a one-use copy, not kept);
 // next slot 86; with both inline lookups 111/117, initial inline lookup 90/96, next inline lookup 101/104.
+// Round 88: a wait loop run by a `waiting` flag cleared in its else arm gives retail's top-tested
+// SSE wait (alone 113); with data_datum_index and the `index == NONE ? 0 : (index & 0xffff) + 1`
+// next search (retail's masked-slot reuse) 9; plus a memset of the impulse ids 6 (its pointer in
+// ECX, retail EAX). Not kept without a match. Next search alone 85; deadline in the loop condition
+// 107; local-pointer, loop, chained and helper id stores 9; struct copy of the ids 114.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
@@ -3388,6 +3400,12 @@ struct s_128ca0
 // Definition after packet initialization 237; branch gain writeback 234; current-chunk candidate 234;
 // sequential gain workspace 234; direct processed-gain initialization 234 (fast); all restored.
 // Pitch lower snapshot 273; native flag3 view 236; pitch workspace subtraction 234; zero-default controller gain 267; readonly parameter/range views 234 (fast); all restored.
+// Shared sum accumulator 234; commuted sum 233; returned bit home 234; native sum
+// inputs 234; native inputs plus bit home 234; early raw gain with accumulator,
+// commuted sum or native inputs 268 each (frame 0x494, worse count).
+// Native nested packet with original/part/whole/aggregate clears 234/304/316/309;
+// reverse part clears/entry declaration/late packet/entry with part clears 304/234/283/304.
+// Original packet view and clear boundaries restored.
 // Round 160: Native permutation gain/count, controller gain array, promotion coefficient and all three
 // together 234 each; native clear-member addresses 234; chained packet flags 293; upper-first shared pin
 // 234; pin input home name 234. Original fields, clear ranges and helpers restored; protected chunk
@@ -3588,6 +3606,11 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 160: Rotation scale declaration orders 0/2/1 583, 1/0/2 589, 1/2/0 589, 2/0/1 586, 2/1/0 1050;
 // quaternion acquisitions w/i/j/k 538 and k/j/i/w 545; native scale-home names 535. Original quaternion
 // snapshots, expressions, helper contract and body restored.
+// Rotation output orders ikj/jik/jki/kij/kji 545/560/554/541/550;
+// uniform projection/scaled-input/cross-scale multiply operand orders 535/535/535.
+// publication aggregate 535; fallback entry lifetime 558; aggregate entry lifetime 558; environment
+// observations 537; listener observations 586; record observations 619; aggregate record observations 619;
+// forced existing rotation 535. All restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

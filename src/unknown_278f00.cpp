@@ -46,6 +46,9 @@ void __stdcall function_b8890(long arg_0);
 
 // score 212 (was 212): Frame 0x424 agrees; list/index/second-count homes and cleanup induction differ.
 // list selection, second-count home and cleanup schedule remain;
+// Earlier: list selection, second-count home and cleanup schedule remain;
+// frame 0x424 agrees; list/count homes and cleanup schedule remain;
+// Frame 0x424 agrees; list/count homes and cleanup schedule remain.
 // list reference 212; island reference 212.
 // body reference 212; header reference 212.
 // unsigned object handle 212; list and island references 212.
@@ -58,6 +61,18 @@ void __stdcall function_b8890(long arg_0);
 // selection 245/291; byte/short with indexed cleanup 226/269. Original restored.
 // Distinct first/second membership ordinals: byte/long, short/long, word/long 281 each;
 // long/byte 278; long/short and long/word 267; byte/byte 289; short/short 290.
+// Earlier 212 (was 212): list selection/count homes and cleanup schedule remain.
+// Round 225: First/second array list/island ownership pairs 01/02/10/11/12/20/21/22: 212 each.
+// List/index/count and cleanup homes remain.
+// Round 227: Remove redundant first/second/both pre-retry initializations 212/212/212; split
+// first/second/both insertion increments 212/212/212; both removals with second/both split increments
+// 212/212. Original resets and body restored.
+// Earlier at 212 (from 212): list selection/count homes and cleanup schedule remain.
+// Compound-termination first/second index 266/212; both indices 266; first/second
+// begin-end cursors 291/279; both cursors 319; index/cursor 271; cursor/index 291.
+// Earlier at 212 (was 212): list selection/count homes and cleanup schedule remain.
+// Round 330: Full-width unsigned first/second/search domains, seven combinations 212 each; all three with
+// both processing ordinals 212. Signed body/list bounds, retry and call cycle retained; original restored.
 // @retail 0x278f00
 void function_278f00()
 {
