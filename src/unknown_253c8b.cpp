@@ -170,7 +170,7 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 	return result;
 }
 
-// score 37 (was 37): height conversion and two-axis SIMD scheduling remain.
+// score 37 (was 37): height word move and independent-axis SIMD residency still differ.
 // Native short height retained at retail length. Real screen offsets
 // x/y/both/early 103/103/102/114; short width/height/both 40/37/119;
 // short dimensions with offsets 118; long height/width 100/104;
@@ -185,6 +185,9 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 // origin/rectangle names 37/37; long width with native height 39; reversed dimension
 // producers 40; native-height source initializer 35; height-first extent stores 36;
 // reversed rectangle names 37. Two- and one-count gains rejected; opening body retained.
+// Constant native height 37; height/dimensions before opacity 42/42;
+// library source initialization 150; native output with short height 37;
+// zero before dimensions 37; closed dimension lifetime 37; native source bounds 37.
 // @retail 0x253ea8
 void c_class_19b8b1::v4(long screen_rect_address)
 {

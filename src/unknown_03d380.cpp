@@ -561,14 +561,16 @@ void __stdcall function_1889d0(dword flags)
 	}
 }
 
-// score 62 (was 110): raw flags load and tag/late-global registers still differ;
+// score 62 (was 62): native BX load, tag table and inactive clear receiver differ.
 // flags/tag names 110; positive/rejection tests 110; direct parameter 160; early flag 42 (restored);
 // inline query 110; shifted word/dword/byte 128/129/120; direct masks 154; first/second mask 132/151;
 // multi-use word mask 62; full-width mask 147.
-// score 62 (was 62): native flags BX load and tag/late-global registers remain.
 // Active-path mask 173; rejected-path mask 110; query-rejection result 62;
 // shared absolute scan 62; shared next datum 249; signed tag index 62;
 // common final flag publication 72; existing sound table helpers 62.
+// Signed short/long masked flags 62/61; final parameter exit 66;
+// final receiver ownership 55 (the global reloaded into a local by hand, not kept); receiver with parameter exit 66;
+// isolated tag scope 62; native iterator initializer 118; direct reset record 62.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {
