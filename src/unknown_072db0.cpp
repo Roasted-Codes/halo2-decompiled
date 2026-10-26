@@ -1319,6 +1319,9 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
+// score 202 (was 202): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
+// Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
+// Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 
 // score 202 (was 202): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
 // Earlier: Key/statistic homes, cursor and grouped team dispatch remain; live
@@ -1361,6 +1364,11 @@ struct s_rating_summary
 // Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.
 // Summary count/lookup/formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three 316. Full-width character retained at 1167/1212 after plain whole-image confirmation.
+// Round 148: Existing bound helper in bounded for, caller ordinary/force-inline/inline 323/323/323; direct
+// bound-helper break 224; native player pointer 325; whole summary clear 353; outer summary workspace 323;
+// native player plus summary clear 353; definition-side force-inline with bounded for/direct break 323/216.
+// Key/statistic homes and helper expansion remain.
+// Round 317: Late player/team/both statistic producers 199/207/204; late player plus native indexing 199; ascending/descending reads on late player 203/201; both late with ascending/native indexing 208/204. On late player: key first 199; shared carrier names 199; word character 203; positive character-budget for 320. Three-point reduction excluded.
 // Player-change/rating/group-add/group-set inline and noinline call declarations 202 each
 // (eight forms); all declarations restored; key/statistic homes and cursor remain.
 // Signed full-width character 203; entry query-table workspace 202; test-derived translated
@@ -1588,6 +1596,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // All five-group word ordinals 741 (frame 0xc8; rejected); byte clear ordinals 770;
 // read-submission failure first 770; common delay default 769; clamp bounds 769;
 // request/completion/offline word group 775/754/775; completion-only 754 plain, frame 0xc0.
+// Native duplicate index 761; request/completion/both direct player fields 794/754/794;
+// signed/unsigned word completion-player ordinals 755/755; unsigned word completion group
+// 754; duplicate index with unsigned word group 761. Original body retained.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

@@ -189,6 +189,7 @@ struct s_block_candidate
 // 372; byte ring tail 432 (fast). Tail reset 375; candidate while 370; short inner cursor 374;
 // timestamp maximum 367 (three-point gain dropped); word limit index 386; maximum plus tail reset
 // 373; maximum plus word limit 381; maximum plus all ring resets 368 (fast).
+// Round 214: byte insertion successor 375; byte inner successor 383; byte inner ordinal 389; byte best-present state 370; byte policy state 370.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

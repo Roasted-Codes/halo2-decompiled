@@ -685,7 +685,8 @@ long log2_floor(dword value);
 
 /* builds a bitmap's hardware texture header over its description, pointing
    into the shared pixel data */
-// score 12 (was 12): the last two log2 loops differ: retail copies the height and the
+// score 12 (was 12): Frame 8 and prefix through +0xe7 agree; post-guard logarithm copies and depth EAX result remain.
+// the last two log2 loops differ: retail copies the height and the
 // depth after the `cmp 1` test and counts the depth in EAX; ours copies before the `jbe` and
 // counts the depth in EDX. Kept: the hardware format a plain local (no volatile) and the
 // 32-bit sizes taken right after the mip count call in width, height, depth order (12); the
@@ -701,6 +702,7 @@ long log2_floor(dword value);
 // before the call 88; the sizes passed straight to log2_floor 92; a `local_0` for the
 // dimension bits 77; short levels 63; the dword sizes after the type test 76; the ternary as
 // `type == 1 ? 3 : 2` and every operand order of the format expression 60.
+// Early width/height/depth/width-height/width-depth/height-depth promotions 80/90/78/91/109/109; late height and late height-depth 111/107.
 // Logarithm inline/force-inline declarations 12/12; immutable dimensions 12; immediate short/long results 12/12; shifted masks 12; explicit Format assignments 12; long results with immutable dimensions 12.
 // @retail 0x12c820
 void texture_cache_bitmap_build_texture(s_bitmap_data *bitmap)

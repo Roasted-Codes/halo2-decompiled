@@ -515,6 +515,11 @@ done:
 
 #undef COLLISION_OBJECT_14A8E0
 
+// score 125 (was 125): retail keeps the exclusion flag in BL (`mov bl, 1` / `xor bl, bl`, tested again
+// after the failed lightmap query), NONE in EBX and the result in its parameter slot; VC threads our
+// flag. Flag as a helper out-parameter 168 (kept in memory); early-outs through the availability
+// helper 149 (440 bytes, aligned closer); scenery getter call 146 (out of line); function-scope flag
+// 125 (identical); early-out helper with an if/else flag 149.
 // @retail 0x14af40
 bool function_14af40(bool include_objects, point3f const *point, vector3f const *direction,
     long ignore_object_index, bool result, void *surface, point3f *probe)

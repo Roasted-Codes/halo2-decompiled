@@ -3623,6 +3623,7 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
+// score 101 (was 101): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
 
 // score 101 (was 101): frame 0x3c agrees; missing timeout owner spill and announcement/reply scheduling remain.
 // Earlier: Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
@@ -3641,6 +3642,8 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 // actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;
 // native workspace names 115; chained message flags 115; peer result with chained flags 101; host
 // result at send 113.
+// Guarded/nested/state-gated/conditional leave with the retained peer result 131/131/132/126;
+// those forms with the actual host-query result 148/148/151/143. Opening body restored.
 // complete native announcement construction 132 fast;
 // native announcement flag-array initialization 129 fast;
 // direct owning-array reply fields 101 fast;
@@ -3713,6 +3716,11 @@ bool function_07ab10(long key_index, s_type_99af70 *address, long local, word po
 // host/session homes, cleanup placement and clock expansion differ;
 // isolated failure-first 159, identifier assignment 136, delayed ready flag 136,
 // redundant false removed from one-exit flow 165, inline depth zero 136.
+// Join-key helper call 163; single-exit loopback bool helper 136 (retail's sete/test);
+// with it the clock helper forceinline 147; then channel failure first 138 at 573 bytes with
+// only the host register left (retail esi copied to ebx for the address call, session
+// reloaded; ours keeps host in ebx across it); inline address callee 138; inline key
+// setter 138; session parameter re-read at the address call 137 (host still ebx).
 // @retail 0x59e50
 bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
  const XNKID *kid, const XNKEY *key, const s_session_member_identity *host,
@@ -4323,7 +4331,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
+// score 384 (was 384): Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
+// Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
 // Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
@@ -4340,6 +4349,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // direct state observations 387; result after state 384. Frame/Boolean homes and block placement remain.
 // Word identity result 384; word preference/equality states 396/396; local member first 386;
 // selection flags after map updates 384; word reachability counts 383.
+// Round 356: Byte acceptance 387; word acceptance 394; paired byte selection 384; complete version admission 410; admission with byte selection 410; isolated invalid-state/role/missing-selection exits 386 each.
+// Native received/stored/both map records 384/412/412; native input alone/with stored fields
+// 384/412; native output/both assignments 412/412; native records with identity equality 420.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4531,9 +4543,13 @@ bool __stdcall function_05d9e0(c_class_58d20 *session, const void *message_)
 
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update);
 
-// score 122 (was 122): missing owner spill leaves frame 0x9148 versus 0x914c;
+// score 122 (was 122): missing owner spill leaves frame 0x9148 versus 0x914c (BLOCKED-BY 0x76930:
+// retail passes the owner to the mark-message call as an unused argument; its file is held);
 // mask/counter role names 122, first-loop cursor 122, eligibility guard 122,
 // member bit live across readiness 159, named readiness result 122.
+// Round 50: early continues for the eligibility tests 122; sequence tests swapped 121;
+// channel/observer/sequence read before the tests 136; ready test negated with the mark
+// call in the else arm 119; empty arm for the state-8 test 122.
 // @retail 0x62640
 void function_62640(c_class_58d20 *session)
 {

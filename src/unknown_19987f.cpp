@@ -1939,6 +1939,12 @@ struct s_session_map_view
    5 the members' status, 6 ready, 7 the wrong players, 8 to 10 the host's
    states; the members' progress goes to progress. Retail keeps progress on
    the stack: reading it through its address keeps it there */
+// score 103 (was 103): ours holds progress in EDI; retail reads it from its stack home at both
+// uses, keeps the limit in EDI, the team mask in EBX and the count in progress's home.
+// Volatile reads of progress at both uses 195 (aligned 40 of 50: progress stays home, but a
+// zero constant takes EDI and the limit spills); at the second use only 112; at the first
+// only 195; both plus the limit at function scope 194; both with the team mask declared
+// first 192; team mask declared first alone 103.
 // @retail 0x19a2ce
 long function_19a2ce(real *progress)
 {
