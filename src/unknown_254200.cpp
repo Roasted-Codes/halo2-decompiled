@@ -185,7 +185,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 157 (was 157): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// score 153 (was 157): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
 // 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
 // color/both 246 each; alpha with edges 322; native color reference 276; color copies after
@@ -218,6 +218,8 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Current byte-alpha frame: color after Begin 192; color after commit 168; C++ color entry 166; first position C++
 // entry 166; second quad real-table loop 412 (fast control 166). Frame/color/reservation homes remain; complete
 // opening body restored.
+// Native memcpy in byte-alpha frame 166; complete component initializer 171; shared color helper with byte alpha 166;
+// word alpha 162 fast / 153 plain (kept); explicit half-size assignments with word alpha 162 fast.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
@@ -328,7 +330,7 @@ void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 			function_0224f0(0, D3DTSS_ALPHAKILL, 0);
 			function_0222d0((D3DRENDERSTATETYPE)0x3e, 1);
 			function_0222d0((D3DRENDERSTATETYPE)0x3f, 0x303);
-			byte local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
+			word local_6 = (byte)(long)(function_1392a9(g_4b9ed8) * 255.f);
 			memset(&g_484f68, 0, sizeof(g_484f68));
 			g_484f68.PSConstant0[0] = (((((dword)local_6 << 8) | local_6) << 8 | local_6) << 8) | local_6;
 			g_484f68.PSCombinerCount = 1;
