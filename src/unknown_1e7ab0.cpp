@@ -169,6 +169,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 
 // score 631 (was 631): Frame 0x54/type EDX agree; state/player/unit homes remain.
 // Earlier 631 from 645: frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
+// frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // Earlier 649 from 649: frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
 // Earlier 613 from 656: frame/type agree; state/player/unit allocation remains.
 // Direct state receiver 656; unsigned unit carrier 656; early blocked local 656;
@@ -194,6 +195,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Paired Boolean-role names 631; player/unit handle names 631; receiver-role names 631; one failure
 // exit 631; flag/empty cases first 631; flag/input-state cases first 653; flag/health cases first 643;
 // flag/weapon-test cases first 653 (fast). All restored.
+// Complete eligibility assigned to returned result in reset cases 10/11/12/13/2/16 632/632/640/640/627/643; all six 693; success result after reset 630. Case 2 kept, plain 627.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
@@ -236,8 +238,8 @@ bool function_1e7ab0(long local_index, long type)
     if (function_1e7a60(local_index, 16) == 0 && function_c8860(unit_index) != NONE) result = true;
     break;
    case 2:
-    if (!function_13cb40() && function_1e7a10(local_index, 12) && *(long *)(unit + 0x14) == NONE)
-    { result = true; if (*(long *)(data + 0x80) != 2) data[0x1a0] = false; }
+    result = !function_13cb40() && function_1e7a10(local_index, 12) && *(long *)(unit + 0x14) == NONE;
+    if (result && *(long *)(data + 0x80) != 2) data[0x1a0] = false;
     break;
    case 4:
     if (!function_13cb40())

@@ -730,6 +730,7 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Round 361: complete/row-local additive sums 174/174; complete/row-local compound rows 218/185;
 // aggregate additive construction 174; complete/row-local additive and weighted parts 185/185;
 // additive vector plus plain subtraction loop 204 (fast). Complete opening body restored.
+// Cross before/between trigonometric values 202/200; direct axis fields 247; immutable rotation scalars 155; native scaled velocity 214; with early cross 238; early/mid cross plus direct axis 261/236.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

@@ -730,7 +730,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
-// score 258 (was 258): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// score 254 (was 254): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
 // selected/input/offset references 294/291/272, pairs 311/311/307, three/four references 326/340.
 // All restored.
 // Earlier: frame 0x1c versus 0x18; mode occupies EBP.
@@ -760,6 +760,12 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // frame 0x1c/0x18 and input-level/mode homes remain.
 // Primary routing 272; signed word route 264; direct left 275; external output
 // and live settings records 264/264; primary-output pair 272; full left 275; settings-direct pair 271.
+// Earlier 258 (was 258). Dword right/rear-left/both 258/255/259; rear-right 255;
+// right/rear-right 259, both rear 256, all spilled 260, all destinations 268 on gain-first source.
+// Round 127: inline/noinline 254/254; native routing bit 251 (three-point gain rejected); complete
+// input/settings/both copies 282/238/277 (dispatcher lost); Boolean/dword predicates with native
+// endpoints 274/273; native bit plus native endpoints/Boolean predicate 273/260. Frame 0x1c and
+// mode/level homes remain.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -953,7 +959,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	}
 }
 
-// score 200 (was 200): Frame 0x10 and x87 tail sums remain; level/rear/all references 221/208/231,
+// score 200 (was 200): frame 0x10 versus consumed argument homes; inherited x87 send sums remain.
+// Earlier at 208 (was 208): eight-byte frame and inherited x87 send sums differ.
+// Frame 0x10 and x87 tail sums remain; level/rear/all references 221/208/231,
 // pointers 221/208/231; reference early sums 212/222, all restored.
 // Earlier: eight-byte frame and inherited x87 send sums differ.
 // frame 0x10 versus incoming-slot reuse; inherited x87 send sums remain.
@@ -963,19 +971,26 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // steer the compiler) the frame is four bytes and the late level sum remains.
 // Native channel bit 208; const samples 208; immutable input 208; bit/input 208;
 // scoped precision pragma 173; global optimization off 229; frame pointer 225; precision/early sum 224.
-// Earlier: frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
+// Earlier at 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
 // Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
 // samples 208/212/206/202; all samples with early send sum 215.
-// Earlier: frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// Earlier at 200 (was 200): frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
 // sum after rear pair 212; accumulated sum 212; read-only input contract 200; rear reads reversed
 // 200; rear before levels 201; signed-byte selector 200; unsigned-word selector 197 (three-point
 // gain dropped).
-// Earlier: Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
+// Earlier at 200 (was 200): Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
 // left/right after first 206/206; early sum with first/front/staggered rear samples 217/222/225; staggered
 // rear samples 208 (fast).
-// Earlier: frame 0x10 and inherited x87 sums remain; native input
+// Earlier at 200 (was 200): frame 0x10 and inherited x87 sums remain; native input
 // assignment or memcpy, each with late/early level sums and rear samples/direct
 // rear fields, all 240. Copies grow the frame to 0x28; original inputs restored.
+// Native front/rear/both input pair loops 243/275/300f; each with final level result
+// 243/275/300f; native channel bit with both loops, with/without named final level,
+// 300/300f. All input array views, pair loops and changed result producers restored.
+// Earlier: frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
+// Earlier: frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// Earlier: Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
+// Earlier: frame 0x10 and inherited x87 sums remain; native input
 // Live offset/base/both levels 208/208/221; live channel flag 199 (one-point gain dropped);
 // live flag with offset/base/both levels 208/208/223; live levels and native flag bit 205.
 // @retail 0x2af920

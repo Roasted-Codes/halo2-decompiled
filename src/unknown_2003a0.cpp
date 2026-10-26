@@ -50,15 +50,19 @@ extern short const g_44aee8[20] =
 	3, 7, 3, 3, 3, 3, 1, 2, 2, 4, 4, 4, 5, 5, -1, 3, 7, 7, 7, 4
 };
 
-// score 82 (was 82): 16-bit mask, split flag RMW, sentinel/base allocation remain.
-// Real flag word/byte views 82; word-only flags 105; multi-use source flags 86;
-// real handle array index/library/pointer fills 82/90/101; flag aliases with
-// indexed/library fills 82/90. Original record and complete body retained.
-// score 82 (was 82): word mask/RMW and sentinel/array-base registers remain.
-// Late next-link/word/long sentinel subsets 82,82,82,82,82,82,82;
-// native-short five-handle counter 99. Initializer body restored.
-// score 82 (was 82): narrow mask/RMW and sentinel/base registers remain.
-// Boolean first/second/both bits 107/88/112; conditional second bit 88;
+// score 90 (was 82): the five handles are now filled by memset (retail's NONE in EDX, LEA ECX
+// base and five stores); aligned on retail the body differs in 6 instructions (49 before),
+// but the second flag bit's load is hoisted above the branch and its store merged after it
+// (retail ORs/ANDs the byte in memory in each arm), which shifts the positional listing by one,
+// and the first bit is masked with AND EAX where retail has AND AX. Round 87 on the memset:
+// second bit as the record's bitfield 94 (the word's value is forwarded); SET_FLAG ternary 90;
+// byte or dword bitfield containers in the header 90/94 (cost 0x275a50); both bits as bitfields
+// 94; word truncation before the mask 90; masking bitfield insert for the first bit 90; dword
+// second-bit access 94; signed first-bit store with bitfield second bit 94.
+// Earlier at 82: real flag word/byte views 82; word-only flags 105; multi-use source flags 86;
+// real handle array index/library/pointer fills 82/90/101; flag aliases with indexed/library
+// fills 82/90; late next-link/word/long sentinel subsets 82 (seven orders); native-short
+// five-handle counter 99; Boolean first/second/both bits 107/88/112; conditional second bit 88;
 // library clear with first/both bits 124/127; counted pointer fill 82, with Boolean bits 112.
 // @retail 0x200c20
 void function_200c20(byte const *definition)
@@ -87,8 +91,7 @@ void function_200c20(byte const *definition)
 	*(long *)((byte *)squad + 0x6c) = *(short const *)(definition + 0x26);
 	squad->next_squad_index = NONE;
 	*(short *)((byte *)squad + 0x7e) = NONE;
-	for (long i = 0; i < 5; i++)
-		((long *)((byte *)squad + 0x84))[i] = NONE;
+	memset((byte *)squad + 0x84, 0xff, 5 * sizeof(long));
 	*((byte *)squad + 0x76) = definition[0x24];
 	if (!*((byte *)squad + 0x76))
 	{
@@ -462,10 +465,18 @@ struct s_squad_iterator
 	s_squad_definition_entry *definition;
 };
 
-// score 92 (was 92): squad/definition registers and persistent zero/count homes remain; shared lookup 92; parent while 148; read-only squad 92; unused formal addresses removed 92; definition scope 92; cached entries 87 (one-use pointer excluded); direct mode flags 94; early index 92; native count/entries block 90.
-// no frame; squad/definition EAX/ECX and zero/count homes differ.
-// Common scan exit 94; direct count 92; alternate reads 92; fallback-first flags 102;
-// search condition 92; exit/direct count 94; exit/alternate reads 94; definition result 92.
+s_squad_definition_entry *function_203330(s_squad_definition_view const *squad);
+
+// score 92 (was 92): no frame; squad/definition EAX/ECX exchanged in the walk, and a zero kept
+// in EBP (stored as next, scan index, count and palette tests) where retail uses immediates/TEST.
+// Shared lookup 92; parent while 148; read-only squad 92; unused formal addresses removed 92;
+// definition scope 92; cached entries 87 (one-use pointer excluded); direct mode flags 94; early
+// index 92; native count/entries block 90; common scan exit 94; direct count 92; alternate reads 92;
+// fallback-first flags 102; search condition 92; exit/direct count 94; exit/alternate reads 94;
+// definition result 92. Round 87: squad re-fetched after the walk 118; definition declared first
+// 92; entry pointer in the scan 92; a 72-form screen of count/entries selection (if/ternary/value),
+// loop form (for/for-init/while), alternate local/field and >=/== exhaustion test: all 92.
+// The definition lookup now calls the existing getter 0x203330 (byte-identical).
 // @retail 0x204ec0
 void function_204ec0(s_squad_iterator *iterator, short squad_index, short flags, short mode)
 {
@@ -478,8 +489,7 @@ void function_204ec0(s_squad_iterator *iterator, short squad_index, short flags,
 		for (;;)
 		{
 			squad = squad_get((word)squad_index);
-			short index = ((s_squad_definition_view *)squad)->definition_index;
-			definition = index == NONE ? NULL : &((s_squad_definition_table_view *)g_4e0350)->entries[index];
+			definition = function_203330((s_squad_definition_view const *)squad);
 			if (!definition || !(definition->data[0x24] & 0x20) || *(short *)(definition->data + 0x4e) == NONE)
 				break;
 			squad_index = *(short *)(definition->data + 0x4e);
@@ -925,26 +935,27 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// score 69 (was 69): the record's field is read into SI where retail reads it into BP, so the two
-// values are exchanged and the compare uses the other register.
-// score 69 (was 69): merged index and fallback short/promoted pair still differ.
-// Multi-use promoted index 73; helper failure guards 69; native short selection
-// 69; input-default result 75; read-only table 69; signed bounded length 70;
-// promotion/input-default result 119; read-only promotion/signed length 75.
-// score 69 (was 69): merged short and fallback native/promoted allocation remain.
-// Actual shared script fields: native snapshot 109; direct fields 70; NONE/input
-// results 141/115; descriptor first 109; const table 109; long result/ordinal 119/108.
-// score 69 (was 69): input/result merge and fallback pair remain.
-// Existing bounded-length call 69; native candidate invalidation 75;
-// invalidation plus bounded call 75; negated success 75/75;
-// candidate selection 75/75 (manual/shared length); signed count 76.
+// score 13 (was 69): the merged index is now the first record index's own register as in
+// retail; the fallback index and its promoted copy sit in SI/EBP where retail has BP/ESI, and
+// the fallback's result is tested before its copy into the merged index (retail copies, then
+// tests). Round 87: index read into the result before the first check 13 (kept); both checks
+// seeded so 36; bool check with assigned index 81 (267 bytes); helper name before index 13;
+// count-first range compare 15; result declared first 13; single-exit helper result 141.
+// Earlier at 69: multi-use promoted index 73; helper failure guards 69; native short selection
+// 69; input-default result 75; read-only table 69; signed bounded length 70; promotion/input-
+// default result 119; read-only promotion/signed length 75; actual shared script fields: native
+// snapshot 109; direct fields 70; NONE/input results 141/115; descriptor first 109; const table
+// 109; long result/ordinal 119/108; existing bounded-length call 69; native candidate
+// invalidation 75; invalidation plus bounded call 75; negated success 75/75; candidate
+// selection 75/75 (manual/shared length); signed count 76.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
 	(void)&actor_index;
 	s_squad_placement_definition *squad = &((s_squad_placement_table *)g_4e0350)->squads[squad_index & 0xffff];
 	s_squad_placement_entry *entry = &squad->entries[entry_index];
-	short script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, entry->command_script_index, entry->command_script_name);
+	short script_index = entry->command_script_index;
+	script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, script_index, entry->command_script_name);
 	if (script_index == NONE)
 		script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, squad->command_script_index, squad->command_script_name);
 	if (script_index != NONE)
@@ -1132,7 +1143,7 @@ struct s_squad_tree_definition
 	s_squad_tree_squad_definition *squads;
 };
 
-// score 31 (was 31): frame and first two passes agree. In the third and fourth passes retail loads the
+// score 31 (was 31): One-dword frame and first two passes agree; later parent loads still lose the retained record address.
 // parent field into ECX through [eax+edx+offset] and still forms the record pointer (add eax,edx) before
 // the compare, then copies the value to EAX; ours forms the pointer first and loads through it into EAX.
 // Tried: const current group 43; unsigned squad parent 43; unsigned group parent 63; unsigned sibling 43;
@@ -1150,6 +1161,7 @@ struct s_squad_tree_definition
 // Native parent field 31; shared squad-data base 118; nonempty list arm first 59;
 // native field plus data/arm 118/59; data plus arm 127; all three 127;
 // definition observed at every use 31 (fast). Opening body and record type restored.
+// Native group-parent/head/group+squad/group+head/squad+head/all field pointers 37/34/37/37/34/37; readonly parents with head or squad pointers 37/37.
 // @retail 0x2009d0
 void function_2009d0(void)
 {

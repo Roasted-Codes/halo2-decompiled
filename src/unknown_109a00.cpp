@@ -117,15 +117,18 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 						else
 						{
 							point3f moved;
-							vector3f change;
 							transform4x3f_apply_point(&motion->transform, &matrix.position, &moved);
 							real ticks = (real)g_510c54->field_2_3;
-							change.i = matrix.position.x - moved.x;
-							change.j = matrix.position.y - moved.y;
-							change.k = matrix.position.z - moved.z;
-							change.i *= ticks;
-							change.j *= ticks;
-							change.k *= ticks;
+							vector3f displacement = {
+								matrix.position.x - moved.x,
+								matrix.position.y - moved.y,
+								matrix.position.z - moved.z
+							};
+							vector3f change = {
+								displacement.i * ticks,
+								displacement.j * ticks,
+								displacement.k * ticks
+							};
 							function_b75a0(object_index, &moved, NULL, NULL, NULL, false);
 							*velocity = object->velocity;
 							carrier_add_vectors(&object->velocity, &change, &object->velocity);
@@ -143,13 +146,10 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 	return result;
 }
 
-// score 164 (was 128): one instruction longer (1018 bytes, retail 1012), so most
-// differences are positional; aligned it went 66 -> 40 when the shared
-// carrier_point_velocity began computing the cross product before writing it
-// (the second call's block is now retail's). Left: the first call's block
-// (into a local) loads angular.i twice where retail folds it, and its
-// subtraction order; the non-rotate branch's scaled differences.
-// score 164 (was 164): First point-velocity and nonrotating difference/add schedules remain. external motion record 164;
+// score 126 (was 164): Frame 0x88 agrees; point-velocity and nonrotating scale/add
+// scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
+// 128/1015 to 164/1018 and aligned differences 66 to 40; second call schedule recovered.
+// First point-velocity and nonrotating difference/add schedules remain. external motion record 164;
 // external object record 164; returned transform input 249; first angular input value 205; first linear
 // input value 197; first center input value 206; first velocity input values 246; immutable displacement
 // rate 164.
@@ -165,6 +165,9 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // Nonrotating shared point difference 165; shared scale 164; difference plus scale 166;
 // shared scaled difference 169; final delta scale 164; both scale boundaries 164;
 // actual motion-field bindings 166; object-velocity field reference 164 (fast scores).
+// Native clock short/long/double 179/175/193; native difference initializer 164;
+// separate displacement/scaled-change vectors 126 (kept); with short/long/double clock
+// 173/168/199. The actual scaled change remains used by the addition and delta outputs.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {
@@ -328,7 +331,13 @@ PRIVATE inline void carrier_body_angular_velocity_get(s_carrier_body const *body
 // (149; as three field copies 140, through a motion local 129). Tried:
 // parameters swapped at both ends (no change), entry declared before the
 // object or after the component index (113, 128), inline object and entry
-// getters (no change).
+// getters (no change). The three axis pointers declared together before the
+// normalize calls 111 (retail's registers: forward edi, up esi, left ebp; the
+// products then come out forward-first and the dot sums k,i,j where retail has
+// up-first and k,j,i; the source operand order of the dot does not change it,
+// 111); that plus the center through carrier_vector_from_havok 151 (object index
+// in eax as retail, entry index on the stack); with the entry pointer computed
+// first 153; the pointers together with the entry first 112.
 // @retail 0x109660
 void function_109660(long object_index, long entry_index)
 {

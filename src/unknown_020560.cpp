@@ -57,13 +57,13 @@ PRIVATE __forceinline long texture_floor(real value)
 // score 4 (was 4): Frame agrees; the final slot-bit clear uses EDX instead of EAX. Tried unsigned slot bit 4;
 // signed traversal mask 4; unsigned slot index 4; toggle selected bit 14; subtract selected bit 16; assign
 // remaining mask 4; pending slots name 4; for mask traversal 4; named slot bit 4; bias declaration first 4;
-// slot index name 4; texture frame name 4.
-// the final bit-clear mask uses EDX instead of EAX. Lowest-bit clear 19;
+// slot index name 4; texture frame name 4; lowest-bit clear 19;
 // early clear 111; entry lifetime 4; scan-index lifetime 4; level lifetime 4; integral
-// level clamp 86; short bitmap 4; typed texture entry 4.
-// score 4 (was 4): Guarded do continuation 4; reversed mask assignment 4; complement by -1 xor 4;
-// masked xor clear 4; short stage 4; entry tag local 4; existing bit setter 132;
-// callee inline declarations 4.
+// level clamp 86; short bitmap 4; typed texture entry 4; guarded do continuation 4; reversed mask
+// assignment 4; complement by -1 xor 4; masked xor clear 4; short stage 4; entry tag local 4;
+// existing bit setter 132; callee inline declarations 4; ternary bitmap 104; one-expression level
+// 202; one conditional bias 115; bitmap set on both arms 90; named frame time 108. Compile-only
+// screens: only removing the whole bitmap block gives EAX; ~450 forms of that block keep EDX.
 // @retail 0x1b0a0
 void __stdcall function_1b0a0(byte *state)
 {

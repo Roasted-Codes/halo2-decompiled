@@ -165,9 +165,13 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 	*timer = (short)ticks;
 }
 
-// score 68 (was 80): frame eight versus retail zero; mode compare and entry scheduling remain.
+// score 68 (was 68): frame eight versus retail zero; mode compare and entry scheduling remain.
 // Both timer helpers 85; add helper 68 plain kept; set helper 80; native tick outputs
 // both 72, first 70, second 80; shared random index 80; library slot copy 80.
+// Round 138: mode predicate/shared clock/both 68/68/68; shared rate 84; second rounding-result
+// helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
+// force-inline second/both/first rounding results 85/70/68; native result with both 78.
+// Zero-frame forms regress allocation or expansion.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -296,6 +300,9 @@ short __stdcall function_1ac3f0(long actor_index)
 // 43/43; true-field chain 48; late completion reset 44; byte-first resets 45; update/chain 52.
 // Native character readonly/reference/value 35/35/82; double scale/delay/both 35/74/74;
 // character reference/value plus double scale 35/82. Seed reload and scale pop remain.
+// Round 138: shared seed pointer/record 58/58; shared clock alone/with seed 35/46; common rate
+// alone/with seed 86/91; first conversion input and second output entry homes 35/35.
+// Intermediate seed store and early scale pop remain.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -648,6 +655,9 @@ bool __stdcall function_1ad590(long actor_index, s_slot *slot)
 // Separate continuation, word/native with arms/conditional: branch 55/58/56/59; entry
 // 55/58/56/59 (three-point gain rejected). Tag/prop/state inline and noinline declarations,
 // singly and together, 58 each. Independent default reload and saved roles still differ.
+// No else (entry default kept) 55; invalid test first without else 55; slot cast at each use 58;
+// split 0xe tests 58; nested property/element tests 58; result first 58; state first 58;
+// inverted tick test 60.
 // Actor readonly/reference, element readonly/reference, readonly pair, native input
 // pair, state reference and all record references: 58 each; default reload and saved roles remain.
 // @retail 0x1ad5b0
@@ -1067,6 +1077,9 @@ struct s_1ac9e1
 // Actor readonly/reference 48/48; readonly location and direct reference comparison 48/48;
 // query-outcome flags alone/with actor record 88/88; nested endpoint guards and named
 // direction length 48/48. Count/completion and history exit reload still differ.
+// Round 138: query-only output scope 126; entry result 48; both 126; fallback result flags 48;
+// query scope with result flags 126; explicit direction stores 50; scope/direction 136; entry
+// result/direction 50. Count and completion byte lifetimes remain.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)
