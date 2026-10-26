@@ -2066,6 +2066,10 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
     return result;
 }
 
+// score 275 (was 275): Frame 0x48 versus 0x54, early saved-register pushes, iterator/point homes and intersection spill remain.
+// This round: structure at uses 305; cluster root at uses 302; both roots at uses 300; shared final
+// bit test 275; direct bitmap countdown 274; root observations shared test 300; root observations
+// countdown 302; roots countdown shared test 302.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2666,17 +2670,18 @@ PRIVATE __forceinline byte *function_202752(s_record_pool_iterator *arg_0)
 
 static __forceinline long real_to_long(real value);
 
-// score 227 (was 227): frame 0x30 agrees; active/pool reloads and zero-result joins differ.
+// score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain.
 // Role names 227; native squad iterator 227; squad result local 227; short timers 227;
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // Single-result squad step 298; zero inline depth 584; global optimization off 439;
 // frame pointer 258; size preference 633. Original kept.
-// score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
-// squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
+// Timer squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
 // positive-timer continues 227.
-// score 227 (was 227): Frame 0x30 agrees; active/pool observations and zero-result joins remain.
 // Native zero initialization 255; timer addresses 227; final group for 289; final squad for 329;
 // first squad-phase lifetime 227.
+// This round: group local publication 280; group field publication 293; group failure exit 293; squad
+// conditional return 264; squad direct return 227; local group conditional squad 277; field group
+// direct squad 293; local group direct squad 280.
 // @retail 0x202720
 void function_202720(void)
 {
