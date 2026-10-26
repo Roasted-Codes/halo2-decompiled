@@ -1047,6 +1047,7 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 }
 
 // score 421 (was 421): Frame 0x64 agrees; persistent zero and count/component homes remain.
+// Frame 0x64 agrees; persistent zero and count/component homes remain.
 // Earlier 428 from 489: frame now 0x64; count/component and vector homes still differ.
 // Three-pass countdown 490; preferred-contact cursor 527; search cursor 428;
 // inline depth one 489; existing snapshot cross helper 488.
@@ -1069,6 +1070,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Request flags once 494; flight once 531; preferred surface once 467; complete contact-base snapshot
 // 587; signed contact-bound snapshot 496; flags/flight 596; base/bound 651; flags/flight/preferred 659
 // (fast). All restored.
+// Round 361: native contact records in preferred/candidate/response/final scans 421/421/421/421;
+// preferred plus candidate, response plus final, all scans and all read-only records 421/421/421/421
+// (fast). Existing record layout and complete body restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
