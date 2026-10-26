@@ -344,6 +344,8 @@ static inline void release_block(void *block, long *info)
 // Handle-table loop kept: plain 87, 252/261 bytes; receiver/allocator now EBP/EDI.
 // Round 164: pointer range 91; entry handle cursor 91; entry handle end 91; counted cursor 87;
 // unsigned counter 87; word counter 87; counted handle value 87; pointer task lifetime 91.
+// Round 167: task/handle postconditions 87/87; first/all buffer postconditions 86/87;
+// task+handles/handles+buffers/all/task+buffers 87/87/87/87. Original body restored.
 // @retail 0x90c80
 void __stdcall function_090c80(byte *p)
 {
@@ -703,6 +705,10 @@ done:
 // Round 164: native detail inputs 128; full results lifetime 182; native full results 182;
 // entry input scope 128; loop input scope 128; entry scope results 182; native loop scope 128;
 // native entry results 182.
+// Round 167: complete typed details pointer/direct fields 128/213;
+// pointer with signed difference/range step/both 128/128/128;
+// pointer with full results lifetime 182; direct difference/range step 213/213.
+// Original results observation and details/kind/count homes remain.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {
