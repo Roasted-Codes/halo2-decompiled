@@ -272,7 +272,9 @@ Want to be on this list? See [How to help](#how-to-help).
 - [punpckhdq/halo](https://github.com/punpckhdq/halo),
   [bnunu/halo-1](https://github.com/bnunu/halo-1) and
   [halo-ce-universal](https://github.com/cybersecurity/halo-ce-universal):
-  the Halo CE decompilation and port that this project follows.
+  the Halo CE decompilation and port that this project follows. punpckhdq/halo
+  is AGPL-3.0 since 2026-10-17 (CC0 before); its AGPL revisions are read for
+  understanding only, never copied from (see [PROVENANCE.md](PROVENANCE.md)).
 - [BirchWoodGod/halo2-decomp](https://github.com/BirchWoodGod/halo2-decomp):
   a functional recovery of the same XBE. Its published analysis gave us
   leads: the subsystem lifecycle table, the data-array layout and some
