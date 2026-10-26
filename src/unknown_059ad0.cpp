@@ -2878,24 +2878,12 @@ void session_parameters_apply_update(s_session_parameters *parameters, const s_s
 
 /* a channel of a member connected (a peer tells the host it is there) or
    closed */
-// score 31 (was 31): cold state-clear arm still precedes the mask tail; dead-state, state-value, search and combined local names 31; repeated field reads 31; connected state snapshot 31; shared state snapshot and renamed shared snapshot 51.
-// state-clear block still precedes the mask tail instead of following the exit; result cursor 139; result-bounded scan 181; separate inactive/mismatch continues 31; unsigned ordinal 32; chained/reversed absent fields 31/31; direct masks 31; message memcpy 31.
 // @retail 0x5f480
 void c_class_58d20::channel_connection_changed(long channel_index, long remote_index, bool connected)
 {
 	c_class_58d20 *session = this;
-	long member_index = NONE;
+	long member_index = network_session_find_member_by_channel_inline(session, channel_index);
 
-	if (channel_index == NONE)
-		return;
-	for (long i = 0; i < MAXIMUM_PLAYERS_PER_SESSION; i++)
-	{
-		if (session->member_states[i].unknown00 && session->member_states[i].unknown04 == channel_index)
-		{
-			member_index = i;
-			break;
-		}
-	}
 	if (member_index == NONE)
 		return;
 	if (connected)
@@ -2911,19 +2899,14 @@ void c_class_58d20::channel_connection_changed(long channel_index, long remote_i
 	else
 	{
 		s_network_session_member_state *state = &session->member_states[member_index];
-		long session_state = session->state;
-		if (session_state != 5 && session_state != 6 && session_state != 7 && session_state != 8)
-		{
-			volatile long unused = session_state;
-			if (member_index == session->member_index)
-				network_session_reset_7620(session);
-		}
-		else
+		if (network_session_state_is_host_local(session->state))
 		{
 			state->unknown08 = NONE;
 			state->unknown0c = NONE;
 			state->flag3 = true;
 		}
+		else if (member_index == session->member_index)
+			network_session_reset_7620(session);
 		if (session->state == 8)
 		{
 			dword mask = ~(1 << member_index);
