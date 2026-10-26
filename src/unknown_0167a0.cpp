@@ -593,45 +593,27 @@ void function_174d0(byte *context, long group, long stage, long pass, long entry
 	}
 }
 
-// score 68 (was 68): frame 0x3c agrees; zero/default/scale registers and trig scheduling still differ.
-// Earlier at 68: frame 0x3c agrees; zero/scale/trigonometric register allocation differs.
-// Zero-angle defaults on their own branch 68; shared rounded angle 166;
-// basis before translation 168; role-named workspaces 130; value-initialized matrix 133.
-// Earlier at 68: frame agrees; zero/scale and trig live ranges still differ.
-// score 68 (was 68): zero/scale/trigonometric allocation remains.
-// Sine/cosine default alone 69/70; defaults after clear/split phases 131/131;
-// Y-scale first 69; clear before scales 68; planar/complete output rows first 99/150.
-// frame agrees; zero/scale and trig live ranges still differ.
-// Small-angle first 69; cosine first 68; trig declarations first 68; late matrix clear 75;
-// late scales 172; shared cosine complement 68; scales at use 135; shared Y scale 73.
-// Raw angle early/late/const 177/177/177; double sine/cosine/both APIs 68/68/68; entry success result 68;
-// const scales 68.
 // @retail 0x1b790
 bool function_1b790(byte const *state, long index, real *out, long mode)
 {
     real const *values = (real const *)(state + 0x320 + index * 0x40);
+    real sine = 0.0f;
+    real cosine = 1.0f;
     real sx = values[7];
     real sy = values[8];
     transform4x3f matrix;
-    real sine;
-    real cosine;
     memset(&matrix, 0, sizeof(matrix));
     if (!(fabs(values[13]) < 0.0001f))
     {
         sine = sinf(values[13] * 6.2831854820251465f);
         cosine = cosf(values[13] * 6.2831854820251465f);
     }
-    else
-    {
-        sine = 0.0f;
-        cosine = 1.0f;
-    }
+    matrix.forward.i = sx * cosine;
     matrix.forward.j = 0.0f - sx * sine;
     matrix.position.x = (1.0f - cosine + sine) * sx * 0.5f + values[10];
     matrix.left.i = sy * sine;
-    matrix.position.y = (1.0f - cosine - sine) * values[8] * 0.5f + values[11];
-    matrix.forward.i = sx * cosine;
     matrix.left.j = sy * cosine;
+    matrix.position.y = (1.0f - cosine - sine) * sy * 0.5f + values[11];
     matrix.up.k = values[9];
     matrix.position.z = values[12];
     switch (mode)
@@ -682,7 +664,7 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 // Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
 // native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
 // @retail 0x1b580
-bool function_1b580(byte const *definition, long component, long unused, long mode, real *out)
+bool function_1b580(long unused, byte const *definition, long component, long mode, real *out)
 {
     long const *unused_reference = &unused;
     (void)unused_reference;
@@ -802,6 +784,12 @@ void __stdcall function_17960(byte *state, word const *range)
 const dword g_467068[8] = { 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000,
     0x00ffffff, 0x00ff0000, 0x0000ff00, 0x000000ff };
 
+/* the shader's output remapping, a packed range of its remapping table */
+static inline s_packed_shader_range const *shader_remapping(byte const *state)
+{
+    return (s_packed_shader_range const *)(*(byte **)(state + 0x24) + 0xf6);
+}
+
 PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long index, dword mask, dword value)
 {
     if ((packed & 0x3c0) != 0x200)
@@ -851,7 +839,7 @@ void function_17170(byte *state, word const *range)
 {
     dword const *values = *(dword **)(*(byte **)(state + 0xc) + 0x10);
     byte const *entry = *(byte **)(*(byte **)(state + 0x10) + 0x24) + (*range & 0x1ff) * 4;
-    word remapping = *(word *)(*(byte **)(state + 0x24) + 0xf6);
+    word remapping = shader_remapping(state)->packed;
     if (!(remapping & 0xfe00))
     {
         for (long i = 0; i < (*range >> 9); ++i, entry += 4)
@@ -881,51 +869,55 @@ void function_17170(byte *state, word const *range)
 
 dword __cdecl pack_color4f(color4f const *color);
 
-static inline real unit_clamp_176a0(real value)
+static inline void unit_clamp_176a0(real &value)
 {
     if (0.0f > value)
         value = 0.0f;
     else if (value > 1.0f)
         value = 1.0f;
-    return value;
 }
 
-// score 124 (was 124): frame 0x2c agrees; cursor EDI versus EBP and clamp
-// result publication differ. Indexed entry walk 186; alpha-first clamps with
-// body entry step 122; frame pointer 229; global optimization off 385; size 301.
-// frame 0x2c agrees; cursor register, clamp-result lifetimes and remapping schedule differ.
-// Entry step in body 122; indexed clamp loop 151; short/byte entry counter 122/133; inline depth one 122.
 // @retail 0x176a0
 void function_176a0(byte *state, s_packed_shader_range const *range)
 {
     if (range->count() > 0)
     {
         byte const *entry = *(byte **)(*(byte **)(state + 0xc) + 0x58) + range->index() * 4;
-        for (long i = 0; i < (long)range->count(); ++i, entry += 4)
+        for (long i = 0; i < (long)range->count(); entry += 4, ++i)
         {
             byte const *definition = *(byte **)(state + 0xc);
             long range_index = ((word const *)*(byte **)(definition + 0x50))[entry[3]] & 0x1ff;
             long index = ((short const *)*(byte **)(definition + 0x48))[range_index * 2];
             byte const *parameter = *(byte **)(definition + 0x40) + index * 20;
             real values[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-            function_1b580(parameter, entry[2] & 7, (long)state, (entry[2] >> 3) & 7, values);
+            function_1b580((long)state, parameter, entry[2] & 7, (entry[2] >> 3) & 7, values);
+            unit_clamp_176a0(values[0]);
+            unit_clamp_176a0(values[1]);
+            unit_clamp_176a0(values[2]);
+            unit_clamp_176a0(values[3]);
             color4f color;
-            color.red = unit_clamp_176a0(values[0]);
-            color.green = unit_clamp_176a0(values[1]);
-            color.blue = unit_clamp_176a0(values[2]);
-            color.alpha = unit_clamp_176a0(values[3]);
+            color.red = values[0];
+            color.green = values[1];
+            color.blue = values[2];
+            color.alpha = values[3];
             dword value = pack_color4f(&color);
             word packed = *(word const *)entry;
             long slot = packed & 7;
-            long remapping = *(word *)(*(byte **)(state + 0x24) + 0xf6);
-            byte const *mapping = *(byte **)(*(byte **)(state + 0x20) + 0x24) + ((remapping & 0x1ff) + slot) * 4;
-            short source = *(short const *)mapping;
-            if (!(remapping & 0xfe00) || source == NONE || ((packed >> 3) & 7) == *(long *)(state + 0x300 + source * 4))
+            short const *source = (short const *)(*(byte **)(*(byte **)(state + 0x20) + 0x24) + (shader_remapping(state)->index() + slot) * 4);
+            if (shader_remapping(state)->count() == 0 || *source == NONE || ((packed >> 3) & 7) == *(long *)(state + 0x300 + *source * 4))
             {
-                long output_index = (packed >> 6) & 15;
-                if ((packed & 0x3c0) != 0x200 && (remapping & 0xfe00))
-                    output_index += *(signed char *)(state + 0x1520 + slot);
-                store_shader_mask(state, packed, output_index, g_467068[entry[2] & 7], value);
+                dword mask = g_467068[entry[2] & 7];
+                if ((packed & 0x3c0) != 0x200)
+                {
+                    long output_index = (packed >> 6) & 15;
+                    if (shader_remapping(state)->count() > 0)
+                        output_index += *(signed char *)(state + 0x1520 + slot);
+                    store_shader_mask(state, packed, output_index, mask, value);
+                }
+                else
+                {
+                    store_shader_mask(state, packed, (packed >> 6) & 15, mask, value);
+                }
             }
         }
     }
@@ -1315,7 +1307,7 @@ void function_19ca0(byte *state, word const *range)
 {
     byte const *definition = *(byte **)(state + 0x20);
     byte const *entry = *(byte **)(definition + 0x3c) + (*range & 0x1ff) * 4;
-    word remapping = *(word *)(*(byte **)(state + 0x24) + 0xf6);
+    word remapping = shader_remapping(state)->packed;
     real values[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
     if (!(remapping & 0xfe00))
     {

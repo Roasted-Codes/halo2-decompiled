@@ -2769,31 +2769,28 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 	item->value5c = team;
 }
 
-// score 100 (was 100): Frame 0x754 agrees; item-loop receiver reload, bitmap block order, row carriers and animation load remain.
-// Tried category descending 237; title default first 244; bitmap index long 237; title widget scopes
+// score 100 (was 100): frame 0x754 agrees; the item-loop receiver reload (retail: once after the loop),
+// row-loop text lookup (retail inlines it; widget/counter registers swapped), animation byte
+// (retail movsx) and the final receiver reloads differ; retail lays out the category switch first.
+// Tried: category descending 237; title default first 244; bitmap index long 237; title widget scopes
 // 237; separate player row counters 237; existing widget lookups 175; native animation bit 233; widget
-// lookups animation bit 179; map text lookup 237; text lookup helpers 156; bitmap lookup helpers 164; native
-// widget query indices 180; heading widget lookups 237; text helper query indices 164.
-// Tried item pointer walk 301; game result width 309; row counter
-// short 247; direct map names 218; direct search result 172; bitmap exhaustive result fixed 189;
-// offline index range 195; exhaustive bitmap long 189; exhaustive bitmap case order serial 189;
-// exhaustive bitmap range serial 195.
-// This round: game result initialization 310; bitmap result guards 167; offline bitmap first 100; map
-// widget lifetimes 164; all widget phase lifetimes 159; map lifetimes bitmap guards 175; selected
-// squad role 156; search result from acceptance 156; offline native animation bit 115; offline
-// native text index 116; offline row lifetimes 100; offline native bit index 120.
-// frame 0x754 agrees; item-loop receiver reload, bitmap arm placement and row/animation homes remain.
-// item-loop screen reload, bitmap case placement and row/animation register homes still
-// differ. Tried category descending 237; title default first 244; bitmap index long 237; title widget scopes
-// Frame 0x754 agrees; item-loop receiver reload, bitmap case placement and
-// row/animation homes remain. Tried item pointer walk 301; game result width 309; row counter
-// Name/appearance/team/all item operations force-inline 156 each; unsigned word rows 203;
-// loop-scoped row widgets 157; bitmap category order 156; player-item array home name 156.
-// Native/promoted retained item count 100/100; count-tested item while 100;
+// lookups animation bit 179; map text lookup 237; text lookup helpers 156; bitmap lookup helpers 164;
+// native widget query indices 180; heading widget lookups 237; text helper query indices 164; item
+// pointer walk 301; game result width 309; row counter short 247; direct map names 218; direct search
+// result 172; bitmap exhaustive result fixed 189; offline index range 195; exhaustive bitmap long 189;
+// exhaustive bitmap case order serial 189; exhaustive bitmap range serial 195; game result
+// initialization 310; bitmap result guards 167; offline bitmap first 100; map widget lifetimes 164; all
+// widget phase lifetimes 159; map lifetimes bitmap guards 175; selected squad role 156; search result
+// from acceptance 156; offline native animation bit 115; offline native text index 116; offline row
+// lifetimes 100; offline native bit index 120; name/appearance/team/all item operations force-inline
+// 156 each; unsigned word rows 203; loop-scoped row widgets 157; bitmap category order 156; player-item
+// array home name 156; native/promoted retained item count 100/100; count-tested item while 100;
 // independent item admissions 100; name-only item continue 100; current array-item pointer 294;
-// complete bitmap/title guards on the offline-first body 100/100. Original body retained.
-// Round 164: row generic query 235; direct text queries 235; game at use 322; team availability 294;
-// native item flags 100; row game observations 314; row team availability 304; row native game 314.
+// complete bitmap/title guards on the offline-first body 100/100; row generic query 235; direct text
+// queries 235; game at use 322; team availability 294; native item flags 100; row game observations
+// 314; row team availability 304; row native game 314; game-first bitmap selection 156 (878 bytes,
+// closest structure); with the row text index passed uncast 164 (875); with a separate row counter
+// 164 (identical); with an unconverted bit test 179; with a bool-converted signed bit test 177.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {
