@@ -34,6 +34,9 @@ static __forceinline long real_to_long(real value);
 // Published magnitude reads recover frame 0x48 at fast 430/1869, but early input ownership still differs.
 // Existing state-copy owner 380; published sign-state test 373; native long adjustment result 408.
 // Double first/second/both positive angular bounds 414/412/468; double negated bounds 431; all angular bounds double 466.
+// Later second bound / initial speed / both 389/388/390 (frame 0x48); cap before ranges 389.
+// Distance before side normalization/cross 427 each; cap after first draw 370 (three-count gain rejected); trig reuse 384.
+// Middle cap with later bound/speed/both/trig reuse 390/389/391/381.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

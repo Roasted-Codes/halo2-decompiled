@@ -92,7 +92,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 	g_5047f8[arg_0].field_18 = arg_0;
 }
 
-// score 408 (was 433): frame 0x68 versus 0x64; normalization homes differ; shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
+// score 408 (was 408): frame 0x64 agrees; entry loads, parameter cleanup and normalization/trig homes differ.
+// Earlier frame 0x68 forms: shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
 // frame now 0x64; entry load schedule, point/magnitude homes
 // and candidate arithmetic differ. Byte candidate count 417; byte endpoint 427;
 // later center sum 444; early facing result 441; short angle count 433; both byte counts 408.
@@ -102,6 +103,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // short facing result 430. Entry loads and 0x18 versus 0x1c return cleanup remain.
 // Helper-owned/returned evaluation 425/425; native endpoint result 443; endpoint value 455;
 // ratio value result 408; consuming angle cursor 416; side before distance 408; angle pair initialization 414.
+// Native real fixed cosine/sine/pairs 409/430/420; general cosine/sine/pair 408/408/409;
+// all cosines 408; all sines 430; all real trig 430. Original double APIs restored.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)

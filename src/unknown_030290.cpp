@@ -91,6 +91,8 @@ long g_4ba134;
 // On early coordinate/depth pairs: direct radius 205; coordinate role names 112.
 // Early-pair context: vertical coefficient names 112; vertical edge names 112; vertical-first coefficients 118;
 // coefficient fields at use 252; viewport first 130; later vertical viewport 217; later vertical coefficients 180; both later 217.
+// Coordinate accumulator x/depth/all 112 each; horizontal/depth/all leading products 112 each;
+// shared camera scale 245; branch-defined scaled components 137.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
