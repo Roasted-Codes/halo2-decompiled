@@ -817,15 +817,16 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 355 (was 355): frame agrees; byte flag clear, child carriers and selective inlining differ.
+// score 308 (was 308): frame agrees; byte flag clear, child carriers and selective inlining differ.
 // Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
 // perpendicular call 394; inline depth one 394, zero 517.
-// score 329 (was 355): frame 0x64 versus 0x60; flag clear and selective calls differ.
+// Earlier context: frame 0x64 versus 0x60; flag clear and selective calls differ.
 // Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
 // child tag scalar 394; long result 329; dword flags 401.
-// score 308 (was 338): Frame 0x60 now agrees; flag transfer, child carriers and selective calls
+// Frame 0x60 now agrees; flag transfer, child carriers and selective calls
 // remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
 // 308 (plain verified); child for-loop 338.
+// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native orientation result 373, with shared cross 373.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

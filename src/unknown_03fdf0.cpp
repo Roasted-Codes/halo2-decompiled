@@ -272,15 +272,16 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 226 (was 250): unsigned-zero branch and pass-call boundaries differ;
+// score 226 (was 226): unsigned-zero branch and pass-call boundaries differ;
 // word material index 298; unsigned weight 309; typed geometry header 250;
 // entry observations reordered 326; native local names 250 (fast).
 // Early weight with context-first material 226; depth zero 250, one 250;
 // size policy 462; shared tail-pass loop 476.
-// score 226 (was 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
+// Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
 // first multipass 269; shared second multipass 281; shared conditional pass 273; shared twentieth pass 269;
 // shared seventh pass 269; shared all passes 291; forced shared all passes 291; shared final result two
 // consumers 291; native final result two consumers 291.
+// Conditional cull calls first/third/both 226/226/226; native Boolean cull tests first/third/both 226/226/226; signed/unsigned short pass result 255/255.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {
