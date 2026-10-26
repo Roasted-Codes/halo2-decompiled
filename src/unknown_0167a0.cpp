@@ -74,32 +74,37 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 167 (was 167): logarithm width/reset schedule and restore/final pointer allocation;
+// score 153 (was 153): logarithm factor width and restore allocation remain; frame and numeric/reset sequence agree.
+// logarithm width/reset schedule and restore/final pointer allocation;
 // final record lifetime 167; common update 263; retained old tag 241; records-first test 169;
 // promoted inverse 248; float consistency 306; coordinated texture inputs 167.
 // Typed numeric state fields 167; typed pointer fields 181; full state view 181;
 // force-inline material lookup 167; global-first mask unions on full view 181.
 // frame/entry agree; logarithm width, reset and restore scheduling differ.
 // Factor first 167; inline depth one 167; scoped size 483; dirty-mask order 167; packed-range view 167.
-// logarithm width/reset schedule and restore/final pointer allocation;
 // Logarithm width and reset/restore scheduling remain;
 // rounded logarithmic value before stores 167; late tag publication 295; both published restore ranges 279;
 // record reload after render call 192; raw global-first unions 167.
-// score 167 (was 167): Frame and entry agree; logarithm operand width/reset and restore allocation
+// Frame and entry agree; logarithm operand width/reset and restore allocation
 // differ. Pending-mask snapshot 188; late record predicate 297; late tag predicate 287; direct old
 // record 167; conditional reciprocal 167 (fast).
 // logarithm width and reset/restore scheduling remain;
 // early dirty mask, update byte or late counter pair each 296; first published range 167;
 // second published range 187.
-// score 162 (was 167): logarithm width/reset and restore allocation remain;
+// logarithm width/reset and restore allocation remain;
 // final consumers read the actual published record field. Entry-only read 169; pass-only read 167;
 // early saved-tag predicate 298; published-record field reference 162 (plain); equality arms 167.
-// score 162 (was 162): logarithm/reset schedule and restore/final allocation remain.
+// logarithm/reset schedule and restore/final allocation remain.
 // Record-field pointer 162; signed entry/pass/both carriers 163/163/164;
 // negated equalities 162; saved tag at both tests 246; dirty-mask cursor 161; both cursors 161 (one-point gains dropped).
-// score 153 (was 162): dirty-word library clear recovers numeric/reset scheduling;
+// dirty-word library clear recovers numeric/reset scheduling;
 // logarithm width and restore allocation remain. Native entry/chain/both descriptors,
 // const record and signed change forms 162; update/counter/all/reset-last clears 287/258/307/157.
+// Native entry/pass/range/all word pointers 153/153/153/153;
+// readonly entry words 153; chained counter resets 155;
+// unqualified float-input logarithm 152; reciprocal default first 157.
+// Float-input logarithm with native descriptors/first range/second range 152/152/184;
+// with first mask pair/mask cursor/both 151/151/151 (two-point gains excluded).
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -638,6 +643,9 @@ struct s_tag_data;
 dword function_13bc00(s_tag_data const *function, real input);
 color3f *unpack_color3f(dword pixel, color3f *color);
 
+// score 22 (was 22): zero/one and interval SSE carriers, then remap-spill scheduling differ;
+// bound declaration order 22; lower/upper names 22; sample name 22; named span 22;
+// bounds after clamp 25; reversed remap cases 231; separate remap result 22; color first 154.
 // @retail 0x1b580
 bool function_1b580(byte const *definition, long component, long unused, long mode, real *out)
 {

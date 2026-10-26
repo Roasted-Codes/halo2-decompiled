@@ -53,6 +53,10 @@ long __stdcall function_18d1c0(long arg_0);
 bool function_b9d20(long arg_0);
 
 #pragma inline_depth(0)
+// score 106 (was 106): retained pool/scan/datum/handle allocation and root-location call differ;
+// shared absolute scan 153; native inline iterator 174; existing datum iterator 170;
+// separate scan admissions 106; guarded bitmap for 106; word division 142;
+// readonly bitmap 106; repeated current handle 106.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
 {
