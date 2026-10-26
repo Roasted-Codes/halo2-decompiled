@@ -714,19 +714,22 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
-// score 274 (was 283): frame 0x1c versus 0x18; mode occupies EBP.
+// score 258 (was 258): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// selected/input/offset references 294/291/272, pairs 311/311/307, three/four references 326/340.
+// All restored.
+// Earlier: frame 0x1c versus 0x18; mode occupies EBP.
 // Front pair loop 308; rear pair loop 323; both 363; all short/word
 // selectors 274; byte selectors 275; only spilled short/word selectors 280.
-// score 274 (was 274): frame 0x1c versus 0x18 and input-level/mode homes remain.
+// Earlier: frame 0x1c versus 0x18 and input-level/mode homes remain.
 // Shared append front 392, rear 394, tail 430 (dispatcher lost in all three);
 // whole-function depth zero 673 (dispatcher lost), depth one 274.
-// score 270 (was 274): frame and input-level/mode homes remain;
+// Earlier: frame and input-level/mode homes remain;
 // front setting snapshot 270; rear 279; both 275; frame pointer 312;
 // global optimization off 281 (dispatcher lost).
-// score 264 (was 270): frame 0x1c versus 0x18 and input-level/mode homes remain;
+// Earlier: frame 0x1c versus 0x18 and input-level/mode homes remain;
 // word routing predicate 264; named routing reads 270; native-word home names 270;
 // front field reference 267 and both field references 267 (three-point gains rejected).
-// score 258 (was 264): frame 0x1c versus 0x18; mode/level homes and x87 tail sums remain.
+// Earlier: frame 0x1c versus 0x18; mode/level homes and x87 tail sums remain.
 // Left/right/both gain snapshots 258/262/266; input level/offset cursors 313/281;
 // gains with level/offset/both cursors 274/261/291 (fast). Paired gains lose dispatcher.
 // Kept only the left-gain snapshot, used three times; plain 258 at 809/853 bytes.
@@ -921,24 +924,26 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	}
 }
 
-// score 208 (was 208): eight-byte frame and inherited x87 send sums differ.
+// score 200 (was 200): Frame 0x10 and x87 tail sums remain; level/rear/all references 221/208/231,
+// pointers 221/208/231; reference early sums 212/222, all restored.
+// Earlier: eight-byte frame and inherited x87 send sums differ.
 // Levels before flag 208; scalar names 208; depth one 208;
 // size preference 449; shared gain loop 384.
 // With a per-function precision pragma (173, not kept: pragmas other than a file-scope inline_depth
 // steer the compiler) the frame is four bytes and the late level sum remains.
 // Native channel bit 208; const samples 208; immutable input 208; bit/input 208;
 // scoped precision pragma 173; global optimization off 229; frame pointer 225; precision/early sum 224.
-// score 200 (was 208): frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
+// Earlier: frame 0x10 versus incoming-slot reuse; inherited x87 send sums differ.
 // Entry front/rear/all gain samples 210/200/203; individual left/right/rear-left/rear-right
 // samples 208/212/206/202; all samples with early send sum 215.
-// score 200 (was 200): frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
+// Earlier: frame 0x10 and inherited x87 send sums remain; early sum with rear pair 212;
 // sum after rear pair 212; accumulated sum 212; read-only input contract 200; rear reads reversed
 // 200; rear before levels 201; signed-byte selector 200; unsigned-word selector 197 (three-point
 // gain dropped).
-// score 200 (was 200): Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
+// Earlier: Frame 0x10 and x87 tail sums remain. Rear pair after first/front appends 207/205;
 // left/right after first 206/206; early sum with first/front/staggered rear samples 217/222/225; staggered
 // rear samples 208 (fast).
-// score 200 (was 200): frame 0x10 and inherited x87 sums remain; native input
+// Earlier: frame 0x10 and inherited x87 sums remain; native input
 // assignment or memcpy, each with late/early level sums and rear samples/direct
 // rear fields, all 240. Copies grow the frame to 0x28; original inputs restored.
 // @retail 0x2af920

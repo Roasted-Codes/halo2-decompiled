@@ -1216,7 +1216,10 @@ struct s_index_pair
 };
 bool function_0b6760(s_index_pair const *pair);
 
-// score 303 (was 347): Frame 0x1c versus 0x20; index/header and state/result homes remain.
+// score 303 (was 303): Frame 0x1c versus 0x20 and index/header/state/result homes remain; native
+// power/position/both/activity flag values 376/302/379/370; power-activity/position-
+// activity/all/shared 376/373/376/376. One-point gain rejected.
+// Earlier: Frame 0x1c versus 0x20; index/header and state/result homes remain.
 // Acceleration products 303; speed products 316; both pairs 341; both plus complement 341;
 // delay product 310; acceleration plus delay 303; both plus delay 341; ordinary receiver plus both 378;
 // position/remaining product names 303, plain 303 kept. Sum grouping, fields, calls and existing qualifiers unchanged.

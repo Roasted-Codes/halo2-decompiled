@@ -1314,7 +1314,11 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
+
+// score 202 (was 202): Key/statistic homes, cursor and grouped team dispatch remain; live
+// key/player/team/both skills 348/320/199/317; key plus player/team/both 379/374/388; player-only
+// key phase 266. Three-point team-read gain rejected.
+// Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Earlier: frame 0xfc agrees; key/statistic homes and grouped team dispatch remain.
 // key/statistic homes, statistic cursor and grouped team dispatch differ.
 // frame 0xfc agrees; key/statistic homes, six-byte statistic cursor shift and grouped dispatch remain.

@@ -5123,7 +5123,9 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 167 (was 167): Frame 0x14 versus 0x18 and countdown/base homes remain; shared
+// score 167 (was 167): Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
+// inline or noinline declarations, separately and together, all 167.
+// Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
 // reset/scheduling/both displacement producers 175/167/175; outer short index 167; outer countdown
 // pointer 167; pointer with reset/scheduling/both 175/167/175.
 // frame 0x14 versus 0x18; timer/base homes and scheduling layout differ.
