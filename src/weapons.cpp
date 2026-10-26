@@ -2770,7 +2770,10 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 	return result;
 }
 
-// score 398 (was 398): Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
+// score 398 (was 398): Frame eight versus four; activity/dispatch and object/tag homes remain.
+// Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
+// Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
+// Frame eight versus four and object/tag/activity homes remain.
 // Frame eight versus four and object/tag/activity/dispatch homes remain.
 // Earlier: Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
 // maximum 398; barrel read 422; scale reads 422; property bits 420; branch maxima 404; all maxima
@@ -2795,12 +2798,24 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // readonly activity inputs 407; normalization parts 407; elapsed tick expression 407; inventory case exit 407;
 // progress field admission 407; progress case exits 407; magazine case exits 407; decimal digit expressions
 // 407.
+// Round 361: caller-seeded activity accumulator 398; entry result 399; barrel/trigger/both
+// while traversals 398/398/398; entry result with barrel/trigger/both while traversals 399/399/399
+// (fast). Existing helper and body restored.
 // Separate activity/sparse tag lifetimes with result/helper variants 411 each;
 // direct unknown-name exits 434 each (four of each). Entry/activity tag lookups
 // with early/native activity dispatch 398/409; full object lookups 411/419.
 // Four-byte frames regress; opening early-activity/final-maximum body restored at 398.
 // Trigger fields at use/table pointer/table field reference 398/422/398; selected magazine pointer 398;
 // with each trigger form 398/422/398; barrel array and direct maximum 423. All restored.
+// Round 163: Native trigger-state cursor with metadata/bound/tag-lookup combinations
+// none/metadata/bound/metadata+bound/tag/metadata+tag/bound+tag/all
+// 423/422/423/422/423/422/423/422. Each is 1623/1642 bytes and regresses.
+// Original helper, field observations, maxima and tag ownership restored.
+// Trigger metadata cursor 422; with barrel cursor, native bounds, both 422/422/422;
+// cursor with field scale, both cursors with field scale 427/427; cursor with complete maxima 422;
+// both cursors/bounds/field scale/maxima 426. All restored.
+// Negative unknown-name bool/byte/short/long with original exits 398 each;
+// single-exit guarded publication 471/471/462/466. All restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3039,9 +3054,12 @@ struct s_ammo_conversion_entry
     byte unknown02[6];
     long definition_index;
 };
-// score 198 (was 198): Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
+
+// score 198 (was 198): Frame 0x24 versus 0x20; destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 
+// Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
+// Earlier: Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
 // Earlier: frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
 // Earlier: frame agrees; destination/tag and search carriers remain.
@@ -3071,10 +3089,22 @@ struct s_ammo_conversion_entry
 // Round 318: actual unloaded/loaded/both source-count values 207/201/202;
 // native source state 236; capacity arm 197 (gain 1, rejected); values/state with capacity arm
 // 202/236; both values with Boolean acquisition 220. Frame and saved roles remain; all restored.
+// Round 159: Native leading tag byte/conversion fields/both 198/198/198; native fields with machine-width
+// loaded/unloaded/both transfers 198/205/205; native fields with common acquisition result 212 (740
+// bytes); native kind at every use 236 (747 bytes). Original word acquisition, raw observations, transfer
+// types and return flow restored.
+// Early unloaded publication after/before remaining calculation 198/198; with candidate entry 217/217;
+// early publication with conversion quantity 198; numeric home names 198; wide loaded quantity 198;
+// numeric names/conversion quantity/earliest publication 198. Original body restored.
+// Round 183 complementary acquisition word/byte/long 212/194/215; source depletion
+// bool/byte/short 197/197/212; both word-plus-bool/bytes 215/200 (fast). Byte acquisition
+// recovers frame 0x20 but gains only four, so all restored; destination/tag and conversion homes remain.
 // Complementary byte acquisition with source counts/capacity branch/source scope/
 // table at every use 210/193/207/195; source counts with capacity/source scope 210/210;
 // twice-used offered count 194, with source scope 207. Capacity form has frame 0x20
 // and retail length but gains only five; all combinations restored.
+// State declaration order, acquisition/retention names, source declaration order, capacity and
+// conversion comparisons 198 each; explicit return truth 202; source minimum branch 197.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3433,7 +3463,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1436 (was 1436): frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
+// score 1436 (was 1436): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
+// Earlier: frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
 // Byte result fast 1505; long result 1475 fast/1476 plain (5684 bytes); long dual 1507;
@@ -3464,6 +3495,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Existing header getter initially/throughout 1436/1436; header-data receiver 1447;
 // long masked slot 1470; header receiver plus slot 1459; getter plus slot 1470;
 // dword/word masked slot 1470/1434. Two-point word gain rejected; original lookups restored.
+// Branch-owned three query outputs 1436; direct barrel selectors 1537; direct input selector 1448;
+// all direct tag selectors 1542; integer input tables 1457; branch outputs/all selectors 1540;
+// unsigned-byte effect decisions 1436; branch outputs/integer tables 1457. Original body restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

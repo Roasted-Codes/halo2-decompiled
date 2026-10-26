@@ -78,6 +78,13 @@ PRIVATE __forceinline real function_22aff5(real arg_0)
 // declarations reordered (axes, height/width, vertical_scale before the vertices)
 // 121 each; locals renamed 121; scales computed inside the loop 120, as a point2f
 // 138; offset x before y 466; offset at loop or function scope 121; vertex pointer 121.
+// Native offset vector 121; destination cursor 423; vector plus cursor 423;
+// vertical/horizontal/both full-width side predicates 447/138/450; bounded short
+// vertex ordinal 431; native vector plus short ordinal 431. Original body retained.
+// complete vertex value before array store 446; both completed coordinate scalars before stores 121;
+// uniform named axis products at each row 121; uniform origin addition stages at each row 119; constant
+// axis initialization at declaration 136; explicit offset branches with native point workspace 121; width
+// used directly by repeated draw spacing 121; immutable palette with body cursor step 121.
 // Uniform two-row horizontal/vertical product and pair-sum operand orders 121 each;
 // complete input-color component publication 518.
 // @retail 0x22aff1

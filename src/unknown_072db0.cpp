@@ -1319,11 +1319,13 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 202): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
+// score 202 (was 202): Frame 0xfc agrees; key/statistic/group homes, cursor bias and grouped dispatch remain.
+// Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
 // Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 
-// score 202 (was 202): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
+// Earlier 202 (was 202): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
+// Earlier: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
 // Earlier: Key/statistic homes, cursor and grouped team dispatch remain; live
 // key/player/team/both skills 348/320/199/317; key plus player/team/both 379/374/388; player-only
 // key phase 266. Three-point team-read gain rejected.
@@ -1377,6 +1379,16 @@ struct s_rating_summary
 // Native unsigned masked statistics 202; shared player/team ordinal 220 (key home recovered);
 // contiguous summary prefix fill 217; counts/ordinal 220; counts/prefix 217; ordinal/prefix 214;
 // all three 214; read-only query table 202.
+// Round 366: Native fifteen-bit player/team/both statistic fields 195/207/200 fast;
+// word/short player results 279/279, with both arrays 283/283; native statistic receiver 199.
+// On the recovered +0xf44 cursor: native player indexing/shared counts/query-key name 195/195/195;
+// entry statistic receiver 202. Seven-point gain rejected; original body and types restored.
+// Round 130: stored summary change/count-set/level consumers, individually and all
+// combinations, 202 each; complete stored consumers with word character 206.
+// Native fifteen-bit fields with one player/team ordinal: late receiver with dword/word character
+// 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
+// completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
+// the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

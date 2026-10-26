@@ -81,6 +81,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // local-machine validity value 263; uniqueness/found entry lifetimes 175/175.
 // Word-home/paired byte-home/combined/all validity role names 171/171/171/171;
 // signed-byte accumulated/player/both/final validity 174/171/174/193.
+// One membership search/result index: native long 233; signed byte/unsigned word/unsigned byte 269/269/269;
+// exhaustion equality and direct mask 233/233; shared tail with long/byte index 237/275.
+// Original separate found byte restored; frame and options/index/mask homes remain.
 // Native input references: primary machine 171; identifier 198; both 198; player machine, with primary, with identifier or with both 240 each; complete current-player reference 175. Original input reads, comparisons and byte membership restored.
 // Round 161: separate player/machine/both pass cursors 171/157/157; word machine/player 262/171; short/unsigned/byte separate passes 262/157/262. Independent native long pass cursors 157 plain kept.
 // Independent-pass membership long/short 183/184; with retail count lower bound 188/188;

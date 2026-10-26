@@ -144,7 +144,9 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 	return result;
 }
 
-// score 88 (was 118): Frame 0x88 agrees; first point-velocity schedule recovered; second
+// score 126 (was 126): Frame 0x88 agrees; point-velocity and nonrotating scale/add
+// scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
+// Frame 0x88 agrees; first point-velocity schedule recovered; second
 // point-velocity and nonrotating scale/add scheduling and five excess bytes remain.
 // Earlier shared point-velocity expansion changed
 // 128/1015 to 164/1018 and aligned differences 66 to 40; second call schedule recovered.
@@ -167,6 +169,14 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // Native clock short/long/double 179/175/193; native difference initializer 164;
 // separate displacement/scaled-change vectors 126 (kept); with short/long/double clock
 // 173/168/199. The actual scaled change remains used by the addition and delta outputs.
+// Separate-output shared real scale 123 (three-point gain rejected), double scale 195;
+// final shared real scale 126; both real 165; double then real 198; real then double
+// 152 (retail length); both double 198; real scale plus forced original addition 123.
+// native scaled change initialized by value then scaled 243; native scaled change assigned by component
+// 126; clock conversion after completed native displacement 168; shared point difference with separate
+// scaled change 125; plain component loop for separate scaled change 164; scaled change workspace declared
+// before displacement 126; immutable completed displacement and scaled change 126; complete native delta
+// value before output copy 174.
 // Separate displacement components xzy/yxz/yzx/zxy/zyx 122/122/118/126/126;
 // clock-first products 126; scaled-output orders jki/kij 140/146. yzx kept after plain check.
 // Relative-velocity subtraction stores ikj/jik/jki/kij/kji 118 each;

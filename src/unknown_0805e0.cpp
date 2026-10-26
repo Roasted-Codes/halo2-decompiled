@@ -816,7 +816,8 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 243 (was 243): Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
+// score 238 (was 243): frame 0xc agrees; removed-index EDX/ESI and upper-bound ECX/EAX still differ.
+// Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
 // Paired range arms 373;
 // frame 0x0c agrees; removed-index registers, upper
 // bound selection and copy-loop induction remain. Paired range arms 373;
@@ -835,6 +836,9 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
 // Frame 0xc agrees; removed-index EDX/ESI and upper ECX/EAX remain. Direction value 342; signed-byte direction
 // 243; range role names 243; direct indexed repair 243; signed min/max with long adjustment 370.
+// Upper-first repair tests 375; nested tests 243; four head values 238 kept; branch-produced bounds
+// 243; signed-byte adjustment 445; upper-first/head values 377; bounds/byte 445; nested/head values
+// 238.
 // Insertion destination before shifts 384; earlier view 243; both addresses 384;
 // insertion/time role names 243; early destination with names 384; both with names 384;
 // early destination/time workspace 393; all lifetimes/names 393. Original body restored.
@@ -900,10 +904,14 @@ long function_7fe90(const s_cached_player_identity *identity, long position, con
 			if (entry->unknown58 >= lower && entry->unknown58 <= upper) entry->unknown58 += change;
 			if (entry->next >= lower && entry->next <= upper) entry->next += change;
 		}
-		if (g_4cf97c >= lower && g_4cf97c <= upper) g_4cf97c += change;
-		if (g_4cf980 >= lower && g_4cf980 <= upper) g_4cf980 += change;
-		if (g_4cf984 >= lower && g_4cf984 <= upper) g_4cf984 += change;
-		if (g_4cf988 >= lower && g_4cf988 <= upper) g_4cf988 += change;
+		long first_other = g_4cf97c;
+		if (first_other >= lower && first_other <= upper) g_4cf97c = first_other + change;
+		long last_other = g_4cf980;
+		if (last_other >= lower && last_other <= upper) g_4cf980 = last_other + change;
+		long first_cached = g_4cf984;
+		if (first_cached >= lower && first_cached <= upper) g_4cf984 = first_cached + change;
+		long last_cached = g_4cf988;
+		if (last_cached >= lower && last_cached <= upper) g_4cf988 = last_cached + change;
 	}
 	s_player_configuration_cache_entry *entry = &g_4cf98c[position];
 	entry->next_other = (short)g_4cf97c;
