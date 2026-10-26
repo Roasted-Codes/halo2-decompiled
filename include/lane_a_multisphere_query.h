@@ -5,8 +5,15 @@
 #include "pair_agent_2ed170.h"
 #include "physics_allocator.h"
 
-// Radius-shape construction is not used by the wrapper agent family.
-class c_2def90;
+// Same external constructor and prefix used by unknown_183910.cpp.
+class c_2def90 : public c_a
+{
+public:
+	c_2def90(real radius_);
+	virtual long type();
+	long user_value;
+	real radius;
+};
 
 // The six-vector motion state already modelled in pair_agent_2ed170.h.
 // A multisphere shape has its count at +0xc and sphere vectors at +0x10.
