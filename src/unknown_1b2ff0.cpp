@@ -183,7 +183,9 @@ bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 
 real function_1f8940(long actor_index);
 
-// score 44 (was 44): actor-data load and early selected-reference transfer still differ.
+// score 27 (was 27): frame and active-getter prefix agree; selected reference enters EBX before validation.
+// Earlier forms and observations:
+// actor-data load and early selected-reference transfer still differ.
 // late selected value 44; late value/native result 97; native/short/byte result
 // 97/94/134; sentinel operands 44; active-test result 122; native request fields 44.
 // the active test reads through the getter, as the other actor
@@ -197,10 +199,13 @@ real function_1f8940(long actor_index);
 // actor-table load/add and the early selected-reference EBX copy differ.
 // Actor object reference/const view 44/44; candidate/flag/index/joint names 44/44/44/44;
 // result from reference validity 116; successful-selection arm first 71.
-// score 44 (was 44): actor-data load and selected-reference transfer still differ.
+// actor-data load and selected-reference transfer still differ.
 // Const reference/early reference/output-first declarations/const scratch 44;
 // choice failure from test 123; nested reference gate 44; inclusive cancel limits 48;
 // aggregate-zero request 89 (446 bytes).
+// This round:
+// Member equality low/high first 92/92; combined follow/cancel 27; native follow result 27;
+// nested count domain 33; owner/path/both output defaults 113/63/120.
 // @retail 0x1b3380
 bool __stdcall function_1b3380(long actor_index, s_slot *slot)
 {
