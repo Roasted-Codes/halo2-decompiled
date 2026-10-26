@@ -664,6 +664,10 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // game-name table 624. Buffers, loops, calls and common exit are unchanged.
 // Long joinability 600; word saved bit 625; timestamp rename 598; long count
 // 577 kept; explicit score exclusion 598. Original count values are preserved.
+// score 577 (was 577): frame 0x85c agrees; EBP bias and flag/time/state homes remain.
+// Data-branch format buffer 644; both data-branch buffers 644; word widget index 631;
+// branch-assigned score maximum 575 (below threshold, frame 0x860); row increment after
+// publication 577; auxiliary-buffer role names 577.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

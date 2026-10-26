@@ -308,8 +308,11 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 }
 
 #define sound_effect_delete function_21dcf1
+// score 204 (was 204): frame eight versus four and opposite start/delete expansion;
 
 // score 204 (was 204): frame eight versus four and opposite start/delete expansion;
+// frame eight versus four and opposite start/delete expansion remain; closer flag forms lose matched callers.
+// Earlier: frame eight versus four and opposite start/delete expansion;
 // joined query/allocation 220, unforced failure-first 221, effect pointer scope 220,
 // shifted platform flag 220, inline depth zero 391.
 // Frame and start/delete expansion still differ; uninitialized definition 236;
@@ -318,6 +321,10 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Earlier 208 (was 220): frame/start/delete expansion remains; allocator reuse/const class/request reference/tested result/combined 220/220/220/236/220f;
 // global/size/depth-two policies 246/359/220f.
 // Earlier 204 (was 208): Frame eight versus four, state admission and opposite start/delete
+// frame/start/delete expansion remains; allocator reuse/const class/request reference/tested result/combined 220/220/220/236/220f;
+// Frame eight versus four, state admission and opposite start/delete
+// Earlier: frame/start/delete expansion remains; allocator reuse/const class/request reference/tested result/combined 220/220/220/236/220f;
+// Earlier: Frame eight versus four, state admission and opposite start/delete
 // expansion remain. share record type sound 204; share record sound priority 211; share
 // record type priority 204; getter body single result 207; getter body definition guard 224;
 // type sound with single result 229; type sound with definition guard 221.
@@ -327,6 +334,16 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Native class byte/bool bits with Boolean/direct tests 204 each; byte bits plus shared
 // allocator 204; byte bits/settings and bool bits/parameters 204/204; byte bits with
 // shared allocator/settings 204.
+// Availability/allocation/accessor expansion declarations and all three together 204 each;
+// immutable state/tag/both input bindings 204 each; all boundaries with both bindings 204. Frame
+// and opposite start/delete expansion remain; protected caller cycle preserved.
+// Earlier: frame and start/delete expansion remain; complete
+// admission scope with branch-defined allocation/nested class guards 204 each;
+// shared start with those forms 232/226/232/226. Original lifetimes restored.
+// Query-owned handle 204; availability failure/result/admission 204/204/204;
+// query-owned handle with those availability forms 204/204/204; preserved class bit 180 plain (eight caller losses);
+// logical/masked/clear-only flag 165/215/174; scoped logical flag 165;
+// at-use record getters with compound/logical/masked/clear-only flags 185/164/220/177 (all gains lose callers).
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

@@ -218,7 +218,7 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 	}
 }
 
-// score 235 (was 235): frame 0x78 versus 0x6c; early ESI save and position home differ.
+// score 220 (was 220): frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
 // shared-left output with one exit 233 (two-point gain dropped).
 // Branch-scoped velocity 248; scalar point setter 255; parent-transform first 237;
@@ -226,11 +226,11 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Frame and basis/position homes still differ.
 // normalized forward shared 265; basis scratch roles reused 269; velocity/basis scratch shared 252;
 // shared forward and scoped velocity 257; early position snapshot 263.
-// score 226 (was 235): Frame 0x78 versus 0x6c; basis/position homes remain. Shared speed scale 226 kept; left/velocity scratch 252; zero-source memcpy 235; angle-limit lifetime 233; accepted-up first 255 (plain).
-// score 220 (was 226): Frame 0x78 versus 0x6c; basis/position homes remain. Speed-arm scalars 270;
+// Frame 0x78 versus 0x6c; basis/position homes remain. Shared speed scale 226 kept; left/velocity scratch 252; zero-source memcpy 235; angle-limit lifetime 233; accepted-up first 255 (plain).
+// Frame 0x78 versus 0x6c; basis/position homes remain. Speed-arm scalars 270;
 // acceleration first 226; scalar names 226; early turn-velocity capture 226; zero velocity after
 // world-up 220 kept (plain).
-// score 220 (was 220): Frame 0x78 versus 0x6c and basis/position homes remain. Selected up buffer
+// Frame 0x78 versus 0x6c and basis/position homes remain. Selected up buffer
 // 269; normalized forward at third call 222; at second call 265; all calls with retained scale
 // and late zero 265; selected up plus shared normalized forward 301 (plain).
 // Frame 0x78 versus 0x6c and basis/position homes remain.
@@ -240,6 +240,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Frame 0x78 versus 0x6c; velocity/basis/position homes remain.
 // zero after first basis 240; zero after second basis 240; turn velocity before guard 274; basis role
 // reuse with scale 260; turn zero before guard 220.
+// Round 110: direct scale on late-zero frame 232; native velocity aggregate 237; const metadata 220; inline basis 220; inline forward 220 with caller loss; symmetric angle order 218 (two-point gain dropped).
+// Round 112: First left/output shared 259; later shared 260; all shared 262; second only 258;
+// third only 219 (one-point gain dropped); shared default velocity 242; native world-up input 295.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -714,6 +717,7 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 
 // score 95 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // frame 0x6c agrees; flag/handle carriers and final state stores differ.
+// frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.
 // Word-flag/handle registers and call Boolean roles still differ.
@@ -729,6 +733,11 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // copied position 162; shared threshold product 101; existing definition view 95; counter names 95.
 // Saved first bit byte/word/signed-byte 120/119/120; query byte/signed-byte 101/101;
 // word-bit with byte query 127; signed-bit/query 119; unsigned dword query 112.
+// Existing mask setter 112; result through setter 95; setter with split output tests/direct threshold
+// 106/101; short query 124; builder scope 98; direct parent/read-only tag receivers 95/95.
+// Admission word/mask 136/166; native output byte 95; shared counter and output decision 123;
+// shared counter carrier 95; byte with shared counter 95; reversed adjacent output publications
+// 95; final native word 102. Word/Boolean allocation and final store width remain.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -853,6 +862,7 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 
 // score 151 (was 151): Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
+// frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // Complete request type 278; scale at each use 278; aggregate sweep 278;
 // point/normal/location copies first 278; target size optimization 536.
 // Query before sweep 159; distinct later-up output 288; double best fraction 255;
@@ -876,6 +886,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // selected handle after tuple 162; normal before point 160.
 // Existing combined velocity helper 390; readonly candidate/tag/both 151/151/151; selected object before default index 151;
 // separate collision result 151; helper with readonly paths 390; result/object/tag lifetimes 151.
+// Private unscaled input/native in-place copy/shared in-place scale 337 each; point/location
+// between words 162/164; second word then point 161; identifier declarations 151; timer home name
+// 151. Quotient/sweep/impact homes and protected owner-call setup remain.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1032,10 +1045,11 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 
 // score 94 (was 94): Frame 0x1f0 agrees; call setup, movement loads and force-call publication still differ.
 // MOV/LEA call setup, movement flag merge, force argument and activity register still differ;
+// MOV/LEA setup, component loads and force-byte publication still differ;
 // stationary/byte/word movement result 107/98/111; complete flag value 98;
 // initial-state/parent/update/countdown activity values 265/119/98/101. Original body restored.
-// Frame 0x1f0 agrees; call setup, flag merge, component loads and final result
-// homes differ. Branch flag store 131; long force 130; native velocity copy 131; long activity
+// Earlier frame-correct forms targeted call setup, flag merge, component loads and result homes.
+// Branch flag store 131; long force 130; native velocity copy 131; long activity
 // 164; reversed result OR 131; parent result earlier 123; update/countdown result earlier 131.
 // With original flag store, early parent result 109; long force 101; both 110.
 // Native motion/input/state fields 98 each; request/output/all basis copies 98 each;
@@ -1051,6 +1065,8 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // Bitfield store with the NONE reset 108; branch store 119; ternary store 119.
 // Force byte/word/signed-byte 94/16/94; readonly metadata 94; metadata with byte/word force 94/16;
 // absent-parent first 94; absent-parent with byte force 94. The single-use word carrier is rejected unless exact.
+// Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
+// each; conditional orientation success 112; short activity 168.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

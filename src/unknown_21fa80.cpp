@@ -73,12 +73,15 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 	return (c_channel_effects_view *)SOUND_DRIVER_GLOBALS->effects;
 }
 
-// score 541 (was 541): frame 0x22c versus 0x224; stream/gain homes and math expansion differ.
+// score 545 (was 545): frame 0x22c versus 0x224; stream/gain homes and mixed math remain.
+// frame 0x22c versus 0x224; stream/gain homes and math expansion differ.
 // native input direct bit 541; all native input bits 548; captured direct use 540;
 // shared gain converter 629; inline depth one 541; native output bits with captured direct 544.
 // frame 0x22c versus 0x224; stream and gain homes plus SSE and x87 scheduling differ; native-bit tests gain only three
 // tried initial driver value 541; native send bit writes 567; native send bit tests 538; native pitch truncation 551; level pointer traversal 558; real absolute values 541; native flags real abs 538; native flags driver 538.
-// score 545 (was 575): Frame 0x22c versus 0x224 and stream/gain homes remain. Redundant level clamp removed: 575 to 545, 1901/1901 bytes. Voice output reuse 575; query output scope 572; complete flag projection 572; output stream observation 614 (plain).
+// Frame 0x22c versus 0x224 and stream/gain homes remain. Redundant level clamp removed: 575 to 545, 1901/1901 bytes. Voice output reuse 575; query output scope 572; complete flag projection 572; output stream observation 614 (plain).
+// Voice selector snapshot 572 fast; level-offset snapshot 557 fast; entry status,
+// initial voice output and initial settings 532 fast each (unchanged preview 532).
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

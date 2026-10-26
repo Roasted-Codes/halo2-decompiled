@@ -59,6 +59,10 @@ bool function_b9d20(long arg_0);
 // readonly bitmap 106; repeated current handle 106.
 // Inline update/link/object/query declarations 106 each; paired sound/all boundaries 106/106;
 // noinline update/all boundaries 106/106; native flag bit alone/with sound boundaries 106/106.
+// pool retention, datum/scan/handle carriers and location call differ.
+// Ordinary iterator read 131; current-datum consumer 106; both 131; pool names 106;
+// pool/datum names 106; ordinary named carriers 131; ordinary scoped datum 131;
+// ordinary named current consumer 131. Original body retained.
 // @retail 0x18c060
 void __stdcall function_18c060(real arg_0)
 {
