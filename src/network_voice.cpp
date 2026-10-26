@@ -3091,6 +3091,11 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
 
 // score 139 (was 139): channel/cursor/count registers and route homes differ;
 // frame pointer 188; short stride 163; short index 139; recipient-bit reuse 161; route name 139.
+// Round 53: retail keeps the channel in ebp from entry (its home then holds the route) and spills
+// the current member; ours gives the member ebp and reloads the channel. A packet cursor beside the
+// consumed count (retail keeps both) declared first 141f, after the count 164f, before the count
+// 139f; with an if-set stride 165f; member at loop scope 141f; 36 cursor/stride/member forms
+// screened, none puts the channel in a register.
 // frame and extent agree; channel/cursor/count registers and route homes differ.
 // Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
 // entry route lifetime 139; ordinary delivery arm first 162.

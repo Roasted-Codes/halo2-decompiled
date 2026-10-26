@@ -323,6 +323,10 @@ PRIVATE __forceinline bool function_98fb1(c_handle_table_450cd0 *arg_0, long con
 // entry cursor declarations 115; both entry storage lifetimes 143. Original body restored.
 // Plain pretested for with both/size/handle/no helper producers 195,210,212,212; corresponding while
 // 195,210,212,212. Items/data carriers remain; full opening helper and body restored.
+// Round 53: natural loops without the volatile reads (index or pointer cursors, direct call or
+// helper, named size/handle/result values, for or while; 38 screened) keep edi for a cursor and
+// spill the handle: indexed direct call 207f, indexed helper 208f, named size 207f, named size in
+// the test 207f, pointer cursors with a direct call 212f.
 // @retail 0x98fb0
 void c_handle_table_450cd0::v6(s_request_450cd0 *a1)
 {
