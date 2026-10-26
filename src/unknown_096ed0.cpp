@@ -13,20 +13,29 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 217 (was 217): Frame 0x48 agrees; receiver EDI/EBP and query/blocked homes remain.
+// score 217 (was 217): Frame 0x48 agrees; receiver and aggregate/blocked homes remain.
+// Earlier 217 from 217: frame 0x48 agrees; receiver EDI/EBP and count,
 // priority, size and blocked homes remain. Both redundant count guards removed
 // 249; separate native arrays 249; distinct counter names 249; result-home names
 // 249; arrays and counter names 249; pending-only guard 242; active-only 220.
+// Earlier 217 from 217: Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
+// Frame 0x48 agrees; receiver EDI/EBP and query/blocked homes remain.
 // Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
 // Earlier 217 (was 217): Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
 // State snapshot 217; direct handled states 247; default chain count 238;
 // invalid-priority-first arms 221; state/default/arm combination 238.
 // Entry-scope guarded arrays 217; shared blocked workspace 217; shared chain
 // index 217; shared callback outputs 224; all-ready predicate 220.
+// Priority/size/both before pending lookup 221/218/221; active priority/size/both 217/217/217;
+// both priorities/all four early 221/221.
 // Remaining capacity 262; failed-query counts 239; size accumulation first 229;
 // separate chain size 239; capacity/count/size combination 272.
 // Pending/active/both counted while 217/217/294; pending/active unsigned chain index 217/217; shared dispatch and chain aggregation 340.
 // Round 111: Positive pending/active/both equality termination 217/217/217; active state first 253; Boolean-OR blocked reduction 264.
+// Pending/active/both separate chain lengths 219/219/221;
+// pre-query peer flags 229; flags plus separate lengths 254.
+// Round 115: Guarded distinct indices 217; separate blocked names 217; separate callback-output names 217; aggregate declarations first 217; guarded index/blocked names together 217. Opening body restored.
+// Pending/active/both invalid-query continues 229/217/229; zero-state exit 217; output-failure exit 217; initialized handle arrays 297; pending/active selector after lookup 219/217. Receiver and callback/output/blocked homes remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

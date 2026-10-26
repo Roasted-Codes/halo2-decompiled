@@ -138,11 +138,27 @@ public:
 	short m_index;
 };
 
-// score 33 (was 42): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
+// score 33 (was 33): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
+// key EDI/EBX and entry-live absent result remain.
+// Earlier: key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
 // Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
 // pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
 // Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
 // inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
+// Native return object first/bound first/found constructor 42/42/42; late result object 35;
+// cursor object with member/copy exhaustion 41/40; entry object/live field bound 42;
+// entry object with completed search 46. Existing class and aligned caller unchanged.
+// Post-search/shared-bound/positive-count class results 41/42/51; while class 46;
+// unsigned positive search 25; unsigned class 51; class copy 33/46.
+// Positive equality/nested equality 22/22; direct return/cursor 28/28;
+// post-search object/scalar 27/25. Negative guard 25; negative equality 22 (a count < 0 guard before an unsigned search, 67/65 bytes; not kept);
+// negative direct return/scalar 28/25; signed/unsigned normalized bounds 26/27.
+// Pointer-derived indices: range-first-return 46; range-completed-test 70; range-native-result 91;
+// range-exhausted-exit 75; range-ordered-bound 46; range-local-object 92; range-computed-index 97;
+// range-result-from-count 84.
+// Descriptor base before cursor/bound/after cursor 39/39/33; live count 39;
+// base with entry short/word/wide result 41/39/41; positive-domain base 32.
+// All include the aligned upstream caller; preliminary one-source scores excluded.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {
@@ -554,6 +570,8 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // score 77 (was 77): frame 0x48 agrees; first counter spill recovered; effect/forward inputs and second scan differ.
 // Earlier forms and observations:
 // frame 0x48 agrees; effect/forward registers and first-counter spill remain.
+// frame 0x48 agrees; effect/forward inputs and first-counter spill remain.
+// Earlier: frame 0x48 agrees; effect/forward registers and first-counter spill remain.
 // Point setter 89; component loop 317; origin value 150; description position 105;
 // late description 89; result-array names 89; query-owned defaults 122; facing value 149.
 // frame and array homes agree; input registers and the first scan counter differ;
@@ -571,6 +589,9 @@ long function_189400(s_sound_position const *position, long object_index, long t
 // native velocity/location field copies 89/96.
 // Round 147: two-phase offset 125; origin accumulation 142; all named products 77; origin-first adds 77;
 // effect/sound/both continues 77/77/77; signed short bound 77.
+// direction alias 89; point memcpy 89; velocity memcpy 89; location memcpy 89; three copies 89;
+// signed effect index 89; signed sound index 89; signed indices 89; own-parameter input 87;
+// inline effect callee 89; inline sound callee 89; inline dispatch callees 89.
 // @retail 0x188180
 void function_188180(point3f const *point, vector3f const *forward, long tag_index, long object_index, long index, long variant,
 	long entry_element_index, long effect_value, s_location const *location, real scale)

@@ -340,7 +340,12 @@ struct s_unit_state_0f
 
 static __forceinline long real_to_long(real value);
 
-// score 49 (was 79): Frame agrees; actor/index ECX/EDX and final call setup differ.
+// score 49 (was 49): Frame four agrees; actor/index ECX/EDX and final argument setup still differ.
+// actor/index ECX/EDX and final setup remain; existing state query
+// ordinary/inline/forced 138 each; query with long timer 143; timer/mode 143; mode 137; readonly actor
+// 138; readonly records 138.
+// Earlier: Frame agrees; actor/index ECX/EDX and final call setup differ.
+// Frame agrees; actor/index ECX/EDX roles and final setup still differ.
 // Earlier: the argument is read into ECX and the other value into EDX; retail reads them
 // in the opposite order.
 // Earlier: ecx and edx are swapped through the whole body (retail: index edx, actor ecx);
@@ -351,6 +356,9 @@ static __forceinline long real_to_long(real value);
 // reference 49; short/early short countdown 49/123; actor reference and read-only node/unit/actor/all
 // views 49 each; final guard 49; direct shared product/conversion 49/49; shared low-half index with
 // pointer/reference 127/127.
+// Nested prop/clock/tick names singly, in all pairs and together 49 each; early uninitialized tick declaration 49.
+// Actor getter boundary 49; getter observations at timer/prop/both 117/115/140;
+// unit/timer-unit/prop-unit/all phases 120/117/117/132; all computed receiver forms rejected.
 // @retail 0x1afb30
 void __stdcall function_1afb30(long actor_index, s_slot *slot)
 {

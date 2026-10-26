@@ -387,7 +387,8 @@ bool balance_teams_greedy(s_balance_problem *problem, long team_count, s_balance
 }
 #pragma function(_ReadWriteBarrier)
 
-// score 116 (was 116): count-address homes, party registers, delta and query order differ.
+// score 116 (was 116): count homes, signed party delta and pure-query ownership remain.
+// Earlier: count-address homes, party registers, delta and query order differ.
 // Reduced control 80 (full 116); count fields A/B/both 80/80/80; early roots 173;
 // players A/B/both 78/75/80; reverse count roots 173; B players root before A/first/
 // between views 82/88/82; immutable B root 75. B players plain 115 is an ineligible
@@ -395,9 +396,16 @@ bool balance_teams_greedy(s_balance_problem *problem, long team_count, s_balance
 // frame 0x2694 agrees; team-pointer homes, delta and query ownership differ.
 // Reduced baseline 80 (full 116); team/party/both lexical priority 80/80/80;
 // short outer/inner/both ordinals 142/142/155; accepted scope and comparison names 80/80.
-// score 116 (was 116): count homes, signed delta and query ownership remain.
+// Earlier: count homes, signed delta and query ownership remain.
 // Reduced candidate/reference/both spread values 135/127/137; spread delta 132;
 // candidate A/B/both team roots 80/150/150; outer party cursor 91 (reduced baseline 80).
+// Reduced trials (opening 80; full 116):
+// first spread order 80; equal spread order 80; spread orders 80; cost order 78;
+// first spread/cost order 78; equal spread/cost order 78; query orders 78; inner party cursor 132;
+// cursor/spread orders 132; reused signed team delta 161; reused party delta 80;
+// reused team and party deltas 161; A count reference 80; B count reference 80; count references 80;
+// early count references 173; inline count spread 225; inline total spread 80;
+// inline spread queries 225.
 // @retail 0x91bd0
 void s_balance_optimizer::try_swap(long team_a, long team_b)
 {
