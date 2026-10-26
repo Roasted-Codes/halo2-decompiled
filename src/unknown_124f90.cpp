@@ -1483,6 +1483,7 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 // 46; base with retained other tag 44; success-live result 44; storage/tag/result 44; distance result
 // 88; class-field reads 74; class/storage/tag 73; class/success result 78.
 // slot/lookup scheduling, retained identifier and full-width return tails differ;
+// Frame/length agree; playback/header scheduling, retained identifier and full-width exits differ.
 // long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
 // index input with long result 46; existing class operation 169; priority difference 71;
 // class-index input with retained other identifier 44 (two-point gain excluded).
@@ -1492,6 +1493,9 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 // integer result 123; this definition read at its priority use 94.
 // Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
 // readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
+// Equal-priority first 82; its direct distance result 119; loudness discriminator 79;
+// equal-first discriminator 99; loudness difference 66; equal-first difference 124;
+// complete decision predicate 113; complete equal-first result 73.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {
@@ -3037,6 +3041,9 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // Failed-acquisition first 127; pending-chunk first 131; retained callback source 86;
 // previous voice owner 86; mode zero guard 155; separate update guard 86;
 // range pointer addition 86; callback-availability first 85 (one point, rejected).
+// Loop-end search seed/explicit cases 86/86; first search result/both boundaries 86/86; existing tail
+// search/seed plus search 86/86; first/both salt producers 183/203. Original body restored; playback/clock and
+// native mode scheduling remain.
 // @retail 0x1282d0
 void function_1282d0(void)
 {

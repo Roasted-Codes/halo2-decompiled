@@ -309,6 +309,8 @@ static inline bool teams_enabled_19e1c0()
 
 /* writes the text of one token for the event, returning its length */
 // score 433 (was 433): frame/result register and separate copy tails still differ.
+// Frame 0x208 versus 0x204; result/capacity allocation and separate copy tails differ.
+// Earlier at 443 (was 443): frame/result register and separate copy tails still differ.
 // Depth one with plain result 709; depth one with original result 443; unsigned mode 443;
 // opponent eligibility continue 443; opponent text initialized after scan 459; all restored.
 // frame 0x208 versus 0x204; result and copy tails differ.
@@ -325,6 +327,13 @@ static inline bool teams_enabled_19e1c0()
 // Ordinary short/long return forms 430/432; both small gains discarded.
 // Candidate score reuse 445; existing score formatter 492; both 502; their ordinary-result
 // forms 708/794/798; original two-call conditional maximum 433, with ordinary result 701.
+// Earlier at 433 (was 443): frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
+// Earlier at 433 (was 433): frame 0x208 versus 0x204 and result/copy tails remain.
+// Private player/team/all-name/all-text buffers 434/433/412/433; the 412 form
+// adds 512 frame bytes and is rejected. Ordinary result with those scopes 692/692/686/701.
+// Name event-first/player complete guards/all event-first/all complete event guards
+// 475/460/430/480; ordinary result with the same four dispatch forms 716/680/718/697. The
+// three-point 430 form is ineligible; all restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

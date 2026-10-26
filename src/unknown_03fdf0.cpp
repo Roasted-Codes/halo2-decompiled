@@ -275,6 +275,7 @@ bool function_404b0(long mode)
 // score 226 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
 // Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
 // 254/300/226; noinline with short/byte 254/226.
+// unsigned-zero branch and pass-call boundaries differ;
 // unsigned-zero branch and pass-call boundaries remain.
 // unsigned-zero branch and pass-call boundaries differ;
 // Unsigned-zero admission, setup/result joins and clear-call transport remain.
@@ -287,6 +288,7 @@ bool function_404b0(long mode)
 // first multipass 269; shared second multipass 281; shared conditional pass 273; shared twentieth pass 269;
 // shared seventh pass 269; shared all passes 291; forced shared all passes 291; shared final result two
 // consumers 291; native final result two consumers 291.
+// Conditional cull calls first/third/both 226/226/226; native Boolean cull tests first/third/both 226/226/226; signed/unsigned short pass result 255/255.
 // Inline cull/stencil/first-flush/second-flush/state-pair/flush-pair/all-four
 // declarations 226 each; noinline all-four 226. All declarations restored.
 // unsigned-zero branch, pass-result stores and call joins remain.

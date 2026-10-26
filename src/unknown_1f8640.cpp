@@ -378,6 +378,8 @@ struct s_1f8a70_actor
 // frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
 // Earlier: frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
 // Earlier: frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
+// frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
+// Earlier at 408 (was 418): frame 0x80 agrees; pool/data schedule, unit-mode call and result/route homes differ.
 // Reduced trials: typed scratch only 415; byte scratch only 415; immutable path 415; read-only tags 415;
 // reference expression 419; chained reset 415; context branches 415; reference branches 427.
 // Native active flag 411; native reset member 411; native mode member 411; native source metadata
@@ -395,6 +397,9 @@ struct s_1f8a70_actor
 // Initial mode/reference mode/root override snapshots 399/399/399; named and
 // separate route admission 399/399; scratch-location memcpy 399; readonly query
 // targets 399; combined native mode/root values 399. All original forms restored.
+// Earlier at 399 (was 408): frame 0x80 agrees; pool/data schedule, unit-mode boundary and result/route homes remain; point node first 433; point radius first 399 plain; target node first 434; target radius first 399; moving node first 428; immediate records last 412; target records last 407; moving record last 428.
+// Five independent reset orders 399 each; initial/success/paired status publication 399/399/399. Original body
+// restored; pool/data entry and protected unit-mode/result homes remain.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

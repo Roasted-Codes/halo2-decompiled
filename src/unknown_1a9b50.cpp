@@ -408,11 +408,13 @@ extern point2f *g_468778;
 
 // score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // actor-table/result/prop carriers still differ; first
+// actor-table/result/prop carriers still differ; first
 // prediction loop 391; second prediction loop 391; planar reverse loop 391;
 // repeated vector-field access 387; direct final result 379, plain verified.
 // Round 290: result after lookups 411; read-only settings pointer 379; payload-only memset 378; native
 // planar request workspace 391; byte result 399; actor first with direct final result 413.
 // Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
+// Earlier at 379 (was 379): Frame 0x40 agrees; actor/settings/prop carriers differ. Guarded actor lookup
 // 408; integer clock 413; conditional threshold 389; aggregate request 379; branch-derived
 // prediction weight 385 (fast).
 // Round 303: entry request 379; entry primary vector 379; sibling secondary vector 379;
@@ -422,6 +424,8 @@ extern point2f *g_468778;
 // actor/settings/prop carriers differ; request direction at use 379; request
 // validity first 379; vector memcpy 379; normalization arm first 379; state interval 379.
 // Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
+// Earlier at 379 (was 379): actor/settings/prop carriers differ; request direction at use 379; request
+// Earlier at 379 (was 379): Frame 0x40 agrees; actor/settings/prop homes remain. Slot-first with direct
 // result 379; unit field pointer 379; external state byte reference 390; position pointer 387;
 // velocity pointer 424.
 // Round 173: external actor / guarded slot / combined references 379/379/379;
@@ -436,6 +440,10 @@ extern point2f *g_468778;
 // branch-derived prop receiver 399; read-only actor 375; final rejection expression 375; nested admission 374; prop result with later direction 404.
 // Actor lookup at use 524; velocity/position/both values 405/417/406;
 // all projection products 375; products with live actor 516; clock at use 391; products with prediction values 406.
+// Earlier at 375 (was 379): frame 0x40 agrees; early actor/settings/prop carriers remain.
+// Existing point-difference helper at primary/secondary/both predictions 375/375/375; native predicted
+// point at primary/secondary/both 375/375/375; unary planar negation 390; earlier uninitialized
+// prediction-time storage 375. Actor/settings/prop carriers remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

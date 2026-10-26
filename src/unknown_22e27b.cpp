@@ -166,7 +166,9 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
-// score 100 (was 106): frame 0x10 agrees; quotient/next-time setup and frame/index registers differ.
+// score 96 (was 100): Frame 0x10 and timing setup agree; advancing-frame and interpolation carriers differ.
+// Earlier at 100 (was 106): frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
+// frame 0x10 agrees; quotient/next-time setup and frame/index registers differ.
 // frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
 // Next time before elapsed with separate assignments on frame 0x10: 100.
 // Earlier at 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.
@@ -185,6 +187,17 @@ static inline real interpolate_linear(real a, real b, real t)
 // Earlier at 106: frame 0x10 agrees; division setup, quotient and frame/index registers differ.
 // Active time anchor 106; next-time anchor before/after division 114/114;
 // late const fraction 106; entry time anchor 114; current-frame/direction values 108/106.
+// Current-based short accumulation in advance/lookahead/both 100/100/100;
+// direction-based accumulation 100/100/100; shared/lookahead playback-mode values 100/174.
+// Advancing/lookahead/both index role names 100/100/100; shared native index at active/loop scope
+// 100/100; offset-delta name alone/with phase indices 100/100; scale helper on recovered frame 114.
+// Timestamp before both local updates/between next and elapsed/after swapped updates/before swapped
+// updates/between elapsed and next 96/96/100/96/96. Keep the minimal next/timestamp/elapsed order,
+// plain-confirmed 96 at 657/657; the complete loop-end timing stream now agrees.
+// Disposal result from tests 128; restart result from tests 208; result declaration order/role
+// names 96/96; live key table 96; key records on recovered timing 217; advance/lookahead direction
+// retention 96/96. All forms restored; native direction/frame and lookahead/fraction carriers
+// remain.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
@@ -267,8 +280,8 @@ void c_class_1a2c81::update(dword time)
 				animation.valuea = frame;
 			}
 			next_time += frame_time;
-			elapsed -= frame_time;
 			animation.end_time = time;
+			elapsed -= frame_time;
 		}
 
 		if (!dispose)

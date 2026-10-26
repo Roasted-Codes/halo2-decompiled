@@ -1953,6 +1953,7 @@ bool function_1df5d0(short team_a, short team_b);
 // Signed-byte/byte hostility and unsigned branch count 179 each; non-unit default count 242; unsigned tracking handle and readonly tracking/target/both views 179 each. Original values and declaration types restored.
 // Round 164: shared swarm input 179; shared pool getter 179; aggregation phase 235; phase swarm 235;
 // phase pool getter 235; iteration actor scope 182; actor scope swarm 182; all native scopes 235.
+// Zero/sentinel iterator seeds 243/228; actor pointer/health names 179/179; shared actor level 248; shared definition flags 179; live last-update reads 179; health publication before count 179. Cursor memory home and contribution allocation remain.
 // @retail 0x203360
 void function_203360(long squad_index)
 {

@@ -876,6 +876,8 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 // Earlier: No frame gap; incoming actor/old-weapon ownership and early player address differ.
 // No frame gap; incoming actor/old-weapon ownership and early player address differ.
 // Earlier: the corrected forwarding call kept 0x1ca260 matched; this body then scored 48.
+// score 44 (was 44): No frame gap; actor/old-weapon ownership and early player construction still differ.
+// Earlier at 44 (was 44): No frame gap; incoming actor/old-weapon ownership and early player address differ.
 // Earlier: no frame gap; actor/old-weapon registers and early player address differ.
 // Inline/noinline 44/44; direct player/replacement only 82/55; replacement-first 86;
 // late replacement zero 44; old-greater first 47; early unit observation 91.
@@ -892,6 +894,8 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 // Increase result 44; both comparison results 109; results before unit 121; results and entry player
 // 104; results with unit guard 90; early results and guard 94; complete event predicates 153; entry
 // player with guard 85.
+// Previous/replacement/both property inputs 116/119/164; tag objects 130/133/181;
+// both property/tag inputs with early player 163/188.
 // @retail 0x1e18f0
 void __fastcall function_1e18f0(long actor_index, long old_weapon, long player_index, long new_weapon)
 {

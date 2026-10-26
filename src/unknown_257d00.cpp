@@ -1604,6 +1604,9 @@ void function_b7360(long object_index);
 // single-result completion 588; shared entry failure 515 (fast; existing depth two).
 // Existing actor/command/both lookups 482 each; direct output uses alone and with
 // each/both lookups 482 each; actor-object value begun at its producer 524.
+// Four explicit pool/data orders 482 each; native pool headers in either order 482/482; headers plus native
+// offsets in either data order 480/480. Two-point gains and match-only memory snapshots rejected; original
+// body restored. Pool/actor/output acquisition and forty missing bytes remain.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2007,6 +2010,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // actor handle 478; position/facing 574; position/flags 510; combined subobjects 597.
 // Uninitialized first point, case-four point/vector, both groups, all spatial buffers,
 // planar buffers, first plus planar, iterator and all workspaces at entry: 478 each.
+// Complete facing CRT copy, twice-used selected target and consistent vector-before-enable publication: seven
+// separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
+// actor/state registers and first point home remain.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

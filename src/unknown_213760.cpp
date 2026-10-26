@@ -1196,6 +1196,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // File after size lookup 205; entry file lifetime/immutable file cursor 165/165;
 // valid-type byte domain 165; word slot 257; chained validity fill 262;
 // timestamp eligibility guard/write workspace end 165/165. Original body restored.
+// Split file-base/element advance 165; file pointer name 165; wait/header/both forceinline 165/165/165;
+// empty path 205; initialized write count 204; initialized resize result 215. File-displacement and
+// request/I-O setup remain.
 // @retail 0x213970
 void function_213970(void)
 {

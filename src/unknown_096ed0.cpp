@@ -35,6 +35,7 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Pending/active/both separate chain lengths 219/219/221;
 // pre-query peer flags 229; flags plus separate lengths 254.
 // Round 115: Guarded distinct indices 217; separate blocked names 217; separate callback-output names 217; aggregate declarations first 217; guarded index/blocked names together 217. Opening body restored.
+// Pending/active/both invalid-query continues 229/217/229; zero-state exit 217; output-failure exit 217; initialized handle arrays 297; pending/active selector after lookup 219/217. Receiver and callback/output/blocked homes remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

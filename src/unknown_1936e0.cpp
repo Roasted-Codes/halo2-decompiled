@@ -311,6 +311,7 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Native zero initialization 199; complete aggregate values 307; grouped
 // place cases 204; case returns 203; zero initialization and grouping 206.
 // Earlier: extra EBX save and settings homes remain; native leading
+// Earlier at 186 (was 199): extra EBX save and settings homes remain; native leading
 // defaults for type-four/type-five/both/team/type-four-team/type-five-team/all
 // 229/216/241/204/233/224/249; longer type-four prefix 258.
 // Native settings memset 203; Boolean fields first 200; shared type-four
@@ -319,6 +320,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Round 111: Type-five/team/place native scopes 189/196/199; reverse type-four stores 204; type-four cases first 220; combined native scopes 186 kept; type-five value initialization alone/combined 193/190; combined lexical home 186; combined reversed stores 191.
 // Builder scale/type-four/type-five/team inline-noinline declarations 186 each; place workspace beside retained pair 186; type-four workspace beside pair 203; type-five-first/separate-place-first cases 213/192.
 // Round 113: Shared type-five overwritten clear omitted 224; equal team-field chain 185 (one-point gain dropped); type-four memset with shared workspaces 203; shared declarations reversed 186; complete shared-record entry initialization 237.
+// Type-four native value reset 216; first-case shared three/four 193/193; second-case shared five 192; all
+// equal type-four values chained 199; type-five range/full reversed stores 186/186; descending cases 228.
+// Scale EBX/EAX and constant pushes remain.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

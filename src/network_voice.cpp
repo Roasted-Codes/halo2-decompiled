@@ -2051,6 +2051,9 @@ long voice_players_share_team(long other, long player)
 // Deferred mask initialization 55; complete query arms/selection 46/46;
 // deferred live/native mode 55/55; accepted team predicate 127;
 // deferred default output 53; deferred initial exit 55.
+// Mode/mask saves still precede acceptance; cold exits differ; peer loop agrees.
+// Live mode 34; function-scope mask before/after result 54/54; signed mask 34;
+// enclosing mask with live mode 54; signed live mask 34; rejection to sole exit 34; enclosing exit 54.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
@@ -2932,6 +2935,8 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 #pragma function(_ReadWriteBarrier)
 
 // score 56 (was 56): mode load and output cursor/store scheduling differ; direct formal 95;
+// Frame agrees; mode-load and output cursor/store scheduling still differ.
+// Earlier direct formal 95.
 // unsigned index 95; short/byte 107; early choices 95; early unsigned/short 95/107; direct unsigned 95.
 // mode load and record-store scheduling differ; real record
 // receiver/order/name/player-first 95/95/95/95; route lifetime 94; early player 56;
@@ -2939,6 +2944,8 @@ void __stdcall function_57960(s_voice_player_settings *settings)
 // direct talker parameter with early player 56.
 // Shared route result/default arms 60/84; completed-player forms 94/85;
 // shared input bit 60/84; both computed bit parts 60/84.
+// Output mode owns result before timestamp, early/late player 127/112;
+// mode store before distance, early/late player 112/112; after distance 95/95; after flags 95/95.
 // @retail 0x56df0
 void __stdcall function_56df0(s_voice_player_settings *settings, long talker, long mode)
 {

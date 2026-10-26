@@ -877,11 +877,14 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // score 385 (was 385): Frame 0x28 agrees; radius/zero schedule, edge/history homes and indexed node selection remain.
 // Radius/zero schedule, edge/history homes and node selection remain.
 // frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
+// frame 0x28 and length agree; zero register, edge/history homes and indexed node loads differ.
+// Earlier context: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
 // Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
 // ordinary previous/first/both history 399/401/400;
 // word node index 408; alternate normalizer 401; indexed node pair 428;
 // indexed pair with ordinary previous history 438. Frame and edge/history homes remain.
 // frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
+// Earlier context: frame 0x30 versus 0x28; zero register, edge/history homes and indexed node loads differ.
 // Reduced trials: direct dot predicate 401; shared dot product 401; immutable predicates 401; geometry
 // names 401; output memcpy 401; earlier offset workspaces 401; native first-open 416; word selected vertex
 // 404.
@@ -889,6 +892,7 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // first offset in place 401; second offset in place 401; both offsets in place 401; first offset origin
 // snapshot 400; second offset origin snapshot 400
 // frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
+// Earlier context: frame 0x38 versus 0x28; zero register, history homes and indexed node loads differ.
 // Node fields at use 420; vertex words at use 414; endpoint values 432; normal assignments 401;
 // split crossing phases 399; late second workspace 399; split phases/ordinary previous history 397;
 // Boolean ring direction 399; vertex words/ordinary previous, first, both history 414,415,415;
@@ -902,6 +906,7 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // 430; indexed/result query 396; indexed/nested query 427; overall/indexed/query result 450.
 // Original body, both private helpers and complete shared header restored.
 // Predicate inline declarations 433; ordinary ring history 404; ring/incoming/both history names 385/385/385; declaration order 385; ordinary names/order 404/404; names plus order 385.
+// Native helper side/promoted node/both 385/385/385; word/unsigned node input 409/385; byte/long openness result 417/410; native side and word node 409.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
