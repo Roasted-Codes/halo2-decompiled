@@ -3028,7 +3028,7 @@ struct s_ammo_conversion_entry
     long definition_index;
 };
 
-// score 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
+// score 198 (was 198): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
 // Earlier: frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
@@ -3050,6 +3050,9 @@ struct s_ammo_conversion_entry
 // scope 203/203/203/203; result-conditioned search 202 (below gate); plain while 203;
 // source-count store order 203. Opening body restored.
 // Success-path return 209; source from each path/after conversion 204/219; conversion count/table/both at use 197/198/198; short current/successor 205; combined ownership 205. One-point gain rejected.
+// Round 318: actual unloaded/loaded/both source-count values 207/201/202;
+// native source state 236; capacity arm 197 (gain 1, rejected); values/state with capacity arm
+// 202/236; both values with Boolean acquisition 220. Frame and saved roles remain; all restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
