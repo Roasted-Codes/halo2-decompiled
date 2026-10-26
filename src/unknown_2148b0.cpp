@@ -29,6 +29,8 @@ extern s_cache_copy_request g_55be24[2];
 // Implicit numerator 2; implicit denominator 2; nested total guard 2; low state uses initial fraction 39;
 // active result first 39; denominator at least one 41; outer branches reversed 31; unit numerator factor 2;
 // entry completed local 51.
+// nonzero unsigned total 3; upper clamp first 20; optional output clamp 39; inactive entry return 63;
+// availability from tests 49; both results by branch 45; inclusive low bound 4; inclusive high bound 4.
 // @retail 0x2148b0
 bool function_2148b0(long progress)
 {

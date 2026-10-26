@@ -942,6 +942,9 @@ long function_1765e0(point3f const *point, vector3f const *direction, vector3f c
 // score 6 (was 6): only the order of the pushes: retail pushes esi and both
 // constant arguments before the x87 work, ours interleaves push esi and the
 // second push 1 with the fld/fcos; four source rewrites all scored 6.
+// Commuted horizontal products 6; all trigonometric factors named 6; position snapshot 65;
+// read-only flag view 6; scenario base reused at each field 74; flag-table lifetime 6;
+// vector component array view 6; angle field references 6.
 // @retail 0x2a05f0
 void function_2a05f0(long effect_index, short cutscene_flag_index)
 {

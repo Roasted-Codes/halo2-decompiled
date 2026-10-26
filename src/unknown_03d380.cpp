@@ -561,7 +561,8 @@ void __stdcall function_1889d0(dword flags)
 	}
 }
 
-// score 62 (was 62): native BX load, tag table and inactive clear receiver differ.
+// score 62 (was 62): Frame 0x1c agrees; raw BX flag load and later scratch receivers remain.
+// Earlier: native BX load, tag table and inactive clear receiver differ.
 // raw flags load and tag/late-global registers still differ;
 // flags/tag names 110; positive/rejection tests 110; direct parameter 160; early flag 42 (restored);
 // inline query 110; shifted word/dword/byte 128/129/120; direct masks 154; first/second mask 132/151;
@@ -586,8 +587,16 @@ void __stdcall function_1889d0(dword flags)
 // Earlier 62 (was 62): native flags BX load and tag/late-global registers remain.
 // Masked tag declaration/flag iteration scope 62/62; dword parameter mask 83;
 // scoped tag for-loop 62; paired zero chain/fill 64/123; Boolean parameter mask 62; late global declaration 62.
+// Zero-or-one parameter byte/short/word/long 62/125/125/141; query/update noinline
+// declarations 62/62; signature-first initializer 64; signed byte table ordinal 62.
 // Native raw word/signed word/flag object 62/62/62; masked dword 61;
 // const word 62; masked byte 155; parameter bit pair 173; typed word with pair 173.
+// Tag/volume/reset/final-callback inline-noinline declarations 62 each; tag iterator/global receiver/both names 62 each; composite release predicate 151.
+// Tag field reads 62; flag word reads 110; both reads 110; native bitfield snapshot 128;
+// direct snapshot bits 154; snapshot plus tag reads 128; per-use bits 110; bits plus tag reads 110.
+// Active-state-first/pool for/release continue/active for 62/62/62/62;
+// whole record input 195; active record input 183;
+// record pool for/release continue 195/195.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {

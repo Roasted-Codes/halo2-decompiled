@@ -61,6 +61,9 @@ PRIVATE __forceinline long texture_floor(real value)
 // the final bit-clear mask uses EDX instead of EAX. Lowest-bit clear 19;
 // early clear 111; entry lifetime 4; scan-index lifetime 4; level lifetime 4; integral
 // level clamp 86; short bitmap 4; typed texture entry 4.
+// score 4 (was 4): Guarded do continuation 4; reversed mask assignment 4; complement by -1 xor 4;
+// masked xor clear 4; short stage 4; entry tag local 4; existing bit setter 132;
+// callee inline declarations 4.
 // @retail 0x1b0a0
 void __stdcall function_1b0a0(byte *state)
 {
@@ -233,6 +236,23 @@ void function_16f60(byte *state, word const *range)
 // 103/103; early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
 // common exit 99; sixth exit 93; comparison exit 93; fifth exit 93; sixth comparison exit 93; fifth
 // sixth exit 93; explicit default common exit 99; fourth comparison first 93.
+// BX dispatch agrees; selective setter expansion and shared tails remain.
+// Earlier 103 from 117: frameless BX entry agrees; dispatch span and selective setter expansion differ.
+// 0/34/12/5/6 158; 0/5/12/34/6 151; 0/6/12/34/5 167;
+// 0/34/5/6/12 224; 0/6/5/34/12 165. Code rows 91 to 80; 780/772 bytes.
+// Earlier 93 from 103: dispatch span and selective setter expansion still differ.
+// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison 103/103;
+// early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
+// Complete group orders 05316/05631/03516/03651: 222/156/221/197;
+// 06153/06315/06513/05361: 145/196/168/223 (1=one/two, 3=three/four).
+// frameless BX entry agrees; dispatch span and selective setter expansion
+// differ.
+// dispatch span and selective setter expansion still differ.
+// 103/103;
+// sixth exit 93; explicit default common exit 99; fourth comparison first 93. Selective setter
+// expansion and shared tails remain.
+// frameless BX entry agrees; dispatch span and selective setter expansion differ.
+// 0/34/5/6/12 224; 0/6/5/34/12 165. Earlier code rows 91 to 80; 780/772 bytes.
 // Reference-call branches first/second mode 144/145; paired-label orders 93/93/93;
 // complete group orders 0/12/34/5/6, 0/12/5/6/34, 0/34/6/12/5 105/106/197.
 // Shared keep-pass group/conditional comparison/mask-call branches 282/270/207;

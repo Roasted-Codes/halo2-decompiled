@@ -83,9 +83,14 @@ short __stdcall function_2551c0(long actor_index)
 // declaration orders 43.
 // Earlier: our frame was four bytes larger than retail's and the
 // inlined rotation helper ran on a different SSE schedule.
+// Round 132: shared cosine/axial/both/transverse/cosine+transverse/axial+transverse/all scaling
+// [143, 203, 195, 189, 140, 197, 165]; native helper references 43. Early cross products and
+// score-dot schedule remain.
 // Named second j/k products 109/109; both second products 65; both first products 65;
 // named j/k cosine products 120/109; both cosine products 61;
 // second products plus cosine parts 139.
+// Output base sums i/j/k 109/109/109; all base sums 68; success word/long 106/76;
+// signed/unsigned byte direction counters 43/43.
 // Round 138: axis value 233; input value 213; projection i/j/k parts 109/109/124; transverse i/j/k parts 109/109/109.
 // Round 85: about 90 helper forms screened (cross order, product operand order, output form,
 // projection form): VC canonicalizes the product and sum forms, so only the cross statement

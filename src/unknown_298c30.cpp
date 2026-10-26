@@ -92,7 +92,10 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 	g_5047f8[arg_0].field_18 = arg_0;
 }
 
-// score 408 (was 433): frame 0x68 versus 0x64; normalization homes differ; shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
+// score 408 (was 408): frame 0x64 agrees; entry loads, parameter cleanup and normalization/trig homes differ.
+// Earlier frame 0x68 forms: shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
+// Frame 0x64 agrees; entry loads, normalization homes and 0x18 versus 0x1c cleanup differ.
+// Earlier shared normalizer 433; unsigned count 437; unsigned endpoint 433; both 437; angle end pointer 457.
 // frame now 0x64; entry load schedule, point/magnitude homes
 // and candidate arithmetic differ. Byte candidate count 417; byte endpoint 427;
 // later center sum 444; early facing result 441; short angle count 433; both byte counts 408.
@@ -102,6 +105,14 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // short facing result 430. Entry loads and 0x18 versus 0x1c return cleanup remain.
 // Helper-owned/returned evaluation 425/425; native endpoint result 443; endpoint value 455;
 // ratio value result 408; consuming angle cursor 416; side before distance 408; angle pair initialization 414.
+// Native real fixed cosine/sine/pairs 409/430/420; general cosine/sine/pair 408/408/409;
+// all cosines 408; all sines 430; all real trig 430. Original double APIs restored.
+// On recovered frame: unused/direction/both formal carrier removals 409/408/409; normalized-point
+// name/all point homes 408/408; early evaluation/angle workspace 408/408; dead-carrier removal with
+// point names 409.
+// Existing endpoint helper at negative/positive/both outputs 408/409/409; rounded distance/projection/ratio
+// in double 442/444/445; native velocity fields 408; indexed endpoint observations 458. Entry loads,
+// XY/magnitude homes and 0x18 versus 0x1c cleanup remain.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -268,15 +279,18 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Shared endpoint setters 767; center CRT copy 767; step CRT copies 767;
 // obstacle-radius observation 813; requested-angle observation 796; all restored.
 // Trace-field forward sector 772, reverse 776, both 774; settings radius rereads 812; short-index obstacle cursor 814.
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Early settings radius 800; const center 767; early selector 847; final-angle selection first 798; reverse component assignments 767 (fast).
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain.
+// Frame 0x11c versus 0x114 and radius/trace homes remain. Early settings radius 800; const center 767; early selector 847; final-angle selection first 798; reverse component assignments 767 (fast).
+// Frame 0x11c versus 0x114 and radius/trace homes remain.
 // native endpoint return 947; native rotated-point return 961; endpoint input order 767;
 // two-coordinate pivot 767; side transform first 822 (fast).
 // Frame 0x11c versus 0x114 and radius/trace homes remain. One sector sample 809; cosine first 767; signed step branches 848; normalization result 839; maximum rejection guard 767 (fast).
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Absent-obstacle exit 768; positive center clearance 820; direct edge distances 916; early annular bounds 767; reverse-vector component loop 839 (fast).
-// score 767 (was 767): Frame 0x11c versus 0x114 and radius/trace homes remain. Selected obstacle pointer 802;
+// Frame 0x11c versus 0x114 and radius/trace homes remain. Absent-obstacle exit 768; positive center clearance 820; direct edge distances 916; early annular bounds 767; reverse-vector component loop 839 (fast).
+// Frame 0x11c versus 0x114 and radius/trace homes remain. Selected obstacle pointer 802;
 // forward state on hit 771; reverse state on hit 771; both states on hit 784; active edge updates 857;
 // in-place initial endpoint 850 (fast).
+// Rotation output reference 767; endpoint output reference 767; endpoint input references 767;
+// rotation height-source input 767; endpoint pointer result 767; native settings member 767 (fast).
+// Original helper contracts and settings storage restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,
