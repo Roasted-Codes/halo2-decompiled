@@ -1165,6 +1165,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 }
 
 // score 165 (was 165): frame 0x1144 agrees; file-displacement register,
+// Frame 0x1144 and length agree; file displacement and request/I-O setup differ.
 // task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
 // completion scope 172; output scopes 172; slot equality 393;
 // equal-size arm first 209.
@@ -1182,6 +1183,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // plus failed-write result 159; request lifetime through submission only 165.
 // Handle-result arms 159 rejected as a branch flag.
 // Ordinary slot while 165; unsigned slot while 165; request clear before path 202; long/byte validity 210/165.
+// Round 111: Redundant request zeros omitted 225; shared handle-field pointer 165; iteration-scope write/read headers 165/165; request path after access fields 169.
 // @retail 0x213970
 void function_213970(void)
 {

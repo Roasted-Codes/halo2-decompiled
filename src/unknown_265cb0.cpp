@@ -1556,6 +1556,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 }
 
 // score 684 (was 684): frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
+// frame 0x7c versus 0x80; saved link/predicate homes and expanded conversion calls remain.
 // Conditional facing 731; wide best level 701; direct parameter 701; shared difference 705;
 // wide retention 704; live relative inputs 695; native velocity copy 695; early defaults 755;
 // phase defaults 752.
@@ -1572,6 +1573,11 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
 // Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
 // Matrix component loop 721; direction component loop 711; relative component loop 696; traversal-scope contact handle 702; traversal-scope tick threshold 702 (fast control 702); relative loop 714 plain, rejected.
+// Earlier 684 (was 695): Frame, saved-link homes and expanded tick conversions remain.
+// Earlier 684 (was 684): Frame 0x7c/0x80, saved links and expanded conversions remain. Single player search 706; point phase 684; relative initializer 684; selection scope 684; long vehicle kind 684 (plain; ordinary actor reads in all).
+// Earlier 684 (was 684): Frame/saved links and conversion expansion remain. Native iterator 702; live elapsed field 684; long contact result 694 (frame 0x80); direction library copy 684; shared reset 699; native best level 707 (plain).
+// Round 112: Long visible 683 (one-point gain dropped); long positive 710; long close 727; long
+// very-close 699; combined state/view guard 705; ordinary actor input in all.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

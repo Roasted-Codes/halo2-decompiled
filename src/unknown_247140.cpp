@@ -264,6 +264,9 @@ public:
 // successor while traversal 194.
 // Selector inline declaration 170 (matched sibling becomes 292); displacement aggregate,
 // squared distance before/after selector, retained center and branched range maximum 194 each.
+// score 194 (was 194): round 108: frame 0x1c/0x20 and location/receiver homes remain.
+// Late range accumulator 201; outer range endpoints 194; shared center setter 198;
+// scoped successor for traversal 194; nested age/cleanup guards 194.
 // Lower-reader ordinary inline 194; both readers ordinary inline 194; native origin 170
 // (held: unmatched caller 0x174a30 308 -> 369); direct selector result 194; reversed center stores 194.
 // Origin-field pointer 194; reused native center 170; shared point setter 197; native origin/direct receiver 170.

@@ -808,6 +808,12 @@ done:
 // Earlier: round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
 // Earlier: round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
 // AC338: accept-all snapshot 192; requested-bit snapshot 191; both flags 191; fallback mode first 187; read-only squad 176.
+// round 312: next/sentinel allocation remains; rejection continuations 176; flat validation 176; count snapshot 191; four-short records 176; shared scalar scope 176.
+// round 106: Frame 8 agrees; next-word and sentinel allocation remain. Boolean predicate 176; Boolean arms 224; lazy entry address 176; direct definition observation 176; result-driven valid scans 203.
+// round 108: frame 8 agrees; next-word/sentinel allocation remains.
+// Native entry table 176; native palette table 176; both table views 176;
+// palette retained across advance 188; direct category-bit extraction 202.
+// Round 110: native explicit selection pair 196; direct published success returns 224; pair with first while scan 211; published current return 176; unsigned-word result 198.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -1747,6 +1753,11 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // actor continue 305.
 // Earlier: round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
 // AC338: typed count pointer 264; per-iteration table choice 323; long validation 264; entry best 264; entry nearest 264; earlier player home 264.
+// frame 0x3c agrees; definition/count/best/point homes, entry reloads and packed references differ.
+// Frame 0x3c agrees; stack homes, entry loads and packed reference tests
+// Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
+// round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
+// Round 110: branch table with native selection 323; actual palette field reference 279; reference with branch table 301; split point scopes on native iterator/count frame 264; early actor iterator workspace 264.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -1914,6 +1925,7 @@ bool function_1df5d0(short team_a, short team_b);
 
 // score 179 (was 179): Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
 // Earlier: frame 0x14 agrees; iterator index is cached and the flag clear splits.
+// frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // Earlier iterator declaration 242; iterator/count role names 242; natural for
 // walks 348; unsigned full-width count 242; delayed flag clear 242. Shared
 // iterator helpers 242; marked iterator calls 350; branch-assigned count 179;
@@ -1928,6 +1940,9 @@ bool function_1df5d0(short team_a, short team_b);
 // Shared unit handle 179; shared perception handle 234; native swarm member 179;
 // health clamp assignments 179; shared centroid setter 179.
 // AC338: signed-word contribution 183; entry count 179; entry health 179; absent-definition exit 179; disabled-definition exit 179.
+// Frame 0x14 agrees; next-index memory home, contribution register and entry
+// Frame 0x14 agrees; next-cursor storage, contribution register and flag
+// Round 110: delayed long count from native population 235; known native squad fields 179; direct hostility OR 238; hostility first 179; native point memcpy 179.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2854,6 +2869,11 @@ void function_2011f0(long arg_0);
 // round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
 // round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
 // Short countdown 389; long reuse result 389; loop-scope seat output 383; loop-scope separate actor/object/seat results 383; traversal-scope selected entry 383.
+// score 383 (was 387): round 312: frame 0x13c versus 0x134 remains; per-arm optional record 390; signed placement 387; full-width chosen entry 396; per-arm object result 388; native-short fallback selector 383 plain; direct parameter reads retained with identical conversions.
+// score 383 (was 383): round 106: Frame 0x13c versus 0x134 and spawn/definition homes remain. Direct list splice 391; placement rejection 383; native masked index 390; reuse continuation 383; direct difficulty 383.
+// score 383 (was 383): round 108: frame 0x13c/0x134 and spawn/definition homes remain.
+// Native placement workspace 383; completion-result guard 383; full-width category 387;
+// unconditional initialized override 388; shared default word 387.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
