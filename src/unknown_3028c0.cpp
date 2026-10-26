@@ -111,6 +111,11 @@ public:
 // Further trials: sum by value 40; staged sum 42; vector sum result 56;
 // direct splat 65; forced inline math 42; whole query initializer 48;
 // sum through output 44; size preference 121; value sum with late clears 43.
+// Further trials: segment before direction 48; translations before length
+// 47; length after segment 48; shared direction value 48; shared origin
+// value 64; direction with early translations 50 or late length 46; both
+// shared values with late length 63. Header/cells registers and late pushes
+// still differ; the opening zero-store and arithmetic forms are retained.
 // @retail 0x3028c0
 void walker_3028c0::function_3028c0(input_3028c0 const *input_, long arg_1, long arg_2)
 {

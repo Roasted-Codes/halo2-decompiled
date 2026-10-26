@@ -36,6 +36,10 @@ public:
 // owner hands out; a miss drops it and hands the id back
 // score 37 (was 67): the centre and body B take edi and ebx where retail has
 // ebx and edi, and three 4-byte stack slots are packed differently.
+// Further trials: output element reference 37; native signed or unsigned
+// held id 64; direct id consumers 37; common held-id lifetime 37; common
+// native id 64; element reference with common or direct id 37/37.
+// This/scratch homes and centre/body-B register ownership still differ.
 // @retail 0x2f1b80
 void class_2f1b80::function_2f1b80(void const *a, void const *b, void const *input, void *collector)
 {

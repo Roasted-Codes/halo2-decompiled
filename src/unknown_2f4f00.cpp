@@ -650,6 +650,10 @@ void class_2f4f00::function_2f4f00(void const *a, void const *b, void const *inp
 // facing snapshot test 2; oriented results 3; transform output reference 2;
 // normalization force-inline 2; distance before plane 486; early interpolation 147;
 // direct signed depth 57.
+// the x87 height/edge-component load pair still differs.
+// Earlier shared height 3; earlier difference vector 131; lane pointer 3;
+// named square 2; existing scale negated 2; direct broadcasts 2;
+// inverse/offset/distance names 2; shuffled height lane 617.
 // @retail 0x2f5960
 void __cdecl function_2f5960(void const *a, void const *b, void const *input, void *collector)
 {

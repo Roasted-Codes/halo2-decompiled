@@ -250,6 +250,10 @@ void __cdecl function_2dd930(void *data, s_visibility_plane_query const *query,
 // Further trials: split reciprocal lifetime 49; late reciprocal field 49;
 // sphere value snapshot 61; size preference 40; explicit scalar splat 48;
 // in-place delta 33; named radius times two 33; aligned intrinsic loads 48.
+// Further trials: zero-initialized iterator local 71; pending value construction
+// 33; point-value output 82; paired coordinate store 61; centre array
+// or indexed coordinate copy 33; initialized array copy 71; initialized
+// point value 108. Origin/list order and root/query registers still differ.
 // @retail 0x2ddbd0
 void __cdecl function_2ddbd0(void *data, s_visibility_sphere_query const *query,
 	s_visibility_query_list *second, s_visibility_query_list *first)

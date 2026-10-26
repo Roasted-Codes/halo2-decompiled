@@ -37,6 +37,10 @@ public:
 
 // the vertex furthest along a direction, with its index in the fourth term
 // tagged with the bits of 0.5
+// score 7 (was 7): x/z transfers and final coordinate/tag schedule remain.
+// Scalar loads 159; direct/shared vector shuffles 157/157; dot accumulator 7;
+// wide selected scalar 7; output vector 86; coordinate-array loop 4; indexed blocks 166;
+// coordinate loop with scalar-value/shared broadcasts 4/4.
 // @retail 0x2fd260
 void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *support) const
 {
@@ -150,6 +154,9 @@ void convex_vertices_2fd260::function_2fd260(__m128 const *direction, __m128 *su
 // score 2 (was 2): second unrolled z-store/receiver-reload order remains.
 // Explicit source object first/last 2/2; two-stage block cursor 2; direct lane
 // index 50; unsigned index 7; earlier/later fetch definition 2/2; ordinal name 2.
+// the second unrolled z store and receiver reload are swapped.
+// Scalar memcpy x/y/z 2/2/2; all-coordinate memcpy/memmove 424/375;
+// scalar vector intrinsics z/all 411/414; tag memcpy 2.
 // @retail 0x2fd430
 void convex_vertices_2fd260::function_2fd430(unsigned short const *indices, int count, __m128 *vertices) const
 {

@@ -651,6 +651,11 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 // adjacent word-load/byte-clear order and callback reload remain.
 // Native state bit clears/chained clears/publication/both 126/126/97/126;
 // dispatcher word flags 122; with separate/chained/all native state writes 137/137/137.
+// Direct variant publication 103; identity after lookup 102; early next frame 97; early frame limit 120;
+// position after clears 103; explicit event merge/result at dispatch 97/97; end arm first 98.
+// Direct callback with user/frame/state/frame-user/state-user/frame-state 125 each; callback with
+// channel/channel-user 139 each. Entry convention shifts and matched callers regress; original
+// callback and argument homes restored. Word-load schedule and callback reload remain.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)

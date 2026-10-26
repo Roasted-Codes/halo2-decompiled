@@ -284,6 +284,10 @@ bool function_404b0(long mode)
 // consumers 291; native final result two consumers 291.
 // Inline cull/stencil/first-flush/second-flush/state-pair/flush-pair/all-four
 // declarations 226 each; noinline all-four 226. All declarations restored.
+// score 226 (was 226): unsigned-zero branch, pass-result stores and call joins remain.
+// Late single/third/both success publication 220/212/210; single/third/conditional
+// result arms 232/214/226; all result arms 204 at 1217 bytes;
+// ordered conditional result 221. All unmatched flag-publication forms restored.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

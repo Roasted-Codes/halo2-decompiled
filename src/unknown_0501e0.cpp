@@ -48,6 +48,10 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Value direction 348; reference direction/output 221/221; input-first scale products 221;
 // selected scaled inputs 275; short offset counters 277; byte transform counter 394;
 // value direction with reference output 348. Retained separate offset loops and cursor restored.
+// score 221 (was 221): extra frame dword and coefficient/result/tail homes remain.
+// On the output-cursor form: forward/up/right snapshots 275/275/269;
+// all coefficients before/after scale 453/448; shared scale 252 at 1136 bytes;
+// early/late coefficients with shared scale 478/477.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

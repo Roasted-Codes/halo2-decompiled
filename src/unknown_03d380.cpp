@@ -571,6 +571,15 @@ void __stdcall function_1889d0(dword flags)
 // Signed short/long masked flags 62/61; final parameter exit 66;
 // final receiver ownership 55 (the global reloaded into a local by hand, not kept); receiver with parameter exit 66;
 // isolated tag scope 62; native iterator initializer 118; direct reset record 62.
+// raw flags load and tag/late-global registers still differ;
+// flags/tag names 110; positive/rejection tests 110; direct parameter 160; early flag 42
+// (restored);
+// inline query 110; shifted word/dword/byte 128/129/120; direct masks 154; first/second mask
+// 132/151;
+// native flags BX load and tag/late-global registers remain.
+// complementary input 85; native flag copy 62; copy complementary input 85; whole flag copy 110;
+// reset array index 62; reset negative guard 62; late flag positive 72; native entry ordinal 93.
+// Raw BX flag load and later receiver allocation remain.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {

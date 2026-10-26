@@ -372,6 +372,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
 // score 236 (was 236): region scheduling and model/range/vertex homes remain.
+// Region scheduling and model/range/vertex homes remain; staged region base
+// 236; library point copy 236; both 236; false result at first failure 242; read-only
+// reference/range 236/236; late false with reference 242; chained part resets 238.
 // 0x58 frame; region scheduling/model spill remain.
 // Retained mesh 258; unsigned node ordinal 240; masked plane snapshot 264;
 // native surface-table view 240; relative range ordinal 252.
