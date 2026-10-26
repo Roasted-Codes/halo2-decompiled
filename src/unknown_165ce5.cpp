@@ -1741,7 +1741,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 
 /* samples a weapon's animation, its overlays and its sway into the user's
    orientations, then builds the weapon's node matrices */
-// score 411 (was 411): frame 0x58 versus 0x78; root/channel overlap and later sway homes remain.
+// score 410 (was 411): frame 0x58 versus 0x78; root/channel overlap and later sway homes remain.
 // root/channel homes still overlap in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // blend time true arm 506; ammo nonnegative path first 463; adjustment flag from index 460; arms model read
 // first 469; channel before lookups 531; channel before state view 475; ammo adjustment flag 455; ammo arms

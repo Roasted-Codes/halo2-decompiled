@@ -746,7 +746,7 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // shared counter and output decision 123; shared counter carrier 95; byte with shared counter 95;
 // reversed adjacent output publications 95; final native word 102.
 
-// score 95 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// score 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.

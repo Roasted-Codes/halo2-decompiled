@@ -117,7 +117,7 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 109 (was 109): frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// score 104 (was 109): frame 0x0c versus 0x10 and property/buffer register-stack split remain.
 // Earlier: frame 0x0c versus 0x10 and properties/buffer
 // frame 0x0c versus 0x10 and property/buffer carriers remain; shared record/buffer total
 // 125f; property total from records 113f; property total from buffers 113f; admission accounting 108f (below
