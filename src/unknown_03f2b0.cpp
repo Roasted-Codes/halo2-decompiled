@@ -1296,6 +1296,12 @@ long function_4c450(long object_index, real distance, real const *definition, re
 short function_4bcc0(byte *output, long object_index, real distance, long override,
     bool *cached, bool force, signed char *level);
 
+// score 43 (was 43): count/current take edi and wanted esi (retail esi and edi, with wanted
+// computed in ecx and copied); the early level read adds a byte. Direct level read 83 at 281
+// bytes (one instruction more aligned); wanted from current/wanted first/non-const wanted 43
+// each; random mixes of declaration orders, compound division, defaults-first branch, early
+// level read and result at the top 43-110; pointers defaulting to the zero buffer 54/53;
+// local and parameter renames 43 each.
 // @retail 0x4c190
 bool function_4c190(long *count, long object_index, bool defaults, long tag,
     short *level, signed char fallback_level, signed char *sections, bool *fallback)
