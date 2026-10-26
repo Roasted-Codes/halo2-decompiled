@@ -737,13 +737,15 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 243 (was 368): frame 0x0c agrees; removed-index registers, upper
-// bound selection and copy-loop induction remain. Paired range arms 373;
+// score 243 (was 243): Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy induction differ.
+// Paired range arms 373;
 // native FILETIME 314; short adjustment 300; unsigned repair counter 364;
 // range/time/short combination 375; native time and short adjustment 357.
 // Three relative-position cases 243; early bounds 377; explicit upper bound 361;
 // forward destination index 366; reverse destination index 360; widened
 // global-index adjustment 358.
+// First removal-call acquisition 243; real repair-table cursor 819; short repair counter 819;
+// long direction flag 244; equality-first cases 243; forward CRT memmove 385.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

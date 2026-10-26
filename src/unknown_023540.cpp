@@ -2969,22 +2969,25 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 978 (was 978): frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
+// score 971 (was 971): Frame 0x2c agrees; capability/save roles and state expansion remain.
+// frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
 // eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
-// score 971 (was 978): frame 0x2c agrees; saved registers, mode flags and state expansion differ.
+// frame 0x2c agrees; saved registers, mode flags and state expansion differ.
 // Inner depth pairs removed 1212; direct texture API 983; dispatch defaults 1224;
 // normalization after dispatch 984; four-use alpha snapshot 971.
 // Byte capabilities 1086; rescale-state name 978; case three first 978;
 // short exponent 1084; later integer decomposition 977; exponent for-loop 1273.
-// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
-// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Initial state helper 1179; normalized bounds 985; split zero defaults 942 discarded; dispatch lifetimes 971; branched depth result 971; shared cutoff default 1055 (fast).
-// score 971 (was 971): Frame 0x2c agrees; capability/save and state expansion remain. Shared mode-
+// Frame 0x2c agrees; capability/save and state expansion remain. Span power 1080 (retail length); integer range samples 971; quantizer result 1201; shift result 1197; slope/cutoff homes 971 (fast).
+// Frame 0x2c agrees; capability/save and state expansion remain. Initial state helper 1179; normalized bounds 985; split zero defaults 942 discarded; dispatch lifetimes 971; branched depth result 971; shared cutoff default 1055 (fast).
+// Frame 0x2c agrees; capability/save and state expansion remain. Shared mode-
 // two/three tail 1153; redundant case defaults removed 1193; common exponent outputs 1365; second
 // packed color shared 1101; byte fraction 971 (fast).
 // Frame 0x2c agrees; capability/save roles, state expansion and
 // color/quantizer homes differ. Word success 1194; unsigned exponent 1197; mode decision chain
 // 1084; word color input 971; word alpha input 1181 at retail length.
+// Capability declaration/name order 971/971; late rescaling flag 971; native color aggregates 971;
+// conditional-update shared clamp 1207 (fast). Original body and shared clamp retained.
 // score 971 (was 971): round 106: Frame 0x2c agrees; capability/save and state expansion remain. Packed range clamp 1199; early exponent lifetime 1201; shared gain divisor 1194; late input selectors 1204; late clipped width 970 (one-point gain rejected).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,

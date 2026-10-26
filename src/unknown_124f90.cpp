@@ -1226,8 +1226,10 @@ long function_2197f0(real gain);
 
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
-// score 162 (was 162): frame 0xc agrees; early gain home, delayed ESI save and fade scheduling differ.
+// score 162 (was 162): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
 // Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
+// Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
+// shared fade-in duration 162; distinct-ambience case first 163.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -3332,8 +3334,10 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 241 (was 241): frame 0x49c versus 0x494; gain argument and clamp homes differ.
+// score 234 (was 241): Frame 0x49c versus 0x494; initial gain argument homes and clamp stores still differ.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
+// Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
+// long next-chunk candidate 254; completed-chunk early exit 241.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3374,8 +3378,7 @@ void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization c
 	if (!(bool)((local_1->flags >> 9) & 1))
 	{
 		real local_12 = *(real *)&local_6 + (real)*(signed char *)((byte const *)local_8 + 4);
-		local_12 = PIN(local_12, -64.0f, 0.0f);
-		local_3.field_c = *(long *)&local_12;
+		local_3.field_c = decibels_pin(*(long *)&local_12);
 		function_21f8a0(local_0->channel_index, (s_looping_channel_properties *)&local_3, (s_looping_effect_playback *)local_3.field_48);
 		function_21f720((s_looping_impulse_parameters *)local_3.field_468);
 		sound_voice_queue_chunk(arg_0, local_8, local_1->chunk_index);
@@ -3395,8 +3398,7 @@ void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization c
 	else if (local_0->permutation)
 	{
 		real local_15 = *(real *)&local_6 + (real)*(signed char *)((byte const *)local_0->permutation + 4);
-		local_15 = PIN(local_15, -64.0f, 0.0f);
-		local_3.field_c = *(long *)&local_15;
+		local_3.field_c = decibels_pin(*(long *)&local_15);
 		function_21fa80(local_0->channel_index, (s_looping_channel_properties *)&local_3, (s_looping_effect_playback *)local_3.field_48, true);
 	}
 	if (!TEST_FIELD_BIT(local_1->flag6))
@@ -3514,9 +3516,12 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 	arg_2->k = (arg_0->i * arg_1->j - arg_0->j * arg_1->i) * local_2 + arg_0->k * local_1 + local_0 * arg_1->k;
 }
 
-// score 551 (was 551): frame 0x12c versus 0xe8; native vector and environment homes differ.
+// score 551 (was 551): Frame 0x12c versus 0xe8; native vector, environment and listener-index homes differ.
 // Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
 // Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
+// Static const fallback 727 (frame 0xec); spatial role names 551; long success workspace 551;
+// short listener counter 581; outer spatial workspace 551; interpolated point setter 615;
+// position-zero setter 616.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

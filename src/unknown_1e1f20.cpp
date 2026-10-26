@@ -639,6 +639,9 @@ void swarm_leader_detach(long actor_index);
 // Ordinary actor/iterator locals 330; direct parameters 330; guarded callback 324; fresh memory lookup 291;
 // live memory-slot reads 326; slot reuse at lookups 301; callback plus fresh lookup 290; direct combined
 // parameters 290.
+// score 290 (was 290): actor offset retention, fresh memory-slot reads and cleanup homes remain.
+// Short cleanup index 301; pretested cleanup loop 560; entry iterator declaration 290;
+// direct current-slot store 290; ancestor failure-first continuation 290. Original body retained.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

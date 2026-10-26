@@ -156,6 +156,9 @@ static __forceinline long float_to_int_nearest(real value)
 // Conditional flags then priority 187; deferred flags publication 176; location first with copied
 // audible priority 167 kept (full); location memcpy 182; conditional end-time publications 175.
 // Outer state scope 167; early optional-size default 164 (below threshold); size before marker copy 167; nested class tests 167; platform-flags block first 167; opening 167 restored.
+// score 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
+// Late tag receiver 184; branch-assigned result 193; shared marker observation 167;
+// absent-marker-first 165 (below threshold); native short priority and padding memset 176.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
