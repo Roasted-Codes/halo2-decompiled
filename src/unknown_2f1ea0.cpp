@@ -73,6 +73,10 @@ public:
 // short/unsigned axis 62/20; rotation transform reference 20.
 // Record B/A input alone 25/25; abstract collector 20; typed outer A/B/all
 // inputs 20/20/20; ordinary/private outer inline 812/20.
+// score 20 (was 20): body/centre and inside-motion registers still differ.
+// Box at uses 20; sphere at uses 146; box and sphere at uses 146; centre at uses 173;
+// box and centre at uses 173; box-radius value 38; both radius values 174;
+// box radius at uses with extent receiver 20. Restored.
 // @retail 0x2f1ea0
 void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *input, void *collector)
 {
@@ -87,6 +91,11 @@ void class_2f1ea0::function_2f1ea0(void const *a, void const *b, void const *inp
 // Signed/unsigned byte axis 69/69; long axis 20; native broadcast 45;
 // uniform refinement constants 155; scalar selection first 20; refined-lane
 // broadcast 167; reversed outer input order 20.
+// as 0x2f1ea0.
+// score 20 (was 20): same body/centre, motion and tail register differences.
+// Sphere before transform 24; box before transform 175; aligned axis loads 20;
+// aligned normal stores 133; aligned point store 22; aligned centre load 20;
+// opaque record sides 20; shared completion exit 20. Restored.
 // @retail 0x2f2130
 void __cdecl function_2f2130(void const *a, void const *b, void const *input, void *collector)
 {

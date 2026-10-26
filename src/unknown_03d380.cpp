@@ -580,6 +580,11 @@ void __stdcall function_1889d0(dword flags)
 // complementary input 85; native flag copy 62; copy complementary input 85; whole flag copy 110;
 // reset array index 62; reset negative guard 62; late flag positive 72; native entry ordinal 93.
 // Raw BX flag load and later receiver allocation remain.
+// frame 0x1c agrees; raw flag-word load, tag and late-global registers differ.
+// Earlier 62 (was 110): raw flags load and tag/late-global registers still differ;
+// Earlier 62 (was 62): native flags BX load and tag/late-global registers remain.
+// Masked tag declaration/flag iteration scope 62/62; dword parameter mask 83;
+// scoped tag for-loop 62; paired zero chain/fill 64/123; Boolean parameter mask 62; late global declaration 62.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {

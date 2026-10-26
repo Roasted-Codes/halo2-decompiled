@@ -105,8 +105,13 @@ static inline s_actor_view *clump_actor_iterator_advance_1b57f0(s_clump_iterator
 // Local forceinline 111; negative/positive iterator results 111/111; iterator reference 111;
 // direct current index 111; entry selection state 154; source key/guard plus key 135/135.
 // late EBP save and first-entry/backedge homes remain.
+// saved-register staging and member/index homes differ. Tried shared neutral exit 111; index after prop gates 137; native walk role homes 137; nested source view gates 137; nested nearby candidate 137; shared exit late index 111; shared exit member scope 111; shared exit native homes 111.
+// Earlier 111 (was 111): late EBP save and first-entry/backedge homes remain.
 // Shared iterator, native state, late selection, denominator, compound weight,
 // key-first selection and forceinline shared iterator each 111; source-key-first 108 (rejected).
+// Next/current field order, actual member output, completed-path output,
+// output plus field order and selected/current dword handles each 111;
+// clump gate first 121; positive member eligibility 111.
 // @retail 0x1b57f0
 short __stdcall function_1b57f0(long actor_index, s_slot *slot)
 {

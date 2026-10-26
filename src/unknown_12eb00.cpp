@@ -68,6 +68,10 @@ static inline s_12eb00 *entry_at_index(s_12ed00 *table, long index)
 // after table 82; earlier table-receiver scope with unchanged load point 21.
 // Entry/ramp/both bound expressions 49/199/200; input/output/both cursors
 // initialized before the table 78/78/317; const element view 21; int result 21.
+// score 21 (was 21): count/cursor homes, pin-result registers and blend address remain.
+// Accumulation row cursor 116; blend row cursor 91; both row cursors 142;
+// accumulation short ordinal 159; blend short ordinal 110; both short ordinals 178;
+// unsigned output count 21; unsigned remaining count 21. Restored.
 // @retail 0x12eb00
 long function_12eb00(long count, s_fog_cluster_distance *clusters, s_12eb00 *output)
 {

@@ -316,6 +316,10 @@ PRIVATE __forceinline real function_1aded1(real arg_0, real arg_1)
 // score 61 (was 61): first range still fuses; frame and later tick conversion agree.
 // In-place delay/duration/both products 61/61/61; delay/duration/both operand orders 61/61/61;
 // entry failure guard 85; earlier state initialization 61.
+// score 61 (was 61): first interval still fuses; frame and ret 8 agree.
+// Reversed scalar inputs 64; lower/upper names 61; both 64;
+// shared draw in private producer 68; reversed shared draw 87;
+// reversed product/add operand ownership 64/64; named reversed shared draw 87.
 // @retail 0x1aded0
 bool __stdcall function_1aded0(long actor_index, s_slot *slot)
 {

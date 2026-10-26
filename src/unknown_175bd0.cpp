@@ -1919,16 +1919,19 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
-// score 160 (was 163): frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
+// score 130 (was 130): frame 0x40 versus 0x44; early color slot, cursor/query homes and zone-base scheduling remain.
+// frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
-// score 171 (was 163): frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
+// frame 0x44 agrees; entry cursor/settings homes, color staging and zone-base scheduling remain.
 // Type query, color update, matrix query and spawn update noinline declarations 163 each;
 // existing tint/multiplication result byte carriers 146/159, both 142 kept;
 // placement result byte carrier 163. No new result copy or field read.
-// score 128 (was 171): frame 0x40 versus 0x44; color/cursor homes and zone-base carriers remain.
+// frame 0x40 versus 0x44; color/cursor homes and zone-base carriers remain.
 // Round 173: tint bool 165; multiply bool 137; both bool 128 kept plain; direct multiply
 // with signed-byte/bool tint 149/135. The merged Boolean consumer re-normalized the byte carriers.
+// Native spawn initialization/query outputs first/both 130 each; complete placement helper 375;
+// returned-location for 379; placement output first/rejection guard 130 each; native spawn with for 379.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2678,6 +2681,14 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Full-width explicitly wrapping counter 361; per-part point 179; direct creation predicate 166;
 // early suppressed-part guard 166; per-part forward 166.
 // Counter declared before tag 166; part-scope up 166; part-scope matrix 166; native fallback CRT copies 166; separate location/tag guards 168.
+// frame 0x7c agrees; radius/tag/counter/iterator homes, flag reloads and random-product lifetime remain.
+// radius precedes the tag/counter/iterator homes; flag reloads and random-product lifetime differ.
+// Round 173: part-scope radius 166; radius product 166; product with lower bound 352;
+// full-width location index 352; positive mode scope 166. Scalar homes and flag/random lifetimes remain.
+// scalar homes, flag reloads and random-product lifetime remain.
+// Detached signed byte 163 (three-point gain dropped); word/long 378/380; reversed signed byte/word
+// 166/288; mode result byte and creation result long 166 each; detached/mode bytes 163;
+// detached byte with two-use lower bound 163. All executable forms restored.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2888,7 +2899,7 @@ bool function_1778d0(void)
 }
 
 bool function_3e9c0(long object_index);
-bool function_2dba0(long tag, vector3f const *direction, long c, long d, long e, point3f const *position, color3f const *color, real alpha, real amount, real scale, bool alternate);
+bool function_2dba0(long tag, vector3f const *direction, bool alternate, long c, long d, long e, point3f const *position, color3f const *color, real alpha, real amount, real scale);
 void function_42850(long a, long b, point3f const *position, vector3f const *first,
 	vector3f const *second, real scale, real width, vector3f const *third);
 real function_17ca10(real x, short curve);
@@ -2903,9 +2914,14 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
-// score 112 (was 287): frame 0x94 agrees; event/flare registers and point/call setup differ. Vector walk
+// score 88 (was 112): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
 // lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
 // initialization 112.
+// Readonly tag/event/part/all metadata 112 each; location cursor home 112; vector homes 112;
+// bounded word flare count 208; transform/color homes 112; consistent alternate argument order 88.
+// Frame 0x94 agrees; scale initialization branch, point SSE setup and later call setup remain.
+// After the consistent call contract: default-first scale 272; default after point 270;
+// default before color 270. Conditional scale and the 88-point body retained.
 // @retail 0x179880
 void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 {
@@ -2952,7 +2968,7 @@ void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 							real remaining = effect_remaining_fraction_179880(effect);
 							scale *= 1.0f - function_17ca10(1.0f - remaining, *(short *)(tag + 0x3c));
 						}
-						function_2dba0(part->tag_index, &forward, 1, effect_index & 0xffff, flare_index, &position, (color3f const *)&effect->origin, 1.0f, scale, 1.0f, function_3e9c0(effect->object_index));
+						function_2dba0(part->tag_index, &forward, function_3e9c0(effect->object_index), 1, effect_index & 0xffff, flare_index, &position, (color3f const *)&effect->origin, 1.0f, scale, 1.0f);
 						++flare_index;
 					}
 				}

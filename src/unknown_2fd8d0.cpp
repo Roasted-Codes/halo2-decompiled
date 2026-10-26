@@ -101,6 +101,9 @@ public:
 // 29; a full block value 214; coordinate-array block 31; direct array
 // inputs 29; existing output index helper 31; direct inputs with index helper 29.
 // The early base load and EAX/EDX ownership still differ.
+// Further trials: block shift 108; lane remainder 97; both 97; short
+// selector 70; lane helper parameter order 31; forced lane helper inline 31;
+// zero component first 31; short selector with zero first 70.
 // @retail 0x2fd8d0
 void blocked_convex_2fd8d0::function_2fd8d0(description_2fd8d0 *out) const
 {

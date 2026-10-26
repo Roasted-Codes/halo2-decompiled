@@ -511,7 +511,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 	return (arg_0 >> 3) & 1;
 }
 
-// score 182 (was 195): state/forward registers agree; rotation scheduling differs.
+// score 182 (was 182): frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
+// Earlier 182 (was 195): state/forward registers agree; rotation scheduling differs.
 // Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
 // Direct state dot loads still cost six bytes; cross before trig 247; late limited snapshot 190;
@@ -519,7 +520,7 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
 // rotation-only snapshot crosses 182; native j/k rotation loop 240.
 // Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
-// score 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
+// Earlier 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
 // scaled cross 264; scaled limited input 241; scaled axis projection 267;
 // full component rotation 239; accumulated alignment 245; normalization decision 183;
 // scaled-cross scalars 186; projected-plus-cosine sums 186.
@@ -538,6 +539,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Rotation publication ijk/ikj/jik/jki/kji 242/241/244/247/244; cross between trig 247;
 // accepted-up library copy 182; deferred k/i results 247; native state/workspace/both
 // array views 182/182/182. Original scalar expressions, shared helpers and outputs restored.
+// Native dot/up/orientation/full input fields 182/182/182/182; test-produced rotation 183;
+// inactive forward/active forward/both active output library copies 182/182/182.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {

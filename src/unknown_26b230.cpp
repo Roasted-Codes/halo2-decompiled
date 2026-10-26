@@ -178,7 +178,8 @@ void function_268840()
 	function_268c90();
 }
 
-// score 296 (was 296): frame 0x48 versus 0x50; iterator result/exhaustion and
+// score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
+// frame 0x48 versus 0x50; iterator result/exhaustion and
 // player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
 // (the latter four use the current-datum iterator). All body forms restored.
@@ -187,11 +188,14 @@ void function_268840()
 // proxy-before-unit loads 296. Original body retained.
 // Round 156: depth zero 426; depth one 296; target size 546; byte retention 317;
 // iterator role names 296. Original frame and child traversal retained.
-// score 246 (was 296): the clump datum walk gives retail's loop head; NONE kept in ebx
+// the clump datum walk gives retail's loop head; NONE kept in ebx
 // where retail keeps the player pool in ebp, and the current clump's slot differs.
 // Round 173: long expiry result 315; long child-step result 295 (one-point gain rejected);
 // retention if/else 302; existing typed actor fields 296; external player-pool reference 296.
 // Frame 0x48 versus 0x50 and current/exhaustion/player homes remain; child-call carriers differ.
+// In the recovered 0x50 frame: entry player pool 302; Boolean retention 247; both 302;
+// direct expiry admission 246/893 bytes; pool/Boolean/both plus direct expiry 314/256/314;
+// entry pool and Boolean retention with full-width child result 301.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2119,12 +2123,16 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
+// score 322 (was 322): frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
+// frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
 // Round 156, caller context: depth zero 505; depth one 322; target size 517;
 // wide cluster selectors 356; retained generation slot 322. Original body retained.
-// score 322 (was 322): round 312: reset/cursor allocation remains; selected byte 332; generation publication first 338; short visibility count 355; cluster-count snapshot 374; shared iterator initializer 322.
-// score 322 (was 322): Frame 0x6a4 agrees; reset-word SI, marking registers and selection/cleanup placement remain. Existing creation helper 322; exhaustive successor 324; native clump heads 373; generation value 332; shared state fallthrough 322; visibility pointers 374.
+// round 312: reset/cursor allocation remains; selected byte 332; generation publication first 338; short visibility count 355; cluster-count snapshot 374; shared iterator initializer 322.
+// Frame 0x6a4 agrees; reset-word SI, marking registers and selection/cleanup placement remain. Existing creation helper 322; exhaustive successor 324; native clump heads 373; generation value 332; shared state fallthrough 322; visibility pointers 374.
+// Scoped first distance iterator 322; two-use candidate-distance sample 326; readonly
+// settings view 322; first scope plus sample 326; separate marking result 322; first
+// scope plus marking result 322; chained reset fields 322, plus marking result 322.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

@@ -87,6 +87,13 @@ s_slot_handler_2 g_47e1c0 =
 	(t_slot_proc)function_1b3380, 0, function_1b3540
 };
 
+// score 109 (was 109): frame 0x44 and initial stores agree; direction XMM, square/store and normalization scheduling differ.
+// Earlier split direction plus rolled reset 116; selection initialization 109;
+// wider ordinals/saved pairs 192/164/128/132/199; source references and projection 109;
+// declaration/component order 114-118; shared point selection 152; scalar directions 150.
+// Shared subtraction 107; existing direction call 312; squared-length part,
+// separation/reciprocal homes and compound reciprocal 109 each; shared scale 107;
+// positive short-vector arm 110; subtraction plus scale 107. Two-point gains rejected.
 // @retail 0x1b3070
 bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 {

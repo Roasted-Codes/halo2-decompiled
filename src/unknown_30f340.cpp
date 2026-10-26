@@ -146,6 +146,11 @@ void owner_30c8e0::function_30f340(member_30c8e0 *member)
 // adds the member, gives its island the constraints added with it, and notes
 // each member its constraints and actions tie it to that is not fixed; an
 // action the fixed island held moves to the member's island
+// score 47 (was 47): final owner-store index and pair count/data registers still differ.
+// Island home name 47; counter home names 47; both home names 47;
+// append parameter order 47; old pair index across resize 246;
+// old index plus parameter order 246; old index plus home names 246;
+// final peer identity first 53.
 // @retail 0x30f380
 void owner_30c8e0::function_30f380(member_30c8e0 *member, constraints_30f380 const *added)
 {

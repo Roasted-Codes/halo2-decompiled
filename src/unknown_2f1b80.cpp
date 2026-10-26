@@ -40,6 +40,9 @@ public:
 // held id 64; direct id consumers 37; common held-id lifetime 37; common
 // native id 64; element reference with common or direct id 37/37.
 // This/scratch homes and centre/body-B register ownership still differ.
+// Further trials: typed output/body pair/query/all inputs 37/37/37/37;
+// miss first 59; miss to one exit 59; id rejection first 42;
+// output-array member reference 37.
 // @retail 0x2f1b80
 void class_2f1b80::function_2f1b80(void const *a, void const *b, void const *input, void *collector)
 {
