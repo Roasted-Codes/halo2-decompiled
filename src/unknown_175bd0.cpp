@@ -2401,7 +2401,8 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 	return location;
 }
 
-// score 59 (was 59): Frame 0x74 and transforms agree; early I load, normalized stores and final output home differ.
+// score 59 (was 59): Frame 0x74 and transforms agree; early I capture, normalized stores and final output home remain.
+// Earlier: Frame 0x74 and transforms agree; early I load, normalized stores and final output home differ.
 // Earlier 59 (was 181): frame 0x74 now agrees; early first-component load, normalized stores and final output home differ.
 // Earlier 181 (was 181): frame 0x78 versus 0x74; point snapshot spills and float scheduling differ.
 // Scalar-member snapshot 238; in-place point 210; acceleration cursor 230 (frame 0x74);
@@ -2435,6 +2436,8 @@ static __forceinline s_effect_location_datum *effect_location_next_179fb0(s_effe
 // Scalar inputs/vector output 105; scalar references/pointers 59/59; scalar inputs/vector
 // reference or value output 105/315; scalar-reference result arms 59; early impulse
 // under scalar contract 105; scalar-input distinct normalization output 65. All restored.
+// Native shared/indexed rescale 63/63; separate-result home names 59/59; result with
+// location outputs/across accelerations/at entry/with matrix lifetime 59/59/59/59.
 // @retail 0x179fb0
 void function_179fb0(s_effect_datum *effect)
 {
@@ -2941,7 +2944,8 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 	return result;
 }
 
-// score 88 (was 88): Frame 0x94 agrees; scale constant/branch, point SSE copies and render input roles differ.
+// score 88 (was 88): Frame 0x94 agrees; scale-default/branch, point SSE copies and render input roles remain.
+// Earlier: Frame 0x94 agrees; scale constant/branch, point SSE copies and render input roles differ.
 // Earlier 88 (was 112): frame 0x94 agrees; scale selection branch, point SSE copies and render-call setup remain.
 // lifetime 287; branch color 324; event/count names 287; part-pointer walk 394; conditional scale
 // initialization 112.
@@ -2953,6 +2957,8 @@ PRIVATE inline real effect_remaining_fraction_179880(s_effect_datum const *effec
 // Consistent tag/direction formal positions: 82/81/81/414/414/83/82/88; none recovers
 // tag ECX/position stack. Native position/forward/up/color 331/329/323/321; both directions
 // 361; spatial inputs 392; point/color 328; all inputs 396. All source/contracts restored.
+// Indexed point/directions/spatial/separate-spatial copies 323/331/352/511;
+// the same copies with native default-first scale 313/333/344/498. All restored.
 // @retail 0x179880
 void __stdcall function_179880(s_effect_datum *effect, long effect_index)
 {

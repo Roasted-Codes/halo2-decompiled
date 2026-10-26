@@ -280,6 +280,10 @@ public:
 // per-use default lower/upper/both 174/174/192; complete reader results 174.
 // Shared classification through existing range readers byte/long/dword/bool 201/189/189/189;
 // shared header plus classification byte/long/dword/bool 202/201/201/190. All restored.
+// Native location position/direct receiver/center 174/174/174, with const receiver
+// 174/174/174; native typed origin 154 (541 bytes), with const receiver 154, both held
+// for caller 308 -> 369 and frame 0x2c. Native origin component/member producers
+// 182/182; coherent location front/middle on component producer 182/182. All restored.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
