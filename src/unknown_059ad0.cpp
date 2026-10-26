@@ -4317,6 +4317,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // identifier 396; chained peer clears 396.
 // Raw-comparison slot name 384; reversed comparison buffers 384; library identity outputs 384;
 // direct state observations 387; result after state 384. Frame/Boolean homes and block placement remain.
+// Word identity result 384; word preference/equality states 396/396; local member first 386;
+// selection flags after map updates 384; word reachability counts 383.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
