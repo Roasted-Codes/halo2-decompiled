@@ -561,7 +561,8 @@ void __stdcall function_1889d0(dword flags)
 	}
 }
 
-// score 62 (was 62): native BX load, tag table and inactive clear receiver differ.
+// score 62 (was 62): Frame 0x1c agrees; raw BX flag load and later scratch receivers remain.
+// Earlier: native BX load, tag table and inactive clear receiver differ.
 // raw flags load and tag/late-global registers still differ;
 // flags/tag names 110; positive/rejection tests 110; direct parameter 160; early flag 42 (restored);
 // inline query 110; shifted word/dword/byte 128/129/120; direct masks 154; first/second mask 132/151;
@@ -590,6 +591,7 @@ void __stdcall function_1889d0(dword flags)
 // declarations 62/62; signature-first initializer 64; signed byte table ordinal 62.
 // Native raw word/signed word/flag object 62/62/62; masked dword 61;
 // const word 62; masked byte 155; parameter bit pair 173; typed word with pair 173.
+// Tag/volume/reset/final-callback inline-noinline declarations 62 each; tag iterator/global receiver/both names 62 each; composite release predicate 151.
 // @retail 0x188ac0
 void __stdcall function_188ac0(dword flags)
 {
