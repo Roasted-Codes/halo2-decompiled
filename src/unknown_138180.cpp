@@ -85,6 +85,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // Round 161: separate player/machine/both pass cursors 171/157/157; word machine/player 262/171; short/unsigned/byte separate passes 262/157/262. Independent native long pass cursors 157 plain kept.
 // Independent-pass membership long/short 183/184; with retail count lower bound 188/188;
 // shared switch-result tail with long/short 196/189, and with lower bound 194/189.
+// Entry zero lifetimes on independent passes: count 172; machine 171; player 157;
+// both ordinals 171; count/machine 184; count/player 172; all 184; ordinal role names 171.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
