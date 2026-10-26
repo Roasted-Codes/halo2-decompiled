@@ -2766,7 +2766,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 	return result;
 }
 
-// score 398 (was 407): Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
+// score 398 (was 398): Frame eight versus four and object/tag/activity/dispatch homes remain.
+// Earlier: Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
 // maximum 398; barrel read 422; scale reads 422; property bits 420; branch maxima 404; all maxima
 // 398; joined scale 423; wide selector 424.
 // Earlier: frame 8 versus 4; activity/dispatch registers and tag spill differ.
@@ -2789,6 +2790,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // readonly activity inputs 407; normalization parts 407; elapsed tick expression 407; inventory case exit 407;
 // progress field admission 407; progress case exits 407; magazine case exits 407; decimal digit expressions
 // 407.
+// Trigger fields at use/table pointer/table field reference 398/422/398; selected magazine pointer 398;
+// with each trigger form 398/422/398; barrel array and direct maximum 423. All restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {

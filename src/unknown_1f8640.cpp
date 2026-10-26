@@ -367,12 +367,13 @@ struct s_1f8a70_actor
 	byte unknown00[0x4ac];
 	s_1f8a70_frame frame;
 };
-// score 399 (was 399): Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
+// score 399 (was 399): Frame 0x80 agrees; pool/data entry schedule, protected unit-mode boundary and result/route homes remain.
+// Earlier: Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
 
 // Earlier at 399 (was 399): frame 0x80 agrees; pool/data entry order, unit-mode boundary and result/route homes remain.
 // Earlier forms and observations:
 // frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
-// score 399 (was 399): Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
+// Previous forms at 399 (was 399): Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
 // Earlier: frame 0x80 agrees; pool/data order and result/route homes differ; global optimization off 1030, frame pointer 500, inline depth 1 414, no route range guard 434, result after first exit 419.
 // pool/data load schedule, unit-mode call and result/route homes differ;
 // fast control 415; signed-char result 425; entry workspaces 415; common target query 440;
@@ -414,6 +415,9 @@ struct s_1f8a70_actor
 // restored; pool/data entry and protected unit-mode/result homes remain.
 // Request/location/reference receivers 449/399/449/450/449/450/449; route-only request 449 (fast).
 // Original complete body restored; pool/data entry and protected unit-mode/result storage remain.
+// Movement flags byte/dword/long 396/399/399; state const pointer/reference 399/399;
+// state reference with flags byte/dword/long 396/399/399; long result/long route/both on byte flags
+// and state reference 421/410/427. Three-point reductions rejected; all restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
