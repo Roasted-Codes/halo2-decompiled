@@ -1587,6 +1587,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // All five-group word ordinals 741 (frame 0xc8; rejected); byte clear ordinals 770;
 // read-submission failure first 770; common delay default 769; clamp bounds 769;
 // request/completion/offline word group 775/754/775; completion-only 754 plain, frame 0xc0.
+// Native duplicate index 761; request/completion/both direct player fields 794/754/794;
+// signed/unsigned word completion-player ordinals 755/755; unsigned word completion group
+// 754; duplicate index with unsigned word group 761. Original body retained.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

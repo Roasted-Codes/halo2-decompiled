@@ -931,6 +931,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // vector 164; complete response vector 185; existing rounding helper 151; response arms and collision fill 361;
 // dot with native reflection vector 164; rounding with reflection products 163; rounding with reflection vector
 // 163; rounding with native query count 154; rounding/count/reflection products 166.
+// Immutable speed/radius/quotient/all scalars 151/151/151/151; native entry success 397;
+// speed-test-produced success 317; immutable query count and candidate 151; native selected
+// collision record 345 at retail length, with wrong entry frame. All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
