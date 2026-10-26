@@ -80,6 +80,9 @@ void function_17e670(s_effect_source *source, point3f const *point, long tag_ind
 // score 16 (was 16): frame and prefix agree; palette/entry register ownership differs from +0xba.
 // Shared entry 17; entry plus palette 17; shared index 32; const shared entry 17;
 // direct tag 52; tag after angles 28; tag after direction 52; shared direction helper 17.
+// Position pointer 16; aggregate direction 16; direction helper with position 16;
+// that combination with shared entry 17; entry pointer arithmetic 16;
+// full-width first entry 32; short first entry 16; short spawn cursor 78.
 // @retail 0x23aad0
 void __stdcall function_23aad0(long previous_address, long current_address, long count)
 {
