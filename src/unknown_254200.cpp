@@ -185,7 +185,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 157 (was 237): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
+// score 157 (was 157): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
 // 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
 // color/both 246 each; alpha with edges 322; native color reference 276; color copies after
@@ -212,6 +212,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // chained descriptor counts/final short-coordinate API/half-scale product order/
 // upper-coordinate term order 246/246/246/246/246/246 (opening fast 246, plain 237).
 // Opening executable body and all inherited directives restored.
+// Current native-color/byte-alpha frame: scoped color 166 fast; scalar half-size 166; disabled return 166; full
+// readiness guards 166; lower coordinate first 378 (control 166). Pointer/byte controls 342 and value-half/pointer
+// 342 reproduce older configurations and are excluded.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

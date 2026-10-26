@@ -591,9 +591,11 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // child category equality 251; dword friendliness plus speed snapshot 229.
 // Predicted-point force-inline 232; depth zero 510; size policy 355;
 // global optimization off 629; projectile category first 242.
-// score 232 (was 232): frame 0x50/0x54 and child-iterator register contract remain.
+// frame 0x50/0x54 and child-iterator register contract remain.
 // Positive occupied/hostile/both results 232/232/232; word empty/friendly/both
 // 253/233/254; external child record and positive-results combination 232/232.
+// Settings at use 233; player-team lookup at use 264; signed-byte empty 232; signed-byte friendly 232; both signed
+// bytes 232. Frame 0x50/0x54 and protected child-iterator register contract remain; original body restored.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

@@ -4305,13 +4305,16 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 396 (was 396): Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
+// score 384 (was 396): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
 // isolated sender rename 407; preference results first 407; old version first 407.
 // Identifier entry workspace 398; received entry workspace 396; long identity equality 402;
 // long preference results 406; equal-version decision first 422.
+// Result byte +9 versus +b, identity/host homes and early acknowledgement/rejection remain. Raw multi-use
+// comparison 384 kept; preference-only long 405; equality-only long 405; integer acceptance 395; peer before
+// identifier 396; chained peer clears 396.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4346,7 +4349,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
   long host = session->member_index;
   const s_session_member_identity *host_identity = (const s_session_member_identity *)&session->members[host];
   s_network_session_member_state *host_state = &session->member_states[host];
-  bool same_host = !memcmp(host_identity, (const byte *)message + 8, 0x24);
+  long identity_order = memcmp(host_identity, (const byte *)message + 8, 0x24);
   if (session->function_058d20())
   {
    if (sender != NONE)
@@ -4358,7 +4361,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
   }
   if (network_observer_channel_timed_out(session->observer, host_state->unknown04))
   {
-   *reason = same_host ? 4 : 6;
+   *reason = !identity_order ? 4 : 6;
    *has_identity = true;
    *identity = *host_identity;
    goto done;
@@ -4368,7 +4371,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
    *reason = 8;
    goto done;
   }
-  if (session->observer->channels[host_state->unknown04].state == 7 && !same_host)
+  if (session->observer->channels[host_state->unknown04].state == 7 && identity_order)
   {
    result = true;
    goto done;

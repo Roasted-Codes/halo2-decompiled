@@ -769,6 +769,8 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Existing complete view initializer 240 (three-point gain rejected); reverse memmove 380; native-entry memcpy 243; signed repair while 243; isolated signed-min lower bound 306 (fast).
 // Paired signed min/max 302; independent bound overrides 362; forward entry cursor 369; reverse entry cursor 394; both entry cursors 406.
 // Full-width adjustment with three-case bounds 256; adjustment with shared initializer 253; pre-copy short adjustment 378; adjusted insertion local 390; less-first cases 243.
+// Frame 0xc agrees; removed-index EDX/ESI and upper ECX/EAX remain. Direction value 342; signed-byte direction
+// 243; range role names 243; direct indexed repair 243; signed min/max with long adjustment 370.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
