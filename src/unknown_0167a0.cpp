@@ -832,7 +832,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): Frame 0xc versus 0x10 and deferred descriptor rereads remain.
+// score 157 (was 157): Frame 0xc versus 0x10; entry/value homes and deferred descriptor rereads remain.
+// Earlier: Frame 0xc versus 0x10 and deferred descriptor rereads remain.
 // frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
 // alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
@@ -851,6 +852,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // 158; source-kind memory first 155; all with body entry steps.
 // Direct/mapped signed selector 157/157; special category first 170;
 // ordinary/special bank-one-first arms 159/167.
+// Complete mapping-root observation alone/with value table/with remapping word/both 159/197/160/212;
+// the same four graphs with native unsigned slot 159/197/160/212 (all with ordinary body steps).
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -1298,7 +1301,8 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 267 (was 265): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
+// score 267 (was 267): Frame and sampler agree; captured descriptor/index and post-store rereads remain.
+// Earlier: Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
 // Frame 0x28 and sampler agree; captured descriptors and
 // destination/dirty-store scheduling remain. Unsigned/signed writer packed formals 291/291;
@@ -1324,6 +1328,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
 // Shared writer reference 267; masked value 302; split stores 267; reference/mask 302;
 // reference/split 267; mask/split and all three 302; named destination values 267.
+// Native external indexed banks/constants/dirty words and their pairs/all 267 each; all fields with packed reference 267.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
