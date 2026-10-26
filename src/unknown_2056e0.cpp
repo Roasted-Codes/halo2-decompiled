@@ -112,6 +112,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 
 // score 184 (was 184): Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
 // Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
+// aligned query/rotation overlap, motion/reciprocal and cap-result allocation remain.
+// Earlier: Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
 // double cap parameter 249; read-only motion input 184; read-only step view 184; read-only
 // component view 184; native contact receiver 184; complete contact mask result 304; separate
 // braking result 274; linear brake used after its cap 223.
@@ -122,6 +124,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // broad rotation plus limiter input 366; norm accumulation 184; capped stores reversed 184;
 // separate integration loops 182 (dropped); torque coordinate loop 286. Frame gap remains.
 // rotation/inertia frame sharing and reciprocal/product scheduling still differ.
+// Earlier: rotation memcpy 184; complete limiter input 351; both 351;
+// Earlier: rotation/inertia frame sharing and reciprocal/product scheduling still differ.
 // separate first matrix result 194f; separate final matrix result 213f.
 // both matrix results 194f; torque snapshot 271f.
 // first result plus torque snapshot 286f; linear change reused 184f.
@@ -147,6 +151,11 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Round 160: Complete force products, linear integration results, angular integration results, both
 // result sets, norm squares, squared cap, all cap products and force-plus-cap products all 184. Every
 // expression tree, input observation, existing helper, matrix role and signed contact loop restored.
+// Earlier: query/rotation overlap and scalar-product allocation remain;
+// Round 131: existing length norm 184; shared cap scale with real first-product
+// output 194; shared cap scale with length/dot norms 184/184; shared double cap
+// scale 227, with first product 239, with length/dot norms 227/227. Alternate
+// norm and double expansion required an exact match; all restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

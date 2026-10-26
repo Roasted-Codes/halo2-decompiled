@@ -3845,7 +3845,8 @@ static __forceinline long nonnegative_15ce70(long value)
 {
 	return value < 0 ? 0 : value;
 }
-// score 470 (was 470): frame 0xe4 versus 0xe0; attacker/category/NONE and decision-byte homes differ.
+// score 470 (was 470): frame 0xe4 versus 0xe0; attacker/category/NONE and decision homes remain.
+// Earlier: frame 0xe4 versus 0xe0; attacker/category/NONE and decision-byte homes differ.
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
 // frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
@@ -3864,12 +3865,18 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 201: One reused event 485; distinct inner event names 480; byte different-player 480; byte same-team 480; long different-player 543.
 // Conversion spill names 480; complete special comparisons 577; category-only word 570; modifier-only word 579;
 // plain timed-step for 480. Frame/NONE and event homes remain; helper and body restored.
+// Round 128: attacker read at each use 563; native penalty/elapsed/both fields 470/470/470;
+// penalty/both with fresh attacker 563/563; shared victim ordinal 571, plus fresh attacker 574;
+// classifier/notification/both Boolean virtual parameters 543/542/544. Frame,
+// attacker/category/NONE and decision-byte homes remain; all restored.
 // Round 358: Category-only byte 545; modifier-only byte 530; modifier after category predicate 543;
 // exhaustive subtype result 566; entry statistics ordinal 557. Frame/NONE and decision homes remain; opening
 // body and shared award update restored.
 // Round 364: Native chain/streak/both statistics fields 470/470/470; fresh victim 615;
 // fresh output state 548; both fresh bases 639; native fields plus fresh victim/state 615/548.
 // Clock/round/options base snapshots 566/481/487; clock-round/clock-options/round-options/all 492/558/548/496; role-named marker and both events 470. Frame and attacker/NONE homes remain.
+// Round 131: word special/different/both/team/special-team/different-team/all
+// decision carriers 477/528/540/470/477/528/540; dword subtype 470.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

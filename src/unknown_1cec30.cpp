@@ -2165,13 +2165,17 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 }
 // score 137 (was 137): aligned frame 0x34 agrees; normal/velocity XMM roles, early velocity loads and property-zero retention remain.
 
-// Earlier: the velocity sums in the material loop load the
+// score 137 (was 137): the velocity sums in the material loop load the
 // running sum second in retail, and the final scale and its stores are
 // scheduled differently.
+// Round 128: shared dot input order 137; consistent inverse-first/inverse-last products 137/137;
+// dot with either product form 137/137; mode snapshot 192; snapshot plus dot 192; sample default
+// before matched query 208. Frame and sample boundary preserved; normal/velocity XMM roles and
+// final zero remain.
+// Earlier: the velocity sums in the material loop load the
 // Round 187: complete contact input/normal sum/both 220/267/463; complete velocity sum 283;
 // symmetric scaled components, separate speed product, material count after store and corrected-boundary speed-first each 137;
 // fallback-first 150; separate normal/velocity/both normalization inputs 443/232/478. All restored.
-// score 137 (was 137): the velocity sums in the material loop load the
 // scheduled differently; initial normal XMM roles also differ.
 // Round 138: native flag byte, signed index, both fields, native bit, bit/index, Boolean bit,
 // Boolean bit/index and readonly native contacts all 137. Normal/velocity XMM roles and
@@ -2735,8 +2739,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     havok_from_vector3d(&position, (vector3f const *)&matrix->position);
     frame->m_translation = position;
 }
-
-// score 206 (was 206): body/stride registers and relative-call input differ;
+// score 206 (was 206): Frame 0xb4 and exact extent agree; stride/base and protected relative-call input registers remain.
+// Earlier: Frame 0xb4 agrees; stride/base and relative-call input registers remain.
+// Earlier: body/stride registers and relative-call input differ;
 // body getters 206; first count after lookup 205 (below gate), both 275;
 // node streams 336; streams with getters 336 (plain scores). Original kept.
 // body stride/base registers and transform call differ;
@@ -2746,12 +2751,18 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // entry relative transform 206; fallback first 206 (plain scores).
 // Round 303: first mapped byte 299; second mapped byte 213; first node at use 338;
 // second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
-// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
-// score 206 (was 206): Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
-// score 206 (was 206): frame 0xb4 agrees; stride/base and relative-call registers remain.
+// Earlier: Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
+// Earlier: Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
+// Earlier: frame 0xb4 agrees; stride/base and relative-call registers remain.
 // Reduced search operand order first/second/both 346/346/346; frame-test operands
 // first/second/both 346/346/346; first mapped-index result 345; with search operands 345
 // (control 346; one-point reductions excluded).
+// Round 130: existing frame converter with matrix/output/both references 206/206/206; direct translation, with matrix/output/both
+// references and actual output return 367/367/367/367/367 (plain scores).
+// The original aligned translation temporary and all interfaces are restored.
+// Round 132: output-first converter, with matrix reference, output pointer return, and
+// output-first return 206/206/206/206; split rotation/translation, output-first split,
+// split return and output-first split return 206/206/206/206 (resolved previews).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

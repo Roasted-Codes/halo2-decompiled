@@ -147,6 +147,10 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Native quaternion snapshot 458 (frame 0x24); all dot products named 288; all cross input products named 292;
 // sine-branch construction j/i/k 310, i/k/j 240. Frame/quaternion spill reuse remains; body and both helpers
 // restored.
+// Separate quaternion axis/scalar inputs: axis-first/scalar-first/reference
+// 246/246/246; native axis value 353; the actual output-pointer return gives
+// 246/246/246/353 respectively. Original helpers and body restored; frame
+// 0x1c/0x24 and half-angle/quaternion/cross spill overlap remain.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

@@ -1270,6 +1270,8 @@ extern bool g_4ed39d;
 
 // score 184 (was 184): Frame 0x28 agrees; game/main byte homes and dialog joins remain.
 // game/main byte homes and dialog joins differ;
+// frame 0x28 agrees; game/main byte homes and dialog joins remain.
+// Earlier: game/main byte homes and dialog joins differ;
 // branch loader scope 184; lobby byte 184; main byte 184; word dialog ID 190;
 // signed user flags 184.
 // Dialog-choice name 184; recovery-result name 184; both names 184; qualified loader if/else 184; dialog-
@@ -1279,6 +1281,8 @@ extern bool g_4ed39d;
 // results before user query 193; late dialog ID 184; full-width dialog flags 189;
 // recovery middle/high groups first 184/184; qualified pending/gate exits 184.
 // game/main byte homes and dialog joins remain.
+// Earlier: initialized message before menu results 183; later mode 184;
+// Earlier: game/main byte homes and dialog joins remain.
 // Plain: direct dialog callbacks 202; callbacks after mode 199; callbacks at display 192;
 // direct callbacks/plain game result 242; late callbacks/plain result 233; display callbacks/plain result 237;
 // direct callbacks/scalar error 245; direct callbacks/both plain 268.
@@ -1287,6 +1291,7 @@ extern bool g_4ed39d;
 // dialog high/middle cases first 184/184; scoped default-dialog query,
 // dialog-presence and alternate-menu results 184/184/184.
 // game/main byte homes and dialog joins remain; low-mode error 190;
+// Earlier: game/main byte homes and dialog joins remain; low-mode error 190;
 // both error chains 186; recovery-needed result alone/with low error 174/159 (latter plain);
 // default main alone/with low error 228/229; default handled/both defaults 181/231.
 // The 159 form adds instructions and worsens normalized sequence edits 69 to 77; restored.
@@ -1307,6 +1312,11 @@ extern bool g_4ed39d;
 // Round 160: Branch-local route result long/short/signed byte 254/251/251; callback-presence choice on
 // common flags query 202; long/byte route plus presence 258/263; message clear at publication 228; shared
 // user-flags workspace 184. Original flow, inherited qualifiers, callbacks and calls restored.
+// Earlier: game/main byte homes and dialog joins remain;
+// Earlier: game/main byte homes and dialog joins remain; signed-byte
+// Round 131: incoming change/pending/both/error/change-error/pending-error/all
+// dword input carriers 184 each; native word dialog choice 189. Original
+// parameter types, own-error observation and both inherited qualifiers restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

@@ -1050,8 +1050,8 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	default: __assume(0);
 	}
 }
-
-// score 766 (was 766): frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
+// score 766 (was 766): Frame 0xd4 versus 0xb4, session input and protected opening lookup expansion remain.
+// frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
 // Frame 0xd4 versus 0xb4, session input and initial lookup expansion remain.
 // Earlier: frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
 // private histogram 852; wide group decision 840; shared group total base 879; native group identity copy
@@ -1083,6 +1083,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Round 141: Native output/session/both object contracts 766 each; output-first pointer, output object,
 // session object and both objects 766 each; readonly session 766. All original interfaces and call
 // sites restored; frame/session/lookup remain.
+// Round 134: all selector const pointers/const references/native values 766/766/1802;
+// switch/field/flag const references 766/766/766;
+// all mutable references/switch values 766/1079.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

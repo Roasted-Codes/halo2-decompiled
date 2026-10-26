@@ -359,11 +359,11 @@ real function_30bf0(vector3f *vector);
 
 bool g_47ff86 = true;
 
-PRIVATE inline void transform_plane_163db0(transform4x3f const *matrix, s_plane *plane)
+PRIVATE inline void transform_plane_163db0(transform4x3f const *matrix, vector3f const *normal, s_plane *plane)
 {
-	real x = plane->normal.i;
-	real y = plane->normal.j;
-	real z = plane->normal.k;
+	real x = normal->i;
+	real y = normal->j;
+	real z = normal->k;
 	plane->normal.i = matrix->up.i * z + matrix->left.i * y + matrix->forward.i * x;
 	plane->normal.j = matrix->up.j * z + matrix->left.j * y + matrix->forward.j * x;
 	plane->normal.k = matrix->up.k * z + matrix->left.k * y + matrix->forward.k * x;
@@ -378,8 +378,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 {
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
-
-// score 412 (was 412): Camera/point saved registers and initial stores differ; complete buffered normal rows require an exact match.
+// score 404 (was 404): Camera/points saved registers and initial stores remain; scalar normal inputs do not recover them.
+// Camera/points saved registers and initial stores remain; input distance/whole-plane ownership does not qualify.
+// Earlier: Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
 // Earlier: Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
 // Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
 // inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
@@ -408,6 +409,16 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Immutable scalar inputs 412; native/immutable native normal 789/789; complete row
 // accumulators 410; immutable inputs with row accumulators 410; native normal with rows 790;
 // parallel normal products 410; native normal/products 789. Two-point reductions rejected.
+// Round 129: separate normal pointer/reference/value 404/404/835; with matrix reference
+// 404/404/835; separate normal pointer/reference with output-address return 404/404.
+// Only separate normal pointer retained, plain 404; all original input copies precede stores.
+// Round 132: separate distance input 611; whole-plane pointer/reference/value 403/403/883;
+// rotation-scale-position inputs 684; with distance/plane pointer/reference 582/717/717.
+// One-point whole-plane reductions rejected; original in-place input copies retained.
+// Round 134: shared triple-test expression/success-result/failure-result/early-failures,
+// point first 1182/1170/1170/1182; point last 1182/1168/1168/1182.
+// Scalar normal arguments XYZ/XZY/YXZ/YZX/ZXY/ZYX 697/697/697/697/697/697;
+// scalar XYZ/ZYX with matrix reference 697/697.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
@@ -443,25 +454,25 @@ bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long
 		result->planes[0].normal.k = 0.0f - result->rectangle.x0;
 		function_30bf0(&result->planes[0].normal);
 		result->planes[0].d = 0.0f;
-		transform_plane_163db0(&camera->matrix, &result->planes[0]);
+		transform_plane_163db0(&camera->matrix, &result->planes[0].normal, &result->planes[0]);
 		result->planes[1].normal.i = 1.0f;
 		result->planes[1].normal.j = 0.0f;
 		result->planes[1].normal.k = result->rectangle.x1;
 		function_30bf0(&result->planes[1].normal);
 		result->planes[1].d = 0.0f;
-		transform_plane_163db0(&camera->matrix, &result->planes[1]);
+		transform_plane_163db0(&camera->matrix, &result->planes[1].normal, &result->planes[1]);
 		result->planes[2].normal.i = 0.0f;
 		result->planes[2].normal.j = -1.0f;
 		result->planes[2].normal.k = 0.0f - result->rectangle.y0;
 		function_30bf0(&result->planes[2].normal);
 		result->planes[2].d = 0.0f;
-		transform_plane_163db0(&camera->matrix, &result->planes[2]);
+		transform_plane_163db0(&camera->matrix, &result->planes[2].normal, &result->planes[2]);
 		result->planes[3].normal.i = 0.0f;
 		result->planes[3].normal.j = 1.0f;
 		result->planes[3].normal.k = result->rectangle.y1;
 		function_30bf0(&result->planes[3].normal);
 		result->planes[3].d = 0.0f;
-		transform_plane_163db0(&camera->matrix, &result->planes[3]);
+		transform_plane_163db0(&camera->matrix, &result->planes[3].normal, &result->planes[3]);
 		if (!(!(camera->has_plane)))
 		{
 			result->planes[4].normal.i = 0.0f - camera->plane.normal.i;
@@ -475,13 +486,13 @@ bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long
 			result->planes[4].normal.j = 0.0f;
 			result->planes[4].normal.k = 1.0f;
 			result->planes[4].d = 0.0f;
-			transform_plane_163db0(&camera->matrix, &result->planes[4]);
+			transform_plane_163db0(&camera->matrix, &result->planes[4].normal, &result->planes[4]);
 		}
 		result->planes[5].normal.i = 0.0f;
 		result->planes[5].normal.j = 0.0f;
 		result->planes[5].normal.k = -1.0f;
 		result->planes[5].d = camera->depth;
-		transform_plane_163db0(&camera->matrix, &result->planes[5]);
+		transform_plane_163db0(&camera->matrix, &result->planes[5].normal, &result->planes[5]);
 		for (long i = 0; i < 4; i++)
 		{
 			vector3d_from_points3d(&result->points[4], &result->points[i], &result->directions[i]);

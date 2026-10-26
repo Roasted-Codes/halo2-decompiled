@@ -2575,8 +2575,8 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
     real red, real green, real blue, real *red_result, real *green_result, real *blue_result);
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
-
-// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
+// Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 // Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
 // unsigned handle 544; native bucket fields 544.
 // Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
@@ -2596,6 +2596,12 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Short/word eligibility 537/537; short/word cache hit 534/534; sampled-transform,
 // inverse-rotation and both workspace names 530/530/530; inverse declared at sample
 // entry 530; Boolean success with live cache observations 535.
+// Round 129, live-cache graph: full-width order with long/bool/short/byte result
+// and short sample ordinal 542/535/542/573; with long sample ordinal
+// 570/559/570/573. Original order declarations, result and sample types restored.
+// Round 131: shared cross/dot determinant in all three cyclic orientations,
+// either dot receiver order, 543 each (exact-match-only); signed-byte capped
+// sample count 529 (one-point gain rejected); byte capped count 564.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)

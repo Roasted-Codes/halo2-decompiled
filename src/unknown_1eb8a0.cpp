@@ -185,6 +185,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 }
 
 // score 642 (was 642): Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
+// Frame 0x24 and clock EDI agree; direction/sample homes and coefficient schedules remain.
+// Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
 // frame 0x24 and clock EDI agree; vector argument homes, scalar schedules and counter return differ.
 // clock register recovered by capped-use coefficient lifetimes; vector argument homes,
 // Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
@@ -222,6 +224,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // complete shared squared lengths 664; products with lengths 665, with initial point difference 719.
 // Named acceleration terms 716; three clamp assignments 664; normalization length first 675;
 // terms/clamps 763; terms/length 738; clamps/length 695; all 781; clamped headroom 751 (fast).
+// Round 134: final flag-word workspace with early coefficient masks 0/1/2/3/4/5/6/7
+// 648/694/716/695/648/692/716/695; original counter and caller preserved.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

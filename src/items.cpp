@@ -966,8 +966,8 @@ struct s_item_flags_view_10b850
     byte flag6 : 1;
     byte flag7 : 1;
 };
-
-// score 813 (was 813): Frame 0x154 versus 0x12c and Boolean/vector homes remain.
+// score 813 (was 813): Frame 0x154 versus 0x12c, entry Boolean bytes and carrier/collision/rotation homes remain.
+// Frame 0x154 versus 0x12c and Boolean/vector homes remain.
 // frame 0x154 versus 0x12c; direction workspace 861;
 // frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
@@ -994,6 +994,9 @@ struct s_item_flags_view_10b850
 // Round 126: Native dot/scaled-add pointer inputs 813/813; complete rotation outputs 813 at retail length;
 // component cross-result fill 813; ordinary dot inline 813; reused geometry predicate 858; reused contact
 // kind 878; all velocity copies by memcpy 813 (fast); all restored.
+// Round 134: separate vector input pointer/reference/value with pointer/reference output
+// 816/816/816/816/936/936; actual vector return with pointer/reference input
+// 939/939 (exact only).
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1217,6 +1220,8 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 
 // score 154 (was 154): Frame 0xac agrees; release-byte RMW/tail, event homes and protected location-call setup remain.
 // Earlier 154 (was 154): frame 0xac agrees; release RMW/tail, event homes and location-call setup remain.
+// Frame 0xac agrees; release-byte RMW/tail and event/location homes remain.
+// frame 0xac agrees; release RMW/tail, event homes and location-call setup remain.
 // Earlier 182 (was 182): frame 0xac agrees; release-byte clears, vector-tail sharing
 // and event-point homes differ; impulse loop 182; damping loop 182; both loops 182;
 // source-vector reference 182; owner/request at entry 184.
@@ -1262,6 +1267,8 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Round 140: eight caller-only declaration/canonical-call forms tie 154 and are excluded diagnostics. Eight
 // coordinated callee declarations (point, matrix, owner, parent, effect and combinations) all 154; owner forms
 // lose a reduced control. Every caller/provider declaration and executable body restored.
+// Round 134: native direction value alone/with rate/with scale/with separate factors,
+// index first 194/194/205/194; index last 194/194/205/194.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

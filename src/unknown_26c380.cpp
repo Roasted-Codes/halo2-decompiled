@@ -172,6 +172,9 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // planar and magnitude 419; cross and magnitude 453; all three 455; point offsets 418. All restored.
 // Edge-test / iterator / passability call boundaries, ordinary inline versus noinline,
 // eight combinations 419/435/460/460/435/435/460/460. All contracts and bodies restored.
+// Round 129, traversal-count scope retained: native planar copy with long/bool/short/byte
+// result 479/543/483/427; CRT planar copy with those result types 479/543/483/427.
+// All original executable source restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

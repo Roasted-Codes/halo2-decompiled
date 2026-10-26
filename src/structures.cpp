@@ -242,12 +242,15 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 }
 
 // score 185 (was 185): exact 0x58 frame; BSP/section registers and range/plane homes differ.
+// frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
+// Earlier: exact 0x58 frame; BSP/section registers and range/plane homes differ.
 // BSP reads at use 217; conditional section selection 229; direct success returns 243;
 // instance reads at use 213; relative triangle-range counter 206.
 // BSP/section registers and range/plane homes remain;
 // reference table before traversal 221; instance case first 232; byte success result 185;
 // result-controlled traversal 205; reference table and result traversal 216.
 // Earlier 185 (was 185): BSP/section residency, range/plane homes and vertex-result joins remain.
+// Earlier: BSP/section residency, range/plane homes and vertex-result joins remain.
 // Index-first/output-first fetch contracts 185/185; filled-point return 185; native span inputs 238;
 // actual validity publication 185; triangle query into result 217; validity-byte name 185; read-only section 185.
 // Shared residency 203; first-fetch validity 185; strip-input cursor 221;
@@ -259,6 +262,8 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // external section source 191; active section reference 185; surface table before walk 205;
 // source and table 244; plane reads at use 225; collision record reference 185; long success/validity 192/185.
 // Earlier 185 (was 185): BSP/section carriers and range/plane homes remain.
+// Earlier: BSP/section carriers and range/plane homes remain;
+// Earlier: BSP/section carriers and range/plane homes remain.
 // Fast: native range 211; native reference 225; native section 216; native BSP 272;
 // native collision 256; range and reference 218; section and range 227; collision and reference 248.
 // BSP/section carriers, range/plane homes and vertex joins remain;
@@ -271,6 +276,11 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 143: joint range/plane, range/instance, plane/instance and all metadata reads
 // at every use 225/217/226/223; with BSP also read at every use 231/221/232/222.
 // All restored; defined vertex failures and protected triangle interfaces unchanged.
+// Earlier: BSP/section carriers, range/plane homes and vertex joins remain.
+// Round 131: private point setter 230; dword index 258; both 256; dword
+// fetch result 185; result with setter/index/both 230/258/256; complete
+// input point captured before the shared setter 319. All defined failures,
+// public declarations, triangle-test arguments and original helper restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
