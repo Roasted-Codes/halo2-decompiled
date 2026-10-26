@@ -1441,6 +1441,7 @@ struct s_camera_clip_reference_16ebf0
 };
 
 // score 209 (was 209): Frame 0x98 agrees; saved-state/direction homes and clipping convention remain.
+// Frame 0x98 now agrees; saved-state/direction homes and narrow/fraction convention differ.
 // Earlier forms on frame 0x9c:
 // shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
 // aggregate copies with shared cross product 249, role names 249, combined scope 249.
@@ -1460,6 +1461,11 @@ struct s_camera_clip_reference_16ebf0
 // direction fields with branch-assigned narrow 209 (plain).
 // Round 215: signed-byte narrow 218; signed/unsigned-word narrow 208/208;
 // function-scope narrow 209; missing-location-first 209. One-point gains rejected.
+// Recovered-frame saved-state name 209; composition output memcpy 209; consistent
+// direction/position role names 209; native byte predicate 218; invalid-reference-first 209.
+// Recovered-frame forward-only copy 217; up-only copy 217; shared cross product 209; saved-state
+// alias removed 254; split high-bit predicate 209. Frame 0x98 agrees; saved-state and direction
+// homes plus clipping convention remain.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

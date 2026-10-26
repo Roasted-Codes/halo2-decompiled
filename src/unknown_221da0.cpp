@@ -178,41 +178,6 @@ struct s_effect_inputs
 dword function_191660(long string_handle, long index);
 
 /* fills the data block of one component of a sound effect */
-// score 169 (was 169): frame 0x24 versus 0x28; full parameter spill and BP/BX selector allocation differ.
-// Parameter record reference 200; both native selectors 188; named gains 169; size policy 400;
-// floating consistency 169; natural while 215; source count after header 186; native header copy 169.
-// frame 0x24 versus 0x28; full parameter-pointer spill
-// and input-selector registers differ. Parameter record 200; early bounds 223;
-// type ladders 177; speaker presence 207; bound values 220; fallback default 227;
-// output mode 169; parameter record with ladders 208. Selected-record copy 206
-// excluded for earlier overlap. Original body retained.
-// score 165 (was 169): Source-element addressing is closer at retail length;
-// frame 0x24 versus 0x28, parameter spill and input selectors still differ.
-// Function/source references 169/165; shared period 165 (740 bytes);
-// shared range selector 220; period plus range 238; function plus range 220;
-// curve record 202; primary field plus range 220; source plus period 164
-// (739 bytes, rejected); source plus function 165. Source reference kept.
-// score 5 (was 165): frame and parameter/selector homes agree; remainder-result
-// stores versus pointer/speaker reload scheduling remain. Direction receiver 211;
-// early parameter 201; both 201; range bit at use 218; function-scope samples
-// 165/165/165; early parameter plus range bit 5 plain. Corrected-frame primary,
-// range, paired and shared phase results 5 each; common period 175; implicit
-// remainder-result conversion 5.
-// score 5 (was 5): remainder stores versus parameter/speaker reloads remain;
-// conditional primary/range/both remainder results 5/5/5; primary/range/both
-// gain results 5/5/5; paired primary/range remainder-and-gain results 5/5.
-// full parameter-pointer spill and primary/range selector registers still differ.
-// parameter count once 165; override mask once 260; parameter cursor 215
-// primary remainder result 165; range remainder result 165; primary quotient 165
-// range quotient 165; cursor/count/mask 235.
-// Count snapshot restores frame 0x28 at 727 bytes and +0x65; its count home replaces no parameter spill.
-// score 5 (was 165): full parameter spill and BP/BX selector homes still differ.
-// External header/input/override records 215/165/165; live bound fields 165;
-// source count after special header 183; sampled values at loop scope 165;
-// named rounded results 165; header plus live bounds 215.
-// score 5 (was 5): remainder stores still precede parameter/speaker reloads.
-// Primary/range/both selector fields 5/7/7; primary/range/both sample names 5/5/5;
-// independent range sample first 117; speaker-index name 5. Original body retained.
 // @retail 0x2222c0
 void function_2222c0(s_effect_component const *component, s_effect_component_overrides const *overrides,
 	s_effect_inputs const *inputs, long speaker, s_effect_data_block *block)
@@ -257,7 +222,7 @@ void function_2222c0(s_effect_component const *component, s_effect_component_ove
 
 				if (input == 1)
 				{
-					x = (real)fmod((double)(x / function->period), 1.0);
+					x = fmodf(x / function->period, 1.0f);
 				}
 				if (speaker != NONE && input == 3)
 				{
@@ -269,7 +234,7 @@ void function_2222c0(s_effect_component const *component, s_effect_component_ove
 
 					if (range_input == 1)
 					{
-						y = (real)fmod((double)(y / function->period), 1.0);
+						y = fmodf(y / function->period, 1.0f);
 					}
 					if (speaker != NONE && range_input == 3)
 					{

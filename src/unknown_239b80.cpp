@@ -48,6 +48,10 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 // x-first deltas with full denominator 107.
 // Shared difference/projection/both 109/101/109; actual output cursor 256;
 // difference/projection with output cursor 256/256; natural previous update 101; cursor with previous update 256.
+// Second/both input records 163/247; complete/staged projection numerator 101/103;
+// parallel output offsets 101; second record with offsets 163; numerator with offsets
+// 101; nested eligibility/capacity scopes 101. Original helper and body restored.
+// Immutable displacements 101; both projection products 101; plane value 269; word output/classification/clipping ordinals 231/220/202; common output result 138; current before previous 101.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)
@@ -421,6 +425,7 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 // reused short/native bound values 43/47.
 // Test-point value 97; function-scope vectors 31; edge before offset 31; role names 31;
 // difference helper y-first/output-first/base-first/vector result 31/31/31/144.
+// Early short successor with vertex pointer/value 58/103; separate current/successor 63; advanced short wrap 50; advance before rejection 43; result-controlled traversal 49; native/word equality wrap 44/45.
 // @retail 0x23a220
 bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
 {

@@ -746,12 +746,15 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 	spawn->location_index = particle_location->next_index;
 }
 
-// score 17 (was 29): the untinted half-path exit is a long jump to the last
+// score 17 (was 17): the untinted half-path exit is a long jump to the last
 // epilogue where retail's short jump joins the half path's own; the half path
 // reads the unpacked color through the returned pointer where retail reads the
 // buffer and pushes the returned pointer. Store per path (retail's entry
 // registers) 41; returned pointer packed only 41; one shared buffer 17;
 // early untinted return 17; tinted tested first 37.
+// Shared double scale 58; immutable/ordinary complete products 23/23;
+// product value copy 74; decode value copy 63; exchanged decode workspaces 17;
+// two decode-result lifetimes 45; double scale with in-place result 64.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
@@ -826,12 +829,15 @@ public:
 // Frame 0x60 now agrees; flag transfer, child carriers and selective calls
 // remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
 // 308 (plain verified); child for-loop 338.
-// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native orientation result 373, with shared cross 373.
+// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native
+// orientation result 373, with shared cross 373.
 // frame 0x60 agrees; early long-result store, flag transfer and child/call homes remain.
 // Ordinary local parent 366; word result 338; direct final result 388; direct parent color
 // Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
 // child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
 // Original entry result, ordinary pooled flags and all child calls restored.
+// Flag-stage long result/native bitfield transfer/direct visibility and combinations
+// 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1019,6 +1025,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // Frame 0x64 agrees; early EDI/tag homes remain. Direct mask chain 222; late native request 331; persistent point workspace 213; bias after camera 213; library point copy 213 (fast).
 // Direct render-table expression 222; request location at rendering 327; byte view result 213;
 // ordinary while location traversal 213; camera up copied first 213.
+// Negative visibility 287; exclusion membership 213; opposite-view classification 213; three negative
+// predicates 287; signed render mask 213. Original source restored.
 // Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
 // availability result before the work guard 355. Early EDI/tag lifetimes remain.
 // @retail 0x174420

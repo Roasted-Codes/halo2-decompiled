@@ -49,6 +49,8 @@ real function_30bf0(vector3f *vector);
 // Selector failing-range returns 213; explicit selector context 213; direct collision predicate 213;
 // ordinary while light traversal 213; independent blend bounds 213; constant output first 213.
 // Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
+// Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
+// 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -677,13 +679,12 @@ void function_d2bf0(s_mesh *mesh, long triangle_index, real u, real v, real *out
 	}
 }
 
-static inline real pin_real(real value, real minimum, real maximum)
+static inline void pin_real(real *value, real minimum, real maximum)
 {
-	if (minimum > value)
-		return minimum;
-	if (value > maximum)
-		return maximum;
-	return value;
+    if (minimum > *value)
+        *value = minimum;
+    else if (*value > maximum)
+        *value = maximum;
 }
 
 PRIVATE __forceinline real uv_coordinate_pin(real const &value, real minimum, real maximum)
@@ -1168,11 +1169,14 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
     return 0.0f;
 }
 
-// score 539 (was 539): frame 0x2c versus 0x28, stored result and block/query registers differ.
+// score 529 (was 529): Frame 0x2c versus 0x28, stored result and block/query carriers remain.
+// Selected ordinal 587; combined admission mask 570; unsigned scan 529; shared bias local 559
+// (caller lost); common blend weight 533.
+// frame 0x2c versus 0x28, stored result and block/query registers differ.
 // Late success return 577; short result 585; direct primary output 598; early square 579;
 // negate normal before copy 546; late return plus parameter order 577; ordered countdown
 // traversal 560 (retail length); countdown with tested result 566.
-// score 529 (was 539): second scale starts at its application; retail length, extra frame word remains.
+// second scale starts at its application; retail length, extra frame word remains.
 // Early lightmap workspace 579 (caller lost); lightmap clamp first 587; primary copy/clamp 598;
 // early final fade 529/2196; second scale at use 529/2189 kept.
 // Final fade with late second scale 541/2175 (restored).
@@ -1252,9 +1256,10 @@ real g_467484 = 15.0f;
 real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
-// score 364 (was 364): frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
+// score 364 (was 364): Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
+// Earlier 364 (was 364): frame 0x4c versus 0x40; normal-copy and native color/rotation homes remain.
+// frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
 // Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
-// frame 0x4c versus 0x40 and normal/color scheduling still differ;
 // frame 0x4c versus 0x40 and normal/color scheduling still differ;
 // copied limited color kept; early squared length 428, decoded-color names 429,
 // in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
@@ -1272,6 +1277,10 @@ real function_30bf0(vector3f *vector);
 // Native rotation input snapshot 490; cosine-first evaluation 364; live axis fields 528 (caller lost);
 // input snapshot with cosine order/in-place output/live axis 490/487/487 (live-axis caller lost);
 // input snapshot with bounded-color home/radians producer 490/490.
+// Native limited/turned/both/normal homes 364/364/364/364;
+// limited-normal/turned-normal/all homes 364/364/364; outer rotation workspace 364.
+// All original normal, copied color and rotation values and helper boundaries retained.
+// Round 152: All rotation-row partial sums/products 364/438; all normalizer products 430 (retail frame/length); normalizer with rotation partials/products 430/449; all RGB blend products 429 (retail frame/length); blend/rotation partials 443; all parallel products 429.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1612,9 +1621,9 @@ extern color3f *g_46872c;
 
 PRIVATE __forceinline void surface_pin_color(color3f *color)
 {
-    color->red = pin_real(color->red, 0.0f, 1.0f);
-    color->green = pin_real(color->green, 0.0f, 1.0f);
-    color->blue = pin_real(color->blue, 0.0f, 1.0f);
+    pin_real(&color->red, 0.0f, 1.0f);
+    pin_real(&color->green, 0.0f, 1.0f);
+    pin_real(&color->blue, 0.0f, 1.0f);
 }
 
 PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_point *point)
@@ -1626,7 +1635,12 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 819 (was 819): the long per-vertex flag and the sample points declared at the top of
+// score 790 (was 819): Frame 0x90 now agrees; mesh, UV/color homes and material/magnitude expansion
+// remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
+// block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
+// Boolean/word/byte capability 790/802/790.
+// the long per-vertex flag and the sample points declared at the top of
+// the long per-vertex flag and the sample points declared at the top of
 // their scope; mesh, UV and color homes and helper expansion still differ (frame 0xa8 versus 0x90).
 // Native bitmap word 835; palette byte 852; both 852; UV role names 835; inline depth zero 2009;
 // metadata dispatch 847; long per-vertex alone 831; dynamic entry lifetime 835; model sample
@@ -1674,7 +1688,7 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
             real base_u = 0.0f, base_v = 0.0f;
             long bitmap_index = NONE;
             long palette_index = NONE;
-            long per_vertex = index != NONE &&
+            bool per_vertex = index != NONE &&
                 *(word *)(*(byte **)((byte *)g_4e0348 + 0x144) + index * 0x58 + 0x56) != 0;
             if (!per_vertex)
             {
@@ -1724,9 +1738,6 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
         byte *definition = g_4e3b44[*(long const *)(record + 0xc) & 0xffff].bytes;
         s_mesh *mesh = *(s_mesh **)(*(byte **)(definition + 0x28) + section_index * 0x5c + 0x34);
         word const *vertices = (word const *)((byte *)mesh->triangles + triangle->part_offset * 2);
-        s_sample_point point_a;
-        s_sample_point point_b;
-        s_sample_point point_c;
         bool dynamic_valid = false;
         color3f dynamic_color;
         vector3f dynamic_normal;
@@ -1736,6 +1747,9 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
                 *(s_24490_definition **)(definition + 0x78), section_index);
             if (block)
             {
+                s_sample_point point_a;
+                s_sample_point point_b;
+                s_sample_point point_c;
                 byte *data = *(byte **)(block + 0xc) + *(long *)(block + 4);
                 s_sample_point const *a, *b, *c;
                 if (block[0] != 0x39)
