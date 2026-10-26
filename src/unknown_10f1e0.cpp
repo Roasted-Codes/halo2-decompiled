@@ -1641,12 +1641,14 @@ PRIVATE __forceinline void bounds_112070(s_aiming_screen const *screen, real *bo
 PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *forward,
 	vector3f const *side, vector3f const *up, vector3f *result)
 {
-	result->i = forward->k * v->k + forward->j * v->j + forward->i * v->i;
-	result->j = side->k * v->k + side->j * v->j + side->i * v->i;
-	result->k = up->k * v->k + up->j * v->j + up->i * v->i;
+	vector3f input_direction = *v;
+	result->i = forward->k * input_direction.k + forward->j * input_direction.j + forward->i * input_direction.i;
+	result->j = side->k * input_direction.k + side->j * input_direction.j + side->i * input_direction.i;
+	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 841 (was 841): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
+// score 810 (was 841): frame 0xcc versus 0xd4 and first angle expansion remain.
+// Earlier: frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
 // two inline levels 833, sequential channel construction 833, activity byte 833,
@@ -1671,6 +1673,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // uniform running projection sums 841; output-first 841; native input references 841;
 // references plus output-first 841; running sums plus output-first/references 841/841.
 // Frame 0xc8 versus 0xd4 and first angle expansion remain. Body and helper restored.
+// Round 181 direction input value/native copy 810/810; basis values/native copies 1067/1073;
+// all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166.
+// Direction copied once inside projection retained (plain 810, 3403/3403); frame 0xcc versus 0xd4.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

@@ -206,6 +206,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // qualification removals none/result/player/result+player/blocked/result+blocked/
 // player+blocked/all 827/769/649/671/811/750/660/674.
 // All regress; original state receiver, case graph and local qualifiers restored.
+// Complemented return with original locals 771; ordinary result/player/both 764/856/832;
+// ordinary blocked/result-blocked/player-blocked/all 781/778/858/844. Original case-two
+// result, case order, local qualifications and complete executable body restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

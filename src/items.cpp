@@ -997,6 +997,7 @@ struct s_item_flags_view_10b850
 // Round 134: separate vector input pointer/reference/value with pointer/reference output
 // 816/816/816/816/936/936; actual vector return with pointer/reference input
 // 939/939 (exact only).
+// Complemented motion/floor/speed/surface 922/813/811/890; floor-speed/surface-floor/surface-speed/all 811/890/888/879 (fast). Two-count speed gain rejected; frame 0x154/0x12c and native workspace homes remain.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1269,6 +1270,7 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // lose a reduced control. Every caller/provider declaration and executable body restored.
 // Round 134: native direction value alone/with rate/with scale/with separate factors,
 // index first 194/194/205/194; index last 194/194/205/194.
+// Direction global at every use with bool/long/short update result 229/243/242; bool/byte/short/long idle result 223/223/243/244; entry bool idle 224 (fast). All restored; release RMW/tail and event/location homes remain.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

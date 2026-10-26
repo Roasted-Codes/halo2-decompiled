@@ -1340,6 +1340,11 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // all results before sample publication both/direct/mapped 380/356/291; native color
 // results before sample publication both/direct 375/356. Original sample writes,
 // shared writer, sampler and executable body restored.
+// Round 185 indexed-first reversed constant/indexed/both bank arms 267/267/267; constant-first four
+// bank orders 265 each; bank-first 242 plain (dropped for shared-writer regression). On bank-first:
+// XOR 245; common masked value 290; masked XOR 290; dword packed 258; dword XOR 263; dword
+// masked/both 320/320; signed packed 258 (fast). Original helper and body restored; descriptor
+// capture and dirty-store scheduling remain.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

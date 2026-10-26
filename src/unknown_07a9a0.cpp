@@ -1086,6 +1086,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Round 134: all selector const pointers/const references/native values 766/766/1802;
 // switch/field/flag const references 766/766/766;
 // all mutable references/switch values 766/1079.
+// Round 180 native short party
+// extrema/spread/population/extrema-spread/extrema-population/spread-population/all, then word population
+// 901/797/766/904/904/796/904/766 (fast); all restored. Frame 0xd4/0xb4 and protected opening lookup remain.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

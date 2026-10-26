@@ -623,6 +623,8 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // friendliness AND with retained unit count 228; word friendliness AND with retained unit count 209; signed
 // byte friendliness AND with retained unit count 201; word count and long friendliness AND 229; named
 // complete child friendliness predicate 201; word count and word friendliness AND 210.
+// Round 185 hostility OR bool/byte/short/long with count first 231/231/247/248; count last
+// 224/224/236/235 (fast). All restored; frame and protected child contract remain.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

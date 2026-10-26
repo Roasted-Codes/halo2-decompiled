@@ -156,6 +156,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // output 194; shared cap scale with length/dot norms 184/184; shared double cap
 // scale 227, with first product 239, with length/dot norms 227/227. Alternate
 // norm and double expansion required an exact match; all restored.
+// Virtual output pointer/mutable receiver/both 184/184/184; uniform angular terms alone/with
+// pointer/receiver/both 184 each; new query/product contract with distinct first result 194.
+// Aligned query/rotation overlap remains.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

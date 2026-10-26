@@ -375,6 +375,7 @@ bool function_22acb4(long player_index);
 // enum plus flags/first bytes 190/190; all scalar fields/all fields plus native items 190/190.
 // Round 366: Joint item/type-mask selection 298; mask-first stores 298; zero result 300;
 // initialized absent outputs 278; early first seed 298; signed third/native fourth/native second 316/308/285.
+// First/second enum observations once 292/284; flags at each use 190; both enum observations 284; first/second/both with live flags 292/284/284; unsigned-word enums with live flags 284. Extra second-mask spill and persistent constant homes remain.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

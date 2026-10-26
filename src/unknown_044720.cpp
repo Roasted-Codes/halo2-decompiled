@@ -234,6 +234,7 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Indexed mark/tag/link/read-only receivers 228/271/271/271; large center aggregate copy 202;
 // signed-short node cache 216, with byte node 234, with selective indexed reads 285.
 // Earlier 190 (was 190): entry/index spill and sphere/position homes remain.
+// entry/index spill and sphere/position homes remain.
 // Native bound sphere with branch/entry count homes 196/196; aligned bound 203/203.
 // Native bound with split center/query 197 for both count homes and either bound alignment.
 // All native sphere copies restored; no field observation or float grouping retained.
@@ -245,6 +246,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // 8/4, 4/8, 4/4 with aligned query 190/190/190/190/190/190/190/190.
 // Combined tag snapshot/live node fields, original/split center 219/221; with shared marking
 // 231/232; branch-scoped count gives the same four 219/221/231/232. All restored.
+// Selector read-only input 190; packed-flags value alone/with read-only input 236/236; selector
+// tag value alone/with read-only input 190/190; both metadata values 236, with read-only input
+// 236, with one final geometry result 236. Entry/index and point homes remain.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

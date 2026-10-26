@@ -935,7 +935,7 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// score 13 (was 69): the merged index is now the first record index's own register as in
+// score 13 (was 13): the merged index is now the first record index's own register as in
 // retail; the fallback index and its promoted copy sit in SI/EBP where retail has BP/ESI, and
 // the fallback's result is tested before its copy into the merged index (retail copies, then
 // tests). Round 87: index read into the result before the first check 13 (kept); both checks
@@ -948,6 +948,8 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 // 109; long result/ordinal 119/108; existing bounded-length call 69; native candidate
 // invalidation 75; invalidation plus bounded call 75; negated success 75/75; candidate
 // selection 75/75 (manual/shared length); signed count 76.
+// Round 186 seeded-first validator: promoted ordinal 103; input-default native result 13;
+// long return/input 121/98; signed/word scan counts 16/174; immutable index 13; equality bound 178.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
@@ -1759,7 +1761,7 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
     }
 }
 
-// score 257 (was 264): Frame 0x3c agrees; count/definition/best/point homes, entry loads and packed reference tests remain.
+// score 257 (was 257): Frame 0x3c agrees; count/definition/best/point homes, entry loads and packed reference tests remain.
 // Packed comparisons 393; shared actor walk 344; split point scopes 344; early target 365;
 // native reference indices 350; entry fields at use 344; inline distance call 678.
 // Native player iterator 305; native entry cursor 316; word validation 305; matching-area
@@ -1781,6 +1783,8 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Frame 0x3c agrees; stack homes, per-entry loads and reference tests remain.
 // round 106: Frame 0x3c agrees; stack homes, entry loads and packed reference tests remain. Pointer count block 264 plain; pointer table 323; shared squared product 305; single time exit 305; native selection fields 274. On pointer block: selection fields 285; earlier block 312; earlier block with selection 333; point name 264; block name 264; unused formal address removed 264.
 // Round 110: branch table with native selection 323; actual palette field reference 279; reference with branch table 301; split point scopes on native iterator/count frame 264; early actor iterator workspace 264.
+// Round 186 actual native records: definition 321; entry 257; both 321; area 257;
+// definition/area 321; entry/area 257; all 321; all read-only 321. Strides and field widths preserved.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {

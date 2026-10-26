@@ -786,6 +786,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // four coherent five-scalar home names 254 each; live front/native routing bit 238 plain (kept);
 // live front/native widths and native-bit widths 256/256; input level/offset fields 322;
 // selected-field reference with live front, without/with native bit 312/312 (dispatcher lost).
+// Unqualified right/rear-left/both/rear-right/right+rear-right/both-rear/all words 267/261/266/262/267/261/267; all with native routing bit 265. Every right-word removal loses dispatcher; other subsets regress. Frame 0x1c/0x18, mode/level homes and tail sums remain.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

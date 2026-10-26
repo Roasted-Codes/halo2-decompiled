@@ -761,6 +761,8 @@ real normalize2d(point2f *v);
 // 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
 // movement flag stores 174; retry speed first 172; native planar output copies 172.
 // Earlier: frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
 // Query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
 // first-type state 172/208; decisions after query 177; both byte decisions 172.
 // Word validity reaches 935 bytes but gains only two points and is restored.
@@ -770,6 +772,7 @@ real normalize2d(point2f *v);
 // shared movement destination 172; native request copy 172.
 // earlier result declaration 172; minimum and retry force 227.
 // Earlier: query-byte zero, trajectory setup and scalar homes remain;
+// query-byte zero, trajectory setup and scalar homes remain;
 // retry/movement/both threshold products 172/172/172; clamped upward result
 // 172, with both products 172; retry/movement/both eligibility results 172/172/172.
 // frame 0x48 agrees; fast-byte zero and trajectory convention remain.
@@ -785,6 +788,10 @@ real normalize2d(point2f *v);
 // Round 199: Initial/retry/both scalar outputs at method entry 172 each; retry outputs at valid scope
 // 172; first entry plus retry valid 172; both entry with false validity return 172; retry valid with
 // false validity return 172; false validity return alone 172 (fast). All restored.
+// Round 180 complementary
+// validation/base-check/trajectory/validation-base/validation-trajectory/base-trajectory/all/byte trajectory
+// 217/173/223/172/212/226/225/223 (fast); all restored. Frame 0x48 agrees; immediate query zero and protected
+// trajectory convention remain.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

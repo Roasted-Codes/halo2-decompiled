@@ -251,6 +251,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // result-controlled traversal 205; reference table and result traversal 216.
 // Earlier 185 (was 185): BSP/section residency, range/plane homes and vertex-result joins remain.
 // Earlier: BSP/section residency, range/plane homes and vertex-result joins remain.
+// BSP/section residency, range/plane homes and vertex-result joins remain.
 // Index-first/output-first fetch contracts 185/185; filled-point return 185; native span inputs 238;
 // actual validity publication 185; triangle query into result 217; validity-byte name 185; read-only section 185.
 // Shared residency 203; first-fetch validity 185; strip-input cursor 221;
@@ -264,6 +265,8 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Earlier 185 (was 185): BSP/section carriers and range/plane homes remain.
 // Earlier: BSP/section carriers and range/plane homes remain;
 // Earlier: BSP/section carriers and range/plane homes remain.
+// BSP/section carriers and range/plane homes remain;
+// BSP/section carriers and range/plane homes remain.
 // Fast: native range 211; native reference 225; native section 216; native BSP 272;
 // native collision 256; range and reference 218; section and range 227; collision and reference 248.
 // BSP/section carriers, range/plane homes and vertex joins remain;
@@ -281,6 +284,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // fetch result 185; result with setter/index/both 230/258/256; complete
 // input point captured before the shared setter 319. All defined failures,
 // public declarations, triangle-test arguments and original helper restored.
+// BSP/section carriers, range/plane homes and vertex joins remain.
+// Validity output pointer/reference/byte 185/185/185; predicate-produced bool/byte 185/185;
+// predicate byte with native block 185; Boolean/byte outputs with native block 185/185. Defined
+// failure and geometry homes remain.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

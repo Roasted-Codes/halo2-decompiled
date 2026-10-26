@@ -571,6 +571,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // fallback axis/default library copies 182/182; initial snapshot with aliases removed 182;
 // all snapshots with fallback copies 182; settings-only/forward-only alias removal 291/291;
 // up-field reference on combined alias removal 195. Two-point gain rejected; original body/helper restored.
+// Round 183 complementary skip decision bool/byte/short/long 182 each; each with consistent
+// old-up field pointer 309 (fast), losing the caller match. All restored; initial dot
+// displacement bytes and rotation schedule remain with EDI state/EBX forward preserved.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -892,6 +895,7 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 
 // score 582 (was 582): Frame 0x34 versus 0x30, direct-mode carrier and vector homes remain.
 // Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain.
+// Frame 0x34 versus 0x30 and direct/vector homes remain.
 // Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
 // Frame 0x34 versus 0x30; direct-mode carrier and original/limited vector homes remain.
 // Earlier: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
@@ -934,6 +938,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // consistent active direct crosses 580; in-place history addition 641 (frame 0x30, 2981 bytes);
 // byte states with direct crosses 580; flying-only/ground-only direct crosses 580/582.
 // Two-point cross gain rejected; original private implementation and inherited qualifiers restored.
+// Round 183 existing returned-vector cross for first flying / remaining flying / ground / all flying
+// 607/659/590/694; first flying plus ground / remaining flying plus ground / all active / all paths
+// 637/689/724/834 (fast). All restored; extra frame dword, direct bit and vector homes remain.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {

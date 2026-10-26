@@ -1339,6 +1339,10 @@ bool function_1e1de0(long arg_0);
 // producer 219. All restored; early ESI and computed result remain.
 // Coherent native-byte return with bool/byte update, early/shared exit and long/bool activity:
 // 165/165/250/250/257/257/245/245. Original Boolean return, both outside declarations and all producer/copy forms restored.
+// Complemented readiness/activity/both/behavior 174/251/258/167; readiness-behavior/activity-behavior/all 175/251/258; cases 12,0,1 165 (fast). All restored; early ESI, computed return byte and actor/motion homes remain.
+// Round 187 final readiness/activity/behavior/time publication orders RABT/BRAT/BART/ARBT/ABRT
+// 167/167/167/168/168; RTBA/RBTA/BTRA 167/166/166 (fast). All restored;
+// early ESI, return byte and actor/motion homes remain.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

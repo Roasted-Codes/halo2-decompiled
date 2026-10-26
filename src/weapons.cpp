@@ -3090,6 +3090,9 @@ struct s_ammo_conversion_entry
 // Early unloaded publication after/before remaining calculation 198/198; with candidate entry 217/217;
 // early publication with conversion quantity 198; numeric home names 198; wide loaded quantity 198;
 // numeric names/conversion quantity/earliest publication 198. Original body restored.
+// Round 183 complementary acquisition word/byte/long 212/194/215; source depletion
+// bool/byte/short 197/197/212; both word-plus-bool/bytes 215/200 (fast). Byte acquisition
+// recovers frame 0x20 but gains only four, so all restored; destination/tag and conversion homes remain.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

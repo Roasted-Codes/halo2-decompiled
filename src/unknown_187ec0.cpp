@@ -468,6 +468,8 @@ bool function_172750(long mode, point3f const *point, real radius);
 // Round 147: existing index getter 210; distance-reject exit 118; variant-first guards 188; equality
 // membership 144; reverse cases 118; nested guards 118; selected first-table index 188; second-case
 // branches 151.
+// Round 186 initial/fallback/both conditional lookup results 162/118/162; guarded payload
+// selection alone/with initial/with fallback/with both 219/230/219/230; shared getter force-inline 118.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)

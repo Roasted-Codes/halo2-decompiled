@@ -53,6 +53,7 @@ real function_30bf0(vector3f *vector);
 // 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
 // Existing scalar color/blend/both 213/213/213; existing color helper and helper plus blend 213/213;
 // entry strength snapshot alone/with scalar clamps/with color helper 225/225/225. All restored.
+// Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1191,6 +1192,8 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // captured-normal role names, entry color declarations and entry length 508 (caller 442);
 // inline/noinline declarations 508 (caller 442). Restore original body to preserve caller 364.
 // Round 222: native query-vector field 529; field at every use 567; native query copy 578; original-query squared-length helper 529; native-query length before copy 528; all RGB first products 530; all RGB illumination terms 577; normal memcpy 578.
+// Negative selection bool/byte/short/long 534/534/567/565; with uniform live block count
+// 561/561/531/533. Original selection, count snapshot and every math/helper form restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1678,6 +1681,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Late model texture outputs/sample color/combined color at model entry 790/790/796;
 // texture plus sample/texture plus combined/sample plus combined/all three 790/796/796/796;
 // all three at function entry 793. Frame/result/mesh and external helper boundaries remain.
+// Round 181 material noinline 807; native status/mesh, vector, color, barycentric sample and combined role homes 790/790/790/790/790; single result exit 834; combined homes with material noinline 807 (fast); all restored. Frame 0x90 agrees; result/mesh/sample/UV homes and material/magnitude expansion remain.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
