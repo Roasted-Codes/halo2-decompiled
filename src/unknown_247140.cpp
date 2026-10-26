@@ -272,6 +272,8 @@ public:
 // Shared definition base 200; selector input snapshot 182 (match-only);
 // definition base with selector input 185 (match-only); count snapshot 179 (match-only);
 // Y/Z-first input intervals 194/194; origin fields at consumers 201; unsigned cleanup handle 194.
+// Origin memcpy 170 (same held code); two-use origin scalars 205; shared magnitude 194;
+// expansion product 194; unsigned first handle 194.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

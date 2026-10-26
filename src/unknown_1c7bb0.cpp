@@ -65,6 +65,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // 164; actor iterator expansion 164; actor next accessor expansion 164; begin pool expansion 164;
 // all shared expansions 164. Separate pool residency, early null publication and successor EBP
 // remain.
+// Iterator before entry guard 164; unsigned partition word 164; native actor iterator
+// initializer 206; active count before both actor stores 166; Boolean completion-first step 165.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

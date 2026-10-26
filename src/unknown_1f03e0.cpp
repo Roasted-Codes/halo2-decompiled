@@ -886,6 +886,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
 // score 614 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
 // 614; normal-only value 685; facing-only value 641; up-only value 632; damping/gravity/direct order 614
 // (fast).
+// score 614 (was 614): frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
+// 627; direct clipping scope 614; general clipping scope 614; scalar history change 741
+// (frame 0x30, 2920 bytes); shared cross products 626 (fast).
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1033,6 +1036,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // value subtraction 445; dual preferred/search cursors 434; response-scoped indices 428; native
 // component/scoped indices 428; dual cursors with projection helper 454; dual cursors with entry count 433
 // (fast).
+// score 421 (was 428): frame 0x64 agrees; persistent zero and count/component homes remain.
+// Two-contact response first 421 kept; entry index array 428; dynamic preferred bound 428;
+// fallback-only shared negative scale 428; byte pass ordinal 434 (fast).
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1149,13 +1155,7 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
             *surface = selected;
             indices[count++] = selected;
             byte *contact = *(byte **)(component + 0x88) + selected * 0x48;
-            if (count == 1)
-            {
-                direction.i = desired.i - *(real *)(contact + 0x28) * minimum;
-                direction.j = desired.j - *(real *)(contact + 0x2c) * minimum;
-                direction.k = desired.k - *(real *)(contact + 0x30) * minimum;
-            }
-            else if (count == 2)
+            if (count == 2)
             {
                 byte *contacts = *(byte **)(component + 0x88);
                 vector3f tangent;
@@ -1163,6 +1163,12 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
                     (vector3f *)(contacts + indices[1] * 0x48 + 0x28), &tangent);
                 contact_normalize(&tangent);
                 vector3f_scale(&tangent, dot3f(&tangent, &desired), &direction);
+            }
+            else if (count == 1)
+            {
+                direction.i = desired.i - *(real *)(contact + 0x28) * minimum;
+                direction.j = desired.j - *(real *)(contact + 0x2c) * minimum;
+                direction.k = desired.k - *(real *)(contact + 0x30) * minimum;
             }
         }
         function_1f2a80(request, moving, &desired, indices, count, out, velocity);
@@ -1202,6 +1208,9 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // score 230 (was 230): Frame 0x28 agrees; real-zero load, reset/selection homes and second material-call
 // expansion remain. Native component 230; flag after supported 355; long moving 300; long saved supported
 // 293; long saved flag 296 (fast).
+// score 230 (was 230): frame 0x28 agrees; zero width, selection homes and material-call expansion
+// remain. Separate inline declaration 230; entry normal workspace 230; unsigned highest 234;
+// native-long flying 306; final cleanup exit 230; normal/ordinal combination 232 (fast).
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

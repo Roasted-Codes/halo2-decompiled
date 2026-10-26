@@ -254,6 +254,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // shared point initializer 195; single result 280.
 // Origin/camera/scale fallback selections, all three paired selections and all together 195 each;
 // native floating factor admission 195. Complete original body restored.
+// Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;
+// y-first displaced construction 218; scale shared through existing helper 235.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
