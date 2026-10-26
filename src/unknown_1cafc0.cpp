@@ -807,15 +807,18 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // (six match losses). On 251: logical channel 287; logical offset 248 (gain
 // three, dropped); loop expression 345; success after query 274; before
 // overlay 255; previous-loop home name 251.
-// score 251 (was 251): Frame 0x38 agrees; ID/Boolean homes and blend call lifetime remain. Byte result 249 (gain two, dropped); entry third ID 306; two-channel clear loop 251; masked blend bit 311; byte combined state 251.
+// Frame 0x38 agrees; ID/Boolean homes and blend call lifetime remain. Byte result 249 (gain two, dropped); entry third ID 306; two-channel clear loop 251; masked blend bit 311; byte combined state 251.
 // ID/result/loop homes, blend reloads and frame clamp remain.
 // Transition ID name 251; blend-first join 327; failed result from flag 354;
 // frame-position snapshot 297; reversed bitwise loop result 251; previous-loop
 // lifetime first 254; false result after channel observation 286 (fast).
-// score 251 (was 251): Frame 0x38 agrees; ID/Boolean homes and blend lifetime remain. Word result 255; word previous loop 334; word combined state 312; reused selected set 251; found record at lookup 251; byte result plus logical offset 269 (fast).
+// Frame 0x38 agrees; ID/Boolean homes and blend lifetime remain. Word result 255; word previous loop 334; word combined state 312; reused selected set 251; found record at lookup 251; byte result plus logical offset 269 (fast).
 // Frame 0x38 agrees; identifier/result/loop homes and protected query lifetime remain.
 // Full-width return 255; signed-byte previous loop 251; primary ID at lookup 339; names initialized at
 // lookup 443; aggregate names on late-success form 320 (fast).
+// Optional blend-ID initialization 289; transition-set lookup scope 251; both 289; channel-state
+// initialization 251; positive channel flag 254; reversed independent clears 251;
+// state/flag/clear combination 254; native ID/set/state combination 289.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

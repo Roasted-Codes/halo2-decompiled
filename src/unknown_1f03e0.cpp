@@ -405,19 +405,22 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 203 (was 203): frame 0x14 agrees; request/count registers and cross scheduling differ.
+// score 198 (was 203): frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
 // reversed independent dot order 203; stepping snapshot 303.
-// score 203 (was 203): frame 0x14 agrees; request/count/table registers and cross-result stores still differ.
+// frame 0x14 agrees; request/count/table registers and cross-result stores still differ.
 // Shape pointer 329 (not matched); read-only scan and natural while 203/203; desired copy 271;
 // double height comparison 309; size policy 374; floating consistency 314; native default copies 203.
-// score 198 (was 203): frame 0x14 agrees; request/count/table homes and cross stores remain.
+// frame 0x14 agrees; request/count/table homes and cross stores remain.
 // Cases 3/1/2 226; second normal first 246; average ikj/jik/jki/kij/kji
 // 201/200/198/203/203; native masked handle 203. Average j/k/i kept after full check.
 // frame agrees; request/count/table registers and cross-result stores remain;
 // selected normal from existing pair 233; direct pair cross inputs 209; first normal reference 203;
 // second normal reference 203; both normal references 203; output record reference 226; lower
 // height bound first 211; complete average initializer 203.
+// Native first/second/both normal values 261/293/334; average initialized from second/first
+// normal 285/288; first-value/second-average 315; second-value/first-average 301; both-
+// values/second-average 341.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
