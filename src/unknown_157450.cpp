@@ -946,19 +946,22 @@ bool function_159610(void)
 
 	if (game_engine_get())
 	{
-		double timer = 1.0;
+		real timer = 1.0f;
 
 		if (g_4b9ed8 != NONE)
 		{
 			timer = function_xaee93d()->timers[g_4b9ed8];
 		}
-		if (timer >= 1.0)
+
+		long local_user = g_4b9ed8;
+
+		if (timer >= 1.0f)
 		{
 			long player_index = NONE;
 
-			if (g_4b9ed8 != NONE)
+			if (local_user != NONE)
 			{
-				player_index = g_4e8c20->entries[g_4b9ed8];
+				player_index = g_4e8c20->entries[local_user];
 			}
 			result = true;
 			if (player_index != NONE && engine_player_get(player_index)->unit_index != NONE)
