@@ -1428,9 +1428,12 @@ void function_2422d0(long slot)
 	}
 }
 
-// @retail 0x2423f0
 // score 7 (was 65): the object index is kept in EDI and the object in EBP, retail keeps them the other
 // way round.
+// score 7 (was 7): native index/eligibility/object reference 7; team-index/team-object/
+// other-count names 7; second-loop element address/nested accept 7; native slot table/
+// const object pointer/table-entry address 7; slot-field address 60. Original body restored.
+// @retail 0x2423f0
 bool function_2423f0()
 {
 	long others[8];

@@ -92,7 +92,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 	g_5047f8[arg_0].field_18 = arg_0;
 }
 
-// score 408 (was 408): frame 0x64 agrees; entry loads, parameter cleanup and normalization/trig homes differ.
+// score 408 (was 408): Frame 0x64 agrees; entry loads, normalization homes and 0x18 versus 0x1c cleanup differ.
+// frame 0x64 agrees; entry loads, parameter cleanup and normalization/trig homes differ.
 // Earlier frame 0x68 forms: shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
 // Frame 0x64 agrees; entry loads, normalization homes and 0x18 versus 0x1c cleanup differ.
 // Earlier shared normalizer 433; unsigned count 437; unsigned endpoint 433; both 437; angle end pointer 457.
@@ -113,6 +114,9 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Existing endpoint helper at negative/positive/both outputs 408/409/409; rounded distance/projection/ratio
 // in double 442/444/445; native velocity fields 408; indexed endpoint observations 458. Entry loads,
 // XY/magnitude homes and 0x18 versus 0x1c cleanup remain.
+// Normalizer input snapshots 448; native normalizer/distance/both roots 443/408/448; snapshots with
+// native distance root 448; void normalizer alone/with snapshots/with native roots 408/448/448.
+// Original helper and body restored; entry loads, XY/magnitude homes and return cleanup remain.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -275,7 +279,7 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 	arg_3->y = arg_1 * arg_2->y + arg_0->y;
 }
 
-// score 767 (was 767): frame 0x11c versus 0x114; radius caching and trace/point homes differ.
+// score 749 (was 767): frame 0x11c versus 0x114; radius caching and trace/point homes differ.
 // Shared endpoint setters 767; center CRT copy 767; step CRT copies 767;
 // obstacle-radius observation 813; requested-angle observation 796; all restored.
 // Trace-field forward sector 772, reverse 776, both 774; settings radius rereads 812; short-index obstacle cursor 814.
@@ -288,6 +292,9 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Frame 0x11c versus 0x114 and radius/trace homes remain. Selected obstacle pointer 802;
 // forward state on hit 771; reverse state on hit 771; both states on hit 784; active edge updates 857;
 // in-place initial endpoint 850 (fast).
+// All parallel sweep scale terms 749; both endpoint distance carriers 791; scales plus distances 755;
+// obstacle owner field rereads 767; separate annular failure guards 767; shared coordinate join 875
+// (fast). Frame 0x11c versus 0x114 and radius/trace/pivot homes remain.
 // Rotation output reference 767; endpoint output reference 767; endpoint input references 767;
 // rotation height-source input 767; endpoint pointer result 767; native settings member 767 (fast).
 // Original helper contracts and settings storage restored.
@@ -336,21 +343,27 @@ bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point2f local_17, local_18, local_19;
 	if (arg_1->field_0)
 	{
-		local_17.x = local_6.i * -(arg_6 - local_12.distance);
-		local_17.y = local_6.j * -(arg_6 - local_12.distance);
-		local_18.x = local_6.i * -(local_13.distance + arg_6);
-		local_18.y = local_6.j * -(local_13.distance + arg_6);
-		local_19.x = local_6.i * -arg_6;
-		local_19.y = local_6.j * -arg_6;
+		real forward_scale = -(arg_6 - local_12.distance);
+		real reverse_scale = -(local_13.distance + arg_6);
+		real center_scale = -arg_6;
+		local_17.x = local_6.i * forward_scale;
+		local_17.y = local_6.j * forward_scale;
+		local_18.x = local_6.i * reverse_scale;
+		local_18.y = local_6.j * reverse_scale;
+		local_19.x = local_6.i * center_scale;
+		local_19.y = local_6.j * center_scale;
 	}
 	else
 	{
-		local_17.x = local_6.i * (local_12.distance + arg_6);
-		local_17.y = local_6.j * (local_12.distance + arg_6);
-		local_18.x = local_6.i * (arg_6 - local_13.distance);
-		local_18.y = local_6.j * (arg_6 - local_13.distance);
-		local_19.x = local_6.i * arg_6;
-		local_19.y = local_6.j * arg_6;
+		real forward_scale = (local_12.distance + arg_6);
+		real reverse_scale = (arg_6 - local_13.distance);
+		real center_scale = arg_6;
+		local_17.x = local_6.i * forward_scale;
+		local_17.y = local_6.j * forward_scale;
+		local_18.x = local_6.i * reverse_scale;
+		local_18.y = local_6.j * reverse_scale;
+		local_19.x = local_6.i * center_scale;
+		local_19.y = local_6.j * center_scale;
 	}
 	point3f local_20 = *local_5;
 	point3f local_21 = {local_6.i * local_12.distance + local_5->x, local_6.j * local_12.distance + local_5->y, local_5->z};
