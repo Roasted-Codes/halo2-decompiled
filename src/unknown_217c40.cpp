@@ -105,6 +105,8 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // Role names 564; four-controller bound 541; ordinary snap inline 1438; short quadrant 564; shared default 548; combined 562.
 // Iteration-wide axes 541; direct double-angle helper 541; offset before magnitude 556;
 // shared axis signs 735; reverse layout-case order 541.
+// Native short coordinates 603; native long coordinates 551; quadrant through tests 555;
+// preference rereads 543; late preference/output bases 598.
 // Snap magnitude value parameter 541; snap axes by value 541; short four-controller ordinal 554; byte selected button 539; shared mapping index 541.
 // @retail 0x217c40 standard
 void function_217c40(void)

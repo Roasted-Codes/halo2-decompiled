@@ -80,6 +80,8 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 }
 
 // score 416 (was 416): Frame 0x6c/0x64, table-pointer roles and bound spill remain; entry bitmap storage 416; output-helper formal order 454; failed-selection common exit 416; ordinary distance inline 416; byte overall result 445.
+// Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
+// squared-distance second point by value 430; conditional table pointer initialization 416.
 // Group-table field at each use 457; native long overall result 445; bounded output for 420; same-group pretested while 416; positive nearest-point scope 416.
 // Entry secondary root 417; direct initial root fields 416; native output-point reference 416;
 // native distance references 416; native first squared-distance point 433; unsigned-word fixed pass 416.

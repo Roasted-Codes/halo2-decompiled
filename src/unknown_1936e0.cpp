@@ -150,8 +150,11 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 194 (was 194): Frame 0x40c versus 0x408, tag/language and string cursor/count homes remain.
+// score 194 (was 194): Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
+// Earlier: Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
+// Frame 0x40c versus 0x408, tag/language and string cursor/count homes remain.
 // Earlier 194 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
+// Frame 0x40c versus 0x408 and tag/language/string-cursor homes remain.
 // Earlier 194 (was 229): frame 0x40c versus 0x408; string zero, cursor and
 // frame 0x40c versus 0x408 and tag/language/string-cursor homes remain.
 // Earlier: frame 0x40c versus 0x408; string zero, cursor and
@@ -164,15 +167,22 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Separate points input cursor 228; direct string countdowns 194; both 228;
 // independent countdown output cursors 228; shared remaining-string counter 228.
 // Simultaneous output cursors 226; native string-array end bounds 263; shared increasing counter 194; score-array cursor 210; points-array end bound 191; shared counter/end bound 191; simultaneous cursors/end bound 222.
+// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Tried string workspace scope 211; masked list index 217; byte string counters 194; independent
 // score counters 194; score upper clamps 226; unsigned score counter 194.
 // Round 109: Complete point memcpy 217; role-named buffer/counters 194; whole wide-buffer zero 248 (three sibling losses); direct list field 212; independent named cursors 194.
+// Round 113: Intermediate wide-buffer entry scope 194; unloaded-table early return 194; table pointer before list 194; list receiver before language query 202; existing table helper output-first 194.
 // Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Explicit language last/first 194/194; explicit-language ordinary inline 433;
 // original lookup/table/both ordinary inline 481/194/481; readonly language inputs 194;
 // native wide workspace 194. Original lookup helpers, contracts and body restored.
+// retained list receiver 235; retained table root 223; both receivers 235; source-end copy 200;
+// indexed source with destination cursor 221; both arrays indexed 221; list receiver/source end 241;
+// table root/source end 215.
+// List-index/language/list/table-root lexical homes separately and together 194 each;
+// receiver declaration at producer 194; independent point count 194; short score ordinal 241.
 // Round 201: Outer lookup output-first 194; existing bounded copy 194; unsigned string ordinals 194; entry point-destination cursor 223; intermediate buffer lexical order 194.
 // Round 210: Native wide-array helper outputs 194; signed-byte string ordinals 194; direct table
 // root 194; native table-reference input 194; unsigned language ordinal 194. Extra tag spill and
@@ -296,18 +306,26 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
-// score 186 (was 199): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
+// score 186 (was 186): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes remain.
+// Earlier: Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
+// Frame 0x38 agrees; scale callee EBX/EAX and constant-argument pushes still differ.
 // Earlier 199 (was 203): frame 0x38 agrees; callee scale in EBX versus EAX
 // adds a save and shifts settings homes; constant argument pushes also differ.
 // Native zero initialization 199; complete aggregate values 307; grouped
 // place cases 204; case returns 203; zero initialization and grouping 206.
-// score 186 (was 199): extra EBX save and settings homes remain; native leading
+// Earlier: extra EBX save and settings homes remain; native leading
+// Earlier at 186 (was 199): extra EBX save and settings homes remain; native leading
 // defaults for type-four/type-five/both/team/type-four-team/type-five-team/all
 // 229/216/241/204/233/224/249; longer type-four prefix 258.
 // Native settings memset 203; Boolean fields first 200; shared type-four
 // workspace 206; equal-place assignment chain 199; team case first 218.
 // Round 109: Type-four padding-only clear 272; team padding-only clear 204; complete type-five assignment 228; all three forms 301; distinct native case settings names 199.
 // Round 111: Type-five/team/place native scopes 189/196/199; reverse type-four stores 204; type-four cases first 220; combined native scopes 186 kept; type-five value initialization alone/combined 193/190; combined lexical home 186; combined reversed stores 191.
+// Builder scale/type-four/type-five/team inline-noinline declarations 186 each; place workspace beside retained pair 186; type-four workspace beside pair 203; type-five-first/separate-place-first cases 213/192.
+// Round 113: Shared type-five overwritten clear omitted 224; equal team-field chain 185 (one-point gain dropped); type-four memset with shared workspaces 203; shared declarations reversed 186; complete shared-record entry initialization 237.
+// Type-four native value reset 216; first-case shared three/four 193/193; second-case shared five 192; all
+// equal type-four values chained 199; type-five range/full reversed stores 186/186; descending cases 228.
+// Scale EBX/EAX and constant pushes remain.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

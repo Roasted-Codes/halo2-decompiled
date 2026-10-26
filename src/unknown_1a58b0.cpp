@@ -1812,7 +1812,29 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 	return (s_target_link_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 }
 
-// score 98 (was 113): call argument setup, marker-loop homes and terminal epilogues still differ.
+// score 85 (was 85): frame 0xf0 agrees; the marker loop's query carriers and the optional second
+// matrix (retail: a nullable marker selected before the capacity test, then null-tested) differ.
+// With a selector local (allowed only with a match) 13, plus a marker list local 11 at 565 bytes;
+// left: the marker address (retail [base+offset] load, then an in-place add) and count loaded into
+// ecx before the selector. Earlier: the first candidate named inside the count test kept (98 -> 85
+// with candidate indexed by accepted count); positive-count guard around the loop 93 (not kept).
+// Direct count increment 121; native short query 129; shared exit 131; direct optional transform
+// 115; positive marker count 129; combined increment/transform 113; combined short query 114;
+// direct count cleanup 113; two-phase candidate cursor 125; marker/table/both records 113 each;
+// cursor with marker record 125; cursor with native query 129; cursor with positive table 126;
+// separate count result 169; initial candidate lifetime 98; marker presence 113; weighting value
+// 120; optional matrix value 173; readonly tag/capacity value/scalar names 113 each; initialized
+// marker output 209; initial candidate plus weighting 109; post-query candidate 85; native query
+// there 86; existing tag helper 161; first candidate record 98; post-query marker
+// record/workspace 85 each; tag helper plus post-query candidate 161; selector branches/before
+// presence 80/80; native query count 73; index name/shared marker buffer 13/13; weight result 67;
+// combined eligibility 80; accepted-count snapshot after/before query 13/13; query name first/with
+// count 12/12; native marker value before/after query 100/110; library copies 100/110; native
+// query width 126/128; shared descriptor 100; late copy with shared outputs 110; name local before
+// the marker 12; marker after the query 11; marker by pointer arithmetic 85 (with selector 13: the
+// in-place add appears, offset/name in ecx/edx); if-assigned selector 80; matrix local 85;
+// capacity tested before the selector 85; named candidate before/after the selector 13/13.
+// call argument setup, marker-loop homes and terminal epilogues still differ.
 // Kept: the first candidate named inside the count test (98); with a repeated positive-count guard
 // around the marker loop 93 (not kept: a test the loop already makes).
 // Direct count increment 121; native short query 129; shared exit 131; direct optional transform 115.

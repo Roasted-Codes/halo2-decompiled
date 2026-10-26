@@ -135,7 +135,21 @@ long function_239d50(long count, point2f const *points, point2f *hull);
 short function_239e50(short count, point2f const *points, short *indices);
 
 /* 0 when every point is the same, 1 when they are on one line, 2 otherwise */
-// score 42 (was 42): state/index/point and normalization SSE homes still differ at frame 0x18.
+// score 42 (was 42): state/index/point registers (retail ECX/EDX/ESI) and the XMM homes
+// differ; retail keeps the line normal's j in XMM2 through the scaling, so its constants
+// sit one XMM register higher. Local/formal point cursor with short ordinal 94/93; short
+// remaining count 94/93; long ordinal 97/97; long remaining count 94/93; byte state 91;
+// unsigned word ordinal 85; state increments 76; terminal equality 43; first point before
+// scan 85; normalizer reference 42; point-first dot 42; success normalizer 102; normalizer
+// input vector 126; compound scales 42; factor-first scales 42; positive normalizer scope
+// 42; long point index 101; count-first guard 99; long state 86; plane/point names 42;
+// forced normalizer 42; forced dot 42; both forced 42; single-result normalizer 42;
+// squared-length expression 42; staged scales 42; reverse scale publication 42; length
+// workspace 56; signed-distance expression 42; native first-point components 63;
+// accumulated dot result 46; repeated j input 42; repeated i input 42; both scalar inputs
+// 126; state renamed to sort before the index 42; zero-length arm first 44; `>= epsilon`
+// far test 68; named normalizer length 56; line declared before the first point 42.
+// state/index/point and normalization SSE homes still differ at frame 0x18.
 // Earlier: coupled state/index/XMM homes and normalized Y load remain;
 // local/formal point cursor with short ordinal 94/93; short remaining count
 // 94/93; long ordinal 97/97; long remaining count 94/93. Opening body restored.
@@ -342,7 +356,19 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 	result->j = a->y - b->y;
 }
 
-// score 50 (was 50): entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
+// score 50 (was 50): retail loads the count once (DX, then EBX sign-extended for the
+// wrap) and compares the index with the count's stack home as a word; ours re-reads the
+// count each pass. The XMM homes differ too (retail offset XMM0/XMM3, edge XMM1/XMM2). Short
+// wrap snapshot 78, long 68, later short 78; ordinary count 73 (moves the point to the stack
+// and breaks the matched caller 0x14a370), ordinary count with long/short shared bound
+// 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67;
+// byte/short/native result 102/104/102; unsigned-short induction 50; early cross 58;
+// distance limit scalar 50; cross square scalar 50; both squared parts 50; edge first 48;
+// vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50; nested
+// predicates 50; entry success 51; predicate result 51; ordinary count with a volatile read
+// of it only at the loop test 69 (192 bytes); offset-first cross operands, the length sum
+// without casts and a pointer cross-product inline all compile identically (50).
+// entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // score 50 (was 50): entry count load, word tail and XMM edge/offset homes remain.
 // Current point value 111; advancing point cursor 58 at 184 bytes; ordinary while 50;
 // named edge squares/cross products/both 50/50/50; point value with edge squares/both 111/111.
@@ -355,7 +381,6 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 // initial count load, wrap-bound ownership and XMM allocation remain.
 // Edge first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50;
 // nested predicates 50; entry success 51; predicate result 51. Two-point gain rejected.
-// entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
 // Next before offset 50; radius square at use 71; const radius square 50;
 // outer offset/edge/both storage 50/50/50; early next with outer vectors 50; radius at use with outer vectors 71.
 // @retail 0x23a160

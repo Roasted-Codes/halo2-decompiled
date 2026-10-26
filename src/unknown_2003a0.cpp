@@ -814,6 +814,7 @@ done:
 // Native entry table 176; native palette table 176; both table views 176;
 // palette retained across advance 188; direct category-bit extraction 202.
 // Round 110: native explicit selection pair 196; direct published success returns 224; pair with first while scan 211; published current return 176; unsigned-word result 198.
+// Round 117: Native selection block 176; optional definition result 176; fallback postadvance 203; shared palette publication 210; readonly selection graph 176.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -1929,6 +1930,7 @@ bool function_1e1de0(long actor_index);
 bool function_1df5d0(short team_a, short team_b);
 
 // score 179 (was 179): Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
+// Earlier: Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
 // Earlier: frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // Earlier iterator declaration 242; iterator/count role names 242; natural for
@@ -1948,6 +1950,10 @@ bool function_1df5d0(short team_a, short team_b);
 // Frame 0x14 agrees; next-index memory home, contribution register and entry
 // Frame 0x14 agrees; next-cursor storage, contribution register and flag
 // Round 110: delayed long count from native population 235; known native squad fields 179; direct hostility OR 238; hostility first 179; native point memcpy 179.
+// Signed-byte/byte hostility and unsigned branch count 179 each; non-unit default count 242; unsigned tracking handle and readonly tracking/target/both views 179 each. Original values and declaration types restored.
+// Round 164: shared swarm input 179; shared pool getter 179; aggregation phase 235; phase swarm 235;
+// phase pool getter 235; iteration actor scope 182; actor scope swarm 182; all native scopes 235.
+// Zero/sentinel iterator seeds 243/228; actor pointer/health names 179/179; shared actor level 248; shared definition flags 179; live last-update reads 179; health publication before count 179. Cursor memory home and contribution allocation remain.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2098,13 +2104,19 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
     return result;
 }
 
-// score 275 (was 275): frame 0x48 versus 0x54; iterator/point homes, early saves
+// score 275 (was 275): Frame 0x48 versus 0x54, early saved-register pushes, iterator/point homes and intersection spill remain.
+// This round: structure at uses 305; cluster root at uses 302; both roots at uses 300; shared final
+// bit test 275; direct bitmap countdown 274; root observations shared test 300; root observations
+// countdown 302; roots countdown shared test 302.
+// frame 0x48 versus 0x54; iterator/point homes, early saves
 // and intersection spill remain. Native workspace names 275; shared point setter 275;
 // separate squad-phase scope 275; forward bitmap scan 298; Boolean overlap OR 303.
 // Frame 0x48 versus 0x54, iterator/point homes and intersection spill remain; original body and declarations restored.
 // Failure-first/composed squad steps 316/306; native bitmap union 294; point copy/update 335;
 // unsigned current handle 275; declared word bitfield 294.
 // Long overlap 321; raised-component loop 275; shared current-handle scope 275; per-squad area scope 275; long actor wake 301.
+// Exact tick result 312; native word index/actor type 275/275; complete point value 275;
+// value/lexical order 275; failed-team result 275; first-overlap exit 305; early output object 275.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2705,20 +2717,25 @@ PRIVATE __forceinline byte *function_202752(s_record_pool_iterator *arg_0)
 
 static __forceinline long real_to_long(real value);
 
-// score 227 (was 227): frame 0x30 agrees; active/pool reloads and zero-result joins differ.
+// score 227 (was 227): Frame 0x30 agrees; active/pool reloads and zero-result joins remain.
 // Role names 227; native squad iterator 227; squad result local 227; short timers 227;
 // timer-only step 230 (725 bytes); separate group phases 277; both forms 297.
 // Single-result squad step 298; zero inline depth 584; global optimization off 439;
 // frame pointer 258; size preference 633. Original kept.
-// Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
-// squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
+// Timer squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
 // positive-timer continues 227.
-// Frame 0x30 agrees; active/pool observations and zero-result joins remain.
 // Native zero initialization 255; timer addresses 227; final group for 289; final squad for 329;
 // first squad-phase lifetime 227.
+// This round: group local publication 280; group field publication 293; group failure exit 293; squad
+// conditional return 264; squad direct return 227; local group conditional squad 277; field group
+// direct squad 293; local group direct squad 280.
+// Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
+// squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
+// Frame 0x30 agrees; active/pool observations and zero-result joins remain.
 // Native group both/first/root 250/272/282; native squads 258; both native walks 256; group
 // workspace lexical order 250; both workspace lexical order 256.
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
+// Round 117: Activity input group/squad/both 227/227/227; conversion-workspace names 227; factor-first periods 227; ordinary inline group/squad 227/227.
 // @retail 0x202720
 void function_202720(void)
 {

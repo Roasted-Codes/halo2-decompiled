@@ -39,7 +39,8 @@ PRIVATE __forceinline long sky_surface_tag(short index)
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
+// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
+// Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
 // light/value fields 213; both views 213; frame pointer 296; status enum 213.
 // selector complete validation 213; selector result join 213; collision value initialization 238; direct
@@ -47,6 +48,7 @@ real function_30bf0(vector3f *vector);
 // preference 380; float consistency 302.
 // Selector failing-range returns 213; explicit selector context 213; direct collision predicate 213;
 // ordinary while light traversal 213; independent blend bounds 213; constant output first 213.
+// Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1250,16 +1252,26 @@ real g_467484 = 15.0f;
 real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
-// score 364 (was 429): frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// score 364 (was 364): frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
+// Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
+// frame 0x4c versus 0x40 and normal/color scheduling still differ;
+// frame 0x4c versus 0x40 and normal/color scheduling still differ;
 // copied limited color kept; early squared length 428, decoded-color names 429,
 // in-place rotation 464, normal-square scalar 429, copy plus early square 453 (fast).
 // Base clamped in place 444; outer limited-color lifetime 364; copied color plus
 // in-place rotation 435 (retail length); scales at first use 381; shared surface clamp 481;
 // shared axis view 515, with in-place rotation 463, with in-place base clamp 542
 // (all three axis views lose the matched caller). Original helper and bodies restored.
-// score 364 (was 364): rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
+// rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
 // shared negate then native output 460; scoped turned vector 364; single-result normalizer 380;
 // ordinary rotation inline 364.
+// Normal consumer before rotation 476; before limited color 508; early primary record 500; direct mobile result 480.
+// Complete color result 440; blend complement 451; early normal with complement 479, with complete color result 500.
+// Shared dot/length-square/primary RGB scale 364/364/364; secondary/reflected/all RGB scales 452/450/465; dot/all and square/all 465/465.
+// Earlier: rotation workspace still adds twelve frame bytes; intrinsic normal copy 364;
+// Native rotation input snapshot 490; cosine-first evaluation 364; live axis fields 528 (caller lost);
+// input snapshot with cosine order/in-place output/live axis 490/487/487 (live-axis caller lost);
+// input snapshot with bounded-color home/radians producer 490/490.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1391,6 +1403,9 @@ bool __stdcall function_1d2f0(D3DSurface *surface, byte *bitmap);
 dword function_1362b0(s_type_7ba8e9 const *bitmap, point2f const *uv, real detail);
 dword function_015cd0(long index, dword entry);
 
+// score 4 (was 4): the conversion destination uses ECX rather than EAX; the UV address uses EDX rather than ECX.
+// Scoped/entry two-use conversion pointers 4/4; multiuse UV pointer with and without it 4/4;
+// direct success return 93; UV/storage names 4/4; getter noinline 4; both/sample noinline 4/4.
 // @retail 0xd2f90
 long function_d2f90(long flags, short bitmap_index, long palette_index, real u, real v, color3f *out)
 {

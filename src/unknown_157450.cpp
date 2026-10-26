@@ -5045,18 +5045,17 @@ void function_36580(void);
 void function_36880(s_short_rectangle const *rectangle, color4f const *color);
 void function_161420(long player_index, real alpha);
 
-// score 24 (was 24): state/user EDI/EBP swap and final x87 argument scheduling remain.
+// score 2 (was 2): final player register setup precedes the x87 argument store; frame and other instructions agree.
 // value-initialized iterator 158; entry workspaces 42; draw dimensions 24; immutable user 24;
 // frame pointer 173; global optimization disabled 242; float consistency 42; force-inline fraction 24.
 // Double power expression/result 24/51; shared RGB setter 130; alpha-last 24;
 // rectangle-first 118; setter/power 130; branch-assigned intensity 62; combined output fill 130.
-// score 24 (was 24): state/user saved registers and final x87 scheduling remain.
 // Actual flag/tick/both lvalues, timer receiver/receiver with lvalues, shared mask,
 // mask with lvalues/mask with receiver 24/24/24/24/24/164/164/164.
-// score 2 (was 24): only `mov edx, ebx` ahead of the power's fstp before 0x161420 (retail after).
 // Fade by if 127; nested target test 24; power into intensity 2; float pow overload 2;
 // early return for no intensity 4; fraction straight into intensity 52; noinline
 // 0x161420 declaration 2; a 600 s permuter run (39 tries), none below 2.
+// Wide fraction/intensity/both 101/136/136; independent clamps 2; upper first 8; entry intensity/both scalars 2/2; wide upper-first 136.
 // score 2 (was 2): final fstp/player order remains; force-inline panel declaration 2;
 // power-base/fraction names 2/2; const alpha 2; intensity declared first 2; scoped power 2;
 // power into alpha/assignment expression 2/2; terminal player guard 2; power declared first 2.
@@ -5146,6 +5145,8 @@ void __stdcall function_d6bc0(long object_index);
 // 164 (three-point gain rejected); conditional reset counter 195; long modifier 184; byte kind 168.
 // Frame 0x14 versus 0x18 and timer/base homes remain.
 // Round 201: Reset-only entry pointer 190; later timer after query recovery 166 (one-point gain rejected); native bool schedule after query recovery 184; type result before slice 223; scenario global at use 231.
+// Native scheduling/activity/both bits 167/204/204; full native object fields 204;
+// Boolean schedule with bits 216; bits with late timer 204; full fields/late timer 204; direct countdown/bits 214.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

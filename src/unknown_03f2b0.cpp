@@ -1296,7 +1296,13 @@ long function_4c450(long object_index, real distance, real const *definition, re
 short function_4bcc0(byte *output, long object_index, real distance, long override,
     bool *cached, bool force, signed char *level);
 
-// score 43 (was 43): count/current EDI and wanted ESI replace retail ESI/EDI;
+// score 43 (was 43): count/current take edi and wanted esi (retail esi and edi, with wanted
+// computed in ecx and copied); the early level read adds a byte. Direct level read 83 at 281
+// bytes (one instruction more aligned); wanted from current/wanted first/non-const wanted 43
+// each; random mixes of declaration orders, compound division, defaults-first branch, early
+// level read and result at the top 43-110; pointers defaulting to the zero buffer 54/53;
+// local and parameter renames 43 each.
+// count/current EDI and wanted ESI replace retail ESI/EDI;
 // default count and selector scheduling remain. Native definition/library clear/both 43/43/43;
 // defaults first 99; default pointers 54; native level/result 83/100; typed default pointers 54.
 // Cache/selector inline, outline and combined call contracts: six further trials at 43.

@@ -1,5 +1,6 @@
 #include "unknown_11c920.h"
 #include "effects.h"
+#include "particle_tag_views.h"
 #include <math.h>
 
 // @flags /O2 /arch:SSE /Gr
@@ -43,7 +44,9 @@ struct s_247143
 {
     byte field_0[4];
     long field_4;
-    byte field_8[0xb0];
+    byte field_8[0x50 - 8];
+    s_function_data range;
+    byte field_58[0xb8 - 0x58];
 };
 
 struct s_247144
@@ -224,26 +227,14 @@ public:
     virtual real function_248763() = 0;
 };
 
-PRIVATE __forceinline real function_248765(byte const *arg_1)
+PRIVATE __forceinline real function_248765(s_function_data const *arg_1)
 {
-    s_248751 const *arg_0 = *(s_248751 const *const *)(arg_1 + 4);
-    real local_0;
-    if (!(arg_0->field_1 >> 4))
-        local_0 = arg_0->field_4;
-    else
-        local_0 = 0.0f;
-    return local_0;
+    return arg_1->header->type == 0 ? arg_1->header->minimum : 0.0f;
 }
 
-PRIVATE __forceinline real function_248766(byte const *arg_1)
+PRIVATE __forceinline real function_248766(s_function_data const *arg_1)
 {
-    s_248751 const *arg_0 = *(s_248751 const *const *)(arg_1 + 4);
-    real local_0;
-    if (!(arg_0->field_1 >> 4))
-        local_0 = arg_0->field_8;
-    else
-        local_0 = 1.0f;
-    return local_0;
+    return arg_1->header->type == 0 ? arg_1->header->maximum : 1.0f;
 }
 
 class c_248767 : public s_effect_particle_system_definition
@@ -252,7 +243,8 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 194 (was 194): frame/input registers, range-header lowering and final selector expansion still differ.
+// score 174 (was 174): Frame/input registers and final selector expansion still differ; eight new reader trials restored.
+// Earlier: frame/input registers, range-header lowering and final selector expansion still differ.
 // frame 0x1c versus 0x20, input registers and final
 // selector expansion differ. Per-iteration definition 196; conditional
 // accumulation 194; flag-first cleanup 196; lower-first bounds 202;
@@ -264,7 +256,7 @@ public:
 // successor while traversal 194.
 // Selector inline declaration 170 (matched sibling becomes 292); displacement aggregate,
 // squared distance before/after selector, retained center and branched range maximum 194 each.
-// score 194 (was 194): round 108: frame 0x1c/0x20 and location/receiver homes remain.
+// Earlier: round 108: frame 0x1c/0x20 and location/receiver homes remain.
 // Late range accumulator 201; outer range endpoints 194; shared center setter 198;
 // scoped successor for traversal 194; nested age/cleanup guards 194.
 // Lower-reader ordinary inline 194; both readers ordinary inline 194; native origin 170
@@ -281,6 +273,11 @@ public:
 // Independent range/ordinal/bounds homes 194 each; shared emitter cursor 194; shared cursor with
 // range/ordinal homes 194 each; native upper-point difference helper 198, with shared emitter
 // 198.
+// Native range field/reader receivers/headers/full native view 194 each; lower/both
+// conditional reader results 194/194; native reader defaults 198; header fields at uses
+// 174 (507/541, plain). Range field remains at +0x50; sibling exact and caller unchanged.
+// Per-use upper reader ordinary inline 174; early lower/upper/both 174/174/192;
+// per-use default lower/upper/both 174/174/192; complete reader results 174.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
@@ -298,8 +295,8 @@ void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte 
         if (local_2 < arg_0->unknown30)
         {
             s_247143 const *local_5 = &(*(s_247143 const **)arg_0->unknown34)[local_2];
-            real local_8 = function_248765((byte const *)local_5 + 0x50);
-            real local_9 = function_248766((byte const *)local_5 + 0x50);
+            real local_8 = function_248765(&local_5->range);
+            real local_9 = function_248766(&local_5->range);
             real local_10 = local_8 > local_9 ? local_8 : local_9;
             if (local_10 > local_0)
                 local_0 = local_10;
