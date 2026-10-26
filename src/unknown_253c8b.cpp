@@ -192,6 +192,11 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 // Horizontal/vertical interleaved source extents 100/103; separate vertical/horizontal source axes 104/35;
 // bounds before source/dimensions/interleaved source/value initialization 72/40/117/184.
 // Two-count source-axis gain rejected; opening body retained.
+// Height stored to the source rectangle and read back there 103 (552 bytes; converts the height
+// as retail does); both extents read back 105; offsets before any store 40, with the height or
+// both read back 104/104; orders of the six coordinate statements 100-104; offsets added into
+// the target first, far edges from it, then the position added (the matched sibling's shape)
+// 100-123 at 558-561 bytes, best with the y position converted first 100.
 // @retail 0x253ea8
 void c_class_19b8b1::v4(long screen_rect_address)
 {
