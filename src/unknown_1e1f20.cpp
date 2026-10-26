@@ -62,7 +62,8 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 	return function_cbd50(unit_index, *((signed char *)ai_object_get(unit_index) + 0x213));
 }
 
-// score 12 (was 20): with the slot query through 0xcbd50 (inlined) the actor-base add,
+// score 12 (was 12): separate outer sentinel register and exit remain; the actor-base prefix agrees.
+// Earlier: with the slot query through 0xcbd50 (inlined) the actor-base add,
 // the masked-index copy and the inner sentinel are retail's; retail still keeps a separate
 // NONE result in ECX for the absent-unit exit (`or ecx, -1` ... `mov eax, ecx`).
 // Round 129: result initialised NONE then assigned 20 (separate result, but unit ECX and
@@ -84,12 +85,15 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 // Inner entry result/both-arm assignment 20/20; absent slot return 19;
 // inner slot selection 20; inner sentinel early exit 19; readonly unit 20;
 // two result lifetimes 24; absent unit input return 22.
-// score 20 (was 20): base folding and separate outer sentinel remain.
+// Earlier: base folding and separate outer sentinel remain.
 // Actor/object/both query force-inline 20/20/20; separate secondary call 66;
 // native outer/inner result 20/20; unsigned inner/outer result 20/20.
 // Unit pointer/readonly boundary 20/20; actor query boundary 27; actor result
 // first/from tests 30/27; slot sentinel result 27; actor slot sentinel 27;
 // unit and slot sentinel results 31.
+// Shared-query unit-seeded result 28; field-derived absent arm 20; unsigned/native query
+// input 12/12; unsigned query result 12; read-only actor with shared query 12; private query
+// C/stack contracts 12/12.
 // @retail 0x1e1fd0
 long function_1e1fd0(long actor_index)
 {
@@ -652,7 +656,8 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 290 (was 290): Frame 0x20, early actor offset and cleanup/scan homes remain; slot element
+// score 290 (was 290): frame 0x20 agrees; early actor displacement, cleanup counter and slot reloads remain.
+// Earlier: Frame 0x20, early actor offset and cleanup/scan homes remain; slot element
 // 290; scan for-header 338; repeated input predicate 305; retained reference pool 290; word slot
 // with fresh lookup 304.
 // frame 0x20 agrees; actor-offset storage, cleanup counter and slot reloads differ.
@@ -675,6 +680,9 @@ void swarm_leader_detach(long actor_index);
 // resolutions 302/312/327/313/301;
 // natural long slot at all/early/memory resolutions 307/314/311;
 // every original pool refresh and full callback handle retained.
+// Cleanup/dispatch local homes separately and together 290 each; outer/shared prop workspace
+// 290/290; released reference home 290; slot before entry-address reads 288 (two-point gain
+// rejected). Original body retained.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
