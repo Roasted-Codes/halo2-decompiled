@@ -883,6 +883,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // 151. Quotient/sweep/impact homes and protected owner-call setup remain.
 // Candidate index short/word 366/366; native query count 153; reflection conditional 151; with native count
 // 153; ordinary while scan 151; fraction-first comparison 151; nested candidate admission 151. All restored.
+// Complete speed square/all component squares 151/151; each with saved-word lexical homes
+// 151/151; each with scalar homes 151/151; complete magnitude with both home groups 151;
+// complete speed square with existing out-of-place scale 151 (fast).
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1060,6 +1063,8 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // Word force with ordered squares/native publication/output receiver 14/16/16; squares and
 // publication/squares and output/output and publication 14/14/16; all three 14; ordered squares with final
 // mask setter 14. Changed single-use word carrier is exact-only; all restored.
+// Direct force query 101; velocity-input/complete-input/nested-input scopes 94/94/94; direct query
+// with those input scopes 101/101/101; direct query with reversed orientation result 101 (fast).
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

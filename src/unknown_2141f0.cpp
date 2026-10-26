@@ -93,6 +93,8 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // Paired dependency cursors 367; signed-word cursor ordinal 367; terminal memmove 568; separate name/priority locals 383; header failure-first result 430.
 // priority observations 568; copy size result 367; completed byte result 367; accumulated checksum 448; retry
 // disposition first 367; staged request admission 367; active request memmove 433; no slot case exit 367.
+// Out-of-line path/checksum/both/clock/all call summaries 367 each; completion states first 491;
+// destination states first 451; path summary with completion-first states 491 (fast).
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
