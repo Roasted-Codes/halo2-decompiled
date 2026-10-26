@@ -325,6 +325,9 @@ static inline short heading_unit_get_state(s_heading_unit *unit)
 // loads and spills a word. State 7 first 13; state before movement 86;
 // animation first 19; promoted accessor return 11; unsigned accessor 11;
 // indexed forward 11; indexed target 11; immutable long state 11.
+// Round 34: the existing short-output helper with first/second hoisted, reversed or clustered
+// with target 124 each; read-only unit and actor carriers on that form 124 each; cached unit
+// index 127; initialized short output 124; initialized short assigned by the return accessor 90.
 // @retail 0x1f55e0
 bool function_1f55e0(long actor_index, point3f *point, vector3f *direction)
 {

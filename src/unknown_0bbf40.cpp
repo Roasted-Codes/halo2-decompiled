@@ -1015,6 +1015,10 @@ void function_1ced00(s_havok_component *component);
 // parameter slot) 123; with the result returned at the end of the awake branch 1 (kept); not-awake
 // test as an early return 114; result declared before the header or assigned after its declaration 1;
 // result declared inside the awake branch 30; inverted final test with an early return 122.
+// Round 34: both activity exits returning active 1; one fallthrough activity return or an explicit
+// done join 123 each; countdown assignment-return with one activity return 123; inactive result
+// ORed with the awake bit, logically or bitwise, 1 each; inactive result ANDed with that bit 1;
+// double-negated inactive result 1.
 // @retail 0xbc470
 bool __stdcall function_bc470(long object_index)
 {
