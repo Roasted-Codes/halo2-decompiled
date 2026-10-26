@@ -1782,6 +1782,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // byte-logical-query-eligibility 422; byte-compound-query-eligibility 430.
 // word-logical-query-eligibility 448; word-compound-query-eligibility 448.
 // long-logical-query-eligibility 451; long-compound-query-eligibility 446.
+// Round 373: native quaternion-transform sway output, forced last/first 411/410;
+// ordinary inline last/first 769/768. Native orientation output gives the same
+// four scores. Reduced control 411/2166; full baseline 410/2154. All restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
