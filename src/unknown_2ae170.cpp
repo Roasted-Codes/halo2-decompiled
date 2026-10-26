@@ -651,6 +651,7 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 }
 
 // score 447 (was 447): Frame twelve agrees; selected-level homes and SSE argument staging remain.
+// Frame 0xc agrees; selected-level homes and SSE argument staging remain different.
 // Earlier 453 from 460: frame twelve agrees; selected-level homes and SSE argument staging remain.
 // Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
 // completed-path return 532; offset reads 554; retail-order base 514;
@@ -674,6 +675,9 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // Reused buffer/alternate/all channel subtotals 470/498/520; complete front/rear
 // pair subtotals 484/458, both 494; repeated boosted offset 465; complete subtotal
 // graph 521. All restored; selected-level homes and SSE argument staging remain.
+// Live front/rear threshold references 489; selector field too 504; gain fields too
+// 515; both groups 533; native destinations with those four forms 498/518/528/544.
+// All expressions and opening body restored.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

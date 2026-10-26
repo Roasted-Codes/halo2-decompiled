@@ -775,6 +775,8 @@ real function_18cac0(long arg_0);
 // Round 164: Returned gain view ending before final batch 228 (frame 0x8b0);
 // native real table, post-clear BSP and readonly camera combinations 228 each.
 // All eight regress; original clear, gain view and aligned body restored.
+// Three-state mask admission with long/short/signed-byte/byte complete arms 225/229/246/246;
+// default-first admission at those widths 225/229/246/246. Original early continue, selector and whole library clear restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

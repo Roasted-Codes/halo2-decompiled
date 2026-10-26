@@ -73,6 +73,7 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // score 641 (was 641): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
+// Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes differ.
 // Earlier: frame 0xf8 versus 0x108; result/basis/rotation homes differ.
 // frame 0x108 agrees; success/basis/rotation homes differ.
 // Frame pointer 960; size preference 1163; cosine-difference carrier 652;
@@ -120,6 +121,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // All regress; original arrays, private producers and in-place snapshots restored.
 // Complementary ray-miss bool/byte/word/long arrays 642/642/676/708; active-phase
 // arrays 708/708/682/724. Original hit flags, success result and math helpers restored.
+// Negative failure result bool/byte/short/long, conditional store: 712/712/713/712;
+// negative failure with reused close-hit logical accumulation: 679/679/674/673 (fast).
+// Original result, hit arrays and all in-place math snapshots restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

@@ -37,6 +37,7 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // scope 190. Original body and helper declaration retained.
 // pool reload and separate completion stores remain;
 // Earlier 190 (was 190): pool reload and separate completion stores remain;
+// Earlier: pool reload and separate completion stores remain;
 // read-only unit/type result 190/190; scoring team at call 226; completion event prepared first 193;
 // marker/slot entry lifetimes 190/190; success-result predicate 193; type result plus event preparation 193.
 // Read-only helper input 190; table reference 190; native team parameter 190; result-first predicate 192;
@@ -54,6 +55,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Earlier 190 (was 190): Cached pool base and merged completion stores remain.
 // Earlier 190 (was 190): cached pool, merged completion stores and flag-result materialization remain.
 // Earlier 190 (was 190): cached pool base, merged completion stores and predicate result remain.
+// Earlier: Cached pool base and merged completion stores remain.
+// Earlier: cached pool, merged completion stores and flag-result materialization remain.
+// Earlier: cached pool base, merged completion stores and predicate result remain.
 // Native unit/weapon/both header references 190/190/190; external carried-index,
 // selected-slot or both field bindings 190/190/190; initializer return used directly 311;
 // external options record reference 190.
@@ -74,6 +78,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // first bit/initialize/cause/second bit 183; both preparation steps first 193. Separate event
 // buffers 196/160/183/193. Seven-point forms rejected; raw 163/160 regress the instruction
 // sequence or frame (0x60), so all restored.
+// Earlier: frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
+// Native flag-array and actual flag-element reference predicate inputs, each
+// with logical/complement extraction: bool results 190, long results 189;
+// all eight restored, one-point gains below threshold.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

@@ -154,7 +154,7 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 	return index;
 }
 
-// score 886 (was 886): Frame 0x4e0 agrees; entry zero, count/primary/query-array homes and choice carriers remain.
+// score 886 (was 886): Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice carriers remain.
 // Earlier 919 (was 919): count/array homes and choice registers differ in the 0x4e0 frame;
 // count/array homes and choice registers differ in the 0x4e0 frame;
 // Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice registers remain.
@@ -172,6 +172,8 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // First/second/both query pointer walks 944/941/951; duplicate/conversion choice pointer walks 947/1008; target pointer walk 899; existing-index pointer walk 919; unused local mask removed 904.
 // With retained short query count: word first query ordinal 915; word second query ordinal 898;
 // word choice-conversion ordinal 923; word duplicate ordinal 929 (retail length); all four word ordinals 894.
+// Unsigned word query/choice/both counts 886 each; dword/byte/word inside result 921/886/910;
+// unsigned first-query/duplicate ordinals 886/886. Original executable source restored.
 // Round 126: Named squared blend term 886; repeated portal endpoint 909; existing pin/get forceinline
 // 886/886; single successful allocation guard 905; choice-cap test first 932; accumulated target gain 886;
 // default-first detail result 884 (fast, gain below threshold); all restored.
@@ -428,7 +430,7 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 	function_189fe0(&request, tag);
 }
 
-// score 223 (was 223): frame 0x14c versus 0x148; BSP/camera lifetimes and query/output homes still differ.
+// score 223 (was 223): Frame 0x14c versus 0x148, BSP/camera/query homes and duration spill remain.
 // Transition result 235; unsigned listener 264; byte listener 319; angle lifetime 264; separate request indices 264.
 // Request transition field 263; bounded listener result 223 plain; separate fill guard 255;
 // depth one 235; size optimization 441; direct search returns 254.
@@ -451,6 +453,7 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // shared caller cue workspace 229; unsigned query index 223; table/direct duration 273;
 // shared workspace/location 233; table/workspace 254 (fast). Shared cue workspace gives frame 0xf4, not retail 0x148.
 // Earlier: BSP/camera/query homes, duration spill and cue zero carrier remain.
+// BSP/camera/query homes, duration spill and cue zero carrier remain.
 // Native BSP view 223; multi-use environment row 267; initialized query count 296;
 // duration interval/sign arms 231/229 (frame 0x148); BSP/count 296;
 // BSP/interval 231; BSP/count/interval 286.
@@ -460,6 +463,8 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Round 164: Paired tag/transition result arms, tag after magnitude, paired
 // defaults and defaults/tag-after 223/275/233/276; outer duration workspace
 // 223/275/233/276. Original separate metadata graph and all helpers restored.
+// Transition after angles with original arms, deferred metadata/direct angles/both 271/290/282/330;
+// same four forms with default-first duration 263/278/309/323. Original observation timing, output copies and helpers restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

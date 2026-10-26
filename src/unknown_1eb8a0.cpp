@@ -226,6 +226,7 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // terms/clamps 763; terms/length 738; clamps/length 695; all 781; clamped headroom 751 (fast).
 // Round 134: final flag-word workspace with early coefficient masks 0/1/2/3/4/5/6/7
 // 648/694/716/695/648/692/716/695; original counter and caller preserved.
+// Readonly input d/q/both/a/b/pos/b-pos/all contracts: eight forms 642 each.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

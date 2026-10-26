@@ -2577,6 +2577,8 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
     real *blue, byte order, vector3f *direction, point3f const *position);
 // score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+
+// score 530 (was 530): Frame 0x20c versus 0x200; stack order, coefficient homes and sample boundaries remain.
 // Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
 // unsigned handle 544; native bucket fields 544.
 // Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
@@ -2602,6 +2604,9 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Round 131: shared cross/dot determinant in all three cyclic orientations,
 // either dot receiver order, 543 each (exact-match-only); signed-byte capped
 // sample count 529 (one-point gain rejected); byte capped count 564.
+// Negative allocation failure bool/byte/short/long in the original rejection arm
+// 531/531/529/528; reused actual capacity predicate 539/539/537/537.
+// Best reduction two is below the gate; original result and all helpers restored.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)

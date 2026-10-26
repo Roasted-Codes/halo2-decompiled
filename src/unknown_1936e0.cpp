@@ -106,14 +106,16 @@ struct s_variant_string_tables_view
 	s_string_table tables[1];
 };
 
+struct s_variant_language_range
+{
+	short first;
+	short count;
+};
+
 struct s_variant_string_list_view
 {
 	byte unknown00[0x10];
-	struct
-	{
-		short first;
-		short count;
-	} languages[1];
+	s_variant_language_range languages[1];
 };
 
 struct s_user_interface_shared_globals *ui_mode_definition_get(void);
@@ -140,17 +142,17 @@ __forceinline void variant_string_table_get(s_string_table *table, long first, l
 __forceinline void variant_string_get(long tag_index, long string_handle, word *buffer)
 {
 	long language = get_current_language();
-	s_variant_string_list_view *list = (s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes;
+	s_variant_language_range const *range = &((s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes)->languages[language];
 	s_variant_string_tables_view *tables = (s_variant_string_tables_view *)g_4e034c;
 
-	variant_string_table_get(&tables->tables[language], list->languages[language].first,
-		list->languages[language].count, string_handle, buffer);
+	variant_string_table_get(&tables->tables[language], range->first,
+		range->count, string_handle, buffer);
 }
 
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 194 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
+// score 172 (was 172): Frame 0x40c versus 0x408; tag spill and language/range/cursor homes remain.
 // String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
 // Frame 0x40c versus 0x408 and tag/language/cursor homes remain; intermediate ownership does not remove the spill.
 // Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
@@ -181,8 +183,6 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // native wide workspace 194. Original lookup helpers, contracts and body restored.
 // Inner string workspace at helper entry 194; file-local lookup helpers 194; string-first helper 194;
 // native short range inputs 194; short ranges with file-local helpers 194 (fast); all restored.
-// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
-// Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Round 113: Intermediate wide-buffer entry scope 194; unloaded-table early return 194; table pointer before list 194; list receiver before language query 202; existing table helper output-first 194.
 // Round 123: Initializer-owned scratch 194; lookup-owned scratch 194; valid-list scratch 194; initializer scratch/native row cursors 194; initializer scratch/destination endpoint 191 (three-point gain dropped).
 // retained list receiver 235; retained table root 223; both receivers 235; source-end copy 200;
@@ -194,6 +194,14 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Round 210: Native wide-array helper outputs 194; signed-byte string ordinals 194; direct table
 // root 194; native table-reference input 194; unsigned language ordinal 194. Extra tag spill and
 // language/cursor homes remain.
+// Native range pointer/reference 172/172; table-helper range pointer/reference/value
+// after table 172/172/217, before table 220/220/220. Keep the genuine
+// twice-used range pointer; 791/782 bytes, original arithmetic and call values.
+// Outer/inner/both actual lookup output results 172/172/172; native range value 217;
+// outer tag-output-string/string-output-tag/output-string-tag orders 172 each;
+// range value with both output results 217. Complete original helpers restored.
+// Native table member long scalars/range pointer/range reference/short scalars 172 each;
+// the same four receiver contracts with native fixed-array output 172 each. Original helpers restored.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

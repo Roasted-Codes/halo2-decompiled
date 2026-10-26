@@ -244,6 +244,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // score 185 (was 185): exact 0x58 frame; BSP/section registers and range/plane homes differ.
 // frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
 // Earlier: exact 0x58 frame; BSP/section registers and range/plane homes differ.
+// Frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
 // BSP reads at use 217; conditional section selection 229; direct success returns 243;
 // instance reads at use 213; relative triangle-range counter 206.
 // BSP/section registers and range/plane homes remain;
@@ -288,6 +289,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Validity output pointer/reference/byte 185/185/185; predicate-produced bool/byte 185/185;
 // predicate byte with native block 185; Boolean/byte outputs with native block 185/185. Defined
 // failure and geometry homes remain.
+// Final failure bool/byte/short/long with original validity 182/182/192/194;
+// with actual invalid vertex accumulator 182/182/192/194. Best reduction three
+// dropped; original result, defined fetch failures and all call roles restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

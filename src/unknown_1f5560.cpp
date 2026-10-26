@@ -746,6 +746,7 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 real normalize2d(point2f *v);
 
 // score 172 (was 172): frame 0x48 agrees; query-byte zero and trajectory call/output homes remain.
+// Frame 0x48 agrees; fast-byte zero, protected trajectory convention and retry/output homes remain.
 // search then selection 172; unsigned scan 178; fixed do/while 191;
 // types arm first 191; fallback setters 195; split plus unsigned scan 223.
 // signed-long search 192; signed-byte search 188; exact exhaustion 210;
@@ -763,6 +764,8 @@ real normalize2d(point2f *v);
 // Earlier: frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
 // Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
 // frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Earlier 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// Earlier 172 (was 172): frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
 // Query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
 // first-type state 172/208; decisions after query 177; both byte decisions 172.
 // Word validity reaches 935 bytes but gains only two points and is restored.
@@ -773,6 +776,7 @@ real normalize2d(point2f *v);
 // earlier result declaration 172; minimum and retry force 227.
 // Earlier: query-byte zero, trajectory setup and scalar homes remain;
 // query-byte zero, trajectory setup and scalar homes remain;
+// Earlier 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
 // retry/movement/both threshold products 172/172/172; clamped upward result
 // 172, with both products 172; retry/movement/both eligibility results 172/172/172.
 // frame 0x48 agrees; fast-byte zero and trajectory convention remain.
@@ -792,6 +796,8 @@ real normalize2d(point2f *v);
 // validation/base-check/trajectory/validation-base/validation-trajectory/base-trajectory/all/byte trajectory
 // 217/173/223/172/212/226/225/223 (fast); all restored. Frame 0x48 agrees; immediate query zero and protected
 // trajectory convention remain.
+// Post-query force OR/guarded/conditional/complete arms 303/197/172/273; exact search bound 211;
+// mask-first search 228; complete requested-byte snapshot 240; snapshot plus force OR 300.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

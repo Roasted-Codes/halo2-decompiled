@@ -1116,6 +1116,7 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 
 // score 421 (was 421): Frame 0x64 agrees; persistent zero and count/component homes remain.
 // Frame 0x64 agrees; persistent zero and count/component homes remain.
+// Frame 0x64 agrees; persistent zero, count/component homes and direction residency remain.
 // Earlier 428 from 489: frame now 0x64; count/component and vector homes still differ.
 // Frame 0x64 agrees; persistent zero, count/component homes and direction retention differ.
 // Earlier: frame now 0x64; count/component and vector homes still differ.
@@ -1156,6 +1157,8 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // 421/422/422; desired-length result alone/with square/with absolute/with both
 // 421/421/422/422 (one-use return forms match-only); existing squared-length helper 421;
 // Boolean flight expressions at both tests 466. Original helper, expressions and body restored.
+// Existing selection/tangent/speed dot inputs reversed independently, in all seven combinations,
+// and together with the accepted-count lexical home: 421 each. Helpers and body restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)

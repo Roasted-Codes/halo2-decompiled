@@ -74,6 +74,7 @@ long g_4ba134;
 // score 86 (was 86): Frame 0x34 and half-box homes agree; horizontal/depth XMM roles
 // and vertical tangent scheduling still differ.
 // Frame 0x34 and viewport homes agree; horizontal/depth XMM roles and vertical tangent scheduling differ.
+// Frame 0x34 and viewport homes agree; horizontal/depth XMM0/XMM1 carriers remain exchanged.
 // Earlier: frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes differ.
 // coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
 // Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
@@ -115,6 +116,8 @@ long g_4ba134;
 // Round 157: Native half-box frame: shared depth square 86; depth-radius 251; parallel lateral-radius
 // 154; parallel root products 123; all radius products 221; all tangent products 233; coordinate
 // declarations first 86; displacement declaration lifetimes 86.
+// Round 155: tangent default/complete results 171/186; axis complete/default results 168/261;
+// full output results 276; full/tangent results 185; axis/visible default publication 224/219.
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
@@ -261,7 +264,7 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point homes remain.
+// score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point/factor homes remain.
 // Earlier 195 from 195: Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
 // frame 0x30 versus 0x2c and inverse-depth/point homes
 // frame 0x30 versus 0x2c and inverse-depth/point homes remain.
@@ -304,6 +307,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 161: Complete translated-row results in all six row computation orders
 // 195 each; those results with shared helper-local scale, x/y/z and z/y/x,
 // 252/252. Original helper snapshots, row trees and executable body restored.
+// Native input/camera/output point records singly, pairs, all and all/shared scale [248, 693, 334, 693, 690, 693, 693, 693];
+// forced native camera/output/both expansion [443, 287, 456]. Original helper and body restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

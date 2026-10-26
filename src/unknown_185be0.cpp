@@ -71,7 +71,7 @@ struct s_185be6
     vector3f field_34;
     long field_40;
     byte field_44[0x68 - 0x44];
-    byte field_68;
+    bool field_68;
     byte field_69[0x78 - 0x69];
     real field_78;
     real field_7c;
@@ -140,7 +140,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 989 (was 1017): Frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules differ.
+// score 985 (was 985): Frame 0xe4 versus 0xe0; state/output carriers and flag schedules differ.
 // frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
@@ -157,6 +157,17 @@ union s_185be7
 // inline 1017; no outer zero-mask guard 1018; second-copy continue/final input ternary/const settings 1017
 // each; paired branch with complete flags 989 (plain kept); paired branch with external state reference
 // 994; combined with promoted component 1010, word copy ordinal 989, input-first mask 1016 (fast).
+// Native flag/scalar/state-bool declarations 989/989/985; flag+scalar 989;
+// flag+bool/scalar+bool/all fields 985; all fields with promoted selected value 984.
+// First-mask byte/word index with long/byte/word copy indices: all six 1174;
+// shared byte/word ordinals 1174/1174. Native first indices lose useful expansion;
+// original long ordinals and body restored.
+// Native value-result flag helper in all six formal orders 979 each; complete
+// branch-result and negative enabled input 979/979. Six-point reduction dropped;
+// 3760/3777 bytes. Original pointer-input helper and every call restored.
+// State root at every field use 987; with reset output result/flag value/both 987/988/999;
+// state and settings roots at each use 1048; with reset result/flag value/both 1048/1026/1014.
+// Original root snapshots, reset, pointer-input flag helper and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

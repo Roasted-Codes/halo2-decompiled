@@ -1009,12 +1009,14 @@ bool __stdcall function_be8e0(long object_index);
 struct s_havok_component;
 void function_1ced00(s_havok_component *component);
 
-// score 1 (was 122): the not-awake exit returns false as `xor al, al` where retail returns the result
+// score 1 (was 122): inactive return XOR AL versus retail MOV AL,BL; matching delayed EBP and object/header homes retained.
 // register (`mov al, bl`); retail saves ebp only after the two header gates, as ours now does.
 // Round 50: object read through the table before the flags clear (object in ebp, header in the
 // parameter slot) 123; with the result returned at the end of the awake branch 1 (kept); not-awake
 // test as an early return 114; result declared before the header or assigned after its declaration 1;
 // result declared inside the awake branch 30; inverted final test with an early return 122.
+// Awake-predicate bool/byte/char/short results 127/132/132/164; native byte/char/short/word
+// accumulators with common result exits 17/17/100/100. All restored.
 // @retail 0xbc470
 bool __stdcall function_bc470(long object_index)
 {

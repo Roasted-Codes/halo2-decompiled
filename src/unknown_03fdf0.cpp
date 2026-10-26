@@ -166,7 +166,7 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
-// score 183 (was 183): frame 0x84/0x88, helper transport and API expansion remain.
+// score 183 (was 183): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
 // Earlier: frame 0x84/0x88, callee registers and render-state expansion differ;
 // dword selection 183; word setup flags 234; combined mask 222;
 // brightness component loop 238; redundant bit-clear removal 217.
@@ -205,6 +205,9 @@ void function_402b0(long cache_index, long mode)
 // Round 161: Actual low-word shape kind with shared long/bool/signed-byte/short
 // pass carriers 202f/231f/231f/248f; separate pass lifetimes 202f/231f/231f/248f.
 // Unchanged reduced control 202f; full baseline 183. Actual shape type and body restored.
+// Inline/noinline state-helper declaration with shared long/bool/byte/short pass
+// carriers 319f/290f/290f/285f; independent carriers 319f/290f/290f/285f.
+// Reduced control 202f; full baseline 183. All declarations and body restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

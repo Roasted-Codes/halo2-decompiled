@@ -668,6 +668,9 @@ static __forceinline long real_to_long(real value);
 // Native predicted point/shared difference 451; x/y/z order and aggregate point 447/447;
 // point plus shared squared length 447; query output scope, scalar names, declaration
 // order and their combination on the point graph 451/451/451/451. Original body restored.
+// Entry/eligibility/final-approach/deadline Boolean reductions 506/493/407/440;
+// all mode reductions 510; entry plus modes 477; early test-derived eligibility
+// on the native velocity receiver 393; entry reduction plus that result 505.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
