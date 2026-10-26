@@ -536,6 +536,7 @@ void function_118e80(long object_index, vector3f *forward);
 real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
+
 // score 273 (was 273): frame 0x8c versus 0x90, early NONE and held-direction byte home remain.
 // frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
@@ -552,6 +553,9 @@ real function_267370(long volatile object_index);
 // motion-direction reference 277; up reference 273 (plain).
 // Flag-range memset 441; movement-mode branches 369; named activity time 371;
 // per-use geometry fields 371; predicate/index role names 371 (fast control 371).
+// Held-direction pointer/reference 386/386; complete explicit plane-result arms 418;
+// true-first plane result 371; explicit arms with pointer/reference 425/425;
+// true-first result with pointer/reference 386/386 (fast control 371). All restored.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -988,6 +992,7 @@ void function_a7b30(long index);
 void __stdcall swarm_delete(long perception_index);
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type);
 
+
 // score 320 (was 320): Frame 0x118 agrees; sentinel EDI/ESI, squad/substitution homes and success layout remain.
 // Earlier 345 (was 364): frame 0x11c versus 0x118; sentinel and success blocks differ.
 // frame 0x118 agrees; entry sentinel, squad and substitution/result homes differ.
@@ -1032,6 +1037,8 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Separate actor/unit/perception creation producers from persistent outputs 320/320/320;
 // actor-unit/actor-perception/unit-perception/all producer splits 320/320/320/320;
 // all splits with delayed cleanup publication 331. Original output and cleanup ownership restored.
+// Native creation/request/both payloads 320/320/320; direct variant field alone/with
+// creation/with request/with both 339/339/339/339; direct variant with entry placement view 339.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

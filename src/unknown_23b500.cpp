@@ -590,6 +590,7 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
+
 // score 201 (was 201): frame 0x50/0x54, early EBX and child-iterator convention remain.
 // Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
 // frame 0x50/0x54 and child-iterator registers differ;
@@ -616,6 +617,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // real/double scale then point addition 232/251; real scale with point/velocity
 // value inputs 306/242; double scale with both value inputs 353. All restored;
 // frame and protected child-initializer register contract remain.
+// Retained count/AND graph: explicit radius branches, sqrtf and both 201 each;
+// output-first existing point helper alone/with branches/with sqrtf/with both 202 each;
+// all three plus shared minimum-speed factors 205. Protected child convention unchanged.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

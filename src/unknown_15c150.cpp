@@ -73,21 +73,21 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 	return result;
 }
 
+
 // score 196 (was 196): delayed EBP save, team-byte home and word slot spill.
 // Cursor player 253; count at loop tail 199; both 257; signed/unsigned
 // word team counters 248; tail count plus word team counter 252.
 // early EBP save, teams byte home and local-slot spill differ;
 // unsigned count 242; short count 249; byte team 248; shared crowded with word slot 248; indexed fade with word slot 196.
-// score 196 (was 196): early EBP save, team-byte home and local-slot spill remain.
+// early EBP save, team-byte home and local-slot spill remain.
 // Shared iterator 196; typed pooled player 196; native team bitfield 196; all three 196;
 // direct four-slot traversal 351; with shared types 351; with native bitfield 351; all 351.
-// score 196 (was 196): delayed EBP save, team-byte home and word local-slot spill remain.
+// delayed EBP save, team-byte home and word local-slot spill remain.
 // Per-use first-loop datum 196; short/byte/word teams predicates 196/196/196; datum plus short teams 196;
 // shared entry/callback getters 196/196; both getters with per-use datum 196, all plain-confirmed.
 // early EBP save, team-byte home and local-slot spill differ.
 // Complete iterator/cursor clear 263/263; word/byte population 250/245;
 // live pool ordinal 241; unsigned datum 196; complete iterator with ordinal 264; plus byte population 244.
-// score 196 (was 196): delayed EBP save, team-byte home and word local-slot spill remain.
 // Early/late/both snapshot record references 196/196/196; late pooled-player reference 196;
 // native fade reference with word slot 196; player and fade references 196; first-branch
 // short rate 196; both snapshot references plus player/rate 196, all plain-confirmed.
@@ -95,7 +95,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Signed/unsigned byte local slots 244/244; each with indexed fade 244/244;
 // signed-byte population 197 (plain 197), signed-byte team 248;
 // signed-byte population/slot 245; unsigned-byte slot with signed-byte team 244.
-
+// Timer final-store/result-first/conditional/increment-first 254/254/254/254;
+// final-store/result-first with crowded result 254/256; each with complete live state 254/254.
 // @retail 0x15c150
 void function_15c150()
 {
