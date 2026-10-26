@@ -461,7 +461,7 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 73 (was 73): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// score 67 (was 73): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
@@ -479,6 +479,7 @@ void function_1537f0(s_profile_record *record);
 // With contiguous tail reset: identity/source/both names 73 each; signed byte sentinel 73;
 // word ordinal 94; record/view/both force-inline declarations 73 each.
 // Immutable identity with tail clear 74; source-before-identity names 73; source-only outer scope 73; identity between initializer and tail 73; tail-clear entry-end traversal 94.
+// Complete destination clear 73; contiguous destination-tail clear 67 kept; destination first/after identity 75/75; links before view 98; tail before view 95; direct indexed destination 73; tail fill with early links 100.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -500,8 +501,7 @@ void function_7f930(void)
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
 		function_7f8b0((s_cached_player_view *)&entry->player, &identity, &source, NULL);
 		entry->next = entry->next_other = entry->unknown58 = entry->previous_other = NONE;
-		entry->flags = 0;
-		*(long *)entry->unknown64 = 0;
+		memset(&entry->flags, 0, sizeof(entry->flags) + sizeof(entry->unknown64));
 	}
 }
 

@@ -214,8 +214,8 @@ bool function_01de20(long index)
 dword function_1d6f0(bool linear, bool alternate, dword format, long width, long height);
 long g_55e6c0;
 
-// score 115 (was 115): Incoming data home, delayed saves and header bias still differ.
-// incoming data, delayed saves, packed-size folding and level-header bias remain.
+// score 29 (was 29): pitch/height packing is folded and height/count registers differ;
+// frame, incoming data, delayed saves and level-header bias now agree.
 // Earlier: Incoming data home, delayed saves and header bias still differ.
 // Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
 // Earlier: incoming data home, saved-register timing and level-header bias remain.
@@ -253,6 +253,7 @@ long g_55e6c0;
 // delayed clamped-count publication 148; inline/noinline format declarations 115/115; published
 // byte total 192; level/offset names 115; size after format 190; named aligned width 115;
 // element before size 123; linear size branches 174.
+// Named byte pitch 87; all packing parts 29; height part first 29; all parts early 47; unsigned-int packing 29; shared clamped count 154; selected packed result 119; linear-only packing 145.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {
