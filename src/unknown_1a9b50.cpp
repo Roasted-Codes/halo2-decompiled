@@ -603,21 +603,24 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 466 (was 478): early false exit, frame 0x54 versus 0x58 and scratch
-// homes differ; prediction loop 482; initial velocity snapshot 538; direct
+// score 386 (was 410): Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
+// Earlier forms: prediction loop 482; initial velocity snapshot 538; direct
 // eligibility 484; full-width readiness 495; fallback copy loops 541.
 // j92: actor/settings registers agree; frame 0x54 versus 0x58, early false exit and speed/object homes remain; retain facing view and native planar copy.
 // shared velocity length 486; separate minimum speed 488; retained facing vector 472; planar direction copy
 // 476; direction length by arm 482; facing position view 471; facing prediction seconds 472; facing planar
 // copy 466; facing direction length 473; planar speed homes 466; planar position view 464; planar position
 // speed homes 464; planar position late 466.
-// score 410 (was 466): Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// Previous form: Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
 // late object receiver 470; trajectory planar view 466; direct request view 466;
 // test-derived readiness 410; conditional approach factor 466 (fast).
-// score 410 (was 410): frame 0x54 versus 0x58, early rejection and query homes remain.
+// Previous form: frame 0x54 versus 0x58, early rejection and query homes remain.
 // Separate query in/out scalar 494; wider output scope 410; wider trajectory scope 410;
 // scalar/output and scalar/trajectory scopes 494 each; output/trajectory scopes 410;
 // all query homes 494; all homes with earlier query-scalar declaration 494.
+// Target velocity view 487; object velocity view 386; both 384 (two-point increment rejected);
+// byte readiness 410; target/object/both views with byte 487/386/384; native readiness 422.
+// Direct six-use object velocity field producer 386 kept (plain), removing the one-use object pointer.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
@@ -676,7 +679,7 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 			else
 			{
 				real local_12 = (real)sqrt(local_8->field_1c.i * local_8->field_1c.i + local_8->field_1c.j * local_8->field_1c.j + local_8->field_1c.k * local_8->field_1c.k);
-				s_ai_object *local_13 = ai_object_get(local_1->unknown018);
+				vector3f const *object_velocity = &ai_object_get(local_1->unknown018)->velocity;
 				real local_14 = 0.0f;
 				if (local_12 > 0.0f)
 					local_14 = (1.0f + (local_8->field_1c.k * facing->k + local_8->field_1c.j * facing->j + local_8->field_1c.i * facing->i) / local_12) * 0.5f;
@@ -727,10 +730,10 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 				else if (local_0->field_2e)
 				{
 					local_10 = local_0->field_34 > local_17 || (0.0f > local_17 &&
-						(local_8->field_1c.k - local_13->velocity.k) * local_11.k + (local_8->field_1c.j - local_13->velocity.j) * local_11.j + (local_8->field_1c.i - local_13->velocity.i) * local_11.i > 0.7f);
+						(local_8->field_1c.k - object_velocity->k) * local_11.k + (local_8->field_1c.j - object_velocity->j) * local_11.j + (local_8->field_1c.i - object_velocity->i) * local_11.i > 0.7f);
 				}
 				else
-					local_10 = 0.5f > local_17 - (local_13->velocity.k * local_11.k + local_13->velocity.j * local_11.j + local_11.i * local_13->velocity.i) * local_15 * g_510c54->rate;
+					local_10 = 0.5f > local_17 - (object_velocity->k * local_11.k + object_velocity->j * local_11.j + local_11.i * object_velocity->i) * local_15 * g_510c54->rate;
 			}
 		local_18:
 			if (local_0->field_18 || (local_10 && !local_0->field_2e))

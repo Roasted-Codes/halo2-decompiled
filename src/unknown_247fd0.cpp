@@ -246,7 +246,7 @@ vector3f *function_143070(matrix3x3 const *arg_1, vector3f const *arg_0, vector3
 void placement_set(s_placement *arg_0, vector3f const *arg_1, point3f const *arg_2, vector3f const *arg_3, short arg_4);
 void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_object_246eb0 const *arg_3, long arg_4);
 
-// score 380 (was 389): frame 0xbc versus 0xb0; late EBP save, first random store and geometry/getter scheduling remain.
+// score 380 (was 380): Frame 0xbc versus 0xb0; entry EBP preservation and random/geometry homes remain.
 // Earlier form: exact 0xb0 frame; late EBP save, random stores/getter expansion differ.
 // Interpolation remainder 415; child-duration default 411; failed-child continue 408;
 // overwritten placement default removed 409; definition reads at use 449.
@@ -275,6 +275,8 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Child tag/duration/both native values 391/390/392; inherited velocity value 380 kept (plain);
 // complete blend products 387; tag/products 392; duration/velocity 384; all producers 401;
 // velocity at admission 395; after rotations 382. Frame 0xbc versus 0xb0 for the retained native velocity.
+// Complete velocity arms 411; entry velocity declaration 380; both 411; per-use velocity fields 467;
+// separate real spatial objects 433; with velocity arms/entry declaration/per-use fields 438/433/487. All restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)
