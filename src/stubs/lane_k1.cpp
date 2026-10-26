@@ -67,10 +67,7 @@ int class_3048a0::function_3048a0(convex_2fefd0 const *first, convex_2fefd0 cons
 
 
 
-// @stub 0x2e90f0
-void __cdecl function_2e90f0(void const *a, void const *b, void const *input, void *collector)
-{
-}
+
 
 
 

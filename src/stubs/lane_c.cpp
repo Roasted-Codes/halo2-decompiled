@@ -342,29 +342,19 @@ struct c_shape_library_base_a
  c_shape_library_base_a(c_havok_reference_counted *arg_0, long arg_1);
 };
 
-struct s_2e5a10 { byte field_0; s_2e5a10(const s_2e5a10 &arg_0) : field_0(arg_0.field_0) {} };
-
-struct s_1c3a40
-{
- void function_2e5e70(long arg_0, long arg_1);
- void function_2e5a10(s_2e5a10 arg_0);
-};
+#include "agent_table_2e5d50.h"
 
 // @stub 0x2e5e70
 void s_1c3a40::function_2e5e70(long arg_0, long arg_1) {}
 
 
-// @stub 0x2e6190
-void __cdecl function_2e6190(s_1c3a40 *arg_0) {}
 
-// @stub 0x2e6cd0
-void __cdecl function_2e6cd0(s_1c3a40 *arg_0) {}
 
-// @stub 0x2e7d10
-void __cdecl function_2e7d10(s_1c3a40 *arg_0) {}
 
-// @stub 0x2e9030
-void __cdecl function_2e9030(s_1c3a40 *arg_0) {}
+
+
+
+
 
 // @stub 0x3144b0
 s_1d1870 c_314710::function_3144b0(void *arg_0) { return s_1d1870(); }
