@@ -51,6 +51,8 @@ real function_30bf0(vector3f *vector);
 // Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
 // 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
+// Existing scalar color/blend/both 213/213/213; existing color helper and helper plus blend 213/213;
+// entry strength snapshot alone/with scalar clamps/with color helper 225/225/225. All restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1670,6 +1672,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Decoder output reference 790; decoder output pointer result 823; ordinary decoder/color/both
 // 1143/1084/1478; separate noinline decoder/color/both 1140/1597/1958.
 // Frame agrees; status/mesh/sample homes and shared external call boundaries remain. All restored.
+// Late model texture outputs/sample color/combined color at model entry 790/790/796;
+// texture plus sample/texture plus combined/sample plus combined/all three 790/796/796/796;
+// all three at function entry 793. Frame/result/mesh and external helper boundaries remain.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
