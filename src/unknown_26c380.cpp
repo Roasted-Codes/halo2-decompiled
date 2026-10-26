@@ -143,7 +143,7 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 	return success;
 }
 
-// score 435 (was 435): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
+// score 419 (was 435): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
 // tails remain; tried late first independent normal 490; late first native result word 438; native edge
 // orientation 438; existing planar product inline 435; late first unsigned count 435.
 // frame 0x5c versus 0x64; normal, result/first/hit homes and exit tails differ.
@@ -152,6 +152,10 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // magnitude value input 556; unsigned success 435; normal length result 435.
 // Final blocked output 658; signed result byte 460; endpoint array index 443; direct node flags 435;
 // vertex base 458; accepted distance 476; vertex base plus distance 501; endpoint index plus distance 432.
+// Iterator native node/first seed/both 433/435/433; count traversal scope 419 kept (plain);
+// progress-history scope 433; native planar/full-normal copies 490/505; planar input order 435.
+// Only constant counter initialization moves into the valid-normal walk. Frame 0x5c versus 0x64
+// and normal/result/exit homes remain.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,
@@ -160,7 +164,6 @@ bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origi
 	s_sector_trace_result *result = (s_sector_trace_result *)trace;
 	long success = false;
 	long current_sector_index = sector_index;
-	short count = 0;
 	real last_distance = -0.1f;
 	s_pathfinding_edge *edge = NULL;
 
@@ -177,6 +180,7 @@ bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origi
 		cross3f(g_4687b0, direction, &normal);
 		if (magnitude3d(&normal) > 1e-5)
 		{
+			short count = 0;
 			vector2f line_normal;
 			real line_distance;
 			long next_sector_index = sector_index;

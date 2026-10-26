@@ -243,6 +243,10 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 110: direct scale on late-zero frame 232; native velocity aggregate 237; const metadata 220; inline basis 220; inline forward 220 with caller loss; symmetric angle order 218 (two-point gain dropped).
 // Round 112: First left/output shared 259; later shared 260; all shared 262; second only 258;
 // third only 219 (one-point gain dropped); shared default velocity 242; native world-up input 295.
+// Existing node getter 283; native matrix advance 220; both default CRT copies 220; getter plus
+// default copies 283; turn transfers 220; turn transfers plus late zero 220; world-up pointer
+// result 220; world-up parameter order 220. Original body/private helper restored; frame 0x78
+// versus 0x6c and early ESI/basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {

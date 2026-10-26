@@ -194,6 +194,10 @@ static inline real interpolate_linear(real a, real b, real t)
 // Timestamp before both local updates/between next and elapsed/after swapped updates/before swapped
 // updates/between elapsed and next 96/96/100/96/96. Keep the minimal next/timestamp/elapsed order,
 // plain-confirmed 96 at 657/657; the complete loop-end timing stream now agrees.
+// Disposal result from tests 128; restart result from tests 208; result declaration order/role
+// names 96/96; live key table 96; key records on recovered timing 217; advance/lookahead direction
+// retention 96/96. All forms restored; native direction/frame and lookahead/fraction carriers
+// remain.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {
