@@ -67,6 +67,7 @@ public:
 // viewer-row cursor 281; library position copy 252.
 // Round 111: Per-viewer Boolean override 210 (its 1/0 value written out at each use, not kept); unsigned-word viewer 249; readonly metadata 221; activation-byte contract 221; Boolean/word combination 232; Boolean/late activation 243; Boolean/closed doubles 210.
 // Round 113: Native viewer state member 221; early child head with shared-index/falloff context 222; child metadata byte cursor 221; default-first reused override float 221; separate allocation handle 228.
+// Round 117: Activation in viewer loop 247; child while 221; range-success first 221; native child table 221; reused range limits 243.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

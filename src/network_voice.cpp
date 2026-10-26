@@ -2512,6 +2512,7 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
 // Boolean role names 124; entry-scope workspaces 124; guarded preferred/mode values 154;
 // shared final selected bit 189; direct blocked assignment 165.
 // Capacity/preserve and preferred-bit homes remain; original body retained.
+// Round 117: Plain availability fields 162; joint workspace names 124; full final mask 143; mode observation first 130; existing preferred getter 124; byte preserve 146; unsigned preferred 124.
 // @retail 0x565c0
 void __stdcall function_565c0(s_voice_routing *routing, dword remaining, s_voice_route *output)
 {
