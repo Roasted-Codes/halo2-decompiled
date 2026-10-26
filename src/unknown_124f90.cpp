@@ -1226,7 +1226,7 @@ long function_2197f0(real gain);
 
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
-// score 149 (was 162): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
+// score 149 (was 149): Frame 0xc agrees; early fade-table load, entry gain home, delayed ESI save and fade scheduling remain.
 // Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
 // Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
 // shared fade-in duration 162; distinct-ambience case first 163.
@@ -1237,6 +1237,9 @@ long function_2197f0(real gain);
 // Hold duration snapshot 165; ambience time snapshot 173; ducking gain snapshot 165;
 // upper-first release clamp 162; all three snapshots 178 (fast); all restored.
 // Both ambience indices 170; readonly fade 162; equality-first admission 198; shared ducking pointer 162; native class ordinal 149 kept plain; int ordinal 149; ordinal with unsigned gain 149; ordinal with common gain result 157.
+// Round 160: Interpolation input orders a/t/b 149, b/a/t 148, b/t/a 148, t/a/b 149, t/b/a 148; immutable
+// base plus release gain 149; interpolation/addition home names 149/149. All executable lines and helper
+// contracts restored. One-point previews excluded by the minimum-gain rule.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -3374,7 +3377,7 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 234 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and clamp stores still differ.
+// score 234 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
 // long next-chunk candidate 254; completed-chunk early exit 241.
@@ -3385,6 +3388,10 @@ struct s_128ca0
 // Definition after packet initialization 237; branch gain writeback 234; current-chunk candidate 234;
 // sequential gain workspace 234; direct processed-gain initialization 234 (fast); all restored.
 // Pitch lower snapshot 273; native flag3 view 236; pitch workspace subtraction 234; zero-default controller gain 267; readonly parameter/range views 234 (fast); all restored.
+// Round 160: Native permutation gain/count, controller gain array, promotion coefficient and all three
+// together 234 each; native clear-member addresses 234; chained packet flags 293; upper-first shared pin
+// 234; pin input home name 234. Original fields, clear ranges and helpers restored; protected chunk
+// interface unchanged.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3567,7 +3574,7 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 	arg_2->k = (rotation_i * arg_1->j - rotation_j * arg_1->i) * local_2 + rotation_k * local_1 + local_0 * arg_1->k;
 }
 
-// score 535 (was 535): Frame 0x130 versus 0xe8; native vector, environment and listener-index homes differ.
+// score 535 (was 535): Frame 0x130 versus 0xe8; native rotation, environment and listener-index homes remain.
 // Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
 // Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
 // Static const fallback 727 (frame 0xec); spatial role names 551; long success workspace 551;
@@ -3578,6 +3585,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Weighted cross terms 596; projection products 596; scaled-input terms 590; rotation subtotals 596;
 // vector-first publication 535 (fast); all restored.
 // Shared handle query 575; complete rotation outputs 1050; quaternion cross helper 1050; unsigned listener ordinal 557; plain environment cursor 649; positive entry scope 535 (fast); all restored.
+// Round 160: Rotation scale declaration orders 0/2/1 583, 1/0/2 589, 1/2/0 589, 2/0/1 586, 2/1/0 1050;
+// quaternion acquisitions w/i/j/k 538 and k/j/i/w 545; native scale-home names 535. Original quaternion
+// snapshots, expressions, helper contract and body restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

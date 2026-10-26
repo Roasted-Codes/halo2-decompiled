@@ -110,17 +110,18 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 	out->up.k = inertia.m_col2(2);
 }
 
-// score 184 (was 184): Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
+// score 184 (was 184): Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
+// Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
 // double cap parameter 249; read-only motion input 184; read-only step view 184; read-only
 // component view 184; native contact receiver 184; complete contact mask result 304; separate
 // braking result 274; linear brake used after its cap 223.
 // Output reference 184; motion reference 184; both references 184; limiter reference 184; both helper
 // contracts 184; native column values 382; column library copies 220; copies with output reference 220.
 // Frame overlap, motion/reciprocal and brake allocation remain.
-// score 184 (was 184): rotation memcpy 184; complete limiter input 351; both 351;
+// rotation memcpy 184; complete limiter input 351; both 351;
 // broad rotation plus limiter input 366; norm accumulation 184; capped stores reversed 184;
 // separate integration loops 182 (dropped); torque coordinate loop 286. Frame gap remains.
-// score 184 (was 184): rotation/inertia frame sharing and reciprocal/product scheduling still differ.
+// rotation/inertia frame sharing and reciprocal/product scheduling still differ.
 // separate first matrix result 194f; separate final matrix result 213f.
 // both matrix results 194f; torque snapshot 271f.
 // first result plus torque snapshot 286f; linear change reused 184f.
@@ -136,9 +137,12 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Query workspace in caller alone/with broad rotation 234/234; live rotation input 232;
 // first-product output pointer 224; pointer with separate transpose 236; native square-root
 // result, limiter output pointer and both 184/184/184. All helper contracts restored.
-// score 184 (was 184): query/rotation overlap and scalar-product allocation remain;
+// query/rotation overlap and scalar-product allocation remain;
 // query output pointer ignored/retained/ordinary/ordinary ignored 184/184/184/184;
 // new pointer flow with broad rotation/first product/final product/transpose 221/194/213/222.
+// Round 160: Complete force products, linear integration results, angular integration results, both
+// result sets, norm squares, squared cap, all cap products and force-plus-cap products all 184. Every
+// expression tree, input observation, existing helper, matrix role and signed contact loop restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
