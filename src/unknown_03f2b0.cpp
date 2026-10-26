@@ -1302,6 +1302,18 @@ short function_4bcc0(byte *output, long object_index, real distance, long overri
 // each; random mixes of declaration orders, compound division, defaults-first branch, early
 // level read and result at the top 43-110; pointers defaulting to the zero buffer 54/53;
 // local and parameter renames 43 each.
+// count/current EDI and wanted ESI replace retail ESI/EDI;
+// default count and selector scheduling remain. Native definition/library clear/both 43/43/43;
+// defaults first 99; default pointers 54; native level/result 83/100; typed default pointers 54.
+// Cache/selector inline, outline and combined call contracts: six further trials at 43.
+// Entry inline/stdcall/cdecl 43/43/44; byte return 43; final false/true exits 64;
+// fallback failure exit 100; both failure exits 119; inline final exits 64.
+// early EDI save, count/current EDI and wanted ESI remain.
+// Pointer order/role name, entry result, count first/library clear, signed workspace all 43;
+// direct level 83; unused formal addresses 43; count/variant names 43/43;
+// twice-used source count 43; source count with direct level 83.
+// Native word buffer 43; default tag scope with byte/word data 98/98; native word clear 43;
+// actual object fields with byte/word data 43/43; initial-selection result alone/with fields 43/43.
 // @retail 0x4c190
 bool function_4c190(long *count, long object_index, bool defaults, long tag,
     short *level, signed char fallback_level, signed char *sections, bool *fallback)

@@ -278,12 +278,17 @@ short __stdcall function_1b39e0(long actor_index)
 	return (short)result;
 }
 
-// score 1 (was 36): literal target differs (1.5 versus 1.0); one result 1;
+// score 1 (was 1): literal target differs (1.5 versus 1.0); one result 1;
 // result supplies flags 1; byte expression 36; flags after unit 35; unit before copy 46;
 // clear return receiver 63; first/second shared timer rounding 86/63.
-// object-flag byte register and shared tail zero still differ.
+// Before the result, the object-flag byte register and shared tail zero differed.
 // Chained flags 36; direct object flag 93; const property state 36; flags before link 37;
 // flag-pair memset 61; target memcpy 36; duration names 36; accepted state scope 115.
+// score 1 (was 1): only the constant target differs; retained property 155; joint admission 154;
+// admission result 1; retained admission 156; selection result 151; retained selection 144;
+// native state clear 180; constant before timers 35. Numerical value preserved.
+// Separate real timers 8; separate tick results/both pairs/pair scopes 1/1/1;
+// unsigned identifiers 1; long result 149; current-id lifetime 1; early result 27.
 // @retail 0x1b3a80
 bool __stdcall function_1b3a80(long actor_index, s_slot *slot)
 {
@@ -380,6 +385,9 @@ short __stdcall function_1b3ea0(long actor_index)
 // This round: Boolean after reset 26; both slots after reset 46; Boolean after activation 25; both slots after activation 53; sentinel after activation 34; actor after reset 34; actor after slots 34; direct slots after reset 46.
 // Out-of-line reset function call 80 (stays a call); reset actor without the nested getter 26;
 // offset-first actor address 26; local and parameter renames 26 each.
+// score 26 (was 26): input offset/pool scheduling and shared zero still differ;
+// explicit getter/reset/both inline contracts 26/26/26; Boolean/sentinel/both field lvalues 26/26/26;
+// inline contracts with Boolean/both lvalues 26/26. All helper declarations and lvalues restored.
 // @retail 0x1b3ee0
 bool __stdcall function_1b3ee0(long actor_index, s_slot *slot)
 {
@@ -409,10 +417,19 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	}
 	return result;
 }
-
 // score 63 (was 63): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
+
+// score 63 (was 63): seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
+// Shared rounding 66; direct scaled rounding 74; separate scaled timer 63; result-first rounding 66;
+// range/fraction/both force-inline declarations 63/63/63; both with shared rounding 66.
+// seed/actor scheduling, folded random scale and slot EBP lifetime remain;
 // duration and timer names, ticks first, timer scope, named ticks first, named
 // timer scope, direct slot and named direct slot each 63. Opening body restored.
+// Accessor receivers 61; distinct scaled input 63; native conversion output 63; entry success with
+// assembly 63; chained resets 63; conversion before publications 61; random before accessor 66;
+// scaled input with accessor receivers 61. Seed/slot allocation and unfolded range remain.
+// Reset flag/pair/property postconditions 63/80/68; notification inline 63;
+// const receivers 63; input names 63; actor clear before timer store/conversion 63/63.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
@@ -601,15 +618,19 @@ long function_1e4a50(long index);
 void function_26c180(long actor_index);
 short actor_behavior_find_level(long owner_index, short type);
 
-// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch homes differ;
+// score 140 (was 144): frame 0x84 versus 0x88 and actor/scratch homes differ;
 // source store order 145, movement result 142, positive membership scope 161,
 // role names 144, native zero initialization 144, combined setup/result 141.
-// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
+// frame 0x84 versus 0x88 and actor/scratch/best homes remain.
 // Double best distance 214; failure-default active result 172; inactive success exit 188;
 // ordered member rejection 144; native point memcpy 144.
-// score 144 (was 144): frame 0x84 versus 0x88 and actor/scratch/best homes remain.
 // Full-width result 157; setup-scope best distance 155; early native workspaces 144;
 // initialized query distance 167; shared member iterator 160 (frame 0x88).
+// Nearest-distance name alone 144; candidate-availability result 160;
+// identity after member lookup 144; nested query/distance scopes 144;
+// distance before initial member lookup 144.
+// frame 0x84 versus 0x88 and actor/scratch/best homes remain.
+// Round 110: radius aggregate 140 plain; redundant zero stores omitted 167; selected actor name 144; movement scope 144; search construction scope 144.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {
@@ -621,9 +642,7 @@ bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 	{
 		byte *movement = (byte *)function_1e4a50(actor->unknown054);
 		function_26c180(actor_index);
-		s_path_source source;
-		memset(&source, 0, sizeof(source));
-		source.radius = *(real *)(movement + 4);
+		s_path_source source = { *(real *)(movement + 4) };
 		source.unknown04 = false;
 		source.object_index = NONE;
 		source.unknown0c = NONE;

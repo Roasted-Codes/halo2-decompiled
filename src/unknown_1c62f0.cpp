@@ -89,6 +89,23 @@ void c_animation_channel::clear()
 // (retail order 49/51); graph as a by-value class 43 (on the stack); graph store first/after the
 // NONE words 41/41, after the zero words/unknown0d/frame 42 each; inline definition in retail
 // order 42; that order with graph copied to a local at the top of the block 42.
+// Early frame-position store keeps 36 at retail length;
+// incoming graph save and later store order still differ.
+// sentinel chain 41; word clear chain 41; byte clear chain 43; two-byte memset 43; stored flags 41; early frame 36 plain; stored-ID result 76; renamed late graph 42; dword flags plus early frame 36; long flags plus early frame 37.
+// Early frame-position store keeps 36 at retail length; input save and later store order still differ.
+// Incoming graph save and later store schedule still differ.
+// paired defaults 42; identifier memcpy 36; metadata before resets 42; trailing defaults 41;
+// redundant byte clear removed 36; early derived state 38; explicit state bit 35; defaults plus memcpy 42.
+// graph ECX needs an ESI save and a late store;
+// validity-result 43; animation guard first 44; inline/noinline declarations 41;
+// existing reset 43; state memset 51; high-bit predicate 41; ID word copies 50.
+// Further trials: nested validity gates 36; separate invalid guards 42;
+// eager validity tests 47; short-pair memset 50; early short metadata 43;
+// early flags word 41; early long metadata 43; named short promotion 36.
+// Eager validity and short-pair memset lose the four checked callers.
+// Further trials: success result/nested success result 49/49; early invalid
+// guard with early frame 36; role-named inputs 36; late rate/short metadata/
+// both 36/36/36; both with the success result 49.
 // @retail 0x1c6470
 bool c_animation_channel::set(long graph_tag_index, word flags, c_type_709360 animation_id, long unknown08,
 	char unknown0c, char unknown0d, char unknown0e)
@@ -656,6 +673,11 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 // adjacent word-load/byte-clear order and callback reload remain.
 // Native state bit clears/chained clears/publication/both 126/126/97/126;
 // dispatcher word flags 122; with separate/chained/all native state writes 137/137/137.
+// Direct variant publication 103; identity after lookup 102; early next frame 97; early frame limit 120;
+// position after clears 103; explicit event merge/result at dispatch 97/97; end arm first 98.
+// Direct callback with user/frame/state/frame-user/state-user/frame-state 125 each; callback with
+// channel/channel-user 139 each. Entry convention shifts and matched callers regress; original
+// callback and argument homes restored. Word-load schedule and callback reload remain.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)

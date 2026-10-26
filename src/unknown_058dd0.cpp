@@ -1146,6 +1146,10 @@ long __stdcall function_063190(void *summary, long user);
 // missing count 110; byte player ordinal 129; both byte counters 129; native signed counters 110; aggregate
 // function scope 110; native member property storage 110; fixed player end test 110; sse after rank binding
 // 111.
+// score 110 (was 110): three-word frame/session spill and aggregate allocation remain.
+// Eligible-only rank reference 115; early property receiver 110; both lifetimes 115;
+// maximum-first/sum-between-extrema/count-before-sum 110/110/113;
+// eligible source-rank snapshot/read-only inputs 116/115.
 // @retail 0x72540
 void function_72540(c_session_state_matchmaking *state)
 {
