@@ -137,10 +137,17 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 }
 
 
-// score 55 (was 55): frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
+// score 55 (was 55): BLOCKED-BY 0xba300: our object_get_root_location takes the object in eax and the output in esi,
+// retail's the output in eax and the object in ecx, so the object index can't stay in esi as in retail. Retail keeps a
+// bool result in bl (xor bl, bl at entry) and returns through tail copies (mov al, 1 / mov al, bl); the final location
+// copy stores its second dword first. Frame 0x18 and normal-transform block agree.
 // Byte result first 150; Boolean early-success result 152; long result 135; independent type tests 170;
 // excluded-class exit 165; long result first 134 kept (plain).
 // Root output at entry 134; forward at entry 134; direct successful completion 185; machine arm first 134; CRT location publication 134; existing normal helper input values 55 kept (plain).
+// Word/unsigned long/signed char result 55/55/73; named location fields 65; invalid-cluster common exit 55;
+// bool result 76 (xor bl, bl agrees; the object index moves to ebp), set before the location copy 76, set after the
+// audible store 181; long result set after the audible store 53; cluster index sum operands swapped 55.
+// frame 0x18 and normal-transform block agree; entry result/object, root-location and final copy carriers differ.
 // Word result 55; unsigned long result 55; signed char result 73; named location fields 65; invalid-cluster common exit
 // 55.
 // Recovered normal body: Boolean first 76; byte first 73; Boolean after lookup 78; long after lookup 56;
@@ -550,6 +557,7 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Tag-first declaration 293; explicit failure arms 309; word cluster 294; CRT velocity copy 293; owner value conditional 301.
 // Effect axis at entry 293; audibility output at entry 293; direct late tag flag 323 (frame 0x80);
 // readonly datum 293; CRT marker position 293.
+// signed-word effect failure 293; unsigned native cluster 293; unsigned marker handle 293; immutable datum pointer 293; native clear-output reference 293; unsigned-byte effect failure 293.
 // Named location fields 293; failure-first common return 296; cases two/three/zero 296; entry marker-name workspace
 // 293; native flag0 view 293.
 // Tag acquisition after returning kinds 305; conditional failure 309; conditional marker selection 293;

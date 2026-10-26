@@ -272,7 +272,9 @@ struct s_pending_message_storage : s_pending_message_header
 // score 14 (was 14): timestamp slot sharing leaves frame 0x1c rather than 0x18;
 // unsigned capacity 14; result after both outputs 85; result after pointer output 85; unsigned
 // capacity and late result 85; published field output 14; published field test 14; both
-// published field consumers 14; allocation-result flow 45.
+// published field consumers 14; allocation-result flow 45. _ReadWriteBarrier before the
+// allocation 13 (retail's store order; the frame stays 0x1c: retail packs start into the
+// first counter's slot, ours packs the retry count there); after it 14; before the if 17.
 // @retail 0x80e10
 bool function_80e10(s_pending_message_storage *request, void **output, long *size)
 {

@@ -1296,6 +1296,9 @@ static __forceinline long function_72458(s_surface_description *arg_0)
 // 1-2 and 3-5 with __assume(0) (134); separate case 3 and case 4 (103); 5 || 3 then a case 4
 // switch (100); a negated && test before the special block (100); the || test around a
 // case 1-2/3-5 switch with __assume(0) (111). The table itself is function_193440 inlined.
+// Member at each use 165; member before session root 9; common limit result 190;
+// retained width/minimum results 99/162; typed variant storage/native record copy 9/9;
+// typed storage with helper classification 128. Frame and first +0xe remain unchanged.
 // @retail 0x72330
 void function_72330(c_session_state_matchmaking *state)
 {

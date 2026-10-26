@@ -631,6 +631,8 @@ void function_1a6d80(void)
 // Nested count assignment/return count expression/full return expression 6/6/6;
 // comma output statement/indexed and offset returns 6/6/6;
 // const node-list pointer/handler local 6/6.
+// Count at each use 53; table value snapshot 27; validity from a false-default test 52;
+// success/failure output arms 15/15; native group snapshot 26; word count 6; true-default test 79.
 // @retail 0x1a73c0
 s_action_node **function_1a73c0(long owner_index, short id, bool *valid, short *count)
 {

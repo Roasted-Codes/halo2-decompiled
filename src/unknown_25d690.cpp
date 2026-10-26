@@ -1291,7 +1291,8 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
-// score 165 (was 165): early ESI save, computed return byte and actor/motion homes remain.
+// score 165 (was 165): Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
+// Earlier 165 (was 165): early ESI save, computed return byte and actor/motion homes remain.
 // frame 0x84 agrees; early ESI save/computed return byte
 // frame 0x84 agrees; early ESI save, computed return byte and actor/motion homes differ.
 // Earlier 165 (was 175): frame 0x84 agrees; early ESI save/computed return byte
@@ -1321,7 +1322,7 @@ bool function_1e1de0(long arg_0);
 // Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
 // Computed guarded result 250; failed literal/previous-time snapshot 165/165; conditional motion 191;
 // ordinary-parent-first/separate actor producers/cases 1,0,12 165/165/165; timestamp-first final stores 167.
-// score 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
 // Native initial/parent/root/all header queries 165 each; explicit initial/parent type domains
 // 181/192; both type domains 208; both with native header queries 208.
 // early ESI save, return byte and motion homes remain; parent flag/identifier/both clears
@@ -1330,6 +1331,7 @@ bool function_1e1de0(long arg_0);
 // Character selection 221; scratch last-use scope 165; parent kind first 277;
 // first parent producer 209; character-kind alternative first 222;
 // second parent producer 215; selected rising state 169; both parent producers 222.
+// Round 151: Clock/parent/root observations 235/325/165; clock-parent/clock-root/parent-root/all 338/235/325/338; consistent current object 349.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
