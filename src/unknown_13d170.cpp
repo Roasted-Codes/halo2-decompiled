@@ -180,6 +180,7 @@ struct s_block_candidate
 // page cursor published first 372; byte ring tail 432 (fast).
 // Round 210: Word best-present/busy/policy states 372/373/374; byte ring head 393; function-
 // scope deletion iterator 370. Frame 0x1050 versus 0x1054 and page/tail allocation remain.
+// Round 212: Shared page shift 370; byte limit category 418; unsigned-word inner/insertion-next/successor cursors 374/375/383. Frame and page/tail homes remain.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

@@ -223,6 +223,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Round 210: Signed-word alpha 162; coordinate lexical homes 162; immutable value half-size 162;
 // native channel packing 238; chained descriptor counts 162 (fast control 162). Frame and
 // reservation scheduling remain.
+// Round 212: Immutable bitmap pointers/repeated texture coordinates 162/162; chained RGB/alpha outputs 165; shared color output with word alpha 162; center snapshot at first final vertex 296 (fast control 162). Frame and reservation scheduling remain.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

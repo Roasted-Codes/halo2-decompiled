@@ -227,12 +227,13 @@ struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long f
 // score 332 (was 332): frame 0x114 versus 0x10c and stacked request versus EAX remain; metadata lifetimes tie, counter/flag forms regress, shared inline declarations tie.
 // primary index after vector 332; primary index before point 332; extra index before point 332; branch counter
 // result 356; extra flag native width 342; position helper inline 332.
-// score 332 (was 332): frame 0x114 versus 0x10c and request stack home remain.
+// Earlier: frame 0x114 versus 0x10c and request stack home remain.
 // Native request/actor/output references 332/332/332; separate extra point/index 333;
 // offset point setter 332; parent/source/origin field references 332/332/332.
 // frame 0x114 versus 0x10c and request convention remain; byte result 338;
 // long result 360; library fallback/output record copies 332/332; unsigned primary index 332;
 // inline out-of-line location declaration 392. Original body and shared declaration kept.
+// Round 212: Word path/extra states 364/350; signed-byte append ordinal 333; real counter field 332; fallback-point library copy 332. Frame, request convention and location expansion remain.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,
