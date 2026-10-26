@@ -662,6 +662,8 @@ void swarm_leader_detach(long actor_index);
 // direct current-slot store 290; ancestor failure-first continuation 290. Original body retained.
 // Fresh-lookup live slots 300; unsigned cleanup index 290; iterator local home 290; Boolean bit
 // test 290; native masked slot 308.
+// Round 122: Shared marked scan 289; native actor for 290; ancestor cursor scope 290; empty-memory
+// continue 290; exact cleanup endpoint 290.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

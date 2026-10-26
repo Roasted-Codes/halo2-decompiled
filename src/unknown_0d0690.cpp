@@ -49,6 +49,8 @@ real function_30bf0(vector3f *vector);
 // Selector failing-range returns 213; explicit selector context 213; direct collision predicate 213;
 // ordinary while light traversal 213; independent blend bounds 213; constant output first 213.
 // Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
+// Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
+// 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
