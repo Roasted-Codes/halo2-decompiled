@@ -711,7 +711,6 @@ void function_1e68a0(s_character_physics_update_input_datum_a *arg_0, s_source_a
     long arg_2, long arg_3, long arg_4, bool arg_5, bool arg_6, bool arg_7,
     bool arg_8, bool arg_9, point3f *arg_10, point3f *arg_11, point3f *arg_12);
 void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const *arg_1, void *arg_2);
-
 // score 95 (was 95): frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.
@@ -728,6 +727,9 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // copied position 162; shared threshold product 101; existing definition view 95; counter names 95.
 // Existing mask setter 112; result through setter 95; setter with split output tests/direct threshold
 // 106/101; short query 124; builder scope 98; direct parent/read-only tag receivers 95/95.
+// Admission word/mask 136/166; native output byte 95; shared counter and output decision 123;
+// shared counter carrier 95; byte with shared counter 95; reversed adjacent output publications
+// 95; final native word 102. Word/Boolean allocation and final store width remain.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -849,8 +851,7 @@ void __stdcall function_d6bc0(long arg_0);
 void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vector3f const *arg_3,
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
-
-// score 159 (was 278): frame 0x124 agrees; query/sweep timing and owner-call setup differ.
+// score 151 (was 151): frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // Complete request type 278; scale at each use 278; aggregate sweep 278;
 // point/normal/location copies first 278; target size optimization 536.
 // Query before sweep 159; distinct later-up output 288; double best fraction 255;
@@ -858,20 +859,23 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Sweep/impact homes and store scheduling still differ.
 // targeted sweep name 278; sweep/impact names exchanged 278; completed normal reused 285; candidate
 // countdown 284; header flag at use 278.
-// score 159 (was 159): Frame 0x124 agrees; quotient spill and sweep/impact homes remain. Native collision result 159; later best fraction 161; later quotient 281; candidate cursor 393; bool return 159 (fast).
-// score 151 (was 159): Frame 0x124 agrees; quotient/sweep/impact homes and owner-call setup remain.
+// Frame 0x124 agrees; quotient spill and sweep/impact homes remain. Native collision result 159; later best fraction 161; later quotient 281; candidate cursor 393; bool return 159 (fast).
+// Frame 0x124 agrees; quotient/sweep/impact homes and owner-call setup remain.
 // Long saved identifiers first 152, second 152, third 151 kept (plain); all three 154; early
 // fraction 161; first/third 157; second/third 157; first/second 158 (fast).
-// score 151 (was 151): Quotient spill, sweep/impact homes and owner-call setup remain.
+// Quotient spill, sweep/impact homes and owner-call setup remain.
 // Sweep components before query i/j/k/ij/ik/jk each 159; all components 293;
 // aggregate sweep before query 293, with retained long third saved identifier.
 // Frame 0x124 agrees; quotient/sweep/location homes and word loads remain.
 // second identifier first 149; location home name 151; native request after lifetime gains 151; distinct
 // up after lifetime gains 180; location before identifiers 218; long first with second first 154; long
 // second with second first 154; both long with second first 150.
-// score 151 (was 151): quotient spill, sweep/impact/location homes and owner-call setup remain.
+// quotient spill, sweep/impact/location homes and owner-call setup remain.
 // Repeated quotient after query 287; native sweep array loop 731; exhausted-selection exit 290;
 // selected handle after tuple 162; normal before point 160.
+// Private unscaled input/native in-place copy/shared in-place scale 337 each; point/location
+// between words 162/164; second word then point 161; identifier declarations 151; timer home name
+// 151. Quotient/sweep/impact homes and protected owner-call setup remain.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
