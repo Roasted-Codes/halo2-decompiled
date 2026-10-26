@@ -106,14 +106,16 @@ struct s_variant_string_tables_view
 	s_string_table tables[1];
 };
 
+struct s_variant_language_range
+{
+	short first;
+	short count;
+};
+
 struct s_variant_string_list_view
 {
 	byte unknown00[0x10];
-	struct
-	{
-		short first;
-		short count;
-	} languages[1];
+	s_variant_language_range languages[1];
 };
 
 struct s_user_interface_shared_globals *ui_mode_definition_get(void);
@@ -140,17 +142,17 @@ __forceinline void variant_string_table_get(s_string_table *table, long first, l
 __forceinline void variant_string_get(long tag_index, long string_handle, word *buffer)
 {
 	long language = get_current_language();
-	s_variant_string_list_view *list = (s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes;
+	s_variant_language_range const *range = &((s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes)->languages[language];
 	s_variant_string_tables_view *tables = (s_variant_string_tables_view *)g_4e034c;
 
-	variant_string_table_get(&tables->tables[language], list->languages[language].first,
-		list->languages[language].count, string_handle, buffer);
+	variant_string_table_get(&tables->tables[language], range->first,
+		range->count, string_handle, buffer);
 }
 
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 194 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
+// score 172 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
 // String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
 // Frame 0x40c versus 0x408 and tag/language/cursor homes remain; intermediate ownership does not remove the spill.
 // Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
@@ -194,6 +196,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Round 210: Native wide-array helper outputs 194; signed-byte string ordinals 194; direct table
 // root 194; native table-reference input 194; unsigned language ordinal 194. Extra tag spill and
 // language/cursor homes remain.
+// Native range pointer/reference 172/172; table-helper range pointer/reference/value
+// after table 172/172/217, before table 220/220/220. Keep the genuine
+// twice-used range pointer; 791/782 bytes, original arithmetic and call values.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

@@ -78,6 +78,8 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // private math helpers restored; frame/input and x87 homes remain.
 // DL134: unrounded magnitude/planar/both root boundaries 428/433/433; real sign 432;
 // named correction root/term 428/428; scale output return 428; ordered clamp returns 428.
+// Native magnitude/planar/scale reference input contracts independently and
+// combined, with native scale output reference: eight forms all 428.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

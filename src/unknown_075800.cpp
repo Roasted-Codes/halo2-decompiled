@@ -1018,6 +1018,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // all 191 fast, tying preview; no declaration or handler-body change retained.
 // Dispatcher inline/noinline/forceinline/inline-outofline declarations all 191 fast, tying reduced control 191;
 // direct orders 0,2,4,3 / 0,3,2,4 / 0,3,4,2 / 2,0,3,4 give 193/193/194/196 fast.
+// Remaining direct orders 2,4,3,0 / 3,0,4,2 / 3,2,0,4 / 3,4,2,0 /
+// 4,0,3,2 / 4,2,3,0 give 193/194/196/195/196/193 fast; genuine
+// residual default scope last/first 191/191, tying the reduced control.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
