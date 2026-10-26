@@ -13,15 +13,18 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 217 (was 217): frame 0x48 agrees; receiver EDI/EBP and count,
+// score 217 (was 217): Frame 0x48 agrees; receiver and aggregate/blocked homes remain.
+// Earlier 217 from 217: frame 0x48 agrees; receiver EDI/EBP and count,
 // priority, size and blocked homes remain. Both redundant count guards removed
 // 249; separate native arrays 249; distinct counter names 249; result-home names
 // 249; arrays and counter names 249; pending-only guard 242; active-only 220.
-// score 217 (was 217): Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
+// Earlier 217 from 217: Frame 0x48 agrees; receiver/output-slot/priority homes remain. Active priority result 228; mutable cursor 250; native entry/peer/both arrays 236/266/238; shared handle buffer 220; linked for 217; query enum 217; cursor plus priority 259; unmasked arm first 216.
 // State snapshot 217; direct handled states 247; default chain count 238;
 // invalid-priority-first arms 221; state/default/arm combination 238.
 // Entry-scope guarded arrays 217; shared blocked workspace 217; shared chain
 // index 217; shared callback outputs 224; all-ready predicate 220.
+// Priority/size/both before pending lookup 221/218/221; active priority/size/both 217/217/217;
+// both priorities/all four early 221/221.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
