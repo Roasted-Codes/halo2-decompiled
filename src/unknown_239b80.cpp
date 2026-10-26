@@ -362,31 +362,22 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 
 // score 50 (was 50): retail loads the count once (DX, then EBX sign-extended for the
 // wrap) and compares the index with the count's stack home as a word; ours re-reads the
-// count each pass. The XMM homes differ too (retail offset XMM0/XMM3, edge XMM1/XMM2). Short
-// wrap snapshot 78, long 68, later short 78; ordinary count 73 (moves the point to the stack
-// and breaks the matched caller 0x14a370), ordinary count with long/short shared bound
-// 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67;
-// byte/short/native result 102/104/102; unsigned-short induction 50; early cross 58;
-// distance limit scalar 50; cross square scalar 50; both squared parts 50; edge first 48;
-// vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50; nested
-// predicates 50; entry success 51; predicate result 51; ordinary count with a volatile read
-// of it only at the loop test 69 (192 bytes); offset-first cross operands, the length sum
-// without casts and a pointer cross-product inline all compile identically (50).
-// entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
-// score 50 (was 50): entry count load, word tail and XMM edge/offset homes remain.
-// Current point value 111; advancing point cursor 58 at 184 bytes; ordinary while 50;
-// named edge squares/cross products/both 50/50/50; point value with edge squares/both 111/111.
-// The initial count load, widened loop tail and XMM edge/offset homes still
-// entry count load, word loop tail and offset/edge SSE homes still differ.
-// Earlier: entry count load and XMM offset/edge lifetimes still differ; short wrap snapshot 78, long 68, later short 78; ordinary count 73, ordinary count with long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct rejection 67.
-// Earlier: The initial count load, widened loop tail and XMM edge/offset homes still
-// differ. Byte/short/native result 102/104/102; unsigned-short induction 50; early cross 58; distance
-// limit scalar 50; cross square scalar 50; both squared parts 50.
-// initial count load, wrap-bound ownership and XMM allocation remain.
-// Edge first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50;
-// nested predicates 50; entry success 51; predicate result 51. Two-point gain rejected.
-// Next before offset 50; radius square at use 71; const radius square 50;
-// outer offset/edge/both storage 50/50/50; early next with outer vectors 50; radius at use with outer vectors 71.
+// count each pass. The XMM homes differ too (retail offset XMM0/XMM3, edge XMM1/XMM2).
+// Tried: short wrap snapshot 78, long 68, later short 78; ordinary count 73 (moves the
+// point to the stack and breaks the matched caller 0x14a370), ordinary count with
+// long/short shared bound 67/73; cached-long direct rejection 63/184 bytes, ordinary direct
+// rejection 67; byte/short/native result 102/104/102; unsigned-short induction 50; early
+// cross 58; distance limit scalar 50; cross square scalar 50; both squared parts 50; edge
+// first 48; vertex receiver 97; wrap if 63; positive wrap 50; degenerate continue 50; nested
+// predicates 50; entry success 51; predicate result 51 (two-point gain rejected); ordinary
+// count with a volatile read of it only at the loop test 69 (192 bytes); offset-first cross
+// operands, the length sum without casts and a pointer cross-product inline all compile
+// identically (50). Current point value 111; advancing point cursor 58 at 184 bytes;
+// ordinary while 50; named edge squares/cross products/both 50/50/50; point value with edge
+// squares/both 111/111. Next before offset 50; radius square at use 71; const radius square
+// 50; outer offset/edge/both storage 50/50/50; early next with outer vectors 50; radius at
+// use with outer vectors 71. Current-point pointer for both differences with
+// ordinary/volatile count 92/97 (point moves to the stack; 0x14a370 23).
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {
@@ -413,31 +404,20 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 	return result;
 }
 
-// score 31 (was 31): short body index/tail width and point/wrap homes remain.
-// Difference helper ordinary inline/pointer result/input references 31/31/31;
-// input values 161; staged differences 31; output reference 31;
-// current point value 82; advancing current-point cursor 42.
-// The induction is carried at native width; point and wrap-register homes still
-// differ. Direct rejection 45; short/native result 68/66; rejection result 80; short next 43;
-// unsigned-short induction 31; negative threshold 38; result from cross test 39.
-// Promoted current index 31; plain while 31; explicit wrap assignment 44;
-// modulo wrap 42; signed area 31; first/second/both product parts 31/31/31;
-// reused short/native bound values 43/47.
-// Test-point value 97; function-scope vectors 31; edge before offset 31; role names 31;
-// difference helper y-first/output-first/base-first/vector result 31/31/31/144.
-// Early short successor with vertex pointer/value 58/103; separate current/successor 63; advanced short wrap 50; advance before rejection 43; result-controlled traversal 49; native/word equality wrap 44/45.
+/* true when the point lies on the inner side of every edge of the polygon,
+   to within epsilon */
 // @retail 0x23a220
-bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
+bool function_23a220(point2f const *point, short count, point2f const *points, real epsilon)
 {
-	(void)&count;
 	bool result = true;
 	for (short i = 0; i < count; i++)
 	{
-		vector2f offset;
-		polygon_difference_23a220(point, &points[i], &offset);
+		point2f const *current = &points[i];
 		long next = (i + 1 >= count) ? 0 : i + 1;
+		vector2f offset;
+		polygon_difference_23a220(point, current, &offset);
 		vector2f edge;
-		polygon_difference_23a220(&points[next], &points[i], &edge);
+		polygon_difference_23a220(&points[next], current, &edge);
 		if (edge.i * offset.j - edge.j * offset.i < -epsilon)
 		{
 			result = false;

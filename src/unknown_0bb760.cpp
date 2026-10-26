@@ -466,6 +466,9 @@ void function_3dd10(long object_index, bool force);
 // selection test 132f; 30 declaration/clamp orders with it 120-134 (screened); seed names and a
 // named choices pointer (screened) don't move the slots.
 // Earlier 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// Blend and cached-choice homes, signed scan exits, inverse placement and constant reload still differ.
+// Frame 0x54 agrees; remainder publication/home, signed scan exits and fallback one reload remain.
+// Frame 0x54 agrees; blend/choice homes, signed scan exits, inverse placement and fallback one reload remain.
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
@@ -510,6 +513,10 @@ void function_3dd10(long object_index, bool force);
 // blend block, with 1.0 reloaded at the not-found exit) and the 1.0/0.0 load order.
 // Second scan as for 196; found flag in its condition 403/406; renames 84; named choices pointer
 // 208/238; select-then-blend 132, with the inverse after the loop 188.
+// Round 186: One seed scope, output orders selection/blend and blend/selection, 84/84; both with blend-entry inverse 132/132; separate seed scopes in both orders 84/84, with inner inverse 132/132.
+// Upper-first conditional/branches 201/244; lower-upper/upper-lower clamp stages 273/252; per-channel values lower/upper-first 240/243; all channel values lower/upper-first 245/254.
+// Direct rounded seeds 84; shared double hue delta 156; both 156; symmetric six HSV products 84;
+// products/direct seeds 84; products/delta 156; all three 156; positive hue arm on all three 156.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
