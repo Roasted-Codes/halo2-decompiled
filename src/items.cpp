@@ -967,7 +967,8 @@ struct s_item_flags_view_10b850
     byte flag7 : 1;
 };
 
-// score 813 (was 821): Frame 0x154 versus 0x12c and Boolean/vector homes remain.
+// score 813 (was 813): Frame 0x154 versus 0x12c, entry Boolean bytes and collision/carrier/rotation homes still differ.
+// Earlier: Frame 0x154 versus 0x12c and Boolean/vector homes remain.
 // frame 0x154 versus 0x12c; direction workspace 861;
 // frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
@@ -991,6 +992,10 @@ struct s_item_flags_view_10b850
 // Rotation helper explicit axis 853; explicit trigonometric inputs 893; all rotation inputs 892;
 // native reference output 821; output return 821; ordinary rotation inline 1926.
 // Frame/Boolean/native workspace homes remain; original body and every helper restored.
+// dot products 880; scaled-add products 813.
+// rotation projections 839; dot/add products 858.
+// dot/projection products 864; add/projection products 839.
+// all three product families 856; cross input products 834.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

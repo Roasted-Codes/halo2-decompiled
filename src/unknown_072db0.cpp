@@ -1568,7 +1568,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 }
 #pragma optimize("", on)
 
-// score 754 (was 770): frame 0xc0 agrees; user/identity and request homes remain.
+// score 739 (was 754): Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
+// Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
 // user-cursor and identity-word homes differ;
 // long validity 770; pending read guard first 786; timestamp before
@@ -1584,6 +1585,10 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // All five-group word ordinals 741 (frame 0xc8; rejected); byte clear ordinals 770;
 // read-submission failure first 770; common delay default 769; clamp bounds 769;
 // request/completion/offline word group 775/754/775; completion-only 754 plain, frame 0xc0.
+// direct records 754; direct properties 754.
+// direct destinations 772; record/property accesses 754.
+// record/destination accesses 772; property/destination accesses 772.
+// all three accesses 772; accumulated failure 739.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
@@ -1749,8 +1754,8 @@ void function_074aa0(void)
                             {
                                 if (player->state == 2) player->state = 1;
                                 else if (player->state == 5) player->state = 4;
-                                failed = true;
                             }
+                            failed = failed || received != 6;
                         }
                     function_80aa0(g_50c474, g_50c470);
                 }

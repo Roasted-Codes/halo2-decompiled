@@ -74,7 +74,8 @@ void function_2232a0(void)
 	function_2c8a0((byte const *)function_2232a1(&g_47f0f8[0]));
 }
 
-// score 151 (was 151): One-dword frame agrees; common count/layout join, terminal registers and tail convention remain.
+// score 151 (was 151): One-dword frame agrees; count/layout join, slot predicate and terminal/tail allocation still differ.
+// Earlier: One-dword frame agrees; common count/layout join, terminal registers and tail convention remain.
 // Earlier 151 (was 151): count-one paths still bypass the common count/layout join; tail call differs.
 // Signed-byte count alone/with player value 169; signed-word layout alone/with normalized selection 174;
 // native selected-player value, normalized selection and their combination 151; redundant scan test removed 154.
@@ -103,6 +104,10 @@ void function_2232a0(void)
 // Round 150: chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
 // count/layout join still threads. First/second/both native
 // Nested slot admission/sentinel continue/selected-source value 151/151/151; source admission before normalization 158; nested source 151; continued source 158; sole output cursor 232; native entry address 151 (restored).
+// sentinels/mode/rectangles 151; rectangles/sentinels/mode 151.
+// rectangles/mode/sentinels 151; mode/sentinels/rectangles 151.
+// mode/rectangles/sentinels 151; reversed rectangle pair 151.
+// sentinels/mode/reversed pair 151; reversed pair/sentinels/mode 151.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

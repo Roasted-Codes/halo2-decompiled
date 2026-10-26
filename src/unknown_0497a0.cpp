@@ -14,7 +14,8 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 594 (was 599): Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
+// score 594 (was 594): Frame 0x64 versus 0x60, primary-shape/basis homes and wave scheduling still differ.
+// Earlier: Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
 // Earlier: frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
 // Earlier 647 from 647: frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
 // primary output scale 744; default depth scale 743; alternate depth scales 727; product scale workspaces 734;
@@ -35,6 +36,10 @@
 // bool-shape-domain 633; word-shape-domain 645.
 // consumer-shape-wide-special 599; direct-primary-field-wide-special 662.
 // bool-shape-domain-wide-special 654; word-shape-domain-wide-special 642.
+// named trig factors 673; projection terms 673.
+// camera offset terms 594; trig/projection terms 594.
+// trig/camera terms 673; projection/camera terms 673.
+// all three term families 594; named modulation 673.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
