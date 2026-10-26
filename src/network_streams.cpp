@@ -1148,7 +1148,8 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
-// score 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
+// score 172 (was 172): Frame 0x10048 agrees; oldest/false carriers, copy-loop entry and allocator save remain.
+// Earlier 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Earlier: retained oldest/false registers and copy-loop entry differ;
 // scan getter 302; copy getter 325; both getters 361; unsigned byte progress 215; decode buffer first 213; forced-inline getters 223.
 // readonly decode records 215; native stream value initialization 254; native copy size bits 215; native
@@ -1165,6 +1166,7 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // Existing release-helper composition 221; reused fragment data 213; terminal loop condition 191;
 // first-sequence/saved-CRC homes 172/172; failure result before payload/after copy 250/224;
 // failure publication order 172; data and terminal lifetimes 254.
+// Round 152: Per-fragment terminal bool/header byte 192/250; conditional size with bool/byte 192/250; default size with bool/byte 244/251; native result with terminal bool/byte 266/218.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {
