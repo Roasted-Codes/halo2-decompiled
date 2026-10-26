@@ -51,7 +51,7 @@ static __forceinline long marker_viewer_unit(void)
 	return unit_index;
 }
 
-// score 99 (was 105): projection-result store, coordinate registers and later helper scheduling differ;
+// score 99 (was 99): projection-result store, coordinate registers and later helper scheduling differ;
 // bool result 231; early placement 233; position snapshot 282; late collision 237;
 // final factor clamp 233; bool with word half extents 123 kept; projection arm order 231 (fast).
 // projected endpoints 123; word centers 225; final endpoints 123; native direction 264; distance lifetime 141.
@@ -81,6 +81,9 @@ static __forceinline long marker_viewer_unit(void)
 // factor with size field 278; projection/vector noinline declarations 105/105;
 // early coordinate declarations 105.
 // Signed/unsigned word status 243/243; placement fill/flags after projection 223/111; chained flags 103; immutable ellipse products 99; shared ellipse squares 263; ellipse ratio lifetime 99 (last two exact-only).
+// Immutable outcome 99; signed-byte outcome 99; coordinate names/order 99/99;
+// directional-product names 99; unshadowed extents/immutable extents 99/99;
+// forward stores after offset 114.
 // @retail 0x24e59f
 void __stdcall function_24e59f(s_marker_list *list)
 {
