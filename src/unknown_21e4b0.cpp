@@ -93,7 +93,7 @@ void function_220790(s_sound_listener const *listener);
 bool sound_driver_voice_create_buffer(long voice_index);
 void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 
-// score 165 (was 165): Frame 0x80 agrees; success/type registers and first-channel spill remain.
+// score 165 (was 165): Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
 // Earlier 165 (was 169): success/type registers and first-channel spill;
 // byte allocation result 165; early byte result 280; listener aggregate 328;
 // aggregate with early result 357; early result with count cursor 300.
@@ -143,6 +143,7 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 150: const input/output/both tables 165/165/165; early input/output/both tables 253/371/312; early const tables 312; early tables with reset state 327; unified native byte 368; unified byte across reset 257 (fast).
 // Native-byte return 165; with final byte/allocation bool/both 169/169/169;
 // native-byte return across reset 280; with final byte/allocation bool/both 290/290/290.
+// Round 222: spatial/submix/both native interface owners 252/199/271; both with reset state 300; spatial with word channel ordinal 254; submix with word voice ordinal 305; both with word category/send ordinals 266/306.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

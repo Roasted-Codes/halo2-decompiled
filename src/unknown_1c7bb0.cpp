@@ -102,6 +102,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // null and successor EBP remain; opening body and private iterator restored. Repeated standalone word form
 // 218 excluded.
 // Native byte/signed-byte/Boolean high-bit fields with Boolean tests 164/164/164; direct tests 164/164/164; native bit values 164/187. Record size stayed 0x98; original flag byte restored.
+// Round 222: split iterator plus datum/index outputs 164; split pointer result 164; returned datum with ordinal output 164; outputs-first contract 164; typed split datum 164; split completion result first 165; split byte completion 164; internal split-step linkage 164.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
