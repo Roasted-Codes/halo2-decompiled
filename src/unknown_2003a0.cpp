@@ -2741,6 +2741,7 @@ static __forceinline long real_to_long(real value);
 // workspace lexical order 250; both workspace lexical order 256.
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
 // Round 117: Activity input group/squad/both 227/227/227; conversion-workspace names 227; factor-first periods 227; ordinary inline group/squad 227/227.
+// Round 121: Boolean group-step contract 227; unused group/squad/both suffix words removed 228/228/228; typed squad-step return 227. Original records and helper contracts restored.
 // @retail 0x202720
 void function_202720(void)
 {

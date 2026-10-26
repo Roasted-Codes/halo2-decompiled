@@ -1193,6 +1193,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Existing open API, file-element reference, both 165/165/165; open API with
 // constructed write/read/both headers 165/165/165; handle-field pointer 165;
 // native file and both headers 165. Shared API emits the same request code.
+// Round 122: Indexed request output 179; indexed by-value handles 179; chained request zeros 170;
+// unsigned channel ordinal 165; buffering flags before sharing 168.
 // File after size lookup 205; entry file lifetime/immutable file cursor 165/165;
 // valid-type byte domain 165; word slot 257; chained validity fill 262;
 // timestamp eligibility guard/write workspace end 165/165. Original body restored.

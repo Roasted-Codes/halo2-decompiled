@@ -178,7 +178,10 @@ void function_268840()
 	function_268c90();
 }
 
-// score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and protected child-call carriers differ.
+// score 246 (was 246): Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
+// Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
+// full distance 246; actor-query point scope 246.
+// frame 0x50 agrees; player-pool/NONE, current-clump homes and protected child-call carriers differ.
 // Player-pool/NONE allocation and current/successor homes remain.
 // Earlier score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
 // Frame 0x50 agrees; player-pool/NONE registers, clump/successor homes and child-call carriers remain.

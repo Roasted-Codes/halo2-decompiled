@@ -45,7 +45,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 
-// score 164 (was 164): frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
+// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null publication and saved successor EBP remain.
+// frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
 // Frame 0x28 agrees; separate pool/iterator homes, early null publication and successor EBP remain.
 // Earlier: Frame 0x28 agrees; separate pool/iterator homes, null timing and successor residency remain.
 // frame 0x28 agrees; separate pool/iterator homes,
@@ -93,6 +94,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 211: Masked squad slot 250; opaque datum 164; unsigned ordinal member 164; slot/full-width
 // partition 252; slot/opaque datum 250. Separate pool/iterator and successor homes remain.
 // Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
+// Round 123: Native force-inline member 164; member pointer result 164; ordinary inline member 281; current-handle for 190; force-inline member with current-handle for 190.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

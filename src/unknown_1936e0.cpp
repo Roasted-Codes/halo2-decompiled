@@ -152,6 +152,7 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
    address keeps it there */
 // score 194 (was 194): Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
 // String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
+// Frame 0x40c versus 0x408 and tag/language/cursor homes remain; intermediate ownership does not remove the spill.
 // Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
 // Earlier: Frame 0x40c versus 0x408; tag/language and string cursor homes remain.
 // Frame 0x40c versus 0x408, tag/language and string cursor/count homes remain.
@@ -169,6 +170,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Separate points input cursor 228; direct string countdowns 194; both 228;
 // independent countdown output cursors 228; shared remaining-string counter 228.
 // Simultaneous output cursors 226; native string-array end bounds 263; shared increasing counter 194; score-array cursor 210; points-array end bound 191; shared counter/end bound 191; simultaneous cursors/end bound 222.
+// Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
+// Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
+// Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Tried string workspace scope 211; masked list index 217; byte string counters 194; independent
 // score counters 194; score upper clamps 226; unsigned score counter 194.
 // Round 109: Complete point memcpy 217; role-named buffer/counters 194; whole wide-buffer zero 248 (three sibling losses); direct list field 212; independent named cursors 194.
@@ -180,6 +184,7 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Earlier: Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Earlier 194 (was 194): Frame 0x40c versus 0x408 and language, tag and string-cursor homes remain.
 // Round 113: Intermediate wide-buffer entry scope 194; unloaded-table early return 194; table pointer before list 194; list receiver before language query 202; existing table helper output-first 194.
+// Round 123: Initializer-owned scratch 194; lookup-owned scratch 194; valid-list scratch 194; initializer scratch/native row cursors 194; initializer scratch/destination endpoint 191 (three-point gain dropped).
 // retained list receiver 235; retained table root 223; both receivers 235; source-end copy 200;
 // indexed source with destination cursor 221; both arrays indexed 221; list receiver/source end 241;
 // table root/source end 215.
