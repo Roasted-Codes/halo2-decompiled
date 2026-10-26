@@ -43,7 +43,7 @@ const dword g_455978[81] = {
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
 
-// score 354 (was 361): frame 0x1d4 agrees; optional-input/scalar homes and helper expansion differ.
+// score 350 (was 354): frame 0x1d4 agrees; optional-input/scalar homes and helper expansion differ.
 // frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
 // both path lifetimes 485; count just before scan 366; read-only body 370; native transform copies 370.
@@ -53,6 +53,8 @@ const dword g_455978[81] = {
 // 393; per query callback 376; callback and direct ray 376; early filters and reset 423.
 // Native callback context: conditional count 389; earlier conditional 495; earlier arithmetic count 354 kept (plain).
 // Exact sample end 361; transform slot names 361; native ray endpoint 394; expanded radius name 361; unsigned sample ordinal 361.
+// Candidate/endpoint/ray component loops 382/354/354; basis loop 524;
+// translation loop 350 kept (plain); radial scaling/blend loops 354/354; combined producers 492.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
@@ -153,9 +155,8 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   local_21.up.i = local_7.m_rotation.m_col2(0);
   local_21.up.j = local_7.m_rotation.m_col2(1);
   local_21.up.k = local_7.m_rotation.m_col2(2);
-  local_21.position.x = local_7.m_translation(0);
-  local_21.position.y = local_7.m_translation(1);
-  local_21.position.z = local_7.m_translation(2);
+  for (long component = 0; component < 3; ++component)
+   local_21.position.n[component] = local_7.m_translation(component);
   function_1d43d0(arg_0, &local_21, &local_22);
   *arg_11 = local_22.position;
   function_11bed0(arg_5, arg_11);

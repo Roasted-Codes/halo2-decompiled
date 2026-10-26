@@ -434,6 +434,8 @@ extern point2f *g_468778;
 // Distance at common direction scope 410; prediction-default order 375; complete weight result 388.
 // Direct parent-to-direction handoff 375; direction after admission 378; named velocity alignment 375;
 // branch-derived prop receiver 399; read-only actor 375; final rejection expression 375; nested admission 374; prop result with later direction 404.
+// Actor lookup at use 524; velocity/position/both values 405/417/406;
+// all projection products 375; products with live actor 516; clock at use 391; products with prediction values 406.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

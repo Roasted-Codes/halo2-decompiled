@@ -42,6 +42,8 @@ extern real g_4c9798[36];
 // conditional/branch offset 309 each; branch reciprocal 295; complete size result 295; combined entry/results 313.
 // Five consistent formal permutations 295 each; native byte mode 332; unsigned mode 295;
 // signed-byte mode 331.
+// Direction/origin/both value snapshots 376/329/411; far output dot 311;
+// point component loops 303; normal loop 295; plane scaling loops 295; combined loops 300.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {
