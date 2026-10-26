@@ -57,6 +57,8 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 // complete cache fields, native location/table types, both together, native value initialization,
 // real table subobject reference, type comparison reversed, readonly native table and
 // native terminator library clears each 91.
+// Compound match 133; nested match 133; complete match result 116; type match result 133; reversed
+// comparison inputs with those four forms 133/133/116/133.
 // @retail 0x2170e0
 long function_2170e0(long file_index)
 {

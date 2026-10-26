@@ -49,6 +49,9 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 // direct duration 35; duration with argument playback 85; shared permutation 123;
 // permutation with argument playback 123; completion result 55; request variant first 41;
 // callback fields first 60; separate standard noinline declaration 35 (ordinary scores).
+// Native description bit 141f; native positioned bit 118f; both bits 141f; request workspace 118f;
+// request and native bit 141f; native bit and result scope 141f; native bit and request admission
+// 141f; native bit with both workspaces 141f (fast scores; unchanged fast 118).
 // @retail 0x189cd0 standard
 void __stdcall function_189cd0(long tag_index, long object_index, real scale, long a, long b, long label, long duration_address)
 {

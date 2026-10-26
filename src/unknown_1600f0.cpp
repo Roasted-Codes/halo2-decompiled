@@ -1511,6 +1511,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // justification arms 122. Original team-text cursor retained.
 // typed text 1411; team reference 120; advanced cursor 282; typed reference 1411; native text
 // inputs bounds/receiver/validity/color first 150 each.
+// Existing default text drawer 475; byte offset 475; indexed team 466; player row 490; both rows 481;
+// validity exit 475; mutable panel 475; both rows and byte offset 481. The shared drawer stays out of
+// line.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {
