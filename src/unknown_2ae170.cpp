@@ -955,7 +955,7 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 	}
 }
 
-// score 200 (was 200): frame 0x10 versus consumed argument homes; inherited x87 send sums remain.
+// score 200 (was 200): Frame 0x10 versus consumed incoming homes; inherited send x87 sums remain.
 // Earlier at 208 (was 208): eight-byte frame and inherited x87 send sums differ.
 // Frame 0x10 and x87 tail sums remain; level/rear/all references 221/208/231,
 // pointers 221/208/231; reference early sums 212/222, all restored.
@@ -989,6 +989,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Earlier: frame 0x10 and inherited x87 sums remain; native input
 // Live offset/base/both levels 208/208/221; live channel flag 199 (one-point gain dropped);
 // live flag with offset/base/both levels 208/208/223; live levels and native flag bit 205.
+// Round 330: t01-shared-front-late 319; t02-shared-rear-late 228; t03-shared-all-late 346; t04-shared-front-
+// early 335; t05-shared-rear-early 234; t06-shared-all-early 357; t07-forced-shared-late 200; t08-forced-
+// shared-early 212; shared helper declaration restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

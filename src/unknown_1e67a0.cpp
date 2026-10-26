@@ -701,7 +701,7 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
  return a->k * b->k + a->j * b->j + a->i * b->i;
 }
 
-// score 155 (was 155): Frame 0x18 agrees; sampled movement/rotation homes and scalar/output scheduling remain.
+// score 155 (was 155): Frame 0x18 agrees; sampled-vector homes and x87/SSE rotation scheduling remain.
 // Earlier: movement/rotation homes and cross/result lifetimes still differ.
 // early side products 249f; single turn cross 249f.
 // rotation cross as old 155f; rotation cross as new 153f.
@@ -730,6 +730,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Cross before/between trigonometric values 202/200; direct axis fields 247; immutable rotation scalars 155; native scaled velocity 214; with early cross 238; early/mid cross plus direct axis 261/236.
 // double scale 237; double scale helper 223; movement inline 155; movement noinline 155; movement inline
 // noinline 155; inline double helper 223; noinline double helper 223; inline noinline double helper 223.
+// Round 330: Native rotation 155; paired double trig 281; rotation plus trig 281; double projection 276;
+// rotation/projection 276; trig/projection 281; all native precision 281; native output velocity sampling
+// 246. Exact-match-only forms restored.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,
