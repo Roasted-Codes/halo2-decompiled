@@ -3625,11 +3625,15 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 #pragma inline_depth(0)
 // score 101 (was 115): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
 // Earlier: Frame agrees; timeout owner spill and native identity/reply load order differ.
+// frame agrees; timeout owner spill and identity load order differ;
+// Frame agrees; timeout owner spill and native identity/reply load order differ.
 // Earlier: frame agrees; timeout owner spill and identity load order differ;
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
 // Direct leave predicate 115; retained host-query result 137; narrower host-result
 // scope 125; flags before identifier 120; early nonpeer return 123.
+// State/host/both at uses 115/120/120; long host/leave/both 129/132/130;
+// host/leave initialized individually before lookup 119/120.
 // Native identity assignment 115; identity before identifier 115; announcement/reply/both named identifier stores 115/115/115;
 // entry result lifetimes 120; separate host initialization 118; host result before message 113.
 // actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;

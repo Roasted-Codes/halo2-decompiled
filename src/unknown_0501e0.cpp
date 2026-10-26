@@ -36,7 +36,8 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
     }
 }
 
-// score 221 (was 221): frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
+// score 221 (was 221): Frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
+// frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 // Global optimization off 961; depth zero 555; frame pointer 300;
 // input-first products 255; k/j/i transform output 272.
 // Offset/transform/blend loops 315/291/255; paired loops 237; depth bounds 237; both 227.
@@ -45,6 +46,9 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Separate offset loops 226; output cursor 225; short transform index 405;
 // first/second bound at uses 225/236; bound declaration order 227;
 // separate offsets with output cursor 221 plain (1145/1136 bytes); short index/first bound 397.
+// This round: limits after depth guards 224; limits after first depth 283; explicit tail clamp 221;
+// constant weight arm first 221; delayed limits tail clamp 224; delayed limits weight arms 224; first
+// depth tail clamp 283; depth weight clamp lifetimes 224.
 // Value direction 348; reference direction/output 221/221; input-first scale products 221;
 // selected scaled inputs 275; short offset counters 277; byte transform counter 394;
 // value direction with reference output 348. Retained separate offset loops and cursor restored.

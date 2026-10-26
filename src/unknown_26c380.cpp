@@ -152,6 +152,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // magnitude value input 556; unsigned success 435; normal length result 435.
 // Final blocked output 658; signed result byte 460; endpoint array index 443; direct node flags 435;
 // vertex base 458; accepted distance 476; vertex base plus distance 501; endpoint index plus distance 432.
+// nonempty edge while 435; rejected hit reset 460; blocked success test 529; count first progress guard 435;
+// edge endpoint homes 435; iterator storage lifetime 435; paired edge workspace 435; overshoot expression 434.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

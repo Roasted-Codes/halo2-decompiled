@@ -2777,8 +2777,18 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // output test 407; scalar clamp 407; unsigned word selector 407; shared progress guard 413; shared
 // barrel read 414; typed flags field 407.
 // Earlier: Frame eight versus four bytes and activity/tag homes remain. Descending
+// Frame eight versus four and initial object/tag/dispatch registers remain.
+// Earlier 407 from 407: frame 8 versus 4; activity/dispatch registers and tag spill differ.
+// Earlier 407 from 407: Frame 8 versus 4 and activity/dispatch homes remain. Helper input order 407; bool selector 408; tag-only helper lookup 407; object/tag homes 407; barrel bound sample 407 (fast).
+// Earlier 407 from 407: activity/dispatch registers and pointer homes differ. Trials: published
+// Earlier 407 from 407: Frame eight versus four bytes and activity/tag homes remain. Descending
 // progress classifier 407; direct short selectors 407; shared threshold 407; normalization range
 // 407; shifted property flags 428.
+// Early/default activity classification 404/406; suppressed admission 421;
+// identifier partitions 0xbffffff/0x10000573/0x11ffffff/0x13ffffff/0x16ffffff 459/418/435/418/434.
+// readonly activity inputs 407; normalization parts 407; elapsed tick expression 407; inventory case exit 407;
+// progress field admission 407; progress case exits 407; magazine case exits 407; decimal digit expressions
+// 407.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {

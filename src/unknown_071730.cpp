@@ -74,6 +74,8 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // balance test outcomes 449; readiness at outcome 450; reset at outcome 481; unsigned found count 449.
 // Ratings count, group-size cursor, player-rating cursor, combined ratings inputs, readiness-output
 // lifetime, native identifier, paired outputs and combined inputs/outputs all 449.
+// player scan while 449; assignment while 449; paired counted whiles 449; capacity admission scopes 449; roster
+// admission stages 449; countdown expression homes 449; valid input work scope 449; future deadline first 449.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

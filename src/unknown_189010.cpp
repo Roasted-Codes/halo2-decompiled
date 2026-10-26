@@ -531,15 +531,19 @@ long function_1891d0(long object_index, long marker_name, s_sound_label_play con
 // frame agrees; saved registers, root-location contract and stacked play differ.
 // Plain workspace order 51; workspace names 51; zero initialization 99; aggregate construction 64;
 // native point copy 51; compression first 52; velocity first 49; separate location output 73.
+// Earlier: root-location convention still adds saves and stacks the play pointer.
+// Shared point setter 63; native velocity copy 51; both 63; marker scope 51;
+// late playback record 69; pre-query playback record 64; root before velocity/compression 52/52.
+// Earlier: root-location registers and stacked playback input remain.
 // root-location setup, saved registers and stacked play remain.
 // Marker value/clear 99/89; position clear 101; transform value/library copy 78/78;
 // forward value 86; marker array 51; initialized marker array 99.
 // root-location convention still adds saves and stacks the play pointer.
-// Shared point setter 63; native velocity copy 51; both 63; marker scope 51;
-// late playback record 69; pre-query playback record 64; root before velocity/compression 52/52.
 // root-location registers and stacked playback input remain.
 // Entry/post-marker playback records 82/63; entry tag/scale/both 64/64/54;
 // root before marker/point 60/52; entry record with root first 82.
+// Post-marker tag/scale/both 52/63/53; post-compression 52/63/52;
+// post-velocity tag/scale 52/63; all one-use snapshots restored.
 // @retail 0x189210
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play)
 {

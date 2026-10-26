@@ -153,6 +153,9 @@ public:
 // Positive equality/nested equality 22/22; direct return/cursor 28/28;
 // post-search object/scalar 27/25. Negative guard 25; negative equality 22 (a count < 0 guard before an unsigned search, 67/65 bytes; not kept);
 // negative direct return/scalar 28/25; signed/unsigned normalized bounds 26/27.
+// Pointer-derived indices: range-first-return 46; range-completed-test 70; range-native-result 91;
+// range-exhausted-exit 75; range-ordered-bound 46; range-local-object 92; range-computed-index 97;
+// range-result-from-count 84.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {

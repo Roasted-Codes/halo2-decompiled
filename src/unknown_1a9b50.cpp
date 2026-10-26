@@ -605,6 +605,8 @@ static __forceinline long real_to_long(real value);
 
 // score 386 (was 410): Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // Earlier forms: prediction loop 482; initial velocity snapshot 538; direct
+// early false exit, frame 0x54 versus 0x58 and scratch
+// homes differ; prediction loop 482; initial velocity snapshot 538; direct
 // eligibility 484; full-width readiness 495; fallback copy loops 541.
 // j92: actor/settings registers agree; frame 0x54 versus 0x58, early false exit and speed/object homes remain; retain facing view and native planar copy.
 // shared velocity length 486; separate minimum speed 488; retained facing vector 472; planar direction copy
@@ -621,6 +623,10 @@ static __forceinline long real_to_long(real value);
 // Target velocity view 487; object velocity view 386; both 384 (two-point increment rejected);
 // byte readiness 410; target/object/both views with byte 487/386/384; native readiness 422.
 // Direct six-use object velocity field producer 386 kept (plain), removing the one-use object pointer.
+// Frame 0x54 versus 0x58, early false exit and speed/object/request homes remain.
+// frame 0x54 versus 0x58, early rejection and query homes remain.
+// query output names 410; native request clear 474; positive mode arms 483; far prediction first 413; request
+// mode first 522; relative velocity expression 413; direct facing field 524; deadline mode first 510.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

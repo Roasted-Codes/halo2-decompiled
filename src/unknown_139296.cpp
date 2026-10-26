@@ -1078,6 +1078,7 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // independent second 3; captured/split-offset second 118/118; nonzero second admission 76;
 // positive-nonzero/double-positive/combined second admissions 118/118/118.
 // score 1 (was 12): only first count zero-test differs: TEST EAX,EAX versus CMP EAX,EBX; frame 0x28 and retail length agree.
+// only first count zero-test differs: TEST EAX,EAX versus CMP EAX,EBX; frame 0x28 and retail length agree.
 // Earlier: only first count zero-test differs: test EAX,EAX versus CMP EAX,EBX; frame 0x28 and length agree.
 // Earlier: retail keeps a success byte (set to 1 up front, overwritten with the
 // call's result on failure) and returns that byte directly; ours keeps the failure flag, so the
@@ -1107,6 +1108,7 @@ void __stdcall function_22aa16(long arg_1, byte const *arg_2, byte const *arg_3,
 // restored because they are nonexact. The ordinary positive-count for remains the plain-validated keeper.
 // Repaired-countdown mask chain 5; offset mask producer 5; late result 1; subject,
 // descriptor, input and mask lexical roles 1/1/1/1; mask chain with native roles 5.
+// Partial mask chains 34/35/36/45/46/56/345/456: 5/4/5/3/4/3/5/3; first zero-test remains.
 // @retail 0x13a3c6
 bool function_13a3c6(long arg_1, long arg_2, byte const *arg_3, long arg_4)
 {

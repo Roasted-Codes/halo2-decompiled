@@ -33,6 +33,7 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 
 // score 21 (was 21): single late retained object load and five-byte extent gap remain.
 // Earlier: retail reads the object index once, after the playback call, into
+// retail reads the object index once, after the playback call, into
 // ebx and copies it to esi for the call; ours reads it into esi at the call and again
 // into ebx for the started test (526 bytes). Argument-list assignment 85; plain reads
 // throughout 116; second half plain 90; all three through the reference 28; first half
@@ -52,6 +53,12 @@ long function_189340(long object_index, long tag_index, long audible, s_sound_ma
 // callback fields first 60; separate standard noinline declaration 35 (ordinary scores).
 // Shared spatial query 134f; native positioned value 114f/109p; both 143f;
 // outer description/priority scale 118f each; spatial/playback/request call summaries 118f each.
+// Native description bit 141f; native positioned bit 118f; both bits 141f; request workspace 118f;
+// request and native bit 141f; native bit and result scope 141f; native bit and request admission
+// 141f; native bit with both workspaces 141f (fast scores; unchanged fast 118).
+// Post-playback notification object 118f; two-phase object 118f; full source-result join 118f;
+// result with notification object 118f; positioned-source-first admission 118f; admission with
+// notification 118f; admission with result 118f; all source/object lifetimes 118f (control 118f).
 // @retail 0x189cd0 standard
 void __stdcall function_189cd0(long tag_index, long object_index, real scale, long a, long b, long label, long duration_address)
 {

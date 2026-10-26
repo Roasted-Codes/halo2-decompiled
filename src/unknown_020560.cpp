@@ -226,21 +226,26 @@ void function_16f60(byte *state, word const *range)
     }
 }
 
-// score 93 (was 93): frameless BX entry agrees; dispatch span and selective setter expansion
-// differ.
+// score 93 (was 93): BX dispatch agrees; selective setter expansion and shared tails remain.
+// Earlier 103 from 117: frameless BX entry agrees; dispatch span and selective setter expansion differ.
 // Complete case orders 0/12/34/6/5 114; 0/12/5/34/6 119; 0/12/6/34/5 103 kept;
 // 0/34/12/5/6 158; 0/5/12/34/6 151; 0/6/12/34/5 167;
 // 0/34/5/6/12 224; 0/6/5/34/12 165. Code rows 91 to 80; 780/772 bytes.
+// Earlier 93 from 103: dispatch span and selective setter expansion still differ.
+// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison 103/103;
+// early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
+// Complete group orders 05316/05631/03516/03651: 222/156/221/197;
+// 06153/06315/06513/05361: 145/196/168/223 (1=one/two, 3=three/four).
+// frameless BX entry agrees; dispatch span and selective setter expansion
+// differ.
 // dispatch span and selective setter expansion still differ.
 // Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison
 // 103/103;
-// early reference/both values 179/179; comparison-call branches 93, 776/772 bytes.
 // common exit 99; sixth exit 93; comparison exit 93; fifth exit 93; sixth comparison exit 93; fifth
 // sixth exit 93; explicit default common exit 99; fourth comparison first 93. Selective setter
 // expansion and shared tails remain.
 // frameless BX entry agrees; dispatch span and selective setter expansion differ.
 // 0/34/5/6/12 224; 0/6/5/34/12 165. Earlier code rows 91 to 80; 780/772 bytes.
-// Inline/noinline/force-inline setter declarations 103/377/224; early native/enum comparison 103/103;
 // Reference-call branches first/second mode 144/145; paired-label orders 93/93/93;
 // complete group orders 0/12/34/5/6, 0/12/5/6/34, 0/34/6/12/5 105/106/197.
 // Shared keep-pass group/conditional comparison/mask-call branches 282/270/207;

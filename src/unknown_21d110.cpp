@@ -350,6 +350,11 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // logical/masked/clear-only flag 165/215/174; scoped logical flag 165;
 // at-use record getters with compound/logical/masked/clear-only flags 185/164/220/177 (all gains lose callers).
 // Class/activation/listener/rate-query inline-noinline declarations 204 each; listener/stage/both output names 204 each; reversed output declarations 204.
+// Listener/stage/both outputs initialized absent or zero 204 each; per-use playback selection
+// alone/with absent outputs 199, rejected for matched-caller losses.
+// Round 164: complete start result 226; positive start admission 204; exhaustive start arms 226;
+// rate result selection 204; query owned stage 204; admission owned outputs 204; scoped positive rate 204;
+// scoped exhaustive results 226.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

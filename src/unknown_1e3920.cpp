@@ -743,6 +743,7 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 
 // score 17 (was 17): amount-phase pool ESI/ADD versus ECX/LEA remains.
 // Earlier score 32 (was 32): actor-base LEA and child scratch allocation differ; amount admission 239;
+// actor-base LEA and child scratch allocation differ; amount admission 239;
 // independent refresh 32; combined admission 239; child receiver 32/32; timestamp result 234; first-definition capture 32; refresh/timestamp 234.
 // actor-base LEA and child lookup scratch remain; native timestamp/amount/interval/all
 // fields 32/32/32/32; clock object 32; count/limit/first-child homes 32/32/32.
@@ -753,6 +754,9 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // Earlier score 17 (was 32): the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // Amount predicate 112; actor fields at use 280; pooled actor references 17;
 // direction inline/noinline 17/17; channel/activation/reference inline-noinline 17 each.
+// the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
+// Previous timestamp 17; event unit 17; both 17; recent timestamp test 17; snapshot recent test 17;
+// early event unit 98; early unit and timestamp 98; complete interval predicate 22.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -870,6 +874,8 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 // Round 36: the corrected forwarding call keeps 0x1ca260 matched; this body remains 48 differences.
 // Retail 0x1e18f0
 // Earlier: No frame gap; incoming actor/old-weapon ownership and early player address differ.
+// No frame gap; incoming actor/old-weapon ownership and early player address differ.
+// Earlier: the corrected forwarding call kept 0x1ca260 matched; this body then scored 48.
 // Earlier: no frame gap; actor/old-weapon registers and early player address differ.
 // Inline/noinline 44/44; direct player/replacement only 82/55; replacement-first 86;
 // late replacement zero 44; old-greater first 47; early unit observation 91.
@@ -883,6 +889,9 @@ void __stdcall function_1e2570(long actor_index, word type, long object_index, r
 // global tables/native entry player 85; native entry player 81; player fields at use 128; native item/header chain 44.
 // Six coherent formal/caller orders 44 each; pair order with early player 81,
 // plus tag fields at use 75; stdcall/cdecl 44/59, cdecl also loses the forwarding caller.
+// Increase result 44; both comparison results 109; results before unit 121; results and entry player
+// 104; results with unit guard 90; early results and guard 94; complete event predicates 153; entry
+// player with guard 85.
 // @retail 0x1e18f0
 void __fastcall function_1e18f0(long actor_index, long old_weapon, long player_index, long new_weapon)
 {

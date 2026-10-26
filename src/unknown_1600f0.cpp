@@ -1520,6 +1520,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // text 122, indexed byte team/player/both rows 120/148/146; validity with team/player/both
 // 1411/1414/1414; coordinated inline draw/color/both 122 each. Two-point form rejected; original
 // executable source and all outside declarations restored.
+// Existing default text drawer 475; byte offset 475; indexed team 466; player row 490; both rows 481;
+// validity exit 475; mutable panel 475; both rows and byte offset 481. The shared drawer stays out of
+// line.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {

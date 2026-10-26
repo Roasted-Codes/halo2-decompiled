@@ -1344,6 +1344,9 @@ struct s_rating_summary
 // Bounded character countdown 326; group guards 206; player admission scope 206; team guards 206;
 // group guards plus character countdown 326; player/team admission 206; all admissions plus character countdown 326;
 // negative-first lower selection 212.
+// Unsigned name capacity 207; capacity-first continuation 216; ordinary-slot-first output 213;
+// capacity/continuation, capacity/output, continuation/output, all three 241/214/220/248;
+// copied-character ordinal with native pointers 207.
 // Earlier trial set: key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
 // Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
 // Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.

@@ -94,6 +94,10 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // Round 342: active request field copy 499; completed-size operand order 367;
 // checksum-result-first assignment 367; slot publication before file pointer 364 (three-point
 // gain rejected); isolated direct final file 435.
+// priority observations 568; copy size result 367; completed byte result 367; accumulated checksum 448; retry
+// disposition first 367; staged request admission 367; active request memmove 433; no slot case exit 367.
+// Out-of-line path/checksum/both/clock/all call summaries 367 each; completion states first 491;
+// destination states first 451; path summary with completion-first states 491 (fast).
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
