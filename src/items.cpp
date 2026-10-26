@@ -969,6 +969,7 @@ struct s_item_flags_view_10b850
 
 // score 813 (was 813): Frame 0x154 versus 0x12c, entry Boolean bytes and collision/carrier/rotation homes still differ.
 // Earlier: Frame 0x154 versus 0x12c and Boolean/vector homes remain.
+// Frame 0x154 versus 0x12c and Boolean/vector homes remain.
 // frame 0x154 versus 0x12c; direction workspace 861;
 // frame 0x154 versus 0x12c; direction workspace 861;
 // bounce-first 894; shared support predicate 838; direct rotation first 819;
@@ -996,6 +997,9 @@ struct s_item_flags_view_10b850
 // rotation projections 839; dot/add products 858.
 // dot/projection products 864; add/projection products 839.
 // all three product families 856; cross input products 834.
+// Round 126: Native dot/scaled-add pointer inputs 813/813; complete rotation outputs 813 at retail length;
+// component cross-result fill 813; ordinary dot inline 813; reused geometry predicate 858; reused contact
+// kind 878; all velocity copies by memcpy 813 (fast); all restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1245,7 +1249,7 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Scalar/component factor orders, eight forms 154; direct output 207; native
 // point value 176; owner/origin/position/pair/all library copies 154; direct
 // output with library copies 207. Retained origin reuse and initializer unchanged.
-// score 154 (was 154): release-byte RMW/tail and event homes remain.
+// Earlier 154 from 154: release-byte RMW/tail and event homes remain.
 // Returned vector/output buffer 274/274; output with shared scaler 200;
 // native attachment handle/node plus point/all fields 154/154/154;
 // all fields with output buffer/returned vector 274/274.
@@ -1259,6 +1263,7 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Native tag flags/child block/damage/effect/all fields 154 each;
 // common contact/event point at entry or active scope 201;
 // native tag plus common point 201. Complete tag, helper and body restored.
+// Native state-byte/countdown/both field references 200/200/200; damage-key reference 154; state/key, countdown/key and all three 200 each; surface-contact expression 200. Original release and event code restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

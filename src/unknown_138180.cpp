@@ -81,6 +81,7 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // local-machine validity value 263; uniqueness/found entry lifetimes 175/175.
 // Word-home/paired byte-home/combined/all validity role names 171/171/171/171;
 // signed-byte accumulated/player/both/final validity 174/171/174/193.
+// Native input references: primary machine 171; identifier 198; both 198; player machine, with primary, with identifier or with both 240 each; complete current-player reference 175. Original input reads, comparisons and byte membership restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

@@ -746,12 +746,16 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 	spawn->location_index = particle_location->next_index;
 }
 
-// score 17 (was 17): the untinted half-path exit is a long jump to the last
+// score 17 (was 17): Frame and entry agree; half-path buffer/result ownership and the distant untinted exit remain.
+// Earlier 17 (was 29): the untinted half-path exit is a long jump to the last
+// the untinted half-path exit is a long jump to the last
 // epilogue where retail's short jump joins the half path's own; the half path
 // reads the unpacked color through the returned pointer where retail reads the
 // buffer and pushes the returned pointer. Store per path (retail's entry
 // registers) 41; returned pointer packed only 41; one shared buffer 17;
 // early untinted return 17; tinted tested first 37.
+// Update inline/noinline declarations 17/17; packing noinline 17; paired update-inline/packing-noinline 17.
+// Plain product loop with long/short/byte ordinals 21/45/45; shared native product-loop storage 23.
 // Shared double scale 58; immutable/ordinary complete products 23/23;
 // product value copy 74; decode value copy 63; exchanged decode workspaces 17;
 // two decode-result lifetimes 45; double scale with in-place result 64.
@@ -837,12 +841,18 @@ public:
 // Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
 // child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
 // Original entry result, ordinary pooled flags and all child calls restored.
+// Native flag bytes 382; flag-stage result 378; native flag overlay 382;
+// Overlay with flag-stage result 378; named byte transfer 411; transfer/result 411;
+// byte flags with ordinal observations 388; overlay/ordinal/result 384.
+// All native byte layouts lose five matched controls; original word flags retained.
 // Flag-stage long result/native bitfield transfer/direct visibility and combinations
 // 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
 // native-definition 308; shared-velocity-address 308.
 // native-definition-shared-velocity-address 308; readonly-particle 308.
 // native-definition-readonly-particle 308; shared-velocity-address-readonly-particle 308.
 // native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
+// Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
+// canonical results 374/374/308/375 on the recovered frame. Original body restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

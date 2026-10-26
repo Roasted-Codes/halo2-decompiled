@@ -84,6 +84,9 @@ public:
 // Consistent live pool/direct location/both 215/215/215; all squared terms 215;
 // live pool with squared terms/selected influence 215/238; native element index
 // alone/with live pool 215/215.
+// Double coordinate orders xzy/yxz/yzx/zxy/zyx 217/217/218/218/217;
+// coordinate declarations before viewer 215; complete scalar phase declared first 215;
+// coordinate declarations at activation scope 215.
 // Native Boolean activation destination, published gate, live child count and both 215/251/247/265;
 // the same four with read-only metadata 215/251/247/265. Boolean published gate with one actual
 // location-parameter-slot read 232 (exact-only, reverted).

@@ -658,8 +658,11 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
     widget->function_22f52e()->set_text(text);
 }
 
-// score 573 (was 573): Frame 0x85c agrees; EBP bias 0x70 and early flags/time/state homes remain.
+// score 573 (was 573): frame 0x85c agrees; EBP bias and flag/time/state
+// frame 0x85c agrees; EBP bias and flag/time/state
+// Frame 0x85c agrees; EBP bias 0x70 and early flags/time/state homes remain.
 // Earlier: frame 0x85c agrees; EBP bias and flag/time/state
+// frame 0x85c agrees; EBP bias and flag/time/state homes differ.
 // Frame 0x85c agrees; EBP bias and flags/time/state homes remain. Guard-owned state
 // 576; session before elapsed test 578; word team scan 574 (three-point gain rejected); conditional
 // maxima 577; shared state formatting 717.
@@ -677,10 +680,16 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // activity at uses 573 kept; native ages 577; native flag byte 630; combined native observations 574.
 // Entry-owned formatting 605; with key 605, activity 601, both 601; original formatting restored.
 // EBP bias and initial flags/timestamp homes remain; original frame, loops and all call arguments retained.
+// Unsigned/signed word and signed-long flags 574/574/574; word flags with
+// long local/activity/joinability results 650/584/583; local/activity pair 653;
+// all native truth results 653. EBP bias and initial carriers still differ;
+// original dword flags, Boolean results and activity observations retained.
 // player-table 587; team-table 587.
 // both-tables 592; player-table-before-search 587.
 // team-table-before-search 587; both-tables-before-search 592.
 // tables-score-values 592; early-tables-score-values 592.
+// State/count/both at every use 572/594/594; flags/truth/row/all scalar role names
+// 573/573/573/573; all observations with role names 594. Original body restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

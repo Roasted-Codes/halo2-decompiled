@@ -16,6 +16,8 @@
 #include "normalize3d.h"
 // score 594 (was 594): Frame 0x64 versus 0x60, primary-shape/basis homes and wave scheduling still differ.
 // Earlier: Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
+// frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
+// Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
 // Earlier: frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
 // Earlier 647 from 647: frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
 // primary output scale 744; default depth scale 743; alternate depth scales 727; product scale workspaces 734;
@@ -32,6 +34,11 @@
 // phased 625; shared camera late inverse 618.
 // DL134: existing wave origin 599 kept; coordinate/point inputs 631/720; first phase 604;
 // first/second/both saved-axis copies 604/604/604; phase with native origin 620.
+// Reciprocal/shape/parallel-product names and their five combinations 599;
+// reciprocal/source/projection case order and all three together 599;
+// wave cross-result/offset homes 599; second input products first 598 (below threshold);
+// wave homes with case order 599. Frame 0x64 versus 0x60 and wave scheduling remain;
+// original native origin, products, case order and conversion retained.
 // consumer-shape 594; direct-primary-field 658.
 // bool-shape-domain 633; word-shape-domain 645.
 // consumer-shape-wide-special 599; direct-primary-field-wide-special 662.

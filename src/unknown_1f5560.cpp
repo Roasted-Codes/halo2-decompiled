@@ -1012,7 +1012,7 @@ done:
         *movement_out = movement;
 }
 
-// score 307 (was 307): Frame 0x18 versus 0x1c; actor/object roles, factor homes and x87 scheduling differ.
+// score 307 (was 307): Frame 0x18 versus 0x1c; actor/object roles, factor homes and x87 scheduling remain.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following
 // factor 335; frame pointer 399; inline depth one 308 (fast). Scalar velocity 309;
 // approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast). object
@@ -1024,6 +1024,9 @@ done:
 // (plain). Shared approach geometry 377; conditional-body entry result 308; direct turning
 // fraction 321; turning workspace scope 308; conditional-body ordered minimum branches 308 (fast
 // control 308).
+// Round 124: Existing shared magnitude/normalizer 308/308; parallel double turning products 308;
+// paired complete speed projections 308; both scalar boundaries 308 (fast control 308, full baseline 307).
+// Original body and every math operation restored.
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,

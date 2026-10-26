@@ -748,6 +748,8 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // reversed adjacent output publications 95; final native word 102.
 
 // Previous forms at 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// score 95 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
 // shared output-bit branch 95; direct final state result 101.
@@ -939,6 +941,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // vector 164; complete response vector 185; existing rounding helper 151; response arms and collision fill 361;
 // dot with native reflection vector 164; rounding with reflection products 163; rounding with reflection vector
 // 163; rounding with native query count 154; rounding/count/reflection products 166.
+// Immutable speed/radius/quotient/all scalars 151/151/151/151; native entry success 397;
+// speed-test-produced success 317; immutable query count and candidate 151; native selected
+// collision record 345 at retail length, with wrong entry frame. All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1117,6 +1122,10 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // absent-parent first 94; absent-parent with byte force 94. The single-use word carrier is rejected unless exact.
 // Result homes/movement scope/early activity/direct velocity receiver/refresh names/read-only movement 94
 // each; conditional orientation success 112; short activity 168.
+// Squared length in i, j, k order, through the shared squared-length or dot helper 94 each;
+// a vector3f field at 0x138 of the output read directly 92 (retail's k, j, i loads); with a
+// word force result 14 (the rest is the force push and the MOV/LEA order). Named output, up and
+// forward pointers 94/92 with the field.
 // Word force with ordered squares/native publication/output receiver 14/16/16; squares and
 // publication/squares and output/output and publication 14/14/16; all three 14; ordered squares with final
 // mask setter 14. Changed single-use word carrier is exact-only; all restored.

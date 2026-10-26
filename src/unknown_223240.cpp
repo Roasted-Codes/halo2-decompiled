@@ -108,6 +108,9 @@ void function_2232a0(void)
 // rectangles/mode/sentinels 151; mode/sentinels/rectangles 151.
 // mode/rectangles/sentinels 151; reversed rectangle pair 151.
 // sentinels/mode/reversed pair 151; reversed pair/sentinels/mode 151.
+// wide source count 138; wide count result 215; wide layout 174;
+// wide selected slot 227; wide output ordinal 195; unsigned byte layout 189;
+// unsigned native layout 151; immutable native source count 151. Wide source count worsens aligned rows.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
