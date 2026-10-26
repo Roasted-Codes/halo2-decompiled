@@ -832,6 +832,10 @@ public:
 // Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
 // child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
 // Original entry result, ordinary pooled flags and all child calls restored.
+// Native flag bytes 382; flag-stage result 378; native flag overlay 382;
+// Overlay with flag-stage result 378; named byte transfer 411; transfer/result 411;
+// byte flags with ordinal observations 388; overlay/ordinal/result 384.
+// All native byte layouts lose five matched controls; original word flags retained.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

@@ -14,7 +14,7 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 599 (was 604): frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
+// score 599 (was 599): frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
 // Earlier 647 from 647: frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
 // primary output scale 744; default depth scale 743; alternate depth scales 727; product scale workspaces 734;
 // late wave lifetime 743; wave offset workspaces 660; inverse before basis 765; direct integer component 743;
@@ -30,6 +30,11 @@
 // phased 625; shared camera late inverse 618.
 // DL134: existing wave origin 599 kept; coordinate/point inputs 631/720; first phase 604;
 // first/second/both saved-axis copies 604/604/604; phase with native origin 620.
+// Reciprocal/shape/parallel-product names and their five combinations 599;
+// reciprocal/source/projection case order and all three together 599;
+// wave cross-result/offset homes 599; second input products first 598 (below threshold);
+// wave homes with case order 599. Frame 0x64 versus 0x60 and wave scheduling remain;
+// original native origin, products, case order and conversion retained.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

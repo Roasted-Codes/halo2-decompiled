@@ -658,7 +658,7 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
     widget->function_22f52e()->set_text(text);
 }
 
-// score 573 (was 577): frame 0x85c agrees; EBP bias and flag/time/state
+// score 573 (was 573): frame 0x85c agrees; EBP bias and flag/time/state
 // carriers and status-helper convention still differ. Flag bit at uses 647;
 // long active 624; long local 623; long campaign 598 kept; branch-local
 // game-name table 624. Buffers, loops, calls and common exit are unchanged.
@@ -671,6 +671,10 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // activity at uses 573 kept; native ages 577; native flag byte 630; combined native observations 574.
 // Entry-owned formatting 605; with key 605, activity 601, both 601; original formatting restored.
 // EBP bias and initial flags/timestamp homes remain; original frame, loops and all call arguments retained.
+// Unsigned/signed word and signed-long flags 574/574/574; word flags with
+// long local/activity/joinability results 650/584/583; local/activity pair 653;
+// all native truth results 653. EBP bias and initial carriers still differ;
+// original dword flags, Boolean results and activity observations retained.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {
