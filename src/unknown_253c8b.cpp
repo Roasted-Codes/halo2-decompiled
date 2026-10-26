@@ -170,15 +170,24 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 	return result;
 }
 
-// score 100 (was 100): bitmap rectangle scheduling and three-byte extent gap remain;
+// score 37 (was 37): height word move and independent-axis SIMD residency still differ.
+// Native short height retained at retail length. Real screen offsets
+// x/y/both/early 103/103/102/114; short width/height/both 40/37/119;
+// short dimensions with offsets 118; long height/width 100/104;
+// short-height vertical origin/near-first/vertical-first 38/40/39.
 // source width/height/both 104/103/105; aggregate source 107; source width,
-// height, both and aggregate with staged far edges 104/103/105/107. Opening body restored.
-// score 100 (was 100): post-bounds axis schedule and three-byte extent gap remain; output
-// x/y/both origins 105/101/105; output far edges 105; vertical-first edges 108; native bounds
+// height, both and aggregate with staged far edges 104/103/105/107.
+// Output x/y/both origins 105/101/105; output far edges 105; vertical-first edges 108; native bounds
 // 100; native origins/edges 105/108.
-// axis calculation/store scheduling differs after bounds;
 // both origins first 104; vertical origin first 106; corner stores 104; vertical/corners 105;
 // all edges first 104; vertical edges first 105; named far edges 104; vertical far edge first 105.
+// Height/width/both read at use 100/40/100; height/width/both role names 37/37/37;
+// origin/rectangle names 37/37; long width with native height 39; reversed dimension
+// producers 40; native-height source initializer 35; height-first extent stores 36;
+// reversed rectangle names 37. Two- and one-count gains rejected; opening body retained.
+// Constant native height 37; height/dimensions before opacity 42/42;
+// library source initialization 150; native output with short height 37;
+// zero before dimensions 37; closed dimension lifetime 37; native source bounds 37.
 // @retail 0x253ea8
 void c_class_19b8b1::v4(long screen_rect_address)
 {
@@ -209,7 +218,7 @@ void c_class_19b8b1::v4(long screen_rect_address)
         }
         s_float_rect from, to;
         real width = element->width;
-        real height = element->height;
+        short height = element->height;
         from.x0 = from.y0 = 0.0f;
         from.x1 = width;
         from.y1 = height;

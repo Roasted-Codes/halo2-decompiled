@@ -59,15 +59,20 @@ struct s_spawn_scenario_23aea0
 	s_spawn_settings_23aea0 *settings;
 };
 
-// score 105 (was 105): input receiver and integer destination offset still differ;
+// score 105 (was 105): source receiver and integer destination induction still differ.
 // actual batch/type ranges 139/227; inner type ordinal 139; direct twelve types 254;
 // source records with direct/batch/read-only ranges 257/227/227; complete override 140.
+// Word/byte batch ordinals 141/141; word/byte entry ordinals 242/242;
+// both word/byte 253/253; early table publication and later scenario receiver 105/105.
 // integer destination offset and definition register remain; adjacent
 // component loop/word table 242/242; record cursor/batch cursor 240/240; actual batch bases 239;
 // direct twelve types 254; unsigned component/native records 242/242.
 // destination pointer replaces the retail integer table offset;
 // flat index 254; zero-based batches 139; typed records 137; flat typed records 121;
 // unsigned indices 141; batch steps 139; const records 137; full source table 139.
+// Read-only source 105; direct header link 105; scenario after copy 158;
+// isolated default-source phase 158; header field at consumers 135;
+// global object/override fields at consumers 105/107; explicit override values 105.
 // @retail 0x23aea0
 void function_23aea0()
 {

@@ -371,21 +371,26 @@ extern real g_4b8940[9], g_4b8964[9], g_4b8988[9];
 void function_022750(real const *a, long size, real const *b, real *out, real t);
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result);
 
-// score 252 (was 258): frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
+// score 237 (was 237): frame 0x80/0x68, axis/trig homes and rolled coefficient calls remain.
+// Earlier trials: frame 0x78 versus 0x68; axis/angle homes and rolled coefficient calls differ.
 // Sample cursor 258; sine-scaled axis 259; diagonals first 288; elapsed snapshot 258; size optimization 397.
 // frame 0x7c versus 0x68; axis/trigonometric homes and rotation-call layout differ.
 // Complement at use 264; reused axis squares 252; coefficient countdown 273;
 // contiguous payload reset 286; conditional phase clamp 258.
-// score 243 (was 252): frame, axis/trigonometric homes and rotation-call layout remain;
+// Earlier trials: frame, axis/trigonometric homes and rotation-call layout remain;
 // native coefficient array 258; payload clears first 257; late axis squares 258;
 // reused mixed-axis products 243; entry result buffer 252; source pointer before reset 250.
-// score 237 (was 243): Frame 0x80 versus 0x68, axis/trigonometric homes and rolled
+// Earlier trials: Frame 0x80 versus 0x68, axis/trigonometric homes and rolled
 // coefficient calls remain. squares between trig 256; paired mixed products 265; cosine
 // before sine 242; scalar sine products 237; single sample exit 243; sines with squares
 // between trig 272; sines with paired mixed products 242; sines with cosine before sine 239;
 // short table field 243; sines with axis field reference 255; sines with angle field
 // reference 257; sines with input field references 273.
 // Frame 0x7c versus 0x68 and axis/trig/call homes remain; on reused square/mixed products: direct axis 300; direct angle 264; both 284; native coefficient index 257; geometry scalar scope 243. Reduced callee caveat; no keeper.
+// Selective sine i/j/k at uses 245/235/243; pairs ij/ik/jk 243/249/243;
+// selective mixed ji/ki/jk 248/248/231; sine-j with mixed ji/ki/jk 229/250/245.
+// (sine-j and mixed-ji written out at their matrix uses gave 229; not kept: two of six parallel locals inlined.)
+// Direct axis/angle/both on this product context 274/252/274 fast (callee caveat).
 // @retail 0x22850
 void function_22850(void)
 {

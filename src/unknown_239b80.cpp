@@ -368,6 +368,9 @@ bool function_23a160(point2f const *point, real radius, short volatile count, po
 // score 31 (was 31): The induction is carried at native width; point and wrap-register homes still
 // differ. Direct rejection 45; short/native result 68/66; rejection result 80; short next 43;
 // unsigned-short induction 31; negative threshold 38; result from cross test 39.
+// Promoted current index 31; plain while 31; explicit wrap assignment 44;
+// modulo wrap 42; signed area 31; first/second/both product parts 31/31/31;
+// reused short/native bound values 43/47.
 // @retail 0x23a220
 bool function_23a220(point2f const *point, short volatile count, point2f const *points, real epsilon)
 {

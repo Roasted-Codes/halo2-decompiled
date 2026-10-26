@@ -178,11 +178,11 @@ inline float dot3_2fe830(__m128 const &a, __m128 const &b)
 	return result;
 }
 
-// score 207 (was 207): the code matches retail but for the stack layout
-// (retail closest collector at esp+0x30 and the cast result at esp+0x60, here
-// the reverse) and esi and edi holding the first body and the input the other
-// way round; renaming the result and declaring the input first do not change
-// either.
+// score 8 (was 8): frame 0x128 and homes agree; placement-copy source and
+// body stores/configuration schedule differ. Earlier result name and input-first
+// declarations tied. Vector record copy 379; direct vector stores 8; distance
+// getter inlining 8; reset limit first 17; reset inlining 8; vector assignment
+// inlining 8; product-helper inlining 8; point/normal setter inlining 8.
 // @retail 0x2fe830
 void __cdecl function_2fe830(void const *a_, void const *b_, void const *input_, void *collector_, void *second_collector_)
 {
