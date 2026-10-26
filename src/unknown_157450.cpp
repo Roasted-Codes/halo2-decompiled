@@ -2422,6 +2422,11 @@ void function_1e9ce0(long player_index, long counter, s_statborg *statistics, lo
 // statistics setup, event scratch rotation and cached options remain;
 // statistics reference/narrow delta 44/44; event-only delta 116; event-mode snapshot 44;
 // combined selection 78; aggregate if arms 50 (retail length); shared index initialization 44; improvement value 57.
+// score 44 (was 44): BLOCKED-BY 0x1e9df0 (its first reads, counter/field/statistics, set the
+// ecx/eax/edx load order here) and BLOCKED-BY 0x1967d0 (the options reload after it follows
+// what the compiler thinks 0x1967d0 writes: a 0x4e6948 store there gives the reload).
+// Statistics getter at the call 109; old score through the getter 111; named score-to-win 44;
+// one change local for all calls 125; early equal-score return 44.
 // @retail 0x15b650
 void __stdcall function_15b650(long team, long delta)
 {
