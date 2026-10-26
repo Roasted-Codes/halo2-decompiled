@@ -3009,15 +3009,15 @@ struct s_ammo_conversion_entry
     byte unknown02[6];
     long definition_index;
 };
-
-// score 203 (was 203): destination/tag saved roles and conversion-entry address staging differ.
+// score 203 (was 203): frame 0x20 agrees; destination/tag roles and conversion-entry staging remain.
 // Fast long loaded 203, unloaded 204, retained-rounds flag 205, acquired flag 209; shared return 205.
-// score 203 (was 203): frame agrees; destination/tag and search carriers remain.
 // Wide truncated capacity 207; search-key snapshot 203; unloaded value clamp 203;
 // direct retention predicate 213; loaded value clamp 203. Original body restored.
-// score 203 (was 203): Frame 0x20 agrees; destination EDI/EBP and conversion staging remain.
 // Conversion ordinal 203; same-definition carrier 224; destination object reference 203; magazine
 // reference 203; source sum order 203; native conversion fields 203.
+// Reusable magazine count 211; read-only tag receivers/result names/outer ordinal/conversion
+// scope 203/203/203/203; result-conditioned search 202 (below gate); plain while 203;
+// source-count store order 203. Opening body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
