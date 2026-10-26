@@ -28,7 +28,7 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
-// score 171 (was 171): frame 0x14/0x18 and options/index/mask homes remain.
+// score 157 (was 157): frame 0x14/0x18 and options/index/mask homes remain.
 // Earlier: frame 0x18 agrees. Retail compares i and count signed
 // (long), stores count = 0 before the first loop and counts a player before
 // its uniqueness test. Registers still rotate: retail has options in edi
@@ -81,13 +81,20 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // local-machine validity value 263; uniqueness/found entry lifetimes 175/175.
 // Word-home/paired byte-home/combined/all validity role names 171/171/171/171;
 // signed-byte accumulated/player/both/final validity 174/171/174/193.
+// One membership search/result index: native long 233; signed byte/unsigned word/unsigned byte 269/269/269;
+// exhaustion equality and direct mask 233/233; shared tail with long/byte index 237/275.
+// Original separate found byte restored; frame and options/index/mask homes remain.
 // Native input references: primary machine 171; identifier 198; both 198; player machine, with primary, with identifier or with both 240 each; complete current-player reference 175. Original input reads, comparisons and byte membership restored.
+// Round 161: separate player/machine/both pass cursors 171/157/157; word machine/player 262/171; short/unsigned/byte separate passes 262/157/262. Independent native long pass cursors 157 plain kept.
+// Independent-pass membership long/short 183/184; with retail count lower bound 188/188;
+// shared switch-result tail with long/short 196/189, and with lower bound 194/189.
+// Entry zero lifetimes on independent passes: count 172; machine 171; player 157;
+// both ordinals 171; count/machine 184; count/player 172; all 184; ordinal role names 171.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
 	bool local_1 = false;
 	{
-		long i = 0;
 		if (options->type < 0 || options->type >= 6)
 		{
 			local_1 = false;
@@ -117,43 +124,43 @@ bool __stdcall function_138180(const s_session_options *options)
 		long count = 0;
 		dword mask = options->machine_mask;
 		bool ok = (mask & 0xffff0000) == 0;
-		for (; i < MAXIMUM_PLAYERS_PER_SESSION; i++)
+		for (long machine_index = 0; machine_index < MAXIMUM_PLAYERS_PER_SESSION; machine_index++)
 		{
-			if ((1 << i) & mask)
+			if ((1 << machine_index) & mask)
 			{
-				for (long j = i + 1; j < MAXIMUM_PLAYERS_PER_SESSION; j++)
+				for (long j = machine_index + 1; j < MAXIMUM_PLAYERS_PER_SESSION; j++)
 				{
 					if ((1 << j) & mask)
 					{
-						ok = ok && memcmp(&options->machines[i], &options->machines[j], sizeof(s_session_machine)) != 0;
+						ok = ok && memcmp(&options->machines[machine_index], &options->machines[j], sizeof(s_session_machine)) != 0;
 					}
 				}
 			}
 		}
 
-		for (i = 0; i < MAXIMUM_PLAYERS_PER_SESSION; i++)
+		for (long player_index = 0; player_index < MAXIMUM_PLAYERS_PER_SESSION; player_index++)
 		{
-			if (options->players[i].active)
+			if (options->players[player_index].active)
 			{
 				count++;
-				bool unique = ok && options->players[i].index >= 0 && options->players[i].index < MAXIMUM_CONTROLLERS && memcmp(&options->players[i].id, g_440070, sizeof(options->players[i].id)) != 0;
-				for (long j = i + 1; j < MAXIMUM_PLAYERS_PER_SESSION; j++)
+				bool unique = ok && options->players[player_index].index >= 0 && options->players[player_index].index < MAXIMUM_CONTROLLERS && memcmp(&options->players[player_index].id, g_440070, sizeof(options->players[player_index].id)) != 0;
+				for (long j = player_index + 1; j < MAXIMUM_PLAYERS_PER_SESSION; j++)
 				{
 					if (options->players[j].active)
 					{
-						unique = unique && memcmp(&options->players[i].id, &options->players[j].id, sizeof(options->players[i].id)) != 0;
+						unique = unique && memcmp(&options->players[player_index].id, &options->players[j].id, sizeof(options->players[player_index].id)) != 0;
 					}
 				}
-				if (options->players[i].flag1)
+				if (options->players[player_index].flag1)
 				{
-					ok = unique && memcmp(&options->players[i].machine, g_440070, sizeof(options->players[i].machine)) == 0;
+					ok = unique && memcmp(&options->players[player_index].machine, g_440070, sizeof(options->players[player_index].machine)) == 0;
 				}
 				else
 				{
 					signed char found = NONE;
 					for (long m = 0; m < MAXIMUM_PLAYERS_PER_SESSION; m++)
 					{
-						if (((1 << m) & mask) && memcmp(&options->machines[m], &options->players[i].machine, sizeof(s_session_machine)) == 0)
+						if (((1 << m) & mask) && memcmp(&options->machines[m], &options->players[player_index].machine, sizeof(s_session_machine)) == 0)
 						{
 							found = m;
 							break;

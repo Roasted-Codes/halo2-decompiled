@@ -659,6 +659,7 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 }
 
 // score 573 (was 573): Frame 0x85c agrees; EBP bias 0x70, flag/time/state homes and timing-result schedule remain.
+// Frame 0x85c agrees; EBP bias 0x70, flags/time/state homes and status-helper transport remain.
 // Earlier: frame 0x85c agrees; EBP bias and flag/time/state
 // frame 0x85c agrees; EBP bias and flag/time/state
 // Frame 0x85c agrees; EBP bias 0x70 and early flags/time/state homes remain.
@@ -681,6 +682,8 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // activity at uses 573 kept; native ages 577; native flag byte 630; combined native observations 574.
 // Entry-owned formatting 605; with key 605, activity 601, both 601; original formatting restored.
 // EBP bias and initial flags/timestamp homes remain; original frame, loops and all call arguments retained.
+// Native real payload fields: state/activity, count, selection/totals, keys, timers, game/team,
+// score arrays and the complete view 573 each; native declaration restored. EBP bias remains.
 // Unsigned/signed word and signed-long flags 574/574/574; word flags with
 // long local/activity/joinability results 650/584/583; local/activity pair 653;
 // all native truth results 653. EBP bias and initial carriers still differ;
@@ -695,6 +698,9 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // explicit session true test 621, early flag producer 664, read-only local table 623, word widget ordinal 640.
 // Separate time dividend/results in both arms, immutable results and clock-role homes 573/573/573;
 // with native campaign/count/both/state-fields/session-test 605/594/623/623/621. All executable forms restored.
+// Round 161: clock at every use 642; table at entry/pre-query/pre-widget 619/618/601; those three with consistent clock reads 654/654/643; read-only local table 573. All restored.
+// flags inline 699; flags noinline 573; flags inline noinline 573; user inline 573; user noinline 573; user
+// inline noinline 573; both inline noinline 573; both inline 699.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

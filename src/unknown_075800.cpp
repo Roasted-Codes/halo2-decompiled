@@ -1022,6 +1022,21 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // query/peer/session/connection 220; connection/query/peer/session 202; connection/session/peer/query 207;
 // peer/query/connection/session 212; peer/session/query/connection and peer/session/connection/query 220.
 // All restored; reduced control 191 versus plain 193; incoming selector/message/address roles remain.
+// Round 364: Shared lookup inside the connection cases: retained phases 261; unified direct/numeric/
+// observed orders 272/272/271; residual group last 252; failure break 261; observed failure/scoped result 271/271.
+// Round 366: Common direct exit/residual returns/failure breaks/case-local results 216 each;
+// common-exit nested defaults last/first 191/191 fast (ties reduced control);
+// complete common-exit switch retained/observed handler orders 208/218. Original phases restored.
+// One-root family orders connection/peer/query/session and connection/peer/session/query
+// 204/205; session/connection/query/peer 207; session/query/peer/connection,
+// session/peer/query/connection and session/peer/connection/query 220/220/220;
+// peer/connection/query/session and peer/connection/session/query 206/207. All restored.
+// Remaining direct orders 2,4,3,0 / 3,0,4,2 / 3,2,0,4 / 3,4,2,0 /
+// 4,0,3,2 / 4,2,3,0 give 193/194/196/195/196/193 fast; genuine
+// residual default scope last/first 191/191, tying the reduced control.
+// Combined inline/out-of-line declarations on lookup, direct refusal/query, three connection handlers,
+// and leave/acknowledgment handlers: all eight 191 fast, tying reduced control 191 (full 193).
+// Every declaration and handler call restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
