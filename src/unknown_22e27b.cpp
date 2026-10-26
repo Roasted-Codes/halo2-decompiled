@@ -166,7 +166,7 @@ static inline real interpolate_linear(real a, real b, real t)
 	return (b - a) * t + a;
 }
 
-// score 106 (was 106): frame 0x10 agrees; quotient/next-time setup and frame/index registers differ.
+// score 100 (was 106): frame 0x10 agrees; quotient/next-time setup and frame/index registers differ.
 // frame 0x10 and next-time setup agree; advancing-frame and interpolation registers differ.
 // Next time before elapsed with separate assignments on frame 0x10: 100.
 // Earlier at 106 (was 205): frame 0x10 and next-time stack home recovered; timing and frame registers differ.

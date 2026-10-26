@@ -296,7 +296,7 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // adds a save and shifts settings homes; constant argument pushes also differ.
 // Native zero initialization 199; complete aggregate values 307; grouped
 // place cases 204; case returns 203; zero initialization and grouping 206.
-// score 199 (was 199): extra EBX save and settings homes remain; native leading
+// score 186 (was 199): extra EBX save and settings homes remain; native leading
 // defaults for type-four/type-five/both/team/type-four-team/type-five-team/all
 // 229/216/241/204/233/224/249; longer type-four prefix 258.
 // Native settings memset 203; Boolean fields first 200; shared type-four
