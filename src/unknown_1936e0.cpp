@@ -313,7 +313,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 }
 
 /* fills one of the seven built-in variants */
-// score 186 (was 186): Frame 0x38 agrees; scale builder EBX/EAX, shifted settings homes and constant pushes remain.
+// score 186 (was 186): Frame 0x38 agrees; scale builder EBX/EAX, settings homes and constant pushes remain.
+// Frame 0x38 agrees; scale builder EBX/EAX, shifted settings homes and constant pushes remain.
 // Earlier 186 (was 186): Frame 0x38 agrees; scale callee EBX/EAX and constant pushes remain.
 // Frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
 // frame 0x38 agrees; scale callee EBX/EAX and constant pushes still differ.
@@ -346,6 +347,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // 196/190; type-four plus type-five 192; all pairs 198; alternate presets before base presets 206. Frame 0x38
 // agrees; scale EBX/EAX and constant pushes remain.
 // Round 317: Mixed complete-case orders 1023456 196; 0142356 197; 0124356 200; 0123645 188; 0126345 198; 0412356 205; 4012365 214; 0214356 206.
+// Round 324: memset destination result 186; implicit type-four zero defaults 211; destination/type-four 211;
+// implicit type-five zero default 180 (below gate); destination/type-five 180; both default kinds 215;
+// destination/both 215; destination/defaults/native place values 215.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

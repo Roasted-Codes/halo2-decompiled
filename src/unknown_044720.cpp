@@ -207,7 +207,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
-// score 190 (was 190): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
+// score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain.
+// frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
 // Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
 // or capacities 194/194; indexed geometry input 229; memory bound/center copies 196/196;
@@ -233,12 +234,14 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // alignment 190; direct object-index field 190; read-only bound source 190. Opening body restored.
 // Indexed mark/tag/link/read-only receivers 228/271/271/271; large center aggregate copy 202;
 // signed-short node cache 216, with byte node 234, with selective indexed reads 285.
-// score 190 (was 190): entry/index spill and sphere/position homes remain.
+// entry/index spill and sphere/position homes remain.
 // Native bound sphere with branch/entry count homes 196/196; aligned bound 203/203.
 // Native bound with split center/query 197 for both count homes and either bound alignment.
 // All native sphere copies restored; no field observation or float grouping retained.
 // Shared point setter at initial/query/bound producers 245/190/204; initial+query/initial+bound/query+bound 245/246/204.
 // All three point setters 246; native bound-point initializer 204.
+// Round 324: index/radius/center contract 192; radius/index/center 192; center/index/radius 190;
+// radius/center/index 192; the same orders with a full absolute ordinal 193/193/191/193.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

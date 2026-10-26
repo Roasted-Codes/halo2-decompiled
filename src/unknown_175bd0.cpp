@@ -2809,7 +2809,8 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 	return next_index;
 }
 
-// score 176 (was 176): Frame 0x50 agrees; early false BL, player bitmap/count carriers and point/advance scheduling remain.
+// score 176 (was 176): Frame 0x50 agrees; early false BL, bitmap/count/unit carriers and point/advance scheduling remain.
+// Frame 0x50 agrees; early false BL, player bitmap/count carriers and point/advance scheduling remain.
 // frame 0x50 agrees; early false-result, player bitmap/count carriers and point scheduling remain.
 // Persistent effect pool 194; persistent player pool 189; outer for 189;
 // squared distance compared first 176; player slot/unit names 189.
@@ -2828,6 +2829,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // readonly effect metadata 176. Original body, native widths and metadata restored.
 // Accumulated/selected test result 184/176; result after pool query/signed-byte result/function delta 176 each;
 // live tag radius/live unit fields 254/254; live tag with accumulated result 258.
+// Round 324: absolute effect slot 176; existing player search 176; slot/search 176; existing salted-index
+// conversion 254; slot/conversion 255; search/conversion 254; all three 255; full slot name with both helpers
+// 255.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
