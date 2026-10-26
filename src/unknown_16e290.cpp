@@ -1453,6 +1453,8 @@ struct s_camera_clip_reference_16ebf0
 // Interpolation setter 223; transformation scope 223; branch-assigned narrow 220;
 // transformation names 223; direction fields at use 213; native copies with branch-assigned narrow 240;
 // direction fields with branch-assigned narrow 209 (plain).
+// Recovered-frame saved-state name 209; composition output memcpy 209; consistent
+// direction/position role names 209; native byte predicate 218; invalid-reference-first 209.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
