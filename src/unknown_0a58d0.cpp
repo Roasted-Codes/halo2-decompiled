@@ -867,6 +867,10 @@ PRIVATE inline bool z_state_real_valid(real value)
 // the result 9 each, `return a && b` 16; mask test `if (state[0x61])` 10; a byte mask local
 // for every use 6 (keeps it in ESI; retail reads the field again), for the tests only 9;
 // a long mask local 45; without the stream self-reference 9.
+// First/two decoded-word locals 9/9; count reference 13; word count 36; word-array
+// destination 8 (first store fixed); byte count plus array 6 (ESI); first-count split/guard
+// 8/8; remaining-bits bound 9; two-value loop 31; short/implicit word arrays 8/8;
+// named bound inputs 8.
 // @retail 0xa6d50
 bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
 {
