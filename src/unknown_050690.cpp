@@ -186,6 +186,9 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // Round 127: native basis/output/both 680/680/680; shared displacement helper 694, with native
 // position setter 711; sum/weight/both alignments 680/680/680 (reduced control 680). All restored;
 // full frame 0x1490 and stacked mode remain.
+// Round 171 reduced control 680: short exponent 699; coefficient aggregate 680; symmetric weighted products
+// 691; short/aggregate 699; short/products 698; aggregate/products 691; all native boundaries 698; readonly
+// coefficients/native boundaries 698.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,

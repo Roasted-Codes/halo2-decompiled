@@ -876,6 +876,8 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // score 385 (was 385): frame 0x28 agrees; zero/radius schedule, history homes and indexed node-word lowering remain.
 
 // Earlier: frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
+// score 385 (was 385): Frame 0x28 and length agree; zero/radius schedule, history homes and indexed node loads differ.
+// frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
 // Earlier: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
 // Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
 // Earlier: ordinary previous/first/both history 399/401/400;
@@ -907,6 +909,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // edge/history homes and indexed node loads differ. Later first/second/both
 // differences in place 397/397/397; one displacement 397; one radial offset
 // 385; offset with shared displacement 385; phase scopes 397; offset/scopes 385.
+// Complete geometry before predicates 397; with shared dot 397, symmetric cross parts 402,
+// named projection 397, both named products 402, equivalent orientation 421, postincrement count 396,
+// separate ring guards 397. Original single radial workspace and predicate phases restored.
 // Native/promoted cached flags 385/401; explicit flag guards 414/409;
 // node fields at use 384; native/promoted flags with receiver at use 384/383; flag-word single result 406.
 // frame 0x28 and length agree; zero register,

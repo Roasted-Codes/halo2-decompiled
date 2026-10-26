@@ -117,7 +117,10 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 104 (was 109): frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// score 104 (was 104): frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
+// remain. Prior frame 0x0c; entry cursor 125; property cursor 135;
+// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
+// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
 // Earlier: frame 0x0c versus 0x10 and properties/buffer
 // frame 0x0c versus 0x10 and property/buffer carriers remain; shared record/buffer total
 // 125f; property total from records 113f; property total from buffers 113f; admission accounting 108f (below
@@ -133,11 +136,13 @@ struct s_cache_property_record
 // split first/three accounting 109. Reported length is now 352/352.
 // Count-indexed record/buffer/both outputs 129/113/128; scalar-identifier induction 113;
 // identifier with record/buffer/both indices 114/114/113 (each 352 bytes); shared final total 151.
-// Three-use scalar property element 114 (frame 0x10); unsigned/byte/signed-byte ordinal 109/110/110;
-// unsigned property/all totals 109/109; flat entry admission 109; property element with unsigned ordinal 114.
 // Round 167: record/property/buffer capacity-derived totals 137/136/116;
 // paired totals 132/132/132; all totals 142; all totals with three-use property
 // element 104 kept, plain and complete inventory confirmed; 352/352 bytes.
+// Three-use scalar property element 114 (frame 0x10); unsigned/byte/signed-byte ordinal 109/110/110;
+// unsigned property/all totals 109/109; flat entry admission 109; property element with unsigned ordinal 114.
+// Native identifier field 104; scalar-array end bound 105; activation ordinals 104;
+// field/end 105; field/ordinals 104; end/ordinals 105; all three 105; named activation ordinals 104.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -458,8 +463,10 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 73 (was 73): frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
+// score 67 (was 73): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // Existing record initializer with zero tail 130; short/word counters 133/133;
@@ -468,12 +475,13 @@ void function_1537f0(s_profile_record *record);
 // Contiguous tail clear with sentinel restored 73; identity after record helper 122;
 // fixed do loop with record helper 122; tail clear plus late identity 73;
 // function-scope identity with record helper 122 (fast); tail clear 73 plain.
-// With contiguous tail reset: identity/source/both names 73 each; signed byte sentinel 73;
-// word ordinal 94; record/view/both force-inline declarations 73 each.
-// Immutable identity with tail clear 74; source-before-identity names 73; source-only outer scope 73; identity between initializer and tail 73; tail-clear entry-end traversal 94.
 // Round 167: actual initializer record 73; native identity in that record context 74;
 // source function scope/declaration-first 73/73; ordinary inline view on native/original
 // source 73/73; out-of-line view on native/original source 80/79. Original body restored.
+// With contiguous tail reset: identity/source/both names 73 each; signed byte sentinel 73;
+// word ordinal 94; record/view/both force-inline declarations 73 each.
+// Immutable identity with tail clear 74; source-before-identity names 73; source-only outer scope 73; identity between initializer and tail 73; tail-clear entry-end traversal 94.
+// Complete destination clear 73; contiguous destination-tail clear 67 kept; destination first/after identity 75/75; links before view 98; tail before view 95; direct indexed destination 73; tail fill with early links 100.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -495,8 +503,7 @@ void function_7f930(void)
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
 		function_7f8b0((s_cached_player_view *)&entry->player, &identity, &source, NULL);
 		entry->next = entry->next_other = entry->unknown58 = entry->previous_other = NONE;
-		entry->flags = 0;
-		*(long *)entry->unknown64 = 0;
+		memset(&entry->flags, 0, sizeof(entry->flags) + sizeof(entry->unknown64));
 	}
 }
 
@@ -575,7 +582,7 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 111 (was 111): frame 0x1c agrees; records/properties registers, counter homes and ret 0x18 versus 0x1c remain.
+// score 90 (was 111): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // Frame 0x1c agrees; records/buffers register contract and cursor/count
 // scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
@@ -583,10 +590,12 @@ bool function_7fb50(void)
 // names 132.
 // Unsigned short ordinal 111; selected property pointer 111; early remaining-property accounting 137; scalar while 111; cache scan while 111 (fast, retained values-cursor form).
 // Paired source/destination cursors 129; direct property identifier 116; paired cursors with native ordinal 130; complete property-array indexing 152; short-ordinal advancing buffer 116.
-// Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
 // Round 167: native player view 111; native view/wide ordinal 112;
 // view with record/property/both capacity deltas 125/141/134; original view
 // with record/property/both deltas 125/141/134. Frame 0x1c agrees; input homes remain.
+// Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
+// Native identifier field 111; source-array end 90 kept; activation ordinal 111;
+// field/end 90; field/ordinal 111; end/ordinal 90; all three 90; named end ordinal 90.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -620,7 +629,7 @@ void function_80bf0(long record_capacity, s_cache_property_record *records,
 			properties_used++;
 			buffers_used++;
 			long const *value = values;
-			for (short j = 0; j < 3; j++)
+			for (short j = 0; value < values + 3; j++)
 			{
 				*(short *)&properties[j].unknown00 = (short)(j + 2);
 				properties[j].type = 1;

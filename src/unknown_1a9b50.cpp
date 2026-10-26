@@ -620,7 +620,8 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 386 (was 386): frame 0x58 and length agree; early rejection and query scalar/object homes remain.
+// score 386 (was 386): frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// Earlier: frame 0x58 and length agree; early rejection and query scalar/object homes remain.
 // Earlier: Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // Earlier forms: prediction loop 482; initial velocity snapshot 538; direct
 // early false exit, frame 0x54 versus 0x58 and scratch
@@ -649,6 +650,9 @@ static __forceinline long real_to_long(real value);
 // mode first 522; relative velocity expression 413; direct facing field 524; deadline mode first 510.
 // Complete slot/target/both layouts 386/386/386; paired approach projections 386;
 // slot/target/both layouts with projections 386/386/386; both layouts with early rejection 511.
+// On the direct velocity producer: false-default result 497; completion-time success 511;
+// byte/word results 431/447; early rejection 511; single-exit admission 497;
+// completion-time byte/word results 505/510.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

@@ -88,6 +88,10 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Frame 0xf8 versus 0x108; result/basis/rotation homes remain.
 // Rotation input snapshot 661; axis snapshot 705; both input snapshots 772;
 // native point/direction snapshots 776; projection axis fields at use 646.
+// Round 171 reduced control 646: rotation role names 646; rotation declaration homes 646; origin pointer
+// result 646; rotation pointer result 646; symmetric lateral parts 675; symmetric axial parts 727; both row
+// parts 643; row parts/rotation names 643; row parts/declaration homes 643; row parts/origin result 643; row
+// parts/rotation result 643.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

@@ -216,6 +216,8 @@ long g_55e6c0;
 
 // score 29 (was 29): One-slot frame and late level loop agree; count/height homes and folded unsigned pitch/height packing remain.
 // incoming data, delayed saves, packed-size folding and level-header bias remain.
+// pitch/height packing is folded and height/count registers differ;
+// frame, incoming data, delayed saves and level-header bias now agree.
 // Earlier: Incoming data home, delayed saves and header bias still differ.
 // Nested result 136; absent-data guard 156; common result exit 131; level-index shift 122; role-named workspaces 136.
 // Earlier: incoming data home, saved-register timing and level-header bias remain.
@@ -257,6 +259,7 @@ long g_55e6c0;
 // Packing accumulator pitch/width/height, height/pitch/width, height/width/pitch,
 // width/pitch/height, width/height/pitch 29 each; complete integer OR height/pitch/width,
 // width/height/pitch, pitch/width/height 29 each. Unsigned packing still folds.
+// Named byte pitch 87; all packing parts 29; height part first 29; all parts early 47; unsigned-int packing 29; shared clamped count 154; selected packed result 119; linear-only packing 145.
 // @retail 0x1df20
 bool function_1df20(long index, long kind, long width, long height, bool alternate, bool linear, long count, void *data)
 {

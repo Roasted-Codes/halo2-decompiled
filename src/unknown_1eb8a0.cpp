@@ -184,7 +184,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 	}
 }
 
-// score 660 (was 660): frame 0x24 and clock EDI agree; vector argument homes, scalar schedules and counter return differ.
+// score 642 (was 648): Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
+// frame 0x24 and clock EDI agree; vector argument homes, scalar schedules and counter return differ.
 // clock register recovered by capped-use coefficient lifetimes; vector argument homes,
 // Frame 0x24 and clock EDI agree; d/q homes and scalar schedules remain. Native
 // selected vector 689; selected vector arms 674; workspace role names 660; wide failure on guarded
@@ -210,8 +211,13 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Earlier: Frame 0x24 and clock EDI agree; vector homes and scalar schedules remain. Shared
 // output counter 706; computed activation alignment 710; impulse-add loop 687; active target advance loop
 // 698; active target extension loop 700 (fast); matched caller preserved.
+// Round 171 reduced/plain control 660: target cursor 708; direction cursor 701; impulse cursor 666;
+// target/direction 735; target/impulse 711; direction/impulse 698; all state cursors 722; activation limit
+// once 648 (plain, kept).
 // Consistent live clock 662; normalized/remaining/both native vector values 698/660/698;
 // live clock with normalized/remaining/both values 700/662/700; entry normalizer workspace 660.
+// Native fallback vector assignment 642 kept; activation mode once 684; conditional coefficients 824;
+// copy/mode 670; copy/coefficients 824; mode/coefficients 812; all three 807; fallback memcpy 642.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,
@@ -233,9 +239,10 @@ long function_1eb8a0(
 		{
 			if (dt > 0.001f)
 			{
+				real limit = s->limit;
 				real step = dt;
-				if (s->limit != 0.f && step > s->limit)
-					step = s->limit;
+				if (limit != 0.f && step > limit)
+					step = limit;
 
 				real t = step * 0.375f;
 				real e = 0.001f;
@@ -283,8 +290,8 @@ long function_1eb8a0(
 
 				real len2 = (real)sqrt(delta.i * delta.i + delta.k * delta.k + delta.j * delta.j);
 				real len3;
-				if (s->limit != 0.f && len2 > s->limit)
-					len3 = s->limit;
+				if (limit != 0.f && len2 > limit)
+					len3 = limit;
 				else
 					len3 = len2;
 
@@ -306,9 +313,9 @@ long function_1eb8a0(
 				if (e2 > 0.001f)
 					n2 = rem2 / e2 + 6.f;
 
-				s->limited = s->limit != 0.f && len2 > s->limit;
+				s->limited = limit != 0.f && len2 > limit;
 				s->start = *pos;
-				s->distance = s->limited ? s->limit : len2;
+				s->distance = s->limited ? limit : len2;
 				s->active = true;
 				s->duration = (long)((s->fast ? 7 : 1) + n2);
 				if (len2 > 0.001f)
@@ -406,9 +413,7 @@ long function_1eb8a0(
 				}
 				else
 				{
-					position->i = qr.i;
-					position->j = qr.j;
-					position->k = qr.k;
+					*position = qr;
 					real ticks = (real)globals->field_2_3;
 					position->i = ticks * position->i;
 					position->j = position->j * ticks;
