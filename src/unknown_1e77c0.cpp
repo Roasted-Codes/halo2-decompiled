@@ -665,7 +665,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 long function_1469f0(real seconds);
 // score 279 (was 279): frame 4/12, early slot spill and state/displacement/final-cursor homes remain.
 
-// score 279 (was 279): frame 4 versus 12; early slot spill, state displacement and transition/flag homes remain.
+// Earlier: frame 4 versus 12; early slot spill, state displacement and transition/flag homes remain.
 // Earlier: Frame 4/12, early slot spill and state/transition/flag homes remain.
 // Earlier: frame 4/12 and slot/state/transition/flag homes remain.
 // frame four/twelve and slot/state/transition homes remain.
@@ -697,6 +697,9 @@ long function_1469f0(real seconds);
 // byte/signed-byte restriction 280/280; nested restriction result 286; unsigned/signed-word
 // initial scan 335/335. Reduced control 280, full baseline 279; real state layout and
 // executable body restored.
+// Round 167: Cooldown-first selected-case orders 41023/41203/41302/42013/42103/
+// 42301/43012/43102 score 279/283/279/277/282/290/280/278 fast (control 280, full 279).
+// Best gains at most three; original 40123 order restored; inherited score headers merged.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {

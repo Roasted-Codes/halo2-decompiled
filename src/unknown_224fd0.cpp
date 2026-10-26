@@ -92,6 +92,9 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 // Scalar-axis factor names, product names and independent square order all 391 (fast).
 // Reverse scalar inputs 441; trig-first scalar inputs 441; reversed inputs with orientation snapshot 441; reversed inputs with shared axis cases 400; reversed inputs with separate trig declarations 441.
 // Round 121: Both axis pointers retained 470; complete local matrix then publication 1142; second axis pointer across switches 501; double angle 393; all three scale products factor-first 380. Original body and both helper bodies restored.
+// Complete native axis input copy 424; copy with complement/sine products/both
+// 430/470/418; diagonal-first copy with the same four forms 428/468/461/515.
+// All recover frame 0x6c and first +0xaf but regress; original helper restored.
 // @retail 0x224fd0
 void __stdcall function_224fd0(s_draw_mesh_seed const *seed, s_draw_value_cache *values,
 	point3f const *position, vector3f const *direction, real scale, color4f const *color,

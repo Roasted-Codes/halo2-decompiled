@@ -85,14 +85,18 @@ PRIVATE __forceinline real function_206091(vector3f const *arg_0, vector3f const
 
 PRIVATE __forceinline void function_206092(vector3f const *arg_0, vector3f const *arg_1, vector3f *arg_2)
 {
-    arg_2->k = arg_0->i * arg_1->j - arg_0->j * arg_1->i;
-    arg_2->j = arg_0->k * arg_1->i - arg_0->i * arg_1->k;
-    arg_2->i = arg_0->j * arg_1->k - arg_0->k * arg_1->j;
+    real second_i = arg_1->i;
+    real second_j = arg_1->j;
+    real second_k = arg_1->k;
+    arg_2->k = arg_0->i * second_j - arg_0->j * second_i;
+    arg_2->j = arg_0->k * second_i - arg_0->i * second_k;
+    arg_2->i = arg_0->j * second_k - arg_0->k * second_j;
 }
 
 PRIVATE __forceinline real function_206093(vector3f const *arg_0)
 {
-    return (real)sqrt((double)arg_0->k * arg_0->k + (double)arg_0->j * arg_0->j + (double)arg_0->i * arg_0->i);
+    vector3f magnitude_input = *arg_0;
+    return (real)sqrt((double)magnitude_input.k * magnitude_input.k + (double)magnitude_input.j * magnitude_input.j + (double)magnitude_input.i * magnitude_input.i);
 }
 
 PRIVATE __forceinline real function_206094(vector3f *arg_0)
@@ -137,7 +141,8 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
-// score 1585 (was 1596): Frame 0x590 versus 0x58c; component/velocity homes and contact induction remain.
+// score 1402 (was 1402): Frame 0x5cc versus 0x58c; component/velocity homes, contact induction and scheduling remain.
+// Earlier 1585 (was 1596): Frame 0x590 versus 0x58c; component/velocity homes and contact induction remain.
 // Earlier 1600 from 1600: frame 0x580 versus 0x58c; velocity homes and contact induction differ;
 // frame pointer 2092; inline depth zero 3049, eight 1600; point/contact row tables 1600/1600;
 // double magnitude accumulator 1654.
@@ -157,6 +162,17 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // 1585 kept (plain), indexed typed point/contact records 1593 (three-point gain rejected).
 // Native configuration header/point rows/contact rows 1585 each; header/point, header/contact,
 // both row tables and all layouts 1585 each; all layouts with both tables indexed at each use 1640.
+// Round 140: cross first/second/both scalar captures 1581/1570/1587. Native-argument and cross-result forms
+// 1620/1570/1955/1423/2158/1426/1402/1456/1504/1655/1680/1402/1772 reverted for generated local address
+// cancellations.
+// Pointer-interface magnitude vector capture alone/with second cross 1423/1402; three scalar magnitude
+// captures alone/with second cross 1577/1604. Vector magnitude snapshot plus second cross scalars kept, plain
+// 1402; all original interfaces and call expressions preserved.
+// Complete cross-vector second/first/both captures with magnitude snapshot 1655/1552/1765; rejected.
+// Round 143: pointer-interface complete add/scale/both captures 1991/1892/2424;
+// first/second/both dot inputs 1885/1772/2221; add+dot and scale+dot 2664/2554.
+// On the retained magnitude/second-cross graph, velocity/buffers/magnitude home names and
+// all four combinations 1402 each; all three second-cross component names 1402. All restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
