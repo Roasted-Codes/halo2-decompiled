@@ -405,7 +405,8 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 198 (was 203): frame 0x14 agrees; request/count registers and cross scheduling differ.
+// score 181 (was 198): Frame 0x14 agrees; request/count/table registers and cross publication still differ.
+// Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
 // reversed independent dot order 203; stepping snapshot 303.
 // frame 0x14 agrees; request/count/table registers and cross-result stores still differ.
@@ -421,6 +422,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Native first/second/both normal values 261/293/334; average initialized from second/first
 // normal 285/288; first-value/second-average 315; second-value/first-average 301; both-
 // values/second-average 341.
+// Separate projection results both/first/second 297/288/288; shared projection result 273;
+// common complete pair result 181 at 975 bytes (plain confirmed); swapped dot comparison 198;
+// negated average-default arm 198; common pair result with swapped comparison 181.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -451,15 +455,16 @@ void function_1f2a80(byte const *request, bool moving,
         {
             vector3f const *a = (vector3f *)(*(byte **)(component + 0x88) + indices[0] * 0x48 + 0x28);
             vector3f const *b = (vector3f *)(*(byte **)(component + 0x88) + indices[1] * 0x48 + 0x28);
+            vector3f support;
             if (selected != NONE)
             {
                 vector3f const *normal = (vector3f *)(*(byte **)(component + 0x88) + indices[selected] * 0x48 + 0x28);
                 vector3f axis;
                 contact_cross(a, b, &axis);
                 if (selected == 0)
-                    contact_cross(&axis, normal, out);
+                    contact_cross(&axis, normal, &support);
                 else
-                    contact_cross(normal, &axis, out);
+                    contact_cross(normal, &axis, &support);
             }
             else
             {
@@ -471,10 +476,11 @@ void function_1f2a80(byte const *request, bool moving,
                 real dot_a = a->i * desired->i + desired->k * a->k + a->j * desired->j;
                 real dot_average = desired->i * average.i + desired->k * average.k + desired->j * average.j;
                 if (dot_average > dot_a)
-                    *out = *a;
+                    support = *a;
                 else
-                    *out = average;
+                    support = average;
             }
+            *out = support;
         }
         break;
     case 3:
