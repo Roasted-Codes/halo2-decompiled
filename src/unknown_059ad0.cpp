@@ -3623,14 +3623,22 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 115 (was 115): Frame agrees; timeout owner spill and native identity/reply load order differ.
+// score 101 (was 115): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
+// Earlier: Frame agrees; timeout owner spill and native identity/reply load order differ.
+// frame agrees; timeout owner spill and identity load order differ;
+// Frame agrees; timeout owner spill and native identity/reply load order differ.
 // Earlier: frame agrees; timeout owner spill and identity load order differ;
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
 // Direct leave predicate 115; retained host-query result 137; narrower host-result
 // scope 125; flags before identifier 120; early nonpeer return 123.
+// State/host/both at uses 115/120/120; long host/leave/both 129/132/130;
+// host/leave initialized individually before lookup 119/120.
 // Native identity assignment 115; identity before identifier 115; announcement/reply/both named identifier stores 115/115/115;
 // entry result lifetimes 120; separate host initialization 118; host result before message 113.
+// actual peer-result return 101; unsigned member 115; unsigned host 115; both unsigned handles 115;
+// native workspace names 115; chained message flags 115; peer result with chained flags 101; host
+// result at send 113.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -3671,7 +3679,8 @@ bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *addr
     function_612c0(session);
   }
  }
- if (network_session_address_is_peer(session, address))
+ bool result = network_session_address_is_peer(session, address);
+ if (result)
  {
   s_session_id id = *(s_session_id *)&session->unknown1c;
   s_network_session_member_state *member_state = &session->member_states[session->member_index];
@@ -3680,9 +3689,8 @@ bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *addr
     false, 0x14, sizeof(id), &id);
   if (leave)
    session->leave(false);
-  return true;
  }
- return false;
+ return result;
 }
 #pragma inline_depth()
 
@@ -4305,13 +4313,23 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 396 (was 396): Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
+// score 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
+// Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
+// Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
 // isolated sender rename 407; preference results first 407; old version first 407.
+// Round 113: Equality-name 396; shared-result name 396; entry host-equality scope 396; direct version fields 396; nested preference tie-break 395 (one-point gain dropped).
 // Identifier entry workspace 398; received entry workspace 396; long identity equality 402;
 // long preference results 406; equal-version decision first 422.
+// Result byte +9 versus +b, identity/host homes and early acknowledgement/rejection remain. Raw multi-use
+// comparison 384 kept; preference-only long 405; equality-only long 405; integer acceptance 395; peer before
+// identifier 396; chained peer clears 396.
+// Raw-comparison slot name 384; reversed comparison buffers 384; library identity outputs 384;
+// direct state observations 387; result after state 384. Frame/Boolean homes and block placement remain.
+// Word identity result 384; word preference/equality states 396/396; local member first 386;
+// selection flags after map updates 384; word reachability counts 383.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4346,7 +4364,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
   long host = session->member_index;
   const s_session_member_identity *host_identity = (const s_session_member_identity *)&session->members[host];
   s_network_session_member_state *host_state = &session->member_states[host];
-  bool same_host = !memcmp(host_identity, (const byte *)message + 8, 0x24);
+  long identity_order = memcmp(host_identity, (const byte *)message + 8, 0x24);
   if (session->function_058d20())
   {
    if (sender != NONE)
@@ -4358,7 +4376,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
   }
   if (network_observer_channel_timed_out(session->observer, host_state->unknown04))
   {
-   *reason = same_host ? 4 : 6;
+   *reason = !identity_order ? 4 : 6;
    *has_identity = true;
    *identity = *host_identity;
    goto done;
@@ -4368,7 +4386,7 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
    *reason = 8;
    goto done;
   }
-  if (session->observer->channels[host_state->unknown04].state == 7 && !same_host)
+  if (session->observer->channels[host_state->unknown04].state == 7 && identity_order)
   {
    result = true;
    goto done;

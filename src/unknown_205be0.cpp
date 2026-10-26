@@ -75,32 +75,27 @@ struct s_205be0
 void function_ba1d0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 transform4x3f *function_ba160(long arg_0, transform4x3f *arg_1);
 real function_30bf0(vector3f *arg_0);
-void havok_component_rigid_body_inertia_get(long arg_0, s_havok_component *arg_1, matrix3x3 *arg_2);
-real havok_component_rigid_body_mass_get(long arg_0, s_havok_component *arg_1);
 void havok_component_transform_set(s_havok_component *arg_0, transform4x3f const *arg_1);
 void function_1cfb90(s_havok_component *arg_0, transform4x3f const *arg_1, void const *arg_2);
+void function_ba690(long object_index, byte **states, long *state_count, long *a, long *b);
 
 /* the vector rotated into the matrix's axes and divided by its scale */
 PRIVATE inline vector3f *transform_vector_into_frame_205be0(transform4x3f const *matrix,
     vector3f const *vector, vector3f *result)
 {
-    real i, j, k;
-    if (matrix->scale != 1.0f)
+    real x = vector->i;
+    real y = vector->j;
+    real z = vector->k;
+    if (matrix->scale != 1.f)
     {
-        real inverse_scale = 1.0f / matrix->scale;
-        i = vector->i * inverse_scale;
-        j = vector->j * inverse_scale;
-        k = vector->k * inverse_scale;
+        real inverse = 1.f / matrix->scale;
+        x = inverse * x;
+        y = inverse * y;
+        z = inverse * z;
     }
-    else
-    {
-        i = vector->i;
-        j = vector->j;
-        k = vector->k;
-    }
-    result->i = matrix->forward.i * i + matrix->forward.j * j + matrix->forward.k * k;
-    result->j = matrix->left.i * i + matrix->left.j * j + matrix->left.k * k;
-    result->k = matrix->up.i * i + matrix->up.j * j + matrix->up.k * k;
+    result->i = matrix->forward.k * z + matrix->forward.j * y + matrix->forward.i * x;
+    result->j = matrix->left.k * z + matrix->left.j * y + matrix->left.i * x;
+    result->k = matrix->up.k * z + matrix->up.j * y + matrix->up.i * x;
     return result;
 }
 
@@ -111,6 +106,13 @@ PRIVATE inline vector3f *transform_vector_into_frame_205be0(transform4x3f const 
 // Tried: components copied before the scale test (266: right frame, but j gets an extra
 // register and two movaps), in-place vector3f_scale on the vector (188), declaration and
 // multiply orders of i/j/k (264-271), object pointer recomputed from arg_1 (216).
+// score 11 (was 127): the region table through the existing 0xba690 (retail inlines it), the
+// rigid-body inertia and mass getters as s_havok_component members (every retail call site loads
+// the index before the component), the transform helper in 0x1427f0's statement shape (retail
+// inlines that function here; a local forceinline declaration keeps it out of line, and inline on
+// its definition also inlines it into matched 0x210770) and the component index read before the
+// definition. Still differs: the object pointer takes eax where retail gives it ecx (the table
+// register). Typed component index or byte/dword offset forms 11; definition first 23.
 // @retail 0x205be0
 bool __stdcall function_205be0(s_vehicle_physics_state *arg_0, long arg_1)
 {
@@ -118,8 +120,8 @@ bool __stdcall function_205be0(s_vehicle_physics_state *arg_0, long arg_1)
     {
         long local_0 = (arg_1 & 0xffff) * 12;
         byte *local_1 = *(byte **)(g_4e0300->data + local_0 + 8);
-        byte *local_2 = g_4e3b44[*(long *)local_1 & 0xffff].bytes + 0x2ac;
         long local_3 = *(long *)(local_1 + 0xb4);
+        byte *local_2 = g_4e3b44[*(long *)local_1 & 0xffff].bytes + 0x2ac;
         result = false;
         if (local_3 == NONE)
             goto done;
@@ -129,13 +131,13 @@ bool __stdcall function_205be0(s_vehicle_physics_state *arg_0, long arg_1)
         vector3f local_5;
         function_ba1d0(arg_1, &local_5, NULL);
         s_205be0 *local_6 = (s_205be0 *)arg_0;
-        havok_component_rigid_body_inertia_get(0, local_4, &local_6->field_3c);
+        local_4->rigid_body_inertia_get(0, &local_6->field_3c);
         byte *local_7 = (byte *)local_4->rigid_bodies.data[0].rigid_body->m_motion;
         vector3f const *motion = (vector3f const *)(local_7 + 0x70);
         real_point3d_set((point3f *)&local_6->field_60, motion->i, motion->j, motion->k);
         local_6->field_0 = arg_1;
         local_6->field_4 = local_2;
-        local_6->field_6c = havok_component_rigid_body_mass_get(0, local_4);
+        local_6->field_6c = local_4->rigid_body_mass_get(0);
         local_6->field_70 = 0.0f;
         transform4x3f *local_8 = &local_6->field_8;
         function_ba160(arg_1, local_8);
@@ -144,9 +146,10 @@ bool __stdcall function_205be0(s_vehicle_physics_state *arg_0, long arg_1)
         local_6->field_74 = *(vector3f *)(local_1 + 0x1b0);
         memset(local_6->field_90, 0, *(long *)(local_2 + 0x3c) * sizeof(s_205be0_record));
         memset(local_6->field_b10, 0, *(long *)(local_2 + 0x44) * sizeof(s_205be0_record2));
-        byte *local_10 = *(byte **)(g_4e0300->data + local_0 + 8);
-        char *local_11 = (char *)local_10 + *(short *)(local_10 + 0x11a);
-        local_11 += (*(short *)(local_10 + 0x118) / 10) * 2;
+        long local_9;
+        long local_10;
+        function_ba690(arg_1, NULL, &local_9, NULL, &local_10);
+        char *local_11 = (char *)local_10;
         s_object_marker local_12;
         for (long local_13 = 0; local_13 < *(long *)(local_2 + 0x3c); local_13++)
         {

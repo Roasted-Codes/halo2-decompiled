@@ -48,8 +48,11 @@ short __stdcall function_1afde0(long actor_index)
 }
 
 // score 9 (was 9): retail keeps the actor's unknown344 in ebp where ours keeps
-// it in esi, and retail loads the actor pointer before it saves edi, so the
+// it in esi, and retail loads the slot pointer before it saves edi, so the
 // loads and the comparison against NONE differ.
+// Slot load/save schedule remains. Immutable actor/state/both homes fast 9/9/9; owner/state names 9;
+// native result byte 69; chained common clear 11; success after state stores 12;
+// reference value copy 23. All new scores reduced; original body restored.
 // @retail 0x1afe50
 bool __stdcall function_1afe50(long actor_index, s_slot *slot)
 {
