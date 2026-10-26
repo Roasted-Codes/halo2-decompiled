@@ -2138,6 +2138,8 @@ void *actor_get_character_situation_entry(long actor_index);
 // Scoped first distance iterator 322; two-use candidate-distance sample 326; readonly
 // settings view 322; first scope plus sample 326; separate marking result 322; first
 // scope plus marking result 322; chained reset fields 322, plus marking result 322.
+// Round 342: candidate-count lifetime at collection 383; invalid-cluster reset first 322;
+// fallback initialization first 322; observed-state CRT copy 322; shared visibility test 322.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

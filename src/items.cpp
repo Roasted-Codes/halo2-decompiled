@@ -556,13 +556,15 @@ struct s_item_collision_bsp
 	s_item_collision_instance *instances;
 };
 
-// score 249 (was 253): plane-index width, plane-join registers and spin stores differ;
+// score 249 (was 249): plane-index width, plane-join registers and spin stores differ;
 // seed before square root 249; fallback input copy 364; up pointer 253;
 // plane input scalars 254; angular output initializer 253.
 // Shared input/output scaling 249; transform value 350; linear/angular loops 249/249; normal-row loop 250.
-// score 249 (was 249): plane-index width, plane-join homes and spin stores remain.
+// plane-index width, plane-join homes and spin stores remain.
 // Item/transform references 249/249; surface selector 250;
 // speed-role names 249; current-spin reference 249 (plain).
+// Round 342: linear-output aggregate 249; native axis CRT copies 249; direct effect-flag read
+// 249; shared fallback-only spin scale 249; direct offset expression 249.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
