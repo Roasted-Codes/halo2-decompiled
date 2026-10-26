@@ -62,7 +62,7 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 	bool arg_16, bool arg_17, bool arg_18, real arg_19, real arg_20,
 	real arg_21, byte arg_22, point3f const *arg_23, real arg_24);
 
-// score 155 (was 155): frame 0x214 agrees; late ESI save and source/count/feature homes remain.
+// score 155 (was 155): Frame 0x214 agrees; delayed ESI save, source retention and count/cursor/feature homes remain.
 // Earlier 162 (was 162): Frame 0x214 agrees; delayed ESI save, source/count cursor and feature-byte homes differ.
 // entry word count 162; entry native count 162.
 // entry inner ordinal 162; repeated count location 162.
@@ -123,8 +123,16 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Unsigned count/selector/word/all offsets 155/155/155/155; wide inner
 // ordinal 223; wide optional index 214; wide composite mask 192; word cursor
 // before packed mask 154. One-point reduction rejected; original body retained.
+// Actual low-byte independent/common/equality feature access 206/210/221; low-word
+// access 158/204/220; byte/word access with native copied-field store order 206/158.
 // Round 225: Signed-word outer/decoded/paired/inner/outer-inner/decoded-inner/all carriers [185, 189, 192,
 // 195, 182, 197, 193]; unsigned-word outer 196. Early source/count and feature homes remain.
+// Common disabled bool/byte/short/long with positive/negative feature results [192, 193, 192, 193, 201, 207, 192, 193].
+// Original body, word cursor and inherited qualifiers restored.
+// Entry count/selection/word-row offset lifetimes 156/154/154; count-selection/count-word/selection-word/all 156/156/156/156;
+// all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
+// Count/word/byte, byte/count/word, byte/word/count and word/count/byte
+// declaration orders 154/155/154/155; same offset-step orders 155/156/156/155.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

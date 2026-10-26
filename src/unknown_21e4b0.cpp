@@ -143,7 +143,21 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 150: const input/output/both tables 165/165/165; early input/output/both tables 253/371/312; early const tables 312; early tables with reset state 327; unified native byte 368; unified byte across reset 257 (fast).
 // Native-byte return 165; with final byte/allocation bool/both 169/169/169;
 // native-byte return across reset 280; with final byte/allocation bool/both 290/290/290.
+// Joint final/allocation failure carriers: bool-byte/byte-byte/bool-bool/byte-bool 168/167/167/167;
+// the same four spanning reset 308/303/303/303. Original positive results and guarded loops restored.
+// Round 141: Coordinated inline-noinline
+// startup/listener/reset/channel/voice/effects-loader/effects-setup/impulse declarations
+// 165/165/165/165/165/165/333/165. All providers restored; success/type/first-channel homes remain.
+// Round 141: Canonical inline-only
+// startup/listener/reset/channel/voice/effects-loader/effects-setup/impulse declarations 165 each. All
+// providers and original declarations restored.
 // Round 222: spatial/submix/both native interface owners 252/199/271; both with reset state 300; spatial with word channel ordinal 254; submix with word voice ordinal 305; both with word category/send ordinals 266/306.
+// Native short count 307; with shared voices 307; short first 322, with shared voices 322; across reset 304, with shared voices 304; short first across reset 298, with shared voices 298. Success/type registers and first-channel spill remain.
+// Round 187 closed allocation/checksum scope: signed extent original/listener/reset/both
+// 165/165/280/280; unsigned extent same four 165/165/280/280 (fast).
+// All restored; success/type carriers and first-channel spill remain.
+// Direct output-buffer fields: plain 279; spatial 295; both 297; submix 233;
+// plain/submix 280; spatial/submix 282; all 297; repeated effect-mixbin field 290.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

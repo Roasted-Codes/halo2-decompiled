@@ -1387,6 +1387,12 @@ struct s_133f70;
 // Native reuse 330; native level change 291; short entry index 352; late success 262; short builder
 // result 216.
 // Earlier 213 (was 213): distance staging, nullable entry and cache/result homes remain.
+// frame 0x33f8 agrees; distance staging, nullable entry and cache scheduling remain;
+// Earlier at 213 (from 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
+// Earlier at 213 (from 213): distance staging, nullable entry and cache/result homes remain.
+// Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result schedule remain.
+// Earlier at 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
+// Earlier at 213 (was 213): distance staging, nullable entry and cache/result homes remain.
 // Direct successful-output slot, entry lifetime: long/long 379, long/short 371,
 // short/long 354, short/short 350; loop lifetime 360,372,374,375.
 // distance input, nullable-entry address and cache/result scheduling remain.
@@ -1402,6 +1408,11 @@ struct s_133f70;
 // Round 227: Native output short/Boolean/dword fields and their seven combinations 356f each; all
 // fields with current-level reference 356f. Reduced control 356f versus full 213; original metadata,
 // body and declarations restored.
+// Native pooled record at level/batch/usage boundaries 213/213/213; level+batch,
+// level+usage, batch+usage, all members and native const level elements each 213 plain
+// (all eight 356 fast). Original record access and body restored.
+// Round 330: Query/builder/output-query/lighting inline and noinline declarations: eight at 356f, matching
+// reduced control (frame 0x3400), versus full 213. All declarations restored; no reduced-only candidate.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

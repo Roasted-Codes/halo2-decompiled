@@ -138,7 +138,11 @@ struct s_placement_2bc1
 
 // score 16 (was 16): placement argument EAX/ECX transfer and event-store scheduling differ from +0x6d.
 // Existing initializer 89; initializer result 89; initializer before mode 88; paired helpers 88;
-// event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90.
+// event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90;
+// event filled before the mode test 32 (stores now precede the test but the mode load folds into the
+// compare after them, 223 bytes); test result as a bool before the fill 76; fill then send helper 32;
+// mode read into a local before the fill 31 (load order right, constant 4 not shared in eax);
+// function-scope event filled before the test 32. The placement copy is ecx here, eax in retail.
 // @retail 0x2bc1f0
 void function_2bc1f0(long team)
 {

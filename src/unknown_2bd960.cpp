@@ -364,6 +364,8 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 	}
 }
 
+// the four control points of segment n of a closed spline: the segment's two
+// points and the midpoints with their outer neighbours
 // score 43 (was 43): no frame; spline/index/point input ownership and first average schedule differ.
 // native output-pointer result without index home 64 fast;
 // ordinary inline declaration without index home 64 fast;
@@ -383,9 +385,9 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 // @retail 0x2bdd70
 void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points)
 {
-	long const *index_reference = &n;
-	long i = *index_reference * 2;
+	long i = n * 2;
 	long previous = i - 1;
+	long following = i + 1;
 	long next = i + 2;
 
 	if (previous < 0)
@@ -396,7 +398,7 @@ void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points
 	point3f &first_output = out[0];
 	point3f *a = &points[previous];
 	point3f *b = &points[i];
-	point3f *c = &points[i + 1];
+	point3f *c = &points[following];
 	point3f *d = &points[next];
 	first_output.x = b->x + a->x;
 	first_output.y = b->y + a->y;

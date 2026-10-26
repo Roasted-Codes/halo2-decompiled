@@ -1267,6 +1267,9 @@ bool function_c70b0(long unit_index);
 // combined native fields 164; existing channel-state member 164.
 // Complete first/second/both depletion selections 314/357/357; rejection predicates
 // first/second/both 164/164/164; canonical true return 205; selections with true return 355. All restored.
+// Explicit name default/definite result 354/354; native/unsigned-word/signed-word
+// result 381/377/377; separate overlay byte 183; natural overlay exits 302;
+// definite result plus overlay exits 475. Entry pool/state allocation and normalization remain.
 // Round 224: First/second/both query scopes 164/164/164; state/channel/both identifier lexical homes
 // 164/164/164; identifier homes with first/both scopes 164/164. Frame eight agrees; pool/state roles,
 // count joins and normalization remain.
@@ -1416,6 +1419,8 @@ bool __stdcall function_110ab0(long unit_index)
 // Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Byte return with byte result 482; byte return alone 450; byte return/result with Boolean overlay 482;
 // with controlling field at use 482; with separate final overlay byte 482. Original Boolean interface retained.
+// Native signed count/slot/both fields 450/450/450; read-only receivers alone/with count/with slots/with both
+// 450 each; typed read-only inputs plus native result 554. Original record and body restored.
 // Round 222: retained slot-owner 450; controlling field at both uses 450; Boolean depletion/overlay/both 482/466/482; both with retained owner/entry result 482/482; pointer-home names 450.
 // Round 224: First/second/both query scopes and branch-entry output declarations 450/450/450/450;
 // branch-owned status defaults alone/with first/second/both scopes 485/485/485/485. Frame eight versus
@@ -1636,12 +1641,14 @@ PRIVATE __forceinline void bounds_112070(s_aiming_screen const *screen, real *bo
 PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *forward,
 	vector3f const *side, vector3f const *up, vector3f *result)
 {
-	result->i = forward->k * v->k + forward->j * v->j + forward->i * v->i;
-	result->j = side->k * v->k + side->j * v->j + side->i * v->i;
-	result->k = up->k * v->k + up->j * v->j + up->i * v->i;
+	vector3f input_direction = *v;
+	result->i = forward->k * input_direction.k + forward->j * input_direction.j + forward->i * input_direction.i;
+	result->j = side->k * input_direction.k + side->j * input_direction.j + side->i * input_direction.i;
+	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 841 (was 841): frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
+// score 810 (was 841): frame 0xcc versus 0xd4 and first angle expansion remain.
+// Earlier: frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
 // two inline levels 833, sequential channel construction 833, activity byte 833,
@@ -1662,6 +1669,13 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // (frame 0xd4); float bound fields 841; byte overlay ordinal 841; joined bound receiver 912;
 // named blend scalars 841. Opening body and both helpers retained.
 // native projection inputs by value 1112; native projection output reference 841; native bounds-screen reference 841; signed-word activity 844; readonly retained tag 841.
+// Shared dot products with basis/direction first 841/841 (match-only grouping);
+// uniform running projection sums 841; output-first 841; native input references 841;
+// references plus output-first 841; running sums plus output-first/references 841/841.
+// Frame 0xc8 versus 0xd4 and first angle expansion remain. Body and helper restored.
+// Round 181 direction input value/native copy 810/810; basis values/native copies 1067/1073;
+// all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166.
+// Direction copied once inside projection retained (plain 810, 3403/3403); frame 0xcc versus 0xd4.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2281,6 +2295,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // cases first 674; internal validity linkage 674. Original helper declaration restored.
 // Forced validity on late-result body 707; reversed validity fields 722; fallback vector memcpy 674;
 // current-frame request/workspace names 674; shared channel flag word 674. Opening body and helper retained.
+// Validity tag/index scalars 702; native identifier value/reference 820/699; scalar independent tests 729;
+// scalar/value/reference forced expansion 707/868/707; identifier-first scalar formals 702. Original helper and
+// twelve calls restored.
 // Round 222: word transition/override 672/714; byte permission/activity 694/674; separate final accumulator 666 kept plain; logical final OR 680; both native validity tests 716, with word transition 714; call-first/combined accumulator 666/666; byte activity with accumulator 669.
 // Round 226: Boolean transition 710; byte override 666; byte permission 693; transition with
 // override 710; transition with permission 662; both byte inputs 693; Boolean transition with both

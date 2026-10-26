@@ -23,24 +23,27 @@ struct plane2f
 PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane,
 	point2f const *first, point2f const *second, long count, short capacity, point2f *output)
 {
-	real dy = first->y - second->y;
+	real fraction = 0.0f;
 	real dx = first->x - second->x;
-	real denominator = plane->n.i * dx;
-	denominator += plane->n.j * dy;
+	real dy = first->y - second->y;
+	real denominator = plane->n.i * dx + plane->n.j * dy;
 	if ((denominator < -0.0001f || denominator > 0.0001f) && count < capacity)
 	{
-		real fraction = (plane->n.j * first->y + plane->n.i * first->x - plane->d) / denominator;
-		dx *= fraction;
-		output->x = first->x - dx;
-		dy *= fraction;
-		output->y = first->y - dy;
+		fraction = (plane->n.j * first->y + plane->n.i * first->x - plane->d) / denominator;
+		output->x = first->x - dx * fraction;
+		output->y = first->y - dy * fraction;
 		return true;
 	}
 	return false;
 }
 
-// score 101 (was 101): frame 0x618 agrees; result/cursor initialization and displacement/fraction SSE homes still differ.
-// Earlier: frame 0x618 agrees; cursor/result initialization, delta XMM
+// score 5 (was 101): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// intersection's x product loads the plane before the point. The fraction defaulted first,
+// x-first displacements and the scale inside the output expressions gave retail's XMM homes
+// and length (101 -> 5). Then: current declared before previous 5; named current/previous
+// point pointers 28; dot_product2d numerator 5; fraction shared with the classification
+// distance 5; previous updated at the loop end 5; staged/reversed denominators and helper
+// parameter orders screened compile-only without change. Earlier: frame 0x618 agrees; cursor/result initialization, delta XMM
 // homes and extra fraction copies remain. X-first deltas 109; full denominator 103;
 // scales before stores 101; first input record 207; Boolean helper result 101;
 // aggregate intersection 152; capacity-first gate 108; native input count 153;
@@ -261,6 +264,7 @@ long function_239d50(long count, point2f const *points, point2f *hull)
    the lowest */
 // score 203 (was 203): Frame 0x14 agrees; count/departure homes, scan bound, equality and compaction differ.
 // Earlier: scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
+// scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
 // Full count tests 274; current-point snapshot 271; byte start state 250; float workspace names 250; still-at-origin state 264; inline classifier declaration 250; forced equality declaration 250.
 // Unsigned word result 275; unsigned first/candidate ordinals 247/209 (caller lost); native compaction ordinals 285;
 // monotonic departure 263; compaction shared exit 279; heading initialized after lowest scan 234.
@@ -268,6 +272,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // Round 212: Unsigned-word/native-long departure 208/203; result lexical home 208; native lowest-scan ordinal 612; entry heading lifetime 237. Result/departure slots, bound and compaction boundary remain.
 // Round 229: Equality-helper false-first/true-first/separate/early rejection results with long
 // departure 260/260/260/212; with Boolean departure 249/249/249/234. Original helper/body restored.
+// Departure/output/both/current/heading names 203 each; byte departure 234; late departure and
+// lowest-coordinate order 203/203; heading before scan 220.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -444,6 +450,8 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Round 229: Equality helper native first/second/both point arguments 356/357/444;
 // result-first with those arguments 356/357/444; pointer result-first/early rejects 237/237.
 // Original helper/body restored.
+// Previous-point, distance, positive-state, negative-state and result names 237 each;
+// status declaration order 264; previous-point address 237; displacement order 237.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

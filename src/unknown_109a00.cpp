@@ -118,16 +118,14 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 						{
 							point3f moved;
 							transform4x3f_apply_point(&motion->transform, &matrix.position, &moved);
-							real ticks = (real)g_510c54->field_2_3;
-							vector3f displacement = {
-								matrix.position.x - moved.x,
-								matrix.position.y - moved.y,
-								matrix.position.z - moved.z
-							};
+							vector3f displacement;
+							displacement.j = matrix.position.y - moved.y;
+							displacement.k = matrix.position.z - moved.z;
+							displacement.i = matrix.position.x - moved.x;
 							vector3f change = {
-								displacement.i * ticks,
-								displacement.j * ticks,
-								displacement.k * ticks
+								displacement.i * (real)g_510c54->field_2_3,
+								displacement.j * (real)g_510c54->field_2_3,
+								displacement.k * (real)g_510c54->field_2_3
 							};
 							function_b75a0(object_index, &moved, NULL, NULL, NULL, false);
 							*velocity = object->velocity;
@@ -148,8 +146,11 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 
 // score 126 (was 126): Frame 0x88 agrees; point-velocity and nonrotating scale/add
 // scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
+// Frame 0x88 agrees; first point-velocity schedule recovered; second
+// point-velocity and nonrotating scale/add scheduling and five excess bytes remain.
+// Earlier shared point-velocity expansion changed
 // 128/1015 to 164/1018 and aligned differences 66 to 40; second call schedule recovered.
-// First point-velocity and nonrotating difference/add schedules remain. external motion record 164;
+// Earlier first point-velocity and nonrotating difference/add forms: external motion record 164;
 // external object record 164; returned transform input 249; first angular input value 205; first linear
 // input value 197; first center input value 206; first velocity input values 246; immutable displacement
 // rate 164.
@@ -161,18 +162,28 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // native-result component loop 157f; forced native addition result 195f; forced change-input sum
 // 235f; forced result loop 201f.
 // Returned addition result 157p adds a call absent from retail; original helper retained.
-// first point-velocity input schedule and nonrotating scale/add schedule remain.
+// Earlier first point-velocity input and nonrotating scale/add forms:
 // Nonrotating shared point difference 165; shared scale 164; difference plus scale 166;
 // shared scaled difference 169; final delta scale 164; both scale boundaries 164;
 // actual motion-field bindings 166; object-velocity field reference 164 (fast scores).
 // Native clock short/long/double 179/175/193; native difference initializer 164;
 // separate displacement/scaled-change vectors 126 (kept); with short/long/double clock
 // 173/168/199. The actual scaled change remains used by the addition and delta outputs.
+// Separate-output shared real scale 123 (three-point gain rejected), double scale 195;
+// final shared real scale 126; both real 165; double then real 198; real then double
+// 152 (retail length); both double 198; real scale plus forced original addition 123.
 // native scaled change initialized by value then scaled 243; native scaled change assigned by component
 // 126; clock conversion after completed native displacement 168; shared point difference with separate
 // scaled change 125; plain component loop for separate scaled change 164; scaled change workspace declared
 // before displacement 126; immutable completed displacement and scaled change 126; complete native delta
 // value before output copy 174.
+// Separate displacement components xzy/yxz/yzx/zxy/zyx 122/122/118/126/126;
+// clock-first products 126; scaled-output orders jki/kij 140/146. yzx kept after plain check.
+// Relative-velocity subtraction stores ikj/jik/jki/kij/kji 118 each;
+// final delta publication jik/jki/kji 122/124/122.
+// At-use clock field 88 kept: all three products read the field consistently; first
+// point-velocity block now agrees. Native two-use initial velocity/field receiver/both
+// 185/166/185; with at-use clock 187/167/194; initial velocity with shared real scale 185.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

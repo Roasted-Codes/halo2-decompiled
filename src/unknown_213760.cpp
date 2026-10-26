@@ -1172,7 +1172,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 165 (was 165): Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
+// score 112 (was 112): frame 0x1144 and extent agree; file displacement, request-copy and validity joins remain.
+// Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
+// Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
 // frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file displacement and request/I-O setup differ.
 // task-copy scheduling and by-value I/O setup differ. Unsigned slot 172;
@@ -1211,11 +1213,22 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Split file-base/element advance 165; file pointer name 165; wait/header/both forceinline 165/165/165;
 // empty path 205; initialized write count 204; initialized resize result 215. File-displacement and
 // request/I-O setup remain.
+// Explicit native write-options construction 112 (kept); complete task value 227; all output lifetimes 165; options/task 218, options/outputs 112, task/outputs 227, all three 218; complete data-member memset 165.
 // Native output handle/by-value handles/both/header/output plus header/values plus header/all views
 // 165/165/165/165/165/165/165; all views with initialized completion 224. Opening body restored.
 // Round 124: Sole native file cursor with array ordinal 262; zero-member initialization phase 171;
 // entry-scope header pair 165; header/path/task entry workspaces 165; signed-byte slot 254.
 // Every request, header initialization, wait, validity assignment and I/O tuple restored.
+// Round 181 complementary invalidity/write failure/cleanup-once 196/112/115; invalidity-write/invalidity-cleanup/write-cleanup/all 196/199/115/199; byte invalidity 196 (fast); all restored. Frame 0x1144 agrees; file displacement, request-copy and validity joins remain.
+// Round 183 request output address with path first / after access metadata / after access rights /
+// before buffering 117/116/116/114; separate reused slot long/dword/short/word
+// 112/112/286/286 (fast). All restored; file displacement, task copy and validity joins remain.
+// Round 185 resize-derived write success bool/byte/short/long 112/112/203/185; complementary
+// failure 200/200/205/205 (fast). All restored; displacement, request copy and validity joins
+// remain.
+// Round 187 direct-options context: indexed output/values/both 180/180/180; indexed metadata
+// alone/output/values/both 198/198/198/198; native four-use acquired handle 211 (fast).
+// All restored; temporary displacement ECX and request/completion/I-O scheduling remain.
 // @retail 0x213970
 void function_213970(void)
 {
@@ -1264,7 +1277,7 @@ void function_213970(void)
                     s_cache_header empty_header;
                     cache_header_initialize_strings(&empty_header);
                     dword bytes_written;
-                    function_1a1050(*(s_file_handle *)&file->handle, &empty_header, 0x800, 0, 0, 0, 6, &bytes_written, &done);
+                    function_1a1050(*(s_file_handle *)&file->handle, &empty_header, 0x800, 0, s_file_write_flags(0), 0, 6, &bytes_written, &done);
                     cache_wait_for_completion(&done);
                     written = bytes_written == 0x800;
                 }

@@ -164,6 +164,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Existing point producer output return alone/with forced point expansion/with magnitude/with point and
 // magnitude/with cross/with point and cross/with magnitude and cross/with all three 419 each; every sibling
 // retains its preview baseline. Original helpers restored.
+// Native cross axis/direction/both values 522/522/579; planar point2 input 419; planar plus axis/direction/both
+// 522/522/579; orientation at every use 418 (one-point gain rejected).
 // Existing planar point/vector and magnitude input reference contracts, singly and in all seven combinations, 419 each;
 // existing cross-producer output reference 419. Original helpers and body restored.
 // Complete named products: planar/cross/magnitude 421/455/421; planar and cross 453;
@@ -173,6 +175,9 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Complete endpoint stages 421; planar sum accumulator 421; normal-first products 419;
 // stages with accumulator / normal-first products 421/421; named completed projection 421;
 // stages with forced planar expansion 421; stages with native planar memcpy 483. All restored.
+// Round 129, traversal-count scope retained: native planar copy with long/bool/short/byte
+// result 479/543/483/427; CRT planar copy with those result types 479/543/483/427.
+// All original executable source restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

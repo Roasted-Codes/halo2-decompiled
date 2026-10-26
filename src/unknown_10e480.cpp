@@ -146,6 +146,7 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 
 // score 221 (was 221): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // and spilled induction remain; native-byte sample frame 221; short sample frame 261;
+// native-byte sample frame 221; short sample frame 261;
 // one tag frame count 255; input cursors 273; signed-byte sampled result 221;
 // signed-byte ordinal 221; native frame/count 255; cursors/sampled result 273.
 // Earlier: destination and induction homes plus getter expansion remain;
@@ -154,6 +155,15 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // weight-magnitude first 266; actual animation reference 221.
 // Round 230: Read-only sample/tag/both views 221/221/221; reused weight scale 284;
 // scale with either/both views 284/284/284; full input views with named conversion product 284.
+// Round 164: Base identifier confined, separate base admission, both, separate
+// weighted admission and its three combinations 221 each; complete countdown
+// admission split 221. Original playback graph and all constructor points restored.
+// Earlier at 221 (from 221): destination and induction homes plus getter expansion remain;
+// Positive/countdown/touch order 289; touch/positive/countdown 276;
+// touch/countdown/positive 304; countdown/positive/touch 341; countdown/touch/positive
+// 351; positive/touch, touch/positive and countdown/positive guard exits 284/276/341.
+// Negative no-samples bool/byte/short/long in weighted scope 221/221/222/221;
+// across the positive playback phase 313/313/328/331. Original sampled flag and constructors restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

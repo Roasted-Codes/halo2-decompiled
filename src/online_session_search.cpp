@@ -207,6 +207,7 @@ static inline void session_search_set_minimum_score(s_session_search *search)
 extern "C" void _ReadWriteBarrier(void);
 // score 36 (was 36): Frame 0x20 and request fill agree; current/bound/score register exchange remains.
 // Earlier: Frame/length and the whole request fill agree; the bound and score section is retail's
+// Frame/length and the whole request fill agree; the bound and score section is retail's
 // with EAX and ECX exchanged (current ECX, clamp temporaries/total EAX, score EAX where retail has EDX).
 // Round 87: request filled x, y, count, maximum pair, minimum pair 36 (screen of all 120 orders after x, y:
 // 36..54); with each-use loose read 50; current as field/local, upper first, flags first, ternary clamps on
@@ -236,6 +237,8 @@ extern "C" void _ReadWriteBarrier(void);
 // shared invalid predicate with those inputs 105/105/108/108. Original helper and body restored.
 // Round 229: Existing score helper pointer output with original/current/total/both scalar inputs
 // 36/36/36/36; reference output with those inputs 36/36/36/36. Original helper/body restored.
+// Current/lower/upper/both names 36/36/36/36; const current/endpoint 36/36; force-inline score 36;
+// score guard reordered 36; lower/upper candidate clamp 37/36.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -351,25 +354,13 @@ static inline void release_block(void *block, long *info)
 {
 	g_4d87f8->allocator->get_info(block, info);
 	s_allocator_globals *globals = g_4d87f8;
-	globals->allocator->release(block, NONE);
+	g_4d87f8->allocator->release(block, NONE);
 	if (block != 0)
 		globals->count--;
 }
 
 /* stops a session search: cancels its online task and its QoS lookups and
    releases its buffers */
-// score 87 (was 87): extra save, sentinel/zero and rolled handle loop remain.
-// Earlier: extra save, sentinel/zero and rolled handle loop differ; existing local-output release
-// for buffer masks 1/2/4/3/5/6/7, then shared size output: 96, 96, 96, 92, 96, 96, 92, 96.
-// Task handle 91; two query-handle snapshots 91; plain handle-table loop 87;
-// first/results/seen buffer snapshots 106/105/98; all buffers 116; table plus buffers 113.
-// Handle-table loop kept: plain 87, 252/261 bytes; receiver/allocator now EBP/EDI.
-// Round 164: pointer range 91; entry handle cursor 91; entry handle end 91; counted cursor 87;
-// unsigned counter 87; word counter 87; counted handle value 87; pointer task lifetime 91.
-// Round 167: task/handle postconditions 87/87; first/all buffer postconditions 86/87;
-// task+handles/handles+buffers/all/task+buffers 87/87/87/87. Original body restored.
-// Exact handle endpoint/short exact/byte exact/signed-byte bound 87/87/87/87;
-// direct fixed do loop/byte do loop 87/87; existing release forced/implicit inline 87/87.
 // @retail 0x90c80
 void __stdcall function_090c80(byte *p)
 {
@@ -383,13 +374,15 @@ void __stdcall function_090c80(byte *p)
 		function_6b640(search->task_index);
 		search->task_index = NONE;
 	}
-	for (long i = 0; i < 2; i++)
+	if (search->qos_handles[0] != NONE)
 	{
-		if (search->qos_handles[i] != NONE)
-		{
-			qos_release(search->qos_handles[i]);
-			search->qos_handles[i] = NONE;
-		}
+		qos_release(search->qos_handles[0]);
+		search->qos_handles[0] = NONE;
+	}
+	if (search->qos_handles[1] != NONE)
+	{
+		qos_release(search->qos_handles[1]);
+		search->qos_handles[1] = NONE;
 	}
 	if (search->unknown90)
 	{
@@ -707,7 +700,13 @@ done:
 	return result;
 }
 
-// score 128 (was 128): results observation, details cursor base and kind/count homes differ.
+// score 113 (was 128): the details cursor is entry+0x1f8 (retail entry+0x10c), so every field
+// offset differs, and the kind/count homes differ. Cursor taken from the results before the
+// end pointer gave retail's results reuse after the compare (128 -> 113). Round 52:
+// single-exit compare 128; typed details block 128; separate details cursor 154, with the typed
+// block 154; then on the kept form: distance local 113; typed details block 113; count/value/kind
+// declared in reverse 113; details flag read through the details pointer 182; score reset after
+// the filter 181. Earlier:
 // Initial results snapshot 183; scalar/cursor role names 128; exact end-pointer test 128;
 // repeated-use computed distance 128; shared maximum bonus 128; persistent details cursor 154.
 // frame 0x10 agrees; initial results observation,
@@ -732,8 +731,9 @@ void __stdcall session_search_score_and_sort(s_session_search *search)
 {
 	if (memcmp(search->unknown90, search->results, search->unknown88) == 0)
 		return;
-	s_search_result *local_0 = search->results + MAXIMUM_SEARCH_RESULTS;
-	for (s_search_result *entry = search->results; entry < local_0; entry++)
+	s_search_result *entry = search->results;
+	s_search_result *local_0 = entry + MAXIMUM_SEARCH_RESULTS;
+	for (; entry < local_0; entry++)
 	{
 		byte *local_1 = (byte *)entry + 0x10c;
 		(*(long *)(local_1 + 0xec)) = 0;
