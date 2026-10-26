@@ -135,6 +135,8 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Frame pointer 530; long selection index 451; short assist counts 421 (1549 bytes);
 // long consideration result 426; long hostility result 430.
 // Frame 0x48/0x50, result homes and rounding calls remain; typed history 421; history base before team query 466; named rounded windows 421; byte consideration 421; short award counters 433.
+// Complete history-object layout 421; fallback slot alone short 422; later killer-team result 426;
+// retained player-pool pointer 462; final friendly result from nested tests 427.
 // Early assist arrays alone 421; unsigned short selection ordinal 421; first assist-prefix cursors 451; both assist-prefix cursors 430; expired-history continue 421.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)

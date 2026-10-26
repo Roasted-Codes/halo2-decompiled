@@ -28,6 +28,8 @@ bool function_1946f0(s_bitstream *stream)
 // Reversed additions 2; grouped clear start 2; data plus one then index 2; shared clear start 24;
 // count before mask 47; count declared first 2; split index declaration 2; index plus one then data 2;
 // element address plus one 2; const index and count 2; size local 47.
+// discard entry guard 2; nested writing gates 2; unchanged writer guard 2; accounting store order 13;
+// positive clear count 21; inclusive remaining count 2; named byte mask 2; native signed bit offset 2.
 // @retail 0x194710
 void function_194710(s_bitstream *stream, bool discard)
 {

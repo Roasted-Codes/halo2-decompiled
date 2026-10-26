@@ -568,20 +568,21 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 578 (was 583): frame 0xd8 versus 0x94; constant conversions still coalesce.
+// score 463 (was 463): frame 0xdc versus 0x94 and repeated-conversion homes remain.
 // First-buffer input 578; late workspaces 583; muted-send loop 576;
 // native rear predicate 584; workspace role names 583; input plus loop 565
 // (not kept: the loop's index formula only reproduces 6, 8, 7, 9).
-// score 552 (was 578): frame 0xd8 versus 0x94; repeated constant conversions still coalesce.
 // Native settings copy 574; last-two scopes 616; direct routing table 552; pair table 553;
 // constant append helper 552; variable append helper 552; last workspace scope 552.
 // j91: frame 0xd8 versus 0x94 and repeated constant conversions remain; shared routing storage reaches 0xa4 but loses.
 // front level table 613; back level table 566; both level tables 635; shared level table 635; shared routing
 // workspace 647
-// score 463 (was 552): Frame 0xdc versus 0x94 and conversion reuse remain; first/second/both rear calls 579/532/583, first/second table pairs 542/509, second pair with call 491, both pairs 480, both pairs with call 463 (plain).
-// score 463 (was 463): first/third scopes reach frame 0x94 but score 490; pointer traversal 463;
+// First/second/both rear calls 579/532/583, first/second table pairs 542/509, second pair with call 491, both pairs 480, both pairs with call 463 (plain).
+// first/third scopes reach frame 0x94 but score 490; pointer traversal 463;
 // byte table 462; byte counters 458 (instruction sequence worsens); common counter 463;
 // recovered-frame front/rear snapshots 546. Original loops and native workspaces kept.
+// Word ordinals 464; word routing table 454; last-two scopes 498;
+// front-only snapshot 502; word ordinals with first/third scopes 479 (fast).
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -629,7 +630,7 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 	return mode == 1 ? (TEST_FLAG(parameters->flags, 6) ? g_44f70c : effects->m_settings.level2c) : effects->m_settings.level10;
 }
 
-// score 527 (was 532): frame 4 versus 12; gain spills still differ.
+// score 453 (was 460): frame twelve agrees; selected-level homes and SSE argument staging remain.
 // Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
 // completed-path return 532; offset reads 554; retail-order base 514;
 // base/bin snapshots 484; base/primary snapshots 504 (caller losses).
@@ -637,15 +638,14 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // short destinations 531; boolean routing extraction 527.
 // scalar home names 532; selector bitfield 527 (split 276).
 // both named flag fields 524 (+3; split 276); routing bitfield 527.
-// score 515 (was 527): frame four versus twelve and scalar/SSE homes remain;
 // frame pointer 559 (dispatcher lost); ordinary route first 532; repeated-send loop 541;
 // front setting snapshot 521; rear setting snapshot 520; both 515.
-// score 507 (was 515): frame four versus twelve and gain spill/SSE homes remain;
 // per-use primary selection 467 (dispatcher lost); byte destinations 507;
 // reversed mode cases 515; named special gains 515; conditional mode arms 532.
-// score 460 (was 507): frame twelve agrees; selected-level and gain SSE spills still differ.
 // ordinary gain snapshots 460; late secondary setting 517; native send copy 522 (dispatcher lost);
 // alternate ordinary route first 507; special input snapshot 464; combined snapshots 455 (dispatcher lost).
+// Primary level snapshot 457; secondary setting first 453 (plain); ordinary input snapshot 498
+// (dispatcher lost); native destinations 469; scalar role names 460 (fast).
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -654,8 +654,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 		bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
 		byte left = alternate ? 0 : 6;
 		byte right = alternate ? 1 : 7;
-		real const &level = rear ? m_settings.level1c : m_settings.level24;
 		real level2 = rear ? m_settings.level20 : m_settings.level28;
+		real const &level = rear ? m_settings.level1c : m_settings.level24;
 		sound_stream_append_mixbin(mixbins, left, level + parameters->level);
 		sound_stream_append_mixbin(mixbins, right, parameters->level + level);
 		add_send(2, mode, level2 + parameters->level, mixbins);
@@ -858,6 +858,11 @@ __forceinline void c_sound_effects::add_send(long mixbin, long mode, real gain, 
 // score 137 (was 137): source/bin allocation, runtime attenuation and mode dispatch remain.
 // Selected mode-two range with speaker cases 123: long/captured 159, long/direct 184,
 // byte/captured 162, byte/direct 177; cases 321 give 159/184/162/177. Original loops retained.
+// score 137 (was 137): the zero gain (retail keeps it in EDI and pushes EDI) and the run-time
+// attenuation remain. Built with /Op (pragma diagnostic, or a /O2 /Op /arch:SSE /Gr file of its
+// own) the attenuation becomes retail's run-time subss through the rear slot, 146 at 408 bytes;
+// there the switch with explicit calls is 203 at 306 bytes (32-bit bin selections as retail). An
+// empty case 0 switch 151; explicit calls 233; direct capacity tests 163.
 // @retail 0x2afb80
 void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rear, long mode, s_mixbin_settings *mixbins)
 {
