@@ -1232,6 +1232,8 @@ long function_2197f0(real gain);
 // shared fade-in duration 162; distinct-ambience case first 163.
 // Forced interpolation inline 162; direct fade-table fields 169; readonly class views 162; system rereads 162;
 // short-duration exit 162.
+// Release fraction term 163; ducking-field rereads 313; shared fade fraction 162;
+// shared fade time 162; both fade workspaces 162.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -3368,12 +3370,14 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 234 (was 241): Frame 0x49c versus 0x494; initial gain argument homes and clamp stores still differ.
+// score 234 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and clamp stores still differ.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
 // long next-chunk candidate 254; completed-chunk early exit 241.
 // Shared clamp common result 255; forced gain-add inline 234; gain before packet 234; long controller count 235; named
 // flag masks 234.
+// Both branch gain names 234; raw gain before pitch 268 (frame 0x494); playback-bound rereads 234;
+// pitch-range rereads 258; existing-stream branch first 235; recovered-frame form with shared scale 237.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
