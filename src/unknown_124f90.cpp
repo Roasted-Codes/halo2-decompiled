@@ -1475,7 +1475,7 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 /* whether a playing sound should give way to another: the other's class has
    a higher priority, or the same sound plays it louder, or this one is
    farther than a distance */
-// score 46 (was 46): slot/lookup scheduling, retained identifier and full-width return tails differ;
+// score 46 (was 46): Frame/length agree; playback/header scheduling, retained identifier and full-width exits differ.
 // long helper result 46; force-inline priority helper 46; short/byte class-index inputs 46/46;
 // index input with long result 46; existing class operation 169; priority difference 71;
 // class-index input with retained other identifier 44 (two-point gain excluded).
@@ -1485,6 +1485,9 @@ static inline short sound_definition_priority(s_sound_definition const *definiti
 // integer result 123; this definition read at its priority use 94.
 // Rejection-first result 45; priority-derived result 115; each with other identifier 45/115;
 // readonly current/other/both playbacks 46/46/46; second definition boundary with rejection 45.
+// Equal-priority first 82; its direct distance result 119; loudness discriminator 79;
+// equal-first discriminator 99; loudness difference 66; equal-first difference 124;
+// complete decision predicate 113; complete equal-first result 73.
 // @retail 0x128b90
 bool function_128b90(long other_index, long sound_index, real distance)
 {

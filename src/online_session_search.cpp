@@ -197,14 +197,18 @@ bool function_90160(long task_index, s_match_result_data *result)
    score to the loosest as the search widens */
 static inline void session_search_set_minimum_score(s_session_search *search)
 {
+	long loose_score = g_network_configuration.value1ec;
 	if (search->unknown1c != NONE && search->unknown20 > 0)
-		search->minimum_score = (long)((real)g_network_configuration.value1e8 + ((real)search->unknown1c / (real)search->unknown20) * ((real)g_network_configuration.value1ec - (real)g_network_configuration.value1e8));
+		search->minimum_score = (long)((real)g_network_configuration.value1e8 + ((real)search->unknown1c / (real)search->unknown20) * ((real)loose_score - (real)g_network_configuration.value1e8));
 	else
-		search->minimum_score = g_network_configuration.value1ec;
+		search->minimum_score = loose_score;
 }
 
 extern "C" void _ReadWriteBarrier(void);
-// score 50 (was 50): current/bound registers and request fill differ; explicit helper current 103, total 51, both 51; standard lower/upper/both clamps 50; combined 51; field current 50 (round 117).
+// score 46 (was 50): Frame/length agree; current/bound carriers and request field scheduling still differ.
+// Earlier helper current/total/both inputs 103/51/51; standard lower/upper/both clamps 50;
+// combined inputs/clamps 51; field current 50; shared bound workspace 50; default score first 98;
+// invalid score inputs first 50.
 // current/bound registers and request scheduling differ; native field layout,
 // typed bound/flag/request groups 0..7: 50, 50, 50, 50, 50, 50, 50, 50.
 // frame 0x20 agrees; ECX/EAX allocation and request clear/fill scheduling differ;
@@ -213,8 +217,10 @@ extern "C" void _ReadWriteBarrier(void);
 // bound result homes declared together 50; task result used for store and test 50;
 // explicit clock selection 53; direct zero initialized request 87;
 // current snapshot inside active guard 50; both bounds declared before current 50. Restored.
-// score 50 (was 50): shared bound workspace 50; default score first 98; invalid score inputs first 50;
 // named progress 50; lower/upper/both output clamps 105/104/98; inactive current first 58.
+// Strict/loose/both endpoints 50/46/46; converted strict alone/with loose 50/46;
+// endpoints with total/current/both progress snapshots 46/46/46; count-first/observed fill 50/48.
+// Kept the loose endpoint for interpolation and fallback; plain check 46 at 336/336 bytes.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
