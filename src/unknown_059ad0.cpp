@@ -4310,10 +4310,13 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
 // score 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
+// Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
+// Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
 // isolated sender rename 407; preference results first 407; old version first 407.
+// Round 113: Equality-name 396; shared-result name 396; entry host-equality scope 396; direct version fields 396; nested preference tie-break 395 (one-point gain dropped).
 // Identifier entry workspace 398; received entry workspace 396; long identity equality 402;
 // long preference results 406; equal-version decision first 422.
 // Result byte +9 versus +b, identity/host homes and early acknowledgement/rejection remain. Raw multi-use

@@ -814,6 +814,7 @@ done:
 // Native entry table 176; native palette table 176; both table views 176;
 // palette retained across advance 188; direct category-bit extraction 202.
 // Round 110: native explicit selection pair 196; direct published success returns 224; pair with first while scan 211; published current return 176; unsigned-word result 198.
+// Round 117: Native selection block 176; optional definition result 176; fallback postadvance 203; shared palette publication 210; readonly selection graph 176.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -2723,6 +2724,7 @@ static __forceinline long real_to_long(real value);
 // Native group both/first/root 250/272/282; native squads 258; both native walks 256; group
 // workspace lexical order 250; both workspace lexical order 256.
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
+// Round 117: Activity input group/squad/both 227/227/227; conversion-workspace names 227; factor-first periods 227; ordinary inline group/squad 227/227.
 // @retail 0x202720
 void function_202720(void)
 {

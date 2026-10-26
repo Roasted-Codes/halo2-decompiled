@@ -50,6 +50,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Earlier: Frame 0x28 agrees; separate pool/iterator homes, null timing and successor residency remain.
 // frame 0x28 agrees; separate pool/iterator homes,
 // frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
+// Frame 0x28 agrees; separate pool/iterator storage, early null publication and successor EBP remain.
+// Earlier 164 (was 164): frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
 // null-result timing and actor-successor residency remain. Inactive early exit
 // 164; native flag mask 164; successful inner-update continue 164; pointer-result
 // for loop 275; early-exit/mask/continue combination 164.
@@ -64,6 +66,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive continue 164; direct datum 164; unsigned successor 164.
 // traversal phase lifetimes do not recover separate pool
 // Earlier: traversal phase lifetimes do not recover separate pool
+// Earlier 164 (was 164): traversal phase lifetimes do not recover separate pool
 // storage or the actor successor register. Squad/actor/both phase scopes 164/164/164;
 // squad/both scopes with actor for-loop 164/164; squad/both scopes with read-only
 // first acquisition 164/164; both scopes with read-only acquisition and for-loop 164.
@@ -87,6 +90,7 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Separate inline/noinline declarations for eligibility, location update, detach, actor test, attach, transfer, partition update and final update each 164. All eight original declarations and both traversals restored.
 // Native step reference 164; unsigned-word completion 164; shared absolute ordinal 250;
 // native record-array view 180; cleanup inline declaration 164; reference/word contract 164.
+// Round 116: Successor advanced at tail 190; forced existing inactive setter 166; live-pool aggregate 164; both workspaces at entry 164; source-squad field reads 164. Opening code restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

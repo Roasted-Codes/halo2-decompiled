@@ -1928,7 +1928,8 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
-// score 130 (was 130): frame 0x40 versus 0x44; early color slot, cursor/query homes and zone-base scheduling remain.
+// score 130 (was 130): Frame 0x40 versus 0x44; early color spill, cursor/query homes and zone-base scheduling remain.
+// Earlier 130 (was 130): frame 0x40 versus 0x44; early color slot, cursor/query homes and zone-base scheduling remain.
 // frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
@@ -1947,6 +1948,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // Spawn location first/middle 130/130; unknown before scale 127 (three-count gain rejected);
 // query receiver scope/enduring query outputs 130/130; signed node domain/sign after NONE 151/135;
 // condition-local location 130. Original stores, query scopes and node predicate restored.
+// Round 116: Unsigned-byte placement 130; signed-word placement 165; signed-byte zone selector 130; true-default placement 130; private zone failure guards 172. Opening body and helper restored.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {

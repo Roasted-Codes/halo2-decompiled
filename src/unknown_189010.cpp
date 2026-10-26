@@ -148,20 +148,25 @@ static __forceinline long float_to_int_nearest(real value)
 	return result;
 }
 
-// score 167 (was 167): Frame agrees; first lookup expansion and flag/result homes remain;
-// location/priority phase after flags/header 188/194; first/shared class receiver 167/167;
-// seconds/ticks terms 167/167; phase with seconds 188; shared receiver with seconds 167.
-// first class lookup expands; flag and result homes differ;
+// score 134 (was 149): Frame 0xa8 and request EAX agree; first class lookup expansion and flag/result homes remain.
+// Earlier 149 (was 167): Frame 0xa8 and request EAX agree; first class query still expands and flag/result homes differ.
 // priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
 // base-first flags 178 (caller losses), role names 182, source snapshot 178,
 // object snapshot 183, priority after flags 192.
-// frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
+// Earlier 167 (was 182): frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
 // Conditional flags then priority 187; deferred flags publication 176; location first with copied
 // audible priority 167 kept (full); location memcpy 182; conditional end-time publications 175.
 // Outer state scope 167; early optional-size default 164 (below threshold); size before marker copy 167; nested class tests 167; platform-flags block first 167; opening 167 restored.
-// score 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
+// Round 113: Platform index snapshot 167; redundant object/platform clears omitted 149 kept; scoped header on clean flags 149; native flag8 conversion 157 (eight caller losses); repeated class index on clean flags 159.
+// Frame agrees; first lookup expansion and flag/result homes remain;
+// location/priority phase after flags/header 188/194; first/shared class receiver 167/167;
+// seconds/ticks terms 167/167; phase with seconds 188; shared receiver with seconds 167.
+// first class lookup expands; flag and result homes differ;
+// frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
+// Earlier 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
 // Late tag receiver 184; branch-assigned result 193; shared marker observation 167;
 // absent-marker-first 165 (below threshold); native short priority and padding memset 176.
+// Round 116: Whole source flags 149; clean state flags 169 (eight caller losses); variant fields before flag 149; audible-first admission 149; post-query marker default 134 kept plain; size conditional 147; looping global reads 130 fast/135 plain rejected; time-global reads 134; size override before copy 134. All 10640 matches preserved by keeper.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -180,17 +185,9 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 		{
 			flags |= 8;
 		}
-		else
-		{
-			flags &= ~8;
-		}
 		if (request->platform_playback != NONE)
 		{
 			flags |= 0x100;
-		}
-		else
-		{
-			flags &= ~0x100;
 		}
 		state.flags = flags;
 		state.object_index = request->object_index;
@@ -202,14 +199,11 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 			state.location.flags |= 0x800;
 		}
 
+		state.source_data_size = 0;
 		if (request->marker)
 		{
 			state.marker = *request->marker;
 			state.source_data_size = sizeof(s_sound_marker);
-		}
-		else
-		{
-			state.source_data_size = 0;
 		}
 
 		char const *variant = request->variant;

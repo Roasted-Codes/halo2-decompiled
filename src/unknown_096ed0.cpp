@@ -29,6 +29,7 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 111: Positive pending/active/both equality termination 217/217/217; active state first 253; Boolean-OR blocked reduction 264.
 // Pending/active/both separate chain lengths 219/219/221;
 // pre-query peer flags 229; flags plus separate lengths 254.
+// Round 115: Guarded distinct indices 217; separate blocked names 217; separate callback-output names 217; aggregate declarations first 217; guarded index/blocked names together 217. Opening body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

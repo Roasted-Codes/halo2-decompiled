@@ -80,7 +80,13 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 	out->left.k=jk+sine*axis->i;
 }
 
-// score 380 (was 380): Frame 0x64 versus 0x6c; independently scheduled axis expansions and cosine/product spills remain.
+// score 380 (was 380): Frame 0x64 versus 0x6c; rotation copies and product homes differ.
+// Scalar axis inputs 393 plain (391 fast, frame 0x6c); all axis snapshots 754; third component
+// snapshot 820; first two 900; camera record snapshot 615. Scalar-axis factor names, product names
+// and independent square order all 391 (fast). Basis scope ends after composition 380;
+// diagonal-first stores 610; cross destination return 380; second-axis cases first 380; scales
+// after rotation 802 (fast).
+// Frame 0x64 versus 0x6c; independently scheduled axis expansions and cosine/product spills remain.
 // Scalar axis inputs 393 plain (391 fast, frame 0x6c); all axis snapshots 754;
 // third component snapshot 820; first two 900; camera record snapshot 615.
 // Scalar-axis factor names, product names and independent square order all 391 (fast).
