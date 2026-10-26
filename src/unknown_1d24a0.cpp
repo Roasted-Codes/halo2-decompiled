@@ -124,6 +124,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // linear/angular 980; linear/limits 1065; angular/limits 979; all 1065; all/read-only record 1065.
 // Complete native vector outputs in scale/add/subtract helpers 1291/1048/984; scale-add/scale-subtract/add-subtract/all 1466/1434/1147/1610;
 // all native vector outputs with completed planar workspace 1668. Original helpers and accepted loop/coefficient pair restored.
+// Scale signed-byte/unsigned-byte/unsigned-word ordinals 953/953/953; unsigned-word scale with signed-word
+// add/subtract/both loops 1152/1115/1215; all unsigned-byte/signed-byte producer loops 1215/1215. Original
+// helpers and coefficient pair restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

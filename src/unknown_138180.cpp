@@ -87,6 +87,12 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // shared switch-result tail with long/short 196/189, and with lower bound 194/189.
 // Entry zero lifetimes on independent passes: count 172; machine 171; player 157;
 // both ordinals 171; count/machine 184; count/player 172; all 184; ordinal role names 171.
+// Independent-pass complete mask observations 157; with native long/short membership 183/184; unsigned mask
+// bound 238; long accumulated/player/both validity 215/171/212; short accumulated validity 221. Original body
+// restored.
+// Recovered-prefix native uniqueness: long/short membership 190/190; reversed membership inputs 190; count
+// bounds 194; bounds and reversed inputs 194; early player ordinal 171; early ordinal with native membership
+// 190; shared native result tail 191. All restored; native uniqueness alone reaches first +0x11b at 171.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

@@ -122,6 +122,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // before packed mask 154. One-point reduction rejected; original body retained.
 // Entry count/selection/word-row offset lifetimes 156/154/154; count-selection/count-word/selection-word/all 156/156/156/156;
 // all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
+// Canonical shifted enable: independent 194; shared bool/byte/long 194/194/194; feature-first tests 194;
+// independent/shared-bool/shared-byte bitwise conjunctions 219/219/219. Original body and cursor restored;
+// caller preserved.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

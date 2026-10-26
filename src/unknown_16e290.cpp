@@ -1478,6 +1478,9 @@ struct s_camera_clip_reference_16ebf0
 // homes plus clipping convention remain.
 // Native player receiver 209; input/basis/composition/publication component loops 1165/1161/1157/265;
 // native receiver with input/composition loops 1165/1157; all native copy phases 1210. All restored.
+// Existing matrix constructor: scalar inputs 290; direct fields 379; native/library direction inputs 330/330;
+// native point 299; direct fields/library point 388; native/library complete copies 332/332. All constructor
+// and declaration forms restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
