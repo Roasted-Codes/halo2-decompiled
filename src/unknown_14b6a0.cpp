@@ -118,7 +118,7 @@ void function_14bac0()
 	players_pending_creation_process(iterator_reference);
 }
 
-// score 234 (was 234): frame 0x34 versus 0x3c and point/iterator homes remain.
+// score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
 // Existing first/second/both iterator calls 280/247/263; typed request/marker/both records 234/234/234; read-only request record 234; accepted-point memcpy 234.
 // frame 0x34 versus 0x3c, query/iterator homes and visit-counter reloads differ;
 // destination byte 234; alternate byte 234.
@@ -130,6 +130,8 @@ void function_14bac0()
 // destination/alternate/both marker results 237/243/244; both plus difference 244.
 // Round 211: Destination/alternate/both result names 234/234/234; marker input memcpy 234; result
 // names/native recipient 257. Frame, iterator sharing and result homes remain.
+// Round 215: function-scope shared iterator 234; readiness declaration order 233;
+// scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

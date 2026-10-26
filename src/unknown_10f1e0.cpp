@@ -1387,19 +1387,26 @@ bool __stdcall function_110ab0(long unit_index)
 }
 
 
-// score 450 (was 450): Frame 8 versus 12, requested/state carriers and result joins remain.
-// frame 8 versus 12 and requested/state registers still differ.
+// score 450 (was 450): Frame eight versus twelve and requested/state homes remain.
+// Earlier 453 (was 478): frame 8 versus 12 and requested/state registers still differ.
 // Predicate names 478; byte result 538; byte depleted/overlay 453; global optimization off 1195;
 // merged interruptible cases 473; byte depleted alone 458; byte overlay alone 477; merged cases with bytes 456.
-// frame 8 versus 12 and requested/state homes remain.
+// Earlier 451 (was 451): frame 8 versus 12 and requested/state homes remain.
 // Byte-context word/native interruptible 456/453; named channel words 453;
 // size policy 827; common requested override 754 (unchanged fast preview 453).
 // Second depletion accumulation 468; bitwise depletion 482.
-// Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
-// Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
+// Earlier 452 (was 451): Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
+// Earlier 430 (was 453): Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Frame 8 versus 12 and requested/state homes remain;
 // byte result 506; byte interruptibility 453; separate overlay result 508;
 // direct inner membership 486; held-index names 451 (fast control 451). Opening body retained.
+// Explicit true initialization / isolated two-request override / both 450/470/470;
+// overlay-time control alone/with true initialization/with override/with both 513/513/530/530; entry result with both 530.
+// Frame 8 versus 12, requested/state carriers and result joins remain.
+// frame 8 versus 12 and requested/state registers still differ.
+// frame 8 versus 12 and requested/state homes remain.
+// Frame 8 versus 12 and requested/state homes remain; default first 451, overlay depletion cases first 451, opposite predicate arms 470, first/second count scalars 451/451.
+// Frame 8 versus 12 and requested/state homes remain; requested success override 430 (plain); signed-byte result 506; initialized result/unit scope 451/451; early byte overlay 533; paired allow override 434; three override groups 454.
 // Byte return with byte result 482; byte return alone 450; byte return/result with Boolean overlay 482;
 // with controlling field at use 482; with separate final overlay byte 482. Original Boolean interface retained.
 // Native signed count/slot/both fields 450/450/450; read-only receivers alone/with count/with slots/with both
@@ -2558,25 +2565,23 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
-// score 152 (was 162): frame 60 versus 56; action-output and seat-query argument registers still differ.
-// Native channel workspace 139; copy return to play 152; accumulated channel failure 177;
-// unsigned word result 173; short table index 188.
-// Dword channel backing 152; direct copy chain 152; mode at use 196 (frame 56);
-// repeated table index 152; mode after animation 157.
-// score 147 (was 152): action/result packing and action/seat helper conventions remain.
-// Direct action decision 163; actual overlay-bit result 224; converged play operations 152;
-// control/tag/table role names 152/152/152; selected-overlay initialization 178; word play flags 150.
-// frame 60 versus 56 and protected action/seat argument registers remain.
-// Signed success/force/both bytes 147/152/147; word channel backing 152;
-// mode fallback 154; unsigned play mask, const tag view and success fallthrough 152/152/152.
-// Round 277: language-char result 147; unsigned-word force 164; signed-byte/word animated result 147/156;
-// base success test 153; success/force/both initialized before selection 187 each.
-// score 147 (was 147): frame 0x3c versus 0x38 and action/availability conventions remain; separate
-// copy-return boundaries 142 (exact-only, discarded); base-channel entry/selection 147/147;
-// animation-result home 147; receiver/workspace copy split 162/162, with base channel 162/162.
-// score 147 (was 147): frame 0x3c versus 0x38 and action-output convention remain;
-// success/force/both role names 147/147/147; unsigned lookup/animation/mode 147 each;
-// action-result assignment/positive completion 161/161; direct success return 154.
+// score 147 (was 147): BLOCKED-BY 0xe70b0 (retail passes the unit in ecx and the action pointer
+// in eax and compares through the pointer it returns); frame 0x3c versus 0x38: retail packs the
+// address-taken action short at +2 beside the two flag bytes, ours gives it a 4-byte slot.
+// Tried: native channel workspace 139; copy return to play 152; accumulated channel failure 177;
+// unsigned word result 173; short table index 188; dword channel backing 152; direct copy chain 152;
+// mode at use 196 (frame 56); repeated table index 152; mode after animation 157; direct action
+// decision 163; actual overlay-bit result 224; converged play operations 152; control/tag/table role
+// names 152 each; selected-overlay initialization 178; word play flags 150; signed success/force/both
+// bytes 147/152/147; word channel backing 152; mode fallback 154; unsigned play mask, const tag view
+// and success fallthrough 152 each; language-char result 147; unsigned-word force 164;
+// signed-byte/word animated result 147/156; base success test 153; success/force/both initialized
+// before selection 187 each; separate copy-return boundaries 142 (exact-only, discarded);
+// base-channel entry/selection 147/147; animation-result home 147; receiver/workspace copy split
+// 162/162, with base channel 162/162; success/force/both role names 147 each; unsigned
+// lookup/animation/mode 147 each; action-result assignment/positive completion 161/161; direct
+// success return 154; copy statement before the play call 162 (aligned diff 71 -> 65); copy with
+// direct success return 165; bool result 152, with the copy 162, with copy and return 162.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

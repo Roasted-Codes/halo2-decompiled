@@ -172,6 +172,9 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // First/second/both query pointer walks 944/941/951; duplicate/conversion choice pointer walks 947/1008; target pointer walk 899; existing-index pointer walk 919; unused local mask removed 904.
 // With retained short query count: word first query ordinal 915; word second query ordinal 898;
 // word choice-conversion ordinal 923; word duplicate ordinal 929 (retail length); all four word ordinals 894.
+// Round 126: Named squared blend term 886; repeated portal endpoint 909; existing pin/get forceinline
+// 886/886; single successful allocation guard 905; choice-cap test first 932; accumulated target gain 886;
+// default-first detail result 884 (fast, gain below threshold); all restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

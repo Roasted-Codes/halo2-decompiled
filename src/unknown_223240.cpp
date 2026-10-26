@@ -103,6 +103,9 @@ void function_2232a0(void)
 // Round 150: chained sentinels 151; native rectangle pair 150; rectangle library copies 150; direct source argument 152; live count field 151; search in for test 151; sentinel chain with rectangle value 150; live count with direct source 152 (fast). Gains of one are rejected.
 // count/layout join still threads. First/second/both native
 // Nested slot admission/sentinel continue/selected-source value 151/151/151; source admission before normalization 158; nested source 151; continued source 158; sole output cursor 232; native entry address 151 (restored).
+// wide source count 138; wide count result 215; wide layout 174;
+// wide selected slot 227; wide output ordinal 195; unsigned byte layout 189;
+// unsigned native layout 151; immutable native source count 151. Wide source count worsens aligned rows.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

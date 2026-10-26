@@ -15,6 +15,8 @@
 #include "vector_products.h"
 #include "normalize3d.h"
 // score 599 (was 599): frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
+// Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
+// Earlier: frame 0x64 versus 0x60; basis/scalar scheduling remains, retail length recovered.
 // Earlier 647 from 647: frame 0x54 vs 0x60 and camera/source saved registers differ; wave vectors fix the frame but lose overall.
 // primary output scale 744; default depth scale 743; alternate depth scales 727; product scale workspaces 734;
 // late wave lifetime 743; wave offset workspaces 660; inverse before basis 765; direct integer component 743;
@@ -35,6 +37,10 @@
 // wave cross-result/offset homes 599; second input products first 598 (below threshold);
 // wave homes with case order 599. Frame 0x64 versus 0x60 and wave scheduling remain;
 // original native origin, products, case order and conversion retained.
+// consumer-shape 594; direct-primary-field 658.
+// bool-shape-domain 633; word-shape-domain 645.
+// consumer-shape-wide-special 599; direct-primary-field-wide-special 662.
+// bool-shape-domain-wide-special 654; word-shape-domain-wide-special 642.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -49,17 +55,7 @@ void function_0497a0(
 	vector4f *old30)
 {
 	real inv = -1.0f;
-	s_view_shape_0 * shape0 = 0;
-	s_view_shape_1 * shape1;
-	shape1 = 0;
-	if (0 == source->type_low)
-	{
-		shape0 = &source->shape0;
-	}
-	else
-	{
-		shape1 = &source->shape1;
-	}
+	s_view_shape_1 *shape1 = source->type_low == 0 ? 0 : &source->shape1;
 
 	bool special = ((0x20 & flags->flags)) && (0x40000 & flags->flags);
 	point3f v1 = special ? g_4b9da0 : source->v2c;
@@ -102,8 +98,11 @@ void function_0497a0(
 			break;
 
 		default:
+		{
+			s_view_shape_0 *shape0 = source->type_low == 0 ? &source->shape0 : 0;
 			inv = -1.0f / (shape0 ? shape0->f0c : shape1->f2c);
 			break;
+		}
 	}
 
 	if (source->type != 1)

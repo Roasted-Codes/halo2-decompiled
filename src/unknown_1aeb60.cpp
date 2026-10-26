@@ -232,6 +232,9 @@ bool __stdcall function_1aefc0(long actor_index, s_slot *slot)
 // State fields through parameter 8; output fields through parameter 8; both direct slot parameters 8;
 // prop lookup at field use 60; selection result names 8; chained activation flags 8;
 // activation result before stores 17; strict prop threshold 9.
+// alternate conjunction 8; conjunction with direct other 62; inner default return 58;
+// direct inner returns 42; alternate global at assignment 35; alternate before lookup 54;
+// immutable prop 8; result after actor 8; outer-scope alternate split 8.
 // @retail 0x1af0a0
 short __stdcall function_1af0a0(long actor_index, s_slot *slot, s_slot *arg_2)
 {

@@ -568,7 +568,8 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 463 (was 463): frame 0xdc versus 0x94 and repeated-conversion homes remain.
+// score 463 (was 463): Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
+// Earlier 463 from 463: frame 0xdc versus 0x94 and repeated-conversion homes remain.
 // First-buffer input 578; late workspaces 583; muted-send loop 576;
 // native rear predicate 584; workspace role names 583; input plus loop 565
 // (not kept: the loop's index formula only reproduces 6, 8, 7, 9).
@@ -586,6 +587,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Fast control 453 versus full 463. Current-loop first/second scopes 497 (frame 0x94); both
 // level snapshots 502; scopes with snapshots 545; unsigned ordinals 453; direct shared appends
 // 463. Full frame 0xdc versus 0x94 and repeated-conversion homes remain.
+// Fast control 453 versus full 463. All buffer arguments 460; input setting fields 453; both inputs
+// 478; buffer record 459; reused buffer handles 487; plain table while loops 453; while/input fields
+// 453; paired actual setting references 453. No preview beats its control; all restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -633,7 +637,8 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 	return mode == 1 ? (TEST_FLAG(parameters->flags, 6) ? g_44f70c : effects->m_settings.level2c) : effects->m_settings.level10;
 }
 
-// score 453 (was 460): frame twelve agrees; selected-level homes and SSE argument staging remain.
+// score 447 (was 453): Frame twelve agrees; selected-level homes and SSE argument staging remain.
+// Earlier 453 from 460: frame twelve agrees; selected-level homes and SSE argument staging remain.
 // Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
 // completed-path return 532; offset reads 554; retail-order base 514;
 // base/bin snapshots 484; base/primary snapshots 504 (caller losses).
@@ -649,6 +654,10 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // alternate ordinary route first 507; special input snapshot 464; combined snapshots 455 (dispatcher lost).
 // Primary level snapshot 457; secondary setting first 453 (plain); ordinary input snapshot 498
 // (dispatcher lost); native destinations 469; scalar role names 460 (fast).
+// Gain pair before selection 447 (plain); offset first 453; all ordinary inputs first 471; special
+// settings record 453; ordinary settings record 474; input record 517; special record/early gains 455;
+// ordinary record/early offset 476 (fast). Keep only paired gain declarations before the pure
+// selector.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -666,10 +675,10 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 	else
 	{
-		real send_level = sound_effects_send_level(this, parameters, mode);
-		real offset = parameters->level_offset + parameters->level;
 		real left_gain = parameters->gain0c;
 		real right_gain = parameters->gain10;
+		real send_level = sound_effects_send_level(this, parameters, mode);
+		real offset = parameters->level_offset + parameters->level;
 		if (!TEST_FIELD_BIT(parameters->flag3))
 		{
 			sound_stream_append_mixbin(mixbins, m_buffers->mixbin00, left_gain + (send_level + parameters->level));
@@ -717,7 +726,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
-// score 258 (was 258): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// score 254 (was 254): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
 // selected/input/offset references 294/291/272, pairs 311/311/307, three/four references 326/340.
 // All restored.
 // Earlier: frame 0x1c versus 0x18; mode occupies EBP.
@@ -747,6 +756,12 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // frame 0x1c/0x18 and input-level/mode homes remain.
 // Primary routing 272; signed word route 264; direct left 275; external output
 // and live settings records 264/264; primary-output pair 272; full left 275; settings-direct pair 271.
+// Earlier 258 (was 258). Dword right/rear-left/both 258/255/259; rear-right 255;
+// right/rear-right 259, both rear 256, all spilled 260, all destinations 268 on gain-first source.
+// Round 127: inline/noinline 254/254; native routing bit 251 (three-point gain rejected); complete
+// input/settings/both copies 282/238/277 (dispatcher lost); Boolean/dword predicates with native
+// endpoints 274/273; native bit plus native endpoints/Boolean predicate 273/260. Frame 0x1c and
+// mode/level homes remain.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

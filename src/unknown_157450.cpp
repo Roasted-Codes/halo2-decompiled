@@ -3845,8 +3845,7 @@ static __forceinline long nonnegative_15ce70(long value)
 {
 	return value < 0 ? 0 : value;
 }
-
-// score 470 (was 480): frame 0xe4 versus 0xe0; attacker/category/NONE and decision-byte homes differ.
+// score 470 (was 470): frame 0xe4 versus 0xe0; attacker/category/NONE and decision-byte homes differ.
 // tried category read at use 568; modifier read at use 668; both decodes at use 644; statistics base value 604; shared chain notification 561; category phase lifetime 559; modifier phase lifetime 568; both phase lifetimes 568.
 // Frame 0xe4 versus 0xe0; attacker/NONE/category homes remain. Existing tick conversion 480; direct one-second minimum 549; lives clamp before decrement 535; first cause setter 563; shared initial ticks 528 (fast).
 // frame 0xe4 versus 0xe0; eager attacker and category/NONE homes differ. Timing-phase
@@ -3865,6 +3864,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 201: One reused event 485; distinct inner event names 480; byte different-player 480; byte same-team 480; long different-player 543.
 // Conversion spill names 480; complete special comparisons 577; category-only word 570; modifier-only word 579;
 // plain timed-step for 480. Frame/NONE and event homes remain; helper and body restored.
+// Round 358: Category-only byte 545; modifier-only byte 530; modifier after category predicate 543;
+// exhaustive subtype result 566; entry statistics ordinal 557. Frame/NONE and decision homes remain; opening
+// body and shared award update restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4091,8 +4093,8 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-
-// score 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
+// score 472 (was 472): Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
+// Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
@@ -4112,6 +4114,10 @@ struct s_score_zone_view
 // Round 201: Shared team text 469 (three-point gain rejected); shared team color 484; shared iterator after copy recovery 472; native word presence mask 472; short score selectors 608; charge qualifier removed after copy recovery 495.
 // Team color library copies 472; individual iterator chained reset 473; zone iterator chained reset 472; shared
 // zone output index 522; common zone count clear 472. Text/color homes and native zone/charge allocation remain.
+// Round 356: Team color declarations first 472; individual palettes first 472; both declaration orders 472; byte return 507; byte rounds 472.
+// Round 358: Four distinct entry text outputs 507; complete text role names 472; both selection defaults
+// before samples 614; format-mode reads at every use 472; plain team while 472. Reversed text/color homes and
+// zone/charge allocation remain; opening executable body restored.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

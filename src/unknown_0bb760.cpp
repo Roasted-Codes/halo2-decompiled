@@ -455,7 +455,10 @@ hsv3f *function_1318d0(color3f const *rgb, hsv3f *hsv);
 color3f *function_131a00(hsv3f const *hsv, color3f *rgb);
 void function_3dd10(long object_index, bool force);
 
-// score 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// score 84 (was 84): Blend and cached-choice homes, signed scan exits, inverse placement and constant reload still differ.
+// Frame 0x54 agrees; remainder publication/home, signed scan exits and fallback one reload remain.
+// Earlier 122 (was 138): second remainder store, signed scan exits and constant reload still differ.
+// Frame 0x54 agrees; blend/choice homes, signed scan exits, inverse placement and fallback one reload remain.
 // Distinct seeds 138; last before weight 136; accumulator first 134;
 // signed variant ordinal 138; const choices 138; unsigned variant key 138;
 // skipped-choice loop 138; threshold first 144. Original full-length scan loops retained.
@@ -472,7 +475,7 @@ void function_3dd10(long object_index, bool force);
 // Variant between native remainder and rounding 213; variant assigned at metadata test 134;
 // immutable early variant 122; output element reference 131; metadata entry reference 122;
 // twice-used choice key 131; late mixed HSV workspace 122; selected choice reference 122.
-// score 122 (was 122): remainder publication, saved color roles and signed scan exits still differ.
+// Earlier 122 (was 122): remainder publication, saved color roles and signed scan exits still differ.
 // lower HSV reused 199f; upper HSV reused 203f.
 // weighted selection reused 122f; cumulative weight reused 122f.
 // shared scan ordinal 122f; short variant ordinal 263f.
@@ -485,21 +488,25 @@ void function_3dd10(long object_index, bool force);
 // both 149; early presence predicate 131; default/supplied/final color
 // memcpy 213/213/213; base-color name 122; model-first guard 150; shared
 // model handle with that guard 232. Original copies and observations retained.
-// score 122 (was 122): variant/remainder publication, saved roles and scan exits differ.
+// Earlier 122 (was 122): variant/remainder publication, saved roles and scan exits differ.
 // Live choice count 122; choice-count field reference 213; signed weight bound 630;
 // unequal-end for 122; inverse blend at uses 168; eligibility equality first 122;
 // eligibility predicate value 213; actual object variant field 122. Opening body retained.
-// score 122 (was 122): output/delta roles, variant timing, scan exits and one reload differ.
+// Earlier 122 (was 122): output/delta roles, variant timing, scan exits and one reload differ.
 // Full-width variant 273; eligibility first 122; early choice weight 131; complete clamp value
 // with output reload/direct dual publication 341/341; separate wrapped hue 218; unsigned choice
 // token declaration and receiver 122; weighted upper-channel scalar values 134.
-// score 84 (was 122): variant byte read after the blend value (registers now retail's), last
+// Earlier 84 (was 122): variant byte read after the blend value (registers now retail's), last
 // before weight, inverse computed at the top of the blend branch. Still differs: the first scan's
 // `!=` exits (retail's signed `<` loop unrolls by 4 in every for/while/field/shared-counter form,
 // 637-647; short counter 252), blend's stack slot, the inverse subtraction (retail's is in the
 // blend block, with 1.0 reloaded at the not-found exit) and the 1.0/0.0 load order.
 // Second scan as for 196; found flag in its condition 403/406; renames 84; named choices pointer
 // 208/238; select-then-blend 132, with the inverse after the loop 188.
+// Round 186: One seed scope, output orders selection/blend and blend/selection, 84/84; both with blend-entry inverse 132/132; separate seed scopes in both orders 84/84, with inner inverse 132/132.
+// Upper-first conditional/branches 201/244; lower-upper/upper-lower clamp stages 273/252; per-channel values lower/upper-first 240/243; all channel values lower/upper-first 245/254.
+// Direct rounded seeds 84; shared double hue delta 156; both 156; symmetric six HSV products 84;
+// products/direct seeds 84; products/delta 156; all three 156; positive hue arm on all three 156.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
