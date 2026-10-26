@@ -132,6 +132,8 @@ void function_14bac0()
 // names/native recipient 257. Frame, iterator sharing and result homes remain.
 // Round 215: function-scope shared iterator 234; readiness declaration order 233;
 // scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
+// Offset ikj/jik/jki/kij/kji 238/237/239/240/238;
+// position xzy/yxz/yzx 234/233/234.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

@@ -772,6 +772,8 @@ real function_18cac0(long arg_0);
 // unsigned membership masks 246; pretested cluster while walk 225.
 // Round 215: unsigned-word selector 229; read-only audibility receiver 225;
 // mask declaration before gain 225; chained small-mask zero 245; branch-derived gain result 229.
+// Flat mask, reversed flat index 225/225; door division 265; cluster division 230;
+// both divisions 269; flat with door/cluster/both divisions 265/230/269.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
