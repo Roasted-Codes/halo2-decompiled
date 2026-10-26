@@ -175,6 +175,9 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // Round 126: Named squared blend term 886; repeated portal endpoint 909; existing pin/get forceinline
 // 886/886; single successful allocation guard 905; choice-cap test first 932; accumulated target gain 886;
 // default-first detail result 884 (fast, gain below threshold); all restored.
+// Round 180 current gain active/inactive/outside state/both gains/active-outside/inactive-outside/all/byte
+// outside 890/889/887/893/891/890/894/887 (fast); all restored. Frame 0x4e0 agrees; entry zero,
+// query-array/count and primary homes remain.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
