@@ -286,6 +286,11 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // parallel named pre-translation sums 263.
 // Round 115: Origin/displaced/both reciprocal selections 195/195/195; guarded helper coordinate initialization 293; negate selections 195; initial displacement scope ends after transforms 195. Opening body/helper restored.
 // Round 117: Transformed storage first 195; chained inverse defaults 195; complete inverse results 296; helper coordinate homes 195; depth-first inputs 225; output-pointer result 195.
+// Parallel transform product values right/up/right+up/forward 265/276/251/264;
+// right+forward/up+forward/all 251/251/213; all with y-first output 224.
+// Complete products recover frame 0x2c but regress; opening helper and body restored.
+// Recovered-frame inverse declaration order/names and displaced sums/combined 211/213/213/211;
+// original frame 0x30 and inverse/point homes remain.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
