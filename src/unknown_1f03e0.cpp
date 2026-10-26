@@ -291,15 +291,15 @@ void function_141590(transform4x3f const *in, transform4x3f *out);
 int __fastcall function_142a60(transform4x3f const *a, transform4x3f const *b, transform4x3f *result);
 real function_f5e00(long vehicle_index);
 extern real g_47f05c;
-
-// score 202 (was 202): frame/displacement materialization and shape/entry retention;
+// score 202 (was 202): Frame 0xc8 versus 0xd4, folded displacement and shape/entry retention remain.
+// Earlier 202 (was 202): frame/displacement materialization and shape/entry retention;
 // float consistency 279; split root result 204; native normal 221; unsigned best 202;
 // integer result 276; scaled difference 203; point helper with height/point views 292.
-// score 202 (was 202): frame 0xc8 versus 0xd4; displacement materialization and shape/entry homes still differ.
+// Earlier 202 (was 202): frame 0xc8 versus 0xd4; displacement materialization and shape/entry homes still differ.
 // Unraised origin copy 265; height view with body reloads 275; selection/result names 202;
 // native point copy, enclosing point, entry displacement and read-only records 202 each;
 // size policy 357; existing magnitude boundary 204 (sum-order form not matched).
-// score 202 (was 202): frame 0xc8 versus 0xd4; displacement folding and shape/entry homes remain;
+// Earlier 202 (was 202): frame 0xc8 versus 0xd4; displacement folding and shape/entry homes remain;
 // separate displacement scalars, reversed scalar order, coordinate names, partial squared sum,
 // squared-distance result and outer scalar scope 202 each; actual point receiver with scalars 311;
 // separate squared components 204.
@@ -307,7 +307,7 @@ extern real g_47f05c;
 // Existing ground record 204; world matrix declared at entry 202; inverse/relative in place 244/241;
 // normal value with shape reads 233; selected-entry result 272; best comparison first 201;
 // selected index assigned before alignment 202. One-count comparison gain rejected.
-
+// Round 356: Transform role names 202; inverse/body/relative declarations 202; names with common scope 202; byte success 282; byte validity 202.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
