@@ -215,7 +215,7 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
     s_path_settings const *settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
     point3f const *position, real radius, vector3f const *direction, long unit_index, long ignore_index);
 
-// score 866 (was 866): frame 0x2cb8 versus 0x2cac and actor/unit retention;
+// score 866 (was 866): frame 0x2cb8 versus 0x2cac; actor/unit retention and priority/query/marker homes remain.
 // point workspace names 866; initial actor value 869; query index value 916;
 // conditional self-unit 911; wide initial predicates 1011; native location copy 911.
 // Frame pointer 1207; size preference 1436; native object fields 866;
@@ -230,12 +230,14 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Native category on retained homes 910 (frame 0x2cb4); direct query
 // members 911; current priority long 894; relationship results long 893;
 // sphere flag byte 917 (frame 0x2cb4). Original body kept.
-// score 866 (was 866): Frame 0x2cb8 versus 0x2cac; actor/unit and query/marker homes remain.
+// Frame 0x2cb8 versus 0x2cac; actor/unit and query/marker homes remain.
 // category switch 948; shared marker workspace 914; object matrix across iterations 866; sphere radius
 // before transform 878; flags at ordinary insertion 910; motion enabled guard 866.
 // frame 0x2cb8 versus 0x2cac and actor/unit homes remain. Plain direct sphere differences
 // 881; direct object differences 866; both 881; shared raised-point setter 866; ordered sphere-filter join
 // 866. Fast scores 927/916/927/916/916; full control 866.
+// Separate first/second/third marker ordinals long 913f/934f/916f; object ordinal alone
+// 897f/924 plain; only marker counts long 914f (control 916f). Original bounded traversals restored.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
