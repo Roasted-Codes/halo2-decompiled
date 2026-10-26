@@ -3276,6 +3276,10 @@ failure:
 
 dword g_4b8424;
 void function_27aa0();
+// score 5 (was 5): opening projection remains x/y/z with direction x first.
+// Z/y/x with all/first/third k copy-then-multiply 101/101/101; buffer after projection 16;
+// input view after projection 16; early buffer with late input view 16; early dot declaration 16;
+// first k-i-j row 23; multi-use first-scale local 101.
 // score 5 (was 16): retail adds the dot product's terms z, y, x and loads the
 // position's x before the direction's; here x, y, z with the direction's x
 // first. Tried: the terms z, y, x 16 (the k products then copy the scale);

@@ -154,6 +154,9 @@ bool function_216da0(long type, wchar_t *name, wchar_t const *display_name, long
 extern long g_55c280;
 dword function_217b70(word const *text);
 
+// score 5 (was 5): post-fill prefix address is still reused in ESI instead of rematerialized.
+// Prefix declared before the ordinal 5; function-scope index/language 5/5; early length declaration 5;
+// prechecked append 91; force-inline append 5; ordinal/buffer lexical names 5/5.
 // score 5 (was 5): post-fill prefix address reused instead of rematerialized.
 // short language ordinal 84;
 // signed byte language ordinal 46;
