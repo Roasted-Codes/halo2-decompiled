@@ -2213,7 +2213,8 @@ event_done:
 
 #pragma inline_depth()
 
-// score 63 (was 109): only the object index differs: ours keeps it in ESI from entry across 0xbadc0
+// score 63 (was 63): Four-byte frame agrees; initial object handle remains retained across read-only queries.
+// Earlier: only the object index differs: ours keeps it in ESI from entry across 0xbadc0
 // and 0xbaf80 (NONE in EBX), retail reloads it after each call with NONE in ESI. Retail's callers
 // 0x10a390 and 0x16c2b0 keep an index across 0xbadc0, so its summary is not the cause. 0x1794a0's
 // first argument is the root index in retail (EAX after 0xbaf80).
@@ -2250,6 +2251,9 @@ event_done:
 // object index then takes ESI where retail keeps NONE, and EDI is reloaded); with the visible
 // arm first 224; result false by default 197 (87 without the root index); the object index
 // named in the arm 197. Not kept until the reload blocker is gone.
+// Round 147: update mask 202; response masks 167; both masks 215; admission returns 201;
+// returns/update 215; returns/response 200; returns/both 228; shared admission/root handle 198.
+// All executable forms restored; sources and comparisons saved.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2533,7 +2537,8 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 177 (was 235): Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
+// score 177 (was 177): Frame 0x104 versus 0x100 and point/up eligibility remain; native formals do not move them.
+// Earlier: Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
 // frame 0x104 versus 0x100, incoming point/up eligibility and record/call setup remain.
 // frame 0x104 versus 0x100; point/up eligibility and record/call setup remain.
 // Placement name 345; request name 345; retained decal seed pointer 313;
@@ -2555,6 +2560,10 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // both native attachment nodes with radius argument 286. Callers and light callee checked.
 // Native light-node result 177 at 1330/1328 bytes, kept after ordinary full check;
 // every other form restored. No call expression or input value changed.
+// Round 147: location reference 177; effect reference 177; part reference 177; location/effect
+// 177; location/part 177; effect/part 177; all record references 177; all references/point value
+// 350; direction inline 177; angular inline 177; both vector inline 177; light inline (lost
+// matches) 177. All executable forms restored; sources and comparisons saved.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2683,7 +2692,8 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 152 (was 152): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
+// score 152 (was 152): Frame 0x7c agrees; scalar homes, post-copy flags and radius random lifetime remain.
+// Earlier: Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
 // frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
@@ -2722,6 +2732,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Lower-bound workspace at location/part/entry 152/152/152; paired lower/radius
 // workspaces at location/part/entry 152/152/152; iterator with both at entry 152;
 // all four scalar workspaces at entry with role names 152. Initializations unchanged.
+// Round 147: matrix reference 152; source reference 152; output reference 152; matrix/source
+// 152; matrix/output 152; source/output 152; all native references 152; source vector value 383.
+// All executable forms restored; sources and comparisons saved.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {

@@ -2648,7 +2648,8 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 168 (was 168): Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
+// score 135 (was 168): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
+// Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
 // staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
 // Force-inline linear/angular/both getter declarations 175 each; initialized linear/angular outputs 199 each;
@@ -2681,6 +2682,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // all their combinations 128 each; state/change inline boundaries 132/678. All restored.
 // Joint active/notification/impulse inline boundaries plain 168/677; restored.
 // Round 152: Shared angular inline/force/out-of-line declarations 168/168/168; shared angular call with those contracts 177/177/236; shared pair with angular force/inline 238/238. Forced forms lose a matched caller; all declarations and body restored.
+// Round 147: admission mask 161; state masks 135; both masks 194; vertical product 168;
+// admission/product 161; state/product 135; both/product 194; guarded type mask 168; state zero
+// tests 135. Keep both native state zero tests; every other form restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2691,7 +2695,7 @@ void function_1ced00(s_havok_component *component)
         change.j = 0.0f;
         change.k = 0.0f - g_510c54->rate * g_51e9c4->unknown0;
         function_bba20(component->object_index);
-        if (!TEST_FIELD_BIT(component->flag2) &&
+        if ((component->unknown04 & 4) == 0 &&
             ((1 << ((s_component_transform_header *)g_4e0300->data)[component->object_index & 0xffff].type) & 2))
             function_f7ed0(component->object_index, &change);
         for (long i = 0; i < component->rigid_bodies.size; i++)
@@ -2726,7 +2730,7 @@ void function_1ced00(s_havok_component *component)
             }
             havok_component_rigid_body_state_update(i, component);
             if (havok_component_rigid_body_get(i, component)->body_is_simulating().m_bool &&
-                !TEST_FIELD_BIT(component->flag2) &&
+                (component->unknown04 & 4) == 0 &&
                 havok_component_rigid_body_get(i, component)->m_motion->kind_code() != 6 &&
                 !havok_component_rigid_body_get(i, component)->m_fixed)
                 havok_component_rigid_body_linear_velocity_change(i, component, &change);

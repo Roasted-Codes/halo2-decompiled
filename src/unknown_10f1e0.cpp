@@ -2336,6 +2336,8 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // word-word: 666/676/666/693/666/693/676/682 (fast); all restored.
 // Eight complete entry object/control/state/tag receiver lexical orders all 666; frame
 // 0x80 unchanged, request ESI capture and tag/control homes remain. All names restored.
+// Round 146: Complete channel-reference validity with bool/byte/short/long results 666/666/677/672;
+// forced expansion 702/702/698/699. Original pointer helper, calls and body restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

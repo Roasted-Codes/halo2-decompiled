@@ -102,6 +102,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 175: Consumed-axis reference axis/direction/both 186/186/186;
 // axis value with pointer/reference direction 308/308; double trig input with
 // pointer/axis-reference/both-reference inputs 188/188/188. Original helper restored.
+// Round 145: Cross into consumed axis with preserved native input and six shared-scale
+// orders 321/318/300/302/305/305; cross into direction with preserved input 287/282.
+// Alias-safe distinct cross inputs retained in every trial; original helper restored.
 // Round 177: Consumed-axis complete output by assignment/aggregate 287/287; native returned output with
 // pointer/reference axis 297/297; complete scalar/cross role names 186/186; early cross storage
 // with original/named scalars 186/186. Frame 0x11c versus 0x118 persists; all original code restored.

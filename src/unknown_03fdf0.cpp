@@ -218,6 +218,9 @@ void function_402b0(long cache_index, long mode)
 // Round 168: All normalized mask producers: long shared/split 202f each; bool shared/split 231f
 // each; byte setup with long shared/split 203f each, bool shared/split 234f each. Fast control
 // 202f; full 183. All source restored.
+// Round 145: Stable cache bound with long/bool/byte/short results 210/253/253/251f;
+// same bound with native cursor and ordinal 236/253/253/260f (control 202f, full 183).
+// Bound-only long recovers frame 0x88 but regresses. All original traversal and results restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -298,7 +301,8 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 193 (was 193): Frame 0x48 and geometry agree; unsigned-zero branch, pass joins and clear-call transport remain.
+// score 193 (was 193): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
+// Frame 0x48 and geometry agree; unsigned-zero branch, pass joins and clear-call transport remain.
 // Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
 // 254/300/226; noinline with short/byte 254/226.
 // unsigned-zero branch and pass-call boundaries differ;
@@ -336,6 +340,9 @@ bool function_404b0(long mode)
 // complete stipple choice bool/byte/short/long 193/193/226/226. Boolean role name,
 // negated range, direct outside range and byte outside range 193 each. Both named
 // Boolean stipple-enable choices kept, plain 193; unsigned-zero admission and pass joins remain.
+// Round 145: Shared culling setting/predicate/split comparisons at multipass entry
+// 275/264/264; setting/predicate at pass phase 272/274; independent outcomes with
+// those three multipass observations 275/264/264. Original observations and body restored.
 // Round 243: Seven ordered admission partitions 225 each; positive geometry arm 192 at
 // 1194 bytes, first +0x1b3. One-point gain rejected; original body restored.
 // frame 0x48 and geometry agree; the entry byte test (retail `jbe`), the pass joins and

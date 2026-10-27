@@ -31,7 +31,7 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 	return !(table->flags[team] & 1);
 }
 
-// score 146 (was 190): frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
+// score 146 (was 146): frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
 // it, the completion bits use other registers, and the final predicate's layout differs. Kept: the two
 // completion bits set through byte_flags_set (retail stores the flag byte twice), 190 -> 146.
 // Tried on the 190 body: scoring team word 187, long 214; blocked long/byte 190/190; existing flag helper
@@ -133,6 +133,8 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Complete entry carried-unit value 221; with short slot/clock-first product/both
 // 239/221/239; word teams alone/slot/product/all 207/223/207/223 (fast).
 // Original unit observations, counter arithmetic, stores and reader contracts restored.
+// Round 146, separate byte-store graph: table-first explicit-bool/byte/short/long predicates
+// 146/146/146/149; team-first bool/byte/short/long 146/146/146/149. Original helper/body restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

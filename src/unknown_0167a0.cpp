@@ -1331,7 +1331,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 267 (was 267): Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
+// score 267 (was 267): Frame and sampler agree; deferred index and post-store descriptor rereads remain.
 // Frame and sampler agree; captured descriptor/index and post-store rereads remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
@@ -1374,6 +1374,10 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Shared writer reference 267; masked value 302; split stores 267; reference/mask 302;
 // reference/split 267; mask/split and all three 302; named destination values 267.
 // Native external indexed banks/constants/dirty words and their pairs/all 267 each; all fields with packed reference 267.
+// Round 148: indexed destination pointers 267; constant destination pointers 296; all
+// destination pointers 296; pointers/packed reference 296; pointers/dword packed 320;
+// pointers/mask complement 274; pointers/XOR replacement 274; pointers/reference/complement 278.
+// All executable forms restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

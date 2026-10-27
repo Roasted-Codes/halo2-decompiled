@@ -414,6 +414,9 @@ real function_30bf0(vector3f *vector);
 // separate 3/2 stores 255; projection fraction clamped in place 184 (plain, kept); both 241;
 // direct threshold accumulators 230. Keep long return/result, one projection fraction and
 // seat cursor stepped in the body; both external declarations agree, exact caller preserved.
+// Round 145: Vector role names/vector plus plane-fraction names 184/184; mode failure at
+// one result exit with existing/plain result 184/241; settings failure likewise 184/241;
+// plain mode/settings early-result returns 340/350. Original body restored.
 // Round 243: Native point/origin/both/endpoint values 351/363/396/327; point-endpoint
 // 366, origin-endpoint 378; all inputs in either declaration order 432/432. Original body
 // restored.
