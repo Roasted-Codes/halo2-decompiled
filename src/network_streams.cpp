@@ -1163,7 +1163,7 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
-// score 172 (was 172): Frame and length agree; oldest/false carriers, copy-loop entry and allocator save still differ.
+// score 141 (was 141): Frame and copy entry agree; oldest/false carriers, nullable copy result and allocator save differ.
 // Earlier: Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Frame 0x10048 agrees; oldest/false carriers, copy-loop entry and allocator save remain.
 // Earlier 172 (was 172): Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
@@ -1229,6 +1229,8 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // receiver 229; shared initial newest with oldest-first/newest-first 202/202; oldest plus
 // readonly types/stream helper/unsigned byte total 229; availability accumulation forms
 // 220-262.
+// Pre-lookup nullable scan/copy/both results with long 141/202/202; with bool 234/263/263;
+// both lookups with byte/short result 243/214. Original terminal-loop body restored.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {

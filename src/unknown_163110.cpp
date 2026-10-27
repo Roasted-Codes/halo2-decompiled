@@ -378,11 +378,11 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 {
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
-// score 404 (was 404): Camera/points saved registers and initial stores remain; scalar normal inputs do not recover them.
+// score 404 (was 404): Frameless guard agrees; camera/points register ownership, plane reloads and first stores remain.
 // Camera/points saved registers and initial stores remain; input distance/whole-plane ownership does not qualify.
 // Earlier: Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
 
-// score 412 (was 412): frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
+// Earlier 412 (was 412): frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
 // YZX normal inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
 // Camera/point saved registers and initial stores differ; complete buffered normal rows require an exact match.
 // Earlier: Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
@@ -426,6 +426,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Complete depth snapshot 733; all depth fields 667; identifier before rectangle 431; input rectangle
 // value 686; depth snapshot/identifier 733; fields/identifier 682; rectangle/snapshot 699;
 // rectangle/fields 683.
+// Three-input transform formal orders M/O/N, N/M/O, N/O/M, O/M/N, O/N/M
+// 404/404/403/404/403; transform/diagnostic/both forced expansion 404/404/404.
+// One-point formal-order leads rejected; original helper contracts and all normal copies restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
