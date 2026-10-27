@@ -54,6 +54,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Enabled/nonempty count initialization 230/219; narrow pending/active array names
 // 217/217; pending-before-ready/active-before-waiting names 217/217; enabled count
 // with pending-before-ready 230; nonempty count with active-before-waiting 219.
+// Round 234: Native state dispatch, either case order, with original pointers,
+// entry reference, peer reference and both references: 244 each (816 bytes).
+// Original guarded callback/output graph and executable body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

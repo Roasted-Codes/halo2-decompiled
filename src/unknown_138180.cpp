@@ -29,6 +29,7 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 }
 
 // score 157 (was 157): Frame 0x14/0x18 and options/index/mask homes remain.
+// frame 0x14 versus 0x18 and options/index/mask homes remain.
 // Earlier: frame 0x14/0x18 and options/index/mask homes remain.
 // Earlier: frame 0x18 agrees. Retail compares i and count signed
 // (long), stores count = 0 before the first loop and counts a player before
@@ -95,6 +96,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // result 238; conditional machine/duplicate results 260; conditional local-machine result 258;
 // conditional machine/local results 283; conditional duplicate/local results 235; all three
 // conditional comparison results 282; conditional initial player result 245. All restored.
+// Complete accumulated/player/final comparison-result complements and combinations
+// 272/160/272/203/274/206/274/335; last form uses a native long final failure result. All restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

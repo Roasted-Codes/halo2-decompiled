@@ -482,6 +482,8 @@ static __forceinline byte *function_9d952(long arg_0)
 // all 196. Original observations and protected interfaces restored.
 // Round 148: native object fields at player, parent, packed identity and final-update receivers
 // 196 each; player+parent, packed+final, first three and all four 196 each.
+// Round 240: complementary attachment selection bool/byte/short/long 229/229/240/233;
+// with a native dword slot ordinal 250/250/254/250. All restored; entry register roles remain.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

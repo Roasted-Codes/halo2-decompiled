@@ -454,6 +454,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // inline/noinline 420/420; all eight compiled forms and every separate declaration restored.
 // Round 166: typed actor startup/admission/tracking/completion/all 420 each; native actor
 // getter, native node fields and both 420 each. Actual shared type layout restored.
+// Complementary run-wide availability bool/byte/short/long 424/424/422/443;
+// per-node skip/defer/both 429/424/433; all three complements 436 at retail length. All restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {

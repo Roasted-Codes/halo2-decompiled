@@ -1353,6 +1353,8 @@ bool function_1e1de0(long arg_0);
 // body restored. Frame 0x84 agrees; early ESI, return-byte and actor/motion homes remain.
 // Round 147: Library first point/position/location/facing 165 each; both points/first-point-
 // facing/location-facing/all four 165 each in the current default-output graph.
+// Round 240: native character eligibility bool/byte/short/long 269/269/285/299;
+// complementary eligibility at the same widths 287/287/284/298. Original nullable receiver restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

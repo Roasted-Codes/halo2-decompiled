@@ -1325,6 +1325,8 @@ extern bool g_4ed39d;
 // Round 175: Choice from the test, two/one alternatives: bool 168/184, byte 168/184,
 // short 175/189, long 173/192. Lower raw counts add conversion instructions and
 // worsen aligned sequence edits from 66 to 72-74; all original producers restored.
+// Native message object/name/early lifetime/both 184/184/184/184; aggregate/CRT/early aggregate 247/207/239;
+// branch-local loader 184. All restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

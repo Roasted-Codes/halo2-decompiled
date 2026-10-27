@@ -145,6 +145,7 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 }
 
 // score 88 (was 88): Frame 0x88 and first point-velocity agree; second point-velocity and nonrotating schedules remain.
+// Frame 0x88 and first point block agree; second point inputs, nonrotating products and five extra bytes remain.
 // Earlier: Frame 0x88 agrees; point-velocity and nonrotating scale/add
 // scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
 // Frame 0x88 agrees; first point-velocity schedule recovered; second
@@ -190,6 +191,9 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // displacement 201; returned point and complete scaled assignments 167; returned point, native
 // original and scaled assignments 201; returned point, early displacement and scaled assignments
 // 167; returned point with all three native boundaries 201. All restored.
+// Second point native center/linear/both/angular/center-angular/linear-angular/all inputs
+// 212/189/229/211/247/216/256/286; the last form also gives the completed position both consumers.
+// Single-use input copies restored; original shared helper and game calls retained.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

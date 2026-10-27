@@ -198,6 +198,11 @@ struct s_block_candidate
 // three plus unsigned allocation result: 370 each (eight forms). Equality-first
 // time policy bool/byte/short/long 385/385/381/383; non-strict admission
 // 370/370/374/373. Frame/page-tail homes persist; all original code restored.
+// Round 235: Complementary availability bool/byte/short/long at segment entry
+// 376/376/387/385; constant default before ring insertion 385/385/399/397.
+// Frame and page/ring allocation remain; original busy state and complete body restored.
+// Round 237: Negative policy comparison bool/byte/short/long inside admission
+// 376/376/374/375; defaults before admission 376/376/374/375. Original policy state restored.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

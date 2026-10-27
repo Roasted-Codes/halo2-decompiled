@@ -1,7 +1,7 @@
 // @flags /O2 /Gr /arch:SSE
 #include "unknown_044e90.h"
 #include "normalize3d.h"
-// score 434 (was 434): Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
+// score 434 (was 434): aligned frame and retail length agree; entry/table ownership and plane/list homes remain.
 
 // Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // Earlier 434 (was 434): Entry/tag-table registers and plane/list homes remain.
@@ -55,6 +55,8 @@
 // Round 175: Native position/three rotation rows/both observations 475/556/586;
 // with shared scale observation 477/556/586; independent scalar normals with
 // all rows/position plus all rows 515/549. All original input ownership restored.
+// Native storage-template alignment eight/sixteen 435/435; with scalar normal inputs
+// 447/447; with whole-plane library publication 435/435; both 447/447. Header/body restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

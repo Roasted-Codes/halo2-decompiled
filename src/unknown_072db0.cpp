@@ -1379,6 +1379,9 @@ struct s_rating_summary
 // Native unsigned masked statistics 202; shared player/team ordinal 220 (key home recovered);
 // contiguous summary prefix fill 217; counts/ordinal 220; counts/prefix 217; ordinal/prefix 214;
 // all three 214; read-only query table 202.
+// Round 230: Promoted membership 335; group/team identity-first tests 350/202;
+// membership with group/team/both identity-first 345/336/345;
+// both identity-first without membership 349; native-byte membership with both 343.
 // Round 366: Native fifteen-bit player/team/both statistic fields 195/207/200 fast;
 // word/short player results 279/279, with both arrays 283/283; native statistic receiver 199.
 // On the recovered +0xf44 cursor: native player indexing/shared counts/query-key name 195/195/195;

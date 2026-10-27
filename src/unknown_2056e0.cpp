@@ -110,7 +110,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 	out->up.k = inertia.m_col2(2);
 }
 
-// score 184 (was 184): Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
+// score 184 (was 184): frame 0x94 versus 0xc4 and query/rotation, reciprocal/product and brake homes remain.
+// Earlier: Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
 // Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
 // aligned query/rotation overlap, motion/reciprocal and cap-result allocation remain.
 // Earlier: Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
@@ -162,6 +163,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Virtual output pointer/mutable receiver/both 184/184/184; uniform angular terms alone/with
 // pointer/receiver/both 184 each; new query/product contract with distinct first result 194.
 // Aligned query/rotation overlap remains.
+// Coordinated body-scalar/limiter-scalar/query-output names and combinations
+// 184/184/184/184/184/184/184/184; last form also makes repeated body scalars const. All restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

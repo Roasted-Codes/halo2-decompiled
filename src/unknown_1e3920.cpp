@@ -1636,6 +1636,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // Round 145: Both ammunition bounds captured, lower/upper/ordinal short-short-short 326, short-
 // short-long 339, long-short-short 333, long-short-long 347, short-long-short 332, short-long-long
 // 340, long-long-short 334, long-long-long 348; all restored.
+// Round 230: Actor after weapon/settings queries 277/308; shared current/secondary/both
+// slot queries 329/317/349; both queries with later actor 352/308; direct shared queries 279.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

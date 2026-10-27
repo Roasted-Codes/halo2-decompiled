@@ -703,6 +703,8 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // inline noinline 573; both inline noinline 573; both inline 699.
 // Round 211: Main message/format/both output pointers 573 each; auxiliary game/teams/both
 // output pointers 573 each; all four and message with both auxiliary outputs 573 each.
+// Round 237: Complementary local/activity/joinability states independently and together
+// 648/575/648/574/648/576/648; complementary campaign 573. Original truth states restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

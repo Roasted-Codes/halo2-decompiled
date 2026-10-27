@@ -1592,6 +1592,7 @@ void function_b7360(long object_index);
 #pragma inline_depth(2)
 // score 466 (was 466): No local frame; pool acquisition, actor/output roles, dispatch and rounding homes remain.
 // Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/pool/output entry carriers and rounding homes still differ; selection case result retained.
 // Earlier: Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output acquisition, dispatch layout and forty missing bytes remain.
@@ -1638,6 +1639,8 @@ void function_b7360(long object_index);
 // Round 145: Native counted character table, promoted lookup result, repeated command index reads
 // and both 466 each; corresponding actual-record table forms 466/466/466/466. Original type and
 // body restored.
+// Round 240: complementary query result bool/byte/short/long 520/520/469/525;
+// with complete complementary locomotion at the same widths 520/520/470/525. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

@@ -847,6 +847,10 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Round 124: No-removal-first range 371; uninitialized time output 385; packed metadata memcpy 257;
 // real-array repair bound 375; consistent table base 394; first/second/both removal inline declarations 243/243/243.
 // All five body forms and all three declaration trials restored.
+// Round 232: native link-block loop 812; unsigned link-block cursor 812.
+// native link array 238; memory-order native links 238.
+// native links/shared initializer 240; native links/signed snapshots 834.
+// native loop/full adjustment 826; native links/live heads 243.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

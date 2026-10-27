@@ -1307,6 +1307,8 @@ struct s_player_properties
 // alone 184/184; both getters with bounded byte name count 218. All restored.
 // Round 208: positive cache-update scope 184; absent-input exit 217; team metadata first 231;
 // cache/input guards 217; cache/metadata 231; input/metadata and all three 220; all plus wide team 223.
+// Round 240: literal default groups first-array/second-array/zero-bytes/byte-sentinel/long-sentinel/short-sentinels;
+// orders ACBDEF/ABDEFC/DEFCAB/FCABDE/EABCFD/BFEDCA/CDEFAB/FEDCBA 184/184/186/186/184/186/184/186. Original store order restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

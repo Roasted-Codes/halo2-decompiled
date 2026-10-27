@@ -242,6 +242,8 @@ bool __stdcall function_25dd30(long a, long b)
 // Independent clearance/movement reaches: separate native lifetimes 310; point-of-computation
 // declarations 310; read-only values 310; role names 310; first home before vectors 310;
 // paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
+// Round 233: Native live scalar-field references, reach/radius/both/blocked gate/
+// reach+gate/radius+gate/all 310/310/175/310/175/175/310; segment squared part 175.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
