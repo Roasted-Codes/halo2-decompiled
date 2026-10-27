@@ -410,7 +410,7 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
-// score 181 (was 236): region code and node search now match; retail reads the model's bounds before
+// score 181 (was 181): region code and node search now match; retail reads the model's bounds before
 // the geometry-block call (that read moved there gives 143 with the section groups ahead of the node
 // search, but it moves a definition read ahead of a call), keeps the vertex cursor in EBX and the
 // mesh spilled, and BLOCKED-BY 0x11e800: its vertices/point registers (ours eax/esi/edx/ecx, retail
@@ -452,6 +452,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // reference/group-reference/range-reference/all roots 247/294/265/329; all with bool result 320.
 // Bounds/node/part table fields at every use 284/236/243; bounds-node/bounds-part/node-part
 // graphs 258/286/243; all three/all three plus part-count field 239/239. All restored.
+// Round 212: complete native range mutable/const 193/193; native reference mutable/const
+// 194/194; both mutable/const 208/208; mesh field at every use 205; both const records with
+// mesh field observations 214. Original records, observations and protected interfaces restored.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

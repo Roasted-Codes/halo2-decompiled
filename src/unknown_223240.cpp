@@ -140,6 +140,9 @@ void function_2232a0(void)
 // counterparts 185/195/185/195. Original count producer and loop restored.
 // Coherent ordinary inline dispatch/reset/both 151/151/151; each with existing slot predicate 150;
 // force-inline reset alone/with slot predicate 151/150 and loses the matched initializer caller. All restored.
+// Round 212: shared raw count drives clamp and layout, short/long with nested clamp
+// 167/177; exclusive clamp 146/149 (five/two-point gains rejected); the four with plain for
+// traversal 177/178/165/168. Original count producer, traversal and tail contract restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

@@ -199,6 +199,9 @@ void function_265bb0(long actor_index);
 // recover the conversion homes or the mode register; original body restored.
 // Y346: timer input/output order, scalar names and complete delay-product boundaries 60 (seven forms);
 // all with the second input named at computation 60.
+// Round 212: long/dword returned-state storage at entry 69/69; branch-default 107/107;
+// the same with the zero-mode single exit 69/69/107/107. Four-byte conversion frame and
+// mode residency remain; original result storage, body and every call tuple restored.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {

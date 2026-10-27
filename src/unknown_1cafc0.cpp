@@ -887,6 +887,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Input-record field orders 0-2-1-3/3-0-1-2/3-2-1-0/1-2-3-0/2-3-0-1/0-3-2-1/
 // 2-1-0-3/1-0-3-2 give 212/213/215/216/213/212/215/216 (mode/class/type/set = 0/1/2/3).
 // Complete publication schedules do not recover the identifier homes; original order restored.
+// Round 212: success byte before/after the prior-loop result 274/275; before offset-valid
+// query/before loop-flag publication 271/271; the same four with byte combined loop state
+// 274/275/271/271. Original late success, identifiers and protected query restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

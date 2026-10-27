@@ -429,6 +429,9 @@ real function_30bf0(vector3f *vector);
 // Round 249: coordinated projection inline/noinline 294/184; threshold inline/noinline
 // 184/184; both inline, projection-inline/threshold-noinline, projection-noinline/threshold-inline,
 // both noinline 294/294/184/184. Original declarations and bodies restored.
+// Round 212: outer/scaled/both range-failure returns with inherited result 216/219/253;
+// both plus missing-settings return 253; the four with ordinary result 329/314/273/275.
+// Frame 0x350 persists, entry roles move; original admission, result and observations restored.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
