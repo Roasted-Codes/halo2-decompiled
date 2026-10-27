@@ -2585,7 +2585,7 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
     real red, real green, real blue, real *red_result, real *green_result, real *blue_result);
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
-// score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
+// score 506 (was 530): frame 0x21c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
 // Earlier score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
@@ -2630,9 +2630,8 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Best reduction two is below the gate; original result and all helpers restored.
 // Coefficient address at the consumer 506; direct bucket/sample/both 530/530/530;
 // consumer address with bucket/sample/both 506/506/506. Address begun at accepted
-// allocation with both direct receivers 527 (three-point gain rejected). The consumer
-// address (506, 1404/1543 bytes, frame 0x21c) was held in batch 135: with the rest of that batch it again
-// cost c_helper_b::v7 (0x73360) its match. Retry it only with a full check that keeps 0x73360 matched.
+// allocation with both direct receivers 527 (three-point gain rejected). Only the
+// consumer address retained; 1404/1543 bytes, frame 0x21c.
 // Round 190: Existing copy/inverse/coefficient inline declarations singly, in three pairs and
 // together 530 each; all three separate noinline declarations 850. Original helper declarations and
 // body restored; frame 0x20c/0x200 and separate-sample boundaries remain.
@@ -2657,7 +2656,6 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         real red[16], green[16], blue[16];
         long level = 5 - order;
         if (level > layout->level_count - 1) level = layout->level_count - 1;
-        real const *data = layout->data + layout->levels[level].offset;
         long stride = layout->groups * (layout->columns * 3 + 4);
         s_bucket_source const *buckets = (s_bucket_source const *)vertices;
         long total = function_023540((short)count, buckets, &g_4b89b0[g_5093e8], stride);
@@ -2710,7 +2708,7 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
                     function_143600((real const *)&rotation, 3, red, rotated_red);
                     function_143600((real const *)&rotation, 3, green, rotated_green);
                     function_143600((real const *)&rotation, 3, blue, rotated_blue);
-                    function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                    function_023ca0((s_block_layout const *)layout, layout->data + layout->levels[level].offset, rotated_red, rotated_green, rotated_blue, output);
                     output += stride;
                 }
             }

@@ -232,6 +232,18 @@ void __stdcall function_1160c0(real dt)
 	}
 }
 
+// score 190 (was 194): attachment/previous/axis homes and rotation scheduling differ;
+// seven local-name sets, declaration reversals and entry/loop scopes 194;
+// shared cross 207, both point differences 286, both helpers 280;
+// scaled difference 212, all vector helpers 285.
+// frame 0xa4 agrees; three pairs of same-size stack homes are exchanged (retail:
+// origin below forward, offset below previous, the scalar temporaries below the axis), the segment
+// pointer lives in edx (ours edi) and the rotation's products are scheduled in another order.
+// Round 62: the existing normalize3d for the axis and dot3f for the projection give the same code (194)
+// but cost 0x73360 its match (this file links ahead of unknown_058dd0.cpp), so not kept; forward
+// declared before origin 194; the three rotation cross terms as one vector 275; previous/predicted at
+// function scope 194. Earlier: origin/forward, previous/offset and axis/length/scale names, singly and
+// combined, 194 each.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

@@ -1235,6 +1235,11 @@ bool function_c70b0(long unit_index);
 long function_cbd50(long unit_index, short weapon_index);
 
 // score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result
+// Round 141: retail returns the result byte unnormalised (a bool) and keeps the depletion in BL with the
+// interruptibility in memory; round 75's first-sets/second-clears depletion 330, with a bool result
+// 361 (1243 bytes, aligned 132 -> 102: retail's setle and second test, but depleted in memory and
+// interruptible in BL, no unit re-read), with interruptible/depleted/result declaration orders 362/363;
+// controlling read first 164; name before overlay 164.
 // normalization differ. Retail keeps the pool global in EAX and its data in EBP from entry, the state
 // in EDI, re-reads the unit pointer for both held-weapon queries (the second through a fresh data load)
 // and keeps the depletion's initial false in a stack byte (+0x12) beside the result (+0x11) and the
