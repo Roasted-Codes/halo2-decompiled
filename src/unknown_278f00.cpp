@@ -69,6 +69,9 @@ void __stdcall function_b8890(long arg_0);
 // Earlier at 212 (was 212): list selection/count homes and cleanup schedule remain.
 // Round 330: Full-width unsigned first/second/search domains, seven combinations 212 each; all three with
 // both processing ordinals 212. Signed body/list bounds, retry and call cycle retained; original restored.
+// Unsigned first/second/both handle arrays 212/212/212; first/second/both
+// arrays with unsigned classification 212/212/212; complete unsigned processing 212;
+// unsigned arrays/processing with original signed classification 212. Original storage restored.
 // @retail 0x278f00
 void function_278f00()
 {

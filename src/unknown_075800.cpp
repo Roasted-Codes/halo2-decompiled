@@ -1033,6 +1033,8 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Combined inline/out-of-line declarations on lookup, direct refusal/query, three connection handlers,
 // and leave/acknowledgment handlers: all eight 191 fast, tying reduced control 191 (full 193).
 // Every declaration and handler call restored.
+// Single-root retained/observed orders with lookup inline/noinline or all three
+// connection-handler inline/noinline boundaries: 208/208/208/208/218/218/218/218 fast; original graph and declarations restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
