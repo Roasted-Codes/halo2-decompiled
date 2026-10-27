@@ -1343,6 +1343,9 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // trace-hit single exit (goto or nested if) 278, with plain flag 275; negated early return 288;
 // facing reference 302; difference through the point-difference helper 278/275 (plain flag).
 // Round 152: Ordinary origin/side with symmetric lateral/forward x products 285, y products 302, all products 302; complete dot terms 302, with x/y/all products 285/302/302; complete terms with shared trace exit 276 (1175 bytes). Two-point exit gain rejected; original body restored.
+// Round 347: ordinary origin with direct byte/short left state 302/305, Boolean/byte right 281/281;
+// complete facing scalar observations with those four states 284/298/300/300.
+// Last two reach 1173 bytes, but input/SSE register ownership regresses; original body restored.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

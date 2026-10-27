@@ -1510,6 +1510,9 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // native area records 58; live squad/native area records 76.
 // Round 344: returned short cursor 58/453; returned long cursor 68/453; staged entry pointer 58/454;
 // returned short/long with staged pointer 58/68; nested admission with short/staged/both 58 each.
+// Round 347: uniform live squad admission with returned cursor/output index/both 78/76/78;
+// with library point copy alone/cursor/index/all 76/78/76/78; later minimum lifetime 76.
+// Prefix recovered through +0x54, but later pointer/register ownership still regresses; opening body restored.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1803,6 +1806,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // early target result alone/with joint homes and byte/signed-byte validation 321 each.
 // Native packed-view diagnostics 243/248/258 changed containing-record alignment and were rejected;
 // the paired packed fields with actor-field reference scored 323. All original layouts restored.
+// Round 347: consistent live squad/definition/both roots 491/451/576;
+// those roots with multi-use point-getter result 496/453/572; joint displacement names 576,
+// with returned point 572. Root/home allocation and lengths regress; original complete body restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2906,7 +2912,7 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
-// score 338 (was 351): Frame 0x134 agrees; placement/definition registers and final chain homes remain.
+// score 338 (was 338): Frame 0x134 agrees; placement/definition registers and final chain homes remain.
 // Earlier: Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
 // Earlier: Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
 // Earlier: frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
@@ -2939,6 +2945,9 @@ void function_2011f0(long arg_0);
 // with per-arm object result 352/357; both outputs 350/338.
 // Per-use native unsigned category with actual output-arm initialization kept at 338 plain.
 // Native row word at +0x2a with unchanged 0x64 size/two-byte alignment 338 plain.
+// Round 347: first cached native squad receiver 336/1328; with native squad word 391/1292,
+// promoted difficulty 334/1328, both 389/1292. Request/mask/chain home names repeat
+// 336/391/334/389 at the same lengths. Gains of two/four are below threshold; body restored.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
