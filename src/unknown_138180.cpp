@@ -96,6 +96,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // Recovered-prefix native uniqueness: long/short membership 190/190; reversed membership inputs 190; count
 // bounds 194; bounds and reversed inputs 194; early player ordinal 171; early ordinal with native membership
 // 190; shared native result tail 191. All restored; native uniqueness alone reaches first +0x11b at 171.
+// Independent-pass nested ordinals: distinct machine/player/both/membership identities and all
+// three pair/all combinations 157 each; separate inner native declarations 157. Frame 0x14/0x18
+// and options/index/mask homes remain; all executable forms restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

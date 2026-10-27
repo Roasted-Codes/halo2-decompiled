@@ -212,7 +212,7 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
-// score 5 (was 13): the frame-count load is still hoisted above the float stores;
+// score 5 (was 5): the frame-count load is still hoisted above the float stores;
 // pool local 13; byte-offset record 13; native vector assignment 13; function-scope record 13;
 // unsigned location 13; link array loop 5 (plain 5); plain frame store 6; frame-count local 5;
 // plain float stores 6.
@@ -227,6 +227,9 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 // location pointer 14; the frame count stored first 14; 1c before 2c 13 by position only). The
 // frame counter defined in a /GL- file changes nothing. Retail keeps that load after the float
 // stores but hoists the random-seed pointer above them.
+// Late seed/count scheduling remains. Ordinary scalar stores with short/word/signed-byte/byte
+// link ordinals 51/51/51/51; unsigned ordinal 6; bounded/sentinel link pointers 66/57;
+// block-scope native ordinal 6. All executable trials restored.
 // @retail 0x248620
 long function_248620()
 {

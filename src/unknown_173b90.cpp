@@ -884,6 +884,9 @@ public:
 // and their combinations 308; native receivers/location for 308; native location/child/
 // successor/all handle domains 308; byte/signed-byte/word/bool canonical results
 // 374/374/308/375.
+// Fallback normalization vector/scalar/working-vector/computed-input forms 349/308/349/359;
+// with result after flags 346/305/346/356. Complete vector forms add frame storage; the
+// three-point scalar/result form is rejected. Original body and protected interfaces restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
