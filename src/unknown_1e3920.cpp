@@ -559,6 +559,10 @@ real function_267370(long volatile object_index);
 // Round 375: Complete native plane value, mutable/const plane with mutable/const point,
 // 452 each; the same four graphs with the shared plane-distance helper 452 each.
 // Native snapshot expands the frame; every form and the original float tree restored.
+// Round 377: Type-gated held-direction result bool/byte/short/long 367/367/385/382;
+// default-first producers 362/362/369/368 (fast control 371). Guarded bool restores
+// frame 0x90 but plain 267 gains only six, rejected; second cross helper 367 fast;
+// recovered-frame signed plane key 233 fast/373 plain. All executable forms restored.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -1039,6 +1043,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Separate actor/unit/perception creation producers from persistent outputs 320/320/320;
 // actor-unit/actor-perception/unit-perception/all producer splits 320/320/320/320;
 // all splits with delayed cleanup publication 331. Original output and cleanup ownership restored.
+// Round 377: Complete clear-mode bool/byte/short/long results 358/358/337/320;
+// guarded producers 349/349/345/328 (fast control 320). Both creation-call values
+// preserved; polarity does not recover sentinel or squad homes. All forms restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

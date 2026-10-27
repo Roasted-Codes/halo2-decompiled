@@ -2053,6 +2053,10 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
 // actor/state registers and first point home remain.
 // Position/distance/motion/alternate-motion helper inline and noinline declarations 478 each.
+// Round 377: Complete pending-result bool/byte/short/long 603/603/637/632;
+// entry-initialized pending results 605/605/636/631 (fast control 478). Boolean
+// forms reach retail length but preserve actor/state reversal and regress.
+// All result producers, iterator, facing value and original update graph restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

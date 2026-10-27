@@ -111,6 +111,10 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // destination states first 451; path summary with completion-first states 491 (fast).
 // Priority word/byte 506/516; retained-cursor do 469; operation-group/reverse cases 479/504;
 // sole time-array traversal 415; staged size result on cursor body 448; checksum state first 367.
+// Round 377: Separate incoming/next-state long/dword/short/byte 367/367/543/524;
+// arm-produced next-state results 528/528/593/530 (fast control 367). Complete
+// transition-result ownership does not recover request-source or write-option
+// scheduling; byte arm results reach retail length but regress. All forms restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
