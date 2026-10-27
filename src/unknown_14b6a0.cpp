@@ -186,6 +186,11 @@ void function_14bac0()
 // datum iterator 257 (frame 0x44; both readiness homes then agree); plus a block scoping the
 // centre 257 (identical under LTCG, 0x38 compile-only); first loop on a datum iterator through an
 // inline next 257 (frame 0x48); readiness declarations swapped 262; centre declared first 257.
+// Round 80: the visit test through the existing 0xbec70 285 (called, not inlined); the root search in
+// 0xbaf80's own shape (NONE result, plain while) 298; first iterator scoped to its block with the second
+// scan through 0x6b380 257 (frame 0x44); stamp-first comparison 234 (identical); the visit test through
+// 0xbec70's inline stamp-parameter shape 239 (indexed store as retail, but no stamp copy). Retail's
+// `mov edx, ecx` before the stamp store occurs in no other retail function. Original body restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
