@@ -256,6 +256,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // both headers split 235; natural headers/aligned buffers 236.
 // all natural split storage 236; all aligned split storage 235.
 // first natural header/aligned buffer 220; second natural header/aligned buffer 216.
+// Round 240: reversed ordered sphere comparison alone/with distance/radius/both squares 189/189/189/189;
+// those forms with the existing point-difference helper 190/190/190/190. One-point gain rejected; original comparison restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

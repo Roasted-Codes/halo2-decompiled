@@ -477,6 +477,8 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 199: Native packed packet cell 196; with word copy ordinal 197; captured low-word publication
 // 223; both 196; unsigned copied cell and the same three combinations 196/197/223/196 (fast). All
 // restored.
+// Round 240: complementary attachment selection bool/byte/short/long 229/229/240/233;
+// with a native dword slot ordinal 250/250/254/250. All restored; entry register roles remain.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

@@ -1590,7 +1590,7 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 476 (was 476): Actor/output registers, dispatch layout and rounding homes still differ.
+// score 466 (was 466): Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/pool/output entry carriers and rounding homes still differ; selection case result retained.
 // Earlier: Actor/output registers, dispatch layout and rounding homes still differ.
@@ -1635,6 +1635,8 @@ void function_b7360(long object_index);
 // 466 plain (kept), without a shared function exit. Validity initialized before selection 536; native selection
 // outcome 466; both 536; selection outcome begun after dispatch 467. Entry carriers and rounding homes remain.
 // Round 161: movement/selection/recording completion 533/528/529; paired movement-selection/movement-recording/selection-recording 524/523/533; all outcome completion 528; orientation branch store 525. All restored.
+// Round 240: complementary query result bool/byte/short/long 520/520/469/525;
+// with complete complementary locomotion at the same widths 520/520/470/525. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
