@@ -1362,6 +1362,8 @@ bool function_1e1de0(long arg_0);
 // Round 179: target-admission/target-publication/activity inline declaration subsets
 // 165/165/165/165/165/165/165; all three inline/noinline 165. Original declarations restored.
 // Scratch lifetime, split actor declarations, default order and scratch name: eight combinations 165.
+// Existing actor query with sample-first/receiver-first/direct/separate admission
+// 297/256/268/268; read-only character counterparts 297/256/268/268. All restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
