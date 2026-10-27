@@ -78,11 +78,16 @@ void __stdcall function_b8890(long arg_0);
 // with branched selection 404/538. All helpers stay out of line; original body restored.
 // Complementary category bool/byte/short/long with signed second count 212/212/271/273;
 // unsigned second-count counterparts 212/212/271/273. Wide category frame 0x428; all restored.
+// Round 194: Shared array/header/group alone, all three pairs and all three together 212 each; all native
+// records with branched list selection 244. Original body and views restored.
 // Unsigned first/second/both handle arrays 212/212/212; first/second/both
 // arrays with unsigned classification 212/212/212; complete unsigned processing 212;
 // unsigned arrays/processing with original signed classification 212. Original storage restored.
 // Round 246: category after first/both membership scans with early header 252/291;
 // move header too 306/302; indexed-cleanup counterparts 257/296/312/311.
+// Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
+// combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
+// original induction restored. List/index/second-count homes and cleanup scheduling remain.
 // @retail 0x278f00
 void function_278f00()
 {

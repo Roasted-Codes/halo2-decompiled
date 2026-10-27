@@ -178,6 +178,10 @@ void cache_copy_forget(char const *map_name)
 // Fast: empty path value 59; normalizer-owned path 49; record-pointer iterator 56;
 // signed record index 56; older record before empty 14; retained-record continue 6;
 // state reset before copy 8; guaranteed selected record 37.
+// Path helper with an inline definition, with and without a noinline declaration, 6/6; path
+// helpers defined after their callers 6; path helper alone in an /Ob1 file 6; print helper
+// inline with a noinline declaration 6. Retail also forms 0x2141f0's EDI constant again after
+// the call: retail callers act as if they had no register summary for the path helper.
 // @retail 0x214100
 void __stdcall cache_copy_record_use(char const *map_name)
 {
@@ -356,6 +360,10 @@ long cache_copy_priority(char const *map_name)
 // Fast: empty path value 67; normalizer-owned path 47; open-path scope 7; nested copy state 7;
 // copy at first use 7; queued result domain 21; open-index observation 7;
 // active-priority observation 7.
+// Path helper with an inline definition, with and without a noinline declaration, 7/7; path
+// helpers defined after their callers 7; path helper alone in an /Ob1 file 7; print helper
+// inline with a noinline declaration 7. Retail also forms 0x2141f0's EDI constant again after
+// the call: retail callers act as if they had no register summary for the path helper.
 // @retail 0x213f10
 long map_location_get(char const *map_name)
 {

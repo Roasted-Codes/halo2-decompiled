@@ -246,6 +246,10 @@ struct s_physics_component_walk : s_havok_component
 // Round 167: Signed-word first/current-side/next-side group body identities, individually
 // and in all combinations, 275 each; signed-word output body index 317 at 898/922,
 // frame 0x18 recovered but saved roles still differ. All eight forms restored.
+// Round 150: Positive policy acquired inside nonempty admission, bool/short 290/300; complementary
+// preserve-originals policy at entry/admission bool 323/324, char 323/324, short 306/310. Policy
+// ownership does not recover current/entry/status allocation or the neighbor-group spill; complete
+// original method restored.
 // Round 375: Complete tested-status producers, guarded bool/byte/short/long
 // 319/319/300/319; eager replacement/clamp 304/304/298/307. All recover frame 0x18;
 // guarded short retains 922 bytes, others 898. Register roles still differ; restored.

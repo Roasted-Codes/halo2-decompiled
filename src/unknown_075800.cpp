@@ -315,6 +315,8 @@ PRIVATE __forceinline void function_94151(s_type_f7e40b *reply, const s_session_
 // score 12 (was 12): the leave reason is computed without a branch (neg/sbb/add) where
 // retail tests the leave result and moves 8 or 9; the shorter body also moves every
 // branch displacement and the padding at the end.
+// success/failure locals 12/12; helper-owned reason 48; widened result 12;
+// separate decisions 61; two result tests 12; reply-field forms 44/72; inverted inner select 12.
 // @retail 0x94150
 void network_message_handler_handle_leave_request(c_class_938e0 *handler, long address, const s_session_id *message)
 {
@@ -1043,6 +1045,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // original phases, case bodies, caller and handler tuples restored.
 // Single-root retained/observed orders with lookup inline/noinline or all three
 // connection-handler inline/noinline boundaries: 208/208/208/208/218/218/218/218 fast; original graph and declarations restored.
+// Full-root internal direct orders 4,2,0,3 / 4,2,3,0 / 3,4,0,2 / 3,4,2,0 /
+// 2,3,4,0 / 2,0,3,4 / 0,4,3,2 / 0,3,2,4 score 208/208/208/208/208/208/207/208
+// fast, against reduced control 191 (full 193). Original phases and call tuples restored.
 // Early phase connection cases 5/6/7 216/224/230; pairs 5+6/5+7/6+7
 // 241/249/253; 5+8 and 6+8 229/231 (fast, control 191).
 // Five coherent formal orders on the two-phase body 191 each; unsigned selector

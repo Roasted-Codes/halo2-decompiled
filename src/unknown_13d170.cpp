@@ -194,6 +194,8 @@ struct s_block_candidate
 // array lifetimes 382/382/380/380/382/382/380/380. Original body and helpers restored.
 // Negative best-candidate bool/byte/short/long in admitted scope 371/371/373/373;
 // the same carriers from entry 379/379/380/380. Original positive best state and body restored.
+// Cursor declaration orders 102435/032145/042315/052341 382/370/369/377
+// (head, tail, offset, previous, current, oldest); four combined cursor names 370 each.
 // Round 176: Unsigned previous/current/oldest, every pair/all three, and all
 // three plus unsigned allocation result: 370 each (eight forms). Equality-first
 // time policy bool/byte/short/long 385/385/381/383; non-strict admission

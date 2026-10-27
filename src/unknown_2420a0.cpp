@@ -3,6 +3,7 @@
 #include <string.h>
 #include "unknown_11c920.h"
 #include "globals.h"
+#include "bit_vector.h"
 #include "unknown_19ec40.h"
 #include "unknown_1efac0.h"
 #include "unknown_2420a0.h"
@@ -1050,6 +1051,14 @@ void c_game_engine_markers::v21(long object_index)
 	function_243a20(object_index);
 }
 
+// score 50 (was 80): the entry swaps the object-header registers (retail: header in EAX, index in ECX),
+// the slot table and the player index swap EDI/EBP, and retail computes the player pointer before the
+// flag test. Kept: retail's long slot and both bits through byte_flags_set (retail stores the flag
+// byte twice), 80 -> 50. Tried: the helper with a short slot 103; the long slot alone 94; the flag
+// tested as a byte 50; the player index read before the table pointer 50; the team read at each call
+// (retail's merged call setup and player pointer, but the options pointer is then kept from entry) 119,
+// plus the table read through the global 119, the player pointer first 119, the unit before the slot
+// 119 (428 bytes); through the player getter at each call 100.
 // @retail 0x240ff0
 void c_game_engine_markers::v23(long object_index, long unit_index)
 {
@@ -1057,7 +1066,7 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 	{
 		if (function_101280(object_index) == 1)
 		{
-			short slot = slot_object_get(object_index)->slot;
+			long slot = slot_object_get(object_index)->slot;
 			s_slot_object *unit = slot_object_get(unit_index);
 
 			if (slot != NONE)
@@ -1086,8 +1095,8 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 					}
 				}
 
-				g->flag_bits[slot].bit0 = true;
-				g->flag_bits[slot].bit1 = false;
+				byte_flags_set(&g->flags[slot], 0, true);
+				byte_flags_set(&g->flags[slot], 1, false);
 				function_a7810(0x200);
 
 				if (slot >= 0 && slot < 9)
@@ -1596,6 +1605,12 @@ void function_15e360(point3f const *point, long object_index);
 byte *record_pool_lookup(s_record_pool *data, long datum_index);
 void function_242e00(long player_index, long team);
 
+// score 83 (was 83): the effect markers' direction copies are scheduled differently; the root-location
+// call passes the object in EAX and the location in ESI (retail: location in EAX, object in ECX,
+// BLOCKED-BY 0xba300); in the tail retail keeps the marker index in ESI and reloads the engine globals
+// pointer after each call, ours keeps that pointer in ESI and spills the index. Tried: the point copied
+// straight from the marker table, declared at its use, or both 83 (identical); the directions in index
+// order 86; the positions in index order 95; both 98.
 // @retail 0x242660
 void function_242660(long object_index, bool arg_1)
 {
@@ -1772,7 +1787,11 @@ long function_242ef0(s_242ef1 arg_0, long team)
 // source reuses ebx, and with the event sent through an opaque function ours still takes ebp.
 // Earlier: the fields of the event are written in the opposite order and the argument is passed in the
 // other register. Options pointer local: the player index moves to edi (44-58); subtype/type locals in
-// either order 51; game time read into a local before the sum: retail's tail, 53 (67/65).
+// either order 51; game time read into a local before the sum: retail's tail, 53 (67/65); a file-level
+// inline event-type helper for the type argument 53 (identical); the sum as game time plus the rounded
+// value 53; the subtype in a local at entry 53; the time test reversed 55; the team through the file's
+// player getter 53; the cause team stored first 56; the team in a local before the initializer 66 (and
+// the matched caller 0x241620 stops matching).
 // @retail 0x2430a0
 void function_2430a0(long player_index, bool flag)
 {
@@ -2533,6 +2552,12 @@ bool c_game_engine_markers::v46(dword flags, long, s_marker_update *update)
 }
 void function_15e360(point3f const *point, long object_index);
 
+// score 136 (was 136): retail keeps the player in EBP and the marker in EDI and spills the slot to the
+// player's argument home; ours keeps the slot in EBP, the marker in ESI and the player in EDI, and spills
+// the masked player index. Tried: the stored scale read back for its zero test 140 (retail's test-ax
+// form, registers unmoved); a named scale 140; that test without the player reference 145; without the
+// masked-index local 140; the team through the masked index 135 (603 B); the masked index at entry 136;
+// read through the player reference 140.
 // @retail 0x242ba0
 void function_242ba0(long marker_index, long object_index, long player_index)
 {
@@ -2596,38 +2621,47 @@ typedef bool (__stdcall *t_record_fill)(long, void *, long, long, long, void *, 
 void function_41490(short group, long tag, short kind, real distance, t_record_fill fill,
 	dword value, void (__stdcall *callback)(void *), void *context, point3f const *position);
 
+/* draws the circle of a slot's marker (a negative slot names the second set): 32 points around the
+   marker's position at the slot's radius, eight per quadrant */
 // @retail 0x244470
 void __stdcall function_244470(long arg_0, long arg_1, long arg_2, long arg_3,
 	long arg_4, long arg_5, void *arg_6)
 {
-	s_marker_entry *local_0 = g_4e0350->marker_entries;
-	long local_1;
+	s_marker_entry *entry;
+	point3f local_3;
 	real local_2;
 	if (arg_5 >= 0)
 	{
-		local_1 = g_51ec80->b[arg_5];
+		entry = &g_4e0350->marker_entries[g_51ec80->b[arg_5]];
+		local_3 = entry->position;
 		local_2 = g_51ec80->bounds[0][arg_5].x;
 	}
 	else
 	{
-		local_1 = g_51ec80->c[-1 - arg_5];
-		local_2 = g_51ec80->bounds[1][-1 - arg_5].x;
+		long index = -1 - arg_5;
+
+		entry = &g_4e0350->marker_entries[g_51ec80->c[index]];
+		local_3 = entry->position;
+		local_2 = g_51ec80->bounds[1][index].x;
 	}
-	point3f local_3 = local_0[local_1].position;
 	point2f local_4[32];
 	for (long local_5 = 0; local_5 < 8; ++local_5)
 	{
 		real local_6 = (real)local_5 * 0.19634954631328583f;
-		real local_7 = (real)sin(local_6) * local_2;
-		real local_8 = (real)cos(local_6) * local_2;
-		local_4[local_5].x = local_3.x + local_7;
-		local_4[local_5].y = local_3.y + local_8;
-		local_4[local_5 + 8].x = local_3.x + local_8;
-		local_4[local_5 + 8].y = local_3.y - local_7;
-		local_4[local_5 + 16].x = local_3.x - local_7;
-		local_4[local_5 + 16].y = local_3.y - local_8;
-		local_4[local_5 + 24].x = local_3.x - local_8;
-		local_4[local_5 + 24].y = local_3.y + local_7;
+		real sine = (real)sin(local_6);
+		real cosine = (real)cos(local_6);
+		point2f *first = &local_4[local_5];
+		point2f *second = &local_4[local_5 + 8];
+		point2f *third = &local_4[local_5 + 16];
+		point2f *fourth = &local_4[local_5 + 24];
+		first->x = local_3.x + sine * local_2;
+		first->y = local_3.y + cosine * local_2;
+		second->x = local_3.x + cosine * local_2;
+		second->y = local_3.y - sine * local_2;
+		third->x = local_3.x - sine * local_2;
+		third->y = local_3.y - cosine * local_2;
+		fourth->x = local_3.x - cosine * local_2;
+		fourth->y = local_3.y + sine * local_2;
 	}
 	real local_9 = local_4[1].x - local_4[0].x;
 	real local_10 = local_4[1].y - local_4[0].y;
