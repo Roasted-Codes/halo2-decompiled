@@ -28,7 +28,8 @@ struct s_278f02
 struct s_278f03
 {
 	byte field_0[0xc0];
-	word : 6;
+	word : 5;
+	word field_c0_5 : 1;
 	word field_c0 : 1;
 	word : 9;
 	byte field_c2[0x12];
@@ -44,12 +45,11 @@ void function_1d1260(s_havok_component *arg_0);
 void __stdcall function_b8540(long arg_0);
 void __stdcall function_b8890(long arg_0);
 
-// score 212 (was 212): frame 0x424 agrees. Retail selects the island list with two branch arms that each
-// read the world pointer and keeps the list pointer in a stack slot (ours hoists the pointer and selects
-// branchlessly); the list/index/second-count homes and cleanup induction differ (retail slots, ascending:
-// list, island, selector, index, body count); after the second membership scan retail skips the insertion
-// on the found exit without re-testing the index; the predicted-copy test is a materialized bool
-// (`setne cl; test cl, cl`) and the flag set is a direct `or byte ptr`.
+bool function_a7670(long object_index);
+
+// score 181 (was 212): frame 0x424 and retail's length agree; left are the scratch-register phase at entry
+// (retail xor eax), the homes of the list/island/index/count slots and the inner-loop induction, the
+// admission flag (retail BL, ours a stack byte) and the cursor cleanup loop (retail indexed).
 // list reference 212; island reference 212.
 // body reference 212; header reference 212.
 // unsigned object handle 212; list and island references 212.
@@ -94,6 +94,10 @@ void __stdcall function_b8890(long arg_0);
 // original/branched selection 283/221/283/221/272/266/272/266. Original indexed processing and call cycle restored.
 // Header-byte-offset induction long/dword 276 each, short/word/byte 280 each;
 // direct descending list selector long/short/signed-byte 251/265/252. Restored.
+// Round 102: the mode-4 test through the existing 0xa7670 (inlined with retail's setne/test) 281 alone;
+// with word bit-5/bit-6 fields written through them 250 (954 B); with the list chosen per arm 181,
+// kept. On it: descriptive names 181; list declared at function scope 181; indexed cleanup loop 196;
+// found flag declared before the admission flag 274; the inner bound read from the field 248.
 // Round 63: list chosen by if/else arms (long selector) 244; ternary of the two list addresses 244;
 // descriptive names for the outer locals 212; second scan with its own found flag 269 (flag materialized,
 // not threaded); index comparison before the first-scan flag 213. Diagnostics, not kept: the predicted-copy
@@ -108,7 +112,11 @@ void function_278f00()
 		g_47f05b = true;
 		for (long local_2 = 0; local_2 < 2; local_2++)
 		{
-			s_278f01 *local_3 = (s_278f01 *)((byte *)g_51e9a4 + (local_2 == 0 ? 8 : 0x14));
+			s_278f01 *local_3;
+			if (local_2 == 0)
+				local_3 = (s_278f01 *)((byte *)g_51e9a4 + 8);
+			else
+				local_3 = (s_278f01 *)((byte *)g_51e9a4 + 0x14);
 			for (long local_4 = 0; local_4 < local_3->field_4; local_4++)
 			{
 				s_278f00 *local_5 = local_3->field_0[local_4];
@@ -164,9 +172,9 @@ void function_278f00()
 				{
 					long local_11 = local_0[local_10];
 					s_havok_object *local_12 = havok_object_get(local_11);
-					if (g_4e6948->mode == 4 && ((s_278f03 *)local_12)->field_d4 != NONE)
+					if (function_a7670(local_11))
 					{
-						*((byte *)local_12 + 0xc0) |= 0x20;
+						((s_278f03 *)local_12)->field_c0_5 = true;
 						function_1c3770(local_11, 0);
 					}
 					else
@@ -211,7 +219,7 @@ void function_278f00()
 					s_havok_object *local_12 = havok_object_get(local_11);
 					if (local_12->havok_component_index != NONE)
 						function_1d1260(havok_component_get(local_12->havok_component_index));
-					*((byte *)local_12 + 0xc0) &= 0xbf;
+					((s_278f03 *)local_12)->field_c0 = false;
 					function_b8890(local_11);
 				}
 			}
