@@ -499,11 +499,11 @@ PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh
 
 PRIVATE __forceinline real decal_normal_angle_17fd20(vector3f const *a, vector3f const *b)
 {
-	vector3f first_vector;
-	memcpy(&first_vector, a, sizeof(first_vector));
-	if (!memcmp(&first_vector, b, sizeof(first_vector)))
+	if (*(dword const *)&a->i == *(dword const *)&b->i &&
+		*(dword const *)&a->j == *(dword const *)&b->j &&
+		*(dword const *)&a->k == *(dword const *)&b->k)
 		return 0.0f;
-	real cosine = first_vector.i * b->i + first_vector.k * b->k + first_vector.j * b->j;
+	real cosine = a->i * b->i + a->k * b->k + a->j * b->j;
 	cosine = cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
 	return (real)acos(cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine);
 }
@@ -518,7 +518,16 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 716 (was 749): Self-aligned frame 0x2204 versus 0x21dc, definition/output carriers and angle equality homes remain.
+// score 650 (was 716): retail's 3647 bytes; the normals compared as three dwords (retail's cmp/jne,
+// no copy) leave a frame of 0x21ec against 0x21dc, the definition/output registers swapped, and a
+// rotation block whose schedule differs, which offsets everything after it.
+// Round 8 (lane 10): counts set after faces[0] 716; float component equality 762 (ucomiss, but the
+// cosine products then follow retail's order); dword component equality without the copy 650 (kept);
+// short plane index 698 (test cx); mode read from the definition at each use 705 (registers, loop
+// entry jump and final call as retail, rest worse; retail does read it at each use); rotation in the
+// sine-axis/t*j*i/t*k shape 731 (x87 product as retail), its square and sine-product statement orders
+// 731-740; with the mode at each use 717; matrix local renamed a_/z_ 650/650 (slot unchanged).
+// Earlier: Self-aligned frame 0x2204 versus 0x21dc, definition/output carriers and angle equality homes remain.
 // Earlier: frame 0x2204 versus 0x21dc; definition/output carriers still differ.
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.

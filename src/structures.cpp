@@ -223,7 +223,21 @@ done:
     return result;
 }
 
-struct s_16e1b0_list;
+/* a list of ranges (0x48 bytes each), as unknown_16e290.cpp defines it */
+struct s_16e1b0_range
+{
+	byte unknown00[6];
+	word first;
+	word count;
+	byte unknown0a[0x48 - 0xa];
+};
+
+struct s_16e1b0_list
+{
+	long count;
+	s_16e1b0_range *ranges;
+};
+
 void function_16e1b0(long value, s_16e1b0_list const *list, long *unknown, long *range_index, long *offset);
 point3f *function_142700(transform4x3f const *matrix, point3f const *point, point3f *out);
 bool function_11e800(point3f const *a, point3f const *b, point3f const *c, point3f const *p, real *u, real *v);
@@ -242,6 +256,15 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 }
 
 // score 185 (was 185): Frame 0x58 agrees; BSP/section, range/plane homes and vertex joins remain.
+// Round 8 (lane 10), not kept: retail never initialises its vertex flag (set only when a vertex exists,
+// tested only after the first vertex); that uninitialised success-only flag with the table pointer
+// chosen by the ternaries gives 165 (163 with other declaration orders), but it reads an uninitialised
+// flag and drops the checks on the second and third vertices, so HEAD's body stays. Other trials:
+// output declarations reordered 185; outputs renamed 185; part index/unknown stores swapped 185; bool
+// result 197; success-only flag 235, with bool result 221; instance index at each use 226/227; vertex
+// loop with a break 287; inverted ternaries 165; surface range index at each use 191; flag initialised
+// false 232; early return without a section 127 (an epilogue retail lacks; realignment only).
+// Earlier: Frame 0x58 agrees; BSP/section, range/plane homes and vertex joins remain.
 // frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
 // Earlier: exact 0x58 frame; BSP/section registers and range/plane homes differ.
 // Frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
@@ -413,7 +436,15 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
-// score 177 (was 181): region code and node search now match; retail reads the model's bounds before
+// score 78 (was 177): with the part list read through its 0x48-byte range records and the part
+// offset read at each use, only the model/collision registers (EBX/EDI swapped), the lookup address
+// (retail keeps it in ESI for the second call) and BLOCKED-BY 0x11e800's argument registers differ.
+// Round 8 (lane 10): range-record list 95 (kept); part offset at each use 78 (kept); section groups
+// after the node search 208; bounds read at its use in the vertex call 274; separate local for the
+// second object lookup 78; lookup declared at the top 78; object lookup before the model 219;
+// diagnostic: the bounds read before the geometry-block call gives 9 (registers as retail; left
+// are the lookup address and 0x11e800's registers), held because it moves a one-use read.
+// Earlier: region code and node search match; retail reads the model's bounds before
 // the geometry-block call (that read moved there gives 143 with the section groups ahead of the node
 // search, but it moves a definition read ahead of a call), keeps the vertex cursor in EBX and the
 // mesh spilled, and BLOCKED-BY 0x11e800: its vertices/point registers (ours eax/esi/edx/ecx, retail
@@ -557,14 +588,12 @@ bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 				*(long *)((byte *)triangle + 8) = COLLISION_OBJECT_14A8E0;
 				triangle->part_index = 0;
 				result = true;
-				long part_count = *(long *)section_mesh;
-				byte *parts = *(byte **)(section_mesh + 4);
-				long previous_index = triangle->part_offset;
-				for (long part = 0; part < part_count; ++part)
+				s_16e1b0_list const *parts = (s_16e1b0_list const *)section_mesh;
+				for (long part = 0; part < parts->count; ++part)
 				{
-					word first = *(word *)(parts + part * 0x48 + 6);
-					word count = *(word *)(parts + part * 0x48 + 8);
-					if (previous_index >= first && previous_index < first + count)
+					s_16e1b0_range const *part_range = &parts->ranges[part];
+					if (triangle->part_offset >= part_range->first &&
+						triangle->part_offset < part_range->first + part_range->count)
 					{
 						triangle->part_index = part;
 						break;
