@@ -318,6 +318,11 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // changes since; reverting the five changed units in its reduced image keeps 18). On it, member
 // entries for both positions/color too/final quad, `0.5f * arg_1` products, `0.5f + ...` upper
 // sums 18 each (fast). All restored.
+// Round 7 (lane 10) on the two-difference graph (pointer color, byte alpha, per-use coordinates,
+// member second position): C-form Begin 446 (2196 bytes); member color plus member first
+// position 2; first lower coordinate with the product commuted 2; lower as a negated sum 2;
+// half-span as a division by two 2. The two reloads after the second texture reservation stay
+// swapped. All restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

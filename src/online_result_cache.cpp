@@ -63,25 +63,25 @@ dword online_result_text_length(const char *text);
 // @retail 0xb36c0
 bool online_result_service_connected(void)
 {
-    bool logged_on = false;
+    bool logon_succeeded = false;
     bool connected;
     if (g_467214 != NONE)
     {
         switch (online_task_get_logon_status(g_467214))
         {
         case 1:
-            logged_on = true;
+            logon_succeeded = true;
             break;
         }
     }
-    if (logged_on)
+    if (logon_succeeded)
     {
         connected = false;
         for (long i = 0; i < 13; i++)
             if (g_467178[i].service_id == 0x4d530064)
                 connected = g_467178[i].connect;
     }
-    return logged_on && connected;
+    return logon_succeeded && connected;
 }
 
 // @retail 0xb3700

@@ -736,6 +736,10 @@ void swarm_leader_detach(long actor_index);
 // Round 344: phase-specific stop/memory receivers 304/286; shared cleanup/terminal ordinal 282;
 // stop/memory pair 293; stop/memory with shared ordinal 304/286; both with ordinal 293;
 // both with byte shared ordinal 293. All phase snapshots and ordinal changes restored.
+// Round 143: 0x26ed40 is open now, but its file is another lane's this round; the bool parameter
+// still needs src/unknown_1bba20.cpp. Short memory index 277 (identical); the memory loop as a for
+// loop 565 (1204 bytes); the counts loop as a for loop 309; both 565; the `current` store as a plain
+// `= NONE` 277 (identical, kept: the word cast was not needed).
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
@@ -745,7 +749,7 @@ void __stdcall function_1e1a00(long actor_index, long value)
 		if (stop)
 			stop(actor_index, slot_index < 4 ? &actor_get(actor_index)->slots[slot_index] : NULL);
 	}
-	*(word *)&actor_get(actor_index)->current = 0xffff;
+	actor_get(actor_index)->current = NONE;
 	function_258600(actor_index);
 	long memory_index = 0;
 	do

@@ -153,6 +153,9 @@ void function_2232a0(void)
 // 182/185/182; short count 153; long raw count 153 (fast). Compile-only screens of an inline count
 // helper (single or multiple returns), a pin helper and a layout helper taking the count: each still
 // threads the count-one edges past the layout test. All restored.
+// Round 7 (lane 10): count from a single-exit inline helper 182 (count 4 no longer threads, count 1
+// still does); helper with pretested for loop 183; if/else-if clamp in retail's branch order 182;
+// named view count (count + 1) after the loop 159; count arms swapped (clamp first) 151. All restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
