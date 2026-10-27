@@ -94,8 +94,14 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // Round 233: Shared side-input scale, quarter in-place/displacement 239/242;
 // both modes in-place/displacement 242/252; raw secondary-byte counterparts
 // 195/210/200/219. Original side observations and flagless body restored.
+// Round 225: complete quarter/triple/both point arrays on the staged raw-byte flow
+// 68/90/90; at entry 68/104/112; shared three-point workspace in optional/entry
+// scope 104/104. Raw-byte control 20/1176. Every grouped-point/extra-result form
+// is unmatched and restored; original flagless category/clear flow retained.
 // Round 150: Raw-byte path with common positive/opposite/third input point homes, seven subsets 5/28/28/5/5/28/28; all three before primary output 89. All exact-match-only forms restored.
 // Frame 0x8c/0x94 and raw secondary-result/common tail remain; near-five forms still miss X/Z point-add scheduling.
+// Primary endpoint helper with outcome long/long, bool/long, long/short, bool/short
+// state/category 170/175/234/225; direct-result counterparts 207/202/238/242. All restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

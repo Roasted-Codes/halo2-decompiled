@@ -73,6 +73,14 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 153: Once-computed validity with readiness AND pending/active/both 233/220/240; blocked OR
 // pending/active 249/232; AND-OR/OR-AND 249/251; both readiness byte/long 240/269. Original
 // callback/reduction graph restored.
+// Round 254: shared callback owner after peer/before peer/before handle 262/262/262;
+// entry table alone/with owner 261/242; enabled/nonempty/entry-scope table with owner
+// 246/244/248. Original live pointer observations and executable body restored.
+// Round 193: Private pending/active/both chain maxima; each with private pending size;
+// both maxima with conditional pending publication, without/with private size: 227/240/228/227/218/241/288/235. Original restored.
+// Round 195: Pending/active reversed-relational and conditional-replacement maximum
+// graphs, alone and in all pairs, 217 in eight forms. Equality/unordered choices retained;
+// original body restored, with receiver and callback/output/blocked homes unresolved.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

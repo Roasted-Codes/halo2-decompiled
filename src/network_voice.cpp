@@ -1265,6 +1265,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // expanded caller conventions checked separately; original accumulation restored.
 // Round 152: Signed/unsigned-word identity, original/counting traversal 315/140/315/140;
 // bounded byte/signed-byte ordinals, original/counting traversal 281/281/281/281. Word forms lose 0x54990; original restored.
+// Round 76 (counted loop, fast with 0x54990/0x56160): bool from the getter compare without local_0 112;
+// operands swapped 112; 2 + product 112; multiplier first 112; channel indexed at each use 120;
+// identity compare inside the loop 324 (rolled). Each counted form pushes the channels pointer in 0x54990.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2977,6 +2980,9 @@ struct s_voice_route_choice
 // declarations 410/411; as two separate ifs 411; with a char radio 411. Retail's remainder loop
 // indexes `[offset + choices]` with choices in edi (which forces the headset spill); ours walks
 // a pointer. Ternary headset bit update 363 (same code), with the radio branch 411.
+// Complete current route value/const value/element reference with bitwise radio
+// 438/438/395; with conditional radio 459/459/410; native three-pair descriptor
+// with current value/reference 431/386. All original observations and workspaces restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

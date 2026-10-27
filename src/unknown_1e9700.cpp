@@ -144,6 +144,9 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Object before/between rounding 421/421; object and history before/between 466/465;
 // later victim-team observation 450; early object with later team 449;
 // early object / object and history with forced rounding expansion 439/472. All restored.
+// Round 160: native award counts/prefix ordinals 421/422; shared award/prefix/both
+// ordinals 421/421/421; native counts with shared ordinals/slot homes/early
+// credit default 421/421/452. Original types, lifetimes and loops restored.
 // Round 149: Shared current tick with rate, earlier code and clock receiver combinations [427, 450, 445,
 // 432, 427, 450, 445, 432]; all restored.
 // @retail 0x1e9fa0

@@ -811,6 +811,8 @@ real normalize2d(point2f *v);
 // Original query-byte allocation and protected trajectory convention remain.
 // Round 151: Two-use retry success with logical/bitwise/reversed logical joins before/after publication 216/239/218/254/215/243; promoted long/word result joins 200/203. All restored.
 // Frame 0x48 agrees; immediate query zero, protected trajectory convention and retry/output homes remain.
+// Native vector setter for planar zeros/actor fallback/default axis 172/218/187;
+// zero-actor/zero-axis/actor-axis/all 218/187/211/211; all plus request setter 222. All restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -1073,6 +1075,10 @@ real function_50650(real cosine);
 // shared inner minimum 335; all observations plus shared inner minimum 381. Original receivers restored.
 // Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
 // X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
+// Round 59 (fast control 117): offset-first actor expression 117; actor through the actor getter 117;
+// object before actor 118; speed factor declared last 117; ternary first clamp 117 (same code). The
+// velocity j preload matches the shape the in-place 3-D normalize gives in matched 0x179fb0 (every
+// component but the first preloaded before fsqrt); a hand-written 2-D copy of that shape 128.
 // Direct speed-factor default 302; all minimum spans 117; speed/spans 302; paired closing
 // projections 117; speed/projections 302; spans/projections 117; all 302; all with facing default
 // first 300 (fast control 117, full 137). All restored; actor/object homes, velocity preload

@@ -262,6 +262,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 153: Actual up/forward/both/turn/up-turn/forward-turn/all three field receivers
 // 249/253/253/276/261/283/260; requested-forward/all four 266/256. Default-vector pointer observed
 // once, alone/with turn/with all three fields 240/251/292. Whole original body restored.
+// Round 252: Final orientation predicates in bool/byte/short/long domains 251/251/259/257; short-circuit
+// refined results 222/222/222/222. Original comparisons and every vector/callback role restored; frame
+// 0x78 versus 0x6c and early ESI/basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -990,6 +993,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Round 201: Response storage: normal/sweep reorientation and sweep reflection 176/160/177; paired
 // direction/reflection 193/174; consumed-input left output alone/with sweep reflection 176/194; saved-
 // velocity left output 176. All restored.
+// Round 352: native stored-velocity fields with direct, scalar-first, named-product and combined
+// products 151 each; each with one three-use velocity snapshot 374 (frame 0x128). Original
+// external record, response expressions, query-first sweep and saved identifiers restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

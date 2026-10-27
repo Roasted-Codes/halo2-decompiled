@@ -581,6 +581,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // 309/345/336/309/280/331/337/337; genuine location+spatial pair kept at plain 280, 1034 bytes.
 // Direct/reversed-direct/entry pair 311/311/282; late pair 278 (two-point gain rejected);
 // position/location and spatial/world receiver names 280/280.
+// Round 208: existing output bit members 2/3/4/5/6 individually, all five,
+// with bit 10, and with bits 10/0 all 293. Original output masks and complete
+// body restored; frame 0x84, datum/tag homes and root-location convention remain.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
