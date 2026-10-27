@@ -772,6 +772,8 @@ real function_18cac0(long arg_0);
 // unsigned membership masks 246; pretested cluster while walk 225.
 // Round 215: unsigned-word selector 229; read-only audibility receiver 225;
 // mask declaration before gain 225; chained small-mask zero 245; branch-derived gain result 229.
+// Flat mask, reversed flat index 225/225; door division 265; cluster division 230;
+// both divisions 269; flat with door/cluster/both divisions 265/230/269.
 // Round 164: Returned gain view ending before final batch 228 (frame 0x8b0);
 // native real table, post-clear BSP and readonly camera combinations 228 each.
 // All eight regress; original clear, gain view and aligned body restored.

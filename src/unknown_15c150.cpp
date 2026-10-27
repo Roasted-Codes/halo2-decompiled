@@ -134,6 +134,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // save, teams-byte home and local-slot spill remain.
 // Existing search table pointer/const pointer/reference/const reference 196/196/196/196;
 // actual entries pointer/const pointer/array/const array 196/196/196/196. Original helper restored.
+// Count/unit index/team/local slot/fade/unit home names and two combined groups
+// 196 each (fast; reduced-image callee caveat).
 // @retail 0x15c150
 void function_15c150()
 {

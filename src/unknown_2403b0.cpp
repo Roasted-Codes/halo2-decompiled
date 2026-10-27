@@ -94,6 +94,8 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Loop remains rolled; extra branches and event/store sequencing regress. All restored.
 // Complete eligibility bool/byte/short/long results 190/190/190/190;
 // default-false reader-gate results 190/190/190/190. Pool reload and completion stores remain.
+// Slot/limit/ticks/marker/unit/weapon home names and scalar/all combinations
+// 190 each (fast); original body restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

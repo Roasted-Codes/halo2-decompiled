@@ -125,6 +125,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // traversals restored.
 // Round 174: isolated partition/ordinal/both/successor/partition-successor/ordinal-successor/all
 // scalar home names, then all with the second-pass actor receiver, 164 each. Original names restored.
+// Eligibility result bool/const-bool/long/short with conditional or branch publication:
+// 194/200, 194/200, 195/178, 193/193; original body restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

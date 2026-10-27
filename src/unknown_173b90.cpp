@@ -1084,6 +1084,7 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // predicates 287; signed render mask 213. Original source restored.
 // Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
 // availability result before the work guard 355. Early EDI/tag lifetimes remain.
+// Group-test order, high-bit shift/equality and combinations 213; other-bit OR test 222.
 // Round 329: shared pool/data 339/354; group/render-mask/both observations 222/331/331;
 // pool with group/mask/both 275/364/364. Original receivers and every memory observation restored.
 // Round 376: Independent child cursor/receiver/both entry declarations 213/213/213; native

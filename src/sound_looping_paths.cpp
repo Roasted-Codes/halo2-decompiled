@@ -462,6 +462,7 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Native cluster word 287; readonly camera 223; angle-output name 223;
 // early fade/tag stores 270; cluster/camera 287; cluster/angle 287;
 // camera/angle 223; combined input/output and earlier stores 285.
+// Count-as-fill-cursor for six store orders 264 each; while forms in two orders 264 each.
 // Round 164: Paired tag/transition result arms, tag after magnitude, paired
 // defaults and defaults/tag-after 223/275/233/276; outer duration workspace
 // 223/275/233/276. Original separate metadata graph and all helpers restored.

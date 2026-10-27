@@ -131,11 +131,11 @@ void function_8dd70(void);
 // unsigned word sessions 230; unsigned word all 230.
 // byte link with word stages 232; byte observer with word stages 231.
 // byte sessions with word stages 234; byte first two word session 231.
-// entry normalization, helper boundaries and global reloads differ.
+// Earlier: entry normalization, helper boundaries and global reloads differ.
 // Actual link/observer/manager/trim/availability/interface return receivers 230 each;
 // five receivers together 230; guarded interface with observer/trim/availability 230.
+// entry normalization, helper boundaries and global reloads differ.
 // entry normalization, helper boundaries and global reloads remain.
-// Earlier: entry normalization, helper boundaries and global reloads differ.
 // Earlier: entry normalization, helper boundaries and global reloads remain.
 // Shared setup link/message/gateway inputs 232/230/229; all three 233;
 // retained observer 230; session-list publication 230; existing gateway reverse
@@ -147,6 +147,7 @@ void function_8dd70(void);
 // gateway input/consumer order 230; gateway flag first 230; handler flag first 230;
 // handler input order 230; shared integer zero assignment 230; short stage names 230;
 // short session prerequisite 236; nested manager/interface tests 230.
+// Earlier baseline 234; global publication adjacent swaps, reverse and rotation 230 each.
 // Complementary link/observer/session/link-observer/link-session/observer-session/all
 // stage domains 229/230/230/229/229/230/229; all stages plus positive entry state 229. All restored.
 // Round 164: Plain first-two session cohort long/short/word/byte ordinal

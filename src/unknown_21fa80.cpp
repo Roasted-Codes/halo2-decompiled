@@ -103,6 +103,8 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // 542/542/569/569; entry declaration forms 542/542/569/569 (fast control 532,
 // full baseline 545). Byte forms recover checker length but regress; all three
 // consumers, original status, mixed math and helper contracts restored.
+// Force-inline gain pin, bit pin, linear gain and combinations, then all four
+// existing helpers: eight forms all 532 on the reduced control. Helpers restored.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

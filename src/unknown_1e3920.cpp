@@ -1641,6 +1641,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // Uninitialized probability/delay at entry 270/270; constant probability at entry/after query 295/286;
 // with the other scalar workspaces 295/286; scalar-role names with early constant 295,
 // with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
+// Scalar-home names for probability, fraction, delay, ticks, minimum and loop index,
+// plus both grouped renames: 270 each.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

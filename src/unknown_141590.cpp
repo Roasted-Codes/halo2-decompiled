@@ -147,6 +147,8 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Native quaternion snapshot 458 (frame 0x24); all dot products named 288; all cross input products named 292;
 // sine-branch construction j/i/k 310, i/k/j 240. Frame/quaternion spill reuse remains; body and both helpers
 // restored.
+// Axis orders flu/ufl/ulf/lfu/luf 301/237/237/301/238;
+// flu/ufl/ulf with sine-half first 301/240/240.
 // Separate quaternion axis/scalar inputs: axis-first/scalar-first/reference
 // 246/246/246; native axis value 353; the actual output-pointer return gives
 // 246/246/246/353 respectively. Original helpers and body restored; frame

@@ -3082,6 +3082,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Mode cases 1/0/2/3, 2/0/1/3 and 0/2/1/3 971 each; 0/1/3/2 and
 // 2/3/0/1 973 each; function-scope color inputs 971; shared upper/lower
 // quantizer scope 971; native long success 1194.
+// Mode assignment orders MNS/SMN/SNM/NMS/NSM 973/971/971/973/973; NSM in cases
+// 0/1, 2/3, 0/2 971/973/971 (fast; M=maximum, S=allow_small, N=allow_negative).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

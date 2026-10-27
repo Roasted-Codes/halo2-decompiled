@@ -1427,6 +1427,8 @@ struct s_133f70;
 // executable source restored.
 // Complementary failure bool/byte/short/long 235/235/268/259 plain; also complementary
 // reuse 326/326/335/326 plain (fast 355/355/344/350). All restored; frame and staging remain.
+// Projection branch scope, later failure constant and earlier level constant combinations:
+// 356/371/371/356/356/371/371 fast; separate level initialization 356 fast.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

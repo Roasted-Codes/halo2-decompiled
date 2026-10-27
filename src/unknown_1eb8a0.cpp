@@ -236,6 +236,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Round 237: One rate observation everywhere 742; native integer ticks 642, both 742;
 // ticks at each field use 663, with reused rate 718; rate with all left/right factors
 // 742/742, native ticks and all left factors 742. Original clock scalar forms restored.
+// Output displacement/scale schedules ikj/jik/jki/kij/kji 641/643/642/644/644;
+// displacement-first, scale-first and scale-first per axis 642/642/642 (fast); caller matched.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

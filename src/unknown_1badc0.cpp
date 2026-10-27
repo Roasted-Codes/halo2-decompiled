@@ -38,6 +38,9 @@ real normalize2d(point2f *arg_0);
 // Round 174: center/radius/both per-use sources 291/242/296; complete actor-position snapshot
 // alone/with center/radius/both 267/283/262/246; complete sources with clean output access 296.
 // Original observations, early clearance, delayed zero, output access and scalar spill restored.
+// Direction declaration/call ordering and collision-storage lifetime combinations 220 in seven forms;
+// those together with radius before center copy 214 (six-point gain restored).
+// Same-size point/vector name swaps, separately and in combinations, 220 in eight forms.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

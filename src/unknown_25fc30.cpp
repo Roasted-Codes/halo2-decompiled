@@ -246,6 +246,8 @@ bool __stdcall function_25dd30(long a, long b)
 // paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
 // Round 233: Native live scalar-field references, reach/radius/both/blocked gate/
 // reach+gate/radius+gate/all 310/310/175/310/175/175/310; segment squared part 175.
+// Offset and segment workspace names, their combinations, and declaration order
+// each 175; original vector declarations restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

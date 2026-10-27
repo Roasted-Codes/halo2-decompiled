@@ -2072,6 +2072,8 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // entry-initialized pending results 605/605/636/631 (fast control 478). Boolean
 // forms reach retail length but preserve actor/state reversal and regress.
 // All result producers, iterator, facing value and original update graph restored.
+// Single-bit equality tests across dispatch/clear/tail, separately and combined,
+// and one shared case flag observation: eight forms all 478. Original body restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

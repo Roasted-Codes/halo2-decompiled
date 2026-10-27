@@ -267,6 +267,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Round 174: existing native three-word color storage, immutable storage, each with shared output,
 // library memcpy alone/with value half-size, native storage/value half-size and immutable/shared/value
 // all 162 (fast control 162, full 153). Native-view forms require a match; original body restored.
+// Bitmap-local name orders with alpha and coordinate names: eight combinations 162 (fast control 162).
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

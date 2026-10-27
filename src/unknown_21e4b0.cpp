@@ -169,6 +169,7 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 174: native signed-word channel/voice/both/category/channel-category/voice-category/all
 // ordinals 167/301/303/311/311/292/292; all with creation state across reset 317.
 // Original signed loops, result lifetime, call order and descriptors restored.
+// Description/mix-bin/listener workspace names and creation-state name: eight combinations 165.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

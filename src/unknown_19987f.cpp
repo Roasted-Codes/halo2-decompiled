@@ -1327,6 +1327,10 @@ extern bool g_4ed39d;
 // worsen aligned sequence edits from 66 to 72-74; all original producers restored.
 // Native message object/name/early lifetime/both 184/184/184/184; aggregate/CRT/early aggregate 247/207/239;
 // branch-local loader 184. All restored.
+// Lobby/handled order, callback initializers, dialog assignment order and their
+// combinations all 184; session reset before dialog assignment 185.
+// Screen workspace, user and dialog options, callback, dialog ID and loader
+// names individually and together 184 each.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

@@ -568,6 +568,8 @@ struct s_item_collision_bsp
 // 249; shared fallback-only spin scale 249; direct offset expression 249.
 // Complete plane memcpy 305; all normal-row partial projections 250; all row products named 250;
 // contact-position projection named 249; paired shared spin scales 254. Opening body and includes retained.
+// Entry tests flag7/parent/flags_12c in orders 213/132/231/312/321 253/251/265/264/254; reversed spin flags 249;
+// reversed spin flags with 213/132 entry orders 253/251.
 // Shared matrix rotation alone/point setter 249/249; with shared distance/both 250/250;
 // native whole-plane transfer on those four rotation graphs 305 each. Exact-only forms restored.
 // Round 376: Complete axial/fallback/both spin outputs 281/279/298; CRT publication 281/279/298;

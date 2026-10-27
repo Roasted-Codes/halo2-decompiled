@@ -1043,6 +1043,8 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // original phases, case bodies, caller and handler tuples restored.
 // Single-root retained/observed orders with lookup inline/noinline or all three
 // connection-handler inline/noinline boundaries: 208/208/208/208/218/218/218/218 fast; original graph and declarations restored.
+// Early phase connection cases 5/6/7 216/224/230; pairs 5+6/5+7/6+7
+// 241/249/253; 5+8 and 6+8 229/231 (fast, control 191).
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
