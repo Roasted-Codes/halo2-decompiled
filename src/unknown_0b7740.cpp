@@ -591,13 +591,19 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
     return false;
 }
 
-// score 24 (was 204): the g_4e7414 increment goes through esi and is stored
+// score 24 (was 24): the g_4e7414 increment goes through esi and is stored
 // after the pushes (retail: ecx, stored at once); the record/iterator reloads
 // after each first-object call are swapped; the second inlined distance test
 // computes dz, dx, dy in retail (dz, dy, dx here). Tried: second inline copy
 // with dz,dx,dy or dy,dx,dz or a vector3f delta (no gain); count = 0 just
 // before the loop (205); a goto to a shared exit instead of the early returns
-// (196: count lived in esi and the empty exit got its own epilogue).
+// (196: count lived in esi and the empty exit got its own epilogue);
+// post-increment counter 24; while loops 24; cluster list declared first 24;
+// iterators passed without references 24 (kept). A one-expression sum runs in
+// reverse order of the deltas' definitions: a second test defining dy, dx, dz
+// gives retail's dz, dx, dy order but swaps the x/y registers (24); retail keeps
+// x, y, z in xmm1, xmm2, xmm3 in both tests, so its second test defines x, y, z
+// and accumulates the squares z, x, y.
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
@@ -632,9 +638,8 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
         if (mask & 1)
         {
             search.record = 0;
-            s_object_cluster_iterator &iterator = search.first;
-            for (long object = function_b8940(cluster, &search.record, &iterator); object != NONE;
-                 object = object_cluster_next_ab((s_record_pool *)g_4de2e4, &iterator, &search.record))
+            for (long object = function_b8940(cluster, &search.record, &search.first); object != NONE;
+                 object = object_cluster_next_ab((s_record_pool *)g_4de2e4, &search.first, &search.record))
             {
                 if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
                 {
@@ -651,9 +656,8 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
         if (mask & 2)
         {
             search.record = 0;
-            s_object_cluster_iterator &iterator = search.second;
-            for (long object = function_b8a10(cluster, &search.record, &iterator); object != NONE;
-                 object = object_cluster_next_ab((s_record_pool *)g_4de2d8, &iterator, &search.record))
+            for (long object = function_b8a10(cluster, &search.record, &search.second); object != NONE;
+                 object = object_cluster_next_ab((s_record_pool *)g_4de2d8, &search.second, &search.record))
             {
                 if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
                 {

@@ -217,8 +217,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 		up->k = matrix->up.k * k + matrix->left.k * j + matrix->forward.k * i;
 	}
 }
-
-// score 220 (was 220): Frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
+// score 220 (was 220): Frame 0x78 versus 0x6c, early ESI save and basis/position homes remain.
+// Earlier: Frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
 // shared-left output with one exit 233 (two-point gain dropped).
@@ -252,6 +252,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // default copies 283; turn transfers 220; turn transfers plus late zero 220; world-up pointer
 // result 220; world-up parameter order 220. Original body/private helper restored; frame 0x78
 // versus 0x6c and early ESI/basis/position homes remain.
+// Round 132: separate input-up and parent metadata 275; native carriers 276; output-first
+// 275/276; actual header input 275/276; header input plus output-first 275/276.
+// All input-splitting contracts regress; existing producer, late zero and basis roles restored.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -748,6 +751,9 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // reversed adjacent output publications 95; final native word 102.
 
 // Previous forms at 87 and 95: Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// Previous forms at 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// Earlier: Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
+// Earlier note: Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // frame 0x6c agrees; flag/handle carriers and final state stores differ.
 // Target size 225; global optimization off 639; saturation before increment 139;
@@ -787,6 +793,9 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // as a shifted-bit ternary 84 (state tail now retail's sequence), with the bit named before the
 // state test 82; per-arm scale alone 87, shifted 101, named bit 96; named result bit before or after
 // the counters 84. Left: retail's `mov al, 1; test al, cl` and a first `test cl, 1` before `and al, 1`.
+// Output-only result byte/bool/word/dword 84/84/85/85; with definition mask 87/87/88/88.
+// Common counter-output stores with branch saturation, long/dword/short/word 93/93/93/93;
+// common counter-output stores with completion saturation, long/dword/short/word 93/93/93/93.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {
@@ -908,7 +917,8 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 
-// score 151 (was 151): Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
+// score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Earlier: Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // Complete request type 278; scale at each use 278; aggregate sweep 278;
@@ -946,9 +956,17 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // vector 164; complete response vector 185; existing rounding helper 151; response arms and collision fill 361;
 // dot with native reflection vector 164; rounding with reflection products 163; rounding with reflection vector
 // 163; rounding with native query count 154; rounding/count/reflection products 166.
+// Numerator-first quotient 151; uniform sweep products 151; post-query native sweep copy 329;
+// quotient/products and quotient/copy 151/329; early sweep with products/quotient/both
+// 151/151/151.
 // Immutable speed/radius/quotient/all scalars 151/151/151/151; native entry success 397;
 // speed-test-produced success 317; immutable query count and candidate 151; native selected
 // collision record 345 at retail length, with wrong entry frame. All restored.
+// Probe/input/both workspace scopes 151/175/175; complete request library copies 151;
+// probe/input/both scopes with request copies 151/175/175; actual selected-header byte 151.
+// root accessor 151; candidate accessor 151; selected accessor 151; root candidate accessors 151; root
+// selected accessors 151; candidate selected accessors 151; all object accessors 151; all native header
+// 151.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

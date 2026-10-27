@@ -2,6 +2,37 @@
 
 The newest entry comes first.
 
+## 2026-10-26: 9705 functions match
+
+```
+matched 9705 of 11326 game functions (1569273 of 2786206 bytes, 56.32%)
+matched 1162 of 1436 Havok functions (157240 of 290362 bytes, 54.15%)
+```
+
+196 new matches, none lost:
+- @Roasted-Codes's drafts #825–#839, merged as #841: 193 Havok functions and the library functions `0x2d8d80`, `0x319740` and `0x3724f0` match. Some identifiers were renamed to neutral names on merge.
+
+## 2026-10-26: 9705 functions match
+
+```
+matched 9705 of 11326 game functions (1569273 of 2786206 bytes, 56.32%)
+matched 969 of 1436 Havok functions (139357 of 290362 bytes, 47.99%)
+```
+
+No new matches; owners corrected:
+- The 400 unlabelled library rows between `0x2d6fc0` and `0x3202bb`, and `0x372300`, are Havok: decompiling shows they build without link-time code generation and use the standard calling conventions. Their 34 matched functions now count as Havok.
+- `0x183910` and the allocator functions `0x22c390`, `0x22c3e0`, `0x22cb00` and `0x22cb90` are the game's: they build with link-time code generation and use its register conventions. All five were already matched.
+
+## 2026-10-26: 9700 functions match
+
+```
+matched 9700 of 11321 game functions (1567350 of 2784283 bytes, 56.29%)
+matched 940 of 1041 Havok functions (138665 of 234536 bytes, 59.12%)
+```
+
+6 new matches, none lost:
+- Machine 3's batch 131 (#840): `0x85650`, `0x90c80`, `0x1b3600`, `0x216f80`, `0x268510` and `0x2bdd70` match.
+
 ## 2026-10-26: 9694 functions match
 
 ```

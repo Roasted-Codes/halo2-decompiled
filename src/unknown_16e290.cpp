@@ -357,6 +357,7 @@ bool function_44690(s_word_bit_iterator *iterator, long *out);
 // Native output/nested/visited/expanded memory-operation results 194/230/184/267f;
 // output plus visited/expanded 247/279f; scratch results 205f; all results 268f;
 // aligned signed bits divided by eight 241f. Fast baseline 125; all restored.
+// Const byte count/base/word count/all 125 each; union/intersection/expansion/all while loops 125 each.
 // @retail 0x16de20
 void function_16de20(short index, s_16e150_bits const *table, dword *output)
 {
@@ -1415,6 +1416,9 @@ void function_170630(long player_index);
 // scalar channel addresses 7; timer cursor after delta 11; countdown for 7;
 // inline/noinline delta declarations 7/7; noinline update declaration 7;
 // shifted command bit 33; branch timer stores 27.
+// Single current/previous/delta pointers 7/7/7; direct observer array 36;
+// scoped state/time 18; command flags snapshot 7; countdown entry/before delta/split 7/7/7;
+// fixed base pointers 7.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {
@@ -1483,6 +1487,8 @@ struct s_camera_clip_reference_16ebf0
 // homes plus clipping convention remain.
 // Native player receiver 209; input/basis/composition/publication component loops 1165/1161/1157/265;
 // native receiver with input/composition loops 1165/1157; all native copy phases 1210. All restored.
+// Input/axis/output/all order 209 each; point/point-axis order 209/209; cross ji/kj 209/209;
+// input-axis order 209.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

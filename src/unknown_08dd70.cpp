@@ -100,7 +100,12 @@ struct s_handler_slot
 	void *unknown14;
 };
 
-// score 68 (was 67): retail keeps the node pointer in eax and adds 0xc to it before the
+// score 29 (was 47): the handler and gateway blocks still differ: retail keeps a
+// copy of the slot pointer in edx and esi and clears the two back-pointers through
+// the materialized field addresses (add eax, 0xc and add eax, 8), ours stores both
+// through [eax+N]; everything before the handler block now matches (the
+// gateway flag cleared with a one-byte memset; a plain store gives 54).
+// Earlier: score 68 (was 67): retail keeps the node pointer in eax and adds 0xc to it before the
 // compare, ours copies it into ecx and reads [eax+0xc] instead.
 // score 67 (was 67): field-address carriers and post-clear link load still differ;
 // typed handler/gateway/both members 67/67/67; gateway/handler/both byte flags 67/67/67;
@@ -157,7 +162,8 @@ void function_8dd70(void)
 			session->state = NONE;
 			session->value18 = NONE;
 			session->value14 = 0;
-			memset(&session->unknown04, 0, sizeof(session->unknown04) + sizeof(session->observer));
+			session->unknown04 = 0;
+			session->observer = 0;
 		}
 		network_observer_dispose_channels(g_510570);
 		function_81f80();
@@ -182,7 +188,7 @@ void function_8dd70(void)
 				gateway->link = 0;
 			}
 			memset(&gateway->messages, 0, sizeof(gateway->messages) + sizeof(gateway->handler));
-			gateway->initialized = false;
+			memset(&gateway->initialized, 0, sizeof(gateway->initialized));
 		}
 		memset(g_510564, 0, 0x5a0);
 		c_class_93590 *link = g_510560;
