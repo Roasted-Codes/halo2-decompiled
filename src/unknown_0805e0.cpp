@@ -600,86 +600,53 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 90 (was 90): Frame 0x1c agrees; input homes and ret 0x18 versus 0x1c remain.
-// Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
-// Frame 0x1c agrees; records/buffers register contract and cursor/count
-// scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
-// 132; per record totals 150; entry pointer walk 132; three properties do loop 132; frame role
-// names 132.
-// Unsigned short ordinal 111; selected property pointer 111; early remaining-property accounting 137; scalar while 111; cache scan while 111 (fast, retained values-cursor form).
-// Paired source/destination cursors 129; direct property identifier 116; paired cursors with native ordinal 130; complete property-array indexing 152; short-ordinal advancing buffer 116.
-// Round 167: native player view 111; native view/wide ordinal 112;
-// view with record/property/both capacity deltas 125/141/134; original view
-// with record/property/both deltas 125/141/134. Frame 0x1c agrees; input homes remain.
-// Buffer count after scalar group 112; retained-cursor count names 111; four-property base indexing 118; late record advance 116; successful budget scope 111.
-// Native identifier field 111; source-array end 90 kept; activation ordinal 111;
-// field/end 90; field/ordinal 111; end/ordinal 90; all three 90; named end ordinal 90.
-// On source-end traversal: long ordinal/packed values/both 92/90/92; scalar element 90;
-// element with long ordinal/packed values/both 92/90/92; word ordinal 90.
-// Two-use selected buffer 90; with record/property/both capacity deltas 120/135/129;
-// with word record/property/both totals 91/91/94; with native scalar ordinal 92.
-// Record header property-first/reverse/remaining orders 90 each (five forms);
-// name-property buffer-first/type-first/rotated stores 90 each (three forms).
-// On source-end traversal: chained emitted zeros 92; complete late record commit 90;
-// scalar-loop accounting 120; chained zeros with early scalar accounting 126;
-// completed record/buffer totals 115; chained zeros with record commit 92;
-// scalar accounting with record commit 120, with chained zeros 122. Input homes remain.
-// Round 146: records/buffers/record-capacity homes 125/90/90; records-buffers/records-
-// capacity/buffers-capacity/all/with-property-capacity homes 125/125/90/125/125, all restored.
-// Separate advancing record/property/both cursors 120/90/120; distinct record/property/both budgets 126/127/134; both cursors and budgets 135, with advancing buffer 134. Original input and working-state forms retained.
-// On source-end traversal, native three-copy source view 90; with entry cursor/native ordinal/both 91/92/93;
-// native view with actual identifier/identifier and entry cursor 125/125; semantic frame names/native ordinal 90/92.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
 	long *record_count, long *property_count, long *buffer_count)
 {
-	long records_used = 0;
-	long properties_used = 0;
-	long buffers_used = 0;
+	long record_index = 0;
+	long property_index = 0;
+	long buffer_index = 0;
 	for (long i = 0; i < g_4cf978; i++)
 	{
-		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
-		if (entry->flags & 1)
+		if (g_4cf98c[i].flags & 1)
 		{
 			if (record_capacity <= 0 || property_capacity < 4)
 				break;
+			s_player_configuration_cache_entry *entry = &g_4cf98c[i];
 			long values[3];
 			memcpy(values, (byte *)&entry->player + 0x4c, sizeof(values));
-			memcpy(records->identity, &entry->player, sizeof(records->identity));
-			records->type = 0x61;
-			records->count = 4;
-			records->properties = properties;
-			records++;
+			memcpy(records[record_index].identity, &entry->player, sizeof(records[record_index].identity));
+			records[record_index].type = 0x61;
+			records[record_index].count = 4;
+			s_cache_property *record_properties = &properties[property_index];
+			records[record_index].properties = record_properties;
+			record_index++;
 			record_capacity--;
-			records_used++;
-			memcpy(buffers + 0x40 * buffers_used, (byte *)&entry->player + 0xc, 0x40);
-			*(short *)&properties->unknown00 = -3;
-			properties->type = 4;
-			properties->unknown08 = (long)(buffers + 0x40 * buffers_used);
-			properties++;
+			memcpy(&buffers[0x40 * buffer_index], (byte *)&entry->player + 0xc, 0x40);
+			*(short *)&record_properties->unknown00 = -3;
+			properties[property_index].type = 4;
+			properties[property_index].unknown08 = (long)&buffers[0x40 * buffer_index];
+			property_index++;
+			buffer_index++;
 			property_capacity--;
-			properties_used++;
-			buffers_used++;
-			long const *value = values;
-			for (short j = 0; value < values + 3; j++)
+			for (long j = 0; j < 3; j++)
 			{
-				*(short *)&properties[j].unknown00 = (short)(j + 2);
-				properties[j].type = 1;
-				properties[j].unknown08 = *value;
-				++value;
+				*(short *)&properties[property_index].unknown00 = (short)(j + 2);
+				properties[property_index].type = 1;
+				properties[property_index].unknown08 = values[j];
+				property_index++;
+				property_capacity--;
 			}
-			properties += 3;
-			property_capacity -= 3;
-			properties_used += 3;
 		}
 	}
 	if (record_count)
-		*record_count = records_used;
+		*record_count = record_index;
 	if (property_count)
-		*property_count = properties_used;
+		*property_count = property_index;
 	if (buffer_count)
-		*buffer_count = buffers_used;
+		*buffer_count = buffer_index;
 }
 
 #include <xtl.h>

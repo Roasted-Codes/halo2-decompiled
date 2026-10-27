@@ -2879,6 +2879,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // 255.
 // Round 208: per-test result with literal hit/exhaustion returns, bool/byte/short/long 176 each;
 // uniform player record 270; that record with bool/short/long per-test result 270 each.
+// Round 58: literal false at exhaustion 176; hit as `result = true; return result;` with literal/variable
+// exhaustion 176/176 (VC folds the constant result each time, no early BL); found flag breaking out of
+// each loop 281; found flag in all three loop conditions 281. Retail returns BL only at the early exit.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
