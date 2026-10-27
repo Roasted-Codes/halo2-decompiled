@@ -1308,6 +1308,7 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // byte/byte/short/word/long carriers 183/183/196/196/196. Original release and event code
 // restored.
 // Event owner/category/magnitude publication permutations 154/154/154/154/154; location first, owner last and location between owner/scalars 154/154/154. Original event and release code restored.
+// Existing scaler return consumed by impulse call, direct/native-copy/library-copy/early-output forms 200/246/246/200; each with shared damping 200/246/246/200. Original release helper, includes and damping restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

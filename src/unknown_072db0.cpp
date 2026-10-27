@@ -1190,6 +1190,7 @@ long function_1931a0(long count, s_surface_description *variant);
 // native rating record, native role names, native capacity expression, native
 // minimum observations, array minimum observations, capacity expression,
 // inline rating declaration and inline quality declaration 32/32/60/32/32/60/32/32.
+// Native output-record graph; maximum/population/both snapshots; record with maximum/population/both; native address assignment: 32 each (fast control 32). Original output graph and all calls restored.
 // @retail 0x73530
 void function_73530(c_helper_a *helper, void *description)
 {
@@ -1625,6 +1626,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Round 137: SSE flag 755 (file gate failed);
 // inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
 // Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.
+// Read-builder count homes in six meaningful lexical orders, write-builder homes and both builders: 739 each on the retained word-completion/failure graph. Original count names, helpers, predicates and call tuples restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

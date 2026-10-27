@@ -74,7 +74,7 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 153 (was 153): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
+// score 132 (was 153): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
@@ -142,6 +142,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // with paired-counter library clear 305/258, chained counters 284/155,
 // and long changed result 280/195. Exact original logarithm and reciprocal retained.
 // Eager record/restore/final predicates and their pairs/all 303/219/168/291/296/206/276; all plus eager copy gate 293. Original double expression, observations and calls restored.
+// Published entry-field lvalue 132; pass field 153; range field 294; entry/pass 132;
+// entry/range and all fields 290; pass/range 294; published table-field lvalue 153.
+// Minimal entry-field form kept after ordinary confirmation at retail length 972.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -177,9 +180,9 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
         definition = g_4e3b44[*(long const *)parameters & 0xffff].bytes;
         tables = *(byte **)(definition + 0x5c);
         *(byte **)(state + 0x10) = tables;
-        entry = *(byte **)(*(byte **)(state + 0x10) + 4) + first * 10;
-        *(byte **)(state + 0x14) = entry;
-        packed = *(word *)entry;
+        byte *&restored_entry = *(byte **)(state + 0x14);
+        restored_entry = *(byte **)(*(byte **)(state + 0x10) + 4) + first * 10;
+        packed = *(word *)restored_entry;
         next = ((word *)*(byte **)(*(byte **)(state + 0x10) + 0xc))[(packed & 0x1ff) + second];
         pass = *(byte **)(*(byte **)(state + 0x10) + 0x14) + ((next & 0x1ff) + third) * 10;
         *(byte **)(state + 0x18) = pass;
