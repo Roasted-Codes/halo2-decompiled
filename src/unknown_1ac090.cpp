@@ -768,7 +768,7 @@ s_slot_handler_2 g_47dc88 =
 void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
-// score 174 (was 174): Frame 0x80c agrees; actor/result, selection-count and direction homes differ.
+// score 174 (was 174): Frame 0x80c agrees; actor/result/count and direction homes remain.
 // Result first 203; request outer scope 187; role names 181; shared point differences 179;
 // failure result before release 207; shared cross product 174.
 // Count name with shared cross 174; request-output declarations first 174;
@@ -790,6 +790,9 @@ bool function_1f8660(long arg_0);
 // Round 323: vehicle field at each use 174; radius read once 191; shared projections
 // 194; vehicle/radius 191; vehicle/projections 194; radius/projections 213; all 213; radius
 // and projections with native vehicle index 213. Original actor/result/count and direction homes remain.
+// Round 168: Shared complete position with original/split directions and actor/count role names 170
+// each; with entry result 193 each; three scalar coordinates original/split 182/185. Four-point
+// best rejected; snapshot frame 0x81c; opening body restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {

@@ -215,6 +215,9 @@ void function_402b0(long cache_index, long mode)
 // Round 140: Repeated sample count observed once for passes 11/12/13, their pairs and all three; then all with
 // native Boolean selection 202/202/202/202/202/202/202/231 (fast control 202, full 183). Original observations
 // and selection restored; frame, cache/draw and state/API expansion remain.
+// Round 168: All normalized mask producers: long shared/split 202f each; bool shared/split 231f
+// each; byte setup with long shared/split 203f each, bool shared/split 234f each. Fast control
+// 202f; full 183. All source restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

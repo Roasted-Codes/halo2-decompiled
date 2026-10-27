@@ -383,6 +383,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // destination/both 215; destination/defaults/native place values 215.
 // Round 210: implicit type-five zero with complete equal-value type-four producers, first/second/both
 // 187/186/193; each with equal-place chain 187/186/193; reversed chains 193; native place values 193.
+// Round 167: Independent first/second/both type-four workspaces 202/198/203; separate
+// place pair 186; first/second/both with separate place pair 202/198/203; all
+// independent workspaces with native type-four value resets 216. All restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

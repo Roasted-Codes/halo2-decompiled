@@ -786,6 +786,7 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // native pan point 290; separate final state pointer 245 (unchanged reduced preview 245).
 // frame 0x48 agrees; direction preload and length/zero XMM roles, flag RMWs and interpolation differ.
 // Entry flag result 459; depth one 245; native plane construction 248; matrix return 326; point-category conditionals 272.
+// direction preload, length/zero registers and flag stores still differ.
 // Earlier 244 (was 246): direction preload, length/zero registers and flag stores still differ.
 // Earlier 244 (from 246): direction preload, length/zero registers and flag stores still differ.
 // native point state 401p; native pan state 246p.
@@ -795,6 +796,7 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // direction preload, length/zero XMM roles, flag stores and timer differ.
 // Forced dot/plane/tick expansion 247 each; each pair and all three 247;
 // all three plus immutable command pointer and scale 253 (fast base 247).
+// frame 0x48 agrees; projection preload, length/zero
 // Earlier 245 (was 245): frame 0x48 agrees; projection preload, length/zero
 // Earlier 245 (from 245): frame 0x48 agrees; projection preload, length/zero
 // registers and flag stores remain. Intrinsic copies of the normal 245, basis 401,
@@ -803,9 +805,12 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // frame 0x48 agrees; direction preload, XMM roles and flag updates remain.
 // Existing line helpers 368p/371p; fraction-home and output-record combinations 368p/367p/367p.
 // External command record 236p (one executable row); pan/view fraction homes 245/245.
-// Earlier 245 (was 245): direction preload, length/zero registers and memory flag updates remain.
+// direction preload, length/zero registers and memory flag updates remain.
 // Projected output orders yxz/zxy/yzx/zyx/xzy 245/245/388/388/245;
 // default basis up-left-forward/left-forward-up/forward-left-up 248/248/247 (fast).
+// Complete state observations, with cached/live time root 236/236 (one executable row);
+// live scale, live time/scale 450/407; live target, time/target, scale/target, all 264/379/411/457.
+// Earlier 245 (was 245): direction preload, length/zero registers and memory flag updates remain.
 // All three reused direction scalar components, six observation orders 473 each
 // (frame 0x4c, 1724 bytes); complete normal from those scalars, ijk/jik orders 487/487
 // (1664 bytes). Original field observations, plane copy, helpers and float groups restored.

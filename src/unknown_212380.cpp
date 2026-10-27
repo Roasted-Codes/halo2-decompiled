@@ -27,6 +27,8 @@ bool function_212ec0(s_game_variant *arg_0, long arg_1);
 // 386/444/385/384; the same four with forced copy expansion 386/444/385/384.
 // All restored; gains at most two, and the 384 form has a farther executable sequence.
 // Case orders 2415789/2451789/2457189/2457819/1452789/1257489/1724589/1824579 417/417/416/418/389/387/386/384.
+// Round 169: Public initializer ordinary/forced boundaries 386/386; each low specialization
+// 386, high group 386, forced boundary with entry output 386. Original calls/declaration restored.
 // @retail 0x212380
 long function_212380(long arg_0, long arg_1, byte *arg_2)
 {

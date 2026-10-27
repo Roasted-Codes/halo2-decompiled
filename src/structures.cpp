@@ -241,7 +241,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
-// score 185 (was 185): exact 0x58 frame; BSP/section registers and range/plane homes differ.
+// score 185 (was 185): Frame 0x58 agrees; BSP/section, range/plane homes and vertex joins remain.
 // frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
 // Earlier: exact 0x58 frame; BSP/section registers and range/plane homes differ.
 // Frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
@@ -296,6 +296,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // dropped; original result, defined fetch failures and all call roles restored.
 // Round 324: existing point setter 231; cluster reads at use 216; setter/cluster 245; instance receiver at use
 // 188; setter/instance 228; both receivers 220; setter/both 251; native coordinate initializer 231.
+// Round 168: Separate source/query points, entry/default initialization: byte 233/233, bool
+// 222/222; CRT byte 233/233, bool 222/222. Body, helper, in-place transform and include set
+// restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -429,6 +432,8 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Safe signed transform count and direct region-record expression 236 each;
 // section/range/reference/index/parts storage names and combined signed-count homes 236 each.
 // Extraction-helper inline/noinline 236/236; unsigned/short/word vertex ordinal 236/248/248; initialized vertices/node/both 303/243/304. All helper declarations restored. Region schedule and model/range/vertex homes remain.
+// Native surface-group/range/both roots through reused byte offsets 269/241/300;
+// reference/group-reference/range-reference/all roots 247/294/265/329; all with bool result 320.
 // Bounds/node/part table fields at every use 284/236/243; bounds-node/bounds-part/node-part
 // graphs 258/286/243; all three/all three plus part-count field 239/239. All restored.
 // @retail 0x14a8e0
