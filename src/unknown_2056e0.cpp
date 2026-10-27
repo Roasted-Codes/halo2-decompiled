@@ -163,6 +163,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Virtual output pointer/mutable receiver/both 184/184/184; uniform angular terms alone/with
 // pointer/receiver/both 184 each; new query/product contract with distinct first result 194.
 // Aligned query/rotation overlap remains.
+// Wide rotation with query publication columns 021/102/120/201/210 219/221/221/219/221;
+// rows 012/021/102 221/219/217. Frame recovers but scores regress; original retained.
 // Coordinated body-scalar/limiter-scalar/query-output names and combinations
 // 184/184/184/184/184/184/184/184; last form also makes repeated body scalars const. All restored.
 // Round 168: Complete native converted matrix by fields/aggregate 270/270; with broad rotation
@@ -172,6 +174,7 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Round 333: Ordinary limiter/cap-first/both contracts 184/184/184; cap-first/both with broad rotation 221/221; ordinary limiter/cap-first/both with ordinary query expansion 184/184/184. Broad forms recover frame 0xc4 but regress; all original helpers, matrix scopes and calls restored.
 // Complete world-inertia producer with matrix/state pointer/reference inputs, forced 233 each;
 // ordinary matrix/state pointer/reference 462/468/462/468. Original query boundary restored.
+// Round 153: native virtual query value/const-value initialization 184/184; assignment 275/275; each with broad rotation 221/287/221/287. Initializers retain the 0x94 frame; broad initialization recovers 0xc4 but regresses. Original virtual output, helpers and scoped rotation restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

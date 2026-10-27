@@ -121,6 +121,10 @@ void *c_game_havok_memory::allocate_aligned(long alignment, long size, long memo
 #pragma intrinsic(_ReadWriteBarrier)
 // score 19 (was 19): retail tests the end of the block with >= and gives the second block its own
 // deallocate, ours shares the first and the second.
+// Second return 19; first+second returns 19; address local 19; second concrete 19; second concrete
+// with third base 19; primary/second branch inversions 19/19; third-before-second 19; fallback local 19;
+// second predicate 19. First start/end 41; with second return/concrete/end/receiver 41/41/42/41;
+// inclusive tests and inclusive returns 42/42; first start/end without the barrier 41.
 // @retail 0x147240
 void c_game_havok_memory::deallocate_aligned(void *address)
 {

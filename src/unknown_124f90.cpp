@@ -1227,6 +1227,13 @@ long function_2197f0(real gain);
 /* a sound class's gain in decibels: its fade, ducked by the current and the
    previous ambience */
 // score 149 (was 149): Frame 0xc agrees; early table load, gain home, delayed ESI save and fade scheduling differ.
+// Retail keeps gain in a stack home from entry (stored before the flag test, EDI keeps a copy for the
+// plain returns), the helpers read it there with no copy, and each sum is stored in that home.
+// Round 72: decibels_add's second parameter a const reference 168 (retail's home store and EDI copy
+// appear; the first-argument gain is still copied to a temporary, sums go to another slot); both
+// parameters const references 173 (655 bytes: the tag gain is read in place); first parameter a const
+// reference 152; the add done in place on its first parameter 147; `*(real *)&gain +=` with a real
+// interpolation 183; `(void)&gain` 149; the class index used directly 162.
 // Frame 0xc agrees; early fade-table load, entry gain home, delayed ESI save and fade scheduling remain.
 // Common gain result 172; early system receiver 217; outer elapsed 162; hold-first branches 206; assigned clamps 165.
 // Unsigned gain 162; entry gain declaration 162; disabled-ducking early return 172;
