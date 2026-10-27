@@ -110,6 +110,11 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // x centre as a memory operand and loads the z centre; ours the reverse). On that: x row product first
 // 5; cast centre for the positive point only 5; negative point first 230; literal quarter 20; mutable
 // spacing 5. Match-only (added result byte); restored.
+// Actual category defaults (magnitude-calibrated): entry zero/native category 408; entry zero/short category 425.
+// admitted zero/native category 419; admitted zero/short category 436.
+// entry zero/native/direct clear 397; entry zero/short/direct clear 414.
+// admitted zero/native/direct clear 408; admitted zero/short/direct clear 425.
+// All executable forms restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

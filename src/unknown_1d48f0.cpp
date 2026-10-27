@@ -42,7 +42,7 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 321 (was 350): Aligned frame 0x1d4 agrees; the sample count now matches (retail's
+// score 321 (was 321): Aligned frame 0x1d4 agrees; the sample count now matches (retail's
 // setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack); optional input
 // registers (esi/edi swapped), scalar homes and selective helper expansion remain.
 // Earlier: Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
@@ -98,6 +98,11 @@ const dword g_455978[81] = {
 // Then: volatile casts dropped from the radial length 388 (before the count change); length terms
 // swapped 320; component index as a ternary 427; k cleared before the length, with or without its
 // term 321/321; named lower/upper pointers in the bounds loop 321.
+// Shared radial producers on the accepted count graph: in-place radius scale 321; complete blend setter 321.
+// both shared producers 321; blend factor before normalization 331.
+// factor with radius scale 331; factor with blend setter 331.
+// all three producers 331; complete normalized-vector setter 321.
+// All executable forms restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
