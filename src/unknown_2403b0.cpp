@@ -3,6 +3,7 @@
 #include "engine_peer.h"
 #include "unknown_19ec40.h"
 #include "unknown_2420a0.h"
+#include "bit_vector.h"
 #include "game_engine_events.h"
 
 // @flags /O2 /arch:SSE /Gr
@@ -30,7 +31,34 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 	return !(table->flags[team] & 1);
 }
 
-// score 190 (was 190): frame 0x3c agrees; object-pool reload, completion
+// score 146 (was 190): frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
+// it, the completion bits use other registers, and the final predicate's layout differs. Kept: the two
+// completion bits set through byte_flags_set (retail stores the flag byte twice), 190 -> 146.
+// Tried on the 190 body: scoring team word 187, long 214; blocked long/byte 190/190; existing flag helper
+// force-inline 190; returned point 199; marker bits 190; option scope 190; read-only unit/type result
+// 190/190; scoring team at call 226; completion event prepared first 193; marker/slot entry lifetimes
+// 190/190; success-result predicate 193; type result plus event preparation 193; read-only helper input
+// 190; table reference 190; native team parameter 190; result-first predicate 192; flag byte sample 190;
+// direct capped result 190; cap and table reference 190; option guard order 190; native player record
+// 190; scoring-team field binding 190, both 190; increment counter binding 202; decrement binding 190;
+// both counters 202; marker-team value 194; native player with both counters 202; predicate
+// long/short/byte/signed-byte returns 189/190/190/190; byte predicate input 190, with long/short/byte
+// results 189/190/190; native unit/weapon/both header references 190 each; external carried-index,
+// selected-slot or both field bindings 190 each; initializer return used directly 311; external options
+// record reference 190; permission result 190; fallback permission, present-unit, eligible-weapon,
+// present-slot, present-marker and unit/weapon scopes 190 each; option once 190; negative-three
+// addition 190; default-NONE/explicit-arm team results 191/190; reversed completion bit order 190;
+// in-place limit 190; two-use stored-short ticks 190; limit plus stored ticks 190; default-NONE team plus
+// negative-three addition 191; fresh player/unit/slot reads 254/190/271; player-unit/player-slot/
+// unit-slot/all three 254/329/271/329; unit-index field at each use 195; team-first existing predicate
+// with original/const/native-team/both inputs 190 each, long/short/byte/signed-byte results
+// 189/190/190/190; event initialization between the completion bits 183; initialize/first bit/cause/
+// second bit 163; first bit/initialize/cause/second bit 183; both preparation steps first 193; separate
+// event buffers 196/160/183/193 (163/160 grow the frame to 0x60); native flag-array and flag-element
+// predicate inputs with logical/complement extraction: bool 190, long 189; separate noinline
+// declarations of 0x101280, 0x15b2f0, 0x138880, 0x138860, 0x15fe70, 0x244680, 0x197210 and 0x242660:
+// 190 each.
+// frame 0x3c agrees; object-pool reload, completion
 // flag stores and final predicate layout differ. Scoring team word 187
 // (three-point gain rejected), long 214; blocked long/byte 190/190; existing
 // flag helper force-inline 190; returned point 199; marker bits 190; option
@@ -147,8 +175,8 @@ void __stdcall function_2403b0(long player_index)
 			g_51ec80->e[slot] = (short)ticks;
 			if ((short)ticks == limit)
 			{
-				g_51ec80->flags[slot] |= 8;
-				g_51ec80->flags[slot] |= 1;
+				byte_flags_set(&g_51ec80->flags[slot], 3, true);
+				byte_flags_set(&g_51ec80->flags[slot], 0, true);
 				game_engine_event_initialize_inline(&event, 10, 15);
 				game_engine_event_set_cause_player(player_index, &event);
 				function_19eb90(&event);
