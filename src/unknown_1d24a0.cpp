@@ -151,6 +151,14 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // 31/43,31/63,43/63/all 1004/991/980/1018. Existing shared scale on the retained response graph, with shared
 // changes and consistent flag reads 1199/1201/1188/1200; all restored. Shared linear changes recover frame
 // 0x1d4 at 960; input and record homes still differ.
+// Matrix output in dead body rotation, alone/with first/third/both response outputs
+// 931/986/959/987; in dead marker rotation 946/978/952/985. Original separate product
+// matrix, response outputs, helper calls and complete body restored.
+// Native current record value/point setter/both 1003/935/1009; live option word
+// 1007, with record/point setter/both 990/1005/985; full component aggregate 985.
+// Record value fixes entry registers, point setter fixes the second byte home; all restored.
+// Record memmove, center/input/initial-vector library copies and combinations
+// 999/920/920/920/999/999/920/999; record copy recovers entry registers but frame grows to 0x1f4. All restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

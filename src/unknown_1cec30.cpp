@@ -2198,6 +2198,8 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // and matched sample boundary preserved; first normal XMM roles, early velocity loads and property-zero lifetime remain.
 // Round 342: Shared normal/velocity length 123; shared inverse 162; both 168; outer sample vector 109;
 // vector plus length/inverse/both 123/162/168; all with one scan ordinal 168. Exact-length inverse forms regress; originals restored.
+// Round 201: Successive normal/velocity sum workspace 109; with shared length/inverse/both
+// 115/109/123; the same four with persistent sample 109/115/109/123. Original accumulators restored.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {
@@ -2648,7 +2650,8 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 168 (was 168): Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
+// score 135 (was 168): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
+// Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
 // staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
 // Force-inline linear/angular/both getter declarations 175 each; initialized linear/angular outputs 199 each;
@@ -2680,7 +2683,13 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 332 (reduced control 128): active/notification/impulse inline boundaries and
 // all their combinations 128 each; state/change inline boundaries 132/678. All restored.
 // Joint active/notification/impulse inline boundaries plain 168/677; restored.
+// Round 345 (controlled preview 168): complete linear/angular/both squared terms
+// 173/168/173; iteration terms/paired first sums/immutable terms/shared terms/shared first sums
+// 173/173/173/173/173. Full-image save staging and getter homes remain.
 // Round 152: Shared angular inline/force/out-of-line declarations 168/168/168; shared angular call with those contracts 177/177/236; shared pair with angular force/inline 238/238. Forced forms lose a matched caller; all declarations and body restored.
+// Round 147: admission mask 161; state masks 135; both masks 194; vertical product 168;
+// admission/product 161; state/product 135; both/product 194; guarded type mask 168; state zero
+// tests 135. Keep both native state zero tests; every other form restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2691,7 +2700,7 @@ void function_1ced00(s_havok_component *component)
         change.j = 0.0f;
         change.k = 0.0f - g_510c54->rate * g_51e9c4->unknown0;
         function_bba20(component->object_index);
-        if (!TEST_FIELD_BIT(component->flag2) &&
+        if ((component->unknown04 & 4) == 0 &&
             ((1 << ((s_component_transform_header *)g_4e0300->data)[component->object_index & 0xffff].type) & 2))
             function_f7ed0(component->object_index, &change);
         for (long i = 0; i < component->rigid_bodies.size; i++)
@@ -2726,7 +2735,7 @@ void function_1ced00(s_havok_component *component)
             }
             havok_component_rigid_body_state_update(i, component);
             if (havok_component_rigid_body_get(i, component)->body_is_simulating().m_bool &&
-                !TEST_FIELD_BIT(component->flag2) &&
+                (component->unknown04 & 4) == 0 &&
                 havok_component_rigid_body_get(i, component)->m_motion->kind_code() != 6 &&
                 !havok_component_rigid_body_get(i, component)->m_fixed)
                 havok_component_rigid_body_linear_velocity_change(i, component, &change);
@@ -2792,6 +2801,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 132: output-first converter, with matrix reference, output pointer return, and
 // output-first return 206/206/206/206; split rotation/translation, output-first split,
 // split return and output-first split return 206/206/206/206 (resolved previews).
+// Round 345: Shared sequential body index/count/first-link workspaces 299/208/302;
+// index+count/index+link/count+link/all/all with child ordinal 217/213/302/300/300.
+// Original per-side lifetimes, frame 0xb4 and contributor interface restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

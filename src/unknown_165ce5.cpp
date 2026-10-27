@@ -1379,7 +1379,12 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 241 (was 241): frame 0x28 vs 0x2c, unit/mode and look-output homes differ; the look
+// score 241 (was 241): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
+// Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
+// reloading the time globals) and esi/edi saved before the unit test (retail after it) differ.
+// frame 0x28 vs 0x2c, unit/mode and look-output homes differ; the look
 // reciprocal (retail divides twice, reloading the time globals) and esi/edi saved before the unit
 // test (retail after it) differ.
 // Round 55 kept: the speed (5th argument) and acceleration limits passed in retail's roles (15/6 speed,
@@ -1401,6 +1406,15 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Indexed user-record reads at every access 550; with live flags 544; direct channels 560;
 // both 538; complete coefficient selection with those four forms 550/544/560/538.
 // Complete entry spring phase, override-only receiver, entry look outputs and both 250 each;
+// narrower aiming pair within that phase, with the same four storage combinations, 254 each
+// (fast control 250, full baseline 248). Original phase scopes and all five smoothing calls restored.
+// Explicit empty-unit return with the user receiver before/after admission and scoped
+// bool/byte/short/long storage 243/243/434/429 and 555/555/558/549 (fast control 243).
+// Original entry guard, receiver and state types restored.
+// Round 187 paired normalized expression parts 243; yaw consumed before pitch production
+// alone/with named parts 496/496; fresh view fields alone/with parts 442/442;
+// interleaved fresh fields with/without parts 510/510; all plus signed flags 510
+// (fast control 243, full baseline 241). All original expressions and calls restored.
 // narrower aiming pair within that phase, with the same four storage combinations, 254 each.
 // Original phase scopes and all five smoothing calls restored.
 // Round 93 (fast base 243): look angles as a two-element local 239 (retail's -0x2c/-0x28 homes,

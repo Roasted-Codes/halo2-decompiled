@@ -178,6 +178,8 @@ static __forceinline long game_seconds_to_ticks_round(real seconds)
 // losses each); nested class admission 118; real class-word mask with direct query 135;
 // state/result/flags/both names 118/118/118/118; early object/source/platform/all stores
 // 118/135/118/133; swapped object-source/source-platform stores 118/118.
+// Round 187 named duration/source expression parts and both 110/110/110; complete fresh
+// tag lookup alone and with those parts 158 each; all plus signed native flags 158. Restored.
 // Round 93: with 0x21d110 starting its sounds inline (state in EAX; 0x21d110 204 -> 52) the request
 // moves to EDX: 135 at 470 bytes, each caller one line off. A noinline declaration of 0x221810 in
 // this file leaves the first lookup expanded; one ahead of its definition calls both lookups

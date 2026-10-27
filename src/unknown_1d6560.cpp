@@ -215,6 +215,11 @@ struct s_physics_component_walk : s_havok_component
 };
 
 // score 275 (was 275): Frame 0x1c versus 0x18; current/entry/status homes and next-group spill remain.
+// In the body loop retail keeps the policy byte at frame 2 and the availability byte at 3
+// (available in dl on the replacement path, reloaded from its byte otherwise; replaced in cl);
+// ours swaps the two bytes and keeps available in memory, replaced in dl. Round 57: availability
+// named to sort after the policy, the policy named to sort first, both: 275 each (same layout);
+// available declared before replaced 303 (898 bytes); both flags declared before the body lookup 300.
 // Earlier: frame 0x1c versus 0x18; current/entry roles and next-group spill differ.
 // Reduced trials: availability first 303; immutable policy 275; read-only model 275; read-only body 275;
 // native availability 297; native application 305; byte first body 298; read-only sections 275.

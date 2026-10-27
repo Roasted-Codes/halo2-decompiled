@@ -1172,7 +1172,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 104 (was 104): frame 0x1144 and extent agree; file displacement (retail's product in ECX
+// score 104 (was 104): frame 0x1144 and extent agree; file displacement, request-copy, the first read
+// call's handle copy and the write-success join remain.
+// frame 0x1144 and extent agree; file displacement (retail's product in ECX
 // and `lea ebp`), the task zeroing/path/counter registers, the first read call's handle copy, the
 // write-success join and retail's 1 held in ESI for two unmerged slot-range compares remain.
 // Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
@@ -1238,6 +1240,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // loop padding shifts); handle as an s_file_handle member 104; on the kept form: completion flag
 // declared first 104; size limit before the path 249; file pointer after the path 106;
 // validity declared at the loop top 104.
+// Round 187 actual handle-field reference at request/value/test groups, every nonempty
+// combination 104 each; full reference with immutable size limit 104. All restored.
 // Round 93: write success set by its own test 166 (914 bytes: every join matches; what is left is
 // retail's 1 held in ESI for two unmerged slot-range compares and the later slot test, and the
 // handle copy at the close call instead of the size query); that with the range test joined to
