@@ -2991,9 +2991,11 @@ void function_e4c10(long arg_159e6d)
 
 	if (biped->physics_mode == 3)
 	{
-		biped->unknown3f9 = 0;
-		biped->unknown3f8 = 0;
-		function_1ed340((byte *)biped + 0x3ec, arg_159e6d);
+		byte *ragdoll = (byte *)biped + 0x3ec;
+
+		ragdoll[0xd] = 0;
+		ragdoll[0xc] = 0;
+		function_1ed340(ragdoll, arg_159e6d);
 		function_e18d0(arg_159e6d, true);
 	}
 }

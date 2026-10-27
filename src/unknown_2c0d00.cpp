@@ -1139,7 +1139,13 @@ bool __stdcall function_26ccb0(s_pathfinding_data const *pathfinding, s_obstacle
 bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
-// score 444 (was 444): Frame 0x11c versus 0x10c; radius, zero and metadata/endpoint homes still differ.
+// score 444 (was 444): frame 0x11c versus 0x10c, 1740 bytes against 1746. Ours copies the whole step
+// (`rep movsd`) where retail reads it through a pointer and keeps only its type and link in stack slots;
+// retail places the count <= 1 arm at the end, keeps 0 in EBX for the whole function, compares the
+// loop indexes against the count on the stack (ours holds it in bx) and forms the output element at
+// the emit point. The distance test is retail's inlined expansion (one shared (z*z + y*y) + x*x sum),
+// not 0x210a30, whose two branches sum differently.
+// Frame 0x11c versus 0x10c; radius, zero and metadata/endpoint homes still differ.
 // Earlier at 453: Frame 0x10c and exact extent agree; radius, persistent zero and metadata/endpoint homes remain.
 // Earlier: Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
 // Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
@@ -1216,6 +1222,21 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 93 (fast base 453): `count > 1` arm first 466 (retail's branch placement); with a short loop
 // index 475; with the source pointer formed before the loop 466; all three 475; output element
 // formed at the emit point 518 (1692 bytes; aligned differences 604 -> 532).
+// Round 187 selected/emitted point receivers and both 469/472/530; existing world-point
+// conversion helper alone/selected/emitted/both 515/526/492/505; full form with
+// actual selected-element reference 505. All original receivers and conversions restored.
+// Existing tangent/candidate/corner inline declarations, their pairs/all, and all
+// three noinline declarations 453 each. Original declarations and body restored.
+// Current/selected/both native record values 461/464/469; with word outer index
+// 444/461/454; ordinary output index with current/selected value 462/461. Current
+// record value and word outer index 444 plain kept, 1740/1746 bytes; other forms restored.
+// Round 62: the distance test through 0x210a30 730 (called, not inlined: 1478 bytes); with a
+// forceinline declaration here 730; with `inline` on its definition 541 (inlined, but 0x1f45c0 then
+// inlines it too and stops matching; 0x210850 stays called); data as default plus if 444; the step
+// as a const reference 490 (aligned 443 -> 342, query in ecx and frame 0x104 as retail's entry); plus
+// the count > 1 arm first 475 (aligned 339); plus the output element at the emit point 506 (aligned
+// 318); plus a plain output index 551 (aligned 316). The reference form is the lead: it needs retail's
+// saved type/link slots and the stack-compared count to recover the length.
 // Round 227: Mutable current record, iteration assignment/CRT, traversal assignment/CRT,
 // immutable current-step home and traversal current-step assignment/CRT 444/444/444/444/444/444/444/444. All restored.
 // Final source/emitted/both native coordinate values 476/484/557;

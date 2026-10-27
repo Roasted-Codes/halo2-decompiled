@@ -675,7 +675,16 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 282 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// score 277 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// Round 141: the memory loop is the existing joint_decline (0x26ed40) inlined in retail (test through the
+// cached actor, body re-derived, participant index re-read per store), BLOCKED-BY 0x26ed40: its /Ob1
+// file keeps it out of line (a call there 317/343). The tail block (flag 9 clear, as 0x1c7bb0/0x1e3920
+// write it) takes one fresh actor lookup as retail does: 277 (a shared helper in slot_handler.h gives
+// the same, but any new inline function there costs 0x73360). `value` is a bool in retail (pushed
+// through to 0x203ed0 unconverted, tested as a byte): 275 with it, but src/unknown_1bba20.cpp declares
+// the parameter long (MiniMax file).
+// Round 139's actor local + walk helpers with the bool and the shared tail 306 (942 bytes, aligned 114),
+// with the memory test through the local 299 (974 bytes) or re-derived and per-store reads 304.
 // Round 139: retail keeps the actor pointer in EBP from the entry (slot loop, current store, 0xa/0x7c
 // tests, prop-list clear, iterator compare, 0x3f4/7/0x1c/0x18/0x54 reads) and re-derives it from the
 // pool and the saved offset only in the memory-slot body, the prop walk start, the inlined 0x1e1250,
@@ -826,10 +835,11 @@ void __stdcall function_1e1a00(long actor_index, long value)
 			}
 		} while (++i < 3);
 	}
-	if (actor_get(actor_index)->unknown009)
+	s_actor_view *actor = actor_get(actor_index);
+	if (actor->unknown009)
 	{
-		actor_get(actor_index)->unknown009 = false;
-		*(long *)((byte *)actor_get(actor_index) + 0x10) = g_510c54->game_time;
+		actor->unknown009 = false;
+		*(long *)((byte *)actor + 0x10) = g_510c54->game_time;
 		--*(short *)((byte *)g_4f55d0 + 0x36a);
 	}
 	record_pool_release(g_4f55f0, actor_index);
