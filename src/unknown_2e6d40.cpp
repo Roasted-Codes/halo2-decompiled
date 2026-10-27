@@ -20,6 +20,10 @@ void lane_b_bv_agent::cleanup()
 	delete this;
 }
 
+// score 2 (was 2): the parent and placement stores are reversed;
+// table first 20, placement input 2, wrapper capture 44, early result
+// declarations 2; const child forms give the same scores. Shared parent
+// first 0 loses a match.
 // @retail 0x2e6d70
 lane_b_bv_agent::lane_b_bv_agent(body_2ea940 const *a, body_2ea940 const *b, lane_a_dispatch *const *input, void *manager) : lane_a_agent_base(manager)
 {
@@ -187,6 +191,10 @@ void lane_b_bv_agent::get_penetrations(body_2ea940 const *a, void const *b, void
 	timer_add_2ebc80("Et");
 }
 
+// score 2 (was 2): the parent and placement stores are reversed;
+// placement input 2, wrapper capture 47, early result declarations 2,
+// value initialization 2; const child forms give the same scores.
+// Shared parent first 0 loses a match.
 // @retail 0x2e7710
 void __cdecl function_2e7710(body_2ea940 const *a, body_2ea940 const *b, lane_a_dispatch *const *input, void *collector)
 {

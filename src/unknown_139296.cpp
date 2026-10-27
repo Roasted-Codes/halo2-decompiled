@@ -388,6 +388,9 @@ bool function_22acb4(long player_index);
 // Round 331, retained third-type order 231: first-enum orders 248/284/428/482/842
 // 192/193/284/283/189f; total second enum 234f; both enums 235f;
 // all mask declarations at entry 165f. Extra spill remains; all eight restored.
+// Round 243: Signed source flags char/short 165/164; native second 204/203, third
+// 270/269, both 287/286. The one-point length-only form is rejected; original body
+// restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

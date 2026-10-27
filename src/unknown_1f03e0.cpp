@@ -571,6 +571,10 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Round 183 complementary skip decision bool/byte/short/long 182 each; each with consistent
 // old-up field pointer 309 (fast), losing the caller match. All restored; initial dot
 // displacement bytes and rotation schedule remain with EDI state/EBX forward preserved.
+// Round 245 (fast): Shared initial/rotation alignment workspace 288; with cosine complement,
+// both one-use input aliases removed, or both 183/183/180; common normalization result alone,
+// with complement, with alias removal, or all 183/180/180/288. Two-point best rejected;
+// matched caller preserved. Direct-dot displacement bytes and rotation SIMD lifetimes remain.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {

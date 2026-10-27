@@ -2525,7 +2525,7 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 313 (was 313): Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
+// score 177 (was 235): Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
 // frame 0x104 versus 0x100, incoming point/up eligibility and record/call setup remain.
 // frame 0x104 versus 0x100; point/up eligibility and record/call setup remain.
 // Placement name 345; request name 345; retained decal seed pointer 313;
@@ -2542,6 +2542,11 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // Round 123: Native point/up/forward/all input references 313 each; all references/direct decal radius 344. All pointer contracts and sole caller restored.
 // Decal velocity at entry/created-object guard/native node admission/active cases by value/immutable sound
 // record 313 each; direct default flag 322; position before origin/case order plus velocity lifetime 313/313.
+// With the matched light call: native light node/radius argument/both 177/203/286;
+// uniform live decal seed 248, with native node/radius/both 190/208/277;
+// both native attachment nodes with radius argument 286. Callers and light callee checked.
+// Native light-node result 177 at 1330/1328 bytes, kept after ordinary full check;
+// every other form restored. No call expression or input value changed.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -2621,7 +2626,7 @@ void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f 
 	case 'ligh':
 		if (effect->object_index != NONE && !detached)
 		{
-			short node_index = location->node_index == NONE ? NONE : location->node_index & 0x7fff;
+			long node_index = location->node_index == NONE ? NONE : location->node_index & 0x7fff;
 
 			function_c0350(part->tag_index, effect->object_index, node_index, &location->matrix.up, &location->matrix.position, &location->matrix.forward, scale);
 		}
@@ -2670,7 +2675,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 153 (was 153): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
+// score 152 (was 152): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
 // frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
@@ -2706,6 +2711,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // expression 153 (bounds loaded first, but the span is formed before the fraction, and the
 // helper itself stops matching); with the factors swapped 153; radius declared at function
 // scope first/after the definition 153/153 (slots unmoved).
+// Lower-bound workspace at location/part/entry 152/152/152; paired lower/radius
+// workspaces at location/part/entry 152/152/152; iterator with both at entry 152;
+// all four scalar workspaces at entry with role names 152. Initializations unchanged.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {

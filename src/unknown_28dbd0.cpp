@@ -130,6 +130,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 177: Consumed-axis complete output by assignment/aggregate 287/287; native returned output with
 // pointer/reference axis 297/297; complete scalar/cross role names 186/186; early cross storage
 // with original/named scalars 186/186. Frame 0x11c versus 0x118 persists; all original code restored.
+// Round 243: Delayed-sine schedules 187/187/180/212/209/212/209; output loop 230; scalar
+// trig contracts 227/187/224/191. The 180 form fixes frame only, gains six and is
+// rejected; 209 fixes frame and request homes. Original helper and body restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {
