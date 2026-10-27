@@ -588,6 +588,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Round 204: Consistent repeated original-up field pointer/reference before settings
 // or after settings 309/309 each; active-entry or after ground-up initialization 196/196 each
 // at retail length. Original field reads restored; direct-dot displacement and SIMD schedule remain.
+// Round 155: Existing flag predicate: forced bool shift/mask, ordinary byte, ordinary bool
+// shift/mask, forced word/long/signed byte: 182/182/182/182/182/182/299/182. Original byte predicate and complete vector body restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {

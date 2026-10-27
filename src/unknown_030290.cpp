@@ -278,6 +278,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 192: five other internal transform pointer-parameter orders 195 each; reverse order
 // with actual camera/point/both reference inputs 195 each. Every definition/call binding,
 // original snapshots and full body restored; frame 0x30 versus 0x2c remains.
+// DL round 156: uniform final projection products, all/origin/displaced/const 195 each;
+// projected origin/displaced/both aggregate/both component inputs 197/196/197/197.
+// Frame 0x30 and original transform, inverse defaults and expression trees restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

@@ -1339,6 +1339,8 @@ extern bool g_4ed39d;
 // its complement 198/198/209/215. Raw 169 adds arithmetic absent from retail, aligned edits 66 to 72;
 // original producers restored. Menu-byte homes and dialog joins remain.
 // Round 153: shared indirect load only 184; game-lobby/game-main/lobby-main constructor-and-load joins 195/195/190; corresponding partial indirect-load joins 184/184/184; shared load with direct constructor loaders 184. Original branch-local publication and both inherited qualifications restored.
+// Round 155: Deferred native message declaration/partial initialization at game/lobby/main
+// consumers, their pairs/all, and common selection boundary: 225/215/215/233/233/224/220/228. Original publication lifetimes restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
