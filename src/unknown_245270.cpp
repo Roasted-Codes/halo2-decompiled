@@ -346,6 +346,10 @@ void function_245400(s_source_245400 const *source, long index,
 // point workspace placement ties each. Original scalar inputs with separate native
 // rotation output copied before/after point transform 193/211, both declaration
 // scopes; direct final output with initial copy/branch results 193/229.
+// Round 225: uniform primary-index/surface/both observations 208/203/208;
+// each with the material table read at every use 217/213/209; complete at-use
+// graph with signed/unsigned native low-word fields 209/209. Surface-only
+// grows four bytes; no qualifying gain. Original receivers and observations restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

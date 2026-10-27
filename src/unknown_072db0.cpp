@@ -1639,6 +1639,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Read-builder count homes in six meaningful lexical orders, write-builder homes and both builders: 739 each on the retained word-completion/failure graph. Original count names, helpers, predicates and call tuples restored.
 // Round 343: Native request identity via library/aggregate copy 747/747; with real descriptor count 792/792;
 // terminal candidate reuse 742/742; count plus terminal reuse 836/836. All restored; original completion failure and word group remain.
+// Initial-pass signed-word group/availability/both/clears/group-clears/availability-clears/all
+// 752/761/764/737/752/761/764; all initial-pass unsigned-word indices 764.
 // Round 248: Complete returned-property extent and received total, signed/unsigned
 // with indexed access and before/after accumulation 737/754 each; native property
 // cursor with the same pairs 737/760 each. Original bound and accumulation restored.

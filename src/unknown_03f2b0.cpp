@@ -1441,6 +1441,8 @@ struct s_133f70;
 // Round 191: Query-output flags/nodes/count workspace names, all seven combinations,
 // each 213; all three with projection-array name 213. Expanded control 213.
 // Original outputs, projection array and executable body restored.
+// Round 224: Signed-short query count/failure count/derived-slot domains, seven combinations,
+// then all with short entry ordinal 368/216/367/229/364/229/364/354 fast. Original count/compaction widths restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

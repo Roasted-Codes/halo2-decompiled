@@ -209,6 +209,9 @@ struct s_block_candidate
 // reference 370; both candidate references 370; insertion/allocated references 370;
 // scan/allocated references 370; all object references 370; all references/readonly block/policy
 // inline 370; isolated policy inline 370. All executable forms restored.
+// Round 226: Native inserted candidate initializer 387; zero-initialized best 398; both 398;
+// native deletion iterator initializer 370; insertion/iterator 387; best/iterator 398;
+// all three 398; all with entry best initialization 417. Frame/page-tail homes remain.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

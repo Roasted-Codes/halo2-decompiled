@@ -1091,6 +1091,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // Round 376: Independent child cursor/receiver/both entry declarations 213/213/213; native
 // request with cursor/receiver/both 211/211/211; both with native request and positive/negative
 // child bit stores 340/340. Original lifetimes and stores restored.
+// Round 223: Real request parent aggregate/assignment receivers 235/238; with child bit stores
+// 369/255; location receiver 230; both aggregate/assignment 244/247; location with child stores 250.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

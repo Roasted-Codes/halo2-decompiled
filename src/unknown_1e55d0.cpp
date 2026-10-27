@@ -73,6 +73,8 @@ static __forceinline long real_to_long(real value);
 // Position yzx/zxy/zyx 353/353/353 (plain); no qualifying executable gain.
 // Native output velocity 369; orientation 353; velocity/orientation 369; control fields 353;
 // velocity/control 369; orientation/control 353; all fields 369; all fields with one time-step observation 374.
+// Round 223: Complete shape decision result bool/byte/short/long, declared at its producer
+// or at entry, all 364 (1148 bytes); common flag publication restored.
 // Round 148: shape reads at every use 374; body-shape reads at every use 353; handle reads at
 // every use 392; shape/body-shape 374; shape/handle 413; body-shape/handle 392; all field
 // observations 413; all fields/shared length helper 413. All executable forms restored.

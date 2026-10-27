@@ -857,6 +857,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 183: Eight actual native-word destination declaration permutations
 // 227/228/228/225/228/224/227/228; starting with right ties, rear-first forms regress.
 // Original declarations restored; frame 0x20, mode/input-level and x87 tail homes remain.
+// Native-word destinations with bool/byte routing predicates and original/gain/level/both
+// read-at-use forms 242/271/302/323 each. Original scalar observations restored.
 // Round 190: Mode-first field-address selection with gain at entry/after selection/after
 // offset/after input level 247/247/258/258; constant-first counterpart 232/231/245/245. Every form
 // regresses; original helper and scalar lifetimes restored.

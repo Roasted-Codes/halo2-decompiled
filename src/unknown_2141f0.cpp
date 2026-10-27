@@ -124,6 +124,9 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // clock+checksum/all call declarations 367 each; all declarations and bodies restored.
 // Complete failure result bool/byte/short/long 661/661/654/657;
 // the same result initialized first 661/661/654/657. Original success restored.
+// Round 223: Repeated transfer buffer/count/limit/buffer+count/buffer+limit/count+limit/all
+// inputs 366/362/367/362/367/362/362; all with named size 367; count and buffer+count
+// with earlier slot publication 367/367. Five-point exact-length gains restored.
 // Round 148: admission after validation 458; retirement after validation 412; both request cases
 // after validation 502; validation/retirement first 501; publication phases first 498;
 // publication phases after validation 517; header phases first 520;
