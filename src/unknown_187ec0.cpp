@@ -185,7 +185,13 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 	return result;
 }
 
-// score 6 (was 6): the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
+// score 6 (was 6): key is retained in EDI rather than retail EBX; 75/75 bytes.
+// Earlier: the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
+// the key is passed in EDI instead of retail's EBX, rotating the entry saves and loads;
+// key pointer before globals 6; direct index construction 6; delayed globals assignment 6;
+// read-only key pointer 6; global at each use 6; read-only index result 6;
+// direct key address 29; read-only key parameter 6.
+// the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
 // 0x1885f0's entry-live result body (key compared first, break) both match unless the caller 0x1eb020
 // is 16-byte self-aligned (with a frame pointer but no alignment, or a double buffer, both match), and
 // only while 0x1885f0 returns its index class through memory (a short result keeps the key in a register).
@@ -193,6 +199,11 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 // an explicit short out pointer 25; key read through a volatile own-parameter cast 8; the entry-live
 // body with 0x1eb020 not taking &material_index/buffer declared after result 7/7; the search as a
 // constructor of the index class 10 (key still on the stack). BLOCKED-BY 0x1eb020
+// Further trials: saved-key/search convention remains EDI rather than EBX; aligned upstream edge unchanged.
+// existing index construction 9; returned-index bridge 6.
+// default index/member assignment 9; default index/value assignment 9.
+// read-only block/construction 9; read-only block/bridge 6.
+// read-only block/member assignment 9; read-only block/value assignment 9.
 // @retail 0x188640
 s_globals_element *function_188640(long key)
 {

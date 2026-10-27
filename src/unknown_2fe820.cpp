@@ -2,13 +2,10 @@
 // Havok (third-party physics library): reports failure through its
 // argument.
 
-struct class_2fe820
-{
-    void function_2fe820(bool *result);
-};
+#include "buffered_writer_2d9e40.h"
 
 // @retail 0x2fe820
-void class_2fe820::function_2fe820(bool *result)
+void stream_writer_2d9e40::query(bool *result)
 {
     *result = false;
 }

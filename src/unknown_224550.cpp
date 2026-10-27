@@ -128,6 +128,7 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 	return local_0;
 }
 
+
 // score 421 (was 421): Frame 0x50 versus 0x60, tint/second-UV overlap, cache EBP/EBX and scalar homes remain.
 // Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX homes remain.
 // Earlier: Frame 0x50 versus 0x60, tint/second-UV overlap and cache EBP/EBX remain.
@@ -156,6 +157,8 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // force-inline in-place pointer/reference/value 421/421/738. Original helper and all alias-safe captures restored.
 // Definition at every use 462; shared cache value array 421; both 462; shared pivot weight 421;
 // with definition/cache/both 462/421/462; complete seed products 421. All restored.
+// Both scaled-pivot products/all four edge factors/both 421/421/421; real interval
+// result alone/with products/with edge factors/with both 424/424/424/424; guarded frame fraction 421.
 // Round 129: native four-element UV output reference with bounds/cache/color references
 // in all eight combinations 421 each. Original producer contracts, tint inputs and all
 // four in-place UV captures restored.

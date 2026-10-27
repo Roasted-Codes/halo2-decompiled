@@ -66,6 +66,15 @@
 // camera offset terms 594; trig/projection terms 594.
 // trig/camera terms 673; projection/camera terms 673.
 // all three term families 594; named modulation 673.
+// Round 211: Late special cross 707; reversed sine producers/after-amplitude sine 594/594;
+// late cross with either sine order 707/707; cross at first scale 592 (two-point gain dropped);
+// first-scale cross with late sine 594; complete native basis arms 727. Original body restored.
+// Round 174: consume cross vector in place 673; cross at displacement 707;
+// early sine factor 652, with late cross 709; factor after modulation 652, with late cross 709;
+// cross after first sine 673, with early factor 652. Original cross/scaler graph restored;
+// frame 0x64/0x60 and shape/basis/wave homes remain.
+// Camera-shift homes, alternate shift homes, wave-result homes, wave-scale homes,
+// and four paired combinations all 594; frame and initial shape homes unchanged.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -419,6 +428,12 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
 // round 108: definition/output carriers, endpoint placement and color/vector homes remain.
 // Round 349: Conversion-local names 615; source pointer rereads 624; normal-output flag 642; position memcpy 615; shared in-place scales 615 (fast).
+// Round 211: Lower native/library color seed 684/684; upper native/library seed 661/661;
+// complete difference/scaled-difference stages 658/658; upper seed with difference/scaled
+// stages 707/700. Original separate color phases, helpers and output ownership restored.
+// Native upper bound/point scale/both 615/626/626; state-array receiver/with upper bound 615/615; scale
+// plus array/all inputs/all role homes 626/626/626. All restored.
+// U/V entry ordering, seven combinations 615; definition then source 615.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

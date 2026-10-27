@@ -26,16 +26,6 @@ long function_249e20(s_structure_bsp_view *bsp, long index)
 	return result;
 }
 
-// score 9 (was 9): audibility load before saved-register/index setup remains;
-// tried entry row first 31f; entry row after result 31f; second category default 29f; explicit absence results 42f;
-// complete category selection 37f; native row domain 9f; native stride domain 9f; read only word table 9f;
-// direct table fields 44f; direct row expressions 38f.
-// entry saves/index load and audibility EDI allocation differ;
-// shared bit test/read-only bits 9/9; second-arm cursor 44; category loops
-// indexed/shared test/cursor/mask 58/58/46/45; final result selection 37;
-// word and mask locals first 45 (bsp moves to the stack); word/mask after the row 45;
-// word local after the stride 9; mask local after the stride 47; row declared last 21;
-// permuter 600 s found nothing.
 // @retail 0x249e60
 long function_249e60(long cluster_index, s_structure_bsp_view *bsp, long index)
 {
@@ -43,15 +33,16 @@ long function_249e60(long cluster_index, s_structure_bsp_view *bsp, long index)
 
 	if (bsp->audibility_count > 0)
 	{
+		s_structure_audibility *audibility = bsp->audibility;
 		long row = 2 * index;
-		dword *bits = bsp->audibility->bits;
+		dword *bits = audibility->bits;
 		long stride = (bsp->cluster_count + 31) >> 5;
 
 		if (bits[stride * row + (cluster_index >> 5)] & (1 << (cluster_index & 0x1f)))
 		{
 			result = 0;
 		}
-		else if (bits[stride * (row + 1) + (cluster_index >> 5)] & (1 << (cluster_index & 0x1f)))
+		else if (audibility->bits[stride * (row + 1) + (cluster_index >> 5)] & (1 << (cluster_index & 0x1f)))
 		{
 			result = 1;
 		}

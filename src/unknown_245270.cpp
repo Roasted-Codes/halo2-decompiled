@@ -275,7 +275,29 @@ void function_245400(s_source_245400 const *source, long index,
 }
 // score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
 
-// score 204 (was 204): Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
+// Earlier: Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
+// score 204 (was 204): frame 0x24 versus 0x2c, the source register (edx here, ecx in retail,
+// which keeps 0x245aa0 at 3) and the separate side-byte homes differ. Ours holds the transform
+// pointer in ebp from entry, so the source pointer stays in a scratch register; retail reads the
+// transform from the stack at its test and borrows ebp briefly for the first plane code.
+// Native plane field 204; signed surface field 204; combined views 204; native side bitfields
+// 207; indexed vector scaling 205; source reference 204; surface reference 204; vertex table
+// snapshot 204; plane references 204; transform forceinline 204; const transform result 204;
+// separate emitter noinline 204; both call boundaries 204; first/second/both normal values
+// 230/208/248; first/second/both endpoint values 235/205/244; cross scope/late side values
+// 204/204; narrow sides 207; early narrow sides 207; direct narrow codes 239; material snapshot
+// 206; shared rotation 204; shared dot 204; both shared products 204; snapshot with early sides
+// 209; signed-byte side carriers first/second/both 238/238/204; native-long carriers
+// first/second/both 228/228/222; mixed signed-byte/native-long both ways 228/228; live first
+// material/matrix/plane table/material table/index 204 each; material plus matrix records 208;
+// both table fields 204; records with table fields 204; first/second/both live vertex records
+// 204 each; native signed/unsigned low-word code 204/204; current matrix scale 207; native code
+// plus scale 207; vertex records plus scale 207. Round 72: second material read first 205, with
+// its long copy first too 205; a second material record pointer 204; the transform read once
+// through its address 226 (still loaded into ebp at entry); the edge vector scaled into a copy
+// and rotated with the existing matrix_transform_vector 220; the scaled rotation in an inline
+// helper with its own matrix parameter 204.
+// Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
 // Earlier: frame 0x24 versus 0x2c; source register and independent
 // side-byte homes differ. Native plane field 204; signed surface field 204;
 // combined views 204; native side bitfields 207; indexed vector scaling 205.
@@ -308,6 +330,9 @@ void function_245400(s_source_245400 const *source, long index,
 // One-point reduction excluded; alternate dot association/grouped values restored.
 // Round 327: corresponding two-product rotation sums at each row 222; all partial sums before
 // stores in ijk/ikj/jik/jki/kij/kji order 222 each; partial rows with shared matrix scale 212.
+// Round 207: native endpoint-word array alone/with plane-table field/with signed material field/
+// with both 204 each; separate native endpoint words with those same four record views 204 each.
+// Complete original declarations and body restored; duplicate score headers merged.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
