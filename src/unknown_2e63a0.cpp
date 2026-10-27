@@ -16,6 +16,11 @@ static __declspec(align(16)) const unsigned long g_4124a0[4] = {0x80000000, 0x80
 
 // @retail 0x2e7a80 deleting lane_b_flip_point_collector
 
+// score 2 (was 2): the parent and placement stores are reversed;
+// table first 20, placement input 2, wrapper capture 43, early result
+// declarations 2; const child forms give the same scores. Shared parent
+// first 0 loses a match; member-list forms 2/16/6/8/7/0/2, input copies 6,
+// direct fields 4; value initialization 2, value assignment 9.
 // @retail 0x2e63a0
 lane_b_wrapper_agent::lane_b_wrapper_agent(body_2ea940 const *a, body_2ea940 const *b, lane_a_dispatch *const *input, void *manager) : lane_a_agent_base(manager)
 {
@@ -163,8 +168,7 @@ void lane_b_symmetric_wrapper_agent::process_collision(body_2ea940 const *a, voi
 	agent->slot_4(&child, a, input, collector);
 	for (; i < output->points->count; ++i)
 	{
-		__m128 &normal = output->points->data[i].normal;
-		normal = _mm_xor_ps(normal, *(const __m128 *)g_4124a0);
+		output->points->data[i].normal = _mm_xor_ps(output->points->data[i].normal, *(const __m128 *)g_4124a0);
 	}
 }
 
