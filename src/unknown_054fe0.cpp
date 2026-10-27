@@ -1334,6 +1334,11 @@ struct s_player_properties
 // 221/204/210; quartet-byte/quartet-short/byte-short pairs 208/217/221;
 // all groups 216, with promoted team 215. Byte-pair form reaches retail length
 // but regresses; original record declaration and team carrier restored.
+// Round 7 (lane 10, plain checks; the fast check builds this differently): the zero in edx is the
+// second loop's hoisted invariant for the dword zero stores (retail uses the memset's eax for the
+// four-long group and a fresh ecx for the three-long group). Three-long group as real 0.0f 215;
+// both groups as memsets 235 (941 bytes; the parameters test becomes `test`, but the zero registers
+// land on the wrong groups); three-long/four-long memset alone 240/240; both memsets reversed 235.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

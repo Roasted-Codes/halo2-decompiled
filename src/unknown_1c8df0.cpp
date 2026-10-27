@@ -102,6 +102,12 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // Frame 0x8c/0x94 and raw secondary-result/common tail remain; near-five forms still miss X/Z point-add scheduling.
 // Primary endpoint helper with outcome long/long, bool/long, long/short, bool/short
 // state/category 170/175/234/225; direct-result counterparts 207/202/238/242. All restored.
+// Round 7 (lane 10, plain checks; the fast check builds this differently): short category, bool clear
+// state, one bool probe result with `category = 1` on a hit 26 (1177 bytes); plus the mode-1 centre
+// read through the cast parameter 5 at 1175 bytes, no staged arithmetic needed (left: retail folds the
+// x centre as a memory operand and loads the z centre; ours the reverse). On that: x row product first
+// 5; cast centre for the positive point only 5; negative point first 230; literal quarter 20; mutable
+// spacing 5. Match-only (added result byte); restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

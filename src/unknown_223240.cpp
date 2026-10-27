@@ -146,6 +146,9 @@ void function_2232a0(void)
 // DH round 189: Native equality-bound ordinals: short/word/byte do 201/201/167; short/word/byte
 // for 180/180/166; short/word while 180/180. Original signed clamp, ordinal, scan, initializer and
 // tail restored.
+// Round 7 (lane 10): count from a single-exit inline helper 182 (count 4 no longer threads, count 1
+// still does); helper with pretested for loop 183; if/else-if clamp in retail's branch order 182;
+// named view count (count + 1) after the loop 159; count arms swapped (clamp first) 151. All restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
