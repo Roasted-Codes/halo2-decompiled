@@ -577,32 +577,39 @@ void __stdcall function_d6b60(long object_index)
 // @retail 0xd66d0
 void __stdcall object_get_damage_owner(long object_index, s_damage_owner *owner)
 {
-	if (object_index == NONE)
+	if (object_index != NONE)
+	{
+		s_damage_object *object = DAMAGE_OBJECT(object_index);
+
+		if ((1 << object->type) & 3)
+		{
+			if (object->unknown248 != NONE)
+			{
+				object_get_damage_owner(object->unknown248, owner);
+				/* always true here, so it compiles to nothing; without a test
+				   after the call the compiler turns this tail call into a loop,
+				   where retail jumps back to its own entry (and so keeps the
+				   stack convention its callers use) */
+				if (object->unknown248 != NONE)
+					return;
+				return;
+			}
+			if (object->unknown12c != NONE || object->player_index != NONE)
+			{
+				owner->object_index = object_index;
+				owner->player_index = object->player_index;
+				owner->team = object->team;
+				return;
+			}
+		}
+		owner->object_index = object->owner_object_index;
+		owner->player_index = object->owner_player_index;
+		owner->team = object->owner_team;
+	}
+	else
 	{
 		*owner = *g_467420;
-		return;
 	}
-
-	s_damage_object *object = DAMAGE_OBJECT(object_index);
-
-	if ((1 << object->type) & 3)
-	{
-		if (object->unknown248 != NONE)
-		{
-			object_get_damage_owner(object->unknown248, owner);
-			return;
-		}
-		if (object->unknown12c != NONE || object->player_index != NONE)
-		{
-			owner->object_index = object_index;
-			owner->player_index = object->player_index;
-			owner->team = object->team;
-			return;
-		}
-	}
-	owner->object_index = object->owner_object_index;
-	owner->player_index = object->owner_player_index;
-	owner->team = object->owner_team;
 }
 
 // @retail 0xd6a70
@@ -1087,9 +1094,13 @@ void __stdcall function_d74e0(s_type_1e6529 *data, long object_index, bool child
 
 /* the material of one of an object's model regions */
 // @retail 0xd8ae0
-void function_d8ae0(long object_index, long region_index, short *material)
+short *function_d8ae0(long object_index, long region_index, short *material)
 {
-	short result = g_47d8e0;
+	/* a 16-bit bit-field, as in 0x1886d0: retail loads the default with a
+	   16-bit move, where a plain short local is loaded as a dword */
+	struct s_default_material { signed short value : 16; };
+	s_default_material result;
+	result.value = g_47d8e0;
 
 	if (object_index != NONE)
 	{
@@ -1100,10 +1111,11 @@ void function_d8ae0(long object_index, long region_index, short *material)
 			byte *regions = *(byte **)(g_4e3b44[model_index & 0xffff].bytes + 0x5c);
 
 			*material = *(short *)(regions + region_index * 0x14 + 0x10);
-			return;
+			return material;
 		}
 	}
-	*material = result;
+	*material = result.value;
+	return material;
 }
 
 /* the bits of the entries (0x14 bytes, at +0xe4, counted at +0xe0) that
