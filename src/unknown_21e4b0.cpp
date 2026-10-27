@@ -161,6 +161,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 147: Chained zero levels 165; repeated coefficients 164; final volumes 164;
 // zero/coefficient 163; zero/volume 164; coefficient/volume 163; all three 162; all with shared
 // voice-count publication 161 (four-point gain rejected).
+// Round 149: Static input/output/both tables 294/381/316; same storage with native SDK identifiers
+// 294/381/316; both with saved byte across reset at original/native element types 368/368. Each
+// existing table remained one object; no duplicate constant. All original automatic tables and body
+// restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

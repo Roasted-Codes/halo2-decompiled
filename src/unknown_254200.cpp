@@ -253,6 +253,10 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // 251/394/392/462; staged packed alpha at the same sites 261/327/325/521.
 // Round 147: Real state-table address/filter/both/zero-tail/address-tail/filter-tail/all-
 // three/complete setup 611/579/737/582/764/784/1030/520 (fast control 162).
+// Round 149: Coherent color/alpha acquisition contracts 153/466/466/153/153/153/466/466; inline alpha
+// loses four controls and is restored. On new coordinated contracts, RGB/BGR captures and their const
+// forms 142 each, 2258 bytes, frame 0x10; all eight nonmatching one-use field forms rejected. Original
+// body and providers restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

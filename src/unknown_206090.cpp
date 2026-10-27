@@ -173,6 +173,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // first/second/both dot inputs 1885/1772/2221; add+dot and scale+dot 2664/2554.
 // On the retained magnitude/second-cross graph, velocity/buffers/magnitude home names and
 // all four combinations 1402 each; all three second-cross component names 1402. All restored.
+// Round 149: Existing scale/add/cross output-return masks 1474/1402/1474/1402/1474/1402/1474; returned
+// scale outputs at two immediate consumers 1474. First/second/both single-exit normalizers
+// 1456/1410/1402; matching plain component loops 1410/1432/1432; both with first/second result name
+// 1402/1402. All restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {

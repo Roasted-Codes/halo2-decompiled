@@ -767,7 +767,7 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 154 (was 185): Frame 0x98 agrees; total/receiver/kind homes and counted-item transport remain.
+// score 154 (was 154): Frame 0x98 agrees; total/receiver/kind homes and counted-item transport remain.
 
 // Frame 0x98 agrees; count/receiver stack homes, decoded-kind width and callback setup remain.
 // Frame 0x98 agrees; total/receiver/callback-index homes and native kind remain different.
@@ -814,6 +814,10 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // Round 145: First-array endpoint byte/posttest 157, byte/pretest 250, native/posttest 177,
 // native/pretest 186; second-array counterparts 154/249/177/186. On second-array endpoint: enum
 // kind 177; shared creation arm 170; enum/shared arm 178; word kind 195.
+// Round 149: Second-array endpoint graph: scalar/buffer lexical home masks and entry buffer
+// declarations 154 each; range-first byte/native 216/205, default-first 228/221, terminal-produced
+// count 210/208; range/default native unsigned count 205/221. Original endpoint and full body
+// restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
