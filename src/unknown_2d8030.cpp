@@ -64,6 +64,8 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 
 // @retail 0x2d84e0 deleting error_handler_2d8030
 
+// score 39 (was 39): Extra vtable store and release arguments remain.
+// Signed and unsigned capacity locals, separately and together: eight forms 39.
 // @retail 0x2d8510
 error_handler_2d8030::~error_handler_2d8030()
 {

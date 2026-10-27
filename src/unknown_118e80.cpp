@@ -971,6 +971,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // all with double selected fraction 337 (exact-only precision diagnostics; all restored).
 // Round 332: Candidate/collision/eligibility inline contracts, each and every
 // combination, 151; candidate/collision noinline pair 151. All restored.
+// Round 199: Ordinary input/scalars/count/saved words/vector names/late quotient/early sweep/readonly
+// receivers 151/151/153/154/151/287/293/151. Consistent pool/header observations, alone, with word
+// order, with independent saved words and with early sweep: 346/339/346/339/348/341/291/275.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

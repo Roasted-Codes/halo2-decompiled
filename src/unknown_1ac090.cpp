@@ -798,6 +798,9 @@ bool function_1f8660(long arg_0);
 // Round 168: Shared complete position with original/split directions and actor/count role names 170
 // each; with entry result 193 each; three scalar coordinates original/split 182/185. Four-point
 // best rejected; snapshot frame 0x81c; opening body restored.
+// Round 199: Count/status scope 175; complete selected-point copy 182; both 180;
+// reference before selected output 174; scope/reference 175; point/reference 182;
+// all three 180; scoped count/status role names 175. Original output lifetimes restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
