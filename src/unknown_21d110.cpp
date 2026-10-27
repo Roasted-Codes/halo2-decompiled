@@ -368,6 +368,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // with entry sound declaration 212. Effect-domain forms lose eight caller controls.
 // Round 327: current deletion record/pool/both 211/204/206; public creator noinline 204;
 // with record/pool/both 211/204/206; both observations and boundary with signed class byte 206.
+// Round 179: global availability fields at each use, direct/complete/failure/staged result
+// at Boolean storage 204/204/204/204; native byte storage 204/204/204/204.
+// Original availability receiver, helper, field types and expansion policy restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

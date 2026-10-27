@@ -1305,6 +1305,9 @@ struct s_player_properties
 // Existing player getter in collection/update/both phases 222/215/219;
 // update getter with word/short collection mask 216/216; native word/short masks
 // alone 184/184; both getters with bounded byte name count 218. All restored.
+// Round 179: first/second/both default arrays after name output 194/205/234;
+// two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
+// all scalar/array defaults after names 296. Original store phases restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
