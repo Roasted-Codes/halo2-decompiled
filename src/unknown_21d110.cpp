@@ -386,13 +386,13 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // each use 52 (0x189fe0 134, callers lost); with a noinline declaration ahead of 0x221810 52 (0x189fe0
 // on stack arguments, 156, callers lost); that declaration alone also loses the callers. Retail
 // calls 0x221810 out of line and re-reads the state after it, which keeps 0x189fe0's request in EBX.
-// Round 177: Complete start admission bool/byte/short/long and their complete complements
-// 204 each; every sensitive caller control remains matched. Original helper and body restored;
-// eight-byte frame and opposite start/delete expansion remain.
 // Round 206: Five remaining availability-field conjunction orders and three complementary
 // failure-first orders 204 each; all eight sensitive caller controls remain matched.
 // Round 151: Existing two-use starter output result, four private parameter-role orders: final publication 196 each, direct publication 189 each; every form loses eight sensitive callers in the fast image. All restored.
 // Frame eight/four, state/tag homes and opposite start/delete expansion remain; protected caller cycle unchanged.
+// Round 63: platform handle by an if statement 211; nested class/flag tests 204; definition query and
+// allocation as one ternary 233; start-result arms swapped (delete first) 206; effect index declared
+// before the definition pointer 204.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

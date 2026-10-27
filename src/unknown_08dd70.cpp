@@ -102,6 +102,21 @@ struct s_handler_slot
 
 // score 29 (was 29): the handler and gateway blocks still differ: retail keeps a
 // copy of the slot pointer in edx and esi and clears the two back-pointers through
+// materialized field addresses (add eax, 0xc and add eax, 8); ours stores both
+// through [eax+N]. Everything before the handler block matches (the gateway flag
+// cleared with a one-byte memset; a plain store gives 54).
+// Tried: pointer-to-field locals (s_gateway_slot **) 67, and 29 on this form (same
+// code); static dispose helpers, inline member dispose() on both slots and static
+// detach helpers taking T ** 67; the globals read again inside the tests 67;
+// volatile initialized/back-pointer fields 65; typed handler/gateway members 67;
+// byte flags on either or both slots 67; initialization values 67; inactive return
+// 67; byte release ordinal 112; short/byte session ordinals 125/125; shared index
+// scope, session reference, session array receiver and link reference 67;
+// handler/gateway/both native clears 58/59/54; session clears 71/68/67/59; all
+// three 47; full pointer ranges 57; reciprocal clears 47/59/59; trailing pointer
+// 47; all scalar clears 72; separate field stores in retail's order in both slots
+// 59 (the gateway's alone 51, the handler's alone 55); one-pointer memsets of the
+// two back-pointers 29 (same code).
 // the materialized field addresses (add eax, 0xc and add eax, 8), ours stores both
 // through [eax+N]; everything before the handler block now matches (the
 // gateway flag cleared with a one-byte memset; a plain store gives 54).

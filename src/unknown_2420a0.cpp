@@ -1069,7 +1069,10 @@ void c_game_engine_markers::v21(long object_index)
 // 100. Round 59, on 40: no absolute-index local 93; per-arm team local/char/declared once 119;
 // arms swapped 119; object pointer local 130; unit inside the slot test 129; player pointer from the
 // absolute index 82..128; unit before slot 120; entry through g_4e6948, type local, byte flag test,
-// second player index read directly 40.
+// second player index read directly 40. Round 63: the team read at each call gives retail's middle
+// (memory-operand flag test, player pointer before it, team after the type compare) but keeps the
+// options pointer in EDX from entry; on it: the slot table in a local 119, arms swapped 119, unit
+// first 119, player from the absolute index 82; the mode and type tests joined 40.
 // @retail 0x240ff0
 void c_game_engine_markers::v23(long object_index, long unit_index)
 {
@@ -1615,20 +1618,21 @@ void function_15e360(point3f const *point, long object_index);
 byte *record_pool_lookup(s_record_pool *data, long datum_index);
 void function_242e00(long player_index, long team);
 
-// score 79 (was 83): the effect markers' direction copies are scheduled differently; the root-location
-// call passes the object in EAX and the location in ESI (retail: location in EAX, object in ECX,
-// BLOCKED-BY 0xba300); in the tail retail keeps the marker index in ESI and reloads the engine globals
-// pointer after each call, ours keeps that pointer in ESI and spills the index. Kept: 0x176b60's
-// parameters in retail's argument-setup order 83 -> 79. Tried: the point copied straight from the
-// marker table, declared at its use, or both 83 (identical); the directions in index order 86; the
-// positions in index order 95; both 98; without the inline_depth pair 246; the tail through
-// function_a7810 or the 0x400 change inline 83; the marker index or the point declared earlier 83;
-// marker 4's direction from the copied vector 72, as marker 2's copy 172, all from the copy 98;
-// marker 3's first component before marker 4 82; names first 111. Found: the tail's marker entry
-// through an element pointer (`entry = &...marker_entries[marker_index]; point = entry->position;`)
-// 17 at retail's length with the whole tail identical, and with marker 3 assigned before marker 4
-// and marker 4 from the copied vector 2 (only the 0xba300 call differs); both forms need a match, so
-// apply them together with the held 0xba300 change.
+// score 64 (was 79): the root-location call passes the object in EAX and the location in ESI
+// (retail: location in EAX, object in ECX, BLOCKED-BY 0xba300); in the tail retail keeps the marker
+// index in ESI and reloads the engine globals pointer after each call, ours keeps that pointer in ESI
+// and spills the index. Kept: 0x176b60's parameters in retail's argument-setup order 83 -> 79; the
+// directions filled in index order with marker 4's from the copied vector 79 -> 64. Tried: the point
+// copied straight from the marker table, declared at its use, or both 83 (identical, 64 on the kept
+// order); the directions in index order 86; the positions in index order 95; both 98; without the
+// inline_depth pair 246; the tail through function_a7810 or the 0x400 change inline 83; the marker
+// index or the point declared earlier 83; marker 4's direction from the copied vector alone 72 (68 on
+// 79), as marker 2's copy 172, all from the copy 98; marker 3's first component before marker 4 82;
+// names first 111 (110 on the kept order); on the kept order the positions in index order 76; the
+// point read before the flag clears 44 (a read moved above a call). Found: the
+// tail's marker entry through an element pointer (`entry = &...marker_entries[marker_index]; point =
+// entry->position;`) gives 2 on the kept order, only the 0xba300 call differing; it needs a match, so
+// apply it together with the held 0xba300 change.
 // @retail 0x242660
 void function_242660(long object_index, bool arg_1)
 {
@@ -1683,10 +1687,10 @@ void function_242660(long object_index, bool arg_1)
 				markers[0].forward = *g_4687b0;
 				markers[1].forward = *g_4687bc;
 				markers[2].forward = *g_4687b0;
-				markers[4].forward = *g_4687b0;
 				markers[3].forward.i = 0.0f - local_0.i;
 				markers[3].forward.j = 0.0f - local_0.j;
 				markers[3].forward.k = 0.0f - local_0.k;
+				markers[4].forward = local_0;
 				markers[0].name = 0x700054c;
 				markers[1].name = 0x70000c0;
 				markers[2].name = 0x20000ca;

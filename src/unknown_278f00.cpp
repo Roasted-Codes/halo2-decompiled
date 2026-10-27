@@ -61,7 +61,6 @@ bool function_a7670(long object_index);
 // Distinct first/second membership ordinals: byte/long, short/long, word/long 281 each;
 // long/byte 278; long/short and long/word 267; byte/byte 289; short/short 290.
 // Round 225: First/second array list/island ownership pairs 01/02/10/11/12/20/21/22: 212 each.
-// List/index/count and cleanup homes remain.
 // Round 227: Remove redundant first/second/both pre-retry initializations 212/212/212; split
 // first/second/both insertion increments 212/212/212; both removals with second/both split increments
 // 212/212. Original resets and body restored.
@@ -99,6 +98,10 @@ bool function_a7670(long object_index);
 // with word bit-5/bit-6 fields written through them 250 (954 B); with the list chosen per arm 181,
 // kept. On it: descriptive names 181; list declared at function scope 181; indexed cleanup loop 196;
 // found flag declared before the admission flag 274; the inner bound read from the field 248.
+// Round 63: list chosen by if/else arms (long selector) 244; ternary of the two list addresses 244;
+// descriptive names for the outer locals 212; second scan with its own found flag 269 (flag materialized,
+// not threaded); index comparison before the first-scan flag 213. Diagnostics, not kept: the predicted-copy
+// test as a one-line inline bool helper 212, as a single-exit helper 281 (gives the setne/test).
 // @retail 0x278f00
 void function_278f00()
 {

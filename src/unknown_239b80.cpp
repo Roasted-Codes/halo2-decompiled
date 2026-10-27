@@ -499,6 +499,10 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // On the common failure-result graph: signed word/native count at entry or after
 // alias handling, each without/with shared copy extent: 212/289/211/211/303/225/212/212.
 // One-point forms rejected; original count observations, helpers and body restored.
+// Round 143: retail materialises the point-mask test as a 0/1 value (`neg; sbb; neg; je`) before
+// the set/clear; SET_FLAG with TEST_FLAG / with a `(bool)` test 212/212, a named bool 212, `!!` 212,
+// `? true : false` 212 (all simplified to `test`); SET_FLAG plus signed short index 252, plus the
+// previous side not volatile 227, plus both 254.
 // Round 59: retail keeps the index as a word in memory (+0x14, tested `cmp ax, [count]`), the
 // previous point at +0x1c, the copy size at +0x18 and the plane reloaded from its argument home.
 // Tried: the previous side's volatile removed 227; signed short index 252 (869 B; retail's loop

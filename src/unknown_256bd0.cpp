@@ -106,6 +106,9 @@ struct s_object_flags_256bd0
 // Displacement producer orders xyz/xzy/yzx/zxy/zyx 206 each; all three named squares
 // after the deltas/interleaved with each delta 205/205; successive z-y-x additions 208.
 // One-count forms rejected; original arithmetic and helper restored.
+// Round 63: object/selected handles declared the other way 205; result read after the timer pointer 205;
+// minimum declared before the flags query 210; entry position through a named point pointer 205; the
+// variant creation and the spawn as if/else after the flags block 208.
 // Round 102: the cause of the hoist: our link proves the iterator's address never escapes, so the
 // iterator stores cannot reach g_4f55d0->active; retail reloads it each pass. A diagnostic
 // `s_290c50_iterator *const *` read of the step helper's parameter (stores &iterator) gives
