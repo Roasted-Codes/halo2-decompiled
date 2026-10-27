@@ -3424,6 +3424,9 @@ struct s_128ca0
 // together 234 each; native clear-member addresses 234; chained packet flags 293; upper-first shared pin
 // 234; pin input home name 234. Original fields, clear ranges and helpers restored; protected chunk
 // interface unchanged.
+// Round 254: live voice-table fields, alone/with scale/raw-gain-first/both 293/249/277/302;
+// the same four with live pitch-parameter fields 293/249/293/244. All regress;
+// original voice/parameter receivers, scale observations, gain schedule and body restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

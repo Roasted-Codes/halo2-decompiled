@@ -52,6 +52,9 @@ real normalize2d(point2f *arg_0);
 // Round 345: Native original/center/both CRT copies 220/220/220; entry point
 // storage alone/with original/center/both copies 218/218/218/218; both copies
 // and entry storage with radius before center 213 (seven-point gain below gate). All restored.
+// Round 254: entry collision-sentinel initialization with original/first-point/center/both
+// entry storage 269/269/269/269; with radius-before-center 269/269/269/269.
+// Original late collision initialization, point storage and executable body restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)
