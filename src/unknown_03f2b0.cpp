@@ -1429,6 +1429,9 @@ struct s_133f70;
 // reuse 326/326/335/326 plain (fast 355/355/344/350). All restored; frame and staging remain.
 // Projection branch scope, later failure constant and earlier level constant combinations:
 // 356/371/371/356/356/371/371 fast; separate level initialization 356 fast.
+// Round 246: common success/failure accounting, bool/byte/short/long result
+// at the builder result 240/240/286/279; early result declaration 240/240/286/279.
+// Expanded reduced control 213; original independent rejection and body restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

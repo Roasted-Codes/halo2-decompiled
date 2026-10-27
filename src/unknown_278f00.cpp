@@ -81,6 +81,8 @@ void __stdcall function_b8890(long arg_0);
 // Unsigned first/second/both handle arrays 212/212/212; first/second/both
 // arrays with unsigned classification 212/212/212; complete unsigned processing 212;
 // unsigned arrays/processing with original signed classification 212. Original storage restored.
+// Round 246: category after first/both membership scans with early header 252/291;
+// move header too 306/302; indexed-cleanup counterparts 257/296/312/311.
 // @retail 0x278f00
 void function_278f00()
 {

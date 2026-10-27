@@ -2139,6 +2139,8 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // forms reach 1081 bytes but regress; original cached object and signed result restored.
 // Direct-field-tail getter table/header/payload/decoded-table inputs, forced 210/210/210/318;
 // ordinary inline 210/210/210/318. Original getter and observations restored.
+// Round 246: metadata/count/fraction defaults before the child getter in seven
+// combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
