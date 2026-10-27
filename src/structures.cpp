@@ -459,6 +459,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // reference/group-reference/range-reference/all roots 247/294/265/329; all with bool result 320.
 // Bounds/node/part table fields at every use 284/236/243; bounds-node/bounds-part/node-part
 // graphs 258/286/243; all three/all three plus part-count field 239/239. All restored.
+// Round 212: complete native range mutable/const 193/193; native reference mutable/const
+// 194/194; both mutable/const 208/208; mesh field at every use 205; both const records with
+// mesh field observations 214. Original records, observations and protected interfaces restored.
 // DH round 189: Native lookup/extraction-array/node-output work-scope lifetimes, singles, pairs,
 // all and reversed all 181 each; all original producer/read phases restored.
 // Round 62: section groups read right after the surface lookup, as retail does 177 (kept; model

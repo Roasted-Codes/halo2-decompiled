@@ -180,6 +180,9 @@ void function_8dd70(void);
 // after every store through a pointer, as when these globals are address-taken.
 // Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
 // stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
+// Round 356: Native handler tail clear 249; gateway pointer/byte tail clear 251;
+// complete list clear 230; both tails 248; handler/list 249; gateway/list 251;
+// all three and native message-table extent 248/248. Original clear boundaries restored.
 // Complete link/search/scalar/gateway/ready publication orders 0-1-2-3-4, 1-0-2-3-4,
 // 0-2-1-3-4, 0-2-3-1-4, 3-0-1-2-4, 0-4-1-2-3, 1-2-0-3-4 and 2-3-0-4-1 each 230.
 // Each search reset clears before both sentinels; original complete publication order restored.

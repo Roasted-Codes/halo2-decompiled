@@ -2155,6 +2155,10 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // Round 352: persistent, child-value and induction/mask scalar-home groups, singly and all
 // combinations, 168; complete homes plus native header offset 167 (one point, rejected).
 // Original executable body and retained post-store child masks restored at 168/1070.
+// Final source-field pointer 168; exhaustive first parent result alone/with pointer
+// 164/164 rejected; exhaustive mapped results alone/with pointer 223/223; both
+// parent result groups without/with pointer 219/219; named-offset combination 218.
+// Original receiver, result production, stores and lookup restored.
 // Round 62: first-block declaration orders, all five others 168 (identical code); NONE
 // default as a ternary 201; field-copy compare operands swapped 168; field pointer for the
 // copied field 168 (retail's dead `add ebp, 0x214` remains). The first block's goto became a

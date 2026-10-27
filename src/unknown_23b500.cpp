@@ -595,6 +595,11 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // child-iterator initializer takes the object index in EAX and the iterator in EBX (ours takes the iterator
 // on the stack), so retail zeroes EBX for the object iterator, keeps the settings pointer on the stack and
 // its second child flag in a frame byte; every later stack offset differs by four.
+// Frame 0x50/0x54, early EBX and protected child-iterator convention remain.
+// Earlier baseline: frame 0x50/0x54, early EBX and child-iterator convention remain.
+// BLOCKED-BY 0xd0620 (contributor code, unmatched): retail passes the object index in eax and the child
+// iterator in ebx (ours pushes the iterator), so retail's ebx is taken through the child loop: it zeroes
+// ebx early for the object iterator and keeps both child flags on the stack (frame 0x54).
 // Round 74: retail's own shape is two flags (no unit child, every unit child friendly, both set from
 // the constant 1) and the three tail-merged calls: that form is 232 here at retail's length with the
 // aligned listing at 82 (count form 111), held back by the frame; with one call on a computed kind 273
@@ -650,6 +655,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Round 249: shared insertion count after point/first radius/second radius/lower height/
 // upper height/weight 232/232/230/229/228/219; reused count at entry/end 201/215.
 // Original append helper and body restored; protected child contract unchanged.
+// Round 153: Outer position/velocity/both field receivers 210/202/210; vehicle-scope 208/202/208;
+// outer position/velocity references 210/202. Position receiver fixes frame but total regresses;
+// body restored.
 // Round 252: Signed team snapshot char/short/int/long before child initializer 205/265/263/263; after
 // 205/265/181/181. The 181 forms recover frame 0x54 but lose the matched caller by seven preview
 // differences; one-use field snapshots remain unmatched and are rejected. Original player

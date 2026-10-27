@@ -228,11 +228,12 @@ bool function_1173e0(long object_index, long index)
 	bool result = function_1171a0(index);
 	if (result)
 	{
-		point3f origin = *(point3f *)(surface_object_header(object_index)->object + 0x30);
+		byte *object = surface_object_header(object_index)->object;
+		point3f origin = *(point3f *)(object + 0x30);
 		for (long i = 0; i < definition->vertex_count; ++i)
 		{
-			s_surface_vertex *vertex = &record->vertices[i];
 			point3f *source = &definition->vertices[i].position;
+			s_surface_vertex *vertex = &record->vertices[i];
 			vertex->position.x = source->x + origin.x;
 			vertex->position.y = source->y + origin.y;
 			vertex->position.z = source->z + origin.z;

@@ -94,6 +94,8 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // Round 233: Shared side-input scale, quarter in-place/displacement 239/242;
 // both modes in-place/displacement 242/252; raw secondary-byte counterparts
 // 195/210/200/219. Original side observations and flagless body restored.
+// Round 198: Normalizer inline/noinline and magnitude inline/forceinline caller
+// declarations in eight distinct pairs 170 each. Original math boundaries and body restored.
 // Round 225: complete quarter/triple/both point arrays on the staged raw-byte flow
 // 68/90/90; at entry 68/104/112; shared three-point workspace in optional/entry
 // scope 104/104. Raw-byte control 20/1176. Every grouped-point/extra-result form
