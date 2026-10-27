@@ -264,6 +264,8 @@ struct s_physics_component_walk : s_havok_component
 // with application status from policy 319/304/304/304. All recover frame 0x18 but shorten to
 // 898/922 and retain wrong current/entry roles. Original executable source and output/status/clamp
 // observations restored.
+// Round 350: shared entry-bit test, visited-bit set, neighbor-bit test and all combinations
+// 275 each; complete shared bits with direct receiver 275. Frame/status/group spill unchanged.
 // Round 96: replace flag renamed to sort first 275 (slots unchanged); next-group count/body through the
 // current-style ternary 307; the file's section-test helper for the first query 283; first body as
 // if/else or ternary 300/300 (frame 0x18 and retail's untreaded next test, but current lands in EDX).

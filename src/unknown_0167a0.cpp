@@ -1386,10 +1386,15 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Shared writer reference 267; masked value 302; split stores 267; reference/mask 302;
 // reference/split 267; mask/split and all three 302; named destination values 267.
 // Native external indexed banks/constants/dirty words and their pairs/all 267 each; all fields with packed reference 267.
+// Round 351: native component/mask/packed-color scalar home names in all seven combinations
+// 267/267/267/267/267/267/267; all with descriptor/input/output ordinal names 267. Original names restored.
 // Round 148: indexed destination pointers 267; constant destination pointers 296; all
 // destination pointers 296; pointers/packed reference 296; pointers/dword packed 320;
 // pointers/mask complement 274; pointers/XOR replacement 274; pointers/reference/complement 278.
 // All executable forms restored.
+// Round 353: short writer index, category/bank-first 266/255; shared complement
+// 286/269; shared masked input 298/270; both mask parts 317/305.
+// Every short-index form loses a matched sibling; original shared writer restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

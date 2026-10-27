@@ -2152,6 +2152,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
 // Round 197: Existing base-sync/identifier-map ordinary-inline-noinline declaration pairs,
 // all eight alternatives, 168 each; original declaration graph and body restored.
+// Round 352: persistent, child-value and induction/mask scalar-home groups, singly and all
+// combinations, 168; complete homes plus native header offset 167 (one point, rejected).
+// Original executable body and retained post-store child masks restored at 168/1070.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

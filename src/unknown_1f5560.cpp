@@ -811,6 +811,8 @@ real normalize2d(point2f *v);
 // Original query-byte allocation and protected trajectory convention remain.
 // Round 151: Two-use retry success with logical/bitwise/reversed logical joins before/after publication 216/239/218/254/215/243; promoted long/word result joins 200/203. All restored.
 // Frame 0x48 agrees; immediate query zero, protected trajectory convention and retry/output homes remain.
+// Native vector setter for planar zeros/actor fallback/default axis 172/218/187;
+// zero-actor/zero-axis/actor-axis/all 218/187/211/211; all plus request setter 222. All restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

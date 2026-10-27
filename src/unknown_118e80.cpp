@@ -989,6 +989,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Round 201: Response storage: normal/sweep reorientation and sweep reflection 176/160/177; paired
 // direction/reflection 193/174; consumed-input left output alone/with sweep reflection 176/194; saved-
 // velocity left output 176. All restored.
+// Round 352: native stored-velocity fields with direct, scalar-first, named-product and combined
+// products 151 each; each with one three-use velocity snapshot 374 (frame 0x128). Original
+// external record, response expressions, query-first sweep and saved identifiers restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

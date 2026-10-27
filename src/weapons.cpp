@@ -3118,6 +3118,8 @@ struct s_ammo_conversion_entry
 // Round 337: actual published round total short/word/long 225/225/229;
 // mode-test return producer 197 (gain 1, rejected); with short/word/long totals 231/231/235;
 // short total and mode producer with complementary byte acquisition 208. All restored.
+// Round 351: persistent tag/magazine/both/conversion/tag-conversion/magazine-conversion/all
+// cursors 205/222/228/228/224/217/232; all cursors with Boolean acquisition 236. All restored.
 // Complementary bool/byte/short/long acquisition with the tag byte at every type test
 // 216/216/234/232; with result-controlled first-match scan 246/246/261/259. All restored.
 // Round 204: Shared three-use type-bit result bool/byte/word/dword with word acquisition

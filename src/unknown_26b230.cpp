@@ -2197,12 +2197,17 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 183: Backward visibility source/destination/both pointer induction 331/322/358;
 // four default-position permutations 296/296/296/296; both pointers with default first 358.
 // Original merge and dispatch restored; reset-word SI and later cursor/selection homes remain.
+// Round 351: native short count/cursor/selected home names in all seven combinations
+// 296 each; all scalar-home names with structure/distance roles 296. Original names restored.
 // Round 192: actor/prop/node iterator lexical homes in all seven combinations 296 each;
 // complete native iterator/array homes 296. Frame 0x6a4, early reset-word SI and later
 // visibility/selection allocation unchanged; original names and all code restored.
 // DL round 156: native member/object generation ordinals word-word, word-long, long-word,
 // long-long, dword-long, long-dword, dword-word, word-dword
 // 311/323/323/299/299/299/323/323. Shared walk and original observations restored.
+// Round 353: on the shared marking walk, reset snapshots short/long/word
+// 357/356/357; short/long with chained sentinels 357/356; short/long
+// with long actor cluster 359/362; all three 359. Original observations restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

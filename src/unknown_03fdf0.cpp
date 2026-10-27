@@ -166,7 +166,7 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
-// score 183 (was 183): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
+// score 182 (was 182): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
 // Earlier: frame 0x84/0x88, callee registers and render-state expansion differ;
 // dword selection 183; word setup flags 234; combined mask 222;
 // brightness component loop 238; redundant bit-clear removal 217.
@@ -255,6 +255,9 @@ void function_402b0(long cache_index, long mode)
 // 0x496f0 is then inlined, aligned 87 -> 44); with the vertex-program planes 222 (aligned 42); plus a
 // noinline redeclaration of 0x496f0 here 222 (ignored); plus a noinline declaration at its definition
 // 285 (892 bytes).
+// Round 352: native cache-body graph with consistent reversed/unsigned/both mode contracts
+// 201f each; four explicit cdecl combinations 211f each; unsigned reversed stdcall 201f.
+// Fast control 201/946 versus plain 182/947. Original helper signature/call and body restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
