@@ -2435,20 +2435,23 @@ struct s_weapon_target_model
 
 bool function_106280(long object_index, long *out_index, byte *out_entry);
 
-// score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
-// tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
-// score 130 (was 130): frame 0x88/current-object spill remains. Settings-record reference, query-result
-// and elapsed-fraction locals 130; native output initialization 218; promoted target state 128 (rejected);
-// true-default active result alone/with settings reference 194; settings reference plus final receiver 130.
-// tried query output names 130; output record reference 219; current receiver first 132.
-// tried nested range tests 130; staged active result 206; natural while 130.
-// tried read-only tags 130; float consistency 130.
-// score 130 (was 130): frame 88 versus 84 and current-object spill remain; object/header getters 130/130;
-// entry weapon/tag references 130/130; output magazine reference 219; byte/long active carriers 192/194;
-// target-model reference 130.
-// score 130 (was 130): frame 0x88 versus 0x84 and current-object spill remain;
-// one-use marker identifier local 125 (reverted in review). Halfword active 169; signed-byte active 192;
-// loaded/total/both capacity values 130/130/130; target query/status noinline 130/130.
+// score 130 (was 130): frame 0x88 versus 0x84 and current-object spill remain; loop register
+// roles and the post-loop scratch registers (ours eax/ecx/edx where retail uses edx/eax/ecx) differ.
+// Retail tests `idle` through the entry weapon pointer (ebx), not the reloaded one: that form
+// alone gives retail's 0x84 frame and prologue but 171, as the loop reloads its index offset at
+// the latch where retail reloads it at the loop head (and again after the loop).
+// Tried: current magazine view 180; unsigned active range 207; marker position memcpy 130;
+// signed trigger state 130; charging result lifetime 129; settings-record reference, query-result
+// and elapsed-fraction locals 130; native output initialization 218; promoted target state 128
+// (rejected); true-default active result alone/with settings reference 194; settings reference
+// plus final receiver 130; query output names 130; output record reference 219; current receiver
+// first 132; nested range tests 130; staged active result 206; natural while 130; read-only tags
+// 130; float consistency 130; object/header getters 130/130; entry weapon/tag references 130/130;
+// output magazine reference 219; byte/long active carriers 192/194; target-model reference 130;
+// one-use marker identifier local 125 (reverted in review); halfword active 169; signed-byte
+// active 192; loaded/total/both capacity values 130/130/130; target query/status noinline 130/130;
+// idle through the entry weapon 171; with the magazine pointer declared first 171; with the
+// magazine fields read in full 225; with a short state 170; with new locals for the final reread 171.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
