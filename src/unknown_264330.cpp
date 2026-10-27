@@ -261,7 +261,8 @@ void function_264940(long actor_index, long prop_ref_index)
 	}
 }
 
-// score 358 (was 358): frame 0x24 versus 0x20; object/view allocation and cached object index differ.
+// score 358 (was 358): Frame 0x24 versus 0x20; cached object index, object/view homes and category-store joins remain.
+// Frame 0x24 versus 0x20; object/view allocation and cached object index differ.
 // Full-width unit mask 439; sampled-time reuse 380; deferred tracking view 431; fallback state default 358; inline depth one 358.
 // j92: frame 0x24 versus 0x20 and object/view homes remain; real object/header types and selection inline declarations tie; expiry snapshot regresses.
 // typed object view 358; typed header lookup 358; typed object header 358; tracking expiry snapshot 385;
@@ -273,6 +274,16 @@ void function_264940(long actor_index, long prop_ref_index)
 // entry vector workspaces 358; speed category result 358. Frame 0x24/0x20 and object/view homes remain.
 // Round 211: Direct time 442; signed-byte/word update 358/429; word approach category 360; named expiration
 // 358. Frame and object/view homes remain.
+// Round 176: Branch-produced approach categories signed-byte/byte/word/long
+// 370/371/360/360; highest-category-default forms 392/392/394/393. Frame
+// 0x24 versus 0x20 and object/view homes persist; all original categories restored.
+// Disjoint velocity/facing scope 358; semantic vector names 358; both 358; shared speed length 358;
+// shared speed dot 358; shared approach dot 358; length/approach helpers 357; scoped two-dot helpers 357.
+// Complementary bool/byte/short/long complete update predicates 442/442/425/377;
+// complementary conditional producers 359/359/429/422. Original update restored.
+// Round 337: complete origin point/scalars 419/427; sampled state position 444;
+// origin scalars/point with state position 463/457; const native copies 457;
+// entry origin copy 498; both native inputs with shared difference 457. All restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -453,6 +464,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // getter, native node fields and both 420 each. Actual shared type layout restored.
 // Round 212: Three-state sampling enum/byte/short/long with entry success 434/426/434/434;
 // with success at consumption 434/430/438/434. Byte states recover frame 0xa0 and 1616 bytes.
+// Complementary run-wide availability bool/byte/short/long 424/424/422/443;
+// per-node skip/defer/both 429/424/433; all three complements 436 at retail length. All restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -772,11 +785,11 @@ short function_25c9d0(long actor_index, long prop_ref_index, bool player, long s
 short function_25cb60(long actor_index, long object_index, short type, void *sample,
 	void *point, long location, long sight);
 short function_25cca0(long prop_ref_index);
-short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
+long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 
-// score 358 (was 358): Frame 0x20 agrees; actor ESI versus EBX, saved actor and flag homes still differ.
+// score 358 (was 358): Frame 0x20 agrees; actor ESI versus EBX and saved-actor/flag homes remain.
 // Equal-zero reference, equal-four sight, view zero, priority zero, paired defaults, all defaults chains
 // 363/363/363/363/363/363; alternate-view short pair memmove 374; copy field order 363 (control 363).
 // Original stores, body and local pointer qualifier retained; full baseline 358.
@@ -801,6 +814,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // Native prop/datum/sample/motion references 363f/363f/363f/363f; direct alternate
 // sight result 363f; child/guarded-parent handles 363f/363f; adjacent priority memmove
 // 377f (preview 363f); all original bodies and call arguments restored.
+// Ordinary object-type/suppression/current orders 012/021/102/120/201/210
+// 366/366/351/355/369/388; coordinated priority names 341; names with 210 order 388
+// (fast control 341; full baseline 358).
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

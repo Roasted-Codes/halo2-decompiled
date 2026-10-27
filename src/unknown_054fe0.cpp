@@ -1259,7 +1259,12 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
-// score 184 (was 184): Frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// score 184 (was 184): frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// Round 90: a zero constant stays in edx from the parameters test to the record defaults, so the name count
+// lives in memory (retail: test edi, edi; the count in esi). Requested-record pointer first in the loop 199;
+// current as requested + 1 184; a player-record pointer 184; the record zero-initialised with braces 241;
+// the missing-parameters case as an early return 217.
+// Frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
 // Earlier: frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
@@ -1309,6 +1314,13 @@ struct s_player_properties
 // cache/input guards 217; cache/metadata 231; input/metadata and all three 220; all plus wide team 223.
 // Round 214: native array-end traversal collection/update/both 299/344/395; shifted collection/update/both
 // 202/341/347; collected-name output end with collection/both input ends 325/418. All restored.
+// Round 240: literal default groups first-array/second-array/zero-bytes/byte-sentinel/long-sentinel/short-sentinels;
+// orders ACBDEF/ABDEFC/DEFCAB/FCABDE/EABCFD/BFEDCA/CDEFAB/FEDCBA 184/184/186/186/184/186/184/186. Original store order restored.
+// Native short/word/signed-byte/byte collection ordinals 235 each; corresponding
+// update ordinals 227/227/231/231. Both original long traversals restored.
+// Round 179: first/second/both default arrays after name output 194/205/234;
+// two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
+// all scalar/array defaults after names 296. Original store phases restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

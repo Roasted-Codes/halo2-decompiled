@@ -718,7 +718,10 @@ union s_60403
  long field_00;
 };
 
-// score 176 (was 214): current/previous registers and map-loop homes differ;
+// score 149 (was 176): the member's changed test is one condition, so the body now
+// has retail's 1497 bytes; what still differs is the current/previous register
+// rotation (EBX/EBP), the mapping-loop count homes and the discriminator's carrier.
+// Earlier rounds: current/previous registers and map-loop homes differ;
 // retained-player word index 348; emitted-player word index 248; both 359;
 // explicit append indices 324; advancing retained bit 411. Original kept.
 // nested map-index names 214; shared member emission 621; nested player emission 214;
@@ -789,9 +792,7 @@ void __stdcall function_60400(c_class_58d20 *session, const byte *current, const
    const byte *old_member = previous + 0xc + (*local_0) * 0x10c;
    s_60403 local_10;
    local_10.field_0 = false;
-   if (member[0x24] != old_member[0x24])
-    local_10.field_0 = true;
-   else if (memcmp(member + 0x28, old_member + 0x28, 0xc8))
+   if (member[0x24] != old_member[0x24] || memcmp(member + 0x28, old_member + 0x28, 0xc8))
     local_10.field_0 = true;
    if (local_10.field_0 || i != (*local_0))
    {

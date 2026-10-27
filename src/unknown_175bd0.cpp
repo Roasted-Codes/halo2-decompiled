@@ -407,7 +407,7 @@ long __stdcall function_d6c80(s_type_1e6529 *data, long ignore_object_index); /*
 void function_b7930(void *data, long tag_index, long object_index, s_effect_owner const *owner); /* stubs/lane_o.cpp */
 bool function_a7640(s_effect_object_placement *data);
 void __stdcall function_a7870(long object_index); /* stubs/lane_o.cpp */
-long function_c0350(long tag_index, long object_index, long node_index, vector3f const *up, vector3f const *forward, point3f const *position, real scale);
+long function_c0350(long tag_index, long object_index, long node_index, vector3f const *up, point3f const *position, vector3f const *forward, real scale);
 bool __stdcall function_16a8e0(long name, point3f const *point, real radius, long object_index, long unknown, point3f *origin, real *radius_reference);
 void __stdcall function_179880(s_effect_datum *effect, long effect_index);
 void __stdcall function_179e80(s_effect_datum *effect);
@@ -2235,6 +2235,12 @@ event_done:
 // address 109; origin output lifetime 247.
 // Round 208: tag at every use 205; integer destruction result 230; word visibility 130;
 // tag/result 244; tag/word 212; result/word 239; all three 248; unsigned result with all 248.
+// Round 333: Start/visibility/both inline declarations 87/87/87; start noinline alone/with inline visibility 87/87; entry visibility alone/with both inline/with signed-byte result 87/87/87. All restored; object reload and merged-call placement remain.
+// Round 135: retail passes 0xbaf80's result (still in EAX) as 0x1794a0's first argument, not
+// the effect's object index; with that root index 197 (585 bytes; aligned 88 -> 61: the cached
+// object index then takes ESI where retail keeps NONE, and EDI is reloaded); with the visible
+// arm first 224; result false by default 197 (87 without the root index); the object index
+// named in the arm 197. Not kept until the reload blocker is gone.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2617,11 +2623,11 @@ void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f 
 		{
 			short node_index = location->node_index == NONE ? NONE : location->node_index & 0x7fff;
 
-			function_c0350(part->tag_index, effect->object_index, node_index, &location->matrix.up, &location->matrix.forward, &location->matrix.position, scale);
+			function_c0350(part->tag_index, effect->object_index, node_index, &location->matrix.up, &location->matrix.position, &location->matrix.forward, scale);
 		}
 		else
 		{
-			function_c0350(part->tag_index, NONE, NONE, up, forward, point, scale);
+			function_c0350(part->tag_index, NONE, NONE, up, point, forward, scale);
 		}
 		break;
 	case 'snd!':
@@ -2691,6 +2697,15 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // on both: unsigned mode 153, part point 166, conditional scale 156 (fast); follow-ups restored.
 // Round 208: uniform tag/event/part observations 334/349/266; tag+event 340;
 // tag+part 402; event+part 453; all owners 590; all owners with word creation result 618.
+// Round 333: Node/creation/placement inline declarations, each and all combinations, 153 each; joint declarations with forced existing normal transform 153; native signed-byte creation input on the current signed-byte caller 156. Scalar homes, flag stores and random lifetime remain; all declarations restored.
+// Round 135: retail loads the radius bounds upper first, then lower, before drawing the random
+// value, and keeps the fraction on the x87 stack (a range call's arguments, evaluated right to
+// left); its radius/conversion slot lies between the definition and event spills (ours below
+// the next index). Radius named to sort before the definition 153; the existing range helper
+// 349 (inlined in SSE, frame 0x80); bounds read at each use 159; the range helper as one
+// expression 153 (bounds loaded first, but the span is formed before the fraction, and the
+// helper itself stops matching); with the factors swapped 153; radius declared at function
+// scope first/after the definition 153/153 (slots unmoved).
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2849,6 +2864,8 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // readonly effect metadata 176. Original body, native widths and metadata restored.
 // Accumulated/selected test result 184/176; result after pool query/signed-byte result/function delta 176 each;
 // live tag radius/live unit fields 254/254; live tag with accumulated result 258.
+// Current effect observed at every use 276; with live tag/unit/both 295/272/297;
+// those four effect-root graphs with the existing point producer forced inline 276/295/272/297.
 // Radius before displacement 176; displacement-first declaration 176; location-scoped matrix 176;
 // each pair and all three 176; absent-node point setter 228 (fast).
 // Complementary bool/test-produced/signed-byte/full-width status 176/176/176/176;

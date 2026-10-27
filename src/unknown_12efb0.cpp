@@ -133,7 +133,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 616 (was 616): Frame 0x4820 and metadata cursor agree; native palette width and accumulator carriers differ.
+// score 616 (was 616): Frame 0x4820, clears and metadata cursor agree; palette and accumulator carriers remain.
+// Earlier: Frame 0x4820 and metadata cursor agree; native palette width and accumulator carriers differ.
+// Frame, clear prefix and metadata cursor agree; palette/cluster carriers and accumulator scheduling remain.
 // Frame 0x4820, clears and metadata cursor agree; cluster-index EDI, palette carriers and helper update scheduling differ.
 // Earlier: Frame 0x4820 and clear scheduling agree; output cursor +0x10 versus +8 and palette/cluster homes remain.
 // Earlier: Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
@@ -172,6 +174,12 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // One-point leads dropped; original complete free-function helpers restored.
 // Separate clamped weight in scalar/merge/color helpers 684/683/683; scalar-merge/scalar-color/merge-color/all 684/684/683/684;
 // normalized contribution before destination stores 742. Original input captures and helper bodies restored.
+// Uniform scalar/merge/scalar-merge/color/scalar-color/merge-color/all contribution product operands; all
+// normalized publication products; then source-first scalar/merge/scalar-merge/color/scalar-color/merge-
+// color/all helper orders and all with output-first normalization:
+// 616/616/616/616/616/616/616/616/615/616/615/617/616/617/616/616 (fast); all restored.
+// Complete source-value copies: scalar RGB/merge accumulator/both/color RGB/scalar-color/merge-color/all
+// 887/818/984/855/989/953/1101; complete publication source 894. Copies grow code/frame; originals restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

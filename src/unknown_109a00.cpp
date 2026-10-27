@@ -145,10 +145,15 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 }
 
 // score 88 (was 88): Frame 0x88 and first point-velocity agree; second point-velocity and nonrotating schedules remain.
+// Frame 0x88 and first point block agree; second point inputs, nonrotating products and five extra bytes remain.
 // Earlier: Frame 0x88 agrees; point-velocity and nonrotating scale/add
 // scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
+// Frame 0x88 agrees; second point-velocity and nonrotating scheduling
+// and five excess bytes remain. Earlier shared point-velocity expansion changed
 // Frame 0x88 agrees; first point-velocity schedule recovered; second
 // point-velocity and nonrotating scale/add scheduling and five excess bytes remain.
+// Frame 0x88 and first point-velocity block agree; second point-velocity
+// and nonrotating scale/add scheduling and five excess bytes remain.
 // Earlier shared point-velocity expansion changed
 // 128/1015 to 164/1018 and aligned differences 66 to 40; second call schedule recovered.
 // Earlier first point-velocity and nonrotating difference/add forms: external motion record 164;
@@ -190,6 +195,16 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // displacement 201; returned point and complete scaled assignments 167; returned point, native
 // original and scaled assignments 201; returned point, early displacement and scaled assignments
 // 167; returned point with all three native boundaries 201. All restored.
+// Second point native center/linear/both/angular/center-angular/linear-angular/all inputs
+// 212/189/229/211/247/216/256/286; the last form also gives the completed position both consumers.
+// Single-use input copies restored; original shared helper and game calls retained.
+// At-use clock graph: scaled-change component orders ijk/ikj/jik/jki/kij/kji
+// 88/87/86/87/86/88; native value then in-place scale 164; paired native vector names 88.
+// Two-point forms rejected; second point-velocity and nonrotating schedule remain.
+// Void-output native addition inputs first/second/both 123/126/175; forced 123/126/175;
+// complete moved position 202; with coherent nonrotating frame names 202. Original helpers restored.
+// At-use clock displacement producer orders ijk/ikj/jik/kij/kji 88/87/88/87/87;
+// shared displacement producer 177; aggregate and immutable aggregate 88/88.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

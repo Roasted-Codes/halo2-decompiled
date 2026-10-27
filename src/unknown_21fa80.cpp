@@ -102,6 +102,12 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Round 213 reduced control 532: playback state-transition gate with bool/byte/word/long
 // request domains 549/549/550/550; each with status declaration at query 549/549/550/550.
 // Original playback arms, query schedule and all math restored.
+// Round 377: Complete cache-valid bool/byte/short/long result graphs
+// 542/542/569/569; entry declaration forms 542/542/569/569 (fast control 532,
+// full baseline 545). Byte forms recover checker length but regress; all three
+// consumers, original status, mixed math and helper contracts restored.
+// Force-inline gain pin, bit pin, linear gain and combinations, then all four
+// existing helpers: eight forms all 532 on the reduced control. Helpers restored.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

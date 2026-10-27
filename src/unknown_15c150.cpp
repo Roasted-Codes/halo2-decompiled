@@ -128,6 +128,14 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Round 227: Private slot search sentinel-plus-one start 193; short return 196; short input 199; both
 // short 199; simple start with short return/input/both 193/193/193 (three-point gains dropped);
 // terminating candidate scan 230. Existing helper restored.
+// Round 167: Native unsigned-word private search input/return/both 199/196/199;
+// return/result 250, input/return/result 254, input/ordinal 263,
+// input/return/ordinal 263, all native word 263. All restored; delayed EBP
+// save, teams-byte home and local-slot spill remain.
+// Existing search table pointer/const pointer/reference/const reference 196/196/196/196;
+// actual entries pointer/const pointer/array/const array 196/196/196/196. Original helper restored.
+// Count/unit index/team/local slot/fade/unit home names and two combined groups
+// 196 each (fast; reduced-image callee caveat).
 // @retail 0x15c150
 void function_15c150()
 {

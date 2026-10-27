@@ -19,7 +19,15 @@ struct pairs_312430
 	pair_312430 &operator[](int index) { return data[index]; }
 	pair_312430 const &operator[](int index) const { return data[index]; }
 	// stores a copy of `value` after the last element, with room already made
-	void append_unchecked(pair_312430 const &value) { pair_312430 &slot = data[size]; slot = value; size++; }
+	void append_unchecked(pair_312430 const &value)
+	{
+		long index = size;
+		pair_312430 *items = data;
+		pair_312430 saved = value;
+		items[index].field_0 = saved.field_0;
+		items[index].field_4 = saved.field_4;
+		size++;
+	}
 };
 
 struct description_312430

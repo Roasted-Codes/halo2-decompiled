@@ -212,6 +212,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // Round 213: point source before terminal fields/between fields/final score range/all score ranges
 // 142/142/167/192, each with shared or independent countdown; full-width masked ordinal 189,
 // with destination end 192, with late source cursor 238. Original body restored.
+// Round 136: defining-unit search/conversion/both inline 271,172,271;
+// the same with separate noinline 172,172,172;
+// outlined inline search with outlined conversion/both noinline 172,172.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -385,6 +388,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // 187/186/193; each with equal-place chain 187/186/193; reversed chains 193; native place values 193.
 // Round 213: direct destination type-four/type-five/both/team/type-four-team/type-five-team/all
 // settings 245/212/267/200/259/231/271; all with destination place settings 300. Original scratch restored.
+// Round 167: Independent first/second/both type-four workspaces 202/198/203; separate
+// place pair 186; first/second/both with separate place pair 202/198/203; all
+// independent workspaces with native type-four value resets 216. All restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

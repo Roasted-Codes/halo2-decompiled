@@ -2089,6 +2089,12 @@ void function_283600(void)
 // and scale count in its own variable (252); other declaration and frame-save
 // orders (39); the bodies compute_orientations (118), _split (130),
 // _component_count (240), _inheritance_mapping (382), function_288571 (118).
+// MiniMax G (10-27): the blend-2 scale apply through a pointer to the destination's
+// scale (real *s = &destination->scale; *s = g_504430.scale * *s;) in the shared
+// component_apply MATCHES this function, but the same helper then breaks 0x2825b0 (36),
+// 0x282f60 (40) and 0x282be0/0x283600/0x284010 (2 each), so it was not kept. A per-caller
+// bool parameter on component_apply selecting that form for this function alone leaves
+// it at 39: the match needs another way to give only this caller the pointer form.
 // @retail 0x2839d0
 void function_2839d0(void)
 {

@@ -88,6 +88,16 @@ PRIVATE __forceinline real function_29bab4(vector3f const *arg_0, vector3f const
 // sign 828; native projection values 1183; ordinary correction inline boundary 840 (fast).
 // Round 212: Actor after configuration query 812; with short/long default mode 753/821;
 // complete normalizer inputs 755, with short/long mode 821/821; all norm squares 755, with short mode 821.
+// Round 173: Direct-input shared native and dot-based normalizers 793/785; magnitude output
+// pointer/reference/output-first/vector-result 805/805/805/805; magnitude output with shared scaler
+// 804; with real absolute-length boundary 809. All exact-match-only forms restored. Frame 0x88
+// agrees; early input/heading retention and normalizer memory-product homes remain. Original body
+// and helpers restored.
+// Round 140: Direct input with complete immutable turn-distance/correction/history observations
+// 854/853/819/818/855/854/815/814; response defaults three/two in short/long/word/byte storage
+// 815/748/766/816/815/748/804/821; complete normalizer inputs/sum/all products and one-result exit on the new
+// default-two graph 814/814/814/814/814/814/750/814. Best default 748 gains only two; original body, parameter
+// access, helpers and mode assignments restored.
 // @retail 0x29bab0
 void __stdcall function_29bab0(long arg_0, long arg_1, vector3f const *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

@@ -307,6 +307,11 @@ public:
 // noinline native origin with/without const 154/154, both held: caller 308 to 369 and frame 0x2c/0x20. All declarations restored.
 // Round 206: On lower header-value ownership, lower rejection/default/complete/endpoint results 163 each;
 // upper complete result and both rejection/default/complete results 163 each. Caller stays 308; sibling exact.
+// Round 136: one native header shared by lower-value/upper-reference, both-reference, both-pointer,
+// both-value readers 151,176,176,152; upper-first 152,176,176,152.
+// All common-header forms move the caller 308 to 369; the 151/152 forms use frame 0x38.
+// Round 169: Lower/upper/both pointer outputs 163 each, reference outputs 163 each;
+// output-first lower/both 163 each. Original readers restored; frame/input/selector causes remain.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
