@@ -403,6 +403,10 @@ real function_d1210(long object_index)
 	return 0.0f;
 }
 
+// score 8 (was 20): Positive counter arms recover the common zero tail; clamp XMM homes and zero scheduling remain.
+// Unsigned nonpositive guards 20; positive arms 8; shared counter guard/result 59/59;
+// scoped positive counters 8; conditional clamp 20; selected counter with result arms 59;
+// result before clamp 20; positive arms with reversed lower comparison/result reuse 8/8.
 // @retail 0xd1490
 real function_d1490(long object_index, long child_index)
 {
@@ -421,16 +425,18 @@ real function_d1490(long object_index, long child_index)
 		if (current == child_index)
 		{
 			counter = object->counter1fb;
-			if (counter == 0)
+			if (counter > 0)
+				value = (real)counter * g_510c54->rate;
+			else
 				return 0.0f;
-			value = (real)counter * g_510c54->rate;
 		}
 		else
 		{
 			counter = object->counter1fa;
-			if (counter == 0)
+			if (counter > 0)
+				value = (real)counter * g_510c54->rate;
+			else
 				return 0.0f;
-			value = (real)counter * g_510c54->rate;
 		}
 		value *= 10.0f / 3.0f;
 		if (0.0f > value)
@@ -904,6 +910,9 @@ bool function_d3630(s_vertex_block *block, long triangle_index, s_mesh *mesh, re
 	return result;
 }
 
+// score 42 (was 42): Root/pool/object homes, missing shift spill and stacked iterator input remain.
+// Header base 42; root handle 45; both 45; ordinary while 59; separate admission guards 42;
+// parent field at every use 59; named parent-type mask 42; root/header with separate guards 45.
 // @retail 0xd0620
 void function_d0620(long object_index, s_object_child_iterator *iterator)
 {
