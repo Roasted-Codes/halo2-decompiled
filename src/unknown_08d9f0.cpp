@@ -164,6 +164,8 @@ void function_8dd70(void);
 // Constant observer/session/both homes at entry 244/225/224; entry long 230;
 // with observer/session/both entry homes 244/225/224; unsigned entry with both 224.
 // Both entry homes and bool/byte/char/long link result 228/228/228/225. All restored.
+// Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
+// stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
