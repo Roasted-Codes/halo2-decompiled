@@ -275,6 +275,7 @@ void function_245400(s_source_245400 const *source, long index,
 }
 // score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
 
+// Earlier: Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
 // score 204 (was 204): frame 0x24 versus 0x2c, the source register (edx here, ecx in retail,
 // which keeps 0x245aa0 at 3) and the separate side-byte homes differ. Ours holds the transform
 // pointer in ebp from entry, so the source pointer stays in a scratch register; retail reads the
@@ -329,6 +330,9 @@ void function_245400(s_source_245400 const *source, long index,
 // One-point reduction excluded; alternate dot association/grouped values restored.
 // Round 327: corresponding two-product rotation sums at each row 222; all partial sums before
 // stores in ijk/ikj/jik/jki/kij/kji order 222 each; partial rows with shared matrix scale 212.
+// Round 207: native endpoint-word array alone/with plane-table field/with signed material field/
+// with both 204 each; separate native endpoint words with those same four record views 204 each.
+// Complete original declarations and body restored; duplicate score headers merged.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

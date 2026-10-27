@@ -82,6 +82,14 @@ void function_17e670(s_effect_source *source, point3f const *point, long tag_ind
 // retail passes the source in ecx and the point in edx (also at 0x17a8a0).
 // Shared entry 17; entry plus palette 17; shared index 32; const shared entry 17;
 // direct tag 52; tag after angles 28; tag after direction 52; shared direction helper 17.
+// Further trials: entry/palette ownership and contributor effect-call convention remain.
+// uniform structure 125; cluster at use 92.
+// spawn at use 82; structure/cluster 105.
+// structure/spawn 121; cluster/spawn 136.
+// all three owners 149; all owners/tag at call 150.
+// Position pointer 16; aggregate direction 16; direction helper with position 16;
+// that combination with shared entry 17; entry pointer arithmetic 16;
+// full-width first entry 32; short first entry 16; short spawn cursor 78.
 // @retail 0x23aad0
 void __stdcall function_23aad0(long previous_address, long current_address, long count)
 {

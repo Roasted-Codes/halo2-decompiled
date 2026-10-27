@@ -2134,6 +2134,10 @@ static __forceinline long player_round_ticks(real value)
 // Branch-local separate requests 804; live movement fields 701; joined cooldown clamp 707;
 // non-primary melee arm first 701; target completion returns 701.
 // Earlier: Frame 0x4c versus 0x74 and selective expansion remain. Entry request clear 722; native request reset 862; mode-derived acceptance 714; query-derived readiness 711; ordered parented counter reset 701 (fast).
+// Clamped idle local 704; explicit cooldown scale locals 701; hoisted unit pointer 713;
+// inlined candidate pointer 708; two request workspaces 804; permuter 697 but a false match
+// (swapped callee arguments and byte/short volatile type stores, all wrong against retail),
+// its neutral remainder 701. Original body kept.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {

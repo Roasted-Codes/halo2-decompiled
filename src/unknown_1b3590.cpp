@@ -602,8 +602,10 @@ long function_1e4a50(long index);
 void function_26c180(long actor_index);
 short actor_behavior_find_level(long owner_index, short type);
 
-// score 140 (was 140): frame 0x84 versus 0x88 and actor/scratch homes differ;
-// source store order 145, movement result 142, positive membership scope 161,
+// score 59 (was 140): the 0x270750 call passes scratch/sector/target in other registers (its own
+// convention; the extra byte also makes the loop's back-edge jump near, +5 bytes), and after the
+// loop the sector and unit loads and the pool/actor registers are scheduled the other way.
+// Earlier (frame 0x84 versus 0x88 and actor/scratch homes): source store order 145, movement result 142, positive membership scope 161,
 // role names 144, native zero initialization 144, combined setup/result 141.
 // frame 0x84 versus 0x88 and actor/scratch/best homes remain.
 // Double best distance 214; failure-default active result 172; inactive success exit 188;
@@ -621,62 +623,70 @@ short actor_behavior_find_level(long owner_index, short type);
 // comparison with admission/buffer/both 166/140/166; native settings initialization 215.
 // Native start/candidate/both/selected location receivers 159/139/161/139;
 // start-selected/candidate-selected/all receivers 158/138/160; all with query-output scope 160.
+// Round 70: element member iterator 142 (frame 0x88); with memset source 144; best index scoped in
+// the found branch 132; NONE test as result = false in an else-if chain 59 (kept). On that: location
+// pointer 62; getter at each use after the loop 88; loop member reused 59; best locals first 59;
+// inverted selection test 59; slot data block view (unknownc) 59.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {
 	s_actor_view *actor = actor_get(actor_index);
 	bool result = true;
 	if (actor->unknown07c == NONE)
-		return false;
-	if (actor->unknown040 && !((s_slot_66 *)slot)->unknown0c)
+		result = false;
+	else if (actor->unknown040 && !((s_slot_66 *)slot)->unknown0c)
 	{
 		byte *movement = (byte *)function_1e4a50(actor->unknown054);
 		function_26c180(actor_index);
-		s_path_source source = { *(real *)(movement + 4) };
+		s_path_source source;
+		memset(&source, 0, sizeof(source));
+		source.radius = *(real *)(movement + 4);
 		source.unknown04 = false;
 		source.object_index = NONE;
 		source.unknown0c = NONE;
+		source.unknown4c = 0.0f;
 		source.has_point = true;
 		source.point = *(s_path_point *)&actor->unknown27c.point;
 		source.unknown24 = actor->unknown27c.unknown10;
 		source.unknown45 = true;
 		source.unknown48 = 10.0f;
-		source.unknown4c = 0.0f;
 		s_path_settings settings;
 		function_1f9240(actor_index, &settings);
 		byte *scratch = ai_scratch_buffer_get();
 		function_271300((s_type_f17a25 *)scratch, NULL, &settings, &source, 0);
-		long best_index = NONE;
 		if (function_2715a0(scratch))
 		{
-			long member_index = element_502420_get(actor->unknown07c)->first_actor_index;
+			s_element_502420_member_iterator iterator;
+			s_actor_view *member;
+			iterator.next_index = element_502420_get(actor->unknown07c)->first_actor_index;
+			iterator.index = NONE;
+			long best_index = NONE;
 			real best_distance = 50.0f;
-			while (member_index != NONE)
+			while ((member = element_502420_member_next(&iterator)) != 0)
 			{
-				long current_index = member_index;
-				s_actor_view *member = actor_get(current_index);
-				member_index = member->next_index;
-				if (member != actor && actor_behavior_find_level(current_index, 0x66) == NONE)
+				if (member != actor && actor_behavior_find_level(iterator.index, 0x66) == NONE)
 				{
-					function_26c180(current_index);
+					function_26c180(iterator.index);
 					real distance;
 					if (function_270750(scratch, member->unknown27c.unknown10,
 							(s_actor_point_target const *)&member->unknown27c.point, &distance, 0, 0) && best_distance > distance)
 					{
-						best_index = current_index;
+						best_index = iterator.index;
 						best_distance = distance;
-					}
 					}
 				}
 			}
-		if (best_index != NONE)
-		{
-			s_actor_view *member = actor_get(best_index);
-			if (function_1f4460(actor_index, &member->unknown27c.point, member->unknown27c.unknown10, member->unknown018, false))
+			if (best_index != NONE)
 			{
-				actor->unknown4cc = 1.5f;
-				((s_slot_66 *)slot)->unknown10 = best_index;
-				member->unknown314.bit1 = true;
+				s_actor_view *selected = actor_get(best_index);
+				if (function_1f4460(actor_index, &selected->unknown27c.point, selected->unknown27c.unknown10, selected->unknown018, false))
+				{
+					actor->unknown4cc = 1.5f;
+					((s_slot_66 *)slot)->unknown10 = best_index;
+					selected->unknown314.bit1 = true;
+				}
+				else
+					result = false;
 			}
 			else
 				result = false;

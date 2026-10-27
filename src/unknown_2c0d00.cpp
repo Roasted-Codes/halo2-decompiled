@@ -85,12 +85,6 @@ struct s_obstacle_hit
 	short group;
 };
 
-static inline void vector2d_from_points2d(point2f const *p0, point2f const *p1, point2f *out)
-{
-	out->x = p1->x - p0->x;
-	out->y = p1->y - p0->y;
-}
-
 static inline real dot_product2d(point2f const *a, point2f const *b)
 {
 	return a->x * b->x + a->y * b->y;
@@ -1063,6 +1057,8 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // frame 0x3c versus 0x34 and angular homes remain;
 // Round 342: first-clamp tests 342; second-clamp tests 342; separate second-clamp scalar 410;
 // second angular endpoint reuse 373; second distance endpoint reuse 360.
+// Round 54: first/second directions initialised directly 376 (x87 forwarding matches, y preload
+// missing), through normalize_local2d_2c 342/376, out-of-line normalize2d 414, plain first side 374.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
