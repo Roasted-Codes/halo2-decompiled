@@ -108,6 +108,9 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 // 449/450/454/454/450/450/449/449 fast; original order restored.
 // Basis case groups 021/102/120/201/210 380/381/383/384/383; basis 102
 // with rotation orders 01243/01324/10423 393/451/393. Original order restored.
+// Round 160: native destination/both receivers 380/380; immutable product/all producer
+// lifetimes 380/380; complete cross inputs alone/with receiver 380/380; uniform
+// context-definition observations 449; combined cross/receiver/producers 380.
 // @retail 0x224fd0
 void __stdcall function_224fd0(s_draw_mesh_seed const *seed, s_draw_value_cache *values,
 	point3f const *position, vector3f const *direction, real scale, color4f const *color,
