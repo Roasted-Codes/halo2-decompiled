@@ -144,10 +144,8 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 	return result;
 }
 
-// score 126 (was 126): Frame 0x88 agrees; point-velocity and nonrotating scale/add
-// scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
-// Frame 0x88 agrees; first point-velocity schedule recovered; second
-// point-velocity and nonrotating scale/add scheduling and five excess bytes remain.
+// score 88 (was 88): Frame 0x88 and first point-velocity block agree; second point-velocity
+// and nonrotating scale/add scheduling and five excess bytes remain.
 // Earlier shared point-velocity expansion changed
 // 128/1015 to 164/1018 and aligned differences 66 to 40; second call schedule recovered.
 // Earlier first point-velocity and nonrotating difference/add forms: external motion record 164;
@@ -184,6 +182,8 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // At-use clock field 88 kept: all three products read the field consistently; first
 // point-velocity block now agrees. Native two-use initial velocity/field receiver/both
 // 185/166/185; with at-use clock 187/167/194; initial velocity with shared real scale 185.
+// At-use clock displacement producer orders ijk/ikj/jik/kij/kji 88/87/88/87/87;
+// shared displacement producer 177; aggregate and immutable aggregate 88/88.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {

@@ -120,7 +120,7 @@ __forceinline bool function_185be3(long arg_0)
 }
 __forceinline dword function_185be4(dword flags, dword mask, bool enabled)
 {
-    return enabled ? (flags | mask) : (flags & ~mask);
+    return (flags & ~mask) | (enabled ? mask : 0);
 }
 __forceinline void function_185be5(s_186ab2 *arg_0)
 {
@@ -139,8 +139,8 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 969 (was 969): Frame 0xe4 versus 0xe0; state/output carriers and flag scheduling remain.
-// frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// score 947 (was 969): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
+// Earlier: frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
@@ -174,6 +174,9 @@ union s_185be7
 // Round 337: signed controller slot short/long 969/997; snapshot before turns 969;
 // existing turn/response/both pair aggregate initialization 969 each;
 // long slot with early snapshot/with both pair initializers 997/997. All restored.
+// Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
+// clear-first/set-first results with bool 1002/982, with long 1005/985;
+// named selected-mask result bool/long 947/944. Original Boolean helper input retained.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

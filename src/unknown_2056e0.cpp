@@ -160,6 +160,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // pointer/receiver/both 184 each; new query/product contract with distinct first result 194.
 // Aligned query/rotation overlap remains.
 // Round 333: Ordinary limiter/cap-first/both contracts 184/184/184; cap-first/both with broad rotation 221/221; ordinary limiter/cap-first/both with ordinary query expansion 184/184/184. Broad forms recover frame 0xc4 but regress; all original helpers, matrix scopes and calls restored.
+// Complete world-inertia producer with matrix/state pointer/reference inputs, forced 233 each;
+// ordinary matrix/state pointer/reference 462/468/462/468. Original query boundary restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
