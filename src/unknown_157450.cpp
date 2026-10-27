@@ -5163,7 +5163,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 144 (was 153): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
+// score 144 (was 144): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5211,6 +5211,10 @@ void __stdcall function_d6bc0(long object_index);
 // Round 331: typed scenario/equipment views 153f; time-slice field at each use 243f;
 // views plus field 243f; shared squared length at first/second/both tests 153f each;
 // shared dot products 153f; views/field/length together 243f. All eight restored.
+// Round 144, word-schedule/shared-displacement graph: native eligible entry 176f;
+// external timer reference 144f; both 176f. Countdown-only timer pointer/reference,
+// each with eligible entry, and earlier entry with countdown reference: all 176f.
+// Original body restored; frame 0x14/0x18 and independent timer spill remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
