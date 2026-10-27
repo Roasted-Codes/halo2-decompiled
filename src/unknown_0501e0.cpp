@@ -35,10 +35,10 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
         ++output;
     }
 }
-// score 221 (was 221): Frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
+// score 221 (was 221): Frame 0x18 versus 0x14; displacement/coefficient/result overlap remains.
 // Earlier: Frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 
-// score 221 (was 221): Frame 0x18 versus 0x14 and coefficient/input/result homes remain.
+// Frame 0x18 versus 0x14 and coefficient/input/result homes remain.
 // frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 // Global optimization off 961; depth zero 555; frame pointer 300;
 // input-first products 255; k/j/i transform output 272.
@@ -70,6 +70,8 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // memcpy producers 298/297/334; both inputs before offsets 335; both input copies with
 // origin 287; first/second input copy with origin 264/266 (both at 1136 bytes). All restored.
 // Descending first/second/both displacement indices 220/260/260; first/second/both displacement destination cursors 224/224/226; all axis products 221; scalar-role homes 221. Extra frame dword and coefficient/result homes remain; one-point descending-first form rejected.
+// Round 230: Uniform transform first-pair sum/last product/row result 227/284/221;
+// pair with last/row, last with row, all, and all product parts 222/227/284/222/222.
 // Round 132: consistent direct scale-field observations, with input/output/both references
 // and actual output-result contracts in all eight combinations, 224 each (1148 bytes).
 // Original input copies, separate offset loops, output cursor and scalar parameter restored.
@@ -78,6 +80,8 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // each 286 at 1101 bytes, frame 0x2c. Original helper and body restored.
 // Native vector return with pointer/reference/value input and cursor 278/278/401;
 // with indexed result 280/280/404; scaled input vector with output pointer/native return 312/404. Original helper and body restored.
+// Round 146: actual output-end !=/< with long/dword ordinals 406 each and short/word ordinals 378
+// each; original ordinal-controlled helper restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

@@ -590,6 +590,7 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
+
 // score 201 (was 201): frame 0x50/0x54, early EBX and child-iterator convention remain.
 // Frame 0x50/0x54 and protected child-iterator register contract remain.
 // frame 0x50/0x54, early EBX and child-iterator convention remain.
@@ -618,6 +619,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // real/double scale then point addition 232/251; real scale with point/velocity
 // value inputs 306/242; double scale with both value inputs 353. All restored;
 // frame and protected child-initializer register contract remain.
+// Retained count/AND graph: explicit radius branches, sqrtf and both 201 each;
+// output-first existing point helper alone/with branches/with sqrtf/with both 202 each;
+// all three plus shared minimum-speed factors 205. Protected child convention unchanged.
 // Round 143: occupied/empty Boolean and byte results on retained AND graph 232 each;
 // both byte results with AND 232/232; twice-used child-player input with count/occupied 202/233.
 // Original count/AND body restored; protected child-iterator contract remains.
@@ -635,6 +639,8 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Point publication xzy/yxz/yzx/zxy/zyx 204/204/232/207/232;
 // complete displacement products/coordinates 205/205; uniform per-row products 205.
 // Original helper/body restored; frame and protected child convention remain.
+// Plain predicted-point component loop with long/dword/short/byte ordinals 233/233/275/275;
+// the same output-pointer return forms 233/233/275/275. Original helper/body restored.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

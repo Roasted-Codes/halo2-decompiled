@@ -1382,6 +1382,16 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // score 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
 // Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
+// reloading the time globals) and esi/edi saved before the unit test (retail after it) differ.
+// Round 55 kept: the speed (5th argument) and acceleration limits passed in retail's roles (15/6 speed,
+// 72/27 acceleration), defaults in retail's store order, each look angle clamped in one statement.
+// Not kept (each lowers the aligned differences but shifts every later instruction): active preset
+// false then the `!155760 && b6780` assignment 385; first-weapon callback test `== 0 ? right : left` 385;
+// clear test without the redundant `zoomed &&` 396; channel98 rate/overlay read through the weapon 387;
+// overlay mismatch as a ternary 383 (setcc); look angles in an s_view_angles 239 fast (frame 0x30);
+// mode looked up before the unit 574; springs renamed speed/acceleration 243 (slots unchanged).
+// Earlier: word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
 // frame 0x28 vs 0x2c and unit/mode/look homes remain.
 // Entry unit capture 252; const unit/primary weapon/weapon object/look receivers 252 each;
 // look interval capture 417; combined readers 252; readers plus interval 417 (fast base 252).
@@ -1410,10 +1420,10 @@ void __stdcall function_166d75(long user_index)
 	{
 		s_166d75_unit *unit = (s_166d75_unit *)first_person_object_get(user->unit_index);
 		long mode = first_person_weapon_mode_name(user_index);
-		real spring_b = 15.0f;
 		real spring_a = 72.0f;
-		real spring_d = 6.0f;
+		real spring_b = 15.0f;
 		real spring_c = 27.0f;
+		real spring_d = 6.0f;
 		s_first_person_weapon *first_weapon = &user->weapons[0];
 		real look_yaw;
 		real look_pitch;
@@ -1443,14 +1453,12 @@ void __stdcall function_166d75(long user_index)
 				spring_d = definition->unknown2ec;
 			}
 		}
-		function_11eed0((real *)&user->unknown2030[0x0], (real *)&user->unknown2030[0x8], unit->aiming_velocity.i, g_510c54->rate, spring_a, spring_b, false, -1.0f, 1.0f);
-		function_11eed0((real *)&user->unknown2030[0x4], (real *)&user->unknown2030[0xc], unit->aiming_velocity.j, g_510c54->rate, spring_a, spring_b, false, -1.0f, 1.0f);
-		look_yaw = *(real *)&user->unknown2030[0x28] / g_510c54->rate;
-		look_yaw = PIN(look_yaw, -1.0f, 1.0f);
-		look_pitch = -1.0f / g_510c54->rate * *(real *)&user->unknown2030[0x2c];
-		look_pitch = PIN(look_pitch, -1.0f, 1.0f);
-		function_11eed0((real *)&user->unknown2030[0x10], (real *)&user->unknown2030[0x18], look_yaw, g_510c54->rate, spring_c, spring_d, false, -1.0f, 1.0f);
-		function_11eed0((real *)&user->unknown2030[0x14], (real *)&user->unknown2030[0x1c], look_pitch, g_510c54->rate, spring_c, spring_d, false, -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x0], (real *)&user->unknown2030[0x8], unit->aiming_velocity.i, g_510c54->rate, spring_b, spring_a, false, -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x4], (real *)&user->unknown2030[0xc], unit->aiming_velocity.j, g_510c54->rate, spring_b, spring_a, false, -1.0f, 1.0f);
+		look_yaw = PIN(*(real *)&user->unknown2030[0x28] / g_510c54->rate, -1.0f, 1.0f);
+		look_pitch = PIN(-1.0f / g_510c54->rate * *(real *)&user->unknown2030[0x2c], -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x10], (real *)&user->unknown2030[0x18], look_yaw, g_510c54->rate, spring_d, spring_c, false, -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x14], (real *)&user->unknown2030[0x1c], look_pitch, g_510c54->rate, spring_d, spring_c, false, -1.0f, 1.0f);
 
 		look = (point2f *)&g_4ed284->entries[user_index].yaw;
 		flags = user->flags;
@@ -1793,6 +1801,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // byte-logical-query-eligibility 422; byte-compound-query-eligibility 430.
 // word-logical-query-eligibility 448; word-compound-query-eligibility 448.
 // long-logical-query-eligibility 451; long-compound-query-eligibility 446.
+// Round 373: native quaternion-transform sway output, forced last/first 411/410;
+// ordinary inline last/first 769/768. Native orientation output gives the same
+// four scores. Reduced control 411/2166; full baseline 410/2154. All restored.
 // Native packed animation flags, logical result at bool/byte/word/long width 411/411/443/443; conditional result 446/446/442/443 (fast control 411/2166; full 410/2154). Frame 0x78 agrees; early blend byte and later receiver/sway homes remain.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)

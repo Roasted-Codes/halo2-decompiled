@@ -1308,6 +1308,9 @@ extern bool g_4ed39d;
 // Game/handled true chains in menu-first and handled-first order 184/186; lobby/handled chains 184/184; both menu-first/both handled-first/mixed orders 184/186/184/186. Byte homes and dialog joins remain.
 // Complement game/lobby/both/main/game-main/lobby-main/all menu results 184/184/184/184/184/214/184;
 // all complemented with the recovery result 174. Original result representations restored.
+// Recovery success read from game/lobby/both menu results 186/184/186; direct menu
+// success guards game/lobby/both 184/184/205; split both guards 205; both with low-mode
+// error sample 208. Original recovery producers, byte results and joins restored.
 // Round 160: Branch-local route result long/short/signed byte 254/251/251; callback-presence choice on
 // common flags query 202; long/byte route plus presence 258/263; message clear at publication 228; shared
 // user-flags workspace 184. Original flow, inherited qualifiers, callbacks and calls restored.
@@ -1325,6 +1328,13 @@ extern bool g_4ed39d;
 // Round 178: Native availability result selects ID/ID+first/ID+second/all callbacks: 169/169/205/207;
 // its complement 198/198/209/215. Raw 169 adds arithmetic absent from retail, aligned edits 66 to 72;
 // original producers restored. Menu-byte homes and dialog joins remain.
+// Native message object/name/early lifetime/both 184/184/184/184; aggregate/CRT/early aggregate 247/207/239;
+// branch-local loader 184. All restored.
+// Lobby/handled order, callback initializers, dialog assignment order and their
+// combinations all 184; session reset before dialog assignment 185.
+// Screen workspace, user and dialog options, callback, dialog ID and loader
+// names individually and together 184 each.
+// Round 333: Complete message aggregate/CRT initialization 224/207; before menu-result declarations 224/205; with ordinary game result 221/227; with direct error input 222/225. Original partial field initialization, both inherited qualifications and every callback restored; byte homes and dialog joins remain.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

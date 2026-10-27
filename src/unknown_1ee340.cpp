@@ -169,6 +169,8 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 178: Corresponding positive/negative/all row-pair/all grouped cross terms 255/255/253/255;
 // with native aggregate normal 255/255/253/255. Frame 0x7c versus 0x90 persists;
 // original terms restored. Normal/ray/hit and polygon homes remain.
+// Full shared normalization with cross/point/plain-loop combinations 253/250/253/250/258/261/258/261. Three-
+// point 250 forms restored; frame is now 0x7c versus 0x90.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

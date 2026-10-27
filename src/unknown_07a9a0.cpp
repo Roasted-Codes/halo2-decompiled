@@ -1098,6 +1098,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // dword/dword 844; each with machine-ID phase scope 766/826/829/844. Dword forms recover frame 0xb4
 // but worsen code-plus-extent 765 to 784/783/797. Frame 0xd4 versus 0xb4, stacked session and
 // protected opening lookup expansion remain. Original complete body restored.
+// Group zero-store orders, five combinations 766; initial extrema-store orders, three combinations 766.
+// Available, first, last, spread, party count, team count, team size and combined
+// party-boundary slot names 766 each (fast); original names restored.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

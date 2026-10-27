@@ -132,6 +132,8 @@ void function_14bac0()
 // names/native recipient 257. Frame, iterator sharing and result homes remain.
 // Round 215: function-scope shared iterator 234; readiness declaration order 233;
 // scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
+// Offset ikj/jik/jki/kij/kji 238/237/239/240/238;
+// position xzy/yxz/yzx 234/233/234.
 // Shared marker query output/pointer-result/reference 332/332/332, each
 // with native recipient 321; native point result 303, with native recipient 280.
 // Forced output/pointer-result/reference 234/234/234, each with native recipient
@@ -142,10 +144,15 @@ void function_14bac0()
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
 // pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
 // Original receivers and the shared iterator body restored.
+// Round 210: direct destination/alternate/both query buffers 256/255/272;
+// with native recipient iterator 266/265/281; both with late center 272, native recipient/late center 281.
 // Round 172: Native selected/current/both player receivers 234/234/234; with native recipients
 // 257/257/257; readonly both 234 and with native recipients 257. Original body, iterator graph and
 // include list restored. Frame 0x34 versus 0x3c, point/iterator and readiness homes and
 // visit-counter scheduling remain.
+// Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
+// both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
+// Original storage and iterator restored; frame and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

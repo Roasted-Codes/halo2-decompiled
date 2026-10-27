@@ -57,6 +57,8 @@ real function_30bf0(vector3f *vector);
 // Existing scalar color/blend/both 213/213/213; existing color helper and helper plus blend 213/213;
 // entry strength snapshot alone/with scalar clamps/with color helper 225/225/225. All restored.
 // Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
+// Native ray/fallback/both component loops with long ordinals 218/217/217; dword 218/217/217;
+// both with short/byte ordinals 244/244. Original body restored; selector and pending homes remain.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1695,6 +1697,10 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 181 material noinline 807; native status/mesh, vector, color, barycentric sample and combined role homes 790/790/790/790/790; single result exit 834; combined homes with material noinline 807 (fast); all restored. Frame 0x90 agrees; result/mesh/sample/UV homes and material/magnitude expansion remain.
 // Round 327: status tests 800; phase failure default 796; current group/index/data fields
 // 801/811/819; status tests with group/index 802/816; phase default with group and indices 815.
+// Round 331: magnitude noinline/inline/force-inline caller declarations, alone and
+// with material noinline, plus magnitude noinline/material inline: all seven 790f;
+// requested magnitude boundary with all shared vector scales 824f (3069 bytes).
+// Caller-local contracts do not resolve the expansion; all declarations and scales restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

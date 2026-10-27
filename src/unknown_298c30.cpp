@@ -117,6 +117,15 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Normalizer input snapshots 448; native normalizer/distance/both roots 443/408/448; snapshots with
 // native distance root 448; void normalizer alone/with snapshots/with native roots 408/448/448.
 // Original helper and body restored; entry loads, XY/magnitude homes and return cleanup remain.
+// Native normalization-input/evaluation/candidate-direction library copies, pair/all combinations,
+// plus native endpoint-array initialization 408/408/408/408/408/408/408/408. Original body and helpers restored.
+// Complementary facing bool/byte/short/long 408/408/430/420; with complementary first endpoint
+// 442/442/413/411. All restored; incoming object and normalized homes remain.
+// Round 138: existing inline vector normalizer at input/direction/both 408/408/408;
+// shared endpoint magnitude alone/with input/with direction/with both 407 each
+// (frame 0x6c); existing outlined normalizer at both 549. One-point forms rejected;
+// original helpers, calls and includes restored. Entry/XY homes and cleanup remain.
+// Sum/direction/evaluation point-name order, eight combinations 408.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)

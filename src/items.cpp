@@ -568,8 +568,13 @@ struct s_item_collision_bsp
 // 249; shared fallback-only spin scale 249; direct offset expression 249.
 // Complete plane memcpy 305; all normal-row partial projections 250; all row products named 250;
 // contact-position projection named 249; paired shared spin scales 254. Opening body and includes retained.
+// Entry tests flag7/parent/flags_12c in orders 213/132/231/312/321 253/251/265/264/254; reversed spin flags 249;
+// reversed spin flags with 213/132 entry orders 253/251.
 // Shared matrix rotation alone/point setter 249/249; with shared distance/both 250/250;
 // native whole-plane transfer on those four rotation graphs 305 each. Exact-only forms restored.
+// Round 376: Complete axial/fallback/both spin outputs 281/279/298; CRT publication 281/279/298;
+// both outputs declared before marker with assignment/CRT 298/298. Original spin workspaces,
+// inputs and includes restored.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
@@ -1003,6 +1008,9 @@ struct s_item_flags_view_10b850
 // Round 126: Native dot/scaled-add pointer inputs 813/813; complete rotation outputs 813 at retail length;
 // component cross-result fill 813; ordinary dot inline 813; reused geometry predicate 858; reused contact
 // kind 878; all velocity copies by memcpy 813 (fast); all restored.
+// First-computation cosine 845; first-output sine 844; both 828; actual axis-field
+// pointer 849; axis with cosine/sine/both 823/889/870; entry trigonometric declarations
+// with unchanged late assignments 828 at retail length. Original helper and body restored.
 // Round 134: separate vector input pointer/reference/value with pointer/reference output
 // 816/816/816/816/936/936; actual vector return with pointer/reference input
 // 939/939 (exact only).
@@ -1014,6 +1022,9 @@ struct s_item_flags_view_10b850
 // Round 174: dot first/second/both native values 1039/1012/1200; scaled-add input value 942;
 // dot first/second/both plus scaled-add value 1117/1200/1302; native add output reference with value input 942.
 // Original helpers and body restored; frame 0x154/0x12c and Boolean/workspace homes remain.
+// Rotation cross-term declaration orders ikj/jik/jki/kij/kji 814/813/813/814/814;
+// cross-first orders jki/kij/kji 814/815/815. Frame 0x154/0x12c and Boolean/native
+// rotation homes remain. Original complete body and all helpers restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1281,6 +1292,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // common contact/event point at entry or active scope 201;
 // native tag plus common point 201. Complete tag, helper and body restored.
 // Native state-byte/countdown/both field references 200/200/200; damage-key reference 154; state/key, countdown/key and all three 200 each; surface-contact expression 200. Original release and event code restored.
+// Complete scalar release-product lifetimes before ijk vector publication, all six
+// computation orders 200 each; immutable products 200; genuine output declaration
+// before inputs with full product staging 200. Frame 0xac remains; original producer restored.
 // Round 140: eight caller-only declaration/canonical-call forms tie 154 and are excluded diagnostics. Eight
 // coordinated callee declarations (point, matrix, owner, parent, effect and combinations) all 154; owner forms
 // lose a reduced control. Every caller/provider declaration and executable body restored.
@@ -1290,6 +1304,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Release-vector publication ikj/jik/jki/kij/kji 157/160/208/162/208;
 // angular damping jki/kij/kji 155/155/155. Original release helper and body
 // restored; byte RMW/tail and event/location homes remain.
+// Round 376: Predicate-produced surface/attachment/both results 244/228/185; both with signed-
+// byte/byte/short/word/long carriers 183/183/196/196/196. Original release and event code
+// restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

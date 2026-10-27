@@ -193,6 +193,8 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // named remap span 680; reference/late 681; reference/span 680; late/span 681; all 681;
 // all with named scaled range 693. Original curve producer restored; full 626 baseline,
 // unaligned 0x1490 frame and stacked mode remain.
+// Stride, level seed, random state, seed offset, point count, level count, reciprocal count,
+// and random/level seed slot names 680 each (fast control 680); original names restored.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,

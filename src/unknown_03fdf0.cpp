@@ -198,6 +198,10 @@ void function_402b0(long cache_index, long mode)
 // Native actual light definition/parent/node/camera fields 202f each; all fields 202f;
 // external native record reference 202f; native definition receiver 202f; both receivers 202f.
 // Unchanged reduced control 202f/946, ordinary baseline 183/947; frame and helper/API gaps remain.
+// Light-pool receiver at every use 253f; with direct tag 242f; Boolean selection
+// 283f; tag plus Boolean 275f; byte setup 256f; tag plus byte 242f;
+// Boolean plus byte 286f; all three 276f (control 202f, full 183).
+// Boolean receiver forms recover frame 0x88 but regress; original pooled observations restored.
 // Native pass flags first/second/third/final 215/214/214/215; first pair 220; first three 227; all
 // four 233; all with byte result 231. Fast control 202. Native flag header restored.
 // Round 199: Plain shared 12..13 pass loop, long ordinal with long/bool/byte/short result
@@ -208,6 +212,12 @@ void function_402b0(long cache_index, long mode)
 // Inline/noinline state-helper declaration with shared long/bool/byte/short pass
 // carriers 319f/290f/290f/285f; independent carriers 319f/290f/290f/285f.
 // Reduced control 202f; full baseline 183. All declarations and body restored.
+// Round 140: Repeated sample count observed once for passes 11/12/13, their pairs and all three; then all with
+// native Boolean selection 202/202/202/202/202/202/202/231 (fast control 202, full 183). Original observations
+// and selection restored; frame, cache/draw and state/API expansion remain.
+// Round 168: All normalized mask producers: long shared/split 202f each; bool shared/split 231f
+// each; byte setup with long shared/split 203f each, bool shared/split 234f each. Fast control
+// 202f; full 183. All source restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -288,7 +298,7 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 226 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
+// score 193 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
 // Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
 // 254/300/226; noinline with short/byte 254/226.
 // unsigned-zero branch and pass-call boundaries differ;
@@ -314,12 +324,18 @@ bool function_404b0(long mode)
 // Earlier 226 (from 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
 // native masks for passes 16/1/3/8/20/7 give 226/226/226/230/226/226; all masks 230; with byte
 // lower-bound admission 229.
+// Entry tests selection/bit0/byte/flags in orders 2134/1324/1243/2143/1342/1423/2314/1432:
+// 237/230/233/244/235/308/239/308.
 // Round 165: Two-use setup setting captured within single/third/conditional/
 // twentieth/seventh passes 226 each; all five captures 226; both actual cull-setting
 // observations once 226; all setting captures 226. Original reads and body restored.
 // Formal-address removal, pass-phase false result, entry result and entry false result
 // 226/226/226/226; removal with pass false/entry/entry false 226/226/226;
 // isolated unsigned-byte lower-bound admission 225. Original body restored.
+// Round 138: independent pass outcomes bool/byte/short/long 226/226/255/297;
+// complete stipple choice bool/byte/short/long 193/193/226/226. Boolean role name,
+// negated range, direct outside range and byte outside range 193 each. Both named
+// Boolean stipple-enable choices kept, plain 193; unsigned-zero admission and pass joins remain.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {
@@ -380,7 +396,8 @@ bool function_3fdf0(long mode, bool single_pass)
             g_467130 = 1; g_467134 = 0; g_467138 = &g_4c1a48[0]; g_4858b4 = 1;
             function_14bc0(1, 0, true);
             if (!g_485a75 && !g_485a76) function_14b60(1, 0, 0.0f, 0);
-            function_15680(g_485898 >= 4 && g_485898 <= 7 ? 0 : 1);
+            bool stipple_enabled = g_485898 < 4 || g_485898 > 7;
+            function_15680(stipple_enabled);
         }
         else g_467130 = 0;
         function_15370(1);
@@ -390,7 +407,8 @@ bool function_3fdf0(long mode, bool single_pass)
         {
             g_467130 = 3; g_467134 = 0; g_467138 = &g_4c1a48[0]; g_4858b4 = g_4858b8;
             function_14bc0((short)g_4858b8, 0, true);
-            function_15680(g_485898 >= 4 && g_485898 <= 7 ? 0 : 1);
+            bool stipple_enabled = g_485898 < 4 || g_485898 > 7;
+            function_15680(stipple_enabled);
         }
         else g_467130 = 0;
         function_15370(1);

@@ -76,6 +76,14 @@ void __stdcall function_b8890(long arg_0);
 // Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
 // combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
 // original induction restored. List/index/second-count homes and cleanup scheduling remain.
+// Round 235: Force-inline declaration at component-delete/detach boundaries 341/464;
+// with cleanup helper 411/532; with branched list selection 350/469; both boundaries
+// with branched selection 404/538. All helpers stay out of line; original body restored.
+// Complementary category bool/byte/short/long with signed second count 212/212/271/273;
+// unsigned second-count counterparts 212/212/271/273. Wide category frame 0x428; all restored.
+// Unsigned first/second/both handle arrays 212/212/212; first/second/both
+// arrays with unsigned classification 212/212/212; complete unsigned processing 212;
+// unsigned arrays/processing with original signed classification 212. Original storage restored.
 // @retail 0x278f00
 void function_278f00()
 {
