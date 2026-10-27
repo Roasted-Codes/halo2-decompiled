@@ -268,6 +268,9 @@ struct s_physics_component_walk : s_havok_component
 // current-style ternary 307; the file's section-test helper for the first query 283; first body as
 // if/else or ternary 300/300 (frame 0x18 and retail's untreaded next test, but current lands in EDX).
 // Retail stores -1 in a separate block and re-tests next, so it recomputes the group where ours spills it.
+// Round 253: Existing component policy/application/availability bit helpers,
+// all seven nonempty subsets 275 each; native upper-bitfield policy with both
+// shared status stores 275. Original method and include set restored.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

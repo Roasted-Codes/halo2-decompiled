@@ -830,6 +830,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // left-forward-up / left-up-forward, then normal before basis at forward-up-left /
 // up-forward-left / left-forward-up:
 // 247,247,248,248,247,279,279,279 fast; reduced control 245, full 245. Original executable source restored.
+// Round 253: Parallel projection-product parts, ordinary/immutable 251/251;
+// pan first/both weighted parts 245/245; projection with either pan form 251/251;
+// native shared origin alone/with all parts 501/501 (1736 bytes). All restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

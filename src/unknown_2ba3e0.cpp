@@ -369,6 +369,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // 440/249/440/249/440/249/440; all with external inline linkage 440. Reciprocal metadata loses four
 // reduced sibling controls; every helper contract restored. Frame 0xb8/0xb4 and
 // estimate/reciprocal/cache homes remain.
+// Round 253: Native scalar reciprocal with original steering storage 412;
+// independent delta/previous/both 432/382/406; all vectors 431; all limits 399;
+// maximum-speed/change pair 397; all independent 415. Every form aligns the
+// frame to 16 and loses four matched siblings in preview; original helper/storage restored.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
