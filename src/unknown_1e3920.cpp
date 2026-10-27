@@ -1608,6 +1608,9 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // remain.
 // Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
+// Uninitialized probability/delay at entry 270/270; constant probability at entry/after query 295/286;
+// with the other scalar workspaces 295/286; scalar-role names with early constant 295,
+// with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

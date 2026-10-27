@@ -150,7 +150,7 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 135 (was 158): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
+// score 135 (was 135): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
 // frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
 // frame 0x54 agrees; request/choice carriers, protected input convention and cyclic alignment differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
@@ -187,6 +187,9 @@ void player_action_initialize(s_player_action *arg_0);
 // cold clear and output/angle scheduling remain.
 // Direct selection fallback 327; cyclic result/start/both at long width 289/327/326; high-first
 // saturation 316; logical availability 279; fallback/result 323; cyclic/saturation/availability 331.
+// Native orientation vector 135; coherent unit source 185; source/vector 185; existing state query 304;
+// query/source 310, query/vector 304, all three 310; complete native orientation value 220.
+// Original fields, pointer observations and query guard restored.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
