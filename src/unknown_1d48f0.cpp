@@ -45,7 +45,6 @@ const dword g_455978[81] = {
 // score 350 (was 350): aligned frame 0x1d4 agrees; optional input/register roles, scalar homes and selective helper expansion remain.
 
 // Earlier: Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
-// score 350 (was 350): Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Earlier 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Frame 0x1d4 agrees; optional input registers, scalar homes and selective location/release expansion remain.
 // Earlier: Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
@@ -73,6 +72,8 @@ const dword g_455978[81] = {
 // body/shape declaration homes at entry 350. All restored.
 // Transform description after body/shape load/shape choice/pose copy 351/351/351/411;
 // bounds description ends before add/exclusion 406/363; full shape selection 350; word success 415.
+// Round 214: single native vector table, separate/reused radial sample and direct/shared ray difference
+// 350/350/350/350; real-row table with the same producer grid 447/447/362/362. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

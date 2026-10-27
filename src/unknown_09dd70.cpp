@@ -480,6 +480,8 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 207: named initial low mask, packet receiver after initial callback, both, shared object
 // workspace across four phases, shared workspace with either/both, and shared final outer receiver
 // all 196. Original observations and protected interfaces restored.
+// Round 214: array-end attachment cursor with pointer-derived short/word ordinal and Boolean/masked
+// selection 221/223/221/223; native long/dword ordinal pairs 227/237/227/237. All restored.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

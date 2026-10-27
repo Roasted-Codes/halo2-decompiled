@@ -371,6 +371,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 207: existing allocator as native definition member, with original failure return,
 // success nesting, count-selected result or empty-definition return, all 204; those same
 // four with record-link initialization first also 204. Original helper and body restored.
+// Round 214: direct activation returns through sequential, combined, mixed and nested admission, each
+// with entry/query output declarations, all 226 (357/427); frame four recovered, eight caller controls intact. Restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
