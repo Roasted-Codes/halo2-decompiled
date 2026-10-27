@@ -495,6 +495,10 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 179: library two-byte copy with short/long/dword attachment counters 251/252/252;
 // masked slot value with those counters 253/259/259; direct flag observations 251;
 // direct flags plus masked value/dword counter 259. Original byte loop restored.
+// Round 59: the parent through the existing object getter 196 (same code, kept); signed flags 196;
+// player index as a ternary 199 (object index moves to ebp as in retail, first difference +5, but
+// packet/flags take ebx/edi where retail has edi/ebx); with the packet declared first 199; with a
+// dword slot counter 241.
 // Round 192: initial-update, handle-lookup and child-flag provider inline declarations, singly,
 // all pairs and together 196 each; separate noinline declarations on all three 196. All
 // restored; flags/packet/object registers and protected attachment conventions remain.
@@ -524,7 +528,7 @@ void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
         short local_8 = local_2->field_98;
         if (local_7 != NONE)
         {
-            byte *local_9 = ((byte *)((s_object_header *)g_4e0300->data)[local_7 & 0xffff].object);
+            byte *local_9 = function_9d952(local_7);
             if (!((1 << local_9[0xaa]) & 3) || local_8 < 0 ||
                 local_8 >= *(long *)(g_4e3b44[*(long *)local_9 & 0xffff].bytes + 0x1c8))
             {

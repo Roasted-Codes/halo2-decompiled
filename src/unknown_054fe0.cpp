@@ -1330,6 +1330,10 @@ struct s_player_properties
 // Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
 // in three pairs and together 184 each; all three separate noinline declarations 237. Original
 // declarations and body restored; owner/count/zero allocation and requested cursor remain.
+// Round 225: real packed byte-quartet/byte-pair/short-pair declarations
+// 221/204/210; quartet-byte/quartet-short/byte-short pairs 208/217/221;
+// all groups 216, with promoted team 215. Byte-pair form reaches retail length
+// but regresses; original record declaration and team carrier restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

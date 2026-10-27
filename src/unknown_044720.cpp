@@ -207,7 +207,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
-// score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain.
+// score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain;
+// retail also keeps a separate center point (+0x30) beside the sphere query (+0x20).
 // frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
 // Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
@@ -272,8 +273,15 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // both noinline and either mixed pair: all eight 190f. Entry/index and point
 // homes remain; both caller-local declarations and original body restored.
 // Round 153: one complete query at entry/original capture 264/260; each with shared marking 254/220; removing only query alignment gives 263/259/253/219. Aligned forms grow frame to 0x10a4; best remains worse than 190. Original query, marking sites and alignments restored.
+// Round 76: retail callers (here and 0x44e90) sign-extend the index before pushing it to 0x458d0, which
+// fits a long parameter there: 0x458d0 long index stays matched but 191 here, 0x44e90 434 -> 449. On top of it:
+// geometry from the element before the entry pointer 220f (index edi/entry esi as retail, frame 0x10a4);
+// query after the entry/geometry 191f; entry as pointer sum 191f; entry scoped to the loop branch 220f; with a
+// separate entry-time center point for the loop 221f, and the query in the list branch 221f. All restored.
 // Round 155: Real part-table byte/record cursors, mutable/read-only, each with original
 // or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
+// Round 224: Uniform node-byte observations with branch/broad count, initialized/filled output
+// and original/success-local transform lifetimes 219/199/223/199/219/199/223/199. Original node snapshot and scopes restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

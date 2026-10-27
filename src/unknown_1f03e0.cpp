@@ -590,6 +590,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // at retail length. Original field reads restored; direct-dot displacement and SIMD schedule remain.
 // Round 155: Existing flag predicate: forced bool shift/mask, ordinary byte, ordinary bool
 // shift/mask, forced word/long/signed byte: 182/182/182/182/182/182/299/182. Original byte predicate and complete vector body restored.
+// Round 158: Whole-dot multiplication operands commuted at initial, rotation and limit sites independently,
+// in pairs, all three, then with every rotation product. Scores [182, 183, 182, 183, 182, 183, 183, 183].
+// Original executable body restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -1340,6 +1343,8 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // remain. Separate inline declaration 230; entry normal workspace 230; unsigned highest 234;
 // native-long flying 306; final cleanup exit 230; normal/ordinal combination 232 (fast).
 // Signed-word moving/saved-supported/saved-flag/current-supported/current-flag 298/283/295/272/351.
+// Round 193: Component/component+contact/velocity/contact+velocity/component+velocity/all
+// fields at use; all with real magnitude; component root plus shared squared length: 460/404/334/336/501/540/540/460. Original restored.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

@@ -474,8 +474,18 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // home names, their three pairs, all three and reversed array declarations: 267
 // each, 1020 bytes and frame 0x148. Original sampled duration, helper contracts,
 // array names and executable body restored at 223.
+// Lane 8 r58: listener test through the existing 0x14ddc0 instead of the camera NULL test
+// (retail's `cmp iv,-0x48; setne`) 295; with the existing first-local-player helper 293
+// (loop head then retail's); first player in a local before the camera 292; that with the
+// default-first transition re-read from the definition 276 (frame 0x148, tags at retail's
+// slots; bsp not kept in esi, cluster spilled low); without the local 277; transition alone
+// 267; cluster local renamed three ways 276 each.
 // Round 180: Cue control/full-prefix clears 256/253; with pointer-tail clear 263/234;
 // the same four with chained index sentinels 257/253/263/234. Original cue helper restored.
+// Round 253: Complete primary-listener result bool/byte/short/long 223 each;
+// uniform cluster at use 272, with bool/short/long result 272 each. All restored.
+// Round 210: Late transition/fade/tag and their three strict pairs give
+// 242/244/266/253/278/291; early tag/fade alone 270/267. Original restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

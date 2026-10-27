@@ -233,7 +233,7 @@ public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 92 (was 163): left: at the 0x247140 call ours loads the system pointer into eax before the
+// score 92 (was 92): left: at the 0x247140 call ours loads the system pointer into eax before the
 // pushes where retail loads the emitter array base into eax and the system into ecx after the bounds
 // push; the later scratch registers rotate (ecx/dl for edx/al, one byte longer) and the second loop
 // takes a 12-byte alignment pad. Round 56 (kept): s_function_data::get_range_maximum for the range and
@@ -302,6 +302,9 @@ public:
 // output-first lower/both 163 each. Original readers restored; frame/input/selector causes remain.
 // Round 342: Persistent lower/upper/both endpoints, maximum, lower+maximum, upper+maximum and all three 163 each;
 // all three with role-based scalar homes 163. Frame 0x28 and first difference +2 remain; original scoped declarations restored.
+// Round 77: the second loop as a while 92; its guard as nested ifs 92; the first loop as a for 92;
+// the count test reversed 92; the element as pointer plus index 92; the call through `this` 94. The
+// 12-byte pad before the second loop (retail none) and the call-setup registers remain.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

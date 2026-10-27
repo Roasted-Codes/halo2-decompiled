@@ -108,6 +108,9 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 // 449/450/454/454/450/450/449/449 fast; original order restored.
 // Basis case groups 021/102/120/201/210 380/381/383/384/383; basis 102
 // with rotation orders 01243/01324/10423 393/451/393. Original order restored.
+// Round 160: native destination/both receivers 380/380; immutable product/all producer
+// lifetimes 380/380; complete cross inputs alone/with receiver 380/380; uniform
+// context-definition observations 449; combined cross/receiver/producers 380.
 // Round 76 rotation helper forms: products in i,j,k order with a named complement 429; forward/left/up row
 // stores with a named complement 1293 (frame 0x6c, cases expanded); sine products named first 921; named
 // complement alone 429; axis cases grouped 0,1,3 / 2,4 435 (aligned listing 374 -> 323).
