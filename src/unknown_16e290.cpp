@@ -358,6 +358,9 @@ bool function_44690(s_word_bit_iterator *iterator, long *out);
 // output plus visited/expanded 247/279f; scratch results 205f; all results 268f;
 // aligned signed bits divided by eight 241f. Fast baseline 125; all restored.
 // Const byte count/base/word count/all 125 each; union/intersection/expansion/all while loops 125 each.
+// Word count re-read after the copies 220 (count reloaded); word-scaled bytes with word count bytes >> 2 237,
+// bytes / 4 230; word count at the outer loop head 230; masked word count before the copies 236 (count
+// reloaded); padded-count local for all three 228 (one shared word value, frame 0xec).
 // @retail 0x16de20
 void function_16de20(short index, s_16e150_bits const *table, dword *output)
 {
