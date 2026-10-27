@@ -259,6 +259,8 @@ struct s_physics_component_walk : s_havok_component
 // with application status from policy 319/304/304/304. All recover frame 0x18 but shorten to
 // 898/922 and retain wrong current/entry roles. Original executable source and output/status/clamp
 // observations restored.
+// Round 350: shared entry-bit test, visited-bit set, neighbor-bit test and all combinations
+// 275 each; complete shared bits with direct receiver 275. Frame/status/group spill unchanged.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,
