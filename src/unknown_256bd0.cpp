@@ -65,7 +65,8 @@ struct s_object_flags_256bd0
 	word unknown0 : 6;
 	word bit6 : 1;
 };
-// score 206 (was 206): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
+// score 206 (was 206): Frame 0x114/0x110, cached activity and actor/geometry/selection homes remain.
+// Earlier baseline: Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
@@ -115,7 +116,7 @@ struct s_object_flags_256bd0
 // Round 243: Native actor/spawned-actor/unit metadata singly 206 each; all pairings 206
 // each; complete native and read-only native records 206/206. Original body, iterator
 // helper and includes restored.
-// score 206 (was 206): frame 0x114 versus 0x110: our build hoists the ai globals' active byte out
+// Earlier: frame 0x114 versus 0x110: our build hoists the ai globals' active byte out
 // of the iterator loop into a stack byte, where retail re-reads it after every 0x6b380 call (its
 // compiler treats that call as possibly writing it; src/unknown_2003a0.cpp reaches the same reload
 // only through a volatile read, which is no longer allowed); every stack offset then differs by 4.
@@ -139,6 +140,10 @@ struct s_object_flags_256bd0
 // the step selecting the entry with a ternary inside the active test 263 (frame 0x110 through a
 // branchless select, the active byte still spilled); the next result in a named bool 206; the loop
 // distance through vector3d_from_points3d and length_sq3f 208.
+// Round 153: Character/variant/both native admission exits 206/206/206; variant/character/both
+// fields at every use 205/202/273; both exits with variant/both fields 205/273. On the fresh
+// character-field graph, nested step tests/native entry select/shared displacement 202/274/202.
+// Four-point 202 rejected; body/helper restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
