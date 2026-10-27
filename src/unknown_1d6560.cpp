@@ -215,6 +215,11 @@ struct s_physics_component_walk : s_havok_component
 };
 
 // score 275 (was 275): Frame 0x1c versus 0x18; current/entry/status homes and next-group spill remain.
+// Round 9 (lane 11, fast): first body set in an if/else 300 (frame 0x18 and retail's out-of-line NONE store
+// with the re-tested next, but current moves to EDX and the entry index to ESI where retail has ESI/EDX);
+// with it: nested first-body skip test 300 (identical); `this` used directly for the component alias 300
+// (identical); availability set after the replacement branch 318; model pointer read before the body
+// index 294 (922 bytes).
 // In the body loop retail keeps the policy byte at frame 2 and the availability byte at 3
 // (available in dl on the replacement path, reloaded from its byte otherwise; replaced in cl);
 // ours swaps the two bytes and keeps available in memory, replaced in dl. Round 57: availability

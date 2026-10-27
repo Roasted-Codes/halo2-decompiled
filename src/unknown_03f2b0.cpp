@@ -1380,23 +1380,17 @@ struct s_batch_cache_4b5d0
 
 struct s_133f70;
 
-// score 213 (was 213): Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result homes remain.
-// distance load, nullable-entry address and cache/level scheduling differ;
-// distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
-// frame 0x33f8 agrees; distance load and cache/result scheduling differ.
+// score 213 (was 213): frame 0x33f8 agrees; the count is lockstep: retail adds the cache record base
+// before its field offset (`add eax, ecx; lea ebx, [eax + 0xbc]`, also at +0x44) where ours folds one lea,
+// keeps a dead entry lea in the 0x4ed284 test, compares the previous level from memory after the two
+// slot stores, and tests the 0x4c190 result as a byte; distance staging and cache/result homes differ.
+// Round 9 (lane 11, fast): bool builder result 325 (retail length; region of the previous level is then
+// one instruction short); with the flag store before the cache store 337; reuse set inside an if 343;
+// address-taken previous level 325 (diagnostic); record base through an inline helper 325.
+// Retail also sign-extends the level it pushes to 0x23690 (`movsx ecx`), ours pushes a short.
+// Distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
 // Native reuse 330; native level change 291; short entry index 352; late success 262; short builder
 // result 216.
-// distance staging, nullable entry and cache/result homes remain.
-// Full frame 0x33f8 agrees; distance staging, nullable-entry and cache/result scheduling remain.
-// Earlier: distance load, nullable-entry address and cache/level scheduling differ;
-// Earlier 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
-// Earlier 213 (was 213): distance staging, nullable entry and cache/result homes remain.
-// frame 0x33f8 agrees; distance staging, nullable entry and cache scheduling remain;
-// Earlier at 213 (from 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
-// Earlier at 213 (from 213): distance staging, nullable entry and cache/result homes remain.
-// Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result schedule remain.
-// Earlier at 213 (was 213): frame 0x33f8 agrees; distance load and cache/result scheduling differ.
-// Earlier at 213 (was 213): distance staging, nullable entry and cache/result homes remain.
 // Direct successful-output slot, entry lifetime: long/long 379, long/short 371,
 // short/long 354, short/short 350; loop lifetime 360,372,374,375.
 // distance input, nullable-entry address and cache/result scheduling remain.

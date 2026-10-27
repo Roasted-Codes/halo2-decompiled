@@ -49,7 +49,13 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 215 (was 215): Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata/viewer/child homes differ.
+// score 215 (was 215): Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata/viewer/child homes differ;
+// ours passes the location in EBX (LTCG's choice from this body) where retail leaves it on the stack.
+// Round 9 (lane 11, fast): location read once through its address with retail's entry order (head read,
+// metadata call, position copy, then the flag store) 232 (location stacked, flag still stacked); flag-first
+// parameter order through a temporary forwarder (diagnostic; the caller's file is held) 251, with the
+// location address read 232 (the flag never reaches AL); retail entry order alone 251 (caller 0x175270
+// 21 -> 100); head read before the metadata call 216.
 // Earlier: Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
 // Frame 0x10/0x14, stacked activation versus AL and metadata/viewer/child homes remain.
 // Earlier 221 (was 221): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
