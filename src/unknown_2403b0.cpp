@@ -84,6 +84,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // all eight restored, one-point gains below threshold.
 // noinline 101280 190; noinline 15b2f0 190; noinline 138880 190; noinline 138860 190; noinline 15fe70 190;
 // noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
+// Complete entry carried-unit value 221; with short slot/clock-first product/both
+// 239/221/239; word teams alone/slot/product/all 207/223/207/223 (fast).
+// Original unit observations, counter arithmetic, stores and reader contracts restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

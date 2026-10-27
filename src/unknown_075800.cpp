@@ -1033,6 +1033,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Combined inline/out-of-line declarations on lookup, direct refusal/query, three connection handlers,
 // and leave/acknowledgment handlers: all eight 191 fast, tying reduced control 191 (full 193).
 // Every declaration and handler call restored.
+// Five coherent formal orders on the two-phase body 191 each; unsigned selector
+// in address/selector/payload, selector/address/payload and payload/selector/address 191 each.
+// Reduced control 191; full 193. All signatures, caller arguments and bodies restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
