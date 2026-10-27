@@ -165,7 +165,8 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 	*timer = (short)ticks;
 }
 
-// score 68 (was 68): frame eight versus retail zero; mode compare and entry scheduling remain.
+// score 60 (was 68): frame four versus retail zero (first tick in the frame, not the slot home);
+// slot, actor-table and object-table registers rotate and the mode is compared in memory.
 // Both timer helpers 85; add helper 68 plain kept; set helper 80; native tick outputs
 // both 72, first 70, second 80; shared random index 80; library slot copy 80.
 // Round 128: native slot data block/full native copy 91/91; data with second timer writer/native
@@ -175,6 +176,10 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // helper 74; clock/result helper 74; rate/result helper 104; native result on new frame 70;
 // force-inline second/both/first rounding results 85/70/68; native result with both 78.
 // Zero-frame forms regress allocation or expansion.
+// Round 53: unit index read at each use 60 kept (actor_index now in a register); delay through
+// random_index 60 kept. Mode arms swapped 64; unit index before state 68; with the set helper
+// for the second tick: unit at use 94 (zero frame, 367 bytes), unit local 85 (slot loads late),
+// plus state first 85, plus helper tick renamed 85.
 // Round 323: long/word/dword/real delay with second writer 88/85/105/105;
 // the same delay carriers with native second output 88/85/105/105. Conversion-input packing
 // restores zero frame in some forms but regresses allocation; original body restored.
@@ -184,15 +189,12 @@ short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 	short result = g_46fbe8;
 	s_actor_view *actor = actor_get(actor_index);
 	s_slot_2c *state = (s_slot_2c *)slot;
-	long unit_index = actor->unknown018;
-	short mode = UNIT_MODE(unit_index);
+	short mode = UNIT_MODE(actor->unknown018);
 	if (mode == 0)
 		result = 0x2b;
 	else if (((real *)actor->unknown2d8)[1] + ((real *)actor->unknown2d8)[0] > g_45dbd8)
 	{
-		dword *seed = &g_4e7408->unknown0;
-		*seed = 1664525 * *seed + 1013904223;
-		short delay = (short)(2 + (3 * (*seed >> 16) >> 16));
+		short delay = 2 + random_index(&g_4e7408->unknown0, 3);
 		local_0((real)delay * g_510c54->field_2_3, &state->ticks);
 		real seconds;
 		state->unknown12 = false;
@@ -217,7 +219,7 @@ short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 	}
 	else if (state->ticks == 0)
 	{
-		function_e68c0(0x27, unit_index);
+		function_e68c0(0x27, actor->unknown018);
 		g_46eeb8[0x2b]->unknown8 = g_46f348;
 		result = g_46fbe4;
 	}
@@ -312,6 +314,9 @@ short __stdcall function_1ac3f0(long actor_index)
 // Round 138: shared seed pointer/record 58/58; shared clock alone/with seed 35/46; common rate
 // alone/with seed 86/91; first conversion input and second output entry homes 35/35.
 // Intermediate seed store and early scale pop remain.
+// Round 53: adjacent draws remove the seed store but the scale multiply pops (43); scale through
+// the file's random range 38, both draws 38; seconds-to-ticks inline 47 (named rate 43); scale-first
+// product 43; direct rate 47, flat scope 47; real_to_long 114, force-inlined 47; arms swapped 44.
 // @retail 0x1ac430
 bool __stdcall function_1ac430(long actor_index, s_slot *slot)
 {
@@ -1087,21 +1092,6 @@ struct s_1ac9e1
 	bool field_2e;
 };
 
-// score 48 (was 48): shared result exit restores the blocked-output CL read; count in AL,
-// immediate completion store and tail join differ. Literal query returns 63; native history points
-// 60; both 63; common result exit 48; native points and common exit 48; workspace names 60;
-// literal returns and names 63; ordinary completion local 75.
-// Post-location count char/short/long 52/48/51; shared direction 48; count plus direction
-// 52/48/51; declared previous endpoint 48; reference-success completion/single result 63/63.
-// Native/byte common result 121/110; ordinary common completion 60; result initializes
-// completion 48; result clears history 48; both phases 48; completion entry scope 48;
-// completion from unblocked query 58. Count/initialization scheduling still differs.
-// Actor readonly/reference 48/48; readonly location and direct reference comparison 48/48;
-// query-outcome flags alone/with actor record 88/88; nested endpoint guards and named
-// direction length 48/48. Count/completion and history exit reload still differ.
-// Round 138: query-only output scope 126; entry result 48; both 126; fallback result flags 48;
-// query scope with result flags 126; explicit direction stores 50; scope/direction 136; entry
-// result/direction 50. Count and completion byte lifetimes remain.
 // @retail 0x1ac9e0
 bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 	byte *arg_4, bool arg_5, long arg_3, s_1f4a20_source const *arg_6, s_1ac9e1 *arg_7)
@@ -1139,7 +1129,7 @@ bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 			goto done;
 		}
 		arg_7->field_19 = false;
-		volatile bool local_5 = true;
+		result = true;
 		if (local_1->unknown539 > 0)
 		{
 			function_26c180(arg_0);
@@ -1158,7 +1148,6 @@ bool function_1ac9e0(long arg_0, s_reference arg_1, s_1f4a20_entry const *arg_2,
 				arg_7->field_7 = function_30bf0(&arg_7->field_8) > g_45dbd8;
 			}
 		}
-		result = local_5;
 	}
 done:
 	return result;

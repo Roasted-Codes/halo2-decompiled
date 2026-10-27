@@ -736,6 +736,9 @@ done:
 // all groups with the shared maximum distance bonus 113. Frame and initial
 // results reuse still agree; details cursor and kind/count homes remain.
 // Original body restored.
+// Round 54: score/distance/bounded as the struct's named entry fields 204; details pointer
+// declared before the loop 113; details inputs read entry-relative 113; details pointer as
+// the named field's address 113; details pointer as a long array with indices 113.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {
