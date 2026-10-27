@@ -228,11 +228,11 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 
 // score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point/factor homes remain.
 // Frame 0x30 versus 0x2c; inverse defaults, displaced depth and factor spills remain.
-// Earlier: Frame 0x30 versus 0x2c and inverse/point homes remain.
-// Earlier 195 from 195: Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
+// Frame 0x30 versus 0x2c and inverse/point homes remain.
+// Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
 // frame 0x30 versus 0x2c and inverse-depth/point homes
 // frame 0x30 versus 0x2c and inverse-depth/point homes remain.
-// Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
+// frame 0x30 versus 0x2c and inverse-depth/point homes
 // remain. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
@@ -251,7 +251,7 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // native floating factor admission 195. Complete original body restored.
 // Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;
 // y-first displaced construction 218; scale shared through existing helper 235.
-// Earlier: frame 0x30 versus 0x2c remains; initial/reversed/both
+// frame 0x30 versus 0x2c remains; initial/reversed/both
 // component loops 195/195/195; forced existing transform with no/initial/reversed/
 // both loops 195/195/195/195; component loops with displaced storage reused 195.
 // Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
@@ -281,6 +281,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // DL round 156: uniform final projection products, all/origin/displaced/const 195 each;
 // projected origin/displaced/both aggregate/both component inputs 197/196/197/197.
 // Frame 0x30 and original transform, inverse defaults and expression trees restored.
+// Round 58: transform helper locals renamed 195; inverse locals renamed 195; both 195 (identical code:
+// names do not move these slots); transformed points declared tb before ta 195; displaced point declared
+// after the transformed points 195. Ours also stores ta above tb (retail: ta below tb).
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
