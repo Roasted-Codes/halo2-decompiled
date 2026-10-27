@@ -67,6 +67,11 @@ struct s_unit_definition
 
 bool function_1cb920(void *data, long label);
 
+// score 27 (was 27): the prologue saves the object-pool base instead of the
+// unit index and success sets the shared result; one lookup 24, direct success
+// 47, result first 63, unit copies 27, shared headers 24, two lookups 27,
+// result ternary 27, entry unit 61, direct lookups 64, delayed lookup 24,
+// declaration swaps 27, split result 27, unit header 30, object header 27.
 // @retail 0xc8200
 bool function_c8200(long object_index, short seat_index, long unit_index)
 {

@@ -554,6 +554,11 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // switch's shape; VC folds an if on (data >> 29) into a mask compare). Arms swapped as an if 323; with
 // the plane distance in a local 323; distance local alone 321; switch with case 1 first/default first
 // 316/315 (not kept: a switch for an if).
+// Lane 5 r77: retail's 1..16 clamp keeps each constant in the result register (`mov ecx, 1;
+// cmp ecx, edx; jg`) and threads both clamped arms straight to the byte test, which keeps a
+// `setne; test`. Entity as `type == 1 ? entity : NULL` 321; clamp as if/else-if on the local,
+// constant-first if/else-if and the PIN macro 321/321/321 (identical code); side test written in
+// each arm without the side local 352 (1289 bytes). All restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

@@ -421,35 +421,15 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 	if (handle != NONE)
 		function_82a40(handle, (s_relevance_observers const *)a2, a3, a4);
 }
-// score 2 (was 2): False-result/mask scheduling remains.
-// Earlier: the false-result zero precedes the mask; retail forms the mask first;
-// the false-result zero precedes the mask; retail forms the mask first;
-// flags declared first 13; flag/result carrier 31; no index local 2 (plain 2);
-// split result init 2; result after bounds 25; early returns 26; no-index flags-first 2;
-// byte result 28; result on each path 25; single-exit goto 2.
-// wide flags 17; short index 31; word index 17; active result first 24;
-// selected result first 22; slot-array base 13; independent failure guards 27; identity result first 25.
-// Earlier table/index tie: result declared first (15, moves caller 0x8b2a0), early returns (26, caller 86),
-// index before table (28), block local (26), no table local (27), flag entry pointer (21),
-// else-false default (22), (flags & 2) != 0 (13), one combined condition (13), nested ifs (13),
-// flags-array local (13), dword index (13).
-// read-only table 13; signed flag byte 13; native index 13; required-bit equality 21;
-// mask-proved lower/upper bounds 25/29; slot pointer expression 13; complete required-bit predicate 28.
-// World member pointer local 13; block and table pointer locals 13; member pointer, index, then table 28;
-// handle on the left of the identity test 14; long flags 17 (and 48 more declaration/width orders, 13-15).
-// Without a named index: bounds result 27; identity result 27; flag fields at every use 16;
-// bounded identity result 26; identity result and field reads 27; guarded selection result 28;
-// active result 22; complete bit result 28. All restored.
-// On the repeated-index graph: selected-bit mask/equality 2/11; selected-first gate 9;
-// long/short/word result carriers 36/38/38; success-default result 28; guarded slot pointer 15.
 // @retail 0x979f0
 bool function_979f0(s_world_450cb8 *world, long handle)
 {
 	s_table_450cb8 *table = &world->a->block->table;
+	long index = handle & 0x3ff;
 	bool result = false;
-	if ((handle & 0x3ff) >= 0 && (dword)(handle & 0x3ff) < 0x400 && table->slots[handle & 0x3ff].handle == handle)
+	if ((handle & 0x3ff) >= 0 && (dword)(handle & 0x3ff) < 0x400 && table->slots[index].handle == handle)
 	{
-		byte flags = table->flags->entries[handle & 0x3ff].flags;
+		byte flags = table->flags->entries[index].flags;
 		if (flags & 4)
 			result = (flags >> 1) & 1;
 	}

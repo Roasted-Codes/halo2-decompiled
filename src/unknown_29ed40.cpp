@@ -69,8 +69,8 @@ PRIVATE void __stdcall function_29edc0(s_type_339e8b *controller,
 {
     char const *data = (char const *)*cursor;
     short mask = (header->type_and_time >> 2) - 7;
-    long facing = mask & 1;
-    if (facing)
+    short facing = mask & 1;
+    if (mask & 1)
     {
         function_29ed00(data, (short *)&controller->facing);
         real yaw = (real)controller->facing.yaw * 0.00314159272f;
@@ -80,7 +80,7 @@ PRIVATE void __stdcall function_29edc0(s_type_339e8b *controller,
         control->facing.k = (real)sin(pitch);
     }
     short aiming = mask & 2;
-    if (aiming)
+    if (mask & 2)
     {
         if (facing)
         {
@@ -120,8 +120,8 @@ PRIVATE void __stdcall function_29ef20(s_type_339e8b *controller,
 {
     s_type_f72fa2 const *data = (s_type_f72fa2 const *)*cursor;
     short mask = (header->type_and_time >> 2) - 15;
-    long facing = mask & 1;
-    if (facing)
+    short facing = mask & 1;
+    if (mask & 1)
     {
         function_29ed40(data, &controller->facing);
         real yaw = (real)controller->facing.yaw * 0.00314159272f;
@@ -131,7 +131,7 @@ PRIVATE void __stdcall function_29ef20(s_type_339e8b *controller,
         control->facing.k = (real)sin(pitch);
     }
     short aiming = mask & 2;
-    if (aiming)
+    if (mask & 2)
     {
         if (facing)
         {
@@ -217,6 +217,13 @@ void __stdcall function_29f080(s_type_339e8b *controller,
     *cursor += sizeof(s_type_339e8b);
 }
 
+// score 84 (was 84): cursor/delay registers, switch range branch and return width differ;
+// native header fields at all uses, selector, event reads, guard, dispatch and result 84;
+// fourth case as default with native fields or byte masks 83 (174 bytes).
+// Entry result with false test 85, true tests 84; terminal return or branched result 79;
+// packet value 84, with entry results 85/84, with terminal return 79;
+// four labels plus default at last case 83, with terminal return 86;
+// default at zero case 85, with terminal return 88.
 // @retail 0x29f0c0
 bool __stdcall function_29f0c0(s_type_339e8b *controller,
     playback_unit_control_view *control, long *remaining_ticks, byte const **cursor)

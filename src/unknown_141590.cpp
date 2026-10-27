@@ -170,6 +170,9 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // parameter's slot. Plain half-angle locals in place of the two-member struct 291 (frame 0x18);
 // transform cross orders jki/kji/jik/kij 286/290/235/284; transform into a result vector 367, with
 // jik 367. Body and helpers restored.
+// Round 356: Existing inline point-rotation producer 272; independent half angles 280;
+// shared axis cross 251; independent halves/shared axis 239; with shared repair crosses
+// the same four forms 272/280/251/239. Original helper, paired halves and both cross phases restored.
 // Round 253: Cosine half owned by the quaternion scalar, cosine/sine-first 291/293;
 // with shared cross 265/267; shared double-factor scale 311/311 (1317 bytes);
 // both shared products 327/327. Original body and helpers restored.

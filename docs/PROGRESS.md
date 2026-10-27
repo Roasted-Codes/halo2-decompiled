@@ -2,6 +2,26 @@
 
 The newest entry comes first.
 
+## 2026-10-27: 9774 functions match
+
+```
+matched 9774 of 11326 game functions (1597178 of 2786206 bytes, 57.32%)
+matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
+```
+
+32 new matches, none lost:
+- Machine 3's batch 136 (#849): `0x979f0`, `0xb37f0`, `0xdffa0`, `0xe0e00`, `0xea830`, `0xeb520`, `0xefc30`, `0xf4360`, `0xf5bf0`, `0x1173e0`, `0x11bce0`, `0x19ae0f`, `0x1d35d0`, `0x1e6bd0`, `0x21bf00`, `0x2419c0`, `0x25dd50`, `0x26e600`, `0x26e6d0`, `0x26e9c0`, `0x26ecc0`, `0x26ed40`, `0x26ee40`, `0x2702a0`, `0x271e50`, `0x271fd0`, `0x297c10`, `0x298b60`, `0x298bc0`, `0x29e730`, `0x29edc0` and `0x29ef20` match.
+
+## 2026-10-27: 9742 functions match
+
+```
+matched 9742 of 11326 game functions (1585211 of 2786206 bytes, 56.89%)
+matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
+```
+
+5 new matches, none lost:
+- @coldspear's #848: `0xd6af0`, `0xd73c0`, `0xd7ae0`, `0xd9020` and `0xe4c10` match.
+
 ## 2026-10-27: 9737 functions match
 
 ```

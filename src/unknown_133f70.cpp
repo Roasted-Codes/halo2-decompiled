@@ -149,6 +149,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Original/formal-source forms also lose the matched caller; frames grow to 0x21c.
 // Original conditional copy, query, cursor and local qualifiers retained.
 // With retained word recurrence, ordinary source/index/both carriers 207/193/200; conventional while alone/source/index/both 197/209/177/201; conventional for 186. Original body, cursor and inherited qualifiers restored; several forms also disturb the matched caller.
+// Round 354 natural-loop graph: feature word before selector 26; both feature results before selector 25;
+// both with early word 192 (caller differs); conditional selector 16; decoded-selector name 16;
+// both ordinal role names 16; category before selector/feature observation 133/199. Original restored.
 // Round 77: word 22nd parameter in the definition and this declaration (diagnostic, third declaration
 // unresolved) 8; on it: category through the original 207; bool category array 8; category local at the
 // inner-loop top/before the call/before the inner loop/before the flag sample 134/8/195/198; instance

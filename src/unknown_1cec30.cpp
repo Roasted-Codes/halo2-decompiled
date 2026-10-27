@@ -1840,13 +1840,8 @@ public:
     void set_strength(real strength);
 };
 
-// score 10 (was 10): the component arrives in eax and the constraint index in ecx,
-// retail the reverse (BLOCKED-BY 0xe0e00: its declaration and call need the
-// (component, constraint_index, scale) order); the rest matches. Tried: constraint
-// pointer after the lookups 23, just before the override loop 23, as data + index 10,
-// object lookup first 10, object index read into a local first 10.
 // @retail 0x1d35d0
-void function_1d35d0(long constraint_index, s_havok_component *component, real scale)
+void function_1d35d0(s_havok_component *component, long constraint_index, real scale)
 {
     s_havok_component_element0c *constraint = &component->unknown7c.data[constraint_index];
     s_component_object_transform_view *object = (s_component_object_transform_view *)havok_object_get(component->object_index);
@@ -2801,7 +2796,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     havok_from_vector3d(&position, (vector3f const *)&matrix->position);
     frame->m_translation = position;
 }
-// score 206 (was 206): Frame 0xb4 and exact extent agree; stride/base and protected relative-call input registers remain.
+// score 206 (was 206): Frame 0xb4 and extent agree; body base/stride and protected relative-call input registers remain.
+// Earlier baseline: Frame 0xb4 and exact extent agree; stride/base and protected relative-call input registers remain.
 // Earlier: Frame 0xb4 agrees; stride/base and relative-call input registers remain.
 // Earlier: body/stride registers and relative-call input differ;
 // body getters 206; first count after lookup 205 (below gate), both 275;
@@ -2828,6 +2824,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 345: Shared sequential body index/count/first-link workspaces 299/208/302;
 // index+count/index+link/count+link/all/all with child ordinal 217/213/302/300/300.
 // Original per-side lifetimes, frame 0xb4 and contributor interface restored.
+// Round 153: Consistent requested-node snapshots first/second/both 367/254/400; count fields at
+// every use first/second/both 316/337/358; corresponding snapshot/bound pairs and all 369/369/419.
+// All restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

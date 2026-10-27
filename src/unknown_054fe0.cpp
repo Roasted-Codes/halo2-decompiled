@@ -1330,6 +1330,9 @@ struct s_player_properties
 // Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
 // in three pairs and together 184 each; all three separate noinline declarations 237. Original
 // declarations and body restored; owner/count/zero allocation and requested cursor remain.
+// Round 198: Native parameter block alone/with native cache receiver 184/184;
+// with multi-use requested receiver/both 199/199; bounded word name count on
+// those four graphs 214/214/228/228. Original byte views, count and complete body restored.
 // Round 225: real packed byte-quartet/byte-pair/short-pair declarations
 // 221/204/210; quartet-byte/quartet-short/byte-short pairs 208/217/221;
 // all groups 216, with promoted team 215. Byte-pair form reaches retail length
