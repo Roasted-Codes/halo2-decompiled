@@ -52,6 +52,9 @@ extern real g_4c9798[36];
 // width short 296; width word 296; height short 324; height word 324;
 // short/word 325; word/short 325; short/int 296; int/word 324.
 // Original native limits, far-normal copy and all protected call interfaces restored.
+// Round 213: direct lower/upper/both depth fields 294/295/294; each with distinct far normal
+// 294/295/294; both with distinct far point 302, with distinct far point and normal 294.
+// One-point gains rejected; original field snapshots and captured far normal restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {

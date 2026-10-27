@@ -209,6 +209,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // use-stepped point cursors 30; directly indexed point arrays 218. Plain and complete-image checked.
 // Round 210: entry point-input/output/both cursors 239/250/253; independent copy count with
 // entry input/output/both 239/250/253; signed-short copy count 30; entry input/unsigned count 239.
+// Round 213: point source before terminal fields/between fields/final score range/all score ranges
+// 142/142/167/192, each with shared or independent countdown; full-width masked ordinal 189,
+// with destination end 192, with late source cursor 238. Original body restored.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -380,6 +383,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // destination/both 215; destination/defaults/native place values 215.
 // Round 210: implicit type-five zero with complete equal-value type-four producers, first/second/both
 // 187/186/193; each with equal-place chain 187/186/193; reversed chains 193; native place values 193.
+// Round 213: direct destination type-four/type-five/both/team/type-four-team/type-five-team/all
+// settings 245/212/267/200/259/231/271; all with destination place settings 300. Original scratch restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {
