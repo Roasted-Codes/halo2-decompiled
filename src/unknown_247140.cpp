@@ -305,6 +305,8 @@ public:
 // All original reader contracts restored; frame 0x28/0x20 and input/selector expansion remain.
 // Const method original/direct 174/174; separate noinline original/direct 174/174; const plus noinline original/direct 174/174;
 // noinline native origin with/without const 154/154, both held: caller 308 to 369 and frame 0x2c/0x20. All declarations restored.
+// Round 206: On lower header-value ownership, lower rejection/default/complete/endpoint results 163 each;
+// upper complete result and both rejection/default/complete results 163 each. Caller stays 308; sibling exact.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
