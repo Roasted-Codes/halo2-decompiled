@@ -12,7 +12,7 @@ struct s_1badc0
 
 real normalize2d(point2f *arg_0);
 
-// score 220 (was 220): frame 0x90 agrees; output EBX/EBP, point/vector homes and SSE scheduling differ.
+// score 220 (was 220): Frame 0x90 agrees; output EBX/EBP and vector/SSE homes remain.
 // Delayed vertical zero 274; with center difference 271; native 2D perpendicular 286/285;
 // complete aggregate 277/274; delayed zero and early three-use clearance 220; with center 259.
 // Delayed zero and early clearance kept; other executable forms restored.
@@ -27,6 +27,9 @@ real normalize2d(point2f *arg_0);
 // frame 0x90 agrees; output EBX/EBP, vector homes and SSE scheduling differ.
 // Vector/center/point/direction names 277 each; named clearance 277; shared actor-to-object difference
 // 274; center memcpy 277; names/clearance/difference 274. Three-point gains rejected.
+// Round 147: Planar scalar differences 255; complete projection products 220; both side-product
+// sets 220; all squared terms 220; projection/side 220; planar/projection/side 255; all products
+// 220; all products with planar differences 255.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

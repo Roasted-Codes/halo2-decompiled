@@ -188,7 +188,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): Frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
+// score 153 (was 153): Frame 0x14 versus 0x10; native color and reservation homes remain.
 // Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
@@ -251,6 +251,8 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // (fast control 162). Frame and reservation homes remain.
 // Fast control 162: paired alpha with original/before-color/before-commit/entry half-span
 // 251/394/392/462; staged packed alpha at the same sites 261/327/325/521.
+// Round 147: Real state-table address/filter/both/zero-tail/address-tail/filter-tail/all-
+// three/complete setup 611/579/737/582/764/784/1030/520 (fast control 162).
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
