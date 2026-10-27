@@ -53,7 +53,7 @@ bool function_1c5210(transform4x3f const *matrix, void *shape, long component, l
 
 static __forceinline long real_to_long(real value);
 
-// score 353 (was 353): Plain frame 0x8c versus aligned 0x94; saved output/state roles and the expanded tail helper remain.
+// score 353 (was 353): Plain frame 0x8c versus retail aligned 0x94; saved object roles, capsule staging and tail expansion remain.
 // Global optimization off 988, inline depth 2 348, no reference truth test 348, shape flag result 352, combined 352.
 // Base-position/velocity/both input values 379f/382f/413f; move-stage handle 352f;
 // minimum-radius value 352f; activity/compound byte 352f/352f; header offset 352f.
@@ -73,6 +73,9 @@ static __forceinline long real_to_long(real value);
 // Position yzx/zxy/zyx 353/353/353 (plain); no qualifying executable gain.
 // Native output velocity 369; orientation 353; velocity/orientation 369; control fields 353;
 // velocity/control 369; orientation/control 353; all fields 369; all fields with one time-step observation 374.
+// Round 148: shape reads at every use 374; body-shape reads at every use 353; handle reads at
+// every use 392; shape/body-shape 374; shape/handle 413; body-shape/handle 392; all field
+// observations 413; all fields/shared length helper 413. All executable forms restored.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {

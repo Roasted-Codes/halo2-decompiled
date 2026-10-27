@@ -785,6 +785,8 @@ real function_18cac0(long arg_0);
 // workspace and both: 252 each; the same four with the whole library clear return
 // 241 each. Original indexed traversal, native clear, gain result and executable
 // body restored at 225; aligned frame and scalar homes remain.
+// Round 180: Indexed gain-element pointer inside/before admission 225/225; complete result
+// arms 229/229; two-use old gain 262/262; old gain with complete arms 254/254.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

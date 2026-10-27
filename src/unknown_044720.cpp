@@ -278,6 +278,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // geometry from the element before the entry pointer 220f (index edi/entry esi as retail, frame 0x10a4);
 // query after the entry/geometry 191f; entry as pointer sum 191f; entry scoped to the loop branch 220f; with a
 // separate entry-time center point for the loop 221f, and the query in the list branch 221f. All restored.
+// Round 155: Real part-table byte/record cursors, mutable/read-only, each with original
+// or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

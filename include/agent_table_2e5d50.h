@@ -31,6 +31,13 @@ struct registration_2e5d50
 	handlers_2e5d50 handlers;
 };
 
+struct pair_record_2e5a90
+{
+	char first_type;
+	char second_type;
+	char level;
+};
+
 ELEMENTS_2D91D0_ALIGNED(registrations_2e5d50, registration_2e5d50);
 
 // the registrations, owning their storage unless its top bit says otherwise
@@ -79,7 +86,10 @@ struct s_1c3a40 : c_sized_reference_a9ef0
 
 	long unknown8;
 	c_sized_reference_a9ef0 *response_objects[8][8];
-	char unknown10c[0x4d8d - 0x10c];
+	char unknown10c[0x18c - 0x10c];
+	handler_2e5d50 handler_tables[4][32][32];
+	pair_record_2e5a90 pair_records[32][32];
+	unsigned char field_4d8c;
 	unsigned char field_4d8d;
 	char unknown4d8e[0x4d90 - 0x4d8e];
 	owned_alternate_types_2e5d50 alternate_types;
@@ -87,7 +97,7 @@ struct s_1c3a40 : c_sized_reference_a9ef0
 
 	void function_2e5a10(s_2e5a10 arg_0);
 	void function_2e5a90(handlers_2e5d50 const *handlers, long first_type, long second_type, long first_type_again,
-		long second_type_again, bool arg_5);
+		long second_type_again, long level);
 	void function_2e5d50(handlers_2e5d50 const *handlers, long first_type, long second_type);
 	// records that shape type `type` is handled as `alternate`
 	void function_2e5e70(long type, long alternate);

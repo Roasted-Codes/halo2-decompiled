@@ -1325,6 +1325,9 @@ struct s_player_properties
 // Round 179: first/second/both default arrays after name output 194/205/234;
 // two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
 // all scalar/array defaults after names 296. Original store phases restored.
+// Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
+// in three pairs and together 184 each; all three separate noinline declarations 237. Original
+// declarations and body restored; owner/count/zero allocation and requested cursor remain.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
