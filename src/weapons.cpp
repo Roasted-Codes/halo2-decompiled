@@ -2816,6 +2816,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // both cursors/bounds/field scale/maxima 426. All restored.
 // Negative unknown-name bool/byte/short/long with original exits 398 each;
 // single-exit guarded publication 471/471/462/466. All restored.
+// Scalar accumulator/contribution/output names, alone and combined, 398 each;
+// combined names with late constant found declaration 398. All eight restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {

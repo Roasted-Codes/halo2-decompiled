@@ -1,11 +1,11 @@
 // @flags /O2 /Gr /arch:SSE
 #include "unknown_044e90.h"
 #include "normalize3d.h"
-// score 434 (was 434): Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
+// score 434 (was 434): aligned frame and retail length agree; entry/table ownership and plane/list homes remain.
 
-// score 434 (was 434): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // Earlier 434 (was 434): Entry/tag-table registers and plane/list homes remain.
-// score 434 (was 434): aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
+// Earlier: aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
 // Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // Entry/tag-table registers and plane/list homes remain.
@@ -46,6 +46,8 @@
 // Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
 // 436; query result with products 440; const query 434; query result/products with const query
 // 438/436. All product regroupings restored.
+// Native storage-template alignment eight/sixteen 435/435; with scalar normal inputs
+// 447/447; with whole-plane library publication 435/435; both 447/447. Header/body restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

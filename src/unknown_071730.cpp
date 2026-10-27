@@ -64,7 +64,7 @@ bool balance_teams(long arg_0, long arg_1, bool arg_2, long arg_3, long arg_4,
 void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 	const s_match_player_list *arg_2, const long *arg_3);
 
-// score 449 (was 449): frame 1000 versus 996, result byte home and second state/getter handling differ.
+// score 439 (was 449): retail length; frame 1000 versus 996, result byte home and second state/getter handling differ.
 // Refreshed first balance inputs 454; fallback balance inputs 466; both phases 513;
 // native state-value getter 449; final transition-result union 449.
 // frame 0x3e8 versus 0x3e4, result-byte home and getter boundary differ;
@@ -80,6 +80,10 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // transition/advance bytes 468/449; native property clear 454; native ratings plus reset byte 464.
 // All forms restored; frame 0x3e8 versus 0x3e4, secondary-state/getter boundary and result home
 // remain.
+// Complemented final/reset/both decisions 489/467/489; waiting transition decision 439 kept;
+// with complemented final/reset/both 492/469/498; complemented balance 446, restored.
+// On the waiting transition graph: reset bool/byte 469/469, short/word 442/442;
+// balance bool/byte 458/458; paired bool/byte 476/476. All eight widths restored.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {
@@ -111,7 +115,7 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 		long local_10 = (long)(g_510548 ? g_51054c : GetTickCount()) - arg_0->unknowna68;
 		byte *local_11 = *(byte **)((byte *)local_0 + 0x3c);
 		long local_12 = false;
-		bool local_13 = false;
+		bool wait_for_transition = true;
 		long local_15[16];
 		s_71730 local_16;
 		if ((dword)local_2->player_count > *(dword *)((byte *)arg_0 + 0xa6c))
@@ -170,8 +174,8 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 			}
 			if (*(long *)(local_11 + 8) != 1)
 				*(long *)(local_11 + 8) = 1;
-			local_13 = function_72140(arg_0);
-			if (!local_13)
+			wait_for_transition = !function_72140(arg_0);
+			if (wait_for_transition)
 				goto local_30;
 			if (function_1934b0(local_8))
 			{
@@ -196,7 +200,7 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 				}
 				if (!local_25)
 				{
-					local_13 = false;
+					wait_for_transition = true;
 					local_12 = true;
 					goto local_30;
 				}
@@ -228,7 +232,7 @@ bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 				network_session_host_set_data49cc(local_2, (const dword *)&local_14);
 			}
 		}
-		if (local_13)
+		if (!wait_for_transition)
 		{
 	local_31:
 			network_session_set_mode(local_1, 12);
