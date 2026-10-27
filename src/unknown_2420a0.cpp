@@ -485,6 +485,12 @@ long function_243b10(long key_b, bool team_only, long *second)
 	return result;
 }
 
+// score 173 (was 173): frame 0x40 against retail's 0x44. Retail keeps the slot table in EBP through
+// the inner loop (re-reading g_51ec80 when EBP is borrowed, and in the marker select's else arm) and
+// keeps the inner index on the stack; ours re-reads the table at its use and keeps the index in EAX.
+// Round 77 (plain): no table local 200; the select's else arm through the global 200; the result index
+// named first 173; the marker position through function_2417a1 (moved above, retail's y-first copy
+// shape) 172; the index declared in the for 173; the count named result_count 173.
 // @retail 0x243c00
 void function_243c00(long slot)
 {
@@ -2746,6 +2752,18 @@ PRIVATE inline bool function_2419c1(short arg_0, short arg_1)
 }
 extern color3f *g_468714;
 
+// score 54 (was 184): frame 0x160 and length agree. What differs: the per-team block's switch
+// registers rotate (ours EAX/CL where retail uses ECX/AL) and the second flag converts with `setne`;
+// with that flag as a bool the registers agree, but ours then merges the two `local_29 = local_24`
+// case blocks (retail keeps the first switch's copy, `mov al,[esp+0x11]; jmp`), which also moves the
+// iterator loop's alignment pad. Round 77 (kept): the marker position through function_2417a1
+// (retail's y-first copy) 184 -> 159 (fast), the same-team flag as `if (... && ...) local_25 = true;`
+// 159 -> 81 (fast), the queried player through a named pointer 81 -> 54. Tried: the second flag as a
+// bool 89 (aligned differences 61 -> 23) and with the player pointer 146 (aligned 5: only the merged
+// block and the pad); on that body both switches' case orders 146 each, either arm's team test
+// inverted or braced 146 each; permuter 44 tries, none better; the 9-arm through its own result
+// variable 241, with a true default 227; `!(a || b)` for local_24 146; local_26 assigned from the
+// condition 250; local_29 declared with the other flags 146.
 // @retail 0x2419c0
 void c_game_engine_markers::v14(long arg_0)
 {
@@ -2838,7 +2856,8 @@ void c_game_engine_markers::v14(long arg_0)
 						long local_19 = local_18 == 0 ? g_51ec80->b[local_17] : g_51ec80->c[local_17];
 						if (local_19 != NONE)
 						{
-							point3f local_20 = g_4e0350->marker_entries[local_19].position;
+							point3f local_20;
+							function_2417a1(g_4e0350->marker_entries, local_19, &local_20);
 							if (function_243ed0(&local_14, &local_20))
 								function_24e59f(&local_14);
 						}
@@ -2854,8 +2873,8 @@ void c_game_engine_markers::v14(long arg_0)
 				byte local_26 = false;
 				color3f local_27;
 				s_color_bits local_28 = *(s_color_bits *)function_7f720(&local_27, (short)local_15);
-				if (local_23)
-					local_25 = ctf_player_get(local_16->lc)->team == local_1->team;
+				if (local_23 && ctf_player_get(local_16->lc)->team == local_1->team)
+					local_25 = true;
 				if (ctf_options()->engine_type == 9 && g_51ec80->flag_bits[local_15].bit3)
 					local_26 = true;
 				bool local_29 = false;
@@ -2895,36 +2914,41 @@ void c_game_engine_markers::v14(long arg_0)
 			}
 		}
 	}
-	if (local_0 != NONE && ctf_player_get(local_0)->unit_index != NONE)
+	if (local_0 != NONE)
 	{
-		s_player_iterator local_32;
-		local_32.data = g_4e8c24;
-		local_32.absolute_index = NONE;
-		local_32.index = NONE;
-		while (player_iterator_next((long *)&local_32))
+		s_player_view *player = ctf_player_get(local_0);
+
+		if (player->unit_index != NONE)
 		{
-			if (local_32.index != local_0)
+			s_player_iterator local_32;
+			local_32.data = g_4e8c24;
+			local_32.absolute_index = NONE;
+			local_32.index = NONE;
+			while (player_iterator_next((long *)&local_32))
 			{
-				if (!function_2419c1(local_32.player->team, ctf_player_get(local_0)->team))
+				if (local_32.index != local_0)
 				{
-					if (function_162550(local_32.index, &local_14))
+					if (!function_2419c1(local_32.player->team, player->team))
 					{
-						long local_35 = player_find_unit_item_of_type(local_32.index, 1);
-						if (local_35 != NONE)
+						if (function_162550(local_32.index, &local_14))
 						{
-							long local_36 = slot_object_get(local_35)->slot;
-							if (local_36 != NONE)
+							long local_35 = player_find_unit_item_of_type(local_32.index, 1);
+							if (local_35 != NONE)
 							{
-								color3f local_37;
-								s_color_bits local_38;
-								if (local_36 == 8)
-									local_38 = *(s_color_bits *)g_468714;
-								else
-									local_38 = *(s_color_bits *)function_7f720(&local_37, (short)local_36);
-								function_2440a0(&local_14, local_35, (point3f *)&local_38);
+								long local_36 = slot_object_get(local_35)->slot;
+								if (local_36 != NONE)
+								{
+									color3f local_37;
+									s_color_bits local_38;
+									if (local_36 == 8)
+										local_38 = *(s_color_bits *)g_468714;
+									else
+										local_38 = *(s_color_bits *)function_7f720(&local_37, (short)local_36);
+									function_2440a0(&local_14, local_35, (point3f *)&local_38);
+								}
 							}
+							function_24e59f(&local_14);
 						}
-						function_24e59f(&local_14);
 					}
 				}
 			}
