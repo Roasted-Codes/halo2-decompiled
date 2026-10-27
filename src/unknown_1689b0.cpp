@@ -1134,6 +1134,10 @@ bool function_16a040(long flags, point3f const *point0, point3f const *point1, l
 bool function_1691a0(long object_index, dword flags, dword test_flags, point3f const *point, vector3f const *vector,
 	s_collision_result_1697c0 *collision);
 
+/* retail calls this out of line from its one caller (0xdf880) */
+__declspec(noinline) bool collision_test_vector_object(dword flags, s_collision_result_1697c0 *collision,
+	long object_index, point3f const *point, vector3f const *vector);
+
 /* tests a vector against one object */
 // @retail 0x169430
 bool collision_test_vector_object(dword flags, s_collision_result_1697c0 *collision, long object_index,

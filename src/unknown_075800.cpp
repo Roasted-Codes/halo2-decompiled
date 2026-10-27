@@ -1079,6 +1079,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Round 224: Residual connection/free-case interleaves 5,11,6,18,7,8 / 11,5,18,6,8,7 /
 // 5,18,6,8,7,11 / 18,5,8,6,11,7 / 5,11,18,6,8,7 / 11,18,5,8,6,7 /
 // 18,11,5,6,8,7 / 8,5,11,6,18,7 195/194/195/194/195/192/192/194 fast. Original phases and handler tuples restored.
+// Round 28 (m3 lane 12): single retail-order switch 218 fast (type ecx, address eax, message stack); with
+// type/message/address declared 218 (identical); one read of the address through its address 220 (address
+// on the stack as retail, type ecx/message eax, retail eax/ecx); that with type/message/address 219 (message
+// also on the stack, 0x7afd0 3 -> 35), with type/address/message 220. Declared order does not move type to eax.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
