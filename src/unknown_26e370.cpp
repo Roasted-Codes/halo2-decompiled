@@ -389,14 +389,13 @@ long joint_count_invited_participants(joint_state const *joint)
 // @retail 0x26e370
 void joint_clear_references(long joint_index)
 {
-	long index = NONE;
+	s_record_pool_iterator iterator;
+	s_joint_reference *reference;
 
-	while ((index = data_next_absolute_index_inlined(g_51eca4, index + 1)) != NONE)
+	iterator.data = g_51eca4;
+	iterator.index = NONE;
+	while ((reference = (s_joint_reference *)data_iterator_next_inlined(&iterator)) != NULL)
 	{
-		s_joint_reference *reference = (s_joint_reference *)(g_51eca4->data + g_51eca4->size * index);
-
-		if (!reference)
-			break;
 		if (reference->joint_index == joint_index)
 			reference->joint_index = NONE;
 	}
