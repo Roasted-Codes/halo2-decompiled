@@ -685,6 +685,8 @@ struct s_control_pitch_unit
 	vector3f field_88;
 };
 
+real magnitude3d(vector3f const *v);
+
 PRIVATE inline real control_turn_difference(real a, real b)
 {
 	real difference = a - b;
@@ -712,6 +714,11 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 }
 
 // score 172 (was 172): Frame 0xac versus 0xa8; pitch-bound and remaining scalar homes differ.
+// Round 141: retail packs the yaw block's spilled turn differences into the direction vector's slots
+// (range with direction.i) and keeps maximum/minimum at 0x10/0x14 (ours: to_upper, maximum, minimum,
+// range, settings, then direction). Direction declared in the camera block / at the top 172/172;
+// camera after marker 172; range after the two turn differences 289. The movement length now calls
+// the existing 0x24590 (inlined, identical code).
 // Earlier at 213: Frame 0xa8 agrees; upper-bound, range and pin input homes differ.
 // settings/direction/turn-difference homes and step-clamp scheduling
 // differ within frame 0xa8; the initial minimum home now agrees; retail keeps the
@@ -833,7 +840,7 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		{
 			real amount = (real)fabs(entry->facing.pitch - target) * 0.63661975f;
 			real delta = target - entry->facing.pitch;
-			real movement = (real)sqrt(unit->field_88.i * unit->field_88.i + unit->field_88.j * unit->field_88.j + unit->field_88.k * unit->field_88.k) * g_510c54->rate;
+			real movement = magnitude3d(&unit->field_88) * g_510c54->rate;
 			real rate = target != 0.0f ? movement * amount * 0.08f : *(real *)(settings + 0x5c) * movement * amount;
 			entry->facing.pitch += control_pitch_pin(delta, -rate, rate);
 		}
