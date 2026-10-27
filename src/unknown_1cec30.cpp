@@ -2671,7 +2671,9 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 135 (was 135): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
+// score 114 (was 135): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
+// retail stages them (the reduced image stages them as retail), and the getters keep the fixed byte
+// and zero-vector pointer in other registers.
 // Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
 // staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
@@ -2714,6 +2716,12 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 197: Readonly private linear/angular/both getter inputs 135 each; native signed-int
 // ordinal alone/with each input pair 135 each; readonly pair with common double scale 135.
 // Original native state-zero graph, helpers and ordinal restored.
+// Round 63: kept the loop's bit-2 test as TEST_FIELD_BIT(flag2) (retail's shr/test) 135 -> 114 and the
+// float numerators 100.0f/50.0f (retail's fdivr dword, aligned -2) 114; the first bit-2 test as the
+// bitfield too (retail's form there as well) 168, alone 174, while the entry saves are staged
+// differently (reduced image with both: aligned 37). Retail reloads g_4687a4 after the linear copy's
+// stores, as if its address were taken somewhere; ours never takes it. The change vector as a brace
+// initializer 114; its zeros chained 114.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2739,7 +2747,7 @@ void function_1ced00(s_havok_component *component)
                 speed_squared += linear.i * linear.i;
                 if (speed_squared > 10000.0f)
                 {
-                    double scale = 100.0 / sqrt(speed_squared);
+                    double scale = 100.0f / sqrt(speed_squared);
                     linear.i = (real)(linear.i * scale);
                     linear.j = (real)(linear.j * scale);
                     linear.k = (real)(linear.k * scale);
@@ -2750,7 +2758,7 @@ void function_1ced00(s_havok_component *component)
                 angular_squared += angular.i * angular.i;
                 if (angular_squared > 2500.0f)
                 {
-                    double scale = 50.0 / sqrt(angular_squared);
+                    double scale = 50.0f / sqrt(angular_squared);
                     angular.i = (real)(angular.i * scale);
                     angular.j = (real)(angular.j * scale);
                     angular.k = (real)(angular.k * scale);
@@ -2759,7 +2767,7 @@ void function_1ced00(s_havok_component *component)
             }
             havok_component_rigid_body_state_update(i, component);
             if (havok_component_rigid_body_get(i, component)->body_is_simulating().m_bool &&
-                (component->unknown04 & 4) == 0 &&
+                !TEST_FIELD_BIT(component->flag2) &&
                 havok_component_rigid_body_get(i, component)->m_motion->kind_code() != 6 &&
                 !havok_component_rigid_body_get(i, component)->m_fixed)
                 havok_component_rigid_body_linear_velocity_change(i, component, &change);
