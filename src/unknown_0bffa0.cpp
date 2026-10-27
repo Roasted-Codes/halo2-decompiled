@@ -770,12 +770,15 @@ void function_42850(long object_index, long tag_index, point3f const *position,
     vector3f const *third);
 byte g_55e708;
 
-// score 109 (was 109): 0x2dba0 takes the position in ecx and the tag on the stack where retail
+// score 109 (was 109): BLOCKED-BY 0x2dba0: it takes the position in ecx and the tag on the stack where retail
 // passes the tag in ecx and the position on the stack, so the marker loop keeps its index in ebx and
 // spills the position where retail walks the position pointer in ebx with index and count in memory.
 // Round 70: indexed loop with a marker pointer per pass 109; single-marker case first 146; object
 // index local at every use 157; the field read at every use 109; the file's clamp_light helper for
 // the opacity 109 (retail's clamp shape, the rest unchanged).
+// Round 56: indexed loop without the marker pointer 109; opacity clamp as if/else-if 109; short count
+// and short index 125 (607 bytes, aligned diff 86 -> 55: the single-marker arm moves after the loop as
+// in retail, but the loop counts down in registers); short index only 114; short count only 128.
 // @retail 0xc3340
 void __stdcall function_c3340(long light_index, long unused)
 {
@@ -1629,44 +1632,39 @@ done:
 
 
 
+/* updates every light; a flag 8 light whose object (or its second object)
+   has header bit 2 set leaves the cluster partition and goes to 0xc2d00, and
+   a flag 0x10 light past its lifetime goes to 0xc3260 */
 // @retail 0xc1400
 void function_c1400()
 {
     long time = g_510c54->game_time;
     s_record_pool *pool = g_4e030c;
-    long absolute = function_16bc00(pool, 0);
-    long index = data_datum_index(pool, absolute);
+    long index = data_datum_index(pool, function_16bc00(pool, 0));
     while (index != NONE)
     {
-        long current_absolute = index & 0xffff;
-        byte *light = g_4e030c->data + current_absolute * 0x110;
+        byte *light = g_4e030c->data + (index & 0xffff) * 0x110;
         byte *definition = g_4e3b44[*(long *)(light + 4) & 0xffff].bytes;
         function_c0c80(index);
         if (light[2] & 8)
         {
-            long object = *(long *)(light + 0x4c);
-            if (object == NONE) object = *(long *)(light + 0x58);
-            if (object != NONE)
+            bool object_flagged;
+            if (*(long *)(light + 0x4c) != NONE)
+                object_flagged = (bool)(((dword)(g_4e0300->data + (*(long *)(light + 0x4c) & 0xffff) * 12)[2] >> 2) & 1);
+            else if (*(long *)(light + 0x58) != NONE)
+                object_flagged = (bool)(((dword)(g_4e0300->data + (*(long *)(light + 0x58) & 0xffff) * 12)[2] >> 2) & 1);
+            else
+                object_flagged = false;
+            if (object_flagged)
             {
-                byte *header = g_4e0300->data + (object & 0xffff) * 12;
-                if ((bool)(((dword)header[2] >> 2) & 1))
-                {
-                    byte *current = g_4e030c->data + current_absolute * 0x110;
-                    if (current[2] & 2)
-                    {
-                        function_1cae40(&g_4e0310_partition, index, (long *)(current + 0x10));
-                        current[2] &= ~8;
-                    }
-                    function_c2d00(index);
-                }
+                light_partition_clear(index);
+                function_c2d00(index);
             }
         }
         if ((light[2] & 0x10) && (real)(time - *(long *)(light + 0x14))
             > (real)*(short *)((byte *)g_510c54 + 2) * *(real *)(definition + 0xb0))
             function_c3260(index, true);
-        pool = g_4e030c;
-        absolute = data_find_index(pool, index == NONE ? 0 : current_absolute + 1);
-        index = data_datum_index(pool, absolute);
+        index = data_datum_index(g_4e030c, data_find_index(g_4e030c, index == NONE ? 0 : (index & 0xffff) + 1));
     }
 }
 

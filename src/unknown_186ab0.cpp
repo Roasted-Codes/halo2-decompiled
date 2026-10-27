@@ -150,8 +150,8 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 135 (was 135): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
-// frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
+// score 135 (was 135): BLOCKED-BY 0xcfe40 (its index arrives in eax, retail ecx); frame 0x54 agrees;
+// selector input, count width, cold clear and output/angle scheduling differ.
 // frame 0x54 agrees; request/choice carriers, protected input convention and cyclic alignment differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
@@ -190,6 +190,12 @@ void player_action_initialize(s_player_action *arg_0);
 // Native orientation vector 135; coherent unit source 185; source/vector 185; existing state query 304;
 // query/source 310, query/vector 304, all three 310; complete native orientation value 220.
 // Original fields, pointer observations and query guard restored.
+// Round 56: object pointer local in the angle block 185 (retail's esi there; the tail's scratch
+// registers rotate); nested 0x40 latch with the 0x60 and 0x4630200 masks tested apart 164, its
+// latch store first 162, else-first latch 169, with float stores for field_20/24 158 at retail's
+// 1515 bytes. The nested latch and float stores are retail's code (aligned 58 -> 54), but retail
+// puts the `field_92 = false` arm after the return; bool/byte/held locals, store orders and
+// a ternary toggle all leave that arm inline, so the lockstep count shifts.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {

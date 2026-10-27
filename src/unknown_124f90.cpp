@@ -1452,6 +1452,10 @@ void looping_sound_controller_release(long index);
 // playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
 // Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
 // scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
+// Round 56: the byte decrement is what keeps the pool out of EBX (as a dword store it gets EBX);
+// pool local 43 (stack convention); effect index local 5; byte count local 5; count pointer 5;
+// nested decrement tests 5; harness: char field, cast, `--`/`&=`, `+ 0x7f`, long/short/dword
+// temporaries, mask first, bitfield, release without the depth pragma all keep EBP or worsen.
 // @retail 0x127390
 void sound_playback_delete(long sound_index)
 {
@@ -3596,7 +3600,6 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 }
 
 // score 535 (was 535): Frame 0x130 versus 0xe8; native rotation, environment and listener-index homes remain.
-// Earlier: Frame 0x130 versus 0xe8; native rotation, environment and listener-index homes remain.
 // Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
 // Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
 // Static const fallback 727 (frame 0xec); spatial role names 551; long success workspace 551;
@@ -3620,6 +3623,13 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Placement/environment status byte-bool, word-bool, bool-byte, bool-word, byte-byte, byte-word, word-byte,
 // word-word; then five remaining complete quaternion/input/output formal orders:
 // 535/535/535/554/535/554/535/554/560/568/568/560/535 (fast); all restored.
+// Round 56: retail reads the default reverb from the existing const g_44a2a0 (0x48 bytes: our
+// frame excess) and inlines 0x14ddc0/0x14de70 (the `i != NONE` and `setne cl` player test),
+// 0x16f3a0 (the `cmovne` state pointer) and has the fallback copy in both arms. g_44a2a0 (made
+// extern in sound_driver.h) 760 (fast; frame 0xe8, 2065 bytes); with the three helpers and the
+// fallback in both arms 583 (frame 0xe0, 2243 bytes, aligned 650 -> 621; 0x16f3a0 stays out of
+// line and the first 0x155760 call sinks); plus an `inline` redeclaration of 0x16f3a0 583;
+// g_44a2a0 with only the helper loop head 637; the helper loop head alone 597. All restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {
