@@ -23,24 +23,27 @@ struct plane2f
 PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane,
 	point2f const *first, point2f const *second, long count, short capacity, point2f *output)
 {
-	real dy = first->y - second->y;
+	real fraction = 0.0f;
 	real dx = first->x - second->x;
-	real denominator = plane->n.i * dx;
-	denominator += plane->n.j * dy;
+	real dy = first->y - second->y;
+	real denominator = plane->n.i * dx + plane->n.j * dy;
 	if ((denominator < -0.0001f || denominator > 0.0001f) && count < capacity)
 	{
-		real fraction = (plane->n.j * first->y + plane->n.i * first->x - plane->d) / denominator;
-		dx *= fraction;
-		output->x = first->x - dx;
-		dy *= fraction;
-		output->y = first->y - dy;
+		fraction = (plane->n.j * first->y + plane->n.i * first->x - plane->d) / denominator;
+		output->x = first->x - dx * fraction;
+		output->y = first->y - dy * fraction;
 		return true;
 	}
 	return false;
 }
 
-// score 101 (was 101): frame 0x618 agrees; result/cursor initialization and displacement/fraction SSE homes still differ.
-// Earlier: frame 0x618 agrees; cursor/result initialization, delta XMM
+// score 5 (was 101): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// intersection's x product loads the plane before the point. The fraction defaulted first,
+// x-first displacements and the scale inside the output expressions gave retail's XMM homes
+// and length (101 -> 5). Then: current declared before previous 5; named current/previous
+// point pointers 28; dot_product2d numerator 5; fraction shared with the classification
+// distance 5; previous updated at the loop end 5; staged/reversed denominators and helper
+// parameter orders screened compile-only without change. Earlier: frame 0x618 agrees; cursor/result initialization, delta XMM
 // homes and extra fraction copies remain. X-first deltas 109; full denominator 103;
 // scales before stores 101; first input record 207; Boolean helper result 101;
 // aggregate intersection 152; capacity-first gate 108; native input count 153;
@@ -259,12 +262,16 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 
 /* gift wrapping: the indices of the convex hull of the points, starting from
    the lowest */
-// score 203 (was 203): scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
+// score 203 (was 203): Frame 0x14 agrees; count/departure homes, scan bound, equality and compaction differ.
+// Earlier: scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
+// scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
 // Full count tests 274; current-point snapshot 271; byte start state 250; float workspace names 250; still-at-origin state 264; inline classifier declaration 250; forced equality declaration 250.
 // Unsigned word result 275; unsigned first/candidate ordinals 247/209 (caller lost); native compaction ordinals 285;
 // monotonic departure 263; compaction shared exit 279; heading initialized after lowest scan 234.
 // signed-word departure state 208; native selected-next index 273; departure before classifier 218; unsigned compaction ordinals 248; lowest constants after current index 234.
 // Round 212: Unsigned-word/native-long departure 208/203; result lexical home 208; native lowest-scan ordinal 612; entry heading lifetime 237. Result/departure slots, bound and compaction boundary remain.
+// Round 229: Equality-helper false-first/true-first/separate/early rejection results with long
+// departure 260/260/260/212; with Boolean departure 249/249/249/234. Original helper/body restored.
 // Departure/output/both/current/heading names 203 each; byte departure 234; late departure and
 // lowest-coordinate order 203/203; heading before scan 220.
 // @retail 0x239e50
@@ -434,11 +441,15 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 237 (was 237): count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
+// score 237 (was 237): Aligned frame 0x1014 agrees; count/stride/prior homes and distance/result lifetimes differ.
+// Earlier: count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
 // Native current ordinal 249; long side states 264; prior-point ordinal 288; ordered fraction clamp 243; clear-mask arm first 243; shared normalized count 275; existing point difference 243.
 // Explicit source bit 243; unsigned input ordinal 237; word side states 263; retained signed distance 273; parallel edge scales 243.
 // signed side-presence words 248; signed current-side byte 256; double equality tolerance 302; native equality references 237; ordinary unsigned previous-side byte 278.
 // Round 212: Current-side unsigned word/native long 257/250; input ordinal name 237; true-first current side 341; positive-first final policy 236. Count/stride/prior homes and shared publication remain.
+// Round 229: Equality helper native first/second/both point arguments 356/357/444;
+// result-first with those arguments 356/357/444; pointer result-first/early rejects 237/237.
+// Original helper/body restored.
 // Previous-point, distance, positive-state, negative-state and result names 237 each;
 // status declaration order 264; previous-point address 237; displacement order 237.
 // @retail 0x23a6f0

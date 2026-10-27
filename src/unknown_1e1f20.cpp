@@ -9,6 +9,7 @@
 #include "object_queries.h"
 #include "unknown_19ec40.h"
 #include "unknown_1e46c0.h"
+#include "unknown_26b230.h"
 #include <string.h>
 
 struct s_ai_weapon_definition
@@ -99,6 +100,10 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 // C/stack contracts 12/12.
 // Private query output pointer last/first, result after actor/from entry 20/24/20/24;
 // output reference last/first, result after actor/from entry 20/24/20/24. Shared slot query unchanged.
+// Unit then result 20; result then unit/entry result with unit 24/24; unit two result arms 22;
+// field two result arms 12; result goto done 20; field pointer result/early return 20/17;
+// direct else 12; success guard 20; conditional return 12; field reference 17;
+// repeated actor query 22.
 // @retail 0x1e1fd0
 long function_1e1fd0(long actor_index)
 {
@@ -487,25 +492,24 @@ PRIVATE inline void location_make_empty(s_location *location)
  location->bsp_index = g_4686c4;
 }
 
-/* the actor's next prop in its list, or NULL at the end */
-PRIVATE inline s_prop_node_view *prop_list_take_next(long *prop_index)
-{
- s_prop_node_view *prop = NULL;
- if (*prop_index != NONE)
- {
-  prop = prop_node_get(*prop_index);
-  *prop_index = prop->next_index;
- }
- return prop;
-}
+/* the walk over an actor's props: 0x26be00 starts it, 0x26be30 returns the
+   next prop (NULL at the end) */
+struct s_node_view;
+void function_26be00(long actor_index, s_iterator *iterator);
+s_node_view *function_26be30(s_iterator *iterator);
 
-// score 7 (was 7): slot address and callback lookup allocation differ;
+// score 7 (was 7): slot address and callback lookup allocation differ (the slot loop is matched
+// 0x1e1740's loop source, and a compile without LTCG allocates it like retail);
 // shared slot/condition callback/at-use callback 10/10/10; nullable slot
 // before lookup/after test 10/10; handler local/slot reference 10/10;
 // direct slot expressions 7.
 // slot cursor/cursor callback at use 115/115; signed slot type 7;
 // direct actor index 7; inclusive current count 99; empty callback continue 7;
 // counter lifetime from entry 30; callback declared before slot 7.
+// Type through slot/slot element, ternary on the expression/slot/inverted, callback before/after slot
+// 7/7/7/10/7/7; view and prop walk through the existing 0x25d740 wrapper and 0x26be00/0x26be30 7 (same
+// code, kept); 0x25d690 through its wrapper or a noinline declaration without the pragma: inlined, 132;
+// a 600 s permuter run (72 tries), none below 7.
 // Direct lookup with slot callback 10; pointer arithmetic/scaled offset 7/7;
 // later index reference/per-iteration index snapshot 7/7;
 // slot/callback/both outside the loop 7/7/7; inverted slot test 7.
@@ -530,20 +534,16 @@ void function_1e23c0(long actor_index)
   if (callback)
    callback(*index_reference, i < 4 ? &actor->slots[i] : NULL);
  }
- long prop_index = actor_get(*index_reference)->first_prop_index;
+ s_iterator iterator;
+ function_26be00(*index_reference, &iterator);
  s_prop_node_view *prop;
- while ((prop = prop_list_take_next(&prop_index)) != NULL)
+ while ((prop = (s_prop_node_view *)function_26be30(&iterator)) != NULL)
  {
   /* retail calls 0x25d690 here rather than inlining it */
 #pragma inline_depth(0)
   byte *prop_block = (byte *)function_25d690((s_prop_datum *)prop);
 #pragma inline_depth()
-  byte *view = NULL;
-  if (prop->view_index != NONE)
-  {
-   byte *entry = g_502414->data + (prop->view_index & 0xffff) * 0x124;
-   if (entry) view = entry + 0x70;
-  }
+  byte *view = (byte *)prop_node_view(prop);
   location_make_empty((s_location *)(prop_block + 0x28));
   *(long *)(prop_block + 0x44) = NONE;
   if (view && *(short *)(view + 0x70) == 1)

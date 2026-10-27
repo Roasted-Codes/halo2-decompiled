@@ -40,6 +40,9 @@ static __forceinline long real_to_long(real value);
 // Speed/first limit/second limit/first lower/second lower orders
 // 13245/21345/23145/31245/32145 373 each;
 // interleaved bounds 12435/13524/24351 374 each.
+// Point-owner, complete output-phase and normalization-scratch scopes each 373;
+// owner/output, owner/scratch, output/scratch and all three 373; all three with
+// initial-conversion scope 373. Frame remains 0x4c; original lifetimes restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {
