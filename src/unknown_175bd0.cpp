@@ -2233,6 +2233,11 @@ event_done:
 // joins differ. external tag record 109; external root record 109; wide visibility result 144;
 // byte visibility result 109; unsigned color handle 109; root velocity address 109; root location
 // address 109; origin output lifetime 247.
+// Round 135: retail passes 0xbaf80's result (still in EAX) as 0x1794a0's first argument, not
+// the effect's object index; with that root index 197 (585 bytes; aligned 88 -> 61: the cached
+// object index then takes ESI where retail keeps NONE, and EDI is reloaded); with the visible
+// arm first 224; result false by default 197 (87 without the root index); the object index
+// named in the arm 197. Not kept until the reload blocker is gone.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2687,6 +2692,14 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Mode-first admission 358; joint outer spatial outputs 179; parent conditional 163; compound scale 166; tag-first eligibility 222.
 // Parent conditional with two-use lower 156, signed detached state 159, both 153 kept plain;
 // on both: unsigned mode 153, part point 166, conditional scale 156 (fast); follow-ups restored.
+// Round 135: retail loads the radius bounds upper first, then lower, before drawing the random
+// value, and keeps the fraction on the x87 stack (a range call's arguments, evaluated right to
+// left); its radius/conversion slot lies between the definition and event spills (ours below
+// the next index). Radius named to sort before the definition 153; the existing range helper
+// 349 (inlined in SSE, frame 0x80); bounds read at each use 159; the range helper as one
+// expression 153 (bounds loaded first, but the span is formed before the fraction, and the
+// helper itself stops matching); with the factors swapped 153; radius declared at function
+// scope first/after the definition 153/153 (slots unmoved).
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {

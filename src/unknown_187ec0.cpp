@@ -478,6 +478,12 @@ bool function_172750(long mode, point3f const *point, real radius);
 // branches 151.
 // Round 186 initial/fallback/both conditional lookup results 162/118/162; guarded payload
 // selection alone/with initial/with fallback/with both 219/230/219/230; shared getter force-inline 118.
+// Round 135: the entry index read once through its address 128 (no register parameter left,
+// ret 0x34), with the element index too 128, passed from its address 128; the entry index
+// read once into a short local 118; first index after the output defaults 165. With the
+// existing material class for the 4th/5th parameters (and 0x1882d0's) it matches (fast;
+// tag index in EBX, first index on the stack): BLOCKED-BY the declarations in src/impacts.cpp
+// and src/projectiles.cpp, which name the old parameter types.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)
