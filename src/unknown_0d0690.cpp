@@ -1312,6 +1312,9 @@ real function_30bf0(vector3f *vector);
 // Independent lower/upper bound records at entry, before fallback and original final phase:
 // all eight non-original phase pairs 364; original final-bound lifetimes restored.
 // Color clamp orders 102/210/201/012/021 386/377/393/393/387; first color scale orders rbg/grb/gbr 364/363/362.
+// Round 158: Genuine length-only primary/secondary scale factors produced independently or jointly at entry,
+// after decoding, fallback admission and rotation admission. Scores [544, 525, 543, 515, 503, 485, 482,
+// 499]. Original executable body restored.
 // Round 184: direct-field normal initializer 473; early normal snapshot/native initializer
 // 488/507; native query vector view 364; view with shared snapshot/direct reads/library copy
 // 488/364/364; early normal plus direct magnitude reads 517. Original observations restored.

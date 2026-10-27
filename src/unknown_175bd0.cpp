@@ -2213,7 +2213,8 @@ event_done:
 
 #pragma inline_depth()
 
-// score 63 (was 63): Four-byte frame agrees; initial object handle remains retained across read-only queries.
+// score 63 (was 63): only the object index differs: ours keeps it in ESI from entry across 0xbadc0
+// Four-byte frame agrees; initial object handle remains retained across read-only queries.
 // Earlier: only the object index differs: ours keeps it in ESI from entry across 0xbadc0
 // and 0xbaf80 (NONE in EBX), retail reloads it after each call with NONE in ESI. Retail's callers
 // 0x10a390 and 0x16c2b0 keep an index across 0xbadc0, so its summary is not the cause. 0x1794a0's
@@ -2251,6 +2252,9 @@ event_done:
 // object index then takes ESI where retail keeps NONE, and EDI is reloaded); with the visible
 // arm first 224; result false by default 197 (87 without the root index); the object index
 // named in the arm 197. Not kept until the reload blocker is gone.
+// Round 157: release inline 63; destruction inline 63; target inline 63; release/destruction inline 63;
+// release/target inline 63; destruction/target inline 63; all three inline 63; release/destruction inline
+// with separate noinline release 63. Original executable source restored.
 // Round 147: update mask 202; response masks 167; both masks 215; admission returns 201;
 // returns/update 215; returns/response 200; returns/both 228; shared admission/root handle 198.
 // All executable forms restored; sources and comparisons saved.
@@ -2537,7 +2541,8 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 177 (was 177): Frame 0x104 versus 0x100 and point/up eligibility remain; native formals do not move them.
+// score 177 (was 177): Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
+// Frame 0x104 versus 0x100 and point/up eligibility remain; native formals do not move them.
 // Earlier: Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
 // frame 0x104 versus 0x100, incoming point/up eligibility and record/call setup remain.
 // frame 0x104 versus 0x100; point/up eligibility and record/call setup remain.
@@ -2560,6 +2565,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // both native attachment nodes with radius argument 286. Callers and light callee checked.
 // Native light-node result 177 at 1330/1328 bytes, kept after ordinary full check;
 // every other form restored. No call expression or input value changed.
+// Round 157: early radius zero 177; early character node default 177; early light node default 177; early
+// sound node default 177; all node defaults 177; radius/light defaults 177; radius/all node defaults 177;
+// all defaults with paired record names 177. Original executable source restored.
 // Round 147: location reference 177; effect reference 177; part reference 177; location/effect
 // 177; location/part 177; effect/part 177; all record references 177; all references/point value
 // 350; direction inline 177; angular inline 177; both vector inline 177; light inline (lost
@@ -2732,6 +2740,9 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Lower-bound workspace at location/part/entry 152/152/152; paired lower/radius
 // workspaces at location/part/entry 152/152/152; iterator with both at entry 152;
 // all four scalar workspaces at entry with role names 152. Initializations unchanged.
+// Round 157: existing unbounded random query 365; compound radius accumulation 152; query and
+// accumulation 365; early radius zero 152; query and radius zero 365; early scale one 295; radius and
+// scale defaults 295; query with both defaults 259. Original executable source restored.
 // Round 147: matrix reference 152; source reference 152; output reference 152; matrix/source
 // 152; matrix/output 152; source/output 152; all native references 152; source vector value 383.
 // All executable forms restored; sources and comparisons saved.

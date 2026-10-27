@@ -1320,7 +1320,7 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 202): Frame 0xfc agrees; key/statistic/group homes, cursor bias and grouped dispatch remain.
+// score 202 (was 202): frame 0xfc agrees; key/statistic/group homes, statistic cursor bias and grouped dispatch remain.
 // Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
 // Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
@@ -1398,6 +1398,7 @@ struct s_rating_summary
 // status with player indexing 202, with fifteen-bit counters 199 (rejected).
 // Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
 // 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
+// DL159: uniform name-input field observations, crossed with shared pass ordinal, shared three-count results and two-word prefix clear, 235/236/235/236/234/234/234/234. Shared ordinal recovers key home but regresses total; original character snapshot and body restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

@@ -180,6 +180,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // early BL/stack byte, but frame 0x84); before the listener call 288; after the 0x12c040 call/first/
 // second codec store 173 each; separate bool/byte flag set before the 0x12c040 call 290/280; bool flag 169.
 // Five coherent descriptor size/flags/input publication orders 169/169/171/171/169; reverse send-only/submix-only 167/167; complete reverse order with creation byte spanning reset 280. Original descriptors, byte state and body restored.
+// Round 157: speaker zero at query 338; speaker zero at entry 383; early category zero 165; early first-
+// channel zero 165; speaker/category defaults 383; speaker/first defaults 383; category/first defaults
+// 165; all three defaults 383. Original executable source restored.
 // Round 147: allocated owner 519; owner/early state 504; owner/bool state 521; owner/early bool
 // 509; owner/first word 519; owner/early/word 504; owner/bool/word 521; owner/early/bool/word
 // 509. All executable forms restored; sources and comparisons saved.

@@ -2198,6 +2198,9 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // and matched sample boundary preserved; first normal XMM roles, early velocity loads and property-zero lifetime remain.
 // Round 342: Shared normal/velocity length 123; shared inverse 162; both 168; outer sample vector 109;
 // vector plus length/inverse/both 123/162/168; all with one scan ordinal 168. Exact-length inverse forms regress; originals restored.
+// Round 157: normal reciprocal identity 138; velocity reciprocal identity 170; both reciprocals 184;
+// early normal length zero 109; early velocity length zero 109; both length defaults 109; reciprocals and
+// lengths 184; all with early speed sum 392. Original executable source restored.
 // Round 201: Successive normal/velocity sum workspace 109; with shared length/inverse/both
 // 115/109/123; the same four with persistent sample 109/115/109/123. Original accumulators restored.
 // @retail 0x1d87b0
