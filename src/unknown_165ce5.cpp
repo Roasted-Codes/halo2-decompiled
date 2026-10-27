@@ -1384,6 +1384,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
 // frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
 // reloading the time globals) and esi/edi saved before the unit test (retail after it) differ.
+// frame 0x28 vs 0x2c, unit/mode and look-output homes differ; the look
+// reciprocal (retail divides twice, reloading the time globals) and esi/edi saved before the unit
+// test (retail after it) differ.
 // Round 55 kept: the speed (5th argument) and acceleration limits passed in retail's roles (15/6 speed,
 // 72/27 acceleration), defaults in retail's store order, each look angle clamped in one statement.
 // Not kept (each lowers the aligned differences but shifts every later instruction): active preset
@@ -1391,23 +1394,17 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // clear test without the redundant `zoomed &&` 396; channel98 rate/overlay read through the weapon 387;
 // overlay mismatch as a ternary 383 (setcc); look angles in an s_view_angles 239 fast (frame 0x30);
 // mode looked up before the unit 574; springs renamed speed/acceleration 243 (slots unchanged).
-// Earlier: word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
-// frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// Word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
 // Entry unit capture 252; const unit/primary weapon/weapon object/look receivers 252 each;
 // look interval capture 417; combined readers 252; readers plus interval 417 (fast base 252).
-// frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
-// Earlier 250 (was 250): Frame 0x28 versus 0x2c and unit/mode/look homes remain.
-// Frame 0x28 versus 0x2c and unit/mode/look homes remain.
-// Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407; all
-// receivers/direct velocity 617/617 (fast preview 252).
-// frame 0x28/0x2c and unit/mode/look homes remain.
-// External user/unit/weapon records and user-unit pair 252 each; native dword
-// index/mode, callback at update, and unit-weapon-index combination 252 each (fast base 252).
+// Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407;
+// all receivers/direct velocity 617/617 (fast preview 252).
+// External user/unit/weapon records and user-unit pair 252 each; native dword index/mode, callback at
+// update, and unit-weapon-index combination 252 each (fast base 252).
 // Indexed user-record reads at every access 550; with live flags 544; direct channels 560;
 // both 538; complete coefficient selection with those four forms 550/544/560/538.
-// Frame stays 0x28 versus 0x2c; original user receiver and all smoothing inputs restored.
 // Complete entry spring phase, override-only receiver, entry look outputs and both 250 each;
 // narrower aiming pair within that phase, with the same four storage combinations, 254 each
 // (fast control 250, full baseline 248). Original phase scopes and all five smoothing calls restored.
@@ -1418,6 +1415,17 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // alone/with named parts 496/496; fresh view fields alone/with parts 442/442;
 // interleaved fresh fields with/without parts 510/510; all plus signed flags 510
 // (fast control 243, full baseline 241). All original expressions and calls restored.
+// narrower aiming pair within that phase, with the same four storage combinations, 254 each.
+// Original phase scopes and all five smoothing calls restored.
+// Round 93 (fast base 243): look angles as a two-element local 239 (retail's -0x2c/-0x28 homes,
+// frame 0x30, reciprocal still shared; a grouping, not kept); mode renamed past unit 243 (slots
+// unchanged). Combined: active preset, channel98 rate/set read through the weapon, the overlay call
+// and save in each arm (scoped / else if zoomed), the clear test without `zoomed &&`, callback
+// `== 0 ? right : left` and the set read once into a named local: 378 positional but 49 aligned
+// differences (82 before; 577 of retail's 578 instructions). The one instruction short is retail's
+// `movzx eax, byte [edi+0x19]; test al, 0xa` after the update call, where ours folds `test byte`
+// (`!= 0`, two bit tests, a bool local, bitfield/word/shift views and a bool cast all fold).
+// Apply that set once the movzx form is found.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

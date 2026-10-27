@@ -119,6 +119,11 @@ void function_14bac0()
 }
 
 // score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// Round 94 (not kept, gain under 8): first loop through the existing datum iterator 234; plus block-local marker
+// points 231; plus readiness declarations swapped 230. Retail packs its second (16-byte, 0x6b380) iterator with
+// offset, marker points and center at +0x2c and alternate with the first iterator at +0x3c (frame 0x3c). Second loop
+// through its own datum iterator and 0x6b380 257/254/259; stamp-first visit test 230; for-loop spelling 230;
+// marker memcpy 230; marker element pointer 246 (gives retail's add/add marker address, grows the first loop).
 // Existing first/second/both iterator calls 280/247/263; typed request/marker/both records 234/234/234; read-only request record 234; accepted-point memcpy 234.
 // frame 0x34 versus 0x3c, query/iterator homes and visit-counter reloads differ;
 // destination byte 234; alternate byte 234.
