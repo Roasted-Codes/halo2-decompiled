@@ -86,6 +86,8 @@ void __stdcall function_b8890(long arg_0);
 // Unsigned first/second/both handle arrays 212/212/212; first/second/both
 // arrays with unsigned classification 212/212/212; complete unsigned processing 212;
 // unsigned arrays/processing with original signed classification 212. Original storage restored.
+// Round 246: category after first/both membership scans with early header 252/291;
+// move header too 306/302; indexed-cleanup counterparts 257/296/312/311.
 // Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
 // combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
 // original induction restored. List/index/second-count homes and cleanup scheduling remain.

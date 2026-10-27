@@ -1311,6 +1311,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Round 221: current event graph with object roots live, normal/entry result
 // 414/414; tag roots live 228/228; both roots 388; both with byte/long/short
 // result 395/387/388. Original root snapshots, result and body restored.
+// Round 248: Shared release state-mask/updated-byte inputs, publication before
+// inputs/after coefficient/after vector 200/203/204 each; reacquired item
+// before inputs/after vector 200/204. Original helper and byte stores restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

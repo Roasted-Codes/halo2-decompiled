@@ -59,6 +59,8 @@ real function_30bf0(vector3f *vector);
 // Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
 // Native ray/fallback/both component loops with long ordinals 218/217/217; dword 218/217/217;
 // both with short/byte ordinals 244/244. Original body restored; selector and pending homes remain.
+// Round 246: direction seed/color seed/direction publication library-copy combinations,
+// seven at 213; all three plus every whole-color replacement 213. Original copies restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {

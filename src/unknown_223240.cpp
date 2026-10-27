@@ -135,6 +135,9 @@ void function_2232a0(void)
 // Round 221: outer completed-count do/for/while 151/161/161; last-ordinal
 // do/for/while 152/169/169; actual output-table boundary do/for 179/195.
 // Original count producer and traversal restored.
+// Round 248: Split lower-bound phase across mode selection, snapshot/live field
+// with original/pretested traversal 152/163/152/163; split upper-bound phase
+// counterparts 185/195/185/195. Original count producer and loop restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

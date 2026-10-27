@@ -420,6 +420,9 @@ real function_30bf0(vector3f *vector);
 // Posture cases reversed 184; exhaustive scale switch, ordered arms and
 // complete conditional scale 202/253/253; each of the four with per-use range
 // reads 273/311/306/306. Original scale, range observations and body restored.
+// Round 249: coordinated projection inline/noinline 294/184; threshold inline/noinline
+// 184/184; both inline, projection-inline/threshold-noinline, projection-noinline/threshold-inline,
+// both noinline 294/294/184/184. Original declarations and bodies restored.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {

@@ -255,6 +255,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 132: separate input-up and parent metadata 275; native carriers 276; output-first
 // 275/276; actual header input 275/276; header input plus output-first 275/276.
 // All input-splitting contracts regress; existing producer, late zero and basis roles restored.
+// Round 250: Entry basis/position/all native workspaces 220/220/220; discarded-forward name 220;
+// complete basis/phase names 220/220; entry basis plus basis names 220; entry workspaces plus phase
+// names 220. Frame 0x78/0x6c and early ESI/basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
