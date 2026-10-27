@@ -70,37 +70,33 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 	arg_1 = function_x82e52f(arg_0, 0, 0);
 }
 
-// score 142 (was 142): frame 0x10 agrees; cached-pointer comparison, child-call
-// pushes and loop lookup expansion differ; size optimization 525; inline depth one 142;
-// current-record update argument 142; child-input scope 142; both 142.
-// cached-pointer compare and in-loop lookup differ;
-// metadata read order 142; direct child getter 160; early result declaration
-// 142; word flag update 244; reciprocal default first 142.
-// score 142 (was 142): cached-pointer compare and selective lookup expansion remain;
-// cache slot/early flags/both/cache reference 142; reciprocal input 143;
-// global optimization off 433; frame pointer 314; depth two 142.
-// read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
-// child datum accessor 146; both datum accessors 298; native child ordinal 142; immutable
-// creation inputs 142; reciprocal before child link 143.
-// score 142 (was 142): cached-pointer compare, child-input spills and loop lookup remain.
-// Native cache pointer 142; changed-record predicate 142; actual head field 142;
-// unsigned child handle 142; shared bounded selector 142; word flags 142;
-// word flags with bounded selector 142; child zero-age before enable 142.
-// score 142 (was 142): cached-pointer memory compare, child pushes and in-loop lookup remain.
-// Cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime field 142; mask/lifetime fields 142.
-// Cached-pointer comparison and loop lookup remain. Common pointer/flags/both stores
-// 159/140/158f; conditional mask 282f; immutable allocated handle/settings 142f; common current-record
-// stores and combined immutable bindings 158f; common flags with current receiver 158f. Two-point gain
-// discarded.
-// External parent / allocated record / settings / child references 142/142/142/142;
-// parent with record / settings, record with child, all four references 142/142/142/142.
-// Cached-pointer comparison and selective loop lookup expansion remain.
-// score 142 (was 142): cached-pointer compare, creation pushes and loop lookup remain.
-// Parent/settings/both metadata fields, first/last/both list fields, metadata with list fields,
-// metadata with cache slot 161/160/167/142/142/142/167/167.
-// cached-pointer comparison, child pushes and selective lookup expansion remain.
-// Declared sample array/loop 142/435; immutable record/spawn/both 142/142/142;
-// child identity order 142; earlier enable 142; earlier age 143.
+// score 70 (was 142): frame 0x10 and length agree. Left: field_10 is stored after the
+// field_38 sample (retail stores it first, yet with field_10 last the x87 store ends the block
+// and the cached-record compare loads separately, adding the loop-head pad), and the register
+// rotation from the 0x173ba0 arguments on. Round 54: in-loop lookup through the inline
+// particle_object_for_tag with the child getter nested in 0x173fd0's call 133 kept (nested
+// getter alone 160; inline/forceinline redeclarations of 0x137bd0 142); record-first reset
+// without the split temporary 133 kept; field_38 sample before the field_10 store 70 kept;
+// sample through the existing helper 70; the 0x173c10 method called 70 (same code); sample
+// into the shared local before field_10 146; sample local declared first 70; DATUM child 70.
+// Earlier: size optimization 525; inline depth one/two 142/142; current-record update argument
+// 142; child-input scope 142; metadata read order 142; direct child getter 160; early result
+// declaration 142; word flag update 244; reciprocal default first 142; cache slot/early
+// flags/both/cache reference 142; reciprocal input 143; global optimization off 433; frame
+// pointer 314; read-only settings view 142; spawn type at use 254; shared parent datum accessor
+// 246; shared child datum accessor 146; both datum accessors 298; native child ordinal 142;
+// immutable creation inputs 142; reciprocal before child link 143; native cache pointer 142;
+// changed-record predicate 142; actual head field 142; unsigned child handle 142; shared
+// bounded selector 142; word flags 142; word flags with bounded selector 142; child zero-age
+// before enable 142; cache mask field/compare 142/142; existing cache evaluator/native receiver
+// 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime
+// field 142; mask/lifetime fields 142; common pointer/flags/both stores 159/140/158; conditional
+// mask 282; immutable allocated handle/settings 142; common current-record stores and combined
+// immutable bindings 158; common flags with current receiver 158; external parent / allocated
+// record / settings / child references and pairs 142; parent/settings/both metadata fields,
+// first/last/both list fields, metadata with list fields, metadata with cache slot
+// 161/160/167/142/142/142/167/167; declared sample array/loop 142/435; immutable
+// record/spawn/both 142/142/142; child identity order 142; earlier enable 142; earlier age 143.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)
@@ -126,13 +122,12 @@ void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 		local_1->field_18 = (word)real_truncate(local_9 * 65535.f);
 		function_248076(&g_4e7408->seed, local_9);
 		local_1->field_1a = (word)real_truncate(local_9 * 65535.f);
-		local_1->field_10 = arg_2->unknown04;
 		local_1->field_38 = function_x82e52f(&g_4e7408->seed, 0, 0);
-		if (arg_0->field_50 != local_1)
+		local_1->field_10 = arg_2->unknown04;
+		if (local_1 != arg_0->field_50)
 		{
-			dword flags = arg_0->field_44 & ~0xf80f;
 			arg_0->field_50 = local_1;
-			arg_0->field_44 = flags;
+			arg_0->field_44 &= ~0xf80f;
 		}
 		function_173ba0(~arg_0->field_44 & 0xf80f, arg_0->field_48, arg_0->field_4c, arg_0->field_50, arg_0->field_00);
 		arg_0->field_44 |= 0xf80f;
@@ -142,12 +137,9 @@ void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 		c_248228 *local_4 = (c_248228 *)function_137bd0(local_2->tag_index);
 		for (long local_5 = 0; local_5 < local_4->function_24822e(); ++local_5)
 		{
-			long effect_index = arg_2->effect_index;
-			long tag_index = local_2->tag_index;
-			s_effect_particle_system_definition *child_settings = local_4->function_24822f((word)local_5);
-			long local_6 = function_173fd0(child_settings, effect_index,
-				tag_index, (short)local_5, NONE);
-			local_4 = (c_248228 *)function_137bd0(local_2->tag_index);
+			long local_6 = function_173fd0(local_4->function_24822f((word)local_5), arg_2->effect_index,
+				local_2->tag_index, (short)local_5, NONE);
+			local_4 = (c_248228 *)particle_object_for_tag(local_2->tag_index);
 			if (local_6 != NONE)
 			{
 				s_particle_system_datum *local_7 = &((s_particle_system_datum *)g_510c74->data)[local_6 & 0xffff];

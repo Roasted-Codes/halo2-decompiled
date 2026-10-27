@@ -678,6 +678,12 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
 struct s_16760c_render_model;
 bool __stdcall function_bab40(long object_index, long name, real *value);
 
+// score 61 (was 61): frame 0x2c against retail's 0x38. Retail keeps the value at 0x0, the
+// conversion temporary at 0x4 (not shared with the animation id copy at 0x8), 8 untouched
+// 8-aligned bytes at 0xc, the index in a 2-byte home at 0x14 (word stores) and the channel at
+// 0x18. Round 54: float fmod overload 60 (the x87 chain matches; below threshold); with the
+// animation id at function scope 60; counted for loop with the graph fetched in the condition
+// 169; value at function scope 60; double fmod result 60; named double time product 61.
 // @retail 0xbd970 standard
 void __stdcall function_bd970(long object_index, s_16760c_render_model *render_model, s_animation_state *state, long node_mask, long node_count, byte *orientations)
 {
@@ -1090,6 +1096,7 @@ struct s_bit_vector
 };
 void function_0bfe80(dword *mask);
 void function_0bfed0(long node_count, dword *mask);
+void function_0bfe20(dword *flags, long bit, bool value);
 struct s_index_triple;
 bool function_0b6780(s_index_triple const *triple);
 
@@ -1099,6 +1106,15 @@ void __stdcall function_1421f0(transform4x3f *out, rigid_transform_scaled const 
 bool function_a98b0(long index, vector3f *position);
 bool function_a9940(long index, vector3f *up, vector3f *forward);
 
+// score 239 (was 271): retail is 11 bytes longer. Left: retail rematerialises the sample-mask
+// address after 0xbfed0, keeps the component in EDI (table base in EBP), tests the node count
+// for > 0 before the node loop (no loop-head pad), and re-reads the object table's data pointer
+// for the parent in the no-render-model branch. Round 54: the existing flag setter 0xbfe20
+// called (retail's call) 305 positional / closer aligned; 0xbfe80/0xbfed0 inline with separate
+// noinline declarations 304; model lookup without the null test 363; component flag read as a
+// word 239 kept (all four together); 0xa9940's outputs in retail's order 239 kept; sample mask
+// assigned between the mask calls 251; sample mask assigned first and passed to the copies 215
+// (new frame slot shifts the whole frame; rejected); component address spellings 239/239.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {
@@ -1114,7 +1130,7 @@ void __stdcall function_bd090(long object_index)
     dword mask[8];
     memset(mask, 0, ((node_count + 31) >> 5) * sizeof(dword));
     long component_index = *(long *)(object + 0xb4);
-    if (component_index != NONE && (bool)(((dword)object[0xc0] >> 6) & 1))
+    if (component_index != NONE && (bool)((*(word *)(object + 0xc0) >> 6) & 1))
     {
         byte *component = g_51e9b8->data + (component_index & 0xffff) * 0xa0;
         real amount = ((1 << definition[0]) & 1) ? function_e1670(object_index) : 0.0f;
@@ -1131,8 +1147,13 @@ void __stdcall function_bd090(long object_index)
         stored = false;
     }
     long model_index = *(long *)(definition + 0x38);
-    byte *model = model_index == NONE ? 0 : tags[model_index & 0xffff].bytes;
-    long render_index = model ? *(long *)(model + 4) : NONE;
+    byte *model = 0;
+    long render_index = NONE;
+    if (model_index != NONE)
+    {
+        model = tags[model_index & 0xffff].bytes;
+        render_index = *(long *)(model + 4);
+    }
     if (render_index != NONE)
     {
         byte *render_model = tags[render_index & 0xffff].bytes;
@@ -1166,8 +1187,7 @@ void __stdcall function_bd090(long object_index)
                     }
                     function_bdb60(object_index, (s_16760c_render_model *)render_model, state,
                         (long)sample_mask, node_count, (byte *)orientations);
-                    if (sample_mask) *(dword *)(object + 4) |= 0x40000000;
-                    else *(dword *)(object + 4) &= ~0x40000000;
+                    function_0bfe20((dword *)(object + 4), 30, sample_mask != 0);
                     if (*(long *)((byte *)state + 0x68) != NONE && function_0b6780((s_index_triple const *)state))
                         root_absolute = (bool)((*(byte *)((byte *)state->channels[0].function_1c6440() + 0x16) >> 1) & 1);
                 }
@@ -1188,7 +1208,8 @@ void __stdcall function_bd090(long object_index)
                     point3f position_result;
                     if (function_a98b0(object_index, (vector3f *)&position_result)) position = position_result;
                     vector3f forward_result, up_result;
-                    if (function_a9940(object_index, &up_result, &forward_result))
+                    // 0xa9940's first output vector goes to the one read from +0x70
+                    if (function_a9940(object_index, &forward_result, &up_result))
                     {
                         forward = forward_result;
                         up = up_result;

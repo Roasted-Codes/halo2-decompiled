@@ -694,7 +694,7 @@ done:
 	return result;
 }
 
-// score 113 (was 128): the details cursor is entry+0x1f8 (retail entry+0x10c), so every field
+// score 113 (was 113): the details cursor is entry+0x1f8 (retail entry+0x10c), so every field
 // offset differs, and the kind/count homes differ. Cursor taken from the results before the
 // end pointer gave retail's results reuse after the compare (128 -> 113). Round 52:
 // single-exit compare 128; typed details block 128; separate details cursor 154, with the typed
@@ -720,6 +720,9 @@ done:
 // pointer with signed difference/range step/both 128/128/128;
 // pointer with full results lifetime 182; direct difference/range step 213/213.
 // Original results observation and details/kind/count homes remain.
+// Round 54: score/distance/bounded as the struct's named entry fields 204; details pointer
+// declared before the loop 113; details inputs read entry-relative 113; details pointer as
+// the named field's address 113; details pointer as a long array with indices 113.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {
