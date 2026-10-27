@@ -1159,7 +1159,7 @@ bool __stdcall function_16a8e0(long flags, point3f const *point, real radius, lo
 void function_11bed0(s_location *location, point3f const *point);
 point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *point, point3f *out);
 
-// score 72 (was 231): the second vector's rotation products come out in another canonical order than
+// score 70 (was 231): the second vector's rotation products come out in another canonical order than
 // retail's (one product of the first too); the tail is BLOCKED-BY 0xba300 (retail passes the object in
 // ecx and the location in eax), which shifts the last block by one instruction. Round 141: the
 // partition as the global itself, the rotations through matrix_transform_vector, the node matrix through
