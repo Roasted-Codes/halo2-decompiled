@@ -101,6 +101,9 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 // Round 235: Real-rounded trigonometric results in double storage: sine/cosine/both
 // 465/654/764; with native double angle 448/451/576; both results with scalar axis
 // inputs 783, and with angle 449. Original real storage, helper interface and body restored.
+// Round 237: Parallel diagonal remainders with sine/complement sharing
+// 410/443/573/518; parallel diagonal cosine products with the same sharing
+// 410/443/573/518. Original helper expressions restored.
 // @retail 0x224fd0
 void __stdcall function_224fd0(s_draw_mesh_seed const *seed, s_draw_value_cache *values,
 	point3f const *position, vector3f const *direction, real scale, color4f const *color,

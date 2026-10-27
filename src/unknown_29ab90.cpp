@@ -91,6 +91,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Native coordinate-array magnitude/normalizer/both/scale/all interfaces 428 each;
 // array normalizer with planar transfers 447; array normalizer plus planar names 428;
 // both arrays, native transfers and planar names 447.
+// Round 237: Published query-output lexical groups (Boolean pair, speed/turn limits,
+// query vector), independently and combined 428/428/428/428/428/428/428;
+// reversed independent output declarations 428. Original output homes restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
