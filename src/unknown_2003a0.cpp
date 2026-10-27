@@ -2567,13 +2567,15 @@ short function_290cd0(short arg_0, long arg_1, long arg_2, short *arg_3, short *
 bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
-// score 152 (was 152): Frame 0x1c agrees; task zeroing/retest and iterator head remain.
+// score 152 (was 152): Frame 0x1c agrees; task zeroing/retest, predicate load and iterator head remain.
 // Earlier: frame 0x1c agrees; task zeroing/retest and iterator head remain; optional producer scope, delay scope, both scopes, native trigger entry, signed entry index, threshold selection, iterator name and native entry with producer scopes each 152.
 // frame 0x1c agrees; task zeroing/retest, optional-output width and iterator head differ.
 // Test-produced task 152; short output 152; wide task 154; both widths 154; direct inputs
 // on test-produced task 152; short trigger count 152; wide threshold 152; pending store first 152.
 // Complete native task record with signed/unsigned task and short/long optional output 152 each;
 // those four forms with trigger-predicate parity 152 each (574 bytes).
+// Round 146: inline selector/predicate/task-apply/event helpers 152 each; selector-
+// predicate/selector-apply/predicate-apply/all-five/actor-options contracts 152 each.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
@@ -2916,7 +2918,7 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
-// score 351 (was 383): Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
+// score 351 (was 351): Frame 0x138 versus 0x134; placement/definition registers and final chain homes remain.
 // Earlier: frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
 // Direct low-word index 387; other direct parameters 387; all direct reads 387;
 // workspace role names 387; one shared native request 399. Pool-first lookup
@@ -2936,6 +2938,8 @@ void function_2011f0(long arg_0);
 // Consistent squad-root displacement 358; with scenario/category/both observations 351/357/357;
 // negative reuse state on those four graphs 358/351/357/357;
 // scenario graph with early displacement/short placement/word squad/both inputs 351 each.
+// Round 146: native group/entry/scalar masks/both records/group-masks/entry-masks/all/all-
+// unsigned-displacement 351 each.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
