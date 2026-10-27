@@ -2163,7 +2163,7 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 296 (was 322): frame 0x6a4 agrees; visibility-row scheduling, marking and selection/cleanup differ.
+// score 296 (was 296): frame 0x6a4 agrees; visibility-row scheduling, marking and selection/cleanup differ.
 // Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
@@ -2186,6 +2186,12 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 373: shared marking-chain walk ordinary/inline/forced 296/296/296;
 // entry chain workspace with the same boundaries 296/296/296; uniform structure
 // observations with ordinary/forced walk 331/331. Ordinary shared walk kept.
+// Round 144: existing complete actor/location/both views 296f each; cluster field
+// observations alone or with actor/location/both 296f each; both views and readonly
+// visibility row 296f. All restored; early reset-word and later allocation remain.
+// Round 183: Backward visibility source/destination/both pointer induction 331/322/358;
+// four default-position permutations 296/296/296/296; both pointers with default first 358.
+// Original merge and dispatch restored; reset-word SI and later cursor/selection homes remain.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

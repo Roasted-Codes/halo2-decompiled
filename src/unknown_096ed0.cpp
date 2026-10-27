@@ -54,6 +54,8 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Enabled/nonempty count initialization 230/219; narrow pending/active array names
 // 217/217; pending-before-ready/active-before-waiting names 217/217; enabled count
 // with pending-before-ready 230; nonempty count with active-before-waiting 219.
+// Callback priority/size names before handle homes, pending/active combinations
+// and after-handle query names: 217 each; receiver and callback homes remain.
 // Round 234: Native state dispatch, either case order, with original pointers,
 // entry reference, peer reference and both references: 244 each (816 bytes).
 // Original guarded callback/output graph and executable body restored.
@@ -822,6 +824,8 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // declarations 154 each; range-first byte/native 216/205, default-first 228/221, terminal-produced
 // count 210/208; range/default native unsigned count 205/221. Original endpoint and full body
 // restored.
+// Round 151: Inline reader byte/native 154/177; explicit descriptor/payload copies with each 154/177;
+// separate out-of-line reader counterparts 154/177/154/177. Reader contracts and all copies restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {

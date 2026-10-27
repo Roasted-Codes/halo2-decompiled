@@ -1630,6 +1630,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Round 137: SSE flag 755 (file gate failed);
 // inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
 // Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.
+// Round 343: Native request identity via library/aggregate copy 747/747; with real descriptor count 792/792;
+// terminal candidate reuse 742/742; count plus terminal reuse 836/836. All restored; original completion failure and word group remain.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

@@ -568,6 +568,8 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // direct effect/impact flag masks 345; final native flag mask 300.
 // Round 214: direct selected cluster 312; unsigned category mask 293; nested tag/audibility guards 293; conditional final flag 297; force-inline header lookup 293.
 // External datum reference 293; late three-query handle 317; marker position setter 303; complete kind if/else chain 322; readonly object properties 293 (fast); all restored.
+// Round 213: object-index default result/complete arms/nonobject return/object return
+// 325/293/324/293; with direct late tag observation 345/323/343/323. Original helper and body restored.
 // Staged failure bool/byte/short/long 323/323/327/327; staged success 265/265/325/322 (match-only, restored);
 // complete conditional failure/success 309/309/307/308/293/293/293/293. All restored.
 // @retail 0x18cbc0
