@@ -128,6 +128,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Round 227: Private slot search sentinel-plus-one start 193; short return 196; short input 199; both
 // short 199; simple start with short return/input/both 193/193/193 (three-point gains dropped);
 // terminating candidate scan 230. Existing helper restored.
+// Round 194: Shared fade-result store, pointer/direct fade with word slot 212/212; long slot 263/263; merged
+// fade-in admission with word slot 259/259, long slot 311/311. Original body restored.
 // Round 167: Native unsigned-word private search input/return/both 199/196/199;
 // return/result 250, input/return/result 254, input/ordinal 263,
 // input/return/ordinal 263, all native word 263. All restored; delayed EBP

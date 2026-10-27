@@ -702,6 +702,8 @@ long function_1469f0(real seconds);
 // Round 167: Cooldown-first selected-case orders 41023/41203/41302/42013/42103/
 // 42301/43012/43102 score 279/283/279/277/282/290/280/278 fast (control 280, full 279).
 // Best gains at most three; original 40123 order restored; inherited score headers merged.
+// Round 194: Complementary admission bool/byte/short/long 280/280/286/274; native rounded/timed/both countdown
+// stores 279/284/284, both with complementary admission 284. Fast control 280; original body restored.
 // Round 375: Shared active-state 2/3 actions with word/short/long/unsigned state
 // 316/316/325/325; shared 1/2/3 actions 341/341/350/350 (fast control 280).
 // Frame eight versus twelve; shorter bodies and initial slot spill remain; restored.

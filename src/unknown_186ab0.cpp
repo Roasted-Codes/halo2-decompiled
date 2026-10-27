@@ -190,6 +190,8 @@ void player_action_initialize(s_player_action *arg_0);
 // Native orientation vector 135; coherent unit source 185; source/vector 185; existing state query 304;
 // query/source 310, query/vector 304, all three 310; complete native orientation value 220.
 // Original fields, pointer observations and query guard restored.
+// Complete toggle result in bool/byte, union invalidation, early publication 181/184;
+// split masks 182/183; publication after action update 143/184, split masks 185/184.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
