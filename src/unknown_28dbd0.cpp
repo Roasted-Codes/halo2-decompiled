@@ -73,54 +73,29 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 	return local_1;
 }
 
-// score 186 (was 186): Frame 0x11c versus 0x118 and rotation scalar homes remain.
-// Frame 0x11c versus 0x118; request home is four bytes late and rotation scalar homes differ.
-// 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
-// Frame 0x11c versus retail 0x118 and rotation cross scalar homes remain.
-// Earlier: 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
-// frame 0x11c versus 0x118 and rotation cross homes remain;
-// cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
-// Frame 0x11c versus 0x118; rotation cross scalar homes remain.
-// frame 0x11c versus 0x118 and rotation cross homes;
-// named request word 213; complete creation-stage scope 213; random arm first
-// 284; shared rotation output setter 226; size optimization 563.
-// rotation axis input first 213; rotation output first 213; native rotation input copy 250; cosine complement
-// lifetime 226; separate creation result 319; creation value initialization 353; frame pointer 304; float
-// consistency 512.
-// Shared-cross scalar captures 226; axis value 293; post-trig alignment 234;
-// launch-speed name 213; tilt name 213; jitter base value 231;
-// two offset component loops 479; transform memcpy 213.
-// frame 0x11c versus 0x118 and rotation scalar homes remain;
-// in-place input scale 260; in-place cross scale 229; both scales 232;
-// ordinary rotation inline 213; forced shared cross 213; output-pointer result 213;
-// result plus forced cross 213; result plus both scales 232.
-// frame 0x11c/0x118 and rotation cross homes remain; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj 223/195/222/237/216; double angle 216; output-angle-axis helper 213 (fast).
-// Earlier 213 (was 213): frame 0x11c versus 0x118 and rotation scalar homes remain;
-// Earlier 213 (was 213): frame 0x11c/0x118 and rotation cross homes remain; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj 223/195/222/237/216; double angle 216; output-angle-axis helper 213 (fast).
-// Earlier at 213 (from 213): frame 0x11c versus 0x118 and rotation scalar homes remain;
-// Earlier at 213 (from 213): frame 0x11c/0x118 and rotation cross homes remain; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj 223/195/222/237/216; double angle 216; output-angle-axis helper 213 (fast).
-// Earlier at 213 (was 213): frame 0x11c versus 0x118 and rotation scalar homes remain;
-// Earlier at 213 (was 213): frame 0x11c/0x118 and rotation cross homes remain; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj 223/195/222/237/216; double angle 216; output-angle-axis helper 213 (fast).
-// rotation cross spills and the extra frame dword remain;
-// sine-weighted cross products 226; cosine-plus-projection sums 226;
-// axis projection products 226; cosine products 226; rotation-helper names 213;
-// cross/projection lexical homes 213; sine/cosine products 227; launch-offset products 213.
-// Consumed-axis projection 222; with cross scale 222; with direction scale 200;
-// all three shared scales 186 plain; corresponding native loops 230/229/231/235.
-// Direct named pooled flag field 186 plain; the consumed axis is dead after its sole call.
-// Round 225: Native vector result pointer/pointer, value/pointer, pointer/value, value/value,
-// reference/pointer, pointer/reference, reference/reference 296/372/325/409/296/296/296; distinct input/output
-// 296. Frames 12c/134; original restored.
-// Round 227: Distinct shared-scale cosine/projection/cross outputs 241/224/233; paired outputs
-// 246/252/225; all three 246; all three with native component output loop 246. Original helper, body
-// and includes restored.
-// Complete axis+direction inputs: unchanged terms 324; cosine/projection/turn
-// terms 305/319/324; cosine+projection 338; cosine+turn 303; projection+turn 312;
-// all weighted terms 342. Original helper and request restored.
-// Round 330: Paired double trig 244; double projection 244; both 244; double launch speed 244; launch/trig
-// 321; launch/projection 316; all three 322; existing double velocity scaler 245. Exact-match-only forms
-// restored; adjacent helpers retained.
-// Round 173: Consumed-axis shared-scale orders projection/direction/cross 190,
+// score 186 (was 186): frame 0x11c against retail's 0x118; the request home is four bytes late and the
+// rotation's cross-term homes differ (retail spills two scalar cross terms, sine and cosine). Forms tried:
+// cross before trig 234; alignment before trig 234; shared velocity scale 213; plain rotation component loop
+// 234; global optimization off 549; named request word 213; complete creation-stage scope 213; random arm first
+// 284; shared rotation output setter 226; size optimization 563; rotation axis input first 213; rotation output
+// first 213; native rotation input copy 250; cosine complement lifetime 226; separate creation result 319;
+// creation value initialization 353; frame pointer 304; float consistency 512; shared-cross scalar captures 226;
+// axis value 293; post-trig alignment 234; launch-speed name 213; tilt name 213; jitter base value 231; two
+// offset component loops 479; transform memcpy 213; in-place input scale 260; in-place cross scale 229; both
+// scales 232; ordinary rotation inline 213; forced shared cross 213; output-pointer result 213; result plus
+// forced cross 213; result plus both scales 232; completed scalar outputs 226; output orders jik/kij/jki/kji/ikj
+// 223/195/222/237/216; double angle 216; output-angle-axis helper 213; sine-weighted cross products 226;
+// cosine-plus-projection sums 226; axis projection products 226; cosine products 226; rotation-helper names
+// 213; cross/projection lexical homes 213; sine/cosine products 227; launch-offset products 213; consumed-axis
+// projection 222, with cross scale 222, with direction scale 200; all three shared scales 186 (kept);
+// corresponding native loops 230/229/231/235; direct named pooled flag field 186; native vector result
+// pointer/pointer, value/pointer, pointer/value, value/value, reference/pointer, pointer/reference,
+// reference/reference 296/372/325/409/296/296/296, distinct input/output 296 (frames 0x12c/0x134); distinct
+// shared-scale cosine/projection/cross outputs 241/224/233, paired 246/252/225, all three 246, with a native
+// component output loop 246; complete axis+direction inputs 324, cosine/projection/turn terms 305/319/324,
+// cosine+projection 338, cosine+turn 303, projection+turn 312, all weighted terms 342; paired double trig 244;
+// double projection 244; both 244; double launch speed 244; launch/trig 321; launch/projection 316; all three
+// 322; existing double velocity scaler 245; consumed-axis shared-scale orders projection/direction/cross 190,
 // cross/projection/direction 227, cross/direction/projection 236, direction/projection/cross 248,
 // direction/cross/projection 252; early cross 234; early alignment 235; cosine first 227. Frame
 // 0x11c versus 0x118 and rotation cross homes remain; original helper and all calls restored.
@@ -130,6 +105,19 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 145: Cross into consumed axis with preserved native input and six shared-scale
 // orders 321/318/300/302/305/305; cross into direction with preserved input 287/282.
 // Alias-safe distinct cross inputs retained in every trial; original helper restored.
+// Round 177: Consumed-axis complete output by assignment/aggregate 287/287; native returned output with
+// pointer/reference axis 297/297; complete scalar/cross role names 186/186; early cross storage
+// with original/named scalars 186/186. Frame 0x11c versus 0x118 persists; all original code restored.
+// Round 243: Delayed-sine schedules 187/187/180/212/209/212/209; output loop 230; scalar
+// trig contracts 227/187/224/191. The 180 form fixes frame only, gains six and is
+// rejected; 209 fixes frame and request homes. Original helper and body restored.
+// direction/cross/projection 252; early cross 234; early alignment 235; cosine first 227; consumed-axis
+// reference axis/direction/both 186/186/186; axis value with pointer/reference direction 308/308; double trig
+// input with pointer/axis-reference/both-reference inputs 188/188/188.
+// Round 57: retail's rotation (read from its listing) is projection first, then two spilled cross terms and
+// outputs `axis * projection + vector * cosine - cross * sine`. Scalar helper forms all give frame 0x114
+// (four bytes short): the 0x194a10 form 234, the 0x2551f0 form 237, cross orders jki 234 (both output orders),
+// ijk 237, kji 234; a cross3f struct with scalar outputs keeps 0x11c, 213 (both output orders).
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

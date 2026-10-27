@@ -1353,6 +1353,9 @@ bool function_1e1de0(long arg_0);
 // body restored. Frame 0x84 agrees; early ESI, return-byte and actor/motion homes remain.
 // Round 147: Library first point/position/location/facing 165 each; both points/first-point-
 // facing/location-facing/all four 165 each in the current default-output graph.
+// Round 151: Coordinated motion/marker inline and separate out-of-line declaration pairs
+// (1,0)/(0,1)/(1,1)/(2,0)/(0,2)/(2,1)/(1,2)/(2,2), all 165/841. Every provider declaration and body
+// restored.
 // Round 240: native character eligibility bool/byte/short/long 269/269/285/299;
 // complementary eligibility at the same widths 287/287/284/298. Original nullable receiver restored.
 // Actor/character/both constant defaults at entry 165/279/280; after clock 165/279/280; both before object lookup 165; actor at entry with character before lookup 165. Original default lifetimes retained.

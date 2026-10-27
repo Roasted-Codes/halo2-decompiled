@@ -1118,7 +1118,10 @@ void function_c0110()
 // read at each use (kept); the same with a pool local 59, through the s_light_ab pointer 80; flags
 // through a ternary, a typed object, a dword view, a pointer to the flags 6/6/6/6; flag test negated 7;
 // object fetched after the flag 8; datum iterator 6; entry declared in the loop 6; a 600 s permuter
-// run (59 tries), none below 6.
+// run (59 tries), none below 6. Round 72: `|=`/`&=` on the object's flags in each arm 68 (the
+// result test is threaded away); the flags read in each arm 58; the iterator declared before the
+// object 6; the flags as `((dword *)object)[1]` 6; the clear arm first 7; `dword flags = 0;`
+// declared before the object 6.
 // @retail 0xc3260
 void __stdcall function_c3260(long light_index, bool clear_object_flag)
 {
@@ -1254,24 +1257,18 @@ void __stdcall function_c0c80(long light_index);
 #define FLAG(bit) (1 << (bit))
 #define SET_FLAG(flags, bit, value) ((value) ? ((flags) |= FLAG(bit)) : ((flags) &= ~FLAG(bit)))
 
-// score 47 (was 47): only the far point's products differ: ours copies the distance and multiplies the
-// last component in place, retail copies each direction component (one instruction more), which shifts
-// the exit. Far point and nudge through point_add_scaled_c35a0 (kept): the nudge reading through position
-// and writing the light's position gives retail's interleaved stores; by hand, in place, or reading the
-// light's position 47; distance declared before direction 47; distance as one ternary 47.
+/* creates the light of a scenario placement: its frame from the placement's
+   rotation, aimed at the placement's target, and its far point; NONE when the
+   pool is full or the light is not wanted */
 // @retail 0xc0520
 long __stdcall function_c0520(long tag_index, long placement_index, bool force,
     s_light_placement_ab *placement)
 {
-    long result_value = 0;
-    long const *placement_index_reference = &placement_index;
-    bool const *force_reference = &force;
-    s_light_placement_ab *const *placement_reference = &placement;
-    byte const *source = (byte const *)*placement_reference;
+    byte const *source = (byte const *)placement;
     byte const *definition = g_4e3b44[tag_index & 0xffff].bytes;
     long result = NONE;
     bool create = true;
-    if ((definition[0] & 1) || (*(short const *)(source + 0x40) == 3 && !*force_reference))
+    if ((definition[0] & 1) || (*(short const *)(source + 0x40) == 3 && !force))
         create = false;
     if (*(long const *)(definition + 0x94) != NONE || create)
     {
@@ -1279,7 +1276,8 @@ long __stdcall function_c0520(long tag_index, long placement_index, bool force,
         if (result != NONE)
         {
             byte *light = g_4e030c->data + (result & 0xffff) * 0x110;
-            *(long *)(light + 8) = *placement_index_reference;
+            real distance = 0.0f;
+            *(long *)(light + 8) = placement_index;
             *(long *)(light + 0x14) = NONE;
             *(long *)(light + 0x4c) = NONE;
             *(short *)(light + 0x54) = NONE;
@@ -1313,16 +1311,13 @@ long __stdcall function_c0520(long tag_index, long placement_index, bool force,
                 direction = matrix.up;
             else
             {
-                if ((short)shape.kind != 0 && forward->k * direction.k +
-                    forward->j * direction.j + forward->i * direction.i < 0.5f)
+                if ((short)shape.kind != 0 && dot_product_c1a80(forward, &direction) < 0.5f)
                     direction = matrix.up;
             }
-            real distance;
             if ((short)shape.kind == 0)
                 distance = shape.sphere.radius_a > shape.sphere.radius_b ? shape.sphere.radius_a : shape.sphere.radius_b;
             else
-                distance = (forward->k * direction.k + forward->j * direction.j +
-                    forward->i * direction.i) * shape.cone.values[4];
+                distance = dot_product_c1a80(forward, &direction) * shape.cone.values[4];
             point_add_scaled_c35a0(position, &direction, distance, (point3f *)(light + 0x90));
             if (!(definition[0] & 9))
             {
@@ -1333,10 +1328,7 @@ long __stdcall function_c0520(long tag_index, long placement_index, bool force,
             *(long *)(light + 0x10c) = NONE;
         }
     }
-    { result_value = result; goto return_exit; }
-
-return_exit:
-    return result_value;
+    return result;
 }
 
 struct s_light_palette_setup_ab

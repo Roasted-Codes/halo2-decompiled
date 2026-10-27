@@ -364,6 +364,12 @@ bool function_26d370(point3f const *point, vector3f const *direction, plane3f co
 real function_30bf0(vector3f *vector);
 
 // score 184 (was 184): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// Round 57: retail's result stores are a spill of a long result (dword store, `mov ax, word` reload at
+// each tail-duplicated exit). Plain long result 241 (result home +0xc); short return type with every
+// declaration 186 (1311 B), with a plain long result 245; volatile short result 179 (aligned listing count
+// worse: 92 against 86), with the short return 186; else-arm secondary before primary 195; the two
+// out-of-range stores as else-if arms 184.
 // the register allocation differs from the first block
 // the register allocation differs from the first block
 // on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
@@ -411,6 +417,9 @@ real function_30bf0(vector3f *vector);
 // Round 145: Vector role names/vector plus plane-fraction names 184/184; mode failure at
 // one result exit with existing/plain result 184/241; settings failure likewise 184/241;
 // plain mode/settings early-result returns 340/350. Original body restored.
+// Round 243: Native point/origin/both/endpoint values 351/363/396/327; point-endpoint
+// 366, origin-endpoint 378; all inputs in either declaration order 432/432. Original body
+// restored.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1623,6 +1632,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Native cursor/selection/all datum handles 684/684/684; existing prop receiver 707;
 // single strength observation 685; all handles with prop/strength/both 707/685/732.
 // Original complete body and all inherited input/helper declarations restored.
+// Round 212: Common notice dispatch with short/word/long/dword selected event 734 each;
+// player admission shared before selection 711 each. Frame 0x7c remains; original calls restored.
 // Round 376: Native transform pointer/value 684/774; all nine row products with
 // raw/pointer/value receivers 684/684/774; direct output with native pointer/value/value-and-
 // products 717/724/724. Calibrated fast; original body restored.

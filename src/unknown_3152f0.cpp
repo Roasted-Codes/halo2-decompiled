@@ -21,6 +21,12 @@ struct lane_a_mass_restore
 // accumulator pointers 44; scales together/by group 38/34; pointer ranges 71;
 // named scalar scale/input/product 14. Field scale pointers/references at entry
 // or by group 6 each; native vector/component fields 6/6; first/second group loop 10/6.
+// three x87 products still load their operands in reverse order.
+// Uniform compound, scale-first and mass-first forms 6; two index loops 14;
+// retained pointers 44; retained scales 38; group scales 34; pointer ranges 71;
+// per-product scale, input and result locals 14.
+// Scalar member/index accessors, their compound and forced forms 6 each;
+// read-only record and record/member form 6 each.
 // @retail 0x315280
 void __cdecl lane_a_scale_masses(void *, lane_a_mass_restore *record)
 {

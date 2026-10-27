@@ -805,6 +805,10 @@ real normalize2d(point2f *v);
 // mask-first search 228; complete requested-byte snapshot 240; snapshot plus force OR 300.
 // Shared validation/query result 172; two-use unit index 172; native origin value 229; result+index 172;
 // result+origin 229; index+origin 229; all 229; complete origin memcpy 229. All restored.
+// Round 245 (fast): Word validity with early query, early query/minimum, post-query first type,
+// and all three initialization changes 169/169/173/174; byte validity with the same four forms
+// 171/171/175/177. Best word forms reach 935 bytes at 169; three-point gain rejected.
+// Original query-byte allocation and protected trajectory convention remain.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -1041,7 +1045,7 @@ done:
 real function_50650(real cosine);
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
 
-// score 137 (was 307): frame and length agree; actor/object roles (EDI/ESI), the hoisted velocity j load,
+// score 137 (was 137): frame 0x1c agrees; two excess bytes, actor/object roles (EDI/ESI), the hoisted velocity j load,
 // the first clamp's x87 order and the epilogue pops' place in the final minimum remain.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following
 // factor 335; frame pointer 399; inline depth one 308 (fast). Scalar velocity 309;
@@ -1062,6 +1066,11 @@ real function_50650(real cosine);
 // float gap with `!(gap > 0)` 128; shared normalize 117 fast, 137 plain (kept); ternary first clamp
 // 304; inverse-first products 312; velocity copy j first 123; facing factor declared first 115;
 // actor offset first 117 (fast; plain base 137).
+// Round 245 (fast control 117): Native indexed actor fields 117; actor/current-object/both accessors
+// at every use 383/383/444; radius at every use 319; all observations 425; native actor plus
+// shared inner minimum 335; all observations plus shared inner minimum 381. Original receivers restored.
+// Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
+// X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1316,7 +1325,7 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
     return 0.0f;
 }
 
-// score 278 (was 298): Frame 0x3c, direction block and result/radius homes agree; the type-0 arm is not
+// score 278 (was 278): Frame 0x3c, direction block and result/radius homes agree; the type-0 arm is not
 // threaded on the volatile side flag, and a plain flag moves facing into EBP (entry record spilled).
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared
 // arccosine 296, late radius 312, frame pointer 401. Ordinary lifetimes: facing value 307; scalar
@@ -1333,6 +1342,7 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // with float magnitudes and per-arm centre 278 (kept); with plain flag 301; result/radius renames 298;
 // trace-hit single exit (goto or nested if) 278, with plain flag 275; negated early return 288;
 // facing reference 302; difference through the point-difference helper 278/275 (plain flag).
+// Round 152: Ordinary origin/side with symmetric lateral/forward x products 285, y products 302, all products 302; complete dot terms 302, with x/y/all products 285/302/302; complete terms with shared trace exit 276 (1175 bytes). Two-point exit gain rejected; original body restored.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)
