@@ -824,7 +824,7 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 294 (was 308): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
+// score 294 (was 294): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
 // clears flag 8 with `and byte ptr [ebp+0xd], 0xfe` and reloads (ours merges the three); retail
 // has no result slot but spills the tinted byte (ours keeps it in BL, the tag object in EDI where
 // retail uses EBX, and the particle/index registers swapped); 0x248750 takes the definition in
@@ -882,6 +882,12 @@ public:
 // Round 183: Five complete fixed-basis column-order permutations 320/320/326/326/320;
 // three default-position permutations 308/308/308. Original cases and copies restored;
 // early result/flag publication, location transport and selective tag expansion remain.
+// Round 139: the flag word through a `word *` local (read, set/clear 0x200, flag8 bitfield clear)
+// gives retail's word store + byte clear 292, and testing 0x20 through the flag5 bitfield then
+// reproduces retail's `mov ax, [ebp+0xc]; test al, 0x20` exactly, but our entry `result = false`
+// store still sits there and every later instruction shifts (352); with the pointer and a value
+// local 292/292; the bitfield test on the value form 294; result declared at the end or direct
+// returns on top of the exact flag form 345/351 (frame 0x5c).
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

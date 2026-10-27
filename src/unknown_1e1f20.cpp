@@ -185,6 +185,7 @@ void __stdcall function_1e1250(long actor_index)
 }
 
 void __stdcall function_1e1a00(long actor_index, long value);
+long function_1e4990(long character_index);
 
 // @retail 0x1e0d50
 void function_1e0d50(long actor_index, long unit_index)
@@ -675,6 +676,14 @@ void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
 // score 282 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// Round 139: retail keeps the actor pointer in EBP from the entry (slot loop, current store, 0xa/0x7c
+// tests, prop-list clear, iterator compare, 0x3f4/7/0x1c/0x18/0x54 reads) and re-derives it from the
+// pool and the saved offset only in the memory-slot body, the prop walk start, the inlined 0x1e1250,
+// the tag lookup and the tail. An actor local at those first uses with the prop walk through the
+// existing 0x26be00/0x26be30 gives retail's length (980) and 270, but mixes the local with direct
+// re-reads (kept only on a match); the local everywhere 343 (904 bytes, 127 sequence-aligned
+// differences against 192); local without the walk helpers 316/289; cached memory test 300; tail
+// through the local 323. The tag walk now calls the existing 0x1e4990 (identical code).
 // Earlier: Frame 0x20, early actor offset and cleanup/scan homes remain; slot element
 // 290; scan for-header 338; repeated input predicate 305; retained reference pool 290; word slot
 // Frame 0x20 agrees; early actor displacement, cleanup countdown and scan homes remain.
@@ -790,18 +799,7 @@ void __stdcall function_1e1a00(long actor_index, long value)
 		}
 		function_1e1250(actor_index);
 	}
-	long tag_index = actor_get(actor_index)->unknown054;
-	byte *definition = NULL;
-	while (tag_index != NONE)
-	{
-		byte *tag = g_4e3b44[tag_index & 0xffff].bytes;
-		if (*(long *)(tag + 0x34) > 0)
-		{
-			definition = *(byte **)(tag + 0x38);
-			break;
-		}
-		tag_index = *(long *)(tag + 8);
-	}
+	byte *definition = (byte *)function_1e4990(actor_get(actor_index)->unknown054);
 	if (definition && ((*(dword *)definition >> 3) & 1))
 	{
 		byte *counts = (byte *)g_5047f4;
