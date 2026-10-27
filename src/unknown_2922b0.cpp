@@ -148,6 +148,12 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Round 146: Real rotation angle-first/output-first, point distance-first/output-first 629/629/629/629;
 // cross output-first/all output-first/cross-output with rotation-angle/point-distance with rotation-
 // angle 629/629/629/629. Original producer formals and in-place snapshots restored.
+// Round 78 (aligned rows in brackets, baseline 482): FLT_MAX minimum declared at the top 635 plain [478];
+// length element read at each product 668; early `return true` when the range is not positive 685 [443]
+// (retail's prologue: no early EBX push, the flag stored straight to memory), with FLT_MAX at the top
+// 680 [439]; nested body ending `return local_0;` then `return true;` 679 [462] (retail's early-exit
+// layout and `mov al, 1`). Every stack home is then 4-12 bytes off retail's (flag 0xf, minimum 0x10,
+// hit flags 0x14, input copy 0x38 in retail's frame).
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)
