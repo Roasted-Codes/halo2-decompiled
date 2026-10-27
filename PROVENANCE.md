@@ -19,7 +19,7 @@ from leaked or internal material.
   (`tools/functions.py`), the build and the byte-for-byte checker
   (`tools/check.py`).
 - Publicly released documentation, and source code published by its authors
-  under a licence that permits reuse.
+  under a licence compatible with GPL-3.0-or-later.
 - Independent research by others that was published openly, with credit. An
   example is BirchWoodGod/halo2-decomp's published analysis (see the README's
   Credits section); each lead taken from it was verified against the retail
