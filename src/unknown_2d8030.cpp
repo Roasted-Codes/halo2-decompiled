@@ -64,7 +64,12 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 
 // @retail 0x2d84e0 deleting error_handler_2d8030
 
-// score 39 (was 39): Extra class-table store and first release argument staging remain.
+// score 39 (was 39): Extra vtable store and release arguments remain.
+// Signed and unsigned capacity locals, separately and together: eight forms 39.
+// extra table store and first release register staging differ.
+// Implicit destruction and earlier member destructor forms 89, 39, 89, 39, 89, 39, 89;
+// implicit with both cleanups later 89. Implicit forms lose the deleting destructor; explicit forms preserve it.
+// Extra class-table store and first release argument staging remain.
 // Earlier suppressed table store 30; owned storage/both storage/element byte size/
 // named byte size 0, but deleting destructor missing; capacity/signed ownership/
 // unowned return 30; storage before guard 3. All rejected. Separate noinline/inline/

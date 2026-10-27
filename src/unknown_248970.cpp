@@ -119,6 +119,13 @@ public:
 // 266/265/262/266/266/264/263/266; exact-only field snapshots restored. Frame/input homes remain.
 // Native unsigned head/tail/traversal handle domains, seven combinations, 215 each;
 // all three with unsigned produced handle 215. Original fields/carriers restored.
+// Round 246: age/flag-word/both library fills 217/215/217;
+// adjacent-link fills alone/with age/flags/both 219/229/219/229;
+// all fields with individual link fills 217. Original scalar initialization restored.
+// Round 191: Child receiver shared through initialization/link/update 226; link/update
+// only 274; single post-allocation receiver 234; early new-child link clear 275.
+// Those four with closed coordinate-double phase 226/274/234/275.
+// Original acquisitions, double lifetimes and executable body restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

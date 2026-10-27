@@ -1005,7 +1005,14 @@ struct s_game_engine_globals_connections_view
 };
 
 /* builds a player's row of the scoreboard at a position */
-// score 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
+// score 170 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
+// retail tests the score/time widths as dwords but adds them as words, name width (bx) first.
+// Round 75: short widths (casts dropped) 170 (kept: the column sums add the name width first as
+// retail, the width tests become word compares); parenthesised/(short)-summed time left 184/184;
+// connection sum reordered 184; summed time and connection lefts 184; short name width only 173,
+// with uncast long sums 173; word widths 170; short score/time with long name 292; long score
+// with short time/name 180.
+// Earlier 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
 // default-zero byte icon 230, native integer 184; parsed-name scope 184;
 // separate connection rectangle 206; both name buffers scoped 184.
 // whole-row reference 184; column reference 184.
@@ -1076,9 +1083,9 @@ void game_engine_player_row_build(short const *position, real alpha, long player
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
 	s_game_engine_player_row *row, s_player_row_columns const *columns)
 {
-	long score_width;
-	long time_width;
-	long name_width;
+	short score_width;
+	short time_width;
+	short name_width;
 	long quality;
 	color4f local_e2f2b4;
 	color4f field_24;
@@ -1144,16 +1151,16 @@ void game_engine_player_row_build(short const *position, real alpha, long player
 	unicode_string_copy(name_text, parsed_name, 0x100);
 	bounds.left = position[0] + 0x2d;
 	bounds.top = position[1];
-	bounds.right = bounds.left + (short)name_width;
+	bounds.right = bounds.left + name_width;
 	bounds.bottom = bounds.top + 0x14;
 	row->name.initialize(&bounds, &local_e2f2b4, &field_24, name_text, 0x14, false);
 
 	if (score_width && !hide_place)
 	{
 		text_buffer_format(&buffer, (const word *)L"%d", score);
-		bounds.left = position[0] + (short)name_width + 0x2d;
+		bounds.left = position[0] + name_width + 0x2d;
 		bounds.top = position[1];
-		bounds.right = bounds.left + (short)score_width;
+		bounds.right = bounds.left + score_width;
 		bounds.bottom = bounds.top + 0x14;
 		row->score.initialize(&bounds, &local_e2f2b4, &field_24, buffer.text, 6, true);
 	}
@@ -1165,9 +1172,9 @@ void game_engine_player_row_build(short const *position, real alpha, long player
 	if (time_width && !hide_place)
 	{
 		function_159130(seconds, time_text);
-		bounds.left = position[0] + (short)name_width + (short)score_width + 0x2d;
+		bounds.left = position[0] + name_width + score_width + 0x2d;
 		bounds.top = position[1];
-		bounds.right = bounds.left + (short)time_width;
+		bounds.right = bounds.left + time_width;
 		bounds.bottom = bounds.top + 0x14;
 		row->time.initialize(&bounds, &local_e2f2b4, &field_24, time_text, 6, true);
 	}
@@ -1185,7 +1192,7 @@ void game_engine_player_row_build(short const *position, real alpha, long player
 		quality = 1;
 		if (function_68a90(entry, &quality))
 		{
-			bounds.left = position[0] + (short)time_width + (short)name_width + (short)score_width + 0x2d;
+			bounds.left = position[0] + time_width + name_width + score_width + 0x2d;
 			bounds.top = position[1];
 			bounds.right = bounds.left + 7;
 			bounds.bottom = bounds.top + 0x14;
@@ -1270,7 +1277,7 @@ PRIVATE inline long score_string_list_1608e0()
 	}
 	return result;
 }
-// score 766 (was 789): Frame 0x798 versus 0x79c; viewer/coordinate/scalar homes remain.
+// score 766 (was 766): Frame 0x798 versus 0x79c; viewer/coordinate/scalar homes remain.
 // Earlier Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
 // Earlier Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
 // player register and scalar homes; scalar names 817;
@@ -1309,6 +1316,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Boolean header with byte rows 780. Shared fade/row-alpha/both: opening 789 each, byte graph
 // 780 each, direct-query graph 766 each; native icon byte-player/byte-rows/direct-query
 // 791/791/777; repeated team-byte snapshot on direct queries 766 (frame 0x7a0).
+// Round 190: Existing language/team-label/caption inline declarations singly, in three pairs and
+// together 766 each; all three separate noinline declarations 766. All original declarations,
+// workspaces and body restored; frame 0x798/0x79c and viewer/scalar homes remain.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

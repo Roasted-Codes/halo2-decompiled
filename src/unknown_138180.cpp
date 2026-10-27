@@ -121,6 +121,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // each with native uniqueness 171. All restored; native uniqueness still first differs at +0x11b.
 // Round 343: One machine ordinal across initial validation/membership: byte/long/short found 157/183/184;
 // complete mask fields 157; long/short uniqueness 171/183; long found+uniqueness 190; long found+fields 183. All restored.
+// Round 201: Leaf/validated case orders 41253/51243/14253/15243/12435/12534 each 157; 24153 177; 35142
+// 215. Original case order, frame and result graph restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

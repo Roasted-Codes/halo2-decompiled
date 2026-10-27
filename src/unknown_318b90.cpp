@@ -9,6 +9,62 @@ class_318b90::class_318b90(void *owner)
 	: owner(owner)
 {
 }
+
+#include "lane_b_constraint_leaves.h"
+#include "lane_a_contact_manager.h"
+
+class hkBool
+{
+public:
+	hkBool() {}
+	char m_bool;
+};
+
+class c_1d1261
+{
+public:
+	char unknown0[0x12c];
+	char field_12c;
+	hkBool function_30ca30(void *entry);
+};
+
+class class_318e60 : public reference_base_318970
+{
+public:
+	c_1d1261 *world;
+	long unknownc;
+	lane_b_contact_constraint_prefix constraint;
+	void remove(unsigned short id);
+};
+
+// @retail 0x318e60
+void class_318e60::remove(unsigned short id)
+{
+	listener_world_315d20 *first = constraint.first_body;
+	listener_world_315d20 *second = constraint.second_body;
+	event_315d20 event;
+	lane_a_contact_removed_payload payload;
+	payload.id = id;
+	payload.manager = this;
+	payload.a = first;
+	payload.b = second;
+	memcpy(event.unknown0, &payload.id, sizeof(payload.id));
+	memcpy(event.unknown0 + 4, &payload.manager, 12);
+	function_3183b0((listener_world_318320 *)world, &event);
+	if (first->listeners_60.size)
+		function_315d90(first, &event);
+	if (second->listeners_60.size)
+		function_315d90(second, &event);
+	constraint.remove(id);
+	if (constraint.property_count == 0)
+	{
+		long previous_flag = world->field_12c;
+		world->field_12c = 0;
+		world->function_30ca30(&constraint);
+		world->field_12c = previous_flag;
+	}
+}
+
 // score 32 (was 32): extra word store and input loads after allocation;
 // first local 33, second 34, both 18; owner local 31, owner and first 30,
 // owner and second 31, all three 28. The direct expression is retained.

@@ -768,6 +768,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Angle/pin/both input-formal reuse 176/257/257; each with a shared
 // double pitch cosine 226/285/285; both with inner marker scope 257,
 // with the shared terminal pin 272. Original scalar helpers and body restored.
+// Round 249: promoted yaw/pitch/both trig formals 181/222/174; native promoted
+// yaw/pitch/both inputs 181/226/172; both formals with shared pitch cosine 176,
+// yaw formal with shared pitch cosine 172. Original helper/body restored.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
