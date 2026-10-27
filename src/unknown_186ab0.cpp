@@ -190,6 +190,8 @@ void player_action_initialize(s_player_action *arg_0);
 // Native orientation vector 135; coherent unit source 185; source/vector 185; existing state query 304;
 // query/source 310, query/vector 304, all three 310; complete native orientation value 220.
 // Original fields, pointer observations and query guard restored.
+// Round 342: Complete inclination squared-product pairs, reversed pairs and named sum 148 each; squared accumulator 150;
+// with symmetric named angle shifts 148/148/148/150. All enlarge the frame to 0x5c; original expressions restored.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {

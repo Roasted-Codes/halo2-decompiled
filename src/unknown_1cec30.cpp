@@ -2163,14 +2163,14 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 {
     vector->m_quad = _mm_setzero_ps();
 }
-// score 109 (was 137): aligned frame 0x34 agrees; the normal's loop registers (retail keeps the inverse in
+// score 109 (was 109): aligned frame 0x34 agrees; the normal's loop registers (retail keeps the inverse in
 // xmm1 and scales j, k in place), velocity j/k loaded before its length test, and the property value 0
 // kept in edi across the erase remain.
 // Earlier at 137: aligned frame 0x34 agreed; normal/velocity XMM roles, early velocity loads and property-zero retention.
 // Earlier: the velocity sums in the material loop load the
 // aligned frame 0x34 agrees; normal/velocity XMM roles, early velocity loads and property-zero retention remain.
 
-// score 109 (was 137): the velocity sums in the material loop load the
+// Earlier 109 (was 137): the velocity sums in the material loop load the
 // running sum second in retail, and the final scale and its stores are
 // scheduled differently.
 // Round 128: shared dot input order 137; consistent inverse-first/inverse-last products 137/137;
@@ -2193,6 +2193,8 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // the velocity 127 kept; normal scaled j, k, i 109 kept (k, j, i 110; i, k, j 121; j, i, k 124;
 // k, i, j 122; all in place 109); velocity scaled j, k, i as well 109; inlined property setter
 // passing the value as the 0x1cf3b0 setter does 216.
+// Round 342: Shared normal/velocity length 123; shared inverse 162; both 168; outer sample vector 109;
+// vector plus length/inverse/both 123/162/168; all with one scan ordinal 168. Exact-length inverse forms regress; originals restored.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {

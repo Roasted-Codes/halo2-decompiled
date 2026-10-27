@@ -1041,7 +1041,7 @@ done:
 real function_50650(real cosine);
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
 
-// score 137 (was 307): frame and length agree; actor/object roles (EDI/ESI), the hoisted velocity j load,
+// score 137 (was 137): frame 0x1c agrees; two excess bytes, actor/object roles (EDI/ESI), the hoisted velocity j load,
 // the first clamp's x87 order and the epilogue pops' place in the final minimum remain.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following
 // factor 335; frame pointer 399; inline depth one 308 (fast). Scalar velocity 309;
@@ -1062,6 +1062,8 @@ real function_50650(real cosine);
 // float gap with `!(gap > 0)` 128; shared normalize 117 fast, 137 plain (kept); ternary first clamp
 // 304; inverse-first products 312; velocity copy j first 123; facing factor declared first 115;
 // actor offset first 117 (fast; plain base 137).
+// Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
+// X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
