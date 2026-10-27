@@ -333,6 +333,8 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // DH round 189: Native/const fetch source capture with aggregate/library publication 185 each;
 // each with query memmove 207. All one-use captures and copy changes restored; defined failures
 // and protected call roles retained.
+// Round 10 (lane 10): range declared before section 185; BSP declared last 186; range or BSP local
+// renamed 185/185 (spill slots unchanged); instance index read from the record at each use 201.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -436,7 +438,7 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
-// score 78 (was 177): with the part list read through its 0x48-byte range records and the part
+// score 78 (was 78): with the part list read through its 0x48-byte range records and the part
 // offset read at each use, only the model/collision registers (EBX/EDI swapped), the lookup address
 // (retail keeps it in ESI for the second call) and BLOCKED-BY 0x11e800's argument registers differ.
 // Round 8 (lane 10): range-record list 95 (kept); part offset at each use 78 (kept); section groups
@@ -444,6 +446,8 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // second object lookup 78; lookup declared at the top 78; object lookup before the model 219;
 // diagnostic: the bounds read before the geometry-block call gives 9 (registers as retail; left
 // are the lookup address and 0x11e800's registers), held because it moves a one-use read.
+// Round 10 (lane 10): model lookup before the triangle resets 83; model and object lookups there 88;
+// point copied before the object re-read 78; section index local dropped 78 (same code).
 // Earlier: region code and node search match; retail reads the model's bounds before
 // the geometry-block call (that read moved there gives 143 with the section groups ahead of the node
 // search, but it moves a definition read ahead of a call), keeps the vertex cursor in EBX and the

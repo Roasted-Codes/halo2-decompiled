@@ -486,7 +486,7 @@ PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh
 {
 	long index = mesh->faces[face_index].plane_index;
 	plane3f const *source = &mesh->planes[index & 0x7fff];
-	if (index < 0)
+	if (index & 0x8000)
 	{
 		plane->n.i = 0.0f - source->n.i;
 		plane->n.j = 0.0f - source->n.j;
@@ -518,9 +518,17 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 650 (was 716): retail's 3647 bytes; the normals compared as three dwords (retail's cmp/jne,
-// no copy) leave a frame of 0x21ec against 0x21dc, the definition/output registers swapped, and a
-// rotation block whose schedule differs, which offsets everything after it.
+// score 587 (was 650): frame 0x21dc and the definition/output registers agree with the pivot offset
+// rotated in place, the mode read at each use and the plane flip tested as bit 15; 3615 bytes against
+// 3647. Retail increments the first loop's index before its call; the count and plane spill slots
+// sit in a different order; the axis length is summed i, k, j without keeping k on the x87 stack and
+// its j/k components are preloaded for the scale; the rotation schedule differs after that.
+// Round 10 (lane 10): rotated position kept in its own vector 650 (frame 0x21ec); rotate helper
+// writing its output directly 894 (frame 0x21c4); offset in place alone 717, with the mode at each
+// use 762 (frame 0x21dc), plus the bit-15 flip 593, plus the counts declared after faces[0] 587
+// (kept; either order); the bit-15 flip alone 761; grouping plane in its own block 650 (same code);
+// count locals renamed 587 (slots unchanged); first loop as `while` with `faces[i++]` 574 (not kept:
+// a respelled loop); the axis through normalize3d 712, plus vector3d_from_points3d 667.
 // Round 8 (lane 10): counts set after faces[0] 716; float component equality 762 (ucomiss, but the
 // cosine products then follow retail's order); dword component equality without the copy 650 (kept);
 // short plane index 698 (test cx); mode read from the definition at each use 705 (registers, loop
@@ -570,19 +578,18 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 {
 	long faces[1024];
 	long secondary[1024];
-	short secondary_count = 0;
-	short face_count = 1;
 	byte const *definition = g_4e3b44[tag_index & 0xffff].bytes;
 	output->polygon_count = 0;
 	output->vertex_count = 0;
 	faces[0] = placement->unknown50;
+	short secondary_count = 0;
+	short face_count = 1;
 	for (short i = 0; i < face_count; ++i)
 	{
 		function_17dd80(mesh, &projection->quad, output, faces[i], true, projection->radius,
 			*(short const *)(definition + 2), faces, &face_count, secondary, &secondary_count);
 	}
-	short mode = *(short const *)(definition + 2);
-	if ((byte)g_444a38[mode].flags && secondary_count > 0)
+	if ((byte)g_444a38[*(short const *)(definition + 2)].flags && secondary_count > 0)
 	{
 		short remaining = secondary_count;
 		do
@@ -604,7 +611,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 					{
 						plane3f plane;
 						decal_face_plane_17fd20(mesh, face, &plane);
-						if (g_444a38[mode].maximum_angle * 0.017453292f >= decal_normal_angle_17fd20(&first_plane.n, &plane.n) &&
+						if (g_444a38[*(short const *)(definition + 2)].maximum_angle * 0.017453292f >= decal_normal_angle_17fd20(&first_plane.n, &plane.n) &&
 							projection->radius * 0.05f > function_17d900(mesh, face, &first_plane) &&
 							projection->radius * 0.05f > function_17d900(mesh, first_face, &plane))
 						{
@@ -688,15 +695,15 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 					up.j = one_minus_cosine * axis.k * axis.j - axis.i * sine;
 					up.k = axis.k * axis.k + (1.0f - axis.k * axis.k) * cosine;
 					transform4x3f matrix;
-					vector3f offset, position;
+					vector3f offset;
 					vector3d_from_points3d(&start, &projection->matrix.position, &offset);
-					decal_rotate_vector_17fd20(&forward, &left, &up, &offset, &position);
+					decal_rotate_vector_17fd20(&forward, &left, &up, &offset, &offset);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.forward, &matrix.forward);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.left, &matrix.left);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.up, &matrix.up);
-					matrix.position.x = position.i + start.x;
-					matrix.position.y = position.j + start.y;
-					matrix.position.z = position.k + start.z;
+					matrix.position.x = offset.i + start.x;
+					matrix.position.y = offset.j + start.y;
+					matrix.position.z = offset.k + start.z;
 					matrix.scale = 1.0f;
 					function_17d9a0(&matrix, (real const *)&projection->bounds, &quad);
 					for (long k = 0; k < 3; ++k)
@@ -711,7 +718,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 				for (short j = 0; j < group_count; ++j)
 				{
 					function_17dd80(mesh, &quad, output, faces[j], false, projection->radius,
-						mode, 0, 0, 0, 0);
+						*(short const *)(definition + 2), 0, 0, 0, 0);
 				}
 				remaining -= group_count;
 			}

@@ -160,9 +160,13 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 199 (was 290): frame 0xa4 and the marker branch agree; retail keeps the object data base in EBP
+// score 199 (was 199): frame 0xa4 and the marker branch agree; retail keeps the object data base in EBP
 // (ours the tag table), and the collision point's last component reuses the fraction register, which
-// shifts the tail by one instruction.
+// shifts the tail by one instruction. Retail reloads the tag table after the 0xb9ef0 call (parent
+// branch); ours treats that call as unable to change it and keeps it in EBP from entry.
+// Round 10 (lane 10): outer definition declared first 199 (same code); outer definition through
+// unit->definition_index 281; hit point through a point-plus-scaled-vector inline 199 (same);
+// default marker call first 199 (same).
 // Round 8 (lane 10): up vector and point in their own block scopes (frame 0xa4) 292; with the heights
 // definition read through the unit index 273; marker name as an if/else 310; two marker calls 281;
 // default call first 281; one definition for both branches 336; outer definition read through the unit
