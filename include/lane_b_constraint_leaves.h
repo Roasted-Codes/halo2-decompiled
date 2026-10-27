@@ -6,6 +6,7 @@
 #include "lane_b_entity_listener.h"
 
 struct lane_b_constraint_owner;
+struct listener_world_315d20;
 
 #include "lane_a_constraints.h"
 typedef lane_a_constraint_description lane_b_constraint_description;
@@ -63,7 +64,9 @@ struct lane_b_contact_solver_data
 };
 struct lane_b_contact_constraint_prefix
 {
-	char unknown_00[0x14];
+	char unknown_00[0xc];
+	listener_world_315d20 *first_body;
+	listener_world_315d20 *second_body;
 	lane_b_constraint_owner *owner;
 	char unknown_18[8];
 	lane_b_contact_id_array ids;

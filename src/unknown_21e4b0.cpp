@@ -93,7 +93,10 @@ void function_220790(s_sound_listener const *listener);
 bool sound_driver_voice_create_buffer(long voice_index);
 void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 
-// score 165 (was 165): Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
+// score 165 (was 165): Frame 0x80 agrees; success/category registers and the first-channel spill remain.
+// Earlier: Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
+// Earlier 165 (was 169): success/type registers and first-channel spill;
+// Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
 // success/type registers and first-channel spill;
 // byte allocation result 165; early byte result 280; listener aggregate 328;
 // aggregate with early result 357; early result with count cursor 300.
@@ -177,6 +180,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // early BL/stack byte, but frame 0x84); before the listener call 288; after the 0x12c040 call/first/
 // second codec store 173 each; separate bool/byte flag set before the 0x12c040 call 290/280; bool flag 169.
 // Five coherent descriptor size/flags/input publication orders 169/169/171/171/169; reverse send-only/submix-only 167/167; complete reverse order with creation byte spanning reset 280. Original descriptors, byte state and body restored.
+// Round 147: allocated owner 519; owner/early state 504; owner/bool state 521; owner/early bool
+// 509; owner/first word 519; owner/early/word 504; owner/bool/word 521; owner/early/bool/word
+// 509. All executable forms restored; sources and comparisons saved.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

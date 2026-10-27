@@ -547,6 +547,10 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Round 54: in-place normal (x/y/z then plane.n, d) 334 at retail length (frame 0x3c, contact in ESI);
 // summed distance 334; shared matrix_transform_vector in place/into normal 334/321; constant-first
 // clamp 321; clamp through an inline pin function 321.
+// Round 96: retail lays out the instance-plane arm first and tests the type as `shr 29; dec; je` (a
+// switch's shape; VC folds an if on (data >> 29) into a mask compare). Arms swapped as an if 323; with
+// the plane distance in a local 323; distance local alone 321; switch with case 1 first/default first
+// 316/315 (not kept: a switch for an if).
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

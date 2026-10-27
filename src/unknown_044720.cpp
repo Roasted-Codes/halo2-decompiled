@@ -272,6 +272,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // both noinline and either mixed pair: all eight 190f. Entry/index and point
 // homes remain; both caller-local declarations and original body restored.
 // Round 153: one complete query at entry/original capture 264/260; each with shared marking 254/220; removing only query alignment gives 263/259/253/219. Aligned forms grow frame to 0x10a4; best remains worse than 190. Original query, marking sites and alignments restored.
+// Round 155: Real part-table byte/record cursors, mutable/read-only, each with original
+// or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

@@ -64,6 +64,10 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 // Round 54: numerator `y + (x - d)` 14; split sum then `(sum - d) / denominator` 7 (both
 // products point-first but x first; explicit parentheses always order x first); both indices
 // declared in the for 5; while loop with the updates at the end 5; `y - d + x` 14.
+// Round 8: previous/current/result names 5 each; previous declared early or before the exits 5;
+// point-first numerator and plain inline 5; normal-i/first-x locals 110/180; named x/y products
+// 9/7; y product with point/plane parameter orders 7; both named products 9; defaulted y product 7.
+// Original helper and body restored.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)

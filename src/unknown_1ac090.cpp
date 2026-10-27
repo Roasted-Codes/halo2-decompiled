@@ -178,6 +178,8 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // after seconds 28; existing unit random range 18; the file's random range 8/10; random local 8;
 // header-size pointer 8; flag store first 14; tick-rate cast 8; named seconds 8, before the state
 // pointer 6 (slot read after the seed store); permuter 88 tries 8.
+// Y346: complete additive term alone/with timer input 10/10; doubled range and timer input 8; all arithmetic
+// terms, entry workspaces, immutable inputs and later receiver 8/8/8/8; direct data-member observations 28.
 // @retail 0x1ac090
 bool __stdcall function_1ac090(long actor_index, s_slot *slot)
 {
@@ -208,6 +210,8 @@ void function_265bb0(long actor_index);
 // Round 323: long/word/dword/real delay with second writer 88/85/105/105;
 // the same delay carriers with native second output 88/85/105/105. Conversion-input packing
 // restores zero frame in some forms but regresses allocation; original body restored.
+// Y346: timer input/output order, scalar names and complete delay-product boundaries 60 (seven forms);
+// all with the second input named at computation 60.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -823,6 +827,9 @@ bool function_1f8660(long arg_0);
 // Round 168: Shared complete position with original/split directions and actor/count role names 170
 // each; with entry result 193 each; three scalar coordinates original/split 182/185. Four-point
 // best rejected; snapshot frame 0x81c; opening body restored.
+// Round 199: Count/status scope 175; complete selected-point copy 182; both 180;
+// reference before selected output 174; scope/reference 175; point/reference 182;
+// all three 180; scoped count/status role names 175. Original output lifetimes restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {

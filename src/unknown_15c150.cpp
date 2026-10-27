@@ -74,7 +74,15 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 }
 
 
-// score 196 (was 196): delayed EBP save, team-byte home and word slot spill.
+// score 152 (was 196): frame 0x1c and length now agree; retail saves EBP with the other registers and
+// uses it for the player table base in the first loop (ours saves it after that loop), its team loop is
+// bottom-tested, and two loads in the fade update come in the other order.
+// Round 74: long local-player index 263 alone (frame 0x18), with the teams test in the team loop's
+// condition 152 (the teams byte home appears, 1013 bytes); count test first in that condition 254;
+// outer teams test plus a repeated test in the loop body 253 (team loop exact, aligned listing best,
+// not kept); player pointer before the first-loop query call 152; fade comparisons with swapped
+// operands 180; named player table base 152; function-scope teams declaration 196; object header
+// view for the unit 196.
 // Frame 0x1c agrees; delayed EBP save, teams-byte home and word local-slot spill remain.
 // Earlier: delayed EBP save, team-byte home and word slot spill.
 // Cursor player 253; count at loop tail 199; both 257; signed/unsigned
@@ -128,6 +136,9 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Round 227: Private slot search sentinel-plus-one start 193; short return 196; short input 199; both
 // short 199; simple start with short return/input/both 193/193/193 (three-point gains dropped);
 // terminating candidate scan 230. Existing helper restored.
+// Round 178: Complete fade-step terms with ternary/branch/saturate/update outputs 196/277/212/196;
+// the same four with a native full-width local slot 263/251/263/263. Original graph restored;
+// delayed EBP save, teams-byte and word-slot homes remain.
 // Round 194: Shared fade-result store, pointer/direct fade with word slot 212/212; long slot 263/263; merged
 // fade-in admission with word slot 259/259, long slot 311/311. Original body restored.
 // Round 167: Native unsigned-word private search input/return/both 199/196/199;
@@ -186,9 +197,8 @@ void function_15c150()
 		if (g_55e4d0[globals->engine_index])
 		{
 			bool teams = (*((byte *)g_4e6948 + 0x184) & 1) != 0;
-			if (teams)
-				for (long team = 0; team < 8; ++team)
-					if (function_161e10(team)) function_15ba90(team);
+			for (long team = 0; teams && team < 8; ++team)
+				if (function_161e10(team)) function_15ba90(team);
 		}
 		g_55e4d0[globals->engine_index]->p18();
 		if (g_4e6948->mode != 4)
@@ -205,11 +215,11 @@ void function_15c150()
 			(g_4e6948->mode == 4 || globals->lc04 == 1))
 			*(short *)((byte *)globals + 0xfa) = 0;
 		else ++*(short *)((byte *)globals + 0xfa);
-		for (word local = transition_local_player_next_15c150(NONE); local != (word)NONE;
+		for (long local = transition_local_player_next_15c150(NONE); local != NONE;
 			local = transition_local_player_next_15c150(local))
 		{
 			long index = NONE;
-			if (local != (word)NONE)
+			if (local != NONE)
 				index = g_4e8c20->entries[local];
 			if (index != NONE)
 			{
