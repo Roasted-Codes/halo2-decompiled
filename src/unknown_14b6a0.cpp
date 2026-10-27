@@ -119,6 +119,11 @@ void function_14bac0()
 }
 
 // score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
+// center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
+// probe point at 0x1c); plus a bare block around the probe/center code 257 (identical code); per-marker
+// probe points with the center call written in both arms 302 (1080 bytes, not merged); first iterator
+// declared in the first block 257; iterator and probe point renamed 257 (identical layout).
 // Round 139: retail's two iterators are separate locals (first loop at frame 0x30, second at 0x1c
 // sharing the marker probe point's slot) and the second loop calls 0x6b380; split iterators with
 // the second through data_datum_iterator_next 257 (frame 0x44), both inline 234; per-marker probe
