@@ -1263,6 +1263,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Round 188 separate successful total: rolled/counted/unsigned result/unsigned total/
 // retained entry width/admission/split adds/pre-tested walk 281/112/112/112/165/112/112/112;
 // expanded caller conventions checked separately; original accumulation restored.
+// Round 76 (counted loop, fast with 0x54990/0x56160): bool from the getter compare without local_0 112;
+// operands swapped 112; 2 + product 112; multiplier first 112; channel indexed at each use 120;
+// identity compare inside the loop 324 (rolled). Each counted form pushes the channels pointer in 0x54990.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
