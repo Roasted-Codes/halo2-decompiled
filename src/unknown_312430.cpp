@@ -27,6 +27,8 @@ void class_312430::function_312430(description_312430 *description) const
 // element references 51/37/43; force inline pair copy 51/51; long/const 17/17.
 // Native input/output/both data access 17/17/17; complete CRT pair copy
 // with four access forms 26 each; CRT pair capture then field stores 17.
+// Array receiver pointers/references: destination/source/both before header
+// update 20/17/20 each; both after the update 17/17. Original arrays and body restored.
 // @retail 0x3124c0
 void class_312430::function_3124c0(description_312430 const *description)
 {

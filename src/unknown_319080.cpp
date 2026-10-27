@@ -46,12 +46,15 @@ public:
 	s_result_319230 function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const;
 };
 
-// score 22 (was unwritten): the first receiver is loaded into ECX;
+// score 22 (was 22): the first receiver is loaded into ECX;
 // retail loads EAX, its table into EDX, then copies EAX to ECX.
 // Byte output, operand references, const/enum query, destructor slot,
 // concrete slots, inherited slots/base, signed output, owner references,
 // Boolean construction 22; result initialized false 36; separate result
 // assignments 19 rejected; named receivers and named call results 21 rejected.
+// Integer-input construction int/long/unsigned, explicit copy, destruction, both,
+// existing byte Boolean result and aggregate return initialization 22 each.
+// Original result and body restored; first virtual receiver setup still differs.
 // @retail 0x319230
 s_result_319230 c_query_319230::function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const
 {
