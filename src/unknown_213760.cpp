@@ -1172,7 +1172,7 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 104 (was 112): frame 0x1144 and extent agree; file displacement, request-copy, the first read
+// score 104 (was 104): frame 0x1144 and extent agree; file displacement, request-copy, the first read
 // call's handle copy and the write-success join remain.
 // Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
@@ -1237,6 +1237,12 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // loop padding shifts); handle as an s_file_handle member 104; on the kept form: completion flag
 // declared first 104; size limit before the path 249; file pointer after the path 106;
 // validity declared at the loop top 104.
+// Round 93: write success set by its own test 166 (914 bytes: every join matches; what is left is
+// retail's 1 held in ESI for two unmerged slot-range compares and the later slot test, and the
+// handle copy at the close call instead of the size query); that with the range test joined to
+// the validity test 166, with the handle declared s_file_handle 166; nested close test 104; long
+// expected size 104. A one-case switch 413; bounds from a const table or a type-to-slot switch
+// fold early and merge the compares (166).
 // @retail 0x213970
 void function_213970(void)
 {
