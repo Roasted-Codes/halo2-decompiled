@@ -227,10 +227,11 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
 
 // score 20 (was 108): retail passes the marker flags to 0x26fbf0 as a 16-bit argument
 // (`xor edx, edx; mov dx, [eax + 0x1c]`); declaring that parameter `word` gives 4 and keeps
-// 0x26fbf0 matched, but its other prototypes are in src/unknown_2c0d00.cpp. The squared distance
+// 0x26fbf0 matched, but 0x26fbf0 is contributor code: BLOCKED-BY 0x26fbf0. The squared distance
 // through vector3d_from_points3d/length_sq3f 30; difference orders xzy/yzx/zxy/zyx 24/26/26/24;
 // best before best_distance 20; the marker query before both 99; dot3f alignment 26; sum
-// x + y + z 20; nested point test 20.
+// x + y + z 20; nested point test 20; flags through a word local 22; alignment k + i + j 20;
+// the markers array after best 20; long count 111; const character 20.
 // @retail 0x26fc80
 bool function_26fc80(long actor_index, long object_index, real distance, void *path, point3f *point)
 {

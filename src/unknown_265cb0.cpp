@@ -442,6 +442,10 @@ real function_30bf0(vector3f *vector);
 // (241, 1327 bytes); with a short return 245 (needs 0x25c9d0's declaration changed too). Motion declared
 // before delta 184; result before the references 184; maxima as conditionals 184; a/b beside the maxima 184.
 // Ours also keeps secondary/primary in xmm registers across the seat loop; retail compares them in memory.
+// Lane 9 r25: retail returns a short (`mov ax, word ptr [esp + 8]` at each exit) from a long result
+// slot; the prototype in src/unknown_25d690.cpp (another lane's file this round) keeps the return
+// long. Result renamed level 184 and secondary/primary renamed 184 (identical code: names do not
+// move these slots); range read after delta 184; primary declared before secondary 184.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
