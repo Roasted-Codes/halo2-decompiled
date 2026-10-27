@@ -288,6 +288,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // On the long departure state: signed-word/unsigned-word/unsigned-native/int result
 // 257/257/203/203; native input count 259, with signed/unsigned word result
 // 268/268; observed signed-word input count 203. Caller checked with each.
+// Equality input contracts (pointer order, first/second/both native references), each
+// with long/Boolean departure: 203/227/203/234/203/234/203/234. Helper and body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -455,7 +457,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 212 (was 237): Retail length and common failure publication agree; count/stride/prior homes remain.
+// score 212 (was 212): Retail length and common failure publication agree; count/stride/prior homes remain.
 // Earlier: count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
 // Native current ordinal 249; long side states 264; prior-point ordinal 288; ordered fraction clamp 243; clear-mask arm first 243; shared normalized count 275; existing point difference 243.
 // Explicit source bit 243; unsigned input ordinal 237; word side states 263; retained signed distance 273; parallel edge scales 243.
@@ -471,6 +473,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Native previous/plane/both observations 378/370/354; both native points 355;
 // all native inputs 376; complete plane/previous/both scalar observations 347/359/368.
 // Original inputs, copies and body restored.
+// On the common failure-result graph: signed word/native count at entry or after
+// alias handling, each without/with shared copy extent: 212/289/211/211/303/225/212/212.
+// One-point forms rejected; original count observations, helpers and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
