@@ -211,6 +211,11 @@ void function_268840()
 // Original accepted datum walk, retention and contributor child interfaces retained.
 // Iterator pointer order, expiry/successor names, retention scope, extra/player comparisons,
 // child positive arm and player while 246 each.
+// Round 172: Shared native-header identifier 246; native headers 246; both 246; optional-object pool
+// snapshot 246; pool with identifier/native headers/both 246/246/246; all with readonly headers 246.
+// Original pool/header observations, body and contributor child interfaces restored. Frame 0x50
+// agrees; player-pool/NONE allocation, current/successor homes and protected child-call convention
+// remain.
 // @retail 0x268c90
 void function_268c90()
 {

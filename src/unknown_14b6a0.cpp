@@ -142,6 +142,10 @@ void function_14bac0()
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
 // pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
 // Original receivers and the shared iterator body restored.
+// Round 172: Native selected/current/both player receivers 234/234/234; with native recipients
+// 257/257/257; readonly both 234 and with native recipients 257. Original body, iterator graph and
+// include list restored. Frame 0x34 versus 0x3c, point/iterator and readiness homes and
+// visit-counter scheduling remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
