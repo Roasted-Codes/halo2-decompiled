@@ -848,6 +848,13 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
+// score 266 (was 266): retail passes the time-scale pointer on the stack and takes only the
+// target (eax), origin (ecx) and direction (esi) in registers; ours also takes the time scale in
+// edx. Retail loads the gravity pointer into edx at entry and rounds the horizontal length to a
+// float before the gravity tests; ours loads the pointer into ebx and keeps the length on the
+// x87 stack, computing it after those tests. Tried: the high-arc flag or the time-scale pointer
+// read once through its address 266/269; horizontal tests with the constant first 266; the
+// horizontal length computed after the gravity value 266; the gravity operands swapped 266.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
