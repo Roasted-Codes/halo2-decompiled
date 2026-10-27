@@ -117,47 +117,29 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 104 (was 104): frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
-// remain. Prior frame 0x0c; entry cursor 125; property cursor 135;
-// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
-// frame 0x0c versus 0x10 and property/buffer register-stack split remain.
-// Earlier: frame 0x0c versus 0x10 and properties/buffer
-// frame 0x0c versus 0x10 and property/buffer carriers remain; shared record/buffer total
-// 125f; property total from records 113f; property total from buffers 113f; admission accounting 108f (below
-// threshold); shared record/buffer admission 163f; derived property admission 156f; shared total/property
-// phases 125f; derived property/entry cursor 113f.
-// frame 0x0c versus 0x10 and properties/buffer
-// register/stack split remain. Entry cursor 125; property cursor 135;
-// frame 0x10 agrees; properties/buffer input homes and scalar-loop expansion
-// remain. Prior frame 0x0c; entry cursor 125; property cursor 135;
-// per-record property counts 113; count homes 121; cursor/count combination 132.
-// Round 138: emitted record/property/buffer/all capacity bounds 144/113/134/136;
-// short property ordinal 114; ordinal names 113; early four-property accounting 109 kept;
-// split first/three accounting 109. Reported length is now 352/352.
-// Count-indexed record/buffer/both outputs 129/113/128; scalar-identifier induction 113;
-// identifier with record/buffer/both indices 114/114/113 (each 352 bytes); shared final total 151.
-// Round 167: record/property/buffer capacity-derived totals 137/136/116;
-// paired totals 132/132/132; all totals 142; all totals with three-use property
-// element 104 kept, plain and complete inventory confirmed; 352/352 bytes.
-// Three-use scalar property element 114 (frame 0x10); unsigned/byte/signed-byte ordinal 109/110/110;
-// unsigned property/all totals 109/109; flat entry admission 109; property element with unsigned ordinal 114.
-// Native identifier field 104; scalar-array end bound 105; activation ordinals 104;
-// field/end 105; field/ordinals 104; end/ordinals 105; all three 105; named activation ordinals 104.
-// On the capacity-delta graph: short/word scalar ordinals 141/141; short/word identifiers
-// 133/133; long/short/word ordinal do-loops 142/141/141; long identifier do-loop 134.
-// On the three-use element graph: native record/property/both totals 132/136/135;
-// native buffer/record-buffer/property-buffer totals 109/128/131;
-// unused record-address declaration removed 132, with native property total 136.
+// score 8 (was 104): only the first property's 0xfffd id store is scheduled early (retail emits it
+// after the record stores and the buffer-cursor load, just before the buffer pointer store).
+// Earlier (pointer-advancing body, capacity-derived totals): entry cursor 125; property cursor 135;
+// per-record property counts 113; count homes 121; cursor/count combination 132; shared record/buffer
+// total 125; property total from records/buffers 113/113; admission accounting 108; capacity bounds
+// 144/113/134/136; short property ordinal 114; early four-property accounting 109; count-indexed
+// record/buffer/both outputs 129/113/128; capacity-derived totals 137/136/116; paired totals 132;
+// all totals 142; three-use property element 104; unsigned/byte ordinals 109/110; native identifier
+// field 104; scalar-array end bound 105; ordinal do-loops 141/142.
+// Round 136: outputs written at running record/property/buffer indices, capacities counted down in
+// their homes, the property index and capacity advanced inside the three-property loop (rolled as
+// retail): 8. On that body: counted-up totals with pointer advances 135; loop bounded by the
+// record's count 134; record pointer local 119; sixteen orders of the index/capacity updates 17-102;
+// the id store placed around the record stores 8-114 (twenty orders); 16-bit id field 8;
+// named buffer local 8/17; permuter 64 tries 8.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
 	byte *buffers, long *record_count, long *property_count, long *buffer_count)
 {
-	long const initial_record_capacity = record_capacity;
-	long const initial_property_capacity = property_capacity;
-	long const initial_buffer_capacity = buffer_capacity;
-	/* retail passes the records on the stack */
-	s_cache_property_record *const *records_reference = &records;
+	long record_index = 0;
+	long buffer_index = 0;
+	long property_index = 0;
 	for (long i = 0; i < g_4cf978; i++)
 	{
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
@@ -165,35 +147,35 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 		{
 			if (record_capacity <= 0 || property_capacity < 4 || buffer_capacity <= 0)
 				break;
-			memcpy(records->identity, &entry->player, sizeof(records->identity));
-			records->type = 0x61;
-			records->count = 4;
-			records->properties = properties;
-			records++;
+			memcpy(records[record_index].identity, &entry->player, sizeof(records[record_index].identity));
+			*(short *)&properties[property_index].unknown00 = -3;
+			records[record_index].type = 0x61;
+			records[record_index].count = 4;
+			records[record_index].properties = &properties[property_index];
+			record_index++;
 			record_capacity--;
-			*(short *)&properties->unknown00 = -3;
-			properties->type = 4;
-			properties->unknown08 = (long)buffers;
-			properties++;
-			buffers += 0x40;
+			properties[property_index].type = 4;
+			properties[property_index].unknown08 = (long)&buffers[0x40 * buffer_index];
+			property_index++;
+			buffer_index++;
+			property_capacity--;
 			buffer_capacity--;
-			property_capacity -= 4;
 			for (long j = 0; j < 3; j++)
 			{
-				s_cache_property *property = &properties[j];
-				*(short *)&property->unknown00 = (short)(j + 2);
-				property->type = 1;
-				property->unknown08 = 0;
+				*(short *)&properties[property_index].unknown00 = (short)(j + 2);
+				properties[property_index].type = 1;
+				properties[property_index].unknown08 = 0;
+				property_index++;
+				property_capacity--;
 			}
-			properties += 3;
 		}
 	}
 	if (record_count)
-		*record_count = initial_record_capacity - record_capacity;
+		*record_count = record_index;
 	if (property_count)
-		*property_count = initial_property_capacity - property_capacity;
+		*property_count = property_index;
 	if (buffer_count)
-		*buffer_count = initial_buffer_capacity - buffer_capacity;
+		*buffer_count = buffer_index;
 }
 
 void function_80d70(s_cache_property_record *records, long count);
@@ -468,11 +450,8 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 67 (was 67): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
-// frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
-// Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
-// frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
-// Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// score 67 (was 67): frame 0x90 versus 0xa0: the three identity words fold away (retail keeps
+// them on the stack and reloads them), packed source-byte carriers and initialization homes differ.
 // Forward entry pointer 133; chained source resets 149; link-word fill 157; signed byte sentinel 149; unsigned entry index 133 (plain).
 // Existing record initializer with zero tail 130; short/word counters 133/133;
 // counters-before-version stores 132; separate link stores 133; initializer and store order 129 (plain).
@@ -497,6 +476,12 @@ void function_1537f0(s_profile_record *record);
 // complete sixteen-byte header fill 154; source/identity homes remain unchanged.
 // Entry zero/first sentinel pair/second pair chains and all pair subsets 67 each;
 // complete endpoint sentinel chain 67. Frame 0x90 and packed source spills remain.
+// Round 136: library copy of the identity in 0x7f8b0 67 (same code); XUID-typed identity 67;
+// XUID id/flags zeroed by field 95 (flags store hoisted). Source byte 0x7f declared signed char
+// with the tail clear and sentinel removed 78 at 238 bytes (no tail stores, source bytes shifted
+// out of EBX as retail; identity still folded); with flags/timestamp as two stores 80 at 236;
+// on that: record-typed source local 80, source declared first 80, memset through a sized helper 80,
+// 64-bit id + flags identity type 80; per-entry force-inline helper 132.
 // @retail 0x7f930
 void function_7f930(void)
 {
