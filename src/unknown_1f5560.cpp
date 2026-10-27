@@ -220,7 +220,7 @@ bool function_1f5560(long actor_index, vector3f *facing)
 	s_actor_moving *actor = actor_moving_get(actor_index);
 
 	if (actor->unknown26c == NONE && actor->unknown622)
-		real_vector3d_set(facing, actor->unknown624 * actor->unknown62c, actor->unknown628 * actor->unknown62c, actor->unknown630);
+		vector3f_assign(facing, actor->unknown624 * actor->unknown62c, actor->unknown628 * actor->unknown62c, actor->unknown630);
 	actor->unknown622 = false;
 	return true;
 }
