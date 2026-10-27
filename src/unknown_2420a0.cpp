@@ -2751,27 +2751,14 @@ PRIVATE inline bool function_2419c1(short arg_0, short arg_1)
 	return local_0 && local_0->p27(arg_0, arg_1);
 }
 extern color3f *g_468714;
+long function_14de70(long local_player_index);
 
-// score 54 (was 184): frame 0x160 and length agree. What differs: the per-team block's switch
-// registers rotate (ours EAX/CL where retail uses ECX/AL) and the second flag converts with `setne`;
-// with that flag as a bool the registers agree, but ours then merges the two `local_29 = local_24`
-// case blocks (retail keeps the first switch's copy, `mov al,[esp+0x11]; jmp`), which also moves the
-// iterator loop's alignment pad. Round 77 (kept): the marker position through function_2417a1
-// (retail's y-first copy) 184 -> 159 (fast), the same-team flag as `if (... && ...) local_25 = true;`
-// 159 -> 81 (fast), the queried player through a named pointer 81 -> 54. Tried: the second flag as a
-// bool 89 (aligned differences 61 -> 23) and with the player pointer 146 (aligned 5: only the merged
-// block and the pad); on that body both switches' case orders 146 each, either arm's team test
-// inverted or braced 146 each; permuter 44 tries, none better; the 9-arm through its own result
-// variable 241, with a true default 227; `!(a || b)` for local_24 146; local_26 assigned from the
-// condition 250; local_29 declared with the other flags 146.
 // @retail 0x2419c0
 void c_game_engine_markers::v14(long arg_0)
 {
 	s_marker_list local_14;
 	s_marker_list local_31;
-	long local_0 = NONE;
-	if (arg_0 != NONE)
-		local_0 = g_4e8c20->entries[arg_0];
+	long local_0 = function_14de70(arg_0);
 	s_player_view *local_1 = ctf_player_get(local_0);
 	bool local_2 = false;
 	bool local_4 = false;
@@ -2870,7 +2857,7 @@ void c_game_engine_markers::v14(long arg_0)
 				bool local_23 = local_16->lc != NONE;
 				bool local_24 = !local_22 && !local_23;
 				bool local_25 = false;
-				byte local_26 = false;
+				bool local_26 = false;
 				color3f local_27;
 				s_color_bits local_28 = *(s_color_bits *)function_7f720(&local_27, (short)local_15);
 				if (local_23 && ctf_player_get(local_16->lc)->team == local_1->team)
@@ -2900,7 +2887,7 @@ void c_game_engine_markers::v14(long arg_0)
 					{
 						switch (*(long *)((byte *)g_4e6948 + 0x23c))
 						{
-						case 0: local_29 = local_24; break;
+						case 0: if (local_24) local_29 = true; break;
 						case 1: local_29 = true; break;
 						case 2: local_29 = !local_22; break;
 						}
