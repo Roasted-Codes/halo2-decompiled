@@ -1067,6 +1067,12 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // volatile on the second side instead of the first 397; normal as two scalars 236; second side
 // computed before the first 392. Retail keeps the first direction's y in XMM0 from its subtraction
 // (fst/movss) and stores the second side through memory, the first side in the direction's slot.
+// Lane 9 r25: `<= 0.0f` length test and `>= 0.0f` side test 172 (retail's comiss operand order, but the
+// merged return-true block still sits at the end); both results returned as comparisons 370 (the
+// return-true block moves to retail's place but the results widen to eax), angle or distance result
+// alone 254/254; one result assigned in both branches 172; `if (!(a < b)) return false; return true;`
+// at both ends 171 (retail's final `ja`); nested body with one return true 243; result = true with
+// false assignments 424.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1252,6 +1258,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Final source/emitted/both native coordinate values 476/484/557;
 // with existing point difference 492/484/557; both values emitted first
 // without/with point difference 557/557. All restored; original current record retained.
+// Lane 9 r25: retail keeps two NONE-initialised shorts at +0x6c/+0x74 (set to the step's type and link
+// when its type is not NONE, tested at the emit, which reads the type itself through the step pointer).
+// Step pointer plus those two locals 461 (frame 0x10c as retail's); plus the count > 1 arm first 483;
+// plus the output element at the emit point 505; used/copied-last at function scope 476; the two
+// locals on the copied step 493. Retail's zero in EBX from the data test is still missing.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

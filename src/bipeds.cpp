@@ -1916,18 +1916,22 @@ void function_e0c70(long arg_159e6d)
 	*((byte *)&biped->flags_348 + 1) &= 0x9f;
 }
 
+/* retail calls this out of line from 0x1d43d0 */
+__declspec(noinline) bool __stdcall function_e0d70(long arg_159e6d, real *seconds);
+
 /* how long the dead biped's ragdoll has been settling */
 // @retail 0xe0d70
 bool __stdcall function_e0d70(long arg_159e6d, real *seconds)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
+	bool result = false;
 
 	if (biped->unknown3aa)
 	{
-		*seconds = g_510c54->rate * 0.15f * (real)(char)biped->unknown3aa;
-		return true;
+		*seconds = (real)(char)biped->unknown3aa * (g_510c54->rate * 0.15f);
+		result = true;
 	}
-	return false;
+	return result;
 }
 
 real function_1ec5f0(void *ragdoll);

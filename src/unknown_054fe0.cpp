@@ -1347,6 +1347,10 @@ struct s_player_properties
 // four-long group and a fresh ecx for the three-long group). Three-long group as real 0.0f 215;
 // both groups as memsets 235 (941 bytes; the parameters test becomes `test`, but the zero registers
 // land on the wrong groups); three-long/four-long memset alone 240/240; both memsets reversed 235.
+// Lane 9 r25 (plain; the fast check gives 211 for the unchanged body here): ternary data getter 184
+// (fast) but 0x649c0 30; previous buffer read at each use 184; mask before the names 184; const owner
+// 184; state read at each test 184. Retail holds the owner in edx from the parameters test on, so no
+// zero register is free there.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
