@@ -104,6 +104,8 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 // Round 237: Parallel diagonal remainders with sine/complement sharing
 // 410/443/573/518; parallel diagonal cosine products with the same sharing
 // 410/443/573/518. Original helper expressions restored.
+// Rotation case orders 43210/32104/12340/02143/13042/31024/20413/41230:
+// 449/450/454/454/450/450/449/449 fast; original order restored.
 // @retail 0x224fd0
 void __stdcall function_224fd0(s_draw_mesh_seed const *seed, s_draw_value_cache *values,
 	point3f const *position, vector3f const *direction, real scale, color4f const *color,

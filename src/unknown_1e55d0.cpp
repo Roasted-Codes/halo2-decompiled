@@ -53,7 +53,8 @@ bool function_1c5210(transform4x3f const *matrix, void *shape, long component, l
 
 static __forceinline long real_to_long(real value);
 
-// score 353 (was 349): frame 0x8c versus aligned 0x94; global optimization off 988, inline depth 2 348, no reference truth test 348, shape flag result 352, combined 352.
+// score 353 (was 353): Plain frame 0x8c versus aligned 0x94; saved output/state roles and the expanded tail helper remain.
+// Global optimization off 988, inline depth 2 348, no reference truth test 348, shape flag result 352, combined 352.
 // Base-position/velocity/both input values 379f/382f/413f; move-stage handle 352f;
 // minimum-radius value 352f; activity/compound byte 352f/352f; header offset 352f.
 // Last five forms retain the unchanged reduced executable instructions (preview 352f).
@@ -62,7 +63,6 @@ static __forceinline long real_to_long(real value);
 // entry matrix lifetime 357; both entry workspaces 357.
 // immutable margin 357; immutable shape 357.
 // immutable component 357; native point initializer 357.
-// score 353 (was 353): plain 0x8c frame versus aligned 0x94 and saved-register roles remain.
 // Native stack allocation 362 (1148 bytes); shared component/body/both lookups 353/353/353;
 // base-position reference 353; shared object lookups 353; named height offset 353;
 // distinct current-shape lifetime 353. Seven tying forms share the preview instruction prefix.
@@ -71,6 +71,8 @@ static __forceinline long real_to_long(real value);
 // Frame 0x8c versus aligned 0x94 remains; complete dispatch 4/5,1,3,6,2 350;
 // 4/5,3,2,6,1 350; 4/5,6,3,1,2 354; 6,3,1,4/5,2 353; 6,4/5,2,3,1 354.
 // Position yzx/zxy/zyx 353/353/353 (plain); no qualifying executable gain.
+// Native output velocity 369; orientation 353; velocity/orientation 369; control fields 353;
+// velocity/control 369; orientation/control 353; all fields 369; all fields with one time-step observation 374.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {

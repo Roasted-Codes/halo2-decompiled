@@ -35,10 +35,10 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
         ++output;
     }
 }
-// score 221 (was 221): Frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
+// score 221 (was 221): Frame 0x18 versus 0x14; displacement/coefficient/result overlap remains.
 // Earlier: Frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 
-// score 221 (was 221): Frame 0x18 versus 0x14 and coefficient/input/result homes remain.
+// Frame 0x18 versus 0x14 and coefficient/input/result homes remain.
 // frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 // Global optimization off 961; depth zero 555; frame pointer 300;
 // input-first products 255; k/j/i transform output 272.
@@ -80,6 +80,8 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // each 286 at 1101 bytes, frame 0x2c. Original helper and body restored.
 // Native vector return with pointer/reference/value input and cursor 278/278/401;
 // with indexed result 280/280/404; scaled input vector with output pointer/native return 312/404. Original helper and body restored.
+// Round 146: actual output-end !=/< with long/dword ordinals 406 each and short/word ordinals 378
+// each; original ordinal-controlled helper restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

@@ -96,6 +96,9 @@ public:
 // override-receiver-head-link 215; tail-link 215.
 // override-receiver-tail-link 215; head-link-tail-link 215.
 // override-receiver-head-link-tail-link 215; links-before-index-helper 215.
+// Round 144: native flag word with real/bool/word/long override carriers 234/233/232/234;
+// the corresponding mask extractions 234/233/232/234. Shared type and body restored;
+// frame 0x10/0x14, activation and metadata/viewer/child homes remain.
 // Round 368: publication/scan position and viewer-field pointer/reference pairs 274/274/274/274;
 // the same receivers with closed coordinate-double phase 274/274/274/274.
 // Round 195: bounded-viewer NONE test removed 259; native salted index 300;
@@ -112,6 +115,8 @@ public:
 // Round 235: Both range/both ramp/all maximum predicate operands reversed, singly,
 // each pair and all three 215 each; all three with both native ramp boundaries named
 // at their expressions 215. Frame and input allocation unchanged; original body restored.
+// Viewer-bound signed short/long snapshots with long/short/word/while traversal
+// 266/265/262/266/266/264/263/266; exact-only field snapshots restored. Frame/input homes remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

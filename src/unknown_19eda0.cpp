@@ -392,36 +392,23 @@ PRIVATE inline long polygon_round_19f(real value)
     return result;
 }
 
-// score 393 (was 393): Frame 0x40 versus 0x30, promoted loop spills and protected callee boundaries remain.
-// Earlier 393 from 393: Frame 0x40 versus 0x30, promoted loop spills and protected callee conventions remain.
-// Earlier: frame 0x40 versus 0x30; qword loop spills and callee
-// convention/expansion differ. Real radius-range lifetime 397; type-pointer
-// step in the body 393; explicit closing index 393; shared bottom-point setter
-// 393; inline depth one 393.
-// ordinary variant reads with body pointer step: vertex/edge squared staging
-// 400/400; radial numerator 314 (plain, caller loses); edge length/texture step
-// 400/400; center squares 409; both square accumulators 400; radial plus texture
-// 314; rounded-count reuse 407; separate target inline/noinline 314/314.
-// All restored: the matched caller differs by 2 without the original parameter home.
-// Earlier: Frame 0x40/0x30 and qword spills remain; ordinary variant/body step with vertex sqrt result 400, top aggregate 430, word table offsets 400, material result 373 (plain; caller loses 2), direct-reference arm first 400.
-// AC338: ordinary variant/body pointer step with entry render-state/bottom/top/period lifetimes 400 each; previous-vertex pointer 400; center length retest 400 excluded. All lose matched caller by 2.
-// Ordinary variant/body pointer step with fade bounds, original-step predecessor result, earlier
-// vertex/edge double declarations and shorter emitted-point scopes: all 400; matched caller
-// loses by 2 in each.
-// Round 211: Ordinary variant/body step with unsigned UV/current ordinals 400/400; top memcpy 400; ordinal
-// predecessor 381; predecessor result-first 378. Original frame/spills and callee conventions remain.
+// score 379 (was 393): the fade clamp now computes a single radius*1.5 product, so the
+// radius keeps retail's xmm3; our fade block is still one instruction shorter than
+// retail's, and the call to function_4b2d0 still passes three stack arguments.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,
     real perimeter, point3f const *color, real height)
 {
     long const volatile *variant_reference = &variant;
+    long variant_value = *variant_reference;
     real inner_radius = radius - 0.0001f;
     double delta_x = (double)center->x - (double)g_4b9da0.x;
     double delta_y = (double)center->y - (double)g_4b9da0.y;
-    real distance = (real)(sqrt(delta_x * delta_x + delta_y * delta_y) - radius);
-    real fade = distance < 0.0f ? 0.0f : distance > 1.5f * radius ? 1.5f * radius : distance;
-    fade = 1.0f - fade / (1.5f * radius);
+    real distance = (real)sqrt(delta_x * delta_x + delta_y * delta_y) - radius;
+    real fade_limit = radius * 1.5f;
+    real fade = distance < 0.0f ? 0.0f : (distance > fade_limit ? fade_limit : distance);
+    fade = 1.0f - fade / fade_limit;
     if (fade > 0.0f)
     {
         real spread = fade * radius * 2.0f;
@@ -438,7 +425,7 @@ void function_19f680(long tag, long group, long pass, long variant, void *contex
             reference = polygon_pointer_19f(polygon_tag_19f(material), 0x24);
         byte *groups = polygon_pointer_19f(polygon_tag_19f(*(long *)reference), 0x5c);
         long group_offset = *(word *)(polygon_pointer_19f(groups, 4) + group * 10) & 0x1ff;
-        long variant_offset = *(word *)(polygon_pointer_19f(groups, 0xc) + (group_offset + (*variant_reference)) * 2) & 0x1ff;
+        long variant_offset = *(word *)(polygon_pointer_19f(groups, 0xc) + (group_offset + variant_value) * 2) & 0x1ff;
         long shader = *(long *)(polygon_pointer_19f(groups, 0x14) + (variant_offset + pass) * 10 + 4);
         byte *attributes = polygon_pointer_19f(polygon_tag_19f(*(long *)(polygon_pointer_19f(
             polygon_pointer_19f(polygon_tag_19f(shader), 0x20), 4) + 0x100)), 8);
@@ -469,8 +456,8 @@ void function_19f680(long tag, long group, long pass, long variant, void *contex
             long index = step == count ? 0 : step;
             double vertex_x = (double)vertices[index].x - (double)g_4b9da0.x;
             double vertex_y = (double)vertices[index].y - (double)g_4b9da0.y;
-            real alpha = (real)((maximum_distance - sqrt(vertex_x * vertex_x + vertex_y * vertex_y)) /
-                (maximum_distance - spread));
+            real alpha = (maximum_distance - (real)sqrt(vertex_x * vertex_x + vertex_y * vertex_y)) /
+                (maximum_distance - spread);
             alpha = alpha < 0.0f ? 0.0f : alpha > 1.0f ? 1.0f : alpha;
             point3f bottom = { vertices[index].x, vertices[index].y, center->z };
             point3f top = bottom;
@@ -482,10 +469,10 @@ void function_19f680(long tag, long group, long pass, long variant, void *contex
             if (uv != NONE)
                 D3DDevice_SetVertexData2f(uv, texture_position, 0.0f);
             D3DDevice_SetVertexData4f(0, top.x, top.y, top.z, 1.0f);
-            long previous = index == 0 ? count - 1 : step - 1;
+            long previous = index != 0 ? step - 1 : count - 1;
             double edge_x = (double)vertices[previous].x - (double)vertices[index].x;
             double edge_y = (double)vertices[previous].y - (double)vertices[index].y;
-            texture_position = (real)(texture_position - sqrt(edge_x * edge_x + edge_y * edge_y) * texture_scale);
+            texture_position = texture_position - (real)sqrt(edge_x * edge_x + edge_y * edge_y) * texture_scale;
         }
         D3DDevice_End();
         D3DDevice_SetRenderState(D3DRS_CULLMODE, old_cull);

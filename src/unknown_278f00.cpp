@@ -45,6 +45,7 @@ void __stdcall function_b8540(long arg_0);
 void __stdcall function_b8890(long arg_0);
 
 // score 212 (was 212): Frame 0x424 agrees; list/index/second-count homes and cleanup induction differ.
+// list selection, second-count home and cleanup schedule remain;
 // Earlier: list selection, second-count home and cleanup schedule remain;
 // frame 0x424 agrees; list/count homes and cleanup schedule remain;
 // Frame 0x424 agrees; list/count homes and cleanup schedule remain.
@@ -55,9 +56,12 @@ void __stdcall function_b8890(long arg_0);
 // frame agrees; list/index/count homes and cleanup induction differ;
 // existing component-delete helper 341; existing detach helper 464; inline declarations
 // 341/464; category byte comparisons 266; signed-byte category 212, membership 212, both 212.
-// Earlier 212 (was 212): list selection/count homes and cleanup schedule remain.
+// list selection/count homes and cleanup schedule remain.
 // Outer selector byte/short/word/dword 219/266/266/212; byte/short with branched
 // selection 245/291; byte/short with indexed cleanup 226/269. Original restored.
+// Distinct first/second membership ordinals: byte/long, short/long, word/long 281 each;
+// long/byte 278; long/short and long/word 267; byte/byte 289; short/short 290.
+// Earlier 212 (was 212): list selection/count homes and cleanup schedule remain.
 // Round 225: First/second array list/island ownership pairs 01/02/10/11/12/20/21/22: 212 each.
 // List/index/count and cleanup homes remain.
 // Round 227: Remove redundant first/second/both pre-retry initializations 212/212/212; split
@@ -72,6 +76,11 @@ void __stdcall function_b8890(long arg_0);
 // Round 235: Force-inline declaration at component-delete/detach boundaries 341/464;
 // with cleanup helper 411/532; with branched list selection 350/469; both boundaries
 // with branched selection 404/538. All helpers stay out of line; original body restored.
+// Complementary category bool/byte/short/long with signed second count 212/212/271/273;
+// unsigned second-count counterparts 212/212/271/273. Wide category frame 0x428; all restored.
+// Unsigned first/second/both handle arrays 212/212/212; first/second/both
+// arrays with unsigned classification 212/212/212; complete unsigned processing 212;
+// unsigned arrays/processing with original signed classification 212. Original storage restored.
 // @retail 0x278f00
 void function_278f00()
 {

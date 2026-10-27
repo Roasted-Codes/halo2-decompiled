@@ -168,6 +168,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // at the original result lifetime 268/277/316/268; initialized before the getter
 // 296/302/323/296. Frame and destination/ordinal allocation remain. Original
 // Boolean result, all channel/data constructors and executable body restored.
+// Scoped output names in seven combinations 221 each; with separate channel names 221.
+// Common final publication bool/byte/short/long 301/301/300/299;
+// with touch admission before construction 343/343/346/341. Original restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
