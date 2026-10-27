@@ -122,6 +122,8 @@ void function_2232a0(void)
 // Contiguous eight-byte sentinel fill 152; fill with native rectangle value/library rectangle copies 152/152;
 // fill with existing slot predicate alone/rectangle value/copies 151/151/151; fill with plain pretest 170; all 178.
 // Every sentinel-fill form also loses the matched initializer caller in the reduced image; all restored.
+// Complete occupied byte/short/long/signed-byte results 151 each; complete vacant byte/short/long/signed-byte
+// results 151 each. Original slot test and body restored.
 // Layout field-test orders flag/state/index, index/flag/state, index/state/flag,
 // state/flag/index, state/index/flag and three global-first orders 151 each.
 // Existing complete layout query 151; query with ordinary pretest/single-first layout 161/168;

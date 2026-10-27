@@ -131,6 +131,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Original body, word cursor and inherited qualifiers restored.
 // Entry count/selection/word-row offset lifetimes 156/154/154; count-selection/count-word/selection-word/all 156/156/156/156;
 // all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
+// Canonical shifted enable: independent 194; shared bool/byte/long 194/194/194; feature-first tests 194;
+// independent/shared-bool/shared-byte bitwise conjunctions 219/219/219. Original body and cursor restored;
+// caller preserved.
 // Count/word/byte, byte/count/word, byte/word/count and word/count/byte
 // declaration orders 154/155/154/155; same offset-step orders 155/156/156/155.
 // Native workspace construction from original/current/formal source at admission 208/210/208;

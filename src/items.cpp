@@ -1020,6 +1020,9 @@ struct s_item_flags_view_10b850
 // Round 174: dot first/second/both native values 1039/1012/1200; scaled-add input value 942;
 // dot first/second/both plus scaled-add value 1117/1200/1302; native add output reference with value input 942.
 // Original helpers and body restored; frame 0x154/0x12c and Boolean/workspace homes remain.
+// Rotation cross-term declaration orders ikj/jik/jki/kij/kji 814/813/813/814/814;
+// cross-first orders jki/kij/kji 814/815/815. Frame 0x154/0x12c and Boolean/native
+// rotation homes remain. Original complete body and all helpers restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

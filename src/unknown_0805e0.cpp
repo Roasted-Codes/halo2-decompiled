@@ -499,6 +499,7 @@ void function_1537f0(s_profile_record *record);
 // complete endpoint sentinel chain 67. Frame 0x90 and packed source spills remain.
 // Round 146: identity byte/word/signed-word/signed-dword/header/byte-identity/word-flags/byte-
 // flags views 67 each.
+// Complete shared view library/native copies 128/128; per-visit library/native copies 128/128; shared-view array-end 126; ended input scopes 128; contiguous links 130; complete destination clear 148. Original body retained.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -625,6 +626,7 @@ bool function_7fb50(void)
 // scalar accounting with record commit 120, with chained zeros 122. Input homes remain.
 // Round 146: records/buffers/record-capacity homes 125/90/90; records-buffers/records-
 // capacity/buffers-capacity/all/with-property-capacity homes 125/125/90/125/125, all restored.
+// Separate advancing record/property/both cursors 120/90/120; distinct record/property/both budgets 126/127/134; both cursors and budgets 135, with advancing buffer 134. Original input and working-state forms retained.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,

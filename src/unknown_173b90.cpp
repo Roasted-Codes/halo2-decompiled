@@ -890,6 +890,9 @@ public:
 // Round 174: existing cross input references 308; forward/up/both values 411/409/507;
 // reference inputs/output 308; native result with pointer/reference/value inputs 369/369/624.
 // Original helper and both calls restored; frame 0x60, flag/result and selective calls remain.
+// Fallback normalization vector/scalar/working-vector/computed-input forms 349/308/349/359;
+// with result after flags 346/305/346/356. Complete vector forms add frame storage; the
+// three-point scalar/result form is rejected. Original body and protected interfaces restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

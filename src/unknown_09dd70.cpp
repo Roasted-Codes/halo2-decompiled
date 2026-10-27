@@ -484,6 +484,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // 196 each; player+parent, packed+final, first three and all four 196 each.
 // Round 240: complementary attachment selection bool/byte/short/long 229/229/240/233;
 // with a native dword slot ordinal 250/250/254/250. All restored; entry register roles remain.
+// Round 179: library two-byte copy with short/long/dword attachment counters 251/252/252;
+// masked slot value with those counters 253/259/259; direct flag observations 251;
+// direct flags plus masked value/dword counter 259. Original byte loop restored.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

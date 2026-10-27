@@ -425,6 +425,8 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Round 211: Lower native/library color seed 684/684; upper native/library seed 661/661;
 // complete difference/scaled-difference stages 658/658; upper seed with difference/scaled
 // stages 707/700. Original separate color phases, helpers and output ownership restored.
+// Native upper bound/point scale/both 615/626/626; state-array receiver/with upper bound 615/615; scale
+// plus array/all inputs/all role homes 626/626/626. All restored.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

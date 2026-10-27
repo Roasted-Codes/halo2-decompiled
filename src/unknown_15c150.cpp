@@ -132,6 +132,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // return/result 250, input/return/result 254, input/ordinal 263,
 // input/return/ordinal 263, all native word 263. All restored; delayed EBP
 // save, teams-byte home and local-slot spill remain.
+// Existing search table pointer/const pointer/reference/const reference 196/196/196/196;
+// actual entries pointer/const pointer/array/const array 196/196/196/196. Original helper restored.
 // @retail 0x15c150
 void function_15c150()
 {

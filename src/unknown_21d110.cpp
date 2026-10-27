@@ -373,6 +373,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // four with record-link initialization first also 204. Original helper and body restored.
 // Round 148: coherent private start tag/state order, unsigned result, unsigned tag, their pair/all
 // combinations and order with default-NONE rate admission 204 each.
+// Round 179: global availability fields at each use, direct/complete/failure/staged result
+// at Boolean storage 204/204/204/204; native byte storage 204/204/204/204.
+// Original availability receiver, helper, field types and expansion policy restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

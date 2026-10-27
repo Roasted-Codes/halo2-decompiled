@@ -123,6 +123,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // 316/316/316/335; const-reference input with genuine state copy gives the same four scores. All
 // copied members initialized; larger frame and extent regress. Original private step, layout and both
 // traversals restored.
+// Round 174: isolated partition/ordinal/both/successor/partition-successor/ordinal-successor/all
+// scalar home names, then all with the second-pass actor receiver, 164 each. Original names restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

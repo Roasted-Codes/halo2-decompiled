@@ -263,6 +263,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // first natural header/aligned buffer 220; second natural header/aligned buffer 216.
 // Round 240: reversed ordered sphere comparison alone/with distance/radius/both squares 189/189/189/189;
 // those forms with the existing point-difference helper 190/190/190/190. One-point gain rejected; original comparison restored.
+// Round 179: link snapshot 190; bitmap field at each use 257; both 215;
+// geometry at each use alone/with link/bitmap/both 1004/1004/1042/1057;
+// all receiver forms with short node cache 1061. Original observations restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

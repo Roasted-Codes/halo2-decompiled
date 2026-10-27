@@ -78,6 +78,9 @@ void __stdcall function_b8890(long arg_0);
 // with branched selection 404/538. All helpers stay out of line; original body restored.
 // Complementary category bool/byte/short/long with signed second count 212/212/271/273;
 // unsigned second-count counterparts 212/212/271/273. Wide category frame 0x428; all restored.
+// Unsigned first/second/both handle arrays 212/212/212; first/second/both
+// arrays with unsigned classification 212/212/212; complete unsigned processing 212;
+// unsigned arrays/processing with original signed classification 212. Original storage restored.
 // @retail 0x278f00
 void function_278f00()
 {

@@ -35,6 +35,9 @@ real normalize2d(point2f *arg_0);
 // Round 147: Planar scalar differences 255; complete projection products 220; both side-product
 // sets 220; all squared terms 220; projection/side 220; planar/projection/side 255; all products
 // 220; all products with planar differences 255.
+// Round 174: center/radius/both per-use sources 291/242/296; complete actor-position snapshot
+// alone/with center/radius/both 267/283/262/246; complete sources with clean output access 296.
+// Original observations, early clearance, delayed zero, output access and scalar spill restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

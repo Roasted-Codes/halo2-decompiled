@@ -92,6 +92,8 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // initialization before both bits 240/251/240; independent event buffers 193, with
 // the first two interleaves 240/251; existing bitfields plus first interleave 240.
 // Loop remains rolled; extra branches and event/store sequencing regress. All restored.
+// Complete eligibility bool/byte/short/long results 190/190/190/190;
+// default-false reader-gate results 190/190/190/190. Pool reload and completion stores remain.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

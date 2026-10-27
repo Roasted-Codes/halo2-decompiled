@@ -131,6 +131,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // all with planar input values 1746. Original helpers and coefficient pair restored.
 // Complete native vector outputs in scale/add/subtract helpers 1291/1048/984; scale-add/scale-subtract/add-subtract/all 1466/1434/1147/1610;
 // all native vector outputs with completed planar workspace 1668. Original helpers and accepted loop/coefficient pair restored.
+// Scale signed-byte/unsigned-byte/unsigned-word ordinals 953/953/953; unsigned-word scale with signed-word
+// add/subtract/both loops 1152/1115/1215; all unsigned-byte/signed-byte producer loops 1215/1215. Original
+// helpers and coefficient pair restored.
 // Earlier declarations of vector workspaces local_75, local_37, local_40, local_43, local_50,
 // local_52, local_53 and local_58 each 953.
 // Round 137: response pairs 34/48, 34/56, 34/66, 48/56, 48/66, 56/66 959,959,957,933,920,925;

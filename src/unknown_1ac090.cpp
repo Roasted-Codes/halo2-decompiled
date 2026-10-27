@@ -1268,6 +1268,8 @@ struct s_1acda0
 // Round 138: active byte/char/short/long 119/119/132/131; result name, active name,
 // all role names 68/68/68; long active with all names 131. Early ESI and result-byte
 // ownership remain; original active producer, qualification and request stores restored.
+// Round 174: child-result join with inherited/ordinary result and neither/state/actor/both nested guards
+// 106/106/172/184 and 172/191/185/170. Retained active-state producer unchanged; all joins restored.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {

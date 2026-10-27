@@ -1624,6 +1624,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // signed positive completion 759; admission plus positive completion 739.
 // Round 137: SSE flag 755 (file gate failed);
 // inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
+// Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

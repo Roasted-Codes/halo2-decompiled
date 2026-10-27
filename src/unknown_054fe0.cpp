@@ -1311,6 +1311,9 @@ struct s_player_properties
 // orders ACBDEF/ABDEFC/DEFCAB/FCABDE/EABCFD/BFEDCA/CDEFAB/FEDCBA 184/184/186/186/184/186/184/186. Original store order restored.
 // Native short/word/signed-byte/byte collection ordinals 235 each; corresponding
 // update ordinals 227/227/231/231. Both original long traversals restored.
+// Round 179: first/second/both default arrays after name output 194/205/234;
+// two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
+// all scalar/array defaults after names 296. Original store phases restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

@@ -2070,6 +2070,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 
 // score 210 (was 210): frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
+// object/offset homes and low-mask allocation remain;
 // native unit view 184; read-only unit view 184; native child view 184;
 // both native views 184; unsigned result mask 184; child defaults reversed 186;
 // immutable output binding 184; read-only byte source 184.
@@ -2132,6 +2133,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // Direct tail flags from their tests: byte 207; first fraction 206; byte/first 203;
 // second fraction 216; byte/second 212; both fractions 211; all 211; all long 203.
 // Seven-point best gain rejected; original flags, field clamps and stores restored.
+// Complete payload observations through live lookup/header record/header array/decoded array
+// 402/274/370/325; unsigned changed-mask combinations 402/274/370/325. Header-record
+// forms reach 1081 bytes but regress; original cached object and signed result restored.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

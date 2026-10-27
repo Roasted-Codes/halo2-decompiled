@@ -1041,6 +1041,8 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 5,13,6,12,7,14 / 5,13,6,14,7,12 / 5,14,6,12,7,13 / 5,14,6,13,7,12 all 195;
 // 12,5,13,6,14,7 and 14,5,13,6,12,7 both 194. Reduced control 191, full 193;
 // original phases, case bodies, caller and handler tuples restored.
+// Single-root retained/observed orders with lookup inline/noinline or all three
+// connection-handler inline/noinline boundaries: 208/208/208/208/218/218/218/218 fast; original graph and declarations restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
