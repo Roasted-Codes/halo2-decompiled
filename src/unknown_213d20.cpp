@@ -320,6 +320,8 @@ long cache_copy_current_priority(char const *map_name)
 // 0x214db0 forms (callee still matching): returning the printed buffer 5; drive-path test in a bool 5;
 // file name from a separator ternary 5; one shared print call 19; path-first parameter order 9; the
 // helper in its own file sorted after or before this one 5/5.
+// Queued record pointer 5; delayed/scoped comparison buffer 5/5; interleaved result 5;
+// path matrix 15; two-arm result 24; named comparison 5; unsigned result 5.
 // @retail 0x213e90
 long cache_copy_queued_priority(char const *map_name)
 {

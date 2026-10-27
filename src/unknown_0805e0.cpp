@@ -117,21 +117,6 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 8 (was 104): only the first property's 0xfffd id store is scheduled early (retail emits it
-// after the record stores and the buffer-cursor load, just before the buffer pointer store).
-// Earlier (pointer-advancing body, capacity-derived totals): entry cursor 125; property cursor 135;
-// per-record property counts 113; count homes 121; cursor/count combination 132; shared record/buffer
-// total 125; property total from records/buffers 113/113; admission accounting 108; capacity bounds
-// 144/113/134/136; short property ordinal 114; early four-property accounting 109; count-indexed
-// record/buffer/both outputs 129/113/128; capacity-derived totals 137/136/116; paired totals 132;
-// all totals 142; three-use property element 104; unsigned/byte ordinals 109/110; native identifier
-// field 104; scalar-array end bound 105; ordinal do-loops 141/142.
-// Round 136: outputs written at running record/property/buffer indices, capacities counted down in
-// their homes, the property index and capacity advanced inside the three-property loop (rolled as
-// retail): 8. On that body: counted-up totals with pointer advances 135; loop bounded by the
-// record's count 134; record pointer local 119; sixteen orders of the index/capacity updates 17-102;
-// the id store placed around the record stores 8-114 (twenty orders); 16-bit id field 8;
-// named buffer local 8/17; permuter 64 tries 8.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -148,12 +133,13 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 			if (record_capacity <= 0 || property_capacity < 4 || buffer_capacity <= 0)
 				break;
 			memcpy(records[record_index].identity, &entry->player, sizeof(records[record_index].identity));
-			*(short *)&properties[property_index].unknown00 = -3;
+			s_cache_property *first_property = &properties[property_index];
 			records[record_index].type = 0x61;
 			records[record_index].count = 4;
-			records[record_index].properties = &properties[property_index];
+			records[record_index].properties = first_property;
 			record_index++;
 			record_capacity--;
+			*(short *)&first_property->unknown00 = -3;
 			properties[property_index].type = 4;
 			properties[property_index].unknown08 = (long)&buffers[0x40 * buffer_index];
 			property_index++;

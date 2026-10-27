@@ -1459,6 +1459,9 @@ void looping_sound_controller_release(long index);
 // playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
 // Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
 // scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
+// Inline/forced-inline controller getter 40/40; open-depth inline getter with noinline release 122;
+// playback/both receiver references 5/5; const playback/controller pointers 5/5;
+// unsigned decrement/mask 5/5.
 // @retail 0x127390
 void sound_playback_delete(long sound_index)
 {
