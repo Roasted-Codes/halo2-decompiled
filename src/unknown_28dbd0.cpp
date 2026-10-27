@@ -127,6 +127,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 175: Consumed-axis reference axis/direction/both 186/186/186;
 // axis value with pointer/reference direction 308/308; double trig input with
 // pointer/axis-reference/both-reference inputs 188/188/188. Original helper restored.
+// Round 243: Delayed-sine schedules 187/187/180/212/209/212/209; output loop 230; scalar
+// trig contracts 227/187/224/191. The 180 form fixes frame only, gains six and is
+// rejected; 209 fixes frame and request homes. Original helper and body restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

@@ -298,7 +298,7 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 193 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
+// score 193 (was 193): Frame 0x48 and geometry agree; unsigned-zero branch, pass joins and clear-call transport remain.
 // Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
 // 254/300/226; noinline with short/byte 254/226.
 // unsigned-zero branch and pass-call boundaries differ;
@@ -336,6 +336,8 @@ bool function_404b0(long mode)
 // complete stipple choice bool/byte/short/long 193/193/226/226. Boolean role name,
 // negated range, direct outside range and byte outside range 193 each. Both named
 // Boolean stipple-enable choices kept, plain 193; unsigned-zero admission and pass joins remain.
+// Round 243: Seven ordered admission partitions 225 each; positive geometry arm 192 at
+// 1194 bytes, first +0x1b3. One-point gain rejected; original body restored.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

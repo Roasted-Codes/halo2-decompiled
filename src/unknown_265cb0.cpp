@@ -363,7 +363,7 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
-// score 184 (was 195): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// score 184 (was 184): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
 // the register allocation differs from the first block
 // the register allocation differs from the first block
 // on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
@@ -408,6 +408,9 @@ real function_30bf0(vector3f *vector);
 // separate 3/2 stores 255; projection fraction clamped in place 184 (plain, kept); both 241;
 // direct threshold accumulators 230. Keep long return/result, one projection fraction and
 // seat cursor stepped in the body; both external declarations agree, exact caller preserved.
+// Round 243: Native point/origin/both/endpoint values 351/363/396/327; point-endpoint
+// 366, origin-endpoint 378; all inputs in either declaration order 432/432. Original body
+// restored.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
