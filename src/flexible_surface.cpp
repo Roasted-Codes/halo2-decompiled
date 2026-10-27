@@ -108,6 +108,11 @@ void function_118140(long);
 void __stdcall function_118430(long);
 void function_117080(long);
 
+// score 50 (was 54): retail adds the pool data to the record offset before the store (`add eax, edx`),
+// reloads the pool after the `lea` of the next index, and gives the inlined next-index search other
+// registers (result edx, count edi, bitmap esi). Pool read directly at each use as in 0x1160c0 54 (reload
+// now after the `lea` as retail); with typed record arithmetic 54; with no slot local 54; with record and
+// definition locals 54; the for-loop next-index helper 50 (identical code).
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -309,6 +314,13 @@ void __stdcall function_117790(long index)
 	}
 }
 
+// score 81 (was 81): the pool data base sits in ebp where retail has ebx, and retail loads origin.y before
+// forming the record pointer; the first loop is entered by a jump (padding) where retail falls through. In the
+// attachment loop retail walks a pointer at the attachment, reads the marker, then the vertex again after the
+// copy, and still ORs the pinned word in place. Attachment element pointer 103 (retail's walk and reloads, but
+// the copy's registers rotate and the pinned OR splits into load/or/store, 521 bytes); with a vertex local for
+// the pin 103; with the existing bit_vector_set 103; fields in full with bit_vector_set 103 (identical code);
+// the definition read after the origin delta 80; between the origin copy and the delta 80.
 // @retail 0x117a80
 void function_117a80(long index)
 {
@@ -347,8 +359,9 @@ void function_117a80(long index)
 void function_117c80(vector3f const *input, vector3f *output, real angle)
 {
 	real limit = (real)cos(angle);
+	real magnitude = (real)fabs(input->k);
 	*output = *input;
-	if (fabs(input->k) > limit) output->k = input->k < 0.0f ? -limit : limit;
+	if (magnitude > limit) output->k = input->k < 0.0f ? -limit : limit;
 	if (fabs(output->i) < 0.01f && fabs(output->j) < 0.01f || fabs(surface_normalize_horizontal(output)) < 0.0001f)
 	{
 		output->i = 1.0f; output->j = 0.0f;

@@ -292,6 +292,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // used for table and call 191 (index esi/entry edi, retail the other way); indexed entry at each use 271;
 // function-scope center copy with the query local to the list branch 199 (frame 0x10a4), unaligned 192;
 // one marking site with a `continue` 210 (comparison flips). All restored.
+// Round 30 (m3 lane 12): query declared after entry/geometry 190 (identical); geometry helper taking the
+// index (as the sibling file's) 228, 0x44c90 140; geometry helper with one result exit 188 but 0x44c90 107->132;
+// bound position read at each use 198; transform at function scope 190.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {
