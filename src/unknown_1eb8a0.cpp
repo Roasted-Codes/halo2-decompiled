@@ -231,6 +231,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Initial component orders ikj/jik/jki/kij/kji 639/642/637/644/642; scale orders ikj/jik/jki 642/642/642.
 // Round 324: shared ramp time 665; third time 642; ramp/third 665; remaining distance 683; ramp/remaining 682;
 // third/remaining 683; all scalar workspaces 682; displacement workspace 665.
+// Round 376: Continuation status at entry in bool/byte/short/long 643/643/648/647; at output
+// phase 687/687/687/686. Original failure status, counter and caller preserved.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

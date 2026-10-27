@@ -570,6 +570,9 @@ struct s_item_collision_bsp
 // contact-position projection named 249; paired shared spin scales 254. Opening body and includes retained.
 // Shared matrix rotation alone/point setter 249/249; with shared distance/both 250/250;
 // native whole-plane transfer on those four rotation graphs 305 each. Exact-only forms restored.
+// Round 376: Complete axial/fallback/both spin outputs 281/279/298; CRT publication 281/279/298;
+// both outputs declared before marker with assignment/CRT 298/298. Original spin workspaces,
+// inputs and includes restored.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
@@ -1293,6 +1296,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // Release-vector publication ikj/jik/jki/kij/kji 157/160/208/162/208;
 // angular damping jki/kij/kji 155/155/155. Original release helper and body
 // restored; byte RMW/tail and event/location homes remain.
+// Round 376: Predicate-produced surface/attachment/both results 244/228/185; both with signed-
+// byte/byte/short/word/long carriers 183/183/196/196/196. Original release and event code
+// restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

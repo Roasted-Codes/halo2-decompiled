@@ -1613,6 +1613,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Native cursor/selection/all datum handles 684/684/684; existing prop receiver 707;
 // single strength observation 685; all handles with prop/strength/both 707/685/732.
 // Original complete body and all inherited input/helper declarations restored.
+// Round 376: Native transform pointer/value 684/774; all nine row products with
+// raw/pointer/value receivers 684/684/774; direct output with native pointer/value/value-and-
+// products 717/724/724. Calibrated fast; original body restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {
