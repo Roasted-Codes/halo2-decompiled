@@ -20,6 +20,8 @@ struct lane_a_mass_restore
 // Uniform compound, scale-first and mass-first forms 6; two index loops 14;
 // retained pointers 44; retained scales 38; group scales 34; pointer ranges 71;
 // per-product scale, input and result locals 14.
+// Scalar member/index accessors, their compound and forced forms 6 each;
+// read-only record and record/member form 6 each.
 // @retail 0x315280
 void __cdecl lane_a_scale_masses(void *, lane_a_mass_restore *record)
 {
