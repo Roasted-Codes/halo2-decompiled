@@ -1305,6 +1305,9 @@ void __stdcall function_205320(long group_index)
 // long pointer 18; first vehicle saved before the store 19; inverted test 24; squad lookup at each use 33;
 // squad computed before the NONE test 38 (at the top 42); ternary 45; one store after the test 47;
 // index local updated in place 56/57.
+// Round 42: named scaled offset signed/unsigned 18/18; const squad, then both pointers 18/18;
+// identifier as a real short field 18; low-word helper 44; typed pointer increment/address-of-element 18/18;
+// low-word equality 21; early high-bits predicate 18. The pool/index registers and three-address lea remain.
 // @retail 0x201ad0
 void function_201ad0(long squad_index, long object_index)
 {
