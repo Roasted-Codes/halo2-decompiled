@@ -527,6 +527,8 @@ bool function_255b10(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // score 15 (was 15): saved sentinel/clock and settings registers still swap;
 // callback failure returns at actor/prop/unit/settings/cooldown/reaction phases
 // 15/106/106/106/106/106; combined actor-settings/all phases 39/39.
+// getter inline/noinline declarations 15/15; actor-index local 15; entry-scoped clock/timestamp
+// 15/15; prop-index local 113; unit inline declaration 15; result-first 116; direct clock 96.
 // @retail 0x1ae680
 short __stdcall function_1ae680(long arg_0, s_slot *arg_1)
 {

@@ -828,7 +828,7 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 	}
 }
 
-// score 251 (was 251): Frame 0x38 agrees; ID/result/loop homes and protected query lifetime remain.
+// score 222 (was 251): Frame 0x38 agrees; ID/Boolean homes and protected blend-query lifetime still differ.
 // Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
 // 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
 // Two-point gains dropped.
@@ -864,6 +864,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 167: Three separate name-change predicates on the late-success body, logical/bitwise joins:
 // bool 260/254, byte 260/254, short 280/272, long 277/267.
 // All three comparisons precede the original four name stores; original combined predicate restored.
+// Round 194: Native output-record field/aggregate/logical/aggregate-logical pointer forms
+// 250/222/254/252; references 250/222/254/252; declared member 255 (plain 255).
+// Declared member with repeated field pointer/reference 222/222; field pointer kept (plain 222, 1139/1133).
 // Round 375: Native optional transition construction, mutable/const 341/341; with native
 // optional overlay 338/338; uniform three-ID role names on those graphs 341/341/338/338.
 // Frame 0x38 retained; all eight forms restored.
@@ -1002,17 +1005,15 @@ bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_
 
 names_store:
 	{
-		bool changed = (unknown70 != names.mode) | (unknown74 != names.weapon_class) | (unknown78 != names.weapon_type);
+		s_animation_names *names_out = &stored_names;
+		bool changed = (names_out->mode != names.mode) | (names_out->weapon_class != names.weapon_class) | (names_out->weapon_type != names.weapon_type);
 
-		unknown70 = names.mode;
-		unknown74 = names.weapon_class;
-		unknown78 = names.weapon_type;
-		unknown7c = names.set;
+		*names_out = names;
 		if (changed)
 		{
 			if (graph_tag_index != NONE && !(flags & 1))
 			{
-				resources_request(unknown70, unknown74, unknown78, true, true);
+				resources_request(names_out->mode, names_out->weapon_class, names_out->weapon_type, true, true);
 			}
 			if (!channel_valid(&channels[2]))
 			{

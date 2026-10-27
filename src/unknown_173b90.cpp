@@ -860,6 +860,28 @@ public:
 // 308; forward/up/both values 411/409/507; reference inputs/output 308; native result with
 // pointer/reference/value inputs 369/369/624; fallback normalization vector/scalar/working-
 // vector/computed-input forms 349/308/349/359, with result after flags 346/305/346/356.
+// direct final result 388; direct parent color 308 (kept); child for-loop 338; native
+// fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364;
+// native orientation result 373, with shared cross 373; late long result 411; entry/late
+// complete result arms 395/395; late result from tests 395; child/location-stage result
+// 315/316; late successful default 411; signed flags with late result 411; native flag bytes
+// 382; flag-stage result 378; native flag overlay 382; overlay with flag-stage result 378;
+// named byte transfer 411; transfer/result 411; byte flags with ordinal observations 388;
+// overlay/ordinal/result 384 (all native byte layouts lose five matched controls); flag-stage
+// long result/native bitfield transfer/direct visibility and combinations 305-368;
+// post-visibility result 315; native definition, shared velocity address, readonly particle
+// and their combinations 308; native receivers/location for 308; native location/child/
+// successor/all handle domains 308; byte/signed-byte/word/bool canonical results
+// 374/374/308/375.
+// Round 174: existing cross input references 308; forward/up/both values 411/409/507;
+// reference inputs/output 308; native result with pointer/reference/value inputs 369/369/624.
+// Original helper and both calls restored; frame 0x60, flag/result and selective calls remain.
+// Fallback normalization vector/scalar/working-vector/computed-input forms 349/308/349/359;
+// with result after flags 346/305/346/356. Complete vector forms add frame storage; the
+// three-point scalar/result form is rejected. Original body and protected interfaces restored.
+// Round 183: Five complete fixed-basis column-order permutations 320/320/326/326/320;
+// three default-position permutations 308/308/308. Original cases and copies restored;
+// early result/flag publication, location transport and selective tag expansion remain.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

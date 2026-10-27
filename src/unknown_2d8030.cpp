@@ -64,6 +64,16 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 
 // @retail 0x2d84e0 deleting error_handler_2d8030
 
+// score 39 (was 39): Extra class-table store and first release argument staging remain.
+// Earlier suppressed table store 30; owned storage/both storage/element byte size/
+// named byte size 0, but deleting destructor missing; capacity/signed ownership/
+// unowned return 30; storage before guard 3. All rejected. Separate noinline/inline/
+// forceinline declarations 39 each; pure virtual, with those three boundaries,
+// 39 each and deleting destructor missing; suppressed table with noinline 30, also missing.
+// extra table store and first release argument differ.
+// Abstract form 30; owned pointer 0; capacity 30; both 0; signed ownership 30;
+// element size 0; unowned return 30; captured return 3; owned byte size 0.
+// Matching forms lose the matched deleting body; the header is restored.
 // @retail 0x2d8510
 error_handler_2d8030::~error_handler_2d8030()
 {

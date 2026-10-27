@@ -298,6 +298,59 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // all three 378, all plus trace-start 368; guard bit word/long, collision declaration,
 // workspace/guard names, combined flags and child while 368 each; common scalar for all four
 // samples 423.
+// Frame 0xb0 agrees; entry EBP preservation and random/geometry/getter homes remain.
+// Frame 0xb0 agrees; late EBP save, escaped blend coordinates and selective getter expansion remain.
+// Frame 0xbc/0xb0, entry EBP save and random/geometry/getter scheduling remain.
+// Earlier: Frame 0xbc versus 0xb0; entry EBP preservation and random/geometry homes remain.
+// Earlier form: exact 0xb0 frame; late EBP save, random stores/getter expansion differ.
+// Interpolation remainder 415; child-duration default 411; failed-child continue 408;
+// overwritten placement default removed 409; definition reads at use 449.
+// frame 0xb0 agrees; EBP is saved after the early exits,
+// random scratch stores and interpolation/collision homes differ. Entry scalar
+// blend components 417; branch-scoped components 417; native kind snapshot 408;
+// inline depth one 408; independent random outputs 435.
+// random-word array loop 591; array loop with scalar draw 589;
+// position scale loop 418; position-add loop 408; byte guard 408.
+// separate trace point 408; separate direction 408; scoped flag 408;
+// nonzero kind first 415; final scalar draw 399; last two 409; last three 389.
+// Entry record declaration 389; final getter field at use 389; external record
+// reference 389; late placement default 389; child enable last 389.
+// Native effect bit-field, flag-word mask and shift 389/389/389;
+// ordinary result on those native forms 436/436/436; native bit-field and
+// word-mask single guards 389/389 (control 389). Entry EBP save remains late;
+// original admission guard, qualifier and scalar random lifetimes restored.
+// Earlier form: late entry EBP save and random/getter geometry scheduling remain. Fast trials:
+// scalar draw one 399; scalar draw two 386; scalar draw three 399; scalar draws one/two 409; scalar
+// draws one/three 396; scalar draws one/four 409; scalar draws two/four 396; scalar draws one/two/four
+// 415. All restored.
+// Draw two alone reaches 1652 bytes at fast 386; three-point reduction rejected.
+// Entry/random-phase sample scopes and sample name 389 each; shared real scale 396;
+// child reciprocal before link 383; age before position scale 391; separate blend point 447;
+// separate blend with shared real scale 431. Reciprocal lifetime plain 383 at 1638/1652 (a one-use read moved ahead of the link call; not kept).
+// Child tag/duration/both native values 391/390/392; inherited velocity value 380 kept (plain);
+// complete blend products 387; tag/products 392; duration/velocity 384; all producers 401;
+// velocity at admission 395; after rotations 382. Frame 0xbc versus 0xb0 for the retained native velocity.
+// Complete velocity arms 411; entry velocity declaration 380; both 411; per-use velocity fields 467;
+// separate real spatial objects 433; with velocity arms/entry declaration/per-use fields 438/433/487. All restored.
+// Independent collision/placement/both 377/380/376; first sample alone/with collision/with placement/all
+// 429/436/429/436; collision and placement with velocity source 368; collision/source alone 368
+// kept (plain), placement/source 389; branch collision/source 372; late placement 399;
+// shared effect receiver with velocity source/value 434/435. Frame 0xb0; body 1643/1652.
+// Native flag four 393; with velocity pointer/admitted pointer/pointer arms/value arms
+// 394/393/394/410; with complete blend products/duration/all-four scalar draws 393/392/428.
+// Native flag declaration and every body form restored.
+// Round 230: Shared current/prior/both blend-vector scales 375/375/368; collision-offset/motion
+// producers 377/369; both blends with collision/motion/all 377/370/377.
+// Round 197: independent blend/probe-point/probe-direction objects 428/368/368;
+// blend-point/probe-point, blend-point/direction, both probe objects, all three 428/428/368/428;
+// full independent native objects on the recovered collision/velocity-source frame 466. All restored.
+// Shared point constructor: blend 368, collision 371, motion 375, blend/collision 371,
+// blend/motion 375, collision/motion 378, all three 378, all plus trace-start 368. All restored.
+// Guard bit word/long, collision declaration, workspace/guard names, combined flags and
+// child while 368 each; common scalar for all four samples 423.
+// First native sample on the collision/source frame: entry/producer 426/426;
+// with native probe point/direction/both 426/426/426; entry/producer/both probes
+// with shared loop lookup 443/443/443. Frame shrinks to 0xac; all restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

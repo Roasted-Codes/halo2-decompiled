@@ -141,6 +141,7 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Published reciprocal log input with direct/scalar publication 284/153;
 // with paired-counter library clear 305/258, chained counters 284/155,
 // and long changed result 280/195. Exact original logarithm and reciprocal retained.
+// Eager record/restore/final predicates and their pairs/all 303/219/168/291/296/206/276; all plus eager copy gate 293. Original double expression, observations and calls restored.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -695,6 +696,8 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 // Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
 // native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
 // Entry color/interval/data declarations, paired/all scopes and entry sample: eight forms 22 each.
+// Inline range-map helper modifying/returning its value 146/149; switch in a shared inline
+// helper with 0x1b2c0 22; sibling statement clamp 76; sibling named clamp 66.
 // @retail 0x1b580
 bool function_1b580(long unused, byte const *definition, long component, long mode, real *out)
 {
@@ -877,6 +880,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // masked value 202.
 // Complete mapping-root observation alone/with value table/with remapping word/both 159/197/160/212;
 // the same four graphs with native unsigned slot 159/197/160/212 (all with ordinary body steps).
+// Direct/mapped/both word-field observations 199/177/185; each with consistent value-table fields 208/192/186; both with remapping-root observations alone/with value fields 185/186. Original body, dynamic bounds and shared writer restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

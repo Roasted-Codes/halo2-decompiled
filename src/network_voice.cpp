@@ -1253,6 +1253,13 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Native identity with original validation: rolled 316, counted 144; byte identity counted 112;
 // other-player identity 144; native/byte identity with channel rejection 144/112;
 // native/other-player identity with entry-width value 165/165. All lose the matched caller; original retained.
+// Counted traversal with immutable channels/player/both 112 each; pointer traversal
+// with the same forms 283 each; counted immutable identity/source 112/112.
+// Counted forms lose 0x54990; pointer forms preserve it. Original body restored.
+// Every unrolled form keeps the identity flag in bl where retail keeps it in al, so the channels
+// pointer moves to ebp and its argument to the stack. Counted loop 112; named channel size 112;
+// pointer walk 111, with the identity compared in its declaration 111; per-channel size helper 184.
+// Do/while forms (pre-increment too) and short counters stay rolled.
 // Round 188 separate successful total: rolled/counted/unsigned result/unsigned total/
 // retained entry width/admission/split adds/pre-tested walk 281/112/112/112/165/112/112/112;
 // expanded caller conventions checked separately; original accumulation restored.
@@ -2041,6 +2048,11 @@ local_0:
 
 /* whether two players may hear each other in team voice: on the same team,
    or always outside it */
+// score 15 (was 15): retail places the early true exit between the shared-team true exit and
+// the false exit; ours places it last. Early test as an else arm 15; one final true return
+// (pushes move to entry) 49; false guards with a final true return 15; split availability and
+// mode returns 61 (availability exit lands between, as in retail, but the mode exit goes
+// inline); mode getter test 61.
 // @retail 0x57b60
 long voice_players_share_team(long other, long player)
 {
@@ -2089,6 +2101,10 @@ long voice_players_share_team(long other, long player)
 // enclosing mask with live mode 54; signed live mask 34; rejection to sole exit 34; enclosing exit 54.
 // Accepted-boundary mask zero with signed equalities/range 56/125; unsigned 56/125;
 // complete-query mask with signed equalities/range 47/51; unsigned 47/51. Shared getter retained.
+// Global test with the mode named inside before/after the mask 56/56 (exact in a one-file link where
+// the session lookup may write memory, BLOCKED-BY 0x59670: our link proves it writes only the
+// caller's local, so the mode is not split); getter test with the mode named inside 46;
+// mode named before the test with the mask inside 56; mask declared after the membership lookup 55.
 // Round 136: defining-unit inline membership/players/both 25,25,25;
 // with separate noinline 25,25,25; mode force-inline alone/with both outlined queries 25,25.
 // @retail 0x56c60
@@ -2912,6 +2928,45 @@ struct s_voice_route_choice
 // branch/engine/entry/after-routing 376/375/425/452; branch identity with three pairs/native
 // descriptor 382/376; engine identity with three pairs 381; post-routing identity with three
 // pairs and native descriptor 464.
+// frame 0x54 and scalar homes agree; entry registers and unrolled cursor bias differ.
+// Earlier at 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
+// Earlier: frame 0x50 versus 0x54 and nearest-choice homes still differ.
+// Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
+// byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
+// Scalar role names 394; rejected-mode first 394; signed while traversal 394;
+// descriptor before pairs 394; existing mixer helper 461; byte radio with direct reads 411;
+// combined headset clear/set 519. Original body retained.
+// Boolean radio with unsigned nearest index 411; three mixer pairs 394;
+// conditional headset assignment 394; split initial/replacement nearest 412;
+// repeated player-field reads 472. Frame and route homes still differ; original retained.
+// Native Boolean/word radio with choice receiver 410/392; Boolean with three pairs 397;
+// plain pair loop 394, with Boolean 411; native descriptor alone 394 (retail length),
+// with native choice/Boolean 411; native choice/Boolean mixer-workspace names 410.
+// Headset rejection first 394, with native Boolean radio 411; selected nearest result 1101, with native
+// radio 1103, with both 1103; late mixer descriptor 394, with native radio 411; all three with native radio
+// 1103. Selected results prevent four-way expansion; all original code restored.
+// Per-choice pointer 393; signed-word radio 393; signed headset 394;
+// function-scope descriptor only 402; function-scope pairs only 401.
+// Selected route value 459; byte/word radio with route value 491/459;
+// route value with three pairs 469; native descriptor 464; word/three pairs 467;
+// byte/descriptor 495; native mixer combination 503. Frame shrinks to 0x40;
+// original indexed selection and mixer workspace retained.
+// nearest-distance 534; candidate-distance 526.
+// nearest-distance-bool 572; nearest-distance-word 533.
+// nearest-distance-descriptor 538; candidate-distance-bool 572.
+// candidate-distance-word 525; candidate-distance-native-mixer 576.
+// Radio predicate accumulation, bitwise long with either comparison order 436/436;
+// bitwise Boolean 363/363; logical long 1082/1082;
+// logical Boolean 1087/1087. Byte bitwise accumulation 363 plain kept; original indexed nearest selection retained.
+// Byte-accumulation scalar declarations 021/102/120/201/210 and nearest/headset/radio
+// home renames 363 each; entry registers and traversal bias remain.
+// Reused outgoing identity at branch/engine/entry/after-routing 376/375/425/452;
+// branch identity with three pairs/native descriptor 382/376; engine identity with three pairs 381;
+// post-routing identity with three pairs and native descriptor 464. Original identity construction retained.
+// Round 183, recovered bitwise-radio frame: advancing choice cursor 392; reused talker/player
+// masks 384/391; cursor with talker/player 390/409; both masks 379; cursor with both 401;
+// one mode observation 405 (callers 57960/56df0 lose to 22/18). Original loop restored;
+// frame 0x54 and scalar homes agree, entry saves and unrolled cursor bias remain.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
