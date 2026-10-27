@@ -38,7 +38,11 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 }
 
 // score 5 (was 101): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
-// intersection's x product loads the plane before the point. The fraction defaulted first,
+// intersection's x product loads the plane before the point. Round 72 (full build): helper
+// parameters (first, second, plane) 7 and (first, plane, second) 7, both making the second
+// intersection's x product plane-first too; (plane, second, first) 5; a separate input pointer
+// for the points or their copy 9 (x term first in the first intersection), declared first 9.
+// The fraction defaulted first,
 // x-first displacements and the scale inside the output expressions gave retail's XMM homes
 // and length (101 -> 5). Then: current declared before previous 5; named current/previous
 // point pointers 28; dot_product2d numerator 5; fraction shared with the classification

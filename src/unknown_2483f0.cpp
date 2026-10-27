@@ -212,8 +212,14 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
-// score 5 (was 13): the frame-count load is still hoisted above the float stores;
-// pool local 13; byte-offset record 13; native vector assignment 13; function-scope record 13;
+// score 6 (was 13): the frame-count load is still hoisted above the float stores. Retail keeps it
+// below them as if g_4ba034's address were taken (with it taken this function matches), but takes
+// no address there; it takes 0x4ba074's (the flag table, in 0x30e30 and 0x30ed0), so 0x4ba034 is
+// likely a field of that struct. Its users across files would read it as that field.
+// Round 72: the three volatile casts dropped 6 (kept: they only stood in for that alias); the
+// frame count stored after the random byte 9; 1c before 2c 5 (by position only); the frame
+// count stored first 6; the random byte stored before the floats 40.
+// Earlier: pool local 13; byte-offset record 13; native vector assignment 13; function-scope record 13;
 // unsigned location 13; link array loop 5 (plain 5); plain frame store 6; frame-count local 5;
 // plain float stores 6.
 // tried native record receiver 14f; shared position setter 45f; shared vector setter 47f; both shared setters 49f;
@@ -240,9 +246,9 @@ long function_248620()
 			particle_location->link_indices[link_index] = NONE;
 		particle_location->position = *g_468788;
 		*(point3f *)&particle_location->vector = *g_468788;
-		*(real volatile *)&particle_location->unknown2c = 0.5f;
-		*(real volatile *)&particle_location->unknown1c = 1.0f;
-		*(dword volatile *)&particle_location->unknown30 = g_4ba034;
+		particle_location->unknown2c = 0.5f;
+		particle_location->unknown1c = 1.0f;
+		particle_location->unknown30 = g_4ba034;
 		particle_location->random = (byte)random_index(&g_4e7408->seed, 0xff);
 	}
 
