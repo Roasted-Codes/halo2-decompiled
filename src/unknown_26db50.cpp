@@ -462,6 +462,10 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // score 90 (was 90): frame 0xd8 agrees; ring conversion (fild where retail converts in SSE) and the
 // frame 0xd8 agrees; x87 ring conversion and rotation component spill/register scheduling remain.
 // rotation schedule (one spilled component) differ; 1085 bytes against 1089.
+// Round 53: ring phase named in the outer loop before/after the distance 143/143 (SSE ring
+// conversion as retail, but frame 0xdc and the radius copied through integer registers);
+// all three cross terms named, j and k first 90 (forwarded back); a vector3f cross filled j, k, i
+// 100, with the ring phase 149. Retail computes the j- and k-row cross subtrahends with the dot.
 // Round 50: conditional sector store with the field read back as short (120 -> 109) and the
 // sector index read after the radius (-> 90) kept. Rotation with cross j, k before i 100
 // (no spill, frame 0xd4); with a named ring phase as well 96 (frame 0xd8, retail's SSE ring

@@ -750,6 +750,7 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // shared counter and output decision 123; shared counter carrier 95; byte with shared counter 95;
 // reversed adjacent output publications 95; final native word 102.
 
+// Previous forms at 87 and 95: Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // Previous forms at 87 (was 95): Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // Earlier: Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
 // Earlier note: Frame 0x6c agrees; saved-bit/word/handle allocation and final state width remain.
@@ -786,6 +787,12 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // bool-result-byte-state 111; word-result 84.
 // word-result-byte-state 102; byte-state-shifted-scale 96.
 // bool-result-byte-state-shifted-scale 111; word-result-byte-state-shifted-scale 102.
+// Round 53: output bits as if/else word bitfields 86 (byte RMWs as retail), result bit as a bitfield 86,
+// output bits through forward_flags_set 86; state bit byte writes 94, byte clear 86, byte set 89,
+// forward_flags_set 101 (byte read and RMWs as retail, 633 bytes); that plus the scale per state arm
+// as a shifted-bit ternary 84 (state tail now retail's sequence), with the bit named before the
+// state test 82; per-arm scale alone 87, shifted 101, named bit 96; named result bit before or after
+// the counters 84. Left: retail's `mov al, 1; test al, cl` and a first `test cl, 1` before `and al, 1`.
 // Output-only result byte/bool/word/dword 84/84/85/85; with definition mask 87/87/88/88.
 // Common counter-output stores with branch saturation, long/dword/short/word 93/93/93/93;
 // common counter-output stores with completion saturation, long/dword/short/word 93/93/93/93.
@@ -909,8 +916,8 @@ void __stdcall function_d6bc0(long arg_0);
 void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vector3f const *arg_3,
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
-
 // score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
 // Earlier: Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
@@ -960,6 +967,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // root accessor 151; candidate accessor 151; selected accessor 151; root candidate accessors 151; root
 // selected accessors 151; candidate selected accessors 151; all object accessors 151; all native header
 // 151.
+// Round 137: double speed/radius/quotient, speed-radius/speed-quotient/radius-quotient/all 334,339,332,259,332,329,261;
+// all with double selected fraction 337 (exact-only precision diagnostics; all restored).
 // Round 332: Candidate/collision/eligibility inline contracts, each and every
 // combination, 151; candidate/collision noinline pair 151. All restored.
 // @retail 0x119c10

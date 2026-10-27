@@ -188,7 +188,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): Frame 0x14 versus 0x10; color acquisition and reservation/coordinate homes remain.
+// score 153 (was 153): Frame 0x14 versus 0x10; native color and reservation homes remain.
 // Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
@@ -240,9 +240,16 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Word-alpha pointer/shared-color helper 349; direct consumer query/helper 378; late query/helper 378;
 // immutable query/helper 349; pointer/direct helper with scalar size 349/378;
 // lower-first helper coordinates 372; symmetric role-named lower-first coordinates 372 (fast control 162).
+// Complete first draw expiry at End/before End and coordinate-only expiry at either
+// boundary 162f each; complete draw with alpha packing/program expiry 162f each;
+// coordinate-vertex plus alpha packing and complete-vertex plus program expiry 162f each.
+// Reduced control 162, full 153; original complete phase lifetimes and directives restored.
 // RGB/BGR scalar channels 150/150; outer declarations 150/150; RGB after Begin/commit 379/152; BGR after Begin 378; BGR with value half-size 150 (fast control 162). Scalar channels recover frame 0x10 but are one-use field copies without a match, so all restored.
 // Native query pointer with every nonempty public C++ color/first-two-position boundary set
 // 349 each; with last-consumer pointer scope 349 (fast control 162). All restored.
+// Round 204: first/second/both bitmap observations at each use 569/458/653; with value
+// half-size 569/458/653; both observations with native color pointer alone/value size
+// 684/684 (fast control 162, full 153). Complete opening body and directives restored.
 // Round 159: Shared getter resource-result-first 517; bitmap failure returns 522; both null producers
 // 516; ordinary inline resource/bitmap/both 162/162/162; both null producers with resource/bitmap inline
 // 516/516 (fast control 162, full baseline 153). All getter bodies, metadata and target code restored.
@@ -254,6 +261,16 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Complete alpha product/plain byte accumulation/byte-index shifts 275/162/162; product/paired-word/
 // byte accumulation with actual color pointer 349/265/349; product/paired-word with value half-size 275/251
 // (fast control 162). Original native color, alpha packing and directives restored.
+// Round 147: Real state-table address/filter/both/zero-tail/address-tail/filter-tail/all-
+// three/complete setup 611/579/737/582/764/784/1030/520 (fast control 162).
+// Round 149: Coherent color/alpha acquisition contracts 153/466/466/153/153/153/466/466; inline alpha
+// loses four controls and is restored. On new coordinated contracts, RGB/BGR captures and their const
+// forms 142 each, 2258 bytes, frame 0x10; all eight nonmatching one-use field forms rejected. Original
+// body and providers restored.
+// Round 174: existing native three-word color storage, immutable storage, each with shared output,
+// library memcpy alone/with value half-size, native storage/value half-size and immutable/shared/value
+// all 162 (fast control 162, full 153). Native-view forms require a match; original body restored.
+// Bitmap-local name orders with alpha and coordinate names: eight combinations 162 (fast control 162).
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

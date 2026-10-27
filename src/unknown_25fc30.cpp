@@ -193,21 +193,30 @@ bool __stdcall function_25dd30(long a, long b)
 // protected geometry-call registers and score adds remain.
 // Earlier: vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
 // first vector schedule, geometry registers and score adds remain;
+// vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
+// Earlier 175 (was 175): first vector schedule, geometry registers and score adds remain;
 // shared displacement/geometry displacement/bonus result 310/310/313;
 // geometry/sphere/cone score observations 337/310/310; all score observations 337; actual view reference 310.
-// initial offset schedule, geometry carriers and score adds remain;
+// Earlier 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
 // shared component difference at offset/segment/both/fallback 334/343/343/343;
 // sphere/cone/all displacements 368/277/392; existing magnitude helper 175.
-// initial offset schedule and protected geometry carriers remain;
+// Earlier 175 (was 175): initial offset schedule and protected geometry carriers remain;
 // read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
 // 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
-// initial vector scheduling and protected geometry carriers remain. Fast trials:
+// Earlier 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
 // signed sphere ordinal 1031; unsigned sphere ordinal 1031; count snapshot 175; snapshot with signed
 // ordinal 1031; snapshot with unsigned ordinal 1031; final unit cap 352; final cap with signed ordinal
 // 1023; final cap with count snapshot 352. All restored.
-// offset-X scheduling and geometry carriers remain; actor-position field 410; native
+// Earlier 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
 // sphere 182; readonly cone 175; required-flags field 325; offset/minimum scopes 175/175; enabled-mask gate
 // 175; position and sphere fields 410.
+// Round 189 forceinline declarations for difference/squared-length/scale, their three pairs and all
+// three 175 each; all with cone dot 175. Original helper declarations restored.
+// first vector schedule, geometry registers and score adds remain;
+// initial offset schedule, geometry carriers and score adds remain;
+// initial offset schedule and protected geometry carriers remain;
+// initial vector scheduling and protected geometry carriers remain. Fast trials:
+// offset-X scheduling and geometry carriers remain; actor-position field 410; native
 // Penalty radius once 325; named margin radius 310; reach square 310; radius+margin 325;
 // radius+reach 326; margin+reach 310; all 326; both reach squares with radius+margin 326. All
 // fast.
@@ -224,11 +233,6 @@ bool __stdcall function_25dd30(long a, long b)
 // all with segment/fallback squared names 175. Original arithmetic and body restored.
 // Frame 0x30 agrees; initial offset/segment schedule and protected geometry carriers remain.
 // Earlier 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
-// Earlier 175 (was 175): first vector schedule, geometry registers and score adds remain;
-// Earlier 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
-// Earlier 175 (was 175): initial offset schedule and protected geometry carriers remain;
-// Earlier 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
-// Earlier 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
 // Round 140: repeated segment-origin/actor-position/both receivers 356/311/357; sphere-radius receiver 175;
 // radius plus origin/position/both 356/311/357; all three native references 357. Original executable source
 // restored; earlier stacked notes merged.
@@ -244,6 +248,10 @@ bool __stdcall function_25dd30(long a, long b)
 // Independent clearance/movement reaches: separate native lifetimes 310; point-of-computation
 // declarations 310; read-only values 310; role names 310; first home before vectors 310;
 // paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
+// Round 233: Native live scalar-field references, reach/radius/both/blocked gate/
+// reach+gate/radius+gate/all 310/310/175/310/175/175/310; segment squared part 175.
+// Offset and segment workspace names, their combinations, and declaration order
+// each 175; original vector declarations restored.
 // Complete native origin/location/candidate point values 454/366/481; origin+location 493;
 // origin+candidate 518; location+candidate 503; all native values 539; all CRT value copies 539.
 // Native point workspaces enlarge the matching 0x30 frame; all snapshots restored.

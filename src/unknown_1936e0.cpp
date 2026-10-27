@@ -141,18 +141,19 @@ __forceinline void variant_string_table_get(s_string_table *table, long first, l
    its test for NONE, which the caller makes */
 __forceinline void variant_string_get(long tag_index, long string_handle, word *buffer)
 {
-	long language = get_current_language();
-	s_variant_language_range const *range = &((s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes)->languages[language];
+	get_current_language();
+	s_variant_string_list_view const *list = (s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes;
 	s_variant_string_tables_view *tables = (s_variant_string_tables_view *)g_4e034c;
 
-	variant_string_table_get(&tables->tables[language], range->first,
-		range->count, string_handle, buffer);
+	variant_string_table_get(&tables->tables[g_47ff38], list->languages[g_47ff38].first,
+		list->languages[g_47ff38].count, string_handle, buffer);
 }
 
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 172 (was 172): Frame 0x40c versus 0x408; tag spill and language/range/cursor homes remain.
+// score 30 (was 172): Frame 0x408 and language/string homes agree; initial setup order and point-copy homes remain.
+// Earlier: Frame 0x40c versus 0x408; tag spill and language/range/cursor homes remain.
 // String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
 // Frame 0x40c versus 0x408 and tag/language/cursor homes remain; intermediate ownership does not remove the spill.
 // Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
@@ -202,6 +203,15 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // range value with both output results 217. Complete original helpers restored.
 // Native table member long scalars/range pointer/range reference/short scalars 172 each;
 // the same four receiver contracts with native fixed-array output 172 each. Original helpers restored.
+// Round 207: uniform language-global reads 191; with native list field reads 36; with independent
+// description cursor 30. On that graph: points input cursor 141; independent description plus input
+// cursor 141; masked list ordinal 189; masked ordinal/input cursor 238; all three 238;
+// use-stepped point cursors 30; directly indexed point arrays 218. Plain and complete-image checked.
+// Round 210: entry point-input/output/both cursors 239/250/253; independent copy count with
+// entry input/output/both 239/250/253; signed-short copy count 30; entry input/unsigned count 239.
+// Round 136: defining-unit search/conversion/both inline 271,172,271;
+// the same with separate noinline 172,172,172;
+// outlined inline search with outlined conversion/both noinline 172,172.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -227,12 +237,12 @@ void function_1936e0(long type, s_built_variant *variant, dword field_8, long de
 			utf16_string_to_utf8_string(text, output, sizeof(variant->names[0]));
 			output += sizeof(variant->names[0]);
 		}
-		output = variant->descriptions[0];
+		char *description_output = variant->descriptions[0];
 		for (long description_index = 0; description_index < 9; ++description_index)
 		{
 			variant_string_get(string_list_index, description_string, text);
-			utf16_string_to_utf8_string(text, output, sizeof(variant->descriptions[0]));
-			output += sizeof(variant->descriptions[0]);
+			utf16_string_to_utf8_string(text, description_output, sizeof(variant->descriptions[0]));
+			description_output += sizeof(variant->descriptions[0]);
 		}
 	}
 	for (i = 0; i <= 5; i++)
@@ -361,6 +371,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Round 317: Mixed complete-case orders 1023456 196; 0142356 197; 0124356 200; 0123645 188; 0126345 198; 0412356 205; 4012365 214; 0214356 206.
 // Round 199: Static native type-four/type-five/both/team/type-four-team/type-five-team/all preset
 // objects 430/294/525/232/474/335/569; all with static place presets 610 (fast). All restored.
+// Equal type-five team/mode field chain in both directions 186/186; with implicit
+// first-preset zero 180/180, with equal team pair 185/185, with both 180/180 fast.
+// Six-point reduction remains below retention gate; original complete presets restored.
 // Round 163: Complete immutable first/second/both type-four/team/first+team/
 // second+team/all settings, then all with implicit type-five zero default
 // 235/228/259/190/239/237/263/267. All regress; original native workspaces, clears and
@@ -368,6 +381,11 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Round 324: memset destination result 186; implicit type-four zero defaults 211; destination/type-four 211;
 // implicit type-five zero default 180 (below gate); destination/type-five 180; both default kinds 215;
 // destination/both 215; destination/defaults/native place values 215.
+// Round 210: implicit type-five zero with complete equal-value type-four producers, first/second/both
+// 187/186/193; each with equal-place chain 187/186/193; reversed chains 193; native place values 193.
+// Round 167: Independent first/second/both type-four workspaces 202/198/203; separate
+// place pair 186; first/second/both with separate place pair 202/198/203; all
+// independent workspaces with native type-four value resets 216. All restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

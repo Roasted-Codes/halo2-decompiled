@@ -468,7 +468,7 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 67 (was 67): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// score 67 (was 67): Frame 0x90 versus 0xa0; identity words still fold and source bytes spill.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
@@ -497,6 +497,9 @@ void function_1537f0(s_profile_record *record);
 // complete sixteen-byte header fill 154; source/identity homes remain unchanged.
 // Entry zero/first sentinel pair/second pair chains and all pair subsets 67 each;
 // complete endpoint sentinel chain 67. Frame 0x90 and packed source spills remain.
+// Round 146: identity byte/word/signed-word/signed-dword/header/byte-identity/word-flags/byte-
+// flags views 67 each.
+// Complete shared view library/native copies 128/128; per-visit library/native copies 128/128; shared-view array-end 126; ended input scopes 128; contiguous links 130; complete destination clear 148. Original body retained.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -597,7 +600,7 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 90 (was 90): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
+// score 90 (was 90): Frame 0x1c agrees; input homes and ret 0x18 versus 0x1c remain.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // Frame 0x1c agrees; records/buffers register contract and cursor/count
 // scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
@@ -621,6 +624,9 @@ bool function_7fb50(void)
 // scalar-loop accounting 120; chained zeros with early scalar accounting 126;
 // completed record/buffer totals 115; chained zeros with record commit 92;
 // scalar accounting with record commit 120, with chained zeros 122. Input homes remain.
+// Round 146: records/buffers/record-capacity homes 125/90/90; records-buffers/records-
+// capacity/buffers-capacity/all/with-property-capacity homes 125/125/90/125/125, all restored.
+// Separate advancing record/property/both cursors 120/90/120; distinct record/property/both budgets 126/127/134; both cursors and budgets 135, with advancing buffer 134. Original input and working-state forms retained.
 // On source-end traversal, native three-copy source view 90; with entry cursor/native ordinal/both 91/92/93;
 // native view with actual identifier/identifier and entry cursor 125/125; semantic frame names/native ordinal 90/92.
 // @retail 0x80bf0
@@ -845,6 +851,10 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Round 124: No-removal-first range 371; uninitialized time output 385; packed metadata memcpy 257;
 // real-array repair bound 375; consistent table base 394; first/second/both removal inline declarations 243/243/243.
 // All five body forms and all three declaration trials restored.
+// Round 232: native link-block loop 812; unsigned link-block cursor 812.
+// native link array 238; memory-order native links 238.
+// native links/shared initializer 240; native links/signed snapshots 834.
+// native loop/full adjustment 826; native links/live heads 243.
 // Constant removal result/shared full predicate with retained cases 385/381; with signed bounds 391/181 kept.
 // Existing initializer on those four forms 383/380/393/184; bounds alone 304; removal-first lower 181;
 // nonfull polarity 190; full-width admission result 402. Kept form is 1185/1171 bytes, plain 181.

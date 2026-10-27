@@ -252,6 +252,20 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // 236, with one final geometry result 236. Entry/index and point homes remain.
 // Round 324: index/radius/center contract 192; radius/index/center 192; center/index/radius 190;
 // radius/center/index 192; the same orders with a full absolute ordinal 193/193/191/193.
+// Round 207: native list-storage construction in pointer/count/capacity, count/capacity/pointer,
+// value-initialized-header and shared member forms 247 each; the same four with uniform
+// at-use geometry selection 1000 each. All lose the matched caller; complete original restored.
+// Round 148: coherent inline point/node/dispatch, point+node, point+dispatch, node+dispatch and
+// all three 190 each; coherent inline point with separate noinline 190.
+// Round 232: first header split 220; second header split 216.
+// both headers split 235; natural headers/aligned buffers 236.
+// all natural split storage 236; all aligned split storage 235.
+// first natural header/aligned buffer 220; second natural header/aligned buffer 216.
+// Round 240: reversed ordered sphere comparison alone/with distance/radius/both squares 189/189/189/189;
+// those forms with the existing point-difference helper 190/190/190/190. One-point gain rejected; original comparison restored.
+// Round 179: link snapshot 190; bitmap field at each use 257; both 215;
+// geometry at each use alone/with link/bitmap/both 1004/1004/1042/1057;
+// all receiver forms with short node cache 1061. Original observations restored.
 // Round 331: dispatch inline/noinline, node query inline/noinline, both inline,
 // both noinline and either mixed pair: all eight 190f. Entry/index and point
 // homes remain; both caller-local declarations and original body restored.

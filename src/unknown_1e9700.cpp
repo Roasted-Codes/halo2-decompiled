@@ -141,6 +141,9 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Complete history-object layout 421; fallback slot alone short 422; later killer-team result 426;
 // retained player-pool pointer 462; final friendly result from nested tests 427.
 // Early assist arrays alone 421; unsigned short selection ordinal 421; first assist-prefix cursors 451; both assist-prefix cursors 430; expired-history continue 421.
+// Object before/between rounding 421/421; object and history before/between 466/465;
+// later victim-team observation 450; early object with later team 449;
+// early object / object and history with forced rounding expansion 439/472. All restored.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

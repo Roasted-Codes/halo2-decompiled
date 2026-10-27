@@ -31,6 +31,9 @@ extern s_cache_copy_request g_55be24[2];
 // entry completed local 51.
 // nonzero unsigned total 3; upper clamp first 20; optional output clamp 39; inactive entry return 63;
 // availability from tests 49; both results by branch 45; inclusive low bound 4; inclusive high bound 4.
+// Clamp inside the active branch 40; numerator assigned then divided 29; named denominator 32;
+// clamp as two ifs 2; numerator named in the division arm 29. A non-volatile total converts the
+// numerator first but keeps total in EAX (37); a volatile numerator goes through EAX (40).
 // @retail 0x2148b0
 bool function_2148b0(long progress)
 {

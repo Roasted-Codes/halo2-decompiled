@@ -167,6 +167,9 @@ union s_185be7
 // State root at every field use 987; with reset output result/flag value/both 987/988/999;
 // state and settings roots at each use 1048; with reset result/flag value/both 1048/1026/1014.
 // Original root snapshots, reset, pointer-input flag helper and body restored.
+// Round 166: Native actual settings record with cached/live roots, mutable/const
+// receivers and forced/ordinary existing object getter 991/1022/991/1022/991/1022/991/1022
+// fast. Original settings observations, getter declaration and complete body restored.
 // Flag-value producer with shared curve count/pointer/both/values-first 979 each; long count 978;
 // native pairs with short/long inputs 979/978; shared short inputs and complete clamp result 969.
 // Complete clamp alone 978; flag-value plus complete clamp 969 plain (kept); curve inputs plus clamp 978.

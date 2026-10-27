@@ -70,8 +70,14 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 641 (was 641): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
+// score 629 (was 629): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
+// frame agrees (0x108); early success BL/EBX and basis/ray/root/rotation homes remain;
+// retail is 60 bytes longer after the ray loop (12 more loads, 4 more products: (1/range) * minimum
+// twice) and re-reads the half-width for each offset point. Round 134: range local read before the
+// test (with or without FLT_MAX there) 725/727; ray direction via vector3f_scale, 0 - width,
+// minimum * (1/range), sqrt * angle all 641 (same code).
+// Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes differ.
 // Earlier: frame 0xf8 versus 0x108; result/basis/rotation homes differ.
@@ -124,6 +130,15 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Negative failure result bool/byte/short/long, conditional store: 712/712/713/712;
 // negative failure with reused close-hit logical accumulation: 679/679/674/673 (fast).
 // Original result, hit arrays and all in-place math snapshots restored.
+// Hit aggregate 641; length aggregate 629 kept; later success 661; hit/length
+// 642, hit/later success 661, length/later success 650, all 662; success after copy 652.
+// Input, hit flags, range, minimum, basis, origins, lengths and distances names each 629;
+// original workspace names restored.
+// Corrected-frame point-value/direction-value/both 682/694/772; output-reference
+// combinations 682/694/772; input references with pointer/reference output 629/629.
+// Original helper restored.
+// Point-return with pointer/point/direction/both value inputs 680/744/838/899;
+// cross first/second/both value inputs 845/858/1045. Original helpers restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)
@@ -174,11 +189,8 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 		function_2922b2(&local_12, &local_9, local_2->field_14, &local_13[1]);
 		function_2922b2(&local_12, local_11, -local_2->field_14, &local_13[2]);
 		function_2922b2(&local_12, &local_9, -local_2->field_14, &local_13[3]);
-		real local_14[4];
-		local_14[0] = local_2->field_14 + local_6;
-		local_14[1] = local_2->field_14 + local_6;
-		local_14[2] = local_2->field_14 + local_6;
-		local_14[3] = local_2->field_14 + local_6;
+		real local_14[4] = { local_2->field_14 + local_6, local_2->field_14 + local_6,
+			local_2->field_14 + local_6, local_2->field_14 + local_6 };
 		real local_15[4];
 		s_collision_result_1697c0 local_16;
 		local_16.field_24 = NONE;

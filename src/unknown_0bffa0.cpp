@@ -770,6 +770,12 @@ void function_42850(long object_index, long tag_index, point3f const *position,
     vector3f const *third);
 byte g_55e708;
 
+// score 109 (was 109): 0x2dba0 takes the position in ecx and the tag on the stack where retail
+// passes the tag in ecx and the position on the stack, so the marker loop keeps its index in ebx and
+// spills the position where retail walks the position pointer in ebx with index and count in memory.
+// Round 70: indexed loop with a marker pointer per pass 109; single-marker case first 146; object
+// index local at every use 157; the field read at every use 109; the file's clamp_light helper for
+// the opacity 109 (retail's clamp shape, the rest unchanged).
 // @retail 0xc3340
 void __stdcall function_c3340(long light_index, long unused)
 {
@@ -1668,15 +1674,15 @@ void function_c1400()
 
 // @retail 0xc0350
 long function_c0350(long tag_index, long object_index, long node_index, vector3f const *up,
-    vector3f const *forward, point3f const *position, real scale)
+    point3f const *position, vector3f const *forward, real scale)
 {
     long result = record_pool_allocate(g_4e030c);
     if (result != NONE)
     {
         byte *light = g_4e030c->data + (result & 0xffff) * 0x110;
         byte *definition = g_4e3b44[tag_index & 0xffff].bytes;
-        *(long *)(light + 4) = tag_index;
         *(word *)(light + 2) = 0;
+        *(long *)(light + 4) = tag_index;
         *(long *)(light + 0x14) = g_510c54->game_time;
         *(long *)(light + 0x50) = 0;
         *(short *)(light + 0x56) = 0;
@@ -1708,8 +1714,8 @@ long function_c0350(long tag_index, long object_index, long node_index, vector3f
             *(point3f *)(light + 0x60) = *position;
             *(vector3f *)(light + 0x6c) = *forward;
             *(vector3f *)(light + 0x78) = *up;
-            *(short *)(light + 0x5c) = (short)node_index;
             *(long *)(light + 0x58) = object_index;
+            *(short *)(light + 0x5c) = (short)node_index;
             *(dword *)(object + 4) |= 0x40;
         }
         function_c0c80(result);

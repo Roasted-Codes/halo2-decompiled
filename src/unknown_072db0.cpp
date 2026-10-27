@@ -1379,6 +1379,9 @@ struct s_rating_summary
 // Native unsigned masked statistics 202; shared player/team ordinal 220 (key home recovered);
 // contiguous summary prefix fill 217; counts/ordinal 220; counts/prefix 217; ordinal/prefix 214;
 // all three 214; read-only query table 202.
+// Round 230: Promoted membership 335; group/team identity-first tests 350/202;
+// membership with group/team/both identity-first 345/336/345;
+// both identity-first without membership 349; native-byte membership with both 343.
 // Round 366: Native fifteen-bit player/team/both statistic fields 195/207/200 fast;
 // word/short player results 279/279, with both arrays 283/283; native statistic receiver 199.
 // On the recovered +0xf44 cursor: native player indexing/shared counts/query-key name 195/195/195;
@@ -1591,8 +1594,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-
-// score 739 (was 739): Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
+// score 739 (was 739): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
+// Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
 // user-cursor and identity-word homes differ;
@@ -1619,6 +1622,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Admission-test result 739; eager failure OR 753; positive completion 739;
 // player-result-first OR 739; accumulated signed/unsigned failure 761/761;
 // signed positive completion 759; admission plus positive completion 739.
+// Round 137: SSE flag 755 (file gate failed);
+// inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
+// Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

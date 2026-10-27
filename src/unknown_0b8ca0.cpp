@@ -657,6 +657,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // shared square/dot/both 239/239/239; raw/viewed distance 242; distance/facing partials 239/239;
 // shared square with facing partial 239; both partials with viewed distance 242 (all without the
 // inherited radius alias and snapshot).
+// Round 144: shared salted-index construction in the existing scan helper, direct/result-first
+// results and conditional/explicit next index 257/259/257/256; ordinary inline versions 257/259/257/256.
+// All restore the helper, input forms and inherited radius exactly; caller-dependent alignment remains.
 // Real calling/step/datum iterator state 326/286/286; with Boolean result
 // 355/328/328; sole calling/datum pool receivers 326/282. All original
 // code restored; caller-dependent self-alignment and full-handle spills remain.
@@ -1464,6 +1467,11 @@ done:
 // Shared type home 17; promoted placement index 28; both 28; shared type plus stride 27;
 // promoted index/stride 36; shared type/index/stride 36; shared type with call-use palette 37;
 // shared type/index with call-use palette 26.
+// score 17 (was 17): the same tail allocation and 237/236 length remain. Plain/typed aliases 17/17;
+// typed name 17; promoted datum index 19/236; typed block 17; direct name-index reads 31/236;
+// early field/base declarations 17/17; definition declaration/initialization first 17/17;
+// register type/size 17/17; alias with wide stride 27/236; definition/type-definition before guard 17/17;
+// placement-type name 17.
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {

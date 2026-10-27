@@ -5198,6 +5198,13 @@ void __stdcall function_d6bc0(long object_index);
 // 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
 // Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
 // all five call boundaries inline/noinline: all 153; every declaration restored.
+// Round 206: Nested expiry query/admitted removal 153/153; independent expiry index with either 153/153;
+// nested removal eligibility alone/with query/with admission 153/153/153; independent index plus nested removal 153.
+// Round 166: Complete entry/placement/both byte displacements 172/315/306;
+// with direct countdown 175/325/324; both with later timer/native reset result 324/272.
+// All fast versus unchanged 153; complete original body restored.
+// Round 169: Countdown/spawn timer homes, each with independent displacement/accumulation
+// role names in all four combinations, 153 each. Frame 0x14/0x18 and timer/base homes remain.
 // Round 331: typed scenario/equipment views 153f; time-slice field at each use 243f;
 // views plus field 243f; shared squared length at first/second/both tests 153f each;
 // shared dot products 153f; views/field/length together 243f. All eight restored.

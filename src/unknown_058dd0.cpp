@@ -1306,6 +1306,17 @@ static __forceinline long function_72458(s_surface_description *arg_0)
 // fallback noinline alone 9; immutable member 9; member after collection 10;
 // immutable variant 9; immutable summary 9; immutable values 9;
 // immutable type 9; unsigned type 9.
+// Further trials: member/level-address allocation, range dispatch and reloaded type remain.
+// own fallback noinline/held dispatch 9; own fallback noinline/classifier with barrier 7.
+// own fallback noinline/classifier 86; own fallback noinline/classifier with native output 7.
+// own fallback inline/held dispatch 57; own fallback inline/classifier with barrier 128.
+// own fallback inline/classifier 145; own fallback inline/classifier with native output 128.
+// new classifier/uniform session 166; new classifier/collection at use 44.
+// new classifier/session and collection 184; new classifier/session and output 166.
+// new classifier/collection and output 44; new classifier/all roots 184.
+// new classifier/member at use 165; new classifier/all roots and member 153.
+// classifier own inline with barrier 7; classifier own force-inline with barrier 7.
+// classifier own inline without barrier 86; classifier own force-inline without barrier 86.
 // @retail 0x72330
 void function_72330(c_session_state_matchmaking *state)
 {

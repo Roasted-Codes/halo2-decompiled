@@ -401,10 +401,13 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 	return constraint;
 }
 
-// score 29 (was 32): with the entry's object and physics model indices read into one-use
-// locals (reverted in review) the count is 25 and only the final `|= 0x400` differs (split into load/or/store around the
-// pops): retail's zero-size loop guard jumps to the found path's epilogue, ours to the
-// exhausted loop's, so the found block holds a copy of the epilogue.
+// score 22 (was 29): the entry matches retail (the component's object index and the physics
+// model index are read into named locals before their uses); what still differs is the final
+// `|= 0x400`: retail keeps it whole as `or dword ptr [ecx+4],0x400` in the shared block the
+// found path jumps to, ours is split into load/or/store around the epilogue pops (11 bytes
+// against 6), so the body is 4 bytes longer than retail's 1820.
+// Earlier: score 25 (was 32) with the same entry locals and only the final
+// `|= 0x400` differing; that form was reverted in review.
 // Round 80: the tail as a separate static or plain inline helper (not inlined) 193 each;
 // do-while inside `if (size > 0)` 80; found handling after the loop on `i < size` 58;
 // the loop reusing the entry's object index 465. Harness: forced-inline search helpers
@@ -420,10 +423,12 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 // @retail 0x1d77d0
 void __stdcall function_1d77d0(s_havok_component *component, s_physics_model_owner *owner)
 {
+	long component_object_index = component->object_index;
 	s_list_rigid_bodies bodies;
-	function_181bd0(component->object_index, &bodies);
+	function_181bd0(component_object_index, &bodies);
 	s_physics_constraint_iterator iterator;
-	iterator.physics = g_4e3b44[owner->model->physics_model_index & 0xffff].bytes;
+	long physics_model_index = owner->model->physics_model_index;
+	iterator.physics = g_4e3b44[physics_model_index & 0xffff].bytes;
 	for (function_1eb110(&iterator); ; function_1eb160(&iterator))
 	{
 		long element_size;
