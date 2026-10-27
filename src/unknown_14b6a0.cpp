@@ -142,6 +142,9 @@ void function_14bac0()
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
 // pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
 // Original receivers and the shared iterator body restored.
+// Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
+// both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
+// Original storage and iterator restored; frame and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

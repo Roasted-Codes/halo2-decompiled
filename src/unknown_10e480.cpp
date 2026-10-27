@@ -161,6 +161,8 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // 351; positive/touch, touch/positive and countdown/positive guard exits 284/276/341.
 // Negative no-samples bool/byte/short/long in weighted scope 221/221/222/221;
 // across the positive playback phase 313/313/328/331. Original sampled flag and constructors restored.
+// Common final publication bool/byte/short/long 301/301/300/299;
+// with touch admission before construction 343/343/346/341. Original restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
