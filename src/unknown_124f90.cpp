@@ -1459,6 +1459,9 @@ void looping_sound_controller_release(long index);
 // playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
 // Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
 // scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
+// Inline/forced-inline controller getter 40/40; open-depth inline getter with noinline release 122;
+// playback/both receiver references 5/5; const playback/controller pointers 5/5;
+// unsigned decrement/mask 5/5.
 // Round 56: the byte decrement is what keeps the pool out of EBX (as a dword store it gets EBX);
 // pool local 43 (stack convention); effect index local 5; byte count local 5; count pointer 5;
 // nested decrement tests 5; harness: char field, cast, `--`/`&=`, `+ 0x7f`, long/short/dword
