@@ -959,7 +959,7 @@ PRIVATE bool function_271630(s_type_f17a25 *state)
 	return result;
 }
 
-// score 8 (was 8): old index and signed slot registers differ, including existing heap helper input;
+// score 0 (was 8): old index and signed slot registers differ, including existing heap helper input;
 // native long insertion index 21; increment the count field 8; postincrement count at insertion 8; shared
 // native heap element pointer 16; guard return for full heap 8; name the next count expression 8; store
 // cost before node 10; native element pointer with postincrement count 16; consistent existing heap helper

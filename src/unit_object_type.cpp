@@ -5051,7 +5051,7 @@ void function_ce0c0(long unit_index)
    marker 0x500000a (type 0, when clear of the world), slightly above its
    center (type 1) or its center; then plays the impact sounds of what it
    hit */
-// score 196 (was 196): Frame 0x104 agrees; flag extraction, sentinel residency and location/owner call conventions remain. Bool flag tests 277; native collision 196; reversed cases 196; positive damage scope 196; native event byte 196; workspace names 196; native material word 196; shared flag reader 277; native seat bit 277; seat/weapon bool alone 270/275.
+// score 195 (was 196): Frame 0x104 agrees; flag extraction, sentinel residency and location/owner call conventions remain. Bool flag tests 277; native collision 196; reversed cases 196; positive damage scope 196; native event byte 196; workspace names 196; native material word 196; shared flag reader 277; native seat bit 277; seat/weapon bool alone 270/275.
 // @retail 0xcf040
 void function_cf040(long unit_index, short type)
 {

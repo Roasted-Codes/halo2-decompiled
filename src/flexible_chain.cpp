@@ -232,7 +232,7 @@ void __stdcall function_1160c0(real dt)
 	}
 }
 
-// score 194 (was 194): attachment/previous/axis homes and rotation scheduling differ;
+// score 190 (was 194): attachment/previous/axis homes and rotation scheduling differ;
 // seven local-name sets, declaration reversals and entry/loop scopes 194;
 // shared cross 207, both point differences 286, both helpers 280;
 // scaled difference 212, all vector helpers 285.
