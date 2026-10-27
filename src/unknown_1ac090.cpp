@@ -797,8 +797,12 @@ s_slot_handler_2 g_47dc88 =
 void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
-// score 7 (was 34): Frame 0x80c, all exits and every instruction but seven agree: the actor and
+// score 7 (was 7): Frame 0x80c, all exits and every instruction but seven agree: the actor and
 // scratch-buffer spill homes are exchanged (+0x24/+0x28; retail keeps the actor at +0x28).
+// Round 144: the homes follow use weight (heavier is lower): three extra buffer releases put the
+// buffer below the actor, one or two do not, nor one actor use fewer. Getter for the entry test with
+// the actor declared inside 63; object index read once for both uses 211; reference test reversed
+// 137; prop index named for its two uses 13; object index read before the prop tests 235.
 // Round 62: the second point difference in its own vector 7 (kept: retail's direction loads in the
 // second dot product); a release in each arm 66; one position pointer for both differences 7;
 // status output scoped into the request block 11; separate first-call reference 7; early test
@@ -1248,7 +1252,13 @@ bool __stdcall function_1acb50(long arg_0, s_slot *arg_1)
 bool function_2613d0(long arg_0, s_reference arg_1, s_prop_search *arg_2);
 bool __stdcall function_1acb50(long arg_0, s_slot *arg_1);
 
-// score 61 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
+// score 61 (was 61): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
+// Round 144: retail's state test is a bool value (`sete al; test al, al`) stored as such: `bool active
+// = mode == 2; if (active) { if (!set && eligible) {...; set = true;} } else set = active;` 71 (al 29
+// against 28: sete, both stores and the result home +0x13 as retail; left the late slot ESI and
+// EAX/ECX rotation), with `set = active` in both 124 (active spilled); plain nested ifs 121 (al 32);
+// mode through the matched 0x1f86f0 call (kept out of line here) 185/168; n5 + slot pointer before
+// the first exit, any order 177 (slot takes EBX, actor spilled).
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
 // Round 195: retained/default-false active result 139/106; each with direct child result 129/68;
