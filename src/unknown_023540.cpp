@@ -2433,6 +2433,10 @@ dword __cdecl function_131fc0(real alpha);
 // Round 148: fixed-stage address/filter/outlined-disabled tables 969/983/725;
 // address+filter/address+disabled/filter+disabled/all three 1127/1029/1044/1258; all with disabled
 // render table 1162, versus control 331.
+// Late unconditional destination/source defaults 432/334; both destination-first/source-first
+// construction with destination selection first 433/439; source selection first 439/433;
+// source construction before conditional destination 331 (four-point fast gain rejected);
+// conditional source then unconditional destination 427, against fast control 335.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2736,6 +2740,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // first/second/both 500/536/493; unsigned-word stage with first/second 500/536; on the retained
 // contract, in-place scales/independent second trig/later second buffer, their pairs/all and all
 // with trig scopes 368/338/334/368/368/338/368/368.
+// Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
+// address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
+// 1262/1261. Original eleven sampler statements and helpers restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

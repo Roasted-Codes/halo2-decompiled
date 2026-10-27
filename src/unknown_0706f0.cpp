@@ -51,6 +51,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // all eight tested results 243. All original byte assignments restored.
 // Initial/type/final direct field observations 182/182/182; initial+type/initial+final/type+final/all
 // 182/182/182/182; all with the two-use secondary state 182. Original byte-result body restored.
+// Round 189 positive result after direct inactive-reset exit: byte/bool 241/253; terminal-true
+// before reset 241/253; retail case order 242/254; both interactions 242/254. Original shared exit
+// and byte result restored.
 // Inline live-state predicate at secondary/primary/both 227/223/227; existing live-state function
 // at secondary/primary/both 227/223/227; mixed helper boundaries 227/227. All fast.
 // Omit initial unused state store 226; omit final 219; phase result initialization 220; omit both

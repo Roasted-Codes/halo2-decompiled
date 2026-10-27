@@ -1683,6 +1683,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 171: Uniform named k/j/i product subsets k,j,i,kj,ki,ji,kji all 810; uniform first k+j row
 // sums 810. Complete original helper and body restored. Frame 0xcc versus 0xd4 and first angle
 // expansion remain.
+// Round 188 on retained direction copy: immutable direction 810; ordinary inline 1151;
+// complete result publication 900 (frame 0xd4); pointer result 810; direction/basis/all
+// input references 810/810/810; output-first 810. All original helper contracts retained.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

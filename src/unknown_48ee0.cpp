@@ -48,6 +48,9 @@ extern real g_4c9798[36];
 // Native width/height/both result arms 295/295/295; shared sizing predicate 331;
 // height limit first 303; complete mode result 295; initial projection/opposite loops 295/295.
 // Shared near/far/both/projection/all scaling 295/295/295/295/295; near/far/both point accumulation 295/295/295.
+// Round 188 complete sizing scope, unsigned-word mode, depth-bound scope, their
+// pairs/all, and signed-word mode with sizing scope: 300/291/295/297/300/291/297/297.
+// All original scalar lifetimes, native mode, geometry and protected interfaces retained.
 // Round 167: Individual or mixed bounded dimension carriers:
 // width short 296; width word 296; height short 324; height word 324;
 // short/word 325; word/short 325; short/int 296; int/word 324.

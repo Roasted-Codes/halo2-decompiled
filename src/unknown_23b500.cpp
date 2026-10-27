@@ -639,6 +639,8 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Point publication xzy/yxz/yzx/zxy/zyx 204/204/232/207/232;
 // complete displacement products/coordinates 205/205; uniform per-row products 205.
 // Original helper/body restored; frame and protected child convention remain.
+// Plain predicted-point component loop with long/dword/short/byte ordinals 233/233/275/275;
+// the same output-pointer return forms 233/233/275/275. Original helper/body restored.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

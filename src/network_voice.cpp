@@ -1253,6 +1253,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Native identity with original validation: rolled 316, counted 144; byte identity counted 112;
 // other-player identity 144; native/byte identity with channel rejection 144/112;
 // native/other-player identity with entry-width value 165/165. All lose the matched caller; original retained.
+// Round 188 separate successful total: rolled/counted/unsigned result/unsigned total/
+// retained entry width/admission/split adds/pre-tested walk 281/112/112/112/165/112/112/112;
+// expanded caller conventions checked separately; original accumulation restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {

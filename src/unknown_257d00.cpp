@@ -1594,6 +1594,7 @@ void function_b7360(long object_index);
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/pool/output entry carriers and rounding homes still differ; selection case result retained.
 // Earlier: Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output acquisition, dispatch layout and forty missing bytes remain.
@@ -1646,6 +1647,9 @@ void function_b7360(long object_index);
 // 468/468/468/466; shared all tick products 474; all products and outputs 470;
 // moving-only/other-case products 466/466. Original scratch declarations restored;
 // pool/actor/output acquisition, dispatch layout and conversion homes remain.
+// Consistent actor-object field reads 530; one point-selector publication 472; both 532;
+// shared object-update notification 466; field reads/notification 530, point/notification 472,
+// all three 532; field reads with positive point-production admission 530. Original body restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

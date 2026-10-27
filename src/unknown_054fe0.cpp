@@ -1309,6 +1309,8 @@ struct s_player_properties
 // cache/input guards 217; cache/metadata 231; input/metadata and all three 220; all plus wide team 223.
 // Round 240: literal default groups first-array/second-array/zero-bytes/byte-sentinel/long-sentinel/short-sentinels;
 // orders ACBDEF/ABDEFC/DEFCAB/FCABDE/EABCFD/BFEDCA/CDEFAB/FEDCBA 184/184/186/186/184/186/184/186. Original store order restored.
+// Native short/word/signed-byte/byte collection ordinals 235 each; corresponding
+// update ordinals 227/227/231/231. Both original long traversals restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

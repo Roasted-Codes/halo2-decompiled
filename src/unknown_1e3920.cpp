@@ -1638,6 +1638,9 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // 340, long-long-short 334, long-long-long 348; all restored.
 // Round 230: Actor after weapon/settings queries 277/308; shared current/secondary/both
 // slot queries 329/317/349; both queries with later actor 352/308; direct shared queries 279.
+// Uninitialized probability/delay at entry 270/270; constant probability at entry/after query 295/286;
+// with the other scalar workspaces 295/286; scalar-role names with early constant 295,
+// with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

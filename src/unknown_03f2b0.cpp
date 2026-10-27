@@ -1425,6 +1425,8 @@ struct s_133f70;
 // 213. Broad unchanged control also 213; reduced 0x31590 discrepancy already present. Full frame
 // 0x33f8 agrees; distance staging, nullable-entry and cache/result scheduling remain. Original
 // executable source restored.
+// Complementary failure bool/byte/short/long 235/235/268/259 plain; also complementary
+// reuse 326/326/335/326 plain (fast 355/355/344/350). All restored; frame and staging remain.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

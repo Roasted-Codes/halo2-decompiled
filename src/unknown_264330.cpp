@@ -278,6 +278,8 @@ void function_264940(long actor_index, long prop_ref_index)
 // 0x24 versus 0x20 and object/view homes persist; all original categories restored.
 // Disjoint velocity/facing scope 358; semantic vector names 358; both 358; shared speed length 358;
 // shared speed dot 358; shared approach dot 358; length/approach helpers 357; scoped two-dot helpers 357.
+// Complementary bool/byte/short/long complete update predicates 442/442/425/377;
+// complementary conditional producers 359/359/429/422. Original update restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)

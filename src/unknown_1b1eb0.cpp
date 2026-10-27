@@ -240,6 +240,9 @@ struct s_slot_05_data
 // declared request byte 91; conditional reference with selection result 151, with common release 128.
 // Round 233: Native invalid/mode/both on late scratch 91/91/91; live permission
 // alone/invalid/mode/both 181/181/181/181; final selected-reference fields 118.
+// Round 189 independent early declarations of scratch/reference/selection flag and all combinations
+// 91 each; complete saved-scalar role names on late scratch 91. Initializations unchanged; scalar
+// homes and cold joins remain.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

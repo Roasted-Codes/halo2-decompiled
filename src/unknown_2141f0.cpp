@@ -120,6 +120,8 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // case 18 after 19: 410. All case bodies and original order restored.
 // Defining-unit inline path/checksum/path+checksum/path with separate noinline/clock/path+clock/
 // clock+checksum/all call declarations 367 each; all declarations and bodies restored.
+// Complete failure result bool/byte/short/long 661/661/654/657;
+// the same result initialized first 661/661/654/657. Original success restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {

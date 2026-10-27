@@ -76,6 +76,8 @@ void __stdcall function_b8890(long arg_0);
 // Round 235: Force-inline declaration at component-delete/detach boundaries 341/464;
 // with cleanup helper 411/532; with branched list selection 350/469; both boundaries
 // with branched selection 404/538. All helpers stay out of line; original body restored.
+// Complementary category bool/byte/short/long with signed second count 212/212/271/273;
+// unsigned second-count counterparts 212/212/271/273. Wide category frame 0x428; all restored.
 // @retail 0x278f00
 void function_278f00()
 {
