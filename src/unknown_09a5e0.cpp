@@ -2068,7 +2068,8 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 210 (was 210): Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
+// score 210 (was 210): frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
+// Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // native unit view 184; read-only unit view 184; native child view 184;
 // both native views 184; unsigned result mask 184; child defaults reversed 186;
 // immutable output binding 184; read-only byte source 184.
@@ -2128,6 +2129,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // early high bit alone/with intersection 295/295; native record cursor alone/with
 // intersection 213/213; unsigned bit ordinal and reversed count defaults with intersection
 // 210/210. Original direct clamps, four-slot scan and executable body restored.
+// Direct tail flags from their tests: byte 207; first fraction 206; byte/first 203;
+// second fraction 216; byte/second 212; both fractions 211; all 211; all long 203.
+// Seven-point best gain rejected; original flags, field clamps and stores restored.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
