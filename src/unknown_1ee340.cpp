@@ -1,5 +1,6 @@
 #include "unknown_11c920.h"
 #include "globals.h"
+#include "normalize3d.h"
 #include <xmmintrin.h>
 #include <float.h>
 #include <new>
@@ -150,10 +151,15 @@ c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, lon
 short function_120850(const vector3f *vector);
 bool function_23a220(const point2f *point, short count, const point2f *points, real epsilon);
 
-// score 247 (was 253): frame 0x7c versus 0x90; retail reloads `result` from its stack slot and
+// score 247 (was 247): frame 0x7c versus 0x90; retail reloads `result` from its stack slot and
 // shrink-wraps ebx/ebp/edi into the hit block, where ours keeps `result` in ebp (pushed at entry)
 // and duplicates the early failure exits. Retail's unrolled copy loop counts down with a
-// destination pointer; ours keeps the index.
+// destination pointer; ours keeps the index. Retail's frame: length/fraction, plane, direction
+// (later the projection), ray start, second edge (later the hit point), found byte, two spills,
+// first edge, polygon; its edge vectors keep homes for their i components.
+// Round 59: the existing normalize3d in place of its written-out body 247 (same code, kept);
+// found declared first 247; existing cross3f 265; bool side term without the ternary 247;
+// named bool side term 249 (gives retail's `mov al, 1 / xor al, al; movzx`).
 // Round 57: existing plane3f for the normal and its zero d, with the projection loop written
 // plainly (VC unrolls it itself, as retail) 247 kept; plane alone 272; plain loop alone 258;
 // vertex pointer in the loop 293; destination pointer 336; vertices() rows 247 (same code);
@@ -196,14 +202,7 @@ void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_res
 	plane.n.j = first.k * second.i - first.i * second.k;
 	plane.n.k = first.i * second.j - first.j * second.i;
 	bool found = false;
-	real length = (real)sqrt(length_sq3f(&plane.n));
-	if (!(fabs(length) < 0.0001f))
-	{
-		real scale = 1.0f / length;
-		plane.n.i *= scale;
-		plane.n.j *= scale;
-		plane.n.k *= scale;
-	}
+	normalize3d(&plane.n);
 	plane.d = 0.0f;
 	vector3f offset;
 	vector3d_from_points3d(&origin, &ray_start, &offset);

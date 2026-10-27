@@ -275,6 +275,13 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // forced native camera/output/both expansion [443, 287, 456]. Original helper and body restored.
 // Round 327: corresponding two-product sums at each row 259; all partial sums before stores in
 // xyz/xzy/yxz/yzx/zxy/zyx order 259 each; partial rows with shared scale 279.
+// Round 59: the displaced point's sum operands follow parameter order, not text: d-first text 195
+// (same code); `d` declared before `a` gives retail's operand order with the same registers, 193
+// (diagnostic, through a forwarder: both callers, 0x4f7e0 and 0x4ff50, are in contributor files).
+// Reverse displacement written into the same point 195 (same code: the slots were already
+// shared); transformed points declared tb, ta 195; inverse defaults declared b, a 195. Retail keeps
+// the second transform's x in the register b.x was built in and spills only z (to the dead
+// scale slot); ours moves x and spills x and z to two frame slots.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

@@ -675,6 +675,11 @@ long function_1469f0(real seconds);
 // cases in 0..4 order 293; casts alone 284; both 288. On the kept form: player read before the
 // options pointer 275, index before options 280, short difficulty local 290, selected/elapsed
 // declared first 275/275 (fast).
+// Round 59 (fast control 280): campaign difficulty as a ternary short local 278; the same through a
+// forceinline options helper 278 (still a 16-bit load); restricted through a short-parameter bool
+// helper 280 (gives retail's movsx, bool arms inverted); difficulty through a campaign getter 283;
+// restricted computed before the player 330 (player index moves to ecx). The local index stays in
+// edx, so the restricted bool takes al where retail has cl.
 // Earlier: frame 4 versus 12; early slot spill, state displacement and transition/flag homes remain.
 // Earlier: Frame 4/12, early slot spill and state/transition/flag homes remain.
 // Earlier: frame 4/12 and slot/state/transition/flag homes remain.
