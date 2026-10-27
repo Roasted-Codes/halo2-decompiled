@@ -1520,7 +1520,10 @@ long __stdcall function_bb670(short name_index, bool force)
 // Valid-path stride before/after scenario 106/106; offset references 31; offset references plus
 // valid stride 106; direct guards with valid stride 106; word valid stride 106; one-use creation index copy 27 (reverted in review);
 // creation index with valid stride 106.
-// score 31 (was 31): Metadata/sentinel saves and final input staging remain. metadata result arms
+// score 27 (was 31): the definition's two offsets are still read into registers before the guard
+// where retail compares them in memory against a -1 sentinel, and the saved registers are popped
+// in a different order than retail.
+// metadata result arms
 // 108; placement result arms 94; palette result start 89; palette result arms 104; input index
 // entry binding 31; tag index field binding 31; stride field binding 93; native promoted metadata
 // 31; shared input index binding 31.
@@ -1552,7 +1555,10 @@ long __stdcall function_a73b0(s_entity_info *info)
                 if (clamped == palette_index)
                 {
                     if (*(long *)(*(byte **)(palette + 4) + palette_index * 0x28 + 4) == info->definition_index)
-                        result = function_bf0f0((s_type_4f0dcc *)datum, type, info->field0, (s_scenario_block *)palette, false, false);
+                    {
+                        long placement_index = info->field0;
+                        result = function_bf0f0((s_type_4f0dcc *)datum, type, placement_index, (s_scenario_block *)palette, false, false);
+                    }
                 }
             }
         }

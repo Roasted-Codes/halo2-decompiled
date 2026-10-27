@@ -160,6 +160,10 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 59: the existing normalize3d in place of its written-out body 247 (same code, kept);
 // found declared first 247; existing cross3f 265; bool side term without the ternary 247;
 // named bool side term 249 (gives retail's `mov al, 1 / xor al, al; movzx`).
+// Round 62: short loop index 331 (not unrolled); `result` read through its own address 247 (same
+// code: its ebp home is not what pushes ebp at entry); direction from ray->start instead of the copy
+// 245; fraction as one ternary 249; ray->start direction plus the named bool side term 249. Retail also
+// keeps origin.x/y in xmm6/xmm7 and spills first.i/second.i, where ours re-reads origin from the shape.
 // Round 57: existing plane3f for the normal and its zero d, with the projection loop written
 // plainly (VC unrolls it itself, as retail) 247 kept; plane alone 272; plain loop alone 258;
 // vertex pointer in the loop 293; destination pointer 336; vertices() rows 247 (same code);

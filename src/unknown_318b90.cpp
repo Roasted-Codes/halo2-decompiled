@@ -73,6 +73,8 @@ void class_318e60::remove(unsigned short id)
 // Input capture orders second-first/second-first-owner/owner-second-first/first-owner-second/
 // second-owner-first/owner-first-second 20/29/24/23/24/23; result first with reversed inputs
 // or owner-second-first 20/24. Single-use snapshots did not match; direct expression retained.
+// Full first or second input copies 57; both copies, result first,
+// assignments, CRT copies and mixed copies 72.
 // @retail 0x318bb0
 lane_a_simple_contact_manager *class_318b90::function_318bb0(
     lane_a_contact_body const *first, lane_a_contact_body const *second, void const *input)

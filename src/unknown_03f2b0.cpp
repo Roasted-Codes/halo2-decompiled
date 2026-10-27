@@ -1444,6 +1444,13 @@ struct s_133f70;
 // Round 191: Query-output flags/nodes/count workspace names, all seven combinations,
 // each 213; all three with projection-array name 213. Expanded control 213.
 // Original outputs, projection array and executable body restored.
+// Lane 4 r98 (all plain, control 213; the score compares instructions in lockstep, so one instruction
+// more or less before a region shifts it): retail tests the 0x4c190 result as a bool (`test al, al`);
+// `bool built` gives that and retail's 1309 bytes but 325 (the 0x4c190 call setup is one instruction short
+// of retail's, so everything after it shifts). With it: 0x100-byte cache records typed (fold the same) 325;
+// a nullable record before the levels pointer (real null test) 338; an inline active-entry helper for
+// the 0x4ed284 test (null test kept, no dead lea) 308; a view pointer inside the test 325. Retail's
+// record + offset adds (`add eax, ecx; lea ebx, [eax + 0xbc]`) and the dead entry lea stay unreproduced.
 // Round 224: Signed-short query count/failure count/derived-slot domains, seven combinations,
 // then all with short entry ordinal 368/216/367/229/364/229/364/354 fast. Original count/compaction widths restored.
 // @retail 0x4b5d0

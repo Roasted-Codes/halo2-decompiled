@@ -93,7 +93,8 @@ void function_220790(s_sound_listener const *listener);
 bool sound_driver_voice_create_buffer(long voice_index);
 void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 
-// score 165 (was 165): Frame 0x80 agrees; success/category registers and the first-channel spill remain.
+// score 165 (was 165): frame 0x80 agrees; saved success/category and first-channel homes differ.
+// Earlier: Frame 0x80 agrees; success/category registers and the first-channel spill remain.
 // Earlier: Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
 // Earlier 165 (was 169): success/type registers and first-channel spill;
 // Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
@@ -189,6 +190,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 147: allocated owner 519; owner/early state 504; owner/bool state 521; owner/early bool
 // 509; owner/first word 519; owner/early/word 504; owner/bool/word 521; owner/early/bool/word
 // 509. All executable forms restored; sources and comparisons saved.
+// Round 211: category start read from its published field at every creation use, with late byte /
+// late byte-word ordinal / late bool / late bool-word ordinal 393/398/399/401; the same four with
+// state across reset 297/296/296/295. Original first-channel snapshot and body restored.
 // Round 225: shared native descriptor across submix and plain/spatial/both buffer
 // phases 226/206/343; the same with creation byte across reset 282/284/361;
 // plain-submix/spatial-submix with consumed listener storage 226/206. Complete
