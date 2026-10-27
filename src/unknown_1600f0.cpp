@@ -1065,6 +1065,9 @@ struct s_game_engine_globals_connections_view
 // entry name zero/connection scope/time scope 268/204/268. All restored.
 // Inverted/nested/completed/negative/conditional-positive/conditional-negative/dim-scoped/
 // dim-branch icon selection 184/184/203/203/203/203/184/197. Original body restored.
+// Native column-enable values serve width and visibility: score/time/both bool
+// 304/298/298; score/time/both byte 304/298/298; bool-byte/byte-bool 298/298
+// (calibrated fast). Original derived-width gates and frame restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1280,6 +1283,8 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 126: External flag reference 801; reused no-team result 802; player/team/both output cursors
 // 811/834/842; chained RGB stores 801; native team-color output 835; existing string-list forceinline 801
 // (fast); all restored.
+// Round 332: Existing table/list copy helpers, ordinary/inline/force-inline 801 each;
+// new table/list helper boundaries with reused local-user index 836 each. All restored.
 // Round 166: Separate score/time/both caption-list results 801/801/801; scoped name
 // lookup alone/with score/with time/with both 801 each; all three separate immutable
 // caption results 801. Each result has its validity test and lookup use; original shared

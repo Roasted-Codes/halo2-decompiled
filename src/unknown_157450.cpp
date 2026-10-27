@@ -5205,6 +5205,9 @@ void __stdcall function_d6bc0(long object_index);
 // All fast versus unchanged 153; complete original body restored.
 // Round 169: Countdown/spawn timer homes, each with independent displacement/accumulation
 // role names in all four combinations, 153 each. Frame 0x14/0x18 and timer/base homes remain.
+// Round 331: typed scenario/equipment views 153f; time-slice field at each use 243f;
+// views plus field 243f; shared squared length at first/second/both tests 153f each;
+// shared dot products 153f; views/field/length together 243f. All eight restored.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

@@ -150,6 +150,9 @@ void function_14bac0()
 // 257/257/257; readonly both 234 and with native recipients 257. Original body, iterator graph and
 // include list restored. Frame 0x34 versus 0x3c, point/iterator and readiness homes and
 // visit-counter scheduling remain.
+// Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
+// both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
+// Original storage and iterator restored; frame and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

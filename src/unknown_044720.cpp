@@ -266,6 +266,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Round 179: link snapshot 190; bitmap field at each use 257; both 215;
 // geometry at each use alone/with link/bitmap/both 1004/1004/1042/1057;
 // all receiver forms with short node cache 1061. Original observations restored.
+// Round 331: dispatch inline/noinline, node query inline/noinline, both inline,
+// both noinline and either mixed pair: all eight 190f. Entry/index and point
+// homes remain; both caller-local declarations and original body restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

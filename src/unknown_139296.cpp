@@ -385,6 +385,9 @@ bool function_22acb4(long player_index);
 // Round 166: Native source bits with Boolean conversion/total low-bit/false-first
 // second updates 164/296/275/295/164/296/275/297 fast. The 164 form gains one
 // length-penalty point only; extra slot remains. Original body and source fields restored.
+// Round 331, retained third-type order 231: first-enum orders 248/284/428/482/842
+// 192/193/284/283/189f; total second enum 234f; both enums 235f;
+// all mask declarations at entry 165f. Extra spill remains; all eight restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

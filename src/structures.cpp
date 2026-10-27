@@ -299,6 +299,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 168: Separate source/query points, entry/default initialization: byte 233/233, bool
 // 222/222; CRT byte 233/233, bool 222/222. Body, helper, in-place transform and include set
 // restored.
+// Round 333: Eligible source-point return with section/block inputs and aggregate/CRT caller copies 266 each; validity assigned only on failure with those four input/copy forms 192 each. Defined failures, original helper and call tuples restored; BSP/section and range/plane homes remain.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

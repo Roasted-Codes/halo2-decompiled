@@ -1045,6 +1045,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // connection-handler inline/noinline boundaries: 208/208/208/208/218/218/218/218 fast; original graph and declarations restored.
 // Early phase connection cases 5/6/7 216/224/230; pairs 5+6/5+7/6+7
 // 241/249/253; 5+8 and 6+8 229/231 (fast, control 191).
+// Five coherent formal orders on the two-phase body 191 each; unsigned selector
+// in address/selector/payload, selector/address/payload and payload/selector/address 191 each.
+// Reduced control 191; full 193. All signatures, caller arguments and bodies restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

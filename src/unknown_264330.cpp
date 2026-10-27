@@ -262,6 +262,7 @@ void function_264940(long actor_index, long prop_ref_index)
 }
 
 // score 358 (was 358): Frame 0x24 versus 0x20; cached object index, object/view homes and category-store joins remain.
+// Frame 0x24 versus 0x20; object/view allocation and cached object index differ.
 // Full-width unit mask 439; sampled-time reuse 380; deferred tracking view 431; fallback state default 358; inline depth one 358.
 // j92: frame 0x24 versus 0x20 and object/view homes remain; real object/header types and selection inline declarations tie; expiry snapshot regresses.
 // typed object view 358; typed header lookup 358; typed object header 358; tracking expiry snapshot 385;
@@ -280,6 +281,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // shared speed dot 358; shared approach dot 358; length/approach helpers 357; scoped two-dot helpers 357.
 // Complementary bool/byte/short/long complete update predicates 442/442/425/377;
 // complementary conditional producers 359/359/429/422. Original update restored.
+// Round 337: complete origin point/scalars 419/427; sampled state position 444;
+// origin scalars/point with state position 463/457; const native copies 457;
+// entry origin copy 498; both native inputs with shared difference 457. All restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)

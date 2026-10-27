@@ -423,6 +423,7 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 }
 // score 2 (was 2): False-result/mask scheduling remains.
 // Earlier: the false-result zero precedes the mask; retail forms the mask first;
+// the false-result zero precedes the mask; retail forms the mask first;
 // flags declared first 13; flag/result carrier 31; no index local 2 (plain 2);
 // split result init 2; result after bounds 25; early returns 26; no-index flags-first 2;
 // byte result 28; result on each path 25; single-exit goto 2.
@@ -439,6 +440,8 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 // Without a named index: bounds result 27; identity result 27; flag fields at every use 16;
 // bounded identity result 26; identity result and field reads 27; guarded selection result 28;
 // active result 22; complete bit result 28. All restored.
+// On the repeated-index graph: selected-bit mask/equality 2/11; selected-first gate 9;
+// long/short/word result carriers 36/38/38; success-default result 28; guarded slot pointer 15.
 // @retail 0x979f0
 bool function_979f0(s_world_450cb8 *world, long handle)
 {

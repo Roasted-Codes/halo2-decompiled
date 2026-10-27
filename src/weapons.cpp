@@ -3113,6 +3113,9 @@ struct s_ammo_conversion_entry
 // with result-controlled first-match search 216/211/208/212. All restored; frame and saved homes remain.
 // Complementary byte acquisition plus destination/source/tag/magazine/transfer
 // and index home names, individually and together, 194 each (fast; four-point gains dropped).
+// Round 337: actual published round total short/word/long 225/225/229;
+// mode-test return producer 197 (gain 1, rejected); with short/word/long totals 231/231/235;
+// short total and mode producer with complementary byte acquisition 208. All restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3224,7 +3227,7 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
     return unit ? unit->player_index : NONE;
 }
 
-// score 565 (was 565): frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain.
+// score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain.
 // Plain single-store unit 637; later effect locals 659; long marker count 607;
 // CRT marker copies 565; long fired 582.
 // Owner getter 563; scale names 565; direct barrel uses 641; const barrel tag 565;
@@ -3239,6 +3242,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // owner lifetime at entry 637f; entry marker workspaces 637f; unsigned-word mode 637f
 // (control 637f). Original body restored.
 // Round 115: Later failure lifetime 636; reversed tag defaults 637; interval field reads 634; positive magazine arm first 637; byte selected marker 638 (fast, control 637). Three-point preview gain rejected; opening body restored.
+// Round 337 (fast control 637): direct short/promoted barrel values 637/634;
+// direct weapon value/both short values 637/637; both promoted values 634;
+// first-use promoted barrel/both/immutable values 634/634/634. Gain 3 rejected; all restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {

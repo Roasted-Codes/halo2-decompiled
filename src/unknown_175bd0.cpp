@@ -2235,6 +2235,7 @@ event_done:
 // address 109; origin output lifetime 247.
 // Round 208: tag at every use 205; integer destruction result 230; word visibility 130;
 // tag/result 244; tag/word 212; result/word 239; all three 248; unsigned result with all 248.
+// Round 333: Start/visibility/both inline declarations 87/87/87; start noinline alone/with inline visibility 87/87; entry visibility alone/with both inline/with signed-byte result 87/87/87. All restored; object reload and merged-call placement remain.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2691,6 +2692,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // on both: unsigned mode 153, part point 166, conditional scale 156 (fast); follow-ups restored.
 // Round 208: uniform tag/event/part observations 334/349/266; tag+event 340;
 // tag+part 402; event+part 453; all owners 590; all owners with word creation result 618.
+// Round 333: Node/creation/placement inline declarations, each and all combinations, 153 each; joint declarations with forced existing normal transform 153; native signed-byte creation input on the current signed-byte caller 156. Scalar homes, flag stores and random lifetime remain; all declarations restored.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {

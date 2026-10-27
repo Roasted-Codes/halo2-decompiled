@@ -161,6 +161,9 @@ void function_8dd70(void);
 // prerequisite 226/226; direct observer 234/234; both direct producers 237/237. The four-count forms
 // fail the eight-count and match-only requirements; every body and producer restored. Frame four
 // agrees; entry normalization, helper expansion and connection reloads remain.
+// Constant observer/session/both homes at entry 244/225/224; entry long 230;
+// with observer/session/both entry homes 244/225/224; unsigned entry with both 224.
+// Both entry homes and bool/byte/char/long link result 228/228/228/225. All restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

@@ -110,6 +110,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // Word uniqueness signed/unsigned 183/183; with word/byte accumulated result 230/183;
 // with word final/all-word results 230/245; with long/short membership 194/194.
 // These recover the opening frame and registers through +0x10 but regress overall; all restored.
+// Initial validation result from first two/three/four/five tests, bool 157 each;
+// complete entry result long/short/signed byte/byte 219/226/188/188. All restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

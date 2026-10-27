@@ -526,6 +526,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // marker field reads at every use 77f; displacement/height 81f, displacement/marker 78f,
 // height/marker 97f, all three 98f; direct marker reads with a plain for 460f.
 // Reduced control 74 versus full 25; helper conventions and radius/marker homes remain. All restored.
+// Round 331: parallel radius squares 138f; native marker count/ordinal 74f; both 74f;
+// shared center setter 179f, with squares/count/both 171f each; shared marker setter 160f.
+// Reduced control 74f versus full 25. All eight bodies restored.
 // Separate native radius-center input 179f; independent marker count 138f;
 // conditional marker bound updates 83f; center/count 159f; center/updates 142f;
 // count/updates 83f; all 142f; XY center with count/updates 116f. Reduced control 74, full 25.

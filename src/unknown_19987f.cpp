@@ -1331,6 +1331,7 @@ extern bool g_4ed39d;
 // combinations all 184; session reset before dialog assignment 185.
 // Screen workspace, user and dialog options, callback, dialog ID and loader
 // names individually and together 184 each.
+// Round 333: Complete message aggregate/CRT initialization 224/207; before menu-result declarations 224/205; with ordinary game result 221/227; with direct error input 222/225. Original partial field initialization, both inherited qualifications and every callback restored; byte homes and dialog joins remain.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
