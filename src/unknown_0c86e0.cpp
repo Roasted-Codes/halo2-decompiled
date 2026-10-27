@@ -93,10 +93,16 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 	return result;
 }
 
-// score 122 (was 131): entry saves, fresh unit reload and sentinel carriers still differ.
+// score 122 (was 122): entry saves, fresh unit reload and sentinel carriers still differ.
+// BLOCKED-BY 0xbadc0: retail re-fetches the unit after its two calls, ours reuses the entry
+// fetch (our link knows the callee writes no memory).
 // shared weapon producer 131; user-result arms 125; both 125; signed-word user 128;
 // shared producer/word 128; word/result arms 122; all three 122; guarded weapon
 // result 135. Retain signed-word user/result arms; the six-count arm-only gain is rejected.
+// Unit fetched after the player queries 118, with a long user index 121; was_zoomed
+// declared first 107 (it then lives in bl from entry, retail dl: positional only), with the
+// late fetch and long user 109 (376 bytes, flag spilled), with long user 110; zoom-out
+// call in each sound arm 124; weapon read through the entry unit 122.
 // @retail 0xc86e0
 void function_c86e0(long unit_index, bool keep_weapon_zoom)
 {

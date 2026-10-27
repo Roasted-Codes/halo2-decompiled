@@ -43,11 +43,28 @@ PRIVATE __forceinline byte *sky_surface_data(short index)
 
 real function_30bf0(vector3f *vector);
 
-// score 150 (was 213): Frame 0x8c agrees; the selector join and esi/edi saves now match (the sky
-// lookup helper returns the tag data, NULL by default, so the NONE join is not threaded). Left:
-// the sky/count homes, the pending trig products (retail computes cos/sin into two temporaries
-// before the three adds and adds the direction as the memory operand), blend registers, the
-// collision test's sete and the color0 store order.
+/* the value limited to [minimum, maximum] */
+PRIVATE __forceinline real pinned_real(real const &value, real minimum, real maximum)
+{
+	if (value < minimum) return minimum;
+	if (value > maximum) return maximum;
+	return value;
+}
+
+// score 93 (was 150): at retail's length; frame, sky/count homes, trig temporaries, blend registers
+// and the color0 store now match. Left: the three x87 direction adds load the direction first
+// (retail adds it as the memory operand), 0x131c20's `&color` is formed in edi and copied to ecx
+// (retail ecx, then edi), and the collision test's sete.
+// Lane 8 r64 (93 form = count read at each use, lights pointer in the loop, a contribution vector
+// with double products cast once, the blend through the returning clamp, color0 first): three scalar
+// terms 179/184 (sunk into the adds); terms written into the adds 186; contribution renamed/array/
+// declared first, explicit `a = a + b` or `b + a` adds 95; existing direction_from_angles 171;
+// aggregate initializer 162; adds in k/j/i order 109; color declared before direction 99 (frame
+// slots swap); typed light-entry struct 162; strength spelled `entry + strength` or declared first
+// 162/165 (float products); one bool from an `&&` collision test 95; the flag form gives the sete
+// exactly (aligned 9) but 825 bytes, 160.
+// Earlier at 150: the selector join and esi/edi saves match (the sky lookup helper returns the tag
+// data, NULL by default, so the NONE join is not threaded).
 // Lane 5 r77 on the kept form: count without volatile 191 (804 bytes); light contribution vector
 // with fields read at each use 209 (837 bytes), with a plain count 166, plus the lights pointer
 // read in the loop 161, plus the count read from the field at each use 159 (sky/count homes and the
@@ -98,22 +115,21 @@ long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_
             vector3f direction = *g_4687a4;
             color3f color = *(color3f *)g_468718;
             real strength = 0.0f;
-            long volatile count = *(long *)(sky + 0x78);
-            if (count > 0)
+            if (*(long *)(sky + 0x78) > 0)
             {
-                byte *lights = *(byte **)(sky + 0x7c);
-                for (long i = 0; i < count; ++i)
+                for (long i = 0; i < *(long *)(sky + 0x78); ++i)
                 {
-                    byte *light = lights + i * 0x34;
+                    byte *light = *(byte **)(sky + 0x7c) + i * 0x34;
                     if (*(long *)(light + 0x2c) > 0)
                     {
                         byte *entry = *(byte **)(light + 0x30);
-                        real yaw = *(real *)(light + 0xc);
-                        real pitch = *(real *)(light + 0x10);
-                        real cosine = (real)cos(pitch);
-                        direction.i += (real)cos(yaw) * cosine;
-                        direction.j += (real)sin(yaw) * cosine;
-                        direction.k += (real)sin(pitch);
+                        vector3f contribution;
+                        contribution.i = (real)(cos(*(real *)(light + 0xc)) * cos(*(real *)(light + 0x10)));
+                        contribution.j = (real)(sin(*(real *)(light + 0xc)) * cos(*(real *)(light + 0x10)));
+                        contribution.k = (real)sin(*(real *)(light + 0x10));
+                        direction.i += contribution.i;
+                        direction.j += contribution.j;
+                        direction.k += contribution.k;
                         if (i == 0)
                         {
                             color = *(color3f *)(entry + 4);
@@ -121,9 +137,8 @@ long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_
                         }
                         else if (*(real *)(entry + 0x10) > 0.0f)
                         {
-                            real blend = 1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f);
-                            if (blend < 0.0f) blend = 0.0f;
-                            else if (blend > 1.0f) blend = 1.0f;
+                            real blend = pinned_real(1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f),
+                                0.0f, 1.0f);
                             function_131c20(&color, (color3f *)(entry + 4), 0, blend, &color);
                             strength += *(real *)(entry + 0x10);
                         }
@@ -145,8 +160,8 @@ long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_
                 direction.i = direction.j = direction.k = -1.0f;
                 function_30bf0(&direction);
             }
-            record->direction = direction;
             record->color0 = 0xff555555;
+            record->direction = direction;
             if (color.red < 0.0f) color.red = 0.0f;
             else if (color.red > 1.0f) color.red = 1.0f;
             if (color.green < 0.0f) color.green = 0.0f;
@@ -415,10 +430,6 @@ real function_d1210(long object_index)
 	return 0.0f;
 }
 
-// score 8 (was 20): Positive counter arms recover the common zero tail; clamp XMM homes and zero scheduling remain.
-// Unsigned nonpositive guards 20; positive arms 8; shared counter guard/result 59/59;
-// scoped positive counters 8; conditional clamp 20; selected counter with result arms 59;
-// result before clamp 20; positive arms with reversed lower comparison/result reuse 8/8.
 // @retail 0xd1490
 real function_d1490(long object_index, long child_index)
 {
@@ -430,7 +441,6 @@ real function_d1490(long object_index, long child_index)
 		short slot = object->slot212;
 		long current = NONE;
 		byte counter;
-		real value;
 
 		if (slot != NONE)
 			current = object->children[slot];
@@ -438,25 +448,32 @@ real function_d1490(long object_index, long child_index)
 		{
 			counter = object->counter1fb;
 			if (counter > 0)
-				value = (real)counter * g_510c54->rate;
+			{
+				real value = (real)counter * g_510c54->rate * (10.0f / 3.0f);
+				if (0.0f > value)
+					result = 0.0f;
+				else if (value > 1.0f)
+					result = 1.0f;
+				else
+					result = value;
+			}
 			else
-				return 0.0f;
+				result = 0.0f;
+			return result;
 		}
-		else
+		counter = object->counter1fa;
+		if (counter > 0)
 		{
-			counter = object->counter1fa;
-			if (counter > 0)
-				value = (real)counter * g_510c54->rate;
+			real value = (real)counter * g_510c54->rate * (10.0f / 3.0f);
+			if (0.0f > value)
+				result = 0.0f;
+			else if (value > 1.0f)
+				result = 1.0f;
 			else
-				return 0.0f;
+				result = value;
 		}
-		value *= 10.0f / 3.0f;
-		if (0.0f > value)
-			result = 0.0f;
-		else if (value > 1.0f)
-			result = 1.0f;
 		else
-			result = value;
+			result = 0.0f;
 	}
 	return result;
 }
@@ -721,13 +738,6 @@ static inline void pin_real(real *value, real minimum, real maximum)
         *value = maximum;
 }
 
-PRIVATE __forceinline real uv_coordinate_pin(real const &value, real minimum, real maximum)
-{
-	if (value < minimum) return minimum;
-	if (value > maximum) return maximum;
-	return value;
-}
-
 // @retail 0xd2dc0
 void function_d2dc0(s_mesh *mesh, long triangle_index, real u, real v, real *out_a, real *out_b)
 {
@@ -765,8 +775,8 @@ void function_d2dc0(s_mesh *mesh, long triangle_index, real u, real v, real *out
 		*out_a = (c.x - a.x) * v + (b.x - a.x) * u + a.x;
 		*out_b = (c.y - a.y) * v + (b.y - a.y) * u + a.y;
 	}
-	*out_a = uv_coordinate_pin(*out_a, -1000.0f, 1000.0f);
-	*out_b = uv_coordinate_pin(*out_b, -1000.0f, 1000.0f);
+	*out_a = pinned_real(*out_a, -1000.0f, 1000.0f);
+	*out_b = pinned_real(*out_b, -1000.0f, 1000.0f);
 }
 
 static inline void unpack_normal(dword value, vector3f *vector)
