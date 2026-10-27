@@ -99,6 +99,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // Independent-pass nested ordinals: distinct machine/player/both/membership identities and all
 // three pair/all combinations 157 each; separate inner native declarations 157. Frame 0x14/0x18
 // and options/index/mask homes remain; all executable forms restored.
+// Word uniqueness signed/unsigned 183/183; with word/byte accumulated result 230/183;
+// with word final/all-word results 230/245; with long/short membership 194/194.
+// These recover the opening frame and registers through +0x10 but regress overall; all restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

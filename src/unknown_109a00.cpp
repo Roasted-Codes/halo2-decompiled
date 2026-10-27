@@ -187,6 +187,8 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // At-use clock graph: scaled-change component orders ijk/ikj/jik/jki/kij/kji
 // 88/87/86/87/86/88; native value then in-place scale 164; paired native vector names 88.
 // Two-point forms rejected; second point-velocity and nonrotating schedule remain.
+// Void-output native addition inputs first/second/both 123/126/175; forced 123/126/175;
+// complete moved position 202; with coherent nonrotating frame names 202. Original helpers restored.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {
