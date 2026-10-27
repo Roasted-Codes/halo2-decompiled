@@ -30,6 +30,11 @@ real normalize2d(point2f *arg_0);
 // Round 147: Planar scalar differences 255; complete projection products 220; both side-product
 // sets 220; all squared terms 220; projection/side 220; planar/projection/side 255; all products
 // 220; all products with planar differences 255.
+// Round 150: Coherent first/second/both point inputs 215/217/264; second producer first with
+// original/first/second/both 220/216/217/270; early uninitialized directions with both inputs 264.
+// Inline collision provider on original/first/second/both inputs 220/215/217/264, identical with an
+// explicit out-of-line declaration. Best five-point gain rejected; original body restored.
+// Partial original-point input forms are exact-match-only; all trial bodies are restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

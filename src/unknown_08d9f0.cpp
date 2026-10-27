@@ -154,6 +154,11 @@ void function_8dd70(void);
 // All regress; original three-call chain, short stage results and clear restored.
 // long link 232; long observer 228; long link observer 230; long sessions 231; long link sessions 231; long
 // observer sessions 229; long all 231; word entry 230.
+// Round 150: Signed-byte link/session/both returns 230/230/230; canonical link with link/both returns
+// 228/228; inline link/session/both 228/223/223 (canonical link in first/third). New session contract
+// with early observer/session/both constants 242/231/232; both early with bool/byte/char/canonical-
+// short/long link result 224/224/224/240/230. Seven-point form rejected; original contracts and
+// readiness restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

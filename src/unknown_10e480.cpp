@@ -161,6 +161,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // 351; positive/touch, touch/positive and countdown/positive guard exits 284/276/341.
 // Negative no-samples bool/byte/short/long in weighted scope 221/221/222/221;
 // across the positive playback phase 313/313/328/331. Original sampled flag and constructors restored.
+// Round 150: Data producer/exporter inline contracts with direct/shared data acquisition
+// 221/221/221/457/221/457; explicit out-of-line provider pair 221, with shared acquisition 221. Native
+// long/dword/short/byte sample ordinal initialized before channel setup or at function entry 221 each.
+// Complete original body and provider declarations restored; frame and getter expansion remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
