@@ -1234,9 +1234,7 @@ bool __stdcall function_1acb50(long arg_0, s_slot *arg_1)
 bool function_2613d0(long arg_0, s_reference arg_1, s_prop_search *arg_2);
 bool __stdcall function_1acb50(long arg_0, s_slot *arg_1);
 
-#pragma inline_depth(0)
-
-// score 68 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
+// score 61 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
 // Round 195: retained/default-false active result 139/106; each with direct child result 129/68;
@@ -1255,6 +1253,12 @@ bool __stdcall function_1acb50(long arg_0, s_slot *arg_1);
 // ownership remain; original active producer, qualification and request stores restored.
 // Round 174: child-result join with inherited/ordinary result and neither/state/actor/both nested guards
 // 106/106/172/184 and 172/191/185/170. Retained active-state producer unchanged; all joins restored.
+// Round 59: the request flag at +0x59 (was +0x61) 68 -> 61 and the stale inline_depth(0) pragma removed.
+// Retail's state block is plain nested ifs (no store when already set or when ineligible, 0 on the
+// other state) with the state test as sete/test: nested ifs 121 (no sete); with a bool local,
+// if-set, if/else or ternary bool, a helper before or after the body 121; slot pointer before the
+// first exit (retail's ESI) after/before the actor/first 186, with nested ifs 172; plain result 193,
+// with nested ifs 206.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {
@@ -1318,11 +1322,10 @@ bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
             *(real *)((byte *)&local_4 + 0x48) = 10.0f;
             *(real *)((byte *)&local_4 + 0x4c) = 3.0f;
             *(bool *)((byte *)&local_4 + 0x15) = true;
-            *(bool *)((byte *)&local_4 + 0x61) = true;
+            local_4.unknown59 = true;
             if (!function_2613d0(arg_0, local_0->unknown418, &local_4))
                 local_1->unknown0d = true;
         }
     }
     return local_2;
 }
-#pragma inline_depth(255)

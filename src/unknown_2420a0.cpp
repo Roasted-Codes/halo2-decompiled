@@ -1057,14 +1057,19 @@ void c_game_engine_markers::v21(long object_index)
 	function_243a20(object_index);
 }
 
-// score 50 (was 80): the entry swaps the object-header registers (retail: header in EAX, index in ECX),
-// the slot table and the player index swap EDI/EBP, and retail computes the player pointer before the
-// flag test. Kept: retail's long slot and both bits through byte_flags_set (retail stores the flag
-// byte twice), 80 -> 50. Tried: the helper with a short slot 103; the long slot alone 94; the flag
-// tested as a byte 50; the player index read before the table pointer 50; the team read at each call
-// (retail's merged call setup and player pointer, but the options pointer is then kept from entry) 119,
-// plus the table read through the global 119, the player pointer first 119, the unit before the slot
-// 119 (428 bytes); through the player getter at each call 100.
+// score 40 (was 80): the entry swaps the object-header registers (retail: header in EAX, index in ECX),
+// and retail materializes the player pointer before the flag test (memory-operand test) and loads the
+// team after the engine-type compare, hoisted from both arms. Kept: retail's long slot and both bits
+// through byte_flags_set (retail stores the flag byte twice), 80 -> 50; the slot table read through
+// the global at each use (retail's EBP table, EDI player), 50 -> 40. Tried: the helper with a short
+// slot 103; the long slot alone 94; the flag tested as a byte 50; the player index read before the
+// table pointer 50; the team read at each call (retail's merged call setup and player pointer, but the
+// options pointer is then kept from entry) 119, plus the table read through the global 119, the player
+// pointer first 119, the unit before the slot 119 (428 bytes); through the player getter at each call
+// 100. Round 59, on 40: no absolute-index local 93; per-arm team local/char/declared once 119;
+// arms swapped 119; object pointer local 130; unit inside the slot test 129; player pointer from the
+// absolute index 82..128; unit before slot 120; entry through g_4e6948, type local, byte flag test,
+// second player index read directly 40.
 // @retail 0x240ff0
 void c_game_engine_markers::v23(long object_index, long unit_index)
 {
@@ -1077,7 +1082,6 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 
 			if (slot != NONE)
 			{
-				s_slot_table *g = g_51ec80;
 				long player_index = unit->player_index;
 
 				if (player_index != NONE)
@@ -1085,7 +1089,7 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 					long absolute_index = player_index & 0xffff;
 					s_player_view *player = ctf_player_get(player_index);
 
-					if (!g->flag_bits[slot].bit0)
+					if (!g_51ec80->flag_bits[slot].bit0)
 					{
 						long team = player->team;
 
@@ -1101,14 +1105,14 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 					}
 				}
 
-				byte_flags_set(&g->flags[slot], 0, true);
-				byte_flags_set(&g->flags[slot], 1, false);
+				byte_flags_set(&g_51ec80->flags[slot], 0, true);
+				byte_flags_set(&g_51ec80->flags[slot], 1, false);
 				function_a7810(0x200);
 
 				if (slot >= 0 && slot < 9)
 				{
-					g->d[slot] = NONE;
-					g->times[slot] = 0;
+					g_51ec80->d[slot] = NONE;
+					g_51ec80->times[slot] = 0;
 					function_a7810(0x80);
 				}
 
@@ -1601,7 +1605,7 @@ struct s_242661
 	long field_f0;
 };
 
-void function_176b60(long marker_count, s_effect_marker *markers, long mode, s_effect_owner const *owner, long tag_index);
+void function_176b60(s_effect_owner const *owner, long marker_count, s_effect_marker *markers, long mode, long tag_index);
 void function_a8040(long index, long value, point3f const *position);
 void function_d6660(s_type_1e6529 *data, long definition_index);
 void function_bc190(long object_index, s_damage_owner *owner);
@@ -1611,12 +1615,20 @@ void function_15e360(point3f const *point, long object_index);
 byte *record_pool_lookup(s_record_pool *data, long datum_index);
 void function_242e00(long player_index, long team);
 
-// score 83 (was 83): the effect markers' direction copies are scheduled differently; the root-location
+// score 79 (was 83): the effect markers' direction copies are scheduled differently; the root-location
 // call passes the object in EAX and the location in ESI (retail: location in EAX, object in ECX,
 // BLOCKED-BY 0xba300); in the tail retail keeps the marker index in ESI and reloads the engine globals
-// pointer after each call, ours keeps that pointer in ESI and spills the index. Tried: the point copied
-// straight from the marker table, declared at its use, or both 83 (identical); the directions in index
-// order 86; the positions in index order 95; both 98.
+// pointer after each call, ours keeps that pointer in ESI and spills the index. Kept: 0x176b60's
+// parameters in retail's argument-setup order 83 -> 79. Tried: the point copied straight from the
+// marker table, declared at its use, or both 83 (identical); the directions in index order 86; the
+// positions in index order 95; both 98; without the inline_depth pair 246; the tail through
+// function_a7810 or the 0x400 change inline 83; the marker index or the point declared earlier 83;
+// marker 4's direction from the copied vector 72, as marker 2's copy 172, all from the copy 98;
+// marker 3's first component before marker 4 82; names first 111. Found: the tail's marker entry
+// through an element pointer (`entry = &...marker_entries[marker_index]; point = entry->position;`)
+// 17 at retail's length with the whole tail identical, and with marker 3 assigned before marker 4
+// and marker 4 from the copied vector 2 (only the 0xba300 call differs); both forms need a match, so
+// apply them together with the held 0xba300 change.
 // @retail 0x242660
 void function_242660(long object_index, bool arg_1)
 {
@@ -1680,7 +1692,7 @@ void function_242660(long object_index, bool arg_1)
 				markers[2].name = 0x20000ca;
 				markers[3].name = 0x8000550;
 				markers[4].name = 0x400054f;
-				function_176b60(5, markers, 1, (s_effect_owner const *)&owner, effect_index);
+				function_176b60((s_effect_owner const *)&owner, 5, markers, 1, effect_index);
 				function_a8040(object_index, value, &position);
 			}
 
@@ -2564,16 +2576,24 @@ bool c_game_engine_markers::v46(dword flags, long, s_marker_update *update)
 }
 void function_15e360(point3f const *point, long object_index);
 
-// score 136 (was 136): retail keeps the player in EBP and the marker in EDI and spills the slot to the
+// score 141 (was 136): retail keeps the player in EBP and the marker in EDI and spills the slot to the
 // player's argument home; ours keeps the slot in EBP, the marker in ESI and the player in EDI, and spills
 // the masked player index. Tried: the stored scale read back for its zero test 140 (retail's test-ax
 // form, registers unmoved); a named scale 140; that test without the player reference 145; without the
 // masked-index local 140; the team through the masked index 135 (603 B); the masked index at entry 136;
-// read through the player reference 140.
+// read through the player reference 140. Round 59: the player-index reference removed (two reads, no
+// match) 136 -> 141. Found: the marker entry through an element pointer (`entry = &...marker_entries
+// [marker_index]; point3f point = entry->position;`) 32 (retail's registers throughout), with the
+// stored scale read back 12 at retail's length: only the player-data load sits after the event's
+// initializing stores where retail loads it before them. Tried on 12: the players' data pointer read
+// before the initializer 13 (data/team registers swap EAX/EDX), the cause player's pointer before it
+// 149, the cause team before it 158, the team stored first 144, the effect team first 32, the event
+// declared at its use 12, the cause team read through the event's index 12, the initializer and cause
+// helpers called 178..212, the players' data or the cause pointer read before the last change call
+// 63/122 (before the flag store 63/140). The element pointer needs a match, so it is not kept.
 // @retail 0x242ba0
 void function_242ba0(long marker_index, long object_index, long player_index)
 {
-	long const *player_reference = &player_index;
 	long slot = slot_object_get(object_index)->slot;
 
 	if (slot != NONE)
@@ -2610,8 +2630,8 @@ void function_242ba0(long marker_index, long object_index, long player_index)
 			ctf_globals_changed(0x200);
 
 			game_engine_event_initialize_inline(&event, 10, 13);
-			event.cause_player_index = *player_reference;
-			event.cause_team = event_player_get(*player_reference)->team;
+			event.cause_player_index = player_index;
+			event.cause_team = event_player_get(player_index)->team;
 			event.effect_team = marker_team;
 			game_engine_event_send_inline(&event);
 
