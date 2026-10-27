@@ -1260,6 +1260,10 @@ struct s_player_properties
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
 // score 184 (was 184): frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// Round 75: our zero stays in edx from the parameters test (cmp edi, edx) through both loops, so the
+// name count is spilled and the owner leaves edx. Count increment as its own statement 184; long mask
+// 184; inverted parameters test (clear first) 217; count declared after the index 184; `== 0` memcmp
+// test 184.
 // Round 90: a zero constant stays in edx from the parameters test to the record defaults, so the name count
 // lives in memory (retail: test edi, edi; the count in esi). Requested-record pointer first in the loop 199;
 // current as requested + 1 184; a player-record pointer 184; the record zero-initialised with braces 241;
@@ -1323,6 +1327,9 @@ struct s_player_properties
 // all scalar/array defaults after names 296. Original store phases restored.
 // Round 76: separate counters per loop 184; name loop on the player mask field 184; record declared once
 // before the loops 184; previous record before the parameters getter 190; getter before the owner 225.
+// Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
+// in three pairs and together 184 each; all three separate noinline declarations 237. Original
+// declarations and body restored; owner/count/zero allocation and requested cursor remain.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

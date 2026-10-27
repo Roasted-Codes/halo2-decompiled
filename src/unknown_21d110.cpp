@@ -409,6 +409,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // with entry sound declaration 212. Effect-domain forms lose eight caller controls.
 // Round 327: current deletion record/pool/both 211/204/206; public creator noinline 204;
 // with record/pool/both 211/204/206; both observations and boundary with signed class byte 206.
+// Round 177: Complete start admission bool/byte/short/long and their complete complements
+// 204 each; every sensitive caller control remains matched. Original helper and body restored;
+// eight-byte frame and opposite start/delete expansion remain.
 // Round 207: existing allocator as native definition member, with original failure return,
 // success nesting, count-selected result or empty-definition return, all 204; those same
 // four with record-link initialization first also 204. Original helper and body restored.
@@ -422,6 +425,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 177: Complete start admission bool/byte/short/long and their complete complements
 // 204 each; every sensitive caller control remains matched. Original helper and body restored;
 // eight-byte frame and opposite start/delete expansion remain.
+// Round 249: existing starter static ordinary, external inline/ordinary, static
+// noinline ordinary/inline, external noinline ordinary/inline, and ordinary starter
+// plus ordinary availability declarations 204 each; all eight caller controls preserved.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

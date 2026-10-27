@@ -46,6 +46,12 @@ real normalize2d(point2f *arg_0);
 // Direction declaration/call ordering and collision-storage lifetime combinations 220 in seven forms;
 // those together with radius before center copy 214 (six-point gain restored).
 // Same-size point/vector name swaps, separately and in combinations, 220 in eight forms.
+// Round 191: Direct-output mode first with original returns, Boolean/long/byte
+// common completion results 261/261/236/242; all four with radius before center
+// 261/261/236/242. Original mode/result graph and executable body restored.
+// Round 345: Native original/center/both CRT copies 220/220/220; entry point
+// storage alone/with original/center/both copies 218/218/218/218; both copies
+// and entry storage with radius before center 213 (seven-point gain below gate). All restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

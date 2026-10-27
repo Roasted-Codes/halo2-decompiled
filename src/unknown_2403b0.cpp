@@ -34,7 +34,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 	return !(table->flags[team] & 1);
 }
 
-// score 95 (was 146): frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
+// score 146 (was 146): frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
+// it, the completion bits use other registers, and the final predicate's layout differs. Kept: the two
+// completion bits set through byte_flags_set (retail stores the flag byte twice), 190 -> 146.
+// frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
 // where retail reloads it (a forced reload, reverted at once, gives 72), the virtual-call setup and the
 // completion bits use other scratch registers, the team keeps `mov esi, edi` where retail re-extends
 // (`movsx esi, di`: only a long team cast back to short at the 0x242e00 call gives it) and the clear-flag
@@ -64,6 +67,84 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // event buffers 196/160/183/193 (163/160 grow the frame to 0x60); native flag-array and flag-element
 // predicate inputs with logical/complement extraction: bool 190, long 189; separate noinline
 // declarations of 0x101280, 0x15b2f0, 0x138880, 0x138860, 0x15fe70, 0x244680, 0x197210 and 0x242660:
+// 190 each.
+// frame 0x3c agrees; object-pool reload, completion
+// flag stores and final predicate layout differ. Scoring team word 187
+// (three-point gain rejected), long 214; blocked long/byte 190/190; existing
+// flag helper force-inline 190; returned point 199; marker bits 190; option
+// scope 190. Original body and helper declaration retained.
+// Earlier 190 (was 190): pool reload and separate completion stores remain;
+// pool reload and separate completion stores remain;
+// Earlier: pool reload and separate completion stores remain;
+// read-only unit/type result 190/190; scoring team at call 226; completion event prepared first 193;
+// marker/slot entry lifetimes 190/190; success-result predicate 193; type result plus event preparation 193.
+// Read-only helper input 190; table reference 190; native team parameter 190; result-first predicate 192;
+// flag byte sample 190; direct capped result 190; cap and table reference 190; option guard order 190. Pool
+// reload and separate completion stores remain.
+// Earlier 190 (was 190): Cached pool base and merged completion stores remain.
+// Native player record 190; scoring-team field binding 190; both 190;
+// increment counter binding 202; decrement binding 190; both counters 202;
+// marker-team value 194; native player with both counters 202.
+// Earlier 190 (was 190): cached pool, merged completion stores and flag-result materialization remain.
+// Predicate long/short/byte/signed-byte returns 189/190/190/190;
+// byte predicate input 190; byte input with long/short/byte results 189/190/190.
+// Both one-point gains rejected; original predicate and body restored.
+// Earlier 190 (was 190): cached pool base, merged completion stores and predicate result remain.
+// Cached pool base and merged completion stores remain.
+// cached pool, merged completion stores and flag-result materialization remain.
+// cached pool base, merged completion stores and predicate result remain.
+// Earlier: Cached pool base and merged completion stores remain.
+// Earlier: cached pool, merged completion stores and flag-result materialization remain.
+// Earlier: cached pool base, merged completion stores and predicate result remain.
+// Native unit/weapon/both header references 190/190/190; external carried-index,
+// selected-slot or both field bindings 190/190/190; initializer return used directly 311;
+// external options record reference 190.
+// pool-data reload, completion stores and final predicate layout still differ.
+// permission result 190; fallback permission scope 190; present-unit scope 190
+// eligible-weapon scope 190; present-slot scope 190; present-marker scope 190
+// unit/weapon scopes 190; option once 190.
+// Earlier 190 (was 190): frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
+// Negative-three addition 190; default-NONE/explicit-arm team results 191/190; reversed completion
+// bit order 190; in-place limit 190; two-use stored-short ticks 190; limit plus stored ticks 190;
+// default-NONE team plus negative-three addition 191. Opening body and existing helper restored.
+// Round 144: native flag-bit object by value with bool/byte/short/long results 190/190/190/192;
+// native flag-bit object pointer with the same result widths 190/190/190/192. All restored;
+// protected-reader pool reuse and merged completion stores remain.
+// frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
+// Round 364: Fresh player/unit/slot reads 254/190/271; player-unit/player-slot/
+// unit-slot/all three 254/329/271/329; unit-index field at each use 195.
+// Round 366: Team-first existing predicate with original/const/native-team/both inputs 190 each;
+// long/short/byte/signed-byte results 189/190/190/190. One-point reduction rejected.
+// Event initialization between completion bits 183; initialize/first bit/cause/second bit 163;
+// first bit/initialize/cause/second bit 183; both preparation steps first 193. Separate event
+// buffers 196/160/183/193. Seven-point forms rejected; raw 163/160 regress the instruction
+// sequence or frame (0x60), so all restored.
+// Earlier: frame 0x3c agrees; cached pool base, merged completion stores and predicate layout remain.
+// Native flag-array and actual flag-element reference predicate inputs, each
+// with logical/complement extraction: bool results 190, long results 189;
+// all eight restored, one-point gains below threshold.
+// noinline 101280 190; noinline 15b2f0 190; noinline 138880 190; noinline 138860 190; noinline 15fe70 190;
+// noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
+// Round 215: Complete slot-table owner, mutable/const first-consumer captures 200/200,
+// entry captures 245/245; long existing predicate on those graphs 199/199/244/244
+// (control 190). Original global observations, helper, events and body restored.
+// Round 167: Plain descending notification-mask loop 187 (three-point gain dropped);
+// with completion initialization between bits / preparation before the second bit /
+// initialization before both bits 240/251/240; independent event buffers 193, with
+// the first two interleaves 240/251; existing bitfields plus first interleave 240.
+// Loop remains rolled; extra branches and event/store sequencing regress. All restored.
+// Complete eligibility bool/byte/short/long results 190/190/190/190;
+// default-false reader-gate results 190/190/190/190. Pool reload and completion stores remain.
+// Common score result and one publication: bool/byte scoring results, both duration
+// factor orders and both whole-function/scoring event lifetimes all 239 (eight forms).
+// Original separate score publications, event storage and complete body restored.
+// Slot/limit/ticks/marker/unit/weapon home names and scalar/all combinations
+// 190 each (fast); original body restored.
+// Complete entry carried-unit value 221; with short slot/clock-first product/both
+// 239/221/239; word teams alone/slot/product/all 207/223/207/223 (fast).
+// Original unit observations, counter arithmetic, stores and reader contracts restored.
+// Round 146, separate byte-store graph: table-first explicit-bool/byte/short/long predicates
+// 146/146/146/149; team-first bool/byte/short/long 146/146/146/149. Original helper/body restored.
 // 190 each; native flag-bit object by value/pointer with bool/byte/short/long results 190/190/190/192
 // each; complete slot-table owner, mutable/const first-consumer captures 200/200, entry captures
 // 245/245, long predicate on those 199/199/244/244; plain descending notification-mask loop 187, with

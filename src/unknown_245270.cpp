@@ -273,7 +273,11 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
+// score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
+// a separate rotation output vector copied into the direction scores 193 but adds 19 bytes (one-use
+// staging copy, not kept).
+
+// Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
 // Round 74: plane table declared as a source field and read at each use 204; plane codes declared
 // before the edge vector 203; source parameter declared last (definition, declaration and the one
 // call) 204, still edx; material pointer for the final call (as 0x245400) 204; transformed point
@@ -336,7 +340,12 @@ void function_245400(s_source_245400 const *source, long index,
 // stores in ijk/ikj/jik/jki/kij/kji order 222 each; partial rows with shared matrix scale 212.
 // Round 207: native endpoint-word array alone/with plane-table field/with signed material field/
 // with both 204 each; separate native endpoint words with those same four record views 204 each.
-// Complete original declarations and body restored; duplicate score headers merged.
+// Earlier: original declarations and body restored; duplicate score headers merged.
+// Native scaled-vector copy with direct/separate rotation output 220/251;
+// native aggregate input with direct/separate output 204/193 (grouping rejected);
+// point workspace placement ties each. Original scalar inputs with separate native
+// rotation output copied before/after point transform 193/211, both declaration
+// scopes; direct final output with initial copy/branch results 193/229.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

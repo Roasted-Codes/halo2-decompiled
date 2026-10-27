@@ -2266,7 +2266,50 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
-// score 666 (was 666): frame 0x80 agrees; ours passes the request pointer in EAX (ret 4) where retail
+// score 666 (was 666): Frame 0x80 agrees; request/control homes, validity expansion and ret 4 versus ret 8 remain.
+// Earlier: frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// Round 55: retail never enregisters the request pointer (esi holds the control pointer, spilled to
+// +0x24) and copies the request bools at +8/+9 as plain bytes; its transition flag is a byte (+0x11).
+// Request bools read as bool 707 (2545 bytes); with a bool transition flag 723 (frame 0x7c, but aligned
+// diffs 496 -> 383); bool transition flag alone 710 (aligned 386); declared after the result 709; with
+// only the +9 bool read 742. Retail's frame keeps a dword at +0x18 that ours does not.
+// Earlier at 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
+// frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
+// ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
+// requested-name snapshots 709; inline plus native final/validity 696/707.
+// ordinary-helper Boolean transition 712; native helper result 706;
+// explicit helper result 679; size policy 1026; byte validity 679. Request/control
+// homes and the second stack argument remain unresolved.
+// request/control homes and second stack argument remain;
+// force decision at use 723; late validity 677; final activity values 676;
+// entry output scalars 679; early-invalid helper 710; late validity plus activity values 674.
+// Request/control homes and second stack argument remain; native node selector 704, node ordinal 679, separate transformed point 686, completion cases first 679, early data construction 679.
+// Request/control homes and the second stack argument remain;
+// indexed three-channel completion 743; position field receiver 704; byte transition 711;
+// direct eligibility 705; byte request flags 705. Opening body retained.
+// Frame 0x80 agrees; request/control carriers and ret 4 versus ret 8 remain.
+// Unsigned requested names 674; short held-slot count 674; word activity result 690; transition
+// cases first 674; internal validity linkage 674. Original helper declaration restored.
+// Forced validity on late-result body 707; reversed validity fields 722; fallback vector memcpy 674;
+// current-frame request/workspace names 674; shared channel flag word 674. Opening body and helper retained.
+// Validity tag/index scalars 702; native identifier value/reference 820/699; scalar independent tests 729;
+// scalar/value/reference forced expansion 707/868/707; identifier-first scalar formals 702. Original helper and
+// twelve calls restored.
+// Round 222: word transition/override 672/714; byte permission/activity 694/674; separate final accumulator 666 kept plain; logical final OR 680; both native validity tests 716, with word transition 714; call-first/combined accumulator 666/666; byte activity with accumulator 669.
+// Round 226: Boolean transition 710; byte override 666; byte permission 693; transition with
+// override 710; transition with permission 662; both byte inputs 693; Boolean transition with both
+// bytes 662; word transition with both bytes 704.
+// Complete request value after/before initial activity 689/706; with all three request results
+// constructed directly 705/712; complete library input copy after/before 689/706,
+// with direct results 705/712. Native request record and copies restored; original interface retained.
+// Late changed/forced status byte-bool, word-bool, bool-byte, bool-word, byte-byte, byte-word, word-byte,
+// word-word: 666/676/666/693/666/693/676/682 (fast); all restored.
+// Eight complete entry object/control/state/tag receiver lexical orders all 666; frame
+// 0x80 unchanged, request ESI capture and tag/control homes remain. All names restored.
+// Round 146: Complete channel-reference validity with bool/byte/short/long results 666/666/677/672;
+// forced expansion 702/702/698/699. Original pointer helper, calls and body restored.
+// frame 0x80 agrees; ours passes the request pointer in EAX (ret 4) where retail
 // keeps both arguments on the stack (ret 8) and reloads the request pointer three times; retail keeps the
 // control pointer in ESI early, the force flag in a byte at +0x11 and the force result in a byte at +0x1b,
 // inlines every channel-validity test (ours calls it at the three 0x700005c checks) and passes the raw
