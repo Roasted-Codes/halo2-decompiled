@@ -1029,9 +1029,15 @@ __declspec(noinline) real normalize2d(point2f *v);
 
 real function_11cc90(vector2f const *a, vector2f const *b);
 
-// score 172 (was 342): frame 0x34 and the first 0x3e bytes agree; retail keeps the shared return-true block
+// score 172 (was 172): frame 0x34 and the first 0x3e bytes agree; retail keeps the shared return-true block
 // after the length test (both final compares jump back to it), forwards x87 values in the direction
 // normalizations, and rounds the second side through memory before its clamp.
+// Round 144: VC keeps the last of the merged `return true` blocks; with both final compares as
+// `return a < b;` the early block sits after the length test as retail's (al 85 against 88) but the
+// tail becomes `mov eax, 1` / `xor eax, eax` returns, 371; distance compare alone 254, angle alone 254;
+// one `result` assigned from each compare, returned once 172 (identical); `result = false; if (c) result
+// = true;` in each 226; length test `<= 0.0f` / `0.0f >=` 172/172; body under `if (length > 0)` with
+// `return true` last 243.
 // Round 76: signed angles through the existing function_11cc90 (single-result form there) 419, masked 90;
 // with explicit true/false distance return 332; distance compare first < second 407; angle compare
 // first sum < negated second sum 270; with both explicit returns 240; distance sums target first 172
