@@ -238,6 +238,10 @@ struct s_slot_05_data
 // Round 186 on native payload/late scratch: common release 151; flag before acquisition 95;
 // both 152; late output handle 112; release/handle 108; flag/handle 112; all three 109;
 // declared request byte 91; conditional reference with selection result 151, with common release 128.
+// Round 71: plain else-arm reference (`else reference = actor->unknown418;`) gives retail's block layout
+// (both reference arms after the first return) but scratch takes EDI and reference a stack slot, frame 0x774: 117;
+// inverted outer test 118; inverted inner test 91, with the else arm 117; on the else arm, reference at block
+// top / before scratch / function scope, bool first, scratch at function scope, swapped compare, release first 117.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
