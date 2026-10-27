@@ -2168,7 +2168,8 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 296 (was 296): frame 0x6a4 agrees; visibility-row scheduling, marking and selection/cleanup differ.
+// score 283 (was 296): frame 0x6a4 and length agree; the early reset-word load,
+// visibility/marking registers and selection/cleanup allocation still differ.
 // Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
@@ -2208,6 +2209,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 353: on the shared marking walk, reset snapshots short/long/word
 // 357/356/357; short/long with chained sentinels 357/356; short/long
 // with long actor cluster 359/362; all three 359. Original observations restored.
+// Native word dispatch zero-first/direct field 283/283; one-first 354; unsigned
+// eligibility 342. Early state result with those forms 323/323/325/329. Guarded
+// nonzero word dispatch 283 retained; original state-result lifetime kept.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
@@ -2318,30 +2322,25 @@ void function_269870(long clump_index)
                 if (existing->type != candidate->type)
                 {
                     s_type_5cfb45 *state = NULL;
-                    switch (g_470f10[candidate->type].unknown4)
+                    short operation = g_470f10[candidate->type].unknown4;
+                    if (operation != 0)
                     {
-                    case 0:
-                        break;
-                    case 1:
+                        if (operation != 1)
+                            goto type_ready;
+                        s_iterator nodes;
+                        nodes.next = ((s_clump_prop *)prop_get(candidate->prop_index))->first_node;
+                        s_clump_node *node;
+                        while ((node = clump_next_node(&nodes)) != NULL)
                         {
-                            s_iterator nodes;
-                            nodes.next = ((s_clump_prop *)prop_get(candidate->prop_index))->first_node;
-                            s_clump_node *node;
-                            while ((node = clump_next_node(&nodes)) != NULL)
+                            if (node->state >= 1)
                             {
-                                if (node->state >= 1)
-                                {
-                                    if (*(long *)((byte *)node + 0x14) != NONE)
-                                        state = function_25d690((s_prop_datum *)node);
-                                    break;
-                                }
+                                if (*(long *)((byte *)node + 0x14) != NONE)
+                                    state = function_25d690((s_prop_datum *)node);
+                                break;
                             }
-                            if (!node)
-                                goto type_ready;
                         }
-                        break;
-                    default:
-                        goto type_ready;
+                        if (!node)
+                            goto type_ready;
                     }
                     existing->state = 1;
                     if (state)

@@ -495,6 +495,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // tail, but the previous point stays in ESI); both 254 (frame +8, the widened index spilled);
 // long index without the volatile 272; the distance sums with the terms swapped (loop, fraction,
 // both) 212 (identical).
+// Common-failure graph mask production: conditional result 212/252; clear then set
+// 275/266; named output bit 222/252; named bit with conditional result 222/252
+// (unsigned/signed word ordinal). Original ordinal, mask and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

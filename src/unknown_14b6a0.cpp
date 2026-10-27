@@ -178,6 +178,9 @@ void function_14bac0()
 // Round 352: readiness at request entry, alone and with point/bounds/both output declarations,
 // 274 each; early point/bounds/both declarations without readiness 234 each; complete
 // function-entry graph 288. Frame stays 0x34; original storage and observations restored.
+// Marker-test readiness results, destination/alternate/both 237/243/244; with
+// native recipients 262/278/261. Both results plus fallback query result 252;
+// with native recipients 278. Original points, flags and shared iterator restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

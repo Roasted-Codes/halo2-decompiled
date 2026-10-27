@@ -387,7 +387,6 @@ bool function_2702a0(long actor_index, long mode, long set, long target_mode, lo
     long *location, vector3f *out_forward, long *node_index)
 {
     /* retail keeps out_position and position on the stack */
-    point3f *const *reference = &out_position;
     bool result = false;
     point3f const *const *position_reference = &position;
     s_actor_view *actor = actor_get(actor_index);
@@ -397,7 +396,7 @@ bool function_2702a0(long actor_index, long mode, long set, long target_mode, lo
     {
         function_141590(&matrices.local, &matrices.inverse);
         function_142a60(&matrices.source, &matrices.inverse, &matrices.local);
-        if (*reference) **reference = matrices.local.position;
+        if (out_position) *out_position = matrices.local.position;
         if (out_forward) *out_forward = matrices.local.forward;
         if (location || node_index)
         {

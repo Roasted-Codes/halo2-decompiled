@@ -497,8 +497,9 @@ void __stdcall joint_leave(long actor_index, s_slot *slot)
 
 	if (joint)
 	{
-		if (JOINT_DEFINITION(behavior->type)->leave)
-			JOINT_DEFINITION(behavior->type)->leave(actor_index, behavior, joint);
+		s_joint_behavior_definition *definition = JOINT_DEFINITION(behavior->type);
+		if (definition->leave)
+			definition->leave(actor_index, behavior, joint);
 		function_26ee40(behavior);
 	}
 }
@@ -524,8 +525,9 @@ bool __stdcall joint_update(long actor_index, s_slot *slot)
 // @retail 0x26e6d0
 void __stdcall joint_activate(long actor_index, s_slot *slot)
 {
-	if (JOINT_DEFINITION(((s_joint_behavior_state *)slot)->type)->activate)
-		JOINT_DEFINITION(((s_joint_behavior_state *)slot)->type)->activate(actor_index, (s_joint_behavior_state *)slot,
+	s_joint_behavior_definition *definition = JOINT_DEFINITION(((s_joint_behavior_state *)slot)->type);
+	if (definition->activate)
+		definition->activate(actor_index, (s_joint_behavior_state *)slot,
 			JOINT_STATE(((s_joint_behavior_state *)slot)->state_joint_index));
 }
 
