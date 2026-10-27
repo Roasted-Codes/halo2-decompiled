@@ -1113,17 +1113,19 @@ void function_c0110()
     }
 }
 
+// score 6 (was 62): the last flag update holds the object in ecx and the flags in eax, retail the
+// reverse. light_partition_clear after the & 8 test with the light from g_4e030c->data and the pool
+// read at each use (kept); the same with a pool local 59, through the s_light_ab pointer 80; flags
+// through a ternary, a typed object, a dword view, a pointer to the flags 6/6/6/6; flag test negated 7;
+// object fetched after the flag 8; datum iterator 6; entry declared in the loop 6; a 600 s permuter
+// run (59 tries), none below 6.
 // @retail 0xc3260
 void __stdcall function_c3260(long light_index, bool clear_object_flag)
 {
     long const *light_index_reference = &light_index;
-    s_record_pool *lights = g_4e030c;
-    s_light_delete_view *light = &((s_light_delete_view *)lights->data)[*light_index_reference & 0xffff];
-    if ((light->flags & 8) && (light->flags & 2))
-    {
-        function_1cae40(&g_4e0310_partition, *light_index_reference, &light->first_cluster_reference);
-        light->flags &= ~8;
-    }
+    s_light_delete_view *light = &((s_light_delete_view *)g_4e030c->data)[*light_index_reference & 0xffff];
+    if (light->flags & 8)
+        light_partition_clear(*light_index_reference);
     long object_index = light->object_index;
     if (object_index != NONE && clear_object_flag)
     {
@@ -1131,7 +1133,7 @@ void __stdcall function_c3260(long light_index, bool clear_object_flag)
         byte *object = ((s_object_header *)g_4e0300->data)[object_index & 0xffff].object;
         bool remaining = false;
         s_record_pool_iterator iterator;
-        iterator.data = lights;
+        iterator.data = g_4e030c;
         iterator.index = NONE;
         iterator.datum_index = NONE;
         s_light_delete_view *entry;
@@ -1150,7 +1152,7 @@ void __stdcall function_c3260(long light_index, bool clear_object_flag)
             flags &= ~0x40;
         *(dword *)(object + 4) = flags;
     }
-    record_pool_release(lights, *light_index_reference);
+    record_pool_release(g_4e030c, *light_index_reference);
 }
 
 #include "object_queries.h"
@@ -1252,6 +1254,11 @@ void __stdcall function_c0c80(long light_index);
 #define FLAG(bit) (1 << (bit))
 #define SET_FLAG(flags, bit, value) ((value) ? ((flags) |= FLAG(bit)) : ((flags) &= ~FLAG(bit)))
 
+// score 47 (was 47): only the far point's products differ: ours copies the distance and multiplies the
+// last component in place, retail copies each direction component (one instruction more), which shifts
+// the exit. Far point and nudge through point_add_scaled_c35a0 (kept): the nudge reading through position
+// and writing the light's position gives retail's interleaved stores; by hand, in place, or reading the
+// light's position 47; distance declared before direction 47; distance as one ternary 47.
 // @retail 0xc0520
 long __stdcall function_c0520(long tag_index, long placement_index, bool force,
     s_light_placement_ab *placement)
@@ -1316,14 +1323,10 @@ long __stdcall function_c0520(long tag_index, long placement_index, bool force,
             else
                 distance = (forward->k * direction.k + forward->j * direction.j +
                     forward->i * direction.i) * shape.cone.values[4];
-            *(real *)(light + 0x90) = direction.i * distance + position->x;
-            *(real *)(light + 0x94) = direction.j * distance + position->y;
-            *(real *)(light + 0x98) = direction.k * distance + position->z;
+            point_add_scaled_c35a0(position, &direction, distance, (point3f *)(light + 0x90));
             if (!(definition[0] & 9))
             {
-                position->x = direction.i * 0.001f + position->x;
-                position->y = direction.j * 0.001f + position->y;
-                position->z = direction.k * 0.001f + position->z;
+                point_add_scaled_c35a0(position, &direction, 0.001f, (point3f *)(light + 0x84));
             }
             function_c0c80(result);
             *(long *)(light + 0xc) = g_4e0308 - 1;

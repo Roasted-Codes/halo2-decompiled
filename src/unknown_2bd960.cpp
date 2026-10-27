@@ -364,6 +364,8 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 	}
 }
 
+// the four control points of segment n of a closed spline: the segment's two
+// points and the midpoints with their outer neighbours
 // score 43 (was 43): no frame; spline/index/point input ownership and first average schedule differ.
 // native output-pointer result without index home 64 fast;
 // ordinary inline declaration without index home 64 fast;
@@ -383,9 +385,9 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 // @retail 0x2bdd70
 void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points)
 {
-	long const *index_reference = &n;
-	long i = *index_reference * 2;
+	long i = n * 2;
 	long previous = i - 1;
+	long following = i + 1;
 	long next = i + 2;
 
 	if (previous < 0)
@@ -396,7 +398,7 @@ void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points
 	point3f &first_output = out[0];
 	point3f *a = &points[previous];
 	point3f *b = &points[i];
-	point3f *c = &points[i + 1];
+	point3f *c = &points[following];
 	point3f *d = &points[next];
 	first_output.x = b->x + a->x;
 	first_output.y = b->y + a->y;
@@ -469,10 +471,11 @@ void function_2bde90(real t, point3f *out, point3f *points)
 /* builds the hill's polygon on the spline through its markers, and its
    center, radius, perimeter and height range (the height range also covers
    the hill's other markers) */
-// score 25 (was 25): control/sampling conventions, radius base and marker registers remain.
+// score 25 (was 25): frame 0x110 agrees; control/sampling conventions, radius base and marker homes differ.
+// Earlier at 25 (was 25): control/sampling conventions, radius base and marker registers remain.
 // Earlier at 130 (was 134): control-call convention and scan induction differ;
 
-// score 25 (was 25): frame 0x110 agrees; control/sampling conventions, radius base and marker registers differ.
+// Earlier at 25 (was 25): frame 0x110 agrees; control/sampling conventions, radius base and marker registers differ.
 // Earlier: control-call convention and scan induction differ;
 // control-call convention and scan induction differ;
 // segment control scope 141 fast; sample point scope 141 fast; late marker
@@ -523,6 +526,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // marker field reads at every use 77f; displacement/height 81f, displacement/marker 78f,
 // height/marker 97f, all three 98f; direct marker reads with a plain for 460f.
 // Reduced control 74 versus full 25; helper conventions and radius/marker homes remain. All restored.
+// Separate native radius-center input 179f; independent marker count 138f;
+// conditional marker bound updates 83f; center/count 159f; center/updates 142f;
+// count/updates 83f; all 142f; XY center with count/updates 116f. Reduced control 74, full 25.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
