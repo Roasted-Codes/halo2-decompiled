@@ -446,6 +446,10 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 // sum groupings 9/12/9; const table 10; all product orders x three groupings, with and without the
 // row pointer, 6-13; row cursor 9; flat table 10, with the row pointer 6; parameter reorders 10
 // (before the row pointer).
+// Round 42: quadratic-origin row pointer, reordered chain and sequential accumulation 6/6/6;
+// named cubic-linear with plain/swapped/mutable quadratic 9/9/9; native plane row 6; split accumulation 10.
+// Power triple/product helper with shifted row, direct powers and reversed inputs 5/5/5 (439 bytes;
+// one-point grouped-power forms, not kept); scalar SSE multiply 109; scalar conversion form did not compile.
 // Shared square with const/products/early weights 110; early product-helper
 // input 5, late input 99; row/table/const/accumulation variants 5. All restored.
 // Native coefficient/plane rows with the shared product, either input order

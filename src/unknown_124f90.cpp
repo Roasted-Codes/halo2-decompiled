@@ -1459,6 +1459,9 @@ void looping_sound_controller_release(long index);
 // playback pool retained in EBP instead of EBX; no frame, length 98 agrees.
 // Controller reference/workspace 5 each; no-effect cleanup 43; decrement rejection 5;
 // scoped controller lookup 39; receiver names 5; scoped reference 39; reference cleanup 43.
+// Inline/forced-inline controller getter 40/40; open-depth inline getter with noinline release 122;
+// playback/both receiver references 5/5; const playback/controller pointers 5/5;
+// unsigned decrement/mask 5/5.
 // Round 56: the byte decrement is what keeps the pool out of EBX (as a dword store it gets EBX);
 // pool local 43 (stack convention); effect index local 5; byte count local 5; count pointer 5;
 // nested decrement tests 5; harness: char field, cast, `--`/`&=`, `+ 0x7f`, long/short/dword
@@ -3424,6 +3427,9 @@ struct s_128ca0
 // together 234 each; native clear-member addresses 234; chained packet flags 293; upper-first shared pin
 // 234; pin input home name 234. Original fields, clear ranges and helpers restored; protected chunk
 // interface unchanged.
+// Round 254: live voice-table fields, alone/with scale/raw-gain-first/both 293/249/277/302;
+// the same four with live pitch-parameter fields 293/249/293/244. All regress;
+// original voice/parameter receivers, scale observations, gain schedule and body restored.
 // Round 195: Processed-gain producer ordinary/noinline/combined declarations 234 each;
 // forceinline 373. With raw gain before pitch 268/268/268/374; the 268 forms use frame
 // 0x494. Both declaring files and original body restored; gain homes and clamp joins remain.

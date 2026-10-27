@@ -573,7 +573,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 393 (was 449): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
+// score 393 (was 393): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
 // conversions (6 calls versus retail's 15; BLOCKED-BY 0x12aff0: retail's callers treat it as opaque).
 // Round 75: SetMixBins (retail calls 0x37c5e4) for SetMixBinVolumes 449 (kept); the existing 0x2216f0 with a
 // NULL list for the three submissions 393 (kept); explicit sends, one object 613, three objects 544; set-2 rear
@@ -630,6 +630,11 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Automatic-table pointer walks first/second/first+second/third/first+third/second+third/all:
 // 436/436/437/432/431/431/431 fast (control 436); shared table-end pointer 431.
 // All pointer walks 446 plain, three-point gain rejected; original word ordinals restored.
+// Round 208 reduced control 378/967, full 393/951: first/second, first/third,
+// last-two and all descriptor scopes on the current submission graph
+// 417/400/428/447; corresponding three pairwise object reuses 417/400/428;
+// all scopes with both repeated levels 500. All scopes reach frame 0xa0;
+// conversion reuse and the twelve-byte excess frame remain; original body restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -857,9 +862,15 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 183: Eight actual native-word destination declaration permutations
 // 227/228/228/225/228/224/227/228; starting with right ties, rear-first forms regress.
 // Original declarations restored; frame 0x20, mode/input-level and x87 tail homes remain.
+// Native-word destinations with bool/byte routing predicates and original/gain/level/both
+// read-at-use forms 242/271/302/323 each. Original scalar observations restored.
 // Round 190: Mode-first field-address selection with gain at entry/after selection/after
 // offset/after input level 247/247/258/258; constant-first counterpart 232/231/245/245. Every form
 // regresses; original helper and scalar lifetimes restored.
+// Round 208: uniform shared input sums with paired route subtotals, repeated
+// right gain and paired threshold observations 293/263/286/270/267/267/270/270.
+// Without the right-gain snapshot, frame 0x18 shortens to 779-804 bytes; gain forms
+// lose the dispatcher. Original sums, observations and local qualifications retained.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

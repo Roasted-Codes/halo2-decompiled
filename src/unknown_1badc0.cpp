@@ -46,12 +46,18 @@ real normalize2d(point2f *arg_0);
 // Direction declaration/call ordering and collision-storage lifetime combinations 220 in seven forms;
 // those together with radius before center copy 214 (six-point gain restored).
 // Same-size point/vector name swaps, separately and in combinations, 220 in eight forms.
+// Far planar separation through the existing 2D/3D helpers 228/228; complete
+// native 2D/3D initializers 220/220; each with entry collision storage 228/220/228/220.
+// All restored; original scalar geometry and collision-storage lifetime remain.
 // Round 191: Direct-output mode first with original returns, Boolean/long/byte
 // common completion results 261/261/236/242; all four with radius before center
 // 261/261/236/242. Original mode/result graph and executable body restored.
 // Round 345: Native original/center/both CRT copies 220/220/220; entry point
 // storage alone/with original/center/both copies 218/218/218/218; both copies
 // and entry storage with radius before center 213 (seven-point gain below gate). All restored.
+// Round 254: entry collision-sentinel initialization with original/first-point/center/both
+// entry storage 269/269/269/269; with radius-before-center 269/269/269/269.
+// Original late collision initialization, point storage and executable body restored.
 // Round 195: Normalizer inline/noinline/combined/forceinline declarations 220 each;
 // with radius before center 215 each. Five-point best restored; original output access,
 // scalar spill, radius lifetime and body retained, output/vector homes unresolved.

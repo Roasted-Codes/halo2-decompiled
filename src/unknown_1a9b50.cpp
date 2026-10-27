@@ -476,9 +476,14 @@ extern point2f *g_468778;
 // Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
 // all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
 // Exact-only grouping forms restored; actor/settings/prop carriers remain.
+// Round 158: Complete facing/alignment/prediction product operands commuted independently, in pairs, all
+// three, then with both full prediction producers. Scores [375, 375, 375, 375, 375, 375, 375, 375]. Original
+// executable body restored.
 // Round 184: native admission/active/request byte fields, all seven nonempty
 // groups, and the unsigned bounded request discriminator 375 each. Original
 // Boolean fields, output-pointer contracts and request discriminator restored.
+// Round 226: complete settings native/memcpy values with bool/byte result, original/actor-first
+// acquisition 441, 441, 413, 413, 422, 422, 394, 394. All restored; frame and early carrier homes remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

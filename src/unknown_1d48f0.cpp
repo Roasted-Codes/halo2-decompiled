@@ -87,6 +87,8 @@ const dword g_455978[81] = {
 // Round 54: noinline declaration of 0x11bed0 447 (and 0x11bed0 itself 19 in --fast: CAVEAT on its
 // callee 0x14a280); first release with the inline range check 442; both 401 (structural diff 36 vs 66);
 // with an `arg_8 ? 27 : 18` count 427, count alone 477.
+// Round 223: Both positive validation stages 350; result-terminated scan 395; optional failure
+// first 351; both 395; zero rejection removed on these graphs 408/411/407/411. All restored.
 // Round 148: native candidate value 486; native ray-offset value 467; both vector values 516;
 // coordinated transform inline 350; inline/candidate 486; inline/offset 467; inline/both values
 // 516; force-inline/both values 954. All executable forms restored.

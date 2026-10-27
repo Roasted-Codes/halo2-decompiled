@@ -108,6 +108,8 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // consumers, original status, mixed math and helper contracts restored.
 // Force-inline gain pin, bit pin, linear gain and combinations, then all four
 // existing helpers: eight forms all 532 on the reduced control. Helpers restored.
+// Round 227: Double energy/sample, named complete square, their pairs/all,
+// all plus rounded root input 530/532/538/576/531/560/561/566 (precision exact-only). Restored.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

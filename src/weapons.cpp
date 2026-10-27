@@ -2824,6 +2824,7 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // single-exit guarded publication 471/471/462/466. All restored.
 // Scalar accumulator/contribution/output names, alone and combined, 398 each;
 // combined names with late constant found declaration 398. All eight restored.
+// Round 251: Case-scoped barrel/trigger/both/magazine/barrel+magazine/trigger+magazine/all selectors 398/398/398/398/398/398/398; all with full-width selectors 424. Original shared word selector restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3117,6 +3118,8 @@ struct s_ammo_conversion_entry
 // Round 337: actual published round total short/word/long 225/225/229;
 // mode-test return producer 197 (gain 1, rejected); with short/word/long totals 231/231/235;
 // short total and mode producer with complementary byte acquisition 208. All restored.
+// Round 351: persistent tag/magazine/both/conversion/tag-conversion/magazine-conversion/all
+// cursors 205/222/228/228/224/217/232; all cursors with Boolean acquisition 236. All restored.
 // Complementary bool/byte/short/long acquisition with the tag byte at every type test
 // 216/216/234/232; with result-controlled first-match scan 246/246/261/259. All restored.
 // Round 204: Shared three-use type-bit result bool/byte/word/dword with word acquisition

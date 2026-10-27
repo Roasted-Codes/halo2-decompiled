@@ -35,9 +35,43 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
         ++output;
     }
 }
-// score 221 (was 221): Frame 0x18 versus 0x14; displacement/coefficient/result overlap remains.
+// score 221 (was 221): frame 0x18 versus 0x14; retail loads the view scale once (xmm6) for
+// both inlined transforms, keeps the second point's offset in the frame and the first in
+// registers, and scales copies of the inputs; coefficient/result/tail homes differ. Tried:
+// global optimization off 961; depth zero 555; frame pointer 300; input-first products 255;
+// k/j/i transform output 272; offset/transform/blend loops 315/291/255; paired loops 237; depth
+// bounds 237; both 227; paired loops with blend/unsigned/in-place 236/237/287; scoped bounds 230;
+// literal zero 227; bound scalar homes 227; separate offset loops 226; output cursor 225; short
+// transform index 405; first/second bound at uses 225/236; bound declaration order 227;
+// separate offsets with output cursor 221 (kept); short index/first bound 397; limits after
+// depth guards 224; limits after first depth 283; explicit tail clamp 221; constant weight arm
+// first 221; delayed limits tail clamp 224; delayed limits weight arms 224; first depth tail
+// clamp 283; depth weight clamp lifetimes 224; value direction 348; reference direction/output
+// 221/221; input-first scale products 221; selected scaled inputs 275; short offset counters 277;
+// byte transform counter 394; value direction with reference output 348; on the output-cursor
+// form: forward/up/right snapshots 275/275/269; all coefficients before/after scale 453/448;
+// shared scale 252 at 1136 bytes; early/late coefficients with shared scale 478/477; first/
+// second/both endpoint clip results 262/280/278; first clip before second view 282; second clip
+// first 282; incremental clip result 222; both view/clip boundaries 285; cone rejection results
+// 278; shared origin on the separate-offset/output-cursor body 290; first/second/both endpoint
+// memcpy producers 298/297/334; both inputs before offsets 335; both input copies with origin
+// 287; first/second input copy with origin 264/266 (1136 bytes); descending first/second/both
+// displacement indices 220/260/260; first/second/both displacement destination cursors 224/
+// 224/226; all axis products 221; scalar-role homes 221; uniform transform first-pair sum/last
+// product/row result 227/284/221; pair with last/row, last with row, all, and all product parts
+// 222/227/284/222/222; consistent direct scale-field observations with input/output/both
+// references and actual output-result contracts in all eight combinations 224 each (1148
+// bytes); native post-normalization projection axis with all-product terms, shared point
+// difference and same-group ordered dot expression in eight combinations 286 each (1101 bytes,
+// frame 0x2c); native vector return with pointer/reference/value input and cursor 278/278/401,
+// with indexed result 280/280/404; scaled input vector with output pointer/native return 312/
+// 404; actual output-end !=/< with long/dword ordinals 406 each, short/word ordinals 378 each.
+// Round 140: offsets through vector3d_from_points3d 220 (one point, not kept); second offsets
+// first 223; transform rows as three statements 309 (1078 bytes), with the vector3d offsets 307;
+// shared scale local with the vector3d offsets 252 and with second offsets first 253 (1136
+// bytes); scaled values read from the input pointer 221, with shared scale 252.
+// Frame 0x18 versus 0x14; displacement/coefficient/result overlap remains.
 // Earlier: Frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
-
 // Frame 0x18 versus 0x14 and coefficient/input/result homes remain.
 // frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 // Global optimization off 961; depth zero 555; frame pointer 300;
@@ -82,6 +116,11 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // with indexed result 280/280/404; scaled input vector with output pointer/native return 312/404. Original helper and body restored.
 // Round 146: actual output-end !=/< with long/dword ordinals 406 each and short/word ordinals 378
 // each; original ordinal-controlled helper restored.
+// Lane 8 r58: second offset vector reused for the normalized segment (retail's [esp+8] slots,
+// 1136 bytes) 261; with it: scaled arm reading the input 261, if/else scaled copies 297,
+// scaled vector copy 326, camera-pointer helper rows/loop 292/258, plain rows 295, k/j/i
+// copies 260, k/j/i copies and scaling 259, k/j/i scaling 250; k/j/i scaling alone 245,
+// k/j/i copies and scaling alone 257.
 // Round 345: Live forward/up/right coefficient cursors 241/253/253; their pairs/all
 // 253/253/253/254; all with descending direct rows 267. Forward alone gives frame
 // 0x14 and 1136 bytes but regresses to 241; original helper and body restored.
