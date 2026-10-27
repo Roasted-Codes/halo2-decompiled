@@ -2437,6 +2437,9 @@ dword __cdecl function_131fc0(real alpha);
 // construction with destination selection first 433/439; source selection first 439/433;
 // source construction before conditional destination 331 (four-point fast gain rejected);
 // conditional source then unconditional destination 427, against fast control 335.
+// Round 60: BLOCKED-BY 0x289e0 (the only caller, under #if 0, so LTCG gives inverse AL). Own-address
+// inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
+// dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,

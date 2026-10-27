@@ -790,6 +790,9 @@ real function_18cac0(long arg_0);
 // a helper in another file (LTCG inlines it) 225 (still aligned); batch count read once
 // 237 (812 bytes); door clusters through the cached audibility pointer 233 (812 bytes); gain
 // loop bound read once 225; door count read once 237.
+// Lane 8 r58: max as a ternary store 229; table value first with negated test 254; real
+// table type 225; batch count read once 237; with real table 237. The alignment needs the
+// memset and a frame over 0x800: a table of 0x1c0 dwords or no memset gives the plain frame.
 // Round 180: Indexed gain-element pointer inside/before admission 225/225; complete result
 // arms 229/229; two-use old gain 262/262; old gain with complete arms 254/254.
 // Round 196: Whole clear return/direct camera, side long/short/signed-byte/byte 248/248/250/250;

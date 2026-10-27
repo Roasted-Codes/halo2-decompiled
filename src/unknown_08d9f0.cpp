@@ -174,6 +174,10 @@ void function_8dd70(void);
 // below (its definitions sit in a contributor file, so they cannot be folded here). Entry
 // test without the local 230; through an inline getter (result local, if/else) 230/230;
 // `initialized == false` 230; observer readiness as a bool if/else assignment 248.
+// Lane 8 r58: noinline 0x662f0 (retail calls it) 286 at 816 bytes; with noinline 0xb2cc0
+// 379 at 728; inline+noinline registration callees 378/362 (eax reloaded, from esi);
+// with a bool link result 382. Retail reloads the global block before every call and
+// after every store through a pointer, as when these globals are address-taken.
 // Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
 // stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
 // Complete link/search/scalar/gateway/ready publication orders 0-1-2-3-4, 1-0-2-3-4,

@@ -1075,6 +1075,10 @@ real function_50650(real cosine);
 // shared inner minimum 335; all observations plus shared inner minimum 381. Original receivers restored.
 // Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
 // X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
+// Round 59 (fast control 117): offset-first actor expression 117; actor through the actor getter 117;
+// object before actor 118; speed factor declared last 117; ternary first clamp 117 (same code). The
+// velocity j preload matches the shape the in-place 3-D normalize gives in matched 0x179fb0 (every
+// component but the first preloaded before fsqrt); a hand-written 2-D copy of that shape 128.
 // Direct speed-factor default 302; all minimum spans 117; speed/spans 302; paired closing
 // projections 117; speed/projections 302; spans/projections 117; all 302; all with facing default
 // first 300 (fast control 117, full 137). All restored; actor/object homes, velocity preload
