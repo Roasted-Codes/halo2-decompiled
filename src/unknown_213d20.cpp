@@ -289,6 +289,9 @@ void cache_copy_buffer_resize(long size)
 // the second buffer address is reused instead of recomputed after the call.
 // Inline declaration 5; noinline declaration 5; byte memset 5; both clears first 25; selected result 24;
 // later result 13; both buffers initialized 81; priority-first result 31.
+// 0x214db0 forms (callee still matching): returning the printed buffer 5; drive-path test in a bool 5;
+// file name from a separator ternary 5; one shared print call 19; path-first parameter order 9; the
+// helper in its own file sorted after or before this one 5/5.
 // @retail 0x213e30
 long cache_copy_current_priority(char const *map_name)
 {
@@ -314,6 +317,9 @@ long cache_copy_current_priority(char const *map_name)
 // the second buffer address is reused instead of recomputed after the call.
 // Inline declaration 5; noinline declaration 5; byte memset 5; both clears first 25;
 // selected result 24; later result 13; both buffers initialized 81; priority-first result 31.
+// 0x214db0 forms (callee still matching): returning the printed buffer 5; drive-path test in a bool 5;
+// file name from a separator ternary 5; one shared print call 19; path-first parameter order 9; the
+// helper in its own file sorted after or before this one 5/5.
 // @retail 0x213e90
 long cache_copy_queued_priority(char const *map_name)
 {
@@ -382,19 +388,20 @@ long map_location_get(char const *map_name)
 	return cache_copy_queued_priority(map_name) != NONE;
 }
 
-// score 3 (was 3): Frame agrees; the second path address reuses EBX instead of being formed again from ESP.
+// score 3 (was 3): Frame agrees; the second path address reuses EBX instead of being formed again from ESP
+// (retail keeps EDI, the map name, across 0x214db0 but treats its EBX buffer argument as clobbered).
 // Tried buffer declarations 3; first buffer name 3; second buffer name 3; result lifetime 3; second clear
 // lifetime 7; test result 36; two result paths 36; integral result 52; path helper reverse 5; path helper
-// cdecl 5; path helper stdcall 3.
-// the second buffer address is reused instead of recomputed after the call.
-// Noinline declaration 3; inline declaration 3; first buffer initialized 65; second initialized 68;
-// byte memset 3; empty strncpy 81; both buffers initialized 94; shared byte clear 5.
-// Symmetric comparison 39; named comparison 3; named symmetric comparison 39;
-// path array loop with per-path clear 48, preclear 59; path pointer loop with per-path clear 69,
-// preclear 102; path array while traversal 48.
-// score 3 (was 3): later element address 3; whole-array pointer 3; two-dimensional paths 3;
-// path callee noinline/inline declarations 3; call element address 3; call-output pointer 3;
-// later comparison pointer 3; later whole-array comparison pointer 3.
+// cdecl 5; path helper stdcall 3; noinline declaration 3; inline declaration 3; first buffer initialized
+// 65; second initialized 68; byte memset 3; empty strncpy 81; both buffers initialized 94; shared byte
+// clear 5; symmetric comparison 39; named comparison 3; named symmetric comparison 39; path array loop
+// with per-path clear 48, preclear 59; path pointer loop with per-path clear 69, preclear 102; path array
+// while traversal 48; later element address 3; whole-array pointer 3; two-dimensional paths 3; call
+// element address 3; call-output pointer 3; later comparison pointer 3; later whole-array comparison
+// pointer 3; one-member buffer structs (object address to the call, field to the compare) 3.
+// 0x214db0 forms (callee still matching): returning the printed buffer 3; drive-path test in a bool 3;
+// file name from a separator ternary 3; one shared print call 45 (callee 39); path-first parameter
+// order 5; the helper in its own file sorted after or before this one 3/3.
 // @retail 0x214e40
 bool map_names_equal(char const *map_name, char const *other_map_name)
 {

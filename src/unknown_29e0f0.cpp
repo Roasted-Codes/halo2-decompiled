@@ -246,6 +246,11 @@ struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long f
 // locals scoped with the location at the join 320; failure arm as the final else 320; field_10 test
 // inverted 320; the existing 0x210850 lookup called 360, with an inline redeclaration 360 (stays a
 // call); vector output in the extra record's point 307 (frame 0x10c; a reuse form, not kept).
+// Round 54: 0x262a90 is inlined here (retail calls it), which evicts the request from EBX and keeps it
+// on the stack: a noinline declaration of 0x262a90 gives retail's `ret 0x1c` (392); with the 6-path first
+// 370, plus output_index read at each use and the appended record written in full 333 (structural diff
+// 42 vs 135). No __stdcall 332; field-wise reference compare 357; output_index at each use 336; 6-path
+// first 346.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,

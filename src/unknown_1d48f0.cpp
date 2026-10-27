@@ -45,6 +45,9 @@ const dword g_455978[81] = {
 // score 350 (was 350): aligned frame 0x1d4 agrees; optional input/register roles (arg_9/arg_10 in
 // esi/edi swapped), scalar homes and selective helper expansion remain: ours inlines 0x11bed0 (retail
 // calls it at all its sites) and calls 0x279740 at both releases (retail inlines the first).
+// aligned frame 0x1d4 agrees; optional-input registers (ESI/EDI swapped), scalar homes
+// and selective helper expansion remain: retail calls 0x11bed0 out of line and inlines the cache-range
+// check of the first reference release (the form of 0x1d01c0), while ours does the opposite.
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
 // both path lifetimes 485; count just before scan 366; read-only body 370; native transform copies 370.
 // the presence callback at its retail 12-byte size, initialised by its constructor.
@@ -72,6 +75,9 @@ const dword g_455978[81] = {
 // 27/18 ternary 477 (retail's form, but the flag then goes in a register and caller 0xc5460 changes);
 // ray endpoint adds as `x = x + i` 350; translation copy as three statements 354; upper bound as
 // radius-plus-coordinate 350.
+// Round 54: noinline declaration of 0x11bed0 447 (and 0x11bed0 itself 19 in --fast: CAVEAT on its
+// callee 0x14a280); first release with the inline range check 442; both 401 (structural diff 36 vs 66);
+// with an `arg_8 ? 27 : 18` count 427, count alone 477.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

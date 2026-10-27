@@ -129,6 +129,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // table-range / entry-range / all metadata records / all readonly records 153 each.
 // Distinct restore word/input/entry/all carrier lifetimes 153 each; initial/restore/both
 // metadata graph scopes 153 each; full restore graph with separate upload record 153.
+// Existing lookup single-result homes/uninitialized/group-first/default-first 153/153/153/153;
+// same graph with group fields at every test 153/153/153; direct conditional lookup 153. Original helper restored.
 // Round 226: selected-record prefix 153; record-block header 153; pass-input prefix 153; record
 // and block 153; record and pass 153; block and pass 153; all three metadata objects 153; all
 // readonly metadata objects 153.
@@ -136,6 +138,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // reversed middle test 175, both reversed 177.
 // entry at use 153; chain at use 153; previous tag at use 153; entry chain at use 153; entry tag at use
 // 153; chain tag at use 153; all field observations 153; fields old record at use 153.
+// Published reciprocal log input with direct/scalar publication 284/153;
+// with paired-counter library clear 305/258, chained counters 284/155,
+// and long changed result 280/195. Exact original logarithm and reciprocal retained.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -1349,6 +1354,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
 // Round 197: complete definition/remapping/source observations and their four combinations
 // 267 each; all observations with a common genuine color workspace 267. Original writer/body restored.
+// Round 204: sibling reference clamps 267; common color/direct component/both 267/267/267;
+// bounded short counter with clamps 266; with common color/direct component/both 266/266/266.
+// One-point forms restored; descriptor/index capture and post-store rereads remain.
 // Round 161: Complete paired clamp results both/direct/mapped 382/356/291;
 // all results before sample publication both/direct/mapped 380/356/291; native color
 // results before sample publication both/direct 375/356. Original sample writes,

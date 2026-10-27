@@ -28,7 +28,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
-// score 157 (was 157): frame 0x14/0x18 and options/index/mask homes remain.
+// score 157 (was 157): Frame 0x14/0x18 and options/index/mask homes remain.
+// frame 0x14 versus 0x18 and options/index/mask homes remain.
+// Earlier: frame 0x14/0x18 and options/index/mask homes remain.
 // Earlier: frame 0x18 agrees. Retail compares i and count signed
 // (long), stores count = 0 before the first loop and counts a player before
 // its uniqueness test. Registers still rotate: retail has options in edi
@@ -95,6 +97,26 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // first memcmp input 183 (aligned 66); that memcmp order alone 155; plus direct mask reads 183;
 // switch tail under one if chain 269 (816 bytes). Declaration orders and types of count, mask,
 // ok and the machine index never move the options/index/mask registers (compile-only screen).
+// With independent validation passes: conditional machine result 218; conditional duplicate
+// result 238; conditional machine/duplicate results 260; conditional local-machine result 258;
+// conditional machine/local results 283; conditional duplicate/local results 235; all three
+// conditional comparison results 282; conditional initial player result 245. All restored.
+// Complete accumulated/player/final comparison-result complements and combinations
+// 272/160/272/203/274/206/274/335; last form uses a native long final failure result. All restored.
+// Independent-pass complete mask observations 157; with native long/short membership 183/184; unsigned mask
+// bound 238; long accumulated/player/both validity 215/171/212; short accumulated validity 221. Original body
+// restored.
+// Recovered-prefix native uniqueness: long/short membership 190/190; reversed membership inputs 190; count
+// bounds 194; bounds and reversed inputs 194; early player ordinal 171; early ordinal with native membership
+// 190; shared native result tail 191. All restored; native uniqueness alone reaches first +0x11b at 171.
+// Independent-pass nested ordinals: distinct machine/player/both/membership identities and all
+// three pair/all combinations 157 each; separate inner native declarations 157. Frame 0x14/0x18
+// and options/index/mask homes remain; all executable forms restored.
+// Word uniqueness signed/unsigned 183/183; with word/byte accumulated result 230/183;
+// with word final/all-word results 230/245; with long/short membership 194/194.
+// These recover the opening frame and registers through +0x10 but regress overall; all restored.
+// Initial validation result from first two/three/four/five tests, bool 157 each;
+// complete entry result long/short/signed byte/byte 219/226/188/188. All restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
