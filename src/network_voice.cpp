@@ -149,9 +149,14 @@ bool voice_xhv_get_runtime_parameters(XHV_RUNTIME_PARAMS *parameters, c_voice_xh
 	return result;
 }
 
-// @retail 0x55810
 // score 2 (was 2): the engine pointer is loaded into ebp before the branch that
-// skips the creation; retail loads it after the branch.
+// skips the creation; retail loads it after the branch. With the load after the
+// branch ebp is pushed there instead of at entry, and without the volatile store
+// the true result is folded into separate epilogues. Natural nested ifs 42;
+// E_FAIL-initialised status tested after the guarded creation 39, with the field
+// address in the creation call 42, with the stored result 26; plain store
+// through the result pointer 36.
+// @retail 0x55810
 bool voice_xhv_create(c_voice_xhv *xhv)
 {
     XHV_RUNTIME_PARAMS parameters;
@@ -1323,24 +1328,25 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 	queue->count = kept;
 }
 
-// score 107 (was 134): player input is EDI rather than EAX; mask and length
-// homes differ. Five coordinated register-input orders 134; shared invalid
-// exit 169; entry size as unsigned word 188 or byte 170. Original kept.
-// staged length 134; consumed-capacity length 188; accumulated length 201;
-// word/signed retained mask 134/134; unsigned written/result 134/134;
-// explicit retained intersection 134. Input and final-length registers still differ.
-// Real entry/header/both field views 134; direct valid range 153; remaining-budget local 171;
-// result length before header with raw/entry/all fields 134.
-// Entry/packet mode observations 134/134; entry size before written count 107 plain
-// (454/449 bytes); shared scan ordinal 134; entry cursor / with mode 133/133;
-// capacity result join 134; written count after header reservation 160.
-// score 107 (was 107): EDI input and mask/count/size/length homes remain. Written before
-// mask/size 133; mask after size/count 173; retail initialization order 162;
-// completed length after compaction 172; signed-word written count 141 (fast).
-// player input, retained-mask and completed-length homes remain;
-// recipient bit at use 107; entry-size stride 164; shared header stride 184;
-// serialized-span length 144; invalid result first/with stride 180/182;
-// early result on size-first frame 141; serialized span with stride 199.
+// score 107 (was 107): the player arrives in edi where retail passes it in eax and copies
+// it to edi (retail later reuses edi for the result); mask, count, size and length homes
+// differ. Five coordinated register-input orders 134; shared invalid exit 169; entry size
+// as unsigned word 188 or byte 170; staged length 134; consumed-capacity length 188;
+// accumulated length 201; word/signed retained mask 134/134; unsigned written/result
+// 134/134; explicit retained intersection 134; real entry/header/both field views 134;
+// direct valid range 153; remaining-budget local 171; result length before header with
+// raw/entry/all fields 134; entry/packet mode observations 134/134; entry size before
+// written count 107 (kept); shared scan ordinal 134; entry cursor / with mode 133/133;
+// capacity result join 134; written count after header reservation 160; written before
+// mask/size 133; mask after size/count 173; retail initialization order 162; completed
+// length after compaction 172; signed-word written count 141; recipient bit at use 107;
+// entry-size stride 164; shared header stride 184; serialized-span length 144; invalid
+// result first/with stride 180/182; early result on size-first frame 141; serialized span
+// with stride 199. Result before the header stores gives retail's convention (player in
+// eax, result `imul edi, ebx`) but 141, and moves 0x56380 and 0x53b00 (0x765c0 then
+// loses its match); with written declared before the size 151/134; with a plain mask
+// 171; bit after the tests 141; size before mask 180; early NONE returns 162. The
+// player reassigned to the clamped value (diagnostic) arrives in ecx, 183.
 // @retail 0x55c40
 long function_55c40(s_voice_queue *queue, long player, byte *cursor, byte *output, long capacity, bool include_mask)
 {
@@ -1406,6 +1412,14 @@ done:
 	return result;
 }
 
+// score 129 (was 160): retail takes the output in eax and the rest on the stack (ret
+// 0xc); ours takes capacity and channels in registers (ret 8), keeps channels in a
+// callee-saved register and pushes ebp late. The callee 0x55c40 takes the player in
+// edi, so each call here reloads it into edi. Getter + select store 156; single exit
+// 129 (kept); its flag update as if/else 140; walked channel pointer 128; cursor and
+// header declared first 140. With 0x55c40's result before its header stores (player in
+// eax there) this takes player/capacity from the stack as retail but channels in eax
+// (retail: output): 115; if/else flag 111; walked channel pointer 106 (320 bytes).
 // @retail 0x56380
 long function_56380(byte *output, s_voice_channels *channels, long player, long capacity)
 {
@@ -1414,13 +1428,9 @@ long function_56380(byte *output, s_voice_channels *channels, long player, long 
 	if (channels->initialized && voice_channels_have_player(channels, player) && capacity >= 15)
 	{
 		long count = 0;
-		long current_player = 0;
-		if (voice_available())
-			current_player = g_4c9878.unknown00;
-		bool include_mask = current_player == player;
+		bool include_mask = voice_get_unknown00() == player;
 		capacity -= 2;
-		if (include_mask) output[0] |= 1;
-		else output[0] &= ~1;
+		output[0] = include_mask ? output[0] | 1 : output[0] & ~1;
 		byte *cursor = output + 2;
 		byte *header = cursor;
 		for (long i = 0; i < 16; i++)
@@ -1441,10 +1451,10 @@ long function_56380(byte *output, s_voice_channels *channels, long player, long 
 		if (count > 0)
 		{
 			output[1] = (byte)count;
-			return original_capacity - capacity;
+			result = original_capacity - capacity;
 		}
-		output[1] = 0;
-		return 0;
+		else
+			output[1] = 0;
 	}
 	return result;
 }
@@ -2569,6 +2579,12 @@ void function_56790(long *capacity, dword *remaining, dword allowed, word *selec
 // pointers/all input bindings 4/4/4/4/4. The output-register call boundary still differs.
 // Native signed count 4; widened signed count 30; accumulated byte count 4;
 // query after count 4; consumed packet-count value 4. Call inputs still differ.
+// Callee 0x56380 reworked (single exit 129, if/else flag 140, walked channel pointer
+// 128, cursor first 140): 4/4/4/9. BLOCKED-BY 0x55c40: it takes the player in edi;
+// with it in another register (diagnostic) 0x56380 loads player and capacity from
+// the stack into ebx and ebp as retail does. With 0x55c40's result computed before
+// its header stores (retail's convention there) this goes to 12 and 0x765c0 loses its
+// match, because 0x56380 then takes channels in eax where retail takes the output.
 // @retail 0x53b00
 long __stdcall function_53b00(long player, byte *output, long capacity)
 {
