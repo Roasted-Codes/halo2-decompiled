@@ -1259,7 +1259,12 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
-// score 184 (was 184): Frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// score 184 (was 184): frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// Round 90: a zero constant stays in edx from the parameters test to the record defaults, so the name count
+// lives in memory (retail: test edi, edi; the count in esi). Requested-record pointer first in the loop 199;
+// current as requested + 1 184; a player-record pointer 184; the record zero-initialised with braces 241;
+// the missing-parameters case as an early return 217.
+// Frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
 // Earlier: frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.

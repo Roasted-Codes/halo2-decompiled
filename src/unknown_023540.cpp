@@ -212,8 +212,7 @@ bool function_25820(s_render_view_2b790 const *source)
 	return result;
 }
 
-struct s_matrix_workspace { long size; byte data[0x27000]; };
-extern s_matrix_workspace g_487b18;
+#include "render_memory.h"
 
 #if 0 // Activation must preserve all matched callers and callees.
 struct s_223240;
@@ -2585,7 +2584,30 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
-// score 530 (was 530): Frame 0x20c versus 0x200; stack order, coefficient homes and sample boundaries remain.
+/* the determinant of a rotation's forward, left and up rows */
+static inline real rotation_determinant(matrix3x3 const *matrix)
+{
+    real determinant = matrix->left.k * matrix->forward.j * matrix->up.i;
+    determinant += matrix->forward.k * matrix->up.j * matrix->left.i;
+    determinant += matrix->up.k * matrix->left.j * matrix->forward.i;
+    determinant -= matrix->forward.i * matrix->left.k * matrix->up.j;
+    determinant -= matrix->forward.j * matrix->left.i * matrix->up.k;
+    determinant -= matrix->forward.k * matrix->left.j * matrix->up.i;
+    return determinant;
+}
+
+// score 401 (was 530): frame 0x200 and the all-stack arguments (ret 0x1c) agree; retail calls 0x235a0 for the
+// second sample where ours inlines it too (LTCG's inlining budget runs out one site later here); the rotation
+// reaches 0x143600 on the stack where retail passes it in eax (BLOCKED-BY 0x143600); count/object/order register
+// roles (esi/edi) differ; the order is a long in retail (its caller sign-extends it) but 0x4b5d0's declaration is short.
+// Round 90 (two explicit sample blocks in retail's call orders, the render-memory allocator and a merged result
+// byte): long order with a short-declaration wrapper 505 (caller 254); with result = false on failure 492 (caller
+// 258); short order 504; bsp re-read before each sample 438; a one-exit handle-to-address helper 445; the
+// determinant helper 401 (kept); plus a lighting-sample helper 393 (its second site goes out of line, where
+// retail inlines it); plus a coefficient-rotation helper 399; a found-entry helper 580 (the budget runs out at
+// the allocator); a sample-availability helper 401; 0x235a0 kept out of line 544; long sample count 421;
+// long order with the caller's declaration changed too 449 (caller 213 -> 140, held: the caller's file is locked).
+// Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 // Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
 // unsigned handle 544; native bucket fields 544.
 // Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
@@ -2618,87 +2640,93 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
 {
-    long result = true;
+    bool result = true;
+    bool found = false;
+    for (short i = 0; i < g_5093e8; ++i)
+        if (g_4b89b0[i].key == object_index) found = true;
+    if (!found && g_5093e8 < 24)
     {
-        bool found = false;
-        for (short i = 0; i < g_5093e8; ++i)
-            if (g_4b89b0[i].key == object_index) found = true;
-        if (found || g_5093e8 >= 24) goto done;
         g_4b89b0[g_5093e8].key = object_index;
         *(short *)&g_4b89b0[g_5093e8].unknown4 = order;
-        byte const *structure = (byte *)g_4e0344;
-        bool use_samples = structure && *(long const *)(structure + 0x80) > 0 && g_4e0348 &&
-            *(long const *)(*(byte const **)(structure + 0x84) + 0x1c) != NONE &&
-            *(long const *)(*(byte const **)(structure + 0x84) + 4) == *(long const *)((byte *)g_4e0348 + 8);
+        bool use_samples = false;
         real red[16], green[16], blue[16];
-        long level = 5 - order;
-        if (level > layout->level_count - 1) level = layout->level_count - 1;
-        real const *data = layout->data + layout->levels[level].offset;
-        long stride = layout->groups * (layout->columns * 3 + 4);
-        s_bucket_source const *buckets = (s_bucket_source const *)vertices;
-        long total = function_023540((short)count, buckets, &g_4b89b0[g_5093e8], stride);
-        long bytes = total * stride * sizeof(real);
-        if (!use_samples)
+        if (g_4e0344 && g_4e0344->count > 0 && g_4e0348 &&
+            *(long const *)((byte const *)g_4e0344->bsp + 0x1c) != NONE &&
+            *(long const *)((byte const *)g_4e0344->bsp + 4) == *(long const *)((byte *)g_4e0348 + 8))
+        {
+            use_samples = true;
+        }
+        else
         {
             vector3f direction = { 0.0f, 0.0f, -1.0f };
             spherical_harmonics_evaluate_directional_light(&direction, layout->order,
                 1.0f, 1.0f, 1.0f, red, green, blue);
         }
-        if (!bytes) goto done;
-        long next = g_487b18.size + bytes;
-        if (next <= 0x27000)
+        long level = 5 - order < layout->level_count - 1 ? 5 - order : layout->level_count - 1;
+        real const *data = layout->data + layout->levels[level].offset;
+        long stride = layout->groups * (layout->columns * 3 + 4);
+        s_bucket_source const *buckets = (s_bucket_source const *)vertices;
+        long total = function_023540((short)count, buckets, &g_4b89b0[g_5093e8], stride);
+        long bytes = total * stride * sizeof(real);
+        if (bytes)
         {
-            long handle = g_487b18.size & 0x0fffffff;
-            g_487b18.size = next;
-            g_4b89b0[g_5093e8].data_handle = handle;
-            real *output = (real *)(g_487b18.data + handle);
-            for (long bucket = 0; bucket < count; ++bucket)
+            long handle = render_memory_allocate(bytes);
+            if (handle != NONE)
             {
-                byte const *pair = (byte const *)vertices + 4 + bucket * 4;
-                word available_samples = *(word const *)(pair + 2);
-                short samples = available_samples > 2 ? 2 : available_samples;
-                if (!samples) continue;
-                real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
-                transform4x3f matrix;
-                function_0235a0(source, &matrix);
-                for (short sample = 0; sample < samples; ++sample)
+                real *output = NULL;
+                if ((handle & 0x80000000) == 0)
+                    output = (real *)(g_487b18.data + (handle & 0x0fffffff));
+                g_4b89b0[g_5093e8].data_handle = handle;
+                for (long bucket = 0; bucket < count; ++bucket)
                 {
-                    if (sample) function_0235a0(source + 12, &matrix);
+                    byte const *pair = (byte const *)vertices + 4 + bucket * 4;
+                    word samples = *(word const *)(pair + 2);
+                    if (!samples)
+                        continue;
+                    real const *source = (real const *)((byte const *)vertices + 0x44 + *(short const *)pair * 0x30);
+                    transform4x3f matrix;
+                    matrix3x3 rotation;
+                    real rotated_red[16], rotated_green[16], rotated_blue[16];
+                    function_0235a0(source, &matrix);
                     if (use_samples)
                     {
-                        point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, sample);
+                        byte *bsp = (byte *)g_4e0344->bsp;
+                        point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, 0);
                         if (position)
-                        {
-                            byte *bsp = *(byte **)(structure + 0x84);
                             function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
                                 (byte)layout->order, &g_4b89b0[g_5093e8].scale, position);
-                        }
                     }
-                    real determinant = matrix.left.k * matrix.forward.j * matrix.up.i;
-                    determinant += matrix.forward.k * matrix.up.j * matrix.left.i;
-                    determinant += matrix.up.k * matrix.left.j * matrix.forward.i;
-                    determinant -= matrix.forward.i * matrix.left.k * matrix.up.j;
-                    determinant -= matrix.forward.j * matrix.left.i * matrix.up.k;
-                    determinant -= matrix.forward.k * matrix.left.j * matrix.up.i;
-                    matrix3x3 rotation;
-                    function_142bf0((matrix3x3 const *)&matrix.forward, determinant, &rotation);
-                    real rotated_red[16], rotated_green[16], rotated_blue[16];
+                    function_142bf0((matrix3x3 const *)&matrix.forward, rotation_determinant((matrix3x3 const *)&matrix.forward), &rotation);
                     function_143600((real const *)&rotation, 3, red, rotated_red);
                     function_143600((real const *)&rotation, 3, green, rotated_green);
                     function_143600((real const *)&rotation, 3, blue, rotated_blue);
                     function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
                     output += stride;
+                    if (samples > 1)
+                    {
+                        function_0235a0(source + 12, &matrix);
+                        function_142bf0((matrix3x3 const *)&matrix.forward, rotation_determinant((matrix3x3 const *)&matrix.forward), &rotation);
+                        if (use_samples)
+                        {
+                            byte *bsp = (byte *)g_4e0344->bsp;
+                            point3f const *position = (point3f const *)function_23600(tag, object_index, indices, bucket, 1);
+                            if (position)
+                                function_22cf0((s_light_sample_source const *)(bsp + 0x38), red, green, blue,
+                                    (byte)layout->order, &g_4b89b0[g_5093e8].scale, position);
+                        }
+                        function_143600((real const *)&rotation, 3, red, rotated_red);
+                        function_143600((real const *)&rotation, 3, green, rotated_green);
+                        function_143600((real const *)&rotation, 3, blue, rotated_blue);
+                        function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                        output += stride;
+                    }
                 }
+                ++g_5093e8;
             }
-            ++g_5093e8;
+            else
+                result = false;
         }
-        else
-        {
-            result = false;
-        }
-        goto done;
     }
-done:
     return result;
 }
 
