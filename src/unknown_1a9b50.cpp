@@ -461,6 +461,10 @@ extern point2f *g_468778;
 // Native memcpy for the facing-test planar initializer 384; with request, actor
 // fallback, both, constant fallback, request/constant, both fallbacks and all
 // three request transfers 384 each. Original planar transfers restored.
+// Round 235: Scaled-displacement producers (O original scalar, H shared scale
+// output, V native velocity value scaled in place), primary/secondary:
+// O/H 389; O/V 420; H/O 389; H/H 403; H/V 448; V/O 406; V/H 406; V/V 376.
+// Actor/settings/prop homes remain; original producers, include set and body restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

@@ -109,6 +109,9 @@ public:
 // early head with native/library metadata 269/269, and with complete viewer point 237/237.
 // Round 233: Paired head/activation timing, base/Boolean destination/short viewer/both
 // 251/251/283/283; native index with base/Boolean/short/all 299/299/291/291.
+// Round 235: Both range/both ramp/all maximum predicate operands reversed, singly,
+// each pair and all three 215 each; all three with both native ramp boundaries named
+// at their expressions 215. Frame and input allocation unchanged; original body restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
