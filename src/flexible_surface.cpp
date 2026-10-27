@@ -185,15 +185,20 @@ bool function_117100(long index)
 	return result;
 }
 
+// score 23 (was 137): the prologue schedule; retail adds the pool base before reading the tag index and
+// loads the object index first, then the marker name after clearing the order tail. A one-use marker-name
+// local before the call 7 (not a match); order declared after the call 99, first 28, between record and
+// definition 24; arrays before the record 28.
 // @retail 0x1171a0
 bool function_1171a0(long index)
 {
 	s_surface_record *record = surface_record(index);
 	s_surface_definition *definition = surface_definition(record);
 	s_object_marker markers[6];
-	long order[6] = {0, 1, 2, 3, 0, 0};
+	long order[6] = {0, 1, 2, 3};
 	record->attachment_count = function_b8d30(record->object_index, definition->marker_name, markers, 6, false);
-	long axis = (definition->flags & 2) ? 0 : 2;
+	long axis = 2;
+	if (definition->flags & 2) axis = 0;
 	for (long i = 0; i < record->attachment_count; ++i)
 	{
 		for (long j = i + 1; j < record->attachment_count; ++j)
@@ -210,12 +215,13 @@ bool function_1171a0(long index)
 		real step = (real)definition->rows / (real)record->attachment_count;
 		for (long i = 0; i < record->attachment_count; ++i)
 		{
+			s_surface_attachment *attachment = &record->attachments[i];
 			long vertex;
 			if (i == 0) vertex = 0;
 			else if (i == record->attachment_count - 1) vertex = (definition->rows - 1) * definition->columns;
 			else vertex = (long)(ceil(i * step) * definition->columns);
-			record->attachments[i].vertex = (short)vertex;
-			record->attachments[i].marker = (short)order[i];
+			attachment->marker = (short)order[i];
+			attachment->vertex = (short)vertex;
 		}
 	}
 	return record->attachment_count > 0;
@@ -366,6 +372,8 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
+// score 195 (was 209): frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
+// count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -389,7 +397,8 @@ void function_117dd0(long index, vector3f *wind)
 		g_55ecd4.j = old.j*cosine + axis.j*projection - (axis.i*old.k-axis.k*old.i)*sine;
 		g_55ecd4.k = old.k*cosine + axis.k*projection - (axis.j*old.i-axis.i*old.j)*sine;
 		function_117c80(&g_55ecd4, &g_55ecd4, 0.34906584f);
-		g_55e710 = g_4ba034;
+		/* retail reloads the frame count after the call, as for an address-taken global (0x4a7c0, 0x248620) */
+		g_55e710 = *(dword const *)&g_4ba034;
 	}
 	g_55ecd0 += (real)((cos(time * 0.001) * cos(time * 0.0006f) + sin(time * 0.005)) * cos(time * 0.0001f) * 0.01f * 0.3f);
 	if (g_55ecd0 < -0.1f) g_55ecd0 = -0.1f;
@@ -398,6 +407,12 @@ void function_117dd0(long index, vector3f *wind)
 	wind->i = (real)(g_55ecd4.i * strength); wind->j = (real)(g_55ecd4.j * strength); wind->k = (real)(g_55ecd4.k * strength);
 }
 
+// score 109 (was 152): the loop's vertex cursor points at the normal's j (retail: k), so the dot product,
+// tangent and position sums load and schedule in another order; retail adds the acceleration and the force
+// as first operands. Weights stored after the acceleration (retail stores them first, with the current
+// weight above the previous). Tried: dot sums i,j,k / k,i,j / j,k,i 109 each; dot3f either argument order
+// 117 (744 bytes); weights before the acceleration 109; previous weight declared first 113, before the
+// acceleration 113; current weight renamed 109; acceleration and force as first addends 116 (744 bytes).
 // @retail 0x118140
 void function_118140(long index)
 {
