@@ -226,14 +226,11 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point/factor homes remain.
-// Frame 0x30 versus 0x2c; inverse defaults, displaced depth and factor spills remain.
-// Frame 0x30 versus 0x2c and inverse/point homes remain.
-// Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
-// frame 0x30 versus 0x2c and inverse-depth/point homes
-// frame 0x30 versus 0x2c and inverse-depth/point homes remain.
-// frame 0x30 versus 0x2c and inverse-depth/point homes
-// remain. In-place displaced transform 263; later displaced input 270;
+// score 195 (was 195): Frame 0x30 versus 0x2c. Ours gives the dead scale slot to the second inverse
+// depth and spills the second transform's x and z (x into the frame); retail keeps both inverse
+// defaults at [esp+4]/[esp+8], keeps that transform's x/y in xmm7/xmm6 (ours swaps x and z) and spills
+// only z, into the scale slot. Also differ: the displaced point's load order and our camera-space
+// origin point above the displaced one. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
 // Later second inverse 259; later first inverse 271; later second output
@@ -284,6 +281,10 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 58: transform helper locals renamed 195; inverse locals renamed 195; both 195 (identical code:
 // names do not move these slots); transformed points declared tb before ta 195; displaced point declared
 // after the transformed points 195. Ours also stores ta above tb (retail: ta below tb).
+// Round 61 (lane 7): both inverses as one `real[2]` 195 (in the frame, but the second transform still
+// spills into it); with retail's displaced-sum operand order 195 (identical code); camera-space points
+// as `point3f[2]` 195 (origin point below as retail, homes otherwise unchanged); transform helper
+// locals declared z, y, x 228; second inverse declared first 195.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
