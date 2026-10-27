@@ -98,11 +98,15 @@ void class_3193c0::set_local_centre(__m128 const *value)
 	field_70 = lane_a_world_centre(*this);
 	field_70.m128_f32[3] = last;
 }
+// score 2 (was 40): the final float and zero stores are reversed.
+// Direct output, either output pointer, scalar order and sum local 2;
+// aligned loads/stores 39; later pointer 2; CRT copy 34; reversed sum,
+// split scalar and integer zero 2; output-pointer clear 3.
 // @retail 0x3197a0
 void class_3193c0::store_position(__m128 const *value)
 {
 	transform_translation = *value;
-	field_70 = lane_a_world_centre(*this);
+	((c_transformed_point *)&field_70)->transform(&transform_rotation, &field_20);
 	field_60 = field_70;
 	field_60.m128_f32[3] += 1000000.0f;
 	field_70.m128_f32[3] = 0.0f;
