@@ -296,6 +296,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // dropped; original result, defined fetch failures and all call roles restored.
 // Round 324: existing point setter 231; cluster reads at use 216; setter/cluster 245; instance receiver at use
 // 188; setter/instance 228; both receivers 220; setter/both 251; native coordinate initializer 231.
+// Round 333: Eligible source-point return with section/block inputs and aggregate/CRT caller copies 266 each; validity assigned only on failure with those four input/copy forms 192 each. Defined failures, original helper and call tuples restored; BSP/section and range/plane homes remain.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

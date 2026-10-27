@@ -1320,6 +1320,7 @@ extern bool g_4ed39d;
 // Menu-only/dispatch-local/post-query error observation 184/184/184; game-first zero chain 181,
 // with menu-only observation 181; one recovery-error value 206, with scope/chain 207; main-first
 // zero chain 201. Byte homes and dialog joins remain.
+// Round 333: Complete message aggregate/CRT initialization 224/207; before menu-result declarations 224/205; with ordinary game result 221/227; with direct error input 222/225. Original partial field initialization, both inherited qualifications and every callback restored; byte homes and dialog joins remain.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

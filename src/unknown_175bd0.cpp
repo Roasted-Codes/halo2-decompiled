@@ -2213,7 +2213,7 @@ event_done:
 
 #pragma inline_depth()
 
-// score 87 (was 109): Object-index reload (BLOCKED-BY 0xbadc0: retail reloads the index after it, so
+// score 87 (was 87): Object-index reload (BLOCKED-BY 0xbadc0: retail reloads the index after it, so
 // retail's 0xbadc0 is not read-only to LTCG) and the merged destruction call's place (ours keeps the
 // invisible arm's copy before the visible tests, retail the visible arm's copy) still differ.
 // Round 88: invisible arm's flag test the other way round (call to 0x177260 first) 87 (kept);
@@ -2233,6 +2233,7 @@ event_done:
 // joins differ. external tag record 109; external root record 109; wide visibility result 144;
 // byte visibility result 109; unsigned color handle 109; root velocity address 109; root location
 // address 109; origin output lifetime 247.
+// Round 333: Start/visibility/both inline declarations 87/87/87; start noinline alone/with inline visibility 87/87; entry visibility alone/with both inline/with signed-byte result 87/87/87. All restored; object reload and merged-call placement remain.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2662,7 +2663,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 153 (was 166): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
+// score 153 (was 153): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
 // frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
@@ -2687,6 +2688,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Mode-first admission 358; joint outer spatial outputs 179; parent conditional 163; compound scale 166; tag-first eligibility 222.
 // Parent conditional with two-use lower 156, signed detached state 159, both 153 kept plain;
 // on both: unsigned mode 153, part point 166, conditional scale 156 (fast); follow-ups restored.
+// Round 333: Node/creation/placement inline declarations, each and all combinations, 153 each; joint declarations with forced existing normal transform 153; native signed-byte creation input on the current signed-byte caller 156. Scalar homes, flag stores and random lifetime remain; all declarations restored.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
