@@ -46,6 +46,9 @@ real normalize2d(point2f *arg_0);
 // Direction declaration/call ordering and collision-storage lifetime combinations 220 in seven forms;
 // those together with radius before center copy 214 (six-point gain restored).
 // Same-size point/vector name swaps, separately and in combinations, 220 in eight forms.
+// Far planar separation through the existing 2D/3D helpers 228/228; complete
+// native 2D/3D initializers 220/220; each with entry collision storage 228/220/228/220.
+// All restored; original scalar geometry and collision-storage lifetime remain.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

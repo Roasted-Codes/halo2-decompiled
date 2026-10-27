@@ -46,7 +46,7 @@ public:
 	s_result_319230 function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const;
 };
 
-// score 22 (was 22): the first receiver is loaded into ECX;
+// score 16 (was 22): the first receiver is loaded into ECX;
 // retail loads EAX, its table into EDX, then copies EAX to ECX.
 // Byte output, operand references, const/enum query, destructor slot,
 // concrete slots, inherited slots/base, signed output, owner references,
@@ -56,13 +56,15 @@ public:
 // existing byte Boolean result and aggregate return initialization 22 each.
 // Native int/unsigned-int/unsigned-long kind results, ordinary/virtual callback
 // contracts and native signed-byte flag with unsigned kind 22 each.
-// Original result and body restored; first virtual receiver setup still differs.
+// Earlier result-construction forms restored; first virtual receiver setup still differs.
+// Native Boolean/full-byte fields with cached owners 22; first owner read at each
+// use 16; second owner per-use 20 rejected; both per-use with byte bitfield 31.
+// First-owner per-use with the original byte field 16. Entry/receiver setup remains.
 // @retail 0x319230
 s_result_319230 c_query_319230::function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const
 {
-	s_owner_319230 const *first = a->owner;
 	s_owner_319230 const *second = b->owner;
-	if (first->field_40 || second->field_40 || first->field_3c->slot_6() == 6 || second->field_3c->slot_6() == 6)
+	if (a->owner->field_40 || second->field_40 || a->owner->field_3c->slot_6() == 6 || second->field_3c->slot_6() == 6)
 	{
 		return s_result_319230(1);
 	}
