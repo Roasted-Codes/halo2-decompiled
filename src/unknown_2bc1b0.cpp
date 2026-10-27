@@ -241,7 +241,27 @@ struct s_item_object_2bc1
 /* updates a team's item each tick: how long it has been away from home, its
    return home once it has waited too long, and the points of the player
    holding it */
-// score 97 (was 97): team/entry saved registers, timer decrement and tally address remain.
+// score 62 (was 97): retail spills the item pointer to the stack before it
+// reads the rate, so the rate and its forty-times multiply land in different
+// registers than ours; the countdown is also still decremented in al, while
+// retail keeps the decremented byte in cl.
+// Standard convention (see docs/DECOMPILING.md):
+//   1. Retail keeps it __stdcall: the team argument is read from [esp + 0x3c]
+//      and the function returns with ret 4. Without the marker LTCG moves the
+//      argument into a register and the body changes.
+//   2. No data or code in retail holds its address. Its only caller (0x2bcbe5,
+//      inside the engine tick at 0x2bcbb0) is LTCG code and pushes the team
+//      argument before the call.
+//   3. Tried: taking the parameter's address keeps the argument on the stack
+//      but changes the body (156 differences); a named team index (97); a
+//      separate entry declaration (97); the state pointer loaded once (151);
+//      the tick published through a conditional minimum (93); the tick
+//      published from the split observation and increment (93); the decremented
+//      timer kept as its own byte (91); the ceiling as a signed count (69);
+//      the rate read into its own local (69); the tally reached through a
+//      pointer to its element (97); the countdown compared as an unsigned byte
+//      (62).
+// @retail 0x2bc990 standard
 // Standard marker with direct input 97; with the conditional tick clamp 93 (not kept: the marker
 // needs a matched body); absent holder 98/94; native timer forms 110/108/111/109; direct second
 // lookup/test and native/constant team index 93 each.
@@ -252,14 +272,12 @@ struct s_item_object_2bc1
 // EBP/EDI team-entry roles and timer/tally scheduling differ;
 // direct formal 156; entry name 97; object/limit names 97; distinct events 97;
 // shared event 97; separate timer values 110; early tally pointer 97; combined 156.
-// score 97 (was 97): team/entry saved-register roles and timer/tally allocation remain.
 // Separate entry declaration 97; independent/complete failure guards 97/97; multi-use team value 156;
 // timer field reference 110; published timer result 97; tally reference/array 97/97; signed ceiling 97; scoring-state lifetime 97.
 // @retail 0x2bc990
 void __stdcall function_2bc990(long team)
 {
-	long const *team_reference = &team;
-	s_team_item_2bc1 *entry = (s_team_item_2bc1 *)function_15e410((short)*team_reference);
+	s_team_item_2bc1 *entry = (s_team_item_2bc1 *)function_15e410((short)team);
 
 	if (entry && entry->object_index != NONE)
 	{
@@ -306,19 +324,17 @@ void __stdcall function_2bc990(long team)
 
 			if (timer != NONE)
 			{
-				timer--;
-				state->point_timers[team] = timer;
-				if (timer <= 0)
+				char countdown = (char)(timer - 1);
+				state->point_timers[team] = countdown;
+				if ((unsigned char)countdown == 0 || countdown < 0)
 				{
 					function_1972a0(entry->player_index, 3, entry->value04);
 					function_2bce70(entry->player_index);
 					state = (s_state_2bc1 *)g_51ecc4;
 					state->point_timers[team] = (char)g_510c54->field_2_3;
-					char *count = &state->point_tallies[team];
-
-					(*count)++;
+					state->point_tallies[team]++;
 					function_15b930(entry->player_index, function_15eaf0(), 0x17, 1);
-					if (*count % 5 == 0)
+					if (state->point_tallies[team] % 5 == 0)
 					{
 						s_event event;
 
