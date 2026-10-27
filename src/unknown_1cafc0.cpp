@@ -884,6 +884,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 204: repeated native channel receivers primary/transition/overlay 210/269/403;
 // primary-transition/primary-overlay/transition-overlay/all 269/403/369/369;
 // all receivers before result storage 369. Identifier homes and blend-query lifetime remain.
+// Round 187: primary ID at lookup 342; transition ID at entry 357; both 304;
+// overlay ID at entry 267; with primary at lookup 332; with transition at entry 347;
+// all three scope changes 333; entry primary/overlay/transition order 349. Restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
