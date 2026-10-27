@@ -751,6 +751,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // value/maximum/minimum 256, minimum/value/maximum 273, minimum/maximum/value 273,
 // maximum/value/minimum 266, maximum/minimum/value 273; original final clamp
 // with first/last reordered pin inputs 227/259. Original helper and calls restored.
+// Round 183: Direction reference/pointer-result/output-last 213/213/213; native vector result
+// 270; shared cosine 271, with reference/vector result 271/270; reversed scalar formals 227.
+// Original direction helper and body restored; upper-bound/range and pin homes remain.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
