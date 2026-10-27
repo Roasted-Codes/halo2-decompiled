@@ -1263,6 +1263,8 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Round 188 separate successful total: rolled/counted/unsigned result/unsigned total/
 // retained entry width/admission/split adds/pre-tested walk 281/112/112/112/165/112/112/112;
 // expanded caller conventions checked separately; original accumulation restored.
+// Round 152: Signed/unsigned-word identity, original/counting traversal 315/140/315/140;
+// bounded byte/signed-byte ordinals, original/counting traversal 281/281/281/281. Word forms lose 0x54990; original restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {

@@ -292,6 +292,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // On the long departure state: signed-word/unsigned-word/unsigned-native/int result
 // 257/257/203/203; native input count 259, with signed/unsigned word result
 // 268/268; observed signed-word input count 203. Caller checked with each.
+// Round 152: Classifier rejection with entry result, long/bool/byte/short departure
+// 262/262/262/259; post-classification result 256/256/256/251. All restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
