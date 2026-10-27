@@ -872,6 +872,24 @@ real function_30bf0(vector3f *v);
 // -1.0 first); t2 root without its float cast 266; horizontal through magnitude2d 272; gravity
 // computed first 266; the forced-speed test as `if (!forced_speed)` first 237 (kept, 983 bytes);
 // with the forced speed as a ternary 266; delta.k after the gravity product 236.
+// retail passes the time-scale pointer on the stack and takes only the
+// target (eax), origin (ecx) and direction (esi) in registers; ours also takes the time scale in
+// edx. Retail loads the gravity pointer into edx at entry and rounds the horizontal length to a
+// float before the gravity tests; ours loads the pointer into ebx and keeps the length on the
+// x87 stack, computing it after those tests. Tried: the high-arc flag or the time-scale pointer
+// read once through its address 266/269; horizontal tests with the constant first 266; the
+// horizontal length computed after the gravity value 266; the gravity operands swapped 266.
+// retail takes target/origin/direction in EAX/ECX/ESI and the time-scale pointer on
+// the stack (`ret 0x2c`); ours also takes it in EDX (retail's EDX holds the gravity pointer at entry and EDI
+// the distance output; ours keeps the forced-speed pointer in EDI). Retail evaluates the horizontal root in
+// the entry block and divides by two_a twice in x87; ours sinks the root below the gravity tests and
+// multiplies by one SSE reciprocal of two_a.
+// Tried: gravity product operands swapped 266; result flag declared first 275 (frame 0x30); optimal-time
+// root with a double -1.0 244 (no reciprocal, but a final qword multiply where retail loads a dword -1.0
+// first); t2 root without its float cast 266; horizontal through magnitude2d 272.
+// Round 31: the time scale read once into a value (`time_scale ? *time_scale : 0.0f`) 262, time scale still in
+// EDX (0xfa6a0 34 -> 35); retail keeps the distance output in EDI from entry and reads the forced speed and
+// time scale from the stack at their uses.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,

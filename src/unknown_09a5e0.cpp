@@ -2166,6 +2166,11 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // default as a ternary 201; field-copy compare operands swapped 168; field pointer for the
 // copied field 168 (retail's dead `add ebp, 0x214` remains). The first block's goto became a
 // plain NONE guard (identical code).
+// Round 29: the 0x2000 block is 8 of the 11 missing bytes: retail loads the record's
+// field and the unit's +0x214 into registers, compares them, and leaves a dead
+// `add ebp, 0x214`. memcmp for that test gives retail's loads and compare but no add
+// 193; with memcpy for the copy 193; with a named source pointer used for both 193;
+// with a four-byte struct copy 193; the unit pointer through OBJECT() 168 (identical).
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
