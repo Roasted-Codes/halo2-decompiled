@@ -13,6 +13,7 @@ unknown_0cd660.cpp, unknown_0d0690.cpp, unknown_0d0e00.cpp). */
 #include "globals.h"
 #include "data_array.h"
 #include "unknown_0259d0.h"
+#include "bit_vector.h"
 #include "units.h"
 #include "unit_requests.h"
 #include "object_markers.h"
@@ -1324,6 +1325,10 @@ struct s_unit_state_c6ef0
 	s_unit_state_tail tail;
 };
 
+// score 2 (was 2): the name store and shared NONE setup are exchanged; name
+// after NONE 7, name before the zero 2, zero after NONE 2, zero removed 46,
+// cached default pointer 6, later default pointer 2, tail NONE grouped 45,
+// first vector early 16, zero floats swapped 4.
 // @retail 0xc6ef0
 void function_c6ef0(s_unit_state_c6ef0 *state)
 {
@@ -4985,6 +4990,7 @@ void __stdcall function_ca700(long unit_index, real amount, short type, bool not
 // score 205 (was 206): the two flag-word clears (+0x134) and the +0x10a bit
 // test differ from the first store on; the two lookups through the masked-index
 // getter 205 (the first load's operand order now matches).
+// Frame 0x6c agrees; initial flag register/byte test, vector scheduling and smoothing carriers remain. Shared cross 212; scaled differences 205; native byte/word flags 206/206; role names 206; separate thresholds 206; shared writer 188; writer wide extraction 188; initial clears only 192; weight names 188; writer scaled/cross/both 224/203/223.
 // @retail 0xce0c0
 void function_ce0c0(long unit_index)
 {
@@ -4992,8 +4998,8 @@ void function_ce0c0(long unit_index)
 	transform4x3f matrix;
 	s_unit_camera_data camera;
 
-	unit->flags_134 &= ~0x4000000;
-	unit->flags_134 &= ~0x2000000;
+	bit_vector_set(&unit->flags_134, 26, false);
+	bit_vector_set(&unit->flags_134, 25, false);
 	bool still = TEST_FIELD_BIT((unit->flags_10a >> 2) & 1) &&
 		(unit_at_masked_index(unit_index)->type != 0 || !function_e4050(unit_index));
 	if (function_d1080(unit_index, &matrix, &camera) && !still)
@@ -5025,14 +5031,14 @@ void function_ce0c0(long unit_index)
 
 		if (limit > 0.0f && (forward > limit || sideways > limit || vertical > limit))
 		{
-			unit->flags_134 |= 0x2000000;
+			bit_vector_set(&unit->flags_134, 25, true);
 		}
 		limit = camera.unknown10;
 		if (limit > 0.0f && unit->parent_index != NONE && unit->parent_seat_index != NONE &&
 			(g_4e6948->state != 2 || !function_138880()) &&
 			(forward > limit || sideways > limit || vertical > limit))
 		{
-			unit->flags_134 |= 0x4000000;
+			bit_vector_set(&unit->flags_134, 26, true);
 		}
 		unit->unknown270 = matrix.position;
 		unit->unknown27c = velocity;
@@ -5049,7 +5055,7 @@ void function_ce0c0(long unit_index)
 	{
 		keep = 0.95f;
 		take = 0.05f;
-		unit->flags_134 &= ~0x10000000;
+		bit_vector_set(&unit->flags_134, 28, false);
 	}
 	unit->unknown288.i = unit->unknown288.i * keep + unit->unknown294.i * take;
 	unit->unknown288.j = take * unit->unknown294.j + keep * unit->unknown288.j;
@@ -5062,6 +5068,7 @@ void function_ce0c0(long unit_index)
    marker 0x500000a (type 0, when clear of the world), slightly above its
    center (type 1) or its center; then plays the impact sounds of what it
    hit */
+// score 195 (was 196): Frame 0x104 agrees; flag extraction, sentinel residency and location/owner call conventions remain. Bool flag tests 277; native collision 196; reversed cases 196; positive damage scope 196; native event byte 196; workspace names 196; native material word 196; shared flag reader 277; native seat bit 277; seat/weapon bool alone 270/275.
 // @retail 0xcf040
 void function_cf040(long unit_index, short type)
 {
@@ -5470,6 +5477,8 @@ bool __stdcall function_c4410(long unit_index, void const *creation, bool *out_o
    (4 also changing weapons), 5 to 7 into the second hand beside a
    matching first (6 lowering it first, 7 readying it); tells the player
    code */
+// score 294 (was 325): Frame 0x50 and extent agree; incoming unit, return byte and ready home differ.
+// Two request homes 313; result first 313; shared exit 301; secondary modes first 294; branch-local requests 314.
 // @retail 0xcd0c0
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 {
@@ -5493,7 +5502,28 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 	}
 	else
 	{
-		if (mode == 3 || mode == 4)
+		if (mode == 5 || mode == 6 || mode == 7)
+		{
+			long first_index = function_cbd50(unit_index, UNIT_GET(unit_index)->current_weapon_index);
+
+			if (first_index == NONE || !function_101640(first_index) || !function_101640(weapon_index))
+			{
+				return result;
+			}
+			ready = true;
+			if (mode == 6)
+			{
+				memset(&request, 0, sizeof(request));
+				request.type = 0x13;
+				request.type17.unknown4 = true;
+				ready = function_e6900(unit_index, &request);
+				if (!ready)
+				{
+					return result;
+				}
+			}
+		}
+		else if (mode == 3 || mode == 4)
 		{
 			long second_index = function_cbd50(unit_index, UNIT_GET(unit_index)->next_weapon_index);
 
@@ -5529,27 +5559,6 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 				}
 			}
 		}
-		else if (mode == 5 || mode == 6 || mode == 7)
-		{
-			long first_index = function_cbd50(unit_index, UNIT_GET(unit_index)->current_weapon_index);
-
-			if (first_index == NONE || !function_101640(first_index) || !function_101640(weapon_index))
-			{
-				return result;
-			}
-			ready = true;
-			if (mode == 6)
-			{
-				memset(&request, 0, sizeof(request));
-				request.type = 0x13;
-				request.type17.unknown4 = true;
-				ready = function_e6900(unit_index, &request);
-				if (!ready)
-				{
-					return result;
-				}
-			}
-		}
 		hand = mode == 5 || mode == 6 || mode == 7 ? 1 : 0;
 	}
 	if (!ready)
@@ -5578,6 +5587,8 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 		unit->unknown216 = (char)function_cdeb0(unit_index, NONE, unit->current_weapon_index, 0);
 		if (mode == 1 && unit->unknown216 == slot_index)
 		{
+			s_unit_request request;
+
 			memset(&request, 0, sizeof(request));
 			request.type = 8;
 			request.type17.unknown4 = true;
