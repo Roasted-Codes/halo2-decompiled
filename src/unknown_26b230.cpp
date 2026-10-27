@@ -2017,6 +2017,9 @@ void function_269250(long clump_index, long actor_index)
 // names with while/test/both 216/219/219. One-point calling-walk gain rejected; body restored.
 // Round 368: non-unit bool/byte 219/219; non-group bool/byte 190/190;
 // joint absence domains bool/bool, byte/byte, bool/byte, byte/bool 220/220/220/220.
+// Round 373: shared member walk ordinary/inline/forced 183/183/183; entry member
+// workspace with the same boundaries 183/183/183; uniform original-object reads
+// with ordinary/forced member walk 243/243. Six-point gain restored.
 // Current-member identity before lookup 204; successor published on continuation 200;
 // original-object accessor at every use 262; identity/successor, identity/accessor, successor/accessor,
 // all three 200/261/262/262; all with conditional unit admission 263. Original body restored.
@@ -2155,7 +2158,7 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 322 (was 322): frame 0x6a4 agrees; visibility-row scheduling, marking and selection/cleanup differ.
+// score 296 (was 322): frame 0x6a4 agrees; visibility-row scheduling, marking and selection/cleanup differ.
 // Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
@@ -2175,6 +2178,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Readonly candidate 322; priority/type/both samples 331/357/369; readonly samples 369; selected threshold first 372; threshold with samples 361; readonly structure 322.
 // Round 368: joint selection-phase counter lifetime, short/long cursor and total
 // 360/352/361/352; the same four with indexed candidate advancement 382/372/365/371.
+// Round 373: shared marking-chain walk ordinary/inline/forced 296/296/296;
+// entry chain workspace with the same boundaries 296/296/296; uniform structure
+// observations with ordinary/forced walk 331/331. Ordinary shared walk kept.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
@@ -2219,20 +2225,12 @@ void function_269870(long clump_index)
     {
         if (*((bool *)actor + 7))
         {
-            long object_index = perception_get(*(long *)((byte *)actor + 0x1c))->object_index;
-            while (object_index != NONE)
+            s_ai_object_iterator members;
+            members.next_index = perception_get(*(long *)((byte *)actor + 0x1c))->object_index;
+            while (swarm_creature_iterator_next(&members) != NULL)
             {
-                s_handler_object_view *object = handler_object_get(object_index);
-                long next = NONE;
-                if (!object->flags134)
-                {
-                    byte *owner = (byte *)object + object->ai_offset;
-                    if (owner)
-                        next = *(long *)(owner + 0xc);
-                }
-                if (g_4de300[object_index & 0xffff] != g_4de2fc)
-                    g_4de300[object_index & 0xffff] = g_4de2fc;
-                object_index = next;
+                if (g_4de300[members.index & 0xffff] != g_4de2fc)
+                    g_4de300[members.index & 0xffff] = g_4de2fc;
             }
         }
         else

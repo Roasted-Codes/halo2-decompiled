@@ -744,6 +744,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Round 330: Native rotation 155; paired double trig 281; rotation plus trig 281; double projection 276;
 // rotation/projection 276; trig/projection 281; all native precision 281; native output velocity sampling
 // 246. Exact-match-only forms restored.
+// Native float scale to output/in-place/returned output 186/206/248;
+// the same three with sample scope 186/206/248; uniform axis value with direct/in-place scale
+// 266/288. Direct native scale reaches retail length but regresses; original sampled scaling retained.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

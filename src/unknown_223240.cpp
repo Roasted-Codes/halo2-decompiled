@@ -124,6 +124,9 @@ void function_2232a0(void)
 // Every sentinel-fill form also loses the matched initializer caller in the reduced image; all restored.
 // Layout field-test orders flag/state/index, index/flag/state, index/state/flag,
 // state/flag/index, state/index/flag and three global-first orders 151 each.
+// Existing complete layout query 151; query with ordinary pretest/single-first layout 161/168;
+// query with exclusive/conditional clamp 182/182; exclusive clamp with pretest 183;
+// native byte layout with query/do/pretest 189/177. Original expanded gate and loop retained.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

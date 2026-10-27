@@ -129,6 +129,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // table-range / entry-range / all metadata records / all readonly records 153 each.
 // Distinct restore word/input/entry/all carrier lifetimes 153 each; initial/restore/both
 // metadata graph scopes 153 each; full restore graph with separate upload record 153.
+// Existing lookup single-result homes/uninitialized/group-first/default-first 153/153/153/153;
+// same graph with group fields at every test 153/153/153; direct conditional lookup 153. Original helper restored.
 // Round 226: selected-record prefix 153; record-block header 153; pass-input prefix 153; record
 // and block 153; record and pass 153; block and pass 153; all three metadata objects 153; all
 // readonly metadata objects 153.
@@ -136,6 +138,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // reversed middle test 175, both reversed 177.
 // entry at use 153; chain at use 153; previous tag at use 153; entry chain at use 153; entry tag at use
 // 153; chain tag at use 153; all field observations 153; fields old record at use 153.
+// Published reciprocal log input with direct/scalar publication 284/153;
+// with paired-counter library clear 305/258, chained counters 284/155,
+// and long changed result 280/195. Exact original logarithm and reciprocal retained.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

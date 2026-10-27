@@ -52,6 +52,9 @@ extern real g_4c9798[36];
 // width short 296; width word 296; height short 324; height word 324;
 // short/word 325; word/short 325; short/int 296; int/word 324.
 // Original native limits, far-normal copy and all protected call interfaces restored.
+// Round 375: Complete near/far/shared-pair/distinct-pair plane outputs on the
+// retained far-normal graph 322/335/361/364; CRT copies 322/335/361/364.
+// Frame 0x30 versus 0x28; all exact-only output-record forms restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {
