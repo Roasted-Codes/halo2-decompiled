@@ -192,6 +192,8 @@ struct s_block_candidate
 // Round 214: byte insertion successor 375; byte inner successor 383; byte inner ordinal 389; byte best-present state 370; byte policy state 370.
 // Negative best-candidate bool/byte/short/long in admitted scope 371/371/373/373;
 // the same carriers from entry 379/379/380/380. Original positive best state and body restored.
+// Cursor declaration orders 102435/032145/042315/052341 382/370/369/377
+// (head, tail, offset, previous, current, oldest); four combined cursor names 370 each.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {
