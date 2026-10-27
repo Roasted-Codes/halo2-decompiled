@@ -1398,6 +1398,8 @@ struct s_rating_summary
 // status with player indexing 202, with fifteen-bit counters 199 (rejected).
 // Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
 // 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
+// Round 210: Query-count table publication 123/132/213/231/312/321 gives
+// 202/206/213/344/214/345; entry table with 123/321 gives 202/345. Original restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
