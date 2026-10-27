@@ -1029,6 +1029,12 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // reference-value 127/127/223/127/127/223/161/161. Original two-use output helper restored.
 // Round 342: Row-shared forward/left/up product carriers 86/86/86; paired forward-left/forward-up/left-up 53/53/53;
 // all three 52; all three with complete protected input scalars 102. Original nine-product helper restored.
+// Lane 5 r77: VC canonicalises the rotation (any sum order, product operand order or product
+// declaration order gives identical code; a compile-only screen shows it), and `dst += src`
+// with two indirect operands always loads the source first. Override adds through named
+// offset/position pointers 54; row i grouped (forward + left) + up 50 at 1043/1043; retail's
+// own row groupings (left + up, forward + left, forward + left) 59; one named output-velocity
+// pointer for both override blocks 265 (frame); a 600 s permuter run, none below 50.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

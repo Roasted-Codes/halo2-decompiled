@@ -1426,6 +1426,12 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // `movzx eax, byte [edi+0x19]; test al, 0xa` after the update call, where ours folds `test byte`
 // (`!= 0`, two bit tests, a bool local, bitfield/word/shift views and a bool cast all fold).
 // Apply that set once the movzx form is found.
+// Lane 5 r77 (fast base 243): the movzx is the only `movzx; test al, imm` in retail; casts, `> 0`,
+// `!!`, shifted bit pairs, TEST_FLAG pair, byte/word/dword bitfield and dword-shift views, ternary
+// and `&` bool forms, and the test in another file's non-inline function (LTCG-inlined) all fold to
+// `test byte`. Look angles through a pointer clamp helper 246 (inlined away; slots and shared
+// reciprocal kept); if/else clamps 246; mode declared before unit 243; look angles declared before
+// the springs 243; the round 93 combined set re-measured 378 (aligned 49, one instruction short).
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
