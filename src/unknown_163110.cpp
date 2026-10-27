@@ -378,11 +378,11 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 {
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
-// score 404 (was 404): Camera/points saved registers and initial stores remain; scalar normal inputs do not recover them.
+// score 404 (was 404): Frameless admission/output EDI agree; camera/point saved registers and initial stores remain.
 // Camera/points saved registers and initial stores remain; input distance/whole-plane ownership does not qualify.
 // Earlier: Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
 
-// score 412 (was 412): frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
+// frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
 // YZX normal inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
 // Camera/point saved registers and initial stores differ; complete buffered normal rows require an exact match.
 // Earlier: Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
@@ -426,6 +426,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Complete depth snapshot 733; all depth fields 667; identifier before rectangle 431; input rectangle
 // value 686; depth snapshot/identifier 733; fields/identifier 682; rectangle/snapshot 699;
 // rectangle/fields 683.
+// Round 145: On separate-normal input, parallel row accumulators 404; all row products named 407;
+// initial two-term sums 407; final forward terms 455. Scalar-first counterparts 404/407/407/455;
+// all restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

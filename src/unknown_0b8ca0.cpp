@@ -657,6 +657,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // shared square/dot/both 239/239/239; raw/viewed distance 242; distance/facing partials 239/239;
 // shared square with facing partial 239; both partials with viewed distance 242 (all without the
 // inherited radius alias and snapshot).
+// Round 144: shared salted-index construction in the existing scan helper, direct/result-first
+// results and conditional/explicit next index 257/259/257/256; ordinary inline versions 257/259/257/256.
+// All restore the helper, input forms and inherited radius exactly; caller-dependent alignment remains.
 // Real calling/step/datum iterator state 326/286/286; with Boolean result
 // 355/328/328; sole calling/datum pool receivers 326/282. All original
 // code restored; caller-dependent self-alignment and full-handle spills remain.

@@ -96,6 +96,9 @@ public:
 // override-receiver-head-link 215; tail-link 215.
 // override-receiver-tail-link 215; head-link-tail-link 215.
 // override-receiver-head-link-tail-link 215; links-before-index-helper 215.
+// Round 144: native flag word with real/bool/word/long override carriers 234/233/232/234;
+// the corresponding mask extractions 234/233/232/234. Shared type and body restored;
+// frame 0x10/0x14, activation and metadata/viewer/child homes remain.
 // Round 368: publication/scan position and viewer-field pointer/reference pairs 274/274/274/274;
 // the same receivers with closed coordinate-double phase 274/274/274/274.
 // Round 195: bounded-viewer NONE test removed 259; native salted index 300;

@@ -4378,6 +4378,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // all four allocations with native identity equality 382 each. Raw comparison and original names restored.
 // Round 211: Entry preference/equality/both lifetimes 381/381/381; success default alone/with
 // preference/equality/both entry lifetimes 381/391/391/391; native identifier library copy 370.
+// Round 145: Equal-version rejection before preference: original predicates 396; newer predicate
+// 393; equality predicate 394; both predicates 391. Identity-equality counterparts
+// 406/403/404/401; all restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

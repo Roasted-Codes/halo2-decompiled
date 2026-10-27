@@ -116,6 +116,13 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Round 147: Coherent inline lookup/activation/squad cleanup/actor removal 234/164/164/164; lookup
+// plus each other boundary 234/234/234; all four 234; separately outlined inline lookup 164 with
+// checked losses.
+// Round 149: Complete iterator result state with value input and long/int/dword/word ordinals
+// 316/316/316/335; const-reference input with genuine state copy gives the same four scores. All
+// copied members initialized; larger frame and extent regress. Original private step, layout and both
+// traversals restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

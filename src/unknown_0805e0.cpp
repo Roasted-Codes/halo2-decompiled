@@ -468,7 +468,7 @@ bool function_80660(void)
 struct s_profile_record;
 void function_1537f0(s_profile_record *record);
 
-// score 67 (was 67): Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
+// score 67 (was 67): Frame 0x90 versus 0xa0; identity words still fold and source bytes spill.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
 // Earlier: Frame 0x90 vs 0xa0; identity slots and initialization homes still differ; signed array-end comparison recovered.
 // frame 0x90 versus 0xa0; identity homes and packed source-byte carriers remain.
@@ -497,6 +497,8 @@ void function_1537f0(s_profile_record *record);
 // complete sixteen-byte header fill 154; source/identity homes remain unchanged.
 // Entry zero/first sentinel pair/second pair chains and all pair subsets 67 each;
 // complete endpoint sentinel chain 67. Frame 0x90 and packed source spills remain.
+// Round 146: identity byte/word/signed-word/signed-dword/header/byte-identity/word-flags/byte-
+// flags views 67 each.
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -597,7 +599,7 @@ bool function_7fb50(void)
 	return local_0;
 }
 
-// score 90 (was 90): frame 0x1c agrees; records/properties inputs, counter homes and ret 0x18 versus 0x1c differ.
+// score 90 (was 90): Frame 0x1c agrees; input homes and ret 0x18 versus 0x1c remain.
 // Record indexing 133; buffer indexing 129; values cursor 117; budget guard 132; invariant totals 171; values cursor/buffer indexing 112; record combination 112; short property ordinal 111.
 // Frame 0x1c agrees; records/buffers register contract and cursor/count
 // scheduling remain. Tried reserve properties 146; property pointer walk 138; wide values scope
@@ -621,6 +623,8 @@ bool function_7fb50(void)
 // scalar-loop accounting 120; chained zeros with early scalar accounting 126;
 // completed record/buffer totals 115; chained zeros with record commit 92;
 // scalar accounting with record commit 120, with chained zeros 122. Input homes remain.
+// Round 146: records/buffers/record-capacity homes 125/90/90; records-buffers/records-
+// capacity/buffers-capacity/all/with-property-capacity homes 125/125/90/125/125, all restored.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,

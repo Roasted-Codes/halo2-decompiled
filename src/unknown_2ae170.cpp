@@ -672,6 +672,9 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // settings record 453; ordinary settings record 474; input record 517; special record/early gains 455;
 // ordinary record/early offset 476 (fast). Keep only paired gain declarations before the pure
 // selector.
+// Round 144: live ordinary gains with retained thresholds 500; selected-field reference 519;
+// word destinations 510; both 528; primary value with those four forms 503/521/490/518.
+// All restored; the 490 form loses the dispatcher. Frame/selected-level/SSE homes remain.
 // Reused buffer/alternate/all channel subtotals 470/498/520; complete front/rear
 // pair subtotals 484/458, both 494; repeated boosted offset 465; complete subtotal
 // graph 521. All restored; selected-level homes and SSE argument staging remain.

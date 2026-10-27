@@ -308,7 +308,7 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 }
 
 #define sound_effect_delete function_21dcf1
-// score 204 (was 204): Frame eight versus four, state/tag residences and start/delete expansion remain.
+// score 204 (was 204): Frame eight versus four and opposite start/delete expansion remain.
 // Frame eight versus four, state/tag residence and opposite start/deletion expansion remain.
 // Earlier: Frame eight versus four and opposite start/delete expansion remain; eight sensitive callers preserved.
 // Earlier: frame eight versus four and opposite start/delete expansion;
@@ -371,6 +371,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 207: existing allocator as native definition member, with original failure return,
 // success nesting, count-selected result or empty-definition return, all 204; those same
 // four with record-link initialization first also 204. Original helper and body restored.
+// Round 148: coherent private start tag/state order, unsigned result, unsigned tag, their pair/all
+// combinations and order with default-NONE rate admission 204 each.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
