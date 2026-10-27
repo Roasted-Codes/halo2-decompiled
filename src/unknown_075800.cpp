@@ -1071,6 +1071,11 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 5,23,6,24,7,22 / 24,5,23,6,22,7; connection/query interleaves 5,8,6,9,7,10 /
 // 8,5,9,6,10,7 / 5,9,6,10,7,8 / 10,5,9,6,8,7:
 // 193,192,193,192,195,194,195,195 fast; reduced control 191, full 193. Original executable source restored.
+// Lane 4 r98 (fast control 191): retail takes the selector in eax, the message in ecx (kept in ebx) and
+// this in edx with the address on the stack (edi); ours the selector in ecx, the address in eax and the
+// message on the stack. One numeric-order switch with returns, as 0x93aa0, 208 (432 bytes, same
+// convention); an unused message size parameter after the type (dropped by the link) 191; formals
+// (type, message, address) 191, same convention; direct cases 0,2,3,4 196; connection cases after 11 205.
 // Round 224: Residual connection/free-case interleaves 5,11,6,18,7,8 / 11,5,18,6,8,7 /
 // 5,18,6,8,7,11 / 18,5,8,6,11,7 / 5,11,18,6,8,7 / 11,18,5,8,6,7 /
 // 18,11,5,6,8,7 / 8,5,11,6,18,7 195/194/195/194/195/192/192/194 fast. Original phases and handler tuples restored.

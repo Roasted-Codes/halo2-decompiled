@@ -1931,7 +1931,7 @@ bool __stdcall function_e0d70(long arg_159e6d, real *seconds)
 }
 
 real function_1ec5f0(void *ragdoll);
-void function_1d35d0(long rigid_body_index, s_havok_component *component, real scale);
+void function_1d35d0(s_havok_component *component, long rigid_body_index, real scale);
 
 /* scales a dead biped's ragdoll bodies by how far it has settled, a little
    differently for each biped */
@@ -1957,7 +1957,7 @@ void function_e0e00(long arg_159e6d)
 			scale = (1.0f - function_1ec5f0((byte *)biped + 0x3ec)) * scales[arg_159e6d & 3] + 1.0f;
 			for (i = 0; i < *(long *)((byte *)component + 0x80); i++)
 			{
-				function_1d35d0(i, component, scale);
+				function_1d35d0(component, i, scale);
 			}
 		}
 	}
@@ -2994,9 +2994,11 @@ void function_e4c10(long arg_159e6d)
 
 	if (biped->physics_mode == 3)
 	{
-		biped->unknown3f9 = 0;
-		biped->unknown3f8 = 0;
-		function_1ed340((byte *)biped + 0x3ec, arg_159e6d);
+		byte *ragdoll = (byte *)biped + 0x3ec;
+
+		ragdoll[0xd] = 0;
+		ragdoll[0xc] = 0;
+		function_1ed340(ragdoll, arg_159e6d);
 		function_e18d0(arg_159e6d, true);
 	}
 }

@@ -684,19 +684,20 @@ PRIVATE bool function_2713f0(s_type_f17a25 *state)
 	return true;
 }
 
+// score 22 (was 26): the location counter: retail tests it in memory (`cmp word [esi+0x70], 0`) and steps it in memory (`inc word`, `cmp word ..., 0x20`), ours loads it into ax once and reuses it; tried: the increment as its own statement 26, `+= 1` 22, the whole update as an inline helper on the location 26 and 22, a named location pointer 22, the zero test inverted 25, the wrap test after the if/else 29. Only the else arm's step through a force-inline helper taking the location (`if (++location->unknown00 > 32) location->unknown00 = 0;`) matches, a one-caller helper.
 // @retail 0x2715a0
 bool function_2715a0(byte *buffer)
 {
 	s_type_f17a25 *state = (s_type_f17a25 *)buffer;
 	s_path_lookup_view *lookup = (s_path_lookup_view *)state;
 	s_path_closest_view *closest = (s_path_closest_view *)state;
+	bool result = false;
 	state->unknownae = 0;
 	state->heap_count = 1;
 	memset(lookup->hash_table, 0xff, sizeof(lookup->hash_table));
 	closest->node_index = NONE;
 	closest->distance = FLT_MAX;
 	closest->estimated_distance = FLT_MAX;
-	bool result = false;
 	if (function_2713f0(state))
 	{
 		result = function_271630(state);
@@ -964,6 +965,11 @@ PRIVATE bool function_271630(s_type_f17a25 *state)
 	return result;
 }
 
+// score 0 (was 8): old index and signed slot registers differ, including existing heap helper input;
+// native long insertion index 21; increment the count field 8; postincrement count at insertion 8; shared
+// native heap element pointer 16; guard return for full heap 8; name the next count expression 8; store
+// cost before node 10; native element pointer with postincrement count 16; consistent existing heap helper
+// parameter order 8.
 // @retail 0x271fd0
 PRIVATE void function_271fd0(s_type_f17a25 *state, short node_index, short cost)
 {

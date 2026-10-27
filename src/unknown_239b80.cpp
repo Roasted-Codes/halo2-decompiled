@@ -291,6 +291,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // On the long departure state: signed-word/unsigned-word/unsigned-native/int result
 // 257/257/203/203; native input count 259, with signed/unsigned word result
 // 268/268; observed signed-word input count 203. Caller checked with each.
+// Round 152: Classifier rejection with entry result, long/bool/byte/short departure
+// 262/262/262/259; post-classification result 256/256/256/251. All restored.
 // Equality input contracts (pointer order, first/second/both native references), each
 // with long/Boolean departure: 203/227/203/234/203/234/203/234. Helper and body restored.
 // Round 59: retail keeps the hull count at +0x10 and the departure flag as a byte in the index
@@ -495,6 +497,14 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // tail, but the previous point stays in ESI); both 254 (frame +8, the widened index spilled);
 // long index without the volatile 272; the distance sums with the terms swapped (loop, fraction,
 // both) 212 (identical).
+// Common-failure graph mask production: conditional result 212/252; clear then set
+// 275/266; named output bit 222/252; named bit with conditional result 222/252
+// (unsigned/signed word ordinal). Original ordinal, mask and body restored.
+// Round 62: without the volatile the plane sits in ESI and the previous point spills as in retail,
+// but the previous side stays in CL and the frame grows 8 (227); with a signed short index too it
+// gives retail's loop tail but spills the widened index separately (254, 879 B); signed short alone
+// 252; `(bool)` on the point-mask bit 212 (identical; retail materialises it with neg/sbb/neg),
+// with no volatile and short index 254.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

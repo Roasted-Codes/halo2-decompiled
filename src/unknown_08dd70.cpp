@@ -117,6 +117,34 @@ struct s_handler_slot
 // 47; all scalar clears 72; separate field stores in retail's order in both slots
 // 59 (the gateway's alone 51, the handler's alone 55); one-pointer memsets of the
 // two back-pointers 29 (same code).
+// the materialized field addresses (add eax, 0xc and add eax, 8), ours stores both
+// through [eax+N]; everything before the handler block now matches (the
+// gateway flag cleared with a one-byte memset; a plain store gives 54).
+// Earlier 68 (was 67): retail keeps the node pointer in eax and adds 0xc to it before the
+// compare, ours copies it into ecx and reads [eax+0xc] instead.
+// Earlier 67 (was 67): field-address carriers and post-clear link load still differ;
+// typed handler/gateway/both members 67/67/67; gateway/handler/both byte flags 67/67/67;
+// initialization values 67; inactive return 67.
+// everything before the handler block matches. In the handler and gateway
+// blocks retail keeps the tested-and-cleared fields as pointers (handler copied to edx,
+// eax += 0xc for &handler->gateway; gateway copied to esi, lea edx [eax+4] for
+// &gateway->initialized, eax += 8 for &gateway->link); ours stores through [eax+N].
+// Tried (all 67): pointer-to-field locals (s_gateway_slot **), static dispose helpers,
+// inline member dispose() on both slots, static detach helpers taking T **, reading the
+// globals again inside the tests; volatile initialized/back-pointer fields 65 (other shape).
+// Earlier 47 (was 67): Handler/gateway field carriers and post-clear link load still differ.
+// byte release ordinal 112; short session ordinal 125; byte session ordinal 125; shared index
+// scope 67; session reference 67; session array receiver 67; link reference 67; handler/gateway
+// references 67.
+// session clear schedule, field-address carriers and final link load differ;
+// handler/gateway/both native clears 58/59/54; session 71; handler/session 68;
+// gateway/session 67; all three 47 plain; full pointer ranges 57.
+// Earlier 47 (was 47): session schedule, field addresses and late link observation remain; native
+// handler/gateway reciprocal clears 47/59, both 59; gateway/handler byte clears 72/47; separate
+// session clears 59; trailing pointer 47; all scalar clears 72.
+// reverse chained handler/gateway/both pair clears 55/51/59; those forms with
+// complete reciprocal-slot and active-field lifetimes 55/51/59; both reversed
+// pairs in phase scopes 59; reversed pairs/field lifetimes/native handler byte 59.
 // @retail 0x8dd70
 void function_8dd70(void)
 {
