@@ -65,6 +65,10 @@
 // Round 211: Late special cross 707; reversed sine producers/after-amplitude sine 594/594;
 // late cross with either sine order 707/707; cross at first scale 592 (two-point gain dropped);
 // first-scale cross with late sine 594; complete native basis arms 727. Original body restored.
+// Round 174: consume cross vector in place 673; cross at displacement 707;
+// early sine factor 652, with late cross 709; factor after modulation 652, with late cross 709;
+// cross after first sine 673, with early factor 652. Original cross/scaler graph restored;
+// frame 0x64/0x60 and shape/basis/wave homes remain.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

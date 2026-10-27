@@ -864,6 +864,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 375: Native optional transition construction, mutable/const 341/341; with native
 // optional overlay 338/338; uniform three-ID role names on those graphs 341/341/338/338.
 // Frame 0x38 retained; all eight forms restored.
+// Complete lookup/admission/transition/channel result chain, branch/derived fallback:
+// bool 371/354, byte 377/342, short 391/339, long 390/312. All shrink frame to 0x34 versus
+// retail 0x38. Original late-success body, identifier lifetimes and protected queries restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

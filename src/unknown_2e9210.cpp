@@ -31,17 +31,23 @@ void bounded_2e9530::function_2e9210(typed_2e9210 **other, description_2e9210 co
 				long first = (*other)->type();
 				long second = ((typed_2e9210 *)child.key)->type();
 				handler_2e9210 handler = table->handlers[first][second];
-				elements.data[i].value_8 = handler(other, &child, context, arg_3);
+				element_2e9530 *destination = &elements.data[i];
+				destination->value_8 = handler(other, &child, context, arg_3);
 			}
 			else
 			{
 				agent->refresh(other, &child, context);
 			}
 		}
-		else if ((object_4805a4 *)elements.data[i].value_8 != function_301a40())
+		else
 		{
-			((kept_child_2e9210 *)elements.data[i].value_8)->release();
-			elements.data[i].value_8 = (long)function_301a40();
+			kept_child_2e9210 *agent = (kept_child_2e9210 *)elements.data[i].value_8;
+			if ((object_4805a4 *)agent != function_301a40())
+			{
+				agent->release();
+				element_2e9530 *destination = &elements.data[i];
+				destination->value_8 = (long)function_301a40();
+			}
 		}
 	}
 }

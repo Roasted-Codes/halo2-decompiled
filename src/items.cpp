@@ -973,7 +973,7 @@ struct s_item_flags_view_10b850
 };
 // score 813 (was 813): Frame 0x154 versus 0x12c, entry Boolean bytes and carrier/collision/rotation homes remain.
 
-// score 813 (was 813): Frame 0x154 versus 0x12c, entry Boolean bytes and collision/carrier/rotation homes still differ.
+// Earlier: Frame 0x154 versus 0x12c, entry Boolean bytes and collision/carrier/rotation homes still differ.
 // Earlier: Frame 0x154 versus 0x12c and Boolean/vector homes remain.
 // Frame 0x154 versus 0x12c and Boolean/vector homes remain.
 // frame 0x154 versus 0x12c; direction workspace 861;
@@ -1017,6 +1017,9 @@ struct s_item_flags_view_10b850
 // scaled-add jki/kij/kji 859/818/860. Kij rotation with scaled-add
 // ikj/jik/jki/kij/kji 811/811/858/812/859. Six-point 807 rejected;
 // original complete body and helpers restored; frame and Boolean homes remain.
+// Round 174: dot first/second/both native values 1039/1012/1200; scaled-add input value 942;
+// dot first/second/both plus scaled-add value 1117/1200/1302; native add output reference with value input 942.
+// Original helpers and body restored; frame 0x154/0x12c and Boolean/workspace homes remain.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

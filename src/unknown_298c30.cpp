@@ -325,6 +325,10 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Rotation publication xzy/yxz/yzx/zxy/zyx 749/749/748/749/748;
 // endpoint yx alone/with yxz rotation 811/811; normalized kij publication 749.
 // One-point forms rejected; original helper stores and body restored.
+// Round 174: shared three-use height 779; forward/reverse/both endpoint calculations at consumption
+// 803/798/858; center-first/reverse-first initial points 836/802; reverse-first with late forward 792;
+// center-first with late reverse 797. Original geometry production restored; frame 0x11c/0x114,
+// eager radius and trace/pivot/point homes remain.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

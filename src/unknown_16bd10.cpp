@@ -813,6 +813,11 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // Native projection/position/animation flag bit views, alone and all
 // combinations, 245 each (233 executable rows); full dword bitfield 401
 // (382 executable rows). Original dword field, complete body and helpers restored.
+// Round 172: Immutable direction 245; coherent projected-position receiver 371, with immutable
+// direction 371; source-origin receiver 401, with immutable direction 401; both receivers 381, with
+// immutable direction 381 and length-at-expression 381. Executable differences
+// 233/354/354/383/383/357/357/357 versus baseline 233; all original receivers restored. Frame 0x48
+// agrees; direction preload, normal/length/zero allocation, flag stores and timer scheduling remain.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

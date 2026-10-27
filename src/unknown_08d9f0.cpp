@@ -156,6 +156,10 @@ void function_8dd70(void);
 // observer sessions 229; long all 231; word entry 230.
 // Round 210: entry constant homes with bool observer/session/both 228/228/235;
 // bool link plus observer/session/both 234/235/234; long-bool/bool-long stages 229/229.
+// Round 172: Short session accumulation with original/immutable link 231/231; direct list
+// prerequisite 226/226; direct observer 234/234; both direct producers 237/237. The four-count forms
+// fail the eight-count and match-only requirements; every body and producer restored. Frame four
+// agrees; entry normalization, helper expansion and connection reloads remain.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

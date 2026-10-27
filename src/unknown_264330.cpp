@@ -273,6 +273,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // entry vector workspaces 358; speed category result 358. Frame 0x24/0x20 and object/view homes remain.
 // Round 211: Direct time 442; signed-byte/word update 358/429; word approach category 360; named expiration
 // 358. Frame and object/view homes remain.
+// Round 176: Branch-produced approach categories signed-byte/byte/word/long
+// 370/371/360/360; highest-category-default forms 392/392/394/393. Frame
+// 0x24 versus 0x20 and object/view homes persist; all original categories restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)

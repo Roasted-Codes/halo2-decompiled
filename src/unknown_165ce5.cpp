@@ -1381,18 +1381,23 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 
 // score 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
+// Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
 // frame 0x28 vs 0x2c and unit/mode/look homes remain.
 // Entry unit capture 252; const unit/primary weapon/weapon object/look receivers 252 each;
 // look interval capture 417; combined readers 252; readers plus interval 417 (fast base 252).
 // frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
+// Earlier 250 (was 250): Frame 0x28 versus 0x2c and unit/mode/look homes remain.
 // Frame 0x28 versus 0x2c and unit/mode/look homes remain.
 // Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407; all
 // receivers/direct velocity 617/617 (fast preview 252).
 // frame 0x28/0x2c and unit/mode/look homes remain.
 // External user/unit/weapon records and user-unit pair 252 each; native dword
 // index/mode, callback at update, and unit-weapon-index combination 252 each (fast base 252).
+// Indexed user-record reads at every access 550; with live flags 544; direct channels 560;
+// both 538; complete coefficient selection with those four forms 550/544/560/538.
+// Frame stays 0x28 versus 0x2c; original user receiver and all smoothing inputs restored.
 // Complete entry spring phase, override-only receiver, entry look outputs and both 250 each;
 // narrower aiming pair within that phase, with the same four storage combinations, 254 each
 // (fast control 250, full baseline 248). Original phase scopes and all five smoothing calls restored.

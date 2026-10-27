@@ -115,6 +115,9 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // arm-produced next-state results 528/528/593/530 (fast control 367). Complete
 // transition-result ownership does not recover request-source or write-option
 // scheduling; byte arm results reach retail length but regress. All forms restored.
+// Round 176: Case 19 after 0 / 12 after 4 / 16 after 19: 461/444/431;
+// first+second / first+third / second+third / all: 486/492/447/500;
+// case 18 after 19: 410. All case bodies and original order restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
