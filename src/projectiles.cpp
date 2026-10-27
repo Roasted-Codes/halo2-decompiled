@@ -676,7 +676,7 @@ void function_fcdd0(long definition_index, point3f const *point, vector3f const 
 /* a projectile's detonation (or impact) effect at a point, facing out of
    the surface it hit */
 // @retail 0xfcbc0
-void function_fcbc0(point3f const *point, vector3f const *normal, long definition_index,
+void function_fcbc0(long definition_index, point3f const *point, vector3f const *normal,
 	s_effect_owner const *owner, bool attached, bool airburst)
 {
 	s_projectile_definition *definition = PROJECTILE_DEFINITION_GET(definition_index);
@@ -1754,7 +1754,7 @@ void __stdcall function_fc330(long projectile_index, bool detach_contrail, real 
 	if (effect_index != NONE)
 	{
 		effect_flags |= attached ? 2 : 1;
-		function_fcbc0(&position, &forward, projectile->tag_index, &owner, attached, airburst);
+		function_fcbc0(projectile->tag_index, &position, &forward, &owner, attached, airburst);
 	}
 	if (*(long *)(definition_bytes + 0x124) != NONE)
 		effect_flags |= 8;

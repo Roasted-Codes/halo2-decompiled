@@ -609,7 +609,11 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
 // the first shape twice; sum order, parameter order, local scopes, dot3f,
 // named squared length, center pointer and early-out tests change nothing
 // else (compile-only screens). Flag-first, plain globals, defaults and
-// clamp spellings leave the increment late.
+// clamp spellings leave the increment late. The existing squared-distance
+// helper 20 moves the arithmetic difference to the first copy; forced accept
+// and distance helpers 20 and 20; result-first 20; its late-clamp combination
+// 10 (first copy only, but a caller match regressed); reversed comparison 38;
+// named distance 10; first accepted-result local 10. Original body restored.
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
