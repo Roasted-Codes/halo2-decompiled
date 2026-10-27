@@ -2673,6 +2673,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 332 (reduced control 128): active/notification/impulse inline boundaries and
 // all their combinations 128 each; state/change inline boundaries 132/678. All restored.
 // Joint active/notification/impulse inline boundaries plain 168/677; restored.
+// Round 345 (controlled preview 168): complete linear/angular/both squared terms
+// 173/168/173; iteration terms/paired first sums/immutable terms/shared terms/shared first sums
+// 173/173/173/173/173. Full-image save staging and getter homes remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2784,6 +2787,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 132: output-first converter, with matrix reference, output pointer return, and
 // output-first return 206/206/206/206; split rotation/translation, output-first split,
 // split return and output-first split return 206/206/206/206 (resolved previews).
+// Round 345: Shared sequential body index/count/first-link workspaces 299/208/302;
+// index+count/index+link/count+link/all/all with child ordinal 217/213/302/300/300.
+// Original per-side lifetimes, frame 0xb4 and contributor interface restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
