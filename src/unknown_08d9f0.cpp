@@ -171,6 +171,9 @@ void function_8dd70(void);
 // Both entry homes and bool/byte/char/long link result 228/228/228/225. All restored.
 // Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
 // stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
+// Complete link/search/scalar/gateway/ready publication orders 0-1-2-3-4, 1-0-2-3-4,
+// 0-2-1-3-4, 0-2-3-1-4, 3-0-1-2-4, 0-4-1-2-3, 1-2-0-3-4 and 2-3-0-4-1 each 230.
+// Each search reset clears before both sentinels; original complete publication order restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
