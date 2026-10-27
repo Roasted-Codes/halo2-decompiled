@@ -167,7 +167,12 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
-// score 631 (was 631): Frame 0x54/type EDX agree; state/player/unit homes remain.
+// score 627 (was 627): Frame 0x54/type EDX agree; state/player/unit homes remain.
+// Round 134: retail's case layout is 10-14, 2, 4, 15, 18, 0, 1, 31, 17, 30, ...: cases 0/1/31 after 18
+// 656; plain blocked flag 645, both 656; with a plain player pointer too, retail's state edi, player esi,
+// spilled unit index and result at entry, but request_weapon stops inlining: 769, case 2 as an if 785,
+// plus plain blocked 790, plus a plain address-taken result 726; request_weapon forced inline 939
+// (0xcbd50 inlined too, a noinline declaration no help), taking the unit index 658; plain player alone 779.
 // Earlier 631 from 645: frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // Earlier 649 from 649: frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.

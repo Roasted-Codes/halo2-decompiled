@@ -1263,9 +1263,11 @@ bool function_fa6a0(long definition_index, real const *speed_override, point3f c
 	real *unknown2, real const *unknown3, real const *unknown4, bool unknown5, vector3f *direction, real *speed_out,
 	real *time, real *distance, bool *linear);
 
+/* distance comes before speed_out: retail's caller (0x1ffbd0) loads distance (edx) before
+   speed_out (eax), which our build does only in this declared order */
 // @retail 0x100dd0
 bool weapon_barrel_aim(long weapon_index, short barrel_index, point3f const *origin, point3f const *target,
-	real const *unknown3, bool unknown5, vector3f *direction, real *time, real *speed_out, real *distance, bool *linear)
+	real const *unknown3, bool unknown5, vector3f *direction, real *time, real *distance, real *speed_out, bool *linear)
 {
 	bool result = false;
 	s_weapon *weapon = WEAPON_GET(weapon_index);
