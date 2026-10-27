@@ -300,6 +300,8 @@ public:
 // All common-header forms move the caller 308 to 369; the 151/152 forms use frame 0x38.
 // Round 169: Lower/upper/both pointer outputs 163 each, reference outputs 163 each;
 // output-first lower/both 163 each. Original readers restored; frame/input/selector causes remain.
+// Round 342: Persistent lower/upper/both endpoints, maximum, lower+maximum, upper+maximum and all three 163 each;
+// all three with role-based scalar homes 163. Frame 0x28 and first difference +2 remain; original scoped declarations restored.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

@@ -37,7 +37,13 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 	return false;
 }
 
-// score 5 (was 5): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// score 5 (was 101): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// intersection's x product loads the plane before the point. Round 72 (full build): helper
+// parameters (first, second, plane) 7 and (first, plane, second) 7, both making the second
+// intersection's x product plane-first too; (plane, second, first) 5; a separate input pointer
+// for the points or their copy 9 (x term first in the first intersection), declared first 9.
+// The fraction defaulted first,
+// loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
 // intersection's x product loads the plane before the point. The fraction defaulted first,
 // x-first displacements and the scale inside the output expressions gave retail's XMM homes
 // and length (101 -> 5). Then: current declared before previous 5; named current/previous
@@ -277,6 +283,11 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // departure 260/260/260/212; with Boolean departure 249/249/249/234. Original helper/body restored.
 // Departure/output/both/current/heading names 203 each; byte departure 234; late departure and
 // lowest-coordinate order 203/203; heading before scan 220.
+// Shared difference predicate early returns bool/byte/short/long 220/220/202/213;
+// initialized difference result bool/byte/short/long 271/271/250/250. All restored.
+// On the long departure state: signed-word/unsigned-word/unsigned-native/int result
+// 257/257/203/203; native input count 259, with signed/unsigned word result
+// 268/268; observed signed-word input count 203. Caller checked with each.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -444,7 +455,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 237 (was 237): Aligned frame 0x1014 agrees; count/stride/prior homes and distance/result lifetimes differ.
+// score 212 (was 237): Retail length and common failure publication agree; count/stride/prior homes remain.
 // Earlier: count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
 // Native current ordinal 249; long side states 264; prior-point ordinal 288; ordered fraction clamp 243; clear-mask arm first 243; shared normalized count 275; existing point difference 243.
 // Explicit source bit 243; unsigned input ordinal 237; word side states 263; retained signed distance 273; parallel edge scales 243.
@@ -455,6 +466,11 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Original helper/body restored.
 // Previous-point, distance, positive-state, negative-state and result names 237 each;
 // status declaration order 264; previous-point address 237; displacement order 237.
+// Actual NONE failure/common publication unsigned/signed ordinal 212/252; ordinary previous side 227/254;
+// positive-first policies 211/251/256/253. Keep only the minimal 212 form; one-point tail edit restored.
+// Native previous/plane/both observations 378/370/354; both native points 355;
+// all native inputs 376; complete plane/previous/both scalar observations 347/359/368.
+// Original inputs, copies and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
@@ -485,7 +501,10 @@ short function_23a6f0(point2f *output, short count, point2f const *points,
 		if (inside != previous_inside)
 		{
 			if (result == capacity)
-				goto overflow;
+			{
+				result = NONE;
+				break;
+			}
 			if (clipped)
 				*clipped = true;
 			real dy = previous->y - current->y;
@@ -506,7 +525,10 @@ short function_23a6f0(point2f *output, short count, point2f const *points,
 		if (inside)
 		{
 			if (result == capacity)
-				goto overflow;
+			{
+				result = NONE;
+				break;
+			}
 			output[result] = *current;
 			if (point_mask && (*point_mask & (1 << i)))
 				mask |= 1 << result;
@@ -520,23 +542,23 @@ short function_23a6f0(point2f *output, short count, point2f const *points,
 		previous = current;
 		previous_inside = inside;
 	}
-	if (result < 3)
-		result = 0;
-	if (!positive)
-		result = 0;
-	else if (!negative)
+	if (result != NONE)
 	{
-		result = count;
-		memcpy(output, points, count * sizeof(point2f));
+		if (result < 3)
+			result = 0;
+		if (!positive)
+			result = 0;
+		else if (!negative)
+		{
+			result = count;
+			memcpy(output, points, count * sizeof(point2f));
+		}
 	}
+	else
+		memcpy(output, points, count * sizeof(point2f));
 	if (point_mask)
 		*point_mask = mask;
 	return result;
-overflow:
-	memcpy(output, points, count * sizeof(point2f));
-	if (point_mask)
-		*point_mask = mask;
-	return NONE;
 }
 
 // @retail 0x23a2b0

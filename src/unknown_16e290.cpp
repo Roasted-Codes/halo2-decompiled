@@ -1501,6 +1501,8 @@ struct s_camera_clip_reference_16ebf0
 // values and native basis inputs 246; split native values and native basis inputs 222; split
 // library copies and native basis inputs 222; split native values with entry output declarations
 // 222; split scalar values with entry output declarations 209. All restored.
+// Individual direction, matrix, adjustment, point, fraction, location and position local names
+// 209/209/209/209/209/209/209/209.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
