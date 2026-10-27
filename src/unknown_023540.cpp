@@ -2585,7 +2585,7 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
-// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// Earlier score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 // Held (batch 132): Claude lane 4 round 90's two explicit sample blocks with a determinant helper reached 401
 // (frame 0x200, all-stack arguments), but in the batch build that code cost c_helper_b::v7 (0x73360) its match
 // (code linked ahead of src/unknown_058dd0.cpp); with only this file restored the batch keeps 0x73360. Retry it
@@ -2618,6 +2618,8 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Direct cache-hit completion and found-byte break, each with long/bool success and original/positive
+// eligibility results, 554/549/554/549 each. Original exhaustive scan and body restored.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2749,6 +2751,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
+// Complete alpha parameter results, ternary/else-if/independent clamps 353 each; native rectangle
+// field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

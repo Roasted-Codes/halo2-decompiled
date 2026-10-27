@@ -146,6 +146,8 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // 31/43,31/63,43/63/all 1004/991/980/1018. Existing shared scale on the retained response graph, with shared
 // changes and consistent flag reads 1199/1201/1188/1200; all restored. Shared linear changes recover frame
 // 0x1d4 at 960; input and record homes still differ.
+// Record memmove, center/input/initial-vector library copies and combinations
+// 999/920/920/920/999/999/920/999; record copy recovers entry registers but frame grows to 0x1f4. All restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

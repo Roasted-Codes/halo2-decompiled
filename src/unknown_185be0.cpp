@@ -139,7 +139,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 947 (was 969): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
+// score 947 (was 947): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
 // Earlier: frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
@@ -180,6 +180,8 @@ union s_185be7
 // Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
 // clear-first/set-first results with bool 1002/982, with long 1005/985;
 // named selected-mask result bool/long 947/944. Original Boolean helper input retained.
+// Ordinary inline clamp/flag/both 947/947/947; state predicate alone and all
+// combinations plus all-private inline producers 968 each. Original force-inline helpers and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

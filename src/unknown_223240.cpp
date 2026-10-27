@@ -129,6 +129,8 @@ void function_2232a0(void)
 // Existing complete layout query 151; query with ordinary pretest/single-first layout 161/168;
 // query with exclusive/conditional clamp 182/182; exclusive clamp with pretest 183;
 // native byte layout with query/do/pretest 189/177. Original expanded gate and loop retained.
+// Coherent ordinary inline dispatch/reset/both 151/151/151; each with existing slot predicate 150;
+// force-inline reset alone/with slot predicate 151/150 and loses the matched initializer caller. All restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
