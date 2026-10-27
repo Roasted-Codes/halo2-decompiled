@@ -180,11 +180,11 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // lifetimes 250; direct origin fields 282. Frame 0x78 versus 0x90 and ray/normal/polygon homes
 // remain.
 // Round 214: signed-byte hit state 262; unsigned-word hit state 259; byte projection side 253; unsigned-word projection side 255; byte dominant axis 251.
-// Full shared normalization with cross/point/plain-loop combinations 253/250/253/250/258/261/258/261. Three-
-// point 250 forms restored; frame is now 0x7c versus 0x90.
 // Round 178: Corresponding positive/negative/all row-pair/all grouped cross terms 255/255/253/255;
 // with native aggregate normal 255/255/253/255. Frame 0x7c versus 0x90 persists;
 // original terms restored. Normal/ray/hit and polygon homes remain.
+// Full shared normalization with cross/point/plain-loop combinations 253/250/253/250/258/261/258/261. Three-
+// point 250 forms restored; frame is now 0x7c versus 0x90.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

@@ -5215,6 +5215,8 @@ void __stdcall function_d6bc0(long object_index);
 // external timer reference 144f; both 176f. Countdown-only timer pointer/reference,
 // each with eligible entry, and earlier entry with countdown reference: all 176f.
 // Original body restored; frame 0x14/0x18 and independent timer spill remain.
+// Round 146: Reset short/word/byte/signed-byte carriers 195/195/144/144; with a complete retained radius
+// 230/230/228/228. Original observations and body restored.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

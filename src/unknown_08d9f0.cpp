@@ -173,6 +173,8 @@ void function_8dd70(void);
 // 379 at 728; inline+noinline registration callees 378/362 (eax reloaded, from esi);
 // with a bool link result 382. Retail reloads the global block before every call and
 // after every store through a pointer, as when these globals are address-taken.
+// Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
+// stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

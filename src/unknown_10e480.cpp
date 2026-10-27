@@ -179,6 +179,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // byte in a long local for the compare and the conversion 260; both 280; channel data getter
 // call in the first two arms 221 (identical code, kept); with id local and long frame 280.
 // The loop's pointer/countdown spill is the extra frame dword; retail indexes by i.
+// Native unsigned-long/word induction with a full-width frame before/after weight 260 each;
+// signed/unsigned 64-bit induction with that frame 256/249 at either boundary, recovering frame 0x2c.
+// Signed 64-bit direct/char/short frames 295/295/256; unsigned 288/288/244; unsigned direct frame
+// with byte/short sampled result 288/292. Extra loop length regresses; all restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

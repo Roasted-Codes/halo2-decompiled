@@ -788,6 +788,8 @@ real function_18cac0(long arg_0);
 // Lane 8 r58: max as a ternary store 229; table value first with negated test 254; real
 // table type 225; batch count read once 237; with real table 237. The alignment needs the
 // memset and a frame over 0x800: a table of 0x1c0 dwords or no memset gives the plain frame.
+// Round 180: Indexed gain-element pointer inside/before admission 225/225; complete result
+// arms 229/229; two-use old gain 262/262; old gain with complete arms 254/254.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
