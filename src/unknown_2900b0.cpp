@@ -293,7 +293,12 @@ PRIVATE __forceinline void center_update_28f8d0(s_28f8d0 *arg_0)
 // 0xffffffff 38, field_14 cleared after reading field_18 38, a point3f
 // assignment for the copy 70, actor_get after the centre update 115,
 // perception_get at each use 101, the actor index in a local read after
-// the centre update 111.
+// the centre update 111. Retail has all seven registers live during the origin
+// copy (the actor pointer's add interleaves with it, ebp is the copy temporary),
+// so NONE only reaches ebp at the loop; ours finishes the actor pointer first.
+// Origin copy ahead of actor_get 99; memcpy for the copy 38; a named centre
+// pointer in the centre update 42; the copy field by field 116; field_14
+// cleared before the copy 39.
 // @retail 0x28f8d0
 void function_28f8d0(long arg_0)
 {
