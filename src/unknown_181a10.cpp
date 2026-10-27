@@ -515,10 +515,8 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 	return limited != shape->data;
 }
 
-// score 321 (was 321): Frame 0x48 versus 0x44; classifier, transformed-plane and output homes remain.
-// Earlier 321 (was 321): frame 0x48 versus 0x44; classifier, plane and output homes remain.
-// frame 0x48 versus 0x44 and plane/output homes;
-// frame 0x48 versus 0x44; classifier, plane and output homes remain.
+// score 321 (was 321): frame 0x48 versus 0x44 (retail writes the transformed normal into the plane and has two
+// unused dwords below it); classifier clamp form, transformed-plane and output homes remain.
 // normal component loop 319; material-output scope 319; direct validity 351;
 // key-clamp result arms 319; optional entity result 319.
 // j92: frame 0x48 versus 0x44 and node/plane/output homes remain; delayed reads and native rotation copy regress; coordinate names and positive root guard tie.
@@ -529,10 +527,7 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // native plane output 348; shape-input sampled equality 319; ordinary inline classifier 356.
 // Frame and plane/output homes remain. classifier bound result first 329; native classifier signed domain
 // 321; classifier direct bounds 345; existing entity query boundary 321; native destination record 388;
-// Classifier bound result first 329; native classifier signed domain 321; classifier direct bounds 345;
-// existing entity query boundary 321; native destination record 388;
 // native output index values 321; validity after index defaults 321; readonly first node input 321.
-// frame 0x48 versus 0x44 and classifier/plane homes remain.
 // Plane normal setter 334; native matrix reference 321; entry/surface/both words
 // 324/323/326; staged plane distance 321; origin field base 323; shape field reference 321.
 // Native signed data, live classifier fields, both 321/321/321; material output names/scope/both 321/321/321; short material home 321; signed data with output names 321.
@@ -549,6 +544,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Scalar origin Z/Y/X, hit Y/X/Z and both producer orders 321/321/321;
 // side before normal publication 324; immutable normal 321, with late publication 324;
 // encoded field at uses 358; consistent readonly second-node/root contract 321.
+// Round 54: in-place normal (x/y/z then plane.n, d) 334 at retail length (frame 0x3c, contact in ESI);
+// summed distance 334; shared matrix_transform_vector in place/into normal 334/321; constant-first
+// clamp 321; clamp through an inline pin function 321.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

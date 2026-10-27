@@ -97,6 +97,8 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 // bottom-increment for/while 18/18; success/failure presets 122/126 (414/402); shared checkpoint
 // helper 18; release pointer arithmetic 18; assigned outcome branches 18; writer argument
 // assignment 18; index declaration initializer 18. All restored.
+// Round 136, natural spill graph: bool/long/short/byte callback outcomes 18,18,18,18;
+// callback outcome with entry/owner/long-entry/both snapshots 18,18,18,18. All nonmatching exact-only forms restored.
 // @retail 0x98750
 bool function_98750(c_handle_table_450cd0 *self, s_bitstream *stream, long index, long a3, long reserved_bits)
 {

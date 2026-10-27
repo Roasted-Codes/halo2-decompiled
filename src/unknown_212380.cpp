@@ -23,7 +23,12 @@ bool function_212ec0(s_game_variant *arg_0, long arg_1);
 // eight last 301 (executable sequence farther); high cases after one 423 (fast).
 // AC338: case seven/two/four last 388/442/443; high pair exchanged 385; nine before high pair 302 (sequence worse); entry output 386.
 // Round 121: Two/four exchanged 384; five before two/four 384; seven before four 386; eight before five 385; seven/eight after one 383; five/four/two tail 384; high pair with five/two/four or five/four/two 384/385. Original switch kept.
+// Round 373: shared bounded text copy, orders 1245789/1789542/1254789/1425879
+// 386/444/385/384; the same four with forced copy expansion 386/444/385/384.
+// All restored; gains at most two, and the 384 form has a farther executable sequence.
 // Case orders 2415789/2451789/2457189/2457819/1452789/1257489/1724589/1824579 417/417/416/418/389/387/386/384.
+// Round 169: Public initializer ordinary/forced boundaries 386/386; each low specialization
+// 386, high group 386, forced boundary with entry output 386. Original calls/declaration restored.
 // @retail 0x212380
 long function_212380(long arg_0, long arg_1, byte *arg_2)
 {

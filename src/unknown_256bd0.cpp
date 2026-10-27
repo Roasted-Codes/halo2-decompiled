@@ -3,17 +3,31 @@
 #include "slot_handler.h"
 #include "object_markers.h"
 #include "unknown_0259d0.h"
+#include "unknown_11cc90.h"
 #include "unknown_2551c0.h"
 #include <math.h>
+#include <stddef.h>
 
 // @flags /O2 /Gr /arch:SSE
 
+/* the placement a spawned creature starts from (filled by its constructor, 0x200e60) */
 struct s_actor_position_state
 {
 	s_actor_position_state();
-	long field_0[0x19];
+	long flags;
+	point3f position;
+	short field10;
+	byte unknown12[2];
+	real facing;
+	real field18;
+	long field1c;
+	byte unknown20[0xe];
+	short field2e;
+	byte unknown30[0x64 - 0x30];
 };
 typedef char assert_256bd0_placement_size[(sizeof(s_actor_position_state) == 0x64) ? 1 : -1];
+typedef char assert_256bd0_placement_facing[(offsetof(s_actor_position_state, facing) == 0x14) ? 1 : -1];
+typedef char assert_256bd0_placement_field2e[(offsetof(s_actor_position_state, field2e) == 0x2e) ? 1 : -1];
 struct s_290c50_iterator
 {
 	long unknown00;
@@ -25,6 +39,7 @@ struct s_203780;
 extern short g_470c40, g_470c44;
 extern point2f *g_468778;
 real function_30bf0(vector3f *vector);
+real function_11cc90(vector2f const *a, vector2f const *b);
 long function_1e4990(long index);
 void swarm_iterator_new(s_290c50_iterator *iterator);
 long function_28dbd0(long character_index, long perception_index, long definition_index, s_28dab2 const *placement, bool flag);
@@ -51,7 +66,21 @@ struct s_object_flags_256bd0
 };
 // score 211 (was 211): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
 
-// score 211 (was 211): Frame 0x114 versus 0x110, cached activity byte and actor/point/selection homes remain.
+// score 206 (was 211): frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
+// the iterator loop into a stack byte (back edge to its reload) where retail re-reads the ai
+// globals each pass; the 0x28dbd0 call passes the character in eax where retail passes the
+// variant (BLOCKED-BY 0x28dbd0 for that call); retail selects the entry with cmovne.
+// Native placement fields 213; actor getter 212; slot reference 211; native fields with getter
+// 214; const entry result 211; condition-local entry 211; candidate skip 211; placement scope
+// 211; marker position workspace 235; placement position reads 253; in-place velocity 212;
+// marker/placement 225; marker/velocity 235; placement/velocity 253; all three 225; angle field
+// before sign adjustment 230; helper state pointer in two orders 211/211; state reference
+// 211/211; activity value 211/211; external activity reference 211/211; actual datum cursor
+// with separate index output: pointer, void result, read-only result and reference output, each
+// in both orders, 211. Round 72: the signed angle as a call to the existing 0x11cc90 (inlined
+// as retail) 206, kept, with the placement written through named fields; entry selected by a
+// ternary 263; the iterator step as a plain function in swarm.cpp 206 (still hoisted).
+// Frame 0x114 versus 0x110, cached activity byte and actor/point/selection homes remain.
 // Earlier: frame 0x114 versus 0x110 and hoisted active byte remain;
 // native placement fields 213; actor getter 212.
 // slot reference 211; native fields with getter 214.
@@ -98,21 +127,12 @@ short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 				direction = *g_4687a8;
 		}
 		s_actor_position_state placement;
-		byte *local_7b726b = (byte *)&placement;
-		*(point3f *)(local_7b726b + 4) = position;
-		*(short *)(local_7b726b + 0x10) = NONE;
-		real dot = g_468778->y * direction.j + g_468778->x * direction.i;
-		if (-1.0f > dot)
-			dot = -1.0f;
-		else if (dot > 1.0f)
-			dot = 1.0f;
-		real clamped = -1.0f > dot ? -1.0f : dot > 1.0f ? 1.0f : dot;
-		real angle = (real)acos((double)clamped);
-		real cross = g_468778->x * direction.j - g_468778->y * direction.i;
-		*(real *)(local_7b726b + 0x14) = 0.0f > cross ? 0.0f - angle : angle;
-		*(real *)(local_7b726b + 0x18) = 0.0f;
-		*(long *)(local_7b726b + 0x1c) = 4;
-		*(short *)(local_7b726b + 0x2e) = 1;
+		placement.position = position;
+		placement.field10 = NONE;
+		placement.facing = function_11cc90((vector2f const *)g_468778, (vector2f const *)&direction);
+		placement.field18 = 0.0f;
+		placement.field1c = 4;
+		placement.field2e = 1;
 		byte *unit = *(byte **)(g_4e0300->data + (*(long *)(actor + 0x18) & 0xffff) * 12 + 8);
 		byte *definition = g_4e3b44[*(long *)unit & 0xffff].bytes;
 		long character_index = *(long *)(definition + 0x30c);

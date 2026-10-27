@@ -923,7 +923,7 @@ short function_205010(s_squad_iterator *iterator)
 
 long function_257ed0(long actor_index, short script_index, long thread_index);
 
-PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *scenario, short index, char const *name)
+PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *scenario, short const &index, char const *name)
 {
 	if (index >= 0 && index < scenario->script_count)
 	{
@@ -937,29 +937,13 @@ PRIVATE __forceinline short squad_valid_command_script(s_squad_placement_table *
 	return NONE;
 }
 
-// score 13 (was 13): the merged index is now the first record index's own register as in
-// retail; the fallback index and its promoted copy sit in SI/EBP where retail has BP/ESI, and
-// the fallback's result is tested before its copy into the merged index (retail copies, then
-// tests). Round 87: index read into the result before the first check 13 (kept); both checks
-// seeded so 36; bool check with assigned index 81 (267 bytes); helper name before index 13;
-// count-first range compare 15; result declared first 13; single-exit helper result 141.
-// Earlier at 69: multi-use promoted index 73; helper failure guards 69; native short selection
-// 69; input-default result 75; read-only table 69; signed bounded length 70; promotion/input-
-// default result 119; read-only promotion/signed length 75; actual shared script fields: native
-// snapshot 109; direct fields 70; NONE/input results 141/115; descriptor first 109; const table
-// 109; long result/ordinal 119/108; existing bounded-length call 69; native candidate
-// invalidation 75; invalidation plus bounded call 75; negated success 75/75; candidate
-// selection 75/75 (manual/shared length); signed count 76.
-// Round 186 seeded-first validator: promoted ordinal 103; input-default native result 13;
-// long return/input 121/98; signed/word scan counts 16/174; immutable index 13; equality bound 178.
 // @retail 0x201b70
 void function_201b70(long squad_index, short entry_index, long actor_index)
 {
 	(void)&actor_index;
 	s_squad_placement_definition *squad = &((s_squad_placement_table *)g_4e0350)->squads[squad_index & 0xffff];
 	s_squad_placement_entry *entry = &squad->entries[entry_index];
-	short script_index = entry->command_script_index;
-	script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, script_index, entry->command_script_name);
+	short script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, entry->command_script_index, entry->command_script_name);
 	if (script_index == NONE)
 		script_index = squad_valid_command_script((s_squad_placement_table *)g_4e0350, squad->command_script_index, squad->command_script_name);
 	if (script_index != NONE)
@@ -1507,6 +1491,11 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // accumulated sums with x,z,y deltas 124 (whole sum merged); deltas x,y,z with accumulated sums
 // 58 (kept); squad before actor 59 (index registers swap); named marker 58; offset-first entry 58;
 // branch-scoped transformed point 58; permuter 600 s found nothing.
+// Round 232: native actor receiver 58; native squad receiver 58.
+// both native receivers 58; uniform live actor fields 145.
+// uniform live squad fields 76; all live fields 147.
+// early iterator/native actor 58; early iterator/both native 58.
+// native area records 58; live squad/native area records 76.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1792,6 +1781,10 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 110: branch table with native selection 323; actual palette field reference 279; reference with branch table 301; split point scopes on native iterator/count frame 264; early actor iterator workspace 264.
 // Round 186 actual native records: definition 321; entry 257; both 321; area 257;
 // definition/area 321; entry/area 257; all 321; all read-only 321. Strides and field widths preserved.
+// Round 232: margin value input 342; margin field reference 257.
+// located-point/extent inputs 268; located-point/extent reference 257.
+// both scalar inputs 348; margin value/extent reference 342.
+// both field references 257; native inputs/named reach 348.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2285,9 +2278,18 @@ PRIVATE __forceinline s_squad_datum *squad_iterator_next_201df0(s_squad_record_i
     return local_0;
 }
 
-// @retail 0x201df0
 // score 12 (was 12): the record pool's pointer is kept in EDI where retail keeps it in
 // EBX, so the count and the bit mask take the other two registers instead.
+// Further trials: pool/count/mask register rotation remains.
+// existing datum helper 23; common complete datum result 12.
+// absolute squad index 50; helper/common datum 23.
+// helper/absolute squad index 50; common datum/absolute squad index 50.
+// all three datum forms 50; all three/cursor first 48.
+// Trailing store order 12; plain inline helper 150; outer squad assignment 12;
+// named search mask 12; late records snapshot 12; entry search result 12;
+// shared iterator byte result 70; bitmap before count 13; count/mask before pool 12;
+// shared bit test 12.
+// @retail 0x201df0
 void function_201df0(void)
 {
     s_squad_record_iterator local_0;
@@ -2567,13 +2569,18 @@ short function_290cd0(short arg_0, long arg_1, long arg_2, short *arg_3, short *
 bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
-// score 152 (was 152): Frame 0x1c agrees; task zeroing/retest and iterator head remain.
+// score 152 (was 152): Frame 0x1c agrees; task zeroing/retest, predicate load and iterator head remain.
 // Earlier: frame 0x1c agrees; task zeroing/retest and iterator head remain; optional producer scope, delay scope, both scopes, native trigger entry, signed entry index, threshold selection, iterator name and native entry with producer scopes each 152.
 // frame 0x1c agrees; task zeroing/retest, optional-output width and iterator head differ.
 // Test-produced task 152; short output 152; wide task 154; both widths 154; direct inputs
 // on test-produced task 152; short trigger count 152; wide threshold 152; pending store first 152.
 // Complete native task record with signed/unsigned task and short/long optional output 152 each;
 // those four forms with trigger-predicate parity 152 each (574 bytes).
+// Round 146: inline selector/predicate/task-apply/event helpers 152 each; selector-
+// predicate/selector-apply/predicate-apply/all-five/actor-options contracts 152 each.
+// Round 139: Shared pending/trigger optional-output workspace long/int/short/word 152/152/152/153;
+// those four with shared entry index 152/152/152/153. Frame 0x1c agrees; task zeroing/retest and
+// iterator head remain. All original executable source restored.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
@@ -2916,7 +2923,9 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
-// score 351 (was 383): Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
+// score 351 (was 351): Frame 0x138 versus 0x134; placement/definition registers and final chain homes remain.
+// Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
+// Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
 // Earlier: frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
 // Direct low-word index 387; other direct parameters 387; all direct reads 387;
 // workspace role names 387; one shared native request 399. Pool-first lookup
@@ -2936,6 +2945,13 @@ void function_2011f0(long arg_0);
 // Consistent squad-root displacement 358; with scenario/category/both observations 351/357/357;
 // negative reuse state on those four graphs 358/351/357/357;
 // scenario graph with early displacement/short placement/word squad/both inputs 351 each.
+// Round 146: native group/entry/scalar masks/both records/group-masks/entry-masks/all/all-
+// unsigned-displacement 351 each.
+// Early result constants and input guard in seven combinations 361/351/361/359/360/360/360;
+// both result lifetimes in positive-count branch 360.
+// Isolated native final Boolean formal 359; short placement 351; byte control 351; placement/Boolean 359;
+// byte/Boolean 359; placement/byte 351; all native 359; all native with signed byte control 359.
+// Every prototype trial restored; native final Boolean reaches 1328 bytes but retains frame 0x138.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
