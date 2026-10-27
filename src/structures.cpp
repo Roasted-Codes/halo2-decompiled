@@ -413,7 +413,7 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
-// score 181 (was 181): region code and node search now match; retail reads the model's bounds before
+// score 177 (was 181): region code and node search now match; retail reads the model's bounds before
 // the geometry-block call (that read moved there gives 143 with the section groups ahead of the node
 // search, but it moves a definition read ahead of a call), keeps the vertex cursor in EBX and the
 // mesh spilled, and BLOCKED-BY 0x11e800: its vertices/point registers (ours eax/esi/edx/ecx, retail
@@ -464,6 +464,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // mesh field observations 214. Original records, observations and protected interfaces restored.
 // DH round 189: Native lookup/extraction-array/node-output work-scope lifetimes, singles, pairs,
 // all and reversed all 181 each; all original producer/read phases restored.
+// Round 62: section groups read right after the surface lookup, as retail does 177 (kept; model
+// and collision swap EBX/EDI); after the node count/count test/nodes/sentinel 182/186/186/186;
+// with the stored section index replaced by the local 206; object lookup before the model 202.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)
@@ -508,6 +511,7 @@ bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 		if (!lookup.initialize(COLLISION_OBJECT_14A8E0)) goto done;
 		byte *surface_set = (byte *)function_1efd80((s_table_holder *)&lookup,
 			*(dword *)((byte const *)collision + 0x48));
+		byte *section_groups = *(byte **)(model + 0x80) + *(long *)((byte *)triangle + 0x14) * 8;
 		byte *section_mesh = *(byte **)(section + 0x34);
 		long node_count = *(long *)(section_mesh + 0x64);
 		if (node_count <= 0) goto done;
@@ -522,7 +526,6 @@ bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 			}
 		}
 		if (node_index == NONE) goto done;
-		byte *section_groups = *(byte **)(model + 0x80) + *(long *)((byte *)triangle + 0x14) * 8;
 		byte *surface_group = *(byte **)(section_groups + 4) + node_index * 16;
 		if (*(long *)surface_group != *(long *)(surface_set + 0x10)) goto done;
 		s_structure_surface_range *range = (s_structure_surface_range *)*(byte **)(surface_group + 4)
