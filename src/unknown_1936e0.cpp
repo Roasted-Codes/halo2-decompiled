@@ -141,18 +141,19 @@ __forceinline void variant_string_table_get(s_string_table *table, long first, l
    its test for NONE, which the caller makes */
 __forceinline void variant_string_get(long tag_index, long string_handle, word *buffer)
 {
-	long language = get_current_language();
-	s_variant_language_range const *range = &((s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes)->languages[language];
+	get_current_language();
+	s_variant_string_list_view const *list = (s_variant_string_list_view *)g_4e3b44[tag_index & 0xffff].bytes;
 	s_variant_string_tables_view *tables = (s_variant_string_tables_view *)g_4e034c;
 
-	variant_string_table_get(&tables->tables[language], range->first,
-		range->count, string_handle, buffer);
+	variant_string_table_get(&tables->tables[g_47ff38], list->languages[g_47ff38].first,
+		list->languages[g_47ff38].count, string_handle, buffer);
 }
 
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 172 (was 172): Frame 0x40c versus 0x408; tag spill and language/range/cursor homes remain.
+// score 30 (was 172): Frame 0x408 and language/string homes agree; initial setup order and point-copy homes remain.
+// Earlier: Frame 0x40c versus 0x408; tag spill and language/range/cursor homes remain.
 // String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
 // Frame 0x40c versus 0x408 and tag/language/cursor homes remain; intermediate ownership does not remove the spill.
 // Frame 0x40c versus 0x408; language/list registers and cursor homes remain.
@@ -202,6 +203,10 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // range value with both output results 217. Complete original helpers restored.
 // Native table member long scalars/range pointer/range reference/short scalars 172 each;
 // the same four receiver contracts with native fixed-array output 172 each. Original helpers restored.
+// Round 207: uniform language-global reads 191; with native list field reads 36; with independent
+// description cursor 30. On that graph: points input cursor 141; independent description plus input
+// cursor 141; masked list ordinal 189; masked ordinal/input cursor 238; all three 238;
+// use-stepped point cursors 30; directly indexed point arrays 218. Plain and complete-image checked.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -227,12 +232,12 @@ void function_1936e0(long type, s_built_variant *variant, dword field_8, long de
 			utf16_string_to_utf8_string(text, output, sizeof(variant->names[0]));
 			output += sizeof(variant->names[0]);
 		}
-		output = variant->descriptions[0];
+		char *description_output = variant->descriptions[0];
 		for (long description_index = 0; description_index < 9; ++description_index)
 		{
 			variant_string_get(string_list_index, description_string, text);
-			utf16_string_to_utf8_string(text, output, sizeof(variant->descriptions[0]));
-			output += sizeof(variant->descriptions[0]);
+			utf16_string_to_utf8_string(text, description_output, sizeof(variant->descriptions[0]));
+			description_output += sizeof(variant->descriptions[0]);
 		}
 	}
 	for (i = 0; i <= 5; i++)
