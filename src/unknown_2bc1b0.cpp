@@ -261,7 +261,6 @@ struct s_item_object_2bc1
 //      the rate read into its own local (69); the tally reached through a
 //      pointer to its element (97); the countdown compared as an unsigned byte
 //      (62).
-// @retail 0x2bc990 standard
 // Standard marker with direct input 97; with the conditional tick clamp 93 (not kept: the marker
 // needs a matched body); absent holder 98/94; native timer forms 110/108/111/109; direct second
 // lookup/test and native/constant team index 93 each.
