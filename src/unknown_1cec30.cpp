@@ -2671,6 +2671,7 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 332 (reduced control 128): active/notification/impulse inline boundaries and
 // all their combinations 128 each; state/change inline boundaries 132/678. All restored.
 // Joint active/notification/impulse inline boundaries plain 168/677; restored.
+// Round 152: Shared angular inline/force/out-of-line declarations 168/168/168; shared angular call with those contracts 177/177/236; shared pair with angular force/inline 238/238. Forced forms lose a matched caller; all declarations and body restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
