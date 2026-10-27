@@ -1172,7 +1172,11 @@ point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *p
 // forward product reversed and sums the second one up + forward + left. Diagnostics on the shared
 // header (restored): vector-first products 70 (identical), components read at each use 153; const
 // vector arguments 70; a file-private up-first normal transform returning its output (the form other
-// files keep) 70 (identical); the parameter alias dropped 158.
+// files keep) 70 (identical); the parameter alias dropped 158. Round 81: the marker local scoped to
+// its arm 78; the overflow flag declared first 70 (same code); forward/up output pointer locals 86;
+// the location pointer taken at the top 155; the marker flag tested as a byte 70 (same code);
+// diagnostics on the shared header (restored): the helper's components loaded j,k,i / k,j,i / i,k,j /
+// j,i,k / k,i,j 78/76/78/75/81 (i,j,k stays best).
 // @retail 0xc2d00
 void __stdcall function_c2d00(long light_index)
 {
@@ -1371,7 +1375,7 @@ extern s_object_list *g_4de2f4;
 
 #define PIN(x, low, high) ((x) < (low) ? (low) : ((x) > (high) ? (high) : (x)))
 
-// score 49 (was 147): four bytes over retail's length; only the colour-copy block differs: retail
+// score 49 (was 49): four bytes over retail's length; only the colour-copy block differs: retail
 // hoists each next definition load above the previous copy's last store, loads 1.0f before the tint
 // stores and stores the last pair-colour dword after the pushes, so `&light->fraction` takes EBX and
 // is read back as `[ebx]` after the calls (ours stores each copy's last dword first, takes EAX and
@@ -1388,7 +1392,13 @@ extern s_object_list *g_4de2f4;
 // and the clamped fade named 50; the alphas after the rgb copies in declaration order 49 (kept). On
 // that: alphas before each copy / after in source order / first 50/50/49; tint copied last 66; memcpy
 // copies 49; per-field float copies 414; `&light->fraction` passed directly 214; the fraction pointer
-// declared at the block top 88; every fade product `*= 1.0f - light->fade` 50.
+// declared at the block top 88; every fade product `*= 1.0f - light->fade` 50. Round 81 (aligned
+// count 8: the 4 bytes are `[ebx]` against our `[ebp + 0xd0]`, which shifts every later call): RA
+// gives the pointer eax (then rematerialised) because our scheduler stores the last pair-colour dword
+// before the pushes; the colour struct given an rgb member (shared header, restored) 49 (same code);
+// the pointer declared at the function top 93 (it then takes edi and the late store moves as
+// retail's); the pointer also for the second call and/or the blend 49/49/49 (same code);
+// `&light->fraction` passed with no pointer 214.
 // @retail 0xc0c80
 void __stdcall function_c0c80(long light_index)
 {
