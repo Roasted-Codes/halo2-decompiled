@@ -67,6 +67,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // after the reset exit 307/307/292/299. Original positive byte-result body restored.
 // On the byte-result graph: native owner/primary/secondary lexical homes, all
 // pairs, all three, and complete role-correct workspaces 182 each (eight forms).
+// Round 233: Dispatch success-only result stores, byte/bool 277/253;
+// reversed captures, early terminal success, and both 277/253/277/253/277/253.
+// Original result assignments, captures and both local state stores restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

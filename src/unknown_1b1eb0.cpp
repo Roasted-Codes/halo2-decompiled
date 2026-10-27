@@ -238,6 +238,8 @@ struct s_slot_05_data
 // Round 186 on native payload/late scratch: common release 151; flag before acquisition 95;
 // both 152; late output handle 112; release/handle 108; flag/handle 112; all three 109;
 // declared request byte 91; conditional reference with selection result 151, with common release 128.
+// Round 233: Native invalid/mode/both on late scratch 91/91/91; live permission
+// alone/invalid/mode/both 181/181/181/181; final selected-reference fields 118.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {
