@@ -78,6 +78,12 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
 // both/primary word concatenation 423/431; native both/primary concatenation 415/441.
 // Native both concatenation plain 415 at 1350/1369 bytes; products add a call and are restored.
 // Search direct returns/earlier result 415; indexed search fields and combinations 419; identity-first test 415. Return byte/short/long 421/409/414; common exit on current channel/counter graph 426. Six-point short gain excluded; original helper, result and exits restored.
+// Lane 9 r23: result as a volatile stack byte 419 (search, its jmp/found block and the result's
+// argument home follow retail); with `if (local_6 < 48) return` 406; store-only-where-retail
+// for all three result updates 435 (449 without volatile); `local_23 < local_13` test 407, both
+// tests 416, `!(local_23 >= local_13)` 416; fields through channels[index] 410 at 1369 bytes (retail's
+// [esi+0x520] displacements), 423 without volatile; window factor as if 413, with the field form 417. Not kept: the volatile result
+// (a volatile local steers the allocator; volatiles are kept only with a byte match). Body unchanged.
 // @retail 0x75fc0
 bool s_network_observer::connection_v05(long arg_1,
 	bool arg_2, bool arg_3, bool arg_4, bool *arg_5, bool *arg_6,

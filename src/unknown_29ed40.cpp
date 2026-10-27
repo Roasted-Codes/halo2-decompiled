@@ -217,13 +217,6 @@ void __stdcall function_29f080(s_type_339e8b *controller,
     *cursor += sizeof(s_type_339e8b);
 }
 
-// score 84 (was 84): cursor/delay registers, switch range branch and return width differ;
-// native header fields at all uses, selector, event reads, guard, dispatch and result 84;
-// fourth case as default with native fields or byte masks 83 (174 bytes).
-// Entry result with false test 85, true tests 84; terminal return or branched result 79;
-// packet value 84, with entry results 85/84, with terminal return 79;
-// four labels plus default at last case 83, with terminal return 86;
-// default at zero case 85, with terminal return 88.
 // @retail 0x29f0c0
 bool __stdcall function_29f0c0(s_type_339e8b *controller,
     playback_unit_control_view *control, long *remaining_ticks, byte const **cursor)
@@ -252,6 +245,8 @@ bool __stdcall function_29f0c0(s_type_339e8b *controller,
             ticks = *(unsigned short const *)(*cursor + 1);
             header_size = 3;
             break;
+        default:
+            __assume(0);
         }
         if (*remaining_ticks < ticks || (header->type_and_time >> 2) == 1)
             break;
@@ -261,7 +256,9 @@ bool __stdcall function_29f0c0(s_type_339e8b *controller,
             handler(controller, control, header, cursor);
         *remaining_ticks -= ticks;
     }
-    return (header->type_and_time >> 2) != 1 || *remaining_ticks != ticks;
+    if ((header->type_and_time >> 2) == 1 && *remaining_ticks == ticks)
+        return false;
+    return true;
 }
 
 struct recorded_animation_playback_functions

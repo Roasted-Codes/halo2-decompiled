@@ -14,7 +14,10 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 594 (was 594): frame 0x64 versus 0x60; shape homes, basis and wave scheduling remain; nine excess bytes.
+// score 594 (was 594): the frame is 0x64 against retail's 0x60 and the body is
+// nine bytes longer; retail keeps the primary shape in the stack slot at [esp+0x14]
+// and the secondary shape in EDI, ours keeps the inverse at [esp+0x14] and the
+// secondary shape at [esp+0x10].
 // Round 134: retail reads the wave's sine arguments from the global point: that form 701 (frame 0x60,
 // s1 sinks to its use), s1 before the first cross 701, s0's only 602; both shape pointers
 // NULL-initialized then set by an if/else (retail's entry, retail length 2622) 599, with s0's
@@ -402,7 +405,10 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
     return pixel;
 }
 
-// score 615 (was 615): Frame 0xac and extent agree; definition/output carriers, endpoint placement and color/vector homes remain.
+// score 615 (was 615): the frame 0xac and the body length 2596 agree; retail stages
+// the definition in EBX and the output vertices in EDI, ours stages the definition
+// in EDI, and retail places the endpoint handling after the loop where ours places
+// it before.
 // frame 0xac agrees; definition/vertex registers, endpoint-first loop layout and
 // color/vector homes differ. Tried definition first 620; paired vertex store order 636; zero color record
 // Frame 0xac agrees; definition/output carriers, endpoint placement and color/vector homes remain.
