@@ -64,6 +64,12 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 
 // @retail 0x2d84e0 deleting error_handler_2d8030
 
+// score 39 (was 39): Extra class-table store and first release argument staging remain.
+// Earlier suppressed table store 30; owned storage/both storage/element byte size/
+// named byte size 0, but deleting destructor missing; capacity/signed ownership/
+// unowned return 30; storage before guard 3. All rejected. Separate noinline/inline/
+// forceinline declarations 39 each; pure virtual, with those three boundaries,
+// 39 each and deleting destructor missing; suppressed table with noinline 30, also missing.
 // @retail 0x2d8510
 error_handler_2d8030::~error_handler_2d8030()
 {
