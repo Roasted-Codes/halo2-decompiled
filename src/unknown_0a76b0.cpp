@@ -4335,7 +4335,7 @@ void function_edfa0(long unit_index, point2f const *facing)
 
 	if (unit->parent_object_index == NONE)
 	{
-		real_vector3d_set(&unit->forward, facing->x, facing->y, 0.0f);
+		vector3f_assign(&unit->forward, facing->x, facing->y, 0.0f);
 		unit->up = *g_4687b0;
 	}
 }

@@ -4987,7 +4987,7 @@ void __stdcall function_ca700(long unit_index, real amount, short type, bool not
    tick and the last, in the camera's frame scaled by its data; sets flag
    25 (and, seated, flag 26) when it passes the data's limits; then eases
    the smoothed copy at +0x288 toward it */
-// score 205 (was 206): the two flag-word clears (+0x134) and the +0x10a bit
+// score 187 (was 206): the two flag-word clears (+0x134) and the +0x10a bit
 // test differ from the first store on; the two lookups through the masked-index
 // getter 205 (the first load's operand order now matches).
 // Frame 0x6c agrees; initial flag register/byte test, vector scheduling and smoothing carriers remain. Shared cross 212; scaled differences 205; native byte/word flags 206/206; role names 206; separate thresholds 206; shared writer 188; writer wide extraction 188; initial clears only 192; weight names 188; writer scaled/cross/both 224/203/223.

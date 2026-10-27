@@ -1159,7 +1159,7 @@ bool __stdcall function_16a8e0(long flags, point3f const *point, real radius, lo
 void function_11bed0(s_location *location, point3f const *point);
 point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *point, point3f *out);
 
-// score 72 (was 231): the second vector's rotation products come out in another canonical order than
+// score 70 (was 231): the second vector's rotation products come out in another canonical order than
 // retail's (one product of the first too); the tail is BLOCKED-BY 0xba300 (retail passes the object in
 // ecx and the location in eax), which shifts the last block by one instruction. Round 141: the
 // partition as the global itself, the rotations through matrix_transform_vector, the node matrix through
@@ -1167,7 +1167,12 @@ point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *p
 // after the marker test 295; a new two-pointer add helper 70). Node matrix through the out-of-line
 // 0xb8bd0 aligned 71 but stays a call (/Ob1 file; inline/forceinline redeclarations ignored); position/
 // forward/up pointer locals aligned 127/114; named rotation outputs/inputs 88/157; const matrix 72; the
-// helper's sums in up-first text order 70 (canonicalised).
+// helper's sums in up-first text order 70 (canonicalised). Round 143: retail compiles both rotations
+// alike (sum up*k + left*j, then forward*i; vector loaded j, k, i); ours gets the first one's
+// forward product reversed and sums the second one up + forward + left. Diagnostics on the shared
+// header (restored): vector-first products 70 (identical), components read at each use 153; const
+// vector arguments 70; a file-private up-first normal transform returning its output (the form other
+// files keep) 70 (identical); the parameter alias dropped 158.
 // @retail 0xc2d00
 void __stdcall function_c2d00(long light_index)
 {
@@ -1364,27 +1369,26 @@ bool function_b9d20(long object_index);
 struct s_object_list;
 extern s_object_list *g_4de2f4;
 
-PRIVATE __forceinline real clamp_light(real &x, real low, real high)
-{
-    if (low > x) return low;
-    if (x > high) return high;
-    return x;
-}
+#define PIN(x, low, high) ((x) < (low) ? (low) : ((x) > (high) ? (high) : (x)))
 
-// score 147 (was 143): one byte over retail's length; the field-block copy/store schedule, `&light->fraction` kept
-// in EBX across the 0xbab40/0xbad50 calls (ours re-forms it), the fade scaling's last two products
-// (retail reuses the scale register, one instruction shorter), the clamp stores' order, the
-// definition flag test (`js`) and the flag word read once into CX for the end tests. Round 95: the end
-// tests and `|= 2` on the word field 184 (aligned 46 -> 43: the whole flag tail matches, but the fade
-// block's extra instruction now shifts it); with the definition test as `!(bytes[0] & 0x80)` (gives
-// retail's `js`) 184 (aligned 42); fade products written `scale * field` for the last two or all three
-// pair channels 184/184 (operand order is canonicalised); vector3f_scale in place on both colours 298;
-// the fade as a named local used twice 184. Round 141: the grouped colour struct and the parameter
-// alias replaced by plain locals (LTCG then inlined 0x131d60: 607 at 1789 bytes) with 0x131d60 kept out
-// of line by a noinline declaration in its file 147 (aligned 46 -> 42, homes unchanged; kept as the
-// steering removal); on that base `!(bytes[0] & 0x80)` 151, the word-field end tests 183 (aligned 39),
-// both 185, the pair colour through vector3f_scale 281, `scale * field` for the pair 147, the colour
-// through vector3f_scale 161.
+// score 49 (was 147): four bytes over retail's length; only the colour-copy block differs: retail
+// hoists each next definition load above the previous copy's last store, loads 1.0f before the tint
+// stores and stores the last pair-colour dword after the pushes, so `&light->fraction` takes EBX and
+// is read back as `[ebx]` after the calls (ours stores each copy's last dword first, takes EAX and
+// reloads the field). Round 95: the end tests and `|= 2` on the word field 184 (aligned 46 -> 43);
+// with the definition test as `!(bytes[0] & 0x80)` (gives retail's `js`) 184 (aligned 42); fade
+// products written `scale * field` for the last two or all three pair channels 184/184; vector3f_scale
+// in place on both colours 298; the fade as a named local used twice 184. Round 141: the grouped
+// colour struct and the parameter alias replaced by plain locals (LTCG then inlined 0x131d60: 607 at
+// 1789 bytes) with 0x131d60 kept out of line by a noinline declaration in its file 147 (kept as the
+// steering removal); on that base `!(bytes[0] & 0x80)` 151, the word-field end tests 183, both 185,
+// the pair colour through vector3f_scale 281, `scale * field` for the pair 147, the colour through
+// vector3f_scale 161. Round 143: every clamp through a PIN macro that re-reads its field (the channel
+// clamps stored in order) 85 at retail's length; with the word-field end tests 51; with the `js` test
+// and the clamped fade named 50; the alphas after the rgb copies in declaration order 49 (kept). On
+// that: alphas before each copy / after in source order / first 50/50/49; tint copied last 66; memcpy
+// copies 49; per-field float copies 414; `&light->fraction` passed directly 214; the fraction pointer
+// declared at the block top 88; every fade product `*= 1.0f - light->fade` 50.
 // @retail 0xc0c80
 void __stdcall function_c0c80(long light_index)
 {
@@ -1427,13 +1431,13 @@ void __stdcall function_c0c80(long light_index)
         color4f second, first, pair_second, pair_first;
         tint = *(color3f *)g_468710;
         *(color3f *)&first.red = *(color3f *)(definition + 0x58);
-        first.alpha = 1.0f;
         *(color3f *)&second.red = *(color3f *)(definition + 0x64);
-        second.alpha = 1.0f;
         *(color3f *)&pair_first.red = *(color3f *)(definition + 0x40);
-        pair_first.alpha = 1.0f;
         *(color3f *)&pair_second.red = *(color3f *)(definition + 0x4c);
+        second.alpha = 1.0f;
+        first.alpha = 1.0f;
         pair_second.alpha = 1.0f;
+        pair_first.alpha = 1.0f;
         real *fraction = &light->fraction;
         function_bab40(object_index, light->name, fraction);
         function_bad50(object_index, light->colour_index, (point3f *)&tint);
@@ -1445,7 +1449,7 @@ void __stdcall function_c0c80(long light_index)
         light->intensity = (1.0f - blend) *
             *(real *)(definition + 0x70) + *(real *)(definition + 0x74) * blend;
     }
-    else if (((byte *)&light->flags)[0] & 0x10)
+    else if (light->flags & 0x10)
     {
         real elapsed = (real)(g_510c54->game_time - light->start_time);
         real duration = (real)g_510c54->field_2_3 * *(real *)(definition + 0xb0);
@@ -1473,10 +1477,11 @@ void __stdcall function_c0c80(long light_index)
     {
         byte *parent = *(byte **)(g_4e0300->data + (function_baf80(object_index) & 0xffff) * 12 + 8);
         if (((1 << parent[0xaa]) & 3) && *(real *)(parent + 0x2b0) > 0.0f &&
-            (signed char)g_4e3b44[light->tag_index & 0xffff].bytes[0] >= 0)
+            !(g_4e3b44[light->tag_index & 0xffff].bytes[0] & 0x80))
         {
-            light->fade = clamp_light(*(real *)(parent + 0x2b0), 0.0f, 1.0f);
-            real scale = 1.0f - light->fade;
+            real fade = PIN(*(real *)(parent + 0x2b0), 0.0f, 1.0f);
+            light->fade = fade;
+            real scale = 1.0f - fade;
             light->colour.red *= scale;
             light->colour.green *= scale;
             light->colour.blue *= scale;
@@ -1485,28 +1490,21 @@ void __stdcall function_c0c80(long light_index)
             light->pair_colour.blue *= scale;
         }
     }
-    real red = clamp_light(light->colour.red, 0.0f, 1.0f);
-    real green = clamp_light(light->colour.green, 0.0f, 1.0f);
-    light->colour.red = red;
-    real blue = light->colour.blue;
-    blue = clamp_light(blue, 0.0f, 1.0f);
-    light->colour.green = green;
-    real pair_red = clamp_light(light->pair_colour.red, 0.0f, 1.0f);
-    light->colour.blue = blue;
-    real pair_green = clamp_light(light->pair_colour.green, 0.0f, 1.0f);
-    light->pair_colour.red = pair_red;
-    real pair_blue = clamp_light(light->pair_colour.blue, 0.0f, 1.0f);
-    light->pair_colour.green = pair_green;
-    light->pair_colour.blue = pair_blue;
+    light->colour.red = PIN(light->colour.red, 0.0f, 1.0f);
+    light->colour.green = PIN(light->colour.green, 0.0f, 1.0f);
+    light->colour.blue = PIN(light->colour.blue, 0.0f, 1.0f);
+    light->pair_colour.red = PIN(light->pair_colour.red, 0.0f, 1.0f);
+    light->pair_colour.green = PIN(light->pair_colour.green, 0.0f, 1.0f);
+    light->pair_colour.blue = PIN(light->pair_colour.blue, 0.0f, 1.0f);
     real intensity = light->intensity * 2.0f;
-    light->intensity = clamp_light(intensity, 0.0f, 4.0f);
+    light->intensity = PIN(intensity, 0.0f, 4.0f);
     light->radius = (1.0f - light->fraction) * *(real *)(definition + 8) +
         *(real *)(definition + 0xc) * light->fraction;
-    if ((((byte *)&light->flags)[0] & 1) && light->radius > 0.0f &&
-        (red != 0.0f || green != 0.0f || blue != 0.0f ||
-            pair_red != 0.0f || pair_green != 0.0f || pair_blue != 0.0f))
+    if ((light->flags & 1) && light->radius > 0.0f &&
+        (light->colour.red != 0.0f || light->colour.green != 0.0f || light->colour.blue != 0.0f ||
+            light->pair_colour.red != 0.0f || light->pair_colour.green != 0.0f || light->pair_colour.blue != 0.0f))
     {
-        if (!(((byte *)&light->flags)[0] & 2))
+        if (!(light->flags & 2))
         {
             light->flags |= 2;
             if ((object_index == NONE || (!object_or_parent_hidden(object_index) && function_b9d20(object_index))) &&
@@ -1514,10 +1512,10 @@ void __stdcall function_c0c80(long light_index)
                 function_c2d00(light_index);
         }
     }
-    else if (((byte *)&light->flags)[0] & 2)
+    else if (light->flags & 2)
     {
-        if (((byte *)&light->flags)[0] & 8) function_c3220(light_index);
-        ((byte *)&light->flags)[0] &= ~2;
+        if (light->flags & 8) function_c3220(light_index);
+        light->flags &= ~2;
     }
 }
 

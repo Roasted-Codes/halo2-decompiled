@@ -781,6 +781,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Round 249: promoted yaw/pitch/both trig formals 181/222/174; native promoted
 // yaw/pitch/both inputs 181/226/172; both formals with shared pitch cosine 176,
 // yaw formal with shared pitch cosine 172. Original helper/body restored.
+// Round 143 (plain; --fast now builds it differently): the yaw unnamed (atan2 written in both bounds)
+// 183; from_lower computed before to_upper 191; the range wrap before the two differences 307 (frame
+// 0xa8, but ebx saved in the prologue); the marker scoped to the seat block 176; to_upper renamed to
+// sort after minimum 172 (homes unchanged: names do not order these spill slots).
 // Round 252: Role names inside periodic/pin/direction/periodic+pin/periodic+direction/pin+direction/all
 // three/all plus approach inline expansions 172 each. Original helper names restored; extra frame dword
 // and scalar homes remain.

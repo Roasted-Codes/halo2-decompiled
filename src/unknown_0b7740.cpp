@@ -591,7 +591,30 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
     return false;
 }
 
-// score 10 (was 24): the second inlined distance test computes dz, dx, dy in
+// score 20 (was 24): the g_4e7414 increment goes through esi and is stored
+// after the pushes (retail: ecx, stored at once, as matched 0x1cac60 and
+// 0x180b60 do with the same statements); the second inlined distance test
+// computes dz, dx, dy in retail (dz, dy, dx here). Each walk now declares its
+// own record and the iterators sit at the cluster-loop scope, which gives
+// retail's slots and record-first reloads (24 -> 20) without the old layout
+// struct. Tried: second inline copy with dz,dx,dy or dy,dx,dz or a vector3f
+// delta (no gain); count = 0 just before the loop (205); a goto to a shared
+// exit instead of the early returns (196: count lived in esi and the empty
+// exit got its own epilogue); post-increment counter 24; while loops 24;
+// cluster list declared first 24; iterators passed without references 24.
+// A one-expression sum runs in reverse order of the deltas' definitions.
+// The test through vector3d_from_points3d + length_sq3f makes the two
+// inlined copies differ: single exit gives retail's second copy but a y, x, z
+// first copy (29); early returns swap retail's two shapes; while loops give
+// the first shape twice; sum order, parameter order, local scopes, dot3f,
+// named squared length, center pointer and early-out tests change nothing
+// else (compile-only screens). Flag-first, plain globals, defaults and
+// clamp spellings leave the increment late. The existing squared-distance
+// helper 20 moves the arithmetic difference to the first copy; forced accept
+// and distance helpers 20 and 20; result-first 20; its late-clamp combination
+// 10 (first copy only, but a caller match regressed); reversed comparison 38;
+// named distance 10; first accepted-result local 10. Original body restored.
+// the second inlined distance test computes dz, dx, dy in
 // retail (dz, dy, dx here); everything else matches. Each walk declares its
 // own record and the iterators sit at the cluster-loop scope (retail's slots
 // and record-first reloads); the clamp written once after the cluster branch
