@@ -82,6 +82,9 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // with indexed result 280/280/404; scaled input vector with output pointer/native return 312/404. Original helper and body restored.
 // Round 146: actual output-end !=/< with long/dword ordinals 406 each and short/word ordinals 378
 // each; original ordinal-controlled helper restored.
+// Round 345: Live forward/up/right coefficient cursors 241/253/253; their pairs/all
+// 253/253/253/254; all with descending direct rows 267. Forward alone gives frame
+// 0x14 and 1136 bytes but regresses to 241; original helper and body restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

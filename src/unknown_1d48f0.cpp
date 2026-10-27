@@ -42,7 +42,7 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 350 (was 350): aligned frame 0x1d4 agrees; optional input/register roles, scalar homes and selective helper expansion remain.
+// score 350 (was 350): Aligned frame 0x1d4 agrees; optional input/scalar homes and selective helper expansion remain.
 
 // Earlier: Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Earlier 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
@@ -89,6 +89,9 @@ const dword g_455978[81] = {
 // with an `arg_8 ? 27 : 18` count 427, count alone 477.
 // Round 223: Both positive validation stages 350; result-terminated scan 395; optional failure
 // first 351; both 395; zero rejection removed on these graphs 408/411/407/411. All restored.
+// Round 148: native candidate value 486; native ray-offset value 467; both vector values 516;
+// coordinated transform inline 350; inline/candidate 486; inline/offset 467; inline/both values
+// 516; force-inline/both values 954. All executable forms restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

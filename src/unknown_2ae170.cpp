@@ -562,6 +562,9 @@ public:
 };
 
 
+struct s_mixbin_list;
+void function_2216f0(s_mixbin_list *list, s_mixbin_settings *settings, LPDIRECTSOUNDBUFFER buffer);
+
 /* Retail stream mixing expands the mix-bin append operation here. */
 __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long mixbin, real decibels)
 {
@@ -570,7 +573,13 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 449 (was 449): Frame 0xec versus 0x94, workspace homes and repeated-conversion residency remain.
+// score 393 (was 449): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
+// conversions (6 calls versus retail's 15; BLOCKED-BY 0x12aff0: retail's callers treat it as opaque).
+// Round 75: SetMixBins (retail calls 0x37c5e4) for SetMixBinVolumes 449 (kept); the existing 0x2216f0 with a
+// NULL list for the three submissions 393 (kept); explicit sends, one object 613, three objects 544; set-2 rear
+// if/else 482; one reused object 483; level snapshots 416; set-1 rear ternary 391; static table 405;
+// precision pragma diagnostic 624 (the conversions stay CSE'd).
+// Earlier 449 (was 449): Frame 0xec versus 0x94, workspace homes and repeated-conversion residency remain.
 // Earlier 449 from 463; Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Round 55: retail's 0x37c5e4 calls are SetMixBins inside an inlined 0x2216f0 with a NULL list (its dead
@@ -640,7 +649,7 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 		c_sound_effects::add_send(8, 0, -64.0f, &mixbins);
 	for (word first_pair_index = 2; first_pair_index < 4; ++first_pair_index)
 		c_sound_effects::add_send(muted_mixbins[first_pair_index], 0, -64.0f, &mixbins);
-	IDirectSoundBuffer_SetMixBinVolumes(buffers->buffer0c, &mixbins.mixbins);
+	function_2216f0(NULL, &mixbins, buffers->buffer0c);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer0c, 0);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer18, -6400);
 
@@ -649,7 +658,7 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 		c_sound_effects::add_send(muted_mixbins[second_pair_index], 0, -64.0f, &second);
 	c_sound_effects::add_send(7, 0, m_settings.level00, &second);
 	c_sound_effects::add_send(9, 0, rear ? m_settings.level04 : -64.0f, &second);
-	IDirectSoundBuffer_SetMixBinVolumes(m_buffers->buffer10, &second.mixbins);
+	function_2216f0(NULL, &second, m_buffers->buffer10);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer10, 0);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer1c, -6400);
 
@@ -657,7 +666,7 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 	for (word mixbin_index = 0; mixbin_index < 4; ++mixbin_index)
 		c_sound_effects::add_send(muted_mixbins[mixbin_index], 0, -64.0f, &third);
 	c_sound_effects::add_send(10, 0, 0.0f, &third);
-	IDirectSoundBuffer_SetMixBinVolumes(m_buffers->buffer20, &third.mixbins);
+	function_2216f0(NULL, &third, m_buffers->buffer20);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer20, 0);
 	IDirectSoundBuffer_SetVolume(m_buffers->buffer14, -6400);
 }
@@ -670,7 +679,12 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 453 (was 447): Frame twelve agrees; incoming flags/receiver homes and SSE argument staging remain.
+// score 453 (was 453): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
+// Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
+// level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
+// selected before level2 457. Precision pragma diagnostic 453 (no change).
+// Earlier 453 (was 447): Frame twelve agrees; incoming flags/receiver homes and SSE argument staging remain.
 // Frame 0xc agrees; selected-level homes and SSE argument staging remain different.
 // Earlier 453 from 460: frame twelve agrees; selected-level homes and SSE argument staging remain.
 // Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
@@ -845,6 +859,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Original declarations restored; frame 0x20, mode/input-level and x87 tail homes remain.
 // Native-word destinations with bool/byte routing predicates and original/gain/level/both
 // read-at-use forms 242/271/302/323 each. Original scalar observations restored.
+// Round 190: Mode-first field-address selection with gain at entry/after selection/after
+// offset/after input level 247/247/258/258; constant-first counterpart 232/231/245/245. Every form
+// regresses; original helper and scalar lifetimes restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -1082,6 +1099,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 241: Complementary channel bool/byte/short/long 202/202/194/203;
 // the same with four scalar lexical homes 202/202/194/203. Short complement
 // gains six, below retention threshold. Original frame 0x10 and x87 sums remain.
+// Round 190: Live input levels with bool/byte/short/word primary channel and entry-rear/live-rear
+// observations 221/229, 221/229, 213/231, 213/231. All regress; original scalar captures, channel
+// predicate and send expansion restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

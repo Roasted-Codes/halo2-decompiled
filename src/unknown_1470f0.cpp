@@ -58,6 +58,12 @@ void *c_game_havok_memory::allocate(long size, long memory_class)
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 // score 9 (was 9): first and third now share source dispatch, but retail's second uses edx for
+// retail tests the end of the block with >= and gives the second block its own
+// deallocate, ours shares the first and the second.
+// Y346 (not kept: a redundant '>= || ==' end test and a hand-merged dispatch for the first and third ranges): 9.
+// Inverse admission with separate range lifetimes 41/49/52/49/41/49/52, shared end 52; native range lifetimes
+// 31/9/31/9/31/9/31, shared end 31; each receiver global read once on its path 9/9/9.
+// first and third now share source dispatch, but retail's second uses edx for
 // its vtable and eax for bounds; ours uses eax for the vtable, so the third joins the second.
 // Third end addition and fallback argument order also differ.
 // Tried: third abstract/fixed-base dispatch 19/19; nested receivers 19; first/second/both inclusive

@@ -417,7 +417,7 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 	last_output.z *= 0.5f;
 }
 
-// score 6 (was 87): the coefficient loop sums its products in another order (retail: t3, t, then
+// score 6 (was 6): the coefficient loop sums its products in another order (retail: t3, t, then
 // the t2 product folded, row pointer based on m[i][1]); prologue, frame and weighted sums agree.
 // direct output and four reused weights 110 fast;
 // original output and four reused weights 84 fast;
@@ -446,6 +446,16 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 // sum groupings 9/12/9; const table 10; all product orders x three groupings, with and without the
 // row pointer, 6-13; row cursor 9; flat table 10, with the row pointer 6; parameter reorders 10
 // (before the row pointer).
+// Shared square with const/products/early weights 110; early product-helper
+// input 5, late input 99; row/table/const/accumulation variants 5. All restored.
+// Native coefficient/plane rows with the shared product, either input order
+// and early/late weights 5 (439 bytes); quadratic coefficient still loads
+// separately. Grouped input and one-point reduction discarded.
+// Explicit shared square, immutable square, uniform named products and earlier weight-array
+// declaration: eight forms 110 each (425 bytes). Existing three-component product with powers
+// before the table 5/5 (439 bytes); after the table 99/99. Native row/direct table, immutable
+// powers, coefficient-slot accumulation and component initialization: eight forms 5 each.
+// The helper recovers the row base and first two terms but not the folded multiply; all restored.
 // @retail 0x2bde90
 void function_2bde90(real t, point3f *out, point3f *points)
 {

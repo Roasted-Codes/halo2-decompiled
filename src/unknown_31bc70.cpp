@@ -29,6 +29,14 @@ void query_31bc80::function_31bc80(bool *result) const
 // int counters 44; four zeros 44; memset 37; constant new count 79.
 // Two/three aggregate zeros 80/44; chained zeros in member/reverse/op-first/
 // total-results order 48/44/47/47; empty aggregate 37; entry zero list 94.
+// Pair predicate 36; full branch sizes 98; source ordinal 96, with full
+// sizes 100; source cursor 133, with full sizes 122. All restored.
+// Repeated id-array pointer/reference, const or mutable, 36; those views
+// with value-initialized sizes 86. Initial byte-slot pointer/reference
+// with zeros before/after the count 86. Early zero carrier still differs.
+// Named pair predicate 36; complete branch sizes 98; source ordinal 96, with predicate 96;
+// source cursor 133, with predicate 133; source ordinal/cursor with branch sizes 100/122.
+// All restored; early zero/count stores and copy-address allocation remain.
 // @retail 0x31bc90
 void lane_b_contact_constraint_prefix::remove(unsigned short id)
 {

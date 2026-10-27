@@ -2068,7 +2068,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 210 (was 210): object/offset homes and low-mask allocation remain;
+// score 168 (was 210): object/offset homes and low-mask allocation remain;
 // frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // object/offset homes and low-mask allocation remain;
@@ -2142,6 +2142,12 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // forms reach 1081 bytes but regress; original cached object and signed result restored.
 // Direct-field-tail getter table/header/payload/decoded-table inputs, forced 210/210/210/318;
 // ordinary inline 210/210/210/318. Original getter and observations restored.
+// Independent child result timing: low before/high after integers or all 204/204;
+// low between/high before, after integers, after all 193/172/170;
+// low after/high before, after integers, after all 191/170/168.
+// Both mask updates after their original stores retained; 1070/1081 bytes.
+// Round 246: metadata/count/fraction defaults before the child getter in seven
+// combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -2240,17 +2246,17 @@ local_18:
 			short *local_14 = local_17;
 			if ((local_3 & local_6) && ((*(long *)(local_14 - 2)) != local_9 || local_14[0] != local_10))
 			{
-				local_4 |= local_6;
 				(*(long *)(local_14 - 2)) = local_9;
 				local_14[0] = local_10;
+				local_4 |= local_6;
 			}
 			dword local_7 = 1 << local_5;
 			if ((local_3 & local_7) && (local_14[1] != local_11 || local_14[2] != local_12 || (*(real *)(local_14 + 4)) != local_13))
 			{
-				local_4 |= local_7;
 				local_14[1] = (short)local_11;
 				local_14[2] = (short)local_12;
 				(*(real *)(local_14 + 4)) = local_13;
+				local_4 |= local_7;
 			}
 		}
 		local_17 += 8;
