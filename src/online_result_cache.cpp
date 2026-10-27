@@ -100,7 +100,7 @@ void online_result_cache_update(void)
         online_result_query_finish(task);
 }
 
-// score 18 (was 18): retail re-reads `*address` after storing the registered index (ours forwards the value) and leaves the registered arm through its own `mov al, 1` exit; tried: an early `return true` from the registered arm 64, one exit with `result = true` in the cached arm (as an `else`) and the registered arm 16; that exit plus the block 0x510588..0x5107e8 as one address-taken struct (retail clears 0x510580..+0x268 with one memset) matches, but the full link then loses 0x73360 (BLOCKED-BY 0x73360).
+// score 18 (was 18): retail re-reads `*address` after storing the registered index (ours forwards the value) and leaves the registered arm through its own `mov al, 1` exit; tried: an early `return true` from the registered arm 64, one exit with `result = true` in the cached arm (as an `else`) and the registered arm 16; that exit plus the block 0x510588..0x5107e8 as one address-taken struct (retail clears 0x510580..+0x268 with one memset) matches, but the full link then loses 0x73360 (BLOCKED-BY 0x73360). 0x73360's loss is accepted since #763; lane 9 round 24 matched this way (with 0xb3970), but the struct changes 0xb3b10's and 0xb3b70's bodies, which are a contributor's finished code (#9), so it is held.
 // @retail 0xb3770
 bool online_result_get_address(long index, IN_ADDR *address)
 {
@@ -165,7 +165,7 @@ void online_result_shuffle(dword count, s_online_cached_result *records)
     }
 }
 
-// score 14 (was 14): describe's text argument: retail recomputes `lea eax, [esp+0x14]`, ours copies edi; tried: describe's parameters as (record, text) 14, `(char *)&text` 14, a text struct with format/append and describe on its member and address 14, all calls through a force-inline accessor 14; a text struct whose force-inline accessor feeds format/append while describe gets the plain buffer matches, but every such form makes the full link lose 0x73360 (BLOCKED-BY 0x73360).
+// score 14 (was 14): describe's text argument: retail recomputes `lea eax, [esp+0x14]`, ours copies edi; tried: describe's parameters as (record, text) 14, `(char *)&text` 14, a text struct with format/append and describe on its member and address 14, all calls through a force-inline accessor 14; a text struct whose force-inline accessor feeds format/append while describe gets the plain buffer matches, but every such form makes the full link lose 0x73360 (BLOCKED-BY 0x73360). 0x73360's loss is accepted since #763; lane 9 round 24 matched this way (the shared text type and the 0x510588 block struct), but that changes 0xb3b10's and 0xb3b70's bodies, which are a contributor's finished code (#9), so it is held.
 // @retail 0xb3970
 void online_result_query_finish(s_type_9df9da *task)
 {
