@@ -318,6 +318,10 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // the delete where retail rejoins its `cmp esi, -1` (inverted test 110, single result 94). Not kept:
 // 0x189fe0 then takes its request in edx, not eax, and its eight matched callers (0x1890c0,
 // 0x189340, 0x1895f0, 0x189650, 0x1896c0, 0x189710, 0x189760, 0x189a50) lose their match.
+// Round 74 (0x189fe0's file held by another lane): parameters declared tag first, consistently at the
+// caller 204 (convention unchanged); out-of-line delete alone 314 (271 bytes); starts through 0x125f70
+// alone 256 (542 bytes, the eight callers lost); allocation through the existing function_21d2c1 204;
+// definition and effect declared before the platform handle 221.
 // Earlier forms: joined query/allocation 220, unforced failure-first 221, effect pointer scope 220,
 // shifted platform flag 220, inline depth zero 391; uninitialized definition 236; scoped definition
 // and query-result value 220; pre-start receiver 208 (lost callers); record getter at each store
