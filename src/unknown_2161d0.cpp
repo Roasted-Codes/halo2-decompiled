@@ -64,6 +64,9 @@ bool function_2161d0(long file_index, void *buffer, long size)
 // bounded copy 10; append result local/expression 27/27;
 // bounded copy plus append result 27/27; location result 53;
 // copy result with original/returned read path 85/85.
+// Cached direct return 89; function-scope files 17; late path pointer 10;
+// append/copy first-element forms 10/10; result after done 19; state before done 12;
+// shared location type 10.
 // Unsigned copy size 10; profile pointer local 10; result between the task stores 10; index before the
 // cache pointer 10; done flag stored last 13. Retail 0x121570 keeps esi across 0x122810, so the reload
 // after it here is not a property of the callee.

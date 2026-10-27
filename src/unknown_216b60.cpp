@@ -126,6 +126,9 @@ word *unicode_string_append(word *destination, word const *source, long maximum_
 // copy helper 8; ordinary input parameters 8; guard owned prefix buffer 12; prefix value
 // initialization 69; native string handle 8; out of line format declarations 8; available prefix
 // buffer 21; lookup result function scope 8.
+// Prefix lexical name 8; declaration after output clear 8; direct prefix clear 8;
+// nested language guards 8; string-list local 8; result local 8;
+// display/language input homes removed separately 8/8.
 // @retail 0x216da0
 bool function_216da0(long type, wchar_t *name, wchar_t const *display_name, long language)
 {

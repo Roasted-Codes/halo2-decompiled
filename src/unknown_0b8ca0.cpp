@@ -630,7 +630,7 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
     return (*(short *)(data->data + data->size * absolute) << 16) | absolute;
 }
 
-// score 231 (was 231): caller-dependent alignment and scalar/angle homes remain.
+// score 231 (was 231): Caller-dependent alignment and scalar/angle homes remain.
 // caller-dependent frame alignment and scalar homes differ;
 // Caller-dependent eight-byte alignment and scalar/angle homes remain.
 // Earlier 231 (from 231): caller-dependent frame alignment and scalar homes differ;
@@ -657,6 +657,14 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // shared square/dot/both 239/239/239; raw/viewed distance 242; distance/facing partials 239/239;
 // shared square with facing partial 239; both partials with viewed distance 242 (all without the
 // inherited radius alias and snapshot).
+// Real calling/step/datum iterator state 326/286/286; with Boolean result
+// 355/328/328; sole calling/datum pool receivers 326/282. All original
+// code restored; caller-dependent self-alignment and full-handle spills remain.
+// inline 231; noinline 231; inline noinline 231; inline direct radius 239; noinline direct radius 239; inline
+// noinline direct radius 239; cdecl direct radius 239; stdcall direct radius 239.
+// Round 329: native position/radius fields, readonly object and direct center 239/239/239;
+// direct marker/both points 266/266; shared differences/readonly 239/239; native root observations 252.
+// All use ordinary direct radius operands; both known callers included. Original type and body restored.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1658,6 +1666,7 @@ void function_bba20(long index);
 // complete attachment scope 358; entry permission declaration 319; entry activity declaration 319;
 // root-cluster scope 319 (fast).
 // Round 214: signed-byte permission 319; unsigned-word permission 320; signed-word saved activity 319; native-long saved activity 319; word permission/activity homes 319.
+// Isolated pool, offset, object, permission, ancestor, header, parent and cluster names each 319.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

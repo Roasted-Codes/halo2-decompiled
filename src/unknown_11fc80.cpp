@@ -166,6 +166,10 @@ static inline real distance_squared(point3f const *a, point3f const *b)
 // i-k-j components 2; root_up before root_left 2; new_mid declared at the top 2;
 // new_mid.x as root_forward->i * mid_root 2; any one node pointer local dropped
 // 18-39; new_mid computed earlier 31-52; other component store orders 8-29.
+// Helper parameter b-a-out/a-out-b/b-out-a/out-b-a 2 each; cross component names,
+// input/output role names, returned output pointer and all axis-pointer role names 2 each.
+// Twice-used first-input scalar i/j/k 138/133/133; second-input i/j/k
+// 124/121/136; complete first/second scalar inputs 240/273.
 // Round 71: cross helper taking (out, a, b) 2; its locals declared up front 2;
 // the other 23 orders of the four node pointer declarations 7-24.
 // @retail 0x120220

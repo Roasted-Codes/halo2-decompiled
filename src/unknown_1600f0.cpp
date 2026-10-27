@@ -1227,7 +1227,8 @@ PRIVATE inline long score_string_list_1608e0()
 	return result;
 }
 
-// score 801 (was 801): Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
+// score 801 (was 801): Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
+// Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
 // player register and scalar homes; scalar names 817;
 // header/name reuse 818; header/decoder reuse 818; both short team walks 811;
 // short player walk 835; short outer team walk 818; short rank search 810.
@@ -1238,9 +1239,17 @@ PRIVATE inline long score_string_list_1608e0()
 // frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
 // Viewer field at use 808; team score fields at use 805; player score fields at use 801 (plain);
 // dword flag carrier 808; foreground aggregate construction 805.
+// Short/word total rows 843/843; native viewport height 815; existing horizontal/vertical/both position components 820/814/808;
+// native team index 803; short team and row total 826. Original executable source restored.
 // Round 126: External flag reference 801; reused no-team result 802; player/team/both output cursors
 // 811/834/842; chained RGB stores 801; native team-color output 835; existing string-list forceinline 801
 // (fast); all restored.
+// Round 166: Separate score/time/both caption-list results 801/801/801; scoped name
+// lookup alone/with score/with time/with both 801 each; all three separate immutable
+// caption results 801. Each result has its validity test and lookup use; original shared
+// list and every header/row operation restored.
+// External flag reference 801; reused no-team result 802; player/team/both output cursors
+// Isolated score-table, row-total, height, fade-row, viewport-height, points-width, clock-width and label-width names 801 each.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
