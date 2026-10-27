@@ -93,7 +93,7 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 	return result;
 }
 
-// score 122 (was 122): entry saves, fresh unit reload and sentinel carriers still differ.
+// score 107 (was 122): entry saves, fresh unit reload and sentinel carriers still differ.
 // BLOCKED-BY 0xbadc0: retail re-fetches the unit after its two calls, ours reuses the entry
 // fetch (our link knows the callee writes no memory).
 // entry saves, fresh unit reload and sentinel carriers still differ.
