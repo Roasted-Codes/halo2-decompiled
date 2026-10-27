@@ -280,6 +280,11 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // separate entry-time center point for the loop 221f, and the query in the list branch 221f. All restored.
 // Round 155: Real part-table byte/record cursors, mutable/read-only, each with original
 // or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
+// Lane 4 r98: retail reads the node byte at each of its three uses (bound kept in ebx, geometry
+// reloaded from its slot). Node byte at each use with long casts 219 (frame 0x10a4), without 202 (with a
+// long index local, bound now in ebx as retail); a long index local alone 191 (retail's single movsx
+// pushed for the 0x458d0 call); a function-scope plain center copy beside the branch-scoped aligned query
+// 199 (frame 0x10a4: the query no longer shares the bound position's slot), with the long index 200.
 // Round 224: Uniform node-byte observations with branch/broad count, initialized/filled output
 // and original/success-local transform lifetimes 219/199/223/199/219/199/223/199. Original node snapshot and scopes restored.
 // Round 28 (m3 lane 12): retail's frame: query +0x20 shared with the loop's position, function-scope center

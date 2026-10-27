@@ -180,6 +180,11 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // locals 221, with that and the brake helper 221. Aligned difference 143 of 289 (frame and float schedule).
 // Round 155: Native inverse-inertia/rotation matrix alignments 16/4,4/16,16/16,8/4,
 // 4/8,8/8,16/8,8/16: 240/224/240/241/224/241/240/241. Original native matrix alignments and scoped rotation restored.
+// Lane 4 r98: `0.0f - braking / dt` builds as braking * (-1 / dt); `-(braking / dt)` gives retail's
+// zero-minus-quotient and its 1265 bytes but 221. With broad rotation 232 (frame 0xc4, first difference
+// +0xfd); with it, divisions by the mass, reciprocal-first products and an inline vector-scale helper for
+// the mass and angular-brake products 232 each: the products still copy the scalar where retail scales
+// the component in place.
 // Round 224: Existing query producer owns preceding inverse-mass scaling; scalar/state inputs
 // and vector pointer/reference 184/184/184/184; broad-rotation counterparts 221/221/221/221. Original boundary and scopes restored.
 // Round 28 (m3 lane 12): `0.0f - braking / dt` compiles to a product with -1/dt; `-(braking / dt)` gives

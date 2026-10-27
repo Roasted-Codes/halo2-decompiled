@@ -59,19 +59,21 @@ struct s_transition_collision
     byte unknown4c[0x10];
 };
 
+// score 15 (was 32): Direct global observations recover type/settings homes; endpoint inputs and call setup remain.
+// Existing speed getter 126; direct globals 15; reused alternate rise 32; entry result/shared exit 108;
+// early rise 38; common widened index 82; direction at entry 32; entry result plus alternate rise 108.
 // @retail 0x26f150
 bool function_26f150(short type, point3f const *start, point3f const *end,
     point3f const *alternate_start, point3f const *alternate_end)
 {
     real speed = 0.f;
-    s_transition_globals *globals = (s_transition_globals *)g_4e034c;
-    if (type >= 0 && type < 6 && globals && globals->count > 0)
-        speed = globals->settings->speeds[type];
+    if (type >= 0 && type < 6 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
+        speed = ((s_transition_globals *)g_4e034c)->settings->speeds[type];
     if (end->z > start->z || (alternate_start && alternate_end && alternate_start->z > alternate_end->z))
     {
         real maximum = 0.f;
-        if (type >= 0 && type < 6 && globals && globals->count > 0)
-            maximum = globals->settings->maximum_rises[type];
+        if (type >= 0 && type < 6 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
+            maximum = ((s_transition_globals *)g_4e034c)->settings->maximum_rises[type];
         real rise = end->z - start->z;
         if (alternate_start && alternate_end && !(rise > alternate_start->z - alternate_end->z))
             rise = alternate_start->z - alternate_end->z;
@@ -97,40 +99,46 @@ real function_26f290(short type)
     return result;
 }
 
+// score 20 (was 43): Direct globals, entry result and actual bounds receiver recover the prologue; bound/height loads remain.
+// Actual bounds copy 80; bounds pointer 33; entry result 42; full-width result 50;
+// nested admission/bound-first comparisons/success arm 43/43/43; direct globals 35;
+// pointer plus entry result 32; same with unsigned flags 32; pointer/result/direct globals 20.
+// Shared predicate with scalar/value/reference/pointer bounds 32/80/20/20; all removed.
 // @retail 0x26f2d0
 bool function_26f2d0(s_path_settings const *settings, point3f const *start, point3f const *end)
 {
-    long flags = ((dword)settings->unknown04 >> 10) & 6;
-    s_transition_globals *globals = (s_transition_globals *)g_4e034c;
     bool result = false;
+    long flags = ((dword)settings->unknown04 >> 10) & 6;
     for (short i = 0; i < 3; i++)
     {
-        if ((flags & (1 << i)) && i >= 0 && i < 3 && globals && globals->count > 0)
+        if ((flags & (1 << i)) && i >= 0 && i < 3 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
         {
-            real lo = globals->settings->type_bounds[i].lo;
-            real hi = globals->settings->type_bounds[i].hi;
+            real_bounds const *bounds = &((s_transition_globals *)g_4e034c)->settings->type_bounds[i];
             real height = end->z - start->z;
-            result = height >= lo && height <= hi;
+            result = height >= bounds->lo && height <= bounds->hi;
             if (result) break;
         }
     }
     return result;
 }
 
+// score 20 (was 35): Entry result and actual bounds receiver recover the prologue; bound/height loads remain.
+// Actual bounds copy 68; bounds pointer 23; entry result 32; full-width result 42;
+// nested admission/bound-first comparisons/success arm/direct globals 35/35/35/35; pointer plus entry result 20.
+// Shared predicate with scalar/value/reference/pointer bounds 32/69/20/20; all removed.
 // @retail 0x26f360
 bool function_26f360(s_path_settings const *settings, point3f const *start, point3f const *end)
 {
+    bool result = false;
     long flags = settings->unknown04 & 3;
     s_transition_globals *globals = (s_transition_globals *)g_4e034c;
-    bool result = false;
     for (short i = 0; i < 2; i++)
     {
         if ((flags & (1 << i)) && i >= 0 && i < 2 && globals && globals->count > 0)
         {
-            real lo = globals->settings->mode_bounds[i].lo;
-            real hi = globals->settings->mode_bounds[i].hi;
+            real_bounds const *bounds = &globals->settings->mode_bounds[i];
             real height = end->z - start->z;
-            result = height >= lo && height <= hi;
+            result = height >= bounds->lo && height <= bounds->hi;
             if (result) break;
         }
     }
@@ -387,7 +395,6 @@ bool function_2702a0(long actor_index, long mode, long set, long target_mode, lo
     long *location, vector3f *out_forward, long *node_index)
 {
     /* retail keeps out_position and position on the stack */
-    point3f *const *reference = &out_position;
     bool result = false;
     point3f const *const *position_reference = &position;
     s_actor_view *actor = actor_get(actor_index);
@@ -397,7 +404,7 @@ bool function_2702a0(long actor_index, long mode, long set, long target_mode, lo
     {
         function_141590(&matrices.local, &matrices.inverse);
         function_142a60(&matrices.source, &matrices.inverse, &matrices.local);
-        if (*reference) **reference = matrices.local.position;
+        if (out_position) *out_position = matrices.local.position;
         if (out_forward) *out_forward = matrices.local.forward;
         if (location || node_index)
         {

@@ -484,7 +484,7 @@ struct s_decal_projection_17fd20
 
 PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh, long face_index, plane3f *plane)
 {
-	short index = mesh->faces[face_index].plane_index;
+	long index = mesh->faces[face_index].plane_index;
 	plane3f const *source = &mesh->planes[index & 0x7fff];
 	if (index < 0)
 	{
@@ -518,7 +518,7 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 749 (was 749): Self-aligned frame 0x2204 versus 0x21dc, definition/output carriers and angle equality homes remain.
+// score 716 (was 749): Self-aligned frame 0x2204 versus 0x21dc, definition/output carriers and angle equality homes remain.
 // Earlier: frame 0x2204 versus 0x21dc; definition/output carriers still differ.
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.
@@ -551,18 +551,14 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Round 180 alias-free scalar names: selected distances, candidate distances, endpoint distances, axis,
 // rotation, angle cosine, all distances, all scalars; scores 796/796/796/796/796/796/796/796 (fast); all
 // restored.
+// Round 354, without inherited parameter-address aliases: promoted signed plane index 788;
+// mode field at every use 796; both 806; shared pivot-offset difference 753; promoted index plus
+// shared offset 716 (kept, plain); mode plus offset 783; all three 787; all with shared normalizer 775.
+// Retain the signed index promotion and existing offset helper; frame 0x2204 and entry carriers remain.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
 {
-	s_decal_mesh_view const *const *mesh_reference = &mesh;
-	long const *tag_index_alias = &tag_index;
-	s_decal_output_17dd80 *const *output_reference = &output;
-	s_decal_projection_17fd20 *const *projection_reference = &projection;
-	mesh = *mesh_reference;
-	tag_index = *tag_index_alias;
-	output = *output_reference;
-	projection = *projection_reference;
 	long faces[1024];
 	long secondary[1024];
 	short secondary_count = 0;
@@ -684,9 +680,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 					up.k = axis.k * axis.k + (1.0f - axis.k * axis.k) * cosine;
 					transform4x3f matrix;
 					vector3f offset, position;
-					offset.i = projection->matrix.position.x - start.x;
-					offset.j = projection->matrix.position.y - start.y;
-					offset.k = projection->matrix.position.z - start.z;
+					vector3d_from_points3d(&start, &projection->matrix.position, &offset);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &offset, &position);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.forward, &matrix.forward);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.left, &matrix.left);

@@ -709,6 +709,9 @@ static __forceinline long real_to_long(real value);
 // all prediction products 386; helper/prediction 384; projection/prediction 480;
 // all producers 460; all with target velocity receiver 456. Original restored.
 // Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
+// Round 354: complete shared relative-velocity difference 391; every-use object producer 509;
+// both 484; native request initialization on the recovered frame 472; with shared difference 477;
+// with every-use object producer 506; all three 430; all with wide eligibility 493. Original restored.
 // Round 193: Existing metadata providers ordinary-inline singly, all pairs and all,
 // then separate noinline declarations on all three: 386/386/386/386/386/386/386/386. Original restored.
 // @retail 0x1aab50

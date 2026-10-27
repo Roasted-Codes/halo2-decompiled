@@ -20,11 +20,11 @@ struct s_unit_eye_object
 	byte unknownab[0xb4 - 0xab];
 	long attachment_index;
 	byte unknownb8[0x10a - 0xb8];
-	byte flags10a_0 : 1;
-	byte flags10a_1 : 1;
-	byte flags10a_2 : 1;
-	byte : 5;
-	byte unknown10b[0x168 - 0x10b];
+	word flags10a_0 : 1;
+	word flags10a_1 : 1;
+	word flags10a_2 : 1;
+	word : 13;
+	byte unknown10c[0x168 - 0x10c];
 	vector3f forward;
 	byte unknown174[0x1fc - 0x174];
 	short seat_index;
@@ -160,6 +160,11 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
+// score 290 (was 309): frame 0xb0 vs 0xa4 and vertical-basis/point homes still differ.
+// vertical role name 309; native word flags 290; both 290; shared displacement 309;
+// displacement/word/name 290; separate backward query vector 309; complete vector
+// graph/word 290; native copies on that graph 290; local-up name 309; word/local-up 290.
+// Retain the actual flag-word declaration with unchanged following field offsets.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

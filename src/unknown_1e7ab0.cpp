@@ -222,6 +222,11 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // The 609 form worsens executable differing rows 552 to 561; restored.
 // Case pairs 10/11, 12/13, 15/18, 17/30, 20/23, 22/21, 5/6 and 7/8
 // reversed individually 627/629/625/627/627/630/633/636 (fast); original order restored.
+// Round 78 (fast; aligned rows in brackets, baseline 450): plain player 779 [280] (helper out of line);
+// with request_weapon forced inline 981 (0xcbd50 inlined too); with request_weapon taking the unit index
+// 665 [413] (inlined again); plus cases 0/1/31 after 18 666 [355] (retail's case layout); plus the player
+// index as NONE then an if (retail's or/cmp/je shape) 667 [361]. Register roles (retail: state EDI,
+// player ESI, unit index spilled, unit EBX, headers EBP) still differ in all of them.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
