@@ -189,7 +189,11 @@ bool __stdcall function_25dd30(long a, long b)
 	return a == b;
 }
 
-// score 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
+// score 94 (was 94): Frame 0x30 and retail length agree; early count/offset/segment scheduling,
+// protected geometry-call registers and score adds remain.
+// Earlier: vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
+// first vector schedule, geometry registers and score adds remain;
+// vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
 // Earlier 175 (was 175): first vector schedule, geometry registers and score adds remain;
 // shared displacement/geometry displacement/bonus result 310/310/313;
 // geometry/sphere/cone score observations 337/310/310; all score observations 337; actual view reference 310.
@@ -254,6 +258,11 @@ bool __stdcall function_25dd30(long a, long b)
 // Complete permission/linked-unit/whole-geometry-radius observations 470/311/431;
 // permission+unit/permission+radius/unit+radius/all/immutable all 469/442/428/362/362
 // (fast). Original observations, geometry inputs and 0x30 frame restored.
+// Native indexed first scan short/long with shared later ordinal 101/322; independent later ordinals
+// 310/94. Same four with existing magnitude helper 101/322/310/94. Keep the long first index and
+// independent short later counters at 94 plain; original helpers and all call tuples retained.
+// Round 343: Total-position bound long/short before lookup 479/322; after lookup 481/322;
+// long bound with later permission/cone/reference/all long ordinals 976/458/765/1168. All restored; retained indexed graph stays 94.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -262,12 +271,11 @@ void __stdcall function_25dd50(
 	s_type_b36ac5 *positions)
 {
 	s_actor_firing_view *actor = (s_actor_firing_view *)actor_get(actor_index);
-	short i;
 
 	{
-	s_type_b36ac5 *position = positions;
-	for (i = 0; i < count; i++, ++position)
+	for (long position_index = 0; position_index < count; position_index++)
 	{
+		s_type_b36ac5 *position = &positions[position_index];
 
 		if (!position->unknown4c)
 		{
@@ -389,9 +397,9 @@ void __stdcall function_25dd50(
 	}
 
 	}
-	for (i = 0; i < count; i++)
+	for (short position_index_1 = 0; position_index_1 < count; position_index_1++)
 	{
-		s_type_b36ac5 *position = &positions[i];
+		s_type_b36ac5 *position = &positions[position_index_1];
 
 		if (position->unknown4c)
 		{
@@ -413,9 +421,9 @@ void __stdcall function_25dd50(
 		point3f origin;
 
 		function_b9dd0(actor->unknown018, &origin);
-		for (i = 0; i < count; i++)
+		for (short position_index_2 = 0; position_index_2 < count; position_index_2++)
 		{
-			s_type_b36ac5 *position = &positions[i];
+			s_type_b36ac5 *position = &positions[position_index_2];
 
 			if (position->unknown4c)
 			{
@@ -458,9 +466,9 @@ void __stdcall function_25dd50(
 
 	if (context->unknown692)
 	{
-		for (i = 0; i < count; i++)
+		for (short position_index_3 = 0; position_index_3 < count; position_index_3++)
 		{
-			s_type_b36ac5 *position = &positions[i];
+			s_type_b36ac5 *position = &positions[position_index_3];
 
 			if (*(long *)&position->reference == context->unknown694 && position->unknown4c)
 			{

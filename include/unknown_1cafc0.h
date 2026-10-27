@@ -46,10 +46,17 @@ struct s_animation_state
 	long graph_tag_index;
 	word flags;
 	word unknown6e;
-	long unknown70;
-	long unknown74;
-	long unknown78;
-	long unknown7c;
+	union
+	{
+		s_animation_names stored_names;
+		struct
+		{
+			long unknown70;
+			long unknown74;
+			long unknown78;
+			long unknown7c;
+		};
+	};
 	real unknown80;
 	vector3f unknown84;
 

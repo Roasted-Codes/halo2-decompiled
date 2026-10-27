@@ -462,6 +462,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // inline/noinline 420/420; all eight compiled forms and every separate declaration restored.
 // Round 166: typed actor startup/admission/tracking/completion/all 420 each; native actor
 // getter, native node fields and both 420 each. Actual shared type layout restored.
+// Round 212: Three-state sampling enum/byte/short/long with entry success 434/426/434/434;
+// with success at consumption 434/430/438/434. Byte states recover frame 0xa0 and 1616 bytes.
 // Complementary run-wide availability bool/byte/short/long 424/424/422/443;
 // per-node skip/defer/both 429/424/433; all three complements 436 at retail length. All restored.
 // @retail 0x262ba0

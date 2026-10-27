@@ -298,7 +298,7 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 193 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
+// score 193 (was 193): Frame 0x48 and geometry agree; unsigned-zero branch, pass joins and clear-call transport remain.
 // Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
 // 254/300/226; noinline with short/byte 254/226.
 // unsigned-zero branch and pass-call boundaries differ;
@@ -336,6 +336,36 @@ bool function_404b0(long mode)
 // complete stipple choice bool/byte/short/long 193/193/226/226. Boolean role name,
 // negated range, direct outside range and byte outside range 193 each. Both named
 // Boolean stipple-enable choices kept, plain 193; unsigned-zero admission and pass joins remain.
+// Round 243: Seven ordered admission partitions 225 each; positive geometry arm 192 at
+// 1194 bytes, first +0x1b3. One-point gain rejected; original body restored.
+// frame 0x48 and geometry agree; the entry byte test (retail `jbe`), the pass joins and
+// the culling calls differ: in every pass that culls with 0 retail still loads g_485898 (`mov eax, [g_485898];
+// xor eax, eax`, 20 of the 21 missing bytes) and re-stores the pass's selected byte as 1 after the culling call.
+// Forms tried: common final flush 226, with noinline query 226, inline query 397; short/long/byte result
+// 254/300/226; noinline with short/byte 254/226; word material index 298; unsigned weight 309; typed geometry
+// header 250; entry observations reordered 326; native local names 250; early weight with context-first material
+// 226; depth zero 250, one 250; size policy 462; shared tail-pass loop 476; shared single pass 275, first
+// multipass 269, second multipass 281, conditional pass 273, twentieth pass 269, seventh pass 269, all passes 291,
+// forced shared all passes 291; shared final result two consumers 291; native final result two consumers 291;
+// conditional cull calls first/third/both 226 each; native Boolean cull tests first/third/both 226 each;
+// signed/unsigned short pass result 255/255; inline cull/stencil/first-flush/second-flush/state-pair/flush-pair/
+// all-four declarations 226 each, noinline all-four 226; late single/third/both success publication 220/212/210;
+// single/third/conditional result arms 232/214/226; all result arms 204 (1217 B); ordered conditional result 221;
+// native masks for passes 16/1/3/8/20/7 226/226/226/230/226/226, all masks 230, with byte lower-bound admission
+// 229; entry tests selection/bit0/byte/flags in orders 2134/1324/1243/2143/1342/1423/2314/1432
+// 237/230/233/244/235/308/239/308; two-use setup setting captured in single/third/conditional/twentieth/seventh
+// passes 226 each, all five 226, cull-setting observations once 226, all setting captures 226; formal-address
+// removal, pass-phase false result, entry result and entry false result 226 each, removal with pass false/entry/
+// entry false 226 each; isolated unsigned-byte lower-bound admission 225; independent pass outcomes bool/byte/
+// short/long 226/226/255/297; complete stipple choice bool/byte/short/long 193/193/226/226 (bool kept); Boolean
+// role name, negated range, direct outside range and byte outside range 193 each.
+// Round 57 (aligned listing counts in brackets, baseline 24): stipple argument `cond ? 1 : 0` in both culling
+// passes 226 [25] (1181 B); one forced-inline pass helper (bit, extra condition, depth, culling, target) with a
+// bool `&&` enable 205 [38] (1215 B), with a byte `(flags >> mode) & extra` enable 230 [16]; the helper returning
+// whether the pass started (the caller flushes): early-return bool 199 [32], byte enable with early returns 203
+// [29], bool enable 199 [32], culling test order flipped 203 [29], byte enable returning `enabled != 0` 235 [14],
+// ternary byte enable 205 [35], bool `&&` enable returned 211 [38], ternary returned as byte 205 [35], the byte
+// helper with a stipple local before the culling call 235 [14]. None gives retail's dead g_485898 loads.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

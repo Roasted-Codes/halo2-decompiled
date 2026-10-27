@@ -118,6 +118,12 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Round 215: Actual ordinal-return step, long with retained/returned-only ordinal and
+// conditional/result-first exits 164/198/204/199; unsigned 198/222/205/220.
+// Every returned result tested; original private helper and body restored.
+// Persistent full-function/first-traversal payload tables 190/197; with full-width partition 191/198;
+// the same four table/partition forms with pointer step results 190/197/191/198. Original helper and
+// traversals restored; separate pool/iterator, early null and successor homes remain.
 // Round 147: Coherent inline lookup/activation/squad cleanup/actor removal 234/164/164/164; lookup
 // plus each other boundary 234/234/234; all four 234; separately outlined inline lookup 164 with
 // checked losses.
@@ -129,6 +135,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // scalar home names, then all with the second-pass actor receiver, 164 each. Original names restored.
 // Eligibility result bool/const-bool/long/short with conditional or branch publication:
 // 194/200, 194/200, 195/178, 193/193; original body restored.
+// Second-pass combined bool/byte/short/long completion 164 each;
+// second-pass result-first bool/byte/short/long completion 164/164/188/186.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
