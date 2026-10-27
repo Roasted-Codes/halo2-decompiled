@@ -407,7 +407,7 @@ long __stdcall function_d6c80(s_type_1e6529 *data, long ignore_object_index); /*
 void function_b7930(void *data, long tag_index, long object_index, s_effect_owner const *owner); /* stubs/lane_o.cpp */
 bool function_a7640(s_effect_object_placement *data);
 void __stdcall function_a7870(long object_index); /* stubs/lane_o.cpp */
-long function_c0350(long tag_index, long object_index, long node_index, vector3f const *up, vector3f const *forward, point3f const *position, real scale);
+long function_c0350(long tag_index, long object_index, long node_index, vector3f const *up, point3f const *position, vector3f const *forward, real scale);
 bool __stdcall function_16a8e0(long name, point3f const *point, real radius, long object_index, long unknown, point3f *origin, real *radius_reference);
 void __stdcall function_179880(s_effect_datum *effect, long effect_index);
 void __stdcall function_179e80(s_effect_datum *effect);
@@ -2601,11 +2601,11 @@ void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f 
 		{
 			short node_index = location->node_index == NONE ? NONE : location->node_index & 0x7fff;
 
-			function_c0350(part->tag_index, effect->object_index, node_index, &location->matrix.up, &location->matrix.forward, &location->matrix.position, scale);
+			function_c0350(part->tag_index, effect->object_index, node_index, &location->matrix.up, &location->matrix.position, &location->matrix.forward, scale);
 		}
 		else
 		{
-			function_c0350(part->tag_index, NONE, NONE, up, forward, point, scale);
+			function_c0350(part->tag_index, NONE, NONE, up, point, forward, scale);
 		}
 		break;
 	case 'snd!':
