@@ -128,6 +128,9 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Round 227: Private slot search sentinel-plus-one start 193; short return 196; short input 199; both
 // short 199; simple start with short return/input/both 193/193/193 (three-point gains dropped);
 // terminating candidate scan 230. Existing helper restored.
+// Round 178: Complete fade-step terms with ternary/branch/saturate/update outputs 196/277/212/196;
+// the same four with a native full-width local slot 263/251/263/263. Original graph restored;
+// delayed EBP save, teams-byte and word-slot homes remain.
 // Round 194: Shared fade-result store, pointer/direct fade with word slot 212/212; long slot 263/263; merged
 // fade-in admission with word slot 259/259, long slot 311/311. Original body restored.
 // Round 167: Native unsigned-word private search input/return/both 199/196/199;

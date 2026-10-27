@@ -2,6 +2,10 @@
 // Havok (third-party physics library): copying an object's settings into a
 // description and back.
 #include "description_312430.h"
+#include "unknown_1cec30.h"
+
+ELEMENTS_2D91D0(array_312530, s_havok_entity_property);
+typedef char assert_array_312530_size[(sizeof(array_312530) == sizeof(s_havok_array)) ? 1 : -1];
 
 // @retail 0x312430
 void class_312430::function_312430(description_312430 *description) const
@@ -23,6 +27,8 @@ void class_312430::function_312430(description_312430 *description) const
 // element references 51/37/43; force inline pair copy 51/51; long/const 17/17.
 // Native input/output/both data access 17/17/17; complete CRT pair copy
 // with four access forms 26 each; CRT pair capture then field stores 17.
+// Array receiver pointers/references: destination/source/both before header
+// update 20/17/20 each; both after the update 17/17. Original arrays and body restored.
 // @retail 0x3124c0
 void class_312430::function_3124c0(description_312430 const *description)
 {
@@ -37,4 +43,20 @@ void class_312430::function_3124c0(description_312430 const *description)
 		pairs[i].field_0 = value.field_0;
 		pairs[i].field_4 = value.field_4;
 	}
+}
+
+// @retail 0x312530
+void hkEntity::entity_property_put(dword key, s_havok_property_word value)
+{
+	for (long i = 0; i < m_property_count; i++)
+	{
+		if (m_properties[i].m_key == key)
+		{
+			return;
+		}
+	}
+	s_havok_entity_property property;
+	property.m_key = key;
+	property.m_value = value;
+	((array_312530 *)&m_properties)->append_copy(property);
 }

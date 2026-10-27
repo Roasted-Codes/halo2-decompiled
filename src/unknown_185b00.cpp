@@ -711,7 +711,7 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 172 (was 213): Frame 0xac versus 0xa8; pitch-bound and remaining scalar homes differ.
+// score 172 (was 172): Frame 0xac versus 0xa8; pitch-bound and remaining scalar homes differ.
 // Earlier at 213: Frame 0xa8 agrees; upper-bound, range and pin input homes differ.
 // settings/direction/turn-difference homes and step-clamp scheduling
 // differ within frame 0xa8; the initial minimum home now agrees; retail keeps the
@@ -765,6 +765,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Round 183: Direction reference/pointer-result/output-last 213/213/213; native vector result
 // 270; shared cosine 271, with reference/vector result 271/270; reversed scalar formals 227.
 // Original direction helper and body restored; upper-bound/range and pin homes remain.
+// Angle/pin/both input-formal reuse 176/257/257; each with a shared
+// double pitch cosine 226/285/285; both with inner marker scope 257,
+// with the shared terminal pin 272. Original scalar helpers and body restored.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

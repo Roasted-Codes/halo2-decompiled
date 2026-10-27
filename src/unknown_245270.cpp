@@ -273,10 +273,12 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
+// score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
+// a separate rotation output vector copied into the direction scores 193 but adds 19 bytes (one-use
+// staging copy, not kept).
 
 // Earlier: Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
-// score 204 (was 204): frame 0x24 versus 0x2c, the source register (edx here, ecx in retail,
+// Earlier: frame 0x24 versus 0x2c, the source register (edx here, ecx in retail,
 // which keeps 0x245aa0 at 3) and the separate side-byte homes differ. Ours holds the transform
 // pointer in ebp from entry, so the source pointer stays in a scratch register; retail reads the
 // transform from the stack at its test and borrows ebp briefly for the first plane code.
@@ -332,7 +334,12 @@ void function_245400(s_source_245400 const *source, long index,
 // stores in ijk/ikj/jik/jki/kij/kji order 222 each; partial rows with shared matrix scale 212.
 // Round 207: native endpoint-word array alone/with plane-table field/with signed material field/
 // with both 204 each; separate native endpoint words with those same four record views 204 each.
-// Complete original declarations and body restored; duplicate score headers merged.
+// Earlier: original declarations and body restored; duplicate score headers merged.
+// Native scaled-vector copy with direct/separate rotation output 220/251;
+// native aggregate input with direct/separate output 204/193 (grouping rejected);
+// point workspace placement ties each. Original scalar inputs with separate native
+// rotation output copied before/after point transform 193/211, both declaration
+// scopes; direct final output with initial copy/branch results 193/229.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
