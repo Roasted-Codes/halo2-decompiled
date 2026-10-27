@@ -116,6 +116,7 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // Round 169: Clamp outputs projection/inverse-cosine/both/paired limits/paired steps
 // 395/399/395/395/395; all pointer/reference/output-first 395/395/395.
 // Branch-owned angles on the current rotation graph 397; all restored. Early J and scalar homes remain.
+// Round 251: Rotation helper role orders axis-input-angle-output, input-angle-axis-output, axis-angle-input-output, angle-axis-input-output, input-output-axis-angle, axis-output-input-angle, output-axis-input-angle, output-angle-axis-input: 389/389/389/389/389/389/389/389. Original helper contract and both alias-safe calls restored.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

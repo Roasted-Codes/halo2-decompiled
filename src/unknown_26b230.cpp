@@ -216,6 +216,7 @@ void function_268840()
 // Original pool/header observations, body and contributor child interfaces restored. Frame 0x50
 // agrees; player-pool/NONE allocation, current/successor homes and protected child-call convention
 // remain.
+// Round 251: Branch-scoped retention bool/byte/short/long 247/247/247/246; with pool after iterator setup 297/297/296/297. Original actor-wide scope, pool observations and child interfaces restored.
 // @retail 0x268c90
 void function_268c90()
 {
