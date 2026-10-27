@@ -89,6 +89,8 @@ void __stdcall function_b8890(long arg_0);
 // Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
 // combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
 // original induction restored. List/index/second-count homes and cleanup scheduling remain.
+// Native byte flag unit with unchanged/bit-5/bit-6/both writes 212 each;
+// signed-byte flag unit with those four write forms 255 each. Original restored.
 // @retail 0x278f00
 void function_278f00()
 {

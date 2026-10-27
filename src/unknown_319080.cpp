@@ -54,6 +54,8 @@ public:
 // assignments 19 rejected; named receivers and named call results 21 rejected.
 // Integer-input construction int/long/unsigned, explicit copy, destruction, both,
 // existing byte Boolean result and aggregate return initialization 22 each.
+// Native int/unsigned-int/unsigned-long kind results, ordinary/virtual callback
+// contracts and native signed-byte flag with unsigned kind 22 each.
 // Original result and body restored; first virtual receiver setup still differs.
 // @retail 0x319230
 s_result_319230 c_query_319230::function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const

@@ -1392,6 +1392,9 @@ struct s_rating_summary
 // 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
 // completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
 // the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
+// Native full-width unsigned/signed status fields 202/202; native word/bitfield
+// admission with full sentinel 350/350; split sentinel halves 335/335; native
+// status with player indexing 202, with fifteen-bit counters 199 (rejected).
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
