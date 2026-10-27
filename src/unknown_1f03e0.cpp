@@ -571,6 +571,10 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Round 183 complementary skip decision bool/byte/short/long 182 each; each with consistent
 // old-up field pointer 309 (fast), losing the caller match. All restored; initial dot
 // displacement bytes and rotation schedule remain with EDI state/EBX forward preserved.
+// Round 245 (fast): Shared initial/rotation alignment workspace 288; with cosine complement,
+// both one-use input aliases removed, or both 183/183/180; common normalization result alone,
+// with complement, with alias removal, or all 183/180/180/288. Two-point best rejected;
+// matched caller preserved. Direct-dot displacement bytes and rotation SIMD lifetimes remain.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -1001,6 +1005,8 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // Round 166: Complete vector-return ownership, matrix/input pointer-pointer, reference-pointer,
 // value-pointer, pointer-reference, reference-reference, value-reference, pointer-value,
 // reference-value 127/127/223/127/127/223/161/161. Original two-use output helper restored.
+// Round 342: Row-shared forward/left/up product carriers 86/86/86; paired forward-left/forward-up/left-up 53/53/53;
+// all three 52; all three with complete protected input scalars 102. Original nine-product helper restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

@@ -2074,6 +2074,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
 // actor/state registers and first point home remain.
 // Position/distance/motion/alternate-motion helper inline and noinline declarations 478 each.
+// Shared point/displacement/both workspaces 479/478/479; point or displacement
+// with shared planar direction 479/478, all three 479; case-twenty point or
+// displacement sharing 478/478. Opening workspaces and every call restored.
 // Round 377: Complete pending-result bool/byte/short/long 603/603/637/632;
 // entry-initialized pending results 605/605/636/631 (fast control 478). Boolean
 // forms reach retail length but preserve actor/state reversal and regress.

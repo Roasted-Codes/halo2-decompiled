@@ -481,6 +481,8 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 207: named initial low mask, packet receiver after initial callback, both, shared object
 // workspace across four phases, shared workspace with either/both, and shared final outer receiver
 // all 196. Original observations and protected interfaces restored.
+// Round 214: array-end attachment cursor with pointer-derived short/word ordinal and Boolean/masked
+// selection 221/223/221/223; native long/dword ordinal pairs 227/237/227/237. All restored.
 // Round 148: native object fields at player, parent, packed identity and final-update receivers
 // 196 each; player+parent, packed+final, first three and all four 196 each.
 // Round 240: complementary attachment selection bool/byte/short/long 229/229/240/233;

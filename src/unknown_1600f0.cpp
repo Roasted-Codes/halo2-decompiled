@@ -1205,6 +1205,8 @@ long function_19fd00(long team_index);
 void utf8_string_to_utf16_string(char const *source, word *destination, long count);
 bool function_15f120(long player_index, word *buffer, long size, long suppress_score);
 
+bool function_15eaf0();
+
 struct s_score_display
 {
 	long players[16];
@@ -1268,9 +1270,9 @@ PRIVATE inline long score_string_list_1608e0()
 	}
 	return result;
 }
-// score 789 (was 801): Frame 0x794 versus 0x79c and viewer/coordinate/scalar homes remain.
-// Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
-// Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
+// score 766 (was 789): Frame 0x798 versus 0x79c; viewer/coordinate/scalar homes remain.
+// Earlier Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
+// Earlier Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
 // player register and scalar homes; scalar names 817;
 // header/name reuse 818; header/decoder reuse 818; both short team walks 811;
 // short player walk 835; short outer team walk 818; short rank search 810.
@@ -1278,7 +1280,7 @@ PRIVATE inline long score_string_list_1608e0()
 // global optimization off 2237; size optimization 1348.
 // viewer pointer name 810; viewer lookup at first scroll use 848; short displayed-row number 811;
 // short row rank 810; direct team activity predicate 826.
-// frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
+// Earlier frame 0x794 versus 0x79c; player/scalar homes remain. Separate workspaces 816; ordinary locals 879; native player 810; team field reference 805 (plain); direct color output 844; native direct team field 820 (fast).
 // Viewer field at use 808; team score fields at use 805; player score fields at use 801 (plain);
 // dword flag carrier 808; foreground aggregate construction 805.
 // Short/word total rows 843/843; native viewport height 815; existing horizontal/vertical/both position components 820/814/808;
@@ -1300,6 +1302,13 @@ PRIVATE inline long score_string_list_1608e0()
 // all compounds with captures removed 792; captures removed alone 806;
 // dim/icon alone 801,789. Icon alone retains frame 0x794;
 // adding dim gives only three further points and frame 0x790, so that addition is rejected.
+// Round 141: coherent color/appearance/widget inline combinations and joint noinline 789 each;
+// Boolean helper header/player/activity/header-player/header-activity/player-activity/all
+// 789/804/789/804/789/804/804; byte helper counterparts 801/780/789/791/801/780/791;
+// Boolean query at both player/both-row uses 766/766; byte result observed once 791;
+// Boolean header with byte rows 780. Shared fade/row-alpha/both: opening 789 each, byte graph
+// 780 each, direct-query graph 766 each; native icon byte-player/byte-rows/direct-query
+// 791/791/777; repeated team-byte snapshot on direct queries 766 (frame 0x7a0).
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1476,10 +1485,9 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		byte *player = g_4e8c24->data + (index & 0xffff) * 0x21c;
 		++row_number;
 		long place = display.player_ranks[player_row] / 2 + 1;
-		bool has_engine = game_engine_get() != NULL;
-		bool teams = has_engine && g_4e6948->flags184.bit0;
+
 		char const &team = *(char *)(player + 0xc0);
-		if (teams && team != NONE)
+		if (function_15eaf0() && team != NONE)
 		{
 			for (short team_row = 0; team_row < display.team_count; ++team_row)
 				if (team == display.teams[team_row])
@@ -1489,7 +1497,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 				}
 		}
 		color3f colors[4];
-		function_7f790(teams ? team : NONE, team == NONE, (s_player_appearance *)(player + 0x84), colors);
+		function_7f790(function_15eaf0() ? team : NONE, team == NONE, (s_player_appearance *)(player + 0x84), colors);
 		color3f color = colors[0];
 		word flags = *(word *)(player + 2);
 		bool dim = (flags & 2) || !(flags & 1) || team == NONE ||
