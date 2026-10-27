@@ -255,6 +255,11 @@ struct s_object_header
 #define TAG_FROM_OBJECT(object) ((s_object_tag *)g_4e3b44[(object)->tag_index & 0xffff].bytes)
 
 
+// score 4 (was 92): the second scan's found block sets al after its last store and loads the short
+// through ax; retail sets al before the last store and uses cx. Its `result = true` first or with
+// `return result` 4; `result = true; ...; break;` 62/63; a found flag 4; one shared inline child
+// scan for both halves 312 (inline) / 165 (forceinline); type test inverted to `continue` 4;
+// a 600 s permuter run (52 tries), none below 4.
 // @retail 0xd0690
 bool function_d0690(s_object_child_iterator *iterator)
 {
@@ -269,10 +274,10 @@ bool function_d0690(s_object_child_iterator *iterator)
 			iterator->next = child->next_sibling;
 			if ((1 << child->type) & 3)
 			{
+				result = true;
 				iterator->child_index = index;
 				iterator->child_short = child->value1fc;
 				iterator->child_value = child->value14;
-				result = true;
 				break;
 			}
 		}
@@ -295,9 +300,9 @@ bool function_d0690(s_object_child_iterator *iterator)
 		}
 	}
 
-	if (iterator->root != iterator->current && iterator->current != NONE)
+	if (iterator->root != iterator->current)
 	{
-		do
+		while (iterator->current != NONE)
 		{
 			while (iterator->next != NONE)
 			{
@@ -328,7 +333,7 @@ bool function_d0690(s_object_child_iterator *iterator)
 			iterator->current = index;
 			if (index != NONE)
 				iterator->next = OBJECT_FROM_INDEX(index)->first_child;
-		} while (iterator->current != NONE);
+		}
 	}
 
 	return result;
@@ -370,16 +375,8 @@ void function_d0b70(long object_index, long a, long b, real value, long slot)
 		{
 			s_object_range *range = tag->ranges;
 
-			if (a < 0)
-				a = 0;
-			else if (a > range->maximum_a)
-				a = range->maximum_a;
-			child->value22c = (short)a;
-			if (b < 0)
-				b = 0;
-			else if (b > range->maximum_b)
-				b = range->maximum_b;
-			child->value22a = (short)b;
+			child->value22c = (short)(a < 0 ? 0 : a > range->maximum_a ? range->maximum_a : a);
+			child->value22a = (short)(b < 0 ? 0 : b > range->maximum_b ? range->maximum_b : b);
 		}
 	}
 }
