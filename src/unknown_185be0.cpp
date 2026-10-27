@@ -139,7 +139,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 969 (was 985): Frame 0xe4 versus 0xe0; state/output carriers and flag scheduling remain.
+// score 969 (was 969): Frame 0xe4 versus 0xe0; state/output carriers and flag scheduling remain.
 // frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
@@ -171,6 +171,9 @@ union s_185be7
 // native pairs with short/long inputs 979/978; shared short inputs and complete clamp result 969.
 // Complete clamp alone 978; flag-value plus complete clamp 969 plain (kept); curve inputs plus clamp 978.
 // Shared curve locals and native-pair trials restored; original game-call expressions unchanged.
+// Round 337: signed controller slot short/long 969/997; snapshot before turns 969;
+// existing turn/response/both pair aggregate initialization 969 each;
+// long slot with early snapshot/with both pair initializers 997/997. All restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
