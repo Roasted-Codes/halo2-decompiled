@@ -1292,6 +1292,15 @@ long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
 // score 165 (was 165): Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
+// Round 75: retail's shape is `bool updated = true;` first, `if (unknown00 == time) updated = false;
+// else { body }`, the activity result a bool, and one actor-index test at the end (NONE arm false,
+// false, !flag; actor arm the three calls). That gives retail's entry, early epilogue, slot order and
+// tail exactly (218 plain at 841 bytes): only retail's `mov ecx, eax` before the actor-index store
+// (a one-instruction shift) and an eax/ecx swap in the first point copy remain. On that shape: index
+// read at use 220; owner first/through owner/after the test 220/220/220; dword index or local 218/218;
+// index before owner/both before the lookup 220/221; test local, assign through owner 220; owner
+// first then index through it 220; separate guarded owner/index statement 220; permuter best 197
+// (type casts only). All restored.
 // Earlier 165 (was 165): early ESI save, computed return byte and actor/motion homes remain.
 // frame 0x84 agrees; early ESI save/computed return byte
 // frame 0x84 agrees; early ESI save, computed return byte and actor/motion homes differ.

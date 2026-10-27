@@ -26,6 +26,9 @@ void function_242e00(long player_index, long team);
 void function_242660(long object_index, bool flag);
 void function_2430a0(long player_index, bool flag);
 
+#define MIN(a, b) (((a) > (b)) ? (b) : (a))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
 static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 {
 	return !(table->flags[team] & 1);
@@ -34,6 +37,13 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // score 146 (was 146): frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
 // it, the completion bits use other registers, and the final predicate's layout differs. Kept: the two
 // completion bits set through byte_flags_set (retail stores the flag byte twice), 190 -> 146.
+// frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
+// where retail reloads it (a forced reload, reverted at once, gives 72), the virtual-call setup and the
+// completion bits use other scratch registers, the team keeps `mov esi, edi` where retail re-extends
+// (`movsx esi, di`: only a long team cast back to short at the 0x242e00 call gives it) and the clear-flag
+// predicate is tested where retail materializes it (`not al; and al, 1`). Kept: the two completion bits
+// through byte_flags_set 190 -> 146; the blocked call as the else arm 146 -> 106; the decay and the
+// capped increment as MAX/MIN expressions 106 -> 95 (MAX alone 105).
 // Tried on the 190 body: scoring team word 187, long 214; blocked long/byte 190/190; existing flag helper
 // force-inline 190; returned point 199; marker bits 190; option scope 190; read-only unit/type result
 // 190/190; scoring team at call 226; completion event prepared first 193; marker/slot entry lifetimes
@@ -135,6 +145,18 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Original unit observations, counter arithmetic, stores and reader contracts restored.
 // Round 146, separate byte-store graph: table-first explicit-bool/byte/short/long predicates
 // 146/146/146/149; team-first bool/byte/short/long 146/146/146/149. Original helper/body restored.
+// 190 each; native flag-bit object by value/pointer with bool/byte/short/long results 190/190/190/192
+// each; complete slot-table owner, mutable/const first-consumer captures 200/200, entry captures
+// 245/245, long predicate on those 199/199/244/244; plain descending notification-mask loop 187, with
+// completion initialization between bits/preparation before the second bit/initialization before both
+// 240/251/240, independent event buffers 193; complete eligibility bool/byte/short/long 190 each;
+// default-false reader-gate results 190 each; common score result and one publication (eight forms)
+// 239; slot/limit/ticks/marker/unit/weapon home names 190; complete entry carried-unit value 221, with
+// short slot/clock-first product/both 239/221/239; word teams alone/slot/product/all 207/223/207/223.
+// On the 146 body: limit product operands swapped 106 (no change); short slot 236; `+ -3` 106 (no
+// change); event initialization before both bits 109. On the 95 body: permission as `allowed = false;
+// if (0x15e410(team)) allowed = clear;` 128; engine call through game_engine_get 95; slot read without
+// the weapon pointer 95; position/event declarations swapped 95; signed-char predicate team 95.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {
@@ -171,9 +193,7 @@ void __stdcall function_2403b0(long player_index)
 				function_19eb90(&event);
 			}
 			long limit = (short)*(short *)((byte *)g_4e6948 + 0x244) * g_510c54->field_2_3;
-			long ticks = g_51ec80->e[slot] + 1;
-			if (ticks > limit)
-				ticks = limit;
+			long ticks = MIN(g_51ec80->e[slot] + 1, limit);
 			g_51ec80->e[slot] = (short)ticks;
 			if ((short)ticks == limit)
 			{
@@ -188,12 +208,7 @@ void __stdcall function_2403b0(long player_index)
 			}
 		}
 		else
-		{
-			long ticks = g_51ec80->e[slot] - 3;
-			if (ticks <= NONE)
-				ticks = NONE;
-			g_51ec80->e[slot] = (short)ticks;
-		}
+			g_51ec80->e[slot] = (short)MAX(g_51ec80->e[slot] - 3, NONE);
 		function_a7810(0x100);
 		return;
 	}
@@ -209,18 +224,21 @@ void __stdcall function_2403b0(long player_index)
 		if (!function_15e410(team) || !slot_flag_clear_2403b0(g_51ec80, team))
 			blocked = true;
 	}
-	if (blocked)
-		function_2430a0(player_index, true);
-	else if (function_138860())
+	if (!blocked)
 	{
-		if (g_4e6948->mode_180 == 9)
-			function_242ba0(marker, weapon_index, player_index);
-		else
+		if (function_138860())
 		{
-			short team = (short)slot == 8 ? NONE : (short)slot;
-			function_197210(player_index, 1, slot);
-			function_242e00(player_index, team);
-			function_242660(weapon_index, false);
+			if (g_4e6948->mode_180 == 9)
+				function_242ba0(marker, weapon_index, player_index);
+			else
+			{
+				short team = (short)slot == 8 ? NONE : (short)slot;
+				function_197210(player_index, 1, slot);
+				function_242e00(player_index, team);
+				function_242660(weapon_index, false);
+			}
 		}
 	}
+	else
+		function_2430a0(player_index, true);
 }

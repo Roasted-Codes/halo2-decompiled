@@ -188,6 +188,36 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // 616/616/616/616/616/616/616; all native accumulator references 616; scalar-
 // field/contribution/both/both-with-destination references 699/617/698/698. Original helper contracts
 // and alias-safe weight capture restored.
+// frame 0x4820, clears and metadata cursor agree; the palette byte, the palette
+// record (EBX in retail), the float constants (zero in XMM7) and the accumulator scheduling differ.
+// Retail reads the palette byte at each use (`mov cl, [esi+0x6f]`, a byte compare with -1, one
+// `movsx ecx, cl`, and a fresh `movsx edx, byte [esi+0x6f]` for the source index), and loads the
+// four colour values of the fog-colour accumulator up front in reverse order (scalar arguments).
+// Tried: redundant weight guard removed 1080; chained remainder defaults 698; merged failed-weight exit
+// 692; const selected record 692; named uncovered fractions 692; interleaved scalar helper 727; the alpha
+// term first 707, with the weight local 713; ordinary output inline 725; ordinary colour inline 725;
+// output-helper output-first parameters 725; native output clear 742; output clear before palette lookup
+// 790; previous index 692; cluster-distance snapshot 762; zero accumulator copies 835; library clear
+// orders 5-6-7-8-10-9/5-6-7-9-8-10/5-6-7-9-10-8/5-6-7-10-8-9/5-6-7-10-9-8/10-5-6-7-8-9/5-6-10-7-8-9/
+// 6-5-7-8-9-10 687/723/720/771/774/729/770/708, final two clears swapped 687; native colour input 692;
+// native six-field output 692, both 692; wide best weight 827; word cluster ordinal 768; colour with wide
+// weight 827; native output with word ordinal 768; wide weight with word ordinal 868; native-source
+// 012/021/102/120/201/210 683/682/694/694/685/685; source-record 012/021 683/682; single-caller source
+// writer 682/681/693/693/684/684, ordinary writer 682/684; cluster-index snapshot/source-record/byte-state
+// and all four combinations 683 each, all three with readonly source record 683; consistent palette slot
+// char/short/long, mutable or readonly record 705/616/713; inverse weighted-state with char/long palette
+// slot 705/713; one signed-short palette observation at all five uses 616; native member scalar/merge/
+// publication operations singly 615/616/615, pairs 617/615/616, all three/four 617/616; separate clamped
+// weight in scalar/merge/colour helpers 684/683/683, pairs 684/684/683, all 684; normalized contribution
+// before destination stores 742; uniform contribution product operands and helper orders (sixteen
+// forms) 615-617; complete source-value copies 887/818/984/855/989/953/1101, publication source 894;
+// no-palette dispatch first, tag/fallback admission with word/byte palette 620/620/712/713, conditional
+// selected-record result on each 620/620/712/713; shared caller falloff/contribution/both lifetimes
+// 616/616/617; uncovered contribution 715; radius+uncovered/weight+uncovered/all 716/716/714, all with
+// native byte palette 611. Round 75: palette byte read at each use 683; fog-colour accumulator with
+// four scalar colour arguments 770 (frame 0x4824: one colour value spills), with its alpha term first
+// 761, with the per-use palette byte 746; named alpha in the pointer helper 698 (3826 bytes, aligned
+// 497 -> 489).
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

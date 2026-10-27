@@ -100,8 +100,6 @@ public:
 
 
 
-// @stub 0x312530
-void hkEntity::entity_property_put(dword key, s_havok_property_word value) { }
 
 /* slot handler callbacks of the region not decompiled yet (their handler
    structs hold their addresses) */

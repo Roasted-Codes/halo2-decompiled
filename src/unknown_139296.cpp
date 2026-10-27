@@ -422,6 +422,12 @@ bool function_22acb4(long player_index);
 // (short)(char) second 232 [30], `& (word)1` 232, second split into a store and `&= 1` 283 [19], short first
 // 268, all masks short 319, second declared at entry 232, flags read at each use 232, char flags local 233,
 // `(word)(flags & 1)` 289. Only the second-mask register (and with it the frame slot) still differs there.
+// Round 204: First-enum conditional seeds NONE/one/zero, each remaining order,
+// 193/192/165/189/284/283; branch-produced NONE/one seeds 193/165. Retained type
+// order 231; original first-mask producer restored. Extra second-mask spill remains.
+// Round 347: complete second result as unsigned byte on retained/first-enum/second-enum/both
+// producer graphs 269/204/250/280; signed byte repeats 269/204/250/280.
+// The second-enum byte form recovers the one-slot prologue, but later operations regress; body restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
