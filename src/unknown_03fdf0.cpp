@@ -166,58 +166,40 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
-// score 183 (was 183): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
-// Earlier: frame 0x84/0x88, callee registers and render-state expansion differ;
-// dword selection 183; word setup flags 234; combined mask 222;
-// brightness component loop 238; redundant bit-clear removal 217.
-// Word selection 238; byte setup flags 189; joined parent cursor 183;
-// zero inline depth on dword selection 367; raw selection masks 198 (plain).
-// j93: Frame 0x84/0x88 and helper conventions/expansion remain; original API values preserved.
-// first pass byte 202; second pass byte 201; third pass byte 195; typed parent lookup 183; direct tag lookup
-// 226.
-// Earlier: Frame is four bytes small; cache/draw contracts and render expansion
-// remain. first pass result arms 205; second pass result arms 196; third pass result arms 195;
-// fourth pass result arms 195; all pass result arms 219; native cache record binding 183; native
-// setup field updates 183; cache inline contract 183; signed setup word 183; native table
-// traversal 266.
-// Earlier: Frame is four bytes small; callee transport and graphics expansion remain. shared first pass 315; shared
-// second pass 377; shared third pass 364; shared final pass 370; shared all passes 785; forced shared all
-// passes 785; forced shared boolean results 785; forced shared byte results 785; constant table shared all
-// passes 749; constant table forced shared all passes 749; constant table forced shared boolean results
-// 749; constant table forced shared byte results 749; typed constant table shared all passes 280; typed
-// constant table forced shared all passes 280; typed constant table forced shared boolean results 280;
-// typed constant table forced shared byte results 280.
-// frame 0x84/0x88, helper conventions and API expansion remain;
-// independent final-pass byte 199; with first/second/third byte 209/208/202;
-// with first-second/first-third/second-third bytes 218/214/213; final-pass short 200 (plain).
-// Earlier: frame 0x84/0x88 and helper/API contracts remain; independent
-// first/second/third/final/all native pass results 202f each; signed native setup flags, unsigned native
-// selection and both 202f each; unchanged reduced preview 202f, full 183.
-// Entry native selection/flags+selection/parent/ordinal/all declarations 202f each;
-// counter+selection/flags+parent+resource/entry coordinated roles 202f each, unchanged control 202f.
-// Native actual light definition/parent/node/camera fields 202f each; all fields 202f;
-// external native record reference 202f; native definition receiver 202f; both receivers 202f.
-// Unchanged reduced control 202f/946, ordinary baseline 183/947; frame and helper/API gaps remain.
-// Light-pool receiver at every use 253f; with direct tag 242f; Boolean selection
-// 283f; tag plus Boolean 275f; byte setup 256f; tag plus byte 242f;
-// Boolean plus byte 286f; all three 276f (control 202f, full 183).
-// Boolean receiver forms recover frame 0x88 but regress; original pooled observations restored.
-// Native pass flags first/second/third/final 215/214/214/215; first pair 220; first three 227; all
-// four 233; all with byte result 231. Fast control 202. Native flag header restored.
-// Round 199: Plain shared 12..13 pass loop, long ordinal with long/bool/byte/short result
-// 296/282/282/287; short ordinal with those results 293/279/279/284 (fast control 202). All restored.
-// Round 161: Actual low-word shape kind with shared long/bool/signed-byte/short
-// pass carriers 202f/231f/231f/248f; separate pass lifetimes 202f/231f/231f/248f.
-// Unchanged reduced control 202f; full baseline 183. Actual shape type and body restored.
-// Inline/noinline state-helper declaration with shared long/bool/byte/short pass
-// carriers 319f/290f/290f/285f; independent carriers 319f/290f/290f/285f.
-// Reduced control 202f; full baseline 183. All declarations and body restored.
-// Round 140: Repeated sample count observed once for passes 11/12/13, their pairs and all three; then all with
-// native Boolean selection 202/202/202/202/202/202/202/231 (fast control 202, full 183). Original observations
-// and selection restored; frame, cache/draw and state/API expansion remain.
-// Round 168: All normalized mask producers: long shared/split 202f each; bool shared/split 231f
-// each; byte setup with long shared/split 203f each, bool shared/split 234f each. Fast control
-// 202f; full 183. All source restored.
+// score 182 (was 183): frame 0x84 versus 0x88, cache/draw transport and state/API expansion remain.
+// Retail keeps each pass's selection in a stack byte (+0x13; ours a long in ESI); 0x4a1e0 (machine 1's,
+// in a contributor file) takes the camera in EAX, the light index in EDX and the definition on the
+// stack in retail, ours the light index in EAX, the definition in EDX and the camera on the stack:
+// BLOCKED-BY 0x4a1e0. Fixed: the depth clip planes are the vertex-program planes (retail writes the
+// +0x1c10 pair and bit 2, as 0x13450 does), 183 -> 182.
+// Tried: dword selection 183; word setup flags 234; combined mask 222; brightness component loop 238;
+// redundant bit-clear removal 217; word selection 238; byte setup flags 189; joined parent cursor 183;
+// zero inline depth on dword selection 367; raw selection masks 198; first/second/third pass byte
+// 202/201/195; typed parent lookup 183; direct tag lookup 226; first/second/third/fourth/all pass result
+// arms 205/196/195/195/219; native cache record binding 183; native setup field updates 183; cache inline
+// contract 183; signed setup word 183; native table traversal 266; shared first/second/third/final/all
+// passes 315/377/364/370/785, forced 785, forced Boolean/byte results 785/785; constant table shared all
+// passes 749 (forced and result widths 749); typed constant table shared all passes 280 (forced and result
+// widths 280); independent final-pass byte 199, with first/second/third byte 209/208/202, with pairs
+// 218/214/213; final-pass short 200; independent native pass results 202f each; signed native setup
+// flags, unsigned native selection and both 202f each; entry native selection/flags+selection/parent/
+// ordinal/all declarations 202f each; counter+selection/flags+parent+resource/entry coordinated roles
+// 202f each; native light definition/parent/node/camera fields 202f each, all 202f; external native
+// record reference 202f; native definition receiver 202f, both receivers 202f; light-pool receiver at
+// every use 253f, with direct tag 242f; Boolean selection 283f; tag plus Boolean 275f; byte setup 256f;
+// tag plus byte 242f; Boolean plus byte 286f; all three 276f (Boolean receiver forms recover frame
+// 0x88); native pass flags first/second/third/final 215/214/214/215, first pair 220, first three 227,
+// all four 233, with byte result 231; plain shared 12..13 pass loop, long ordinal with long/bool/byte/
+// short result 296/282/282/287, short ordinal 293/279/279/284; low-word shape kind with shared long/
+// bool/signed-byte/short pass carriers 202f/231f/231f/248f, separate lifetimes the same;
+// inline/noinline state-helper declaration with shared long/bool/byte/short carriers 319f/290f/290f/
+// 285f, independent the same; repeated sample count observed once for passes 11/12/13, pairs and all
+// three, with native Boolean selection 202f..231f; all normalized mask producers long shared/split 202f,
+// bool 231f, byte setup with long 203f, with bool 234f ("f": reduced image, which builds this function
+// differently: 202 there for 183 here). Round 75 (plain checks): Boolean selection 222 (975 bytes:
+// 0x496f0 is then inlined, aligned 87 -> 44); with the vertex-program planes 222 (aligned 42); plus a
+// noinline redeclaration of 0x496f0 here 222 (ignored); plus a noinline declaration at its definition
+// 285 (892 bytes).
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -291,7 +273,7 @@ bool function_404b0(long mode)
         g_4858bc = false; g_4b843c = 0;
         D3DDevice_SetRenderState(D3DRS_STENCILENABLE, 0);
         D3DDevice_SetScissors(0, FALSE, 0);
-        D3DDevice_SetDepthClipPlanes(g_485adc, g_485ae0, 2);
+        D3DDevice_SetDepthClipPlanes(g_485adc, g_485ae0, D3DSDCP_SET_VERTEXPROGRAM_PLANES);
         function_14bc0((short)g_4858b8, 0, true);
         g_4ba018 = false; g_4ba014 = 0;
     }
