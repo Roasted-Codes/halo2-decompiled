@@ -1583,7 +1583,7 @@ void function_176ad0(long marker_count, s_effect_marker *markers, s_effect_owner
 }
 
 // @retail 0x176b60
-void function_176b60(long marker_count, s_effect_marker *markers, long mode, s_effect_owner const *owner, long tag_index)
+void function_176b60(s_effect_owner const *owner, long marker_count, s_effect_marker *markers, long mode, long tag_index)
 {
 	s_effect_parameters parameters;
 
