@@ -77,6 +77,10 @@ extern "C" void _ReadWriteBarrier(void);
 // Round 221: void completion second/fallback/both 26/26/26; common 9;
 // second/common and all completions 9/9; fallback/common 9; entry null return with
 // all completions 26. Original dispatch graph restored.
+// Inclusive third with second receiver lifetime 7; eager second/first ends 9/32;
+// address-first second lower 8; scoped first/second range results 7/7; fallback result local 7;
+// entry/reversed receiver declarations 7/7; eager first receiver 7; named second/first upper
+// predicates 7/7; standalone third range 7.
 // @retail 0x147160
 void c_game_havok_memory::deallocate(void *address)
 {
