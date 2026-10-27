@@ -312,6 +312,11 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // dword/int/const-word/const-long/const-dword 28/28/112/112/112/28/112/112; lower/upper
 // endpoints after the first position 293/330 and at the coordinate phase 363/363.
 // No exact match; every per-use coordinate form restored with the original body.
+// Round 7 (lane 10) on the two-difference graph (pointer color, byte alpha, per-use coordinates,
+// member second position): C-form Begin 446 (2196 bytes); member color plus member first
+// position 2; first lower coordinate with the product commuted 2; lower as a negated sum 2;
+// half-span as a division by two 2. The two reloads after the second texture reservation stay
+// swapped. All restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

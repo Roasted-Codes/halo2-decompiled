@@ -531,6 +531,7 @@ bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 }
 
 union vector2f;
+real function_11cc90(vector2f const *a, vector2f const *b);
 extern point2f *g_468778;
 real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
@@ -561,6 +562,14 @@ __forceinline void function_29a20e(vector3f *arg_0)
 	}
 }
 
+// score 550 (was 551): frame 0x580 agrees; retail duplicates the epilogue into both arms of the final
+// clamp and places the failure exit last (ours 82 bytes shorter), keeps the flattened forward vector's
+// length on the x87 stack and loads the reference vector's fields before multiplying. Tried: the
+// flattened length summed j first 551; the flag cleared before the forward copy 550; the flatten helper
+// returning the length 551; the existing normalize3d after clearing k 676 (retail's fst/fabs, but the
+// angle dot is one instruction short and every later line shifts); angle dot products local-first 676;
+// the failure test after the loop 550; the final clamp as if/else 547; one exit for the final heading
+// store 550; the velocity dot with the k term first 550.
 // @retail 0x29a190
 void function_29a190(long arg_0, long arg_1, vector3f const *arg_2, vector3f *arg_3,
 	short *arg_4, real *arg_5, bool *arg_6, bool *arg_7, short arg_8)
@@ -575,14 +584,7 @@ void function_29a190(long arg_0, long arg_1, vector3f const *arg_2, vector3f *ar
 	vector3f local_5 = *(vector3f *)(local_0 + 0x290);
 	*(bool *)(local_0 + 0x6d1) = false;
 	function_29a20e(&local_5);
-	real local_6 = g_468778->x * local_5.i + g_468778->y * local_5.j;
-	if (-1.0f > local_6)
-		local_6 = -1.0f;
-	else if (local_6 > 1.0f)
-		local_6 = 1.0f;
-	local_6 = function_50650(local_6);
-	if (g_468778->x * local_5.j - g_468778->y * local_5.i < 0.0f)
-		local_6 = -local_6;
+	real local_6 = function_11cc90((vector2f const *)g_468778, (vector2f const *)&local_5);
 	if (!*(bool *)(local_0 + 0x5d0) || *(bool *)(local_0 + 0x5d2) || !local_2)
 	{
 		*(real *)(local_0 + 0x670) = 0.0f;
