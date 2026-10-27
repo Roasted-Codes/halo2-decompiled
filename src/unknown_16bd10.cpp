@@ -823,6 +823,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // immutable direction 381 and length-at-expression 381. Executable differences
 // 233/354/354/383/383/357/357/357 versus baseline 233; all original receivers restored. Frame 0x48
 // agrees; direction preload, normal/length/zero allocation, flag stores and timer scheduling remain.
+// Round 250: Projection for/while/do loops 360/360/401; pan for/while/do loops 385/385/292; both
+// for/while loops 380/380 (expanded fast control 245). Original parallel rows restored; direction
+// preload, length/zero allocation and flag stores remain.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

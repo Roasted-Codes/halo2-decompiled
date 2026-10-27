@@ -359,6 +359,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // Original full steering/cache layout, masks, vector copies and every call role restored.
 // Nearest, delta, previous-velocity, requested-mask and cursor names 249 each; cache/cursor
 // declaration and cache initialization order 249; redundant cache reset removed 366.
+// Round 250: Ordinary inline reciprocal/estimate/both/scale/reciprocal+scale/estimate+scale/all
+// 440/249/440/249/440/249/440; all with external inline linkage 440. Reciprocal metadata loses four
+// reduced sibling controls; every helper contract restored. Frame 0xb8/0xb4 and
+// estimate/reciprocal/cache homes remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
