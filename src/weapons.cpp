@@ -3130,6 +3130,10 @@ struct s_ammo_conversion_entry
 // observation and result restored; extra frame word, destination/tag and conversion homes remain.
 // Round 196: Ordinary/inline/noinline post-transfer updater and retention-query declaration
 // pairs, excluding the original pair, 198 each. Original declarations and body restored.
+// Round 14: byte result 200 (frame 0x20); early conversion publication 206; candidate entry 210;
+// declaration order, capacity, table at use and offered count 200 each; source scope 211;
+// complementary early publication 199; complementary early publication with offered count 204.
+// Original word result and body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
