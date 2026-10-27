@@ -833,6 +833,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // Round 190: separate blend output 337; native target quaternion mutable/const 367/367;
 // split output plus target 402; native converter result 363, with split output 393;
 // independent normalization value 367, with split output 375. All original quaternion boundaries restored.
+// Round 253: Parallel projection-product parts, ordinary/immutable 251/251;
+// pan first/both weighted parts 245/245; projection with either pan form 251/251;
+// native shared origin alone/with all parts 501/501 (1736 bytes). All restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

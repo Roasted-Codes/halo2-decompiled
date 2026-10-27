@@ -271,6 +271,9 @@ struct s_physics_component_walk : s_havok_component
 // Round 190: method-scope body identity, both statuses, identity/status pair, model/body
 // receivers and each receiver combination 275 each; common native section ordinal 275.
 // Every initializer and memory observation retained at its original point; all forms restored.
+// Round 253: Existing component policy/application/availability bit helpers,
+// all seven nonempty subsets 275 each; native upper-bitfield policy with both
+// shared status stores 275. Original method and include set restored.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

@@ -217,6 +217,7 @@ void function_268840()
 // agrees; player-pool/NONE allocation, current/successor homes and protected child-call convention
 // remain.
 // DL159: actor-boundary player-pool lifetime 246; all squared products named 246; full-width expiry alone/with products 250/250; signed-byte retention alone/with products 247/247; both result domains alone/with products 251/251. Original observations, arithmetic and child interfaces restored.
+// Round 251: Branch-scoped retention bool/byte/short/long 247/247/247/246; with pool after iterator setup 297/297/296/297. Original actor-wide scope, pool observations and child interfaces restored.
 // @retail 0x268c90
 void function_268c90()
 {

@@ -575,6 +575,7 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Round 190: direct urgent-resource fields 399; twice-used native resource index 399;
 // ordinary urgent while alone/with direct fields/with native index 399 each; earlier native
 // ordinal/resource declarations separately/together 399 each. Original helpers restored.
+// Round 251: Query-produced success at primary/alternate/both/fallback/primary+fallback/alternate+fallback/all 410/452/605/558/543/621/499; all with Boolean status 506. Original status assignments, hidden records and request expansions restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)

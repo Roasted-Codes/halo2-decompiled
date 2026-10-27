@@ -443,6 +443,7 @@ struct s_1f8a70_actor
 // Round 160: native refreshed reset/direct owner observations 402/464;
 // coherent cleanup inline alone/with native reset 402/402; native reset with single
 // exit/escaped mode name/both/cleanup 408/402/408/408. All restored.
+// Round 251: Unit-output phase scope, with source/settings early end, wide route, both, late result, source+late, wide+late, all: 402/402/410/410/429/429/439/439. Original scopes, route/result types, calls and protected unit-mode interface restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
