@@ -742,6 +742,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Round 171: Shared square 213; self-dot 227; velocity before amount/delta 263/213; earlier vector
 // with square/dot 263/261; immutable square 213; coherent vector/pitch homes 213. Original body
 // restored. Frame 0xa8 agrees; upper-bound, wrapped-range and step-clamp homes remain.
+// Round 173: Periodic output pointer first/last 308/308; output reference first/last 308/308;
+// output-pointer result 308; computed difference plus output 313; in-place pointer/reference
+// 308/308. Frame 0xa8 agrees; upper-bound slot, wrapped-range spill and step-clamp scheduling
+// remain. Original periodic helper and body restored.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

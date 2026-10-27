@@ -86,6 +86,11 @@ PRIVATE __forceinline real function_29bab4(vector3f const *arg_0, vector3f const
 // upper-bound-first clamp 803; native projection references 804 (fast). Original complete body/helpers restored.
 // Direct input with immutable parameter 804; parallel blend complement 804; signed-byte correction
 // sign 828; native projection values 1183; ordinary correction inline boundary 840 (fast).
+// Round 173: Direct-input shared native and dot-based normalizers 793/785; magnitude output
+// pointer/reference/output-first/vector-result 805/805/805/805; magnitude output with shared scaler
+// 804; with real absolute-length boundary 809. All exact-match-only forms restored. Frame 0x88
+// agrees; early input/heading retention and normalizer memory-product homes remain. Original body
+// and helpers restored.
 // @retail 0x29bab0
 void __stdcall function_29bab0(long arg_0, long arg_1, vector3f const *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
