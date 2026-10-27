@@ -2758,6 +2758,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
+// Native tag block/bitmap records separately/together, their read-only receivers and
+// complete tag/bitmap observations at use: eight forms 334 each. Original receivers restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

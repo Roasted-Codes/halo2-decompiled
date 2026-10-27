@@ -828,7 +828,7 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 	}
 }
 
-// score 210 (was 222): Frame 0x38 and result/prior-loop bytes agree; ID homes and blend-query lifetime still differ.
+// score 210 (was 210): Frame 0x38 and result/prior-loop bytes agree; ID homes and blend-query lifetime still differ.
 // Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
 // 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
 // Two-point gains dropped.
@@ -879,6 +879,8 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 199: Destination-record pointer at four earlier boundaries 222 each; full ID role names,
 // swapped record declarations and selected-set lifetime 222 each. Byte result with early pointer
 // 210 (plain 210); byte result with original pointer lifetime 210. Original pointer lifetime retained.
+// On the byte-result/native-record graph, eight primary/offset/overlay ID-name families
+// each 210; identifier homes and protected blend-query lifetime remain. Original names restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

@@ -33,6 +33,8 @@ struct lane_a_mass_restore
 // per-product scale, input and result locals 14.
 // Scalar member/index accessors, their compound and forced forms 6 each;
 // read-only record and record/member form 6 each.
+// Native coefficient/pointer arrays separately/together/compound 6/6/6/6; plain nested
+// indexed/do/outer-only/unsigned-group traversals 64/86/6/64. Original fields and bodies restored.
 // @retail 0x315280
 void __cdecl lane_a_scale_masses(void *, lane_a_mass_restore *record)
 {

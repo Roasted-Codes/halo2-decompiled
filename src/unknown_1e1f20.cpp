@@ -711,6 +711,8 @@ void swarm_leader_detach(long actor_index);
 // Full-handle actor getter plus reused prop displacement kept; getter alone gains only seven.
 // Round 168: Complete getter graph: short/byte/signed-byte cleanup 282 each; live slots 284; live
 // slots with those ordinals 284 each; shared callback element 284. Opening body restored.
+// Existing complete count-record fields, terminal do with long/short/byte/unsigned
+// indices 282 each; terminal for 314/282/282/314. Original body and record view restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
