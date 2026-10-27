@@ -2053,28 +2053,27 @@ local_0:
 
 /* whether two players may hear each other in team voice: on the same team,
    or always outside it */
-// score 15 (was 15): retail places the early true exit between the shared-team true exit and
-// the false exit; ours places it last. Early test as an else arm 15; one final true return
-// (pushes move to entry) 49; false guards with a final true return 15; split availability and
-// mode returns 61 (availability exit lands between, as in retail, but the mode exit goes
-// inline); mode getter test 61.
 // @retail 0x57b60
 long voice_players_share_team(long other, long player)
 {
-	if (!voice_available() || g_4c9878.mode != 3)
-		return true;
-	s_network_session_player *players = NULL;
-	byte *membership = (byte *)voice_get_membership();
-	if (membership)
-		players = (s_network_session_player *)(membership + 0x10d4);
-	dword mask = voice_get_player_mask_inlined();
-	if ((mask & (1 << other)) && (mask & (1 << player)))
+	bool early = !voice_available() || g_4c9878.mode != 3;
+	if (!early)
 	{
-		long other_team = (char)players[other].propertiesa8[0x7c];
-		long team = (char)players[player].propertiesa8[0x7c];
-		if (other_team != NONE && team != NONE && other_team == team)
-			return true;
+		s_network_session_player *players = NULL;
+		byte *membership = (byte *)voice_get_membership();
+		if (membership)
+			players = (s_network_session_player *)(membership + 0x10d4);
+		dword mask = voice_get_player_mask_inlined();
+		if ((mask & (1 << other)) && (mask & (1 << player)))
+		{
+			long other_team = (char)players[other].propertiesa8[0x7c];
+			long team = (char)players[player].propertiesa8[0x7c];
+			if (other_team != NONE && team != NONE && other_team == team)
+				return true;
+		}
 	}
+	if (early)
+		return true;
 	return false;
 }
 

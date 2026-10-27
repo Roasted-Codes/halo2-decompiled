@@ -395,7 +395,8 @@ void __stdcall function_dae60(s_damage_info *info, long object_index, s_damage_o
 	s_damage_region_accumulator *accumulator);
 void function_da110(long permutation_index, s_damage_info *info, long object_index, s_damage_owner const *owner,
 	long region_index, s_damage_region_accumulator *accumulator);
-void function_d9d60(bool at_marker, long marker_name, long object_index, long effect_index, s_damage_owner const *owner);
+void function_d9d60(long marker_name, long object_index, bool at_marker, long effect_index,
+	s_damage_owner const *owner);
 void function_ba690(long object_index, byte **states, long *state_count, long *a, long *b);
 void function_a8360(long object_index, long region_index, long permutation_index, long a);
 void function_dbfb0(long object_index, s_damage_owner const *owner, bool a, bool b, bool c);
@@ -636,6 +637,14 @@ void function_d6a70(long object_index)
 	}
 }
 
+// score 168 (was 183): what still differs is register allocation and the parent's flag store. Retail keeps g_4e0300
+// in ebp across the call to 0xb8b70 (ours reloads it). Retail's iterator calls leave the parent's flags re-read from
+// memory (`or byte [esi+0x10b], 0x20`) and `last` in the dead `unknown` argument slot, because 0xd0620 takes the
+// iterator in ebx. Ours reuses the flag word it loaded for the test. 0xd0620 (unknown_0d0690.cpp) is unmatched and its
+// body decides that convention, so this is probably not fixable here. The body_depleted store re-reads the object
+// with DAMAGE_OBJECT so it compiles to retail's byte `or` (183 -> 168).
+// Tried: a local copy of g_4e0300 (183, same code); the same re-read for the parent's unknown13 (177); a byte
+// `|= 0x20` on the parent's flags (181).
 // @retail 0xd6800
 void function_d6800(long object_index, s_damage_owner const *owner, bool notify_parent, bool unknown)
 {
@@ -645,7 +654,7 @@ void function_d6800(long object_index, s_damage_owner const *owner, bool notify_
 	if (TEST_FIELD_BIT(object->damage_flags.body_depleted))
 		return;
 
-	object->damage_flags.body_depleted = true;
+	DAMAGE_OBJECT(object_index)->damage_flags.body_depleted = true;
 	function_b8b70(object_index);
 	memset(&accumulator, 0, sizeof(accumulator));
 	if (unknown)
@@ -1280,24 +1289,28 @@ void function_da860(byte const *owner, byte const *target, word mask, word *bits
 // @retail 0xdc230
 real function_dc230(long rider_index, long vehicle_index, s_type_1e6529 const *data)
 {
+	real result = 1.0f;
 	s_damage_definition *definition = (s_damage_definition *)g_4e3b44[data->definition_index & 0xffff].bytes;
 	s_damage_object *rider = DAMAGE_OBJECT(rider_index);
 	s_damage_object *vehicle = DAMAGE_OBJECT(vehicle_index);
 	byte *field_4_2 = (byte *)function_d5b60(vehicle_index);
-	real result = 1.0f;
+	long seat_index;
 
 	if (field_4_2 && ((1 << rider->type) & 3) && ((1 << vehicle->type) & 3) && !(definition->flags14 & 0x2000) &&
-		rider->unknown1fc != NONE)
+		(seat_index = rider->unknown1fc) != NONE)
 	{
-		byte *seats = *(byte **)(g_4e3b44[vehicle->tag_index & 0xffff].bytes + 0x1cc);
-		long seat_key = *(long *)(seats + rider->unknown1fc * 0xb0 + 4);
+		byte *seat = seat_index * 0xb0 + *(byte **)(g_4e3b44[vehicle->tag_index & 0xffff].bytes + 0x1cc);
 		long count = *(long *)(field_4_2 + 0xd8);
-		byte *entries = *(byte **)(field_4_2 + 0xdc);
 
 		for (long i = 0; i < count; i++)
 		{
-			if (*(long *)(entries + i * 0x14) == seat_key)
-				return *(real *)(entries + i * 0x14 + 4) * definition->unknown44;
+			byte *entry = *(byte **)(field_4_2 + 0xdc) + i * 0x14;
+
+			if (*(long *)entry == *(long *)(seat + 4))
+			{
+				result = *(real *)(entry + 4) * definition->unknown44;
+				break;
+			}
 		}
 	}
 	return result;
@@ -1477,7 +1490,7 @@ void __stdcall function_dae60(s_damage_info *info, long object_index, s_damage_o
 
 			if (permutation->effect_index != NONE)
 			{
-				function_d9d60((permutation->flags >> 20) & 1, permutation->unknown38, object_index,
+				function_d9d60(permutation->unknown38, object_index, (permutation->flags >> 20) & 1,
 					permutation->effect_index, owner);
 				function_a8360(object_index, region_index, i, true);
 			}
@@ -1490,23 +1503,30 @@ void __stdcall function_dae60(s_damage_info *info, long object_index, s_damage_o
 	state->unknown02 = 0xff;
 }
 
-/* whether a permutation's model state allows it: its state index (+0x22)
-   is out of range, or that state's level is below the permutation's (+0x20) */
+/* whether a permutation's model state allows it: false when its state index
+   (+0x22) is in range and that region's chosen state (ba690's fifth array,
+   8 bytes per region, state at +1) is at or above the permutation's (+0x20) */
+// score 2 (was 39): only the order of the lea instructions that load the out-parameter
+// addresses differs (retail edi=states before esi=state_count, ours the reverse); the
+// frame and every other instruction are identical.
+// Tried: declaration order of the locals (no effect), `state_count > state_index` (4),
+// locals declared before the permutation pointer (2).
 // @retail 0xd9f70
 bool function_d9f70(long region_index, long permutation_index, s_damage_info *info, long object_index)
 {
 	s_damage_info_permutation *permutation = &info->regions[region_index].permutations[permutation_index];
 	byte *states;
 	long state_count;
-	long a;
-	long b;
+	long saved_states;
+	long choices;
 	bool result = true;
 
-	function_ba690(object_index, &states, &state_count, &a, &b);
-	short state_index = *(short *)((byte *)permutation + 0x22);
-	if (state_index >= 0 && state_index < state_count &&
-		(short)(char)states[state_index * 8 + 1] >= *(short *)((byte *)permutation + 0x20))
-		return false;
+	function_ba690(object_index, &states, &state_count, &saved_states, &choices);
+	if (permutation->unknown22 >= 0 && permutation->unknown22 < state_count)
+	{
+		if ((short)(char)((byte *)choices)[permutation->unknown22 * 8 + 1] >= permutation->unknown20)
+			result = false;
+	}
 	return result;
 }
 
@@ -1740,7 +1760,7 @@ void function_daaa0(s_damage_info *info, long object_index, s_damage_owner const
 
 						if (permutation->effect_index != NONE)
 						{
-							function_d9d60((permutation->flags >> 20) & 1, permutation->unknown38, object_index,
+							function_d9d60(permutation->unknown38, object_index, (permutation->flags >> 20) & 1,
 								permutation->effect_index, owner);
 							function_a8360(object_index, region_index, i, true);
 						}
@@ -1894,12 +1914,18 @@ void function_176330(point3f const *point, s_effect_marker *markers);
 
 /* starts a destroyed permutation's effect: attached to the object, or at
    the marker with the object's velocity */
-// score 81: retail takes the object index in edx, the marker name in ecx and the flag in al (two stack arguments,
-// `ret 8`); we keep the flag in cl, the marker name in edx and the rest on the stack (`ret 0xc`). The body itself
-// matches statement by statement. Tried: marker branch first (82), the owner cast hoisted to a local (81), the flag
-// as long (79, same registers) or byte (81).
+// score 69 (was 81): retail takes the flag in al, the marker name in ecx and the object index in edx, with two stack
+// arguments (`ret 8`); the parameter order marker, object, flag, effect, owner is the one that gives that assignment
+// (the other orders put the flag in cl or dl, 81), but only while fewer callers pass it. With the calls of 0xdaaa0
+// and 0xda110 both present (with 0xdb760's), the flag stays on the stack (`mov al, [esp + 4]`, `ret 0xc`, 69); with
+// either of them left out, or with 0xdae60's and one of them, this function is 8 away: marker and object swap
+// between esi and edi, and the 0x176ad0 argument loads are ordered differently. Which of those two callers breaks
+// it is not understood (it follows their own, still unmatched, code); the bodies are statement for statement retail's.
+// Tried (all 69): the flag as long or byte, the owner cast hoisted to a local, the flag computed into a local bool or
+// as `!= 0` at the call sites, the marker branch first, the function moved before 0xdae60, the flag last or second.
 // @retail 0xd9d60
-void function_d9d60(bool at_marker, long marker_name, long object_index, long effect_index, s_damage_owner const *owner)
+void function_d9d60(long marker_name, long object_index, bool at_marker, long effect_index,
+	s_damage_owner const *owner)
 {
 	if (!at_marker)
 	{
@@ -2088,7 +2114,7 @@ void function_da110(long permutation_index, s_damage_info *info, long object_ind
 
 	if (permutation->unknown10 != NONE)
 	{
-		function_d9d60((permutation->flags >> 20) & 1, permutation->unknown24, object_index, permutation->unknown10,
+		function_d9d60(permutation->unknown24, object_index, (permutation->flags >> 20) & 1, permutation->unknown10,
 			owner);
 	}
 	if (g_4e6948->mode != 4 && permutation->unknown18 != NONE)
@@ -3444,6 +3470,11 @@ void function_db5c0(long object_index)
 
 /* when no biped is left among a vehicle's children, lets it be destroyed
    again and clears its regions' damage levels */
+// score 44 (was 62): the rest comes from function_d0620's convention. Retail passes it the
+// iterator in ebx (object in eax) and keeps ebx as the zero constant afterwards, so no_bipeds
+// lives in the frame; ours (d0620 is unmatched in unknown_0d0690.cpp) passes the iterator on
+// the stack and keeps no_bipeds in bl. The tail loop after the vehicle update is otherwise
+// identical (unsigned region_states_size / 8, state pointer loaded after the vitality clamp).
 // @retail 0xdb670
 void function_db670(long object_index, long vehicle_index)
 {
@@ -3463,12 +3494,14 @@ void function_db670(long object_index, long vehicle_index)
 		if (no_bipeds)
 		{
 			s_damage_object *vehicle = DAMAGE_OBJECT(vehicle_index);
-			s_object_region_state *state = (s_object_region_state *)((byte *)object + object->region_states_offset);
 
 			vehicle->damage_flags.unknown12 = false;
 			if (0.25f > vehicle->body_vitality)
 				vehicle->body_vitality = 0.25f;
-			for (long i = object->region_states_size / (long)sizeof(s_object_region_state); i > 0; i--, state++)
+
+			s_object_region_state *state = (s_object_region_state *)((byte *)object + object->region_states_offset);
+
+			for (long i = (dword)(long)object->region_states_size / sizeof(s_object_region_state); i > 0; i--, state++)
 			{
 				if (state->unknown02 > 0)
 				{
@@ -3498,7 +3531,7 @@ void function_db760(long region_index, long permutation_index, long object_index
 		{
 			s_damage_info_permutation *permutation = &info->regions[region_index].permutations[permutation_index];
 
-			function_d9d60((permutation->flags >> 20) & 1, permutation->unknown38, object_index, permutation->effect_index,
+			function_d9d60(permutation->unknown38, object_index, (permutation->flags >> 20) & 1, permutation->effect_index,
 				&owner);
 		}
 		else
