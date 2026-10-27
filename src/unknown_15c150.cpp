@@ -122,6 +122,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Round 227: Private slot search sentinel-plus-one start 193; short return 196; short input 199; both
 // short 199; simple start with short return/input/both 193/193/193 (three-point gains dropped);
 // terminating candidate scan 230. Existing helper restored.
+// Count/unit index/team/local slot/fade/unit home names and two combined groups
+// 196 each (fast; reduced-image callee caveat).
 // @retail 0x15c150
 void function_15c150()
 {

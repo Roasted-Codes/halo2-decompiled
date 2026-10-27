@@ -84,6 +84,8 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // all eight restored, one-point gains below threshold.
 // noinline 101280 190; noinline 15b2f0 190; noinline 138880 190; noinline 138860 190; noinline 15fe70 190;
 // noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
+// Slot/limit/ticks/marker/unit/weapon home names and scalar/all combinations
+// 190 each (fast); original body restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

@@ -1033,6 +1033,8 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Combined inline/out-of-line declarations on lookup, direct refusal/query, three connection handlers,
 // and leave/acknowledgment handlers: all eight 191 fast, tying reduced control 191 (full 193).
 // Every declaration and handler call restored.
+// Early phase connection cases 5/6/7 216/224/230; pairs 5+6/5+7/6+7
+// 241/249/253; 5+8 and 6+8 229/231 (fast, control 191).
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
