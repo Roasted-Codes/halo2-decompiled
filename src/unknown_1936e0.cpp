@@ -207,6 +207,8 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // description cursor 30. On that graph: points input cursor 141; independent description plus input
 // cursor 141; masked list ordinal 189; masked ordinal/input cursor 238; all three 238;
 // use-stepped point cursors 30; directly indexed point arrays 218. Plain and complete-image checked.
+// Round 210: entry point-input/output/both cursors 239/250/253; independent copy count with
+// entry input/output/both 239/250/253; signed-short copy count 30; entry input/unsigned count 239.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
@@ -376,6 +378,8 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Round 324: memset destination result 186; implicit type-four zero defaults 211; destination/type-four 211;
 // implicit type-five zero default 180 (below gate); destination/type-five 180; both default kinds 215;
 // destination/both 215; destination/defaults/native place values 215.
+// Round 210: implicit type-five zero with complete equal-value type-four producers, first/second/both
+// 187/186/193; each with equal-place chain 187/186/193; reversed chains 193; native place values 193.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

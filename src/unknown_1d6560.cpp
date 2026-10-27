@@ -244,6 +244,8 @@ struct s_physics_component_walk : s_havok_component
 // Round 167: Signed-word first/current-side/next-side group body identities, individually
 // and in all combinations, 275 each; signed-word output body index 317 at 898/922,
 // frame 0x18 recovered but saved roles still differ. All eight forms restored.
+// Round 210: terminal/neighbor-owned first-body result 292/304; conditional result 296/303;
+// native word neighbors on those four graphs 317/312/299/307. First form recovers 0x18 and 922 bytes.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,
