@@ -802,6 +802,11 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // nonfull polarity 190; full-width admission result 402. Kept form is 1185/1171 bytes, plain 181.
 // Current admission/bounds with long adjustment 66; byte admission 181; native time 194;
 // long/byte 66, long/time 137, byte/time 194, all three 137; mutable removed/long 66.
+// Round 10: existing initializer 98; direct/branch-shared removal 370/370;
+// separate admission 394; removal-first lower forms 66/66/64; forward source entry 66;
+// forward memmove 380; sentinel-first links 157; early view/bound declaration swap/
+// const admission with the 64-point lower 64/64/64; default insertion range 388;
+// three current-graph cases 386. The two-point lower gain was not kept; original body restored.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
