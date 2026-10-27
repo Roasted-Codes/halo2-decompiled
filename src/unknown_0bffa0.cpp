@@ -1113,7 +1113,7 @@ void function_c0110()
     }
 }
 
-// score 6 (was 62): the last flag update holds the object in ecx and the flags in eax, retail the
+// score 6 (was 6): the last flag update holds the object in ecx and the flags in eax, retail the
 // reverse. light_partition_clear after the & 8 test with the light from g_4e030c->data and the pool
 // read at each use (kept); the same with a pool local 59, through the s_light_ab pointer 80; flags
 // through a ternary, a typed object, a dword view, a pointer to the flags 6/6/6/6; flag test negated 7;
@@ -1121,14 +1121,16 @@ void function_c0110()
 // run (59 tries), none below 6. Round 72: `|=`/`&=` on the object's flags in each arm 68 (the
 // result test is threaded away); the flags read in each arm 58; the iterator declared before the
 // object 6; the flags as `((dword *)object)[1]` 6; the clear arm first 7; `dword flags = 0;`
-// declared before the object 6.
+// declared before the object 6. Round 95: the loop leaving through `!remaining` in its condition 6;
+// the object read as `*(byte **)(g_4e0300->data + i * 12 + 8)` (the file's form) 6, with `remaining`
+// declared before it 8; a set-or-clear ternary on the field 68; the light index read directly instead
+// of through a reference local 6 (kept).
 // @retail 0xc3260
 void __stdcall function_c3260(long light_index, bool clear_object_flag)
 {
-    long const *light_index_reference = &light_index;
-    s_light_delete_view *light = &((s_light_delete_view *)g_4e030c->data)[*light_index_reference & 0xffff];
+    s_light_delete_view *light = &((s_light_delete_view *)g_4e030c->data)[light_index & 0xffff];
     if (light->flags & 8)
-        light_partition_clear(*light_index_reference);
+        light_partition_clear(light_index);
     long object_index = light->object_index;
     if (object_index != NONE && clear_object_flag)
     {
@@ -1142,7 +1144,7 @@ void __stdcall function_c3260(long light_index, bool clear_object_flag)
         s_light_delete_view *entry;
         while ((entry = (s_light_delete_view *)data_iterator_next_calling(&iterator)) != 0)
         {
-            if (iterator.datum_index != *light_index_reference && entry->object_index == object_index)
+            if (iterator.datum_index != light_index && entry->object_index == object_index)
             {
                 remaining = true;
                 break;
@@ -1155,7 +1157,7 @@ void __stdcall function_c3260(long light_index, bool clear_object_flag)
             flags &= ~0x40;
         *(dword *)(object + 4) = flags;
     }
-    record_pool_release(g_4e030c, *light_index_reference);
+    record_pool_release(g_4e030c, light_index);
 }
 
 #include "object_queries.h"
@@ -1387,6 +1389,15 @@ PRIVATE __forceinline real clamp_light(real &x, real low, real high)
     return x;
 }
 
+// score 143 (was 143): retail length; the field-block copy/store schedule, `&light->fraction` kept
+// in EBX across the 0xbab40/0xbad50 calls (ours re-forms it), the fade scaling's last two products
+// (retail reuses the scale register, one instruction shorter), the clamp stores' order, the
+// definition flag test (`js`) and the flag word read once into CX for the end tests. Round 95: the end
+// tests and `|= 2` on the word field 184 (aligned 46 -> 43: the whole flag tail matches, but the fade
+// block's extra instruction now shifts it); with the definition test as `!(bytes[0] & 0x80)` (gives
+// retail's `js`) 184 (aligned 42); fade products written `scale * field` for the last two or all three
+// pair channels 184/184 (operand order is canonicalised); vector3f_scale in place on both colours 298;
+// the fade as a named local used twice 184.
 // @retail 0xc0c80
 void __stdcall function_c0c80(long light_index)
 {

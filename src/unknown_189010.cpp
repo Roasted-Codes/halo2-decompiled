@@ -184,6 +184,15 @@ static __forceinline long game_seconds_to_ticks_round(real seconds)
 // (0x129aa0 101 -> 4) but this function then takes both arguments on the stack (156, 450 bytes;
 // with set-or-clear object/platform flags, the priority read from the request and flag8/flag11
 // end tests 132 at 470 bytes). Those body forms with the inline start alone 153, alone 163.
+// Round 95 (plain checks; --fast builds this function differently): the marker size set in an
+// if/else 135 (475 bytes, aligned 94 from 97); that with the priority and flags formed from the request
+// before the location copy 150 (487 bytes, aligned 74); that with a noinline declaration ahead of
+// 0x221810 149, stack arguments, eight callers lost; with set-or-clear object/platform flags 166 (500
+// bytes, aligned 73); that with flag8/flag11 bitfield end tests 191, stack arguments, eight callers
+// lost. Whenever the body homes the request in EBP, LTCG passes both arguments on the stack; homed
+// in EBX it arrives in EAX (retail). Retail reloads the state flags after the first 0x221810 call (its
+// compiler treats that call as opaque); ours forwards them in a callee-saved register across it,
+// which pushes the request into EBP. BLOCKED-BY 0x21d110 (its tag/state registers) and 0x221810.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
