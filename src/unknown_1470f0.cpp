@@ -57,9 +57,12 @@ void *c_game_havok_memory::allocate(long size, long memory_class)
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-// score 9 (was 19): first and third now share source dispatch, but retail's second uses edx for
+// score 9 (was 9): first and third now share source dispatch, but retail's second uses edx for
 // its vtable and eax for bounds; ours uses eax for the vtable, so the third joins the second.
 // Third end addition and fallback argument order also differ.
+// Round 97: plain four-call chain 38; third in the inclusive end form of the first two 7 (not kept,
+// two points); four calls with inclusive first/third 29, all inclusive 29; shared dispatch with
+// inclusive second/third only 31.
 // Tried: third abstract/fixed-base dispatch 19/19; nested receivers 19; first/second/both inclusive
 // 18/28/27; shared receiver name 19 and with inclusive 27; allocation local 19; fallback
 // inline/noinline/consistent-inline declarations 19/19/19; inverted third 19; third predicate 19;

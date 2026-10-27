@@ -105,6 +105,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  return function_30bf0(arg_3);
 }
 // score 920 (was 920): Frame 0x1f0 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// Round 97: offset vector built in place (no copy) 1019 (frame 0x1e4, 4167 bytes); body position
+// through its pointer 1046 (0x1e4, 4153 bytes): retail is longer, so it has more copies, not fewer;
+// marker, accumulated velocity and response output at function scope 920 each (no frame change).
 // Round 73: shared flags word for both entry tests 920; set-then-clear second flag 1019; result/accumulator
 // declared first 927; `>=` threshold flag 994; record object field read first into a named local 923.
 // Earlier: frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remained.
