@@ -17,6 +17,9 @@ real function_30bf0(vector3f *arg_0);
 // (src/projectiles.cpp, unmatched). Tried in the callee: the high-arc flag and the time-scale
 // pointer read once through their addresses 13/13; horizontal tests with the constant first 13;
 // the horizontal length computed after the gravity value 13; the gravity operands swapped 13.
+// Round 49: magnitude between vectors 13; split result declaration 13; retry-speed local 13;
+// separate retry result 13; vector assignment helper 13; array component outputs 13;
+// copy then scale 67; scaled local 101. Starting body restored.
 // @retail 0x2900b0
 bool function_2900b0(long arg_0, point3f const *arg_1, real arg_2, real arg_3, vector3f *arg_4)
 {
