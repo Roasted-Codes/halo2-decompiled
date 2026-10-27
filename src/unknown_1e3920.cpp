@@ -1608,6 +1608,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // remain.
 // Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
+// Scalar-home names for probability, fraction, delay, ticks, minimum and loop index,
+// plus both grouped renames: 270 each.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

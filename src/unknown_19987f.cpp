@@ -1322,6 +1322,8 @@ extern bool g_4ed39d;
 // zero chain 201. Byte homes and dialog joins remain.
 // Lobby/handled order, callback initializers, dialog assignment order and their
 // combinations all 184; session reset before dialog assignment 185.
+// Screen workspace, user and dialog options, callback, dialog ID and loader
+// names individually and together 184 each.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

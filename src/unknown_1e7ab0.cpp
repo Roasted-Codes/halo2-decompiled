@@ -211,6 +211,8 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // result, case order, local qualifications and complete executable body restored.
 // Shared 25/28, 26/27/29, empty cases, paired groups and all groups
 // 634/634/627/634/634/634/634; all with flag cases after 18 651.
+// Conditional player-index assignment 628; parent, seat, iterator, port, status
+// and target names individually and together 627 each.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
