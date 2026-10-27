@@ -621,6 +621,8 @@ bool function_7fb50(void)
 // scalar-loop accounting 120; chained zeros with early scalar accounting 126;
 // completed record/buffer totals 115; chained zeros with record commit 92;
 // scalar accounting with record commit 120, with chained zeros 122. Input homes remain.
+// On source-end traversal, native three-copy source view 90; with entry cursor/native ordinal/both 91/92/93;
+// native view with actual identifier/identifier and entry cursor 125/125; semantic frame names/native ordinal 90/92.
 // @retail 0x80bf0
 void function_80bf0(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, byte *buffers,
@@ -814,7 +816,7 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 238 (was 243): frame 0xc agrees; removed-index EDX/ESI and upper-bound ECX/EAX still differ.
+// score 181 (was 238): frame 0xc agrees; admission prefix, removed-index EDX/ESI and upper ECX/EAX remain.
 // Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
 // Paired range arms 373;
 // frame 0x0c agrees; removed-index registers, upper
@@ -843,13 +845,16 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Round 124: No-removal-first range 371; uninitialized time output 385; packed metadata memcpy 257;
 // real-array repair bound 375; consistent table base 394; first/second/both removal inline declarations 243/243/243.
 // All five body forms and all three declaration trials restored.
+// Constant removal result/shared full predicate with retained cases 385/381; with signed bounds 391/181 kept.
+// Existing initializer on those four forms 383/380/393/184; bounds alone 304; removal-first lower 181;
+// nonfull polarity 190; full-width admission result 402. Kept form is 1185/1171 bytes, plain 181.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
-	long removed = NONE;
-	if (g_4cf978 == 350)
+	bool cache_full = g_4cf978 == 350;
+	long const removed = cache_full ? g_4cf980 : NONE;
+	if (cache_full)
 	{
-		removed = g_4cf980;
 		function_7fd10(removed);
 		function_7fd80(removed);
 	}
@@ -858,22 +863,13 @@ long function_7fe90(const s_cached_player_identity *identity, long position, con
 	bool downward = false;
 	if (removed != NONE)
 	{
-		if (removed > position)
+		lower = position < removed ? position : removed;
+		upper = removed > position ? removed : position;
+		if (removed < position)
 		{
-			lower = position;
-			upper = removed;
-		}
-		else if (removed < position)
-		{
-			lower = removed;
-			upper = position - 1;
+			upper--;
 			position--;
 			downward = true;
-		}
-		else
-		{
-			lower = position;
-			upper = position;
 		}
 	}
 	else if (position < g_4cf978)

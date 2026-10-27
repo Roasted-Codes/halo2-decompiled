@@ -421,7 +421,7 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 	if (handle != NONE)
 		function_82a40(handle, (s_relevance_observers const *)a2, a3, a4);
 }
-// score 2 (was 13): the false-result zero precedes the mask; retail forms the mask first;
+// score 2 (was 2): the false-result zero precedes the mask; retail forms the mask first;
 // flags declared first 13; flag/result carrier 31; no index local 2 (plain 2);
 // split result init 2; result after bounds 25; early returns 26; no-index flags-first 2;
 // byte result 28; result on each path 25; single-exit goto 2.
@@ -435,6 +435,8 @@ void c_vtable_450d14::v1(long a1, long a2, real *a3, long *a4)
 // mask-proved lower/upper bounds 25/29; slot pointer expression 13; complete required-bit predicate 28.
 // World member pointer local 13; block and table pointer locals 13; member pointer, index, then table 28;
 // handle on the left of the identity test 14; long flags 17 (and 48 more declaration/width orders, 13-15).
+// On the repeated-index graph: selected-bit mask/equality 2/11; selected-first gate 9;
+// long/short/word result carriers 36/38/38; success-default result 28; guarded slot pointer 15.
 // @retail 0x979f0
 bool function_979f0(s_world_450cb8 *world, long handle)
 {

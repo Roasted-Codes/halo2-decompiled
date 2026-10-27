@@ -242,6 +242,9 @@ bool __stdcall function_25dd30(long a, long b)
 // Independent clearance/movement reaches: separate native lifetimes 310; point-of-computation
 // declarations 310; read-only values 310; role names 310; first home before vectors 310;
 // paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
+// Complete native origin/location/candidate point values 454/366/481; origin+location 493;
+// origin+candidate 518; location+candidate 503; all native values 539; all CRT value copies 539.
+// Native point workspaces enlarge the matching 0x30 frame; all snapshots restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
