@@ -310,9 +310,13 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
+// score 167 (was 199): entry and loop register allocation differ; single exit 167;
+// long best 199; long loop index 202; point names 199; vector helper 202;
+// single exit with long best 181.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {
+    bool result = false;
     s_actor_view *actor = actor_get(actor_index);
     s_transition_character *character = (s_transition_character *)function_1e4a50(actor->unknown054);
     if (character)
@@ -358,10 +362,10 @@ bool function_26f990(long actor_index, long object_index, real distance, s_objec
         {
             *out = markers[best];
             if (point) *point = best_point;
-            return true;
+            result = true;
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x270240
@@ -461,6 +465,9 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
+// score 299 (was 299): entry register convention and floating-point scheduling differ;
+// result first 299; surface first 299; vector names 299; vector helper 299;
+// case order 300; separate vector declarations 299.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,

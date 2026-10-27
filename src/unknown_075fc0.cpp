@@ -77,6 +77,8 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
 // native live flag/callback/both 441/439/432; direct counter product 419;
 // both/primary word concatenation 423/431; native both/primary concatenation 415/441.
 // Native both concatenation plain 415 at 1350/1369 bytes; products add a call and are restored.
+// Output name 415; counter name 415; paired output names 415; later channel 430;
+// flag test order 416; output declaration first 415 (fast).
 // @retail 0x75fc0
 bool s_network_observer::connection_v05(long arg_1,
 	bool arg_2, bool arg_3, bool arg_4, bool *arg_5, bool *arg_6,

@@ -232,6 +232,8 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // 866. Fast scores 927/916/927/916/916; full control 866.
 // Separate first/second/third marker ordinals long 913f/934f/916f; object ordinal alone
 // 897f/924 plain; only marker counts long 914f (control 916f). Original bounded traversals restored.
+// Direction dot operand order 916f; single expression 928f; both 928f;
+// range read order 916f; alignment test order 916f; predicate declarations 916f.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
