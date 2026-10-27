@@ -40,6 +40,17 @@ struct s_unit_state_tail
 	real unknown20;
 };
 
+/* clears a unit state tail: its floats, NONE indices and +0x18 */
+inline void unit_state_tail_clear(s_unit_state_tail *tail)
+{
+	tail->unknown1c = 0.0f;
+	tail->unknown20 = 0.0f;
+	tail->unknown00 = NONE;
+	tail->unknown04 = NONE;
+	tail->unknown08 = NONE;
+	tail->unknown18 = 0;
+}
+
 /* the unit (the object fields, then the unit's own; the fields read here) */
 struct s_unit
 {
@@ -271,6 +282,16 @@ struct s_unit_header
 #define UNIT_SEAT_COUNT(definition) (*(long *)((definition) + 0x1c8))
 #define UNIT_SEATS(definition) (*(s_unit_seat_definition **)((definition) + 0x1cc))
 #define UNIT_ANIMATION(unit) ((s_unit_animation *)((byte *)(unit) + (unit)->animation_offset))
+
+/* UNIT_GET with the index masked before the header array is read: the
+   lookups that address the header as offset + array (0xcea00, 0xce0c0) */
+static inline s_unit *unit_at_masked_index(long unit_index)
+{
+	long index = unit_index & 0xffff;
+	s_unit_header *headers = (s_unit_header *)g_4e0300->data;
+
+	return headers[index].unit;
+}
 
 /* a float rounded to an integer as the x87 does (fld, fistp) */
 __forceinline long unit_round(real value)
@@ -1044,15 +1065,12 @@ void __stdcall function_c4880(long unit_index)
 
 /* outside mode 4: steps the unit's 4-bit counter at +0x210 and marks the
    object +0xd4 names */
-// score 3 (was 3): indexed-load operands and final owner register differ;
-// mode early exit, index first, unit reload, second owner and counter scope 3;
-// signed counter 7; shared header entry 35; direct related field 3.
 // @retail 0xcea00
 void function_cea00(long unit_index)
 {
 	if (g_4e6948->mode != 4)
 	{
-		s_unit *unit = UNIT_GET(unit_index);
+		s_unit *unit = unit_at_masked_index(unit_index);
 		word counter = ((byte)unit->unknown210 + 1) & 0xf;
 
 		if (counter == (word)NONE)
@@ -1061,10 +1079,10 @@ void function_cea00(long unit_index)
 		}
 		unit->unknown210 = counter;
 		unit->unknown214 = counter;
-		long index = UNIT_GET(unit_index)->unknown0d4;
-		if (index != NONE)
+		unit = unit_at_masked_index(unit_index);
+		if (unit->unknown0d4 != NONE)
 		{
-			function_b58c0(index, 0x2000);
+			function_b58c0(unit->unknown0d4, 0x2000);
 		}
 	}
 }
@@ -1320,12 +1338,7 @@ void function_c6ef0(s_unit_state_c6ef0 *state)
 	state->unknown28 = *g_4687a8;
 	state->unknown34 = *g_4687a8;
 	state->unknown40 = *g_4687a8;
-	state->tail.unknown1c = 0.0f;
-	state->tail.unknown20 = 0.0f;
-	state->tail.unknown00 = NONE;
-	state->tail.unknown04 = NONE;
-	state->tail.unknown08 = NONE;
-	state->tail.unknown18 = 0;
+	unit_state_tail_clear(&state->tail);
 }
 
 /* how far the unit's timer at +0x2be has run, by its kind at +0x2bc: kind 1
@@ -1410,7 +1423,8 @@ struct s_unit_starting_weapon
 	word rounds_total;
 };
 
-/* creates a starting weapon for the unit; flags it at +0x12d when asked */
+/* creates a starting weapon for the unit; when asked, sets bit 8 of the
+   weapon's item flags (the word at +0x12c) */
 // @retail 0xccd60
 long function_ccd60(s_unit_starting_weapon const *weapon, long unit_index, bool flag)
 {
@@ -1432,7 +1446,7 @@ long function_ccd60(s_unit_starting_weapon const *weapon, long unit_index, bool 
 			}
 			if (flag)
 			{
-				*((byte *)object + 0x12d) |= 1;
+				*(word *)((byte *)object + 0x12c) |= 0x100;
 			}
 		}
 	}
@@ -4968,17 +4982,20 @@ void __stdcall function_ca700(long unit_index, real amount, short type, bool not
    tick and the last, in the camera's frame scaled by its data; sets flag
    25 (and, seated, flag 26) when it passes the data's limits; then eases
    the smoothed copy at +0x288 toward it */
+// score 205 (was 206): the two flag-word clears (+0x134) and the +0x10a bit
+// test differ from the first store on; the two lookups through the masked-index
+// getter 205 (the first load's operand order now matches).
 // @retail 0xce0c0
 void function_ce0c0(long unit_index)
 {
-	s_unit *unit = UNIT_GET(unit_index);
+	s_unit *unit = unit_at_masked_index(unit_index);
 	transform4x3f matrix;
 	s_unit_camera_data camera;
 
 	unit->flags_134 &= ~0x4000000;
 	unit->flags_134 &= ~0x2000000;
 	bool still = TEST_FIELD_BIT((unit->flags_10a >> 2) & 1) &&
-		(UNIT_GET(unit_index)->type != 0 || !function_e4050(unit_index));
+		(unit_at_masked_index(unit_index)->type != 0 || !function_e4050(unit_index));
 	if (function_d1080(unit_index, &matrix, &camera) && !still)
 	{
 		real ticks = g_510c54->field_2_3;
@@ -5363,12 +5380,7 @@ bool __stdcall function_c4410(long unit_index, void const *creation, bool *out_o
 	unit->unknown1f7 = NONE;
 	unit->unknown334 = 0.0f;
 	unit->unknown338 = 0.0f;
-	unit->unknown1c8.unknown1c = 0.0f;
-	unit->unknown1c8.unknown20 = 0.0f;
-	unit->unknown1c8.unknown00 = NONE;
-	unit->unknown1c8.unknown04 = NONE;
-	unit->unknown1c8.unknown08 = NONE;
-	unit->unknown1c8.unknown18 = 0;
+	unit_state_tail_clear(&unit->unknown1c8);
 	s_unit_damage_source *sources = (s_unit_damage_source *)((byte *)unit + 0x2f0);
 	for (dword i = 0; i < 4; i++)
 	{

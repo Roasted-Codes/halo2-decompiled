@@ -988,7 +988,7 @@ transform4x3f *function_ba160(long object_index, transform4x3f *matrix);
 void function_1cfb90(s_havok_component *component, transform4x3f const *matrix, void const *buffer);
 bool __stdcall function_f6670(long vehicle_index, bool update);
 void function_ba3d0(long object_index);
-void function_f06c0(s_vehicle_physics_state *state);
+s_vehicle_physics_state *function_f06c0(s_vehicle_physics_state *state);
 bool __stdcall function_205be0(s_vehicle_physics_state *state, long vehicle_index);
 void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state);
 void __stdcall function_f1f80(long vehicle_index, s_vehicle_physics_state *state);
@@ -1291,9 +1291,10 @@ bool __stdcall function_efde0(long vehicle_index)
 	return result | changed;
 }
 
-/* clears the sixteen entries of the physics state's block at +0xbc0 */
+/* clears the sixteen entries of the physics state's block at +0xbc0;
+   returns the state (retail leaves it in eax) */
 // @retail 0xf06c0
-void function_f06c0(s_vehicle_physics_state *state)
+s_vehicle_physics_state *function_f06c0(s_vehicle_physics_state *state)
 {
 	s_vehicle_contact *contact = state->contacts;
 	short i;
@@ -1303,6 +1304,7 @@ void function_f06c0(s_vehicle_physics_state *state)
 		contact->unknownb0 = NONE;
 		contact++;
 	}
+	return state;
 }
 
 /* what the vehicle's animation values sample into */
