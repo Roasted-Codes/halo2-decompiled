@@ -664,7 +664,7 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 282 (was 290): frame 0x20 agrees; early actor displacement, cleanup counter and slot reloads remain.
+// score 282 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
 // Earlier: Frame 0x20, early actor offset and cleanup/scan homes remain; slot element
 // 290; scan for-header 338; repeated input predicate 305; retained reference pool 290; word slot
 // Frame 0x20 agrees; early actor displacement, cleanup countdown and scan homes remain.
@@ -699,6 +699,8 @@ void swarm_leader_detach(long actor_index);
 // Complete actor getter observations, full-handle/native-slot 283/314; with shared prop
 // byte displacement 282/315; with live count record 283/314; both additions 282/315.
 // Full-handle actor getter plus reused prop displacement kept; getter alone gains only seven.
+// Round 168: Complete getter graph: short/byte/signed-byte cleanup 282 each; live slots 284; live
+// slots with those ordinals 284 each; shared callback element 284. Opening body restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

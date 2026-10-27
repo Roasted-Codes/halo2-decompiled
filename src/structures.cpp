@@ -241,7 +241,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
-// score 185 (was 185): exact 0x58 frame; BSP/section registers and range/plane homes differ.
+// score 185 (was 185): Frame 0x58 agrees; BSP/section, range/plane homes and vertex joins remain.
 // frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
 // Earlier: exact 0x58 frame; BSP/section registers and range/plane homes differ.
 // Frame 0x58 agrees; BSP/section carriers, range/plane homes and vertex joins remain.
@@ -296,6 +296,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // dropped; original result, defined fetch failures and all call roles restored.
 // Round 324: existing point setter 231; cluster reads at use 216; setter/cluster 245; instance receiver at use
 // 188; setter/instance 228; both receivers 220; setter/both 251; native coordinate initializer 231.
+// Round 168: Separate source/query points, entry/default initialization: byte 233/233, bool
+// 222/222; CRT byte 233/233, bool 222/222. Body, helper, in-place transform and include set
+// restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

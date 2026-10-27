@@ -159,6 +159,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Virtual output pointer/mutable receiver/both 184/184/184; uniform angular terms alone/with
 // pointer/receiver/both 184 each; new query/product contract with distinct first result 194.
 // Aligned query/rotation overlap remains.
+// Round 168: Complete native converted matrix by fields/aggregate 270/270; with broad rotation
+// 268/268, distinct first product 290/290, both 273/273. Converter and body restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

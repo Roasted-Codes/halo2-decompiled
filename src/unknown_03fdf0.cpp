@@ -208,6 +208,9 @@ void function_402b0(long cache_index, long mode)
 // Inline/noinline state-helper declaration with shared long/bool/byte/short pass
 // carriers 319f/290f/290f/285f; independent carriers 319f/290f/290f/285f.
 // Reduced control 202f; full baseline 183. All declarations and body restored.
+// Round 168: All normalized mask producers: long shared/split 202f each; bool shared/split 231f
+// each; byte setup with long shared/split 203f each, bool shared/split 234f each. Fast control
+// 202f; full 183. All source restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
