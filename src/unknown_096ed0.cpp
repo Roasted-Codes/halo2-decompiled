@@ -65,6 +65,10 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 188: Chain-query inline/noinline/forceinline/inline-out-of-line declarations, then each
 // with native word state observed once:
 // 217,217,217,217,217,217,217,217 fast; reduced control 217, full 217. Original executable source restored.
+// Round 191: Native two-use payload mask at active gate, with original/cursor/
+// conditional size/both output forms 217/250/214/244; before state selection,
+// consistently serving applicable callbacks, 217/250/214/244. Three-point best
+// restored; original field observations, output graph and executable body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

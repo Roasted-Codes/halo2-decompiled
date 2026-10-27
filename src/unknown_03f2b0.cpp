@@ -1435,6 +1435,9 @@ struct s_133f70;
 // reuse 326/326/335/326 plain (fast 355/355/344/350). All restored; frame and staging remain.
 // Projection branch scope, later failure constant and earlier level constant combinations:
 // 356/371/371/356/356/371/371 fast; separate level initialization 356 fast.
+// Round 191: Query-output flags/nodes/count workspace names, all seven combinations,
+// each 213; all three with projection-array name 213. Expanded control 213.
+// Original outputs, projection array and executable body restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
