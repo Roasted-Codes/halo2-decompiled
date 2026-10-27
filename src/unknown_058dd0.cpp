@@ -1338,6 +1338,9 @@ static __forceinline long function_724a6(s_surface_description *arg_0)
 // new classifier/member at use 165; new classifier/all roots and member 153.
 // classifier own inline with barrier 7; classifier own force-inline with barrier 7.
 // classifier own inline without barrier 86; classifier own force-inline without barrier 86.
+// Round 42: current fallback wrapper/existing classifier 7; member through the owning path 7;
+// initialized level 132; collection direct at first/second/third use 7/7/7;
+// first width result as bool/long 7/7. The three-register rotation remains.
 // @retail 0x72330
 void function_72330(c_session_state_matchmaking *state)
 {
