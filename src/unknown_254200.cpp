@@ -274,6 +274,14 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // library memcpy alone/with value half-size, native storage/value half-size and immutable/shared/value
 // all 162 (fast control 162, full 153). Native-view forms require a match; original body restored.
 // Bitmap-local name orders with alpha and coordinate names: eight combinations 162 (fast control 162).
+// Round 220: Native color pointer, byte alpha and per-use coordinates with first/second/both
+// texture C entries 369/375/467; second/both expanded position member entries 2/2 at retail length.
+// Second texture/position boundaries 375; complete rectangle edges alone/with boundaries 161/446.
+// On the two-difference graph: named half-span and both/lower/upper/no endpoints 342/363/363/386;
+// scalar size/branched size/input role names 2/2/2; all named coordinates with scalar size 342.
+// Member color/all positions/all texture calls/all first-quad entries 2 each. Scalar-size form
+// plain confirms 2/2252, first +0x411: constant and lower-coordinate reloads reversed. Every
+// per-use form is exact-only and restored; original native color, word alpha and coordinates retained.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
