@@ -572,6 +572,10 @@ real function_267370(long volatile object_index);
 // Round 176: Shifted held bit on the retained first-cross graph 319 fast/272 plain;
 // complete inverse bool/byte/short/long 319 each; staged inverse bool/byte/short
 // 368/368/388 (fast control 371). Missing frame dword persists; all forms restored.
+// Round 250: Entry receiver declarations, ordinal/type declarations, marker/point/predicate
+// declarations, each paired group, all groups, and all groups with phase-role names: 273 each. Every
+// value birth and original phase declaration restored. Frame 0x8c/0x90, early NONE and held-direction
+// byte home remain.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -1650,6 +1654,10 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
 // Scalar-home names for probability, fraction, delay, ticks, minimum and loop index,
 // plus both grouped renames: 270 each.
+// Round 250: Conditional-result query record inputs: current/secondary/both/both const 270/270/270/270;
+// both with long slots mutable/const 293/293; both with signed-byte slots mutable/const 268/268 (fast
+// control 270). Two-point gain rejected; original scalar-index inputs and short slots restored. Frame
+// 0x14 agrees; index/pool roles and scalar/ammunition homes remain.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

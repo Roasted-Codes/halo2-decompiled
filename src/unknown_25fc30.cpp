@@ -263,6 +263,52 @@ bool __stdcall function_25dd30(long a, long b)
 // independent short later counters at 94 plain; original helpers and all call tuples retained.
 // Round 343: Total-position bound long/short before lookup 479/322; after lookup 481/322;
 // long bound with later permission/cone/reference/all long ordinals 976/458/765/1168. All restored; retained indexed graph stays 94.
+// Round 345: Native unsigned-short first/permission/cone/reference ordinals on the indexed
+// graph 453/442/240/252; first+permission/cone/reference/all 367/474/473/390. Original signed
+// comparisons and 94 body restored; all eight regress.
+// frame 0x30 and retail's length agree. What differs: the 0x11e000 and 0x11e130
+// argument registers (the actor points in ECX/EDX, the vectors in EAX/ESI), which follow those
+// callees' own unmatched bodies (BLOCKED-BY 0x11e000, BLOCKED-BY 0x11e130); the first loop's long
+// index (retail's `test cx, cx` / `movzx` head is a short index, but with the blocked call setups a
+// short index lands the sphere loop on an alignment jump: 310, aligned 50; with the segment first
+// 298, aligned 30); one `score += bonus` add commuted; the 0x5b block's object-pool load (retail
+// hoists it above the index select) and its delta's register order.
+// Tried (f = fast): sphere bonus branches 311f; signed mask snapshot 310f; distance-root local 310f;
+// global optimization off 830f; minimum conditional 175; shared displacement/geometry
+// displacement/bonus result 310/310/313; geometry/sphere/cone score observations 337/310/310, all
+// 337; actual view reference 310; shared component difference at offset/segment/both/fallback
+// 334/343/343/343; sphere/cone/all displacements 368/277/392; existing magnitude helper 175;
+// read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone 175 each, all
+// shared self-dots 313; signed/unsigned sphere ordinal 1031/1031; count snapshot 175, with
+// signed/unsigned ordinal 1031/1031; final unit cap 352, with signed ordinal 1023, with count
+// snapshot 352; actor-position field 410; native sphere 182; readonly cone 175; required-flags field
+// 325; offset/minimum scopes 175/175; enabled-mask gate 175; position and sphere fields 410;
+// forceinline declarations for difference/squared-length/scale, their pairs and all three 175 each,
+// all with cone dot 175; penalty radius once 325; named margin radius 310; reach square 310;
+// radius+margin 325; radius+reach 326; margin+reach 310; all 326; both reach squares with
+// radius+margin 326; later flag/cone/reference pass cursors stepped at use 345/314/340, flag/cone
+// 345, flag/reference 352, cone/reference 342, all 352; separate later short ordinals 175f; whole
+// squared-offset/movement/sphere expression names 310 each, pairs 310, all three 175, with
+// segment/fallback squared names 175; repeated segment-origin/actor-position/both receivers
+// 356/311/357; sphere-radius receiver 175; radius plus origin/position/both 356/311/357; all three
+// native references 357; object lookup valid-first/conditional calls/selected index/missing-first
+// arms 309/309/310/309, with shared unit input 331/331/254/331; independent clearance/movement
+// reaches (separate lifetimes, point-of-computation declarations, read-only values, role names,
+// first home before vectors, paired guard/iteration homes, iteration role names) 310 each; native
+// live scalar-field references reach/radius/both/blocked gate/reach+gate/radius+gate/all
+// 310/310/175/310/175/175/310; segment squared part 175; offset and segment workspace names,
+// combinations and declaration order 175 each; complete native origin/location/candidate point
+// values 454/366/481, origin+location 493, origin+candidate 518, location+candidate 503, all 539,
+// all CRT value copies 539; complete permission/linked-unit/whole-geometry-radius observations
+// 470/311/431, pairs 469/442/428, all/immutable 362/362; first scan short/long with a shared later
+// ordinal 101/322, with independent later ordinals 310/94 (also with the existing magnitude
+// helper); unsigned-short scan ordinals singly and jointly 240 to 474; total-position bound
+// long/short before lookup 479/322, after lookup 481/322, long bound with later
+// permission/cone/reference/all long ordinals 976/458/765/1168. Round 95: the segment computed
+// before the offset and the reach 82 (kept; the offset/segment schedule now matches); segment,
+// reach, offset with the short index 313; `score = score + bonus` 82; the bonus declared before the
+// distance 415; the brace block around the first loop dropped 82 (kept); origin declared before the
+// object 82; delta and squared distance declarations swapped 82.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -272,7 +318,6 @@ void __stdcall function_25dd50(
 {
 	s_actor_firing_view *actor = (s_actor_firing_view *)actor_get(actor_index);
 
-	{
 	for (long position_index = 0; position_index < count; position_index++)
 	{
 		s_type_b36ac5 *position = &positions[position_index];
@@ -298,9 +343,9 @@ void __stdcall function_25dd50(
 			vector3f offset;
 			real reach;
 
+			vector3d_from_points3d(&actor->unknown370, &actor->unknown388, &segment);
 			vector3d_from_points3d(&actor->unknown3a0, &position->position, &offset);
 			reach = actor->unknown39c + 2.5f;
-			vector3d_from_points3d(&actor->unknown370, &actor->unknown388, &segment);
 			if (length_sq3f(&offset) < reach * reach)
 			{
 				real distance;
@@ -394,8 +439,6 @@ void __stdcall function_25dd50(
 			}
 			position->score += bonus;
 		}
-	}
-
 	}
 	for (short position_index_1 = 0; position_index_1 < count; position_index_1++)
 	{

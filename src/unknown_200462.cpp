@@ -117,6 +117,10 @@ void function_22a664(s_widget_quad_2b11 const *arg_0, s_float_rect const *arg_1,
 // source fields 144; native quad 14; fields and quad 144; initialized quad 14;
 // fields and initialized quad 144; input record fields 152; input record and quad 152;
 // input record and initialized quad 152.
+// Round 7: real-pointer bounds and memcpy 14 each; staged both/width/height conversions 85/72/88;
+// width/height product splits 26/14; final-address pointers with split/const/original dimensions 100 each;
+// record-base pointer 12 (not kept); with const dimensions/height split/width split 12/12/24;
+// height at each use 18.
 // @retail 0x200462
 void function_200462(long arg_0)
 {

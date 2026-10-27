@@ -395,6 +395,9 @@ PRIVATE inline long polygon_round_19f(real value)
 // score 379 (was 393): the fade clamp now computes a single radius*1.5 product, so the
 // radius keeps retail's xmm3; our fade block is still one instruction shorter than
 // retail's, and the call to function_4b2d0 still passes three stack arguments.
+// Round 184: native attribute header with captured/live signed count and short/word
+// elements: actual cursor 379 each; direct array indexing 374 each (five-point
+// gain rejected). Frame 0x34 versus 0x30 and protected call transport remain.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

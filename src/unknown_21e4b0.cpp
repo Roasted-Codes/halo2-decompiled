@@ -93,8 +93,11 @@ void function_220790(s_sound_listener const *listener);
 bool sound_driver_voice_create_buffer(long voice_index);
 void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 
-// score 165 (was 165): Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
+// score 165 (was 165): Frame 0x80 agrees; success/category registers and the first-channel spill remain.
+// Earlier: Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
 // Earlier 165 (was 169): success/type registers and first-channel spill;
+// Frame 0x80 agrees; saved success/type registers and first-channel spill remain.
+// success/type registers and first-channel spill;
 // byte allocation result 165; early byte result 280; listener aggregate 328;
 // aggregate with early result 357; early result with count cursor 300.
 // failure arm first 168; direct result exits 364; byte category index 311;
@@ -112,31 +115,31 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // published first channel 165; count from first channel 283; count before range publication
 // 298; published first count 294; native mixbin identifiers 165; input table row traversal
 // 232; output table traversal 268; both native table traversals 274.
-// Earlier 165 (was 165): success/type carriers and first-channel spill remain;
+// success/type carriers and first-channel spill remain;
 // native startup/create/buffer calls 209/201/165; two-row input table 165;
 // absolute channel index 283; state before codec stores 165; failure state 163; early failure state 286.
 // result from startup tests 424; tested-state transfer 424; result at first test 424;
 // final result after reset completion 303; before effects 303; before submix 262;
 // before impulse cleanup 174; before volume stores 165.
-// Earlier 165 (was 165): allocation/type carriers and first-channel spill remain;
+// allocation/type carriers and first-channel spill remain;
 // cross-reset channel / voice / both bitwise accumulation 307/306/328;
 // both Boolean accumulations late / across reset 332/331; listener / table scopes
 // with cross-reset accumulations 328/328; native submix record initializers 328.
 // success/type carriers and first-channel spill remain;
 // voice/both compound states 312/329; channel/voice/both call-first 266/286/274;
 // channel/voice/both conditional states 282/282/301. Original guarded updates retained.
-// Earlier 165 (was 165): saved success/category/first-channel homes still differ;
+// saved success/category/first-channel homes still differ;
 // final byte 167; final byte with wide state 301; final byte cross-reset 288;
 // final byte with bool state 167, cross-reset 288; scoped wide state 302;
 // wide state across reset/listener 293/294. Original byte state retained.
-// Earlier 165 (was 165): success/category and first-channel homes still differ;
+// success/category and first-channel homes still differ;
 // per-category bool/byte/long outcome 322/323/322; bool/byte across reset 295/293;
 // category outcome with native first 310, across reset 335, retained count 325.
 // saved success/type/first-channel allocation remains;
 // listener consumer scope 165; with reset/earlier byte state 280/283; submix scope 165;
 // both scopes 165; both with reset state 280; listener/reset with pointer-first bins 280;
 // all consumer boundaries 280. Original short-circuit loops retained.
-// Earlier 165 (was 165): saved success/category/first-channel allocation remains.
+// saved success/category/first-channel allocation remains.
 // Word input/output/both tables; byte input/output/both tables;
 // both word/byte tables with creation state spanning reset
 // Fast scores 283/336/292/288/378/310/271/311; original body retained.
@@ -173,7 +176,13 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // ordinals 167/301/303/311/311/292/292; all with creation state across reset 317.
 // Original signed loops, result lifetime, call order and descriptors restored.
 // Description/mix-bin/listener workspace names and creation-state name: eight combinations 165.
+// Round 58: one result byte set as the creation flag 173; set before the 0x12c040 call 285 (retail's
+// early BL/stack byte, but frame 0x84); before the listener call 288; after the 0x12c040 call/first/
+// second codec store 173 each; separate bool/byte flag set before the 0x12c040 call 290/280; bool flag 169.
 // Five coherent descriptor size/flags/input publication orders 169/169/171/171/169; reverse send-only/submix-only 167/167; complete reverse order with creation byte spanning reset 280. Original descriptors, byte state and body restored.
+// Round 147: allocated owner 519; owner/early state 504; owner/bool state 521; owner/early bool
+// 509; owner/first word 519; owner/early/word 504; owner/bool/word 521; owner/early/bool/word
+// 509. All executable forms restored; sources and comparisons saved.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
