@@ -570,6 +570,9 @@ long function_1891d0(long object_index, long marker_name, s_sound_label_play con
 // root before marker/point 60/52; entry record with root first 82.
 // Post-marker tag/scale/both 52/63/53; post-compression 52/63/52;
 // post-velocity tag/scale 52/63; all one-use snapshots restored.
+// Play first/middle parameter orders 51/51 (same code); play fields read at entry 54 (play
+// becomes a register argument, in eax). Retail keeps the object in esi and play in edi; ours
+// needs esi for 0xba300's location argument (BLOCKED-BY 0xba300's convention).
 // @retail 0x189210
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play)
 {

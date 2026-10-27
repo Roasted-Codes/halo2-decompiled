@@ -2639,7 +2639,7 @@ bool __stdcall function_111650(long arg_0, long *arg_1)
     return active;
 }
 
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *value);
 bool function_e4050(long object_index);
 const long g_4408f8[8] = { NONE, 0, 1, 2, 2, NONE, NONE, 3 };
 const long g_440918[8] = { NONE, NONE, 0x600008c, 0xc000043, 0xc000043, 0xd000042, 0xc000043, 0xc000043 };
