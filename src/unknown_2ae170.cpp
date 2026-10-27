@@ -573,6 +573,15 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // score 449 (was 449): Frame 0xec versus 0x94, workspace homes and repeated-conversion residency remain.
 // Earlier 449 from 463; Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
+// Round 55: retail's 0x37c5e4 calls are SetMixBins inside an inlined 0x2216f0 with a NULL list (its dead
+// count/pairs stores sit before each call), all three sets reuse one settings object, level00 is read
+// into esi and level04 into a 4-byte snapshot after the copy, and there are no loops: frame 0x94 =
+// settings 0x48 + 0x2216f0's pairs 0x40 and header 8 + snapshot 4. Explicit sends with one object and
+// `function_2216f0(NULL, &mixbins, buffer)` 552 (frame 0x90, 0x2216f0 inlined as retail, but our LTCG
+// CSEs the identical 0x12aff0(-64, 0, -64) calls: 7 calls versus retail's 15); with long-counter table
+// loops 467 (call hoisted); with add_send not forceinline 549; sends through 0x21e230 826 (out of line);
+// word loops with one object and 0x2216f0 447; append decibels by const reference 447.
+// Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Automatic routing storage and word ordinals retained; frame 0xec versus 0x94 and repeated conversions remain.
 // Earlier: Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Earlier 463 from 463: frame 0xdc versus 0x94 and repeated-conversion homes remain.
@@ -773,6 +782,13 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Earlier 238 from 254; complete scalar selector result 228 plain (one-use copy rejected); default-first/early
 // scalar/reference 232/243/238 fast; native-bit forms 226/224/224/227 with direct-route regressions.
 // Earlier: Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain. Round 55: retail
+// tests send flag 6 as a bitfield (`shr eax, 6; test al, 1`, also in 0x2aefe0): a flag6 bitfield in the
+// helper gives 227 plain but 0x2aefe0 456 (447); with gain0c read at each use 261 (aligned closer:
+// retail never snapshots it); flags 2/3 as bitfields too 227/456; bool alternate with plain long
+// selectors 263 (dispatcher lost); send level and offset before the left gain 236. Retail keeps
+// `level` in ebp and never CSEs (send_level + level) across the appends; ours CSEs it and gives
+// ebp to mode. Earlier: external
 // selected/input/offset references 294/291/272, pairs 311/311/307, three/four references 326/340.
 // All restored.
 // Earlier: frame 0x1c versus 0x18; mode occupies EBP.
@@ -1017,6 +1033,11 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 }
 
 // score 200 (was 200): Frame 0x10 versus consumed incoming homes; inherited send x87 sums remain.
+// Round 55: retail copies parameters->level into the dead parameters slot with an integer move and adds it
+// to the offset at entry (xmm0 = offset + slot) before the appends; the inlined add_send then copies the sum
+// through edi and adds in SSE. Gains read at use 208; early named send sum 212 (direct `addss [edi + 4]`,
+// no copy); early sum with gains at use 222 (frame 4); with a one-use base level 222; base level declared
+// before the offset 201.
 // Earlier at 208 (was 208): eight-byte frame and inherited x87 send sums differ.
 // Frame 0x10 and x87 tail sums remain; level/rear/all references 221/208/231,
 // pointers 221/208/231; reference early sums 212/222, all restored.

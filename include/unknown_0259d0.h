@@ -118,6 +118,12 @@ static inline void vector3d_from_points3d(point3f const *p0, point3f const *p1, 
 	out->k = p1->z - p0->z;
 }
 
+static inline void vector2d_from_points2d(point2f const *p0, point2f const *p1, point2f *out)
+{
+	out->x = p1->x - p0->x;
+	out->y = p1->y - p0->y;
+}
+
 __inline point3f *real_point3d_set(point3f *point, real x, real y, real z)
 {
 	point->x = x;

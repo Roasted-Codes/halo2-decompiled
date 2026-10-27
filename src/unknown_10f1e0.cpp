@@ -2291,6 +2291,12 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 
 // score 666 (was 666): Frame 0x80 agrees; request/control homes, validity expansion and ret 4 versus ret 8 remain.
 // Earlier: frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// Round 55: retail never enregisters the request pointer (esi holds the control pointer, spilled to
+// +0x24) and copies the request bools at +8/+9 as plain bytes; its transition flag is a byte (+0x11).
+// Request bools read as bool 707 (2545 bytes); with a bool transition flag 723 (frame 0x7c, but aligned
+// diffs 496 -> 383); bool transition flag alone 710 (aligned 386); declared after the result 709; with
+// only the +9 bool read 742. Retail's frame keeps a dword at +0x18 that ours does not.
 // Earlier at 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
 // frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
