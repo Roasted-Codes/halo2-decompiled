@@ -149,6 +149,10 @@ void function_14bac0()
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
 // pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
 // Original receivers and the shared iterator body restored.
+// Round 150: Actual accepted destination/alternate/both pointer results 271/255/278; with native
+// result-tested recipients 261/266/266. Both optional points initialized NULL at request entry 282;
+// with native recipients 289. Pointer domain and iterator combinations do not recover frame or
+// readiness homes; every original body statement restored.
 // Round 210: direct destination/alternate/both query buffers 256/255/272;
 // with native recipient iterator 266/265/281; both with late center 272, native recipient/late center 281.
 // Round 172: Native selected/current/both player receivers 234/234/234; with native recipients

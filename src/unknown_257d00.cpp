@@ -1642,6 +1642,9 @@ void function_b7360(long object_index);
 // Round 145: Native counted character table, promoted lookup result, repeated command index reads
 // and both 466 each; corresponding actual-record table forms 466/466/466/466. Original type and
 // body restored.
+// Round 151: Shared success return with explicit default failure, empty arms plus complete
+// orientation/motion/point payload masks 0-7, all 466/1812. No result carrier added; original returns and
+// complete dispatch restored.
 // Round 240: complementary query result bool/byte/short/long 520/520/469/525;
 // with complete complementary locomotion at the same widths 520/520/470/525. All restored.
 // Round 138: shared rounded-tick outputs moving-direct/moving-point/direct-point/all
@@ -2071,6 +2074,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
 // actor/state registers and first point home remain.
 // Position/distance/motion/alternate-motion helper inline and noinline declarations 478 each.
+// Shared point/displacement/both workspaces 479/478/479; point or displacement
+// with shared planar direction 479/478, all three 479; case-twenty point or
+// displacement sharing 478/478. Opening workspaces and every call restored.
 // Round 377: Complete pending-result bool/byte/short/long 603/603/637/632;
 // entry-initialized pending results 605/605/636/631 (fast control 478). Boolean
 // forms reach retail length but preserve actor/state reversal and regress.

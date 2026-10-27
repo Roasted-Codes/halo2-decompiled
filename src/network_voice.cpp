@@ -1253,6 +1253,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Native identity with original validation: rolled 316, counted 144; byte identity counted 112;
 // other-player identity 144; native/byte identity with channel rejection 144/112;
 // native/other-player identity with entry-width value 165/165. All lose the matched caller; original retained.
+// Counted traversal with immutable channels/player/both 112 each; pointer traversal
+// with the same forms 283 each; counted immutable identity/source 112/112.
+// Counted forms lose 0x54990; pointer forms preserve it. Original body restored.
 // Every unrolled form keeps the identity flag in bl where retail keeps it in al, so the channels
 // pointer moves to ebp and its argument to the stack. Counted loop 112; named channel size 112;
 // pointer walk 111, with the identity compared in its declaration 111; per-channel size helper 184.
@@ -2920,9 +2923,15 @@ struct s_voice_route_choice
 // Radio predicate accumulation, bitwise long with either comparison order 436/436;
 // bitwise Boolean 363/363; logical long 1082/1082;
 // logical Boolean 1087/1087. Byte bitwise accumulation 363 plain kept; original indexed nearest selection retained.
+// Byte-accumulation scalar declarations 021/102/120/201/210 and nearest/headset/radio
+// home renames 363 each; entry registers and traversal bias remain.
 // Reused outgoing identity at branch/engine/entry/after-routing 376/375/425/452;
 // branch identity with three pairs/native descriptor 382/376; engine identity with three pairs 381;
 // post-routing identity with three pairs and native descriptor 464. Original identity construction retained.
+// Round 183, recovered bitwise-radio frame: advancing choice cursor 392; reused talker/player
+// masks 384/391; cursor with talker/player 390/409; both masks 379; cursor with both 401;
+// one mode observation 405 (callers 57960/56df0 lose to 22/18). Original loop restored;
+// frame 0x54 and scalar homes agree, entry saves and unrolled cursor bias remain.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
