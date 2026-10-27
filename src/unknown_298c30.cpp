@@ -117,6 +117,7 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Normalizer input snapshots 448; native normalizer/distance/both roots 443/408/448; snapshots with
 // native distance root 448; void normalizer alone/with snapshots/with native roots 408/448/448.
 // Original helper and body restored; entry loads, XY/magnitude homes and return cleanup remain.
+// Round 341: Persistent endpoint displacement with separate workspace, shared magnitude and word counters 447/465/447/462; existing direction workspace 474/483/474/483. Original body/helpers restored.
 // Native normalization-input/evaluation/candidate-direction library copies, pair/all combinations,
 // plus native endpoint-array initialization 408/408/408/408/408/408/408/408. Original body and helpers restored.
 // Complementary facing bool/byte/short/long 408/408/430/420; with complementary first endpoint
@@ -332,6 +333,10 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Rotation publication xzy/yxz/yzx/zxy/zyx 749/749/748/749/748;
 // endpoint yx alone/with yxz rotation 811/811; normalized kij publication 749.
 // One-point forms rejected; original helper stores and body restored.
+// Round 212: Split transformed output 749; planar pivot 755 (frame 0x114, first +0x14);
+// producer scopes 749/755; reverse transforms with full/planar pivot 819/829, scoped 819/829.
+// On the planar frame: initial/pivot/both radius joins 870/856/905; ordinary result 801;
+// later ordinary result 822; ordinary common exit 753; late radius 826; endpoint inline 755.
 // Round 174: shared three-use height 779; forward/reverse/both endpoint calculations at consumption
 // 803/798/858; center-first/reverse-first initial points 836/802; reverse-first with late forward 792;
 // center-first with late reverse 797. Original geometry production restored; frame 0x11c/0x114,
@@ -526,6 +531,7 @@ bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 }
 
 union vector2f;
+real function_11cc90(vector2f const *a, vector2f const *b);
 extern point2f *g_468778;
 real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
@@ -556,6 +562,14 @@ __forceinline void function_29a20e(vector3f *arg_0)
 	}
 }
 
+// score 550 (was 551): frame 0x580 agrees; retail duplicates the epilogue into both arms of the final
+// clamp and places the failure exit last (ours 82 bytes shorter), keeps the flattened forward vector's
+// length on the x87 stack and loads the reference vector's fields before multiplying. Tried: the
+// flattened length summed j first 551; the flag cleared before the forward copy 550; the flatten helper
+// returning the length 551; the existing normalize3d after clearing k 676 (retail's fst/fabs, but the
+// angle dot is one instruction short and every later line shifts); angle dot products local-first 676;
+// the failure test after the loop 550; the final clamp as if/else 547; one exit for the final heading
+// store 550; the velocity dot with the k term first 550.
 // @retail 0x29a190
 void function_29a190(long arg_0, long arg_1, vector3f const *arg_2, vector3f *arg_3,
 	short *arg_4, real *arg_5, bool *arg_6, bool *arg_7, short arg_8)
@@ -570,14 +584,7 @@ void function_29a190(long arg_0, long arg_1, vector3f const *arg_2, vector3f *ar
 	vector3f local_5 = *(vector3f *)(local_0 + 0x290);
 	*(bool *)(local_0 + 0x6d1) = false;
 	function_29a20e(&local_5);
-	real local_6 = g_468778->x * local_5.i + g_468778->y * local_5.j;
-	if (-1.0f > local_6)
-		local_6 = -1.0f;
-	else if (local_6 > 1.0f)
-		local_6 = 1.0f;
-	local_6 = function_50650(local_6);
-	if (g_468778->x * local_5.j - g_468778->y * local_5.i < 0.0f)
-		local_6 = -local_6;
+	real local_6 = function_11cc90((vector2f const *)g_468778, (vector2f const *)&local_5);
 	if (!*(bool *)(local_0 + 0x5d0) || *(bool *)(local_0 + 0x5d2) || !local_2)
 	{
 		*(real *)(local_0 + 0x670) = 0.0f;

@@ -591,16 +591,24 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 }
 
 
-// score 201 (was 201): frame 0x50/0x54, early EBX and child-iterator convention remain.
-// Frame 0x50/0x54 and protected child-iterator register contract remain.
-// frame 0x50/0x54, early EBX and child-iterator convention remain.
-// Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
-// frame 0x50/0x54 and child-iterator registers differ;
+// score 201 (was 201): BLOCKED-BY 0xd0620. Frame 0x50 versus retail's 0x54 and the early EBX save: retail's
+// child-iterator initializer takes the object index in EAX and the iterator in EBX (ours takes the iterator
+// on the stack), so retail zeroes EBX for the object iterator, keeps the settings pointer on the stack and
+// its second child flag in a frame byte; every later stack offset differs by four.
+// Frame 0x50/0x54, early EBX and protected child-iterator convention remain.
+// Earlier baseline: frame 0x50/0x54, early EBX and child-iterator convention remain.
+// BLOCKED-BY 0xd0620 (contributor code, unmatched): retail passes the object index in eax and the child
+// iterator in ebx (ours pushes the iterator), so retail's ebx is taken through the child loop: it zeroes
+// ebx early for the object iterator and keeps both child flags on the stack (frame 0x54).
+// Round 74: retail's own shape is two flags (no unit child, every unit child friendly, both set from
+// the constant 1) and the three tail-merged calls: that form is 232 here at retail's length with the
+// aligned listing at 82 (count form 111), held back by the frame; with one call on a computed kind 273
+// (branchless select, 950 bytes); flags declared the other way 233; with bitfield exclusion bits 236;
+// with the flags set by one chained assignment 233.
 // iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
 // child category equality 251; dword friendliness plus speed snapshot 229.
 // Predicted-point force-inline 232; depth zero 510; size policy 355;
 // global optimization off 629; projectile category first 242.
-// frame 0x50/0x54 and child-iterator register contract remain.
 // Positive occupied/hostile/both results 232/232/232; word empty/friendly/both
 // 253/233/254; external child record and positive-results combination 232/232.
 // Nonunit/playerless/both child exits 232/232/232;
@@ -641,6 +649,24 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Original helper/body restored; frame and protected child convention remain.
 // Plain predicted-point component loop with long/dword/short/byte ordinals 233/233/275/275;
 // the same output-pointer return forms 233/233/275/275. Original helper/body restored.
+// Round 205: Function-scope child/vehicle-point/projectile-point workspaces, all seven
+// combinations, and all three at object-iteration scope 201 each. Original lifetimes
+// restored; frame 0x50/0x54 and protected child-iterator convention remain.
+// Round 249: shared insertion count after point/first radius/second radius/lower height/
+// upper height/weight 232/232/230/229/228/219; reused count at entry/end 201/215.
+// Original append helper and body restored; protected child contract unchanged.
+// Round 153: Outer position/velocity/both field receivers 210/202/210; vehicle-scope 208/202/208;
+// outer position/velocity references 210/202. Position receiver fixes frame but total regresses;
+// body restored.
+// Round 252: Signed team snapshot char/short/int/long before child initializer 205/265/263/263; after
+// 205/265/181/181. The 181 forms recover frame 0x54 but lose the matched caller by seven preview
+// differences; one-use field snapshots remain unmatched and are rejected. Original player
+// receiver/count/AND body restored; frame and protected child-initializer contract remain.
+// Round 196: Category inserter inline/noinline/combined/forceinline declarations 230/201/230/465,
+// identically with readonly settings. Original declarations and complete body restored.
+// Round 63: count and flag declared at function scope 201; child iterator declared before them 201; radius
+// clamp as if/else statements 201; the two exclusion tests as separate `continue`s 201; squared speed through
+// a named velocity pointer 202.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

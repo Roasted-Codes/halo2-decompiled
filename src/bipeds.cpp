@@ -1667,10 +1667,13 @@ bool __stdcall function_df880(point3f const *point, vector3f const *direction, l
 	{
 		hit = true;
 	}
+	else if (function_ddf60(arg_159e6d))
+	{
+		hit = function_1697c0(0x800001, &start, &vector, NONE, NONE, (s_collision_result_1697c0 *)&collision);
+	}
 	else
 	{
-		hit = function_1697c0(function_ddf60(arg_159e6d) ? 0x800001 : 0x84000d, &start, &vector, NONE, NONE,
-			(s_collision_result_1697c0 *)&collision);
+		hit = function_1697c0(0x84000d, &start, &vector, NONE, NONE, (s_collision_result_1697c0 *)&collision);
 	}
 	if (hit)
 	{
@@ -1928,7 +1931,7 @@ bool __stdcall function_e0d70(long arg_159e6d, real *seconds)
 }
 
 real function_1ec5f0(void *ragdoll);
-void function_1d35d0(long rigid_body_index, s_havok_component *component, real scale);
+void function_1d35d0(s_havok_component *component, long rigid_body_index, real scale);
 
 /* scales a dead biped's ragdoll bodies by how far it has settled, a little
    differently for each biped */
@@ -1954,7 +1957,7 @@ void function_e0e00(long arg_159e6d)
 			scale = (1.0f - function_1ec5f0((byte *)biped + 0x3ec)) * scales[arg_159e6d & 3] + 1.0f;
 			for (i = 0; i < *(long *)((byte *)component + 0x80); i++)
 			{
-				function_1d35d0(i, component, scale);
+				function_1d35d0(component, i, scale);
 			}
 		}
 	}
@@ -2118,19 +2121,27 @@ bool __stdcall function_10f430(long unit_index, long field_7c, long state_name, 
 
 /* gets a fallen biped up from its ragdoll: back to its getting-up
    animation, Havok asleep, at a clear spot facing along its slide */
+// score 4 (was 120): only the order of two stores differs. Retail clears unknown34b first and then the low three bits
+// of the second flags byte (`and byte [edi + 0x349], 0xf8`); ours emits the `and` first. Needed for the rest: the
+// first flag test in a `bool` local (retail loads it with the fallen test), the second test re-read through
+// BIPED_GET as `(bool)(x >> 29 & 1)` (a plain `>> 29 & 1` becomes `test dword [edi + 4], 0x20000000`), and
+// `facing = velocity` then `facing.k = 0`.
+// Tried: the flags byte as `*((byte *)&flags_348 + 1) &= 0xf8` after the store (86, 429 bytes); the store through
+// BIPED_GET (131); the two statements in either order (4 both).
 // @retail 0xe18d0
 void __stdcall function_e18d0(long arg_159e6d, bool place)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
 	bool fallen = biped->unknown34b == 1;
+	bool flagged = (biped->object_flags >> 29) & 1;
 
-	if ((biped->object_flags >> 29) & 1)
+	if (flagged)
 	{
 		real blend = 0.267f;
 
 		if (arg_159e6d != NONE && *(short *)((byte *)biped + 0x112) != NONE)
 		{
-			if ((biped->object_flags >> 29) & 1)
+			if ((bool)((BIPED_GET(arg_159e6d)->object_flags >> 29) & 1))
 			{
 				function_bfa40(arg_159e6d, 0);
 			}
@@ -2140,7 +2151,7 @@ void __stdcall function_e18d0(long arg_159e6d, bool place)
 		function_10f430(arg_159e6d, 0x7000101, 0x7000101, 0x7000101, 0xd000042, 0.0f, false, 0x210);
 	}
 	biped->unknown34b = 0;
-	*((byte *)&biped->flags_348 + 1) &= 0xf8;
+	biped->flags_348 &= 0xf8ff;
 	function_b9b90(arg_159e6d, false);
 	function_1c3770(arg_159e6d, 0);
 	if (place && biped->unknown34b)
@@ -2153,12 +2164,11 @@ void __stdcall function_e18d0(long arg_159e6d, bool place)
 		function_df5f0(arg_159e6d, &center, &height, &radius);
 		function_c5460(arg_159e6d, NONE, NULL, 0, 0, radius * 2.0f, 0);
 		function_ba1d0(arg_159e6d, &velocity, NULL);
-		if (velocity.k * velocity.k + velocity.i * velocity.i + velocity.j * velocity.j > 1.4f)
+		if (velocity.j * velocity.j + velocity.i * velocity.i + velocity.k * velocity.k > 1.4f)
 		{
 			vector3f facing;
 
-			facing.i = velocity.i;
-			facing.j = velocity.j;
+			facing = velocity;
 			facing.k = 0.0f;
 			if (function_30bf0(&facing) != 0.0f)
 			{
@@ -2991,9 +3001,11 @@ void function_e4c10(long arg_159e6d)
 
 	if (biped->physics_mode == 3)
 	{
-		biped->unknown3f9 = 0;
-		biped->unknown3f8 = 0;
-		function_1ed340((byte *)biped + 0x3ec, arg_159e6d);
+		byte *ragdoll = (byte *)biped + 0x3ec;
+
+		ragdoll[0xd] = 0;
+		ragdoll[0xc] = 0;
+		function_1ed340(ragdoll, arg_159e6d);
 		function_e18d0(arg_159e6d, true);
 	}
 }
@@ -3488,7 +3500,9 @@ bool __stdcall function_e3c90(long arg_159e6d, long *names, s_biped_physics_outp
 // @retail 0xe4330
 void function_e4330(long arg_159e6d, real height)
 {
-	real fall = height;
+	/* how hard the landing is: the height, less the soft landing height on a
+	   soft landing, then as a fraction of the landing's range */
+	real severity = height;
 	s_biped *biped = BIPED_GET(arg_159e6d);
 	byte *definition = BIPED_DEFINITION_GET(biped);
 	real soft = *(real *)(definition + 0x204);
@@ -3501,37 +3515,35 @@ void function_e4330(long arg_159e6d, real height)
 	/* retail keeps forced on the stack */
 	bool const *forced_reference = &forced;
 
-	if (!forced)
+	if (!forced && soft > severity)
 	{
-		if (soft > fall)
-		{
-			return;
-		}
-		if (hard > fall)
-		{
-			range = hard - soft;
-			time = *(real *)(definition + 0x1fc);
-			fall -= soft;
-			kind = 0;
-		}
-		else
-		{
-			range = maximum - hard;
-			time = *(real *)(definition + 0x200);
-			kind = 1;
-		}
+		return;
 	}
-	else
+	if (forced)
 	{
-		fall = maximum;
+		severity = maximum;
 		range = maximum - hard;
 		time = *(real *)(definition + 0x200);
 		*(byte *)&biped->flags_348 &= ~0x40;
 		kind = 1;
 	}
+	else if (hard > severity)
+	{
+		range = hard - soft;
+		time = *(real *)(definition + 0x1fc);
+		severity -= soft;
+		kind = 0;
+	}
+	else
+	{
+		range = maximum - hard;
+		time = *(real *)(definition + 0x200);
+		kind = 1;
+	}
 	if (range > 0.0f)
 	{
-		long ticks = vehicle_round_ticks(time * PIN(fall / range, 0.0f, 1.0f) * g_510c54->field_2_3);
+		severity = PIN(severity / range, 0.0f, 1.0f);
+		long ticks = vehicle_round_ticks(g_510c54->field_2_3 * (time * severity));
 
 		if (ticks > 0)
 		{

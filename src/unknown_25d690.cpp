@@ -1291,7 +1291,17 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
-// score 165 (was 165): Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
+// score 165 (was 165): frame 0x84 agrees; early ESI, result byte and actor/motion homes differ.
+// Earlier: Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
+// Round 75: retail's shape is `bool updated = true;` first, `if (unknown00 == time) updated = false;
+// else { body }`, the activity result a bool, and one actor-index test at the end (NONE arm false,
+// false, !flag; actor arm the three calls). That gives retail's entry, early epilogue, slot order and
+// tail exactly (218 plain at 841 bytes): only retail's `mov ecx, eax` before the actor-index store
+// (a one-instruction shift) and an eax/ecx swap in the first point copy remain. On that shape: index
+// read at use 220; owner first/through owner/after the test 220/220/220; dword index or local 218/218;
+// index before owner/both before the lookup 220/221; test local, assign through owner 220; owner
+// first then index through it 220; separate guarded owner/index statement 220; permuter best 197
+// (type casts only). All restored.
 // Earlier 165 (was 165): early ESI save, computed return byte and actor/motion homes remain.
 // frame 0x84 agrees; early ESI save/computed return byte
 // frame 0x84 agrees; early ESI save, computed return byte and actor/motion homes differ.
@@ -1353,12 +1363,31 @@ bool function_1e1de0(long arg_0);
 // body restored. Frame 0x84 agrees; early ESI, return-byte and actor/motion homes remain.
 // Round 147: Library first point/position/location/facing 165 each; both points/first-point-
 // facing/location-facing/all four 165 each in the current default-output graph.
+// Round 151: Coordinated motion/marker inline and separate out-of-line declaration pairs
+// (1,0)/(0,1)/(1,1)/(2,0)/(0,2)/(2,1)/(1,2)/(2,2), all 165/841. Every provider declaration and body
+// restored.
 // Round 240: native character eligibility bool/byte/short/long 269/269/285/299;
 // complementary eligibility at the same widths 287/287/284/298. Original nullable receiver restored.
 // Actor/character/both constant defaults at entry 165/279/280; after clock 165/279/280; both before object lookup 165; actor at entry with character before lookup 165. Original default lifetimes retained.
 // Round 179: target-admission/target-publication/activity inline declaration subsets
 // 165/165/165/165/165/165/165; all three inline/noinline 165. Original declarations restored.
 // Scratch lifetime, split actor declarations, default order and scratch name: eight combinations 165.
+// Round 211: native signed/unsigned dword timestamp result, positive/complementary status
+// and early/shared predicate exits: 269/237/269/243/269/237/269/243. Original Boolean result and body restored.
+// Round 225: signed-byte readiness/activity/behavior carriers 174/177/175;
+// readiness-activity/readiness-behavior/activity-behavior 184/182/184; all three
+// 191; all three plus signed-byte observed state 198. Original carriers restored.
+// Round 150: Separate native motion/marker storage with lexical-home, marker-arm and motion last-use scopes 174/174/165/165/174/174/165/165. Original union restored.
+// Frame 0x84, early ESI save, return byte and actor/motion homes remain.
+// Existing actor query with sample-first/receiver-first/direct/separate admission
+// 297/256/268/268; read-only character counterparts 297/256/268/268. All restored.
+// Round 76 on the round-75 shape (218, aligned 12): actor arm first 218 (aligned 21); owner after the index
+// test 220; actor-index local in the actor arm 218. Retail gives the index local its call register (ecx) at the
+// definition and spills it there; ours stores it straight from the load.
+// Round 7 (lane 10): round-75 shape rebuilt 220; with `updated` declared before the time read 218
+// (entry exact; only the `mov ecx, eax` shift and the point-copy eax/ecx swap remain); on that,
+// index local as dword 218, actor index declared first 243; one end actor-index test alone on the
+// current body 248 (842 bytes). All restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

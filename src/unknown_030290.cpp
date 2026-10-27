@@ -226,14 +226,11 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point/factor homes remain.
-// Frame 0x30 versus 0x2c; inverse defaults, displaced depth and factor spills remain.
-// Earlier: Frame 0x30 versus 0x2c and inverse/point homes remain.
-// Earlier 195 from 195: Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
-// frame 0x30 versus 0x2c and inverse-depth/point homes
-// frame 0x30 versus 0x2c and inverse-depth/point homes remain.
-// Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
-// remain. In-place displaced transform 263; later displaced input 270;
+// score 195 (was 195): Frame 0x30 versus 0x2c. Ours gives the dead scale slot to the second inverse
+// depth and spills the second transform's x and z (x into the frame); retail keeps both inverse
+// defaults at [esp+4]/[esp+8], keeps that transform's x/y in xmm7/xmm6 (ours swaps x and z) and spills
+// only z, into the scale slot. Also differ: the displaced point's load order and our camera-space
+// origin point above the displaced one. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
 // Later second inverse 259; later first inverse 271; later second output
@@ -251,7 +248,7 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // native floating factor admission 195. Complete original body restored.
 // Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;
 // y-first displaced construction 218; scale shared through existing helper 235.
-// Earlier: frame 0x30 versus 0x2c remains; initial/reversed/both
+// frame 0x30 versus 0x2c remains; initial/reversed/both
 // component loops 195/195/195; forced existing transform with no/initial/reversed/
 // both loops 195/195/195/195; component loops with displaced storage reused 195.
 // Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
@@ -275,6 +272,34 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // forced native camera/output/both expansion [443, 287, 456]. Original helper and body restored.
 // Round 327: corresponding two-product sums at each row 259; all partial sums before stores in
 // xyz/xzy/yxz/yzx/zxy/zyx order 259 each; partial rows with shared scale 279.
+// Round 59: the displaced point's sum operands follow parameter order, not text: d-first text 195
+// (same code); `d` declared before `a` gives retail's operand order with the same registers, 193
+// (diagnostic, through a forwarder: both callers, 0x4f7e0 and 0x4ff50, are in contributor files).
+// Reverse displacement written into the same point 195 (same code: the slots were already
+// shared); transformed points declared tb, ta 195; inverse defaults declared b, a 195. Retail keeps
+// the second transform's x in the register b.x was built in and spills only z (to the dead
+// scale slot); ours moves x and spills x and z to two frame slots.
+// Round 192: five other internal transform pointer-parameter orders 195 each; reverse order
+// with actual camera/point/both reference inputs 195 each. Every definition/call binding,
+// original snapshots and full body restored; frame 0x30 versus 0x2c remains.
+// DL round 156: uniform final projection products, all/origin/displaced/const 195 each;
+// projected origin/displaced/both aggregate/both component inputs 197/196/197/197.
+// Frame 0x30 and original transform, inverse defaults and expression trees restored.
+// Round 58: transform helper locals renamed 195; inverse locals renamed 195; both 195 (identical code:
+// names do not move these slots); transformed points declared tb before ta 195; displaced point declared
+// after the transformed points 195. Ours also stores ta above tb (retail: ta below tb).
+// Round 61 (lane 7): both inverses as one `real[2]` 195 (in the frame, but the second transform still
+// spills into it); with retail's displaced-sum operand order 195 (identical code); camera-space points
+// as `point3f[2]` 195 (origin point below as retail, homes otherwise unchanged); transform helper
+// locals declared z, y, x 228; second inverse declared first 195.
+// Round 151: Native right/up/right+up/forward/right+forward/up+forward/all/all+translation captures 261/257/690/257/690/690/690/690; forced pair/pair/pair/all expansion 476/471/476/639. Singles recover frame 0x2c but change input ownership; combined unforced helper outlines. All restored.
+// Original frame 0x30 versus 0x2c and inverse/point/factor homes remain; native basis captures do not qualify.
+// Round 28 (m3 lane 12): the inverses used directly, without fa/fb copies (non-perspective path sets both
+// to 1), gives retail's registers for the whole inverse/zero/output tail and 974 bytes, but 207; with b.y
+// computed before b.x the displaced point also takes retail's xmm7/xmm6, 206 (971 bytes); z, y, x order 201
+// (registers wrong); ta/tb declared first 206. Left: b at +0x10 (retail +0xc, frame 0x30 v 0x2c) and the second
+// inlined transform spilling two scaled components where retail spills one. Retail-order sum operands 195
+// (same code); a `d`-first parameter order needs callers in contributor files.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

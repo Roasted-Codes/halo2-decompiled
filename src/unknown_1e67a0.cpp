@@ -749,6 +749,25 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // 266/288. Direct native scale reaches retail length but regresses; original sampled scaling retained.
 // Round 332: Sample-angle, turn-angle and paired trig scalar home names, each
 // and every combination, 155; all with projected-axis scalar home 155. All restored.
+// Round 150: Existing cross producer first/second value inputs and returned output, seven combinations 305/307/379/273/234/228/261; both input references 155. All restored.
+// Sampled-vector slot and rotation/output allocation remain.
+// Native rotation producer with value/reference/pointer direction and pointer/reference axis,
+// output forms 220/220/220/220; returned vector forms 258/256/256/258. All restored.
+// Round 220: Five/all input flag packing 382/387; five/all flags from native ordered tests
+// into a real result word 368/398; corresponding conditional result words 391/374;
+// complete result at entry with either role name 398/398. Earlier initialization now differs;
+// original field-by-field flag production, sampled vectors and all rotation expressions restored.
+// Round 199: Canonical turn-result byte/short/long 155/161/159; side-test outputs and
+// result declared before sampling, bool/byte/short/long 155/155/161/159; all vector
+// workspaces declared before sampling with distinct side-output names 155.
+// Round 201: Shared sample/rotation-cross workspace 201; with original-side/rotated-side/sequential
+// side reuse 207/199/246; the same four with existing rotation-cross helper 201/207/199/246. Original
+// workspaces restored.
+// Round 227: Original fields at use, compound projection/cross, their pairs/all,
+// direct fields plus compound projection and existing cross helper 202/171/185/200/204/153/195/262. Restored.
+// Complete rotation rows jki/jik/kij/kji/ikj 204/202/204/206/167;
+// complete rotation and cross rows jki/kij/kji 206/200/203. All restored;
+// sampled-vector slot and rotation/output scheduling remain.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

@@ -28,121 +28,19 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
-// score 157 (was 157): Frame 0x14/0x18 and options/index/mask homes remain.
-// frame 0x14 versus 0x18 and options/index/mask homes remain.
-// Earlier: frame 0x14/0x18 and options/index/mask homes remain.
-// Earlier: frame 0x18 agrees. Retail compares i and count signed
-// (long), stores count = 0 before the first loop and counts a player before
-// its uniqueness test. Registers still rotate: retail has options in edi
-// (reloaded after the inner loop), i in ebp, mask in esi with home [esp+0x1c];
-// we have options in esi, i in edi (spilled), mask in ebp.
-// Retail's tail (one shared local_machine_valid test ending in mov al, 1, and
-// a separate false return after count <= 2) comes out exactly with
-// memcmp(&players[i].machine, &machines[m], ...) and a switch of
-// ok = ok && count > 1 && count <= 2 (12c) / ok = ok && count == 1, then
-// local_1 = ok && options->local_machine_valid; case 2/3 as one && each;
-// but that scores 199: the m loop tests the mask in memory (one instruction
-// where retail loads it into ecx) so the tail sits one line off.
-// Tried: count declared at the top (201), i per loop (202 with the switch form), direct returns in
-// case 1 (238), else branch first (208), machine_mask read directly or
-// mask & (1 << m) (no change), ?: or if for local_machine_valid (193, 298).
-// Long validation result 275; long player uniqueness 270; byte uniqueness 187;
-// short membership result 190; word active count 195.
-// Earlier: Frame 0x14 versus 0x18 and index/options/mask homes still differ.
-// Membership arm first 226; final validity merged 185; uniqueness merged 185; both merged 185;
-// success-only stores 300; mask range 230; signed-byte found index 175 kept; membership first plus
-// shared uniqueness 226. With byte index, role name 175; long uniqueness 238; count bounds 173
-// dropped for only two further points.
-// Earlier: frame 0x14 versus 0x18; options/index/mask homes still differ.
-// Machine/duplicate/both bit cursors 270/285/312; membership bit 245; outer plus
-// membership bits 235; all bit cursors 295; case orders 2,1,3 and 3,1,2 198/224.
-// First bit cursor recovers frame/options register but loses entry zero and adds 12 bytes.
-// frame and options/index/mask homes still differ.
-// native membership cursor 233f; byte membership cursor 269f.
-// machine array base 175f; player array base 242f.
-// native array bases 242f; external options record 175f.
-// search cursor machine base 231f; byte search player base 272f.
-// frame 0x14 versus 0x18 and options/index/mask homes remain;
-// fast bounded scan indexed 239; direct terminator exit 175; signed result/count/bound 175/175/175;
-// signed count and result 175; indexed terminator exit 239; scan cursor/count names 175.
-// Frame 0x14/0x18 and options/index/mask registers still differ.
-// shared duplicate index 175; shared candidate index 175.
-// short duplicate indices 308; byte duplicate indices 294.
-// short membership index 234; byte membership index 234.
-// long final result 220; short final result 235.
-// Earlier: frame 0x14/0x18 and options/index/mask homes remain.
-// Fast: native machine 266; native identifier 295; native player machine 282; identifier and machine 287;
-// native player 288; both machines 313; identifier library copy 295; machine library copy 266.
-// Earlier: frame 0x14/0x18 and options/index/mask homes remain.
-// Byte-frame equality input order: machine pair 175f; empty identifier 175f;
-// duplicate identifier 177f; local machine 176f; membership 173f/175p;
-// machine and membership 173f; player comparisons 178f; all comparisons 176f.
-// Two-point plain membership gain rejected; original comparison inputs retained.
-// frame 0x14/0x18 and options/index/mask homes remain;
-// session type/option kind/limit/index values 175/175/175/175; name length 175;
-// local-machine validity value 263; uniqueness/found entry lifetimes 175/175.
-// Word-home/paired byte-home/combined/all validity role names 171/171/171/171;
-// signed-byte accumulated/player/both/final validity 174/171/174/193.
-// One membership search/result index: native long 233; signed byte/unsigned word/unsigned byte 269/269/269;
-// exhaustion equality and direct mask 233/233; shared tail with long/byte index 237/275.
-// Original separate found byte restored; frame and options/index/mask homes remain.
-// Native input references: primary machine 171; identifier 198; both 198; player machine, with primary, with identifier or with both 240 each; complete current-player reference 175. Original input reads, comparisons and byte membership restored.
-// Round 161: separate player/machine/both pass cursors 171/157/157; word machine/player 262/171; short/unsigned/byte separate passes 262/157/262. Independent native long pass cursors 157 plain kept.
-// Independent-pass membership long/short 183/184; with retail count lower bound 188/188;
-// shared switch-result tail with long/short 196/189, and with lower bound 194/189.
-// Entry zero lifetimes on independent passes: count 172; machine 171; player 157;
-// both ordinals 171; count/machine 184; count/player 172; all 184; ordinal role names 171.
-// With independent validation passes: conditional machine result 218; conditional duplicate
-// result 238; conditional machine/duplicate results 260; conditional local-machine result 258;
-// conditional machine/local results 283; conditional duplicate/local results 235; all three
-// conditional comparison results 282; conditional initial player result 245. All restored.
-// Complete accumulated/player/final comparison-result complements and combinations
-// 272/160/272/203/274/206/274/335; last form uses a native long final failure result. All restored.
-// Independent-pass complete mask observations 157; with native long/short membership 183/184; unsigned mask
-// bound 238; long accumulated/player/both validity 215/171/212; short accumulated validity 221. Original body
-// restored.
-// Recovered-prefix native uniqueness: long/short membership 190/190; reversed membership inputs 190; count
-// bounds 194; bounds and reversed inputs 194; early player ordinal 171; early ordinal with native membership
-// 190; shared native result tail 191. All restored; native uniqueness alone reaches first +0x11b at 171.
-// Independent-pass nested ordinals: distinct machine/player/both/membership identities and all
-// three pair/all combinations 157 each; separate inner native declarations 157. Frame 0x14/0x18
-// and options/index/mask homes remain; all executable forms restored.
-// Word uniqueness signed/unsigned 183/183; with word/byte accumulated result 230/183;
-// with word final/all-word results 230/245; with long/short membership 194/194.
-// These recover the opening frame and registers through +0x10 but regress overall; all restored.
-// Initial validation result from first two/three/four/five tests, bool 157 each;
-// complete entry result long/short/signed byte/byte 219/226/188/188. All restored.
+/* whether a session's options are consistent: the header fields in range,
+   distinct machines, valid and distinct players on known machines, and a
+   player count the session type allows */
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
-	bool local_1 = false;
+	bool result;
+	if (options->type >= 0 && options->type < 6 &&
+		options->unknown4 >= 0 && options->unknown4 < 6 &&
+		options->unknown6 > 0 && options->unknown6 <= 300 &&
+		string_length_bounded(options->name, sizeof(options->name)) > 0 &&
+		options->unknown120 >= 0 && options->unknown120 < 16)
 	{
-		if (options->type < 0 || options->type >= 6)
-		{
-			local_1 = false;
-			goto local_2;
-		}
-		if (options->unknown4 < 0 || options->unknown4 >= 6)
-		{
-			local_1 = false;
-			goto local_2;
-		}
-		if (options->unknown6 <= 0 || options->unknown6 > 300)
-		{
-			local_1 = false;
-			goto local_2;
-		}
-		if (string_length_bounded(options->name, sizeof(options->name)) <= 0)
-		{
-			local_1 = false;
-			goto local_2;
-		}
-		if (options->unknown120 < 0 || options->unknown120 >= 16)
-		{
-			local_1 = false;
-			goto local_2;
-		}
-
 		long count = 0;
 		dword mask = options->machine_mask;
 		bool ok = (mask & 0xffff0000) == 0;
@@ -179,10 +77,10 @@ bool __stdcall function_138180(const s_session_options *options)
 				}
 				else
 				{
-					signed char found = NONE;
+					long found = NONE;
 					for (long m = 0; m < MAXIMUM_PLAYERS_PER_SESSION; m++)
 					{
-						if (((1 << m) & mask) && memcmp(&options->machines[m], &options->players[player_index].machine, sizeof(s_session_machine)) == 0)
+						if (((1 << m) & mask) && memcmp(&options->players[player_index].machine, &options->machines[m], sizeof(s_session_machine)) == 0)
 						{
 							found = m;
 							break;
@@ -199,70 +97,34 @@ bool __stdcall function_138180(const s_session_options *options)
 			ok = ok && options->unknown12a >= 0 && options->unknown12a < 4;
 			if (options->unknown12c)
 			{
-				if (!ok)
-				{
-					local_1 = false;
-					goto local_2;
-				}
-				if (count >= 2 && count <= 2)
-				{
-					local_1 = options->local_machine_valid != 0;
-					goto local_2;
-				}
-				local_1 = false;
-				goto local_2;
+				ok = ok && count > 1 && count <= 2;
 			}
 			else
 			{
-				if (!ok || count != 1)
-				{
-					local_1 = false;
-					goto local_2;
-				}
-				local_1 = options->local_machine_valid != 0;
-				goto local_2;
-
+				ok = ok && count == 1;
 			}
+			result = ok && options->local_machine_valid;
+			break;
 		case 2:
-			if (!ok)
-			{
-				local_1 = false;
-				goto local_2;
-			}
-			if (count >= 1 && count <= 16)
-			{
-				local_1 = options->local_machine_valid != 0;
-				goto local_2;
-			}
-			local_1 = false;
-			goto local_2;
+			result = ok && count >= 1 && count <= 16 && options->local_machine_valid;
+			break;
 		case 3:
-			if (!ok)
-			{
-				local_1 = false;
-				goto local_2;
-			}
-			if (count >= 1)
-			{
-				local_1 = options->local_machine_valid != 0;
-				goto local_2;
-
-			}
-			local_1 = false;
-			goto local_2;
+			result = ok && count >= 1 && options->local_machine_valid;
+			break;
 		case 4:
-			local_1 = ok;
-			goto local_2;
 		case 5:
-			local_1 = ok;
-			goto local_2;
+			result = ok;
+			break;
 		default:
-			local_1 = false;
-			goto local_2;
+			result = false;
+			break;
 		}
 	}
-local_2:
-	return local_1;
+	else
+	{
+		result = false;
+	}
+	return result;
 }
 
 // @retail 0x1384a0

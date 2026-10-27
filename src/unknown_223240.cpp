@@ -75,6 +75,12 @@ void function_2232a0(void)
 }
 
 // score 151 (was 151): One-dword frame agrees; common count/layout join, slot predicate and terminal/tail transport remain.
+// The tail call is BLOCKED-BY 0x2b5d0: its body is disabled and a /Gr stub takes the count in ECX and the
+// mode in EDX, where retail passes the count in EAX and the mode in ECX. Round 73: sibling clamp ternary
+// 182; pretested for loop 161; both 183; callee formals mode-first 151 (mode reaches ECX, count EDX).
+// Round 97: the existing 0x16a90 predicate for the layout test 151 (identical code); inverted count
+// condition 151, with the for loop 161; layout as one ternary 151; count defaulted to one before the
+// test 187 (543 bytes); count and layout declared before the scan index 151.
 // One-dword frame agrees; count/layout join, slot predicate and terminal/tail allocation still differ.
 // Earlier: One-dword frame agrees; common count/layout join, terminal registers and tail convention remain.
 // Earlier 151 (was 151): count-one paths still bypass the common count/layout join; tail call differs.
@@ -129,6 +135,23 @@ void function_2232a0(void)
 // Existing complete layout query 151; query with ordinary pretest/single-first layout 161/168;
 // query with exclusive/conditional clamp 182/182; exclusive clamp with pretest 183;
 // native byte layout with query/do/pretest 189/177. Original expanded gate and loop retained.
+// Round 221: outer completed-count do/for/while 151/161/161; last-ordinal
+// do/for/while 152/169/169; actual output-table boundary do/for 179/195.
+// Original count producer and traversal restored.
+// Round 248: Split lower-bound phase across mode selection, snapshot/live field
+// with original/pretested traversal 152/163/152/163; split upper-bound phase
+// counterparts 185/195/185/195. Original count producer and loop restored.
+// Coherent ordinary inline dispatch/reset/both 151/151/151; each with existing slot predicate 150;
+// force-inline reset alone/with slot predicate 151/150 and loses the matched initializer caller. All restored.
+// Round 212: shared raw count drives clamp and layout, short/long with nested clamp
+// 167/177; exclusive clamp 146/149 (five/two-point gains rejected); the four with plain for
+// traversal 177/178/165/168. Original count producer, traversal and tail contract restored.
+// DH round 189: Native equality-bound ordinals: short/word/byte do 201/201/167; short/word/byte
+// for 180/180/166; short/word while 180/180. Original signed clamp, ordinal, scan, initializer and
+// tail restored.
+// Round 7 (lane 10): count from a single-exit inline helper 182 (count 4 no longer threads, count 1
+// still does); helper with pretested for loop 183; if/else-if clamp in retail's branch order 182;
+// named view count (count + 1) after the loop 159; count arms swapped (clamp first) 151. All restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

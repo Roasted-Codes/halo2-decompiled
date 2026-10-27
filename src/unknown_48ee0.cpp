@@ -55,6 +55,11 @@ extern real g_4c9798[36];
 // width short 296; width word 296; height short 324; height word 324;
 // short/word 325; word/short 325; short/int 296; int/word 324.
 // Original native limits, far-normal copy and all protected call interfaces restored.
+// Round 213: direct lower/upper/both depth fields 294/295/294; each with distinct far normal
+// 294/295/294; both with distinct far point 302, with distinct far point and normal 294.
+// One-point gains rejected; original field snapshots and captured far normal restored.
+// Round 194: Native projection/dimension/border-identity row combinations 297/295/297/295/297/295/297; all
+// rows with projection scope 298. Original body restored.
 // Round 375: Complete near/far/shared-pair/distinct-pair plane outputs on the
 // retained far-normal graph 322/335/361/364; CRT copies 322/335/361/364.
 // Frame 0x30 versus 0x28; all exact-only output-record forms restored.
@@ -62,8 +67,16 @@ extern real g_4c9798[36];
 // real shared pixel area 321/326/321; joint input home names without/with area 316/321. Frame
 // 0x20/0x28, state/matrix and protected rounding homes remain. Original executable source, every
 // float tree and accepted far-normal copy restored.
+// Round 96: retail takes the camera-like record (read at +8/+0x64/+0x28) in ECX and keeps the source
+// record (origin +0, direction +0x28) in EBX across the calls; ours takes the first in EAX and leaves the
+// second on the stack. The two pointer parameters were named crossed against both callers (kept: now
+// swapped, data flow as retail, 295). Direction/origin fields read at each use 328; tag test as a
+// one-case switch 295; origin/direction references at entry 300.
+// Round 60: maximum width/height written through pointers by an inline helper 295; flag test as
+// a shifted bool, its negated-bool and its compare-with-zero spellings 311/337/295; offset as a
+// ternary 309.
 // @retail 0x48ee0
-void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
+void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
     real aspect = (real)sqrt(*(real const *)(state + 8));
     real distance = *(real const *)(state + 0x64);

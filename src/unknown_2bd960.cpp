@@ -417,7 +417,8 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 	last_output.z *= 0.5f;
 }
 
-// score 87 (was 87): frame 0x54 versus 0x50; fraction and coefficient/output registers differ.
+// score 6 (was 6): the coefficient loop sums its products in another order (retail: t3, t, then
+// the t2 product folded, row pointer based on m[i][1]); prologue, frame and weighted sums agree.
 // direct output and four reused weights 110 fast;
 // original output and four reused weights 84 fast;
 // direct output with uniform polynomial products 109 fast;
@@ -437,12 +438,33 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 // native initial copy 106, delayed copy 98, delayed point setter 109, delayed immutable table 97,
 // delayed weights 100, scoped weights with copy 81 (449 bytes, frame 0x50; parameter alias, not kept).
 // Direct weights/copy and coefficient phase with copy/assignment 110/110/110 (425 bytes). All restored.
+// Round 74 (kept): no volatile output, t3 = t * t * t computed before t2 = t * t, weighted sums
+// from points[0] up: 10. t2 first (t3 = t2 * t, t * t2 or t * t * t) 109/109/109; powers written in
+// the loop 117-119; table before the powers 99; one or both powers after the table 109/110/100;
+// t2 declared first, t3 computed first 31; any term order in the loop 31; power names 31;
+// weighted sums reversed/r-first/parenthesised 31/31/29. Then (kept) row pointer in the loop 6;
+// sum groupings 9/12/9; const table 10; all product orders x three groupings, with and without the
+// row pointer, 6-13; row cursor 9; flat table 10, with the row pointer 6; parameter reorders 10
+// (before the row pointer).
+// Round 42: quadratic-origin row pointer, reordered chain and sequential accumulation 6/6/6;
+// named cubic-linear with plain/swapped/mutable quadratic 9/9/9; native plane row 6; split accumulation 10.
+// Power triple/product helper with shifted row, direct powers and reversed inputs 5/5/5 (439 bytes;
+// one-point grouped-power forms, not kept); scalar SSE multiply 109; scalar conversion form did not compile.
+// Shared square with const/products/early weights 110; early product-helper
+// input 5, late input 99; row/table/const/accumulation variants 5. All restored.
+// Native coefficient/plane rows with the shared product, either input order
+// and early/late weights 5 (439 bytes); quadratic coefficient still loads
+// separately. Grouped input and one-point reduction discarded.
+// Explicit shared square, immutable square, uniform named products and earlier weight-array
+// declaration: eight forms 110 each (425 bytes). Existing three-component product with powers
+// before the table 5/5 (439 bytes); after the table 99/99. Native row/direct table, immutable
+// powers, coefficient-slot accumulation and component initialization: eight forms 5 each.
+// The helper recovers the row base and first two terms but not the folded multiply; all restored.
 // @retail 0x2bde90
 void function_2bde90(real t, point3f *out, point3f *points)
 {
-	point3f *volatile output = out;
+	real t3 = t * t * t;
 	real t2 = t * t;
-	real t3 = t2 * t;
 	real m[4][4] =
 	{
 		{ -1.0f, 3.0f, -3.0f, 1.0f },
@@ -455,15 +477,17 @@ void function_2bde90(real t, point3f *out, point3f *points)
 
 	do
 	{
-		r[i] = m[i][0] * t3 + m[i][2] * t + m[i][1] * t2 + m[i][3];
+		real const *row = m[i];
+
+		r[i] = row[0] * t3 + row[1] * t2 + row[2] * t + row[3];
 		i++;
 	}
 	while (i < 4);
 
-	*output = *g_468788;
-	output->x = points[3].x * r[3] + points[2].x * r[2] + points[1].x * r[1] + points[0].x * r[0];
-	output->y = points[3].y * r[3] + points[2].y * r[2] + points[1].y * r[1] + points[0].y * r[0];
-	output->z = points[3].z * r[3] + points[2].z * r[2] + points[1].z * r[1] + points[0].z * r[0];
+	*out = *g_468788;
+	out->x = points[0].x * r[0] + points[1].x * r[1] + points[2].x * r[2] + points[3].x * r[3];
+	out->y = points[0].y * r[0] + points[1].y * r[1] + points[2].y * r[2] + points[3].y * r[3];
+	out->z = points[0].z * r[0] + points[1].z * r[1] + points[2].z * r[2] + points[3].z * r[3];
 }
 
 /* ---- the hill's shape ---- */
@@ -471,7 +495,7 @@ void function_2bde90(real t, point3f *out, point3f *points)
 /* builds the hill's polygon on the spline through its markers, and its
    center, radius, perimeter and height range (the height range also covers
    the hill's other markers) */
-// score 18 (was 23): Sampling fraction/call setup and marker-loop registers remain; frame and retail length agree.
+// score 18 (was 18): Sampling fraction/call setup and marker-loop registers remain; frame and retail length agree.
 // Earlier at 25 (was 25): control/sampling conventions, radius base and marker registers remain.
 // Earlier at 130 (was 134): control-call convention and scan induction differ;
 
@@ -536,6 +560,12 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // 72/137/69/135/72/137/69/135 fast (unchanged control 72, full 23); restored.
 // Exact control-helper orders spline/points/index/output 70, with radius receiver 67;
 // spline/points/output/index 72, with radius 69. First order plus receiver kept, plain 18.
+// Round 218: Native numerator/denominator/quotient/sample names on exact control graph
+// 154/250/67/186/154/250/186/186 fast; pre-guard/shared versus independent
+// marker ordinals 68/134/134/134 fast (control 67, full 18). All restored.
+// Round 144: sampling output/fraction/points order 67f; inline original and five
+// coordinated orders 219f each; separate noinline declaration 67f. Reduced control
+// 67f versus full 18; first sampling input XMM3/XMM2 and final marker roles remain.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

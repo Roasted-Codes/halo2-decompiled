@@ -378,7 +378,45 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 {
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
-// score 404 (was 404): Frameless admission/output EDI agree; camera/point saved registers and initial stores remain.
+// score 404 (was 404): frameless entry and the result in EDI agree. Left: retail keeps the
+// camera in EBP and the corner array in EBX (here exchanged); retail reads the copied rectangle
+// through the copy's address (`[eax+4]`...) after the identifier store, where ours reads
+// `[edi+0x14]`... ahead of it; plane input/product residency and the first store schedule.
+// Round 137: rectangle pointer/reference for the copy and the four products 415/415 (reads move
+// behind the identifier store as in retail, but the pointer takes EBP); corner-array pointer
+// for the corner stores and both 0x1429d0 arguments 655; depth read at each product 666; plain
+// plane test in place of the double negation 404 (same code); returns in place of the result
+// flag 688.
+// Earlier: YZX normal inputs 442; scalar-first normal rows 423; running distance 412 kept;
+// diagnostic disjunctions 423; native float error with distance 412; corner loop 432;
+// side-plane loop 1154; reverse direction loop 423; default plane first 423; direct
+// first-diagnostic expression 423; native matrix snapshot 778; input-rectangle products 446;
+// coordinate-pair product initialization 425; unsigned direction ordinal 423; optional-plane
+// copy 647; normal setter 610; bounds copy block 423; position copy block 423; directions after
+// bounds 578; complete planes before normalize 515; identifier at geometry end 767; corners in
+// index order 426; diagnostic result chain 423; plane tests result 671; camera plane predicate
+// 669; far depth snapshot 646; corner point setters 622; rectangle CRT copy 423; plane array
+// receiver 761; native plane return 700; late right/top products 682; scaled distance 469;
+// normal inputs KJI 433; normal names 423; helper order 422; scaled distance/KJI 474; first
+// slope before constants 478; all side slopes 618; last corner XYZ 424; complete-normal
+// xyz/yxz/xzy/zxy 512/512/511/512 and with distance products 512 (exact only);
+// distance-products xyz/yxz/zxy 412/426/430; immutable scalar inputs 412; native/immutable
+// native normal 789/789; complete row accumulators 410; immutable inputs with row accumulators
+// 410; native normal with rows 790; parallel normal products 410; native normal/products 789;
+// separate normal pointer/reference/value 404/404/835, with matrix reference 404/404/835, with
+// output-address return 404/404 (separate normal pointer kept); separate distance input 611;
+// whole-plane pointer/reference/value 403/403/883; rotation-scale-position inputs 684; with
+// distance/plane pointer/reference 582/717/717; shared triple-test expression/success-result/
+// failure-result/early-failures, point first 1182/1170/1170/1182, point last
+// 1182/1168/1168/1182; scalar normal arguments in all six orders 697; scalar XYZ/ZYX with matrix
+// reference 697/697; complete depth snapshot 733; all depth fields 667; identifier before
+// rectangle 431; input rectangle value 686; depth snapshot/identifier 733; fields/identifier
+// 682; rectangle/snapshot 699; rectangle/fields 683; on separate-normal input, parallel row
+// accumulators 404, all row products named 407, initial two-term sums 407, final forward terms
+// 455, scalar-first counterparts 404/407/407/455; three-input transform formal orders
+// M/O/N, N/M/O, N/O/M, O/M/N, O/N/M 404/404/403/404/403; transform/diagnostic/both forced
+// expansion 404/404/404.
+// Frameless admission/output EDI agree; camera/point saved registers and initial stores remain.
 // Camera/points saved registers and initial stores remain; input distance/whole-plane ownership does not qualify.
 // Earlier: Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
 
@@ -434,6 +472,14 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Three-input transform formal orders M/O/N, N/M/O, N/O/M, O/M/N, O/N/M
 // 404/404/403/404/403; transform/diagnostic/both forced expansion 404/404/404.
 // One-point formal-order leads rejected; original helper contracts and all normal copies restored.
+// Computed distance returned for immediate caller store: normal input orders
+// XYZ/XZY/YXZ/YZX/ZXY/ZYX 486/490/490/492/491/489; forced expansion 486;
+// out-of-line boundary 1758. All input copies and original helper restored.
+// Round 160: diagnostic point/plane/both native inputs 1229/1363/1898;
+// scalar point/plane/both inputs 654/755/755; forced scalar point/both
+// expansion 654/755. Original diagnostic and transform helpers restored.
+// Round 149: Split native normal/distance outputs with all matrix, normal-input and distance-output
+// pointer/reference contracts [476, 476, 476, 476, 476, 476, 476, 476]; all restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

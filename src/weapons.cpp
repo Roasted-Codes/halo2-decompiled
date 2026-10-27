@@ -1603,7 +1603,9 @@ static inline bool weapon_state_replaceable(long current, long state)
 }
 
 /* puts a weapon in a state and plays the state's animation */
-// score 67 (was 69): notification input registers and success scheduling still differ.
+// score 67 (was 67): BLOCKED-BY 0xc9d00: every difference is its call, whose register
+// convention (from its own body) differs from retail's all-stack one; retail keeps the
+// result constant 1 in bl as the in-inventory test mask.
 // forced replacement 69; long replacement 115; complete predicate arms 69; predicate tests 136;
 // state-selected flags 96; case-selected flags 137; const animation receiver 69;
 // wide predicate and case flags 128.
@@ -2427,20 +2429,23 @@ struct s_weapon_target_model
 
 bool function_106280(long object_index, long *out_index, byte *out_entry);
 
-// score 130 (was 130): frame 0x88 versus 0x84; current-object spill and loop register roles remain
-// tried current magazine view 180; unsigned active range 207; marker position memcpy 130; signed trigger state 130; charging result lifetime 129.
-// score 130 (was 130): frame 0x88/current-object spill remains. Settings-record reference, query-result
-// and elapsed-fraction locals 130; native output initialization 218; promoted target state 128 (rejected);
-// true-default active result alone/with settings reference 194; settings reference plus final receiver 130.
-// tried query output names 130; output record reference 219; current receiver first 132.
-// tried nested range tests 130; staged active result 206; natural while 130.
-// tried read-only tags 130; float consistency 130.
-// score 130 (was 130): frame 88 versus 84 and current-object spill remain; object/header getters 130/130;
-// entry weapon/tag references 130/130; output magazine reference 219; byte/long active carriers 192/194;
-// target-model reference 130.
-// score 130 (was 130): frame 0x88 versus 0x84 and current-object spill remain;
-// one-use marker identifier local 125 (reverted in review). Halfword active 169; signed-byte active 192;
-// loaded/total/both capacity values 130/130/130; target query/status noinline 130/130.
+// score 130 (was 130): frame 0x88 versus 0x84 and current-object spill remain; loop register
+// roles and the post-loop scratch registers (ours eax/ecx/edx where retail uses edx/eax/ecx) differ.
+// Retail tests `idle` through the entry weapon pointer (ebx), not the reloaded one: that form
+// alone gives retail's 0x84 frame and prologue but 171, as the loop reloads its index offset at
+// the latch where retail reloads it at the loop head (and again after the loop).
+// Tried: current magazine view 180; unsigned active range 207; marker position memcpy 130;
+// signed trigger state 130; charging result lifetime 129; settings-record reference, query-result
+// and elapsed-fraction locals 130; native output initialization 218; promoted target state 128
+// (rejected); true-default active result alone/with settings reference 194; settings reference
+// plus final receiver 130; query output names 130; output record reference 219; current receiver
+// first 132; nested range tests 130; staged active result 206; natural while 130; read-only tags
+// 130; float consistency 130; object/header getters 130/130; entry weapon/tag references 130/130;
+// output magazine reference 219; byte/long active carriers 192/194; target-model reference 130;
+// one-use marker identifier local 125 (reverted in review); halfword active 169; signed-byte
+// active 192; loaded/total/both capacity values 130/130/130; target query/status noinline 130/130;
+// idle through the entry weapon 171; with the magazine pointer declared first 171; with the
+// magazine fields read in full 225; with a short state 170; with new locals for the final reread 171.
 // @retail 0x100520
 void function_100520(long weapon_index, s_weapon_status *status)
 {
@@ -2822,6 +2827,7 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // single-exit guarded publication 471/471/462/466. All restored.
 // Scalar accumulator/contribution/output names, alone and combined, 398 each;
 // combined names with late constant found declaration 398. All eight restored.
+// Round 251: Case-scoped barrel/trigger/both/magazine/barrel+magazine/trigger+magazine/all selectors 398/398/398/398/398/398/398; all with full-width selectors 424. Original shared word selector restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -2991,30 +2997,27 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
     return result;
 }
 
-// score 52 (was 69): the record's pointer is kept in ebx where retail keeps it in
-// ebp, and the word of the record is read into cx where retail reads it into dx.
-// long outcome 128; byte outcome 127; long helper return 127; both wide 128; const barrel 52;
-// const magazine tag 52; const tags 52; forced-body receiver names 52.
-// late magazine tag 127; late const tag 127; saved query selector 107; failure-first 52;
-// exemption-first 76; distinct stop ordinals 52; immutable selector/barrel 52/52;
-// shared object/header getters 52/52.
-// Ordinary inline 468; automatic inline 468; barrel reference 52; magazine-tag reference 52;
-// magazine reference 52; combined references 52; empty-first tests 88; query result first 140.
-// Actual flag member 52; tag at each use 201; actual tag reference 52;
-// success before notification 116; parent handle 52; capacity snapshot 99;
-// absolute object index 90; flag member with tag reference 52. EBP/EBX
-// receiver roles and DX/CX selector still differ.
-// score 52 (was 52): barrel/magazine and selector registers remain reversed; weapon/tag/both receiver
-// inputs 52/52/52; barrel input 131; weapon+barrel/tag+barrel/all inputs 52/52/52; direct success with
-// weapon input 111.
-// Round 127: short selector with barrel input 133; with weapon/barrel 52;
-// with tag/barrel 52; with all receivers 52; with external record references 52;
-// reserve query, reload notification and barrel stop noinline 52 each.
-// score 52 (was 52): still the ebp/ebx receiver and dx/cx selector swap. Permuter
-// ran out its window in the baseline build (no tries scored). Neighbor inline
-// getter 52; header-table local 52; masked definition-index local 52; outcome and
-// selector declarations swapped 52; nested macro get 131; barrel address by
-// arithmetic 52; shared-linkage forced inline 52; magazine address by arithmetic 52.
+// score 52 (was 52): the barrel record's pointer is kept in ebx where retail keeps it in
+// ebp (magazine record ebp/ebx), and the weapon pointer, magazine index and scratch
+// registers rotate ecx/edx against retail's. Forms tried: long outcome 128; byte outcome
+// 127; long helper return 127; both wide 128; const barrel 52; const magazine tag 52; const
+// tags 52; forced-body receiver names 52; late magazine tag 127; late const tag 127; saved
+// query selector 107; failure-first 52; exemption-first 76; distinct stop ordinals 52;
+// immutable selector/barrel 52/52; shared object/header getters 52/52; ordinary inline 468;
+// automatic inline 468; barrel reference 52; magazine-tag reference 52; magazine reference
+// 52; combined references 52; empty-first tests 88; query result first 140; actual flag
+// member 52; tag at each use 201; actual tag reference 52; success before notification 116;
+// parent handle 52; capacity snapshot 99; absolute object index 90; flag member with tag
+// reference 52; weapon/tag/both receiver inputs 52/52/52; barrel input 131;
+// weapon+barrel/tag+barrel/all inputs 52/52/52; direct success with weapon input 111; short
+// selector with barrel input 133; with weapon/barrel 52; with tag/barrel 52; with all
+// receivers 52; with external record references 52; reserve query, reload notification and
+// barrel stop noinline 52 each; neighbor inline getter 52; header-table local 52; masked
+// definition-index local 52; outcome and selector declarations swapped 52; nested macro get
+// 131; barrel address by arithmetic 52; shared-linkage forced inline 52; magazine address by
+// arithmetic 52; existing trigger-clear helper in the loop 64; barrel local renamed 52;
+// existing index/header getter for both fetches 52; named loaded-round count 52; one loop
+// counter for both loops 52.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
@@ -3118,6 +3121,15 @@ struct s_ammo_conversion_entry
 // Round 337: actual published round total short/word/long 225/225/229;
 // mode-test return producer 197 (gain 1, rejected); with short/word/long totals 231/231/235;
 // short total and mode producer with complementary byte acquisition 208. All restored.
+// Round 351: persistent tag/magazine/both/conversion/tag-conversion/magazine-conversion/all
+// cursors 205/222/228/228/224/217/232; all cursors with Boolean acquisition 236. All restored.
+// Complementary bool/byte/short/long acquisition with the tag byte at every type test
+// 216/216/234/232; with result-controlled first-match scan 246/246/261/259. All restored.
+// Round 204: Shared three-use type-bit result bool/byte/word/dword with word acquisition
+// 218/215/214/221; with complementary byte acquisition 212/204/219/224. Original type
+// observation and result restored; extra frame word, destination/tag and conversion homes remain.
+// Round 196: Ordinary/inline/noinline post-transfer updater and retention-query declaration
+// pairs, excluding the original pair, 198 each. Original declarations and body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

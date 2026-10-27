@@ -155,6 +155,11 @@ void function_8dd70(void);
 // All regress; original three-call chain, short stage results and clear restored.
 // long link 232; long observer 228; long link observer 230; long sessions 231; long link sessions 231; long
 // observer sessions 229; long all 231; word entry 230.
+// Round 150: Signed-byte link/session/both returns 230/230/230; canonical link with link/both returns
+// 228/228; inline link/session/both 228/223/223 (canonical link in first/third). New session contract
+// with early observer/session/both constants 242/231/232; both early with bool/byte/char/canonical-
+// short/long link result 224/224/224/240/230. Seven-point form rejected; original contracts and
+// readiness restored.
 // Round 210: entry constant homes with bool observer/session/both 228/228/235;
 // bool link plus observer/session/both 234/235/234; long-bool/bool-long stages 229/229.
 // Round 172: Short session accumulation with original/immutable link 231/231; direct list
@@ -164,6 +169,23 @@ void function_8dd70(void);
 // Constant observer/session/both homes at entry 244/225/224; entry long 230;
 // with observer/session/both entry homes 244/225/224; unsigned entry with both 224.
 // Both entry homes and bool/byte/char/long link result 228/228/228/225. All restored.
+// Round 140: retail reloads the message collection pointer before every registration call
+// as if the pointer globals shared an address-taken block with the 0x510580 block cleared
+// below (its definitions sit in a contributor file, so they cannot be folded here). Entry
+// test without the local 230; through an inline getter (result local, if/else) 230/230;
+// `initialized == false` 230; observer readiness as a bool if/else assignment 248.
+// Lane 8 r58: noinline 0x662f0 (retail calls it) 286 at 816 bytes; with noinline 0xb2cc0
+// 379 at 728; inline+noinline registration callees 378/362 (eax reloaded, from esi);
+// with a bool link result 382. Retail reloads the global block before every call and
+// after every store through a pointer, as when these globals are address-taken.
+// Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
+// stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
+// Round 356: Native handler tail clear 249; gateway pointer/byte tail clear 251;
+// complete list clear 230; both tails 248; handler/list 249; gateway/list 251;
+// all three and native message-table extent 248/248. Original clear boundaries restored.
+// Complete link/search/scalar/gateway/ready publication orders 0-1-2-3-4, 1-0-2-3-4,
+// 0-2-1-3-4, 0-2-3-1-4, 3-0-1-2-4, 0-4-1-2-3, 1-2-0-3-4 and 2-3-0-4-1 each 230.
+// Each search reset clears before both sentinels; original complete publication order restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

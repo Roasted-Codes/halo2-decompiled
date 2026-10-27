@@ -2437,6 +2437,9 @@ dword __cdecl function_131fc0(real alpha);
 // construction with destination selection first 433/439; source selection first 439/433;
 // source construction before conditional destination 331 (four-point fast gain rejected);
 // conditional source then unconditional destination 427, against fast control 335.
+// Round 60: BLOCKED-BY 0x289e0 (the only caller, under #if 0, so LTCG gives inverse AL). Own-address
+// inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
+// dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2582,10 +2585,17 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
     real red, real green, real blue, real *red_result, real *green_result, real *blue_result);
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
-// score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
+// score 506 (was 530): frame 0x21c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
-// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// Earlier score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// Round 73 (plain checks with 0x73360): the held round 90 body 401 and 0x73360 MATCH -> 33 again;
+// that body with the existing render-memory allocator, merged bool result, default light in the
+// else arm and globals read at each use but the original sample loop 511, 0x73360 again 33; the
+// same without the allocator helper 558 (fast); merged bool result alone 536 (fast, still ret 0x18).
+// In the broken builds LTCG has 0x193300's register summary when it compiles 0x73360 (it evaluates
+// the maximum-players call first and keeps it in EDX); 0x193300 as an inline definition with a
+// noinline declaration keeps 0x73360 at 33 and costs 0x705f0 and 0x1931d0. BLOCKED-BY 0x73360.
 // Held (batch 132): Claude lane 4 round 90's two explicit sample blocks with a determinant helper reached 401
 // (frame 0x200, all-stack arguments), but in the batch build that code cost c_helper_b::v7 (0x73360) its match
 // (code linked ahead of src/unknown_058dd0.cpp); with only this file restored the batch keeps 0x73360. Retry it
@@ -2618,6 +2628,15 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Coefficient address at the consumer 506; direct bucket/sample/both 530/530/530;
+// consumer address with bucket/sample/both 506/506/506. Address begun at accepted
+// allocation with both direct receivers 527 (three-point gain rejected). Only the
+// consumer address retained; 1404/1543 bytes, frame 0x21c.
+// Round 190: Existing copy/inverse/coefficient inline declarations singly, in three pairs and
+// together 530 each; all three separate noinline declarations 850. Original helper declarations and
+// body restored; frame 0x20c/0x200 and separate-sample boundaries remain.
+// Direct cache-hit completion and found-byte break, each with long/bool success and original/positive
+// eligibility results, 554/549/554/549 each. Original exhaustive scan and body restored.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2637,7 +2656,6 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         real red[16], green[16], blue[16];
         long level = 5 - order;
         if (level > layout->level_count - 1) level = layout->level_count - 1;
-        real const *data = layout->data + layout->levels[level].offset;
         long stride = layout->groups * (layout->columns * 3 + 4);
         s_bucket_source const *buckets = (s_bucket_source const *)vertices;
         long total = function_023540((short)count, buckets, &g_4b89b0[g_5093e8], stride);
@@ -2690,7 +2708,7 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
                     function_143600((real const *)&rotation, 3, red, rotated_red);
                     function_143600((real const *)&rotation, 3, green, rotated_green);
                     function_143600((real const *)&rotation, 3, blue, rotated_blue);
-                    function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                    function_023ca0((s_block_layout const *)layout, layout->data + layout->levels[level].offset, rotated_red, rotated_green, rotated_blue, output);
                     output += stride;
                 }
             }
@@ -2715,7 +2733,14 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 334 (was 348): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
+// has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
+// its 0 lives there. 0x144f0 sits in a contributor file this round; no new form tried.
+// The stage call is BLOCKED-BY 0x144f0: retail passes tag in EAX, stage in ECX and the fallback in EBX
+// (ret 0xc), and reads the first bitmap formal as a full dword (cmovne). Round 73: for loop 334;
+// stage-nonzero ternary 334; selected bitmap local 294 at 2001 bytes (strength-reduced sampler table);
+// short stage 500; unsigned stage 334; short-first selection 348.
 // Earlier form: frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
@@ -2744,9 +2769,18 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // first/second/both 500/536/493; unsigned-word stage with first/second 500/536; on the retained
 // contract, in-place scales/independent second trig/later second buffer, their pairs/all and all
 // with trig scopes 368/338/334/368/368/338/368/368.
+// Round 151: All four named rotation products, with paired rotation/scale/bias stage masks 0-7, each 391
+// (1988/2022). Original corner helper and body restored; sampler and protected bitmap transport remain.
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
+// Alpha clamps before initial setup first/second/both 445/433/469; before sampler
+// setup 358/389/341; both before shader clear 353; both at admitted entry 481.
+// Exact-only timing forms restored; original packing and sampler/draw calls retained.
+// Native tag block/bitmap records separately/together, their read-only receivers and
+// complete tag/bitmap observations at use: eight forms 334 each. Original receivers restored.
+// Complete alpha parameter results, ternary/else-if/independent clamps 353 each; native rectangle
+// field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

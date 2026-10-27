@@ -91,6 +91,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Native coordinate-array magnitude/normalizer/both/scale/all interfaces 428 each;
 // array normalizer with planar transfers 447; array normalizer plus planar names 428;
 // both arrays, native transfers and planar names 447.
+// First/second/both query Boolean declarations at entry 428 each; native acceleration
+// aggregate 428, with those three lifetime forms 428 each; complete graph with
+// reversed named Boolean declarations 428. Original helpers and all calls restored.
 // Round 237: Published query-output lexical groups (Boolean pair, speed/turn limits,
 // query vector), independently and combined 428/428/428/428/428/428/428;
 // reversed independent output declarations 428. Original output homes restored.
@@ -99,6 +102,13 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Direct actor-direction reads and initial vector order 428/429/429/429/429;
 // retained direction pointer with two vector orders 435/436; direct reads with
 // shared initial vector 428. Original body restored.
+// Round 158: Complete parallel current sums, current/history products and shared-current-factor combinations
+// all 428; coherent entry-provider/target inline specifications and separate noinline mode-query declaration
+// all 428. Scores [428, 428, 428, 428, 428, 428, 428, 428, 428, 428, 428, 428, 428, 428, 428, 428]. Original
+// executable body restored.
+// Round 353: native actor/object handle and word-mode parameter domains in
+// all seven combinations 428 each; signed native handles with word mode 428.
+// Original definition and sole disabled declaration restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

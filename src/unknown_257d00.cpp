@@ -1590,7 +1590,9 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 466 (was 466): No local frame; pool acquisition, actor/output roles, dispatch and rounding homes remain.
+// score 466 (was 466): the body is 36 bytes short; retail loads the actor and cs-datum
+// table globals before the actor index and keeps the actor base in EBX, ours loads the
+// index first and keeps the actor base in ESI.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
@@ -1642,6 +1644,9 @@ void function_b7360(long object_index);
 // Round 145: Native counted character table, promoted lookup result, repeated command index reads
 // and both 466 each; corresponding actual-record table forms 466/466/466/466. Original type and
 // body restored.
+// Round 151: Shared success return with explicit default failure, empty arms plus complete
+// orientation/motion/point payload masks 0-7, all 466/1812. No result carrier added; original returns and
+// complete dispatch restored.
 // Round 240: complementary query result bool/byte/short/long 520/520/469/525;
 // with complete complementary locomotion at the same widths 520/520/470/525. All restored.
 // Round 138: shared rounded-tick outputs moving-direct/moving-point/direct-point/all
@@ -2048,7 +2053,10 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
-// score 478 (was 478): Frame 0x1c agrees; actor/state registers and the first point home remain.
+// score 478 (was 478): the frame agrees at 0x1c; retail computes the actor base in EBX
+// and spills it at [esp+0x10] before the type dispatch, ours computes it in EDI just
+// before its use and reuses EBX for the state pointer. The body is 2400 bytes against
+// retail's 2396.
 // Earlier 478 (was 478): Frame 0x1c agrees; actor/state registers and first point home still differ; eight scope trials restored.
 // Earlier: frame 28 agrees; actor/state registers and first point home still differ.
 // Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;
@@ -2071,6 +2079,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
 // actor/state registers and first point home remain.
 // Position/distance/motion/alternate-motion helper inline and noinline declarations 478 each.
+// Shared point/displacement/both workspaces 479/478/479; point or displacement
+// with shared planar direction 479/478, all three 479; case-twenty point or
+// displacement sharing 478/478. Opening workspaces and every call restored.
 // Round 377: Complete pending-result bool/byte/short/long 603/603/637/632;
 // entry-initialized pending results 605/605/636/631 (fast control 478). Boolean
 // forms reach retail length but preserve actor/state reversal and regress.

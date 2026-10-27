@@ -42,7 +42,18 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 350 (was 350): aligned frame 0x1d4 agrees; optional-input registers (ESI/EDI swapped), scalar homes
+// score 321 (was 350): Aligned frame 0x1d4 agrees; the sample count now matches (retail's
+// setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack); optional input
+// registers (esi/edi swapped), scalar homes and selective helper expansion remain.
+// Earlier: Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
+// Earlier 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
+// Frame 0x1d4 agrees; optional input registers, scalar homes and selective location/release expansion remain.
+// Earlier: Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
+// frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
+// aligned frame 0x1d4 agrees; optional input/register roles (arg_9/arg_10 in
+// esi/edi swapped), scalar homes and selective helper expansion remain: ours inlines 0x11bed0 (retail
+// calls it at all its sites) and calls 0x279740 at both releases (retail inlines the first).
+// aligned frame 0x1d4 agrees; optional-input registers (ESI/EDI swapped), scalar homes
 // and selective helper expansion remain: retail calls 0x11bed0 out of line and inlines the cache-range
 // check of the first reference release (the form of 0x1d01c0), while ours does the opposite.
 // Native/byte success 427/382; path-local excluded index 449; complete volume arms 487;
@@ -68,9 +79,25 @@ const dword g_455978[81] = {
 // body/shape declaration homes at entry 350. All restored.
 // Transform description after body/shape load/shape choice/pose copy 351/351/351/411;
 // bounds description ends before add/exclusion 406/363; full shape selection 350; word success 415.
+// Round 214: single native vector table, separate/reused radial sample and direct/shared ray difference
+// 350/350/350/350; real-row table with the same producer grid 447/447/362/362. All restored.
+// Noinline redeclaration of 0x11bed0 in this file 350 (ignored; still inlined); sample count as a
+// 27/18 ternary 477 (retail's form, but the flag then goes in a register and caller 0xc5460 changes);
+// ray endpoint adds as `x = x + i` 350; translation copy as three statements 354; upper bound as
+// radius-plus-coordinate 350.
 // Round 54: noinline declaration of 0x11bed0 447 (and 0x11bed0 itself 19 in --fast: CAVEAT on its
 // callee 0x14a280); first release with the inline range check 442; both 401 (structural diff 36 vs 66);
 // with an `arg_8 ? 27 : 18` count 427, count alone 477.
+// Round 223: Both positive validation stages 350; result-terminated scan 395; optional failure
+// first 351; both 395; zero rejection removed on these graphs 408/411/407/411. All restored.
+// Round 148: native candidate value 486; native ray-offset value 467; both vector values 516;
+// coordinated transform inline 350; inline/candidate 486; inline/offset 467; inline/both values
+// 516; force-inline/both values 954. All executable forms restored.
+// Lane 5 r77: `arg_8 ? 27 : 18` gives neg/sbb and makes the flag a register argument (477, caller
+// 0xc5460 251 -> 255); `18`, then `27` if the flag 399; `27 - (arg_8 ? 0 : 9)` kept (350 -> 321).
+// Then: volatile casts dropped from the radial length 388 (before the count change); length terms
+// swapped 320; component index as a ternary 427; k cleared before the length, with or without its
+// term 321/321; named lower/upper pointers in the bounds loop 321.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
@@ -99,7 +126,7 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   if (arg_10 != NONE) local_2 = havok_object_get(arg_10)->havok_component_index;
  }
  bool local_0 = false;
- long local_6 = 18 + 9 * arg_8;
+ long local_6 = 27 - (arg_8 ? 0 : 9); /* the table's 27 directions, or the first 18 */
  hkTransform local_7;
  c_contact_query_transform_volume *local_8;
  {

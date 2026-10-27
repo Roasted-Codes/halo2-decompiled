@@ -27,6 +27,14 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
 
 // score 170 (was 170): Frame 0x8c/0x94, raw secondary-result home and common probe tail remain.
+// Round 75 (all match-only, restored): clear state bool, one bool probe result for the mode-1/mode-2
+// probes with `category = 1` on a hit 28; with short category 26 (frame, slots, cmp ax all retail);
+// centre read through the cast parameter instead of the local copy 20: only the mode-1 x-row fold
+// remains (retail `movaps xmm1, xmm0; addss xmm1, [ebp]`, ours loads [ebp] early). On that body:
+// product-first rows 20/20, constant-left products 20, literal quarter 20, direction through a local
+// copy 26, short-circuit probe result 224; private point-from-line helper 26 (258 inside the pragma,
+// which blocks even __forceinline); noinline probe declaration without the pragma 393. Short
+// category alone 234, with bool clear state 225.
 // Earlier 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
 // Word category 225; native clear state 170; direct origin 172; distance category 175; side workspace 175.
 // Native clear with direct origin 171, word category 234, short return result 178.
@@ -86,6 +94,22 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // Round 233: Shared side-input scale, quarter in-place/displacement 239/242;
 // both modes in-place/displacement 242/252; raw secondary-byte counterparts
 // 195/210/200/219. Original side observations and flagless body restored.
+// Round 198: Normalizer inline/noinline and magnitude inline/forceinline caller
+// declarations in eight distinct pairs 170 each. Original math boundaries and body restored.
+// Round 225: complete quarter/triple/both point arrays on the staged raw-byte flow
+// 68/90/90; at entry 68/104/112; shared three-point workspace in optional/entry
+// scope 104/104. Raw-byte control 20/1176. Every grouped-point/extra-result form
+// is unmatched and restored; original flagless category/clear flow retained.
+// Round 150: Raw-byte path with common positive/opposite/third input point homes, seven subsets 5/28/28/5/5/28/28; all three before primary output 89. All exact-match-only forms restored.
+// Frame 0x8c/0x94 and raw secondary-result/common tail remain; near-five forms still miss X/Z point-add scheduling.
+// Primary endpoint helper with outcome long/long, bool/long, long/short, bool/short
+// state/category 170/175/234/225; direct-result counterparts 207/202/238/242. All restored.
+// Round 7 (lane 10, plain checks; the fast check builds this differently): short category, bool clear
+// state, one bool probe result with `category = 1` on a hit 26 (1177 bytes); plus the mode-1 centre
+// read through the cast parameter 5 at 1175 bytes, no staged arithmetic needed (left: retail folds the
+// x centre as a memory operand and loads the z centre; ours the reverse). On that: x row product first
+// 5; cast centre for the positive point only 5; negative point first 230; literal quarter 20; mutable
+// spacing 5. Match-only (added result byte); restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

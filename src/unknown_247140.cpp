@@ -227,32 +227,20 @@ public:
     virtual real function_248763() = 0;
 };
 
-PRIVATE __forceinline real function_248765(s_function_header arg_1)
-{
-    return arg_1.type == 0 ? arg_1.minimum : 0.0f;
-}
-
-PRIVATE __forceinline real function_248766(s_function_data const *arg_1)
-{
-    return arg_1->header->type == 0 ? arg_1->header->maximum : 1.0f;
-}
-
 class c_248767 : public s_effect_particle_system_definition
 {
 public:
     void function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1);
 };
 
-// score 163 (was 163): Frame 0x28 versus 0x20, input carriers and selective selector expansion remain; caller preserved.
-// Earlier 174 (was 174): Frame/input carriers, range lowering and selective selector expansion remain; caller preserved.
-// Frame 0x1c/0x20, location/receiver carriers, range classification and final selector expansion remain.
-// Frame/input carriers, range lowering and selective selector expansion remain; caller preserved.
-// Earlier 174 (was 174): Frame/input registers and selective selector expansion remain.
-// Frame 0x1c versus 0x20, input registers, range classification and final selector expansion remain.
-// Earlier 174 (was 174): Frame/input registers and final selector expansion still differ; eight new reader trials restored.
-// Frame/input registers and selective selector expansion remain.
-// Earlier: Frame/input registers and final selector expansion still differ; eight new reader trials restored.
-// Earlier: frame/input registers, range-header lowering and final selector expansion still differ.
+// score 92 (was 92): left: at the 0x247140 call ours loads the system pointer into eax before the
+// pushes where retail loads the emitter array base into eax and the system into ecx after the bounds
+// push; the later scratch registers rotate (ecx/dl for edx/al, one byte longer) and the second loop
+// takes a 12-byte alignment pad. Round 56 (kept): s_function_data::get_range_maximum for the range and
+// the inline particle_object_for_tag lookup at the end (retail inlines that copy) give retail's frame
+// 0x20, location in ebx and `ret 8`; caller 0x174a30 308 -> 306, sibling exact. Then: element pointer
+// before the range test 148; non-const element in the call 92; element named before the call 92;
+// limit comparison reversed 92; emitter lookup after the range block 156. Earlier rounds (frame 0x1c/0x28 against 0x20, input registers):
 // frame 0x1c versus 0x20, input registers and final
 // selector expansion differ. Per-iteration definition 196; conditional
 // accumulation 194; flag-first cleanup 196; lower-first bounds 202;
@@ -264,7 +252,7 @@ public:
 // successor while traversal 194.
 // Selector inline declaration 170 (matched sibling becomes 292); displacement aggregate,
 // squared distance before/after selector, retained center and branched range maximum 194 each.
-// Earlier: round 108: frame 0x1c/0x20 and location/receiver homes remain.
+// Round 108: frame 0x1c/0x20 and location/receiver homes remain.
 // Late range accumulator 201; outer range endpoints 194; shared center setter 198;
 // scoped successor for traversal 194; nested age/cleanup guards 194.
 // Lower-reader ordinary inline 194; both readers ordinary inline 194; native origin 170
@@ -312,6 +300,11 @@ public:
 // All common-header forms move the caller 308 to 369; the 151/152 forms use frame 0x38.
 // Round 169: Lower/upper/both pointer outputs 163 each, reference outputs 163 each;
 // output-first lower/both 163 each. Original readers restored; frame/input/selector causes remain.
+// Round 342: Persistent lower/upper/both endpoints, maximum, lower+maximum, upper+maximum and all three 163 each;
+// all three with role-based scalar homes 163. Frame 0x28 and first difference +2 remain; original scoped declarations restored.
+// Round 77: the second loop as a while 92; its guard as nested ifs 92; the first loop as a for 92;
+// the count test reversed 92; the element as pointer plus index 92; the call through `this` 94. The
+// 12-byte pad before the second loop (retail none) and the call-setup registers remain.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {
@@ -328,10 +321,8 @@ void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte 
         s_247141 *local_4 = &((s_247141 *)g_51ec88->data)[local_3 & 0xffff];
         if (local_2 < arg_0->unknown30)
         {
-            s_247143 const *local_5 = &(*(s_247143 const **)arg_0->unknown34)[local_2];
-            real local_8 = function_248765(*local_5->range.header);
-            real local_9 = function_248766(&local_5->range);
-            real local_10 = local_8 > local_9 ? local_8 : local_9;
+            s_247143 *local_5 = &(*(s_247143 **)arg_0->unknown34)[local_2];
+            real local_10 = local_5->range.get_range_maximum();
             if (local_10 > local_0)
                 local_0 = local_10;
         }
@@ -355,7 +346,7 @@ void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte 
     local_13.i = local_1.field_4 - *(real *)(arg_1 + 0x20);
     local_13.j = local_1.field_c - *(real *)(arg_1 + 0x24);
     local_13.k = local_1.field_14 - *(real *)(arg_1 + 0x28);
-    c_248750 *local_14 = (c_248750 *)function_137bd0(arg_0->tag_index);
+    c_248750 *local_14 = (c_248750 *)particle_object_for_tag(arg_0->tag_index);
     *(real *)(arg_1 + 0x2c) = local_14->function_248763() * local_0 +
         (real)sqrt(local_13.i * local_13.i + local_13.j * local_13.j + local_13.k * local_13.k);
 }

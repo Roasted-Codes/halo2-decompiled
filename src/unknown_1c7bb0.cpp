@@ -45,6 +45,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 // score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null and successor EBP remain.
+// Round 43: iterator-pool carrier 164; with field-pool cache 198; with state owner 193;
+// typed iterator/carrier 164; const carrier 164; carrier declared first 164; local result
+// with late/early member publication 164/164.
 // Earlier 164 (was 164): frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
 // Frame 0x28 agrees; separate pool/iterator homes, early null publication and saved successor EBP remain.
 // frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
@@ -118,6 +121,12 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Round 215: Actual ordinal-return step, long with retained/returned-only ordinal and
+// conditional/result-first exits 164/198/204/199; unsigned 198/222/205/220.
+// Every returned result tested; original private helper and body restored.
+// Persistent full-function/first-traversal payload tables 190/197; with full-width partition 191/198;
+// the same four table/partition forms with pointer step results 190/197/191/198. Original helper and
+// traversals restored; separate pool/iterator, early null and successor homes remain.
 // Round 147: Coherent inline lookup/activation/squad cleanup/actor removal 234/164/164/164; lookup
 // plus each other boundary 234/234/234; all four 234; separately outlined inline lookup 164 with
 // checked losses.
@@ -129,6 +138,21 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // scalar home names, then all with the second-pass actor receiver, 164 each. Original names restored.
 // Eligibility result bool/const-bool/long/short with conditional or branch publication:
 // 194/200, 194/200, 195/178, 193/193; original body restored.
+// Native iterator constructors with implicit/explicit pool input, partial/full initialization and
+// free/member next contracts in all eight combinations 164 each. Original construction restored.
+// Second-pass combined bool/byte/short/long completion 164 each;
+// second-pass result-first bool/byte/short/long completion 164/164/188/186.
+// Round 248: One pool observation plus inline/noinline/both/force-inline finder
+// contracts with native partition 214/197/197/222; full-width partition
+// 216/165/165/223. Original pool observations, helper and contracts restored.
+// Round 204: Actual state-owner input to the existing step, owner last/first with
+// bool/byte/short/long completion, 164 each. Original helper and both traversals restored;
+// separate pool/iterator homes, early null and successor EBP remain.
+// Round 206: Actual second-pass source-squad/pending-flag field receivers as pointer/reference,
+// individually and all four pairs, 164 each. Both acquisitions and pre-call successor retained.
+// Round 197: Coherent defining-unit/caller final-phase inline and inline/noinline
+// declarations, each with bool/byte/short/long private completion, 164 each. Original
+// provider declarations, private step and both traversals restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

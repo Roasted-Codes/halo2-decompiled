@@ -91,6 +91,7 @@ static inline real surface_normalize_horizontal(vector3f *v)
 void function_ba1d0(long, vector3f *, vector3f *);
 real function_30bf0(vector3f *);
 long function_155760(long);
+long function_14de70(long local_player_index);
 void object_widget_delete(long, long);
 extern dword g_4ba034;
 long g_55e710;
@@ -178,7 +179,7 @@ bool function_117100(long index)
 	if (!header->inactive && g_4b9ed8 != NONE && function_155760(g_4b9ed8) == 0)
 	{
 		byte *object = header->object;
-		if (g_4e8c20->entries[g_4b9ed8] == *(long *)(object + 0x13c))
+		if (function_14de70(g_4b9ed8) == *(long *)(object + 0x13c))
 			result = false;
 	}
 	return result;
@@ -228,11 +229,12 @@ bool function_1173e0(long object_index, long index)
 	bool result = function_1171a0(index);
 	if (result)
 	{
-		point3f origin = *(point3f *)(surface_object_header(object_index)->object + 0x30);
+		byte *object = surface_object_header(object_index)->object;
+		point3f origin = *(point3f *)(object + 0x30);
 		for (long i = 0; i < definition->vertex_count; ++i)
 		{
-			s_surface_vertex *vertex = &record->vertices[i];
 			point3f *source = &definition->vertices[i].position;
+			s_surface_vertex *vertex = &record->vertices[i];
 			vertex->position.x = source->x + origin.x;
 			vertex->position.y = source->y + origin.y;
 			vertex->position.z = source->z + origin.z;

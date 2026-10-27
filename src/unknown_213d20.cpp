@@ -178,6 +178,10 @@ void cache_copy_forget(char const *map_name)
 // Fast: empty path value 59; normalizer-owned path 49; record-pointer iterator 56;
 // signed record index 56; older record before empty 14; retained-record continue 6;
 // state reset before copy 8; guaranteed selected record 37.
+// Path helper with an inline definition, with and without a noinline declaration, 6/6; path
+// helpers defined after their callers 6; path helper alone in an /Ob1 file 6; print helper
+// inline with a noinline declaration 6. Retail also forms 0x2141f0's EDI constant again after
+// the call: retail callers act as if they had no register summary for the path helper.
 // @retail 0x214100
 void __stdcall cache_copy_record_use(char const *map_name)
 {
@@ -288,6 +292,9 @@ void cache_copy_buffer_resize(long size)
 // 0x214db0 forms (callee still matching): returning the printed buffer 5; drive-path test in a bool 5;
 // file name from a separator ternary 5; one shared print call 19; path-first parameter order 9; the
 // helper in its own file sorted after or before this one 5/5.
+// two-buffer record 5; result between buffers 5; result initialized between calls 10;
+// unsigned result 5; named equality 5; combined noinline declarations 5;
+// combined inline declarations 5; force-inline comparison declaration 5.
 // @retail 0x213e30
 long cache_copy_current_priority(char const *map_name)
 {
@@ -316,6 +323,8 @@ long cache_copy_current_priority(char const *map_name)
 // 0x214db0 forms (callee still matching): returning the printed buffer 5; drive-path test in a bool 5;
 // file name from a separator ternary 5; one shared print call 19; path-first parameter order 9; the
 // helper in its own file sorted after or before this one 5/5.
+// Queued record pointer 5; delayed/scoped comparison buffer 5/5; interleaved result 5;
+// path matrix 15; two-arm result 24; named comparison 5; unsigned result 5.
 // @retail 0x213e90
 long cache_copy_queued_priority(char const *map_name)
 {
@@ -356,6 +365,10 @@ long cache_copy_priority(char const *map_name)
 // Fast: empty path value 67; normalizer-owned path 47; open-path scope 7; nested copy state 7;
 // copy at first use 7; queued result domain 21; open-index observation 7;
 // active-priority observation 7.
+// Path helper with an inline definition, with and without a noinline declaration, 7/7; path
+// helpers defined after their callers 7; path helper alone in an /Ob1 file 7; print helper
+// inline with a noinline declaration 7. Retail also forms 0x2141f0's EDI constant again after
+// the call: retail callers act as if they had no register summary for the path helper.
 // @retail 0x213f10
 long map_location_get(char const *map_name)
 {

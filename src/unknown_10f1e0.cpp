@@ -1231,55 +1231,43 @@ bool function_1112f0(long unit_index)
 }
 
 
-PRIVATE __forceinline long held_object_110ab0(long unit_index, short slot)
-{
-	long result = NONE;
-	if (slot != NONE)
-		result = *(long *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x218 + slot * 4);
-	return result;
-}
-
 bool function_c70b0(long unit_index);
+long function_cbd50(long unit_index, short weapon_index);
 
-// score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization differ.
-// Earlier at 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result normalization remain.
-// Earlier: overlay/frame and depletion/interruptibility homes differ;
-// direct parameter plus word/native interruptibility 376/378, second depletion 337
-// (plain: thirteen caller matches lost), native result 382, held helper inline 358.
-// Earlier: frame 8 and depleted BL recovered; object/header/state registers
-// and count-result materialization differ. Second predicate 194; native interruptible 341;
-// status names 347; size policy 602; overlay-first exits 415; conditional first 336;
-// conditional first with native interruptible 335.
-// Earlier: retail length recovered; object/header/state registers and count joins differ.
-// Original-unit slot reads 194; early interruptibility 316; guarded second count 338;
-// byte result 164; unsigned identifiers 218.
-// Earlier: entry receiver/count joins remain; byte interruptible 164;
-// signed-byte depletion 164; state-first receiver 164; direct interruptibility 348; query result first 332.
-// Earlier: entry pool/state and count joins remain; direct-parameter forms:
-// signed-byte result 322; short result 355; entry held outputs 322; state-switch default 370;
-// branch-local status defaults 253. Opening argument handling restored.
-// Earlier: Frame eight agrees; entry pool/state registers and count joins remain. Entry byte result 164; valid first count 328; guarded second clear 328; signed-byte result 164; state identifier before overlay 164 (fast).
-// Earlier: entry pool/state registers, count joins and result normalization remain.
-// Shared held query at both/first/second sites 164 each; signed-byte/native helper slot 169/327;
-// helper result selection 363; selection with byte/native slot 357/348.
-// entry pool/state and signed-count result joins remain;
-// native first/second/both slots 164 each; native first/second/both counts 164 each;
-// combined native fields 164; existing channel-state member 164.
-// Complete first/second/both depletion selections 314/357/357; rejection predicates
-// first/second/both 164/164/164; canonical true return 205; selections with true return 355. All restored.
-// Explicit name default/definite result 354/354; native/unsigned-word/signed-word
-// result 381/377/377; separate overlay byte 183; natural overlay exits 302;
-// definite result plus overlay exits 475. Entry pool/state allocation and normalization remain.
-// Round 224: First/second/both query scopes 164/164/164; state/channel/both identifier lexical homes
-// 164/164/164; identifier homes with first/both scopes 164/164. Frame eight agrees; pool/state roles,
-// count joins and normalization remain.
-// On the retained success-byte graph: short/long depletion 200/173; short/long
-// interruptibility 304/172; paired short-short/short-long/long-short/long-long
-// 309/201/304/174. Original canonical predicates and inherited argument handling restored.
-// Round 171: Direct native control/state/unit receivers 164/165/344; control+state 165; unit+control
-// 344; unit+state 367; all 367; all plus direct controlling field 367. All restored; inherited
-// parameter observation unchanged. Frame eight agrees; entry pool/state scratch roles, signed-count
-// joins and result normalization remain.
+// score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result
+// Round 141: retail returns the result byte unnormalised (a bool) and keeps the depletion in BL with the
+// interruptibility in memory; round 75's first-sets/second-clears depletion 330, with a bool result
+// 361 (1243 bytes, aligned 132 -> 102: retail's setle and second test, but depleted in memory and
+// interruptible in BL, no unit re-read), with interruptible/depleted/result declaration orders 362/363;
+// controlling read first 164; name before overlay 164.
+// normalization differ. Retail keeps the pool global in EAX and its data in EBP from entry, the state
+// in EDI, re-reads the unit pointer for both held-weapon queries (the second through a fresh data load)
+// and keeps the depletion's initial false in a stack byte (+0x12) beside the result (+0x11) and the
+// interruptibility (+0x13); 0x1103a0 shows the same pattern.
+// Tried: direct parameter plus word/native interruptibility 376/378, second depletion 337 (plain:
+// thirteen caller matches lost), native result 382, held helper inline 358; second predicate 194; native
+// interruptible 341; status names 347; size policy 602; overlay-first exits 415; conditional first 336,
+// with native interruptible 335; original-unit slot reads 194; early interruptibility 316; guarded second
+// count 338; byte result 164; unsigned identifiers 218; byte interruptible 164; signed-byte depletion 164;
+// state-first receiver 164; direct interruptibility 348; query result first 332; signed-byte result 322;
+// short result 355; entry held outputs 322; state-switch default 370; branch-local status defaults 253;
+// entry byte result 164; valid first count 328; guarded second clear 328; state identifier before
+// overlay 164; shared held query at both/first/second sites 164 each; signed-byte/native helper slot
+// 169/327; helper result selection 363, with byte/native slot 357/348; native first/second/both slots
+// 164 each; native first/second/both counts 164 each; combined native fields 164; existing
+// channel-state member 164; complete first/second/both depletion selections 314/357/357; rejection
+// predicates first/second/both 164 each; canonical true return 205, with selections 355; explicit name
+// default/definite result 354/354; native/unsigned-word/signed-word result 381/377/377; separate overlay
+// byte 183; natural overlay exits 302; definite result plus overlay exits 475; first/second/both query
+// scopes 164 each; state/channel/both identifier lexical homes 164 each, with first/both scopes 164/164;
+// on the success-byte graph short/long depletion 200/173, short/long interruptibility 304/172, paired
+// 309/201/304/174; complementary depletion bool/byte/short/long 335/335/346/345; complementary
+// interruptibility bool/byte/short/long 240/240/245/245; direct native control/state/unit receivers
+// 164/165/344, control+state 165, unit+control 344, unit+state 367, all 367, plus direct controlling
+// field 367. Round 75: the existing 0xcbd50 in place of a hand-written copy 164 (identical code; kept,
+// also in 0x1103a0); depletion as `if (first != NONE) depleted = ...; if (second != NONE && count > 0)
+// depleted = false;` 330 (frame four), with a byte depleted 330; without the parameter's volatile
+// re-read at the 0xc70b0 call 322; depletion through an inline helper writing a pointer 330.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1296,9 +1284,9 @@ bool __stdcall function_110ab0(long unit_index)
 	bool interruptible = false;
 	if (controlling != NONE)
 	{
-		long first = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x212));
+		long first = function_cbd50(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x212));
 		depleted = first != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(first) + 0x17c) <= 0;
-		long second = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x213));
+		long second = function_cbd50(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x213));
 		depleted = depleted && (second == NONE || *(short *)((byte *)UNIT_ANIMATION_OBJECT(second) + 0x17c) <= 0);
 		if (*(byte *)((byte *)state + 0x14) & 0x10)
 			interruptible = true;
@@ -1432,6 +1420,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 226: Shared held-query conditional/rejection returns 450/450; native signed-byte slot 451;
 // byte slot with conditional/rejection returns 451/451; ordinary inline conditional/rejection
 // returns 450/450, with byte conditional result 451. Frame/request/state homes remain.
+// Round 241: Complete complementary permission bool/byte/short/long 572/572/616/609;
+// with complementary base interruptibility 593/593/632/619. Original body restored;
+// frame eight versus twelve and requested/state/result homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1444,10 +1435,10 @@ bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 	bool interruptible = false;
 	if (controlling != NONE)
 	{
-		long first = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x212));
+		long first = function_cbd50(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x212));
 		if (first != NONE)
 			depleted = *(short *)((byte *)UNIT_ANIMATION_OBJECT(first) + 0x17c) <= 0;
-		long second = held_object_110ab0(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x213));
+		long second = function_cbd50(unit_index, *(char *)((byte *)UNIT_ANIMATION_OBJECT(unit_index) + 0x213));
 		if (second != NONE && *(short *)((byte *)UNIT_ANIMATION_OBJECT(second) + 0x17c) > 0)
 			depleted = false;
 		if (*(byte *)((byte *)state + 0x14) & 0x10)
@@ -1651,54 +1642,54 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 810 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain.
-// Earlier: frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
-// Earlier 810 from 841; frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
-// depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
-// native centered 834, separate secondary activity 833.
-// two inline levels 833, sequential channel construction 833, activity byte 833,
-// short overlay counter 833, channels before curve weights 833.
-// seat-weight branches 874, overlay pointer countdown 863, refreshed object 833,
-// direct bounds fallback 859, size preference 1557, object pointer name 833,
-// control-first declaration 833.
-// Earlier: unit/state homes and first angle expansion remain. Primary direction
-// snapshot 863; secondary 829 (a one-use copy, not kept); both 865; native initial angles 848;
-// centered predicate after channel preparation 871.
-// Earlier: frame 0xc4 versus 0xd4 and angle expansion remain; partial j/k inputs 919;
-// partial i input 899; early screen pointers 934; named state predicate 873; unsigned counter 879;
-// direct eligibility accumulation 875 kept; state-guard accumulation 892.
-// Earlier: frame and first angle expansion remain; entry blend channels 1057;
-// yaw/pitch values 875; centered tests at use 866; early blend products 853;
-// whole projection output 880; centered tests plus early products 841.
-// Earlier: Frame and first angle expansion remain; native projection return 889
-// (frame 0xd4); float bound fields 841; byte overlay ordinal 841; joined bound receiver 912;
-// named blend scalars 841. Opening body and both helpers retained.
-// native projection inputs by value 1112; native projection output reference 841; native bounds-screen reference 841; signed-word activity 844; readonly retained tag 841.
-// Shared dot products with basis/direction first 841/841 (match-only grouping);
-// uniform running projection sums 841; output-first 841; native input references 841;
-// references plus output-first 841; running sums plus output-first/references 841/841.
-// Frame 0xc8 versus 0xd4 and first angle expansion remain. Body and helper restored.
-// Round 181 direction input value/native copy 810/810; basis values/native copies 1067/1073;
-// all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166.
-// Direction copied once inside projection retained (plain 810, 3403/3403); frame 0xcc versus 0xd4.
-// Round 171: Uniform named k/j/i product subsets k,j,i,kj,ki,ji,kji all 810; uniform first k+j row
-// sums 810. Complete original helper and body restored. Frame 0xcc versus 0xd4 and first angle
-// expansion remain.
-// Round 188 on retained direction copy: immutable direction 810; ordinary inline 1151;
-// complete result publication 900 (frame 0xd4); pointer result 810; direction/basis/all
-// input references 810/810/810; output-first 810. All original helper contracts retained.
-// Independent row orders ikj/jik/jki/kij/kji with retained direction copy:
-// 810/829/829/839/840; uniform k/j/all product operand order 810/810/810.
-// All restored; frame 0xcc versus 0xd4 and first angle boundary remain.
+// score 805 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
+// read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
+// computes the centred test once with x87 fabs before the blend block, copies the default angles as a
+// struct and duplicates the seat-weight call setup in both arms. 0x1c6470's convention (graph in ECX in
+// retail) still differs: BLOCKED-BY 0x1c6470 at its four call sites.
+// Tried: depth zero 1428, depth one 833, projection inline 833, bounds inline 1055, native centered 834,
+// separate secondary activity 833; two inline levels 833, sequential channel construction 833, activity
+// byte 833, short overlay counter 833, channels before curve weights 833; seat-weight branches 874,
+// overlay pointer countdown 863, refreshed object 833, direct bounds fallback 859, size preference 1557,
+// object pointer name 833, control-first declaration 833; primary direction snapshot 863; secondary 829
+// (a one-use copy); both 865; native initial angles 848; centered predicate after channel preparation
+// 871; partial j/k inputs 919; partial i input 899; early screen pointers 934; named state predicate 873;
+// unsigned counter 879; direct eligibility accumulation 875 (kept then); state-guard accumulation 892;
+// entry blend channels 1057; yaw/pitch values 875; centered tests at use 866; early blend products 853;
+// whole projection output 880; centered tests plus early products 841; native projection return 889
+// (frame 0xd4); float bound fields 841; byte overlay ordinal 841; joined bound receiver 912; named blend
+// scalars 841; native projection inputs by value 1112; native projection output reference 841; native
+// bounds-screen reference 841; signed-word activity 844; readonly retained tag 841; shared dot products
+// with basis/direction first 841/841; uniform running projection sums 841; output-first 841; native
+// input references 841; references plus output-first 841; running sums plus output-first/references
+// 841/841. Round 181: direction input value/native copy 810/810; basis values/native copies 1067/1073;
+// all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166;
+// direction copied once inside projection retained (810). Round 171: uniform named k/j/i product subsets
+// all 810; uniform first k+j row sums 810. Round 188: immutable direction 810; ordinary inline 1151;
+// complete result publication 900 (frame 0xd4); pointer result 810; direction/basis/all input
+// references 810; output-first 810; row orders ikj/jik/jki/kij/kji 810/829/829/839/840; uniform k/j/all
+// product operand order 810. Round 75: entry pointers in retail's load order 810; separate second
+// projection vector 830; default angles copied as a struct 826; `active` cleared by a conditional
+// assignment 884 (3358 bytes, aligned 846 -> 622); that plus the centred test as a named bool 875
+// (aligned 584).
+// Round 187: basis matrix 807; matrix/shared cross 858; matrix pointer/reference/value
+// inputs 807/807/842; aggregate/member basis copies 1102/1102; matrix reference/shared
+// cross 851. The three-count gain is dropped; original independent vectors restored.
+// Round 7: graph looked up right after the state 805 (kept); with the final flags as a ternary 804;
+// final test with its arms swapped 810; activity as a logical and 849; a fresh object pointer for the
+// final test 810; definition first 810; definition before control 805; channel tests through a
+// pointer helper 838; overlay ratio clamp as a ternary 805. Retail inlines the first 0x11df30 call
+// and reads the projection input from the object in place.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
 {
 	s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(unit_index);
 	s_animation_state *state = UNIT_ANIMATION_STATE(unit);
+	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	s_unit_animation_control *control = UNIT_ANIMATION_CONTROL(unit);
 	s_unit_animation_definition *definition = (s_unit_animation_definition *)TAG_BYTES(unit->definition_index);
-	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	c_animation_channel channel;
 	if (control->channel_9c.graph_tag_index != NONE && control->channel_9c.animation_id.index != NONE)
 		control->channel_9c.sample(1.0f, node_mask, node_count, transforms);
@@ -1867,7 +1858,6 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 	}
 }
 
-long function_cbd50(long unit_index, short weapon_index);
 bool function_cd660(long unit_index);
 
 // @retail 0x1130f0
@@ -2330,6 +2320,47 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // word-word: 666/676/666/693/666/693/676/682 (fast); all restored.
 // Eight complete entry object/control/state/tag receiver lexical orders all 666; frame
 // 0x80 unchanged, request ESI capture and tag/control homes remain. All names restored.
+// Round 146: Complete channel-reference validity with bool/byte/short/long results 666/666/677/672;
+// forced expansion 702/702/698/699. Original pointer helper, calls and body restored.
+// frame 0x80 agrees; ours passes the request pointer in EAX (ret 4) where retail
+// keeps both arguments on the stack (ret 8) and reloads the request pointer three times; retail keeps the
+// control pointer in ESI early, the force flag in a byte at +0x11 and the force result in a byte at +0x1b,
+// inlines every channel-validity test (ours calls it at the three 0x700005c checks) and passes the raw
+// channel words to 0xe6a20 (`movzx`), whose contributor-owned definition takes bools: BLOCKED-BY 0xe6a20.
+// Round 55: retail never enregisters the request pointer and copies the request bools at +8/+9 as plain
+// bytes; its transition flag is a byte (+0x11). Request bools read as bool 707 (2545 bytes); with a bool
+// transition flag 723 (frame 0x7c, aligned 496 -> 383); bool transition flag alone 710 (aligned 386);
+// declared after the result 709; with only the +9 bool read 742.
+// Tried: ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
+// requested-name snapshots 709; inline plus native final/validity 696/707; ordinary-helper Boolean
+// transition 712; native helper result 706; explicit helper result 679; size policy 1026; byte validity
+// 679; force decision at use 723; late validity 677; final activity values 676; entry output scalars 679;
+// early-invalid helper 710; late validity plus activity values 674; native node selector 704, node
+// ordinal 679, separate transformed point 686, completion cases first 679, early data construction 679;
+// indexed three-channel completion 743; position field receiver 704; byte transition 711; direct
+// eligibility 705; byte request flags 705; unsigned requested names 674; short held-slot count 674; word
+// activity result 690; transition cases first 674; internal validity linkage 674; forced validity on
+// late-result body 707; reversed validity fields 722; fallback vector memcpy 674; current-frame request/
+// workspace names 674; shared channel flag word 674; validity tag/index scalars 702; native identifier
+// value/reference 820/699; scalar independent tests 729; scalar/value/reference forced expansion
+// 707/868/707; identifier-first scalar formals 702; word transition/override 672/714; byte permission/
+// activity 694/674; separate final accumulator 666; logical final OR 680; both native validity tests
+// 716, with word transition 714; call-first/combined accumulator 666/666; byte activity with
+// accumulator 669; Boolean transition 710; byte override 666; byte permission 693; transition with
+// override 710; transition with permission 662; both byte inputs 693; Boolean transition with both bytes
+// 662; word transition with both bytes 704; complete request value after/before initial activity
+// 689/706, with all three request results constructed directly 705/712; complete library input copy
+// after/before 689/706, with direct results 705/712; late changed/forced status byte-bool, word-bool,
+// bool-byte, bool-word, byte-byte, byte-word, word-byte, word-word 666/676/666/693/666/693/676/682;
+// eight entry object/control/state/tag receiver lexical orders 666. Round 75: force-inline validity
+// helper 702 (aligned 487 -> 476); validity result computed before the changed flag 668 (aligned 468);
+// definition pointer computed second 663; both 665; with a Boolean force flag 706 (frame 0x7c, aligned
+// 385); plus the force result as a flag set in a test 708 (aligned 361, frame still 0x7c).
+// Round 187: primary/secondary request producers, original/input-first/complete branch:
+// original/input 694; original/branch 708; input/original 722; input/input 727;
+// input/branch 727; branch/original 713; branch/input 690; branch/branch 690.
+// On the secondary input-first form (ret 8): tag second 694; state before control 694;
+// Boolean transition 702; tag second with Boolean transition 702. Original body restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

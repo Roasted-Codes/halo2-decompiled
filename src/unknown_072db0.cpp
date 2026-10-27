@@ -1190,6 +1190,7 @@ long function_1931a0(long count, s_surface_description *variant);
 // native rating record, native role names, native capacity expression, native
 // minimum observations, array minimum observations, capacity expression,
 // inline rating declaration and inline quality declaration 32/32/60/32/32/60/32/32.
+// Native output-record graph; maximum/population/both snapshots; record with maximum/population/both; native address assignment: 32 each (fast control 32). Original output graph and all calls restored.
 // @retail 0x73530
 void function_73530(c_helper_a *helper, void *description)
 {
@@ -1319,7 +1320,7 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 202): Frame 0xfc agrees; key/statistic/group homes, cursor bias and grouped dispatch remain.
+// score 202 (was 202): frame 0xfc agrees; key/statistic/group homes, statistic cursor bias and grouped dispatch remain.
 // Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
 // Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
@@ -1392,6 +1393,17 @@ struct s_rating_summary
 // 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
 // completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
 // the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
+// Native full-width unsigned/signed status fields 202/202; native word/bitfield
+// admission with full sentinel 350/350; split sentinel halves 335/335; native
+// status with player indexing 202, with fifteen-bit counters 199 (rejected).
+// Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
+// 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
+// DL159: uniform name-input field observations, crossed with shared pass ordinal, shared three-count results and two-word prefix clear, 235/236/235/236/234/234/234/234. Shared ordinal recovers key home but regresses total; original character snapshot and body restored.
+// Round 210: Query-count table publication 123/132/213/231/312/321 gives
+// 202/206/213/344/214/345; entry table with 123/321 gives 202/345. Original restored.
+// Round 194: On native fifteen-bit player statistics and a shared pass ordinal,
+// byte/short/word/dword group counters with dword or word characters all 311;
+// original body and native collection extent restored. Key/group homes remain.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1594,7 +1606,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 739 (was 739): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
+// score 737 (was 737): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
 // Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
@@ -1622,9 +1634,22 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Admission-test result 739; eager failure OR 753; positive completion 739;
 // player-result-first OR 739; accumulated signed/unsigned failure 761/761;
 // signed positive completion 759; admission plus positive completion 739.
+// Round 71: retail inlines the pointer-returning variant getter (index range as a pointer range, then a NULL
+// test, then variant->type) and keeps the six-property loop rolled with a register bound shared by the
+// count store and properties_used += 6. Getter at the first site 755 (2894 bytes); at all three 766 (2910);
+// getter + `j < record->count` bound and `properties_used += record->count` 759 (2830, aligned lines 560 -> 484);
+// the same with the sum before the loop 774; the bound alone 839 (2766).
 // Round 137: SSE flag 755 (file gate failed);
 // inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
 // Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.
+// Read-builder count homes in six meaningful lexical orders, write-builder homes and both builders: 739 each on the retained word-completion/failure graph. Original count names, helpers, predicates and call tuples restored.
+// Round 343: Native request identity via library/aggregate copy 747/747; with real descriptor count 792/792;
+// terminal candidate reuse 742/742; count plus terminal reuse 836/836. All restored; original completion failure and word group remain.
+// Initial-pass signed-word group/availability/both/clears/group-clears/availability-clears/all
+// 752/761/764/737/752/761/764; all initial-pass unsigned-word indices 764.
+// Round 248: Complete returned-property extent and received total, signed/unsigned
+// with indexed access and before/after accumulation 737/754 each; native property
+// cursor with the same pairs 737/760 each. Original bound and accumulation restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

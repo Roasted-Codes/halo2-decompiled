@@ -572,6 +572,13 @@ real function_267370(long volatile object_index);
 // Round 176: Shifted held bit on the retained first-cross graph 319 fast/272 plain;
 // complete inverse bool/byte/short/long 319 each; staged inverse bool/byte/short
 // 368/368/388 (fast control 371). Missing frame dword persists; all forms restored.
+// Round 351: native carrier control/held bit/both/seat/control-seat/held-seat/all
+// 273/272/272/273/273/272/272; complete readonly metadata 272. One-point gains rejected;
+// original external record observations restored; missing frame dword and held-bit byte remain.
+// Round 250: Entry receiver declarations, ordinal/type declarations, marker/point/predicate
+// declarations, each paired group, all groups, and all groups with phase-role names: 273 each. Every
+// value birth and original phase declaration restored. Frame 0x8c/0x90, early NONE and held-direction
+// byte home remain.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -781,6 +788,9 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // Previous timestamp 17; event unit 17; both 17; recent timestamp test 17; snapshot recent test 17;
 // early event unit 98; early unit and timestamp 98; complete interval predicate 22.
+// Shared actor offset 67; amount actor offset 17; amount pool record 17;
+// delayed actor formation 241; prop-view getter 17; amount snapshot 17;
+// actor-index snapshot 17; amount parameter pointer 17.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -1061,6 +1071,14 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 176: Complementary substitution result bool/byte/short/long, guarded
 // producer 362/362/364/363; complete conditional producer 372/372/375/374.
 // Frame 0x118 agrees; sentinel and query-result homes persist. All forms restored.
+// Lane 5 r77: retail's substitution loop is top-tested and not rotated (its jmp only skips the
+// head's padding), computes the result as `forced ? 0x203900(...) : enabled`, keeps the flag as a
+// byte `(flags >> 10) & 1` in the squad pointer's slot, tests grenade indices as ints and reads the
+// palette count at each use. Each alone: int grenade tests 349 (frame changes), count at each use
+// 336, byte shifted flag 359, ternary result 358 (its block then matches retail); all four 379
+// (aligned 233 against 243). All restored.
+// Round 149: Substitution producer/test ordinary inline, noinline, paired and mixed contracts [320, 320,
+// 320, 320, 320, 320, 320, 320]; all restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -1635,6 +1653,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
 // Round 206: Shared unit receiver 270; with entry weapon/ammunition/both output lifetimes 270/270/270;
 // both output lifetimes 270; shared unit with entry grenade receiver, weapon/grenade or all workspaces 270 each.
+// Round 212: Consistent actor getter observations 352; with long ordinal 327; fixed-two for 352;
+// long ordinal with for 327; output initializer 351; initializer with long/for/both 327/351/327.
 // Round 145: Both ammunition bounds captured, lower/upper/ordinal short-short-short 326, short-
 // short-long 339, long-short-short 333, long-short-long 347, short-long-short 332, short-long-long
 // 340, long-long-short 334, long-long-long 348; all restored.
@@ -1645,6 +1665,12 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
 // Scalar-home names for probability, fraction, delay, ticks, minimum and loop index,
 // plus both grouped renames: 270 each.
+// Round 351: bounded equipment for, actual pair initializer, early constant ordinal and
+// their four combinations 270/270/270/270/270/270/270; complete graph with word ordinal 270. All restored.
+// Round 250: Conditional-result query record inputs: current/secondary/both/both const 270/270/270/270;
+// both with long slots mutable/const 293/293; both with signed-byte slots mutable/const 268/268 (fast
+// control 270). Two-point gain rejected; original scalar-index inputs and short slots restored. Frame
+// 0x14 agrees; index/pool roles and scalar/ammunition homes remain.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

@@ -14,6 +14,7 @@ void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
 // score 217 (was 217): Frame 0x48 agrees; receiver EDI/EBP and callback/output/blocked homes remain.
+// Earlier baseline: Frame 0x48 agrees; receiver EDI/EBP and callback/output/blocked homes remain.
 // Earlier 217 from 217: Frame 0x48 agrees; receiver and aggregate/blocked homes remain.
 // Earlier 217 from 217: frame 0x48 agrees; receiver EDI/EBP and count,
 // priority, size and blocked homes remain. Both redundant count guards removed
@@ -62,6 +63,24 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Native state with direct entry/entry-plus-peer/peer fields 236/238/266; native flags
 // with direct entry/peer 239/229; both snapshots with direct entry/entry-plus-peer/peer
 // 239/239/229. Original entry/peer cursors, field reads and callback/output homes restored.
+// Round 188: Chain-query inline/noinline/forceinline/inline-out-of-line declarations, then each
+// with native word state observed once:
+// 217,217,217,217,217,217,217,217 fast; reduced control 217, full 217. Original executable source restored.
+// Round 191: Native two-use payload mask at active gate, with original/cursor/
+// conditional size/both output forms 217/250/214/244; before state selection,
+// consistently serving applicable callbacks, 217/250/214/244. Three-point best
+// restored; original field observations, output graph and executable body restored.
+// Round 153: Once-computed validity with readiness AND pending/active/both 233/220/240; blocked OR
+// pending/active 249/232; AND-OR/OR-AND 249/251; both readiness byte/long 240/269. Original
+// callback/reduction graph restored.
+// Round 254: shared callback owner after peer/before peer/before handle 262/262/262;
+// entry table alone/with owner 261/242; enabled/nonempty/entry-scope table with owner
+// 246/244/248. Original live pointer observations and executable body restored.
+// Round 193: Private pending/active/both chain maxima; each with private pending size;
+// both maxima with conditional pending publication, without/with private size: 227/240/228/227/218/241/288/235. Original restored.
+// Round 195: Pending/active reversed-relational and conditional-replacement maximum
+// graphs, alone and in all pairs, 217 in eight forms. Equality/unordered choices retained;
+// original body restored, with receiver and callback/output/blocked homes unresolved.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -233,10 +252,7 @@ static inline void free_block(void *block)
 	long info;
 	if (!g_4d87f8->allocator->get_info(block, &info))
 		info = NONE;
-	s_allocator_globals *globals = g_4d87f8;
-	globals->allocator->release(block, NONE);
-	if (block != 0)
-		globals->count--;
+	allocator_globals_release(g_4d87f8, block);
 }
 
 // @retail 0x99820
@@ -775,57 +791,6 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 154 (was 154): Frame 0x98 agrees; total/receiver/kind homes and counted-item transport remain.
-
-// Frame 0x98 agrees; count/receiver stack homes, decoded-kind width and callback setup remain.
-// Frame 0x98 agrees; total/receiver/callback-index homes and native kind remain different.
-// Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
-// Native kind 211; role-named scalars 204; shared callback arm 222;
-// library descriptor/payload copies 204; pretested item while 220.
-// Unsigned native item total 204; joint count/error item guard 220; direct local output cursor 211;
-// pair-pointer cleanup 206; payload-before-info declaration 204.
-// Round 132: count after block publication 193 plain kept (688/692 bytes); frame 0x98,
-// count/kind/callback homes still differ. Entry decision/common exit/path results 271/248/206;
-// native-kind pairs 271/236/223; native kind plus count publication 204; both cursors after
-// publication 208; indexed post-publication output 212.
-// Count-bearing descriptor aggregate 208; update case first 211; persistent descriptor 204;
-// native high nibble 207; total-only lexical order 204.
-// Count-first declarations 205; entry-scope advancing cursor 217; produced before descriptor clear
-// 205; existing release helper 207; native kind with both initialization changes 212.
-// Round 111: Header error recheck removed 206; do-while error continuation 272; persistent native payload 204; persistent produced total 204; update error default first 204.
-// Item cursor 221; paired callback cursors 185 plain kept; all descriptor cursors 193;
-// unsigned error 193; word kind 204; default first 193; reverse cases 211;
-// all cursors with full-width kind 204.
-// Paired cursors with native kind 203; paired/native kind with pretested for 217.
-// Round 157: Range-first byte/native kind 232/198; count-default byte/native 232/218; terminal-test
-// count byte/native 214/219; test-count pretested while byte/native 214/215.
-// High/low cursor names 185; second cursor declared first 185; descriptor zero
-// initializer 186; names/declaration order 185; names/initializer 186;
-// declaration order/initializer 186; all three 186; cursor declarations before scalars 185.
-// Frame 0x98 agrees; running total at +0x10 versus +0xc and kind/callback homes remain.
-// callback-table 251; update-entry 198.
-// callback-table-update-entry 219; count-home-names 185.
-// callback-table-count-home-names 251; update-entry-count-home-names 198.
-// callback-table-update-entry-count-home-names 219; table-before-item-publication 251.
-// Round 199: Descriptor-owned item bound, byte kind with indexed/pretested/item-cursor/both forms
-// 216/203/181/191; native-kind counterparts 208/205/224/195 (fast). All restored.
-// Round 159: Second-only/first-only callback cursors with byte kind 218/218; native kind 219/219;
-// second-plus-item/first-plus-item cursors with byte kind 218/218 and native kind 219/219. All 704/692
-// bytes, frame 0x9c versus 0x98. Original paired cursors, item indexing, copies and cleanup restored.
-// Round 161: Failure-first 193; native kind 208; direct cleanup-array reads 178;
-// native kind plus array reads 202; metadata before copies 181; failure-first metadata
-// 193; failure-first native metadata 208; failure-first descriptor before index 193.
-// Seven/four-point previews rejected by minimum gain; original body restored.
-// Shared item/cleanup ordinal 185; with pretested items 222; case-local index 200;
-// case-local/pretested 266; native kind 203; native/pretested 217; native/case-local
-// 202; all three 217. Opening body restored.
-// Round 145: First-array endpoint byte/posttest 157, byte/pretest 250, native/posttest 177,
-// native/pretest 186; second-array counterparts 154/249/177/186. On second-array endpoint: enum
-// kind 177; shared creation arm 170; enum/shared arm 178; word kind 195.
-// Round 149: Second-array endpoint graph: scalar/buffer lexical home masks and entry buffer
-// declarations 154 each; range-first byte/native 216/205, default-first 228/221, terminal-produced
-// count 210/208; range/default native unsigned count 205/221. Original endpoint and full body
-// restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
@@ -838,26 +803,29 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 		s_handle_block *cursor = blocks;
 		do
 		{
-			byte type = (byte)function_1959c0(stream, 3);
+			dword type = function_1959c0(stream, 3);
 			long n;
 			if (type >= 6)
 			{
 				error = 3;
 				break;
 			}
-			if (type == 0)
-				n = 0;
-			else if (type > 2 && type <= 4)
+			if (type != 0)
 			{
-				n = function_1959c0(stream, 2) + 2;
-				if (n < 1 || n > 4)
+				if (type > 2 && type <= 4)
 				{
-					error = 3;
-					break;
+					n = function_1959c0(stream, 2) + 2;
+					if (n < 1 || n > 4)
+					{
+						error = 3;
+						break;
+					}
 				}
+				else
+					n = 1;
 			}
 			else
-				n = 1;
+				n = 0;
 			if (error != 0)
 				break;
 			if (count >= max_blocks && n > 0)
@@ -873,10 +841,7 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 			memset(&info, 0, sizeof(info));
 			info.count = n;
 			long produced = 0;
-			long i = 0;
-			dword *first_cursor = info.b;
-			dword *second_cursor = info.c;
-			do
+			for (long i = 0; i < n; i++)
 			{
 				if (error != 0)
 					break;
@@ -887,18 +852,18 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 				switch (type)
 				{
 				case 1:
-					error = table->owner->v1(item, first_cursor, second_cursor, 8, &produced, data.v, stream);
+				case 3:
+					error = table->owner->v1(item, &info.b[i], &info.c[i], 8, &produced, data.v, stream);
 					break;
 				case 2:
-					break;
-				case 3:
-					error = table->owner->v1(item, first_cursor, second_cursor, 8, &produced, data.v, stream);
-					break;
 				case 4:
 					break;
 				case 5:
 					if (entries[index].handle == (long)item && entries[index].state == 3)
-						error = table->owner->v6(item, info.c, 8, &produced, data.v, stream);
+					{
+						s_handle_peers *peers = table;
+						error = peers->owner->v6(item, info.c, 8, &produced, data.v, stream);
+					}
 					else
 						error = 2;
 					break;
@@ -906,14 +871,11 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 					error = 3;
 					break;
 				}
-				first_cursor++;
-				second_cursor++;
-				i++;
 			}
-			while (second_cursor != info.c + n);
 
 			if (error == 0)
 			{
+				count++;
 				s_handle_block *block = cursor;
 				cursor++;
 				block->type = type;
@@ -921,16 +883,14 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 				block->info = info;
 				block->count = produced;
 				block->data = data;
-				count++;
 			}
 			else
 			{
 				for (long k = 0; k < produced; k++)
 				{
-					void *object = data.v[k * 2 + 1];
-					if (object != 0)
+					if (data.v[k * 2 + 1] != 0)
 					{
-						free_block(object);
+						free_block(data.v[k * 2 + 1]);
 						data.v[k * 2 + 1] = 0;
 					}
 				}

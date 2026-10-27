@@ -24,41 +24,62 @@ struct s_sky_surface_record
     dword color1;
 };
 
-PRIVATE __forceinline long sky_surface_tag(short index)
+/* the tag data of a scenario sky, or NULL when the index or its tag is NONE */
+PRIVATE __forceinline byte *sky_surface_data(short index)
 {
     byte *scenario = (byte *)g_4e0350;
-    long result = NONE;
+    long tag_index = NONE;
     if (index >= 0)
     {
         long count = *(long *)(scenario + 8);
         if (index < count)
-            result = *(long *)(*(byte **)(scenario + 0xc) + index * 8 + 4);
+            tag_index = *(long *)(*(byte **)(scenario + 0xc) + index * 8 + 4);
     }
+    byte *result = NULL;
+    if (tag_index != NONE)
+        result = g_4e3b44[tag_index & 0xffff].bytes;
     return result;
 }
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trig/color homes remain.
-// Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
-// Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
-// and pending trigonometric components differ. Native sky fields 213; native
-// light/value fields 213; both views 213; frame pointer 296; status enum 213.
-// selector complete validation 213; selector result join 213; collision value initialization 238; direct
-// component lifetimes 231; component lifetimes ordinary count 225; native contribution vector 246; size
-// preference 380; float consistency 302.
-// Selector failing-range returns 213; explicit selector context 213; direct collision predicate 213;
-// ordinary while light traversal 213; independent blend bounds 213; constant output first 213.
-// Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
-// Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
-// 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
-// Native contribution aggregate with cached/direct angles 236/235;
-// native direct component fill 235; cached component orders ikj/jik/jki/kij/kji 219/212/221/216/219.
-// Existing scalar color/blend/both 213/213/213; existing color helper and helper plus blend 213/213;
-// entry strength snapshot alone/with scalar clamps/with color helper 225/225/225. All restored.
-// Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
-// Native ray/fallback/both component loops with long ordinals 218/217/217; dword 218/217/217;
-// both with short/byte ordinals 244/244. Original body restored; selector and pending homes remain.
+// score 150 (was 213): frame 0x8c agrees; the selector join and esi/edi saves match (the sky
+// lookup helper returns the tag data, NULL by default, so the NONE join is not threaded). Left:
+// the sky/count homes, the pending trig products (retail computes cos/sin into two temporaries
+// before the three adds and adds the direction as the memory operand), the blend registers
+// (retail: 1.0 in xmm1 loaded first, zero in xmm2, quotient in xmm3, blend copied into xmm5),
+// the strength add after the blend call (retail `addss xmm7, [value]` re-reads the value; ours
+// reuses the value loaded before the call), the collision test's sete and the color0 store order.
+// Forms (positional counts; [n] = differing lines after aligning the listings, 131 for this body):
+// count without volatile 191 [76]; light contribution vector with fields read at each use 209
+// (837 bytes), with a plain count 166, plus the lights pointer read in the loop 161 [54], plus the
+// count read from the field at each use 159 [50] (sky/count homes and the temporaries' homes then
+// match retail; the adds still load the direction first), plus color0 stored first 160 [48], plus
+// `visible = false; if (hit) visible = field == NONE;` (gives retail's sete) 167 [45];
+// direction_from_angles for the contribution 173; pin_real for the blend and colors 161 (same
+// code); a pointer add helper, `contribution + direction` spelled out, contribution declared before
+// direction and array/initializer/declaration-order forms keep the direction-first adds
+// (screened); color0 first alone 149. Native sky fields 213; native light/value fields 213; both
+// views 213; frame pointer 296; status enum 213; selector complete validation 213; selector result
+// join 213; collision value initialization 238; direct component lifetimes 231; component
+// lifetimes ordinary count 225; native contribution vector 246; size preference 380; float
+// consistency 302; selector failing-range returns 213; explicit selector context 213; direct
+// collision predicate 213; ordinary while light traversal 213; independent blend bounds 213;
+// constant output first 213; direction initialization only with lights 213; color initialization
+// only with lights 213; both 213; light-table field at each access 213; result from record
+// validity 230; query-only collision lifetime 230; validated-record collision lifetime 217; byte
+// status 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213;
+// native contribution aggregate with cached/direct angles 236/235; native direct component fill
+// 235; cached component orders ikj/jik/jki/kij/kji 219/212/221/216/219; existing scalar
+// color/blend/both 213/213/213; existing color helper and helper plus blend 213/213; entry strength
+// snapshot alone/with scalar clamps/with color helper 225/225/225; complete data-pointer selector,
+// guard returns, full selector, const data, explicit context and definite pointer arms 213 each;
+// ordinary inline 256; validated data output 228; native ray/fallback/both component loops with
+// long ordinals 218/217/217, dword 218/217/217, short/byte ordinals 244/244; direction seed/color
+// seed/direction publication library copies and whole-color replacements 213; blend/pack/collision
+// ordinary-inline declarations, pairs and together 213, separate noinline declarations 213;
+// scenario/data/both/value/data+value/scenario+value/all source pointers read at each use, then all
+// plus light table 213/192/192/213/231/213/231/247 (data-only adds reloads).
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -68,73 +89,69 @@ long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_
     if (g_4b9ee9 && g_4b9eec != NONE)
     {
         long index = g_4b9eec;
-        long sky_index = sky_surface_tag((short)index);
-        if (sky_index != NONE)
+        byte *sky = sky_surface_data((short)index);
+        if (sky != NULL)
         {
-            byte *sky = g_4e3b44[sky_index & 0xffff].bytes;
-            if (sky != NULL)
+            vector3f direction = *g_4687a4;
+            color3f color = *(color3f *)g_468718;
+            real strength = 0.0f;
+            long volatile count = *(long *)(sky + 0x78);
+            if (count > 0)
             {
-                vector3f direction = *g_4687a4;
-                color3f color = *(color3f *)g_468718;
-                real strength = 0.0f;
-                long volatile count = *(long *)(sky + 0x78);
-                if (count > 0)
+                byte *lights = *(byte **)(sky + 0x7c);
+                for (long i = 0; i < count; ++i)
                 {
-                    byte *lights = *(byte **)(sky + 0x7c);
-                    for (long i = 0; i < count; ++i)
+                    byte *light = lights + i * 0x34;
+                    if (*(long *)(light + 0x2c) > 0)
                     {
-                        byte *light = lights + i * 0x34;
-                        if (*(long *)(light + 0x2c) > 0)
+                        byte *entry = *(byte **)(light + 0x30);
+                        real yaw = *(real *)(light + 0xc);
+                        real pitch = *(real *)(light + 0x10);
+                        real cosine = (real)cos(pitch);
+                        direction.i += (real)cos(yaw) * cosine;
+                        direction.j += (real)sin(yaw) * cosine;
+                        direction.k += (real)sin(pitch);
+                        if (i == 0)
                         {
-                            byte *entry = *(byte **)(light + 0x30);
-                            real yaw = *(real *)(light + 0xc);
-                            real pitch = *(real *)(light + 0x10);
-                            real cosine = (real)cos(pitch);
-                            direction.i += (real)cos(yaw) * cosine;
-                            direction.j += (real)sin(yaw) * cosine;
-                            direction.k += (real)sin(pitch);
-                            if (i == 0)
-                            {
-                                color = *(color3f *)(entry + 4);
-                                strength = *(real *)(entry + 0x10);
-                            }
-                            else if (*(real *)(entry + 0x10) > 0.0f)
-                            {
-                                real blend = 1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f);
-                                if (blend < 0.0f) blend = 0.0f;
-                                else if (blend > 1.0f) blend = 1.0f;
-                                function_131c20(&color, (color3f *)(entry + 4), 0, blend, &color);
-                                strength += *(real *)(entry + 0x10);
-                            }
+                            color = *(color3f *)(entry + 4);
+                            strength = *(real *)(entry + 0x10);
+                        }
+                        else if (*(real *)(entry + 0x10) > 0.0f)
+                        {
+                            real blend = 1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f);
+                            if (blend < 0.0f) blend = 0.0f;
+                            else if (blend > 1.0f) blend = 1.0f;
+                            function_131c20(&color, (color3f *)(entry + 4), 0, blend, &color);
+                            strength += *(real *)(entry + 0x10);
                         }
                     }
-                    function_30bf0(&direction);
-                    vector3f ray;
-                    ray.i = direction.i * 100.0f;
-                    ray.j = direction.j * 100.0f;
-                    ray.k = direction.k * 100.0f;
-                    bool hit = function_1697c0(0x10000001, point, &ray, ignore_object_index, NONE,
-                        (s_collision_result_1697c0 *)collision);
-                    if (!hit || *(short *)(collision + 0x5a) != NONE)
-                        color = *(color3f *)(sky + 0x34);
                 }
-                else
-                {
+                function_30bf0(&direction);
+                vector3f ray;
+                ray.i = direction.i * 100.0f;
+                ray.j = direction.j * 100.0f;
+                ray.k = direction.k * 100.0f;
+                bool hit = function_1697c0(0x10000001, point, &ray, ignore_object_index, NONE,
+                    (s_collision_result_1697c0 *)collision);
+                if (!hit || *(short *)(collision + 0x5a) != NONE)
                     color = *(color3f *)(sky + 0x34);
-                    direction.i = direction.j = direction.k = -1.0f;
-                    function_30bf0(&direction);
-                }
-                record->direction = direction;
-                record->color0 = 0xff555555;
-                if (color.red < 0.0f) color.red = 0.0f;
-                else if (color.red > 1.0f) color.red = 1.0f;
-                if (color.green < 0.0f) color.green = 0.0f;
-                else if (color.green > 1.0f) color.green = 1.0f;
-                if (color.blue < 0.0f) color.blue = 0.0f;
-                else if (color.blue > 1.0f) color.blue = 1.0f;
-                record->color1 = pack_color3f(&color);
-                result = 0;
             }
+            else
+            {
+                color = *(color3f *)(sky + 0x34);
+                direction.i = direction.j = direction.k = -1.0f;
+                function_30bf0(&direction);
+            }
+            record->direction = direction;
+            record->color0 = 0xff555555;
+            if (color.red < 0.0f) color.red = 0.0f;
+            else if (color.red > 1.0f) color.red = 1.0f;
+            if (color.green < 0.0f) color.green = 0.0f;
+            else if (color.green > 1.0f) color.green = 1.0f;
+            if (color.blue < 0.0f) color.blue = 0.0f;
+            else if (color.blue > 1.0f) color.blue = 1.0f;
+            record->color1 = pack_color3f(&color);
+            result = 0;
         }
     }
     return result;
@@ -235,6 +252,11 @@ struct s_object_header
 #define TAG_FROM_OBJECT(object) ((s_object_tag *)g_4e3b44[(object)->tag_index & 0xffff].bytes)
 
 
+// score 4 (was 92): the second scan's found block sets al after its last store and loads the short
+// through ax; retail sets al before the last store and uses cx. Its `result = true` first or with
+// `return result` 4; `result = true; ...; break;` 62/63; a found flag 4; one shared inline child
+// scan for both halves 312 (inline) / 165 (forceinline); type test inverted to `continue` 4;
+// a 600 s permuter run (52 tries), none below 4.
 // @retail 0xd0690
 bool function_d0690(s_object_child_iterator *iterator)
 {
@@ -249,10 +271,10 @@ bool function_d0690(s_object_child_iterator *iterator)
 			iterator->next = child->next_sibling;
 			if ((1 << child->type) & 3)
 			{
+				result = true;
 				iterator->child_index = index;
 				iterator->child_short = child->value1fc;
 				iterator->child_value = child->value14;
-				result = true;
 				break;
 			}
 		}
@@ -275,9 +297,9 @@ bool function_d0690(s_object_child_iterator *iterator)
 		}
 	}
 
-	if (iterator->root != iterator->current && iterator->current != NONE)
+	if (iterator->root != iterator->current)
 	{
-		do
+		while (iterator->current != NONE)
 		{
 			while (iterator->next != NONE)
 			{
@@ -308,7 +330,7 @@ bool function_d0690(s_object_child_iterator *iterator)
 			iterator->current = index;
 			if (index != NONE)
 				iterator->next = OBJECT_FROM_INDEX(index)->first_child;
-		} while (iterator->current != NONE);
+		}
 	}
 
 	return result;
@@ -350,16 +372,8 @@ void function_d0b70(long object_index, long a, long b, real value, long slot)
 		{
 			s_object_range *range = tag->ranges;
 
-			if (a < 0)
-				a = 0;
-			else if (a > range->maximum_a)
-				a = range->maximum_a;
-			child->value22c = (short)a;
-			if (b < 0)
-				b = 0;
-			else if (b > range->maximum_b)
-				b = range->maximum_b;
-			child->value22a = (short)b;
+			child->value22c = (short)(a < 0 ? 0 : a > range->maximum_a ? range->maximum_a : a);
+			child->value22a = (short)(b < 0 ? 0 : b > range->maximum_b ? range->maximum_b : b);
 		}
 	}
 }
@@ -395,6 +409,13 @@ real function_d1210(long object_index)
 	return 0.0f;
 }
 
+// score 8 (was 20): Positive counter arms recover the common zero tail; clamp XMM homes and zero scheduling remain
+// (retail keeps 1.0 in xmm1 and the clamp's zero in xmm2, zeroed before the scale multiply; ours swaps them).
+// Unsigned nonpositive guards 20; positive arms 8; shared counter guard/result 59/59;
+// scoped positive counters 8; conditional clamp 20; selected counter with result arms 59;
+// result before clamp 20; positive arms with reversed lower comparison/result reuse 8/8;
+// the file's in-place pin_real / returning uv_coordinate_pin(value * scale, 0, 1) 8/8;
+// one clamp on result after the guard 32, with the scale in each arm 23; in-place clamp of result 8.
 // @retail 0xd1490
 real function_d1490(long object_index, long child_index)
 {
@@ -413,16 +434,18 @@ real function_d1490(long object_index, long child_index)
 		if (current == child_index)
 		{
 			counter = object->counter1fb;
-			if (counter == 0)
+			if (counter > 0)
+				value = (real)counter * g_510c54->rate;
+			else
 				return 0.0f;
-			value = (real)counter * g_510c54->rate;
 		}
 		else
 		{
 			counter = object->counter1fa;
-			if (counter == 0)
+			if (counter > 0)
+				value = (real)counter * g_510c54->rate;
+			else
 				return 0.0f;
-			value = (real)counter * g_510c54->rate;
 		}
 		value *= 10.0f / 3.0f;
 		if (0.0f > value)
@@ -896,6 +919,16 @@ bool function_d3630(s_vertex_block *block, long triangle_index, s_mesh *mesh, re
 	return result;
 }
 
+// score 42 (was 42): Root/pool/object homes, missing shift spill and stacked iterator input remain.
+// Header base 42; root handle 45; both 45; ordinary while 59; separate admission guards 42;
+// parent field at every use 59; named parent-type mask 42; root/header with separate guards 45.
+// Retail's loop is not rotated (lookup at the top, `jmp` back): a `while (!done)` loop with
+// `done = true` in the else arm, or `do ... while (object_index != NONE)` with breaks, gives
+// retail's iterator in ebx and the spilled 1 (23 each), but the index then loads into ebp and
+// stays a stack argument (`ret 4`; retail eax copied to edi, object in ebp, pool in esi).
+// With that loop: the declarations in either order, parent declared outside, found/preset
+// flag, a renamed walk index, chained or swapped root/current stores, parent read at each use
+// 23 each; object pointer scoped in the loop 60; tail recursion rotates like the for loop.
 // @retail 0xd0620
 void function_d0620(long object_index, s_object_child_iterator *iterator)
 {
@@ -1307,6 +1340,12 @@ real function_30bf0(vector3f *vector);
 // Independent lower/upper bound records at entry, before fallback and original final phase:
 // all eight non-original phase pairs 364; original final-bound lifetimes restored.
 // Color clamp orders 102/210/201/012/021 386/377/393/393/387; first color scale orders rbg/grb/gbr 364/363/362.
+// Round 158: Genuine length-only primary/secondary scale factors produced independently or jointly at entry,
+// after decoding, fallback admission and rotation admission. Scores [544, 525, 543, 515, 503, 485, 482,
+// 499]. Original executable body restored.
+// Round 184: direct-field normal initializer 473; early normal snapshot/native initializer
+// 488/507; native query vector view 364; view with shared snapshot/direct reads/library copy
+// 488/364/364; early normal plus direct magnitude reads 517. Original observations restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

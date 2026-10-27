@@ -1267,71 +1267,6 @@ extern bool g_4ed39d;
    the change is pending, then shows the dialog or the menu that follows it.
    Retail passes all three arguments on the stack: reading the screen id
    through its address keeps it there */
-
-// score 184 (was 184): The game/main byte homes and dialog joins still differ.
-// Frame 0x28 agrees; game/main byte homes and dialog joins remain.
-// game/main byte homes and dialog joins differ;
-// frame 0x28 agrees; game/main byte homes and dialog joins remain.
-// Earlier: game/main byte homes and dialog joins differ;
-// branch loader scope 184; lobby byte 184; main byte 184; word dialog ID 190;
-// signed user flags 184.
-// Dialog-choice name 184; recovery-result name 184; both names 184; qualified loader if/else 184; dialog-
-// only signed flags 184; loader read at use 184; game result byte 184; choice byte 184. Menu-byte homes and
-// dialog joins remain.
-// initialized message before menu results 183; later mode 184;
-// results before user query 193; late dialog ID 184; full-width dialog flags 189;
-// recovery middle/high groups first 184/184; qualified pending/gate exits 184.
-// game/main byte homes and dialog joins remain.
-// Earlier: initialized message before menu results 183; later mode 184;
-// Earlier: game/main byte homes and dialog joins remain.
-// Plain: direct dialog callbacks 202; callbacks after mode 199; callbacks at display 192;
-// direct callbacks/plain game result 242; late callbacks/plain result 233; display callbacks/plain result 237;
-// direct callbacks/scalar error 245; direct callbacks/both plain 268.
-// game/main byte homes and dialog joins remain;
-// lobby recovery result 213; with connection/all recovery results 213/222;
-// dialog high/middle cases first 184/184; scoped default-dialog query,
-// dialog-presence and alternate-menu results 184/184/184.
-// game/main byte homes and dialog joins remain; low-mode error 190;
-// Earlier: game/main byte homes and dialog joins remain; low-mode error 190;
-// both error chains 186; recovery-needed result alone/with low error 174/159 (latter plain);
-// default main alone/with low error 228/229; default handled/both defaults 181/231.
-// The 159 form adds instructions and worsens normalized sequence edits 69 to 77; restored.
-// Direct disconnect game/lobby/main results 177/208/189; paired game-lobby,
-// game-main and lobby-main results 225/217/216; all results 220; ordinary game result 216.
-// Direct game result adds comparisons/stores: aligned changes 78 versus 69; dropped.
-// dialog-ID choice 202f; direct ID-selected callback tuples 238f; callbacks
-// after selection/at consumer 237f/190f; with ordinary game result
-// ID-only/direct/late/consumer 233f/257f/242f/235f. Original flow retained.
-// game/main byte homes and dialog joins remain; signed-byte
-// game/lobby/main/handled and combined results 184 each; signed-word game/lobby/main
-// 177/181/186. Word game worsens normalized sequence edits 69 to 97; restored.
-// Game/handled true chains in menu-first and handled-first order 184/186; lobby/handled chains 184/184; both menu-first/both handled-first/mixed orders 184/186/184/186. Byte homes and dialog joins remain.
-// Complement game/lobby/both/main/game-main/lobby-main/all menu results 184/184/184/184/184/214/184;
-// all complemented with the recovery result 174. Original result representations restored.
-// Recovery success read from game/lobby/both menu results 186/184/186; direct menu
-// success guards game/lobby/both 184/184/205; split both guards 205; both with low-mode
-// error sample 208. Original recovery producers, byte results and joins restored.
-// Round 160: Branch-local route result long/short/signed byte 254/251/251; callback-presence choice on
-// common flags query 202; long/byte route plus presence 258/263; message clear at publication 228; shared
-// user-flags workspace 184. Original flow, inherited qualifiers, callbacks and calls restored.
-// Earlier: game/main byte homes and dialog joins remain;
-// Earlier: game/main byte homes and dialog joins remain; signed-byte
-// Round 131: incoming change/pending/both/error/change-error/pending-error/all
-// dword input carriers 184 each; native word dialog choice 189. Original
-// parameter types, own-error observation and both inherited qualifiers restored.
-// Menu-only/dispatch-local/post-query error observation 184/184/184; game-first zero chain 181,
-// with menu-only observation 181; one recovery-error value 206, with scope/chain 207; main-first
-// zero chain 201. Byte homes and dialog joins remain.
-// Round 175: Choice from the test, two/one alternatives: bool 168/184, byte 168/184,
-// short 175/189, long 173/192. Lower raw counts add conversion instructions and
-// worsen aligned sequence edits from 66 to 72-74; all original producers restored.
-// Native message object/name/early lifetime/both 184/184/184/184; aggregate/CRT/early aggregate 247/207/239;
-// branch-local loader 184. All restored.
-// Lobby/handled order, callback initializers, dialog assignment order and their
-// combinations all 184; session reset before dialog assignment 185.
-// Screen workspace, user and dialog options, callback, dialog ID and loader
-// names individually and together 184 each.
-// Round 333: Complete message aggregate/CRT initialization 224/207; before menu-result declarations 224/205; with ordinary game result 221/227; with direct error input 222/225. Original partial field initialization, both inherited qualifications and every callback restored; byte homes and dialog joins remain.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
@@ -1350,8 +1285,8 @@ void function_19ae0f(long change, long pending, long error)
 	{
 		word user_flags = function_1901fc();
 		long mode = g_47ff90;
+		bool show_game_menu = false;
 		bool show_lobby = false;
-		bool volatile show_game_menu = false;
 		bool show_main_menu = false;
 		s_screen_parameters parameters;
 		screen_load_proc load;
@@ -1408,15 +1343,19 @@ void function_19ae0f(long change, long pending, long error)
 				}
 				break;
 			case 6:
-				if (*error_reference == 0xe)
+			{
+				long error_code = *error_reference;
+
+				if (error_code == 0xe)
 				{
 					handled = function_148044(5, 4, 0xba);
 				}
-				else if (*error_reference == 0xdb || *error_reference == 0xed || *error_reference == 0xdc)
+				else if (error_code == 0xdb || error_code == 0xed || error_code == 0xdc)
 				{
 					handled = true;
 				}
 				break;
+			}
 			}
 			if (handled)
 			{
@@ -1442,15 +1381,14 @@ void function_19ae0f(long change, long pending, long error)
 					show_main_menu = true;
 					break;
 				}
+				break;
 			}
-			else
-			{
-				show_main_menu = true;
-			}
+		default:
+			show_main_menu = true;
 			break;
 		case 4:
 		{
-			long dialog_id;
+			long dialog_id = NONE;
 
 			if (!function_0682c0() && !function_138840())
 			{
@@ -1476,7 +1414,7 @@ void function_19ae0f(long change, long pending, long error)
 				case 0:
 				case 1:
 					function_18f1c0(0);
-					return;
+					break;
 				case 2:
 				case 3:
 					dialog_id = 5;
@@ -1496,27 +1434,21 @@ void function_19ae0f(long change, long pending, long error)
 						second_chosen = dialog_callback_sign_out_to_main_menu;
 					}
 					break;
-				default:
-					return;
 				}
 			}
-			if (!window_manager_window_has_dialog(1, 4, dialog_id))
+			if (dialog_id != NONE && !window_manager_window_has_dialog(1, 4, dialog_id))
 			{
-				word show_options = function_1901fc();
 				if (choice)
 				{
-					dialog_choice_show(1, dialog_id, 4, show_options, first_chosen, second_chosen, 0);
+					dialog_choice_show(1, dialog_id, 4, function_1901fc(), first_chosen, second_chosen, 0);
 				}
 				else
 				{
-					dialog_ok_show(1, dialog_id, 4, show_options, first_chosen, 0);
+					dialog_ok_show(1, dialog_id, 4, function_1901fc(), first_chosen, 0);
 				}
 			}
 			return;
 		}
-		default:
-			show_main_menu = true;
-			break;
 		}
 		if (show_game_menu)
 		{
@@ -1532,15 +1464,17 @@ void function_19ae0f(long change, long pending, long error)
 		}
 		else if (show_main_menu)
 		{
-			if (!function_6c7e0())
+			if (function_6c7e0())
+			{
+				load = function_2310b7;
+				function_149f49((s_message *)&parameters, 7, 0, user_flags, 5, 4, (long)load);
+				parameters.load(&parameters);
+			}
+			else
 			{
 				function_1906b4();
 				function_1483c3(0);
-				return;
 			}
-			load = function_2310b7;
-			function_149f49((s_message *)&parameters, 7, 0, user_flags, 5, 4, (long)load);
-			parameters.load(&parameters);
 		}
 		else
 		{

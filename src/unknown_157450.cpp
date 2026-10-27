@@ -5163,7 +5163,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 153 (was 153): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
+// score 144 (was 144): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5198,6 +5198,9 @@ void __stdcall function_d6bc0(long object_index);
 // 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
 // Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
 // all five call boundaries inline/noinline: all 153; every declaration restored.
+// Round 142: scheduling-scoped timer 148; eligibility-scoped timer 153; wide reset
+// with those timer scopes 188/191; scheduling-scoped word/bool schedule 144/167;
+// scheduling-scoped positive reset bool/long 201/198.
 // Round 206: Nested expiry query/admitted removal 153/153; independent expiry index with either 153/153;
 // nested removal eligibility alone/with query/with admission 153/153/153; independent index plus nested removal 153.
 // Round 166: Complete entry/placement/both byte displacements 172/315/306;
@@ -5208,6 +5211,16 @@ void __stdcall function_d6bc0(long object_index);
 // Round 331: typed scenario/equipment views 153f; time-slice field at each use 243f;
 // views plus field 243f; shared squared length at first/second/both tests 153f each;
 // shared dot products 153f; views/field/length together 243f. All eight restored.
+// Round 144, word-schedule/shared-displacement graph: native eligible entry 176f;
+// external timer reference 144f; both 176f. Countdown-only timer pointer/reference,
+// each with eligible entry, and earlier entry with countdown reference: all 176f.
+// Original body restored; frame 0x14/0x18 and independent timer spill remain.
+// Round 146: Reset short/word/byte/signed-byte carriers 195/195/144/144; with a complete retained radius
+// 230/230/228/228. Original observations and body restored.
+// Lane 3 r142: retail never keeps `entries` in a register and holds the timer pointer in edi (sixth
+// frame slot); ours keeps `entries` in edi and folds the timer. A c_engine_equipment method 144;
+// `entries` read through its address 144; timer pointer before the reset block (used there) 155;
+// char kind with long modifier 178; timer pointer at the loop top 249.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5220,7 +5233,6 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
     {
         byte *placement = *(byte **)(scenario + 0x124) + i * 0x90;
         if (i % arg_642c39 != g_510c54->game_time % arg_642c39) continue;
-        short *timer = &entries[i].value04;
         long type = NONE;
         c_engine_peer *engine = game_engine_get();
         if (engine)
@@ -5248,12 +5260,13 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                 }
                 if (!reset) ++entries[i].value06;
                 else entries[i].value06 = 0;
-                if (entries[i].value06 > *(short *)(placement + 0x10)) *timer = 1;
+                if (entries[i].value06 > *(short *)(placement + 0x10)) entries[i].value04 = 1;
             }
         }
+        short *timer = &entries[i].value04;
         if (*timer == 0)
         {
-            long schedule = entries[i].index == NONE;
+            short schedule = entries[i].index == NONE;
             if (entries[i].index != NONE)
             {
                 switch (*(short *)(placement + 0x12))

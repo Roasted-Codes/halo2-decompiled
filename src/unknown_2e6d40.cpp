@@ -20,7 +20,11 @@ void lane_b_bv_agent::cleanup()
 	delete this;
 }
 
-// score 2 (was 2): child parent/placement stores are reversed; copy initialization 2;
+// score 2 (was 2): the parent and placement stores are reversed;
+// table first 20, placement input 2, wrapper capture 44, early result
+// declarations 2; const child forms give the same scores. Shared parent
+// first 0 loses a match.
+// child parent/placement stores are reversed; copy initialization 2;
 // child assignment 9; direct handler 23; direct dispatcher 54; split declarations 2;
 // const type results 2; first/second declarations before child 2/2.
 // @retail 0x2e6d70
@@ -190,7 +194,11 @@ void lane_b_bv_agent::get_penetrations(body_2ea940 const *a, void const *b, void
 	timer_add_2ebc80("Et");
 }
 
-// score 2 (was 2): child parent/placement stores are reversed; child assignment 9;
+// score 2 (was 2): the parent and placement stores are reversed;
+// placement input 2, wrapper capture 47, early result declarations 2,
+// value initialization 2; const child forms give the same scores.
+// Shared parent first 0 loses a match.
+// child parent/placement stores are reversed; child assignment 9;
 // early dispatcher 52; query handler 2; const results 2; split declarations 2;
 // first/second declarations before child 2/2; later dispatcher 2.
 // @retail 0x2e7710

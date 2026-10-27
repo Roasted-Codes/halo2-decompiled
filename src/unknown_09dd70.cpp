@@ -457,6 +457,11 @@ static __forceinline byte *function_9d952(long arg_0)
 }
 
 // score 196 (was 196): Flags/packet/object registers and protected attachment call conventions remain.
+// BLOCKED-BY 0xd09c0 and 0xd0b70 (contributor code, unmatched): retail passes 0xd09c0's first argument in
+// ebx (ours pushes it) and 0xd0b70's two shorts in esi/edi (ours ecx/edx), so the slot loop's registers
+// and the parameter reloads around it cannot follow retail from this body.
+// Round 74: mask local for the shared attachment call (as the matched sibling overrides) 196; word slot
+// counter 196; long flags local 196; slot record pointer 224; signed slot loop test 196.
 // retail keeps the flags in ebx (reloaded from the parameter after calls), the weapon-slot loop
 // counter as a 32-bit value (inc/cmp 4/jb, no separate down counter) and the slot bit as the
 // masked flags value (and/test, not setne).
@@ -481,6 +486,8 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 207: named initial low mask, packet receiver after initial callback, both, shared object
 // workspace across four phases, shared workspace with either/both, and shared final outer receiver
 // all 196. Original observations and protected interfaces restored.
+// Round 214: array-end attachment cursor with pointer-derived short/word ordinal and Boolean/masked
+// selection 221/223/221/223; native long/dword ordinal pairs 227/237/227/237. All restored.
 // Round 148: native object fields at player, parent, packed identity and final-update receivers
 // 196 each; player+parent, packed+final, first three and all four 196 each.
 // Round 240: complementary attachment selection bool/byte/short/long 229/229/240/233;
@@ -488,6 +495,20 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 179: library two-byte copy with short/long/dword attachment counters 251/252/252;
 // masked slot value with those counters 253/259/259; direct flag observations 251;
 // direct flags plus masked value/dword counter 259. Original byte loop restored.
+// Round 59: the parent through the existing object getter 196 (same code, kept); signed flags 196;
+// player index as a ternary 199 (object index moves to ebp as in retail, first difference +5, but
+// packet/flags take ebx/edi where retail has edi/ebx); with the packet declared first 199; with a
+// dword slot counter 241.
+// Round 192: initial-update, handle-lookup and child-flag provider inline declarations, singly,
+// all pairs and together 196 each; separate noinline declarations on all three 196. All
+// restored; flags/packet/object registers and protected attachment conventions remain.
+// DL round 156: consistent requested handle 228; unsigned player/parent 196/196;
+// requested with player/parent 228/228; both resolved 196; all with signed/unsigned
+// requested handle 228/228. Original observations, handle types and short loop restored.
+// Round 28 (m3 lane 12): retail loads the object-pool global once ahead of the 0x800 parent test and
+// ahead of the 0x400000 test, reusing it in both arms and the next block (ours reloads it per block), and
+// keeps the flags in esi there. Packet declared before the flags 196; datum result at function scope 227;
+// slot shift named once 238; getter plain inline 196; unit index copied to a local 196.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -511,7 +532,7 @@ void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
         short local_8 = local_2->field_98;
         if (local_7 != NONE)
         {
-            byte *local_9 = ((byte *)((s_object_header *)g_4e0300->data)[local_7 & 0xffff].object);
+            byte *local_9 = function_9d952(local_7);
             if (!((1 << local_9[0xaa]) & 3) || local_8 < 0 ||
                 local_8 >= *(long *)(g_4e3b44[*(long *)local_9 & 0xffff].bytes + 0x1c8))
             {

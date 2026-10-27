@@ -118,9 +118,12 @@ __forceinline bool function_185be3(long arg_0)
 {
     return arg_0 != NONE && ((1 << g_4e0300->data[(arg_0 & 0xffff) * 12 + 3]) & 1);
 }
-__forceinline dword function_185be4(dword flags, dword mask, bool enabled)
+__forceinline void function_185be4(dword *flags, dword mask, bool enabled)
 {
-    return (flags & ~mask) | (enabled ? mask : 0);
+    if (enabled)
+        *flags |= mask;
+    else
+        *flags &= ~mask;
 }
 __forceinline void function_185be5(s_186ab2 *arg_0)
 {
@@ -139,7 +142,12 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 947 (was 969): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
+// score 790 (was 875): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Retail re-reads the player-control global before its flag test, after the conditional magnitude/pow
+// calls, and keeps NONE in EBX; ours keeps the global in EBX from entry (LTCG trusts those callees here;
+// retail's address is never taken). Round 73: settings pointer after the clears 959; state entry after the
+// clears 957; state entry first 941 at 3779 bytes (entry loads out of retail's order); clears swapped 949;
+// if/else output pointer 986.
 // Earlier: frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
@@ -180,6 +188,27 @@ union s_185be7
 // Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
 // clear-first/set-first results with bool 1002/982, with long 1005/985;
 // named selected-mask result bool/long 947/944. Original Boolean helper input retained.
+// Round 97: the global defined in a non-LTCG file 947 (still held in EBX); clamp helper with early
+// returns/result variable/ternary 952/973/952; the flag test through a const pointer to the global
+// 884 (reloads it as retail, NONE then misses EBX) but its taken address moves 0x185ab0's store and
+// loses 0x187b30, so retail did not treat the global as address-taken. Reverted.
+// Round 221: recovered-frame settings/scalar/workspace names and active declarations,
+// eight forms 947 each; cached/state-live/settings-live/both roots with native names
+// 947/985/1004/1036/947/985/1004/1036. Original observations and body restored.
+// Consistent parent-control pointer snapshots with original/native entry addresses,
+// mutable/const pointers and either pre-clear acquisition order 947 each (eight forms).
+// Original root observations, entry calculation, helpers and complete body restored.
+// Ordinary inline clamp/flag/both 947/947/947; state predicate alone and all
+// combinations plus all-private inline producers 968 each. Original force-inline helpers and body restored.
+// DH round 189: Range-result default before lower/range/tag/parent reads 950 each, before initial object 966;
+// conditional/exhaustive positive-first/negative-first results 875/875/963. Exhaustive positive-first
+// retained after ordinary full validation; frame/root/settings and later flag schedules remain.
+// Round 7: pointer flag helper with if/else 890 (frame 0xe4); with its inputs tested directly instead
+// of through bool locals 817 (kept); long input 820, with raw values 820; ternary store 1023; clamp as a
+// re-evaluating macro 1014; range result defaulted before its test 790 (kept); declared first 793,
+// between bound and range 793; clamp helper as a ternary 970; byte input with raw values 790; action
+// input in a byte local 790. Retail tests a repeated condition once for consecutive flags; ours
+// re-tests it, and retail places the clamp's upper arms after the hot path.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
@@ -342,7 +371,7 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             if (local_9 || arg_5->field_4 * arg_5->field_4 + arg_5->field_0 * arg_5->field_0 < 0.25f) local_1->field_88 = 1;
         }
         else if (!local_3[10]) local_1->field_88 = 0;
-        arg_5->field_18 = function_185be4(arg_5->field_18, 1, local_1->field_88 != 0);
+        function_185be4(&arg_5->field_18, 1, local_1->field_88 != 0);
         bool local_10 = local_3[11] == 1;
         if (local_10 && local_1->field_2e == NONE && arg_4->field_0)
         {
@@ -356,8 +385,8 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             if (((byte *)arg_4->field_0)[6] > 0x7f || ((byte *)arg_4->field_0)[7] > 0x7f) local_10 = false;
             if (local_11 != NONE && !function_100f70(local_11) && local_2.field_44 * local_2.field_44 + local_2.field_40 * local_2.field_40 > 0.64000004529953f) local_10 = false;
         }
-        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 4, local_10);
-        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 8, local_3[11] != 0);
+        function_185be4((dword *)&arg_5->field_1c, 4, local_10);
+        function_185be4((dword *)&arg_5->field_1c, 8, local_3[11] != 0);
         if (local_2.field_4e)
         {
             arg_5->field_8 = local_2.field_30;
@@ -380,29 +409,26 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             if (local_11 > 0) { local_11 = 0; *local_12 = 0; }
             else local_1->field_90 = 0;
         }
-        bool selected_active = local_11 != 0;
-        bool input_7_active = local_3[7] != 0;
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x10000, input_7_active);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x200000, selected_active);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x20000, selected_active);
-        if (g_4e6948->state != 2) arg_5->field_18 = function_185be4(arg_5->field_18, 0x20000000, local_3[local_2.field_4d] != 0);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x800, selected_active);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x4000, selected_active);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x4000000, local_3[6] != 0);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x80, local_3[12] != 0);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x100, local_3[13] != 0);
-        bool action_active = local_3[5] != 0;
-        arg_5->field_18 = function_185be4(arg_5->field_18, 4, action_active);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x100000, action_active);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x2000000, action_active);
+        function_185be4(&arg_5->field_18, 0x10000, local_3[7] != 0);
+        function_185be4(&arg_5->field_18, 0x200000, local_11 != 0);
+        function_185be4(&arg_5->field_18, 0x20000, local_11 != 0);
+        if (g_4e6948->state != 2) function_185be4(&arg_5->field_18, 0x20000000, local_3[local_2.field_4d] != 0);
+        function_185be4(&arg_5->field_18, 0x800, local_11 != 0);
+        function_185be4(&arg_5->field_18, 0x4000, local_11 != 0);
+        function_185be4(&arg_5->field_18, 0x4000000, local_3[6] != 0);
+        function_185be4(&arg_5->field_18, 0x80, local_3[12] != 0);
+        function_185be4(&arg_5->field_18, 0x100, local_3[13] != 0);
+        function_185be4(&arg_5->field_18, 4, local_3[5] != 0);
+        function_185be4(&arg_5->field_18, 0x100000, local_3[5] != 0);
+        function_185be4(&arg_5->field_18, 0x2000000, local_3[5] != 0);
         local_1->field_93 = local_3[0] && ((g_510c50 && ((byte *)g_510c50)[5]) || local_1->field_93);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 2, local_3[0] && !local_1->field_93);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x10, local_3[4] != 0);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x20, local_3[4] != 0);
-        arg_5->field_18 = function_185be4(arg_5->field_18, 0x40, input_7_active);
-        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 2, local_3[1] == 1);
-        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 0x10, local_3[14] != 0);
-        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 0x20, local_3[15] != 0);
+        function_185be4(&arg_5->field_18, 2, local_3[0] && !local_1->field_93);
+        function_185be4(&arg_5->field_18, 0x10, local_3[4] != 0);
+        function_185be4(&arg_5->field_18, 0x20, local_3[4] != 0);
+        function_185be4(&arg_5->field_18, 0x40, local_3[7] != 0);
+        function_185be4((dword *)&arg_5->field_1c, 2, local_3[1] == 1);
+        function_185be4((dword *)&arg_5->field_1c, 0x10, local_3[14] != 0);
+        function_185be4((dword *)&arg_5->field_1c, 0x20, local_3[15] != 0);
         if (local_3[14] == 1) ((byte *)arg_5)[0x21] |= 1;
         else ((byte *)arg_5)[0x21] &= ~1;
         s_input_state *local_14 = NULL;

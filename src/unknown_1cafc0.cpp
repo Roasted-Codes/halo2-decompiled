@@ -572,6 +572,10 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Actual found-name record at group expansion: pointer/reference/value 616/616/567;
 // with urgent resource cursor 632/632/671; pointer plus resource base 619;
 // pointer plus cursor/base 756. All restored.
+// Round 190: direct urgent-resource fields 399; twice-used native resource index 399;
+// ordinary urgent while alone/with direct fields/with native index 399 each; earlier native
+// ordinal/resource declarations separately/together 399 each. Original helpers restored.
+// Round 251: Query-produced success at primary/alternate/both/fallback/primary+fallback/alternate+fallback/all 410/452/605/558/543/621/499; all with Boolean status 506. Original status assignments, hidden records and request expansions restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
@@ -828,7 +832,7 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 	}
 }
 
-// score 251 (was 251): Frame 0x38 agrees; ID/result/loop homes and protected query lifetime remain.
+// score 210 (was 210): Frame 0x38 and result/prior-loop bytes agree; ID homes and blend-query lifetime still differ.
 // Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
 // 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
 // Two-point gains dropped.
@@ -864,6 +868,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 167: Three separate name-change predicates on the late-success body, logical/bitwise joins:
 // bool 260/254, byte 260/254, short 280/272, long 277/267.
 // All three comparisons precede the original four name stores; original combined predicate restored.
+// Round 194: Native output-record field/aggregate/logical/aggregate-logical pointer forms
+// 250/222/254/252; references 250/222/254/252; declared member 255 (plain 255).
+// Declared member with repeated field pointer/reference 222/222; field pointer kept (plain 222, 1139/1133).
 // Round 375: Native optional transition construction, mutable/const 341/341; with native
 // optional overlay 338/338; uniform three-ID role names on those graphs 341/341/338/338.
 // Frame 0x38 retained; all eight forms restored.
@@ -873,10 +880,35 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 337: complementary prior-loop bool/byte/short/long 325/325/315/331;
 // negative combined state 282; both negative bool/byte 343/343;
 // both negative with complete De Morgan producer 327. Original states and body restored.
+// Round 199: Destination-record pointer at four earlier boundaries 222 each; full ID role names,
+// swapped record declarations and selected-set lifetime 222 each. Byte result with early pointer
+// 210 (plain 210); byte result with original pointer lifetime 210. Original pointer lifetime retained.
+// On the byte-result/native-record graph, eight primary/offset/overlay ID-name families
+// each 210; identifier homes and protected blend-query lifetime remain. Original names restored.
+// Round 204: repeated native channel receivers primary/transition/overlay 210/269/403;
+// primary-transition/primary-overlay/transition-overlay/all 269/403/369/369;
+// all receivers before result storage 369. Identifier homes and blend-query lifetime remain.
+// Round 187: primary ID at lookup 342; transition ID at entry 357; both 304;
+// overlay ID at entry 267; with primary at lookup 332; with transition at entry 347;
+// all three scope changes 333; entry primary/overlay/transition order 349. Restored.
+// Input-record field orders 0-2-1-3/3-0-1-2/3-2-1-0/1-2-3-0/2-3-0-1/0-3-2-1/
+// 2-1-0-3/1-0-3-2 give 212/213/215/216/213/212/215/216 (mode/class/type/set = 0/1/2/3).
+// Complete publication schedules do not recover the identifier homes; original order restored.
+// Round 143: the blend flag's 0x6e update after the 0x200 test (retail threads that test straight to
+// one shared clear) 337 (1110 bytes); blend declared before the transition ID 211; the animation ID
+// declared first 210; transition_set declared with the blend ID 213; frame position read into a
+// local before the frame-count test 287 (1133 bytes).
+// Round 212: success byte before/after the prior-loop result 274/275; before offset-valid
+// query/before loop-flag publication 271/271; the same four with byte combined loop state
+// 274/275/271/271. Original late success, identifiers and protected query restored.
+// Round 62: retail keeps the transition ID in memory and the resolved set in EBP, ours caches the
+// transition ID's index in BP. Success stored before the channel queries 274; member NONE test
+// on the transition ID 210 (identical); resolved set named after the lookup, first/last 210/210
+// (identical); blend declared first 211; graph test before the transition test 272.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
-	bool result = false;
+	byte result = false;
 	s_animation_names names;
 	s_animation_names found;
 	c_type_709360 animation_id;
@@ -1002,17 +1034,15 @@ bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_
 
 names_store:
 	{
-		bool changed = (unknown70 != names.mode) | (unknown74 != names.weapon_class) | (unknown78 != names.weapon_type);
+		s_animation_names *names_out = &stored_names;
+		bool changed = (names_out->mode != names.mode) | (names_out->weapon_class != names.weapon_class) | (names_out->weapon_type != names.weapon_type);
 
-		unknown70 = names.mode;
-		unknown74 = names.weapon_class;
-		unknown78 = names.weapon_type;
-		unknown7c = names.set;
+		*names_out = names;
 		if (changed)
 		{
 			if (graph_tag_index != NONE && !(flags & 1))
 			{
-				resources_request(unknown70, unknown74, unknown78, true, true);
+				resources_request(names_out->mode, names_out->weapon_class, names_out->weapon_type, true, true);
 			}
 			if (!channel_valid(&channels[2]))
 			{

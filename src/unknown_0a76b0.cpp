@@ -1716,7 +1716,7 @@ bool __stdcall function_e9500(long unit_index, s_unit_request *request)
 
 bool __stdcall function_10f430(long unit_index, long field_7c, long state_name, long weapon_name, long action_name,
 	real blend, bool flags, long mode);
-void function_edfa0(long unit_index, point2f const *facing);
+__declspec(noinline) void function_edfa0(long unit_index, point2f const *facing);
 void function_ba3d0(long unit_index);
 
 /* the request to play an animation impulse (type 25) */
@@ -2473,6 +2473,7 @@ bool __stdcall unit_action_vehicle_entry(long unit_index, s_unit_request *reques
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 	s_unit_request_vehicle_entry *entry = (s_unit_request_vehicle_entry *)request;
+	bool result = false;
 	bool reset = false;
 
 	if (function_ea1f0(unit_index, entry->vehicle_index, entry->seat_index, entry->keep_animation, entry->type,
@@ -2481,13 +2482,15 @@ bool __stdcall unit_action_vehicle_entry(long unit_index, s_unit_request *reques
 		if (reset)
 		{
 			function_ea6b0(unit_index, entry->type);
-			return true;
 		}
-		actions->active[0] |= 0x10000000;
-		function_d1360(unit->parent_object_index, unit->seat_index, 0, 1);
-		return true;
+		else
+		{
+			actions->active[0] |= 0x10000000;
+			function_d1360(unit->parent_object_index, unit->seat_index, 0, 1);
+		}
+		result = true;
 	}
-	return false;
+	return result;
 }
 
 long function_10eef0(long object_index, bool alternate, bool no_request);
@@ -2920,12 +2923,9 @@ void __stdcall function_eb520(long unit_index, long type)
 	if (unit->unknown13c != NONE)
 		function_152140(unit->unknown13c);
 	function_eac90(unit_index, false, push);
-
-	s_unit_action_header *header = UNIT_ACTION_HEADER_GET(unit_index);
-
-	if ((1 << header->type) & 1)
+	if ((1 << UNIT_ACTION_HEADER_GET(unit_index)->type) & 1)
 	{
-		word *flags = (word *)((byte *)header->unit + 0x348);
+		word *flags = (word *)((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x348);
 
 		*flags |= 0x40;
 	}
@@ -4335,9 +4335,7 @@ void function_edfa0(long unit_index, point2f const *facing)
 
 	if (unit->parent_object_index == NONE)
 	{
-		unit->forward.j = facing->y;
-		unit->forward.i = facing->x;
-		unit->forward.k = 0.0f;
+		vector3f_assign(&unit->forward, facing->x, facing->y, 0.0f);
 		unit->up = *g_4687b0;
 	}
 }

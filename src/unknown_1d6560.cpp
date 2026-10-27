@@ -215,6 +215,11 @@ struct s_physics_component_walk : s_havok_component
 };
 
 // score 275 (was 275): Frame 0x1c versus 0x18; current/entry/status homes and next-group spill remain.
+// In the body loop retail keeps the policy byte at frame 2 and the availability byte at 3
+// (available in dl on the replacement path, reloaded from its byte otherwise; replaced in cl);
+// ours swaps the two bytes and keeps available in memory, replaced in dl. Round 57: availability
+// named to sort after the policy, the policy named to sort first, both: 275 each (same layout);
+// available declared before replaced 303 (898 bytes); both flags declared before the body lookup 300.
 // Earlier: frame 0x1c versus 0x18; current/entry roles and next-group spill differ.
 // Reduced trials: availability first 303; immutable policy 275; read-only model 275; read-only body 275;
 // native availability 297; native application 305; byte first body 298; read-only sections 275.
@@ -246,6 +251,10 @@ struct s_physics_component_walk : s_havok_component
 // Round 167: Signed-word first/current-side/next-side group body identities, individually
 // and in all combinations, 275 each; signed-word output body index 317 at 898/922,
 // frame 0x18 recovered but saved roles still differ. All eight forms restored.
+// Round 150: Positive policy acquired inside nonempty admission, bool/short 290/300; complementary
+// preserve-originals policy at entry/admission bool 323/324, char 323/324, short 306/310. Policy
+// ownership does not recover current/entry/status allocation or the neighbor-group spill; complete
+// original method restored.
 // Round 375: Complete tested-status producers, guarded bool/byte/short/long
 // 319/319/300/319; eager replacement/clamp 304/304/298/307. All recover frame 0x18;
 // guarded short retains 922 bytes, others 898. Register roles still differ; restored.
@@ -255,6 +264,18 @@ struct s_physics_component_walk : s_havok_component
 // with application status from policy 319/304/304/304. All recover frame 0x18 but shorten to
 // 898/922 and retain wrong current/entry roles. Original executable source and output/status/clamp
 // observations restored.
+// Round 350: shared entry-bit test, visited-bit set, neighbor-bit test and all combinations
+// 275 each; complete shared bits with direct receiver 275. Frame/status/group spill unchanged.
+// Round 96: replace flag renamed to sort first 275 (slots unchanged); next-group count/body through the
+// current-style ternary 307; the file's section-test helper for the first query 283; first body as
+// if/else or ternary 300/300 (frame 0x18 and retail's untreaded next test, but current lands in EDX).
+// Retail stores -1 in a separate block and re-tests next, so it recomputes the group where ours spills it.
+// Round 190: method-scope body identity, both statuses, identity/status pair, model/body
+// receivers and each receiver combination 275 each; common native section ordinal 275.
+// Every initializer and memory observation retained at its original point; all forms restored.
+// Round 253: Existing component policy/application/availability bit helpers,
+// all seven nonempty subsets 275 each; native upper-bitfield policy with both
+// shared status stores 275. Original method and include set restored.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

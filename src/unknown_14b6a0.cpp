@@ -119,6 +119,20 @@ void function_14bac0()
 }
 
 // score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// Round 139: retail's two iterators are separate locals (first loop at frame 0x30, second at 0x1c
+// sharing the marker probe point's slot) and the second loop calls 0x6b380; split iterators with
+// the second through data_datum_iterator_next 257 (frame 0x44), both inline 234; per-marker probe
+// point locals on top 257 (destination 0x10, probe/second iterator 0x1c, alternate 0x2c as in
+// retail; only the df5f0 center stays above at 0x38); a bare block around the probe/center code
+// 257 (link-time code generation ignores it); center/height/radius through an inline helper 257
+// (center joins 0x1c, alternate drops to 0x28, iterator to the top); with the loop as an inline
+// helper too 260; whole marker search as one inline helper 259/255; declaration order 257;
+// alternate/destination renamed 257/257.
+// Round 94 (not kept, gain under 8): first loop through the existing datum iterator 234; plus block-local marker
+// points 231; plus readiness declarations swapped 230. Retail packs its second (16-byte, 0x6b380) iterator with
+// offset, marker points and center at +0x2c and alternate with the first iterator at +0x3c (frame 0x3c). Second loop
+// through its own datum iterator and 0x6b380 257/254/259; stamp-first visit test 230; for-loop spelling 230;
+// marker memcpy 230; marker element pointer 246 (gives retail's add/add marker address, grows the first loop).
 // Existing first/second/both iterator calls 280/247/263; typed request/marker/both records 234/234/234; read-only request record 234; accepted-point memcpy 234.
 // frame 0x34 versus 0x3c, query/iterator homes and visit-counter reloads differ;
 // destination byte 234; alternate byte 234.
@@ -144,6 +158,10 @@ void function_14bac0()
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
 // pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
 // Original receivers and the shared iterator body restored.
+// Round 150: Actual accepted destination/alternate/both pointer results 271/255/278; with native
+// result-tested recipients 261/266/266. Both optional points initialized NULL at request entry 282;
+// with native recipients 289. Pointer domain and iterator combinations do not recover frame or
+// readiness homes; every original body statement restored.
 // Round 210: direct destination/alternate/both query buffers 256/255/272;
 // with native recipient iterator 266/265/281; both with late center 272, native recipient/late center 281.
 // Round 172: Native selected/current/both player receivers 234/234/234; with native recipients
@@ -153,6 +171,21 @@ void function_14bac0()
 // Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
 // both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
 // Original storage and iterator restored; frame and readiness homes remain.
+// One shared native datum iterator, called/inlined first scan and native/called second scan:
+// 353/234/421/376; reversed readiness declarations 334/233/421/376. All restored.
+// Round 197: Existing point-query/relocation ordinary-inline-noinline declarations, all eight
+// alternatives, 234 each. Original point/iterator graph and all declarations restored.
+// Round 352: readiness at request entry, alone and with point/bounds/both output declarations,
+// 274 each; early point/bounds/both declarations without readiness 234 each; complete
+// function-entry graph 288. Frame stays 0x34; original storage and observations restored.
+// Marker-test readiness results, destination/alternate/both 237/243/244; with
+// native recipients 262/278/261. Both results plus fallback query result 252;
+// with native recipients 278. Original points, flags and shared iterator restored.
+// Round 62: retail's frame fits two 16-byte datum iterators, the first sharing its slot with the
+// alternate point and the second with the centre and offset. Second loop through the existing
+// datum iterator 257 (frame 0x44; both readiness homes then agree); plus a block scoping the
+// centre 257 (identical under LTCG, 0x38 compile-only); first loop on a datum iterator through an
+// inline next 257 (frame 0x48); readiness declarations swapped 262; centre declared first 257.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

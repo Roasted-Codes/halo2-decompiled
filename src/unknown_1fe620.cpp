@@ -43,6 +43,14 @@ static __forceinline long real_to_long(real value);
 // Point-owner, complete output-phase and normalization-scratch scopes each 373;
 // owner/output, owner/scratch, output/scratch and all three 373; all three with
 // initial-conversion scope 373. Frame remains 0x4c; original lifetimes restored.
+// Round 194: Initial-test/point-query/optional-adjustment providers, inline
+// singly, in every pair and together, then all three noinline: 373 each.
+// All separate declarations restored; frame and early input allocation remain.
+// Round 184: native actor state-byte/timer-scalar/point-vector regions, all seven
+// nonempty combinations, and the genuine adjacent output-vector array 373 each.
+// External record layouts restored; raw actor receiver and original values retained.
+// Round 226: native point-state value / memcpy with bool, byte, short and long
+// adjustment carriers 459, 459, 459, 459, 472, 472, 477, 477. All restored; frame/input ownership remain.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

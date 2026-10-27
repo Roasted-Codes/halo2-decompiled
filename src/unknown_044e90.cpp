@@ -50,6 +50,9 @@
 // Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
 // 436; query result with products 440; const query 434; query result/products with const query
 // 438/436. All product regroupings restored.
+// Round 142: native tag/table/both observations 434/444/444; on the latter graph,
+// workspace after selection/branch scope, signed flags, query count and entry-data receiver
+// all 444; uniform selection-flag reads with tag-table/tag/tag-table-data 447/438/447.
 // Round 211: Second/third/fourth capacity snapshots, each pair, all three and all four
 // capacities at their sign/size consumers 434 each. Original capacity observations restored.
 // Round 175: Native position/three rotation rows/both observations 475/556/586;
@@ -57,6 +60,11 @@
 // all rows/position plus all rows 515/549. All original input ownership restored.
 // Native storage-template alignment eight/sixteen 435/435; with scalar normal inputs
 // 447/447; with whole-plane library publication 435/435; both 447/447. Header/body restored.
+// Round 190: input-end/output-index 436; output-end/input-index 445; both cursors
+// with input/output end do 486/451; input/output end for 473/451; input/output
+// end while 473/451. Original fixed-six ordinal loop and all plane observations restored.
+// Round 150: Native first/second, third/fourth and transform-array handles, seven subsets 434 each; all descriptor lifetimes beginning at first use 434. All handles restored.
+// Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

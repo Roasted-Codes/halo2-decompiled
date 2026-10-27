@@ -185,6 +185,7 @@ void __stdcall function_1e1250(long actor_index)
 }
 
 void __stdcall function_1e1a00(long actor_index, long value);
+long function_1e4990(long character_index);
 
 // @retail 0x1e0d50
 void function_1e0d50(long actor_index, long unit_index)
@@ -513,6 +514,11 @@ s_node_view *function_26be30(s_iterator *iterator);
 // Direct lookup with slot callback 10; pointer arithmetic/scaled offset 7/7;
 // later index reference/per-iteration index snapshot 7/7;
 // slot/callback/both outside the loop 7/7/7; inverted slot test 7.
+// Localised (reduced image, prop walk removed): the loop alone, or with any prefix that leaves
+// no zero in ebx, gets retail's allocation; every prefix with the reset helper's zero in ebx gets
+// ours. Reset with the parameter read directly 7; actor from the parameter 7; 0x28c before 0x278
+// 9; location after the two stores 15; 0x4fc before the 0x4ac test 11; nested swarm test with a
+// named perception index 7.
 // Further trials: slot-offset/type allocation and delayed slot-address formation remain.
 // uniform actor reads 157; entry iterator lifetime 7.
 // native prop result 7; actor/iterator 157.
@@ -669,7 +675,24 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 282 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// score 277 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// Round 141: the memory loop is the existing joint_decline (0x26ed40) inlined in retail (test through the
+// cached actor, body re-derived, participant index re-read per store), BLOCKED-BY 0x26ed40: its /Ob1
+// file keeps it out of line (a call there 317/343). The tail block (flag 9 clear, as 0x1c7bb0/0x1e3920
+// write it) takes one fresh actor lookup as retail does: 277 (a shared helper in slot_handler.h gives
+// the same, but any new inline function there costs 0x73360). `value` is a bool in retail (pushed
+// through to 0x203ed0 unconverted, tested as a byte): 275 with it, but src/unknown_1bba20.cpp declares
+// the parameter long (MiniMax file).
+// Round 139's actor local + walk helpers with the bool and the shared tail 306 (942 bytes, aligned 114),
+// with the memory test through the local 299 (974 bytes) or re-derived and per-store reads 304.
+// Round 139: retail keeps the actor pointer in EBP from the entry (slot loop, current store, 0xa/0x7c
+// tests, prop-list clear, iterator compare, 0x3f4/7/0x1c/0x18/0x54 reads) and re-derives it from the
+// pool and the saved offset only in the memory-slot body, the prop walk start, the inlined 0x1e1250,
+// the tag lookup and the tail. An actor local at those first uses with the prop walk through the
+// existing 0x26be00/0x26be30 gives retail's length (980) and 270, but mixes the local with direct
+// re-reads (kept only on a match); the local everywhere 343 (904 bytes, 127 sequence-aligned
+// differences against 192); local without the walk helpers 316/289; cached memory test 300; tail
+// through the local 323. The tag walk now calls the existing 0x1e4990 (identical code).
 // Earlier: Frame 0x20, early actor offset and cleanup/scan homes remain; slot element
 // 290; scan for-header 338; repeated input predicate 305; retained reference pool 290; word slot
 // Frame 0x20 agrees; early actor displacement, cleanup countdown and scan homes remain.
@@ -706,6 +729,17 @@ void swarm_leader_detach(long actor_index);
 // Full-handle actor getter plus reused prop displacement kept; getter alone gains only seven.
 // Round 168: Complete getter graph: short/byte/signed-byte cleanup 282 each; live slots 284; live
 // slots with those ordinals 284 each; shared callback element 284. Opening body restored.
+// Round 180: Shared cleanup getter/native prop fields/both 282 each; terminal indexed for
+// alone and with those three forms 314 each; signed stop while on the complete getter graph 299.
+// Existing complete count-record fields, terminal do with long/short/byte/unsigned
+// indices 282 each; terminal for 314/282/282/314. Original body and record view restored.
+// Round 344: phase-specific stop/memory receivers 304/286; shared cleanup/terminal ordinal 282;
+// stop/memory pair 293; stop/memory with shared ordinal 304/286; both with ordinal 293;
+// both with byte shared ordinal 293. All phase snapshots and ordinal changes restored.
+// Round 143: 0x26ed40 is open now, but its file is another lane's this round; the bool parameter
+// still needs src/unknown_1bba20.cpp. Short memory index 277 (identical); the memory loop as a for
+// loop 565 (1204 bytes); the counts loop as a for loop 309; both 565; the `current` store as a plain
+// `= NONE` 277 (identical, kept: the word cast was not needed).
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
@@ -715,7 +749,7 @@ void __stdcall function_1e1a00(long actor_index, long value)
 		if (stop)
 			stop(actor_index, slot_index < 4 ? &actor_get(actor_index)->slots[slot_index] : NULL);
 	}
-	*(word *)&actor_get(actor_index)->current = 0xffff;
+	actor_get(actor_index)->current = NONE;
 	function_258600(actor_index);
 	long memory_index = 0;
 	do
@@ -785,18 +819,7 @@ void __stdcall function_1e1a00(long actor_index, long value)
 		}
 		function_1e1250(actor_index);
 	}
-	long tag_index = actor_get(actor_index)->unknown054;
-	byte *definition = NULL;
-	while (tag_index != NONE)
-	{
-		byte *tag = g_4e3b44[tag_index & 0xffff].bytes;
-		if (*(long *)(tag + 0x34) > 0)
-		{
-			definition = *(byte **)(tag + 0x38);
-			break;
-		}
-		tag_index = *(long *)(tag + 8);
-	}
+	byte *definition = (byte *)function_1e4990(actor_get(actor_index)->unknown054);
 	if (definition && ((*(dword *)definition >> 3) & 1))
 	{
 		byte *counts = (byte *)g_5047f4;
@@ -816,10 +839,11 @@ void __stdcall function_1e1a00(long actor_index, long value)
 			}
 		} while (++i < 3);
 	}
-	if (actor_get(actor_index)->unknown009)
+	s_actor_view *actor = actor_get(actor_index);
+	if (actor->unknown009)
 	{
-		actor_get(actor_index)->unknown009 = false;
-		*(long *)((byte *)actor_get(actor_index) + 0x10) = g_510c54->game_time;
+		actor->unknown009 = false;
+		*(long *)((byte *)actor + 0x10) = g_510c54->game_time;
 		--*(short *)((byte *)g_4f55d0 + 0x36a);
 	}
 	record_pool_release(g_4f55f0, actor_index);
