@@ -17,6 +17,11 @@ struct c_d : c_shape_user_base
 {
 
 	virtual ~c_d();
+	static void __cdecl operator delete(void *block)
+	{
+		// This concrete class owns a fixed twelve-byte tag-0x22 allocation.
+		g_480118->allocate((long)block, 0xc, 0x22);
+	}
 	virtual void *v3() { return 0; }
 	virtual long v5();
 	virtual void v6() {}
