@@ -1328,6 +1328,9 @@ struct s_player_properties
 // Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
 // in three pairs and together 184 each; all three separate noinline declarations 237. Original
 // declarations and body restored; owner/count/zero allocation and requested cursor remain.
+// Round 198: Native parameter block alone/with native cache receiver 184/184;
+// with multi-use requested receiver/both 199/199; bounded word name count on
+// those four graphs 214/214/228/228. Original byte views, count and complete body restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
