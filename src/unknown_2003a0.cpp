@@ -687,13 +687,18 @@ bool function_2013c0(long object_index)
 
 struct s_squad_placement_entry
 {
-	byte unknown00[0x3c];
+	byte unknown00[0x2a];
+	word field2a;
+	byte unknown2c[0x3c - 0x2c];
 	short placement_index;
 	byte unknown3e[2];
 	char command_script_name[32];
 	short command_script_index;
 	byte unknown62[2];
 };
+typedef char assert_placement_entry_size[(sizeof(s_squad_placement_entry) == 0x64) ? 1 : -1];
+typedef char assert_placement_entry_field2a[(offsetof(s_squad_placement_entry, field2a) == 0x2a) ? 1 : -1];
+typedef char assert_placement_entry_alignment[(__alignof(s_squad_placement_entry) == 2) ? 1 : -1];
 
 struct s_squad_placement_definition
 {
@@ -1477,7 +1482,7 @@ void function_2036c0(long definition_index, short mode, bool *enabled, bool *for
 bool function_1df560(short team_a, short team_b);
 bool function_2104b0(short output_index, point3f const *point, point3f *out);
 
-// score 58 (was 120): entry register roles differ (retail saves ebx/ebp/edi first and keeps the
+// score 58 (was 58): entry register roles differ (retail saves ebx/ebp/edi first and keeps the
 // actor pool data in ebx, ours saves esi early for the squad pool data and ebx late); the loop forms
 // the entry pointer after its first use through an edi temporary; fallback copy registers differ.
 // Tried: common y tail 122; native subtraction 121; early workspace 124; direct minimum 122;
@@ -1496,6 +1501,8 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // uniform live squad fields 76; all live fields 147.
 // early iterator/native actor 58; early iterator/both native 58.
 // native area records 58; live squad/native area records 76.
+// Round 344: returned short cursor 58/453; returned long cursor 68/453; staged entry pointer 58/454;
+// returned short/long with staged pointer 58/68; nested admission with short/staged/both 58 each.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1785,6 +1792,10 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // located-point/extent inputs 268; located-point/extent reference 257.
 // both scalar inputs 348; margin value/extent reference 342.
 // both field references 257; native inputs/named reach 348.
+// Round 344: joint frame-home names 257; byte/signed-byte validation 257/257; both with joint homes 257 each;
+// early target result alone/with joint homes and byte/signed-byte validation 321 each.
+// Native packed-view diagnostics 243/248/258 changed containing-record alignment and were rejected;
+// the paired packed fields with actor-field reference scored 323. All original layouts restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2923,9 +2934,9 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
-// score 351 (was 351): Frame 0x138 versus 0x134; placement/definition registers and final chain homes remain.
-// Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
-// Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
+// score 338 (was 351): Frame 0x134 agrees; placement/definition registers and final chain homes remain.
+// Earlier: Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
+// Earlier: Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
 // Earlier: frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
 // Direct low-word index 387; other direct parameters 387; all direct reads 387;
 // workspace role names 387; one shared native request 399. Pool-first lookup
@@ -2952,6 +2963,10 @@ void function_2011f0(long arg_0);
 // Isolated native final Boolean formal 359; short placement 351; byte control 351; placement/Boolean 359;
 // byte/Boolean 359; placement/byte 351; all native 359; all native with signed byte control 359.
 // Every prototype trial restored; native final Boolean reaches 1328 bytes but retains frame 0x138.
+// Round 344: unsigned category once/at uses 351/357; with per-arm seat output 349/338;
+// with per-arm object result 352/357; both outputs 350/338.
+// Per-use native unsigned category with actual output-arm initialization kept at 338 plain.
+// Native row word at +0x2a with unchanged 0x64 size/two-byte alignment 338 plain.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
@@ -2996,6 +3011,7 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
             if (local_14 >= 0 && local_14 < *(long *)(local_5 + 0x48))
             {
                 byte *local_15 = *(byte **)(local_5 + 0x4c) + local_14 * 0x64;
+                s_squad_placement_entry const *placement_entry = (s_squad_placement_entry const *)local_15;
                 long local_16 = NONE;
                 word local_17 = *(word *)(local_15 + 0x3c);
                 if (local_17 != (word)NONE)
@@ -3017,11 +3033,11 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                     if (local_19 == NONE)
                         local_19 = *(short *)(local_5 + 0x34);
                     long local_20 = NONE;
-                    short local_21 = NONE;
-                    short local_22 = *(short *)(local_15 + 0x2a);
-                    if (local_19 != NONE && local_22 != 7)
+                    short local_21;
+                    if (local_19 != NONE && placement_entry->field2a != 7)
                     {
-                        local_20 = function_201010(local_7, (short)local_19, local_22, &local_21);
+                        local_21 = NONE;
+                        local_20 = function_201010(local_7, (short)local_19, placement_entry->field2a, &local_21);
                         if (local_20 == NONE)
                         {
                             byte local_23[0xc4];
@@ -3051,10 +3067,10 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                                 else
                                     *(short *)(local_25 + 0x138) = (signed char)(g_51e9d8->data + squad_offset)[0x76];
                                 function_a7870(local_20);
-                                if (local_22 != 6)
+                                if (placement_entry->field2a != 6)
                                 {
                                     long local_27 = NONE;
-                                    local_21 = function_200ee0(local_20, local_22, &local_27, NULL);
+                                    local_21 = function_200ee0(local_20, placement_entry->field2a, &local_27, NULL);
                                     if (local_21 != NONE)
                                         local_20 = local_27;
                                 }
@@ -3067,7 +3083,11 @@ void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4
                             *local_29 |= 0x1000;
                         }
                     }
-                    if (local_22 != 6)
+                    else
+                    {
+                        local_21 = NONE;
+                    }
+                    if (placement_entry->field2a != 6)
                     {
                         long local_30 = function_203780(local_16, local_14, (short)((word)arg_1), (bool)arg_4);
                         if (local_30 != NONE)

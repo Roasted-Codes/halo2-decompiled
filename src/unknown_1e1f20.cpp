@@ -706,6 +706,9 @@ void swarm_leader_detach(long actor_index);
 // Full-handle actor getter plus reused prop displacement kept; getter alone gains only seven.
 // Round 168: Complete getter graph: short/byte/signed-byte cleanup 282 each; live slots 284; live
 // slots with those ordinals 284 each; shared callback element 284. Opening body restored.
+// Round 344: phase-specific stop/memory receivers 304/286; shared cleanup/terminal ordinal 282;
+// stop/memory pair 293; stop/memory with shared ordinal 304/286; both with ordinal 293;
+// both with byte shared ordinal 293. All phase snapshots and ordinal changes restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
