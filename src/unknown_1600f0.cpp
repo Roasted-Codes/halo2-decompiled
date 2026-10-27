@@ -1012,6 +1012,9 @@ struct s_game_engine_globals_connections_view
 // connection sum reordered 184; summed time and connection lefts 184; short name width only 173,
 // with uncast long sums 173; word widths 170; short score/time with long name 292; long score
 // with short time/name 180.
+// Round 44: all/score-name/name/time width views 184/288/292/168; long time with short uses 168;
+// long fixed widths with short uses 173; derived score predicate 291; direct icon on the long-time
+// form 208. The two-point time-width gains are rejected; opening body restored.
 // Earlier 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
 // default-zero byte icon 230, native integer 184; parsed-name scope 184;
 // separate connection rectangle 206; both name buffers scoped 184.
@@ -1277,7 +1280,40 @@ PRIVATE inline long score_string_list_1608e0()
 	}
 	return result;
 }
-// score 766 (was 766): Frame 0x798 versus 0x79c; viewer/coordinate/scalar homes remain.
+// score 756 (was 766): frame 0x798 versus 0x79c; the local player sits in EDI (retail EBX) and the
+// x coordinate in EBX (retail EDI); the color locals' slots (retail keeps background below foreground)
+// and the shared 0.0/1.0 registers of the fade clamps differ.
+// Tried: player register and scalar homes; scalar names 817; header/name reuse 818; header/decoder
+// reuse 818; both short team walks 811; short player walk 835; short outer team walk 818; short rank
+// search 810; explicit scroll clamp 810; title workspace scope 810; bounds-field arithmetic 810;
+// global optimization off 2237; size optimization 1348; viewer pointer name 810; viewer lookup at
+// first scroll use 848; short displayed-row number 811; short row rank 810; direct team activity
+// predicate 826; separate workspaces 816; ordinary locals 879; native player 810; team field
+// reference 805 (plain); direct color output 844; native direct team field 820 (fast); viewer field
+// at use 808; team score fields at use 805; player score fields at use 801 (plain); dword flag carrier
+// 808; foreground aggregate construction 805; short/word total rows 843/843; native viewport height
+// 815; existing horizontal/vertical/both position components 820/814/808; native team index 803;
+// short team and row total 826; external flag reference 801; reused no-team result 802;
+// player/team/both output cursors 811/834/842; chained RGB stores 801; native team-color output 835;
+// existing string-list forceinline 801 (fast); existing table/list copy helpers,
+// ordinary/inline/force-inline 801 each; new table/list helper boundaries with reused local-user
+// index 836 each; separate score/time/both caption-list results 801/801/801; scoped name lookup
+// alone/with score/with time/with both 801 each; all three separate immutable caption results 801;
+// isolated score-table, row-total, height, fade-row, viewport-height, points-width, clock-width and
+// label-width names 801 each; uniform fade fraction/offset/remainder and combinations
+// 813,801,801,813,813,801,813; full-width initial predicates 785 plain (changed one-use captures
+// excluded); isolated dim-icon/player-teams/activity/dim-icon-teams/all compound carriers
+// 786,801,801,786,786; all compounds with captures removed 792; captures removed alone 806; dim/icon
+// alone 801,789; coherent color/appearance/widget inline combinations and joint noinline 789 each;
+// Boolean helper header/player/activity/header-player/header-activity/player-activity/all
+// 789/804/789/804/789/804/804; byte helper counterparts 801/780/789/791/801/780/791; Boolean query
+// at both player/both-row uses 766/766; byte result observed once 791; Boolean header with byte rows
+// 780; shared fade/row-alpha/both: opening 789 each, byte graph 780 each, direct-query graph 766
+// each; native icon byte-player/byte-rows/direct-query 791/791/777; repeated team-byte snapshot on
+// direct queries 766 (frame 0x7a0); scroll clamp reading the global in PIN (no scroll local) 756
+// (kept); that with height not volatile 800; with the clamp limit named 783; fade count not
+// volatile 769; background renamed to sort after foreground 756; background declared first 756.
+// Frame 0x798 versus 0x79c; viewer/coordinate/scalar homes remain.
 // Earlier Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
 // Earlier Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
 // player register and scalar homes; scalar names 817;
@@ -1310,12 +1346,14 @@ PRIVATE inline long score_string_list_1608e0()
 // dim/icon alone 801,789. Icon alone retains frame 0x794;
 // adding dim gives only three further points and frame 0x790, so that addition is rejected.
 // Round 141: coherent color/appearance/widget inline combinations and joint noinline 789 each;
-// Boolean helper header/player/activity/header-player/header-activity/player-activity/all
 // 789/804/789/804/789/804/804; byte helper counterparts 801/780/789/791/801/780/791;
 // Boolean query at both player/both-row uses 766/766; byte result observed once 791;
 // Boolean header with byte rows 780. Shared fade/row-alpha/both: opening 789 each, byte graph
 // 780 each, direct-query graph 766 each; native icon byte-player/byte-rows/direct-query
 // 791/791/777; repeated team-byte snapshot on direct queries 766 (frame 0x7a0).
+// Parallel long/int seconds 785/785; immutable conditional seconds 765; uninitialized
+// seconds before colors/at row entry 785/785; long seconds with short place/team/both
+// 782/768/765. One-point gains restored; original scalar widths and tests retained.
 // Round 190: Existing language/team-label/caption inline declarations singly, in three pairs and
 // together 766 each; all three separate noinline declarations 766. All original declarations,
 // workspaces and body restored; frame 0x798/0x79c and viewer/scalar homes remain.
@@ -1359,11 +1397,8 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 	if (height < screen_height)
 		(real &)g_4e9af0.unknown04[4 + local_player->local_user_index * 4] = 0.0f;
 	else
-	{
-		real scroll = (real &)g_4e9af0.unknown04[4 + local_player->local_user_index * 4];
 		(real &)g_4e9af0.unknown04[4 + local_player->local_user_index * 4] =
-			PIN(scroll, 0.0f, (real)(height - screen_height));
-	}
+			PIN((real &)g_4e9af0.unknown04[4 + local_player->local_user_index * 4], 0.0f, (real)(height - screen_height));
 	long y = (short)(g_4b9dd8.top -
 		(long)(real &)g_4e9af0.unknown04[4 + local_player->local_user_index * 4] - g_4b9dd0);
 	struct

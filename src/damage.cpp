@@ -503,6 +503,11 @@ real function_d5d80(long object_index, bool ignore_difficulty)
 	return result;
 }
 
+// score 3 (was 3): with the callers' image, only the schedule differs: ours puts `or eax, -1` right after the
+// load of g_47d8e0 (before that value's store at +0x7c); retail stores it first, loads g_4686c4, then does the
+// `or`. Tried: unknown22 assigned right after unknown7c (11), g_4686c4 in a local (3, same code), both globals
+// in locals (28), team/player/object order swapped (5), unknown7c before definition_index (7), chained 1.0f
+// stores (5). A one-function check scores this differently (5); judge it on the 515-source set.
 // @retail 0xd6660
 void function_d6660(s_type_1e6529 *data, long definition_index)
 {
@@ -544,18 +549,16 @@ bool function_d6790(long object_index)
 bool function_d6af0(long object_index)
 {
 	s_damage_object *object = DAMAGE_OBJECT(object_index);
+	bool result = object->shield_vitality <= 1.0f;
 
-	if (object->shield_vitality <= 1.0f)
+	if (result)
 	{
-		bool result = true;
-
 		object->damage_flags.shield_double_charged = true;
 		if (object->shield_vitality == 0.0f)
 			object->shield_vitality = 0.01f;
 		object->shield_stun_ticks = 0;
-		return result;
 	}
-	return false;
+	return result;
 }
 
 // @retail 0xd6b60
@@ -577,34 +580,45 @@ void __stdcall function_d6b60(long object_index)
 // @retail 0xd66d0
 void __stdcall object_get_damage_owner(long object_index, s_damage_owner *owner)
 {
-	if (object_index == NONE)
+	if (object_index != NONE)
+	{
+		s_damage_object *object = DAMAGE_OBJECT(object_index);
+
+		if ((1 << object->type) & 3)
+		{
+			if (object->unknown248 != NONE)
+			{
+				object_get_damage_owner(object->unknown248, owner);
+				/* always true here, so it compiles to nothing; without a test
+				   after the call the compiler turns this tail call into a loop,
+				   where retail jumps back to its own entry (and so keeps the
+				   stack convention its callers use) */
+				if (object->unknown248 != NONE)
+					return;
+				return;
+			}
+			if (object->unknown12c != NONE || object->player_index != NONE)
+			{
+				owner->object_index = object_index;
+				owner->player_index = object->player_index;
+				owner->team = object->team;
+				return;
+			}
+		}
+		owner->object_index = object->owner_object_index;
+		owner->player_index = object->owner_player_index;
+		owner->team = object->owner_team;
+	}
+	else
 	{
 		*owner = *g_467420;
-		return;
 	}
-
-	s_damage_object *object = DAMAGE_OBJECT(object_index);
-
-	if ((1 << object->type) & 3)
-	{
-		if (object->unknown248 != NONE)
-		{
-			object_get_damage_owner(object->unknown248, owner);
-			return;
-		}
-		if (object->unknown12c != NONE || object->player_index != NONE)
-		{
-			owner->object_index = object_index;
-			owner->player_index = object->player_index;
-			owner->team = object->team;
-			return;
-		}
-	}
-	owner->object_index = object->owner_object_index;
-	owner->player_index = object->owner_player_index;
-	owner->team = object->owner_team;
 }
 
+// score 6 (was 6): retail pushes -1, 2, -1, then stores unknownf4 and sets shield_depleted, then pushes the
+// object; ours sets the flag first and stores unknownf4 after the last push. Tried: flag before unknownf4 (6),
+// early return instead of the nested if (6). Setting the flag after function_ba7f0 scores 4 but moves the
+// flag store past the call (retail sets it before), so it is a false improvement and was dropped.
 // @retail 0xd6a70
 void function_d6a70(long object_index)
 {
@@ -725,6 +739,11 @@ void __stdcall function_d6bc0(long object_index)
 }
 
 /* whether a damage event can affect an object */
+// score 26 (was 77): `result` must be a variable that is set true in one branch, or it is folded away and the
+// parameters move to registers (data on the stack, in ebp, is retail's). What still differs is layout: retail
+// shares one `mov al, 1` epilogue between the type test, the flags & 8 test and the team test, we emit one inline
+// before the team call and reach the other through `mov bl, 1`. Tried: all `return true` (convention reverts, 85),
+// `result = true` at every site (35, `mov bl, 1` tail), `return player_index != NONE` without the bool local (50).
 // @retail 0xd72e0
 bool function_d72e0(long object_index, s_type_1e6529 const *data)
 {
@@ -733,33 +752,44 @@ bool function_d72e0(long object_index, s_type_1e6529 const *data)
 	s_damage_object *object = datum->object;
 	bool result = false;
 
-	if ((datum->flags & 0x10) || (object->unknown04[0] & 1))
-		return result;
-
-	if (definition->flags0c & 2)
+	if (!(datum->flags & 0x10) && !(object->unknown04[0] & 1))
 	{
-		s_damage_object *unit = (s_damage_object *)function_badc0(object_index, 3);
-		long player_index = unit ? unit->player_index : NONE;
+		if (definition->flags0c & 2)
+		{
+			s_damage_object *unit = (s_damage_object *)function_badc0(object_index, 3);
+			long player_index = NONE;
 
-		return player_index != NONE;
+			if (unit)
+				player_index = unit->player_index;
+			bool is_player = player_index != NONE;
+
+			return is_player;
+		}
+
+		dword flags = definition->flags14;
+
+		if (!((flags & 1) && object_index == data->owner.object_index))
+		{
+			if (!((1 << object->type) & 3))
+				return true;
+			if (!((flags & 0x8000) && g_4e6948->state == 1 && object->player_index != NONE))
+			{
+				if (!(flags & 8))
+					return true;
+				if (function_1df560(object->team, data->owner.team))
+					result = true;
+			}
+		}
 	}
-
-	dword flags = definition->flags14;
-	if ((flags & 1) && object_index == data->owner.object_index)
-		return result;
-
-	if ((1 << object->type) & 3)
-	{
-		if ((flags & 0x8000) && g_4e6948->state == 1 && object->player_index != NONE)
-			return result;
-		if ((flags & 8) && !function_1df560(object->team, data->owner.team))
-			return result;
-	}
-	return true;
+	return result;
 }
 
 /* whether any entry of the block at +0x70 (0x60 byte entries) has the flag
    at +0x40 of the structure it points to */
+// score 8 (was 8): only the registers differ. Ours takes owner in edx with the loop index in ecx; retail takes
+// owner in ecx and the index in edx (retail's only caller, 0xd74e0 at 0xd7603, does `mov ecx, edi`; that caller
+// is still unmatched). Tried: count in a local (8), pointer-stepping loop (11), while loop (8), index declared
+// first (8), entry pointer local (8), early `return true` (26, owner moves to eax), typed struct view (8).
 // @retail 0xd74b0
 bool function_d74b0(byte const *owner)
 {
@@ -789,7 +819,12 @@ long function_d7ae0(long object_index)
 		{
 			s_damage_object *unit = (s_damage_object *)function_badc0(object_index, 3);
 
-			return unit ? unit->player_index : NONE;
+			long player_index = NONE;
+
+			if (unit)
+				player_index = unit->player_index;
+			result = player_index;
+			break;
 		}
 		object_index = DAMAGE_OBJECT(object_index)->parent_object_index;
 	}
@@ -818,12 +853,9 @@ bool function_d73c0(long object_index, s_type_1e6529 const *data, bool *instant_
 			if ((definition->flags14 & 0x400) && (data->unknown04[0] & 0x40))
 				*instant_kill = false;
 			if (chance > 0.0f && function_259a0((dword *)g_4e7408) < chance * 0.5f)
-			{
 				*instant_kill = false;
-				return result;
-			}
-			if (*instant_kill)
-				return true;
+			else if (*instant_kill)
+				result = true;
 		}
 	}
 	return result;
@@ -1087,9 +1119,13 @@ void __stdcall function_d74e0(s_type_1e6529 *data, long object_index, bool child
 
 /* the material of one of an object's model regions */
 // @retail 0xd8ae0
-void function_d8ae0(long object_index, long region_index, short *material)
+short *function_d8ae0(long object_index, long region_index, short *material)
 {
-	short result = g_47d8e0;
+	/* a 16-bit bit-field, as in 0x1886d0: retail loads the default with a
+	   16-bit move, where a plain short local is loaded as a dword */
+	struct s_default_material { signed short value : 16; };
+	s_default_material result;
+	result.value = g_47d8e0;
 
 	if (object_index != NONE)
 	{
@@ -1100,10 +1136,11 @@ void function_d8ae0(long object_index, long region_index, short *material)
 			byte *regions = *(byte **)(g_4e3b44[model_index & 0xffff].bytes + 0x5c);
 
 			*material = *(short *)(regions + region_index * 0x14 + 0x10);
-			return;
+			return material;
 		}
 	}
-	*material = result;
+	*material = result.value;
+	return material;
 }
 
 /* the bits of the entries (0x14 bytes, at +0xe4, counted at +0xe0) that
@@ -1377,11 +1414,10 @@ real function_d9020(long object_index, byte const *resistance, byte const *sourc
 	if ((**(byte const *const *)(resistance + 4) & 0x20) && !(source[4] & 0x20))
 		result = 0.0f;
 
-	short material = data->unknown7c;
-	if (global_material_get(material))
+	if (global_material_get(data->unknown7c))
 	{
-		byte *armor_a = global_material_get(material);
-		byte *armor_b = global_material_get(material);
+		byte *armor_a = global_material_get(data->unknown7c);
+		byte *armor_b = global_material_get(data->unknown7c);
 
 		result = function_d5bc0(*(string_handle const *)(source + 0x40), *(string_handle const *)(source + 0x44),
 			*(string_handle *)(armor_b + 0x10), *(string_handle *)(armor_a + 0x14)) * result;
@@ -1858,6 +1894,10 @@ void function_176330(point3f const *point, s_effect_marker *markers);
 
 /* starts a destroyed permutation's effect: attached to the object, or at
    the marker with the object's velocity */
+// score 81: retail takes the object index in edx, the marker name in ecx and the flag in al (two stack arguments,
+// `ret 8`); we keep the flag in cl, the marker name in edx and the rest on the stack (`ret 0xc`). The body itself
+// matches statement by statement. Tried: marker branch first (82), the owner cast hoisted to a local (81), the flag
+// as long (79, same registers) or byte (81).
 // @retail 0xd9d60
 void function_d9d60(bool at_marker, long marker_name, long object_index, long effect_index, s_damage_owner const *owner)
 {
@@ -3907,6 +3947,12 @@ dword function_db810(long object_index, long node_index)
 }
 
 /* the model node of the object's lowest ranked physics node */
+// score 28 (was 134): retail calls 0x16d890 here (its only caller), so it is declared noinline ahead of its
+// definition in unknown_16d280.cpp (noinline only on this file's declaration still inlines it: 134). Left: the
+// prologue's instruction order, the outer count load/add order, and where the inner `xor esi, esi`
+// goes (retail does it before the inner guard). Tried: the row and index base pointers as locals
+// before the inner loop (87, 116 with both), a component local dropped (84), `long j = 0` before
+// the `if` (111), the inner `for` under the `if` (69).
 // @retail 0xdbb40
 long function_dbb40(long object_index)
 {
@@ -3930,16 +3976,23 @@ long function_dbb40(long object_index)
 			{
 				long node_count = *(long *)(rigid_body + 4);
 
-				for (long j = 0; j < node_count; j++)
+				if (node_count > 0)
 				{
-					byte *row = *(byte **)(physics + 0x3c) + (*(char **)rigid_body)[j] * 0x90;
-					long rank = *(short *)row;
+					byte *rows = *(byte **)(physics + 0x3c);
+					char *node_indices = *(char **)rigid_body;
+					long j = 0;
 
-					if (rank < lowest_rank)
+					do
 					{
-						lowest_rank = rank;
-						result = render_model_find_marker_group(model_index, *(short *)(row + 2));
-					}
+						byte *row = rows + node_indices[j] * 0x90;
+						long rank = *(short *)row;
+
+						if (rank < lowest_rank)
+						{
+							lowest_rank = rank;
+							result = render_model_find_marker_group(model_index, *(short *)(row + 2));
+						}
+					} while (++j < node_count);
 				}
 			}
 		}

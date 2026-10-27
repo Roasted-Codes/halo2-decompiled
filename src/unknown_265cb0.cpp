@@ -420,12 +420,23 @@ real function_30bf0(vector3f *vector);
 // Round 243: Native point/origin/both/endpoint values 351/363/396/327; point-endpoint
 // 366, origin-endpoint 378; all inputs in either declaration order 432/432. Original body
 // restored.
+// Round 205: Plain component loops for delta/motion/both 429/407/431; projected output
+// 221; projected with delta/motion/both 432/411/425; all with short ordinals 438.
+// Original producers restored; result/range homes and inverse SIMD groups remain.
 // Posture cases reversed 184; exhaustive scale switch, ordered arms and
 // complete conditional scale 202/253/253; each of the four with per-use range
 // reads 273/311/306/306. Original scale, range observations and body restored.
 // Round 249: coordinated projection inline/noinline 294/184; threshold inline/noinline
 // 184/184; both inline, projection-inline/threshold-noinline, projection-noinline/threshold-inline,
 // both noinline 294/294/184/184. Original declarations and bodies restored.
+// Round 212: outer/scaled/both range-failure returns with inherited result 216/219/253;
+// both plus missing-settings return 253; the four with ordinary result 329/314/273/275.
+// Frame 0x350 persists, entry roles move; original admission, result and observations restored.
+// Round 252: Final primary-test/complete-conditional/primary-first/distance-first results
+// 249/283/235/230; ordinary result storage 281/281/220/221. Original result graph and inherited storage
+// restored; result/range homes and SIMD allocation remain.
+// Round 196: Normalizer inline/noinline/combined/forceinline declarations, each with original
+// and post-normalization up lifetime, 184 each. Original declarations and body restored.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1648,6 +1659,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // combinations and full-width player slot on that graph 682/704/682/707/685/707/710/706. Best 682 gains only
 // two, frame 0x74 versus 0x80; all original vectors, observations, result widths, ordinal lifetimes and input
 // access restored.
+// Round 354: shared dot at absolute/relative/facing/absolute-relative/absolute-facing/relative-facing/all
+// scoring sites 684 each; all with native signed-word maximum 707. Original complete body restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

@@ -217,7 +217,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 		up->k = matrix->up.k * k + matrix->left.k * j + matrix->forward.k * i;
 	}
 }
-// score 220 (was 220): Frame 0x78 versus 0x6c, early ESI save and basis/position homes remain.
+// score 220 (was 220): Frame 0x78/0x6c, early ESI save and basis/position homes remain.
+// Earlier baseline: Frame 0x78 versus 0x6c, early ESI save and basis/position homes remain.
 // Earlier: Frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
@@ -258,6 +259,12 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 250: Entry basis/position/all native workspaces 220/220/220; discarded-forward name 220;
 // complete basis/phase names 220/220; entry basis plus basis names 220; entry workspaces plus phase
 // names 220. Frame 0x78/0x6c and early ESI/basis/position homes remain.
+// Round 153: Actual up/forward/both/turn/up-turn/forward-turn/all three field receivers
+// 249/253/253/276/261/283/260; requested-forward/all four 266/256. Default-vector pointer observed
+// once, alone/with turn/with all three fields 240/251/292. Whole original body restored.
+// Round 252: Final orientation predicates in bool/byte/short/long domains 251/251/259/257; short-circuit
+// refined results 222/222/222/222. Original comparisons and every vector/callback role restored; frame
+// 0x78 versus 0x6c and early ESI/basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -467,8 +474,6 @@ struct s_parent_effect_definition_11a140
 	long alternate_effect_index;
 };
 
-// score 5 (was 5): the call to object_get_damage_owner gets its first argument in a register here,
-// while retail passes both arguments on the stack.
 // @retail 0x11a140
 void function_11a140(long object_index)
 {
@@ -920,6 +925,9 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Round 44: short/long-unit adjacent word bitfields 151/339; first-third-second words 153;
+// word/handle acquisition order 218; normal between words 162; sweep in radius/center argument
+// evaluation 293/293; named radius on the current frame 151. Opening body restored.
 // Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
 // Earlier: Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
@@ -974,6 +982,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // all with double selected fraction 337 (exact-only precision diagnostics; all restored).
 // Round 332: Candidate/collision/eligibility inline contracts, each and every
 // combination, 151; candidate/collision noinline pair 151. All restored.
+// Round 149: Native unsigned first/second identifier words and third full-word carrier, all combinations;
+// unsigned pair with second capture first [151, 151, 151, 151, 151, 151, 151, 149]; all restored.
 // Round 220: Collision/effect/both request declarations before the scan 200/200/200;
 // both at entry 203. Real request names, candidate-buffer name and both name groups 151/151/151;
 // combined pre-scan requests with names 200. Wider request lifetimes grow frame to 0x180;
@@ -984,6 +994,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Round 201: Response storage: normal/sweep reorientation and sweep reflection 176/160/177; paired
 // direction/reflection 193/174; consumed-input left output alone/with sweep reflection 176/194; saved-
 // velocity left output 176. All restored.
+// Round 352: native stored-velocity fields with direct, scalar-first, named-product and combined
+// products 151 each; each with one three-use velocity snapshot 374 (frame 0x128). Original
+// external record, response expressions, query-first sweep and saved identifiers restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

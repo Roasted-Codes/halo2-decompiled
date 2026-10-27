@@ -166,7 +166,7 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
-// score 183 (was 183): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
+// score 182 (was 182): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
 // Earlier: frame 0x84/0x88, callee registers and render-state expansion differ;
 // dword selection 183; word setup flags 234; combined mask 222;
 // brightness component loop 238; redundant bit-clear removal 217.
@@ -255,6 +255,9 @@ void function_402b0(long cache_index, long mode)
 // 0x496f0 is then inlined, aligned 87 -> 44); with the vertex-program planes 222 (aligned 42); plus a
 // noinline redeclaration of 0x496f0 here 222 (ignored); plus a noinline declaration at its definition
 // 285 (892 bytes).
+// Round 352: native cache-body graph with consistent reversed/unsigned/both mode contracts
+// 201f each; four explicit cdecl combinations 211f each; unsigned reversed stdcall 201f.
+// Fast control 201/946 versus plain 182/947. Original helper signature/call and body restored.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
@@ -335,53 +338,13 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 193 (was 193): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
-// Frame 0x48 and geometry agree; unsigned-zero branch, pass joins and clear-call transport remain.
-// Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
-// 254/300/226; noinline with short/byte 254/226.
-// unsigned-zero branch and pass-call boundaries differ;
-// unsigned-zero branch and pass-call boundaries remain.
-// unsigned-zero branch and pass-call boundaries differ;
-// Unsigned-zero admission, setup/result joins and clear-call transport remain.
-// Earlier 226 (from 250): unsigned-zero branch and pass-call boundaries differ;
-// word material index 298; unsigned weight 309; typed geometry header 250;
-// entry observations reordered 326; native local names 250 (fast).
-// Early weight with context-first material 226; depth zero 250, one 250;
-// size policy 462; shared tail-pass loop 476.
-// Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
-// first multipass 269; shared second multipass 281; shared conditional pass 273; shared twentieth pass 269;
-// shared seventh pass 269; shared all passes 291; forced shared all passes 291; shared final result two
-// consumers 291; native final result two consumers 291.
-// Conditional cull calls first/third/both 226/226/226; native Boolean cull tests first/third/both 226/226/226; signed/unsigned short pass result 255/255.
-// Inline cull/stencil/first-flush/second-flush/state-pair/flush-pair/all-four
-// declarations 226 each; noinline all-four 226. All declarations restored.
-// unsigned-zero branch, pass-result stores and call joins remain.
-// Late single/third/both success publication 220/212/210; single/third/conditional
-// result arms 232/214/226; all result arms 204 at 1217 bytes;
-// ordered conditional result 221. All unmatched flag-publication forms restored.
-// Earlier 226 (from 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
-// native masks for passes 16/1/3/8/20/7 give 226/226/226/230/226/226; all masks 230; with byte
-// lower-bound admission 229.
-// Entry tests selection/bit0/byte/flags in orders 2134/1324/1243/2143/1342/1423/2314/1432:
-// 237/230/233/244/235/308/239/308.
-// Round 165: Two-use setup setting captured within single/third/conditional/
-// twentieth/seventh passes 226 each; all five captures 226; both actual cull-setting
-// observations once 226; all setting captures 226. Original reads and body restored.
-// Formal-address removal, pass-phase false result, entry result and entry false result
-// 226/226/226/226; removal with pass false/entry/entry false 226/226/226;
-// isolated unsigned-byte lower-bound admission 225. Original body restored.
-// Round 138: independent pass outcomes bool/byte/short/long 226/226/255/297;
-// complete stipple choice bool/byte/short/long 193/193/226/226. Boolean role name,
-// negated range, direct outside range and byte outside range 193 each. Both named
-// Boolean stipple-enable choices kept, plain 193; unsigned-zero admission and pass joins remain.
-// Round 145: Shared culling setting/predicate/split comparisons at multipass entry
-// 275/264/264; setting/predicate at pass phase 272/274; independent outcomes with
-// those three multipass observations 275/264/264. Original observations and body restored.
-// Round 243: Seven ordered admission partitions 225 each; positive geometry arm 192 at
-// 1194 bytes, first +0x1b3. One-point gain rejected; original body restored.
-// frame 0x48 and geometry agree; the entry byte test (retail `jbe`), the pass joins and
-// the culling calls differ: in every pass that culls with 0 retail still loads g_485898 (`mov eax, [g_485898];
-// xor eax, eax`, 20 of the 21 missing bytes) and re-stores the pass's selected byte as 1 after the culling call.
+// score 193 (was 193): BLOCKED-BY 0x44370. Frame 0x48 and geometry agree. Retail's passes 16/1/3/8/20/7
+// are 0x44370 inlined with its mode table folded (that table lies in retail's .rdata; ours is a writable
+// byte array defined in a contributor's file), so in every pass that culls with 0 retail still loads
+// g_485898 (`mov eax, [g_485898]; xor eax, eax`, 20 of the 21 missing bytes: the table's cull mode became
+// constant only after layout) and re-stores the pass's selected byte as 1 after the culling call in
+// passes 16 and 3. Also differ: the entry byte test (retail `jbe`), the stub 0x14b60 (retail passes its
+// flags in eax) and the pass-8 enable (retail copies the global byte).
 // Forms tried: common final flush 226, with noinline query 226, inline query 397; short/long/byte result
 // 254/300/226; noinline with short/byte 254/226; word material index 298; unsigned weight 309; typed geometry
 // header 250; entry observations reordered 326; native local names 250; early weight with context-first material
@@ -400,6 +363,11 @@ bool function_404b0(long mode)
 // entry false 226 each; isolated unsigned-byte lower-bound admission 225; independent pass outcomes bool/byte/
 // short/long 226/226/255/297; complete stipple choice bool/byte/short/long 193/193/226/226 (bool kept); Boolean
 // role name, negated range, direct outside range and byte outside range 193 each.
+// Round 145: Shared culling setting/predicate/split comparisons at multipass entry
+// 275/264/264; setting/predicate at pass phase 272/274; independent outcomes with
+// those three multipass observations 275/264/264. Original observations and body restored.
+// Round 243: Seven ordered admission partitions 225 each; positive geometry arm 192 at
+// 1194 bytes, first +0x1b3. One-point gain rejected; original body restored.
 // Round 57 (aligned listing counts in brackets, baseline 24): stipple argument `cond ? 1 : 0` in both culling
 // passes 226 [25] (1181 B); one forced-inline pass helper (bit, extra condition, depth, culling, target) with a
 // bool `&&` enable 205 [38] (1215 B), with a byte `(flags >> mode) & extra` enable 230 [16]; the helper returning
@@ -407,9 +375,20 @@ bool function_404b0(long mode)
 // [29], bool enable 199 [32], culling test order flipped 203 [29], byte enable returning `enabled != 0` 235 [14],
 // ternary byte enable 205 [35], bool `&&` enable returned 211 [38], ternary returned as byte 205 [35], the byte
 // helper with a stipple local before the culling call 235 [14]. None gives retail's dead g_485898 loads.
+// Round 252: Both window-predicate parts named at both stipple producers, bool/byte/short/long terms:
+// Boolean result 193 each; full-width result 226 each. Original predicates restored; unsigned-zero
+// branch, pass joins, missing setting loads and clear-call transport remain.
+// Round 205: Four admission-mask result producers after setup 350/218/353/218;
+// the same per-entry producers 309/364/366/365. Original mask lifetime and body
+// restored; byte-zero admission, pass joins and clear-call transport remain.
 // Context before enable/walk/object/part boundaries 193 each; the same
 // four scopes with every entry field read directly 310 each. Original context
 // scope and cached-entry pointer restored; pass joins and call transport remain.
+// Round 61: every pass as a call to 0x44370 928 (618 B, kept out of line), with a forceinline
+// declaration of it 928; one forced-inline pass helper in 0x44370's form (mode, target, clear flags,
+// cull mode; `cond ? 0 : cull_mode`; modes 3/16 re-marked enabled) 203 (1198 B; the re-store and
+// the word argument then as retail, the stipple arms swapped), the cull arm written first 203, with
+// 0x44370's mask-gated enable 203. Original body restored.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

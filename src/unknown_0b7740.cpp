@@ -614,6 +614,24 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
 // and distance helpers 20 and 20; result-first 20; its late-clamp combination
 // 10 (first copy only, but a caller match regressed); reversed comparison 38;
 // named distance 10; first accepted-result local 10. Original body restored.
+// the second inlined distance test computes dz, dx, dy in
+// retail (dz, dy, dx here); everything else matches. Each walk declares its
+// own record and the iterators sit at the cluster-loop scope (retail's slots
+// and record-first reloads); the clamp written once after the cluster branch
+// (as 0x180b60) gives retail's early counter increment through ecx (20 -> 10).
+// Tried: second inline copy with dz,dx,dy or dy,dx,dz or a vector3f delta (no
+// gain); a separate second-walk helper in all 36 definition/sum orders (no
+// dz, dx, dy order); count = 0 just before the loop (205); a goto to a shared exit
+// instead of the early returns (196); post-increment counter 24; while loops
+// 24; cluster list declared first 24; iterators passed without references 24.
+// Only the vector3d_from_points3d + length_sq3f forms give the two inlined
+// copies different shapes: single exit 15 (y, x, z first copy), early
+// returns 20 (the two shapes swapped), a distance-squared helper over them
+// with early returns 10 (both copies dz, dx, dy), the same with a single
+// exit 30, a hand distance-squared helper 18; sum order, parameter order,
+// local scopes, dot3f, named squared length, center pointer, early-out
+// tests, a separate center/radius overlap helper, walk forms and loop-index
+// widths change nothing else (compile-only screens).
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
@@ -631,7 +649,6 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             g_4e7411 = true;
             cluster_count = function_14a5b0(cluster, position, radius, 0x200, clusters);
             g_4e7411 = false;
-            if (cluster_count > 0x200) cluster_count = 0x200;
         }
         else
         {
@@ -639,6 +656,7 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             clusters[0] = cluster;
         }
     }
+    if (cluster_count > 0x200) cluster_count = 0x200;
     ++g_4de2fc;
     g_4de2f8 = true;
     for (short i = 0; i < cluster_count; ++i)
@@ -1148,7 +1166,11 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // mask address as the storage struct 239; a function-local static mask object (gives
 // the same guard code as the hand-written one) 239; 0xbfed0 plain or plain with a
 // noinline declaration 234/234; mirrored flag before the matrix 234; parent through a
-// header pointer 234.
+// header pointer 234. Round 140: the parent index shared by both branches 384, with the
+// parent and mirrored defaults 361; the sample mask assigned before the copies 168 (the
+// mask gets a stack home and esi/edi and every later slot shift: 113 aligned differences
+// against 18; rejected as before); 0xbfed0 advancing or reassigning its own flags pointer
+// (both still match) 234/234.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {

@@ -1235,6 +1235,11 @@ bool function_c70b0(long unit_index);
 long function_cbd50(long unit_index, short weapon_index);
 
 // score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result
+// Round 141: retail returns the result byte unnormalised (a bool) and keeps the depletion in BL with the
+// interruptibility in memory; round 75's first-sets/second-clears depletion 330, with a bool result
+// 361 (1243 bytes, aligned 132 -> 102: retail's setle and second test, but depleted in memory and
+// interruptible in BL, no unit re-read), with interruptible/depleted/result declaration orders 362/363;
+// controlling read first 164; name before overlay 164.
 // normalization differ. Retail keeps the pool global in EAX and its data in EBP from entry, the state
 // in EDI, re-reads the unit pointer for both held-weapon queries (the second through a fresh data load)
 // and keeps the depletion's initial false in a stack byte (+0x12) beside the result (+0x11) and the
@@ -1668,6 +1673,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // projection vector 830; default angles copied as a struct 826; `active` cleared by a conditional
 // assignment 884 (3358 bytes, aligned 846 -> 622); that plus the centred test as a named bool 875
 // (aligned 584).
+// Round 187: basis matrix 807; matrix/shared cross 858; matrix pointer/reference/value
+// inputs 807/807/842; aggregate/member basis copies 1102/1102; matrix reference/shared
+// cross 851. The three-count gain is dropped; original independent vectors restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2343,6 +2351,11 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // helper 702 (aligned 487 -> 476); validity result computed before the changed flag 668 (aligned 468);
 // definition pointer computed second 663; both 665; with a Boolean force flag 706 (frame 0x7c, aligned
 // 385); plus the force result as a flag set in a test 708 (aligned 361, frame still 0x7c).
+// Round 187: primary/secondary request producers, original/input-first/complete branch:
+// original/input 694; original/branch 708; input/original 722; input/input 727;
+// input/branch 727; branch/original 713; branch/input 690; branch/branch 690.
+// On the secondary input-first form (ret 8): tag second 694; state before control 694;
+// Boolean transition 702; tag second with Boolean transition 702. Original body restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

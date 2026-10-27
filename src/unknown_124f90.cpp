@@ -3427,6 +3427,15 @@ struct s_128ca0
 // together 234 each; native clear-member addresses 234; chained packet flags 293; upper-first shared pin
 // 234; pin input home name 234. Original fields, clear ranges and helpers restored; protected chunk
 // interface unchanged.
+// Round 356: Native playback-parameter value 311; named pitch span and complete promotion
+// adjustment 234/234; parameter/span 311; parameter/adjustment 311; span/adjustment 234;
+// all three 311; with native pitch-range value 337. Original input pointers and expression parts restored.
+// Round 254: live voice-table fields, alone/with scale/raw-gain-first/both 293/249/277/302;
+// the same four with live pitch-parameter fields 293/249/293/244. All regress;
+// original voice/parameter receivers, scale observations, gain schedule and body restored.
+// Round 195: Processed-gain producer ordinary/noinline/combined declarations 234 each;
+// forceinline 373. With raw gain before pitch 268/268/268/374; the 268 forms use frame
+// 0x494. Both declaring files and original body restored; gain homes and clamp joins remain.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

@@ -1291,7 +1291,8 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
-// score 165 (was 165): Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
+// score 165 (was 165): frame 0x84 agrees; early ESI, result byte and actor/motion homes differ.
+// Earlier: Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
 // Round 75: retail's shape is `bool updated = true;` first, `if (unknown00 == time) updated = false;
 // else { body }`, the activity result a bool, and one actor-index test at the end (NONE arm false,
 // false, !flag; actor arm the three calls). That gives retail's entry, early epilogue, slot order and
@@ -1371,6 +1372,18 @@ bool function_1e1de0(long arg_0);
 // Round 179: target-admission/target-publication/activity inline declaration subsets
 // 165/165/165/165/165/165/165; all three inline/noinline 165. Original declarations restored.
 // Scratch lifetime, split actor declarations, default order and scratch name: eight combinations 165.
+// Round 211: native signed/unsigned dword timestamp result, positive/complementary status
+// and early/shared predicate exits: 269/237/269/243/269/237/269/243. Original Boolean result and body restored.
+// Round 225: signed-byte readiness/activity/behavior carriers 174/177/175;
+// readiness-activity/readiness-behavior/activity-behavior 184/182/184; all three
+// 191; all three plus signed-byte observed state 198. Original carriers restored.
+// Round 150: Separate native motion/marker storage with lexical-home, marker-arm and motion last-use scopes 174/174/165/165/174/174/165/165. Original union restored.
+// Frame 0x84, early ESI save, return byte and actor/motion homes remain.
+// Existing actor query with sample-first/receiver-first/direct/separate admission
+// 297/256/268/268; read-only character counterparts 297/256/268/268. All restored.
+// Round 76 on the round-75 shape (218, aligned 12): actor arm first 218 (aligned 21); owner after the index
+// test 220; actor-index local in the actor arm 218. Retail gives the index local its call register (ecx) at the
+// definition and spills it there; ours stores it straight from the load.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

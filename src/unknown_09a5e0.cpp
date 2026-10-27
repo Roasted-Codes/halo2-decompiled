@@ -2068,7 +2068,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 168 (was 210): object/offset homes and low-mask allocation remain;
+// score 168 (was 168): object/offset homes and low-mask allocation remain;
 // frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // object/offset homes and low-mask allocation remain;
@@ -2146,8 +2146,23 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // low between/high before, after integers, after all 193/172/170;
 // low after/high before, after integers, after all 191/170/168.
 // Both mask updates after their original stores retained; 1070/1081 bytes.
+// Independent early parent result/store boundaries before/between/after: 288/288/285;
+// 267/266/169; 266/265. Original early stores and retained child timing restored.
 // Round 246: metadata/count/fraction defaults before the child getter in seven
 // combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
+// Round 197: Existing base-sync/identifier-map ordinary-inline-noinline declaration pairs,
+// all eight alternatives, 168 each; original declaration graph and body restored.
+// Round 352: persistent, child-value and induction/mask scalar-home groups, singly and all
+// combinations, 168; complete homes plus native header offset 167 (one point, rejected).
+// Original executable body and retained post-store child masks restored at 168/1070.
+// Final source-field pointer 168; exhaustive first parent result alone/with pointer
+// 164/164 rejected; exhaustive mapped results alone/with pointer 223/223; both
+// parent result groups without/with pointer 219/219; named-offset combination 218.
+// Original receiver, result production, stores and lookup restored.
+// Round 62: first-block declaration orders, all five others 168 (identical code); NONE
+// default as a ternary 201; field-copy compare operands swapped 168; field pointer for the
+// copied field 168 (retail's dead `add ebp, 0x214` remains). The first block's goto became a
+// plain NONE guard (identical code).
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -2162,11 +2177,8 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 		long local_5 = *(long *)(local_1 + 0x13c);
 		short local_7 = *(short *)(local_1 + 0x130);
 		if (local_5 != NONE)
-		{
 			local_6 = (short)local_5;
-			if (local_6 != NONE && local_7 != NONE)
-				goto local_18;
-		}
+		if (local_6 == NONE || local_7 == NONE)
 		{
 			if (local_2->field_90 != local_6 || local_2->field_92 != local_7)
 			{
@@ -2176,7 +2188,6 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 			}
 		}
 	}
-local_18:
 	if (local_3 & 0x800)
 	{
 		long local_5 = NONE;

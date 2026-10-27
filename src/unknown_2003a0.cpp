@@ -1305,6 +1305,9 @@ void __stdcall function_205320(long group_index)
 // long pointer 18; first vehicle saved before the store 19; inverted test 24; squad lookup at each use 33;
 // squad computed before the NONE test 38 (at the top 42); ternary 45; one store after the test 47;
 // index local updated in place 56/57.
+// Round 42: named scaled offset signed/unsigned 18/18; const squad, then both pointers 18/18;
+// identifier as a real short field 18; low-word helper 44; typed pointer increment/address-of-element 18/18;
+// low-word equality 21; early high-bits predicate 18. The pool/index registers and three-address lea remain.
 // @retail 0x201ad0
 void function_201ad0(long squad_index, long object_index)
 {
@@ -1513,6 +1516,10 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // Round 347: uniform live squad admission with returned cursor/output index/both 78/76/78;
 // with library point copy alone/cursor/index/all 76/78/76/78; later minimum lifetime 76.
 // Prefix recovered through +0x54, but later pointer/register ownership still regresses; opening body restored.
+// Round 60: squad getter at each use 76 (entry code exact through +0x54; the loop's entry add then
+// splits around its first load); with the entry expression at each use 154; point per arm 69; point
+// at each use 69; first test through the entry expression 70; entry operand order, inline palette,
+// entries-base local, typed location record and an entry declared before the loop 76 each.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1809,6 +1816,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 347: consistent live squad/definition/both roots 491/451/576;
 // those roots with multi-use point-getter result 496/453/572; joint displacement names 576,
 // with returned point 572. Root/home allocation and lengths regress; original complete body restored.
+// Round 198: Direct real entry fields 257; palette/area/both lookup field references
+// 284/286/280; consideration palette field reference alone/with palette/area/both
+// lookup references 271/271/273/273. Original value inputs and helper contracts restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2574,6 +2584,9 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // Round 180: Separate pending predicate/result with admitted/default-result arms: word task
 // and long output 110/110; wide task 168/168; word task and short output 109/109; both widths
 // 168/168. A read-once, two-use pending word and separate admitted result is 109 plain, kept.
+// Round 198: On the retained pending-result graph, direct inputs/dword predicate/both
+// 109/109/109; shared actor step alone/with direct inputs/predicate/both 132 each;
+// signed pending/result pair 109. Original input views, predicate and actor walk restored.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
@@ -2954,6 +2967,8 @@ void function_2011f0(long arg_0);
 // Round 347: first cached native squad receiver 336/1328; with native squad word 391/1292,
 // promoted difficulty 334/1328, both 389/1292. Request/mask/chain home names repeat
 // 336/391/334/389 at the same lengths. Gains of two/four are below threshold; body restored.
+// Round 198: Placement/prior-object lookup declarations, ordinary/inline/noinline
+// in all eight non-original pairs, 338 each. Frame 0x134 agrees; original boundaries restored.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
