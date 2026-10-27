@@ -150,7 +150,8 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 279 (was 279): frame 0x54 agrees; selection register lifetimes and cyclic-search alignment differ.
+// score 158 (was 231): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
+// frame 0x54 agrees; request/choice carriers, protected input convention and cyclic alignment differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
@@ -170,6 +171,17 @@ void player_action_initialize(s_player_action *arg_0);
 // sentinel with short/held/both 315/283/315; int counter with held/sentinel 283.
 // Output angle/vector/scalar pair library copies, each pairwise combination
 // and all three pairs 279 each; angle pair plus complete four-float control copy 314.
+// Complete request flags once before admission at byte/word/short/dword width 279/282/282/267;
+// after admission 279/281/281/266. Dword after admission 266 plain; frame 0x54 agrees.
+// Shared request with bool/byte/word permission 379/379/266; definite short/bool arms 266/379;
+// declaration fallback with short/bool 255/379; combined permission 376; snapshot after object lookup 258;
+// after selection stores with short/bool/byte 252/231/231; late snapshot plus bool/short fallback 366/369.
+// Late coherent request and Boolean permission 231 plain; selection/count and cold output scheduling remain.
+// Round 185 late complete flags byte/word/short/signed byte with bool permission 158/319/319/158;
+// with short permission 279/246/246/288 (fast). Native unsigned byte flags with bool permission
+// kept at 158 plain; every value, observation boundary and call tuple unchanged.
+// Direct selection fallback 327; cyclic result/start/both at long width 289/327/326; high-first
+// saturation 316; logical availability 279; fallback/result 323; cyclic/saturation/availability 331.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
@@ -202,7 +214,8 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
         s_186ab5 *local_4 = ((s_186ab6 *)g_4e0300->data)[local_1->field_0 & 0xffff].field_8;
         if (local_1->field_28 != local_4->field_214)
             *(long *)&local_1->field_28 = *(long *)&local_4->field_214;
-        short local_5 = (local_3.field_1c & 1) != 0;
+        byte request_flags = local_3.field_1c;
+        bool local_5 = (request_flags & 1) != 0;
         char local_6 = local_1->field_2a;
         if (local_4->field_213 != NONE)
             local_5 = false;
@@ -221,7 +234,7 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
         if (local_1->field_2c == NONE ||
             !(short)((s_186ab6 *)g_4e0300->data)[local_1->field_0 & 0xffff].field_8->field_23e[local_1->field_2c])
             local_1->field_2c = local_4->field_23d;
-        if ((local_3.field_1c & 2) || local_1->field_2c == NONE || !function_cdff0(local_1->field_0, local_1->field_2c))
+        if ((request_flags & 2) || local_1->field_2c == NONE || !function_cdff0(local_1->field_0, local_1->field_2c))
         {
             s_186ab5 *local_11 = ((s_186ab6 *)g_4e0300->data)[local_1->field_0 & 0xffff].field_8;
             short local_8 = local_1->field_2c;
@@ -245,7 +258,7 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
             (!g_510c54->active || !g_510c54->unknown01) && !function_155760(local_0->field_28) &&
             local_1->field_0 != NONE && function_c85c0(local_1->field_0))
         {
-            if (local_3.field_1c & 4)
+            if (request_flags & 4)
             {
                 local_1->field_8a = local_1->field_2e;
                 local_1->field_2e = function_c8960(local_1->field_0, local_1->field_2e);
@@ -255,7 +268,7 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
                     local_1->field_8c = 0;
                 }
             }
-            else if (local_3.field_1c & 8)
+            else if (request_flags & 8)
             {
                 if (local_1->field_89 && local_1->field_8c < 0x7f)
                     local_1->field_8c++;
@@ -298,7 +311,7 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
             local_1->field_30 = false;
         if ((byte *)g_4e6948 + 8 && ((byte *)g_4e6948)[0xd] != 3)
         {
-            if (local_3.field_1c & 0x40)
+            if (request_flags & 0x40)
             {
                 if (!local_1->field_92)
                 {

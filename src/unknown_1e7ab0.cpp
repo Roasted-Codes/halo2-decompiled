@@ -201,6 +201,19 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // exit 631; flag/empty cases first 631; flag/input-state cases first 653; flag/health cases first 643;
 // flag/weapon-test cases first 653 (fast). All restored.
 // Complete eligibility assigned to returned result in reset cases 10/11/12/13/2/16 632/632/640/640/627/643; all six 693; success result after reset 630. Case 2 kept, plain 627.
+// Non-reset test-produced results: case 14 666; case 9 665; primary tests 664;
+// local-state/vehicle tests 649; direct capability calls 643; health tests 653;
+// status/child results 683; all non-reset groups 697. Original result graph restored.
+// Round 197: direct-flag cases after case 18, retained case-two result: original local
+// qualifications 656; plain player/result/blocked 769/651/656; player+result, player+blocked,
+// result+blocked, all plain 701/785/665/736. All original cases, qualifications and bodies restored.
+// Round 162: Consistent direct state-array observations with inherited local
+// qualification removals none/result/player/result+player/blocked/result+blocked/
+// player+blocked/all 827/769/649/671/811/750/660/674.
+// All regress; original state receiver, case graph and local qualifiers restored.
+// Complemented return with original locals 771; ordinary result/player/both 764/856/832;
+// ordinary blocked/result-blocked/player-blocked/all 781/778/858/844. Original case-two
+// result, case order, local qualifications and complete executable body restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

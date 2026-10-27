@@ -48,6 +48,10 @@ extern real g_4c9798[36];
 // Native width/height/both result arms 295/295/295; shared sizing predicate 331;
 // height limit first 303; complete mode result 295; initial projection/opposite loops 295/295.
 // Shared near/far/both/projection/all scaling 295/295/295/295/295; near/far/both point accumulation 295/295/295.
+// Round 167: Individual or mixed bounded dimension carriers:
+// width short 296; width word 296; height short 324; height word 324;
+// short/word 325; word/short 325; short/int 296; int/word 324.
+// Original native limits, far-normal copy and all protected call interfaces restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {

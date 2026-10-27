@@ -32,6 +32,9 @@ void function_1fb350(void)
 PRIVATE __forceinline byte *function_1fb762(s_record_pool_iterator *arg_0);
 
 // score 12 (was 12): ours keeps the global pointer in ESI, retail keeps it in EDI.
+// Round 34: early result return 54, also with one parameter address read 54; assignment-return 54;
+// read-only or unsigned parameter 12 each; read-only record pointer 12; condition-scoped record 12;
+// predicate-assigned result 29.
 // @retail 0x1fb6f0
 bool recorded_animation_playing(long object_index)
 {

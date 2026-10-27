@@ -78,6 +78,8 @@ void function_17e670(s_effect_source *source, point3f const *point, long tag_ind
 
 /* Starts and stops cluster effects when the active cluster masks change. */
 // score 16 (was 16): frame and prefix agree; palette/entry register ownership differs from +0xba.
+// BLOCKED-BY 0x17e670: its body takes the effect source in edx and the point in ecx here,
+// retail passes the source in ecx and the point in edx (also at 0x17a8a0).
 // Shared entry 17; entry plus palette 17; shared index 32; const shared entry 17;
 // direct tag 52; tag after angles 28; tag after direction 52; shared direction helper 17.
 // @retail 0x23aad0

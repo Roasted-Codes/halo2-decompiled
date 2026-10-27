@@ -100,6 +100,10 @@ PRIVATE inline long secondary_weapon_get(long unit_index)
 // C/stack contracts 12/12.
 // Private query output pointer last/first, result after actor/from entry 20/24/20/24;
 // output reference last/first, result after actor/from entry 20/24/20/24. Shared slot query unchanged.
+// Unit then result 20; result then unit/entry result with unit 24/24; unit two result arms 22;
+// field two result arms 12; result goto done 20; field pointer result/early return 20/17;
+// direct else 12; success guard 20; conditional return 12; field reference 17;
+// repeated actor query 22.
 // @retail 0x1e1fd0
 long function_1e1fd0(long actor_index)
 {
