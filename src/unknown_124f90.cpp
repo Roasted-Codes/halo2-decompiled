@@ -3424,6 +3424,9 @@ struct s_128ca0
 // together 234 each; native clear-member addresses 234; chained packet flags 293; upper-first shared pin
 // 234; pin input home name 234. Original fields, clear ranges and helpers restored; protected chunk
 // interface unchanged.
+// Round 195: Processed-gain producer ordinary/noinline/combined declarations 234 each;
+// forceinline 373. With raw gain before pitch 268/268/268/374; the 268 forms use frame
+// 0x494. Both declaring files and original body restored; gain homes and clamp joins remain.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

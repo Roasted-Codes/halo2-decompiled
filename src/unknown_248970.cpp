@@ -124,6 +124,9 @@ public:
 // only 274; single post-allocation receiver 234; early new-child link clear 275.
 // Those four with closed coordinate-double phase 226/274/234/275.
 // Original acquisitions, double lifetimes and executable body restored.
+// Round 195: Queued-function inline/noinline/combined/forceinline declarations 215 each;
+// each with closed coordinate-double lifetime 215. Original boundary and body restored;
+// frame and activation/location transport remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
