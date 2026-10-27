@@ -881,6 +881,9 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Complete mapping-root observation alone/with value table/with remapping word/both 159/197/160/212;
 // the same four graphs with native unsigned slot 159/197/160/212 (all with ordinary body steps).
 // Direct/mapped/both word-field observations 199/177/185; each with consistent value-table fields 208/192/186; both with remapping-root observations alone/with value fields 185/186. Original body, dynamic bounds and shared writer restored.
+// Round 201: Native packed-range parameter and entry record: direct/count accessor/selector
+// fields/both 155/189/185/199; the same four with complete remapping fields 155/189/185/199. Two-point
+// body-step lead rejected; complete source restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

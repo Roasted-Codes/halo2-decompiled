@@ -752,6 +752,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Round 199: Canonical turn-result byte/short/long 155/161/159; side-test outputs and
 // result declared before sampling, bool/byte/short/long 155/155/161/159; all vector
 // workspaces declared before sampling with distinct side-output names 155.
+// Round 201: Shared sample/rotation-cross workspace 201; with original-side/rotated-side/sequential
+// side reuse 207/199/246; the same four with existing rotation-cross helper 201/207/199/246. Original
+// workspaces restored.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,
