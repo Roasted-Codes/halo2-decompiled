@@ -61,6 +61,9 @@ real function_30bf0(vector3f *vector);
 // both with short/byte ordinals 244/244. Original body restored; selector and pending homes remain.
 // Round 246: direction seed/color seed/direction publication library-copy combinations,
 // seven at 213; all three plus every whole-color replacement 213. Original copies restored.
+// Round 191: Blend/pack/collision ordinary-inline declarations, singly, all pairs
+// and together, each 213; all three separate noinline declarations 213.
+// Original declarations, count qualification and executable body restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {

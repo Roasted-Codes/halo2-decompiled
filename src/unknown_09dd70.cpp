@@ -490,6 +490,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 179: library two-byte copy with short/long/dword attachment counters 251/252/252;
 // masked slot value with those counters 253/259/259; direct flag observations 251;
 // direct flags plus masked value/dword counter 259. Original byte loop restored.
+// Round 192: initial-update, handle-lookup and child-flag provider inline declarations, singly,
+// all pairs and together 196 each; separate noinline declarations on all three 196. All
+// restored; flags/packet/object registers and protected attachment conventions remain.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

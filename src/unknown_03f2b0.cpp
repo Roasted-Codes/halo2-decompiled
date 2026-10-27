@@ -1438,6 +1438,9 @@ struct s_133f70;
 // Round 246: common success/failure accounting, bool/byte/short/long result
 // at the builder result 240/240/286/279; early result declaration 240/240/286/279.
 // Expanded reduced control 213; original independent rejection and body restored.
+// Round 191: Query-output flags/nodes/count workspace names, all seven combinations,
+// each 213; all three with projection-array name 213. Expanded control 213.
+// Original outputs, projection array and executable body restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

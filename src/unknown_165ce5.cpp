@@ -1414,6 +1414,10 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Explicit empty-unit return with the user receiver before/after admission and scoped
 // bool/byte/short/long storage 243/243/434/429 and 555/555/558/549 (fast control 243).
 // Original entry guard, receiver and state types restored.
+// Round 187 paired normalized expression parts 243; yaw consumed before pitch production
+// alone/with named parts 496/496; fresh view fields alone/with parts 442/442;
+// interleaved fresh fields with/without parts 510/510; all plus signed flags 510
+// (fast control 243, full baseline 241). All original expressions and calls restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

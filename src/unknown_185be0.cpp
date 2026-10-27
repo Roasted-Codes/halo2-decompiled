@@ -188,6 +188,9 @@ union s_185be7
 // Round 221: recovered-frame settings/scalar/workspace names and active declarations,
 // eight forms 947 each; cached/state-live/settings-live/both roots with native names
 // 947/985/1004/1036/947/985/1004/1036. Original observations and body restored.
+// Consistent parent-control pointer snapshots with original/native entry addresses,
+// mutable/const pointers and either pre-clear acquisition order 947 each (eight forms).
+// Original root observations, entry calculation, helpers and complete body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

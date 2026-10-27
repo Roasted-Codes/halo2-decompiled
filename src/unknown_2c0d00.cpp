@@ -1141,7 +1141,7 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Earlier: Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
 // Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
 
-// score 469 (was 469): Frame 0x104 versus 0x10c, radius/metadata/index homes still differ.
+// Earlier 469 (was 469): Frame 0x104 versus 0x10c, radius/metadata/index homes still differ.
 // Earlier: Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
 // Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
 // word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
@@ -1176,6 +1176,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 132 on the shared next-entry graph: entry fallback/used/both zero lifetimes 453/453/453;
 // native word outer 490, with entry fallback/used/both 485/491/491; dword fallback state 448;
 // with entry fallback/used/both 451/453/451. Five-point reduction rejected above 30.
+// Round 187 selected/emitted point receivers and both 469/472/530; existing world-point
+// conversion helper alone/selected/emitted/both 515/526/492/505; full form with
+// actual selected-element reference 505. All original receivers and conversions restored.
+// Existing tangent/candidate/corner inline declarations, their pairs/all, and all
+// three noinline declarations 453 each. Original declarations and body restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

@@ -1190,6 +1190,7 @@ long function_1931a0(long count, s_surface_description *variant);
 // native rating record, native role names, native capacity expression, native
 // minimum observations, array minimum observations, capacity expression,
 // inline rating declaration and inline quality declaration 32/32/60/32/32/60/32/32.
+// Native output-record graph; maximum/population/both snapshots; record with maximum/population/both; native address assignment: 32 each (fast control 32). Original output graph and all calls restored.
 // @retail 0x73530
 void function_73530(c_helper_a *helper, void *description)
 {
@@ -1395,6 +1396,8 @@ struct s_rating_summary
 // Native full-width unsigned/signed status fields 202/202; native word/bitfield
 // admission with full sentinel 350/350; split sentinel halves 335/335; native
 // status with player indexing 202, with fifteen-bit counters 199 (rejected).
+// Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
+// 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1633,6 +1636,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Round 137: SSE flag 755 (file gate failed);
 // inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
 // Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.
+// Read-builder count homes in six meaningful lexical orders, write-builder homes and both builders: 739 each on the retained word-completion/failure graph. Original count names, helpers, predicates and call tuples restored.
 // Round 343: Native request identity via library/aggregate copy 747/747; with real descriptor count 792/792;
 // terminal candidate reuse 742/742; count plus terminal reuse 836/836. All restored; original completion failure and word group remain.
 // Round 248: Complete returned-property extent and received total, signed/unsigned
