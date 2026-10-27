@@ -1312,6 +1312,8 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // remain. Separate inline declaration 230; entry normal workspace 230; unsigned highest 234;
 // native-long flying 306; final cleanup exit 230; normal/ordinal combination 232 (fast).
 // Signed-word moving/saved-supported/saved-flag/current-supported/current-flag 298/283/295/272/351.
+// Round 193: Component/component+contact/velocity/contact+velocity/component+velocity/all
+// fields at use; all with real magnitude; component root plus shared squared length: 460/404/334/336/501/540/540/460. Original restored.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

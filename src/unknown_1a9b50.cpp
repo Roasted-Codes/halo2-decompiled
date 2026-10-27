@@ -698,6 +698,8 @@ static __forceinline long real_to_long(real value);
 // backward+approach/all three, then all with opposite helper inputs: 386 each. Exact-only
 // grouping forms restored; early rejection and magnitude/query homes remain.
 // Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
+// Round 193: Existing metadata providers ordinary-inline singly, all pairs and all,
+// then separate noinline declarations on all three: 386/386/386/386/386/386/386/386. Original restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
