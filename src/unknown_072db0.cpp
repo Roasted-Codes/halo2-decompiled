@@ -1393,6 +1393,8 @@ struct s_rating_summary
 // 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
 // completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
 // the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
+// Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
+// 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

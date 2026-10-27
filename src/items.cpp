@@ -575,6 +575,9 @@ struct s_item_collision_bsp
 // Round 376: Complete axial/fallback/both spin outputs 281/279/298; CRT publication 281/279/298;
 // both outputs declared before marker with assignment/CRT 298/298. Original spin workspaces,
 // inputs and includes restored.
+// Round 188: Paired final linear/angular rows ijk/ikj/jik/jki/kij/kji, then angular-first
+// paired rows ijk/kji:
+// 249,249,248,248,249,249,249,249 fast; reduced control 249, full 249. Original executable source restored.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
