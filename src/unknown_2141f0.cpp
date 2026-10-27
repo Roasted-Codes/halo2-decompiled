@@ -131,6 +131,9 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // after validation 502; validation/retirement first 501; publication phases first 498;
 // publication phases after validation 517; header phases first 520;
 // admission/retirement/publication together 492. All executable forms restored.
+// Round 152: Actual inline definitions plus all declarations, path/checksum/both 367/367/367;
+// with separate noinline boundaries 367/367/367; completed-count combinations 362/362.
+// All supporting declarations and the original body restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {

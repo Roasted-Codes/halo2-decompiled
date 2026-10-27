@@ -84,6 +84,11 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 	left2d->j = forward2d->i;
 }
 
+// score 84 (was 84): frame 0x1c vs 0x28, basis and vertical-displacement homes differ.
+// complete displacement 94; displacement/target helper 94; native target copy 84;
+// displacement/native copy 94; node helper with/without complete displacement 144/139;
+// paired basis names 94; both displacement helpers/names 94; projected point setter
+// with split/complete displacement 84/100.
 // @retail 0xdf380
 void function_df380(long unit_index, point3f *position, vector3f *forward, vector3f *up)
 {

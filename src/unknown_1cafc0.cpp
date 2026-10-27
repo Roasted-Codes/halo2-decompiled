@@ -898,6 +898,13 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // one shared clear) 337 (1110 bytes); blend declared before the transition ID 211; the animation ID
 // declared first 210; transition_set declared with the blend ID 213; frame position read into a
 // local before the frame-count test 287 (1133 bytes).
+// Round 212: success byte before/after the prior-loop result 274/275; before offset-valid
+// query/before loop-flag publication 271/271; the same four with byte combined loop state
+// 274/275/271/271. Original late success, identifiers and protected query restored.
+// Round 62: retail keeps the transition ID in memory and the resolved set in EBP, ours caches the
+// transition ID's index in BP. Success stored before the channel queries 274; member NONE test
+// on the transition ID 210 (identical); resolved set named after the lookup, first/last 210/210
+// (identical); blend declared first 211; graph test before the transition test 272.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

@@ -65,7 +65,9 @@ struct s_object_flags_256bd0
 	word unknown0 : 6;
 	word bit6 : 1;
 };
-// score 206 (was 206): frame 0x114 versus 0x110, cached activity and actor/geometry homes remain.
+// score 206 (was 206): Frame 0x114/0x110, cached activity and actor/geometry/selection homes remain.
+// Earlier baseline: Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
+// frame 0x114 versus 0x110, cached activity and actor/geometry homes remain.
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
@@ -138,6 +140,10 @@ struct s_object_flags_256bd0
 // the step selecting the entry with a ternary inside the active test 263 (frame 0x110 through a
 // branchless select, the active byte still spilled); the next result in a named bool 206; the loop
 // distance through vector3d_from_points3d and length_sq3f 208.
+// Round 153: Character/variant/both native admission exits 206/206/206; variant/character/both
+// fields at every use 205/202/273; both exits with variant/both fields 205/273. On the fresh
+// character-field graph, nested step tests/native entry select/shared displacement 202/274/202.
+// Four-point 202 rejected; body/helper restored.
 // Round 187: placement angle first 253; angle after position 249; angle last 251;
 // constants first 250; descending fields 243; angle then descending fields 269;
 // short stores first 215; position then descending constants 251. Original order restored.
