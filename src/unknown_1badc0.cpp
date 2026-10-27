@@ -12,7 +12,7 @@ struct s_1badc0
 
 real normalize2d(point2f *arg_0);
 
-// score 220 (was 220): frame 0x90 agrees; output EBX/EBP, point/vector homes and SSE scheduling differ.
+// score 220 (was 220): Frame 0x90 agrees; output EBX/EBP and vector/SSE homes remain.
 // Delayed vertical zero 274; with center difference 271; native 2D perpendicular 286/285;
 // complete aggregate 277/274; delayed zero and early three-use clearance 220; with center 259.
 // Delayed zero and early clearance kept; other executable forms restored.
@@ -20,6 +20,11 @@ real normalize2d(point2f *arg_0);
 // 282/279/282; shared perpendicular with coherent point source 225; with split distances 225.
 // Staged second/first/both direction outputs 231/227/262; center-staged second alone/with first
 // 240/273; copied-point staged second/both/center pair 231/262/276. Opening directions restored.
+// Expanded radius and existing point-setter first/second/both combinations all 220;
+// native squared-vector helper 273. Original point construction restored.
+// Round 204: shared far-output store 252; native collision-test result 282; both 284;
+// later adjusted-point copy 267; with shared far store/collision result/both 272/283/285;
+// all with clean output access 301. Original output, spill and point lifetime restored.
 // Output EBX/EBP, point/vector homes and SSE scheduling remain.
 // No output self-address access 295; copied input/native object/both 281/295/281;
 // shared collision storage alone/with input/object/both 295/282/295/282;
@@ -27,6 +32,15 @@ real normalize2d(point2f *arg_0);
 // frame 0x90 agrees; output EBX/EBP, vector homes and SSE scheduling differ.
 // Vector/center/point/direction names 277 each; named clearance 277; shared actor-to-object difference
 // 274; center memcpy 277; names/clearance/difference 274. Three-point gains rejected.
+// Round 147: Planar scalar differences 255; complete projection products 220; both side-product
+// sets 220; all squared terms 220; projection/side 220; planar/projection/side 255; all products
+// 220; all products with planar differences 255.
+// Round 174: center/radius/both per-use sources 291/242/296; complete actor-position snapshot
+// alone/with center/radius/both 267/283/262/246; complete sources with clean output access 296.
+// Original observations, early clearance, delayed zero, output access and scalar spill restored.
+// Direction declaration/call ordering and collision-storage lifetime combinations 220 in seven forms;
+// those together with radius before center copy 214 (six-point gain restored).
+// Same-size point/vector name swaps, separately and in combinations, 220 in eight forms.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

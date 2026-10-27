@@ -916,8 +916,8 @@ void __stdcall function_d6bc0(long arg_0);
 void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vector3f const *arg_3,
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
-
 // score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
 // Earlier: Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
@@ -967,6 +967,10 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // root accessor 151; candidate accessor 151; selected accessor 151; root candidate accessors 151; root
 // selected accessors 151; candidate selected accessors 151; all object accessors 151; all native header
 // 151.
+// Round 137: double speed/radius/quotient, speed-radius/speed-quotient/radius-quotient/all 334,339,332,259,332,329,261;
+// all with double selected fraction 337 (exact-only precision diagnostics; all restored).
+// Round 332: Candidate/collision/eligibility inline contracts, each and every
+// combination, 151; candidate/collision noinline pair 151. All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

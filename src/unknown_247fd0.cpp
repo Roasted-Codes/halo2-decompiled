@@ -349,6 +349,8 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Native flag four 393; with velocity pointer/admitted pointer/pointer arms/value arms
 // 394/393/394/410; with complete blend products/duration/all-four scalar draws 393/392/428.
 // Native flag declaration and every body form restored.
+// Round 230: Shared current/prior/both blend-vector scales 375/375/368; collision-offset/motion
+// producers 377/369; both blends with collision/motion/all 377/370/377.
 // Round 197: independent blend/probe-point/probe-direction objects 428/368/368;
 // blend-point/probe-point, blend-point/direction, both probe objects, all three 428/428/368/428;
 // full independent native objects on the recovered collision/velocity-source frame 466. All restored.

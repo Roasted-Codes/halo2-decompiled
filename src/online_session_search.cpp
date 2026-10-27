@@ -239,6 +239,11 @@ extern "C" void _ReadWriteBarrier(void);
 // 36/36/36/36; reference output with those inputs 36/36/36/36. Original helper/body restored.
 // Current/lower/upper/both names 36/36/36/36; const current/endpoint 36/36; force-inline score 36;
 // score guard reordered 36; lower/upper candidate clamp 37/36.
+// Round 378: lower/upper/both shared clamp limits 36/36/36; limits before
+// candidates 37; upper limit before lower publication 36, with lower limit
+// before its candidate 37; early upper limit with shared helper current 36;
+// upper candidate before lower publication with both limits 62. Original
+// helper and body restored; current/bound/score register exchange remains.
 // @retail 0x90b30
 void function_90b30(s_session_search *search)
 {
@@ -726,6 +731,11 @@ done:
 // pointer with signed difference/range step/both 128/128/128;
 // pointer with full results lifetime 182; direct difference/range step 213/213.
 // Original results observation and details/kind/count homes remain.
+// Round 378: retained distance limit, paired detail thresholds, both groups,
+// count limit, distance/count, thresholds/count and all three groups each 113;
+// all groups with the shared maximum distance bonus 113. Frame and initial
+// results reuse still agree; details cursor and kind/count homes remain.
+// Original body restored.
 // Round 54: score/distance/bounded as the struct's named entry fields 204; details pointer
 // declared before the loop 113; details inputs read entry-relative 113; details pointer as
 // the named field's address 113; details pointer as a long array with indices 113.

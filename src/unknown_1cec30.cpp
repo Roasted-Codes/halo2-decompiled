@@ -2170,7 +2170,7 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // Earlier: the velocity sums in the material loop load the
 // aligned frame 0x34 agrees; normal/velocity XMM roles, early velocity loads and property-zero retention remain.
 
-// score 137 (was 137): the velocity sums in the material loop load the
+// score 109 (was 137): the velocity sums in the material loop load the
 // running sum second in retail, and the final scale and its stores are
 // scheduled differently.
 // Round 128: shared dot input order 137; consistent inverse-first/inverse-last products 137/137;
@@ -2643,7 +2643,8 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 168 (was 168): staggered register saves and paired velocity homes differ;
+// score 168 (was 168): Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
+// staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
 // Force-inline linear/angular/both getter declarations 175 each; initialized linear/angular outputs 199 each;
 // initialized pair 219; initialized pair with getter declarations 219; live external array receiver 175
@@ -2665,6 +2666,11 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 323 (reduced control 128): common norm 139; common scale 128; real limit
 // literals 128; common norm/scale 139; norm/limits 139; scale/limits 128; all 139;
 // all with body-index name 139. Full-image save staging and paired getter homes remain.
+// Round 137: active-query bool/byte/short/long on nested admission 168,168,168,168;
+// on guarded exit 168,168,168,168 (controlled reduced scores).
+// Round 332 (reduced control 128): active/notification/impulse inline boundaries and
+// all their combinations 128 each; state/change inline boundaries 132/678. All restored.
+// Joint active/notification/impulse inline boundaries plain 168/677; restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
