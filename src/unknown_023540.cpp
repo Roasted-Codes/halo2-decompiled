@@ -2731,6 +2731,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 }
 
 // score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
+// has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
+// its 0 lives there. 0x144f0 sits in a contributor file this round; no new form tried.
 // The stage call is BLOCKED-BY 0x144f0: retail passes tag in EAX, stage in ECX and the fallback in EBX
 // (ret 0xc), and reads the first bitmap formal as a full dword (cmovne). Round 73: for loop 334;
 // stage-nonzero ternary 334; selected bitmap local 294 at 2001 bytes (strength-reduced sampler table);

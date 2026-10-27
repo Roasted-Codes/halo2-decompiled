@@ -70,7 +70,7 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 	arg_1 = function_x82e52f(arg_0, 0, 0);
 }
 
-// score 70 (was 142): frame 0x10 and length agree. Retail stores field_10 before the field_38
+// score 70 (was 70): frame 0x10 and length agree. Retail stores field_10 before the field_38
 // sample; written in that order (133) everything through the 0x249aa0 call matches except that
 // the cached-record compare loads field_50 into EAX where retail folds `cmp ebp, [ebx+0x50]`,
 // and the child loop's scratch registers rotate. Compile-only: after an x87 fmul + fstp the
@@ -137,6 +137,12 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // cache-update body 133. Round 137: inline link-child helper (parent pointer argument), with
 // the parent store inside 70/70; cache-update inline helper with early return in retail store
 // order 133; sample through the existing helper in retail store order 133; child result /
+// loop index declared before the loop 70/70. Round 139: this compiler never folds a load into
+// an ALU operand right after an x87 fstp (no such site in the whole linked image, and 0x39a80's
+// equivalent site splits too), while retail folds at both of its two sites, so the retail store
+// order cannot reach `cmp ebp, [ebx+0x50]` from source. Tag index local 245; child definition
+// local 76; first lookup through the inline particle_object_for_tag 69; list-address pointer
+// locals 70; retail order through the shared sample local 133.
 // loop index declared before the loop 70/70.
 // changed-record predicate 142; actual head field 142; unsigned child handle 142; shared bounded
 // selector 142; word flags 142, with bounded selector 142; child zero-age before enable 142;

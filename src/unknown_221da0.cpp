@@ -761,7 +761,6 @@ real function_18cac0(long arg_0);
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
 // indexed batch-entry pointer 225; previous-gain snapshot 262.
 // Earlier: aligned clear still owns EBP and shifts the scalar homes;
-// aligned clear still owns EBP and shifts the scalar homes;
 // unsigned-word door index 236; unsigned-word cluster index 540; both 523;
 // signed-byte side 246; one door-cluster table 233; selected mask pointer 254;
 // both word indices/signed side 534; mask pointer/native camera index 254.
@@ -786,6 +785,11 @@ real function_18cac0(long arg_0);
 // workspace and both: 252 each; the same four with the whole library clear return
 // 241 each. Original indexed traversal, native clear, gain result and executable
 // body restored at 225; aligned frame and scalar homes remain.
+// Round 140: our build aligns the frame for the 0x800-byte clear (compile-only too: any
+// memset of a local of 128 bytes or more aligns there); retail does not. The clear through
+// a helper in another file (LTCG inlines it) 225 (still aligned); batch count read once
+// 237 (812 bytes); door clusters through the cached audibility pointer 233 (812 bytes); gain
+// loop bound read once 225; door count read once 237.
 // Round 180: Indexed gain-element pointer inside/before admission 225/225; complete result
 // arms 229/229; two-use old gain 262/262; old gain with complete arms 254/254.
 // Round 196: Whole clear return/direct camera, side long/short/signed-byte/byte 248/248/250/250;

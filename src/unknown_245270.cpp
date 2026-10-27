@@ -273,7 +273,39 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
+// score 204 (was 204): frame 0x24 versus 0x2c; the source arrives in edx (retail: ecx, copied
+// to esi, which keeps 0x245aa0 at 3); ours holds the transform in ebp from entry where retail
+// reads it from the stack at its test and borrows ebp (push/pop) only around the first plane
+// code; retail keeps the two material codes and the first side byte in separate stack homes and
+// compares the side bytes (`cmp byte`), where ours merges them into `xor bl, dl`; retail gives
+// the first failed facing test its own epilogue. Tried: native plane field 204; signed surface
+// field 204; combined views 204; native side bitfields 207; indexed vector scaling 205; source/
+// surface/plane references 204; vertex table snapshot 204; transform forceinline 204; const
+// transform result 204; separate emitter noinline 204; both call boundaries 204; first/second/
+// both normal values 230/208/248; first/second/both endpoint values 235/205/244; cross scope/
+// late side values 204/204; narrow sides 207; early narrow sides 207; direct narrow codes 239;
+// material snapshot 206; shared rotation 204; shared dot 204; both shared products 204;
+// snapshot with early sides 209; signed-byte side carriers first/second/both 238/238/204;
+// native-long carriers first/second/both 228/228/222; mixed signed-byte/native-long both ways
+// 228/228; live first material/matrix/plane table/material table/index 204 each; material plus
+// matrix records 208; both table fields 204; records with table fields 204; first/second/both
+// live vertex records 204 each; native signed/unsigned low-word code 204/204; current matrix
+// scale 207; native code plus scale 207; vertex records plus scale 207; complete first/second/
+// both plane values 233/230/262; geometry-scoped first/second/both planes 217/222/255; scoped/
+// outer full planes with shared cross 246/252; second material read first 205, with its long
+// copy first too 205; a second material record pointer 204; the transform read once through its
+// address 226 (still in ebp at entry); the edge vector scaled into a copy and rotated with the
+// existing matrix_transform_vector 220; the scaled rotation in an inline helper with its own
+// matrix parameter 204; shared in-place direction scale with dot/cross/both 203/203/203/208;
+// separate native scaled direction with those products 222 each; two-product rotation sums at
+// each row 222; all partial sums before stores in each of the six row orders 222; partial rows
+// with shared matrix scale 212; native endpoint-word array alone/with plane-table field/with
+// signed material field/with both 204 each; separate native endpoint words with those four
+// record views 204 each; the source parameter declared last (definition, declaration and the
+// 0x245aa0 call; still edx) 204; the facing returns as `<=`/`>=` tests 204; one ternary
+// facing test 210; plane and side bit through a two-call inline helper 204; side bits as
+// `(code & 0x8000) != 0` 204.
+// Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
 // a separate rotation output vector copied into the direction scores 193 but adds 19 bytes (one-use
 // staging copy, not kept).
 

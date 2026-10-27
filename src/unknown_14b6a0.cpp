@@ -119,6 +119,15 @@ void function_14bac0()
 }
 
 // score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// Round 139: retail's two iterators are separate locals (first loop at frame 0x30, second at 0x1c
+// sharing the marker probe point's slot) and the second loop calls 0x6b380; split iterators with
+// the second through data_datum_iterator_next 257 (frame 0x44), both inline 234; per-marker probe
+// point locals on top 257 (destination 0x10, probe/second iterator 0x1c, alternate 0x2c as in
+// retail; only the df5f0 center stays above at 0x38); a bare block around the probe/center code
+// 257 (link-time code generation ignores it); center/height/radius through an inline helper 257
+// (center joins 0x1c, alternate drops to 0x28, iterator to the top); with the loop as an inline
+// helper too 260; whole marker search as one inline helper 259/255; declaration order 257;
+// alternate/destination renamed 257/257.
 // Round 94 (not kept, gain under 8): first loop through the existing datum iterator 234; plus block-local marker
 // points 231; plus readiness declarations swapped 230. Retail packs its second (16-byte, 0x6b380) iterator with
 // offset, marker points and center at +0x2c and alternate with the first iterator at +0x3c (frame 0x3c). Second loop
