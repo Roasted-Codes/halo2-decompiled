@@ -6,6 +6,16 @@ The newest entry comes first.
 
 ```
 matched 9705 of 11326 game functions (1569273 of 2786206 bytes, 56.32%)
+matched 1162 of 1436 Havok functions (157240 of 290362 bytes, 54.15%)
+```
+
+196 new matches, none lost:
+- @Roasted-Codes's drafts #825–#839, merged as #841: 193 Havok functions and the library functions `0x2d8d80`, `0x319740` and `0x3724f0` match. Some identifiers were renamed to neutral names on merge.
+
+## 2026-10-26: 9705 functions match
+
+```
+matched 9705 of 11326 game functions (1569273 of 2786206 bytes, 56.32%)
 matched 969 of 1436 Havok functions (139357 of 290362 bytes, 47.99%)
 ```
 
