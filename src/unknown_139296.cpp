@@ -388,6 +388,9 @@ bool function_22acb4(long player_index);
 // Round 331, retained third-type order 231: first-enum orders 248/284/428/482/842
 // 192/193/284/283/189f; total second enum 234f; both enums 235f;
 // all mask declarations at entry 165f. Extra spill remains; all eight restored.
+// Round 145: Independent enum producers with native first/first-second/first-third/first-fourth/
+// first-second-third/first-second-fourth/first-third-fourth/all results 290/299/295/291/311/314/307/323.
+// Existing query inline declaration: retained producers 165; independent producers 232. All restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
