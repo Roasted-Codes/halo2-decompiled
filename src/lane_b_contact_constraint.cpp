@@ -4,6 +4,6 @@
 // @retail 0x31bdf0
 void lane_b_contact_constraint_prefix::build(const void *input, void *output)
 {
-	lane_b_contact_build(points.data, points.size, properties, &atom, input, output);
+	lane_b_contact_build(points.data, points.size, properties, &solver_data, input, output);
 }
 

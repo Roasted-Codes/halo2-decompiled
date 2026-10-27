@@ -18,11 +18,11 @@ void lane_a_ragdoll::import_fields(lane_a_ragdoll_description const *d)
 	plane_b = d->plane_b;
 	twist_a = d->twist_a;
 	twist_b = d->plane_a;
-	cone_min = d->cone_min;
-	plane_min = d->plane_min;
-	plane_max = d->plane_max;
-	twist_min = d->twist_min;
-	twist_max = d->twist_max;
+	cone_limit = d->cone_limit;
+	plane_low = d->plane_low;
+	plane_high = d->plane_high;
+	twist_low = d->twist_low;
+	twist_high = d->twist_high;
 	friction = d->friction;
 }
 // @retail 0x312de0
@@ -36,12 +36,12 @@ void lane_a_ragdoll::info(lane_a_constraint_info *o) const
 {
 	o->maximum = 0;
 	o->result_bytes = 0x54;
-	o->schema_bytes = 0xf0;
+	o->op_bytes = 0xf0;
 	o->result_count = 6;
 	if (friction != 0.0f)
 	{
 		o->result_bytes = 0x6c;
-		o->schema_bytes = 0x150;
+		o->op_bytes = 0x150;
 		o->result_count = 9;
 	}
 }
@@ -52,7 +52,7 @@ void lane_a_limited_hinge::info(lane_a_constraint_info *o) const
 {
 	o->maximum = 0;
 	o->result_bytes = 0x44;
-	o->schema_bytes = 0x110;
+	o->op_bytes = 0x110;
 	o->result_count = 7;
 }
 // @retail 0x313c40
@@ -62,6 +62,6 @@ void lane_a_hinge::info(lane_a_constraint_info *o) const
 {
 	o->maximum = 0;
 	o->result_bytes = 0x2c;
-	o->schema_bytes = 0xd0;
+	o->op_bytes = 0xd0;
 	o->result_count = 5;
 }

@@ -11,7 +11,7 @@ int __cdecl format_2d8cc0(char *buffer, char const *format, ...)
 	return vsprintf(buffer, format, arguments);
 }
 
-static inline char to_lower(char c)
+static inline char lower_ascii(char c)
 {
 	if (c >= 'A' && c <= 'Z')
 	{
@@ -25,11 +25,11 @@ int __cdecl compare_ignoring_case_2d8ce0(char const *left, char const *right)
 {
 	for (int i = 0; left[i] != 0 || right[i] != 0; i++)
 	{
-		if (to_lower(left[i]) < to_lower(right[i]))
+		if (lower_ascii(left[i]) < lower_ascii(right[i]))
 		{
 			return -1;
 		}
-		if (to_lower(left[i]) > to_lower(right[i]))
+		if (lower_ascii(left[i]) > lower_ascii(right[i]))
 		{
 			return 1;
 		}

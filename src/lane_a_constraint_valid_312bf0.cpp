@@ -20,9 +20,9 @@ bool_result_2da7f0 lane_a_ragdoll::valid() const
 	if (!(fabs(lane_a_dot3(twist_b, twist_b) - 1.0f) < 1.0e-5f)) return false;
 	if (!(fabs(lane_a_dot3(plane_a, plane_a) - 1.0f) < 1.0e-5f)) return false;
 	if (!(fabs(lane_a_dot3(plane_b, plane_b) - 1.0f) < 1.0e-5f)) return false;
-	if (fabs(cone_min) > 1.0f) return false;
-	if (plane_min > plane_max) return false;
-	if (twist_min > twist_max) return false;
+	if (fabs(cone_limit) > 1.0f) return false;
+	if (plane_low > plane_high) return false;
+	if (twist_low > twist_high) return false;
 	return true;
 }
 // @retail 0x313cc0

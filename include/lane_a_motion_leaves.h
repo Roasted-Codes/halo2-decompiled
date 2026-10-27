@@ -35,12 +35,12 @@ public:
 	virtual void inertia_world(__m128 *out) const { out[0]=out[1]=out[2]=_mm_setzero_ps(); } //13
 	virtual void inverse_inertia_world(__m128 *out) const { out[0]=out[1]=out[2]=_mm_setzero_ps(); } //14
 	virtual void set_local_centre(__m128 const *value); //15
-	virtual void set_position(__m128 const *value); //16
+	virtual void store_position(__m128 const *value); //16
 	virtual void set_rotation(__m128 const *value); //17
 	virtual void set_position_rotation(__m128 const *position, __m128 const *orientation); //18
-	virtual void set_transform(transform_312630 const *value); //19
-	virtual void set_linear_velocity(__m128 const *value); //20
-	virtual void set_angular_velocity(__m128 const *value); //21
+	virtual void store_transform(transform_312630 const *value); //19
+	virtual void store_linear_velocity(__m128 const *value); //20
+	virtual void store_angular_velocity(__m128 const *value); //21
 	virtual void velocity_at(__m128 const *point, __m128 *out) const; //22
 	virtual void slot23(void *) {} //72c70
 	virtual void slot24(void *,void *) {} //24dc50

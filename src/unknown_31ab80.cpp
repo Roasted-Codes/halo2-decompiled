@@ -42,7 +42,7 @@ public:
 	char unknown0[0x2c];
 	float inverse_mass;
 	char unknown30[0x40];
-	__m128 center_of_mass;
+	__m128 balance_point;
 	hkRotation rotation;
 	char unknownb0[0x30];
 	inertia_value_31ab80 diagonal;

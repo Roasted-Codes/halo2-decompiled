@@ -19,7 +19,7 @@ struct lane_a_constraint_description
 struct lane_a_constraint_info
 {
 	long maximum;
-	long schema_bytes;
+	long op_bytes;
 	long result_bytes;
 	long result_count;
 };
@@ -62,7 +62,7 @@ public:
 struct lane_a_ragdoll_description : lane_a_constraint_description
 {
 	__m128 pivot_a, pivot_b, twist_a, plane_a, twist_b, plane_b;
-	float cone_min, plane_min, plane_max, twist_min, twist_max, friction;
+	float cone_limit, plane_low, plane_high, twist_low, twist_high, friction;
 };
 struct lane_a_limited_hinge_description : lane_a_constraint_description
 {
@@ -77,7 +77,7 @@ class lane_a_ragdoll : public lane_a_constraint
 {
 public:
 	__m128 pivot_a, twist_a, plane_a, pivot_b, twist_b, plane_b;
-	float cone_min, plane_min, plane_max, twist_min, twist_max, friction;
+	float cone_limit, plane_low, plane_high, twist_low, twist_high, friction;
 	lane_a_solver_result results[9];
 	void import_fields(lane_a_ragdoll_description const *description);
 	void build_swing_limits(__m128 const &twist, __m128 const &cone, __m128 const &plane,

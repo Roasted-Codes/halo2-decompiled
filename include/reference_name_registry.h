@@ -35,7 +35,7 @@ public:
 			((c_reference_name_registry *)object)->memory_size, 0x13);
 	}
 
-	unsigned int get_name(c_a const *object, char *buffer, unsigned int size);
+	unsigned int copy_name(c_a const *object, char *buffer, unsigned int size);
 	void set_name(c_a const *object, char const *name);
 };
 

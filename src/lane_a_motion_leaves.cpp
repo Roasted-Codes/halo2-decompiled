@@ -50,12 +50,12 @@ void class_3193c0::function_319740(float value)
 	field_20.m128_f32[3] = value;
 }
 // @retail 0x319890
-void class_3193c0::set_linear_velocity(__m128 const *value)
+void class_3193c0::store_linear_velocity(__m128 const *value)
 {
 	field_40 = *value;
 }
 // @retail 0x3198a0
-void class_3193c0::set_angular_velocity(__m128 const *value)
+void class_3193c0::store_angular_velocity(__m128 const *value)
 {
 	field_50 = *value;
 }
@@ -99,7 +99,7 @@ void class_3193c0::set_local_centre(__m128 const *value)
 	field_70.m128_f32[3] = last;
 }
 // @retail 0x3197a0
-void class_3193c0::set_position(__m128 const *value)
+void class_3193c0::store_position(__m128 const *value)
 {
 	transform_translation = *value;
 	field_70 = lane_a_world_centre(*this);
@@ -127,7 +127,7 @@ void class_3193c0::set_position_rotation(__m128 const *position, __m128 const *o
 	field_70 = lane_a_world_centre(*this);
 	field_70.m128_f32[3] = 0.0f;
 }
-void class_3193c0::set_transform(transform_312630 const *value)
+void class_3193c0::store_transform(transform_312630 const *value)
 {
 	field_60.m128_f32[3] += 1000000.0f;
 	transform_rotation.column[0]=value->rotation.column[0];

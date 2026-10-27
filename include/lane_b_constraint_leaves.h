@@ -23,8 +23,8 @@ struct lane_b_constraint_aggregate
 struct lane_b_constraint_sizes
 {
 	long total;
-	long jacobians;
-	long schemas;
+	long term_bytes;
+	long op_bytes;
 	long results;
 };
 struct lane_b_contact_id_array
@@ -56,7 +56,7 @@ struct lane_b_contact_property
 	unsigned short flags;
 	unsigned short unknown_1a;
 };
-struct lane_b_contact_atom
+struct lane_b_contact_solver_data
 {
 	unsigned long flags;
 	unsigned char unknown_04[0x3c];
@@ -75,7 +75,7 @@ struct lane_b_contact_constraint_prefix
 		long capacity_and_flags;
 	} points;
 	char unknown_40[0x10];
-	lane_b_contact_atom atom;
+	lane_b_contact_solver_data solver_data;
 	lane_b_contact_property *properties;
 	long property_count;
 	long property_capacity;

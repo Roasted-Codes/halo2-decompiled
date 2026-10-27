@@ -11,18 +11,18 @@ lane_b_constraint_aggregate::lane_b_constraint_aggregate()
 void lane_b_contact_constraint_prefix::get_sizes(lane_b_constraint_sizes *sizes)
 {
 	sizes->total = 0;
-	sizes->jacobians = 0;
+	sizes->term_bytes = 0;
 	sizes->results = 0;
-	sizes->schemas = 0x18;
+	sizes->op_bytes = 0x18;
 	long count = property_count;
 	sizes->total = 0x80 + count * 0x30;
-	sizes->jacobians = (count + 2) * 0x30;
-	sizes->schemas = 0x2c + count * 4;
+	sizes->term_bytes = (count + 2) * 0x30;
+	sizes->op_bytes = 0x2c + count * 4;
 	sizes->results = count + 2;
 	if (count >= 2)
 	{
-		sizes->jacobians += 0x20;
-		sizes->schemas += 4;
+		sizes->term_bytes += 0x20;
+		sizes->op_bytes += 4;
 		sizes->results++;
 	}
 }

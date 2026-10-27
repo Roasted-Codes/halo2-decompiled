@@ -48,7 +48,7 @@ c_reference_name_registry::~c_reference_name_registry()
 }
 
 // @retail 0x2d7120
-unsigned int c_reference_name_registry::get_name(c_a const *object, char *buffer, unsigned int size)
+unsigned int c_reference_name_registry::copy_name(c_a const *object, char *buffer, unsigned int size)
 {
 	unsigned long index = names.find((unsigned long)object);
 	bool_2d9240 valid = names.is_valid(index);
@@ -90,7 +90,7 @@ unsigned int c_a::v1(char *buffer, unsigned int size)
 {
 	if (flags & 0x8000)
 	{
-		return g_48011c->get_name(this, buffer, size);
+		return g_48011c->copy_name(this, buffer, size);
 	}
 	return 0;
 }
