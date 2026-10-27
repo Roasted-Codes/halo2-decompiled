@@ -21,12 +21,14 @@ void query_31bc80::function_31bc80(bool *result) const
 	*result = true;
 }
 
-// score 36 (was 44): the early zero stores, copy address and count stores
+// score 36 (was 36): the early zero stores, copy address and count stores
 // differ. Direct stores 44; field count 95; copy pointer 46; size add order 44;
 // postfix point count 44; field decrement 74; zero list 36; map byte 44;
 // element memcpy 44; loop names 44; decrement in test 44; map while 76;
 // shared counter 44; zero before count 36; compound subtract 44; old count 74;
 // int counters 44; four zeros 44; memset 37; constant new count 79.
+// Two/three aggregate zeros 80/44; chained zeros in member/reverse/op-first/
+// total-results order 48/44/47/47; empty aggregate 37; entry zero list 94.
 // @retail 0x31bc90
 void lane_b_contact_constraint_prefix::remove(unsigned short id)
 {

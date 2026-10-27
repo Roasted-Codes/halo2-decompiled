@@ -1270,7 +1270,7 @@ PRIVATE inline long score_string_list_1608e0()
 	}
 	return result;
 }
-// score 766 (was 789): Frame 0x798 versus 0x79c; viewer/coordinate/scalar homes remain.
+// score 766 (was 766): Frame 0x798 versus 0x79c; viewer/coordinate/scalar homes remain.
 // Earlier Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
 // Earlier Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
 // player register and scalar homes; scalar names 817;
@@ -1309,6 +1309,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Boolean header with byte rows 780. Shared fade/row-alpha/both: opening 789 each, byte graph
 // 780 each, direct-query graph 766 each; native icon byte-player/byte-rows/direct-query
 // 791/791/777; repeated team-byte snapshot on direct queries 766 (frame 0x7a0).
+// Parallel long/int seconds 785/785; immutable conditional seconds 765; uninitialized
+// seconds before colors/at row entry 785/785; long seconds with short place/team/both
+// 782/768/765. One-point gains restored; original scalar widths and tests retained.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
