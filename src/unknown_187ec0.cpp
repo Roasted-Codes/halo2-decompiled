@@ -187,6 +187,11 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 
 // score 6 (was 6): key is retained in EDI rather than retail EBX; 75/75 bytes.
 // Earlier: the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
+// the key is passed in EDI instead of retail's EBX, rotating the entry saves and loads;
+// key pointer before globals 6; direct index construction 6; delayed globals assignment 6;
+// read-only key pointer 6; global at each use 6; read-only index result 6;
+// direct key address 29; read-only key parameter 6.
+// the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
 // 0x1885f0's entry-live result body (key compared first, break) both match unless the caller 0x1eb020
 // is 16-byte self-aligned (with a frame pointer but no alignment, or a double buffer, both match), and
 // only while 0x1885f0 returns its index class through memory (a short result keeps the key in a register).

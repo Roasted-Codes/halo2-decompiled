@@ -2285,6 +2285,10 @@ PRIVATE __forceinline s_squad_datum *squad_iterator_next_201df0(s_squad_record_i
 // absolute squad index 50; helper/common datum 23.
 // helper/absolute squad index 50; common datum/absolute squad index 50.
 // all three datum forms 50; all three/cursor first 48.
+// Trailing store order 12; plain inline helper 150; outer squad assignment 12;
+// named search mask 12; late records snapshot 12; entry search result 12;
+// shared iterator byte result 70; bitmap before count 13; count/mask before pool 12;
+// shared bit test 12.
 // @retail 0x201df0
 void function_201df0(void)
 {
