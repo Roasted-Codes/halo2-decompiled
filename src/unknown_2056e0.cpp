@@ -177,6 +177,11 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Round 153: native virtual query value/const-value initialization 184/184; assignment 275/275; each with broad rotation 221/287/221/287. Initializers retain the 0x94 frame; broad initialization recovers 0xc4 but regresses. Original virtual output, helpers and scoped rotation restored.
 // Round 155: Native inverse-inertia/rotation matrix alignments 16/4,4/16,16/16,8/4,
 // 4/8,8/8,16/8,8/16: 240/224/240/241/224/241/240/241. Original native matrix alignments and scoped rotation restored.
+// Lane 4 r98: `0.0f - braking / dt` builds as braking * (-1 / dt); `-(braking / dt)` gives retail's
+// zero-minus-quotient and its 1265 bytes but 221. With broad rotation 232 (frame 0xc4, first difference
+// +0xfd); with it, divisions by the mass, reciprocal-first products and an inline vector-scale helper for
+// the mass and angular-brake products 232 each: the products still copy the scalar where retail scales
+// the component in place.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
