@@ -244,6 +244,16 @@ bool __stdcall function_25dd30(long a, long b)
 // Independent clearance/movement reaches: separate native lifetimes 310; point-of-computation
 // declarations 310; read-only values 310; role names 310; first home before vectors 310;
 // paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
+// Round 233: Native live scalar-field references, reach/radius/both/blocked gate/
+// reach+gate/radius+gate/all 310/310/175/310/175/175/310; segment squared part 175.
+// Offset and segment workspace names, their combinations, and declaration order
+// each 175; original vector declarations restored.
+// Complete native origin/location/candidate point values 454/366/481; origin+location 493;
+// origin+candidate 518; location+candidate 503; all native values 539; all CRT value copies 539.
+// Native point workspaces enlarge the matching 0x30 frame; all snapshots restored.
+// Complete permission/linked-unit/whole-geometry-radius observations 470/311/431;
+// permission+unit/permission+radius/unit+radius/all/immutable all 469/442/428/362/362
+// (fast). Original observations, geometry inputs and 0x30 frame restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

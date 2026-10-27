@@ -308,14 +308,51 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 }
 
 #define sound_effect_delete function_21dcf1
-// score 204 (was 204): Frame eight versus four, state/tag residences and start/delete expansion remain.
+// score 204 (was 204): Frame eight versus four and opposite start/delete expansion remain.
+// BLOCKED-BY 0x189fe0. Frame eight versus four, the state/tag registers and
+// the opposite start/delete expansion remain. Round 72: both starts as calls to the existing
+// 0x125f70 (reason NULL), which LTCG inlines as retail, plus the out-of-line delete (this file's
+// delete macro moved below this function) give 52 plain (429/427): retail's frame and its
+// state-in-eax convention; with the priority stored through the same effect pointer 94 at 427
+// bytes, every block retail's except that our build threads the NONE start results straight to
+// the delete where retail rejoins its `cmp esi, -1` (inverted test 110, single result 94). Not kept:
+// 0x189fe0 then takes its request in edx, not eax, and its eight matched callers (0x1890c0,
+// 0x189340, 0x1895f0, 0x189650, 0x1896c0, 0x189710, 0x189760, 0x189a50) lose their match.
+// Earlier forms: joined query/allocation 220, unforced failure-first 221, effect pointer scope 220,
+// shifted platform flag 220, inline depth zero 391; uninitialized definition 236; scoped definition
+// and query-result value 220; pre-start receiver 208 (lost callers); record getter at each store
+// 208 (kept); kind/sound publication orders and class predicate 220; allocator reuse/const
+// class/request reference/tested result/combined 220/220/220/236/220; global/size/depth-two
+// policies 246/359/220; share record type sound 204; share record sound priority 211; share
+// record type priority 204; getter body single result 207; getter body definition guard 224; type
+// sound with single result 229; type sound with definition guard 221; external published record
+// 220; native effect handle 215; immutable playback/result 208; query/attach/both call boundaries
+// 208/208/208; record plus native handle 221; native boundaries 215; native class byte/bool bits
+// with Boolean/direct tests 204 each; byte bits plus shared allocator 204; byte bits/settings and
+// bool bits/parameters 204/204; byte bits with shared allocator/settings 204;
+// availability/allocation/accessor expansion declarations and all three together 204 each;
+// immutable state/tag/both input bindings 204 each; all boundaries with both bindings 204;
+// creator noinline/inline+noinline/inline 204 each; outlined creator with shared start expansion
+// 80/80 and query/attachment/both call boundaries with it 80 each (all lose the eight callers);
+// complete admission scope with branch-defined allocation/nested class guards 204 each; shared
+// start with those forms 232/226/232/226; query-owned handle 204; availability
+// failure/result/admission 204/204/204, with the query-owned handle 204/204/204; preserved class
+// bit 180 plain (eight caller losses); logical/masked/clear-only flag 165/215/174; scoped logical
+// flag 165; at-use record getters with compound/logical/masked/clear-only flags 185/164/220/177
+// (all gains lose callers); class/activation/listener/rate-query inline-noinline declarations 204
+// each; listener/stage/both output names 204 each; reversed output declarations 204;
+// listener/stage/both outputs initialized absent or zero 204 each; per-use playback selection
+// alone/with absent outputs 199 (caller losses); complete start result 226; positive start
+// admission 204; exhaustive start arms 226; rate result selection 204; query owned stage 204;
+// admission owned outputs 204; scoped positive rate 204; scoped exhaustive results 226;
+// long/word effect slots at admission, playback and publication 206/214 each; long/word slots
+// with common result 181/224; long-result 181 plain (eight caller losses).
+// Frame eight versus four, state/tag residences and start/delete expansion remain.
 // Frame eight versus four, state/tag residence and opposite start/deletion expansion remain.
 // Earlier: Frame eight versus four and opposite start/delete expansion remain; eight sensitive callers preserved.
 // Earlier: frame eight versus four and opposite start/delete expansion;
 
-// Earlier: frame eight versus four and opposite start/delete expansion;
 // frame eight versus four and opposite start/delete expansion remain; closer flag forms lose matched callers.
-// Earlier: frame eight versus four and opposite start/delete expansion;
 // joined query/allocation 220, unforced failure-first 221, effect pointer scope 220,
 // shifted platform flag 220, inline depth zero 391.
 // Frame and start/delete expansion still differ; uninitialized definition 236;
@@ -368,6 +405,14 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // with entry sound declaration 212. Effect-domain forms lose eight caller controls.
 // Round 327: current deletion record/pool/both 211/204/206; public creator noinline 204;
 // with record/pool/both 211/204/206; both observations and boundary with signed class byte 206.
+// Round 207: existing allocator as native definition member, with original failure return,
+// success nesting, count-selected result or empty-definition return, all 204; those same
+// four with record-link initialization first also 204. Original helper and body restored.
+// Round 148: coherent private start tag/state order, unsigned result, unsigned tag, their pair/all
+// combinations and order with default-NONE rate admission 204 each.
+// Round 179: global availability fields at each use, direct/complete/failure/staged result
+// at Boolean storage 204/204/204/204; native byte storage 204/204/204/204.
+// Original availability receiver, helper, field types and expansion policy restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

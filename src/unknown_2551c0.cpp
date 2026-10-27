@@ -548,6 +548,14 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // Default duration in an if/else or ternary after the query 205/205 (frame 0x54, 954 bytes);
 // with the radius sum after the projection test 211 (the 0x1e4a50 call then sinks too);
 // 0x2556b0 returning bool, as retail's tests of al show 141 (kept); with the if/else 205.
+// Round 72: a radius read used once is forwarded into its one use, so the 0x1e4a50 call moves
+// with it (sum named after the dot 210). The default in an else arm plus the object-plus-radius
+// sum written at both of its uses (first test and the 0.6 test) gives 95 at 964 bytes: frame
+// 0x54, call before the dot, sum after the test, as retail. Not kept (a repeated expression
+// counts only with a match). It still differs in the 0x110ab0 argument register and the
+// rotated scratch registers after it, the sum's operand order (field first in retail; either
+// spelling gives radius first), the first-length/projection slot packing (names do not move
+// it), the timing call's unit load and the request store order. Without the else arm 220.
 // Direct trace-test side result 141; immutable side at trace scope 141; direct
 // animation value 168; direct side plus animation 168; unsigned word side 142;
 // immutable side plus animation 168; retained-fallback conditional 141; complete

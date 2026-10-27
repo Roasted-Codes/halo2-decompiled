@@ -537,10 +537,10 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 	graph_weapon_type_request(graph, mode, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 	graph_weapon_type_request(graph, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 }
-// score 399 (was 399): Frame eight versus twelve and independent hidden-result homes remain; native four-byte publication/test lifetimes do not recover them.
+// score 399 (was 399): frame eight versus twelve and independent hidden-result homes remain.
 
 // Earlier 399 (was 399): frame 8 versus 12 and hidden-result homes still differ.
-// score 399 (was 399): frame eight versus twelve and hidden query-result homes still differ.
+// Earlier: frame eight versus twelve and hidden query-result homes still differ.
 // Earlier: frame 8 versus 12 and hidden-result homes still differ.
 // frame 8 versus 12 and hidden-result homes still differ.
 // Byte success 403; fallback fields at use 551; request fields at use 639;
@@ -566,6 +566,12 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // inheritance/urgent/both 567/556/555; both bounds 429; flags-first fallback guard 402. Bound-only locals fail
 // their exact-match requirement. Frame eight versus twelve and hidden-result homes remain.
 // Round 317: Primary/fallback/both const native query plus immediate test 415/431/483; both mutable 483; reused existing identifier 590; entry primary/fallback/both query declarations 590/571/590.
+// Round 373: byte/char/word/short flag formals 396/396/396/396; the same
+// widths with success before graph acquisition 396/396/396/396. Three-point
+// gains restored with the original long formal and class declaration.
+// Actual found-name record at group expansion: pointer/reference/value 616/616/567;
+// with urgent resource cursor 632/632/671; pointer plus resource base 619;
+// pointer plus cursor/base 756. All restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
@@ -861,6 +867,15 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 194: Native output-record field/aggregate/logical/aggregate-logical pointer forms
 // 250/222/254/252; references 250/222/254/252; declared member 255 (plain 255).
 // Declared member with repeated field pointer/reference 222/222; field pointer kept (plain 222, 1139/1133).
+// Round 375: Native optional transition construction, mutable/const 341/341; with native
+// optional overlay 338/338; uniform three-ID role names on those graphs 341/341/338/338.
+// Frame 0x38 retained; all eight forms restored.
+// Complete lookup/admission/transition/channel result chain, branch/derived fallback:
+// bool 371/354, byte 377/342, short 391/339, long 390/312. All shrink frame to 0x34 versus
+// retail 0x38. Original late-success body, identifier lifetimes and protected queries restored.
+// Round 337: complementary prior-loop bool/byte/short/long 325/325/315/331;
+// negative combined state 282; both negative bool/byte 343/343;
+// both negative with complete De Morgan producer 327. Original states and body restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

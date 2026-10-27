@@ -94,6 +94,14 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // First/second/both query Boolean declarations at entry 428 each; native acceleration
 // aggregate 428, with those three lifetime forms 428 each; complete graph with
 // reversed named Boolean declarations 428. Original helpers and all calls restored.
+// Round 237: Published query-output lexical groups (Boolean pair, speed/turn limits,
+// query vector), independently and combined 428/428/428/428/428/428/428;
+// reversed independent output declarations 428. Original output homes restored.
+// Scalar outputs magnitude/planar/both 428/428/428; magnitude reference/with planar output 428/428;
+// output contracts with magnitude/planar/both native values 477/528/574. All restored.
+// Direct actor-direction reads and initial vector order 428/429/429/429/429;
+// retained direction pointer with two vector orders 435/436; direct reads with
+// shared initial vector 428. Original body restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

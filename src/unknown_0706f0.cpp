@@ -70,6 +70,16 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // after the reset exit 307/307/292/299. Original positive byte-result body restored.
 // On the byte-result graph: native owner/primary/secondary lexical homes, all
 // pairs, all three, and complete role-correct workspaces 182 each (eight forms).
+// Round 233: Dispatch success-only result stores, byte/bool 277/253;
+// reversed captures, early terminal success, and both 277/253/277/253/277/253.
+// Original result assignments, captures and both local state stores restored.
+// Scalar state/index/host/first spill/last spill homes 182 each; paired spills,
+// combined value homes, and all scalar homes 182 each (fast).
+// Separate initial-state, type and final-state lifetimes in all seven combinations
+// 182 each; all separate with retail case order 183. Original body restored.
+// Excluded-state conjunction owns the failed arm at initial/final/both joins 182/182/182;
+// each with Boolean result 243/243/243; both with physical case order at byte/Boolean
+// result 183/241 (fast). Original positive readiness arms and byte result restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

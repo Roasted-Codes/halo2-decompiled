@@ -131,11 +131,11 @@ void function_8dd70(void);
 // unsigned word sessions 230; unsigned word all 230.
 // byte link with word stages 232; byte observer with word stages 231.
 // byte sessions with word stages 234; byte first two word session 231.
-// entry normalization, helper boundaries and global reloads differ.
+// Earlier: entry normalization, helper boundaries and global reloads differ.
 // Actual link/observer/manager/trim/availability/interface return receivers 230 each;
 // five receivers together 230; guarded interface with observer/trim/availability 230.
+// entry normalization, helper boundaries and global reloads differ.
 // entry normalization, helper boundaries and global reloads remain.
-// Earlier: entry normalization, helper boundaries and global reloads differ.
 // Earlier: entry normalization, helper boundaries and global reloads remain.
 // Shared setup link/message/gateway inputs 232/230/229; all three 233;
 // retained observer 230; session-list publication 230; existing gateway reverse
@@ -147,6 +147,7 @@ void function_8dd70(void);
 // gateway input/consumer order 230; gateway flag first 230; handler flag first 230;
 // handler input order 230; shared integer zero assignment 230; short stage names 230;
 // short session prerequisite 236; nested manager/interface tests 230.
+// Earlier baseline 234; global publication adjacent swaps, reverse and rotation 230 each.
 // Complementary link/observer/session/link-observer/link-session/observer-session/all
 // stage domains 229/230/230/229/229/230/229; all stages plus positive entry state 229. All restored.
 // Round 164: Plain first-two session cohort long/short/word/byte ordinal
@@ -154,6 +155,15 @@ void function_8dd70(void);
 // All regress; original three-call chain, short stage results and clear restored.
 // long link 232; long observer 228; long link observer 230; long sessions 231; long link sessions 231; long
 // observer sessions 229; long all 231; word entry 230.
+// Round 210: entry constant homes with bool observer/session/both 228/228/235;
+// bool link plus observer/session/both 234/235/234; long-bool/bool-long stages 229/229.
+// Round 172: Short session accumulation with original/immutable link 231/231; direct list
+// prerequisite 226/226; direct observer 234/234; both direct producers 237/237. The four-count forms
+// fail the eight-count and match-only requirements; every body and producer restored. Frame four
+// agrees; entry normalization, helper expansion and connection reloads remain.
+// Constant observer/session/both homes at entry 244/225/224; entry long 230;
+// with observer/session/both entry homes 244/225/224; unsigned entry with both 224.
+// Both entry homes and bool/byte/char/long link result 228/228/228/225. All restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

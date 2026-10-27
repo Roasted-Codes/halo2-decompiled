@@ -145,6 +145,7 @@ extern real g_547648;
 void c_animation_channel_data_get(c_animation_channel const *channel, s_animation_data *data);
 
 // score 221 (was 221): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// and spilled induction remain; native-byte sample frame 221; short sample frame 261;
 // native-byte sample frame 221; short sample frame 261;
 // one tag frame count 255; input cursors 273; signed-byte sampled result 221;
 // signed-byte ordinal 221; native frame/count 255; cursors/sampled result 273.
@@ -152,6 +153,8 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // successful-sample count 274; equality bound 221; frame cursor 283;
 // weight cursor 284; end-controlled input cursors 265; frame guard before weight 266;
 // weight-magnitude first 266; actual animation reference 221.
+// Round 230: Read-only sample/tag/both views 221/221/221; reused weight scale 284;
+// scale with either/both views 284/284/284; full input views with named conversion product 284.
 // Round 164: Base identifier confined, separate base admission, both, separate
 // weighted admission and its three combinations 221 each; complete countdown
 // admission split 221. Original playback graph and all constructor points restored.
@@ -161,6 +164,13 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // 351; positive/touch, touch/positive and countdown/positive guard exits 284/276/341.
 // Negative no-samples bool/byte/short/long in weighted scope 221/221/222/221;
 // across the positive playback phase 313/313/328/331. Original sampled flag and constructors restored.
+// Round 234: Last successful sample ordinal in long/short/signed-byte/dword
+// at the original result lifetime 268/277/316/268; initialized before the getter
+// 296/302/323/296. Frame and destination/ordinal allocation remain. Original
+// Boolean result, all channel/data constructors and executable body restored.
+// Scoped output names in seven combinations 221 each; with separate channel names 221.
+// Common final publication bool/byte/short/long 301/301/300/299;
+// with touch admission before construction 343/343/346/341. Original restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

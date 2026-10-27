@@ -54,6 +54,12 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Enabled/nonempty count initialization 230/219; narrow pending/active array names
 // 217/217; pending-before-ready/active-before-waiting names 217/217; enabled count
 // with pending-before-ready 230; nonempty count with active-before-waiting 219.
+// Round 234: Native state dispatch, either case order, with original pointers,
+// entry reference, peer reference and both references: 244 each (816 bytes).
+// Original guarded callback/output graph and executable body restored.
+// Native state with direct entry/entry-plus-peer/peer fields 236/238/266; native flags
+// with direct entry/peer 239/229; both snapshots with direct entry/entry-plus-peer/peer
+// 239/239/229. Original entry/peer cursors, field reads and callback/output homes restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -767,9 +773,9 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 185 (was 185): frame 0x98 agrees; count/receiver/native-kind and callback homes remain.
+// score 154 (was 154): Frame 0x98 agrees; total/receiver/kind homes and counted-item transport remain.
 
-// score 185 (was 185): Frame 0x98 agrees; count/receiver stack homes, decoded-kind width and callback setup remain.
+// Frame 0x98 agrees; count/receiver stack homes, decoded-kind width and callback setup remain.
 // Frame 0x98 agrees; total/receiver/callback-index homes and native kind remain different.
 // Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
 // Native kind 211; role-named scalars 204; shared callback arm 222;
@@ -811,6 +817,13 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // Shared item/cleanup ordinal 185; with pretested items 222; case-local index 200;
 // case-local/pretested 266; native kind 203; native/pretested 217; native/case-local
 // 202; all three 217. Opening body restored.
+// Round 145: First-array endpoint byte/posttest 157, byte/pretest 250, native/posttest 177,
+// native/pretest 186; second-array counterparts 154/249/177/186. On second-array endpoint: enum
+// kind 177; shared creation arm 170; enum/shared arm 178; word kind 195.
+// Round 149: Second-array endpoint graph: scalar/buffer lexical home masks and entry buffer
+// declarations 154 each; range-first byte/native 216/205, default-first 228/221, terminal-produced
+// count 210/208; range/default native unsigned count 205/221. Original endpoint and full body
+// restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
@@ -895,7 +908,7 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 				second_cursor++;
 				i++;
 			}
-			while (i < n);
+			while (second_cursor != info.c + n);
 
 			if (error == 0)
 			{

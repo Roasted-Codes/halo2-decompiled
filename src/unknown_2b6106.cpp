@@ -701,6 +701,12 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // Round 161: clock at every use 642; table at entry/pre-query/pre-widget 619/618/601; those three with consistent clock reads 654/654/643; read-only local table 573. All restored.
 // flags inline 699; flags noinline 573; flags inline noinline 573; user inline 573; user noinline 573; user
 // inline noinline 573; both inline noinline 573; both inline 699.
+// Round 211: Main message/format/both output pointers 573 each; auxiliary game/teams/both
+// output pointers 573 each; all four and message with both auxiliary outputs 573 each.
+// Round 237: Complementary local/activity/joinability states independently and together
+// 648/575/648/574/648/576/648; complementary campaign 573. Original truth states restored.
+// Three identity-query caller-inline contracts in all seven combinations 573 each; joint
+// caller-noinline contract 573. Original declarations restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

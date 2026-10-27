@@ -138,6 +138,10 @@ struct s_placement_2bc1
 
 // score 16 (was 16): placement argument EAX/ECX transfer and event-store scheduling differ from +0x6d.
 // Existing initializer 89; initializer result 89; initializer before mode 88; paired helpers 88;
+// event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90.
+// Unconditional event with options pointer 32; byte mode before event 31; mode against event type 31;
+// mode declaration before team 31; object result before query 16; creation condition assignment 16;
+// function-scope object result 16; combined result/mode lifetimes 31; event before mode declaration 31.
 // event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90;
 // event filled before the mode test 32 (stores now precede the test but the mode load folds into the
 // compare after them, 223 bytes); test result as a bool before the fill 76; fill then send helper 32;
