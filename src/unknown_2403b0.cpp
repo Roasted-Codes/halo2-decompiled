@@ -86,6 +86,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
 // Complete eligibility bool/byte/short/long results 190/190/190/190;
 // default-false reader-gate results 190/190/190/190. Pool reload and completion stores remain.
+// Common score result and one publication: bool/byte scoring results, both duration
+// factor orders and both whole-function/scoring event lifetimes all 239 (eight forms).
+// Original separate score publications, event storage and complete body restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

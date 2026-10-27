@@ -1035,6 +1035,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Every declaration and handler call restored.
 // Single-root retained/observed orders with lookup inline/noinline or all three
 // connection-handler inline/noinline boundaries: 208/208/208/208/218/218/218/218 fast; original graph and declarations restored.
+// Full-root internal direct orders 4,2,0,3 / 4,2,3,0 / 3,4,0,2 / 3,4,2,0 /
+// 2,3,4,0 / 2,0,3,4 / 0,4,3,2 / 0,3,2,4 score 208/208/208/208/208/208/207/208
+// fast, against reduced control 191 (full 193). Original phases and call tuples restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

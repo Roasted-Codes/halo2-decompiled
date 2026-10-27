@@ -67,6 +67,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // after the reset exit 307/307/292/299. Original positive byte-result body restored.
 // On the byte-result graph: native owner/primary/secondary lexical homes, all
 // pairs, all three, and complete role-correct workspaces 182 each (eight forms).
+// Continuous member induction on the byte-result frame: mutable/readonly cursors
+// 182/182; with physical dispatch order 183/183; Boolean result 243/243,
+// with physical order 241/241. Original ordinal traversal and byte result restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {
