@@ -118,6 +118,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Persistent full-function/first-traversal payload tables 190/197; with full-width partition 191/198;
+// the same four table/partition forms with pointer step results 190/197/191/198. Original helper and
+// traversals restored; separate pool/iterator, early null and successor homes remain.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
