@@ -802,9 +802,12 @@ s_slot_handler_2 g_47dc88 =
 void function_b9fc0(long arg_0, vector3f *arg_1, vector3f *arg_2);
 bool function_f47d0(long arg_0, long arg_1);
 bool function_1f8660(long arg_0);
-// score 34 (was 174): Frame 0x80c and all exits agree; the actor and scratch-buffer spill homes are
-// exchanged (+0x24/+0x28), and the second dot product copies the forward components and multiplies
-// by the direction in memory where retail loads the direction components and multiplies by them.
+// score 7 (was 34): Frame 0x80c, all exits and every instruction but seven agree: the actor and
+// scratch-buffer spill homes are exchanged (+0x24/+0x28; retail keeps the actor at +0x28).
+// Round 62: the second point difference in its own vector 7 (kept: retail's direction loads in the
+// second dot product); a release in each arm 66; one position pointer for both differences 7;
+// status output scoped into the request block 11; separate first-call reference 7; early test
+// folded into the outer condition (no label) 7.
 // Result first 203; request outer scope 187; role names 181; shared point differences 179;
 // failure result before release 207; shared cross product 174.
 // Count name with shared cross 174; request-output declarations first 174;
@@ -897,14 +900,15 @@ bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 						real local_18 = dot3f(&local_15, &local_17);
 						if (local_18 > 0.9f)
 						{
-							vector3d_from_points3d(&local_0->position, &local_7.point, &local_17);
-							real local_19 = function_30bf0(&local_17);
-							local_18 = dot3f(&local_15, &local_17);
+							vector3f local_21;
+							vector3d_from_points3d(&local_0->position, &local_7.point, &local_21);
+							real local_19 = function_30bf0(&local_21);
+							local_18 = dot3f(&local_15, &local_21);
 							if (local_18 > 0.707106769f)
 							{
 								vector3f side;
 								cross3f(&local_16, &local_15, &side);
-								real local_20 = dot3f(&side, &local_17);
+								real local_20 = dot3f(&side, &local_21);
 								local_20 *= local_19;
 								if (local_20 > 1.0f)
 									function_f47d0(local_14, 1);
