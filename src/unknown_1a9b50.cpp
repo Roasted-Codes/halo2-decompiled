@@ -408,7 +408,7 @@ real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
-// score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
+// score 375 (was 375): Frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
 // Earlier at 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
 // Earlier: frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
@@ -458,6 +458,7 @@ extern point2f *g_468778;
 // Native memcpy for the facing-test planar initializer 384; with request, actor
 // fallback, both, constant fallback, request/constant, both fallbacks and all
 // three request transfers 384 each. Original planar transfers restored.
+// Round 341: Successive vector-length storage before prediction, target velocity receiver and actor-first graphs 379/413/394/435; after prediction 379/413/395/437. Original body restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -625,7 +626,7 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 386 (was 386): frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// score 386 (was 386): Frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
 // Earlier: frame 0x58 and length agree; early rejection and query scalar/object homes remain.
 // Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // frame 0x58 and length agree; early rejection and query scalar/object homes remain.
@@ -676,6 +677,7 @@ static __forceinline long real_to_long(real value);
 // Existing squared-length helper 384; uniform projection products 480; both 460;
 // all prediction products 386; helper/prediction 384; projection/prediction 480;
 // all producers 460; all with target velocity receiver 456. Original restored.
+// Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

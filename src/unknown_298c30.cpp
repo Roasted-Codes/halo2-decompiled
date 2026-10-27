@@ -117,6 +117,7 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Normalizer input snapshots 448; native normalizer/distance/both roots 443/408/448; snapshots with
 // native distance root 448; void normalizer alone/with snapshots/with native roots 408/448/448.
 // Original helper and body restored; entry loads, XY/magnitude homes and return cleanup remain.
+// Round 341: Persistent endpoint displacement with separate workspace, shared magnitude and word counters 447/465/447/462; existing direction workspace 474/483/474/483. Original body/helpers restored.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
