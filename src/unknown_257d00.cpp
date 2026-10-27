@@ -1642,6 +1642,9 @@ void function_b7360(long object_index);
 // Round 145: Native counted character table, promoted lookup result, repeated command index reads
 // and both 466 each; corresponding actual-record table forms 466/466/466/466. Original type and
 // body restored.
+// Round 151: Shared success return with explicit default failure, empty arms plus complete
+// orientation/motion/point payload masks 0-7, all 466/1812. No result carrier added; original returns and
+// complete dispatch restored.
 // Round 240: complementary query result bool/byte/short/long 520/520/469/525;
 // with complete complementary locomotion at the same widths 520/520/470/525. All restored.
 // Round 138: shared rounded-tick outputs moving-direct/moving-point/direct-point/all

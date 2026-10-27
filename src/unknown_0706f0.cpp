@@ -83,6 +83,7 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // Excluded-state conjunction owns the failed arm at initial/final/both joins 182/182/182;
 // each with Boolean result 243/243/243; both with physical case order at byte/Boolean
 // result 183/241 (fast). Original positive readiness arms and byte result restored.
+// Round 153: advancing member cursor on the retained byte graph 182; structured reset/active join indexed/cursor 182/182, native Boolean 243/243; successful-first join indexed/cursor 182/182, cursor Boolean 243. Original body and inherited state stores restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

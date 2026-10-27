@@ -2715,7 +2715,7 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 334 (was 348): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
 // Earlier form: frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
@@ -2744,6 +2744,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // first/second/both 500/536/493; unsigned-word stage with first/second 500/536; on the retained
 // contract, in-place scales/independent second trig/later second buffer, their pairs/all and all
 // with trig scopes 368/338/334/368/368/338/368/368.
+// Round 151: All four named rotation products, with paired rotation/scale/bias stage masks 0-7, each 391
+// (1988/2022). Original corner helper and body restored; sampler and protected bitmap transport remain.
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
