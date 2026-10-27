@@ -308,20 +308,15 @@ static inline bool teams_enabled_19e1c0()
 }
 
 /* writes the text of one token for the event, returning its length */
-// score 433 (was 433): frame/result register and separate copy tails still differ.
-// Frame 0x208 versus 0x204; result/capacity allocation and separate copy tails differ.
-// Earlier at 443 (was 443): frame/result register and separate copy tails still differ.
+// score 433 (was 433): frame 0x208 versus 0x204, result/capacity registers and separate copy tails differ.
 // Depth one with plain result 709; depth one with original result 443; unsigned mode 443;
 // opponent eligibility continue 443; opponent text initialized after scan 459; all restored.
-// frame 0x208 versus 0x204; result and copy tails differ.
 // Plain result with global optimisation off 1225; size mode 863; comparison-fed
 // terminators 413 (discarded); size mode with existing result 834; global
 // optimisation off with existing result 1225; comparison-fed plain result 709;
 // first-name comparison terminator 444; score-text comparison terminator 443.
-// Earlier: frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
-// iterator 433 kept; explicit modes 443; native local team 457; native eligibility 443; shared
+// Word opponent iterator 433 kept; explicit modes 443; native local team 457; native eligibility 443; shared
 // player dispatch 593; word iterator plus modes/local team/eligibility 440/451/433.
-// Earlier: frame 0x208 versus 0x204 and result/copy tails remain.
 // Team-test byte/short/long locals with bool returns 433/483/483; native
 // byte/short/long returns 433/430/432; unsigned-word/byte opponent counters 433/433.
 // Ordinary short/long return forms 430/432; both small gains discarded.
@@ -332,24 +327,22 @@ static inline bool teams_enabled_19e1c0()
 // Immutable capacity/comparison length/both 433/433/433; ordinary result with both 701;
 // valid-team-first/inherited and ordinary result 441/729;
 // word/native exact-end team loop 433/444.
-// frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
-// frame 0x208 versus 0x204 and result/copy tails remain.
 // Candidate score reuse 445; existing score formatter 492; both 502; their ordinary-result
 // forms 708/794/798; original two-call conditional maximum 433, with ordinary result 701.
-// Earlier at 433 (was 443): frame 0x208 versus 0x204 and result/copy tails differ. Word opponent
-// Earlier at 433 (was 433): frame 0x208 versus 0x204 and result/copy tails remain.
 // Private player/team/all-name/all-text buffers 434/433/412/433; the 412 form
 // adds 512 frame bytes and is rejected. Ordinary result with those scopes 692/692/686/701.
 // Name event-first/player complete guards/all event-first/all complete event guards
 // 475/460/430/480; ordinary result with the same four dispatch forms 716/680/718/697. The
 // three-point 430 form is ineligible; all restored.
-// Round 166: mode observations 433; engine result exit 433; fallback test result 435; mode with
-// exit/tests 433/435; native result with exit/tests/mode exit 704/703/704.
 // Round 150: Shared admission, shared engine getter, forced existing admission and native admission inputs 433 each; ordinary result on those four graphs 701 each. Original helper/include/result restored.
-// Frame 0x208/0x204, result/capacity homes and separate copy tails remain.
 // Round 353: target inline/noinline declarations 433/433; ordinary result
 // 701/701; forced admission helper 433/433; both 701/701.
 // Target metadata and original result/helper restored; matched caller preserved.
+// Round 146: plain result 701 (frame 0x204 and the ESI result agree, but the player/team copy
+// tails merge from the name call on, so `remaining` loses its register to `token`; retail
+// keeps token_length in EDI and remaining in EBP and reloads token); with token read through
+// its address 701 (identical code); clamp as >=, remaining <, remaining <= 433 each, with the
+// plain result 701/701.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {
