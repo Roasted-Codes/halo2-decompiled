@@ -2209,7 +2209,8 @@ bool __stdcall function_1e700(word first, word second, void const *context)
 {
 	s_depth_sort_record const *a = (s_depth_sort_record const *)context + (short)first;
 	s_depth_sort_record const *b = (s_depth_sort_record const *)context + (short)second;
-	long comparison = a->type - b->type;
+	int type_difference = a->type - b->type;
+	long comparison = type_difference;
 	if (!comparison)
 	{
 		if (a->active)
@@ -2218,8 +2219,7 @@ bool __stdcall function_1e700(word first, word second, void const *context)
 			point += b->position.y * a->plane.j;
 			point += b->position.x * a->plane.i;
 			plane3f const *camera_plane = &a->plane;
-			real camera = camera_plane->k * g_4b9da0.z;
-			camera = camera_plane->j * g_4b9da0.y + camera;
+			real camera = camera_plane->k * g_4b9da0.z + camera_plane->j * g_4b9da0.y;
 			camera = camera + camera_plane->i * g_4b9da0.x;
 			long camera_side = a->plane.d > camera ? 1 : 0;
 			long point_side = a->plane.d > point ? 1 : 0;
@@ -2231,8 +2231,7 @@ bool __stdcall function_1e700(word first, word second, void const *context)
 			point += a->position.y * b->plane.j;
 			point += a->position.x * b->plane.i;
 			plane3f const *camera_plane = &b->plane;
-			real camera = camera_plane->k * g_4b9da0.z;
-			camera = camera_plane->j * g_4b9da0.y + camera;
+			real camera = camera_plane->k * g_4b9da0.z + camera_plane->j * g_4b9da0.y;
 			camera = camera + camera_plane->i * g_4b9da0.x;
 			long camera_side = b->plane.d > camera ? 1 : 0;
 			long point_side = b->plane.d > point ? 1 : 0;
@@ -2248,6 +2247,9 @@ bool __stdcall function_1e700(word first, word second, void const *context)
 	return comparison > 0;
 }
 
+// score 4 (was 4): the subtraction of the stream count must come before the last push of the
+// sorter call, and the add of the stipple stride must follow the second rep movsd of the
+// inlined device call.
 // @retail 0x1e370
 void function_1e370(void)
 {
@@ -2286,6 +2288,8 @@ void function_1e370(void)
 	}
 }
 
+// score 8 (was 8): the record table base is held in edi here and in ebp in retail, and the
+// copy of the payload saves and restores the register that choice leaves free.
 // @retail 0x1e4e0
 bool function_1e4e0(point3f const *position, t_1e4e0_callback callback, void const *data, long size)
 {
@@ -2788,6 +2792,8 @@ PRIVATE __forceinline dword stream_register_mask(byte const *descriptor)
     return mask;
 }
 
+// score 10 (was 10): the count of the streams is loaded into ecx here and into eax in retail,
+// the compare against zero uses a second zero register, and esi is pushed later.
 // @retail 0x1c8c0
 bool function_1c8c0(byte const *definition, dword mask,
     s_1c8c0_stream const *third, s_1c8c0_stream const *second, s_1c8c0_stream const *first)
@@ -3067,6 +3073,9 @@ void function_13d80()
 
 extern D3DResource *g_485ae4, *g_485ae8, *g_485aec;
 
+// score 2 (was 2): the setup of the call to 0x15a60 zeroes ecx before it loads 9 into eax,
+// retail loads 9 first. The callee lives in src/unknown_0158f0.cpp and is itself unmatched,
+// and its parameter home decides the order of this setup.
 // @retail 0x1d0e0
 bool function_1d0e0()
 {
@@ -7850,14 +7859,12 @@ dword g_55e6b8;
 // @retail 0x14280
 long __fastcall function_14280(void const *data)
 {
-    volatile unsigned __int64 *current = (volatile unsigned __int64 *)&g_485ab0;
-    volatile unsigned __int64 *previous = (volatile unsigned __int64 *)&g_485ab8;
     long result = 0;
-    ++*current;
+    ++*(volatile unsigned __int64 *)&g_485ab0;
     if (((dword const *)data)[1] != g_55e6b8)
     {
-        result = (long)(*current - *previous);
-        *previous = *current;
+        result = (long)(*(volatile unsigned __int64 *)&g_485ab0 - *(volatile unsigned __int64 *)&g_485ab8);
+        *(volatile unsigned __int64 *)&g_485ab8 = *(volatile unsigned __int64 *)&g_485ab0;
         g_55e6b8 = ((dword const *)data)[1];
     }
     return result;
