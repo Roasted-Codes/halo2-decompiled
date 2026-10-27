@@ -2650,7 +2650,7 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 135 (was 168): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
+// score 135 (was 135): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
 // Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
 // staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
@@ -2690,6 +2690,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 147: admission mask 161; state masks 135; both masks 194; vertical product 168;
 // admission/product 161; state/product 135; both/product 194; guarded type mask 168; state zero
 // tests 135. Keep both native state zero tests; every other form restored.
+// Round 197: Readonly private linear/angular/both getter inputs 135 each; native signed-int
+// ordinal alone/with each input pair 135 each; readonly pair with common double scale 135.
+// Original native state-zero graph, helpers and ordinal restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

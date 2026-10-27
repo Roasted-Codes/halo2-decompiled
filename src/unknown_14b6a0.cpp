@@ -162,6 +162,8 @@ void function_14bac0()
 // Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
 // both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
 // Original storage and iterator restored; frame and readiness homes remain.
+// Round 197: Existing point-query/relocation ordinary-inline-noinline declarations, all eight
+// alternatives, 234 each. Original point/iterator graph and all declarations restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
