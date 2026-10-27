@@ -156,6 +156,11 @@ void function_2232a0(void)
 // Round 7 (lane 10): count from a single-exit inline helper 182 (count 4 no longer threads, count 1
 // still does); helper with pretested for loop 183; if/else-if clamp in retail's branch order 182;
 // named view count (count + 1) after the loop 159; count arms swapped (clamp first) 151. All restored.
+// Standard clamp producers: short min/max clamp 181; long min/max clamp 176.
+// short max/min clamp 181; long max/min clamp 176.
+// short min/max with equality join 181; long min/max with equality join 176.
+// short max/min with equality join 181; long max/min with equality join 176.
+// All executable forms restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

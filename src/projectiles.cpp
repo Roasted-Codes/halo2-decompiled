@@ -502,6 +502,9 @@ void function_fa100(long projectile_index)
 }
 
 /* the projectile type's per-tick update: its movement, plus what moved it */
+// score 38 (was 38): Boolean argument byte spill and final call/add schedule differ; frame and vector homes agree.
+// Direct moved expression 38; implicit flag conversion 38; double negation 38;
+// guarded bool/byte flag 46/47; direct velocity fields 65; vector memcpy 38; vector names 38.
 // @retail 0xf8de0
 bool __stdcall function_f8de0(long projectile_index)
 {
@@ -559,6 +562,10 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
+// score 69 (was 69): Material index/pointer and response cursor registers differ; both aligned loop entries are missing.
+// Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
+// direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
+// native current ancestry index 69; entry result/current index 67.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
@@ -792,6 +799,10 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 }
 
 /* sticks a projectile to what it hit */
+// score 72 (was 72): First positioning-call setup and later parent-type receiver differ; entry and child scan agree.
+// Native real fields 72; named flag stores 72; conditional seconds 73; entry seconds 128;
+// seconds-first product 72; direct maximum reads 72; direct definition reads 219;
+// native fields/conditional seconds 73.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)

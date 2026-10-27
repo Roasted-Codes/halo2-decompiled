@@ -323,6 +323,13 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // position 2; first lower coordinate with the product commuted 2; lower as a negated sum 2;
 // half-span as a division by two 2. The two reloads after the second texture reservation stay
 // swapped. All restored.
+// Complete resource outcomes (match-only; fast control 162): ready bool 162; ready byte 162.
+// ready short 162; ready long 162.
+// unavailable bool 162; unavailable byte 162.
+// unavailable short 162; unavailable long 162.
+// Current color/alpha frame: half-span parameter 162; parameter/byte alpha 166.
+// parameter/color pointer 349; parameter/value half-size 162.
+// All executable forms restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

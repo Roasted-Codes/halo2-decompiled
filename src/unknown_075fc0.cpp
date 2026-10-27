@@ -75,6 +75,8 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
 // native live flag/callback/both 441/439/432; direct counter product 419;
 // both/primary word concatenation 423/431; native both/primary concatenation 415/441.
 // Native both concatenation plain 415 at 1350/1369 bytes; products add a call and are restored.
+// Output name 415; counter name 415; paired output names 415; later channel 430;
+// flag test order 416; output declaration first 415 (fast).
 // Search direct returns/earlier result 415; indexed search fields and combinations 419; identity-first test 415. Return byte/short/long 421/409/414; common exit on current channel/counter graph 426. Six-point short gain excluded; original helper, result and exits restored.
 // Lane 9 r23: result as a volatile stack byte 419 (search, its jmp/found block and the result's
 // argument home follow retail); with `if (local_6 < 48) return` 406; store-only-where-retail

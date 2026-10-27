@@ -223,7 +223,11 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
     return true;
 }
 
-// score 20 (was 108): retail passes the marker flags to 0x26fbf0 as a 16-bit argument
+// score 20 (was 20): Flags promotion and marker-query/loop-entry scheduling remain; protected helper interface unchanged.
+// Alignment pointer snapshot 55; actor point snapshot 131; direct marker indexing 20;
+// selected marker memcpy 20; unsigned-word ordinal 111; long best index 76;
+// entry best sentinel 46; both vector observations 114.
+// retail passes the marker flags to 0x26fbf0 as a 16-bit argument
 // (`xor edx, edx; mov dx, [eax + 0x1c]`); declaring that parameter `word` gives 4 and keeps
 // 0x26fbf0 matched, but 0x26fbf0 is contributor code: BLOCKED-BY 0x26fbf0. The squared distance
 // through vector3d_from_points3d/length_sq3f 30; difference orders xzy/yzx/zxy/zyx 24/26/26/24;
@@ -327,9 +331,13 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
+// score 167 (was 199): entry and loop register allocation differ; single exit 167;
+// long best 199; long loop index 202; point names 199; vector helper 202;
+// single exit with long best 181.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {
+    bool result = false;
     s_actor_view *actor = actor_get(actor_index);
     s_transition_character *character = (s_transition_character *)function_1e4a50(actor->unknown054);
     if (character)
@@ -375,10 +383,10 @@ bool function_26f990(long actor_index, long object_index, real distance, s_objec
         {
             *out = markers[best];
             if (point) *point = best_point;
-            return true;
+            result = true;
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x270240
@@ -477,6 +485,9 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
+// score 299 (was 299): entry register convention and floating-point scheduling differ;
+// result first 299; surface first 299; vector names 299; vector helper 299;
+// case order 300; separate vector declarations 299.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,
