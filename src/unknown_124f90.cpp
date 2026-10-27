@@ -2817,6 +2817,9 @@ void function_129380(vector3f const *const *voice_values, vector3f const *const 
 // Clear helper/listener declaration/query test 3 each; accepted listener first 34;
 // shared playback flags/direct location flags 3 each; fading field 8; fading helper 3;
 // shared next-index helper 3; shared slot index 176.
+// Separate noinline and inline+noinline declarations 3 each; noinline replacing inline-depth 3;
+// long and unsigned-word curve declarations 3 each; fading-test local 3; byte-wide clear 3;
+// native listener store 3; per-iteration index 3.
 // @retail 0x128020
 void function_128020(void)
 {
