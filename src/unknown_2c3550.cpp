@@ -638,6 +638,9 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // paired with live pathfinding/shared scratch/both 777/763/812; complete receiver graph with word frame 810. Original source restored.
 // Radius from field or ternary, before/after path and long/bool success:
 // 766/773/764/774 and 744/773/740/775; original selection restored.
+// Round 354 recovered-frame graph: shared 3D/2D/both difference producers 711/711/711;
+// native signed-word frame alone/with 3D/with 2D/with both 709/709/709/709 (two-count gains dropped);
+// complete producer graph with Boolean success 750. Original complete body restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,

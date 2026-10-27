@@ -1659,6 +1659,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // combinations and full-width player slot on that graph 682/704/682/707/685/707/710/706. Best 682 gains only
 // two, frame 0x74 versus 0x80; all original vectors, observations, result widths, ordinal lifetimes and input
 // access restored.
+// Round 354: shared dot at absolute/relative/facing/absolute-relative/absolute-facing/relative-facing/all
+// scoring sites 684 each; all with native signed-word maximum 707. Original complete body restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {
