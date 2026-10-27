@@ -35,6 +35,13 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // copy 26, short-circuit probe result 224; private point-from-line helper 26 (258 inside the pragma,
 // which blocks even __forceinline); noinline probe declaration without the pragma 393. Short
 // category alone 234, with bool clear state 225.
+// Round 81 on that 20 body (plain): a centre-pointer copy in the first probe block and the side
+// vector 5 (1175 bytes; mode-1 x row still loads the centre x, z row now folds); also in the mode-1
+// rows 5; in the side vector only 26; in the mode-1 rows only 20; in the first block only 33; first
+// block and rows 33; side vector and rows 26; side vector as an aggregate 20; negated side j term 259;
+// per-row copies (x, z, x and z) on the 5 body 27/5/27; distance blocks through the copy 20/5.
+// Compile-only screens reproduce the folds: no read path, row order, declaration order, literal or
+// operand order makes the x row fold. All match-only forms restored.
 // Earlier 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
 // Word category 225; native clear state 170; direct origin 172; distance category 175; side workspace 175.
 // Native clear with direct origin 171, word category 234, short return result 178.

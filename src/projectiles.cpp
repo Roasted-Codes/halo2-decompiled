@@ -16,6 +16,10 @@ detonation. */
 #include <math.h>
 #include <string.h>
 
+#ifndef NUMBEROF
+#define NUMBEROF(array) (sizeof(array) / sizeof((array)[0]))
+#endif
+
 #ifndef PIN
 #define PIN(n,floor,ceiling) ((n)<(floor) ? (floor) : ((n)>(ceiling)?(ceiling):(n)))
 #endif
@@ -316,10 +320,11 @@ real function_fa7b0(long definition_index, real distance)
 bool __stdcall function_fd3c0(long projectile_index)
 {
 	s_projectile *projectile = PROJECTILE_GET(projectile_index);
+	dword *flags = (dword *)&projectile->flags;
 
 	projectile->unknown160 = 1.0f;
 	projectile->unknown158 = 1.0f;
-	*(dword *)&projectile->flags &= ~8;
+	*flags &= ~8;
 	function_b9a90(projectile_index);
 	return true;
 }
@@ -620,14 +625,14 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 	parameters->tag_index = NONE;
 	parameters->unknown18 = NONE;
 	parameters->object_index = NONE;
-	parameters->unknown34 = 0;
-	parameters->unknown38 = 0;
-	parameters->unknown3c = 0;
 	parameters->owner.unknown4 = NONE;
 	parameters->owner.unknown0 = NONE;
+	parameters->unknown34 = 0;
 	parameters->owner.unknown8 = NONE;
+	parameters->unknown38 = 0;
 	parameters->scale_a = 1.0f;
 	parameters->scale_b = 1.0f;
+	parameters->unknown3c = 0;
 	parameters->unknown30 = 0;
 	parameters->color_a = 0xff808080;
 	parameters->color_b = 0xff808080;
@@ -853,21 +858,20 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 266 (was 266): retail passes the time-scale pointer on the stack and takes only the
-// target (eax), origin (ecx) and direction (esi) in registers; ours also takes the time scale in
-// edx. Retail loads the gravity pointer into edx at entry and rounds the horizontal length to a
-// float before the gravity tests; ours loads the pointer into ebx and keeps the length on the
-// x87 stack, computing it after those tests. Tried: the high-arc flag or the time-scale pointer
-// read once through its address 266/269; horizontal tests with the constant first 266; the
-// horizontal length computed after the gravity value 266; the gravity operands swapped 266.
-// retail takes target/origin/direction in EAX/ECX/ESI and the time-scale pointer on
-// the stack (`ret 0x2c`); ours also takes it in EDX (retail's EDX holds the gravity pointer at entry and EDI
-// the distance output; ours keeps the forced-speed pointer in EDI). Retail evaluates the horizontal root in
-// the entry block and divides by two_a twice in x87; ours sinks the root below the gravity tests and
-// multiplies by one SSE reciprocal of two_a.
-// Tried: gravity product operands swapped 266; result flag declared first 275 (frame 0x30); optimal-time
-// root with a double -1.0 244 (no reciprocal, but a final qword multiply where retail loads a dword -1.0
-// first); t2 root without its float cast 266; horizontal through magnitude2d 272.
+// score 237 (was 266): retail passes the time-scale pointer on the stack and takes only the
+// target (eax), origin (ecx) and direction (esi) in registers (`ret 0x2c`); ours also takes the
+// time scale in edx. Retail loads the gravity pointer into edx at entry, keeps the distance output
+// in edi from entry (ours the forced-speed pointer) and rounds the horizontal length to a float
+// before the gravity tests; ours loads the pointer into ebx and keeps the length on the x87 stack,
+// computing it after those tests. Retail evaluates the horizontal root in the entry block and
+// divides by two_a twice in x87; ours multiplies by one SSE reciprocal of two_a.
+// Tried: the high-arc flag or the time-scale pointer read once through its address 266/269;
+// horizontal tests with the constant first 266; the horizontal length computed after the gravity
+// value 266; the gravity operands swapped 266; result flag declared first 275 (frame 0x30);
+// optimal-time root with a double -1.0 244 (a final qword multiply where retail loads a dword
+// -1.0 first); t2 root without its float cast 266; horizontal through magnitude2d 272; gravity
+// computed first 266; the forced-speed test as `if (!forced_speed)` first 237 (kept, 983 bytes);
+// with the forced speed as a ternary 266; delta.k after the gravity product 236.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -901,11 +905,7 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 
 		if (minimum_speed)
 			*minimum_speed = minimum_speed_value;
-		if (forced_speed)
-		{
-			chosen_speed = *forced_speed;
-		}
-		else
+		if (!forced_speed)
 		{
 			chosen_speed = speed;
 			if (time_scale && *time_scale > 0.0f)
@@ -917,6 +917,10 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 				if (speed > needed)
 					chosen_speed = needed;
 			}
+		}
+		else
+		{
+			chosen_speed = *forced_speed;
 		}
 
 		if (chosen_speed >= minimum_speed_value)
@@ -980,6 +984,12 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 
 /* aims a projectile of a definition at a target: along an arc for
    projectiles that fall, in a line otherwise */
+// score 34 (was 34): only the two call setups differ. 0xfa1a0 takes the time-scale pointer
+// in edx where retail pushes it, and the 0xfa580 call loads its pushed values through other
+// scratch registers (retail origin eax, speed ecx, direction edx before the pushes).
+// BLOCKED-BY 0xfa1a0 (its own body sets that convention). Tried in 0xfa1a0: gravity first,
+// forced-speed test inverted (0xfa1a0 237), forced speed as a ternary, delta.k after the
+// gravity product: 34 each; both arms here as an if/else with one return 34.
 // @retail 0xfa6a0
 bool function_fa6a0(long definition_index, real const *speed_override, point3f const *origin, point3f const *target,
 	real *unknown2, real const *unknown3, real const *unknown4, bool unknown5, vector3f *direction, real *speed_out,
@@ -1105,6 +1115,12 @@ long function_189fe0(s_sound_request const *request, long tag_index);
 
 /* the effects and sounds of an effects block (a material's response) at
    a point */
+// score 4 (was 19): only the register arguments of the 0xfd740 call differ (retail
+// passes the first sound in esi, the second effect in ecx, the second sound in edi
+// and the third effect in edx; ours ebx/edi/esi/edx), set by that callee's own body.
+// BLOCKED-BY 0xfd740. NUMBEROF loop bounds 17; parameter defaults in the effects
+// file's order 14; request filled in 0x1895f0's order 10; scale and audible bits
+// before the rest 4.
 // @retail 0xfcea0
 void function_fcea0(long effects_index, point3f const *point, vector3f const *direction,
 	s_effect_owner const *owner, long index, vector3f const *normal)
@@ -1118,7 +1134,7 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 	function_11bed0(&location, point);
 	function_fd740(point, effects, 0xf, index, &effect_indices[0], &sounds[0], &effect_indices[1], &sounds[1],
 		&effect_indices[2], &sounds[2]);
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < NUMBEROF(effect_indices); i++)
 	{
 		long effect_index = effect_indices[i];
 
@@ -1138,7 +1154,7 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 			effect_new_from_parameters(&parameters);
 		}
 	}
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < NUMBEROF(sounds); i++)
 	{
 		long sound_index = sounds[i];
 
@@ -1153,16 +1169,16 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 			position.location = location;
 			request.location.unknown02 = 0;
 			request.location.flags = 0;
-			request.location.scale = 1.0f;
 			request.location.spatial = position;
+			request.location.scale = 1.0f;
 			request.location.audible = 1;
 			request.location.requested_audible = 1;
 			request.location.unknown08 = 0;
-			request.platform_playback = NONE;
-			request.object_index = NONE;
-			request.source = NULL;
 			request.marker = NULL;
+			request.source = NULL;
 			request.variant = NULL;
+			request.object_index = NONE;
+			request.platform_playback = NONE;
 			function_189fe0(&request, sound_index);
 		}
 	}

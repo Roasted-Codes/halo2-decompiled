@@ -149,6 +149,10 @@ void function_2232a0(void)
 // DH round 189: Native equality-bound ordinals: short/word/byte do 201/201/167; short/word/byte
 // for 180/180/166; short/word while 180/180. Original signed clamp, ordinal, scan, initializer and
 // tail restored.
+// Round 81: count clamp as one ternary/with the mode test in the same ternary/if-else chain
+// 182/185/182; short count 153; long raw count 153 (fast). Compile-only screens of an inline count
+// helper (single or multiple returns), a pin helper and a layout helper taking the count: each still
+// threads the count-one edges past the layout test. All restored.
 // Round 7 (lane 10): count from a single-exit inline helper 182 (count 4 no longer threads, count 1
 // still does); helper with pretested for loop 183; if/else-if clamp in retail's branch order 182;
 // named view count (count + 1) after the loop 159; count arms swapped (clamp first) 151. All restored.

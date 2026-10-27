@@ -49,7 +49,8 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 215 (was 215): Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata/viewer/child homes differ.
+// score 215 (was 215): Frame 0x10 versus 0x14 and stacked activation versus AL remain (ours passes the location pointer
+// in ebx instead); metadata/viewer/child homes differ.
 // Earlier: Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
 // Frame 0x10/0x14, stacked activation versus AL and metadata/viewer/child homes remain.
 // Earlier 221 (was 221): Frame 0x10/0x14 and activation, metadata/viewer/child homes remain.
@@ -132,6 +133,19 @@ public:
 // Round 195: Queued-function inline/noinline/combined/forceinline declarations 215 each;
 // each with closed coordinate-double lifetime 215. Original boundary and body restored;
 // frame and activation/location transport remain.
+// Round 81: retail's child link is the existing 0x2483f0 inlined (salt from the element, ordinal from
+// the pointer difference); calling it keeps a call in this /Ob1 file: alone 303, with the entry
+// reordered as below 299, inline/forceinline declarations 299/299; field_4 read before the getter
+// call and the activation store after the position copy 251 (fast). A /Gd compile-only first
+// pass loads the location pointer once (so it becomes the register argument) and the activation
+// twice. All restored.
+// Round 81 lead (fast; all restored): a position pointer for the copy and the three loop-1 reads
+// gives retail's convention (bool in AL, location stacked; 274); with field_4 read before the getter
+// and the flag stored after the copy 277; plus a nested MAX for the fade combine 243; plus the loop
+// arm first 247; plus the fade default-first in 0x249bb0's shape 246 (aligned similarity 0.32 ->
+// 0.70). Left: our frame stays 0x10 because the position pointer folds into [edi+0x10] (retail keeps
+// it in ecx and spills field_4 to a fifth slot); then the child link (retail inlines 0x2483f0) and
+// the x87 cleanup after the square root.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
