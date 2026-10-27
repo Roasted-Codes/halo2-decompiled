@@ -2623,6 +2623,9 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Round 190: Existing copy/inverse/coefficient inline declarations singly, in three pairs and
+// together 530 each; all three separate noinline declarations 850. Original helper declarations and
+// body restored; frame 0x20c/0x200 and separate-sample boundaries remain.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
