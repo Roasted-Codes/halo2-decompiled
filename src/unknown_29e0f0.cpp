@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "unknown_2626b0.h"
 #include "unknown_20fe20.h"
+#include "slot_handler.h"
 #include <math.h>
 #include <string.h>
 // @flags /O2 /Ob1 /arch:SSE /Gr
@@ -32,9 +33,7 @@ struct s_29e0f8
     long field_4;
     short field_8;
     byte field_a[2];
-    point3f field_c;
-    short field_18;
-    byte field_1a[2];
+    s_type_c3b527 field_c;
 };
 struct s_29e0f9
 {
@@ -65,8 +64,8 @@ PRIVATE __forceinline void function_29e64d(s_29e0f8 *arg_0, point3f const *arg_1
 {
     arg_0->field_0 = NONE;
     arg_0->field_8 = NONE;
-    arg_0->field_c = *arg_1;
-    arg_0->field_18 = NONE;
+    arg_0->field_c.point = *arg_1;
+    arg_0->field_c.output_index = NONE;
     arg_0->field_4 = NONE;
     arg_0->field_2 = 0;
 }
@@ -231,30 +230,45 @@ struct s_29e730
 };
 struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long field_54; };
 
-// score 321 (was 332): retail's convention (request in EAX, `ret 0x1c`) now holds with 0x262a90 called out of line;
-// frame 0x118 versus 0x10c (retail shares the path vector's slot with the extra record and the
-// location), local slot order, and the location lookup (retail inlines 0x210850 here) remain.
-// Earlier: frame 0x114 versus 0x10c and stacked request versus EAX remain; metadata lifetimes tie, counter/flag forms regress, shared inline declarations tie.
-// primary index after vector 332; primary index before point 332; extra index before point 332; branch counter
-// result 356; extra flag native width 342; position helper inline 332.
-// Earlier: frame 0x114 versus 0x10c and request stack home remain.
-// Native request/actor/output references 332/332/332; separate extra point/index 333;
-// offset point setter 332; parent/source/origin field references 332/332/332.
-// frame 0x114 versus 0x10c and request convention remain; byte result 338;
-// long result 360; library fallback/output record copies 332/332; unsigned primary index 332;
-// inline out-of-line location declaration 392. Original body and shared declaration kept.
-// Round 212: Word path/extra states 364/350; signed-byte append ordinal 333; real counter field 332; fallback-point library copy 332. Frame, request convention and location expansion remain.
-// Round 214: unsigned-byte extra state 332; signed-byte extra state 332; signed-byte path state 338; unsigned-word append ordinal 332; successful exit before failure counter 332.
-// Kept: noinline 0x262a90 392, 6-path first with index reads at each use 333, 4-path index after its
-// lookup 321. Then: 6-path index before the offset point, reused in the extra record 320; path
+// score 52 (was 89): convention, frame, length and every path-block slot agree; the success-path copy
+// registers and the NONE constant (retail EDX, ours EBX, so the end section's last index takes DX and
+// its copy ESI/EDX for retail's BX and EDI/ESI), the 0x29db90 setup (retail stores the list pointer
+// before forming it again in ESI) and the failure counter's register rotation remain.
+// Earlier: primary index after vector 332; primary index before point 332; extra index before point
+// 332; branch counter result 356; extra flag native width 342; position helper inline 332; native
+// request/actor/output references 332/332/332; separate extra point/index 333; offset point setter
+// 332; parent/source/origin field references 332/332/332; byte result 338; long result 360; library
+// fallback/output record copies 332/332; unsigned primary index 332; inline out-of-line location
+// declaration 392; word path/extra states 364/350; signed-byte append ordinal 333; real counter field
+// 332; fallback-point library copy 332; unsigned-byte/signed-byte extra state 332/332; signed-byte
+// path state 338; unsigned-word append ordinal 332; successful exit before failure counter 332;
+// noinline 0x262a90 392 (kept); 6-path first with index reads at each use 333; 4-path index after its
+// lookup 321 (kept); 6-path index before the offset point, reused in the extra record 320; path
 // locals scoped with the location at the join 320; failure arm as the final else 320; field_10 test
-// inverted 320; the existing 0x210850 lookup called 360, with an inline redeclaration 360 (stays a
-// call); vector output in the extra record's point 307 (frame 0x10c; a reuse form, not kept).
-// Round 54: 0x262a90 is inlined here (retail calls it), which evicts the request from EBX and keeps it
-// on the stack: a noinline declaration of 0x262a90 gives retail's `ret 0x1c` (392); with the 6-path first
-// 370, plus output_index read at each use and the appended record written in full 333 (structural diff
-// 42 vs 135). No __stdcall 332; field-wise reference compare 357; output_index at each use 336; 6-path
-// first 346.
+// inverted 320; the existing 0x210850 lookup called 360, with an inline redeclaration 360; vector
+// output in the extra record's point 307 (frame 0x10c; a reuse form); no __stdcall 332; field-wise
+// reference compare 357; output_index at each use 336.
+// Round 93 kept: the location lookup in 0x210850's own two-copy shape 197; path temporaries declared
+// in each path's block 182 (frame 0x10c); the extra lookup's index from the path record and the
+// extra record's from the location record 161; REFERENCE_EQUAL against g_470fa0 97; the failure arm
+// without the goto, the end section guarded by the result 88;
+// 0x2702a0 given 0x262af0's point then facing (retail's stack slots; ours crossed them under casts) 89;
+// 0x210770 given the 0x2702a0 facing as input and its own output (retail's EBX/EDI; ours transformed
+// the path point into the facing, which then went to field_2c) 89.
+// Not kept: field_28 stored before field_14 (retail's order) -2; forceinline redeclaration of 0x210850
+// 362 (stays a call); both indexes from the location
+// record 200; separate offset-point local 113 (frame 0x118); extra record copied whole 95; location
+// index set before the offset point 294; index read into a local first 238; offset point in its own
+// local after the transform fix 91 (every block slot but the path point's now retail's; that one
+// takes a new slot, frame 0x118). Declaration order and names in the path blocks change nothing.
+// Round 96 kept: the path record's location as s_type_c3b527 (no casts) 87; the 6-path point in its own
+// block around its two lookups, the offset point separate, the location index before it 65; the
+// 0x262b40 call inside the 0x29db90 arguments and field_28 before field_14 59; the reference result
+// declared in each path's block 52.
+// Not kept: transform output declared first/last/at function scope 87/87/87; transform output into the
+// path point (cast) 86; offset through an inline add-scaled helper 87; shared function-scope path
+// temporaries 94; 4-path point in its own block 59 (no change); 0x29db90 list from the parameter 52,
+// result pointer local 56, short range local 57; end-section element written out at each use 76.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,
@@ -269,33 +283,35 @@ bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2
         local_2 = NONE;
     memset(arg_7, 0, sizeof(*arg_7));
     s_type_c3b527 local_3;
-    vector3f local_4;
-    point3f local_5;
     s_type_c3b527 local_6;
-    point3f local_7;
-    vector3f local_8;
-    point3f local_9;
-    s_262b40_result *local_10;
     if (arg_0->field_0 == 6)
     {
-        if (!function_262a90(arg_0->field_c, &local_5, &local_4)) goto local_20;
-        if (!function_2702a0(arg_1, 0xf000545, 0x5000049, 0x6000542, 0x400000c,
-            &local_5, &local_4, &local_9, NULL, &local_8, NULL)) goto local_20;
-        local_10 = function_262b40(arg_0->field_c);
-        if (!function_210770(((s_type_c3b527 *)local_10)->output_index, (vector3f *)&local_5, &local_8)) goto local_20;
+        vector3f local_4;
+        vector3f local_8;
+        point3f local_9;
+        {
+            point3f local_5;
+            if (!function_262a90(arg_0->field_c, &local_5, &local_4)) goto local_20;
+            if (!function_2702a0(arg_1, 0xf000545, 0x5000049, 0x6000542, 0x400000c,
+                &local_5, &local_4, &local_9, NULL, &local_8, NULL)) goto local_20;
+        }
+        s_262b40_result *local_10 = function_262b40(arg_0->field_c);
+        vector3f local_11;
+        if (!function_210770(((s_type_c3b527 *)local_10)->output_index, &local_8, &local_11)) goto local_20;
         if (!function_210690(((s_type_c3b527 *)local_10)->output_index, &local_9, &local_3.point)) goto local_20;
-        local_5.x = local_9.x + local_4.i * 1.5f;
-        local_5.y = local_9.y + local_4.j * 1.5f;
-        local_5.z = local_9.z + local_4.k * 1.5f;
         local_3.output_index = ((s_type_c3b527 *)local_10)->output_index;
+        point3f local_24;
+        local_24.x = local_9.x + local_4.i * 1.5f;
+        local_24.y = local_9.y + local_4.j * 1.5f;
+        local_24.z = local_9.z + local_4.k * 1.5f;
         if (arg_0->field_10)
         {
             arg_0->field_29 = true;
             arg_0->field_2c = local_8;
         }
-        else if (function_210690(((s_type_c3b527 *)local_10)->output_index, &local_5, &local_6.point))
+        else if (function_210690(((s_type_c3b527 *)local_10)->output_index, &local_24, &local_6.point))
         {
-            local_6.output_index = ((s_type_c3b527 *)local_10)->output_index;
+            local_6.output_index = local_3.output_index;
             local_0 = true;
         }
         goto local_21;
@@ -305,11 +321,15 @@ bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2
     {
         long local_12 = function_1e4990(local_1->field_54);
         if (!local_12 || (*(byte *)local_12 & 2)) goto local_20;
-        local_10 = function_262b40(arg_0->field_c);
+        s_262b40_result *local_10 = function_262b40(arg_0->field_c);
         if (!local_10 || !((byte)local_10->flags & 0x40)) goto local_20;
+        vector3f local_4;
+        point3f local_5;
+        vector3f local_8;
+        point3f local_9;
         if (!function_262af0(arg_0->field_c, &local_5, &local_8)) goto local_20;
         if (!function_2702a0(arg_1, 0x6000542, 0x400069d, 0x6000542, 0x400000c,
-            (point3f *)&local_8, (vector3f *)&local_5, &local_9, NULL, &local_4, NULL)) goto local_20;
+            &local_5, &local_8, &local_9, NULL, &local_4, NULL)) goto local_20;
         if (!function_210690(((s_type_c3b527 *)local_10)->output_index, &local_9, &local_3.point)) goto local_20;
         local_3.output_index = ((s_type_c3b527 *)local_10)->output_index;
         goto local_21;
@@ -318,18 +338,24 @@ local_20:
     local_3 = *arg_3;
     local_0 = false;
 local_21:
-    if (local_3.output_index == NONE || !function_2104b0(local_3.output_index, &local_3.point, &local_7))
+    point3f local_7;
+    if (local_3.output_index != NONE)
+    {
+        if (!function_2104b0(local_3.output_index, &local_3.point, &local_7))
+            local_7 = local_3.point;
+    }
+    else
         local_7 = local_3.point;
     arg_7->field_1c = *arg_2;
     arg_7->field_4 = local_3;
-    arg_7->field_14 = NONE;
     arg_7->field_28 = NONE;
+    arg_7->field_14 = NONE;
     arg_7->field_2e = false;
     arg_7->field_18 = 0.0f;
     bool local_13;
     if (function_29dd50(arg_2, &local_7, local_2, arg_6))
     {
-        *(s_type_c3b527 *)&arg_7->field_30[0].field_c = local_3;
+        arg_7->field_30[0].field_c = local_3;
         arg_7->field_30[0].field_0 = NONE;
         arg_7->field_30[0].field_4 = NONE;
         arg_7->field_30[0].field_8 = NONE;
@@ -339,30 +365,30 @@ local_21:
     }
     else
     {
-        s_reference local_14 = g_470fa0;
-        if (*(long *)&arg_4 == *(long *)&local_14 || (arg_4.unknown2 & 0x8000))
+        if (REFERENCE_EQUAL(arg_4, g_470fa0) || (arg_4.unknown2 & 0x8000))
         {
             local_13 = false;
-            goto local_22;
         }
-        s_29de21 local_15;
-        if (!arg_5)
+        else
         {
-            s_262b40_result *local_16 = function_262b40(arg_4);
-            arg_5 = &local_15;
-            local_15.field_b4 = 0;
-            function_29db90((s_29db90 *)&local_15, arg_4.unknown2, local_16->unknown10);
-        }
-        local_13 = function_29e0f0(arg_2, local_2, arg_4, arg_5, arg_7);
-        if (local_13 && arg_7->field_2c && arg_7->field_2d > 0)
-        {
-            arg_7->field_30[arg_7->field_2d - 1].field_0 = NONE;
-            *(s_type_c3b527 *)&arg_7->field_30[arg_7->field_2d - 1].field_c = local_3;
-            arg_7->field_30[arg_7->field_2d - 1].field_4 = NONE;
-            arg_7->field_30[arg_7->field_2d - 1].field_8 = NONE;
+            s_29de21 local_15;
+            if (!arg_5)
+            {
+                arg_5 = &local_15;
+                local_15.field_b4 = 0;
+                function_29db90((s_29db90 *)&local_15, arg_4.unknown2, function_262b40(arg_4)->unknown10);
+            }
+            local_13 = function_29e0f0(arg_2, local_2, arg_4, arg_5, arg_7);
+            if (local_13 && arg_7->field_2c && arg_7->field_2d > 0)
+            {
+                arg_7->field_30[arg_7->field_2d - 1].field_0 = NONE;
+                arg_7->field_30[arg_7->field_2d - 1].field_c = local_3;
+                arg_7->field_30[arg_7->field_2d - 1].field_4 = NONE;
+                arg_7->field_30[arg_7->field_2d - 1].field_8 = NONE;
+            }
         }
     }
-    if (arg_7->field_2c && local_0)
+    if (local_13 && arg_7->field_2c && local_0)
     {
         short local_18 = arg_7->field_2d - 1;
         if (arg_7->field_2d < 4)
@@ -372,14 +398,12 @@ local_21:
         }
         else arg_7->field_2c = false;
         s_29e0f8 *local_19 = &arg_7->field_30[local_18];
-        local_19->field_c = local_6.point;
+        local_19->field_c = local_6;
         local_19->field_0 = NONE;
         local_19->field_8 = NONE;
-        local_19->field_18 = local_6.output_index;
         local_19->field_4 = NONE;
         local_19->field_2 = 0;
     }
-local_22:
     arg_7->field_0 = local_13;
     if (!local_13)
     {

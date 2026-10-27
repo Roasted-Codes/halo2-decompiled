@@ -339,6 +339,12 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 }
 
 // score 249 (was 249): Frame 0xb8 versus 0xb4; cache/steering/estimate/inverse homes and staged stores remain.
+// Round 138: the extra frame dword is the attraction delta: as a member of the escaped
+// steering record its scaled values are stored back and never read (retail keeps them in
+// registers), and ours shares two float homes retail keeps apart. Delta as its own local
+// in its block/before/after the record 301/301/301; delta and previous both outside 281;
+// the existing squared-length helper for the attraction/clamp/velocity sums 280/282/294,
+// all three 294.
 // component loops: velocity plus change 248; velocity plus previous 288;
 // attraction addition 280; change scale 269; maximum-change scale 269.
 // Shared inverse 249; shared squared length 277; both carriers 276; unsigned handle 249; attraction scale loop 269.
@@ -362,6 +368,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // Round 350: independent cache validity/system/emitter/particle 408/330/340/354;
 // three contexts 377; validity+particle 412; complete native cache 425;
 // complete native cache with independent steering 435. Frame 0xb8/0xb4 and estimate/inverse homes remain.
+// Round 250: Ordinary inline reciprocal/estimate/both/scale/reciprocal+scale/estimate+scale/all
+// 440/249/440/249/440/249/440; all with external inline linkage 440. Reciprocal metadata loses four
+// reduced sibling controls; every helper contract restored. Frame 0xb8/0xb4 and
+// estimate/reciprocal/cache homes remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

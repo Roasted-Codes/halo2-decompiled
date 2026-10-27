@@ -215,6 +215,11 @@ struct s_physics_component_walk : s_havok_component
 };
 
 // score 275 (was 275): Frame 0x1c versus 0x18; current/entry/status homes and next-group spill remain.
+// In the body loop retail keeps the policy byte at frame 2 and the availability byte at 3
+// (available in dl on the replacement path, reloaded from its byte otherwise; replaced in cl);
+// ours swaps the two bytes and keeps available in memory, replaced in dl. Round 57: availability
+// named to sort after the policy, the policy named to sort first, both: 275 each (same layout);
+// available declared before replaced 303 (898 bytes); both flags declared before the body lookup 300.
 // Earlier: frame 0x1c versus 0x18; current/entry roles and next-group spill differ.
 // Reduced trials: availability first 303; immutable policy 275; read-only model 275; read-only body 275;
 // native availability 297; native application 305; byte first body 298; read-only sections 275.
@@ -261,6 +266,10 @@ struct s_physics_component_walk : s_havok_component
 // observations restored.
 // Round 350: shared entry-bit test, visited-bit set, neighbor-bit test and all combinations
 // 275 each; complete shared bits with direct receiver 275. Frame/status/group spill unchanged.
+// Round 96: replace flag renamed to sort first 275 (slots unchanged); next-group count/body through the
+// current-style ternary 307; the file's section-test helper for the first query 283; first body as
+// if/else or ternary 300/300 (frame 0x18 and retail's untreaded next test, but current lands in EDX).
+// Retail stores -1 in a separate block and re-tests next, so it recomputes the group where ours spills it.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

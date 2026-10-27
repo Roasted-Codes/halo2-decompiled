@@ -86,9 +86,41 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // balance bool/byte 458/458; paired bool/byte 476/476. All eight widths restored.
 // Complementary waiting carrier signed byte/byte 439/439, short/word 450/450, long/dword 454/454; paired
 // waiting/final short 450, paired long 443. All restored.
+// Round 187 advance result carried through roster/count/member-readiness test outcomes,
+// each nonempty combination 459; full combination with native reset byte 465.
+// Exact-match-only decision forms; all restored to the complementary waiting graph.
+// Existing lookup/ratings/transition inline declarations, all three pairs and all three
+// 439 each; all three noinline declarations 439. Original declarations and body restored.
 // Consistent live primary/secondary/both/owner receivers 462/463/468/470; primary,
 // secondary or both with live owner 461/456/466; all with direct state tests 466.
 // All restored; three combined forms report reduced-image callee caveats.
+// retail length; frame 1000 versus 996, result byte home and second state/getter
+// handling differ. Retail calls 0x5b080 (ours expands it), expands the elapsed-time helpers 0x75870/
+// 0x75890 (the start time is loaded before the clock is read), stores each session state to the stack
+// before the early exits, and keeps a ready byte at [esp+0x11] (from the player match, cleared by each
+// failed check, later from 0x72140) and the reset flag as a byte at [esp+0x12].
+// Refreshed first balance inputs 454; fallback balance inputs 466; both phases 513; native state-value
+// getter 449; final transition-result union 449; output-scalar lifetime 449; type/first-state/
+// second-state scopes 449; inline depth one 449; the five settings read into one-use locals first 443
+// (not kept: the locals only fix the argument order); existing property setter 475; selected value
+// result 451; unsigned reset/balance 449/449; balance test outcomes 449; readiness at outcome 450;
+// reset at outcome 481; unsigned found count 449; ratings count, group-size cursor, player-rating
+// cursor, combined ratings inputs, readiness-output lifetime, native identifier, paired outputs and
+// combined inputs/outputs all 449; player scan while 449; assignment while 449; paired counted whiles
+// 449; capacity admission scopes 449; roster admission stages 449; countdown expression homes 449;
+// valid input work scope 449; future deadline first 449; native producer ratings type 449; signed
+// reset/balance/both decision bytes 464/461/483; signed transition/advance bytes 468/449; native
+// property clear 454; native ratings plus reset byte 464; complemented final/reset/both decisions
+// 489/467/489; waiting transition decision 439 kept; with complemented final/reset/both 492/469/498;
+// complemented balance 446; on the waiting transition graph reset bool/byte 469/469, short/word
+// 442/442, balance bool/byte 458/458, paired bool/byte 476/476; complementary waiting carrier signed
+// byte/byte 439/439, short/word 450/450, long/dword 454/454; paired waiting/final short 450, paired
+// long 443.
+// Round 93: noinline class declaration of 0x5b080 467 (frame 0x3e4; entry registers move); the state
+// tests as switches 470 (range compares); the three time reads through file-local inline copies of
+// 0x75870/0x75890 (as network_session_membership.cpp has them) 448 (start time loaded first, as
+// retail); those with the noinline getter 486 (entry registers and frame now retail's, 1549 bytes);
+// plus the reset flag as bool 495.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

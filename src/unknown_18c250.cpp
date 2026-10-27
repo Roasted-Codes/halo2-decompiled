@@ -572,6 +572,10 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // 325/293/324/293; with direct late tag observation 345/323/343/323. Original helper and body restored.
 // Staged failure bool/byte/short/long 323/323/327/327; staged success 265/265/325/322 (match-only, restored);
 // complete conditional failure/success 309/309/307/308/293/293/293/293. All restored.
+// Round 96: BLOCKED-BY 0xba300: retail passes it the location in EAX and the object in ECX; ours passes the
+// location in ESI, so ESI cannot hold the datum and the definition pointer spills (frame 0x84). Without
+// that call (diagnostic) the frame is 0x80 with retail's ESI datum / EBP definition. Failure byte in a
+// function-scope char shared with the audibility output 293; address-taken failure flag 293.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
