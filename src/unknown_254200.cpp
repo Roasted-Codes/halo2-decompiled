@@ -188,21 +188,22 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): Frame 0x14 versus 0x10; native color and reservation homes remain.
-// Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
-// Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
-// Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control
-// 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
+// score 153 (was 153): frame 0x14 versus 0x10 (our color struct copy, made before 0x1cf50, where retail
+// keeps 0x13927e's result in EDI and reads it in the color call after Begin); the half-size texture
+// coordinates (computed before the third reservation, retail after it) and the alpha byte remain.
+// Round 60 lead: the result as a pointer read in the color call 349 alone (frame 0x10); with the
+// half-size values written as expressions in the four texture-coordinate calls 28; plus a byte alpha
+// 18 (2252 bytes; left: retail loads y and adds the offset in the offset quad's third and fourth
+// vertices where ours copies the offset and folds the y load, and one reload order). Not kept without
+// a match (computed values written at each use); same-length variants: swapped y operands 18, plain
+// real offset 18, D3DDevice:: wrapper for the offset quad 18; a 600 s permuter run, none below 18.
+// Earlier trials (scores at their time, frames 0x10/0x14):
+// Fast control 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
 // color/both 246 each; alpha with edges 322; native color reference 276; color copies after
 // Begin/commit 293/311.
-// frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
-// Frame 0x14 versus 0x10; coordinate spills and first reservation scheduling remain.
-// Earlier 237 (was 276): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
-// frame 0x14 versus 0x10; color/coordinate spills and reservation scheduling remain.
 // Native color value 246 fast / 237 plain; value half-size 276; replicated alpha 349;
 // alpha after clear 265; second coordinate C entry 403; color with later alpha 252;
 // memcpy color 246. Only the native color value is kept.
-// Previously 276 (was 342): frame 0x10 agreed; texture-factor homes and reservation scheduling differed.
 // Value half-size 342; disabled-path return 342; C begin/vertex calls 561;
 // C texture-state calls 455; role-named texture coordinates 342.
 // First-quad scope 342; texture expressions at calls 386; C++ color entry 342;
