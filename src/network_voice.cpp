@@ -1256,6 +1256,10 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Counted traversal with immutable channels/player/both 112 each; pointer traversal
 // with the same forms 283 each; counted immutable identity/source 112/112.
 // Counted forms lose 0x54990; pointer forms preserve it. Original body restored.
+// Every unrolled form keeps the identity flag in bl where retail keeps it in al, so the channels
+// pointer moves to ebp and its argument to the stack. Counted loop 112; named channel size 112;
+// pointer walk 111, with the identity compared in its declaration 111; per-channel size helper 184.
+// Do/while forms (pre-increment too) and short counters stay rolled.
 // Round 188 separate successful total: rolled/counted/unsigned result/unsigned total/
 // retained entry width/admission/split adds/pre-tested walk 281/112/112/112/165/112/112/112;
 // expanded caller conventions checked separately; original accumulation restored.
@@ -2044,6 +2048,11 @@ local_0:
 
 /* whether two players may hear each other in team voice: on the same team,
    or always outside it */
+// score 15 (was 15): retail places the early true exit between the shared-team true exit and
+// the false exit; ours places it last. Early test as an else arm 15; one final true return
+// (pushes move to entry) 49; false guards with a final true return 15; split availability and
+// mode returns 61 (availability exit lands between, as in retail, but the mode exit goes
+// inline); mode getter test 61.
 // @retail 0x57b60
 long voice_players_share_team(long other, long player)
 {
@@ -2092,6 +2101,10 @@ long voice_players_share_team(long other, long player)
 // enclosing mask with live mode 54; signed live mask 34; rejection to sole exit 34; enclosing exit 54.
 // Accepted-boundary mask zero with signed equalities/range 56/125; unsigned 56/125;
 // complete-query mask with signed equalities/range 47/51; unsigned 47/51. Shared getter retained.
+// Global test with the mode named inside before/after the mask 56/56 (exact in a one-file link where
+// the session lookup may write memory, BLOCKED-BY 0x59670: our link proves it writes only the
+// caller's local, so the mode is not split); getter test with the mode named inside 46;
+// mode named before the test with the mask inside 56; mask declared after the membership lookup 55.
 // Round 136: defining-unit inline membership/players/both 25,25,25;
 // with separate noinline 25,25,25; mode force-inline alone/with both outlined queries 25,25.
 // @retail 0x56c60
