@@ -2625,6 +2625,9 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Round 190: Existing copy/inverse/coefficient inline declarations singly, in three pairs and
+// together 530 each; all three separate noinline declarations 850. Original helper declarations and
+// body restored; frame 0x20c/0x200 and separate-sample boundaries remain.
 // Direct cache-hit completion and found-byte break, each with long/bool success and original/positive
 // eligibility results, 554/549/554/549 each. Original exhaustive scan and body restored.
 // @retail 0x23690
@@ -2762,6 +2765,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
+// Native tag block/bitmap records separately/together, their read-only receivers and
+// complete tag/bitmap observations at use: eight forms 334 each. Original receivers restored.
 // Complete alpha parameter results, ternary/else-if/independent clamps 353 each; native rectangle
 // field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
 // @retail 0x29b00

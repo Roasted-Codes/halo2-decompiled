@@ -185,6 +185,12 @@ union s_185be7
 // Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
 // clear-first/set-first results with bool 1002/982, with long 1005/985;
 // named selected-mask result bool/long 947/944. Original Boolean helper input retained.
+// Round 221: recovered-frame settings/scalar/workspace names and active declarations,
+// eight forms 947 each; cached/state-live/settings-live/both roots with native names
+// 947/985/1004/1036/947/985/1004/1036. Original observations and body restored.
+// Consistent parent-control pointer snapshots with original/native entry addresses,
+// mutable/const pointers and either pre-clear acquisition order 947 each (eight forms).
+// Original root observations, entry calculation, helpers and complete body restored.
 // Ordinary inline clamp/flag/both 947/947/947; state predicate alone and all
 // combinations plus all-private inline producers 968 each. Original force-inline helpers and body restored.
 // @retail 0x185be0

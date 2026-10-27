@@ -59,6 +59,11 @@ real function_30bf0(vector3f *vector);
 // Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
 // Native ray/fallback/both component loops with long ordinals 218/217/217; dword 218/217/217;
 // both with short/byte ordinals 244/244. Original body restored; selector and pending homes remain.
+// Round 246: direction seed/color seed/direction publication library-copy combinations,
+// seven at 213; all three plus every whole-color replacement 213. Original copies restored.
+// Round 191: Blend/pack/collision ordinary-inline declarations, singly, all pairs
+// and together, each 213; all three separate noinline declarations 213.
+// Original declarations, count qualification and executable body restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1310,6 +1315,9 @@ real function_30bf0(vector3f *vector);
 // Round 158: Genuine length-only primary/secondary scale factors produced independently or jointly at entry,
 // after decoding, fallback admission and rotation admission. Scores [544, 525, 543, 515, 503, 485, 482,
 // 499]. Original executable body restored.
+// Round 184: direct-field normal initializer 473; early normal snapshot/native initializer
+// 488/507; native query vector view 364; view with shared snapshot/direct reads/library copy
+// 488/364/364; early normal plus direct magnitude reads 517. Original observations restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

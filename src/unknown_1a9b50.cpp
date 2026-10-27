@@ -461,6 +461,9 @@ extern point2f *g_468778;
 // Native memcpy for the facing-test planar initializer 384; with request, actor
 // fallback, both, constant fallback, request/constant, both fallbacks and all
 // three request transfers 384 each. Original planar transfers restored.
+// Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
+// all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
+// Exact-only grouping forms restored; actor/settings/prop carriers remain.
 // Round 341: Successive vector-length storage before prediction, target velocity receiver and actor-first graphs 379/413/394/435; after prediction 379/413/395/437. Original body restored.
 // Round 235: Scaled-displacement producers (O original scalar, H shared scale
 // output, V native velocity value scaled in place), primary/secondary:
@@ -476,6 +479,9 @@ extern point2f *g_468778;
 // Round 158: Complete facing/alignment/prediction product operands commuted independently, in pairs, all
 // three, then with both full prediction producers. Scores [375, 375, 375, 375, 375, 375, 375, 375]. Original
 // executable body restored.
+// Round 184: native admission/active/request byte fields, all seven nonempty
+// groups, and the unsigned bounded request discriminator 375 each. Original
+// Boolean fields, output-pointer contracts and request discriminator restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -694,12 +700,12 @@ static __forceinline long real_to_long(real value);
 // Entry/eligibility/final-approach/deadline Boolean reductions 506/493/407/440;
 // all mode reductions 510; entry plus modes 477; early test-derived eligibility
 // on the native velocity receiver 393; entry reduction plus that result 505.
-// Existing squared-length helper 384; uniform projection products 480; both 460;
-// all prediction products 386; helper/prediction 384; projection/prediction 480;
-// all producers 460; all with target velocity receiver 456. Original restored.
 // Round 177: Shared dot at alignment/backward prediction/both/approach/alignment+approach/
 // backward+approach/all three, then all with opposite helper inputs: 386 each. Exact-only
 // grouping forms restored; early rejection and magnitude/query homes remain.
+// Existing squared-length helper 384; uniform projection products 480; both 460;
+// all prediction products 386; helper/prediction 384; projection/prediction 480;
+// all producers 460; all with target velocity receiver 456. Original restored.
 // Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
