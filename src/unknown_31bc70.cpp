@@ -21,12 +21,20 @@ void query_31bc80::function_31bc80(bool *result) const
 	*result = true;
 }
 
-// score 36 (was 44): the early zero stores, copy address and count stores
+// score 36 (was 36): the early zero stores, copy address and count stores
 // differ. Direct stores 44; field count 95; copy pointer 46; size add order 44;
 // postfix point count 44; field decrement 74; zero list 36; map byte 44;
 // element memcpy 44; loop names 44; decrement in test 44; map while 76;
 // shared counter 44; zero before count 36; compound subtract 44; old count 74;
 // int counters 44; four zeros 44; memset 37; constant new count 79.
+// Pair predicate 36; full branch sizes 98; source ordinal 96, with full
+// sizes 100; source cursor 133, with full sizes 122. All restored.
+// Repeated id-array pointer/reference, const or mutable, 36; those views
+// with value-initialized sizes 86. Initial byte-slot pointer/reference
+// with zeros before/after the count 86. Early zero carrier still differs.
+// Named pair predicate 36; complete branch sizes 98; source ordinal 96, with predicate 96;
+// source cursor 133, with predicate 133; source ordinal/cursor with branch sizes 100/122.
+// All restored; early zero/count stores and copy-address allocation remain.
 // @retail 0x31bc90
 void lane_b_contact_constraint_prefix::remove(unsigned short id)
 {

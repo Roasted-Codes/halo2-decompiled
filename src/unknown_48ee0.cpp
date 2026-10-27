@@ -67,8 +67,13 @@ extern real g_4c9798[36];
 // real shared pixel area 321/326/321; joint input home names without/with area 316/321. Frame
 // 0x20/0x28, state/matrix and protected rounding homes remain. Original executable source, every
 // float tree and accepted far-normal copy restored.
+// Round 96: retail takes the camera-like record (read at +8/+0x64/+0x28) in ECX and keeps the source
+// record (origin +0, direction +0x28) in EBX across the calls; ours takes the first in EAX and leaves the
+// second on the stack. The two pointer parameters were named crossed against both callers (kept: now
+// swapped, data flow as retail, 295). Direction/origin fields read at each use 328; tag test as a
+// one-case switch 295; origin/direction references at entry 300.
 // @retail 0x48ee0
-void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
+void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
     real aspect = (real)sqrt(*(real const *)(state + 8));
     real distance = *(real const *)(state + 0x64);

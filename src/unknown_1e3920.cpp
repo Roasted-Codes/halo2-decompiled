@@ -572,6 +572,10 @@ real function_267370(long volatile object_index);
 // Round 176: Shifted held bit on the retained first-cross graph 319 fast/272 plain;
 // complete inverse bool/byte/short/long 319 each; staged inverse bool/byte/short
 // 368/368/388 (fast control 371). Missing frame dword persists; all forms restored.
+// Round 250: Entry receiver declarations, ordinal/type declarations, marker/point/predicate
+// declarations, each paired group, all groups, and all groups with phase-role names: 273 each. Every
+// value birth and original phase declaration restored. Frame 0x8c/0x90, early NONE and held-direction
+// byte home remain.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -781,6 +785,9 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // Previous timestamp 17; event unit 17; both 17; recent timestamp test 17; snapshot recent test 17;
 // early event unit 98; early unit and timestamp 98; complete interval predicate 22.
+// Shared actor offset 67; amount actor offset 17; amount pool record 17;
+// delayed actor formation 241; prop-view getter 17; amount snapshot 17;
+// actor-index snapshot 17; amount parameter pointer 17.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -1647,6 +1654,10 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
 // Scalar-home names for probability, fraction, delay, ticks, minimum and loop index,
 // plus both grouped renames: 270 each.
+// Round 250: Conditional-result query record inputs: current/secondary/both/both const 270/270/270/270;
+// both with long slots mutable/const 293/293; both with signed-byte slots mutable/const 268/268 (fast
+// control 270). Two-point gain rejected; original scalar-index inputs and short slots restored. Frame
+// 0x14 agrees; index/pool roles and scalar/ammunition homes remain.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

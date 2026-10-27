@@ -591,19 +591,25 @@ static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_refere
     return false;
 }
 
-// score 24 (was 24): the g_4e7414 increment goes through esi and is stored
-// after the pushes (retail: ecx, stored at once); the record/iterator reloads
-// after each first-object call are swapped; the second inlined distance test
-// computes dz, dx, dy in retail (dz, dy, dx here). Tried: second inline copy
-// with dz,dx,dy or dy,dx,dz or a vector3f delta (no gain); count = 0 just
-// before the loop (205); a goto to a shared exit instead of the early returns
-// (196: count lived in esi and the empty exit got its own epilogue);
-// post-increment counter 24; while loops 24; cluster list declared first 24;
-// iterators passed without references 24 (kept). A one-expression sum runs in
-// reverse order of the deltas' definitions: a second test defining dy, dx, dz
-// gives retail's dz, dx, dy order but swaps the x/y registers (24); retail keeps
-// x, y, z in xmm1, xmm2, xmm3 in both tests, so its second test defines x, y, z
-// and accumulates the squares z, x, y.
+// score 20 (was 24): the g_4e7414 increment goes through esi and is stored
+// after the pushes (retail: ecx, stored at once, as matched 0x1cac60 and
+// 0x180b60 do with the same statements); the second inlined distance test
+// computes dz, dx, dy in retail (dz, dy, dx here). Each walk now declares its
+// own record and the iterators sit at the cluster-loop scope, which gives
+// retail's slots and record-first reloads (24 -> 20) without the old layout
+// struct. Tried: second inline copy with dz,dx,dy or dy,dx,dz or a vector3f
+// delta (no gain); count = 0 just before the loop (205); a goto to a shared
+// exit instead of the early returns (196: count lived in esi and the empty
+// exit got its own epilogue); post-increment counter 24; while loops 24;
+// cluster list declared first 24; iterators passed without references 24.
+// A one-expression sum runs in reverse order of the deltas' definitions.
+// The test through vector3d_from_points3d + length_sq3f makes the two
+// inlined copies differ: single exit gives retail's second copy but a y, x, z
+// first copy (29); early returns swap retail's two shapes; while loops give
+// the first shape twice; sum order, parameter order, local scopes, dot3f,
+// named squared length, center pointer and early-out tests change nothing
+// else (compile-only screens). Flag-first, plain globals, defaults and
+// clamp spellings leave the increment late.
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
@@ -634,14 +640,15 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
     for (short i = 0; i < cluster_count; ++i)
     {
         short cluster = clusters[i];
-        struct search_slots { s_object_cluster_reference *record; s_object_cluster_iterator second, first; } search;
+        s_object_cluster_iterator colliding_iterator;
+        s_object_cluster_iterator noncolliding_iterator;
         if (mask & 1)
         {
-            search.record = 0;
-            for (long object = function_b8940(cluster, &search.record, &search.first); object != NONE;
-                 object = object_cluster_next_ab((s_record_pool *)g_4de2e4, &search.first, &search.record))
+            s_object_cluster_reference *record = 0;
+            for (long object = function_b8940(cluster, &record, &colliding_iterator); object != NONE;
+                 object = object_cluster_next_ab((s_record_pool *)g_4de2e4, &colliding_iterator, &record))
             {
-                if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
+                if (cluster_sphere_accept_ab(object, record, type_mask, position, radius))
                 {
                     if (count >= maximum_count)
                     {
@@ -655,11 +662,11 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
         }
         if (mask & 2)
         {
-            search.record = 0;
-            for (long object = function_b8a10(cluster, &search.record, &search.second); object != NONE;
-                 object = object_cluster_next_ab((s_record_pool *)g_4de2d8, &search.second, &search.record))
+            s_object_cluster_reference *record = 0;
+            for (long object = function_b8a10(cluster, &record, &noncolliding_iterator); object != NONE;
+                 object = object_cluster_next_ab((s_record_pool *)g_4de2d8, &noncolliding_iterator, &record))
             {
-                if (cluster_sphere_accept_ab(object, search.record, type_mask, position, radius))
+                if (cluster_sphere_accept_ab(object, record, type_mask, position, radius))
                 {
                     if (count >= maximum_count)
                     {
@@ -682,46 +689,55 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
 struct s_16760c_render_model;
 bool __stdcall function_bab40(long object_index, long name, real *value);
 
-// score 61 (was 61): frame 0x2c against retail's 0x38. Retail keeps the value at 0x0, the
-// conversion temporary at 0x4 (not shared with the animation id copy at 0x8), 8 untouched
-// 8-aligned bytes at 0xc, the index in a 2-byte home at 0x14 (word stores) and the channel at
-// 0x18. Round 54: float fmod overload 60 (the x87 chain matches; below threshold); with the
-// animation id at function scope 60; counted for loop with the graph fetched in the condition
-// 169; value at function scope 60; double fmod result 60; named double time product 61.
+/* a walk over the graph's block at +0x44 (the shape of the block +0x3c
+   iterator s_graph_iterator3c): the current element's animation, the name
+   its value is read under and how that value is applied */
+struct s_graph_iterator44
+{
+	c_type_709360 animation_id;
+	long value_name;
+	short kind;
+	short index;
+	short next_index;
+};
+
+/* samples each animation of the state's graph block +0x44 into the
+   orientations, positioned by an object value or by the game time */
 // @retail 0xbd970 standard
 void __stdcall function_bd970(long object_index, s_16760c_render_model *render_model, s_animation_state *state, long node_mask, long node_count, byte *orientations)
 {
-    short index = NONE;
+    s_graph_iterator44 iterator;
+    iterator.next_index = NONE;
     c_animation_channel channel;
     for (;;)
     {
         s_graph_tag *graph = graph_tag_get(state->graph_tag_index);
-        short next = index + 1;
-        if (next >= graph->unknown44_count)
+        short index = iterator.next_index + 1;
+        if (index >= graph->unknown44_count)
             break;
-        index = next;
+        iterator.next_index = index;
         s_graph_element44 *entry = &graph->unknown44[index];
-        c_type_709360 animation_id = entry->animation_id;
-        long name = *(long *)(entry->unknown08 + 4);
-        short kind = *(short *)(entry->unknown08 + 2);
-        if (animation_id.index != NONE)
-            function_1dd9d0(graph, animation_id);
-        if (name && state->graph_tag_index != NONE &&
-            channel_start_out_of_line(state, &channel, animation_id, NONE, NONE, NONE, NONE, 0x7f))
+        iterator.animation_id = entry->animation_id;
+        iterator.value_name = *(long *)(entry->unknown08 + 4);
+        iterator.kind = *(short *)(entry->unknown08 + 2);
+        if (iterator.animation_id.index != NONE)
+            function_1dd9d0(graph, iterator.animation_id);
+        if (iterator.value_name && state->graph_tag_index != NONE &&
+            channel_start_out_of_line(state, &channel, iterator.animation_id, NONE, NONE, NONE, NONE, 0x7f))
         {
             s_animation *animation = 0;
             if (channel.animation_id.index != NONE)
                 animation = function_1daea0(graph_tag_get(channel.graph_tag_index), channel.animation_id);
             real value;
-            function_bab40(object_index, name, &value);
-            if (kind == 0)
+            function_bab40(object_index, iterator.value_name, &value);
+            if (iterator.kind == 0)
             {
                 channel.set_frame_position((animation->frame_count - 1) * value);
                 channel.sample(1.0f, (dword const *)node_mask, node_count, (real_quaternion_transform *)orientations);
             }
-            else if (kind == 1)
+            else if (iterator.kind == 1)
             {
-                real frame = (real)fmod((double)((dword)(g_510c54->game_time + object_index)) * g_510c54->rate * 0.03333333507180214f, (double)animation->frame_count);
+                real frame = fmod((real)(dword)(g_510c54->game_time + object_index) * g_510c54->rate * 0.03333333507180214f, (real)animation->frame_count);
                 channel.set_frame_position(frame);
                 channel.sample(value, (dword const *)node_mask, node_count, (real_quaternion_transform *)orientations);
             }
@@ -1110,22 +1126,31 @@ void __stdcall function_1421f0(transform4x3f *out, rigid_transform_scaled const 
 bool function_a98b0(long index, vector3f *position);
 bool function_a9940(long index, vector3f *up, vector3f *forward);
 
-// score 239 (was 271): retail is 11 bytes longer. Left: retail rematerialises the sample-mask
-// address after 0xbfed0, keeps the component in EDI (table base in EBP), tests the node count
-// for > 0 before the node loop (no loop-head pad), and re-reads the object table's data pointer
-// for the parent in the no-render-model branch. Round 54: the existing flag setter 0xbfe20
-// called (retail's call) 305 positional / closer aligned; 0xbfe80/0xbfed0 inline with separate
-// noinline declarations 304; model lookup without the null test 363; component flag read as a
-// word 239 kept (all four together); 0xa9940's outputs in retail's order 239 kept; sample mask
-// assigned between the mask calls 251; sample mask assigned first and passed to the copies 215
-// (new frame slot shifts the whole frame; rejected); component address spellings 239/239.
+// score 234 (was 239): retail is 11 bytes longer. Left: retail sets the sample-mask
+// address in esi again after 0xbfed0 (which never writes esi), tests the node count for
+// > 0 before the node loop from 1 (no loop-head pad), and in the no-model branch keeps
+// the object table pointer in ecx and re-reads its data pointer (parent index in esi)
+// where ours reuses edi. Round 54: the existing flag setter 0xbfe20 called (retail's
+// call) 305 positional / closer aligned; 0xbfe80/0xbfed0 inline with separate noinline
+// declarations 304; model lookup without the null test 363; component flag read as a
+// word 239 kept (all four together); 0xa9940's outputs in retail's order 239 kept;
+// sample mask assigned between the mask calls 251; sample mask assigned first and passed
+// to the copies 215 (new frame slot shifts the whole frame; rejected); component address
+// spellings 239/239. Round 138: the tag table read at each use instead of a local with a
+// hand reload after the component call 234 kept (fixes the component/table edi/ebp
+// roles); an explicit count > 0 guard around the node loop 233 (the loop then matches,
+// but it repeats the loop's test: not kept); the no-model branch through the existing
+// 0xb8bd0 241 (stays a call); amount before component 278; component in the call 278;
+// mask address as the storage struct 239; a function-local static mask object (gives
+// the same guard code as the hand-written one) 239; 0xbfed0 plain or plain with a
+// noinline declaration 234/234; mirrored flag before the matrix 234; parent through a
+// header pointer 234.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {
-    s_tag_instance *tags = g_4e3b44;
     s_object_transform_header *header = &((s_object_transform_header *)g_4e0300->data)[object_index & 0xffff];
     byte *object = (byte *)header->object;
-    byte *definition = tags[*(long *)object & 0xffff].bytes;
+    byte *definition = g_4e3b44[*(long *)object & 0xffff].bytes;
     long node_count = (dword)*(short *)(object + 0x114) / sizeof(transform4x3f);
     transform4x3f *matrices = (transform4x3f *)(object + *(short *)(object + 0x116));
     *(dword *)(object + 4) &= ~0x40000000;
@@ -1139,7 +1164,6 @@ void __stdcall function_bd090(long object_index)
         byte *component = g_51e9b8->data + (component_index & 0xffff) * 0xa0;
         real amount = ((1 << definition[0]) & 1) ? function_e1670(object_index) : 0.0f;
         function_1d3920(component, mask, amount);
-        tags = g_4e3b44;
     }
     byte *current = (byte *)((s_object_transform_header *)g_4e0300->data)[object_index & 0xffff].object;
     rigid_transform_scaled *orientations;
@@ -1155,12 +1179,12 @@ void __stdcall function_bd090(long object_index)
     long render_index = NONE;
     if (model_index != NONE)
     {
-        model = tags[model_index & 0xffff].bytes;
+        model = g_4e3b44[model_index & 0xffff].bytes;
         render_index = *(long *)(model + 4);
     }
     if (render_index != NONE)
     {
-        byte *render_model = tags[render_index & 0xffff].bytes;
+        byte *render_model = g_4e3b44[render_index & 0xffff].bytes;
         transform4x3f const *parent = 0;
         bool parent_mirrored = false;
         bool root_absolute = false;
