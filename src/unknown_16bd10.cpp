@@ -830,6 +830,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // left-forward-up / left-up-forward, then normal before basis at forward-up-left /
 // up-forward-left / left-forward-up:
 // 247,247,248,248,247,279,279,279 fast; reduced control 245, full 245. Original executable source restored.
+// Round 190: separate blend output 337; native target quaternion mutable/const 367/367;
+// split output plus target 402; native converter result 363, with split output 393;
+// independent normalization value 367, with split output 375. All original quaternion boundaries restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

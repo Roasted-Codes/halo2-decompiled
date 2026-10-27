@@ -121,6 +121,9 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // 0x75870/0x75890 (as network_session_membership.cpp has them) 448 (start time loaded first, as
 // retail); those with the noinline getter 486 (entry registers and frame now retail's, 1549 bytes);
 // plus the reset flag as bool 495.
+// Round 190: existing time helpers at first elapsed/growth stamp/both 494/494/508;
+// second elapsed/first-and-second/growth-and-second/all 496/503/510/520;
+// all with private force-inline declarations 520. Original timing expressions and declarations restored.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

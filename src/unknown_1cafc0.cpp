@@ -572,6 +572,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Actual found-name record at group expansion: pointer/reference/value 616/616/567;
 // with urgent resource cursor 632/632/671; pointer plus resource base 619;
 // pointer plus cursor/base 756. All restored.
+// Round 190: direct urgent-resource fields 399; twice-used native resource index 399;
+// ordinary urgent while alone/with direct fields/with native index 399 each; earlier native
+// ordinal/resource declarations separately/together 399 each. Original helpers restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
