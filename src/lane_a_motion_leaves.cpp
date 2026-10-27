@@ -90,23 +90,26 @@ char *class_3193c0::export_state(long, long, lane_a_motion_output *out) const
 // @retail 0x319750
 void class_3193c0::set_local_centre(__m128 const *value)
 {
-	field_60.m128_f32[3] += 1000000.0f;
+	float &previous_time = field_60.m128_f32[3];
+	previous_time += 1000000.0f;
 	float inverse_mass = field_20.m128_f32[3];
 	field_20 = *value;
 	field_20.m128_f32[3] = inverse_mass;
 	float last = field_70.m128_f32[3];
-	field_70 = lane_a_world_centre(*this);
+	((c_transformed_point *)&field_70)->transform(&transform_rotation, &field_20);
 	field_70.m128_f32[3] = last;
 }
 // @retail 0x3197a0
 void class_3193c0::store_position(__m128 const *value)
 {
 	transform_translation = *value;
-	field_70 = lane_a_world_centre(*this);
+	((c_transformed_point *)&field_70)->transform(&transform_rotation, &field_20);
 	field_60 = field_70;
-	field_60.m128_f32[3] += 1000000.0f;
+	float &previous_time = field_60.m128_f32[3];
+	previous_time += 1000000.0f;
 	field_70.m128_f32[3] = 0.0f;
 }
+
 // @retail 0x3197f0
 void class_3193c0::set_rotation(__m128 const *value)
 {
@@ -120,11 +123,12 @@ void class_3193c0::set_rotation(__m128 const *value)
 // @retail 0x319840
 void class_3193c0::set_position_rotation(__m128 const *position, __m128 const *orientation)
 {
+	transform_312630 *transform = (transform_312630 *)&transform_rotation;
 	field_60.m128_f32[3] += 1000000.0f;
 	rotation = *orientation;
-	transform_rotation.function_372500(&rotation);
-	transform_translation = *position;
-	field_70 = lane_a_world_centre(*this);
+	((rotation_372500 *)&transform->rotation)->function_372500(&rotation);
+	transform->translation = *position;
+	((c_transformed_point *)&field_70)->transform(transform, &field_20);
 	field_70.m128_f32[3] = 0.0f;
 }
 void class_3193c0::store_transform(transform_312630 const *value)

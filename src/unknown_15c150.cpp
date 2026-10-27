@@ -138,6 +138,9 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // actual entries pointer/const pointer/array/const array 196/196/196/196. Original helper restored.
 // Count/unit index/team/local slot/fade/unit home names and two combined groups
 // 196 each (fast; reduced-image callee caveat).
+// Round 178: Complete fade-step terms with ternary/branch/saturate/update outputs 196/277/212/196;
+// the same four with a native full-width local slot 263/251/263/263. Original graph restored;
+// delayed EBP save, teams-byte and word-slot homes remain.
 // @retail 0x15c150
 void function_15c150()
 {

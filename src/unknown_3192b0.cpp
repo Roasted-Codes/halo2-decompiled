@@ -11,3 +11,9 @@ kind_object_3192b0 g_480bb8;
 kind_object_3192b0::kind_object_3192b0()
 {
 }
+
+// score 1 (was unwritten): the call skips the intermediate destructor.
+// A derived destructor, explicit member, early exit, object pointer,
+// named late/early bit, byte flags and separate returns all score 1;
+// a separate destructor declaration does not compile.
+// @retail 0x3192d0 deleting kind_object_3192b0

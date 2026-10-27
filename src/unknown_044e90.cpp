@@ -50,6 +50,9 @@
 // Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
 // 436; query result with products 440; const query 434; query result/products with const query
 // 438/436. All product regroupings restored.
+// Round 142: native tag/table/both observations 434/444/444; on the latter graph,
+// workspace after selection/branch scope, signed flags, query count and entry-data receiver
+// all 444; uniform selection-flag reads with tag-table/tag/tag-table-data 447/438/447.
 // Round 211: Second/third/fourth capacity snapshots, each pair, all three and all four
 // capacities at their sign/size consumers 434 each. Original capacity observations restored.
 // Round 175: Native position/three rotation rows/both observations 475/556/586;

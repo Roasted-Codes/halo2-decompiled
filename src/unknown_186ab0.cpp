@@ -192,6 +192,8 @@ void player_action_initialize(s_player_action *arg_0);
 // Original fields, pointer observations and query guard restored.
 // Complete toggle result in bool/byte, union invalidation, early publication 181/184;
 // split masks 182/183; publication after action update 143/184, split masks 185/184.
+// Round 342: Complete inclination squared-product pairs, reversed pairs and named sum 148 each; squared accumulator 150;
+// with symmetric named angle shifts 148/148/148/150. All enlarge the frame to 0x5c; original expressions restored.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {

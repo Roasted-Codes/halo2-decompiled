@@ -198,6 +198,12 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 // Key as a by-value class 6 (0x1eb020 copies it through eax); that class with the entry-live body 7;
 // an explicit short out pointer 25; key read through a volatile own-parameter cast 8; the entry-live
 // body with 0x1eb020 not taking &material_index/buffer declared after result 7/7; the search as a
+// constructor of the index class 10 (key still on the stack). With the current search body the key
+// travels in edi (ours) where retail uses ebx. With the entry-live body: the search as a const member
+// of the block view 9 (search 42); the getter applied to the call's result 9; a const globals pointer
+// 7; __fastcall search 7; an unsigned key 7; the file without /arch:SSE 7 (diagnostic). The reduced
+// image holds no 0xec4f0 and still keeps the key off ebx, so 0x1eb020's caller is not the cause.
+// BLOCKED-BY 0x1eb020
 // constructor of the index class 10 (key still on the stack). BLOCKED-BY 0x1eb020
 // Further trials: saved-key/search convention remains EDI rather than EBX; aligned upstream edge unchanged.
 // existing index construction 9; returned-index bridge 6.
