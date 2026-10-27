@@ -848,6 +848,14 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
+// score 266 (was 266): retail takes target/origin/direction in EAX/ECX/ESI and the time-scale pointer on
+// the stack (`ret 0x2c`); ours also takes it in EDX (retail's EDX holds the gravity pointer at entry and EDI
+// the distance output; ours keeps the forced-speed pointer in EDI). Retail evaluates the horizontal root in
+// the entry block and divides by two_a twice in x87; ours sinks the root below the gravity tests and
+// multiplies by one SSE reciprocal of two_a.
+// Tried: gravity product operands swapped 266; result flag declared first 275 (frame 0x30); optimal-time
+// root with a double -1.0 244 (no reciprocal, but a final qword multiply where retail loads a dword -1.0
+// first); t2 root without its float cast 266; horizontal through magnitude2d 272.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,

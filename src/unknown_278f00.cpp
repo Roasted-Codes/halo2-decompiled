@@ -44,33 +44,28 @@ void function_1d1260(s_havok_component *arg_0);
 void __stdcall function_b8540(long arg_0);
 void __stdcall function_b8890(long arg_0);
 
-// score 212 (was 212): Frame 0x424 agrees; list/index/second-count homes and cleanup induction differ.
-// list selection, second-count home and cleanup schedule remain;
-// Earlier: list selection, second-count home and cleanup schedule remain;
-// frame 0x424 agrees; list/count homes and cleanup schedule remain;
-// Frame 0x424 agrees; list/count homes and cleanup schedule remain.
+// score 212 (was 212): frame 0x424 agrees. Retail selects the island list with two branch arms that each
+// read the world pointer and keeps the list pointer in a stack slot (ours hoists the pointer and selects
+// branchlessly); the list/index/second-count homes and cleanup induction differ (retail slots, ascending:
+// list, island, selector, index, body count); after the second membership scan retail skips the insertion
+// on the found exit without re-testing the index; the predicted-copy test is a materialized bool
+// (`setne cl; test cl, cl`) and the flag set is a direct `or byte ptr`.
 // list reference 212; island reference 212.
 // body reference 212; header reference 212.
 // unsigned object handle 212; list and island references 212.
 // first standard search 244; second standard search 282.
-// frame agrees; list/index/count homes and cleanup induction differ;
 // existing component-delete helper 341; existing detach helper 464; inline declarations
 // 341/464; category byte comparisons 266; signed-byte category 212, membership 212, both 212.
-// list selection/count homes and cleanup schedule remain.
 // Outer selector byte/short/word/dword 219/266/266/212; byte/short with branched
 // selection 245/291; byte/short with indexed cleanup 226/269. Original restored.
 // Distinct first/second membership ordinals: byte/long, short/long, word/long 281 each;
 // long/byte 278; long/short and long/word 267; byte/byte 289; short/short 290.
-// Earlier 212 (was 212): list selection/count homes and cleanup schedule remain.
 // Round 225: First/second array list/island ownership pairs 01/02/10/11/12/20/21/22: 212 each.
-// List/index/count and cleanup homes remain.
 // Round 227: Remove redundant first/second/both pre-retry initializations 212/212/212; split
 // first/second/both insertion increments 212/212/212; both removals with second/both split increments
 // 212/212. Original resets and body restored.
-// Earlier at 212 (from 212): list selection/count homes and cleanup schedule remain.
 // Compound-termination first/second index 266/212; both indices 266; first/second
 // begin-end cursors 291/279; both cursors 319; index/cursor 271; cursor/index 291.
-// Earlier at 212 (was 212): list selection/count homes and cleanup schedule remain.
 // Round 330: Full-width unsigned first/second/search domains, seven combinations 212 each; all three with
 // both processing ordinals 212. Signed body/list bounds, retry and call cycle retained; original restored.
 // Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
@@ -88,15 +83,16 @@ void __stdcall function_b8890(long arg_0);
 // unsigned arrays/processing with original signed classification 212. Original storage restored.
 // Round 246: category after first/both membership scans with early header 252/291;
 // move header too 306/302; indexed-cleanup counterparts 257/296/312/311.
-// Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
-// combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
-// original induction restored. List/index/second-count homes and cleanup scheduling remain.
 // Native byte flag unit with unchanged/bit-5/bit-6/both writes 212 each;
 // signed-byte flag unit with those four write forms 255 each. Original restored.
 // Round 224: First-list processing cursors, read-only/mutable and consumed/body-end steps,
 // original/branched selection 283/221/283/221/272/266/272/266. Original indexed processing and call cycle restored.
 // Header-byte-offset induction long/dword 276 each, short/word/byte 280 each;
 // direct descending list selector long/short/signed-byte 251/265/252. Restored.
+// Round 63: list chosen by if/else arms (long selector) 244; ternary of the two list addresses 244;
+// descriptive names for the outer locals 212; second scan with its own found flag 269 (flag materialized,
+// not threaded); index comparison before the first-scan flag 213. Diagnostics, not kept: the predicted-copy
+// test as a one-line inline bool helper 212, as a single-exit helper 281 (gives the setne/test).
 // @retail 0x278f00
 void function_278f00()
 {
