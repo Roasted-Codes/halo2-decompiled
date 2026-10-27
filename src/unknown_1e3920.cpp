@@ -556,6 +556,9 @@ real function_267370(long volatile object_index);
 // uniform four-use movement flags alone/with plane/with forward/with both 428 each;
 // complete named plane distance 371. Fast control 371; full baseline 273.
 // Original arithmetic, repeated flag observations and protected interfaces restored.
+// Round 176: Shifted held bit on the retained first-cross graph 319 fast/272 plain;
+// complete inverse bool/byte/short/long 319 each; staged inverse bool/byte/short
+// 368/368/388 (fast control 371). Missing frame dword persists; all forms restored.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -1036,6 +1039,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Separate actor/unit/perception creation producers from persistent outputs 320/320/320;
 // actor-unit/actor-perception/unit-perception/all producer splits 320/320/320/320;
 // all splits with delayed cleanup publication 331. Original output and cleanup ownership restored.
+// Round 176: Complementary substitution result bool/byte/short/long, guarded
+// producer 362/362/364/363; complete conditional producer 372/372/375/374.
+// Frame 0x118 agrees; sentinel and query-result homes persist. All forms restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

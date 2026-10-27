@@ -192,6 +192,10 @@ struct s_block_candidate
 // Round 214: byte insertion successor 375; byte inner successor 383; byte inner ordinal 389; byte best-present state 370; byte policy state 370.
 // Negative best-candidate bool/byte/short/long in admitted scope 371/371/373/373;
 // the same carriers from entry 379/379/380/380. Original positive best state and body restored.
+// Round 176: Unsigned previous/current/oldest, every pair/all three, and all
+// three plus unsigned allocation result: 370 each (eight forms). Equality-first
+// time policy bool/byte/short/long 385/385/381/383; non-strict admission
+// 370/370/374/373. Frame/page-tail homes persist; all original code restored.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

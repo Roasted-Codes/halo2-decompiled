@@ -111,6 +111,9 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // destination states first 451; path summary with completion-first states 491 (fast).
 // Priority word/byte 506/516; retained-cursor do 469; operation-group/reverse cases 479/504;
 // sole time-array traversal 415; staged size result on cursor body 448; checksum state first 367.
+// Round 176: Case 19 after 0 / 12 after 4 / 16 after 19: 461/444/431;
+// first+second / first+third / second+third / all: 486/492/447/500;
+// case 18 after 19: 410. All case bodies and original order restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
