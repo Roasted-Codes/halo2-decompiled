@@ -2196,6 +2196,8 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // Round 245 (fast): Existing squared-length normal/sample/both/velocity/normal-velocity/sample-velocity/all
 // boundaries 109 each; shared self-dot at all magnitudes 109. Current j/k/i normal publication
 // and matched sample boundary preserved; first normal XMM roles, early velocity loads and property-zero lifetime remain.
+// Round 342: Shared normal/velocity length 123; shared inverse 162; both 168; outer sample vector 109;
+// vector plus length/inverse/both 123/162/168; all with one scan ordinal 168. Exact-length inverse forms regress; originals restored.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {

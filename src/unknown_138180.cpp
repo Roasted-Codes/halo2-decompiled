@@ -114,6 +114,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // complete entry result long/short/signed byte/byte 219/226/188/188. All restored.
 // Independent-pass scan admission continues: machine outer/duplicate, player outer/duplicate 157 each;
 // each with native uniqueness 171. All restored; native uniqueness still first differs at +0x11b.
+// Round 343: One machine ordinal across initial validation/membership: byte/long/short found 157/183/184;
+// complete mask fields 157; long/short uniqueness 171/183; long found+uniqueness 190; long found+fields 183. All restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

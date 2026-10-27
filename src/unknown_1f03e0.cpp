@@ -1005,6 +1005,8 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // Round 166: Complete vector-return ownership, matrix/input pointer-pointer, reference-pointer,
 // value-pointer, pointer-reference, reference-reference, value-reference, pointer-value,
 // reference-value 127/127/223/127/127/223/161/161. Original two-use output helper restored.
+// Round 342: Row-shared forward/left/up product carriers 86/86/86; paired forward-left/forward-up/left-up 53/53/53;
+// all three 52; all three with complete protected input scalars 102. Original nine-product helper restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

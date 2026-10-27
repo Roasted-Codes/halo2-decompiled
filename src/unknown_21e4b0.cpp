@@ -158,6 +158,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // All restored; success/type carriers and first-channel spill remain.
 // Direct output-buffer fields: plain 279; spatial 295; both 297; submix 233;
 // plain/submix 280; spatial/submix 282; all 297; repeated effect-mixbin field 290.
+// Across-reset creation state with plain/spatial/both value-initialized descriptions 297/299/298;
+// submix memset alone/with plain/spatial/both initializers 284/284/286/285; complete initialization
+// triple with original late state 250. Original descriptions and state lifetime restored.
 // Round 147: Chained zero levels 165; repeated coefficients 164; final volumes 164;
 // zero/coefficient 163; zero/volume 164; coefficient/volume 163; all three 162; all with shared
 // voice-count publication 161 (four-point gain rejected).

@@ -121,6 +121,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 215: Actual ordinal-return step, long with retained/returned-only ordinal and
 // conditional/result-first exits 164/198/204/199; unsigned 198/222/205/220.
 // Every returned result tested; original private helper and body restored.
+// Persistent full-function/first-traversal payload tables 190/197; with full-width partition 191/198;
+// the same four table/partition forms with pointer step results 190/197/191/198. Original helper and
+// traversals restored; separate pool/iterator, early null and successor homes remain.
 // Round 147: Coherent inline lookup/activation/squad cleanup/actor removal 234/164/164/164; lookup
 // plus each other boundary 234/234/234; all four 234; separately outlined inline lookup 164 with
 // checked losses.
