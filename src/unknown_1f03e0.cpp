@@ -398,6 +398,8 @@ bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *stat
 
 real function_30bf0(vector3f *v);
 
+PRIVATE __forceinline void function_1f087b(vector3f const *arg_0, vector3f const *arg_1, vector3f *arg_2);
+
 PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f *out)
 {
     out->i = a->j * b->k - a->k * b->j;
@@ -405,7 +407,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 177 (was 177): Frame 0x14 agrees; request/count registers, cross publication and projection schedule remain.
+// score 144 (was 177): Frame 0x14 agrees; request/count registers, projection and cross scheduling remain.
 // Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
@@ -441,7 +443,15 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Round 166: Corresponding projection products named on both compared dots: i/k/j
 // 194/194/194; ik/ij/kj 197/197/197; all 194; all with both first sums 194. Original
 // expressions, early constants and pair-result join restored.
+// Round 218: Ordered upper/lower/predicate admission continuations, every nonempty
+// combination 177 each; all continuations with immutable contact count 194. Restored.
 // Round 152: Eight pair-input/result and single-contact library-copy forms 177 each; selected-before-height publication 177; average-only result join 176, with selected-first 176 (983 bytes). One-point joins rejected; original complete pair result and observations restored.
+// Round 220: Current pair workspace names, all-case/entry declarations and their combined names 177 each.
+// Existing input-preserving cross helper at first/selected-zero/selected-other/both-first-and-zero/
+// first-and-other/both-selected/all sites 179/177/177/179/179/177/179. All with direct selected outputs
+// 144; only selected helpers with direct outputs 144 (989/977 bytes, plain confirmed and kept).
+// First-only/zero-only/other-only helper with direct outputs 178/178/175; averaging-only support
+// declaration 144; both average values directly published 221. Original average result join retained.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -479,9 +489,9 @@ void function_1f2a80(byte const *request, bool moving,
                 vector3f axis;
                 contact_cross(a, b, &axis);
                 if (selected == 0)
-                    contact_cross(&axis, normal, &support);
+                    function_1f087b(&axis, normal, out);
                 else
-                    contact_cross(normal, &axis, &support);
+                    function_1f087b(normal, &axis, out);
             }
             else
             {
@@ -496,8 +506,8 @@ void function_1f2a80(byte const *request, bool moving,
                     support = *a;
                 else
                     support = average;
+                *out = support;
             }
-            *out = support;
         }
         break;
     case 3:
@@ -740,7 +750,14 @@ struct s_flags_1f0870
 // Round 183 existing returned-vector cross for first flying / remaining flying / ground / all flying
 // 607/659/590/694; first flying plus ground / remaining flying plus ground / all active / all paths
 // 637/689/724/834 (fast). All restored; extra frame dword, direct bit and vector homes remain.
+// Round 218, cleaned body: complete native flag observation 623; gravity conjunction 611;
+// complete mode observation 625; flag/conjunction 645, flag/mode 605, conjunction/mode 652,
+// all 628; all with byte step result 628. Original complete observations and result restored.
 // Round 152: Disabled-input weighted forward/lateral/both axis scale helpers 590/610/610; vertical 590 at 3047 bytes, forward plus vertical 590, lateral plus vertical/all/all plus bounded-step helper 610/610/610. No score gain; original complete body and helper boundaries restored.
+// Round 220: Separate flight-first/ground-first normalization and ground adjustment 616/607;
+// separate normalization continuations 623; branch-produced gravity on those three graphs
+// 616/607/623; single magnitude assigned in each mode arm with separate normalization,
+// alone/with branch gravity, 647/647. Original clean shared-normalization body restored.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {

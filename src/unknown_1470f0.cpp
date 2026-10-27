@@ -57,7 +57,7 @@ void *c_game_havok_memory::allocate(long size, long memory_class)
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-// score 9 (was 19): first and third now share source dispatch, but retail's second uses edx for
+// score 9 (was 9): first and third now share source dispatch, but retail's second uses edx for
 // its vtable and eax for bounds; ours uses eax for the vtable, so the third joins the second.
 // Third end addition and fallback argument order also differ.
 // Tried: third abstract/fixed-base dispatch 19/19; nested receivers 19; first/second/both inclusive
@@ -65,6 +65,9 @@ extern "C" void _ReadWriteBarrier(void);
 // inline/noinline/consistent-inline declarations 19/19/19; inverted third 19; third predicate 19;
 // first/third shared dispatch 11 with concrete/same-local second 11/11 and inclusive 9;
 // early third 39 (132/121); late second 9; second predicate 9; dispatch flag 38 (109/121).
+// Round 221: void completion second/fallback/both 26/26/26; common 9;
+// second/common and all completions 9/9; fallback/common 9; entry null return with
+// all completions 26. Original dispatch graph restored.
 // @retail 0x147160
 void c_game_havok_memory::deallocate(void *address)
 {
