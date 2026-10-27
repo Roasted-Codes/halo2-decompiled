@@ -116,6 +116,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Eligibility result bool/const-bool/long/short with conditional or branch publication:
+// 194/200, 194/200, 195/178, 193/193; original body restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

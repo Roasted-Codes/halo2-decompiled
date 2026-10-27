@@ -251,6 +251,7 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // (fast control 162). Frame and reservation homes remain.
 // Fast control 162: paired alpha with original/before-color/before-commit/entry half-span
 // 251/394/392/462; staged packed alpha at the same sites 261/327/325/521.
+// Bitmap-local name orders with alpha and coordinate names: eight combinations 162 (fast control 162).
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
