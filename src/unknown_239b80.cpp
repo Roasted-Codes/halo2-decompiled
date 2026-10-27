@@ -478,6 +478,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Fraction default between/before deltas, before clipped publication and at iteration entry:
 // unsigned ordinal 211/211/209/209; signed ordinal 259/259/263/275. All restored;
 // the best three-point change does not qualify. Count/stride/prior and SIMD homes remain.
+// Common-failure graph mask production: conditional result 212/252; clear then set
+// 275/266; named output bit 222/252; named bit with conditional result 222/252
+// (unsigned/signed word ordinal). Original ordinal, mask and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

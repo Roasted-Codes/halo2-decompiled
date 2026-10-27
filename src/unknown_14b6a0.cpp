@@ -164,6 +164,9 @@ void function_14bac0()
 // Original storage and iterator restored; frame and readiness homes remain.
 // One shared native datum iterator, called/inlined first scan and native/called second scan:
 // 353/234/421/376; reversed readiness declarations 334/233/421/376. All restored.
+// Marker-test readiness results, destination/alternate/both 237/243/244; with
+// native recipients 262/278/261. Both results plus fallback query result 252;
+// with native recipients 278. Original points, flags and shared iterator restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

@@ -2150,6 +2150,10 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // 267/266/169; 266/265. Original early stores and retained child timing restored.
 // Round 246: metadata/count/fraction defaults before the child getter in seven
 // combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
+// Final source-field pointer 168; exhaustive first parent result alone/with pointer
+// 164/164 rejected; exhaustive mapped results alone/with pointer 223/223; both
+// parent result groups without/with pointer 219/219; named-offset combination 218.
+// Original receiver, result production, stores and lookup restored.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
