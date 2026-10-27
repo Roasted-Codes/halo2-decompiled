@@ -139,6 +139,8 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Original helper restored.
 // Point-return with pointer/point/direction/both value inputs 680/744/838/899;
 // cross first/second/both value inputs 845/858/1045. Original helpers restored.
+// Round 343: Complete tag-range field reads 686; with shared cross products in basis/rotation/both
+// 664/686/665; projection/basis+projection/rotation+projection/all 691/668/691/668. All restore; retain original snapshots and helpers.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

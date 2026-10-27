@@ -180,6 +180,8 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // 616/616/616/616/616/616/616/616/615/616/615/617/616/617/616/616 (fast); all restored.
 // Complete source-value copies: scalar RGB/merge accumulator/both/color RGB/scalar-color/merge-color/all
 // 887/818/984/855/989/953/1101; complete publication source 894. Copies grow code/frame; originals restored.
+// Round 343: Shared caller falloff/contribution/both lifetimes 616/616/617; uncovered contribution 715;
+// radius+uncovered/weight+uncovered/all 716/716/714; all with native byte palette 611 (five-point lead rejected). Original body restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

@@ -112,6 +112,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // These recover the opening frame and registers through +0x10 but regress overall; all restored.
 // Initial validation result from first two/three/four/five tests, bool 157 each;
 // complete entry result long/short/signed byte/byte 219/226/188/188. All restored.
+// Round 343: One machine ordinal across initial validation/membership: byte/long/short found 157/183/184;
+// complete mask fields 157; long/short uniqueness 171/183; long found+uniqueness 190; long found+fields 183. All restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

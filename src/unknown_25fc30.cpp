@@ -189,7 +189,7 @@ bool __stdcall function_25dd30(long a, long b)
 	return a == b;
 }
 
-// score 94 (was 175): Frame 0x30 and retail length agree; early count/offset/segment scheduling,
+// score 94 (was 94): Frame 0x30 and retail length agree; early count/offset/segment scheduling,
 // protected geometry-call registers and score adds remain.
 // Earlier: vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
 // first vector schedule, geometry registers and score adds remain;
@@ -261,6 +261,8 @@ bool __stdcall function_25dd30(long a, long b)
 // Native indexed first scan short/long with shared later ordinal 101/322; independent later ordinals
 // 310/94. Same four with existing magnitude helper 101/322/310/94. Keep the long first index and
 // independent short later counters at 94 plain; original helpers and all call tuples retained.
+// Round 343: Total-position bound long/short before lookup 479/322; after lookup 481/322;
+// long bound with later permission/cone/reference/all long ordinals 976/458/765/1168. All restored; retained indexed graph stays 94.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
