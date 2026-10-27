@@ -288,6 +288,9 @@ void cache_copy_buffer_resize(long size)
 // 0x214db0 forms (callee still matching): returning the printed buffer 5; drive-path test in a bool 5;
 // file name from a separator ternary 5; one shared print call 19; path-first parameter order 9; the
 // helper in its own file sorted after or before this one 5/5.
+// two-buffer record 5; result between buffers 5; result initialized between calls 10;
+// unsigned result 5; named equality 5; combined noinline declarations 5;
+// combined inline declarations 5; force-inline comparison declaration 5.
 // @retail 0x213e30
 long cache_copy_current_priority(char const *map_name)
 {
