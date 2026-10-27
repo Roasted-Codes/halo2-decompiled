@@ -185,13 +185,12 @@ PRIVATE inline real projectile_difficulty_scale()
    too short) */
 PRIVATE inline real projectile_normalize(vector3f *v)
 {
-	real magnitude = (real)sqrt(v->k * v->k + v->j * v->j + v->i * v->i);
+	real magnitude = (real)sqrt(v->j * v->j + v->k * v->k + v->i * v->i);
 
 	if (!(fabs(magnitude) < 0.0001f))
 	{
+		v->i = (1.0f / magnitude) * v->i;
 		real inverse = 1.0f / magnitude;
-
-		v->i = inverse * v->i;
 		v->j = v->j * inverse;
 		v->k = v->k * inverse;
 		return magnitude;
@@ -377,6 +376,12 @@ bool function_fa580(real speed, point3f const *origin, point3f const *target, ve
 }
 
 /* the rotation a spinning projectile makes each tick */
+// score 3 (was 16): the flag OR/store crosses the angle duplicate and first
+// axis load differently. Forced inline, speed/axis/angle declarations, the
+// first-product order and *= no change; shared normalize 14; j+(k+i) 14;
+// k+(j+i) 18; j+k+i 10; direct first reciprocal with inverse before 18,
+// without inverse 40, after first 3; flag before angle 22; sine before axis 3;
+// axis before flag 32; axis memcpy 3; named flags 3.
 // @retail 0xfbd40
 void function_fbd40(long projectile_index)
 {

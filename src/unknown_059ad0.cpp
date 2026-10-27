@@ -2194,7 +2194,10 @@ void network_session_leave_joining(c_class_58d20 *session)
 // state block; retail defines it afterwards. Tried: the copy as a word loop
 // New trials: memmove 42; request field fill 3; clear result as copy target 9;
 // all-one record fill 31; tail-only clear 32; fill with memmove 37;
-// tail clear with fill 30; tail clear with memmove 46.
+// tail clear with fill 30; tail clear with memmove 46. Destination sentinel
+// after copy 30; scratch sentinel after clear 29, as fill 29; sentinel before
+// clock 15; destination fill 30; copy-result sentinel 27; fill before clock 15;
+// typed destination with late sentinel 26.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {

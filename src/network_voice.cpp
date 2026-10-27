@@ -149,9 +149,12 @@ bool voice_xhv_get_runtime_parameters(XHV_RUNTIME_PARAMS *parameters, c_voice_xh
 	return result;
 }
 
-// @retail 0x55810
 // score 2 (was 2): the engine pointer is loaded into ebp before the branch that
-// skips the creation; retail loads it after the branch.
+// skips the creation; retail loads it after the branch. Direct creation with
+// the pointer bound after the call or in its argument 8; initialized error 2;
+// error declared at creation 2; const engine pointer 6; plain result store 36;
+// early false return 92; error before engine 2.
+// @retail 0x55810
 bool voice_xhv_create(c_voice_xhv *xhv)
 {
     XHV_RUNTIME_PARAMS parameters;
