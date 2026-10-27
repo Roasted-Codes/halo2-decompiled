@@ -432,6 +432,8 @@ real function_30bf0(vector3f *vector);
 // Round 252: Final primary-test/complete-conditional/primary-first/distance-first results
 // 249/283/235/230; ordinary result storage 281/281/220/221. Original result graph and inherited storage
 // restored; result/range homes and SIMD allocation remain.
+// Round 196: Normalizer inline/noinline/combined/forceinline declarations, each with original
+// and post-normalization up lifetime, 184 each. Original declarations and body restored.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {

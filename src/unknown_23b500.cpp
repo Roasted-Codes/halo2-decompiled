@@ -659,6 +659,8 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // 205/265/181/181. The 181 forms recover frame 0x54 but lose the matched caller by seven preview
 // differences; one-use field snapshots remain unmatched and are rejected. Original player
 // receiver/count/AND body restored; frame and protected child-initializer contract remain.
+// Round 196: Category inserter inline/noinline/combined/forceinline declarations 230/201/230/465,
+// identically with readonly settings. Original declarations and complete body restored.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {

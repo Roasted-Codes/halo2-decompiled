@@ -64,6 +64,9 @@ real function_30bf0(vector3f *vector);
 // Round 191: Blend/pack/collision ordinary-inline declarations, singly, all pairs
 // and together, each 213; all three separate noinline declarations 213.
 // Original declarations, count qualification and executable body restored.
+// Round 193: Scenario/data/both/value/data+value/scenario+value/all source pointers
+// read at each use, then all plus light table: 213/192/192/213/231/213/231/247.
+// Data-only plain 192 adds reloads and has a farther aligned sequence; original restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {

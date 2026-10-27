@@ -129,6 +129,9 @@ public:
 // Round 254: completed geometry then global override, original/staged-square/closed-coordinate/
 // shared-scale and all combinations 246 each (725 bytes). Original override guard, double
 // producers and all executable source restored; frame and input homes remain.
+// Round 195: Queued-function inline/noinline/combined/forceinline declarations 215 each;
+// each with closed coordinate-double lifetime 215. Original boundary and body restored;
+// frame and activation/location transport remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

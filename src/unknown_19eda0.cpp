@@ -394,8 +394,12 @@ PRIVATE inline long polygon_round_19f(real value)
 
 // score 379 (was 379): frame 0x34 versus 0x30; fade/radius homes and render-call transport differ.
 // Earlier at 393: the fade clamp now computes a single radius*1.5 product, so the
+// the fade clamp now computes a single radius*1.5 product, so the
 // radius keeps retail's xmm3; our fade block is still one instruction shorter than
 // retail's, and the call to function_4b2d0 still passes three stack arguments.
+// Round 194: Named real radial denominator at division/loop boundary, with ternary/explicit
+// alpha bounds and long/dword UV ordinals, all 366; without the denominator local 416.
+// Ordinary 366 loses both callers at two differences each; all trial forms restored.
 // Round 184: native attribute header with captured/live signed count and short/word
 // elements: actual cursor 379 each; direct array indexing 374 each (five-point
 // gain rejected). Frame 0x34 versus 0x30 and protected call transport remain.

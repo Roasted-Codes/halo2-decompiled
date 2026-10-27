@@ -824,7 +824,7 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 294 (was 308): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
+// score 292 (was 292): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
 // clears flag 8 with `and byte ptr [ebp+0xd], 0xfe` and reloads (ours merges the three); retail
 // has no result slot but spills the tinted byte (ours keeps it in BL, the tag object in EDI where
 // retail uses EBX, and the particle/index registers swapped); 0x248750 takes the definition in
@@ -882,6 +882,9 @@ public:
 // Round 183: Five complete fixed-basis column-order permutations 320/320/326/326/320;
 // three default-position permutations 308/308/308. Original cases and copies restored;
 // early result/flag publication, location transport and selective tag expansion remain.
+// Round 195: Tint byte/word/long/dword carriers 298/301/299/299; the same carriers
+// declared before the matrix 298/301/299/299. Original bool, queries and body restored;
+// early result slot, tint spill and location/child transport remain.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

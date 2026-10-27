@@ -1401,6 +1401,9 @@ struct s_rating_summary
 // DL159: uniform name-input field observations, crossed with shared pass ordinal, shared three-count results and two-word prefix clear, 235/236/235/236/234/234/234/234. Shared ordinal recovers key home but regresses total; original character snapshot and body restored.
 // Round 210: Query-count table publication 123/132/213/231/312/321 gives
 // 202/206/213/344/214/345; entry table with 123/321 gives 202/345. Original restored.
+// Round 194: On native fifteen-bit player statistics and a shared pass ordinal,
+// byte/short/word/dword group counters with dword or word characters all 311;
+// original body and native collection extent restored. Key/group homes remain.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

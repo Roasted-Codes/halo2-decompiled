@@ -164,6 +164,8 @@ void function_14bac0()
 // Original storage and iterator restored; frame and readiness homes remain.
 // One shared native datum iterator, called/inlined first scan and native/called second scan:
 // 353/234/421/376; reversed readiness declarations 334/233/421/376. All restored.
+// Round 197: Existing point-query/relocation ordinary-inline-noinline declarations, all eight
+// alternatives, 234 each. Original point/iterator graph and all declarations restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

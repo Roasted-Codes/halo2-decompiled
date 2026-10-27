@@ -31,6 +31,8 @@ bool function_212ec0(s_game_variant *arg_0, long arg_1);
 // each alone and create-dispose/normalize-save/save-dispose/all, all 386.
 // Round 169: Public initializer ordinary/forced boundaries 386/386; each low specialization
 // 386, high group 386, forced boundary with entry output 386. Original calls/declaration restored.
+// Round 193: Low-tail/high-specialization orders 1542897/1542987/1542978/1542879;
+// 1425897/1425987/1524897/1524987: 417/417/423/383/411/411/417/417. Original switch restored.
 // @retail 0x212380
 long function_212380(long arg_0, long arg_1, byte *arg_2)
 {

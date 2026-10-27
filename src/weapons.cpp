@@ -3123,6 +3123,8 @@ struct s_ammo_conversion_entry
 // Round 204: Shared three-use type-bit result bool/byte/word/dword with word acquisition
 // 218/215/214/221; with complementary byte acquisition 212/204/219/224. Original type
 // observation and result restored; extra frame word, destination/tag and conversion homes remain.
+// Round 196: Ordinary/inline/noinline post-transfer updater and retention-query declaration
+// pairs, excluding the original pair, 198 each. Original declarations and body restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

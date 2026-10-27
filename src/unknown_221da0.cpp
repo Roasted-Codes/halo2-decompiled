@@ -756,7 +756,8 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
-// score 225 (was 225): Aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes remain.
+// score 216 (was 225): Frame 0x8ac agrees; camera/BSP/gain homes and maximum joins remain.
+// Earlier: aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes differed.
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
 // indexed batch-entry pointer 225; previous-gain snapshot 262.
 // Earlier: aligned clear still owns EBP and shifts the scalar homes;
@@ -787,6 +788,10 @@ real function_18cac0(long arg_0);
 // body restored at 225; aligned frame and scalar homes remain.
 // Round 180: Indexed gain-element pointer inside/before admission 225/225; complete result
 // arms 229/229; two-use old gain 262/262; old gain with complete arms 254/254.
+// Round 196: Whole clear return/direct camera, side long/short/signed-byte/byte 248/248/250/250;
+// with audibility at each bound 223/245/223/223. On long 223, after-clear BSP/native real/both
+// 235/223/235; small-mask memset alone/with after-clear BSP/native real/both 216 each.
+// Whole clear return, direct camera/audibility and library mask clear kept at 216 plain (813/812).
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
@@ -795,14 +800,13 @@ void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 	{
 		s_structure_bsp_view *local_1 = (s_structure_bsp_view *)g_4e0348;
 		dword local_13[0x200];
-		real *local_2 = (real *)local_13;
-		memset(local_13, 0, sizeof(local_13));
+		real *local_2 = (real *)memset(local_13, 0, sizeof(local_13));
 		if (local_1->audibility_count > 0)
 		{
-			s_structure_audibility *local_3 = local_1->audibility;
-			dword local_4[4] = {0};
+			dword local_4[4];
+			memset(local_4, 0, sizeof(local_4));
 			function_249d10(local_1, local_4, local_0->index);
-			for (long local_5 = 0; local_5 < local_3->door_count; local_5++)
+			for (long local_5 = 0; local_5 < local_1->audibility->door_count; local_5++)
 			{
 				if (local_4[local_5 >> 5] & (1 << (local_5 & 31)))
 				{
@@ -814,16 +818,15 @@ void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 						vector_constructor_iterator(local_8, 0x40, 2, function_31bc70);
 						function_249c90(local_8[0], local_1, local_5, local_8[1]);
 						long local_9;
-						long local_10 = local_0->index;
-						if (local_8[0][local_10 >> 5] & (1 << (local_10 & 31)))
+						if (local_8[0][local_0->index >> 5] & (1 << (local_0->index & 31)))
 							local_9 = 1;
-						else if (local_8[1][local_10 >> 5] & (1 << (local_10 & 31)))
+						else if (local_8[1][local_0->index >> 5] & (1 << (local_0->index & 31)))
 							local_9 = 0;
 						else
 							continue;
 						for (long local_11 = 0; local_11 < local_1->cluster_count; local_11++)
 						{
-							if (local_11 != local_10 && (local_8[local_9][local_11 >> 5] & (1 << (local_11 & 31))))
+							if (local_11 != local_0->index && (local_8[local_9][local_11 >> 5] & (1 << (local_11 & 31))))
 							{
 								real gain = local_7;
 								if (local_2[local_11] > local_7)
