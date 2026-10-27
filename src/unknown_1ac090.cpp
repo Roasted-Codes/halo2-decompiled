@@ -837,6 +837,8 @@ bool function_1f8660(long arg_0);
 // dot3f argument orders (each, pairs, all) 34-44 unchanged; direction declared first 44; dot3f
 // tested directly 44; actor getter at the object/vehicle/second-difference use 60/135/238;
 // result first 68; slot first 34.
+// Round 49: const actor/buffer/both pointers 7/7/7; request/validation/release buffer aliases
+// 7/7/7; first/second position pointers 7/7. Starting body restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
