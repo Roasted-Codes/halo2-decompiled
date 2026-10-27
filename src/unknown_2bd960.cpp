@@ -417,7 +417,8 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 	last_output.z *= 0.5f;
 }
 
-// score 87 (was 87): frame 0x54 versus 0x50; fraction and coefficient/output registers differ.
+// score 6 (was 87): the coefficient loop sums its products in another order (retail: t3, t, then
+// the t2 product folded, row pointer based on m[i][1]); prologue, frame and weighted sums agree.
 // direct output and four reused weights 110 fast;
 // original output and four reused weights 84 fast;
 // direct output with uniform polynomial products 109 fast;
@@ -437,12 +438,19 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 // native initial copy 106, delayed copy 98, delayed point setter 109, delayed immutable table 97,
 // delayed weights 100, scoped weights with copy 81 (449 bytes, frame 0x50; parameter alias, not kept).
 // Direct weights/copy and coefficient phase with copy/assignment 110/110/110 (425 bytes). All restored.
+// Round 74 (kept): no volatile output, t3 = t * t * t computed before t2 = t * t, weighted sums
+// from points[0] up: 10. t2 first (t3 = t2 * t, t * t2 or t * t * t) 109/109/109; powers written in
+// the loop 117-119; table before the powers 99; one or both powers after the table 109/110/100;
+// t2 declared first, t3 computed first 31; any term order in the loop 31; power names 31;
+// weighted sums reversed/r-first/parenthesised 31/31/29. Then (kept) row pointer in the loop 6;
+// sum groupings 9/12/9; const table 10; all product orders x three groupings, with and without the
+// row pointer, 6-13; row cursor 9; flat table 10, with the row pointer 6; parameter reorders 10
+// (before the row pointer).
 // @retail 0x2bde90
 void function_2bde90(real t, point3f *out, point3f *points)
 {
-	point3f *volatile output = out;
+	real t3 = t * t * t;
 	real t2 = t * t;
-	real t3 = t2 * t;
 	real m[4][4] =
 	{
 		{ -1.0f, 3.0f, -3.0f, 1.0f },
@@ -455,15 +463,17 @@ void function_2bde90(real t, point3f *out, point3f *points)
 
 	do
 	{
-		r[i] = m[i][0] * t3 + m[i][2] * t + m[i][1] * t2 + m[i][3];
+		real const *row = m[i];
+
+		r[i] = row[0] * t3 + row[1] * t2 + row[2] * t + row[3];
 		i++;
 	}
 	while (i < 4);
 
-	*output = *g_468788;
-	output->x = points[3].x * r[3] + points[2].x * r[2] + points[1].x * r[1] + points[0].x * r[0];
-	output->y = points[3].y * r[3] + points[2].y * r[2] + points[1].y * r[1] + points[0].y * r[0];
-	output->z = points[3].z * r[3] + points[2].z * r[2] + points[1].z * r[1] + points[0].z * r[0];
+	*out = *g_468788;
+	out->x = points[0].x * r[0] + points[1].x * r[1] + points[2].x * r[2] + points[3].x * r[3];
+	out->y = points[0].y * r[0] + points[1].y * r[1] + points[2].y * r[2] + points[3].y * r[3];
+	out->z = points[0].z * r[0] + points[1].z * r[1] + points[2].z * r[2] + points[3].z * r[3];
 }
 
 /* ---- the hill's shape ---- */
