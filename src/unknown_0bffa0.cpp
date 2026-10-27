@@ -13,6 +13,7 @@
 #include "crc.h"
 // @flags /O2 /arch:SSE /Gr
 #include "projection_storage.h"
+#include "normalize3d.h"
 
 /* Light pool queries and the shapes copied from definitions and placements. */
 s_record_pool *g_4e030c;
@@ -910,8 +911,7 @@ struct s_light_projection_ab
     bool has_plane;
     byte unknown6d[3];
     real plane_offset;
-    vector3f plane_normal;
-    real plane_distance;
+    plane3f plane;
     bool flag84, flag85;
     byte unknown86[2];
     real depth;
@@ -928,11 +928,12 @@ void function_11f5f0(box2f *bounds, point2f const *points, long count);
 void function_141590(transform4x3f const *in, transform4x3f *out);
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result);
 
-PRIVATE inline void light_projection_cross_ab(vector3f const *a, vector3f const *b, vector3f *result)
+/* result = -vector */
+PRIVATE inline void vector3f_negate_ab(vector3f const *vector, vector3f *result)
 {
-    result->i = a->j * b->k - a->k * b->j;
-    result->j = a->k * b->i - a->i * b->k;
-    result->k = a->i * b->j - a->j * b->i;
+    result->i = 0.0f - vector->i;
+    result->j = 0.0f - vector->j;
+    result->k = 0.0f - vector->k;
 }
 
 PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vector3f const *point, point2f *result)
@@ -955,6 +956,14 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
     result->y = scale * y;
 }
 
+// score 539 (was 621): the entry pointer's base (+0x4c), the direction cursor and the table stores
+// now agree; retail stores the +radius vertex group first (so 1.0 lands in XMM2, not XMM1) and
+// computes each projection's forward row first. Kept: the file's cross helper for both crosses
+// (it sets the +0x4c base; the shared cross3f for the forward one gives +0x50), normalize3d for
+// the left vector, depth copied from the shape field, an aggregate vertex table, the point and
+// dot helpers with a plane3f for the plane, one negate helper for both up vectors. Tried: term
+// and row orders in the projection (identical); y stored before x with each component
+// declaration order 551-571; the radius field at each table use 645; a named negative radius 574.
 // @retail 0xc1d90
 void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab const *shape, s_light_projection_ab *entries, short *count)
 {
@@ -967,31 +976,12 @@ void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab co
         if ((short)shape->kind == 0)
         {
             real radius = shape->sphere_render.radius;
-            vector3f vertices[8];
-            vertices[0].i = radius;
-            vertices[0].j = radius;
-            vertices[0].k = -radius;
-            vertices[1].i = -radius;
-            vertices[1].j = radius;
-            vertices[1].k = -radius;
-            vertices[2].i = -radius;
-            vertices[2].j = -radius;
-            vertices[2].k = -radius;
-            vertices[3].i = radius;
-            vertices[3].j = -radius;
-            vertices[3].k = -radius;
-            vertices[4].i = radius;
-            vertices[4].j = radius;
-            vertices[4].k = radius;
-            vertices[5].i = -radius;
-            vertices[5].j = radius;
-            vertices[5].k = radius;
-            vertices[6].i = -radius;
-            vertices[6].j = -radius;
-            vertices[6].k = radius;
-            vertices[7].i = radius;
-            vertices[7].j = -radius;
-            vertices[7].k = radius;
+            vector3f vertices[8] = {
+                { radius, radius, -radius }, { -radius, radius, -radius },
+                { -radius, -radius, -radius }, { radius, -radius, -radius },
+                { radius, radius, radius }, { -radius, radius, radius },
+                { -radius, -radius, radius }, { radius, -radius, radius }
+            };
             vector3f directions[6] = {
                 { 0, 0, -1 }, { 1, 0, 0 }, { 0, 1, 0 },
                 { -1, 0, 0 }, { 0, -1, 0 }, { 0, 0, 1 }
@@ -1000,26 +990,16 @@ void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab co
                 { 0, 1, 2, 3 }, { 0, 3, 7, 4 }, { 0, 4, 5, 1 },
                 { 1, 5, 6, 2 }, { 2, 6, 7, 3 }, { 4, 7, 6, 5 }
             };
-            entry->depth = radius;
+            entry->depth = shape->sphere_render.radius;
             entry->orthogonal = false;
             entry->has_plane = false;
-            entry->matrix.up.i = 0.0f - directions[i].i;
-            entry->matrix.up.j = 0.0f - directions[i].j;
-            entry->matrix.up.k = 0.0f - directions[i].k;
+            vector3f_negate_ab(&directions[i], &entry->matrix.up);
             vector3f reference = *g_4687a8;
             if (i == 1 || i == 3)
                 reference = *g_4687ac;
-            light_projection_cross_ab(&entry->matrix.up, &reference, &entry->matrix.left);
-            vector3f *up = &entry->matrix.left;
-            real length = (real)sqrt((double)up->i * up->i + (double)up->k * up->k + (double)up->j * up->j);
-            if (fabs(length) >= 0.0001f)
-            {
-                real scale = 1.0f / length;
-                up->i *= scale;
-                up->j *= scale;
-                up->k *= scale;
-            }
-            light_projection_cross_ab(&entry->matrix.left, &entry->matrix.up, &entry->matrix.forward);
+            cross_product_c1a80(&reference, &entry->matrix.up, &entry->matrix.left);
+            normalize3d(&entry->matrix.left);
+            cross_product_c1a80(&entry->matrix.up, &entry->matrix.left, &entry->matrix.forward);
             entry->matrix.position = shape->origin;
             entry->matrix.scale = 1.0f;
             light_projection_point_ab(&entry->matrix, &vertices[faces[i][0]], &entry->points[0]);
@@ -1036,20 +1016,16 @@ void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab co
             entry = entries;
             entry->matrix.forward = shape->left;
             entry->matrix.left = frame->up;
-            entry->matrix.up.i = 0.0f - frame->forward.i;
-            entry->matrix.up.j = 0.0f - frame->forward.j;
-            entry->matrix.up.k = 0.0f - frame->forward.k;
+            vector3f_negate_ab(&frame->forward, &entry->matrix.up);
             entry->matrix.position = shape->origin;
             entry->matrix.scale = 1.0f;
             entry->orthogonal = shape->kind == 1;
             entry->has_plane = shape->origin_offset > 0.0f;
             entry->plane_offset = shape->origin_offset;
             point3f plane_point;
-            plane_point.x = entry->matrix.position.x + frame->forward.i * entry->plane_offset;
-            plane_point.y = entry->matrix.position.y + frame->forward.j * entry->plane_offset;
-            plane_point.z = entry->matrix.position.z + frame->forward.k * entry->plane_offset;
-            entry->plane_normal = frame->forward;
-            entry->plane_distance = entry->plane_normal.k * plane_point.z + entry->plane_normal.j * plane_point.y + entry->plane_normal.i * plane_point.x;
+            point_add_scaled_c35a0(&entry->matrix.position, &frame->forward, entry->plane_offset, &plane_point);
+            entry->plane.n = frame->forward;
+            entry->plane.d = dot_product_c1a80(&entry->plane.n, (vector3f const *)&plane_point);
             entry->depth = shape->cone_render.far_distance + shape->origin_offset;
             point2f center;
             light_projection_point_ab(&entry->matrix, &shape->cone_render.direction, &center);

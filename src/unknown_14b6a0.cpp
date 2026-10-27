@@ -178,6 +178,11 @@ void function_14bac0()
 // Round 352: readiness at request entry, alone and with point/bounds/both output declarations,
 // 274 each; early point/bounds/both declarations without readiness 234 each; complete
 // function-entry graph 288. Frame stays 0x34; original storage and observations restored.
+// Round 62: retail's frame fits two 16-byte datum iterators, the first sharing its slot with the
+// alternate point and the second with the centre and offset. Second loop through the existing
+// datum iterator 257 (frame 0x44; both readiness homes then agree); plus a block scoping the
+// centre 257 (identical under LTCG, 0x38 compile-only); first loop on a datum iterator through an
+// inline next 257 (frame 0x48); readiness declarations swapped 262; centre declared first 257.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

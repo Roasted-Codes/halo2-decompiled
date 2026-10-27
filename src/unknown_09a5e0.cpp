@@ -2155,6 +2155,10 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // Round 352: persistent, child-value and induction/mask scalar-home groups, singly and all
 // combinations, 168; complete homes plus native header offset 167 (one point, rejected).
 // Original executable body and retained post-store child masks restored at 168/1070.
+// Round 62: first-block declaration orders, all five others 168 (identical code); NONE
+// default as a ternary 201; field-copy compare operands swapped 168; field pointer for the
+// copied field 168 (retail's dead `add ebp, 0x214` remains). The first block's goto became a
+// plain NONE guard (identical code).
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -2169,11 +2173,8 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 		long local_5 = *(long *)(local_1 + 0x13c);
 		short local_7 = *(short *)(local_1 + 0x130);
 		if (local_5 != NONE)
-		{
 			local_6 = (short)local_5;
-			if (local_6 != NONE && local_7 != NONE)
-				goto local_18;
-		}
+		if (local_6 == NONE || local_7 == NONE)
 		{
 			if (local_2->field_90 != local_6 || local_2->field_92 != local_7)
 			{
@@ -2183,7 +2184,6 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 			}
 		}
 	}
-local_18:
 	if (local_3 & 0x800)
 	{
 		long local_5 = NONE;

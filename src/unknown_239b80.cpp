@@ -495,6 +495,11 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // tail, but the previous point stays in ESI); both 254 (frame +8, the widened index spilled);
 // long index without the volatile 272; the distance sums with the terms swapped (loop, fraction,
 // both) 212 (identical).
+// Round 62: without the volatile the plane sits in ESI and the previous point spills as in retail,
+// but the previous side stays in CL and the frame grows 8 (227); with a signed short index too it
+// gives retail's loop tail but spills the widened index separately (254, 879 B); signed short alone
+// 252; `(bool)` on the point-mask bit 212 (identical; retail materialises it with neg/sbb/neg),
+// with no volatile and short index 254.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

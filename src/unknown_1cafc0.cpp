@@ -894,6 +894,10 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Input-record field orders 0-2-1-3/3-0-1-2/3-2-1-0/1-2-3-0/2-3-0-1/0-3-2-1/
 // 2-1-0-3/1-0-3-2 give 212/213/215/216/213/212/215/216 (mode/class/type/set = 0/1/2/3).
 // Complete publication schedules do not recover the identifier homes; original order restored.
+// Round 62: retail keeps the transition ID in memory and the resolved set in EBP, ours caches the
+// transition ID's index in BP. Success stored before the channel queries 274; member NONE test
+// on the transition ID 210 (identical); resolved set named after the lookup, first/last 210/210
+// (identical); blend declared first 211; graph test before the transition test 272.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
