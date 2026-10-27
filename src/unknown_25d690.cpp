@@ -1371,6 +1371,9 @@ bool function_1e1de0(long arg_0);
 // Round 179: target-admission/target-publication/activity inline declaration subsets
 // 165/165/165/165/165/165/165; all three inline/noinline 165. Original declarations restored.
 // Scratch lifetime, split actor declarations, default order and scratch name: eight combinations 165.
+// Round 225: signed-byte readiness/activity/behavior carriers 174/177/175;
+// readiness-activity/readiness-behavior/activity-behavior 184/182/184; all three
+// 191; all three plus signed-byte observed state 198. Original carriers restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

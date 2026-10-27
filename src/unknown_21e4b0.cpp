@@ -183,6 +183,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 147: allocated owner 519; owner/early state 504; owner/bool state 521; owner/early bool
 // 509; owner/first word 519; owner/early/word 504; owner/bool/word 521; owner/early/bool/word
 // 509. All executable forms restored; sources and comparisons saved.
+// Round 225: shared native descriptor across submix and plain/spatial/both buffer
+// phases 226/206/343; the same with creation byte across reset 282/284/361;
+// plain-submix/spatial-submix with consumed listener storage 226/206. Complete
+// descriptor resets preserved; original independent workspaces and byte lifetime restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
