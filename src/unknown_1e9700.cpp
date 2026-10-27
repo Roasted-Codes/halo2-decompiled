@@ -144,6 +144,8 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Object before/between rounding 421/421; object and history before/between 466/465;
 // later victim-team observation 450; early object with later team 449;
 // early object / object and history with forced rounding expansion 439/472. All restored.
+// Round 149: Shared current tick with rate, earlier code and clock receiver combinations [427, 450, 445,
+// 432, 427, 450, 445, 432]; all restored.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

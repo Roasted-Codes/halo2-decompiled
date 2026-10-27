@@ -437,6 +437,8 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Computed distance returned for immediate caller store: normal input orders
 // XYZ/XZY/YXZ/YZX/ZXY/ZYX 486/490/490/492/491/489; forced expansion 486;
 // out-of-line boundary 1758. All input copies and original helper restored.
+// Round 149: Split native normal/distance outputs with all matrix, normal-input and distance-output
+// pointer/reference contracts [476, 476, 476, 476, 476, 476, 476, 476]; all restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

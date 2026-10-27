@@ -971,6 +971,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // all with double selected fraction 337 (exact-only precision diagnostics; all restored).
 // Round 332: Candidate/collision/eligibility inline contracts, each and every
 // combination, 151; candidate/collision noinline pair 151. All restored.
+// Round 149: Native unsigned first/second identifier words and third full-word carrier, all combinations;
+// unsigned pair with second capture first [151, 151, 151, 151, 151, 151, 151, 149]; all restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
