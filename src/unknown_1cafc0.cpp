@@ -861,6 +861,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 167: Three separate name-change predicates on the late-success body, logical/bitwise joins:
 // bool 260/254, byte 260/254, short 280/272, long 277/267.
 // All three comparisons precede the original four name stores; original combined predicate restored.
+// Round 375: Native optional transition construction, mutable/const 341/341; with native
+// optional overlay 338/338; uniform three-ID role names on those graphs 341/341/338/338.
+// Frame 0x38 retained; all eight forms restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

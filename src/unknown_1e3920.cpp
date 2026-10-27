@@ -556,6 +556,9 @@ real function_267370(long volatile object_index);
 // uniform four-use movement flags alone/with plane/with forward/with both 428 each;
 // complete named plane distance 371. Fast control 371; full baseline 273.
 // Original arithmetic, repeated flag observations and protected interfaces restored.
+// Round 375: Complete native plane value, mutable/const plane with mutable/const point,
+// 452 each; the same four graphs with the shared plane-distance helper 452 each.
+// Native snapshot expands the frame; every form and the original float tree restored.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
