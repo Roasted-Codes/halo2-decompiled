@@ -213,6 +213,8 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // 634/634/627/634/634/634/634; all with flag cases after 18 651.
 // Conditional player-index assignment 628; parent, seat, iterator, port, status
 // and target names individually and together 627 each.
+// Flag-case order permutations 627/627/627/626/628; individual moves after case 18 609/646/643.
+// The 609 form worsens executable differing rows 552 to 561; restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

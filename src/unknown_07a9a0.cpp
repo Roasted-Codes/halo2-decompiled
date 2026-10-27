@@ -1094,6 +1094,7 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Native selector case declarations: team cases first in capacity/teams/both/
 // imbalance/capacity-imbalance/teams-imbalance/all 766/798/798/765/765/815/815;
 // all three reversed 814. One-point forms rejected; original selectors restored.
+// Group zero-store orders, five combinations 766; initial extrema-store orders, three combinations 766.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {
