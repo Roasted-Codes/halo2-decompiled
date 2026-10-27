@@ -572,6 +572,9 @@ real function_267370(long volatile object_index);
 // Round 176: Shifted held bit on the retained first-cross graph 319 fast/272 plain;
 // complete inverse bool/byte/short/long 319 each; staged inverse bool/byte/short
 // 368/368/388 (fast control 371). Missing frame dword persists; all forms restored.
+// Round 351: native carrier control/held bit/both/seat/control-seat/held-seat/all
+// 273/272/272/273/273/272/272; complete readonly metadata 272. One-point gains rejected;
+// original external record observations restored; missing frame dword and held-bit byte remain.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -1647,6 +1650,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
 // Scalar-home names for probability, fraction, delay, ticks, minimum and loop index,
 // plus both grouped renames: 270 each.
+// Round 351: bounded equipment for, actual pair initializer, early constant ordinal and
+// their four combinations 270/270/270/270/270/270/270; complete graph with word ordinal 270. All restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

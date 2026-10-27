@@ -2195,6 +2195,8 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 183: Backward visibility source/destination/both pointer induction 331/322/358;
 // four default-position permutations 296/296/296/296; both pointers with default first 358.
 // Original merge and dispatch restored; reset-word SI and later cursor/selection homes remain.
+// Round 351: native short count/cursor/selected home names in all seven combinations
+// 296 each; all scalar-home names with structure/distance roles 296. Original names restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

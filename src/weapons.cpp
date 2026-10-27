@@ -3118,6 +3118,8 @@ struct s_ammo_conversion_entry
 // Round 337: actual published round total short/word/long 225/225/229;
 // mode-test return producer 197 (gain 1, rejected); with short/word/long totals 231/231/235;
 // short total and mode producer with complementary byte acquisition 208. All restored.
+// Round 351: persistent tag/magazine/both/conversion/tag-conversion/magazine-conversion/all
+// cursors 205/222/228/228/224/217/232; all cursors with Boolean acquisition 236. All restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
