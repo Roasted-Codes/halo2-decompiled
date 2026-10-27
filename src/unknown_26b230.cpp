@@ -2200,6 +2200,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // DL round 156: native member/object generation ordinals word-word, word-long, long-word,
 // long-long, dword-long, long-dword, dword-word, word-dword
 // 311/323/323/299/299/299/323/323. Shared walk and original observations restored.
+// Round 353: on the shared marking walk, reset snapshots short/long/word
+// 357/356/357; short/long with chained sentinels 357/356; short/long
+// with long actor cluster 359/362; all three 359. Original observations restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

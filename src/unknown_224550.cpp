@@ -162,6 +162,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Round 129: native four-element UV output reference with bounds/cache/color references
 // in all eight combinations 421 each. Original producer contracts, tint inputs and all
 // four in-place UV captures restored.
+// Round 353: native caller tint output reference with color reference/value
+// 463/579; with cache array 463/579; entry output declaration
+// 463/579; entry output and cache array 463/579. Original tint restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

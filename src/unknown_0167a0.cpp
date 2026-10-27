@@ -1388,6 +1388,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // destination pointers 296; pointers/packed reference 296; pointers/dword packed 320;
 // pointers/mask complement 274; pointers/XOR replacement 274; pointers/reference/complement 278.
 // All executable forms restored.
+// Round 353: short writer index, category/bank-first 266/255; shared complement
+// 286/269; shared masked input 298/270; both mask parts 317/305.
+// Every short-index form loses a matched sibling; original shared writer restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
