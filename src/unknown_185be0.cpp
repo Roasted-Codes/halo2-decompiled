@@ -185,6 +185,9 @@ union s_185be7
 // Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
 // clear-first/set-first results with bool 1002/982, with long 1005/985;
 // named selected-mask result bool/long 947/944. Original Boolean helper input retained.
+// Round 221: recovered-frame settings/scalar/workspace names and active declarations,
+// eight forms 947 each; cached/state-live/settings-live/both roots with native names
+// 947/985/1004/1036/947/985/1004/1036. Original observations and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
