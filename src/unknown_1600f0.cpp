@@ -1012,6 +1012,9 @@ struct s_game_engine_globals_connections_view
 // connection sum reordered 184; summed time and connection lefts 184; short name width only 173,
 // with uncast long sums 173; word widths 170; short score/time with long name 292; long score
 // with short time/name 180.
+// Round 44: all/score-name/name/time width views 184/288/292/168; long time with short uses 168;
+// long fixed widths with short uses 173; derived score predicate 291; direct icon on the long-time
+// form 208. The two-point time-width gains are rejected; opening body restored.
 // Earlier 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
 // default-zero byte icon 230, native integer 184; parsed-name scope 184;
 // separate connection rectangle 206; both name buffers scoped 184.

@@ -920,6 +920,9 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Round 44: short/long-unit adjacent word bitfields 151/339; first-third-second words 153;
+// word/handle acquisition order 218; normal between words 162; sweep in radius/center argument
+// evaluation 293/293; named radius on the current frame 151. Opening body restored.
 // Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
 // Earlier: Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
