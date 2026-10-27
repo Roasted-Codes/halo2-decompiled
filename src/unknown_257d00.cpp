@@ -1590,7 +1590,9 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 466 (was 466): No local frame; pool acquisition, actor/output roles, dispatch and rounding homes remain.
+// score 466 (was 466): the body is 36 bytes short; retail loads the actor and cs-datum
+// table globals before the actor index and keeps the actor base in EBX, ours loads the
+// index first and keeps the actor base in ESI.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
@@ -2051,7 +2053,10 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
-// score 478 (was 478): Frame 0x1c agrees; actor/state registers and the first point home remain.
+// score 478 (was 478): the frame agrees at 0x1c; retail computes the actor base in EBX
+// and spills it at [esp+0x10] before the type dispatch, ours computes it in EDI just
+// before its use and reuses EBX for the state pointer. The body is 2400 bytes against
+// retail's 2396.
 // Earlier 478 (was 478): Frame 0x1c agrees; actor/state registers and first point home still differ; eight scope trials restored.
 // Earlier: frame 28 agrees; actor/state registers and first point home still differ.
 // Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;

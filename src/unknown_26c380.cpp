@@ -143,7 +143,10 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 	return success;
 }
 
-// score 419 (was 419): Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit tails remain.
+// score 418 (was 419): the frame is 0x5c against retail's 0x64; retail keeps the
+// pathfinding pointer in EBP and the -1 edge seed in EDX where ours keeps them in EBX
+// and EDI, and retail keeps a byte local at [esp+0xe] where ours has a long zero at
+// [esp+0x14].
 // Earlier 419 (was 419): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
 // Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct output tails remain.
 // Earlier: frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
@@ -186,7 +189,6 @@ bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origi
 	s_sector_trace_result *result = (s_sector_trace_result *)trace;
 	long success = false;
 	long current_sector_index = sector_index;
-	real last_distance = -0.1f;
 	s_pathfinding_edge *edge = NULL;
 
 	result->unknown20 = 3.4028235e38f;
@@ -195,6 +197,7 @@ bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origi
 	result->edge_index = (word)NONE;
 	result->distance = distance;
 	result->unknown1c = false;
+	real last_distance = -0.1f;
 	if (pathfinding && sector_index != target_sector_index && sector_index >= 0 && sector_index < pathfinding->node_count)
 	{
 		vector3f normal;
