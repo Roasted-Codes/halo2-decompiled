@@ -57,30 +57,41 @@ void *c_game_havok_memory::allocate(long size, long memory_class)
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-// score 19 (was 19): retail tests the end of the block with >= and gives the second block its own
-// deallocate, ours shares the first and the second.
+// score 9 (was 19): first and third now share source dispatch, but retail's second uses edx for
+// its vtable and eax for bounds; ours uses eax for the vtable, so the third joins the second.
+// Third end addition and fallback argument order also differ.
+// Tried: third abstract/fixed-base dispatch 19/19; nested receivers 19; first/second/both inclusive
+// 18/28/27; shared receiver name 19 and with inclusive 27; allocation local 19; fallback
+// inline/noinline/consistent-inline declarations 19/19/19; inverted third 19; third predicate 19;
+// first/third shared dispatch 11 with concrete/same-local second 11/11 and inclusive 9;
+// early third 39 (132/121); late second 9; second predicate 9; dispatch flag 38 (109/121).
 // @retail 0x147160
 void c_game_havok_memory::deallocate(void *address)
 {
 	if (address)
 	{
-		if (((long)((byte *)g_479898 + 0x4340) <= (long)address && ((long)((byte *)g_479898 + 0xf0340) > (long)address || (byte *)g_479898 + 0xf0340 == address)))
+		c_havok_abstract_allocator *allocator;
+		if (((long)((byte *)g_479898 + 0x4340) <= (long)address && ((long)((byte *)g_479898 + 0xf0340) >= (long)address || (byte *)g_479898 + 0xf0340 == address)))
 		{
 			_ReadWriteBarrier();
-			g_479898->deallocate(address);
+			allocator = g_479898;
 		}
-		else if (((long)((byte *)g_479894 + 0x30) <= (long)address && ((long)((byte *)g_479894 + 0x15030) > (long)address || (byte *)g_479894 + 0x15030 == address)))
+		else if (((long)((byte *)g_479894 + 0x30) <= (long)address && ((long)((byte *)g_479894 + 0x15030) >= (long)address || (byte *)g_479894 + 0x15030 == address)))
 		{
-			g_479894->deallocate(address);
+			allocator = g_479894;
+			allocator->deallocate(address);
+			return;
 		}
 		else if (ADDRESS_IN_BLOCK(address, g_47989c->m_buffer, (byte *)g_47989c->m_buffer + g_47989c->m_size))
 		{
-			g_47989c->deallocate(address);
+			allocator = g_47989c;
 		}
 		else
 		{
 			function_146e30()->deallocate(address);
+			return;
 		}
+		allocator->deallocate(address);
 	}
 }
 #pragma function(_ReadWriteBarrier)
