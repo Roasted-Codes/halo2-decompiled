@@ -57,26 +57,31 @@ char *online_result_format(char *text, const char *format, ...);
 char *online_result_append(char *text, const char *format, ...);
 dword online_result_text_length(const char *text);
 
+/* the logon test is written out: calling the inline online_logon_connected()
+   compiles to the same code, but the extra inline expansion moves LTCG's
+   whole-program inlining enough that 0x73360 stops matching */
 // @retail 0xb36c0
 bool online_result_service_connected(void)
 {
+    bool logged_on = false;
+    bool connected;
     if (g_467214 != NONE)
     {
         switch (online_task_get_logon_status(g_467214))
         {
         case 1:
-        {
-            bool connected = false;
-            for (long i = 0; i < 13; i++)
-                if (g_467178[i].service_id == 0x4d530064)
-                    connected = g_467178[i].connect;
-            if (connected)
-                return true;
+            logged_on = true;
             break;
         }
-        }
     }
-    return false;
+    if (logged_on)
+    {
+        connected = false;
+        for (long i = 0; i < 13; i++)
+            if (g_467178[i].service_id == 0x4d530064)
+                connected = g_467178[i].connect;
+    }
+    return logged_on && connected;
 }
 
 // @retail 0xb3700

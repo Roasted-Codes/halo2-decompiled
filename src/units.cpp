@@ -67,6 +67,13 @@ struct s_unit_definition
 
 bool function_1cb920(void *data, long label);
 
+// score 22 (was 27): ours keeps the object pool pointer in esi and reloads its
+// data pointer for the unit lookup; retail copies unit_index (ecx) to esi at entry
+// and keeps the data pointer in ecx for both lookups. Tried: one lookup 24/140
+// (retail's body except the seat/unit roles: seat arrives in ecx and is copied to
+// si); the parameters swapped in the definition 24 (same code); two lookups 22/22;
+// result declared first 24; through a header pointer 24; a 600 s permuter run on the
+// one-lookup form, best 23 (a steering flag).
 // @retail 0xc8200
 bool function_c8200(long object_index, short seat_index, long unit_index)
 {
@@ -82,14 +89,18 @@ bool function_c8200(long object_index, short seat_index, long unit_index)
 		s_unit_object *unit = UNIT_OBJECT(unit_index);
 		s_unit_object *animated = UNIT_OBJECT(unit_index);
 		s_unit_object *object = UNIT_OBJECT(unit_index);
-		long label;
 
 		if (unit->type == 1)
-			return true;
-
-		label = definition->seats[seat_index].label;
-		if (function_1cb920((byte *)object + animated->field_x69a903.offset, label))
+		{
 			result = true;
+		}
+		else
+		{
+			long label = definition->seats[seat_index].label;
+
+			if (function_1cb920((byte *)object + animated->field_x69a903.offset, label))
+				result = true;
+		}
 	}
 
 	return result;
