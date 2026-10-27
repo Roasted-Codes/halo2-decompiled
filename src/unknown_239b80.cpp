@@ -291,6 +291,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // On the long departure state: signed-word/unsigned-word/unsigned-native/int result
 // 257/257/203/203; native input count 259, with signed/unsigned word result
 // 268/268; observed signed-word input count 203. Caller checked with each.
+// Round 152: Classifier rejection with entry result, long/bool/byte/short departure
+// 262/262/262/259; post-classification result 256/256/256/251. All restored.
 // Equality input contracts (pointer order, first/second/both native references), each
 // with long/Boolean departure: 203/227/203/234/203/234/203/234. Helper and body restored.
 // Round 59: retail keeps the hull count at +0x10 and the departure flag as a byte in the index
