@@ -2584,6 +2584,8 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
     real *blue, byte order, vector3f *direction, point3f const *position);
 // score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+
+// Earlier score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 // Round 73 (plain checks with 0x73360): the held round 90 body 401 and 0x73360 MATCH -> 33 again;
 // that body with the existing render-memory allocator, merged bool result, default light in the
 // else arm and globals read at each use but the original sample loop 511, 0x73360 again 33; the
@@ -2623,6 +2625,11 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Round 190: Existing copy/inverse/coefficient inline declarations singly, in three pairs and
+// together 530 each; all three separate noinline declarations 850. Original helper declarations and
+// body restored; frame 0x20c/0x200 and separate-sample boundaries remain.
+// Direct cache-hit completion and found-byte break, each with long/bool success and original/positive
+// eligibility results, 554/549/554/549 each. Original exhaustive scan and body restored.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2760,6 +2767,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // 1262/1261. Original eleven sampler statements and helpers restored.
 // Native tag block/bitmap records separately/together, their read-only receivers and
 // complete tag/bitmap observations at use: eight forms 334 each. Original receivers restored.
+// Complete alpha parameter results, ternary/else-if/independent clamps 353 each; native rectangle
+// field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

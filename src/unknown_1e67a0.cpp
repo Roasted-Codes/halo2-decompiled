@@ -749,6 +749,10 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // 266/288. Direct native scale reaches retail length but regresses; original sampled scaling retained.
 // Round 332: Sample-angle, turn-angle and paired trig scalar home names, each
 // and every combination, 155; all with projected-axis scalar home 155. All restored.
+// Round 220: Five/all input flag packing 382/387; five/all flags from native ordered tests
+// into a real result word 368/398; corresponding conditional result words 391/374;
+// complete result at entry with either role name 398/398. Earlier initialization now differs;
+// original field-by-field flag production, sampled vectors and all rotation expressions restored.
 // Round 199: Canonical turn-result byte/short/long 155/161/159; side-test outputs and
 // result declared before sampling, bool/byte/short/long 155/155/161/159; all vector
 // workspaces declared before sampling with distinct side-output names 155.

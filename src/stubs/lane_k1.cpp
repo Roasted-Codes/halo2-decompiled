@@ -15,11 +15,7 @@
 #include "joined_groups_3720a0.h"
 #include "slot_table_372a40.h"
 
-// @stub 0x2e5a90
-void s_1c3a40::function_2e5a90(handlers_2e5d50 const *handlers, long first_type, long second_type,
-	long first_type_again, long second_type_again, bool arg_5)
-{
-}
+
 
 // the three-axis sweep's pair report for many boxes at once (claimed, #638)
 // @stub 0x2e2f70

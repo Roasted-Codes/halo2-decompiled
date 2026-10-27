@@ -1071,6 +1071,10 @@ real function_50650(real cosine);
 // shared inner minimum 335; all observations plus shared inner minimum 381. Original receivers restored.
 // Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
 // X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
+// Direct speed-factor default 302; all minimum spans 117; speed/spans 302; paired closing
+// projections 117; speed/projections 302; spans/projections 117; all 302; all with facing default
+// first 300 (fast control 117, full 137). All restored; actor/object homes, velocity preload
+// and the final minimum/epilogue placement remain.
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1342,7 +1346,18 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // with float magnitudes and per-arm centre 278 (kept); with plain flag 301; result/radius renames 298;
 // trace-hit single exit (goto or nested if) 278, with plain flag 275; negated early return 288;
 // facing reference 302; difference through the point-difference helper 278/275 (plain flag).
+// Round 218, recovered direction graph with ordinary inputs/side: radius at each use
+// 274 at retail length (gain four rejected); negative radius 295; reused threshold 302;
+// negative/field radius with threshold 295/279; direct side result alone/with negative
+// radius/with negative and threshold 302/295/295. Actual trace common exit with field/
+// negative radius 278/299. All restored; zero/radius registers and side threading remain.
 // Round 152: Ordinary origin/side with symmetric lateral/forward x products 285, y products 302, all products 302; complete dot terms 302, with x/y/all products 285/302/302; complete terms with shared trace exit 276 (1175 bytes). Two-point exit gain rejected; original body restored.
+// Round 221: common radial-offset target addition 281/278/292/291;
+// target-seeded center 319/303/315/299. Each group varies early
+// side-radius and common trace exit on ordinary inputs/side; all restored.
+// Round 347: ordinary origin with direct byte/short left state 302/305, Boolean/byte right 281/281;
+// complete facing scalar observations with those four states 284/298/300/300.
+// Last two reach 1173 bytes, but input/SSE register ownership regresses; original body restored.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

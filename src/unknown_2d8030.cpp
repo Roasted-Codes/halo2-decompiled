@@ -66,6 +66,9 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 
 // score 39 (was 39): Extra vtable store and release arguments remain.
 // Signed and unsigned capacity locals, separately and together: eight forms 39.
+// extra table store and first release register staging differ.
+// Implicit destruction and earlier member destructor forms 89, 39, 89, 39, 89, 39, 89;
+// implicit with both cleanups later 89. Implicit forms lose the deleting destructor; explicit forms preserve it.
 // Extra class-table store and first release argument staging remain.
 // Earlier suppressed table store 30; owned storage/both storage/element byte size/
 // named byte size 0, but deleting destructor missing; capacity/signed ownership/
@@ -76,6 +79,10 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 // Abstract form 30; owned pointer 0; capacity 30; both 0; signed ownership 30;
 // element size 0; unowned return 30; captured return 3; owned byte size 0.
 // Matching forms lose the matched deleting body; the header is restored.
+// Signed/unsigned capacity carriers 39; implicit cleanup definitions 89
+// and lose the deleting body; explicit cleanup definition order 39.
+// Member cleanup contracts: force-inline 39; id noinline 55; location
+// noinline 59; both noinline 83. Class-table store and first release remain.
 // @retail 0x2d8510
 error_handler_2d8030::~error_handler_2d8030()
 {

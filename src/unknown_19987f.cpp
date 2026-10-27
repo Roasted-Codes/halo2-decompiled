@@ -1325,6 +1325,9 @@ extern bool g_4ed39d;
 // Round 175: Choice from the test, two/one alternatives: bool 168/184, byte 168/184,
 // short 175/189, long 173/192. Lower raw counts add conversion instructions and
 // worsen aligned sequence edits from 66 to 72-74; all original producers restored.
+// Round 178: Native availability result selects ID/ID+first/ID+second/all callbacks: 169/169/205/207;
+// its complement 198/198/209/215. Raw 169 adds arithmetic absent from retail, aligned edits 66 to 72;
+// original producers restored. Menu-byte homes and dialog joins remain.
 // Native message object/name/early lifetime/both 184/184/184/184; aggregate/CRT/early aggregate 247/207/239;
 // branch-local loader 184. All restored.
 // Lobby/handled order, callback initializers, dialog assignment order and their
@@ -1336,6 +1339,8 @@ extern bool g_4ed39d;
 // its complement 198/198/209/215. Raw 169 adds arithmetic absent from retail, aligned edits 66 to 72;
 // original producers restored. Menu-byte homes and dialog joins remain.
 // Round 153: shared indirect load only 184; game-lobby/game-main/lobby-main constructor-and-load joins 195/195/190; corresponding partial indirect-load joins 184/184/184; shared load with direct constructor loaders 184. Original branch-local publication and both inherited qualifications restored.
+// Round 155: Deferred native message declaration/partial initialization at game/lobby/main
+// consumers, their pairs/all, and common selection boundary: 225/215/215/233/233/224/220/228. Original publication lifetimes restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

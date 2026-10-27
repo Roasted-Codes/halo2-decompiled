@@ -197,6 +197,8 @@ void function_265bb0(long actor_index);
 // Unit-object receiver on the whole-slot graph, four declaration phases: original second
 // output 68/92/82/88; existing setter 85/85/94/85. Native unit input ownership does not
 // recover the conversion homes or the mode register; original body restored.
+// Y346: timer input/output order, scalar names and complete delay-product boundaries 60 (seven forms);
+// all with the second input named at computation 60.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
