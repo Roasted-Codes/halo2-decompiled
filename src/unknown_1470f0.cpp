@@ -59,6 +59,9 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 // score 19 (was 19): retail tests the end of the block with >= and gives the second block its own
 // deallocate, ours shares the first and the second.
+// Y346 (not kept: a redundant '>= || ==' end test and a hand-merged dispatch for the first and third ranges): 9.
+// Inverse admission with separate range lifetimes 41/49/52/49/41/49/52, shared end 52; native range lifetimes
+// 31/9/31/9/31/9/31, shared end 31; each receiver global read once on its path 9/9/9.
 // @retail 0x147160
 void c_game_havok_memory::deallocate(void *address)
 {

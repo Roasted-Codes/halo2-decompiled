@@ -64,6 +64,9 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 
 // @retail 0x2d84e0 deleting error_handler_2d8030
 
+// score 39 (was 39): extra table store and first release register staging differ.
+// Implicit destruction and earlier member destructor forms 89, 39, 89, 39, 89, 39, 89;
+// implicit with both cleanups later 89. Implicit forms lose the deleting destructor; explicit forms preserve it.
 // @retail 0x2d8510
 error_handler_2d8030::~error_handler_2d8030()
 {

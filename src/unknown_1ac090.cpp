@@ -117,31 +117,29 @@ void __stdcall function_1ada70(long actor_index, s_slot *slot);
 
 /* ---- slot type 0x2c ---- */
 
-// score 12 (was 12): conversion spills still use the rounding slot; timer-setting boundary 29, 29, 29, 33; output first 12, output scope 12, byte before rounding 19, native int output 12 (round 115).
-// integer conversion spills use the rounding slot rather than the parameter home;
-// existing rounding helper 29; named tick value with helper 29; later state with helper 29;
-// direct state fields with helper 29; unit range with helper 29; native range with helper 29;
-// unit range with parameter home 12; shared range with parameter home 12; existing time
-// conversion 29; time conversion and later state 29; unit range and time conversion 29.
-// @retail 0x1ac090
-bool __stdcall function_1ac090(long actor_index, s_slot *slot)
+/* the slot state of 0x1acda0 seen past its header (the same layout as s_slot_2c from +0xc) */
+struct s_1acda0
 {
-	s_slot_2c *state = (s_slot_2c *)slot;
-	real scale = (slot_random() + 1.0f) * 2.0f;
-	long ticks;
-
-	*(real *)&slot = scale * g_510c54->field_2_3;
-	__asm
-	{
-		fld slot
-		fistp ticks
-	}
-	state->ticks = (short)ticks;
-	state->unknown39 = false;
-	return true;
-}
-
-void function_265bb0(long actor_index);
+    bool unknown0c;
+    bool unknown0d;
+    short ticks;
+    bool unknown10;
+    byte unknown11;
+    bool unknown12;
+    bool unknown13;
+    vector3f facing;
+    short unknown20;
+    short unknown22;
+    bool unknown24;
+    bool unknown25;
+    byte unknown26[2];
+    s_type_c3b527 point;
+    char unknown38;
+    bool unknown39;
+    bool unknown3a;
+    bool unknown3b;
+    byte unknown3c[0x40 - 0x3c];
+};
 
 PRIVATE __forceinline void local_0(real seconds, short *timer)
 {
@@ -165,7 +163,30 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 	*timer = (short)ticks;
 }
 
-// score 60 (was 68): frame four versus retail zero (first tick in the frame, not the slot home);
+// score 8 (was 12): seed and state registers differ; native data and timer input recover the conversion homes.
+// Timer-setting boundary 29/29/29/33; output first/scope 12/12; byte before rounding 19;
+// native int output 12. Earlier conversion spills used the rounding slot rather than the parameter home;
+// existing rounding helper 29; named tick value with helper 29; later state with helper 29;
+// direct state fields with helper 29; unit range with helper 29; native range with helper 29;
+// unit range with parameter home 12; shared range with parameter home 12; existing time
+// conversion 29; time conversion and later state 29; unit range and time conversion 29.
+// Complete additive term alone/with timer input 10/10; doubled range and timer input 8;
+// all arithmetic terms, entry workspaces, immutable inputs and later receiver 8/8/8/8;
+// direct data-member observations 28.
+// @retail 0x1ac090
+bool __stdcall function_1ac090(long actor_index, s_slot *slot)
+{
+	s_1acda0 *state = (s_1acda0 *)slot->unknownc;
+	real doubled = (slot_random() + 1.0f) * 2.0f;
+	real duration = doubled * g_510c54->field_2_3;
+	local_1(duration, &state->ticks);
+	state->unknown39 = false;
+	return true;
+}
+
+void function_265bb0(long actor_index);
+
+// score 60 (was 60): frame four versus retail zero (first tick in the frame, not the slot home);
 // slot, actor-table and object-table registers rotate and the mode is compared in memory.
 // Both timer helpers 85; add helper 68 plain kept; set helper 80; native tick outputs
 // both 72, first 70, second 80; shared random index 80; library slot copy 80.
@@ -183,6 +204,8 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // Round 323: long/word/dword/real delay with second writer 88/85/105/105;
 // the same delay carriers with native second output 88/85/105/105. Conversion-input packing
 // restores zero frame in some forms but regresses allocation; original body restored.
+// Timer input/output order, scalar names and complete delay-product boundaries
+// 60/60/60/60/60/60/60; all with the second input named at computation 60.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {
@@ -1216,29 +1239,7 @@ bool function_2613d0(long arg_0, s_reference arg_1, s_prop_search *arg_2);
 bool __stdcall function_1acb50(long arg_0, s_slot *arg_1);
 
 #pragma inline_depth(0)
-/* the slot state of 0x1acda0 seen past its header (the same layout as s_slot_2c from +0xc) */
-struct s_1acda0
-{
-    bool unknown0c;
-    bool unknown0d;
-    short ticks;
-    bool unknown10;
-    byte unknown11;
-    bool unknown12;
-    bool unknown13;
-    vector3f facing;
-    short unknown20;
-    short unknown22;
-    bool unknown24;
-    bool unknown25;
-    byte unknown26[2];
-    s_type_c3b527 point;
-    char unknown38;
-    bool unknown39;
-    bool unknown3a;
-    bool unknown3b;
-    byte unknown3c[0x40 - 0x3c];
-};
+
 
 // score 68 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
