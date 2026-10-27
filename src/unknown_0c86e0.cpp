@@ -93,12 +93,19 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 	return result;
 }
 
+// score 122 (was 131): entry saves, fresh unit reload and sentinel carriers still differ.
+// shared weapon producer 131; user-result arms 125; both 125; signed-word user 128;
+// shared producer/word 128; word/result arms 122; all three 122; guarded weapon
+// result 135. Retain signed-word user/result arms; the six-count arm-only gain is rejected.
 // @retail 0xc86e0
 void function_c86e0(long unit_index, bool keep_weapon_zoom)
 {
 	s_zoom_unit *unit = ZOOM_UNIT_GET(unit_index);
-	long user_index = unit_get_player_index(unit_index) != NONE ?
-		((s_zoom_player *)(g_4e8c24->data + (unit_get_player_index(unit_index) & 0xffff) * 0x21c))->user_index : NONE;
+	short user_index;
+	if (unit_get_player_index(unit_index) == NONE)
+		user_index = NONE;
+	else
+		user_index = ((s_zoom_player *)(g_4e8c24->data + (unit_get_player_index(unit_index) & 0xffff) * 0x21c))->user_index;
 	long weapon_index = unit_get_current_weapon(ZOOM_UNIT_GET(unit_index));
 	bool weapon_zoomed = weapon_index != NONE ? function_100f70(weapon_index) : false;
 	bool was_zoomed = false;

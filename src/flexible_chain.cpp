@@ -232,7 +232,11 @@ void __stdcall function_1160c0(real dt)
 	}
 }
 
-// score 194 (was 194): frame 0xa4 agrees; three pairs of same-size stack homes are exchanged (retail:
+// score 190 (was 194): attachment/previous/axis homes and rotation scheduling differ;
+// seven local-name sets, declaration reversals and entry/loop scopes 194;
+// shared cross 207, both point differences 286, both helpers 280;
+// scaled difference 212, all vector helpers 285.
+// frame 0xa4 agrees; three pairs of same-size stack homes are exchanged (retail:
 // origin below forward, offset below previous, the scalar temporaries below the axis), the segment
 // pointer lives in edx (ours edi) and the rotation's products are scheduled in another order.
 // Round 62: the existing normalize3d for the axis and dot3f for the projection give the same code (194)

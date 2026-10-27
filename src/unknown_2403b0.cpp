@@ -34,7 +34,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 	return !(table->flags[team] & 1);
 }
 
-// score 95 (was 95): frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
+// score 95 (was 95): frame 0x3c agrees; pool-data spill and scratch-register ties remain.
+// Earlier: frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
+// frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
 // frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
 // it, the completion bits use other registers, and the final predicate's layout differs. Kept: the two
 // completion bits set through byte_flags_set (retail stores the flag byte twice), 190 -> 146.
@@ -84,6 +86,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // change); event initialization before both bits 109. On the 95 body: permission as `allowed = false;
 // if (0x15e410(team)) allowed = clear;` 128; engine call through game_engine_get 95; slot read without
 // the weapon pointer 95; position/event declarations swapped 95; signed-char predicate team 95.
+// Round 211: on the repaired MIN/MAX graph, twice-used increment/decrement inputs, native short
+// clamp output and their seven subsets 95 each; complete graph with entry result declaration 95.
+// Original input observations, result lifetime and body restored.
 // Round 62 (95 body): unit through the existing unit_weapon_view_get 95; predicate as `== 0` 95;
 // blocked as one value expression 95; second event initialized before both bits 107; both events
 // through the out-of-line initializer nested in the cause call 284 (not inlined).

@@ -273,7 +273,9 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): frame 0x24 versus 0x2c. Retail receives the source in ecx and keeps it in esi
+// score 204 (was 204): frame 0x24 versus 0x2c; source receiver and side-byte homes remain.
+// Earlier: Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
+// frame 0x24 versus 0x2c. Retail receives the source in ecx and keeps it in esi
 // until the plane-table read (scheduled after the edge vector), computes both side flags eagerly (one
 // spilled to a byte slot, `shr; and bl, 1`) and reads the transform from the stack at its test; ours
 // receives the source in edx with no copy, holds the transform in ebp from entry and folds the side
@@ -353,6 +355,9 @@ void function_245400(s_source_245400 const *source, long index,
 // point workspace placement ties each. Original scalar inputs with separate native
 // rotation output copied before/after point transform 193/211, both declaration
 // scopes; direct final output with initial copy/branch results 193/229.
+// Round 211: complete native surface value, mutable/const, with primary-table-first-second /
+// primary-table-second-first / table-primary-first-second / table-second-primary-first publication
+// orders: 211/211/211/209 each; 789/789/789/787 bytes. Original record, reads and body restored.
 // Round 62: second material read first 205; side flags before the plane pointers 204; second material
 // record pointer read first 207; source parameter first (definition, declaration and the one call)
 // 204, still edx; the side comparison named before the plane test 204. The `/Gd` first pass keeps the
