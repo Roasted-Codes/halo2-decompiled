@@ -481,7 +481,7 @@ void function_2bde90(real t, point3f *out, point3f *points)
 /* builds the hill's polygon on the spline through its markers, and its
    center, radius, perimeter and height range (the height range also covers
    the hill's other markers) */
-// score 18 (was 23): Sampling fraction/call setup and marker-loop registers remain; frame and retail length agree.
+// score 18 (was 18): Sampling fraction/call setup and marker-loop registers remain; frame and retail length agree.
 // Earlier at 25 (was 25): control/sampling conventions, radius base and marker registers remain.
 // Earlier at 130 (was 134): control-call convention and scan induction differ;
 
@@ -546,6 +546,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // 72/137/69/135/72/137/69/135 fast (unchanged control 72, full 23); restored.
 // Exact control-helper orders spline/points/index/output 70, with radius receiver 67;
 // spline/points/output/index 72, with radius 69. First order plus receiver kept, plain 18.
+// Round 144: sampling output/fraction/points order 67f; inline original and five
+// coordinated orders 219f each; separate noinline declaration 67f. Reduced control
+// 67f versus full 18; first sampling input XMM3/XMM2 and final marker roles remain.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

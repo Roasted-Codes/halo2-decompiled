@@ -434,6 +434,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Three-input transform formal orders M/O/N, N/M/O, N/O/M, O/M/N, O/N/M
 // 404/404/403/404/403; transform/diagnostic/both forced expansion 404/404/404.
 // One-point formal-order leads rejected; original helper contracts and all normal copies restored.
+// Computed distance returned for immediate caller store: normal input orders
+// XYZ/XZY/YXZ/YZX/ZXY/ZYX 486/490/490/492/491/489; forced expansion 486;
+// out-of-line boundary 1758. All input copies and original helper restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

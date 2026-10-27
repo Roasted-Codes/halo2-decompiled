@@ -64,9 +64,10 @@ struct s_object_flags_256bd0
 	word unknown0 : 6;
 	word bit6 : 1;
 };
-// score 211 (was 211): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
 
-// score 206 (was 211): frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
+// score 206 (was 206): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
+
+// frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // the iterator loop into a stack byte (back edge to its reload) where retail re-reads the ai
 // globals each pass; the 0x28dbd0 call passes the character in eax where retail passes the
 // variant (BLOCKED-BY 0x28dbd0 for that call); retail selects the entry with cmovne.
@@ -104,6 +105,9 @@ struct s_object_flags_256bd0
 // with reused actor offset 254. Original copies and receiver are restored.
 // Round 327: native selected/object/variant/character handles 211/211/211/211; selected/object and variant/character pairs
 // 211/211; all four handles 211; all with double minimum comparison 306.
+// Round 243: Native actor/spawned-actor/unit metadata singly 206 each; all pairings 206
+// each; complete native and read-only native records 206/206. Original body, iterator
+// helper and includes restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

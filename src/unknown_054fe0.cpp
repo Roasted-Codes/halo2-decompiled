@@ -1316,6 +1316,8 @@ struct s_player_properties
 // alone 184/184; both getters with bounded byte name count 218. All restored.
 // Round 208: positive cache-update scope 184; absent-input exit 217; team metadata first 231;
 // cache/input guards 217; cache/metadata 231; input/metadata and all three 220; all plus wide team 223.
+// Round 214: native array-end traversal collection/update/both 299/344/395; shifted collection/update/both
+// 202/341/347; collected-name output end with collection/both input ends 325/418. All restored.
 // Round 240: literal default groups first-array/second-array/zero-bytes/byte-sentinel/long-sentinel/short-sentinels;
 // orders ACBDEF/ABDEFC/DEFCAB/FCABDE/EABCFD/BFEDCA/CDEFAB/FEDCBA 184/184/186/186/184/186/184/186. Original store order restored.
 // Native short/word/signed-byte/byte collection ordinals 235 each; corresponding

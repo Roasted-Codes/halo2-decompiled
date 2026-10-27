@@ -93,6 +93,10 @@ bool function_986d0(c_handle_table_450cd0 *self, long index, s_bitstream *stream
 // Round 318: on the natural index-spill body, long/short status 148/142;
 // status after header 72; late long/short status 142/142; twice-used release mask 18;
 // one status exit 18; late status with mask 72. Frame and callback setup remain. All restored.
+// Round 5: named callback inputs with late and separated receiver acquisitions 18/18/18;
+// bottom-increment for/while 18/18; success/failure presets 122/126 (414/402); shared checkpoint
+// helper 18; release pointer arithmetic 18; assigned outcome branches 18; writer argument
+// assignment 18; index declaration initializer 18. All restored.
 // Round 136, natural spill graph: bool/long/short/byte callback outcomes 18,18,18,18;
 // callback outcome with entry/owner/long-entry/both snapshots 18,18,18,18. All nonmatching exact-only forms restored.
 // @retail 0x98750

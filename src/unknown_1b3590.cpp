@@ -602,7 +602,7 @@ long function_1e4a50(long index);
 void function_26c180(long actor_index);
 short actor_behavior_find_level(long owner_index, short type);
 
-// score 59 (was 140): the 0x270750 call passes scratch/sector/target in other registers (its own
+// score 59 (was 59): the 0x270750 call passes scratch/sector/target in other registers (its own
 // convention; the extra byte also makes the loop's back-edge jump near, +5 bytes), and after the
 // loop the sector and unit loads and the pool/actor registers are scheduled the other way.
 // Earlier (frame 0x84 versus 0x88 and actor/scratch homes): source store order 145, movement result 142, positive membership scope 161,
@@ -627,6 +627,9 @@ short actor_behavior_find_level(long owner_index, short type);
 // the found branch 132; NONE test as result = false in an else-if chain 59 (kept). On that: location
 // pointer 62; getter at each use after the loop 88; loop member reused 59; best locals first 59;
 // inverted selection test 59; slot data block view (unknownc) 59.
+// Round 144, recovered result-first/iterator frame: native slot data 59f; movement
+// result 154f, with slot 154f; search result 121f; search/movement 145f; selection/
+// movement 137f; all results 154f, with slot 154f. Original body restored.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

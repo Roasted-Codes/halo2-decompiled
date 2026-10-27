@@ -435,6 +435,9 @@ struct s_1f8a70_actor
 // Movement flags byte/dword/long 396/399/399; state const pointer/reference 399/399;
 // state reference with flags byte/dword/long 396/399/399; long result/long route/both on byte flags
 // and state reference 421/410/427. Three-point reductions rejected; all restored.
+// Round 142: separate noinline declarations for radius/position/root/directed route/
+// path source/path settings/scratch get/scratch release all 399. Every boundary restored;
+// pool/data entry and protected unit-mode/result homes remain.
 // Round 169: Nonzero route producer with initial/reference/both bounded mode predicates
 // 399/414/406/413; canonical zero tests on those four forms 399/414/406/413. All restored.
 // @retail 0x1f8a70
