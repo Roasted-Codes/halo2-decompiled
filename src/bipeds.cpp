@@ -1667,10 +1667,13 @@ bool __stdcall function_df880(point3f const *point, vector3f const *direction, l
 	{
 		hit = true;
 	}
+	else if (function_ddf60(arg_159e6d))
+	{
+		hit = function_1697c0(0x800001, &start, &vector, NONE, NONE, (s_collision_result_1697c0 *)&collision);
+	}
 	else
 	{
-		hit = function_1697c0(function_ddf60(arg_159e6d) ? 0x800001 : 0x84000d, &start, &vector, NONE, NONE,
-			(s_collision_result_1697c0 *)&collision);
+		hit = function_1697c0(0x84000d, &start, &vector, NONE, NONE, (s_collision_result_1697c0 *)&collision);
 	}
 	if (hit)
 	{
@@ -3490,7 +3493,9 @@ bool __stdcall function_e3c90(long arg_159e6d, long *names, s_biped_physics_outp
 // @retail 0xe4330
 void function_e4330(long arg_159e6d, real height)
 {
-	real fall = height;
+	/* how hard the landing is: the height, less the soft landing height on a
+	   soft landing, then as a fraction of the landing's range */
+	real severity = height;
 	s_biped *biped = BIPED_GET(arg_159e6d);
 	byte *definition = BIPED_DEFINITION_GET(biped);
 	real soft = *(real *)(definition + 0x204);
@@ -3503,37 +3508,35 @@ void function_e4330(long arg_159e6d, real height)
 	/* retail keeps forced on the stack */
 	bool const *forced_reference = &forced;
 
-	if (!forced)
+	if (!forced && soft > severity)
 	{
-		if (soft > fall)
-		{
-			return;
-		}
-		if (hard > fall)
-		{
-			range = hard - soft;
-			time = *(real *)(definition + 0x1fc);
-			fall -= soft;
-			kind = 0;
-		}
-		else
-		{
-			range = maximum - hard;
-			time = *(real *)(definition + 0x200);
-			kind = 1;
-		}
+		return;
 	}
-	else
+	if (forced)
 	{
-		fall = maximum;
+		severity = maximum;
 		range = maximum - hard;
 		time = *(real *)(definition + 0x200);
 		*(byte *)&biped->flags_348 &= ~0x40;
 		kind = 1;
 	}
+	else if (hard > severity)
+	{
+		range = hard - soft;
+		time = *(real *)(definition + 0x1fc);
+		severity -= soft;
+		kind = 0;
+	}
+	else
+	{
+		range = maximum - hard;
+		time = *(real *)(definition + 0x200);
+		kind = 1;
+	}
 	if (range > 0.0f)
 	{
-		long ticks = vehicle_round_ticks(time * PIN(fall / range, 0.0f, 1.0f) * g_510c54->field_2_3);
+		severity = PIN(severity / range, 0.0f, 1.0f);
+		long ticks = vehicle_round_ticks(g_510c54->field_2_3 * (time * severity));
 
 		if (ticks > 0)
 		{
