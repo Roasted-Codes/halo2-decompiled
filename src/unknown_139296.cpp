@@ -336,6 +336,9 @@ void function_13ad48(long user_index, byte const *selectors, real *values, byte 
 bool function_22acb4(long player_index);
 
 // score 165 (was 165): extra second-mask spill and persistent constant homes remain.
+// Round 43: arithmetic NONE-seeded first 237; with third type order 123 240;
+// dword/signed-word first 295/295; dword/signed-word second 291/288;
+// OR-seeded first with third orders 123/231 281/280.
 // Extra second-mask spill and persistent constant homes remain.
 // extra second-mask slot and retained constant registers differ;
 // third/second/fourth phases 265; fourth/second/third 261; third/fourth/second 246;

@@ -45,6 +45,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 // score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null and successor EBP remain.
+// Round 43: iterator-pool carrier 164; with field-pool cache 198; with state owner 193;
+// typed iterator/carrier 164; const carrier 164; carrier declared first 164; local result
+// with late/early member publication 164/164.
 // Earlier 164 (was 164): frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
 // Frame 0x28 agrees; separate pool/iterator homes, early null publication and saved successor EBP remain.
 // frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
