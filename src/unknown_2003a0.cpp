@@ -2569,7 +2569,8 @@ short function_290cd0(short arg_0, long arg_1, long arg_2, short *arg_3, short *
 bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
-// score 152 (was 152): Frame 0x1c agrees; task zeroing/retest, predicate load and iterator head remain.
+// score 109 (was 152): Frame 0x1c agrees; trigger predicate width, pointer retest and iterator head remain.
+// Earlier: task zeroing/retest, predicate load and iterator head remained.
 // Earlier: frame 0x1c agrees; task zeroing/retest and iterator head remain; optional producer scope, delay scope, both scopes, native trigger entry, signed entry index, threshold selection, iterator name and native entry with producer scopes each 152.
 // frame 0x1c agrees; task zeroing/retest, optional-output width and iterator head differ.
 // Test-produced task 152; short output 152; wide task 154; both widths 154; direct inputs
@@ -2581,6 +2582,9 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // Round 139: Shared pending/trigger optional-output workspace long/int/short/word 152/152/152/153;
 // those four with shared entry index 152/152/152/153. Frame 0x1c agrees; task zeroing/retest and
 // iterator head remain. All original executable source restored.
+// Round 180: Separate pending predicate/result with admitted/default-result arms: word task
+// and long output 110/110; wide task 168/168; word task and short output 109/109; both widths
+// 168/168. A read-once, two-use pending word and separate admitted result is 109 plain, kept.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
@@ -2594,18 +2598,20 @@ void function_202be0(long arg_0, long arg_1)
         function_202e90(*local_0, (short)*choice, false);
     else if ((local_1[2] & 0x40) && *(short *)(local_1 + 0x2a) != NONE)
     {
-        long local_2 = NONE;
+        short local_2 = NONE;
         short local_3;
-        word local_4 = *(word *)(local_1 + 0x62);
-        if (local_4 != (word)NONE)
+        word pending = *(word *)(local_1 + 0x62);
+        word local_4;
+        if (pending != (word)NONE)
         {
             if (*(short *)(local_1 + 0x64) > 0)
                 goto local_16;
+            local_4 = pending;
             local_2 = *(short *)(local_1 + 0x66);
         }
         else
         {
-            local_4 = function_290cd0(*(short *)(local_1 + 0x2a), *local_0, NONE, &local_3, (short *)&local_2);
+            local_4 = function_290cd0(*(short *)(local_1 + 0x2a), *local_0, NONE, &local_3, &local_2);
             if (local_4 == (word)NONE)
                 goto local_16;
             if (local_3 > 0)
