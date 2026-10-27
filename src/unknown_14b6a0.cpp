@@ -162,6 +162,9 @@ void function_14bac0()
 // Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
 // both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
 // Original storage and iterator restored; frame and readiness homes remain.
+// Round 352: readiness at request entry, alone and with point/bounds/both output declarations,
+// 274 each; early point/bounds/both declarations without readiness 234 each; complete
+// function-entry graph 288. Frame stays 0x34; original storage and observations restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

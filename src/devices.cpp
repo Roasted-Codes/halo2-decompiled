@@ -1266,6 +1266,9 @@ bool function_0b6760(s_index_pair const *pair);
 // it also re-reads the animation-state offset after the result/state stores. Plain index 389; plain
 // index and definition 421; plain index with the result declared first 394; plain index with a
 // ternary state 416; result declared first 301 (two-point gain dropped).
+// Round 352: next-tick value, elapsed product and both 303; one shared previous power velocity
+// alone and with next-tick/elapsed/both 368; all with long next-tick 365. Frame remains 0x1c;
+// original delay, velocity observations, acceleration producers and inherited qualifiers restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

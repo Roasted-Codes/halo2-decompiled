@@ -2068,7 +2068,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 168 (was 210): object/offset homes and low-mask allocation remain;
+// score 168 (was 168): object/offset homes and low-mask allocation remain;
 // frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // object/offset homes and low-mask allocation remain;
@@ -2148,6 +2148,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // Both mask updates after their original stores retained; 1070/1081 bytes.
 // Round 246: metadata/count/fraction defaults before the child getter in seven
 // combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
+// Round 352: persistent, child-value and induction/mask scalar-home groups, singly and all
+// combinations, 168; complete homes plus native header offset 167 (one point, rejected).
+// Original executable body and retained post-store child masks restored at 168/1070.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
