@@ -2932,6 +2932,12 @@ struct s_voice_route_choice
 // masks 384/391; cursor with talker/player 390/409; both masks 379; cursor with both 401;
 // one mode observation 405 (callers 57960/56df0 lose to 22/18). Original loop restored;
 // frame 0x54 and scalar homes agree, entry saves and unrolled cursor bias remain.
+// Round 57: retail sets the radio byte in a branch (`if (mode == 2) radio = true; else if
+// (!radio && mode == 3 ...)`): that form gives retail's radio blocks but frame 0x50, the headset
+// kept in a register instead of spilled, 411; with each other order of the three scalar
+// declarations 410/411; as two separate ifs 411; with a char radio 411. Retail's remainder loop
+// indexes `[offset + choices]` with choices in edi (which forces the headset spill); ours walks
+// a pointer. Ternary headset bit update 363 (same code), with the radio branch 411.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

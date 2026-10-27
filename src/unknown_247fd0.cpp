@@ -70,103 +70,50 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 	arg_1 = function_x82e52f(arg_0, 0, 0);
 }
 
-// score 70 (was 142): frame 0x10 and length agree. Left: field_10 is stored after the
-// field_38 sample (retail stores it first, yet with field_10 last the x87 store ends the block
-// and the cached-record compare loads separately, adding the loop-head pad), and the register
-// rotation from the 0x173ba0 arguments on. Round 54: in-loop lookup through the inline
-// particle_object_for_tag with the child getter nested in 0x173fd0's call 133 kept (nested
-// getter alone 160; inline/forceinline redeclarations of 0x137bd0 142); record-first reset
-// without the split temporary 133 kept; field_38 sample before the field_10 store 70 kept;
-// sample through the existing helper 70; the 0x173c10 method called 70 (same code); sample
-// into the shared local before field_10 146; sample local declared first 70; DATUM child 70.
-// Earlier: size optimization 525; inline depth one/two 142/142; current-record update argument
-// 142; child-input scope 142; metadata read order 142; direct child getter 160; early result
+// score 70 (was 70): frame 0x10 and length agree. Left: field_10 is stored after the field_38
+// sample (retail stores it first) and the register rotation from the 0x173ba0 arguments on.
+// With field_10 first (retail's order) every register from the 0x173ba0 arguments to the end
+// matches, but the cached-record compare splits into `mov eax,[ebx+0x50]; cmp ebp,eax` after the
+// sample's x87 store (+2 bytes, adds the child-loop pad): 133. The split follows the x87 store in
+// every source shape tried; /G7, /Os or /arch:SSE2 fold it (compile-only), the file's flags don't.
+// Round 57: field_10 first 133; with a compiled-out statement before the compare 133; with the
+// cache-update stores swapped 129; with the sample through the existing reference helper into
+// field_38 or into local_9 133/133. Compile-only, all split: compare in an inline/forceinline
+// helper or bool local, reversed or == compare, typed/int compare, cache pointer copy or member,
+// loop/switch/goto wrappers, sample through an inline initialiser, a named-global or divided
+// scale, helper or direct word samples, field_08/local_3/link/flag statement orders.
+// Earlier: field_38 sample before the field_10 store 70 kept; in-loop lookup through the inline
+// particle_object_for_tag with the child getter nested in 0x173fd0's call 133 kept (nested getter
+// alone 160; inline/forceinline redeclarations of 0x137bd0 142); record-first reset without the
+// split temporary 133 kept; sample through the existing helper 70; the 0x173c10 method called 70;
+// sample into the shared local before field_10 146; sample local declared first 70; DATUM child
+// 70; function_137bd0_inline at the loop re-fetch 134, with the child-settings query in the call's
+// argument list 133 (a copy of 0x137bd0's body); comparison operands swapped 133; child/record
+// datum through DATUM 133; 0x175610's cache-update body 133; complete reconciliation before final
+// draw 133; final sample store after reconciliation 140, with early predicate/flags/both
+// 138/149/160; early cache predicate/masked flags/both across final draw 157/153/177; sample
+// output 142; age/time after sample 239/153; sample late age/time 239/153; late age time 236;
+// sample late age time 236; sample value 142; size optimization 525; inline depth one/two
+// 142/142; global optimization off 433; frame pointer 314; current-record update argument 142;
+// child-input scope 142; metadata read order 142; direct child getter 160; early result
 // declaration 142; word flag update 244; reciprocal default first 142; cache slot/early
-// flags/both/cache reference 142; reciprocal input 143; global optimization off 433; frame
-// pointer 314; read-only settings view 142; spawn type at use 254; shared parent datum accessor
-// 246; shared child datum accessor 146; both datum accessors 298; native child ordinal 142;
+// flags/both/cache reference 142; reciprocal input 143; read-only settings view 142; spawn type
+// at use 254; shared parent/child/both datum accessors 246/146/298; native child ordinal 142;
 // immutable creation inputs 142; reciprocal before child link 143; native cache pointer 142;
-// changed-record predicate 142; actual head field 142; unsigned child handle 142; shared
-// bounded selector 142; word flags 142; word flags with bounded selector 142; child zero-age
-// before enable 142; cache mask field/compare 142/142; existing cache evaluator/native receiver
-// 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime
-// field 142; mask/lifetime fields 142; common pointer/flags/both stores 159/140/158; conditional
-// mask 282; immutable allocated handle/settings 142; common current-record stores and combined
-// immutable bindings 158; common flags with current receiver 158; external parent / allocated
-// record / settings / child references and pairs 142; parent/settings/both metadata fields,
+// changed-record predicate 142; actual head field 142; unsigned child handle 142; shared bounded
+// selector 142; word flags 142, with bounded selector 142; child zero-age before enable 142;
+// cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed
+// interface lifetime 142; child-result declaration home 142; live lifetime field 142;
+// mask/lifetime fields 142; common pointer/flags/both stores 159/140/158; conditional mask 282;
+// immutable allocated handle/settings 142; common current-record stores and combined immutable
+// bindings 158; common flags with current receiver 158; external parent/allocated
+// record/settings/child references and their pairs 142; parent/settings/both metadata fields,
 // first/last/both list fields, metadata with list fields, metadata with cache slot
 // 161/160/167/142/142/142/167/167; declared sample array/loop 142/435; immutable
-// record/spawn/both 142/142/142; child identity order 142; earlier enable 142; earlier age 143.
-// Frame 0x10 agrees; cached-pointer comparison, child pushes and selective loop lookup expansion remain.
-// Earlier: frame 0x10 agrees; cached-pointer comparison, child-call
-// pushes and loop lookup expansion differ; size optimization 525; inline depth one 142;
-// current-record update argument 142; child-input scope 142; both 142.
-// cached-pointer compare and in-loop lookup differ;
-// metadata read order 142; direct child getter 160; early result declaration
-// 142; word flag update 244; reciprocal default first 142.
-// cached-pointer compare and selective lookup expansion remain;
-// Earlier: cached-pointer compare and selective lookup expansion remain;
-// cache slot/early flags/both/cache reference 142; reciprocal input 143;
-// global optimization off 433; frame pointer 314; depth two 142.
-// read-only settings view 142; spawn type at use 254; shared parent datum accessor 246; shared
-// child datum accessor 146; both datum accessors 298; native child ordinal 142; immutable
-// creation inputs 142; reciprocal before child link 143.
-// cached-pointer compare, child-input spills and loop lookup remain.
-// Native cache pointer 142; changed-record predicate 142; actual head field 142;
-// unsigned child handle 142; shared bounded selector 142; word flags 142;
-// word flags with bounded selector 142; child zero-age before enable 142.
-// cached-pointer memory compare, child pushes and in-loop lookup remain.
-// Earlier: cached-pointer compare, child-input spills and loop lookup remain.
-// Earlier: cached-pointer memory compare, child pushes and in-loop lookup remain.
-// Cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result declaration home 142; live lifetime field 142; mask/lifetime fields 142.
-// Cached-pointer comparison and loop lookup remain. Common pointer/flags/both stores
-// 159/140/158f; conditional mask 282f; immutable allocated handle/settings 142f; common current-record
-// stores and combined immutable bindings 158f; common flags with current receiver 158f. Two-point gain
-// discarded.
-// External parent / allocated record / settings / child references 142/142/142/142;
-// parent with record / settings, record with child, all four references 142/142/142/142.
-// Cached-pointer comparison and selective loop lookup expansion remain.
-// cached-pointer compare, creation pushes and loop lookup remain.
-// Earlier: cached-pointer compare, creation pushes and loop lookup remain.
-// Parent/settings/both metadata fields, first/last/both list fields, metadata with list fields,
-// metadata with cache slot 161/160/167/142/142/142/167/167.
-// cached-pointer comparison, child pushes and selective lookup expansion remain.
-// Declared sample array/loop 142/435; immutable record/spawn/both 142/142/142;
-// child identity order 142; earlier enable 142; earlier age 143.
-// Round 368: child effect/tag/settings home names, each pair and all three, then
-// allocation/spawn names with all metadata 142/142/142/142/142/142/142/142.
-// Early cache predicate/masked flags/both across final draw 157/153/177;
-// final sample store after reconciliation 140, with early predicate/flags/both 138/149/160.
-// Complete reconciliation before final draw 133 (plain); aligned edits 54 versus 42, restored.
-// sample output 142; age after sample 239; time after sample 153; sample late age 239; sample late time
-// 153; late age time 236; sample late age time 236; sample value 142.
-// frame 0x10 agrees; the cached-pointer comparison loads the field into EAX where
-// retail compares it in memory (compile-only: the x87 `* (1.f / 65535.f)` scale stored just before
-// keeps the load apart; without the scale, or with the field_10 store after it, it folds), which
-// shifts the rest, including the child loop's alignment.
-// Round 88: retail inlines the type lookup at the loop's re-fetch: function_137bd0_inline there 134;
-// with the child call taking the child-settings query in its argument list (retail pushes the four
-// stack arguments before the query) 133 (not kept: a copy of 0x137bd0's body, kept only with a match); argument list alone 160; comparison operands swapped
-// 133; child datum through DATUM 133; 0x175610's cache-update body 133; record datum through DATUM 133. Compile-only: record-typed cache field, cache store order of 0x175610, an inline cache-update
-// helper, the scale through the shared word wrapper or a named temporary: no fold.
-// Earlier: size optimization 525; inline depth one 142; current-record update argument 142;
-// child-input scope 142; metadata read order 142; direct child getter 160; early result declaration
-// 142; word flag update 244; reciprocal default first 142; cache slot/early flags/both/cache reference
-// 142; reciprocal input 143; global optimization off 433; frame pointer 314; depth two 142; read-only
-// settings view 142; spawn type at use 254; shared parent datum accessor 246; shared child datum
-// accessor 146; both datum accessors 298; native child ordinal 142; immutable creation inputs 142;
-// reciprocal before child link 143; native cache pointer 142; changed-record predicate 142; actual
-// head field 142; unsigned child handle 142; shared bounded selector 142; word flags 142; word flags
-// with bounded selector 142; child zero-age before enable 142; cache mask field/compare 142/142;
-// existing cache evaluator/native receiver 142/142; refreshed interface lifetime 142; child-result
-// declaration home 142; live lifetime field 142; mask/lifetime fields 142; common pointer/flags/both
-// stores 159/140/158; conditional mask 282; immutable allocated handle/settings 142; common
-// current-record stores and combined immutable bindings 158; common flags with current receiver 158;
-// external parent/allocated record/settings/child references 142 each; parent with record/settings,
-// record with child, all four references 142 each; parent/settings/both metadata fields, first/last/both
-// list fields, metadata with list fields, metadata with cache slot 161/160/167/142/142/142/167/167;
-// declared sample array/loop 142/435; immutable record/spawn/both 142 each; child identity order 142;
-// earlier enable 142; earlier age 143.
+// record/spawn/both 142; child identity order 142; earlier enable 142; earlier age 143; child
+// effect/tag/settings home names, pairs, all three, allocation/spawn names 142 each.
+// Compile-only earlier: record-typed cache field, 0x175610's cache store order, an inline
+// cache-update helper, the scale through the shared word wrapper or a named temporary: no fold.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)

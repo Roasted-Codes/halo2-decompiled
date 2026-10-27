@@ -663,8 +663,18 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 }
 
 long function_1469f0(real seconds);
-// score 279 (was 279): frame 4/12, early slot spill and state/displacement/final-cursor homes remain.
-
+// score 279 (was 279): frame 12 and the state/offset/cursor homes now agree; retail keeps the local
+// index in eax (the player index register, reloaded after each call and passed to 0x1e83c0 in
+// eax), ours puts it in edx, so the scratch registers rotate and 0x1e83c0's calls reload it,
+// which also splits `++*elapsed` around the reload (retail `inc dword ptr [edi + 0x84]`).
+// Round 57: the final loop's request test through the existing 0x1e7a10 (retail inlines it:
+// `sete al; test al, al`, with g_51e9c0 re-read) 316 alone; with a long local index (retail's
+// movsx load, 32-bit NONE test, offset spill) 319; with the selected-state cases in 0..4 order
+// (case 4 falls into the final loop as in retail) and the countdown stores without short casts
+// 275 fast / 279 plain, kept (frame 12; removes the hand-written copy of 0x1e7a10). Before that:
+// cases in 0..4 order 293; casts alone 284; both 288. On the kept form: player read before the
+// options pointer 275, index before options 280, short difficulty local 290, selected/elapsed
+// declared first 275/275 (fast).
 // Earlier: frame 4 versus 12; early slot spill, state displacement and transition/flag homes remain.
 // Earlier: Frame 4/12, early slot spill and state/transition/flag homes remain.
 // Earlier: frame 4/12 and slot/state/transition/flag homes remain.
@@ -719,7 +729,7 @@ void function_1e6bd0(long player_index)
 {
  s_game_options_view *options = g_4e6948;
  s_player_request_view *player = (s_player_request_view *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c);
- short local_index = player->local_player_index;
+ long local_index = player->local_player_index;
  bool restricted = options->state == 1 && (options->difficulty == 3 || options->difficulty == 2);
  if (local_index != NONE && *((byte *)g_51e9c0 + 0x6c5) && !restricted)
  {
@@ -768,12 +778,9 @@ void function_1e6bd0(long player_index)
    }
    switch ((word)transition->state)
    {
-   case 4:
-    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
-    break;
    case 0:
     transition->state = 1;
-    transition->ticks = entry ? (short)function_1469f0(*(real *)entry->field_0c) : 0;
+    transition->ticks = entry ? function_1469f0(*(real *)entry->field_0c) : 0;
     break;
    case 1:
     if (function_1e83c0(local_index, selected))
@@ -803,7 +810,7 @@ void function_1e6bd0(long player_index)
     else if (!function_1e7ab0(local_index, selected))
     {
      transition->state = 3;
-     transition->ticks = entry ? (short)(g_510c54->field_2_3 * entry->field_08) : 0;
+     transition->ticks = entry ? g_510c54->field_2_3 * entry->field_08 : 0;
     }
     break;
    case 3:
@@ -827,16 +834,16 @@ void function_1e6bd0(long player_index)
      *elapsed = 0;
     }
     break;
+   case 4:
+    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
+    break;
    }
   }
   for (long i = 0; i < 32; ++i)
   {
    if (i != *current)
    {
-    s_local_player_state_view *local_8da5ff = state;
-    long value = ((local_8da5ff->request_flags[1] & (1 << i)) ? 2 : 0) +
-     ((local_8da5ff->request_flags[0] & (1 << i)) ? 1 : 0);
-    if (value != 3)
+    if (!function_1e7a10(local_index, i))
     {
      switch (i)
      {
