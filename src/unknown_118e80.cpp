@@ -258,6 +258,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 250: Entry basis/position/all native workspaces 220/220/220; discarded-forward name 220;
 // complete basis/phase names 220/220; entry basis plus basis names 220; entry workspaces plus phase
 // names 220. Frame 0x78/0x6c and early ESI/basis/position homes remain.
+// Round 252: Final orientation predicates in bool/byte/short/long domains 251/251/259/257; short-circuit
+// refined results 222/222/222/222. Original comparisons and every vector/callback role restored; frame
+// 0x78 versus 0x6c and early ESI/basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
