@@ -489,7 +489,11 @@ real function_d5d20(long object_index, bool ignore_difficulty)
 	real result = object->maximum_body_vitality;
 
 	if (!ignore_difficulty && ((1 << object->type) & 3))
-		result = function_1e9720(1, object->team) * result;
+	{
+		/* a short local: retail sign-extends it into eax and copies it to ecx */
+		short team = object->team;
+		result = function_1e9720(1, team) * result;
+	}
 	return result;
 }
 
@@ -500,7 +504,10 @@ real function_d5d80(long object_index, bool ignore_difficulty)
 	real result = object->maximum_shield_vitality;
 
 	if (!ignore_difficulty && ((1 << object->type) & 3))
-		result = function_1e9720(2, object->team) * result;
+	{
+		short team = object->team;
+		result = function_1e9720(2, team) * result;
+	}
 	return result;
 }
 
@@ -1318,6 +1325,11 @@ real function_dc230(long rider_index, long vehicle_index, s_type_1e6529 const *d
 
 /* damages an object with the globals' default damage (from +0x144), credited
    to an owner if one is given */
+// score 10 (was 10): two schedule differences remain. Retail copies *owner through eax, ecx, edx (this uses ecx,
+// edx, eax) and stores the finished flags before `push edi` / `lea eax,[data]` (this stores them after the lea,
+// which then goes through ecx instead of eax). Everything else, including the usercall registers, matches.
+// Tried: memcpy of the owner (10), the owner copied through a local (10), flags updated with ?: chains (10),
+// the flags read and written through data.flags instead of the byte-array alias (10).
 // @retail 0xdbfb0
 void function_dbfb0(long object_index, s_damage_owner const *owner, bool a, bool b, bool c)
 {
@@ -1355,6 +1367,14 @@ void function_dbfb0(long object_index, s_damage_owner const *owner, bool a, bool
 
 /* whether an object, or anything seated in or attached to it, is a unit (a
    player's unit, if players_only) */
+// score 167 (was 167): the compiler inlines 0xbadc0 (the datum lookup and the type test) at the unit check in the
+// iterator loop; retail calls it (`mov eax,child_index; push 3; call 0xbadc0`), keeps NONE in edi and `result` in the
+// dead first argument slot (`mov byte [esp+0x24],..`), and recurses with real calls. The inlined copy takes ebx, ebp
+// and a stack slot and moves `result` into bl. 0xd0620 (not ours) takes the iterator in ebx in retail as well.
+// Retail's tails read as `result = result || db110(first_child, players_only, true)` and, for the sibling,
+// `return result || db110(next, players_only, true)` (the `mov byte,0 / je / mov byte,1` and `mov al,1` exits); that
+// form stops the compiler turning the sibling call into a loop but scores 193 here because of the inlining, so
+// the if/else form below stays. Tried: the unit/player_index split of 0xd7ae0 (still inlined).
 // @retail 0xdb110
 bool __stdcall function_db110(long object_index, bool players_only, bool walk_siblings)
 {
@@ -3077,10 +3097,10 @@ void __stdcall function_db210(s_type_1e6529 const *data, long vehicle_index)
 	{
 		long unit_index = iterator.unit_index;
 		s_damage_object *unit = DAMAGE_OBJECT(unit_index);
-		real distance_squared =
-			(unit->field_x221477.z - data->origin.z) * (unit->field_x221477.z - data->origin.z) +
-			(unit->field_x221477.y - data->origin.y) * (unit->field_x221477.y - data->origin.y) +
-			(unit->field_x221477.x - data->origin.x) * (unit->field_x221477.x - data->origin.x);
+		real delta_x = unit->field_x221477.x - data->origin.x;
+		real delta_y = unit->field_x221477.y - data->origin.y;
+		real delta_z = unit->field_x221477.z - data->origin.z;
+		real distance_squared = delta_z * delta_z + delta_y * delta_y + delta_x * delta_x;
 
 		if (unit->unknown1fc == NONE || unit_index == data->unknown18)
 			continue;
@@ -3089,13 +3109,13 @@ void __stdcall function_db210(s_type_1e6529 const *data, long vehicle_index)
 		if ((definition->flags14 & 8) && !function_1df560(unit->team, data->owner.team))
 			continue;
 
-		long seat_key = *(long *)(*(byte **)(local_a2a045 + 0x1cc) + unit->unknown1fc * 0xb0 + 4);
+		byte *seat = *(byte **)(local_a2a045 + 0x1cc) + unit->unknown1fc * 0xb0;
 
 		for (long i = 0; i < info->unknownd8; i++)
 		{
 			byte *entry = info->unknowndc + i * 0x14;
 
-			if (*(long *)entry == seat_key)
+			if (*(long *)entry == *(long *)(seat + 4))
 			{
 				real radius = *(real *)(entry + 8);
 				real scale;
@@ -3162,6 +3182,12 @@ void function_d87e0(long list_index, bool can_take_damage)
 
 /* how many of the model markers of a name an object and its attached
    children are missing */
+// score 46 (was 47): the walk and the first marker test match. What differs is the marker loop head: retail loads
+// the marker array (+0x6c), then marker_name (a separate `mov ecx,[esp+0x94]`), then `add eax,esi; mov eax,[eax]; cmp eax,ecx`;
+// ours folds both into `mov eax,[esi+ecx]; cmp eax,[esp+0x94]`, so every instruction of the loop after that shifts.
+// Tried (all still 46): operand order of the name test, passing marker_name instead of name to 0xb8d30, the array
+// address in a separate local, i*0x1c written before the base, marker_name copied to a local, a struct-array
+// view of the markers.
 // @retail 0xd88f0
 short __stdcall function_d88f0(long object_index, long marker_name)
 {
@@ -3175,7 +3201,7 @@ short __stdcall function_d88f0(long object_index, long marker_name)
 		if (datum && (1 << datum->type))
 		{
 			object = datum->object;
-			if (object && (index == object_index || TEST_FIELD_BIT(object->flags04.permutation_child)))
+			if (object && (object_index == index || TEST_FIELD_BIT(object->flags04.permutation_child)))
 			{
 				long model_index = *(long *)(g_4e3b44[object->tag_index & 0xffff].bytes + 0x38);
 
@@ -3246,6 +3272,10 @@ void function_155b60(long unit_index);
 
 /* kills an object outright with the globals' default damage (falling,
    for one), reporting it as maximum damage */
+// score 3 (was 8): only the order of the three `lea`s that set up the d9490 call differs: retail leas report
+// (eax), accumulator (edi), data (esi); this leas accumulator, data, report. Setting `data.flags |= 4` right after
+// `data.unknown54 = 1.0f` (before the accumulator stores) is what moved the `or edx, 4` to retail's place (8 -> 3).
+// Tried: locals declared in the order report/accumulator/data (3), a report pointer local passed to d9490 (3).
 // @retail 0xdc0a0
 void function_dc0a0(long object_index)
 {
@@ -3283,10 +3313,10 @@ void function_dc0a0(long object_index)
 			function_d6660(&data, *(long *)(damage_globals + 0x14));
 			memset(&accumulator, 0, sizeof(accumulator));
 			data.unknown54 = 1.0f;
+			data.flags |= 4;
 			accumulator.shield_damage = 1.0f;
 			accumulator.unknown28 = 1.0f;
 			accumulator.unknown08 = NONE;
-			data.flags |= 4;
 			accumulator.flags = 0x49;
 			accumulator.unknown18 = 3.4028235e38f;
 			function_d9490(&report, &data, &accumulator, object_index);
