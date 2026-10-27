@@ -98,6 +98,10 @@ void __stdcall function_b8890(long arg_0);
 // bit-5/bit-6 fields in s_278f03 fuse both flag writes into retail's `or/and byte ptr` but 939 bytes, 253;
 // a named bool for the mode-4 test folds away (212). Retail evaluates that test's second half as
 // `setne/test` (as 0x1c4040 does): an inline bool helper shared with 0x1c4040 is untried.
+// Round 224: First-list processing cursors, read-only/mutable and consumed/body-end steps,
+// original/branched selection 283/221/283/221/272/266/272/266. Original indexed processing and call cycle restored.
+// Header-byte-offset induction long/dword 276 each, short/word/byte 280 each;
+// direct descending list selector long/short/signed-byte 251/265/252. Restored.
 // @retail 0x278f00
 void function_278f00()
 {

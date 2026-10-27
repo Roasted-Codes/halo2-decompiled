@@ -139,7 +139,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 947 (was 947): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
+// score 875 (was 947): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
 // Retail re-reads the player-control global before its flag test, after the conditional magnitude/pow
 // calls, and keeps NONE in EBX; ours keeps the global in EBX from entry (LTCG trusts those callees here;
 // retail's address is never taken). Round 73: settings pointer after the clears 959; state entry after the
@@ -197,6 +197,9 @@ union s_185be7
 // Original root observations, entry calculation, helpers and complete body restored.
 // Ordinary inline clamp/flag/both 947/947/947; state predicate alone and all
 // combinations plus all-private inline producers 968 each. Original force-inline helpers and body restored.
+// DH round 189: Range-result default before lower/range/tag/parent reads 950 each, before initial object 966;
+// conditional/exhaustive positive-first/negative-first results 875/875/963. Exhaustive positive-first
+// retained after ordinary full validation; frame/root/settings and later flag schedules remain.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
@@ -230,9 +233,11 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
                 byte *local_13 = *(byte **)(local_12 + 0x1cc) + local_10 * 0xb0;
                 real local_14 = *(real *)(local_13 + 0x54);
                 real local_15 = *(real *)(local_13 + 0x58) - local_14;
-                real local_16 = 0.0f;
+                real local_16;
                 if (local_15 > 0.0f)
                     local_16 = function_185be1((magnitude3d((vector3f *)(local_11 + 0x88)) - local_14) / local_15, 0.0f, 1.0f);
+                else
+                    local_16 = 0.0f;
                 if (*(real *)(local_13 + 0x5c) != 0.0f)
                     local_16 = (real)pow(local_16, *(real *)(local_13 + 0x5c));
                 if (*(real *)(local_13 + 0x44) > 0.0f || *(real *)(local_13 + 0x48) > 0.0f)

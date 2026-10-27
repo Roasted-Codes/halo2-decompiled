@@ -60,6 +60,11 @@
 // all rows/position plus all rows 515/549. All original input ownership restored.
 // Native storage-template alignment eight/sixteen 435/435; with scalar normal inputs
 // 447/447; with whole-plane library publication 435/435; both 447/447. Header/body restored.
+// Round 190: input-end/output-index 436; output-end/input-index 445; both cursors
+// with input/output end do 486/451; input/output end for 473/451; input/output
+// end while 473/451. Original fixed-six ordinal loop and all plane observations restored.
+// Round 150: Native first/second, third/fourth and transform-array handles, seven subsets 434 each; all descriptor lifetimes beginning at first use 434. All handles restored.
+// Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

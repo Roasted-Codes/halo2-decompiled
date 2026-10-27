@@ -143,6 +143,9 @@ void function_2232a0(void)
 // counterparts 185/195/185/195. Original count producer and loop restored.
 // Coherent ordinary inline dispatch/reset/both 151/151/151; each with existing slot predicate 150;
 // force-inline reset alone/with slot predicate 151/150 and loses the matched initializer caller. All restored.
+// DH round 189: Native equality-bound ordinals: short/word/byte do 201/201/167; short/word/byte
+// for 180/180/166; short/word while 180/180. Original signed clamp, ordinal, scan, initializer and
+// tail restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

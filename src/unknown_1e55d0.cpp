@@ -73,9 +73,15 @@ static __forceinline long real_to_long(real value);
 // Position yzx/zxy/zyx 353/353/353 (plain); no qualifying executable gain.
 // Native output velocity 369; orientation 353; velocity/orientation 369; control fields 353;
 // velocity/control 369; orientation/control 353; all fields 369; all fields with one time-step observation 374.
+// Round 223: Complete shape decision result bool/byte/short/long, declared at its producer
+// or at entry, all 364 (1148 bytes); common flag publication restored.
 // Round 148: shape reads at every use 374; body-shape reads at every use 353; handle reads at
 // every use 392; shape/body-shape 374; shape/handle 413; body-shape/handle 392; all field
 // observations 413; all fields/shared length helper 413. All executable forms restored.
+// Round 254: cached fallback shape kind with manual/aligned/shared-update/aligned-shared
+// 361/316/435/398; those four with one time step 362/314/431/394.
+// Aligned forms lose matched callees; other forms regress. Original repeated queries,
+// manual capsule lifetime, expanded update and complete executable body restored.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {
