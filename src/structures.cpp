@@ -422,6 +422,10 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // search 181 (kept); node count >= test 262/206; section groups after the surface lookup 254/214/177
 // (swaps model and collision registers unless the bounds read moves too); for vertex loop 181; part
 // range fields at their uses 180.
+// Round 97: bounds before the geometry-block call with section groups before the node search 143
+// (only BLOCKED-BY 0x11e800 registers, slots and the vertex cursor follow), same with a renamed
+// section local 143 (names do not move slots), with a for vertex loop 143; bounds with the model
+// lookup 221, plus early section groups 214.
 // Frame 0x58 agrees; region scheduling and range/vertex homes remain. Split
 // region/transform receivers 236; early section groups 254; both 254; byte return with
 // split/groups/both 237/255/255; signed-byte result with split/groups 236/254.

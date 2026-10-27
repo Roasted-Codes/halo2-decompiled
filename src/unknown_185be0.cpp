@@ -185,6 +185,10 @@ union s_185be7
 // Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
 // clear-first/set-first results with bool 1002/982, with long 1005/985;
 // named selected-mask result bool/long 947/944. Original Boolean helper input retained.
+// Round 97: the global defined in a non-LTCG file 947 (still held in EBX); clamp helper with early
+// returns/result variable/ternary 952/973/952; the flag test through a const pointer to the global
+// 884 (reloads it as retail, NONE then misses EBX) but its taken address moves 0x185ab0's store and
+// loses 0x187b30, so retail did not treat the global as address-taken. Reverted.
 // Round 221: recovered-frame settings/scalar/workspace names and active declarations,
 // eight forms 947 each; cached/state-live/settings-live/both roots with native names
 // 947/985/1004/1036/947/985/1004/1036. Original observations and body restored.
