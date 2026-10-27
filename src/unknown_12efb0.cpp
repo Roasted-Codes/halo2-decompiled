@@ -184,6 +184,10 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // conditional selected-record result on each 620/620/712/713. Original dispatch and word restored.
 // Round 343: Shared caller falloff/contribution/both lifetimes 616/616/617; uncovered contribution 715;
 // radius+uncovered/weight+uncovered/all 716/716/714; all with native byte palette 611 (five-point lead rejected). Original body restored.
+// Round 146: Native reference destinations scalar/merge/both/color/scalar-color/merge-color/all
+// 616/616/616/616/616/616/616; all native accumulator references 616; scalar-
+// field/contribution/both/both-with-destination references 699/617/698/698. Original helper contracts
+// and alias-safe weight capture restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {
