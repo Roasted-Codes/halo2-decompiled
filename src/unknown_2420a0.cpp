@@ -3,6 +3,7 @@
 #include <string.h>
 #include "unknown_11c920.h"
 #include "globals.h"
+#include "bit_vector.h"
 #include "unknown_19ec40.h"
 #include "unknown_1efac0.h"
 #include "unknown_2420a0.h"
@@ -1050,6 +1051,14 @@ void c_game_engine_markers::v21(long object_index)
 	function_243a20(object_index);
 }
 
+// score 50 (was 80): the entry swaps the object-header registers (retail: header in EAX, index in ECX),
+// the slot table and the player index swap EDI/EBP, and retail computes the player pointer before the
+// flag test. Kept: retail's long slot and both bits through byte_flags_set (retail stores the flag
+// byte twice), 80 -> 50. Tried: the helper with a short slot 103; the long slot alone 94; the flag
+// tested as a byte 50; the player index read before the table pointer 50; the team read at each call
+// (retail's merged call setup and player pointer, but the options pointer is then kept from entry) 119,
+// plus the table read through the global 119, the player pointer first 119, the unit before the slot
+// 119 (428 bytes); through the player getter at each call 100.
 // @retail 0x240ff0
 void c_game_engine_markers::v23(long object_index, long unit_index)
 {
@@ -1057,7 +1066,7 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 	{
 		if (function_101280(object_index) == 1)
 		{
-			short slot = slot_object_get(object_index)->slot;
+			long slot = slot_object_get(object_index)->slot;
 			s_slot_object *unit = slot_object_get(unit_index);
 
 			if (slot != NONE)
@@ -1086,8 +1095,8 @@ void c_game_engine_markers::v23(long object_index, long unit_index)
 					}
 				}
 
-				g->flag_bits[slot].bit0 = true;
-				g->flag_bits[slot].bit1 = false;
+				byte_flags_set(&g->flags[slot], 0, true);
+				byte_flags_set(&g->flags[slot], 1, false);
 				function_a7810(0x200);
 
 				if (slot >= 0 && slot < 9)
@@ -1597,6 +1606,12 @@ void function_15e360(point3f const *point, long object_index);
 byte *record_pool_lookup(s_record_pool *data, long datum_index);
 void function_242e00(long player_index, long team);
 
+// score 83 (was 83): the effect markers' direction copies are scheduled differently; the root-location
+// call passes the object in EAX and the location in ESI (retail: location in EAX, object in ECX,
+// BLOCKED-BY 0xba300); in the tail retail keeps the marker index in ESI and reloads the engine globals
+// pointer after each call, ours keeps that pointer in ESI and spills the index. Tried: the point copied
+// straight from the marker table, declared at its use, or both 83 (identical); the directions in index
+// order 86; the positions in index order 95; both 98.
 // @retail 0x242660
 void function_242660(long object_index, bool arg_1)
 {
@@ -1773,7 +1788,11 @@ long function_242ef0(s_242ef1 arg_0, long team)
 // source reuses ebx, and with the event sent through an opaque function ours still takes ebp.
 // Earlier: the fields of the event are written in the opposite order and the argument is passed in the
 // other register. Options pointer local: the player index moves to edi (44-58); subtype/type locals in
-// either order 51; game time read into a local before the sum: retail's tail, 53 (67/65).
+// either order 51; game time read into a local before the sum: retail's tail, 53 (67/65); a file-level
+// inline event-type helper for the type argument 53 (identical); the sum as game time plus the rounded
+// value 53; the subtype in a local at entry 53; the time test reversed 55; the team through the file's
+// player getter 53; the cause team stored first 56; the team in a local before the initializer 66 (and
+// the matched caller 0x241620 stops matching).
 // @retail 0x2430a0
 void function_2430a0(long player_index, bool flag)
 {
