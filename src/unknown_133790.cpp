@@ -150,6 +150,9 @@ void function_133720(s_bit_vector_pool *arg_1, bool arg_2)
 // directly 28; position pointer local 172.
 // Scalar point inputs shared by setter/projection: y/z/x 178/178/94; yz/xy/xz 101/173/173;
 // xyz/xyz with shared radius 178/178. All scalar-input forms restored.
+// Existing acquisition helper ordinary 206; inline with standalone noinline 206; inline without it 106;
+// early radius with delayed stores 30; delayed direct stores 19; early direct with delayed index 19;
+// radius pointer and two direct field uses 32 each.
 // @retail 0x133790
 bool function_133790(s_bit_vector_pool *arg_1, short arg_2, bool arg_3, long *arg_4, long arg_5, bool arg_6)
 {

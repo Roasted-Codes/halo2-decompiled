@@ -470,6 +470,10 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // same four forms with default-first duration 263/278/309/323. Original observation timing, output copies and helpers restored.
 // global bsp 275; point setter 240; bsp point setter 296; current at use 225; bsp current 274; setter current
 // 318; bsp setter current 305; point initializer 239.
+// Round 234: Uniform live duration with environment/portal/cluster query-array
+// home names, their three pairs, all three and reversed array declarations: 267
+// each, 1020 bytes and frame 0x148. Original sampled duration, helper contracts,
+// array names and executable body restored at 223.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

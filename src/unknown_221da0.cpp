@@ -781,6 +781,10 @@ real function_18cac0(long arg_0);
 // default-first admission at those widths 225/229/246/246. Original early continue, selector and whole library clear restored.
 // readonly camera 225; audibility once 233; camera audibility 233; max workspace 225; camera max 225;
 // audibility max 233; camera audibility max 233; double door gain 338.
+// Round 234: Gain-output cursor with original clear, native side, outer maximum
+// workspace and both: 252 each; the same four with the whole library clear return
+// 241 each. Original indexed traversal, native clear, gain result and executable
+// body restored at 225; aligned frame and scalar homes remain.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

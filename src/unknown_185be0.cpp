@@ -106,8 +106,8 @@ void player_control_update_action_flags(s_player_action *arg_0, s_player_action_
 
 __forceinline real function_185be1(real arg_0, real arg_1, real arg_2)
 {
-    if (arg_0 < arg_1) return arg_1;
-    if (arg_0 > arg_2) return arg_2;
+    if (arg_0 < arg_1) arg_0 = arg_1;
+    else if (arg_0 > arg_2) arg_0 = arg_2;
     return arg_0;
 }
 __forceinline byte *function_185be2(long arg_0)
@@ -118,10 +118,9 @@ __forceinline bool function_185be3(long arg_0)
 {
     return arg_0 != NONE && ((1 << g_4e0300->data[(arg_0 & 0xffff) * 12 + 3]) & 1);
 }
-__forceinline void function_185be4(dword *arg_0, dword arg_1, bool arg_2)
+__forceinline dword function_185be4(dword flags, dword mask, bool enabled)
 {
-    dword flags = arg_2 ? (*arg_0 | arg_1) : (*arg_0 & ~arg_1);
-    *arg_0 = flags;
+    return (flags & ~mask) | (enabled ? mask : 0);
 }
 __forceinline void function_185be5(s_186ab2 *arg_0)
 {
@@ -140,8 +139,8 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 985 (was 985): Frame 0xe4 versus 0xe0; state/output carriers and flag schedules differ.
-// frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// score 947 (was 969): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
+// Earlier: frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
@@ -168,6 +167,19 @@ union s_185be7
 // State root at every field use 987; with reset output result/flag value/both 987/988/999;
 // state and settings roots at each use 1048; with reset result/flag value/both 1048/1026/1014.
 // Original root snapshots, reset, pointer-input flag helper and body restored.
+// Round 166: Native actual settings record with cached/live roots, mutable/const
+// receivers and forced/ordinary existing object getter 991/1022/991/1022/991/1022/991/1022
+// fast. Original settings observations, getter declaration and complete body restored.
+// Flag-value producer with shared curve count/pointer/both/values-first 979 each; long count 978;
+// native pairs with short/long inputs 979/978; shared short inputs and complete clamp result 969.
+// Complete clamp alone 978; flag-value plus complete clamp 969 plain (kept); curve inputs plus clamp 978.
+// Shared curve locals and native-pair trials restored; original game-call expressions unchanged.
+// Round 337: signed controller slot short/long 969/997; snapshot before turns 969;
+// existing turn/response/both pair aggregate initialization 969 each;
+// long slot with early snapshot/with both pair initializers 997/997. All restored.
+// Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
+// clear-first/set-first results with bool 1002/982, with long 1005/985;
+// named selected-mask result bool/long 947/944. Original Boolean helper input retained.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
@@ -330,7 +342,7 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             if (local_9 || arg_5->field_4 * arg_5->field_4 + arg_5->field_0 * arg_5->field_0 < 0.25f) local_1->field_88 = 1;
         }
         else if (!local_3[10]) local_1->field_88 = 0;
-        function_185be4(&arg_5->field_18, 1, local_1->field_88 != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 1, local_1->field_88 != 0);
         bool local_10 = local_3[11] == 1;
         if (local_10 && local_1->field_2e == NONE && arg_4->field_0)
         {
@@ -344,8 +356,8 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             if (((byte *)arg_4->field_0)[6] > 0x7f || ((byte *)arg_4->field_0)[7] > 0x7f) local_10 = false;
             if (local_11 != NONE && !function_100f70(local_11) && local_2.field_44 * local_2.field_44 + local_2.field_40 * local_2.field_40 > 0.64000004529953f) local_10 = false;
         }
-        function_185be4((dword *)&arg_5->field_1c, 4, local_10);
-        function_185be4((dword *)&arg_5->field_1c, 8, local_3[11] != 0);
+        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 4, local_10);
+        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 8, local_3[11] != 0);
         if (local_2.field_4e)
         {
             arg_5->field_8 = local_2.field_30;
@@ -370,27 +382,27 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         }
         bool selected_active = local_11 != 0;
         bool input_7_active = local_3[7] != 0;
-        function_185be4(&arg_5->field_18, 0x10000, input_7_active);
-        function_185be4(&arg_5->field_18, 0x200000, selected_active);
-        function_185be4(&arg_5->field_18, 0x20000, selected_active);
-        if (g_4e6948->state != 2) function_185be4(&arg_5->field_18, 0x20000000, local_3[local_2.field_4d] != 0);
-        function_185be4(&arg_5->field_18, 0x800, selected_active);
-        function_185be4(&arg_5->field_18, 0x4000, selected_active);
-        function_185be4(&arg_5->field_18, 0x4000000, local_3[6] != 0);
-        function_185be4(&arg_5->field_18, 0x80, local_3[12] != 0);
-        function_185be4(&arg_5->field_18, 0x100, local_3[13] != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x10000, input_7_active);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x200000, selected_active);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x20000, selected_active);
+        if (g_4e6948->state != 2) arg_5->field_18 = function_185be4(arg_5->field_18, 0x20000000, local_3[local_2.field_4d] != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x800, selected_active);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x4000, selected_active);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x4000000, local_3[6] != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x80, local_3[12] != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x100, local_3[13] != 0);
         bool action_active = local_3[5] != 0;
-        function_185be4(&arg_5->field_18, 4, action_active);
-        function_185be4(&arg_5->field_18, 0x100000, action_active);
-        function_185be4(&arg_5->field_18, 0x2000000, action_active);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 4, action_active);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x100000, action_active);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x2000000, action_active);
         local_1->field_93 = local_3[0] && ((g_510c50 && ((byte *)g_510c50)[5]) || local_1->field_93);
-        function_185be4(&arg_5->field_18, 2, local_3[0] && !local_1->field_93);
-        function_185be4(&arg_5->field_18, 0x10, local_3[4] != 0);
-        function_185be4(&arg_5->field_18, 0x20, local_3[4] != 0);
-        function_185be4(&arg_5->field_18, 0x40, input_7_active);
-        function_185be4((dword *)&arg_5->field_1c, 2, local_3[1] == 1);
-        function_185be4((dword *)&arg_5->field_1c, 0x10, local_3[14] != 0);
-        function_185be4((dword *)&arg_5->field_1c, 0x20, local_3[15] != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 2, local_3[0] && !local_1->field_93);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x10, local_3[4] != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x20, local_3[4] != 0);
+        arg_5->field_18 = function_185be4(arg_5->field_18, 0x40, input_7_active);
+        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 2, local_3[1] == 1);
+        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 0x10, local_3[14] != 0);
+        *(dword *)&arg_5->field_1c = function_185be4(*(dword *)&arg_5->field_1c, 0x20, local_3[15] != 0);
         if (local_3[14] == 1) ((byte *)arg_5)[0x21] |= 1;
         else ((byte *)arg_5)[0x21] &= ~1;
         s_input_state *local_14 = NULL;

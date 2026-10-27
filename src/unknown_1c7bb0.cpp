@@ -103,6 +103,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // null and successor EBP remain; opening body and private iterator restored. Repeated standalone word form
 // 218 excluded.
 // Native byte/signed-byte/Boolean high-bit fields with Boolean tests 164/164/164; direct tests 164/164/164; native bit values 164/187. Record size stayed 0x98; original flag byte restored.
+// Round 332: Immutable partition/squad ordinal/current actor scalars, each and
+// every combination, 164; all with immutable source-squad handle 164. All restored.
 // Scalarized iterator datum/record/ordinal member names, their three pairs and all three 164 each;
 // complete member names with outer iterator name 164. Separate pool/iterator and successor homes remain.
 // Round 141: Coordinated provider/caller inline-noinline declarations for eligibility, location update,
@@ -116,6 +118,15 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Round 147: Coherent inline lookup/activation/squad cleanup/actor removal 234/164/164/164; lookup
+// plus each other boundary 234/234/234; all four 234; separately outlined inline lookup 164 with
+// checked losses.
+// Round 149: Complete iterator result state with value input and long/int/dword/word ordinals
+// 316/316/316/335; const-reference input with genuine state copy gives the same four scores. All
+// copied members initialized; larger frame and extent regress. Original private step, layout and both
+// traversals restored.
+// Round 174: isolated partition/ordinal/both/successor/partition-successor/ordinal-successor/all
+// scalar home names, then all with the second-pass actor receiver, 164 each. Original names restored.
 // Eligibility result bool/const-bool/long/short with conditional or branch publication:
 // 194/200, 194/200, 195/178, 193/193; original body restored.
 // @retail 0x1c7bb0

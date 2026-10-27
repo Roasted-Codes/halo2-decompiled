@@ -14,8 +14,12 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 594 (was 594): frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
-// Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
+// score 594 (was 594): frame 0x64 versus 0x60; shape homes, basis and wave scheduling remain; nine excess bytes.
+// Round 134: retail reads the wave's sine arguments from the global point: that form 701 (frame 0x60,
+// s1 sinks to its use), s1 before the first cross 701, s0's only 602; both shape pointers
+// NULL-initialized then set by an if/else (retail's entry, retail length 2622) 599, with s0's
+// global arguments 596, with all global arguments 604; as ternaries with global arguments 716.
+// frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
 // Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
 // Frame 0x64 versus 0x60, primary-shape/basis homes and wave scheduling still differ.
 // Earlier: Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.
@@ -62,6 +66,13 @@
 // camera offset terms 594; trig/projection terms 594.
 // trig/camera terms 673; projection/camera terms 673.
 // all three term families 594; named modulation 673.
+// Round 211: Late special cross 707; reversed sine producers/after-amplitude sine 594/594;
+// late cross with either sine order 707/707; cross at first scale 592 (two-point gain dropped);
+// first-scale cross with late sine 594; complete native basis arms 727. Original body restored.
+// Round 174: consume cross vector in place 673; cross at displacement 707;
+// early sine factor 652, with late cross 709; factor after modulation 652, with late cross 709;
+// cross after first sine 673, with early factor 652. Original cross/scaler graph restored;
+// frame 0x64/0x60 and shape/basis/wave homes remain.
 // Camera-shift homes, alternate shift homes, wave-result homes, wave-scale homes,
 // and four paired combinations all 594; frame and initial shape homes unchanged.
 // @retail 0x497a0
@@ -417,6 +428,11 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
 // round 108: definition/output carriers, endpoint placement and color/vector homes remain.
 // Round 349: Conversion-local names 615; source pointer rereads 624; normal-output flag 642; position memcpy 615; shared in-place scales 615 (fast).
+// Round 211: Lower native/library color seed 684/684; upper native/library seed 661/661;
+// complete difference/scaled-difference stages 658/658; upper seed with difference/scaled
+// stages 707/700. Original separate color phases, helpers and output ownership restored.
+// Native upper bound/point scale/both 615/626/626; state-array receiver/with upper bound 615/615; scale
+// plus array/all inputs/all role homes 626/626/626. All restored.
 // U/V entry ordering, seven combinations 615; definition then source 615.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)

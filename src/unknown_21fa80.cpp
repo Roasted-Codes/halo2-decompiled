@@ -99,6 +99,10 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Round 171 reduced control 532: live direct field 555; live mode field 588; shared voice output 532; live
 // direct/mode 579; live direct/shared output 555; live mode/shared output 588; live fields/shared output 579;
 // shared voice cursor 532.
+// Round 377: Complete cache-valid bool/byte/short/long result graphs
+// 542/542/569/569; entry declaration forms 542/542/569/569 (fast control 532,
+// full baseline 545). Byte forms recover checker length but regress; all three
+// consumers, original status, mixed math and helper contracts restored.
 // Force-inline gain pin, bit pin, linear gain and combinations, then all four
 // existing helpers: eight forms all 532 on the reduced control. Helpers restored.
 // @retail 0x21fa80

@@ -144,6 +144,15 @@ void function_14bac0()
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
 // pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
 // Original receivers and the shared iterator body restored.
+// Round 210: direct destination/alternate/both query buffers 256/255/272;
+// with native recipient iterator 266/265/281; both with late center 272, native recipient/late center 281.
+// Round 172: Native selected/current/both player receivers 234/234/234; with native recipients
+// 257/257/257; readonly both 234 and with native recipients 257. Original body, iterator graph and
+// include list restored. Frame 0x34 versus 0x3c, point/iterator and readiness homes and
+// visit-counter scheduling remain.
+// Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
+// both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
+// Original storage and iterator restored; frame and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

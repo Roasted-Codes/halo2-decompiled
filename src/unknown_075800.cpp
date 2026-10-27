@@ -1018,6 +1018,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // all 191 fast, tying preview; no declaration or handler-body change retained.
 // Dispatcher inline/noinline/forceinline/inline-outofline declarations all 191 fast, tying reduced control 191;
 // direct orders 0,2,4,3 / 0,3,2,4 / 0,3,4,2 / 2,0,3,4 give 193/193/194/196 fast.
+// Round 144: complete-root priorities query/connection/peer/session 207; query/session/peer/connection 218;
+// query/peer/session/connection 220; connection/query/peer/session 202; connection/session/peer/query 207;
+// peer/query/connection/session 212; peer/session/query/connection and peer/session/connection/query 220.
+// All restored; reduced control 191 versus plain 193; incoming selector/message/address roles remain.
 // Round 364: Shared lookup inside the connection cases: retained phases 261; unified direct/numeric/
 // observed orders 272/272/271; residual group last 252; failure break 261; observed failure/scoped result 271/271.
 // Round 366: Common direct exit/residual returns/failure breaks/case-local results 216 each;
@@ -1033,8 +1037,17 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Combined inline/out-of-line declarations on lookup, direct refusal/query, three connection handlers,
 // and leave/acknowledgment handlers: all eight 191 fast, tying reduced control 191 (full 193).
 // Every declaration and handler call restored.
+// Round 167: Second-phase lookup/session interleaves 5,12,6,13,7,14 / 5,12,6,14,7,13 /
+// 5,13,6,12,7,14 / 5,13,6,14,7,12 / 5,14,6,12,7,13 / 5,14,6,13,7,12 all 195;
+// 12,5,13,6,14,7 and 14,5,13,6,12,7 both 194. Reduced control 191, full 193;
+// original phases, case bodies, caller and handler tuples restored.
+// Single-root retained/observed orders with lookup inline/noinline or all three
+// connection-handler inline/noinline boundaries: 208/208/208/208/218/218/218/218 fast; original graph and declarations restored.
 // Early phase connection cases 5/6/7 216/224/230; pairs 5+6/5+7/6+7
 // 241/249/253; 5+8 and 6+8 229/231 (fast, control 191).
+// Five coherent formal orders on the two-phase body 191 each; unsigned selector
+// in address/selector/payload, selector/address/payload and payload/selector/address 191 each.
+// Reduced control 191; full 193. All signatures, caller arguments and bodies restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

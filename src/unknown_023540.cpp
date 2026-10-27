@@ -2430,6 +2430,13 @@ dword __cdecl function_131fc0(real alpha);
 // Round 164: Common initial alpha packing with ternary/conditional-update/complete
 // raw-result/shared-clamp producers 435/435/431/435; function-entry workspace
 // 435/435/431/435. All regress against fast control 335; original shader graph restored.
+// Round 148: fixed-stage address/filter/outlined-disabled tables 969/983/725;
+// address+filter/address+disabled/filter+disabled/all three 1127/1029/1044/1258; all with disabled
+// render table 1162, versus control 331.
+// Late unconditional destination/source defaults 432/334; both destination-first/source-first
+// construction with destination selection first 433/439; source selection first 439/433;
+// source construction before conditional destination 331 (four-point fast gain rejected);
+// conditional source then unconditional destination 427, against fast control 335.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2578,7 +2585,11 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
-// score 530 (was 530): Frame 0x20c versus 0x200; stack order, coefficient homes and sample boundaries remain.
+// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// Held (batch 132): Claude lane 4 round 90's two explicit sample blocks with a determinant helper reached 401
+// (frame 0x200, all-stack arguments), but in the batch build that code cost c_helper_b::v7 (0x73360) its match
+// (code linked ahead of src/unknown_058dd0.cpp); with only this file restored the batch keeps 0x73360. Retry it
+// only with a full check that keeps 0x73360 matched.
 // Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
 // unsigned handle 544; native bucket fields 544.
 // Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
@@ -2704,7 +2715,7 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 348 (was 348): frame 0x58 agrees; stage constants/call convention and scale/trig homes differ.
+// score 334 (was 348): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
 // Earlier form: frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
@@ -2729,8 +2740,15 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // separate output plus trig scopes 351; exact stage terminator 348.
 // Round 147: native pair result 479; output pointer result 348; common-factor-first products 348; y-first
 // stores 363; zero-safe results 348; ordinal scope 348; reverse scale updates 350; later first buffer 348.
+// Round 148: first/second/both signed-word bitmap formals 334/373/348; signed-word stage with
+// first/second/both 500/536/493; unsigned-word stage with first/second 500/536; on the retained
+// contract, in-place scales/independent second trig/later second buffer, their pairs/all and all
+// with trig scopes 368/338/334/368/368/338/368/368.
+// Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
+// address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
+// 1262/1261. Original eleven sampler statements and helpers restored.
 // @retail 0x29b00
-void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
+void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
     real second_angle, real second_scale, bool screen_target)
 {

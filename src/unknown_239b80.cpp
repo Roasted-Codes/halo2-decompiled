@@ -37,7 +37,7 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 	return false;
 }
 
-// score 5 (was 101): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// score 5 (was 5): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
 // intersection's x product loads the plane before the point. The fraction defaulted first,
 // x-first displacements and the scale inside the output expressions gave retail's XMM homes
 // and length (101 -> 5). Then: current declared before previous 5; named current/previous
@@ -55,6 +55,9 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 // parallel output offsets 101; second record with offsets 163; numerator with offsets
 // 101; nested eligibility/capacity scopes 101. Original helper and body restored.
 // Immutable displacements 101; both projection products 101; plane value 269; word output/classification/clipping ordinals 231/220/202; common output result 138; current before previous 101.
+// Round 54: numerator `y + (x - d)` 14; split sum then `(sum - d) / denominator` 7 (both
+// products point-first but x first; explicit parentheses always order x first); both indices
+// declared in the for 5; while loop with the updates at the end 5; `y - d + x` 14.
 // @retail 0x23a430
 short function_23a430(short count, point2f const *points, plane2f const *plane,
 	real epsilon, short capacity, point2f *output)

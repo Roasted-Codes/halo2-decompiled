@@ -73,15 +73,19 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 	return result;
 }
 
-// score 196 (was 196): Frame 0x1c agrees; delayed EBP save, teams-byte home and word local-slot spill remain.
+
+// score 196 (was 196): delayed EBP save, team-byte home and word slot spill.
+// Frame 0x1c agrees; delayed EBP save, teams-byte home and word local-slot spill remain.
 // Earlier: delayed EBP save, team-byte home and word slot spill.
 // Cursor player 253; count at loop tail 199; both 257; signed/unsigned
 // word team counters 248; tail count plus word team counter 252.
 // early EBP save, teams byte home and local-slot spill differ;
 // unsigned count 242; short count 249; byte team 248; shared crowded with word slot 248; indexed fade with word slot 196.
-// Earlier 196 (was 196): early EBP save, team-byte home and local-slot spill remain.
+// early EBP save, team-byte home and local-slot spill remain.
 // Shared iterator 196; typed pooled player 196; native team bitfield 196; all three 196;
 // direct four-slot traversal 351; with shared types 351; with native bitfield 351; all 351.
+// delayed EBP save, team-byte home and word local-slot spill remain.
+// Earlier 196 (was 196): early EBP save, team-byte home and local-slot spill remain.
 // Earlier 196 (was 196): delayed EBP save, team-byte home and word local-slot spill remain.
 // Per-use first-loop datum 196; short/byte/word teams predicates 196/196/196; datum plus short teams 196;
 // shared entry/callback getters 196/196; both getters with per-use datum 196, all plain-confirmed.
@@ -96,6 +100,8 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Signed/unsigned byte local slots 244/244; each with indexed fade 244/244;
 // signed-byte population 197 (plain 197), signed-byte team 248;
 // signed-byte population/slot 245; unsigned-byte slot with signed-byte team 244.
+// Timer final-store/result-first/conditional/increment-first 254/254/254/254;
+// final-store/result-first with crowded result 254/256; each with complete live state 254/254.
 // Round 143: complete per-use state receiver 196; with tail count/shared crowded/both
 // 199/248/252. Team admission in body/condition 247/264; with per-use state 247/264.
 // All original code restored; delayed EBP save, team-byte and word-slot homes remain.
@@ -122,6 +128,12 @@ PRIVATE inline long transition_local_player_next_15c150(long index)
 // Round 227: Private slot search sentinel-plus-one start 193; short return 196; short input 199; both
 // short 199; simple start with short return/input/both 193/193/193 (three-point gains dropped);
 // terminating candidate scan 230. Existing helper restored.
+// Round 167: Native unsigned-word private search input/return/both 199/196/199;
+// return/result 250, input/return/result 254, input/ordinal 263,
+// input/return/ordinal 263, all native word 263. All restored; delayed EBP
+// save, teams-byte home and local-slot spill remain.
+// Existing search table pointer/const pointer/reference/const reference 196/196/196/196;
+// actual entries pointer/const pointer/array/const array 196/196/196/196. Original helper restored.
 // Count/unit index/team/local slot/fade/unit home names and two combined groups
 // 196 each (fast; reduced-image callee caveat).
 // @retail 0x15c150

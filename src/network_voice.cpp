@@ -1256,6 +1256,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Counted traversal with immutable channels/player/both 112 each; pointer traversal
 // with the same forms 283 each; counted immutable identity/source 112/112.
 // Counted forms lose 0x54990; pointer forms preserve it. Original body restored.
+// Round 188 separate successful total: rolled/counted/unsigned result/unsigned total/
+// retained entry width/admission/split adds/pre-tested walk 281/112/112/112/165/112/112/112;
+// expanded caller conventions checked separately; original accumulation restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2089,6 +2092,8 @@ long voice_players_share_team(long other, long player)
 // enclosing mask with live mode 54; signed live mask 34; rejection to sole exit 34; enclosing exit 54.
 // Accepted-boundary mask zero with signed equalities/range 56/125; unsigned 56/125;
 // complete-query mask with signed equalities/range 47/51; unsigned 47/51. Shared getter retained.
+// Round 136: defining-unit inline membership/players/both 25,25,25;
+// with separate noinline 25,25,25; mode force-inline alone/with both outlined queries 25,25.
 // @retail 0x56c60
 dword function_56c60(s_voice_player_settings *settings, long player)
 {
@@ -2875,7 +2880,7 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 363 (was 394): frame 0x54 and scalar homes agree; entry registers and unrolled cursor bias differ.
+// score 363 (was 363): frame 0x54 and scalar homes agree; entry registers and unrolled cursor bias differ.
 // Earlier at 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
 // Earlier: frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
@@ -2907,6 +2912,9 @@ struct s_voice_route_choice
 // logical Boolean 1087/1087. Byte bitwise accumulation 363 plain kept; original indexed nearest selection retained.
 // Byte-accumulation scalar declarations 021/102/120/201/210 and nearest/headset/radio
 // home renames 363 each; entry registers and traversal bias remain.
+// Reused outgoing identity at branch/engine/entry/after-routing 376/375/425/452;
+// branch identity with three pairs/native descriptor 382/376; engine identity with three pairs 381;
+// post-routing identity with three pairs and native descriptor 464. Original identity construction retained.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
