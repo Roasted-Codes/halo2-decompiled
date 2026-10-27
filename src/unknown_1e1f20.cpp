@@ -513,6 +513,11 @@ s_node_view *function_26be30(s_iterator *iterator);
 // Direct lookup with slot callback 10; pointer arithmetic/scaled offset 7/7;
 // later index reference/per-iteration index snapshot 7/7;
 // slot/callback/both outside the loop 7/7/7; inverted slot test 7.
+// Further trials: slot-offset/type allocation and delayed slot-address formation remain.
+// uniform actor reads 157; entry iterator lifetime 7.
+// native prop result 7; actor/iterator 157.
+// actor/native prop 157; iterator/native prop 7.
+// all three receivers 157; all three/nested view validity 157.
 // @retail 0x1e23c0
 void function_1e23c0(long actor_index)
 {
