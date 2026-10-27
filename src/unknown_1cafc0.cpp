@@ -881,6 +881,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // 210 (plain 210); byte result with original pointer lifetime 210. Original pointer lifetime retained.
 // On the byte-result/native-record graph, eight primary/offset/overlay ID-name families
 // each 210; identifier homes and protected blend-query lifetime remain. Original names restored.
+// Round 204: repeated native channel receivers primary/transition/overlay 210/269/403;
+// primary-transition/primary-overlay/transition-overlay/all 269/403/369/369;
+// all receivers before result storage 369. Identifier homes and blend-query lifetime remain.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
