@@ -175,6 +175,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Complete world-inertia producer with matrix/state pointer/reference inputs, forced 233 each;
 // ordinary matrix/state pointer/reference 462/468/462/468. Original query boundary restored.
 // Round 153: native virtual query value/const-value initialization 184/184; assignment 275/275; each with broad rotation 221/287/221/287. Initializers retain the 0x94 frame; broad initialization recovers 0xc4 but regresses. Original virtual output, helpers and scoped rotation restored.
+// Round 76: existing vector3f_scale for the inverse mass, the angular brake, both 184/184/184 (identical
+// code: the reciprocal stays the product destination); angular product as three rows 221, with component
+// locals 221, with that and the brake helper 221. Aligned difference 143 of 289 (frame and float schedule).
 // Round 155: Native inverse-inertia/rotation matrix alignments 16/4,4/16,16/16,8/4,
 // 4/8,8/8,16/8,8/16: 240/224/240/241/224/241/240/241. Original native matrix alignments and scoped rotation restored.
 // Round 224: Existing query producer owns preceding inverse-mass scaling; scalar/state inputs

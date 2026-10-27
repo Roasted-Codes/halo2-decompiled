@@ -963,7 +963,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 
 /* the out-of-band messages: those that arrive from an address rather than on
    an established channel */
-// score 193 (was 193): selector/message/address convention and dispatch root remain.
+// score 193 (was 193): selector/message/address convention and dispatch root remain. Round 76: with the
+// unified retail-order switch and the address read once through its address, the address goes on the stack
+// as in retail and only type/message are swapped (ecx/eax for retail eax/ecx); the 24 missing bytes are
+// exactly retail's edi copy of the address and its three-pop exits, so that body matches once the convention does.
 // incoming selector/message/address allocation and dispatch root remain.
 // Single-root family orders query/connection/session/peer 210; query/session/connection/peer 219;
 // query/peer/connection/session 211; connection/query/session/peer 207; connection/session/query/peer 208;
@@ -1057,6 +1060,13 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 6,7,5 / 7,5,6 / 7,6,5 208/208/207/208/208; reverse connections with direct orders
 // 0,2,4,3 / 0,3,4,2 / 0,4,2,3 208/208/207. All regress at 432/444 bytes;
 // original phases restored. Incoming selector/message/address roles and dispatch root remain.
+// Round 76 (fast, control 191): unified retail-order switch 218 (aligned 252 -> 83); plus address read through
+// its address 220 (aligned 104); five parameter orders on it and the message/address/type order 219-220;
+// free function in type/address/handler/message and handler-first orders 220/220; cases 2/4/8/5 first
+// 220/216/219/216; message-typed local first 190 (444 bytes, one lower, not kept); link pointer first 242
+// (this moves to ecx); explicit default/scoped lookups/returns 220 each. Diagnostic message test first 212.
+// Case-subset bisect: one-case bodies take the type in eax, any full body keeps ecx. An unused fourth size
+// parameter is dropped by LTCG (the caller stops passing it) and leaves the registers as they are, 220.
 // Round 188: Residual connection/peer interleaves 5,22,6,23,7,24 / 22,5,23,6,24,7 /
 // 5,23,6,24,7,22 / 24,5,23,6,22,7; connection/query interleaves 5,8,6,9,7,10 /
 // 8,5,9,6,10,7 / 5,9,6,10,7,8 / 10,5,9,6,8,7:
