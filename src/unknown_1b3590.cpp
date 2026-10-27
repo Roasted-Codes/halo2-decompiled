@@ -414,6 +414,10 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 // 58/58/58/58; those placements with shared conversion 64/61/62/61. Opening body restored.
 // Native flag fields/chain, direct/member receivers at final reset 63/63/63/63;
 // the same complete field resets before tick conversion 63/63/63/63.
+// Native data block 61; after actor/notification 61/58; fixed binding/result-first 61/61; data with
+// shared conversion/distinct tick value/output-first 65/61/61. All executable forms restored.
+// Data block with state/actor/seconds/ticks names, both time names, late tick lifetime,
+// and all four names: 61/61/61/61/61/61/61/61. Original body restored.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {

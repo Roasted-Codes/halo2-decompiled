@@ -1276,6 +1276,10 @@ bool function_c70b0(long unit_index);
 // On the retained success-byte graph: short/long depletion 200/173; short/long
 // interruptibility 304/172; paired short-short/short-long/long-short/long-long
 // 309/201/304/174. Original canonical predicates and inherited argument handling restored.
+// Round 171: Direct native control/state/unit receivers 164/165/344; control+state 165; unit+control
+// 344; unit+state 367; all 367; all plus direct controlling field 367. All restored; inherited
+// parameter observation unchanged. Frame eight agrees; entry pool/state scratch roles, signed-count
+// joins and result normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1647,8 +1651,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 810 (was 841): frame 0xcc versus 0xd4 and first angle expansion remain.
+// score 810 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain.
 // Earlier: frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
+// Earlier 810 from 841; frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
 // two inline levels 833, sequential channel construction 833, activity byte 833,
@@ -1676,6 +1681,15 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 181 direction input value/native copy 810/810; basis values/native copies 1067/1073;
 // all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166.
 // Direction copied once inside projection retained (plain 810, 3403/3403); frame 0xcc versus 0xd4.
+// Round 171: Uniform named k/j/i product subsets k,j,i,kj,ki,ji,kji all 810; uniform first k+j row
+// sums 810. Complete original helper and body restored. Frame 0xcc versus 0xd4 and first angle
+// expansion remain.
+// Round 188 on retained direction copy: immutable direction 810; ordinary inline 1151;
+// complete result publication 900 (frame 0xd4); pointer result 810; direction/basis/all
+// input references 810/810/810; output-first 810. All original helper contracts retained.
+// Independent row orders ikj/jik/jki/kij/kji with retained direction copy:
+// 810/829/829/839/840; uniform k/j/all product operand order 810/810/810.
+// All restored; frame 0xcc versus 0xd4 and first angle boundary remain.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2275,7 +2289,14 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
     return arg_0->graph_tag_index != NONE && arg_0->animation_id.index != NONE;
 }
 
-// score 666 (was 666): frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// score 666 (was 666): Frame 0x80 agrees; request/control homes, validity expansion and ret 4 versus ret 8 remain.
+// Earlier: frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 differ.
+// Round 55: retail never enregisters the request pointer (esi holds the control pointer, spilled to
+// +0x24) and copies the request bools at +8/+9 as plain bytes; its transition flag is a byte (+0x11).
+// Request bools read as bool 707 (2545 bytes); with a bool transition flag 723 (frame 0x7c, but aligned
+// diffs 496 -> 383); bool transition flag alone 710 (aligned 386); declared after the result 709; with
+// only the +9 bool read 742. Retail's frame keeps a dword at +0x18 that ours does not.
 // Earlier at 666 (was 666): Frame 0x80 agrees; request/control homes, selected validity calls and ret 4 versus ret 8 remain.
 // frame 0x80 agrees; request/control homes and ret 4 versus ret 8 differ;
 // ordinary validity inline 679; native final/override/validity 688/712/699; depth one 707;
@@ -2305,6 +2326,10 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Complete request value after/before initial activity 689/706; with all three request results
 // constructed directly 705/712; complete library input copy after/before 689/706,
 // with direct results 705/712. Native request record and copies restored; original interface retained.
+// Late changed/forced status byte-bool, word-bool, bool-byte, bool-word, byte-byte, byte-word, word-byte,
+// word-word: 666/676/666/693/666/693/676/682 (fast); all restored.
+// Eight complete entry object/control/state/tag receiver lexical orders all 666; frame
+// 0x80 unchanged, request ESI capture and tag/control homes remain. All names restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

@@ -30,6 +30,8 @@ bool function_1946f0(s_bitstream *stream)
 // element address plus one 2; const index and count 2; size local 47.
 // discard entry guard 2; nested writing gates 2; unchanged writer guard 2; accounting store order 13;
 // positive clear count 21; inclusive remaining count 2; named byte mask 2; native signed bit offset 2.
+// Index expression at each use 2; bytes through the dword buffer member 2; data pointer local 35;
+// plain masked assignment 2; size-first bound comparison 4.
 // @retail 0x194710
 void function_194710(s_bitstream *stream, bool discard)
 {

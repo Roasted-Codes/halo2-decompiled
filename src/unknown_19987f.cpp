@@ -1268,7 +1268,8 @@ extern bool g_4ed39d;
    Retail passes all three arguments on the stack: reading the screen id
    through its address keeps it there */
 
-// score 184 (was 184): Frame 0x28 agrees; game/main byte homes and dialog joins remain.
+// score 184 (was 184): The game/main byte homes and dialog joins still differ.
+// Frame 0x28 agrees; game/main byte homes and dialog joins remain.
 // game/main byte homes and dialog joins differ;
 // frame 0x28 agrees; game/main byte homes and dialog joins remain.
 // Earlier: game/main byte homes and dialog joins differ;
@@ -1295,11 +1296,9 @@ extern bool g_4ed39d;
 // both error chains 186; recovery-needed result alone/with low error 174/159 (latter plain);
 // default main alone/with low error 228/229; default handled/both defaults 181/231.
 // The 159 form adds instructions and worsens normalized sequence edits 69 to 77; restored.
-// game/main byte homes and dialog joins remain.
 // Direct disconnect game/lobby/main results 177/208/189; paired game-lobby,
 // game-main and lobby-main results 225/217/216; all results 220; ordinary game result 216.
 // Direct game result adds comparisons/stores: aligned changes 78 versus 69; dropped.
-// game/main byte homes and dialog joins remain;
 // dialog-ID choice 202f; direct ID-selected callback tuples 238f; callbacks
 // after selection/at consumer 237f/190f; with ordinary game result
 // ID-only/direct/late/consumer 233f/257f/242f/235f. Original flow retained.
@@ -1309,6 +1308,9 @@ extern bool g_4ed39d;
 // Game/handled true chains in menu-first and handled-first order 184/186; lobby/handled chains 184/184; both menu-first/both handled-first/mixed orders 184/186/184/186. Byte homes and dialog joins remain.
 // Complement game/lobby/both/main/game-main/lobby-main/all menu results 184/184/184/184/184/214/184;
 // all complemented with the recovery result 174. Original result representations restored.
+// Recovery success read from game/lobby/both menu results 186/184/186; direct menu
+// success guards game/lobby/both 184/184/205; split both guards 205; both with low-mode
+// error sample 208. Original recovery producers, byte results and joins restored.
 // Round 160: Branch-local route result long/short/signed byte 254/251/251; callback-presence choice on
 // common flags query 202; long/byte route plus presence 258/263; message clear at publication 228; shared
 // user-flags workspace 184. Original flow, inherited qualifiers, callbacks and calls restored.
@@ -1320,6 +1322,16 @@ extern bool g_4ed39d;
 // Menu-only/dispatch-local/post-query error observation 184/184/184; game-first zero chain 181,
 // with menu-only observation 181; one recovery-error value 206, with scope/chain 207; main-first
 // zero chain 201. Byte homes and dialog joins remain.
+// Round 175: Choice from the test, two/one alternatives: bool 168/184, byte 168/184,
+// short 175/189, long 173/192. Lower raw counts add conversion instructions and
+// worsen aligned sequence edits from 66 to 72-74; all original producers restored.
+// Native message object/name/early lifetime/both 184/184/184/184; aggregate/CRT/early aggregate 247/207/239;
+// branch-local loader 184. All restored.
+// Lobby/handled order, callback initializers, dialog assignment order and their
+// combinations all 184; session reset before dialog assignment 185.
+// Screen workspace, user and dialog options, callback, dialog ID and loader
+// names individually and together 184 each.
+// Round 333: Complete message aggregate/CRT initialization 224/207; before menu-result declarations 224/205; with ordinary game result 221/227; with direct error input 222/225. Original partial field initialization, both inherited qualifications and every callback restored; byte homes and dialog joins remain.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

@@ -242,6 +242,11 @@ struct s_slot_05_data
 // (both reference arms after the first return) but scratch takes EDI and reference a stack slot, frame 0x774: 117;
 // inverted outer test 118; inverted inner test 91, with the else arm 117; on the else arm, reference at block
 // top / before scratch / function scope, bool first, scratch at function scope, swapped compare, release first 117.
+// Round 233: Native invalid/mode/both on late scratch 91/91/91; live permission
+// alone/invalid/mode/both 181/181/181/181; final selected-reference fields 118.
+// Round 189 independent early declarations of scratch/reference/selection flag and all combinations
+// 91 each; complete saved-scalar role names on late scratch 91. Initializations unchanged; scalar
+// homes and cold joins remain.
 // @retail 0x1b1f70
 bool __stdcall function_1b1f70(long actor_index, s_slot *slot)
 {

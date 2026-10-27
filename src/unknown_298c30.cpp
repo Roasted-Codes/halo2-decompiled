@@ -117,6 +117,15 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Normalizer input snapshots 448; native normalizer/distance/both roots 443/408/448; snapshots with
 // native distance root 448; void normalizer alone/with snapshots/with native roots 408/448/448.
 // Original helper and body restored; entry loads, XY/magnitude homes and return cleanup remain.
+// Native normalization-input/evaluation/candidate-direction library copies, pair/all combinations,
+// plus native endpoint-array initialization 408/408/408/408/408/408/408/408. Original body and helpers restored.
+// Complementary facing bool/byte/short/long 408/408/430/420; with complementary first endpoint
+// 442/442/413/411. All restored; incoming object and normalized homes remain.
+// Round 138: existing inline vector normalizer at input/direction/both 408/408/408;
+// shared endpoint magnitude alone/with input/with direction/with both 407 each
+// (frame 0x6c); existing outlined normalizer at both 549. One-point forms rejected;
+// original helpers, calls and includes restored. Entry/XY homes and cleanup remain.
+// Sum/direction/evaluation point-name order, eight combinations 408.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -323,6 +332,10 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Rotation publication xzy/yxz/yzx/zxy/zyx 749/749/748/749/748;
 // endpoint yx alone/with yxz rotation 811/811; normalized kij publication 749.
 // One-point forms rejected; original helper stores and body restored.
+// Round 174: shared three-use height 779; forward/reverse/both endpoint calculations at consumption
+// 803/798/858; center-first/reverse-first initial points 836/802; reverse-first with late forward 792;
+// center-first with late reverse 797. Original geometry production restored; frame 0x11c/0x114,
+// eager radius and trace/pivot/point homes remain.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,
