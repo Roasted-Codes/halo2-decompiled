@@ -1371,6 +1371,9 @@ bool function_1e1de0(long arg_0);
 // Round 179: target-admission/target-publication/activity inline declaration subsets
 // 165/165/165/165/165/165/165; all three inline/noinline 165. Original declarations restored.
 // Scratch lifetime, split actor declarations, default order and scratch name: eight combinations 165.
+// Round 76 on the round-75 shape (218, aligned 12): actor arm first 218 (aligned 21); owner after the index
+// test 220; actor-index local in the actor arm 218. Retail gives the index local its call register (ecx) at the
+// definition and spills it there; ours stores it straight from the load.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
