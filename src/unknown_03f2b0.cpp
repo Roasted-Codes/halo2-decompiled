@@ -1435,6 +1435,9 @@ struct s_133f70;
 // reuse 326/326/335/326 plain (fast 355/355/344/350). All restored; frame and staging remain.
 // Projection branch scope, later failure constant and earlier level constant combinations:
 // 356/371/371/356/356/371/371 fast; separate level initialization 356 fast.
+// Complete retained cache receiver: null-first/conditional/absent-first/present-first
+// 366/374/371/374; same producers with one shared cache-index home 366/374/371/374.
+// All add frame bytes; original slot observations and body restored.
 // Round 246: common success/failure accounting, bool/byte/short/long result
 // at the builder result 240/240/286/279; early result declaration 240/240/286/279.
 // Expanded reduced control 213; original independent rejection and body restored.

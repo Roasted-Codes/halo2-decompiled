@@ -1311,6 +1311,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // byte/byte/short/word/long carriers 183/183/196/196/196. Original release and event code
 // restored.
 // Event owner/category/magnitude publication permutations 154/154/154/154/154; location first, owner last and location between owner/scalars 154/154/154. Original event and release code restored.
+// Whole flags byte as unsigned/signed/plain-char full-byte bitfields 154/154/154;
+// plain/signed-char scalars 154/154; full-byte bitfields with byte-unit named
+// flags 216/216/216. Original record declaration, masks and entire body restored.
 // Round 221: current event graph with object roots live, normal/entry result
 // 414/414; tag roots live 228/228; both roots 388; both with byte/long/short
 // result 395/387/388. Original root snapshots, result and body restored.
@@ -1318,6 +1321,10 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // inputs/after coefficient/after vector 200/203/204 each; reacquired item
 // before inputs/after vector 200/204. Original helper and byte stores restored.
 // Existing scaler return consumed by impulse call, direct/native-copy/library-copy/early-output forms 200/246/246/200; each with shared damping 200/246/246/200. Original release helper, includes and damping restored.
+// DH round 189: Native/const/library attachment matrix values 151/151/151; native/const offsets
+// 183/183; native/const/library paired values 190/190/190. All one-use snapshots restored; matrix
+// gain only three, despite retail length. Original helper, contact/event code and includes
+// retained.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

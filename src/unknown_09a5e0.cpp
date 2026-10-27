@@ -2068,7 +2068,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 168 (was 210): object/offset homes and low-mask allocation remain;
+// score 168 (was 168): object/offset homes and low-mask allocation remain;
 // frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // object/offset homes and low-mask allocation remain;
@@ -2146,6 +2146,8 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // low between/high before, after integers, after all 193/172/170;
 // low after/high before, after integers, after all 191/170/168.
 // Both mask updates after their original stores retained; 1070/1081 bytes.
+// Independent early parent result/store boundaries before/between/after: 288/288/285;
+// 267/266/169; 266/265. Original early stores and retained child timing restored.
 // Round 246: metadata/count/fraction defaults before the child getter in seven
 // combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
 // @retail 0x9d450

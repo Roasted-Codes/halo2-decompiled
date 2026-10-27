@@ -1216,6 +1216,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // formed at the emit point 518 (1692 bytes; aligned differences 604 -> 532).
 // Round 227: Mutable current record, iteration assignment/CRT, traversal assignment/CRT,
 // immutable current-step home and traversal current-step assignment/CRT 444/444/444/444/444/444/444/444. All restored.
+// Final source/emitted/both native coordinate values 476/484/557;
+// with existing point difference 492/484/557; both values emitted first
+// without/with point difference 557/557. All restored; original current record retained.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

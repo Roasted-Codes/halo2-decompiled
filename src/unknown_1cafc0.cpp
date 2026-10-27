@@ -572,6 +572,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Actual found-name record at group expansion: pointer/reference/value 616/616/567;
 // with urgent resource cursor 632/632/671; pointer plus resource base 619;
 // pointer plus cursor/base 756. All restored.
+// Round 190: direct urgent-resource fields 399; twice-used native resource index 399;
+// ordinary urgent while alone/with direct fields/with native index 399 each; earlier native
+// ordinal/resource declarations separately/together 399 each. Original helpers restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
@@ -884,6 +887,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 204: repeated native channel receivers primary/transition/overlay 210/269/403;
 // primary-transition/primary-overlay/transition-overlay/all 269/403/369/369;
 // all receivers before result storage 369. Identifier homes and blend-query lifetime remain.
+// Round 187: primary ID at lookup 342; transition ID at entry 357; both 304;
+// overlay ID at entry 267; with primary at lookup 332; with transition at entry 347;
+// all three scope changes 333; entry primary/overlay/transition order 349. Restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

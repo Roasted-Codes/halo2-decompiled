@@ -95,6 +95,8 @@ void __stdcall function_b8890(long arg_0);
 // signed-byte flag unit with those four write forms 255 each. Original restored.
 // Round 224: First-list processing cursors, read-only/mutable and consumed/body-end steps,
 // original/branched selection 283/221/283/221/272/266/272/266. Original indexed processing and call cycle restored.
+// Header-byte-offset induction long/dword 276 each, short/word/byte 280 each;
+// direct descending list selector long/short/signed-byte 251/265/252. Restored.
 // @retail 0x278f00
 void function_278f00()
 {

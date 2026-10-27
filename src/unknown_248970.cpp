@@ -117,6 +117,8 @@ public:
 // at their expressions 215. Frame and input allocation unchanged; original body restored.
 // Viewer-bound signed short/long snapshots with long/short/word/while traversal
 // 266/265/262/266/266/264/263/266; exact-only field snapshots restored. Frame/input homes remain.
+// Native unsigned head/tail/traversal handle domains, seven combinations, 215 each;
+// all three with unsigned produced handle 215. Original fields/carriers restored.
 // Round 246: age/flag-word/both library fills 217/215/217;
 // adjacent-link fills alone/with age/flags/both 219/229/219/229;
 // all fields with individual link fills 217. Original scalar initialization restored.
