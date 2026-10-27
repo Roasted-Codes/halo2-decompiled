@@ -112,6 +112,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // These recover the opening frame and registers through +0x10 but regress overall; all restored.
 // Initial validation result from first two/three/four/five tests, bool 157 each;
 // complete entry result long/short/signed byte/byte 219/226/188/188. All restored.
+// Independent-pass scan admission continues: machine outer/duplicate, player outer/duplicate 157 each;
+// each with native uniqueness 171. All restored; native uniqueness still first differs at +0x11b.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
