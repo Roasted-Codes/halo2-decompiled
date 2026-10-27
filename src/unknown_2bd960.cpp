@@ -1820,7 +1820,7 @@ void c_game_engine_a::v40()
 }
 
 struct s_spawn_influence_list;
-void function_23ba10(long type, s_spawn_influence_list *list, point3f const *point);
+void function_23ba10(long type, point3f const *point, s_spawn_influence_list *list);
 
 // @retail 0x2bdb00
 void c_game_engine_a::v2(long unused, long list_pointer)
@@ -1831,8 +1831,8 @@ void c_game_engine_a::v2(long unused, long list_pointer)
 	{
 		point3f const *point = (point3f const *)&((s_polygon_2be *)g_51ecc8)->center_x;
 
-		function_23ba10(8, (s_spawn_influence_list *)list_pointer, point);
-		function_23ba10(7, (s_spawn_influence_list *)list_pointer, point);
+		function_23ba10(8, point, (s_spawn_influence_list *)list_pointer);
+		function_23ba10(7, point, (s_spawn_influence_list *)list_pointer);
 	}
 }
 

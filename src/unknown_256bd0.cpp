@@ -65,58 +65,9 @@ struct s_object_flags_256bd0
 	word unknown0 : 6;
 	word bit6 : 1;
 };
-// score 206 (was 206): Frame 0x114/0x110, cached activity and actor/geometry/selection homes remain.
-// Earlier baseline: Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
-// frame 0x114 versus 0x110, cached activity and actor/geometry homes remain.
-// Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
-// Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
-// frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
-// the iterator loop into a stack byte (back edge to its reload) where retail re-reads the ai
-// globals each pass; the 0x28dbd0 call passes the character in eax where retail passes the
-// variant (BLOCKED-BY 0x28dbd0 for that call); retail selects the entry with cmovne.
-// Native placement fields 213; actor getter 212; slot reference 211; native fields with getter
-// 214; const entry result 211; condition-local entry 211; candidate skip 211; placement scope
-// 211; marker position workspace 235; placement position reads 253; in-place velocity 212;
-// marker/placement 225; marker/velocity 235; placement/velocity 253; all three 225; angle field
-// before sign adjustment 230; helper state pointer in two orders 211/211; state reference
-// 211/211; activity value 211/211; external activity reference 211/211; actual datum cursor
-// with separate index output: pointer, void result, read-only result and reference output, each
-// in both orders, 211. Round 72: the signed angle as a call to the existing 0x11cc90 (inlined
-// as retail) 206, kept, with the placement written through named fields; entry selected by a
-// ternary 263; the iterator step as a plain function in swarm.cpp 206 (still hoisted).
-// Frame 0x114 versus 0x110, cached activity byte and actor/point/selection homes remain.
-// Earlier: frame 0x114 versus 0x110 and hoisted active byte remain;
-// native placement fields 213; actor getter 212.
-// slot reference 211; native fields with getter 214.
-// const entry result 211; condition-local entry 211.
-// candidate skip 211; placement scope 211.
-// frame 0x114 versus 0x110, activity caching and saved homes remain;
-// marker position workspace 235; placement position reads 253; in-place velocity 212;
-// marker/placement 225; marker/velocity 235; placement/velocity 253; all three 225;
-// angle field before sign adjustment 230.
-// Helper state pointer in two orders 211/211; state reference 211/211;
-// activity value 211/211; external activity reference 211/211. Cached byte/frame remain.
-// frame 0x114 versus 0x110 and cached activity byte remain.
-// Actual datum cursor with separate index output: pointer in both orders, void result
-// in both orders, read-only result in both orders, reference output in both orders all 211.
-// Shared native datum result/position value/read-only result/read-only position value
-// 211/260/211/260; caller-only native result/position value 211/260;
-// complete native/read-only datum values 257/257.
-// Earlier: frame 0x114 versus 0x110 and cached activity byte remain.
-// Round 130: CRT position/direction/both copies 211/211/211; placement
-// copy alone/with position/with direction/all copies 211/211/211/211; all copies
-// with reused actor offset 254. Original copies and receiver are restored.
-// Round 327: native selected/object/variant/character handles 211/211/211/211; selected/object and variant/character pairs
-// 211/211; all four handles 211; all with double minimum comparison 306.
-// Round 180: Shared point setters for source/placement/both 310/292/318; native direction
-// initializer 251; with source/placement/both setters 275/310/288; selected point value 279.
-// Round 344: unsigned-word status 206; per-arm object result 206; per-arm status 272;
-// word status with object/status/both arms 206/272/272; both arms with signed status 272;
-// full unsigned status with both arms 275. All creation-call bindings preserved.
-// Round 243: Native actor/spawned-actor/unit metadata singly 206 each; all pairings 206
-// each; complete native and read-only native records 206/206. Original body, iterator
-// helper and includes restored.
-// Earlier: frame 0x114 versus 0x110: our build hoists the ai globals' active byte out
+// score 205 (was 206): frame 0x114/0x110 from the hoisted ai-active byte (cause below), then
+// scratch-register rotation, the direction copy store order and the angle helper operand pairing.
+// Frame 0x114 versus 0x110: our build hoists the ai globals' active byte out
 // of the iterator loop into a stack byte, where retail re-reads it after every 0x6b380 call (its
 // compiler treats that call as possibly writing it; src/unknown_2003a0.cpp reaches the same reload
 // only through a volatile read, which is no longer allowed); every stack offset then differs by 4.
@@ -140,6 +91,11 @@ struct s_object_flags_256bd0
 // the step selecting the entry with a ternary inside the active test 263 (frame 0x110 through a
 // branchless select, the active byte still spilled); the next result in a named bool 206; the loop
 // distance through vector3d_from_points3d and length_sq3f 208.
+// Round 180: Shared point setters for source/placement/both 310/292/318; native direction
+// initializer 251; with source/placement/both setters 275/310/288; selected point value 279.
+// Round 344: unsigned-word status 206; per-arm object result 206; per-arm status 272;
+// word status with object/status/both arms 206/272/272; both arms with signed status 272;
+// full unsigned status with both arms 275. All creation-call bindings preserved.
 // Round 153: Character/variant/both native admission exits 206/206/206; variant/character/both
 // fields at every use 205/202/273; both exits with variant/both fields 205/273. On the fresh
 // character-field graph, nested step tests/native entry select/shared displacement 202/274/202.
@@ -150,6 +106,12 @@ struct s_object_flags_256bd0
 // Displacement producer orders xyz/xzy/yzx/zxy/zyx 206 each; all three named squares
 // after the deltas/interleaved with each delta 205/205; successive z-y-x additions 208.
 // One-count forms rejected; original arithmetic and helper restored.
+// Round 102: the cause of the hoist: our link proves the iterator's address never escapes, so the
+// iterator stores cannot reach g_4f55d0->active; retail reloads it each pass. A diagnostic
+// `s_290c50_iterator *const *` read of the step helper's parameter (stores &iterator) gives
+// retail's frame 0x110 and loop: 187 fast (aligned 112 -> 67), not kept. The object index copied
+// only while active (retail skips the copy when inactive) 209; with the diagnostic 187; the step
+// helper forceinline 205; both 209.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

@@ -922,28 +922,21 @@ bool function_d3630(s_vertex_block *block, long triangle_index, s_mesh *mesh, re
 	return result;
 }
 
-// score 42 (was 42): Root/pool/object homes, missing shift spill and stacked iterator input remain.
-// Header base 42; root handle 45; both 45; ordinary while 59; separate admission guards 42;
-// parent field at every use 59; named parent-type mask 42; root/header with separate guards 45.
-// Retail's loop is not rotated (lookup at the top, `jmp` back): a `while (!done)` loop with
-// `done = true` in the else arm, or `do ... while (object_index != NONE)` with breaks, gives
-// retail's iterator in ebx and the spilled 1 (23 each), but the index then loads into ebp and
-// stays a stack argument (`ret 4`; retail eax copied to edi, object in ebp, pool in esi).
-// With that loop: the declarations in either order, parent declared outside, found/preset
-// flag, a renamed walk index, chained or swapped root/current stores, parent read at each use
-// 23 each; object pointer scoped in the loop 60; tail recursion rotates like the for loop.
 // @retail 0xd0620
 void function_d0620(long object_index, s_object_child_iterator *iterator)
 {
-	s_object *object;
+	s_object *object = OBJECT_FROM_INDEX(object_index);
+	bool done = false;
 
-	for (;;)
+	while (!done)
 	{
-		object = OBJECT_FROM_INDEX(object_index);
-		long parent_index = object->value14;
-		if (parent_index == NONE || !TEST_FIELD_BIT(object->flag26) || !((1 << OBJECT_FROM_INDEX(parent_index)->type) & 3))
-			break;
-		object_index = parent_index;
+		if (object->value14 != NONE && TEST_FIELD_BIT(object->flag26) && ((1 << OBJECT_FROM_INDEX(object->value14)->type) & 3))
+		{
+			object_index = object->value14;
+			object = OBJECT_FROM_INDEX(object_index);
+		}
+		else
+			done = true;
 	}
 
 	iterator->root = object_index;
