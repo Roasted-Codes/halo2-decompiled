@@ -172,6 +172,7 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Round 333: Ordinary limiter/cap-first/both contracts 184/184/184; cap-first/both with broad rotation 221/221; ordinary limiter/cap-first/both with ordinary query expansion 184/184/184. Broad forms recover frame 0xc4 but regress; all original helpers, matrix scopes and calls restored.
 // Complete world-inertia producer with matrix/state pointer/reference inputs, forced 233 each;
 // ordinary matrix/state pointer/reference 462/468/462/468. Original query boundary restored.
+// Round 153: native virtual query value/const-value initialization 184/184; assignment 275/275; each with broad rotation 221/287/221/287. Initializers retain the 0x94 frame; broad initialization recovers 0xc4 but regresses. Original virtual output, helpers and scoped rotation restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

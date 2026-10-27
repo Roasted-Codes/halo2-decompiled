@@ -1332,6 +1332,7 @@ extern bool g_4ed39d;
 // Screen workspace, user and dialog options, callback, dialog ID and loader
 // names individually and together 184 each.
 // Round 333: Complete message aggregate/CRT initialization 224/207; before menu-result declarations 224/205; with ordinary game result 221/227; with direct error input 222/225. Original partial field initialization, both inherited qualifications and every callback restored; byte homes and dialog joins remain.
+// Round 153: shared indirect load only 184; game-lobby/game-main/lobby-main constructor-and-load joins 195/195/190; corresponding partial indirect-load joins 184/184/184; shared load with direct constructor loaders 184. Original branch-local publication and both inherited qualifications restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
