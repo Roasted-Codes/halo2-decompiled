@@ -62,7 +62,7 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 	bool arg_16, bool arg_17, bool arg_18, real arg_19, real arg_20,
 	real arg_21, byte arg_22, point3f const *arg_23, real arg_24);
 
-// score 16 (was 155): the 22nd argument of the 0x2cbf0 call is a word in retail but 0x2cbf0 declares a
+// score 16 (was 16): the 22nd argument of the 0x2cbf0 call is a word in retail but 0x2cbf0 declares a
 // byte (that declaration is also in src/unknown_1321f0.cpp); field_2c[i] is computed before the
 // field_4/field_5c pushes in retail. Round 58: natural loop with the record reset from the parameter
 // 247 (parameter moves to the stack); record through the parameter/const source copy/record in the loop
@@ -149,6 +149,9 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Original/formal-source forms also lose the matched caller; frames grow to 0x21c.
 // Original conditional copy, query, cursor and local qualifiers retained.
 // With retained word recurrence, ordinary source/index/both carriers 207/193/200; conventional while alone/source/index/both 197/209/177/201; conventional for 186. Original body, cursor and inherited qualifiers restored; several forms also disturb the matched caller.
+// Round 354 natural-loop graph: feature word before selector 26; both feature results before selector 25;
+// both with early word 192 (caller differs); conditional selector 16; decoded-selector name 16;
+// both ordinal role names 16; category before selector/feature observation 133/199. Original restored.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *record, bool arg_2)
 {
