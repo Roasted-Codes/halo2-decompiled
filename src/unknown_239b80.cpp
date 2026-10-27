@@ -277,6 +277,9 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // departure 260/260/260/212; with Boolean departure 249/249/249/234. Original helper/body restored.
 // Departure/output/both/current/heading names 203 each; byte departure 234; late departure and
 // lowest-coordinate order 203/203; heading before scan 220.
+// On the long departure state: signed-word/unsigned-word/unsigned-native/int result
+// 257/257/203/203; native input count 259, with signed/unsigned word result
+// 268/268; observed signed-word input count 203. Caller checked with each.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -455,6 +458,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Original helper/body restored.
 // Previous-point, distance, positive-state, negative-state and result names 237 each;
 // status declaration order 264; previous-point address 237; displacement order 237.
+// Native previous/plane/both observations 378/370/354; both native points 355;
+// all native inputs 376; complete plane/previous/both scalar observations 347/359/368.
+// Original inputs, copies and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
