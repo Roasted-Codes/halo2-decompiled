@@ -14,8 +14,12 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 594 (was 594): frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
-// Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
+// score 594 (was 594): frame 0x64 versus 0x60; shape homes, basis and wave scheduling remain; nine excess bytes.
+// Round 134: retail reads the wave's sine arguments from the global point: that form 701 (frame 0x60,
+// s1 sinks to its use), s1 before the first cross 701, s0's only 602; both shape pointers
+// NULL-initialized then set by an if/else (retail's entry, retail length 2622) 599, with s0's
+// global arguments 596, with all global arguments 604; as ternaries with global arguments 716.
+// frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
 // Frame 0x64 versus 0x60; shape/basis/scalar homes and nine excess bytes remain.
 // Frame 0x64 versus 0x60, primary-shape/basis homes and wave scheduling still differ.
 // Earlier: Frame 0x64 versus 0x60 remains; primary-shape, basis and scalar scheduling still differ; nine excess bytes remain.

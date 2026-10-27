@@ -190,6 +190,9 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // Ordered zero/upper guards word/byte/long/short 71/76/76/71; upper-first word/byte 71/76; nested sub-upper range word/byte 67/71.
 // Round 186 complete conditional result word/byte/short/long 73/78/73/79;
 // the same result returned at its table boundary 73/78/73/79. Original float tree preserved.
+// Round 135 byte decode helper writing through a result pointer (255 default) 77, with a zero
+// default 87, on a word 72; returning decode helper 77; decode helper with a constant
+// maximum argument 80 (the dead constant argument is dropped too).
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {

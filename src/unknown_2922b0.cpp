@@ -72,6 +72,12 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 
 // score 629 (was 629): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
+// frame agrees (0x108); early success BL/EBX and basis/ray/root/rotation homes remain;
+// retail is 60 bytes longer after the ray loop (12 more loads, 4 more products: (1/range) * minimum
+// twice) and re-reads the half-width for each offset point. Round 134: range local read before the
+// test (with or without FLT_MAX there) 725/727; ray direction via vector3f_scale, 0 - width,
+// minimum * (1/range), sqrt * angle all 641 (same code).
+// Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes differ.
 // Earlier: frame 0xf8 versus 0x108; result/basis/rotation homes differ.

@@ -606,7 +606,11 @@ void obstacle_list_group(s_obstacle_list *obstacles, real radius);
 
 bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center, long object_index, real radius);
 
-// score 711 (was 711): Frame 0x1f88 agrees; entry completion/result/path and obstacle/search/step homes differ.
+// score 711 (was 711): frame 0x1f88 agrees; result/path pointer and obstacle/search/step homes differ.
+// Round 134: retail's result is a stack byte (ebx = pathfinding, then NONE): bool result 757; radius as
+// one ternary (retail's load order, one store) 744, with bool result 773, with the pathfinding read after
+// the radius 740, all three 775.
+// Frame 0x1f88 agrees; entry completion/result/path and obstacle/search/step homes differ.
 // Earlier 711 from 735: uniform native forward obstacle indices recover the frame.
 // Frame 0x1f88 agrees; radius/pathfinding entry schedule, success-result and avoidance-workspace homes differ.
 // frame 0x1f88 agrees; result/path pointer and obstacle/search/step homes differ.

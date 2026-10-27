@@ -151,6 +151,10 @@ static inline real distance_squared(point3f const *a, point3f const *b)
    root and middle axes and copies the target into the end node */
 // score 2 (was 2): one product's operand order remains: in the second root cross
 // product (up x forward into left) retail loads up->k before forward->j.
+// Round 134: a shared inline axis rebuild (normalize, two crosses) for root and mid with
+// pointer parameters 2, taking the node instead 107; new_mid through root->forward 4;
+// mid_left among the mid pointers, all 36 orders, best 4 (root_left first fixes this
+// product but flips two in the first cross); root pointers in a block 2; names don't matter.
 // Tried: lift as a vector (232) or three scalars (216); the direction kept in
 // a delta vector (215); u = inverse * delta, u in k-i-j order, vector3f_scale
 // (215-223); delta scaled in place (308); 1 / root_target written inline

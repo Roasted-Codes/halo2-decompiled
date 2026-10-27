@@ -183,6 +183,11 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // Round 166: Ordinary inline at existing magnitude/cross/paired normalizer boundaries,
 // individually and jointly, then all with scale/add: all eight 1402 fast at 6239/6238.
 // Original producer declarations, captures, bodies and all call expressions restored.
+// Round 135 (aligned difflib counts in brackets; base [1470]): the contact query rows sit at
+// 0x1d8 and the 32-entry list at 0x15c in retail, 0x40 higher in ours. Magnitude read through
+// the pointer 1570 (frame 0x590) [1449]; normalizer only through the pointer 1480 (0x5b4)
+// [1460]; cross product without the scalar captures 1423 [1463]; both pointer forms 1585
+// (0x590) [1442]; contact arrays declared at function scope 1402 [1470].
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
