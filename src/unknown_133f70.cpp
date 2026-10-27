@@ -154,6 +154,8 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // inner-loop top/before the call/before the inner loop/before the flag sample 134/8/195/198; instance
 // local 8; byte category cast 8; callee category byte/word 47/15. The register setup of the last three
 // arguments remains.
+// Round 47: tag local 16; key local 16; tag/key in either order 16; category+tag 16;
+// category+key 16; category+tag+key 16; category+key+tag 16; caller preserved.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *record, bool arg_2)
 {
