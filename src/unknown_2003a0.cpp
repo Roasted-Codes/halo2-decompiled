@@ -1166,6 +1166,13 @@ struct s_squad_tree_definition
 // native field plus data/arm 118/59; data plus arm 127; all three 127;
 // definition observed at every use 31 (fast). Opening body and record type restored.
 // Native group-parent/head/group+squad/group+head/squad+head/all field pointers 37/34/37/37/34/37; readonly parents with head or squad pointers 37/37.
+// Retail's dead `add eax, edx` and `mov eax, ecx` read as two loads of the field (the test through
+// the folded index, the use through the record pointer), the second turned into a register copy
+// after allocation; ours merges them into one load. Pass 4: test through a fresh getter and the
+// call through the pointer 42 (one folded load, no pointer); test and call both through a getter
+// inside the block 42; field read once into a group index 31; the call through a file-local
+// forceinline helper taking the squad 31. Pass 3: the group through the global getter 94; the
+// test by index with the group pointer formed inside the block 60.
 // @retail 0x2009d0
 void function_2009d0(void)
 {
@@ -2261,33 +2268,7 @@ void function_201ea0(void)
 
 PRIVATE __forceinline s_squad_datum *function_201c83(s_squad_record_iterator *arg_0);
 
-PRIVATE __forceinline s_squad_datum *squad_iterator_next_201df0(s_squad_record_iterator *arg_0)
-{
-    s_squad_datum *local_0 = NULL;
-    if (g_4f55d0->active)
-    {
-        s_record_pool *local_1 = arg_0->records.data;
-        long local_2 = data_next_absolute_index_inlined(local_1, arg_0->records.index + 1);
-        if (local_2 != NONE)
-        {
-            local_0 = (s_squad_datum *)(local_1->data + local_1->size * local_2);
-            arg_0->records.index = local_2;
-            arg_0->records.datum_index = (*(short *)local_0 << 16) | local_2;
-        }
-        else
-        {
-            arg_0->records.index = local_1->maximum_count;
-            arg_0->records.datum_index = NONE;
-        }
-        arg_0->squad_index = arg_0->records.datum_index & 0xffff;
-        arg_0->squad = local_0;
-    }
-    return local_0;
-}
-
 // @retail 0x201df0
-// score 12 (was 12): the record pool's pointer is kept in EDI where retail keeps it in
-// EBX, so the count and the bit mask take the other two registers instead.
 void function_201df0(void)
 {
     s_squad_record_iterator local_0;
@@ -2296,9 +2277,9 @@ void function_201df0(void)
         local_0.records.data = g_51e9d8;
         local_0.records.index = NONE;
     }
-    while (squad_iterator_next_201df0(&local_0))
+    while (function_200d83(&local_0))
     {
-        if (*((byte *)local_0.squad + 3) & 1)
+        if (*(word *)((byte *)local_0.squad + 2) & 0x100)
             function_203360(local_0.squad_index);
     }
 }

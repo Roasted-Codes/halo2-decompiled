@@ -513,6 +513,11 @@ s_node_view *function_26be30(s_iterator *iterator);
 // Direct lookup with slot callback 10; pointer arithmetic/scaled offset 7/7;
 // later index reference/per-iteration index snapshot 7/7;
 // slot/callback/both outside the loop 7/7/7; inverted slot test 7.
+// Localised (reduced image, prop walk removed): the loop alone, or with any prefix that leaves
+// no zero in ebx, gets retail's allocation; every prefix with the reset helper's zero in ebx gets
+// ours. Reset with the parameter read directly 7; actor from the parameter 7; 0x28c before 0x278
+// 9; location after the two stores 15; 0x4fc before the 0x4ac test 11; nested swarm test with a
+// named perception index 7.
 // @retail 0x1e23c0
 void function_1e23c0(long actor_index)
 {
