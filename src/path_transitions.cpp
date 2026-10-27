@@ -182,6 +182,12 @@ short function_26fe20(long object_index, s_object_marker *markers, short capacit
     return count;
 }
 
+// score 72 (was 72): the distance's products and the first output product differ.
+// vector3d_from_points3d + dot3f(&delta, &up) 4 and the output through a file-private
+// point-along-vector helper (also used by 0x26f3f0) matched, but any new inline helper in this
+// file (it links ahead of src/unknown_072db0.cpp) makes the full check lose 0x73360; the same
+// delta and dot written out by hand 76; up-first output products 72. Without helpers: delta-first
+// products 72; delta in i, j, k order 76; dot in i, j, k order 72; `k + (j + i)` grouping 75.
 // @retail 0x270130
 bool function_270130(s_object_marker const *marker, point3f const *position, real margin, point3f *out)
 {
@@ -214,9 +220,16 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
     return true;
 }
 
+// score 20 (was 108): retail passes the marker flags to 0x26fbf0 as a 16-bit argument
+// (`xor edx, edx; mov dx, [eax + 0x1c]`); declaring that parameter `word` gives 4 and keeps
+// 0x26fbf0 matched, but its other prototypes are in src/unknown_2c0d00.cpp. The squared distance
+// through vector3d_from_points3d/length_sq3f 30; difference orders xzy/yzx/zxy/zyx 24/26/26/24;
+// best before best_distance 20; the marker query before both 99; dot3f alignment 26; sum
+// x + y + z 20; nested point test 20.
 // @retail 0x26fc80
 bool function_26fc80(long actor_index, long object_index, real distance, void *path, point3f *point)
 {
+    bool result = false;
     s_actor_view *actor = actor_get(actor_index);
     s_transition_character *character = (s_transition_character *)function_1e4a50(actor->unknown054);
     if (character)
@@ -232,8 +245,8 @@ bool function_26fc80(long actor_index, long object_index, real distance, void *p
                 marker->matrix.forward.k * g_4687b0->k + g_4687b0->j * marker->matrix.forward.j;
             if (alignment > 0.95f)
             {
-                real y = actor->position.y - marker->matrix.position.y;
                 real x = actor->position.x - marker->matrix.position.x;
+                real y = actor->position.y - marker->matrix.position.y;
                 real z = actor->position.z - marker->matrix.position.z;
                 real squared = z * z + y * y + x * x;
                 if (best_distance > squared) { best_distance = squared; best = i; }
@@ -245,10 +258,10 @@ bool function_26fc80(long actor_index, long object_index, real distance, void *p
             *out = markers[best];
             if (point && !function_270130(out, &actor->position, distance, point))
                 *point = out->matrix.position;
-            return true;
+            result = true;
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x26fe90
