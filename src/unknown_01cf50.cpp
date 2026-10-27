@@ -7856,6 +7856,9 @@ void function_12190()
 
 dword g_55e6b8;
 
+// Advances the vertical blank count (g_485ab0, which the main loop waits on as VBLANK_COUNT in
+// unknown_12b070.cpp) outside the main thread, so both counts are accessed as volatile: retail
+// reloads them from memory at each use.
 // @retail 0x14280
 long __fastcall function_14280(void const *data)
 {
