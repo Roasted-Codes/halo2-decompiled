@@ -649,6 +649,9 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Original helper/body restored; frame and protected child convention remain.
 // Plain predicted-point component loop with long/dword/short/byte ordinals 233/233/275/275;
 // the same output-pointer return forms 233/233/275/275. Original helper/body restored.
+// Round 205: Function-scope child/vehicle-point/projectile-point workspaces, all seven
+// combinations, and all three at object-iteration scope 201 each. Original lifetimes
+// restored; frame 0x50/0x54 and protected child-iterator convention remain.
 // Round 249: shared insertion count after point/first radius/second radius/lower height/
 // upper height/weight 232/232/230/229/228/219; reused count at entry/end 201/215.
 // Original append helper and body restored; protected child contract unchanged.

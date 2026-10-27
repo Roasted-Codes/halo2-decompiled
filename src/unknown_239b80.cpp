@@ -292,6 +292,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // On the long departure state: signed-word/unsigned-word/unsigned-native/int result
 // 257/257/203/203; native input count 259, with signed/unsigned word result
 // 268/268; observed signed-word input count 203. Caller checked with each.
+// Equality input contracts (pointer order, first/second/both native references), each
+// with long/Boolean departure: 203/227/203/234/203/234/203/234. Helper and body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -478,6 +480,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Fraction default between/before deltas, before clipped publication and at iteration entry:
 // unsigned ordinal 211/211/209/209; signed ordinal 259/259/263/275. All restored;
 // the best three-point change does not qualify. Count/stride/prior and SIMD homes remain.
+// On the common failure-result graph: signed word/native count at entry or after
+// alias handling, each without/with shared copy extent: 212/289/211/211/303/225/212/212.
+// One-point forms rejected; original count observations, helpers and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

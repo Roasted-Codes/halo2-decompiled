@@ -168,6 +168,9 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Round 253: Cosine half owned by the quaternion scalar, cosine/sine-first 291/293;
 // with shared cross 265/267; shared double-factor scale 311/311 (1317 bytes);
 // both shared products 327/327. Original body and helpers restored.
+// Round 210: Scalar crosses with coefficient orders dot/s/w2, w2/dot/s, w2/s/dot,
+// s/dot/w2, s/w2/dot: 274/274/272/306/235; cross-first schedules 282/297/304.
+// Best 235 gains two, rejected; original helper/body restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

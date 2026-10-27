@@ -420,6 +420,9 @@ real function_30bf0(vector3f *vector);
 // Round 243: Native point/origin/both/endpoint values 351/363/396/327; point-endpoint
 // 366, origin-endpoint 378; all inputs in either declaration order 432/432. Original body
 // restored.
+// Round 205: Plain component loops for delta/motion/both 429/407/431; projected output
+// 221; projected with delta/motion/both 432/411/425; all with short ordinals 438.
+// Original producers restored; result/range homes and inverse SIMD groups remain.
 // Posture cases reversed 184; exhaustive scale switch, ordered arms and
 // complete conditional scale 202/253/253; each of the four with per-use range
 // reads 273/311/306/306. Original scale, range observations and body restored.

@@ -183,6 +183,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 157: speaker zero at query 338; speaker zero at entry 383; early category zero 165; early first-
 // channel zero 165; speaker/category defaults 383; speaker/first defaults 383; category/first defaults
 // 165; all three defaults 383. Original executable source restored.
+// Retained category index with current-element/advancing native count pointers, each
+// at-use/observed count and byte/Boolean creation state: 165/169/298/311/325/328/327/330.
+// Pointer steps stay in the body; original creation state and count observations restored.
 // Round 147: allocated owner 519; owner/early state 504; owner/bool state 521; owner/early bool
 // 509; owner/first word 519; owner/early/word 504; owner/bool/word 521; owner/early/bool/word
 // 509. All executable forms restored; sources and comparisons saved.

@@ -1093,6 +1093,10 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // child bit stores 340/340. Original lifetimes and stores restored.
 // Round 223: Real request parent aggregate/assignment receivers 235/238; with child bit stores
 // 369/255; location receiver 230; both aggregate/assignment 244/247; location with child stores 250.
+// Metadata lifetimes ending at the shader/table, reference chain or full tag chain give
+// 213/213/213; with native request initialization 211/211/211 (two-count gains rejected);
+// full tag scope with child set/clear stores 219, with native request as well 217.
+// Complete original scopes, request and child-bit copy restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

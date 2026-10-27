@@ -65,9 +65,8 @@ struct s_object_flags_256bd0
 	word unknown0 : 6;
 	word bit6 : 1;
 };
-// score 206 (was 206): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
+// score 206 (was 206): frame 0x114 versus 0x110, cached activity and actor/geometry homes remain.
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
-
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // the iterator loop into a stack byte (back edge to its reload) where retail re-reads the ai
@@ -142,6 +141,9 @@ struct s_object_flags_256bd0
 // Round 187: placement angle first 253; angle after position 249; angle last 251;
 // constants first 250; descending fields 243; angle then descending fields 269;
 // short stores first 215; position then descending constants 251. Original order restored.
+// Displacement producer orders xyz/xzy/yzx/zxy/zyx 206 each; all three named squares
+// after the deltas/interleaved with each delta 205/205; successive z-y-x additions 208.
+// One-count forms rejected; original arithmetic and helper restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

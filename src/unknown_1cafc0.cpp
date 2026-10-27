@@ -891,6 +891,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 187: primary ID at lookup 342; transition ID at entry 357; both 304;
 // overlay ID at entry 267; with primary at lookup 332; with transition at entry 347;
 // all three scope changes 333; entry primary/overlay/transition order 349. Restored.
+// Input-record field orders 0-2-1-3/3-0-1-2/3-2-1-0/1-2-3-0/2-3-0-1/0-3-2-1/
+// 2-1-0-3/1-0-3-2 give 212/213/215/216/213/212/215/216 (mode/class/type/set = 0/1/2/3).
+// Complete publication schedules do not recover the identifier homes; original order restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

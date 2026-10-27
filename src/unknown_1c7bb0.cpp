@@ -145,6 +145,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 204: Actual state-owner input to the existing step, owner last/first with
 // bool/byte/short/long completion, 164 each. Original helper and both traversals restored;
 // separate pool/iterator homes, early null and successor EBP remain.
+// Round 206: Actual second-pass source-squad/pending-flag field receivers as pointer/reference,
+// individually and all four pairs, 164 each. Both acquisitions and pre-call successor retained.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

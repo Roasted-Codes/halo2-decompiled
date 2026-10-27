@@ -410,6 +410,9 @@ bool function_404b0(long mode)
 // Round 252: Both window-predicate parts named at both stipple producers, bool/byte/short/long terms:
 // Boolean result 193 each; full-width result 226 each. Original predicates restored; unsigned-zero
 // branch, pass joins, missing setting loads and clear-call transport remain.
+// Round 205: Four admission-mask result producers after setup 350/218/353/218;
+// the same per-entry producers 309/364/366/365. Original mask lifetime and body
+// restored; byte-zero admission, pass joins and clear-call transport remain.
 // Context before enable/walk/object/part boundaries 193 each; the same
 // four scopes with every entry field read directly 310 each. Original context
 // scope and cached-entry pointer restored; pass joins and call transport remain.

@@ -823,6 +823,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // immutable direction 381 and length-at-expression 381. Executable differences
 // 233/354/354/383/383/357/357/357 versus baseline 233; all original receivers restored. Frame 0x48
 // agrees; direction preload, normal/length/zero allocation, flag stores and timer scheduling remain.
+// Round 206: All three length products named at their expression in orders kji/kij/jki/jik/ikj/ijk
+// 405/405/268/268/405/268; complete immutable products in jki/ijk order 268/268.
+// Original (k+j)+i grouping, operands, observations, helpers and calls restored.
 // Round 250: Projection for/while/do loops 360/360/401; pan for/while/do loops 385/385/292; both
 // for/while loops 380/380 (expanded fast control 245). Original parallel rows restored; direction
 // preload, length/zero allocation and flag stores remain.

@@ -894,6 +894,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // fields/both 155/189/185/199; the same four with complete remapping fields 155/189/185/199. Two-point
 // body-step lead rejected; complete source restored.
 // DL159: actual direct/mapped/both selector field references 199/177/185; signed source field reference 157, with direct/mapped/both selectors 199/177/185; complete field graph with body cursor steps 185. Original copied fields, dynamic bounds and writer retained.
+// Round 206: Native ordinary/special/dirty output fields, individually, all three pairs and all
+// together 157 each; complete output fields with body cursor steps 155. Two-point gain rejected.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
