@@ -116,6 +116,8 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Round 174: isolated partition/ordinal/both/successor/partition-successor/ordinal-successor/all
+// scalar home names, then all with the second-pass actor receiver, 164 each. Original names restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

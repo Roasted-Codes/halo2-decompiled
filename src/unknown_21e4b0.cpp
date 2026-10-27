@@ -159,6 +159,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Direct output-buffer fields: plain 279; spatial 295; both 297; submix 233;
 // plain/submix 280; spatial/submix 282; all 297; repeated effect-mixbin field 290.
 // Complete native channel-table snapshot 359; with consistent voice/native first/both 343/359/343; across reset 357; with voice/first/both across reset 341/357/341. Original count observations and allocation state retained.
+// Round 174: native signed-word channel/voice/both/category/channel-category/voice-category/all
+// ordinals 167/301/303/311/311/292/292; all with creation state across reset 317.
+// Original signed loops, result lifetime, call order and descriptors restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

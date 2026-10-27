@@ -1245,7 +1245,7 @@ struct s_1acda0
     byte unknown3c[0x40 - 0x3c];
 };
 
-// score 68 (was 114): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
+// score 68 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
 // Round 195: retained/default-false active result 139/106; each with direct child result 129/68;
@@ -1257,6 +1257,8 @@ struct s_1acda0
 // Round 323: existing actor getter 193; prop-index observation 114; common empty
 // reference 124; getter/index 193; getter/reference 188; index/reference 124; all 188;
 // all with conditional prop selection 187. Early ESI and Boolean/result traffic remain.
+// Round 174: child-result join with inherited/ordinary result and neither/state/actor/both nested guards
+// 106/106/172/184 and 172/191/185/170. Retained active-state producer unchanged; all joins restored.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {
