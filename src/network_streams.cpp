@@ -1163,7 +1163,42 @@ void __stdcall function_095580(void *header, long message_type, long message_siz
 
 bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb const *collection, long *size);
 
-// score 141 (was 141): Frame 0x10048 agrees; 806/805 bytes; initial oldest/false carriers and allocator save differ.
+// score 141 (was 141): frame agrees; aligned 39. Retail reads the oldest sequence once (EDX) for the
+// count, the first sequence and the scan; keeps the result in a stack byte, made zero in CL at entry and
+// returned with `mov al, cl` from early exits placed at the end, reloaded at the final return; sets the
+// copy loop's fragment to NULL before the index test; and falls into the failure return after the
+// decode test. Kept: the terminal flag in the copy loop's condition (aligned 55 -> 46), long result 141.
+// Tried on the 141 body: short/word result 191, byte/char 217 (791 bytes), bool 234 (771 bytes);
+// literal false failure return 161; first sequence before the count test 241; terminal flag declared
+// first 140; bool result with literal false failure 224; bool single-exit count block 242; short
+// terminal flag 203; copy-loop fragment NULL then assigned 156 (aligned 37), in both loops 156, plus a
+// bool result 213 (aligned 33), plus literal false failure 203, literal false failure alone 174; the
+// count test as a scope around the body with bool result 220, plus literal failure 210, long result 259.
+// Tried on the earlier 172 body: scan getter 302; copy getter 325; both getters 361; unsigned byte
+// progress 215; decode buffer first 213; forced-inline getters 223; readonly decode records 215; native
+// stream value initialization 254; native copy size bits 215; native fragment result selection 213;
+// existing window helper boundary 215; fragment result buffer publication 211; signed-byte/short/word
+// results 210/193/193; read-only scan/copy entries 211/211; oldest with direct fragment selection 232,
+// plus signed byte 234 or read-only scan 232; shared failure result 172; shared success exit 224;
+// nonempty scope 211; scope/failure join 262; byte-total name 193; copy-sequence name 193; scalar
+// names/failure join 172; scope/success join/scalar names 271; on the shared failure result,
+// byte/bool/signed-byte/long results 193/219/193/238; native initial-window count/first with
+// short/bool/byte/signed-byte results 269/278/274/274; single-result reset at payload/copy/CRC phases
+// and validation tests, short 256/231/214/255, bool 229/268/265/276; existing release-helper
+// composition 221; reused fragment data 213; terminal loop condition 191; first-sequence/saved-CRC
+// homes 172/172; failure result before payload/after copy 250/224; failure publication order 172; data
+// and terminal lifetimes 254; per-fragment terminal bool/header byte 192/250; conditional size with
+// bool/byte 192/250; default size with bool/byte 244/251; native result with terminal bool/byte
+// 266/218; independent bool/byte/short/long completion with literal returns 210/210/193/255, with
+// separate callback results 206/206/189/253; oldest after/before result and result before receiver
+// 229; shared initial newest with oldest-first/newest-first 202/202; oldest plus readonly types/stream
+// helper/unsigned byte total 229; native valid/terminal/both fields 172 each; twice-used scan flags
+// byte/native width 172/172, either with native copy terminal 172/172; full fragment observation with
+// native terminal 238; availability accumulation: short logical OR 244, bitwise OR and normalized
+// terminal bit 229/229, incomplete-only assignment 252, bool logical/bitwise OR 262/220, byte
+// logical/bitwise OR 227/235. Diagnostics: frame pointer 289; global optimization 297; size
+// preference 571.
+// Frame 0x10048 agrees; 806/805 bytes; initial oldest/false carriers and allocator save differ.
 // Frame and copy entry agree; oldest/false carriers, nullable copy result and allocator save differ.
 // Earlier: Frame and length agree; retained oldest/false carriers and copy-loop entry differ.
 // Frame 0x10048 agrees; oldest/false carriers, copy-loop entry and allocator save remain.

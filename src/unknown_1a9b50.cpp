@@ -470,6 +470,9 @@ extern point2f *g_468778;
 // result interactions 406/395/440/431/430/421/455/445; original and actor-first lookup under coherent
 // inline/noinline/both settings declarations 375/413/375/413/375/413. Both declarations lose matched 0x265d30
 // in the calibrated peer image; all observations, vectors, result and declarations restored.
+// Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
+// all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
+// Exact-only grouping forms restored; actor/settings/prop carriers remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -691,6 +694,9 @@ static __forceinline long real_to_long(real value);
 // Existing squared-length helper 384; uniform projection products 480; both 460;
 // all prediction products 386; helper/prediction 384; projection/prediction 480;
 // all producers 460; all with target velocity receiver 456. Original restored.
+// Round 177: Shared dot at alignment/backward prediction/both/approach/alignment+approach/
+// backward+approach/all three, then all with opposite helper inputs: 386 each. Exact-only
+// grouping forms restored; early rejection and magnitude/query homes remain.
 // Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)

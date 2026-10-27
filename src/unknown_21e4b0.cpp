@@ -173,6 +173,7 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // ordinals 167/301/303/311/311/292/292; all with creation state across reset 317.
 // Original signed loops, result lifetime, call order and descriptors restored.
 // Description/mix-bin/listener workspace names and creation-state name: eight combinations 165.
+// Five coherent descriptor size/flags/input publication orders 169/169/171/171/169; reverse send-only/submix-only 167/167; complete reverse order with creation byte spanning reset 280. Original descriptors, byte state and body restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {

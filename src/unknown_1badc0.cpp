@@ -35,6 +35,11 @@ real normalize2d(point2f *arg_0);
 // Round 147: Planar scalar differences 255; complete projection products 220; both side-product
 // sets 220; all squared terms 220; projection/side 220; planar/projection/side 255; all products
 // 220; all products with planar differences 255.
+// Round 150: Coherent first/second/both point inputs 215/217/264; second producer first with
+// original/first/second/both 220/216/217/270; early uninitialized directions with both inputs 264.
+// Inline collision provider on original/first/second/both inputs 220/215/217/264, identical with an
+// explicit out-of-line declaration. Best five-point gain rejected; original body restored.
+// Partial original-point input forms are exact-match-only; all trial bodies are restored.
 // Round 174: center/radius/both per-use sources 291/242/296; complete actor-position snapshot
 // alone/with center/radius/both 267/283/262/246; complete sources with clean output access 296.
 // Original observations, early clearance, delayed zero, output access and scalar spill restored.

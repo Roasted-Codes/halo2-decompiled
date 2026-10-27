@@ -2193,6 +2193,9 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // the velocity 127 kept; normal scaled j, k, i 109 kept (k, j, i 110; i, k, j 121; j, i, k 124;
 // k, i, j 122; all in place 109); velocity scaled j, k, i as well 109; inlined property setter
 // passing the value as the 0x1cf3b0 setter does 216.
+// Round 245 (fast): Existing squared-length normal/sample/both/velocity/normal-velocity/sample-velocity/all
+// boundaries 109 each; shared self-dot at all magnitudes 109. Current j/k/i normal publication
+// and matched sample boundary preserved; first normal XMM roles, early velocity loads and property-zero lifetime remain.
 // Round 342: Shared normal/velocity length 123; shared inverse 162; both 168; outer sample vector 109;
 // vector plus length/inverse/both 123/162/168; all with one scan ordinal 168. Exact-length inverse forms regress; originals restored.
 // @retail 0x1d87b0
@@ -2668,6 +2671,10 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 323 (reduced control 128): common norm 139; common scale 128; real limit
 // literals 128; common norm/scale 139; norm/limits 139; scale/limits 128; all 139;
 // all with body-index name 139. Full-image save staging and paired getter homes remain.
+// Round 71: the full image keeps the three saves at entry only when src/unknown_0350e0.cpp is linked in
+// (any reduced image without it sinks them as retail does); float numerators 100.0f/50.0f give retail's
+// fdivr dword 168 (tie); direct array / pointer-to-array rigid body reads 128f; index declared before the
+// loop at function/block top 128f (address order stays [offset + data], retail [data + offset]).
 // Round 137: active-query bool/byte/short/long on nested admission 168,168,168,168;
 // on guarded exit 168,168,168,168 (controlled reduced scores).
 // Round 332 (reduced control 128): active/notification/impulse inline boundaries and
@@ -2676,6 +2683,7 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 345 (controlled preview 168): complete linear/angular/both squared terms
 // 173/168/173; iteration terms/paired first sums/immutable terms/shared terms/shared first sums
 // 173/173/173/173/173. Full-image save staging and getter homes remain.
+// Round 152: Shared angular inline/force/out-of-line declarations 168/168/168; shared angular call with those contracts 177/177/236; shared pair with angular force/inline 238/238. Forced forms lose a matched caller; all declarations and body restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

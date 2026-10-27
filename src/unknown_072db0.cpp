@@ -1622,6 +1622,11 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Admission-test result 739; eager failure OR 753; positive completion 739;
 // player-result-first OR 739; accumulated signed/unsigned failure 761/761;
 // signed positive completion 759; admission plus positive completion 739.
+// Round 71: retail inlines the pointer-returning variant getter (index range as a pointer range, then a NULL
+// test, then variant->type) and keeps the six-property loop rolled with a register bound shared by the
+// count store and properties_used += 6. Getter at the first site 755 (2894 bytes); at all three 766 (2910);
+// getter + `j < record->count` bound and `properties_used += record->count` 759 (2830, aligned lines 560 -> 484);
+// the same with the sum before the loop 774; the bound alone 839 (2766).
 // Round 137: SSE flag 755 (file gate failed);
 // inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
 // Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.

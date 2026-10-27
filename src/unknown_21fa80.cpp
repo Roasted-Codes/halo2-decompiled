@@ -99,6 +99,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Round 171 reduced control 532: live direct field 555; live mode field 588; shared voice output 532; live
 // direct/mode 579; live direct/shared output 555; live mode/shared output 588; live fields/shared output 579;
 // shared voice cursor 532.
+// Round 213 reduced control 532: playback state-transition gate with bool/byte/word/long
+// request domains 549/549/550/550; each with status declaration at query 549/549/550/550.
+// Original playback arms, query schedule and all math restored.
 // Round 377: Complete cache-valid bool/byte/short/long result graphs
 // 542/542/569/569; entry declaration forms 542/542/569/569 (fast control 532,
 // full baseline 545). Byte forms recover checker length but regress; all three

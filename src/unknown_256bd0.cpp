@@ -67,6 +67,7 @@ struct s_object_flags_256bd0
 // score 206 (was 206): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
 
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
+// frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // the iterator loop into a stack byte (back edge to its reload) where retail re-reads the ai
 // globals each pass; the 0x28dbd0 call passes the character in eax where retail passes the
 // variant (BLOCKED-BY 0x28dbd0 for that call); retail selects the entry with cmovne.
@@ -107,6 +108,9 @@ struct s_object_flags_256bd0
 // Round 344: unsigned-word status 206; per-arm object result 206; per-arm status 272;
 // word status with object/status/both arms 206/272/272; both arms with signed status 272;
 // full unsigned status with both arms 275. All creation-call bindings preserved.
+// Round 243: Native actor/spawned-actor/unit metadata singly 206 each; all pairings 206
+// each; complete native and read-only native records 206/206. Original body, iterator
+// helper and includes restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
