@@ -700,6 +700,10 @@ long function_1469f0(real seconds);
 // Round 167: Cooldown-first selected-case orders 41023/41203/41302/42013/42103/
 // 42301/43012/43102 score 279/283/279/277/282/290/280/278 fast (control 280, full 279).
 // Best gains at most three; original 40123 order restored; inherited score headers merged.
+// Round 139: Shared request ordinal long/int/short/word 280/280/339/339 fast; those four with
+// shared scan/selected transition workspace 280/280/339/339. Unchanged fast control 280 versus full
+// 279; frame 4/12 and early slot/state/final-cursor homes remain. Original executable source, fixed
+// scan bounds and state/call observations restored.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {

@@ -52,6 +52,10 @@ extern real g_4c9798[36];
 // width short 296; width word 296; height short 324; height word 324;
 // short/word 325; word/short 325; short/int 296; int/word 324.
 // Original native limits, far-normal copy and all protected call interfaces restored.
+// Round 139: Repeated ratio/angle inputs captured once separately/together 316/305/316; each with
+// real shared pixel area 321/326/321; joint input home names without/with area 316/321. Frame
+// 0x20/0x28, state/matrix and protected rounding homes remain. Original executable source, every
+// float tree and accepted far-normal copy restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {
