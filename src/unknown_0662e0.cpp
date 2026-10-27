@@ -547,6 +547,9 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // native-word flag array 432; native-long flag array 455 (fast).
 // Index name 363; column name 363; both names 363; index declaration order 363;
 // step names 363; common first-table factor 363 (fast).
+// Round 23: shared-level parameter/cached base 444/444; ordinary inline with field/parameter/
+// cached base 573 each; low table first with field/parameter/cached base 478/362/362.
+// One-point gains rejected; original level producer and initialization order restored.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {
