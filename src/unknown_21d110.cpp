@@ -418,6 +418,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 177: Complete start admission bool/byte/short/long and their complete complements
 // 204 each; every sensitive caller control remains matched. Original helper and body restored;
 // eight-byte frame and opposite start/delete expansion remain.
+// Round 206: Five remaining availability-field conjunction orders and three complementary
+// failure-first orders 204 each; all eight sensitive caller controls remain matched.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

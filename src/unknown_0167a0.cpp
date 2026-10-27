@@ -884,6 +884,8 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Round 201: Native packed-range parameter and entry record: direct/count accessor/selector
 // fields/both 155/189/185/199; the same four with complete remapping fields 155/189/185/199. Two-point
 // body-step lead rejected; complete source restored.
+// Round 206: Native ordinary/special/dirty output fields, individually, all three pairs and all
+// together 157 each; complete output fields with body cursor steps 155. Two-point gain rejected.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
