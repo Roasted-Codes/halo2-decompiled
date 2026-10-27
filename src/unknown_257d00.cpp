@@ -1592,6 +1592,10 @@ void function_b7360(long object_index);
 #pragma inline_depth(2)
 // score 466 (was 466): No local frame; pool acquisition, actor/output roles, dispatch and rounding homes remain.
 // Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output registers, dispatch layout and rounding homes still differ.
+// No frame; actor/output entry carriers, dispatch layout and rounding homes remain.
+// Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/pool/output entry carriers and rounding homes still differ; selection case result retained.
 // Earlier: Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output acquisition, dispatch layout and forty missing bytes remain.
@@ -1641,6 +1645,17 @@ void function_b7360(long object_index);
 // Round 151: Shared success return with explicit default failure, empty arms plus complete
 // orientation/motion/point payload masks 0-7, all 466/1812. No result carrier added; original returns and
 // complete dispatch restored.
+// Round 240: complementary query result bool/byte/short/long 520/520/469/525;
+// with complete complementary locomotion at the same widths 520/520/470/525. All restored.
+// Round 138: shared rounded-tick outputs moving-direct/moving-point/direct-point/all
+// 468/468/468/466; shared all tick products 474; all products and outputs 470;
+// moving-only/other-case products 466/466. Original scratch declarations restored;
+// pool/actor/output acquisition, dispatch layout and conversion homes remain.
+// Consistent actor-object field reads 530; one point-selector publication 472; both 532;
+// shared object-update notification 466; field reads/notification 530, point/notification 472,
+// all three 532; field reads with positive point-production admission 530. Original body restored.
+// Complete core-group orders ACB/BAC/BCA/CAB/CBA 474/544/534/478/532;
+// B/A with point case before/between/after the groups 522/546/549. All original case bodies restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2059,6 +2074,12 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
 // actor/state registers and first point home remain.
 // Position/distance/motion/alternate-motion helper inline and noinline declarations 478 each.
+// Round 377: Complete pending-result bool/byte/short/long 603/603/637/632;
+// entry-initialized pending results 605/605/636/631 (fast control 478). Boolean
+// forms reach retail length but preserve actor/state reversal and regress.
+// All result producers, iterator, facing value and original update graph restored.
+// Single-bit equality tests across dispatch/clear/tail, separately and combined,
+// and one shared case flag observation: eight forms all 478. Original body restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

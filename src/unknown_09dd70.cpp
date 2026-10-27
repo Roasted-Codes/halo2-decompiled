@@ -474,11 +474,20 @@ static __forceinline byte *function_9d952(long arg_0)
 // masked slot bit 228; masked bit with dword counter 246 (804 bytes); flags parameter
 // used directly instead of the local copy 196 (identical code).
 
+// Fixed bits 10/11/12/13/22/23 shifted separately 196 each; lower four and all 196/196.
 // Round 199: Native packed packet cell 196; with word copy ordinal 197; captured low-word publication
 // 223; both 196; unsigned copied cell and the same three combinations 196/197/223/196 (fast). All
 // restored.
+// Round 207: named initial low mask, packet receiver after initial callback, both, shared object
+// workspace across four phases, shared workspace with either/both, and shared final outer receiver
+// all 196. Original observations and protected interfaces restored.
 // Round 148: native object fields at player, parent, packed identity and final-update receivers
 // 196 each; player+parent, packed+final, first three and all four 196 each.
+// Round 240: complementary attachment selection bool/byte/short/long 229/229/240/233;
+// with a native dword slot ordinal 250/250/254/250. All restored; entry register roles remain.
+// Round 179: library two-byte copy with short/long/dword attachment counters 251/252/252;
+// masked slot value with those counters 253/259/259; direct flag observations 251;
+// direct flags plus masked value/dword counter 259. Original byte loop restored.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

@@ -2433,6 +2433,10 @@ dword __cdecl function_131fc0(real alpha);
 // Round 148: fixed-stage address/filter/outlined-disabled tables 969/983/725;
 // address+filter/address+disabled/filter+disabled/all three 1127/1029/1044/1258; all with disabled
 // render table 1162, versus control 331.
+// Late unconditional destination/source defaults 432/334; both destination-first/source-first
+// construction with destination selection first 433/439; source selection first 439/433;
+// source construction before conditional destination 331 (four-point fast gain rejected);
+// conditional source then unconditional destination 427, against fast control 335.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2581,7 +2585,11 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
-// score 530 (was 530): Frame 0x20c versus 0x200; stack order, coefficient homes and sample boundaries remain.
+// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// Held (batch 132): Claude lane 4 round 90's two explicit sample blocks with a determinant helper reached 401
+// (frame 0x200, all-stack arguments), but in the batch build that code cost c_helper_b::v7 (0x73360) its match
+// (code linked ahead of src/unknown_058dd0.cpp); with only this file restored the batch keeps 0x73360. Retry it
+// only with a full check that keeps 0x73360 matched.
 // Nine-real rotation outputs 553 (frame 0x1bc); cache-count snapshot 544; defaults after empty exit 544;
 // unsigned handle 544; native bucket fields 544.
 // Frame 0x20c versus 0x200; stack order, coefficient homes and shared sample paths remain.
@@ -2738,6 +2746,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // with trig scopes 368/338/334/368/368/338/368/368.
 // Round 151: All four named rotation products, with paired rotation/scale/bias stage masks 0-7, each 391
 // (1988/2022). Original corner helper and body restored; sampler and protected bitmap transport remain.
+// Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
+// address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
+// 1262/1261. Original eleven sampler statements and helpers restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -3077,6 +3088,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Mode cases 1/0/2/3, 2/0/1/3 and 0/2/1/3 971 each; 0/1/3/2 and
 // 2/3/0/1 973 each; function-scope color inputs 971; shared upper/lower
 // quantizer scope 971; native long success 1194.
+// Mode assignment orders MNS/SMN/SNM/NMS/NSM 973/971/971/973/973; NSM in cases
+// 0/1, 2/3, 0/2 971/973/971 (fast; M=maximum, S=allow_small, N=allow_negative).
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

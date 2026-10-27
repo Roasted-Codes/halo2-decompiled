@@ -1263,9 +1263,11 @@ bool function_fa6a0(long definition_index, real const *speed_override, point3f c
 	real *unknown2, real const *unknown3, real const *unknown4, bool unknown5, vector3f *direction, real *speed_out,
 	real *time, real *distance, bool *linear);
 
+/* distance comes before speed_out: retail's caller (0x1ffbd0) loads distance (edx) before
+   speed_out (eax), which our build does only in this declared order */
 // @retail 0x100dd0
 bool weapon_barrel_aim(long weapon_index, short barrel_index, point3f const *origin, point3f const *target,
-	real const *unknown3, bool unknown5, vector3f *direction, real *time, real *speed_out, real *distance, bool *linear)
+	real const *unknown3, bool unknown5, vector3f *direction, real *time, real *distance, real *speed_out, bool *linear)
 {
 	bool result = false;
 	s_weapon *weapon = WEAPON_GET(weapon_index);
@@ -2807,6 +2809,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Four-byte frames regress; opening early-activity/final-maximum body restored at 398.
 // Trigger fields at use/table pointer/table field reference 398/422/398; selected magazine pointer 398;
 // with each trigger form 398/422/398; barrel array and direct maximum 423. All restored.
+// Actual trigger-scale/threshold/capacity field references, pair/all combinations and readonly activity
+// receivers 423/398/423/396/420/396/420/420. Original body and helpers restored.
 // Round 163: Native trigger-state cursor with metadata/bound/tag-lookup combinations
 // none/metadata/bound/metadata+bound/tag/metadata+tag/bound+tag/all
 // 423/422/423/422/423/422/423/422. Each is 1623/1642 bytes and regresses.
@@ -2816,6 +2820,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // both cursors/bounds/field scale/maxima 426. All restored.
 // Negative unknown-name bool/byte/short/long with original exits 398 each;
 // single-exit guarded publication 471/471/462/466. All restored.
+// Scalar accumulator/contribution/output names, alone and combined, 398 each;
+// combined names with late constant found declaration 398. All eight restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3105,6 +3111,13 @@ struct s_ammo_conversion_entry
 // and retail length but gains only five; all combinations restored.
 // State declaration order, acquisition/retention names, source declaration order, capacity and
 // conversion comparisons 198 each; explicit return truth 202; source minimum branch 197.
+// Destination round-field pointer with short/bool/byte/complementary-byte acquisition 201/218/213/210;
+// with result-controlled first-match search 216/211/208/212. All restored; frame and saved homes remain.
+// Complementary byte acquisition plus destination/source/tag/magazine/transfer
+// and index home names, individually and together, 194 each (fast; four-point gains dropped).
+// Round 337: actual published round total short/word/long 225/225/229;
+// mode-test return producer 197 (gain 1, rejected); with short/word/long totals 231/231/235;
+// short total and mode producer with complementary byte acquisition 208. All restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3216,7 +3229,7 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
     return unit ? unit->player_index : NONE;
 }
 
-// score 565 (was 565): frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain.
+// score 565 (was 565): Frame 0x1c64 versus 0x1c60; weapon/barrel and scalar homes remain.
 // Plain single-store unit 637; later effect locals 659; long marker count 607;
 // CRT marker copies 565; long fired 582.
 // Owner getter 563; scale names 565; direct barrel uses 641; const barrel tag 565;
@@ -3231,6 +3244,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // owner lifetime at entry 637f; entry marker workspaces 637f; unsigned-word mode 637f
 // (control 637f). Original body restored.
 // Round 115: Later failure lifetime 636; reversed tag defaults 637; interval field reads 634; positive magazine arm first 637; byte selected marker 638 (fast, control 637). Three-point preview gain rejected; opening body restored.
+// Round 337 (fast control 637): direct short/promoted barrel values 637/634;
+// direct weapon value/both short values 637/637; both promoted values 634;
+// first-use promoted barrel/both/immutable values 634/634/634. Gain 3 rejected; all restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {

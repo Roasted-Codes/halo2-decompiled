@@ -104,10 +104,8 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  arg_3->k = local_0.k - arg_2->k * local_1;
  return function_30bf0(arg_3);
 }
-
-// score 953 (was 953): Frame 0x1f4 versus 0x1d4, entry EAX/ECX, delayed EBX and record/vector homes remain.
-// Frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
-// Frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// score 920 (was 920): Frame 0x1f0 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// Earlier: frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remained.
 // Earlier 1218 from 1259: frame agrees; early EBX save, array/entry allocation and delta reloads differ.
 // Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
 // inline depth one 1259; counted angular residual 1218, kept after plain check.
@@ -133,8 +131,21 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // all with planar input values 1746. Original helpers and coefficient pair restored.
 // Complete native vector outputs in scale/add/subtract helpers 1291/1048/984; scale-add/scale-subtract/add-subtract/all 1466/1434/1147/1610;
 // all native vector outputs with completed planar workspace 1668. Original helpers and accepted loop/coefficient pair restored.
+// Scale signed-byte/unsigned-byte/unsigned-word ordinals 953/953/953; unsigned-word scale with signed-word
+// add/subtract/both loops 1152/1115/1215; all unsigned-byte/signed-byte producer loops 1215/1215. Original
+// helpers and coefficient pair restored.
 // Earlier declarations of vector workspaces local_75, local_37, local_40, local_43, local_50,
 // local_52, local_53 and local_58 each 953.
+// Round 137: response pairs 34/48, 34/56, 34/66, 48/56, 48/66, 56/66 959,959,957,933,920,925;
+// all responses at record/function scope 979,979;
+// triples 34-48-56/34-48-66/34-56-66/48-56-66 973,974,987,959;
+// disjoint pairs 34-48+56-66/34-56+48-66/34-66+48-56 987,986,984.
+// Selected t5 920 plain; the same real response output is read before its next write.
+// Round 140: Shared change pairs 37/50,37/58,37/59,50/58,50/59,58/59 and linear/all phases
+// 969/945/988/945/988/956/960/1012; residual pairs 40/52,40/68,52/68/all 1012/966/988/1027; axis pairs
+// 31/43,31/63,43/63/all 1004/991/980/1018. Existing shared scale on the retained response graph, with shared
+// changes and consistent flag reads 1199/1201/1188/1200; all restored. Shared linear changes recover frame
+// 0x1d4 at 960; input and record homes still differ.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
@@ -181,6 +192,7 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
     function_ba160(arg_0->object_index, &local_24.matrix);
    if (!local_21) continue;
    vector3f local_25 = *g_4687a4;
+   real response_fraction;
    byte *local_26 = g_4e0300->data + (local_14->object_index & 0xffff) * 12;
    dword local_27 = 1 << local_26[3];
    if (local_27 & 1) function_def30(local_14->object_index);
@@ -245,10 +257,9 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
     if (local_46 != 0.0f)
     {
      real local_47 = function_1d24a1(&local_43, &local_30);
-     real local_48;
      real local_49 = function_1d2280(true, local_18, havok_component_rigid_body_mass_get(local_15, local_14),
       local_46, local_12->field_28 * arg_1, local_47, local_12->field_2c, local_12->field_1c,
-      local_12->field_18, local_22, &local_48);
+      local_12->field_18, local_22, &response_fraction);
      vector3f local_50;
      function_1d24a2(&local_43, local_49, &local_50);
      if (local_46 - local_12->field_1c >= 0.0f)
@@ -272,7 +283,7 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
        }
        function_1d24a4(&local_50, &local_52);
       }
-      if (!(local_3 > local_48)) local_3 = local_48;
+      if (!(local_3 > response_fraction)) local_3 = response_fraction;
       local_2 = true;
      }
      function_1d24a3(&local_25, &local_50);
@@ -311,10 +322,9 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
      real local_64;
      function_11d790(&local_62, &local_63, &local_64);
      real local_65 = function_1d24a1(&local_63, &local_29);
-     real local_66;
      real local_67 = function_1d2280(true, local_18, havok_component_rigid_body_mass_get(local_10->field_1, local_14),
       local_64, coefficient_58 * arg_1, local_65, coefficient_5c, 0.0f,
-      local_12->field_54, local_23, &local_66);
+      local_12->field_54, local_23, &response_fraction);
      function_1d24a2(&local_63, local_67, &local_59);
      vector3f local_68;
      function_1d24a2(&local_63, local_65, &local_68);
@@ -323,7 +333,7 @@ void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
      function_a75d0(&local_68, g_510c54->rate * coefficient_58);
      for (long component = 0; component < 3; ++component)
       local_59.n[component] = local_68.n[component] * -1.0f + local_59.n[component];
-     if (!(local_3 > local_66)) local_3 = local_66;
+     if (!(local_3 > response_fraction)) local_3 = response_fraction;
      local_2 = true;
     }
     function_1d24a3(&local_29, &local_59);

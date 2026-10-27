@@ -3623,14 +3623,14 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 101 (was 101): Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
-
-// score 101 (was 101): frame 0x3c agrees; missing timeout owner spill and announcement/reply scheduling remain.
-// Earlier: Frame 0x3c agrees; timeout owner spill and identity/reply load order remain; length 420/433.
-// Earlier: Frame agrees; timeout owner spill and native identity/reply load order differ.
-// frame agrees; timeout owner spill and identity load order differ;
-// Frame agrees; timeout owner spill and native identity/reply load order differ.
-// Earlier: frame agrees; timeout owner spill and identity load order differ;
+// score 101 (was 101): frame 0x3c agrees; retail loads session+0x10 and spills it, and splits the
+// member-state lea, before the timeout call (BLOCKED-BY 0x769a0, held file; same spill in 0x5e7f0),
+// which shifts everything after it; announcement id/member scheduling also differs.
+// Round 55 (on top of each other): constant true/false returns 115 (retail's two exits); guarded
+// `if (state == 7 && flag) leave = true;` 120 (leave block exact); reply member pointer before the id
+// 121 (reply block exact; only the timeout setup and announcement differ once aligned); host state
+// pointer before the predicate 124; identity memcpy before the id 121. Keep these three for when the
+// timeout setup is solved. Earlier forms:
 // shared result 120, aggregate zero initialization 120, identifier memcpy 120,
 // reply pointer first 121, announcement outer lifetime 120.
 // Direct leave predicate 115; retained host-query result 137; narrower host-result
@@ -4374,6 +4374,10 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // combination improves the original 370; original body restored.
 // Round 229: Signed-byte acceptance/preference/equality/paired selection/all results 401/370/370/370/401;
 // identity equality with signed-byte preference/equality/all results 382/382/392. Original body restored.
+// Round 206: Four complete acceptance/preference/equal-choice role-name allocations 370 each;
+// all four allocations with native identity equality 382 each. Raw comparison and original names restored.
+// Round 211: Entry preference/equality/both lifetimes 381/381/381; success default alone/with
+// preference/equality/both entry lifetimes 381/391/391/391; native identifier library copy 370.
 // Round 145: Equal-version rejection before preference: original predicates 396; newer predicate
 // 393; equality predicate 394; both predicates 391. Identity-equality counterparts
 // 406/403/404/401; all restored.

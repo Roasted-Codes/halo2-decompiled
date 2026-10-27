@@ -87,6 +87,18 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // all eight restored, one-point gains below threshold.
 // noinline 101280 190; noinline 15b2f0 190; noinline 138880 190; noinline 138860 190; noinline 15fe70 190;
 // noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
+// Round 167: Plain descending notification-mask loop 187 (three-point gain dropped);
+// with completion initialization between bits / preparation before the second bit /
+// initialization before both bits 240/251/240; independent event buffers 193, with
+// the first two interleaves 240/251; existing bitfields plus first interleave 240.
+// Loop remains rolled; extra branches and event/store sequencing regress. All restored.
+// Complete eligibility bool/byte/short/long results 190/190/190/190;
+// default-false reader-gate results 190/190/190/190. Pool reload and completion stores remain.
+// Slot/limit/ticks/marker/unit/weapon home names and scalar/all combinations
+// 190 each (fast); original body restored.
+// Complete entry carried-unit value 221; with short slot/clock-first product/both
+// 239/221/239; word teams alone/slot/product/all 207/223/207/223 (fast).
+// Original unit observations, counter arithmetic, stores and reader contracts restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

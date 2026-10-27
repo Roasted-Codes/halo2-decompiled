@@ -383,7 +383,7 @@ void function_2bdd20(s_spline_2bd *spline, point3f *points)
 // scales, first/both point setters, source role names, late second-segment
 // addresses and read-only source points 64/64/64/102/134/64/79/64.
 // @retail 0x2bdd70
-void function_2bdd70(point3f *out, s_spline_2bd *spline, long n, point3f *points)
+void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out)
 {
 	long i = n * 2;
 	long previous = i - 1;
@@ -471,7 +471,7 @@ void function_2bde90(real t, point3f *out, point3f *points)
 /* builds the hill's polygon on the spline through its markers, and its
    center, radius, perimeter and height range (the height range also covers
    the hill's other markers) */
-// score 25 (was 25): frame 0x110 agrees; control/sampling conventions, radius base and marker homes differ.
+// score 18 (was 23): Sampling fraction/call setup and marker-loop registers remain; frame and retail length agree.
 // Earlier at 25 (was 25): control/sampling conventions, radius base and marker registers remain.
 // Earlier at 130 (was 134): control-call convention and scan induction differ;
 
@@ -526,9 +526,16 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // marker field reads at every use 77f; displacement/height 81f, displacement/marker 78f,
 // height/marker 97f, all three 98f; direct marker reads with a plain for 460f.
 // Reduced control 74 versus full 25; helper conventions and radius/marker homes remain. All restored.
+// Round 331: parallel radius squares 138f; native marker count/ordinal 74f; both 74f;
+// shared center setter 179f, with squares/count/both 171f each; shared marker setter 160f.
+// Reduced control 74f versus full 25. All eight bodies restored.
 // Separate native radius-center input 179f; independent marker count 138f;
 // conditional marker bound updates 83f; center/count 159f; center/updates 142f;
 // count/updates 83f; all 142f; XY center with count/updates 116f. Reduced control 74, full 25.
+// Round 166: Native center record with direct-center/radius/shared-point graphs
+// 72/137/69/135/72/137/69/135 fast (unchanged control 72, full 23); restored.
+// Exact control-helper orders spline/points/index/output 70, with radius receiver 67;
+// spline/points/output/index 72, with radius 69. First order plus receiver kept, plain 18.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
@@ -548,7 +555,7 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 	{
 		long steps = hill->steps[i];
 
-		function_2bdd70(control, (s_spline_2bd *)hill, i, points);
+		function_2bdd70((s_spline_2bd *)hill, points, i, control);
 		for (long j = 0; j < steps; j++)
 		{
 			function_2bde90((real)j / (real)steps, &point, control);
@@ -587,8 +594,9 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 	{
 		for (i = 0; i != count; i++)
 		{
-			real dx = points[i].x - center->x;
-			real dy = points[i].y - center->y;
+			point3f const *radius_point = &points[i];
+			real dx = radius_point->x - center->x;
+			real dy = radius_point->y - center->y;
 			real distance_squared = dy * dy + dx * dx;
 
 			hill->radius = hill->radius > distance_squared ? hill->radius : distance_squared;
@@ -1188,6 +1196,11 @@ void c_game_engine_45c948::v12()
 // score 14 (was 14): retail loads the engine global g_4e6948 into edx at the
 // top of the function, ours loads it just before the mode test, so the load
 // and the compare come in the other order.
+// score 14 (was 14): the early global and compare schedule remains; direct final-field initialization 6.
+// Split sentinel/mode guard 17; middle/early predicates and direct options tests 13;
+// payload between zero stores 8; both zeros first 13; partial aggregate 56/119;
+// type before payload 6; middle predicate with that order 6; subtype readback 6;
+// parameter address 6; shared send 6; void-return send 6; force-inline send 6.
 // @retail 0x2bf480
 void c_game_engine_45c948::v6(long a)
 {

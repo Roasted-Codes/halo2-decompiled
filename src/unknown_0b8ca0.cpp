@@ -1467,6 +1467,11 @@ done:
 // Shared type home 17; promoted placement index 28; both 28; shared type plus stride 27;
 // promoted index/stride 36; shared type/index/stride 36; shared type with call-use palette 37;
 // shared type/index with call-use palette 26.
+// score 17 (was 17): the same tail allocation and 237/236 length remain. Plain/typed aliases 17/17;
+// typed name 17; promoted datum index 19/236; typed block 17; direct name-index reads 31/236;
+// early field/base declarations 17/17; definition declaration/initialization first 17/17;
+// register type/size 17/17; alias with wide stride 27/236; definition/type-definition before guard 17/17;
+// placement-type name 17.
 // @retail 0xbb670
 long __stdcall function_bb670(short name_index, bool force)
 {

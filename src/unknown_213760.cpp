@@ -1172,7 +1172,8 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 112 (was 112): frame 0x1144 and extent agree; file displacement, request-copy and validity joins remain.
+// score 104 (was 112): frame 0x1144 and extent agree; file displacement, request-copy, the first read
+// call's handle copy and the write-success join remain.
 // Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
 // frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
@@ -1229,6 +1230,13 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Round 187 direct-options context: indexed output/values/both 180/180/180; indexed metadata
 // alone/output/values/both 198/198/198/198; native four-use acquired handle 211 (fast).
 // All restored; temporary displacement ECX and request/completion/I-O scheduling remain.
+// Round 135: a dependency whose type is no longer valid clears the result (retail loads the
+// type byte into AL as the result) 154 as `&&`, 110 as a separate test (kept); false validity
+// guarded by the handle test 104 (kept, plain); with the write success set by its own test
+// 166 (914 bytes; aligned 54: the joins match but the first read call copies the handle and
+// loop padding shifts); handle as an s_file_handle member 104; on the kept form: completion flag
+// declared first 104; size limit before the path 249; file pointer after the path 106;
+// validity declared at the loop top 104.
 // @retail 0x213970
 void function_213970(void)
 {
@@ -1254,15 +1262,14 @@ void function_213970(void)
         bool volatile done;
         function_120ba0(6, &task, 0, function_1a08f0, &done);
         cache_wait_for_completion(&done);
-        bool valid = file->handle != INVALID_HANDLE_VALUE;
-        if (valid)
+        bool valid = false;
+        if (file->handle != INVALID_HANDLE_VALUE)
         {
             dword size;
             function_1a15f0(*(s_file_handle *)&file->handle, 0, 6, &size, &done);
             cache_wait_for_completion(&done);
             if (size != expected_size)
             {
-                valid = false;
                 if (remove_later)
                 {
                     function_2138f0(index + 1, 6);
@@ -1304,11 +1311,13 @@ void function_213970(void)
                         {
                             for (long type = 0; type < 3; type++)
                             {
-                                if (*((byte *)file + 0x178 + type) && valid_types[type])
+                                if (*((byte *)file + 0x178 + type))
                                 {
                                     FILETIME const *current = (FILETIME const *)((byte *)cache_file_from_type(type) + 0x17c);
                                     FILETIME const *stored = (FILETIME const *)((byte *)file + 0x184 + type * 8);
-                                    valid = CompareFileTime(current, stored) == 0;
+                                    valid = valid_types[type];
+                                    if (valid)
+                                        valid = CompareFileTime(current, stored) == 0;
                                 }
                             }
                         }

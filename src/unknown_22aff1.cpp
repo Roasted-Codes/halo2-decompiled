@@ -78,6 +78,11 @@ PRIVATE __forceinline real function_22aff5(real arg_0)
 // declarations reordered (axes, height/width, vertical_scale before the vertices)
 // 121 each; locals renamed 121; scales computed inside the loop 120, as a point2f
 // 138; offset x before y 466; offset at loop or function scope 121; vertex pointer 121.
+// Round 72: one (real) conversion after each ternary 154 (vertex sums go x87); offsets
+// assigned in if/else 121; origin-first, offset-first sums 121; edge-offset helper
+// inline/forceinline 509/121; plain scalars 146 and an inline transform taking the
+// offsets by address 146 (both load the offsets into xmm as ours does); the vertex loop in
+// a forceinline helper 146. Every SSE form loads the rounded offsets into registers.
 // Native offset vector 121; destination cursor 423; vector plus cursor 423;
 // vertical/horizontal/both full-width side predicates 447/138/450; bounded short
 // vertex ordinal 431; native vector plus short ordinal 431. Original body retained.
