@@ -172,7 +172,10 @@ void function_200462(long arg_0)
             byte *local_20 = *(byte **)(local_17 + 0x40) + local_18 * 0x3c;
             bitmap_index = *(short *)(local_20 + 0x20);
             if (*(long *)(local_20 + 0x34) > 0)
-                local_19 = *(s_float_rect *)(*(byte **)(local_20 + 0x38) + 8);
+            {
+                byte *local_bounds = *(byte **)(local_20 + 0x38);
+                local_19 = *(s_float_rect *)(local_bounds + 8);
+            }
         }
         else if (local_18 == 0 && *(long *)(local_17 + 0x3c) == 0 && *(long *)(local_17 + 0x44) > 0)
             bitmap_index = 0;

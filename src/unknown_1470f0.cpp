@@ -57,14 +57,14 @@ void *c_game_havok_memory::allocate(long size, long memory_class)
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-// score 19 (was 19): retail tests the end of the block with >= and gives the second block its own
-// deallocate, ours shares the first and the second.
+// score 18 (was 19): retail loads the vtable into eax for the first block's free and shares that tail
+// with the physical block, ours loads it into edx and shares the tail with the second block.
 // @retail 0x147160
 void c_game_havok_memory::deallocate(void *address)
 {
 	if (address)
 	{
-		if (((long)((byte *)g_479898 + 0x4340) <= (long)address && ((long)((byte *)g_479898 + 0xf0340) > (long)address || (byte *)g_479898 + 0xf0340 == address)))
+		if (((long)((byte *)g_479898 + 0x4340) <= (long)address && ((long)((byte *)g_479898 + 0xf0340) >= (long)address || (byte *)g_479898 + 0xf0340 == address)))
 		{
 			_ReadWriteBarrier();
 			g_479898->deallocate(address);
@@ -108,14 +108,14 @@ void *c_game_havok_memory::allocate_aligned(long alignment, long size, long memo
 }
 
 #pragma intrinsic(_ReadWriteBarrier)
-// score 19 (was 19): retail tests the end of the block with >= and gives the second block its own
-// deallocate, ours shares the first and the second.
+// score 18 (was 19): retail loads the vtable into eax for the first block's free and shares that tail
+// with the physical block, ours loads it into edx and shares the tail with the second block.
 // @retail 0x147240
 void c_game_havok_memory::deallocate_aligned(void *address)
 {
 	if (address)
 	{
-		if (((long)((byte *)g_479898 + 0x4340) <= (long)address && ((long)((byte *)g_479898 + 0xf0340) > (long)address || (byte *)g_479898 + 0xf0340 == address)))
+		if (((long)((byte *)g_479898 + 0x4340) <= (long)address && ((long)((byte *)g_479898 + 0xf0340) >= (long)address || (byte *)g_479898 + 0xf0340 == address)))
 		{
 			_ReadWriteBarrier();
 			g_479898->deallocate_aligned(address);
