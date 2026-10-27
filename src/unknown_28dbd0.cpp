@@ -73,7 +73,8 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 	return local_1;
 }
 
-// score 186 (was 186): Frame 0x11c versus 0x118; request home is four bytes late and rotation scalar homes differ.
+// score 186 (was 186): Frame 0x11c versus 0x118 and rotation scalar homes remain.
+// Frame 0x11c versus 0x118; request home is four bytes late and rotation scalar homes differ.
 // 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
 // Frame 0x11c versus retail 0x118 and rotation cross scalar homes remain.
 // Earlier: 0x11c frame versus 0x118 and rotation scalar spills remain; cross before trig 234f, alignment before trig 234f, shared velocity scale 213f, plain rotation component loop 234f, global optimization off 549f.
@@ -123,6 +124,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // cross/projection/direction 227, cross/direction/projection 236, direction/projection/cross 248,
 // direction/cross/projection 252; early cross 234; early alignment 235; cosine first 227. Frame
 // 0x11c versus 0x118 and rotation cross homes remain; original helper and all calls restored.
+// Round 175: Consumed-axis reference axis/direction/both 186/186/186;
+// axis value with pointer/reference direction 308/308; double trig input with
+// pointer/axis-reference/both-reference inputs 188/188/188. Original helper restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

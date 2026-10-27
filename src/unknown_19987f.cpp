@@ -1268,7 +1268,8 @@ extern bool g_4ed39d;
    Retail passes all three arguments on the stack: reading the screen id
    through its address keeps it there */
 
-// score 184 (was 184): Frame 0x28 agrees; game/main byte homes and dialog joins remain.
+// score 184 (was 184): The game/main byte homes and dialog joins still differ.
+// Frame 0x28 agrees; game/main byte homes and dialog joins remain.
 // game/main byte homes and dialog joins differ;
 // frame 0x28 agrees; game/main byte homes and dialog joins remain.
 // Earlier: game/main byte homes and dialog joins differ;
@@ -1295,11 +1296,9 @@ extern bool g_4ed39d;
 // both error chains 186; recovery-needed result alone/with low error 174/159 (latter plain);
 // default main alone/with low error 228/229; default handled/both defaults 181/231.
 // The 159 form adds instructions and worsens normalized sequence edits 69 to 77; restored.
-// game/main byte homes and dialog joins remain.
 // Direct disconnect game/lobby/main results 177/208/189; paired game-lobby,
 // game-main and lobby-main results 225/217/216; all results 220; ordinary game result 216.
 // Direct game result adds comparisons/stores: aligned changes 78 versus 69; dropped.
-// game/main byte homes and dialog joins remain;
 // dialog-ID choice 202f; direct ID-selected callback tuples 238f; callbacks
 // after selection/at consumer 237f/190f; with ordinary game result
 // ID-only/direct/late/consumer 233f/257f/242f/235f. Original flow retained.
@@ -1320,6 +1319,9 @@ extern bool g_4ed39d;
 // Menu-only/dispatch-local/post-query error observation 184/184/184; game-first zero chain 181,
 // with menu-only observation 181; one recovery-error value 206, with scope/chain 207; main-first
 // zero chain 201. Byte homes and dialog joins remain.
+// Round 175: Choice from the test, two/one alternatives: bool 168/184, byte 168/184,
+// short 175/189, long 173/192. Lower raw counts add conversion instructions and
+// worsen aligned sequence edits from 66 to 72-74; all original producers restored.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

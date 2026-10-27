@@ -1,18 +1,14 @@
 // @flags /O2 /Gr /arch:SSE
 #include "unknown_044e90.h"
 #include "normalize3d.h"
-// score 434 (was 434): Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
-
-// score 434 (was 434): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// score 434 (was 434): Aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
+// Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
+// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // Earlier 434 (was 434): Entry/tag-table registers and plane/list homes remain.
-// score 434 (was 434): aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
-// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// Entry/tag-table registers and plane/list homes remain.
-// Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
 // Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// Entry/tag-table registers and plane/list homes remain.
+// Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
@@ -43,9 +39,9 @@
 // entry/output planes 449; entry/live transform 472; planes/live transform 459; all three boundaries 449;
 // entry/live selection flags 575.
 // Round 317: Native rotation result 472; native center initializer 434; both 472; member alignment 435; aligned rotation/center/both 473/435/473; aligned rotation with shared normal scale 473. Header fully restored.
-// Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
-// 436; query result with products 440; const query 434; query result/products with const query
-// 438/436. All product regroupings restored.
+// Round 175: Native position/three rotation rows/both observations 475/556/586;
+// with shared scale observation 477/556/586; independent scalar normals with
+// all rows/position plus all rows 515/549. All original input ownership restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {
