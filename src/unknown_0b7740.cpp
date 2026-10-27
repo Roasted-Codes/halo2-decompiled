@@ -1107,7 +1107,7 @@ void __stdcall function_1421f0(transform4x3f *out, rigid_transform_scaled const 
 bool function_a98b0(long index, vector3f *position);
 bool function_a9940(long index, vector3f *up, vector3f *forward);
 
-// score 234 (was 239): retail is 11 bytes longer. Left: retail sets the sample-mask
+// score 234 (was 234): retail is 11 bytes longer. Left: retail sets the sample-mask
 // address in esi again after 0xbfed0 (which never writes esi), tests the node count for
 // > 0 before the node loop from 1 (no loop-head pad), and in the no-model branch keeps
 // the object table pointer in ecx and re-reads its data pointer (parent index in esi)
@@ -1136,7 +1136,9 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // from memcpy's return passed to both calls 255; the null mask declared above the
 // static guard 137 (an artefact: the guard test grows an instruction that realigns the
 // listing past the still-missing reload; rejected); the mask assigned before the copies
-// 168 again (as round 140; rejected).
+// 168 again (as round 140; rejected). Round 31: the sample mask as the long 0xbdb60 takes 234; one pool
+// local for every lookup (0xba160's idiom) 399, from the current-object lookup on 234; the sample mask
+// declared at entry 328; the no-model parent index read at each use 234.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {

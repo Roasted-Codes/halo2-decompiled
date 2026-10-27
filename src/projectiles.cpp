@@ -863,6 +863,9 @@ real function_30bf0(vector3f *v);
 // Tried: gravity product operands swapped 266; result flag declared first 275 (frame 0x30); optimal-time
 // root with a double -1.0 244 (no reciprocal, but a final qword multiply where retail loads a dword -1.0
 // first); t2 root without its float cast 266; horizontal through magnitude2d 272.
+// Round 31: the time scale read once into a value (`time_scale ? *time_scale : 0.0f`) 262, time scale still in
+// EDX (0xfa6a0 34 -> 35); retail keeps the distance output in EDI from entry and reads the forced speed and
+// time scale from the stack at their uses.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
