@@ -64,7 +64,7 @@ bool balance_teams(long arg_0, long arg_1, bool arg_2, long arg_3, long arg_4,
 void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 	const s_match_player_list *arg_2, const long *arg_3);
 
-// score 439 (was 449): retail length; frame 1000 versus 996, result byte home and second state/getter handling differ.
+// score 439 (was 439): retail length; frame 1000 versus 996, result byte home and second state/getter handling differ.
 // Refreshed first balance inputs 454; fallback balance inputs 466; both phases 513;
 // native state-value getter 449; final transition-result union 449.
 // frame 0x3e8 versus 0x3e4, result-byte home and getter boundary differ;
@@ -84,6 +84,8 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // with complemented final/reset/both 492/469/498; complemented balance 446, restored.
 // On the waiting transition graph: reset bool/byte 469/469, short/word 442/442;
 // balance bool/byte 458/458; paired bool/byte 476/476. All eight widths restored.
+// Complementary waiting carrier signed byte/byte 439/439, short/word 450/450, long/dword 454/454; paired
+// waiting/final short 450, paired long 443. All restored.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {
