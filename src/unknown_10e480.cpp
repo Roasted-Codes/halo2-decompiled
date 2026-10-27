@@ -183,6 +183,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // signed/unsigned 64-bit induction with that frame 256/249 at either boundary, recovering frame 0x2c.
 // Signed 64-bit direct/char/short frames 295/295/256; unsigned 288/288/244; unsigned direct frame
 // with byte/short sampled result 288/292. Extra loop length regresses; all restored.
+// Round 60: ours inlines the weighted arm's animation getter call (retail calls it) and tail-merges
+// the second arm's data/publish calls into the first arm's (retail keeps both). Weight product
+// reordered, short and int index 221 each (identical); weighted id copied into the id local or its
+// own local 301/301 (the tail un-merges as retail but the state pointer leaves EBP).
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
