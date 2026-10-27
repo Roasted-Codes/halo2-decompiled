@@ -392,9 +392,12 @@ PRIVATE inline long polygon_round_19f(real value)
     return result;
 }
 
-// score 379 (was 393): the fade clamp now computes a single radius*1.5 product, so the
+// score 379 (was 379): the fade clamp now computes a single radius*1.5 product, so the
 // radius keeps retail's xmm3; our fade block is still one instruction shorter than
 // retail's, and the call to function_4b2d0 still passes three stack arguments.
+// Round 194: Named real radial denominator at division/loop boundary, with ternary/explicit
+// alpha bounds and long/dword UV ordinals, all 366; without the denominator local 416.
+// Ordinary 366 loses both callers at two differences each; all trial forms restored.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

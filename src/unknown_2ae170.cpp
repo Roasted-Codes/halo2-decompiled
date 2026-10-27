@@ -1086,6 +1086,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 190: Live input levels with bool/byte/short/word primary channel and entry-rear/live-rear
 // observations 221/229, 221/229, 213/231, 213/231. All regress; original scalar captures, channel
 // predicate and send expansion restored.
+// Round 194: Native byte/short/word/dword channel masks with retained rear samples
+// 200/198/198/199; with entry level sum 209/209/209/212. Small gains rejected;
+// original scalar captures, channel decision, helpers and sum grouping restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

@@ -1395,6 +1395,9 @@ struct s_rating_summary
 // the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
 // Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
 // 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
+// Round 194: On native fifteen-bit player statistics and a shared pass ordinal,
+// byte/short/word/dword group counters with dword or word characters all 311;
+// original body and native collection extent restored. Key/group homes remain.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
