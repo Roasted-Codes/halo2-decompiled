@@ -2068,7 +2068,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 184 (was 184): object/offset homes and low-mask allocation remain;
+// score 210 (was 210): Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // native unit view 184; read-only unit view 184; native child view 184;
 // both native views 184; unsigned result mask 184; child defaults reversed 186;
 // immutable output binding 184; read-only byte source 184.
@@ -2124,6 +2124,10 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // names and source-first declarations 184; tail fractions, child fraction, mask names and both
 // scratch-home combinations 184; forced/ordinary/compiler-selected getter and clamp inline
 // contracts 184.
+// Round 234 on direct field clamps: low request intersection 210; named low bit 210;
+// early high bit alone/with intersection 295/295; native record cursor alone/with
+// intersection 213/213; unsigned bit ordinal and reversed count defaults with intersection
+// 210/210. Original direct clamps, four-slot scan and executable body restored.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

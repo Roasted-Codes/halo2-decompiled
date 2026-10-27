@@ -164,6 +164,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // 351; positive/touch, touch/positive and countdown/positive guard exits 284/276/341.
 // Negative no-samples bool/byte/short/long in weighted scope 221/221/222/221;
 // across the positive playback phase 313/313/328/331. Original sampled flag and constructors restored.
+// Round 234: Last successful sample ordinal in long/short/signed-byte/dword
+// at the original result lifetime 268/277/316/268; initialized before the getter
+// 296/302/323/296. Frame and destination/ordinal allocation remain. Original
+// Boolean result, all channel/data constructors and executable body restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
