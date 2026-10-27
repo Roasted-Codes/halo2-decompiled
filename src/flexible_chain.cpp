@@ -232,6 +232,10 @@ void __stdcall function_1160c0(real dt)
 	}
 }
 
+// score 194 (was 194): attachment/previous/axis homes and rotation scheduling differ;
+// seven local-name sets, declaration reversals and entry/loop scopes 194;
+// shared cross 207, both point differences 286, both helpers 280;
+// scaled difference 212, all vector helpers 285.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

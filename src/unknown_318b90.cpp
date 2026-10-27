@@ -68,6 +68,8 @@ void class_318e60::remove(unsigned short id)
 // score 32 (was 32): extra word store and input loads after allocation;
 // first local 33, second 34, both 18; owner local 31, owner and first 30,
 // owner and second 31, all three 28. The direct expression is retained.
+// Full first or second input copies 57; both copies, result first,
+// assignments, CRT copies and mixed copies 72.
 // @retail 0x318bb0
 lane_a_simple_contact_manager *class_318b90::function_318bb0(
     lane_a_contact_body const *first, lane_a_contact_body const *second, void const *input)
