@@ -102,7 +102,7 @@ public:
 	virtual void report_2d8330(char const *title, long id, char const *message, char const *file, long line);
 	// switches report `id` on or off
 	virtual void set_enabled(long id, bool enabled);
-	virtual void slot_5() = 0;
+	virtual flag_2d8e70 function_2d7fe0(long id);
 	// counts a silenced location up, or down (forgotten at zero)
 	virtual void count_location(char const *file, long line);
 	virtual void slot_7() = 0;

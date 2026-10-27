@@ -117,6 +117,7 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Normalizer input snapshots 448; native normalizer/distance/both roots 443/408/448; snapshots with
 // native distance root 448; void normalizer alone/with snapshots/with native roots 408/448/448.
 // Original helper and body restored; entry loads, XY/magnitude homes and return cleanup remain.
+// Round 341: Persistent endpoint displacement with separate workspace, shared magnitude and word counters 447/465/447/462; existing direction workspace 474/483/474/483. Original body/helpers restored.
 // Native normalization-input/evaluation/candidate-direction library copies, pair/all combinations,
 // plus native endpoint-array initialization 408/408/408/408/408/408/408/408. Original body and helpers restored.
 // Complementary facing bool/byte/short/long 408/408/430/420; with complementary first endpoint
@@ -332,6 +333,10 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Rotation publication xzy/yxz/yzx/zxy/zyx 749/749/748/749/748;
 // endpoint yx alone/with yxz rotation 811/811; normalized kij publication 749.
 // One-point forms rejected; original helper stores and body restored.
+// Round 212: Split transformed output 749; planar pivot 755 (frame 0x114, first +0x14);
+// producer scopes 749/755; reverse transforms with full/planar pivot 819/829, scoped 819/829.
+// On the planar frame: initial/pivot/both radius joins 870/856/905; ordinary result 801;
+// later ordinary result 822; ordinary common exit 753; late radius 826; endpoint inline 755.
 // Round 174: shared three-use height 779; forward/reverse/both endpoint calculations at consumption
 // 803/798/858; center-first/reverse-first initial points 836/802; reverse-first with late forward 792;
 // center-first with late reverse 797. Original geometry production restored; frame 0x11c/0x114,

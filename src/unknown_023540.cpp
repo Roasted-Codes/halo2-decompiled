@@ -2584,8 +2584,13 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
     real *blue, byte order, vector3f *direction, point3f const *position);
 // score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
-
-// score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
+// Round 73 (plain checks with 0x73360): the held round 90 body 401 and 0x73360 MATCH -> 33 again;
+// that body with the existing render-memory allocator, merged bool result, default light in the
+// else arm and globals read at each use but the original sample loop 511, 0x73360 again 33; the
+// same without the allocator helper 558 (fast); merged bool result alone 536 (fast, still ret 0x18).
+// In the broken builds LTCG has 0x193300's register summary when it compiles 0x73360 (it evaluates
+// the maximum-players call first and keeps it in EDX); 0x193300 as an inline definition with a
+// noinline declaration keeps 0x73360 at 33 and costs 0x705f0 and 0x1931d0. BLOCKED-BY 0x73360.
 // Held (batch 132): Claude lane 4 round 90's two explicit sample blocks with a determinant helper reached 401
 // (frame 0x200, all-stack arguments), but in the batch build that code cost c_helper_b::v7 (0x73360) its match
 // (code linked ahead of src/unknown_058dd0.cpp); with only this file restored the batch keeps 0x73360. Retry it
@@ -2715,7 +2720,11 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 334 (was 348): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// The stage call is BLOCKED-BY 0x144f0: retail passes tag in EAX, stage in ECX and the fallback in EBX
+// (ret 0xc), and reads the first bitmap formal as a full dword (cmovne). Round 73: for loop 334;
+// stage-nonzero ternary 334; selected bitmap local 294 at 2001 bytes (strength-reduced sampler table);
+// short stage 500; unsigned stage 334; short-first selection 348.
 // Earlier form: frame 0x58 agrees; stage-call convention and constants differ.
 // Byte stage 617; distinct second trig scalars 374; separate texture scales 348
 // (plain 348, retail length); vertical bounds first 378; selected short bitmap 374.
@@ -2744,6 +2753,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // first/second/both 500/536/493; unsigned-word stage with first/second 500/536; on the retained
 // contract, in-place scales/independent second trig/later second buffer, their pairs/all and all
 // with trig scopes 368/338/334/368/368/338/368/368.
+// Round 151: All four named rotation products, with paired rotation/scale/bias stage masks 0-7, each 391
+// (1988/2022). Original corner helper and body restored; sampler and protected bitmap transport remain.
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
