@@ -853,6 +853,9 @@ public:
 // native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
 // Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
 // canonical results 374/374/308/375 on the recovered frame. Original body restored.
+// Native memcpy forward/up/left/position transfers 308/308/308/308; all basis,
+// forward plus position, up plus left and all transfers 308 each. Native copy boundaries
+// leave early result/flag allocation and child transport unchanged; original aggregates restored.
 // Round 329: cleanup/count/spawn/unlink inline or outlined inline: all 308; full-EAX
 // return with long/bool/complete-arm results 405/371/405. All declarations and return types restored.
 // frame 0x60 agrees; the early result store, the flag 8 clear (retail
@@ -884,6 +887,12 @@ public:
 // and their combinations 308; native receivers/location for 308; native location/child/
 // successor/all handle domains 308; byte/signed-byte/word/bool canonical results
 // 374/374/308/375.
+// Round 174: existing cross input references 308; forward/up/both values 411/409/507;
+// reference inputs/output 308; native result with pointer/reference/value inputs 369/369/624.
+// Original helper and both calls restored; frame 0x60, flag/result and selective calls remain.
+// Fallback normalization vector/scalar/working-vector/computed-input forms 349/308/349/359;
+// with result after flags 346/305/346/356. Complete vector forms add frame storage; the
+// three-point scalar/result form is rejected. Original body and protected interfaces restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1075,8 +1084,12 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // predicates 287; signed render mask 213. Original source restored.
 // Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
 // availability result before the work guard 355. Early EDI/tag lifetimes remain.
+// Group-test order, high-bit shift/equality and combinations 213; other-bit OR test 222.
 // Round 329: shared pool/data 339/354; group/render-mask/both observations 222/331/331;
 // pool with group/mask/both 275/364/364. Original receivers and every memory observation restored.
+// Round 376: Independent child cursor/receiver/both entry declarations 213/213/213; native
+// request with cursor/receiver/both 211/211/211; both with native request and positive/negative
+// child bit stores 340/340. Original lifetimes and stores restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

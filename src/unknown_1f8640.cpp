@@ -438,6 +438,8 @@ struct s_1f8a70_actor
 // Round 142: separate noinline declarations for radius/position/root/directed route/
 // path source/path settings/scratch get/scratch release all 399. Every boundary restored;
 // pool/data entry and protected unit-mode/result homes remain.
+// Round 169: Nonzero route producer with initial/reference/both bounded mode predicates
+// 399/414/406/413; canonical zero tests on those four forms 399/414/406/413. All restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

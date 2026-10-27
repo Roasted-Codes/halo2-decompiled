@@ -241,9 +241,16 @@ struct s_physics_component_walk : s_havok_component
 // 279; paired signed-word statuses 285.
 // Round 215: signed-byte availability/application/policy 275/275/275;
 // unsigned-word policy 298; policy field at each body use 325.
+// Round 188 connection ordinal, neighbor group/body, section ordinals, their three
+// pairs, all three, and all plus body ordinal renamed: 275 each; frame/group spill unchanged.
 // Round 167: Signed-word first/current-side/next-side group body identities, individually
 // and in all combinations, 275 each; signed-word output body index 317 at 898/922,
 // frame 0x18 recovered but saved roles still differ. All eight forms restored.
+// Round 375: Complete tested-status producers, guarded bool/byte/short/long
+// 319/319/300/319; eager replacement/clamp 304/304/298/307. All recover frame 0x18;
+// guarded short retains 922 bytes, others 898. Register roles still differ; restored.
+// Round 210: terminal/neighbor-owned first-body result 292/304; conditional result 296/303;
+// native word neighbors on those four graphs 317/312/299/307. First form recovers 0x18 and 922 bytes.
 // Round 139: Separate published-body result long/short/signed-byte/byte 311/319/319/319; those four
 // with application status from policy 319/304/304/304. All recover frame 0x18 but shorten to
 // 898/922 and retain wrong current/entry roles. Original executable source and output/status/clamp

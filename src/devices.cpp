@@ -1255,6 +1255,9 @@ bool function_0b6760(s_index_pair const *pair);
 // Long activity result/entry-long/ordinary index/ordinary saved pointer/both/header ordinal/both with
 // ordinal/shared notification 307,305,380,378,407,316,421,375. Original frame/index/state/result storage and
 // qualifiers restored.
+// Separate power/position activity bool/long 443/451; phase-local position 373/448;
+// with shared motion completion 443/451, phase-local position 373/448.
+// Original single activity result and completion lifetimes restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

@@ -697,9 +697,14 @@ long function_1469f0(real seconds);
 // byte/signed-byte restriction 280/280; nested restriction result 286; unsigned/signed-word
 // initial scan 335/335. Reduced control 280, full baseline 279; real state layout and
 // executable body restored.
+// Round 188 unsigned state field, shared bitmap tests, forceinline table getter,
+// their pairs/all, and noinline table getter: 280/295/280/295/280/295/295/341 (fast control 280).
 // Round 167: Cooldown-first selected-case orders 41023/41203/41302/42013/42103/
 // 42301/43012/43102 score 279/283/279/277/282/290/280/278 fast (control 280, full 279).
 // Best gains at most three; original 40123 order restored; inherited score headers merged.
+// Round 375: Shared active-state 2/3 actions with word/short/long/unsigned state
+// 316/316/325/325; shared 1/2/3 actions 341/341/350/350 (fast control 280).
+// Frame eight versus twelve; shorter bodies and initial slot spill remain; restored.
 // Round 139: Shared request ordinal long/int/short/word 280/280/339/339 fast; those four with
 // shared scan/selected transition workspace 280/280/339/339. Unchanged fast control 280 versus full
 // 279; frame 4/12 and early slot/state/final-cursor homes remain. Original executable source, fixed

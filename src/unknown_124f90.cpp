@@ -2817,6 +2817,9 @@ void function_129380(vector3f const *const *voice_values, vector3f const *const 
 // Clear helper/listener declaration/query test 3 each; accepted listener first 34;
 // shared playback flags/direct location flags 3 each; fading field 8; fading helper 3;
 // shared next-index helper 3; shared slot index 176.
+// Separate noinline and inline+noinline declarations 3 each; noinline replacing inline-depth 3;
+// long and unsigned-word curve declarations 3 each; fading-test local 3; byte-wide clear 3;
+// native listener store 3; per-iteration index 3.
 // @retail 0x128020
 void function_128020(void)
 {
@@ -3593,6 +3596,7 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 }
 
 // score 535 (was 535): Frame 0x130 versus 0xe8; native rotation, environment and listener-index homes remain.
+// Earlier: Frame 0x130 versus 0xe8; native rotation, environment and listener-index homes remain.
 // Const reverb 551; outer records 551; shared cross product 635; direct blend reads 555; entry counter 552.
 // Output-before-inputs callee order 551 (callee 15 to 11); all call argument roles preserved.
 // Static const fallback 727 (frame 0xec); spatial role names 551; long success workspace 551;
@@ -3613,6 +3617,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // publication aggregate 535; fallback entry lifetime 558; aggregate entry lifetime 558; environment
 // observations 537; listener observations 586; record observations 619; aggregate record observations 619;
 // forced existing rotation 535. All restored.
+// Placement/environment status byte-bool, word-bool, bool-byte, bool-word, byte-byte, byte-word, word-byte,
+// word-word; then five remaining complete quaternion/input/output formal orders:
+// 535/535/535/554/535/554/535/554/560/568/568/560/535 (fast); all restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

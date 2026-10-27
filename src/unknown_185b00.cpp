@@ -711,8 +711,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 244 (was 244): pitch-bound/settings/direction/turn-difference homes differ within
-// frame 0xa8 (retail: maximum 4, minimum 8, direction 0x10, settings 0x1c); retail keeps the
+// score 213 (was 213): Frame 0xa8 agrees; the upper-bound, range and pin input homes still differ.
+// settings/direction/turn-difference homes and step-clamp scheduling
+// differ within frame 0xa8; the initial minimum home now agrees; retail keeps the
 // full turn in xmm3 and spills the range; the step pins get other registers.
 // Tried: interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280;
 // isolated range scope 272; maximum declared first 243 (shifts the prologue); direction,
@@ -728,6 +729,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Settings at use 335; settings after camera 262; native pitch interval aggregate/assignments
 // 267/267; native yaw interval 267; pitch/yaw interval with settings at use 335/335; both
 // intervals with settings at use 339.
+// One movement-vector observation 213/1330 (kept); yaw observation 243; pitch observation 267;
+// yaw/pitch 264; yaw/movement 253; pitch/movement 280; all three 285; all plus current-bound
+// observation 277. Frame 0xa8 agrees; lower-bound home recovered, settings/direction/range and
+// step-clamp scheduling remain.
 // Pitch approach value-result/target-first/reference/pointer-result 268/267/244/244;
 // each with the actual periodic-difference input gives 268/267/244/244.
 // Coordinated camera inline/inline-plus-noinline declarations 244/244.
@@ -735,6 +740,17 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Per-helper half-turn/full-turn/both observations 311/291/339; early
 // positive-range sum 270; with half-turn/full-turn/both 319/323/374;
 // both observed limits passed through the existing helper 261. Original helpers restored.
+// Round 171: Shared square 213; self-dot 227; velocity before amount/delta 263/213; earlier vector
+// with square/dot 263/261; immutable square 213; coherent vector/pitch homes 213. Original body
+// restored. Frame 0xa8 agrees; upper-bound, wrapped-range and step-clamp homes remain.
+// Round 173: Periodic output pointer first/last 308/308; output reference first/last 308/308;
+// output-pointer result 308; computed difference plus output 313; in-place pointer/reference
+// 308/308. Frame 0xa8 agrees; upper-bound slot, wrapped-range spill and step-clamp scheduling
+// remain. Original periodic helper and body restored.
+// Round 175: Shared final pin 241; shared final pin with scalar input orders
+// value/maximum/minimum 256, minimum/value/maximum 273, minimum/maximum/value 273,
+// maximum/value/minimum 266, maximum/minimum/value 273; original final clamp
+// with first/last reordered pin inputs 227/259. Original helper and calls restored.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
@@ -798,7 +814,8 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		{
 			real amount = (real)fabs(entry->facing.pitch - target) * 0.63661975f;
 			real delta = target - entry->facing.pitch;
-			real movement = (real)sqrt(unit->field_88.i * unit->field_88.i + unit->field_88.j * unit->field_88.j + unit->field_88.k * unit->field_88.k) * g_510c54->rate;
+			vector3f velocity = unit->field_88;
+			real movement = (real)sqrt(velocity.i * velocity.i + velocity.j * velocity.j + velocity.k * velocity.k) * g_510c54->rate;
 			real rate = target != 0.0f ? movement * amount * 0.08f : *(real *)(settings + 0x5c) * movement * amount;
 			entry->facing.pitch += control_pitch_pin(delta, -rate, rate);
 		}

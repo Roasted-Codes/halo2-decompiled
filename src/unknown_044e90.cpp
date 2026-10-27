@@ -1,7 +1,7 @@
 // @flags /O2 /Gr /arch:SSE
 #include "unknown_044e90.h"
 #include "normalize3d.h"
-// score 434 (was 434): Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
+// score 434 (was 434): aligned frame and retail length agree; entry/table ownership and plane/list homes remain.
 
 // Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // Earlier 434 (was 434): Entry/tag-table registers and plane/list homes remain.
@@ -11,8 +11,12 @@
 // Entry/tag-table registers and plane/list homes remain.
 // Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// Aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
+// Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
 // aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
 // Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// Entry/tag-table registers and plane/list homes remain.
+// Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
@@ -49,6 +53,13 @@
 // Round 142: native tag/table/both observations 434/444/444; on the latter graph,
 // workspace after selection/branch scope, signed flags, query count and entry-data receiver
 // all 444; uniform selection-flag reads with tag-table/tag/tag-table-data 447/438/447.
+// Round 211: Second/third/fourth capacity snapshots, each pair, all three and all four
+// capacities at their sign/size consumers 434 each. Original capacity observations restored.
+// Round 175: Native position/three rotation rows/both observations 475/556/586;
+// with shared scale observation 477/556/586; independent scalar normals with
+// all rows/position plus all rows 515/549. All original input ownership restored.
+// Native storage-template alignment eight/sixteen 435/435; with scalar normal inputs
+// 447/447; with whole-plane library publication 435/435; both 447/447. Header/body restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

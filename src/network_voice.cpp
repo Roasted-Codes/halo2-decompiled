@@ -1253,6 +1253,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Native identity with original validation: rolled 316, counted 144; byte identity counted 112;
 // other-player identity 144; native/byte identity with channel rejection 144/112;
 // native/other-player identity with entry-width value 165/165. All lose the matched caller; original retained.
+// Round 188 separate successful total: rolled/counted/unsigned result/unsigned total/
+// retained entry width/admission/split adds/pre-tested walk 281/112/112/112/165/112/112/112;
+// expanded caller conventions checked separately; original accumulation restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2874,7 +2877,7 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 363 (was 394): frame 0x54 and scalar homes agree; entry registers and unrolled cursor bias differ.
+// score 363 (was 363): frame 0x54 and scalar homes agree; entry registers and unrolled cursor bias differ.
 // Earlier at 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
 // Earlier: frame 0x50 versus 0x54 and nearest-choice homes still differ.
 // Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
@@ -2904,6 +2907,9 @@ struct s_voice_route_choice
 // Radio predicate accumulation, bitwise long with either comparison order 436/436;
 // bitwise Boolean 363/363; logical long 1082/1082;
 // logical Boolean 1087/1087. Byte bitwise accumulation 363 plain kept; original indexed nearest selection retained.
+// Reused outgoing identity at branch/engine/entry/after-routing 376/375/425/452;
+// branch identity with three pairs/native descriptor 382/376; engine identity with three pairs 381;
+// post-routing identity with three pairs and native descriptor 464. Original identity construction retained.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
