@@ -70,7 +70,7 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 641 (was 641): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
+// score 629 (was 641): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes differ.
@@ -124,6 +124,8 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Negative failure result bool/byte/short/long, conditional store: 712/712/713/712;
 // negative failure with reused close-hit logical accumulation: 679/679/674/673 (fast).
 // Original result, hit arrays and all in-place math snapshots restored.
+// Hit aggregate 641; length aggregate 629 kept; later success 661; hit/length
+// 642, hit/later success 661, length/later success 650, all 662; success after copy 652.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)
@@ -174,11 +176,8 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 		function_2922b2(&local_12, &local_9, local_2->field_14, &local_13[1]);
 		function_2922b2(&local_12, local_11, -local_2->field_14, &local_13[2]);
 		function_2922b2(&local_12, &local_9, -local_2->field_14, &local_13[3]);
-		real local_14[4];
-		local_14[0] = local_2->field_14 + local_6;
-		local_14[1] = local_2->field_14 + local_6;
-		local_14[2] = local_2->field_14 + local_6;
-		local_14[3] = local_2->field_14 + local_6;
+		real local_14[4] = { local_2->field_14 + local_6, local_2->field_14 + local_6,
+			local_2->field_14 + local_6, local_2->field_14 + local_6 };
 		real local_15[4];
 		s_collision_result_1697c0 local_16;
 		local_16.field_24 = NONE;

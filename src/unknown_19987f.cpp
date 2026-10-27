@@ -1320,6 +1320,8 @@ extern bool g_4ed39d;
 // Menu-only/dispatch-local/post-query error observation 184/184/184; game-first zero chain 181,
 // with menu-only observation 181; one recovery-error value 206, with scope/chain 207; main-first
 // zero chain 201. Byte homes and dialog joins remain.
+// Lobby/handled order, callback initializers, dialog assignment order and their
+// combinations all 184; session reset before dialog assignment 185.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {

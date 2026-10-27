@@ -209,6 +209,8 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Complemented return with original locals 771; ordinary result/player/both 764/856/832;
 // ordinary blocked/result-blocked/player-blocked/all 781/778/858/844. Original case-two
 // result, case order, local qualifications and complete executable body restored.
+// Shared 25/28, 26/27/29, empty cases, paired groups and all groups
+// 634/634/627/634/634/634/634; all with flag cases after 18 651.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

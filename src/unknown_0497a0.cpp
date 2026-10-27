@@ -62,6 +62,8 @@
 // camera offset terms 594; trig/projection terms 594.
 // trig/camera terms 673; projection/camera terms 673.
 // all three term families 594; named modulation 673.
+// Camera-shift homes, alternate shift homes, wave-result homes, wave-scale homes,
+// and four paired combinations all 594; frame and initial shape homes unchanged.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
