@@ -128,6 +128,11 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // 642, hit/later success 661, length/later success 650, all 662; success after copy 652.
 // Input, hit flags, range, minimum, basis, origins, lengths and distances names each 629;
 // original workspace names restored.
+// Corrected-frame point-value/direction-value/both 682/694/772; output-reference
+// combinations 682/694/772; input references with pointer/reference output 629/629.
+// Original helper restored.
+// Point-return with pointer/point/direction/both value inputs 680/744/838/899;
+// cross first/second/both value inputs 845/858/1045. Original helpers restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

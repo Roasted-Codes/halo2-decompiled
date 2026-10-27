@@ -95,6 +95,8 @@ PRIVATE __forceinline void draw_rotation(vector3f const *axis, real sine, real c
 // Complete native axis input copy 424; copy with complement/sine products/both
 // 430/470/418; diagonal-first copy with the same four forms 428/468/461/515.
 // All recover frame 0x6c and first +0xaf but regress; original helper restored.
+// Rotation case orders 43210/32104/12340/02143/13042/31024/20413/41230:
+// 449/450/454/454/450/450/449/449 fast; original order restored.
 // @retail 0x224fd0
 void __stdcall function_224fd0(s_draw_mesh_seed const *seed, s_draw_value_cache *values,
 	point3f const *position, vector3f const *direction, real scale, color4f const *color,
