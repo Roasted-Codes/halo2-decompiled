@@ -711,7 +711,7 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 213 (was 244): settings/direction/turn-difference homes and step-clamp scheduling
+// score 213 (was 213): settings/direction/turn-difference homes and step-clamp scheduling
 // differ within frame 0xa8; the initial minimum home now agrees; retail keeps the
 // full turn in xmm3 and spills the range; the step pins get other registers.
 // Tried: interleaved settings/camera declarations 272/272; delay upper/lower alone 280/280;
@@ -739,6 +739,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Per-helper half-turn/full-turn/both observations 311/291/339; early
 // positive-range sum 270; with half-turn/full-turn/both 319/323/374;
 // both observed limits passed through the existing helper 261. Original helpers restored.
+// Round 171: Shared square 213; self-dot 227; velocity before amount/delta 263/213; earlier vector
+// with square/dot 263/261; immutable square 213; coherent vector/pitch homes 213. Original body
+// restored. Frame 0xa8 agrees; upper-bound, wrapped-range and step-clamp homes remain.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

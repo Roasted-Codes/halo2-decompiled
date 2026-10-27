@@ -678,6 +678,10 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // Live front/rear threshold references 489; selector field too 504; gain fields too
 // 515; both groups 533; native destinations with those four forms 498/518/528/544.
 // All expressions and opening body restored.
+// Round 171: Shared scalar selector/forced expansion/readonly inputs 447 each; ordinary input copy
+// 480; primary value 454; both copies 481; word destinations 461; primary value with native
+// destinations 457. Input-copy and final native-destination forms lose the dispatcher; all restored.
+// Frame 0xc agrees; selected-level homes, full-word destinations and SSE staging remain.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

@@ -1347,6 +1347,10 @@ bool function_1e1de0(long arg_0);
 // Final producer orders activity/readiness/behavior 165; behavior/readiness/activity 164;
 // activity/behavior/readiness 163; behavior/activity/readiness 162; readiness/behavior/activity 165;
 // activity zero at entry 265, after object lookup 251, with behavior first 268.
+// Round 171: Complete mutable motion observation with copy orders anchor-position-location-facing /
+// anchor-location-position-facing / anchor-position-facing-location /
+// position-anchor-location-facing 294/284/294/294; immutable copies repeat 294/284/294/294. Original
+// body restored. Frame 0x84 agrees; early ESI, return-byte and actor/motion homes remain.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

@@ -1276,6 +1276,10 @@ bool function_c70b0(long unit_index);
 // On the retained success-byte graph: short/long depletion 200/173; short/long
 // interruptibility 304/172; paired short-short/short-long/long-short/long-long
 // 309/201/304/174. Original canonical predicates and inherited argument handling restored.
+// Round 171: Direct native control/state/unit receivers 164/165/344; control+state 165; unit+control
+// 344; unit+state 367; all 367; all plus direct controlling field 367. All restored; inherited
+// parameter observation unchanged. Frame eight agrees; entry pool/state scratch roles, signed-count
+// joins and result normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1647,7 +1651,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 810 (was 841): frame 0xcc versus 0xd4 and first angle expansion remain.
+// score 810 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain.
 // Earlier: frame 0xc8 versus 0xd4, unit/state homes and first angle expansion differ;
 // depth zero 1428, depth one 833, projection inline 833, bounds inline 1055,
 // native centered 834, separate secondary activity 833.
@@ -1676,6 +1680,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 181 direction input value/native copy 810/810; basis values/native copies 1067/1073;
 // all native input copies 1125; direction/basis/all value inputs with vector return 900/1181/1166.
 // Direction copied once inside projection retained (plain 810, 3403/3403); frame 0xcc versus 0xd4.
+// Round 171: Uniform named k/j/i product subsets k,j,i,kj,ki,ji,kji all 810; uniform first k+j row
+// sums 810. Complete original helper and body restored. Frame 0xcc versus 0xd4 and first angle
+// expansion remain.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
