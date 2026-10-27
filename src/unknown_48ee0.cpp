@@ -55,6 +55,10 @@ extern real g_4c9798[36];
 // Round 375: Complete near/far/shared-pair/distinct-pair plane outputs on the
 // retained far-normal graph 322/335/361/364; CRT copies 322/335/361/364.
 // Frame 0x30 versus 0x28; all exact-only output-record forms restored.
+// Round 139: Repeated ratio/angle inputs captured once separately/together 316/305/316; each with
+// real shared pixel area 321/326/321; joint input home names without/with area 316/321. Frame
+// 0x20/0x28, state/matrix and protected rounding homes remain. Original executable source, every
+// float tree and accepted far-normal copy restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
 {

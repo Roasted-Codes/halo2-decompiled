@@ -2574,6 +2574,9 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // those four forms with trigger-predicate parity 152 each (574 bytes).
 // Round 146: inline selector/predicate/task-apply/event helpers 152 each; selector-
 // predicate/selector-apply/predicate-apply/all-five/actor-options contracts 152 each.
+// Round 139: Shared pending/trigger optional-output workspace long/int/short/word 152/152/152/153;
+// those four with shared entry index 152/152/152/153. Frame 0x1c agrees; task zeroing/retest and
+// iterator head remain. All original executable source restored.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {

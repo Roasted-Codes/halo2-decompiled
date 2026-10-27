@@ -1616,6 +1616,11 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Round 376: Native transform pointer/value 684/774; all nine row products with
 // raw/pointer/value receivers 684/684/774; direct output with native pointer/value/value-and-
 // products 717/724/724. Calibrated fast; original body restored.
+// Round 140: Sequential absolute/relative velocity workspace with parent observation/shared player
+// ordinal/native established interactions 701/701/701/701/683/683/683/683; native visible/positive/retain
+// combinations and full-width player slot on that graph 682/704/682/707/685/707/710/706. Best 682 gains only
+// two, frame 0x74 versus 0x80; all original vectors, observations, result widths, ordinal lifetimes and input
+// access restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

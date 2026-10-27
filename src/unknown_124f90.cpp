@@ -3603,6 +3603,8 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Weighted cross terms 596; projection products 596; scaled-input terms 590; rotation subtotals 596;
 // vector-first publication 535 (fast); all restored.
 // Shared handle query 575; complete rotation outputs 1050; quaternion cross helper 1050; unsigned listener ordinal 557; plain environment cursor 649; positive entry scope 535 (fast); all restored.
+// Native quaternion-reference 535; quaternion-value 992; vector-reference 535; vector-value 1011;
+// both references 535; both values 956; quaternion/output references 535; value inputs/output reference 956.
 // Round 160: Rotation scale declaration orders 0/2/1 583, 1/0/2 589, 1/2/0 589, 2/0/1 586, 2/1/0 1050;
 // quaternion acquisitions w/i/j/k 538 and k/j/i/w 545; native scale-home names 535. Original quaternion
 // snapshots, expressions, helper contract and body restored.

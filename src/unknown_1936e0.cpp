@@ -209,6 +209,9 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // use-stepped point cursors 30; directly indexed point arrays 218. Plain and complete-image checked.
 // Round 210: entry point-input/output/both cursors 239/250/253; independent copy count with
 // entry input/output/both 239/250/253; signed-short copy count 30; entry input/unsigned count 239.
+// Round 136: defining-unit search/conversion/both inline 271,172,271;
+// the same with separate noinline 172,172,172;
+// outlined inline search with outlined conversion/both noinline 172,172.
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

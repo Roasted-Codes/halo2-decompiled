@@ -703,6 +703,10 @@ long function_1469f0(real seconds);
 // Round 375: Shared active-state 2/3 actions with word/short/long/unsigned state
 // 316/316/325/325; shared 1/2/3 actions 341/341/350/350 (fast control 280).
 // Frame eight versus twelve; shorter bodies and initial slot spill remain; restored.
+// Round 139: Shared request ordinal long/int/short/word 280/280/339/339 fast; those four with
+// shared scan/selected transition workspace 280/280/339/339. Unchanged fast control 280 versus full
+// 279; frame 4/12 and early slot/state/final-cursor homes remain. Original executable source, fixed
+// scan bounds and state/call observations restored.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {

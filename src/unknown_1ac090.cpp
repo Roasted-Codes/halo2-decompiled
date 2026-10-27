@@ -1262,6 +1262,9 @@ struct s_1acda0
 // Round 323: existing actor getter 193; prop-index observation 114; common empty
 // reference 124; getter/index 193; getter/reference 188; index/reference 124; all 188;
 // all with conditional prop selection 187. Early ESI and Boolean/result traffic remain.
+// Round 138: active byte/char/short/long 119/119/132/131; result name, active name,
+// all role names 68/68/68; long active with all names 131. Early ESI and result-byte
+// ownership remain; original active producer, qualification and request stores restored.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {

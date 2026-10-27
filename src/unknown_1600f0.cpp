@@ -1258,8 +1258,8 @@ PRIVATE inline long score_string_list_1608e0()
 	}
 	return result;
 }
-
-// score 801 (was 801): Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
+// score 789 (was 801): Frame 0x794 versus 0x79c and viewer/coordinate/scalar homes remain.
+// Frame 0x794/0x79c and viewer/coordinate/scalar homes remain.
 // Frame 0x794 versus 0x79c and viewer/scalar homes remain; direct player-score fields keep native values.
 // player register and scalar homes; scalar names 817;
 // header/name reuse 818; header/decoder reuse 818; both short team walks 811;
@@ -1282,6 +1282,12 @@ PRIVATE inline long score_string_list_1608e0()
 // list and every header/row operation restored.
 // External flag reference 801; reused no-team result 802; player/team/both output cursors
 // Isolated score-table, row-total, height, fade-row, viewport-height, points-width, clock-width and label-width names 801 each.
+// Round 137: uniform fade fraction/offset/remainder and combinations 813,801,801,813,813,801,813;
+// full-width initial predicates 785 plain (changed one-use captures excluded);
+// isolated dim-icon/player-teams/activity/dim-icon-teams/all compound carriers 786,801,801,786,786;
+// all compounds with captures removed 792; captures removed alone 806;
+// dim/icon alone 801,789. Icon alone retains frame 0x794;
+// adding dim gives only three further points and frame 0x790, so that addition is rejected.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1478,7 +1484,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 			(g_4e6948->value1b8 > 0 && *(long *)(player + 0x2c) == NONE &&
 			*(short *)(player + 0x1ac) == 0);
 		work.position[1] += 0x14;
-		bool show_icon = team != NONE && *(long *)(player + 0x2c) == NONE && !(flags & 2);
+		long show_icon = team != NONE && *(long *)(player + 0x2c) == NONE && !(flags & 2);
 		short seconds;
 		if (g_4e6948->flag1128)
 			seconds = *(short *)(scores + (index & 0xffff) * 0x1c + 6);

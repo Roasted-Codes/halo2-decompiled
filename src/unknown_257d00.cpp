@@ -1593,6 +1593,7 @@ void function_b7360(long object_index);
 // score 466 (was 466): No local frame; pool acquisition, actor/output roles, dispatch and rounding homes remain.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/pool/output entry carriers and rounding homes still differ; selection case result retained.
 // Earlier: Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/output acquisition, dispatch layout and forty missing bytes remain.
@@ -1641,6 +1642,10 @@ void function_b7360(long object_index);
 // body restored.
 // Round 240: complementary query result bool/byte/short/long 520/520/469/525;
 // with complete complementary locomotion at the same widths 520/520/470/525. All restored.
+// Round 138: shared rounded-tick outputs moving-direct/moving-point/direct-point/all
+// 468/468/468/466; shared all tick products 474; all products and outputs 470;
+// moving-only/other-case products 466/466. Original scratch declarations restored;
+// pool/actor/output acquisition, dispatch layout and conversion homes remain.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

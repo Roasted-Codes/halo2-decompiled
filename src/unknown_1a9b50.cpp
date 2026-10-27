@@ -465,6 +465,10 @@ extern point2f *g_468778;
 // output, V native velocity value scaled in place), primary/secondary:
 // O/H 389; O/V 420; H/O 389; H/H 403; H/V 448; V/O 406; V/H 406; V/V 376.
 // Actor/settings/prop homes remain; original producers, include set and body restored.
+// Round 140: One immutable request-distance observation with secondary threshold/shared prediction/native
+// result interactions 406/395/440/431/430/421/455/445; original and actor-first lookup under coherent
+// inline/noinline/both settings declarations 375/413/375/413/375/413. Both declarations lose matched 0x265d30
+// in the calibrated peer image; all observations, vectors, result and declarations restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
