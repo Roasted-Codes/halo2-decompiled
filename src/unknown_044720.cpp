@@ -209,6 +209,11 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 }
 // score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain;
 // retail also keeps a separate center point (+0x30) beside the sphere query (+0x20).
+// Round 81 (fast): a `visible_word` pointer for the test and both marks 190 (same code); one marking
+// site after the bound branch with `if (!(r * r >= d)) continue;` 210 (the marks become retail's single
+// tail block, word pointer reloaded), with `<` 210; on that a function-scope center copy and the query
+// local to the list branch 211, unaligned 209 (entry then in esi spilled at +0x44 as retail); plus a
+// long index local for the table and call 216/209.
 // frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
 // Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
