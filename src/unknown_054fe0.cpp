@@ -1325,6 +1325,11 @@ struct s_player_properties
 // Round 179: first/second/both default arrays after name output 194/205/234;
 // two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
 // all scalar/array defaults after names 296. Original store phases restored.
+// Round 81: the record's explicit zero stores keep the hoisted zero (a compile-only build without them
+// gives retail's `test edi, edi`); retail takes the first default array from the memset's eax and the
+// second array, team and byte from a fresh ecx. First/second/both default arrays as `real`
+// 214/215/187; getter NULL in an else arm 184 (0x649c0 stops matching); previous-record pointer
+// before the getter 190 (916 bytes). All restored.
 // Round 76: separate counters per loop 184; name loop on the player mask field 184; record declared once
 // before the loops 184; previous record before the parameters getter 190; getter before the owner 225.
 // Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,

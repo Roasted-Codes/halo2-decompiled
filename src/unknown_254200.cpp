@@ -312,6 +312,12 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // dword/int/const-word/const-long/const-dword 28/28/112/112/112/28/112/112; lower/upper
 // endpoints after the first position 293/330 and at the coordinate phase 363/363.
 // No exact match; every per-use coordinate form restored with the original body.
+// Round 81: the round-220 two-difference source (color pointer, per-use coordinates, byte alpha,
+// scalar size, member entry for the second position) now builds 18 fast and plain: unchanged
+// source, but the last two vertices' `y + size` again copy the size and fold y (other files'
+// changes since; reverting the five changed units in its reduced image keeps 18). On it, member
+// entries for both positions/color too/final quad, `0.5f * arg_1` products, `0.5f + ...` upper
+// sums 18 each (fast). All restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {
