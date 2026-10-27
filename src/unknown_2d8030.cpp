@@ -74,6 +74,10 @@ void error_handler_2d8030::set_enabled(long id, bool enabled)
 // Abstract form 30; owned pointer 0; capacity 30; both 0; signed ownership 30;
 // element size 0; unowned return 30; captured return 3; owned byte size 0.
 // Matching forms lose the matched deleting body; the header is restored.
+// Signed/unsigned capacity carriers 39; implicit cleanup definitions 89
+// and lose the deleting body; explicit cleanup definition order 39.
+// Member cleanup contracts: force-inline 39; id noinline 55; location
+// noinline 59; both noinline 83. Class-table store and first release remain.
 // @retail 0x2d8510
 error_handler_2d8030::~error_handler_2d8030()
 {

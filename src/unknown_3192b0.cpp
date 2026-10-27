@@ -16,4 +16,7 @@ kind_object_3192b0::kind_object_3192b0()
 // A derived destructor, explicit member, early exit, object pointer,
 // named late/early bit, byte flags and separate returns all score 1;
 // a separate destructor declaration does not compile.
+// Split destruction with long/short/char flags 33; native deletion 19;
+// explicit destruction 20; allocator forms 1. Existing deallocation moved
+// before/after construction: ordinary/inline/force-inline 1, noinline 22.
 // @retail 0x3192d0 deleting kind_object_3192b0
