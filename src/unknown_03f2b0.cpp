@@ -1413,6 +1413,9 @@ struct s_133f70;
 // (all eight 356 fast). Original record access and body restored.
 // Round 330: Query/builder/output-query/lighting inline and noinline declarations: eight at 356f, matching
 // reduced control (frame 0x3400), versus full 213. All declarations restored; no reduced-only candidate.
+// Round 215: Complete per-entry mutable/const frame/view captures 372/372, function-entry
+// captures 384/384; shared two-use stamp on those scopes 361/361/383/383 (control 213).
+// All introduce a frame difference; complete original observations and body restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

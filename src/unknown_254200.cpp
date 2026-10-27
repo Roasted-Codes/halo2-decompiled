@@ -254,6 +254,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // (fast control 162). Frame and reservation homes remain.
 // Fast control 162: paired alpha with original/before-color/before-commit/entry half-span
 // 251/394/392/462; staged packed alpha at the same sites 261/327/325/521.
+// Round 215: First-quad real position/texture tables with counted first/last/both pairs
+// 389/439/432; native end-bound walks 407/477/492; first/both counted pairs with
+// actual color-query pointer 355/260 (fast control 162). Original complete body restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

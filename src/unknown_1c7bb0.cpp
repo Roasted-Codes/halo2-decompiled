@@ -116,6 +116,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // All restored; separate pool/iterator, early null and successor EBP remain.
 // Current actor-handle ownership: inner long/const/unsigned 164 each; iterator lifetime 164;
 // shared long/unsigned 164 each; both read-only 164; inner with unsigned current 164.
+// Round 215: Actual ordinal-return step, long with retained/returned-only ordinal and
+// conditional/result-first exits 164/198/204/199; unsigned 198/222/205/220.
+// Every returned result tested; original private helper and body restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {
