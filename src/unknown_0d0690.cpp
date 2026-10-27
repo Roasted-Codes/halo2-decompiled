@@ -1307,6 +1307,9 @@ real function_30bf0(vector3f *vector);
 // Independent lower/upper bound records at entry, before fallback and original final phase:
 // all eight non-original phase pairs 364; original final-bound lifetimes restored.
 // Color clamp orders 102/210/201/012/021 386/377/393/393/387; first color scale orders rbg/grb/gbr 364/363/362.
+// Round 158: Genuine length-only primary/secondary scale factors produced independently or jointly at entry,
+// after decoding, fallback admission and rotation admission. Scores [544, 525, 543, 515, 503, 485, 482,
+// 499]. Original executable body restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

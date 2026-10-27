@@ -473,6 +473,9 @@ extern point2f *g_468778;
 // Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
 // all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
 // Exact-only grouping forms restored; actor/settings/prop carriers remain.
+// Round 158: Complete facing/alignment/prediction product operands commuted independently, in pairs, all
+// three, then with both full prediction producers. Scores [375, 375, 375, 375, 375, 375, 375, 375]. Original
+// executable body restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
