@@ -366,6 +366,9 @@ bool function_404b0(long mode)
 // [29], bool enable 199 [32], culling test order flipped 203 [29], byte enable returning `enabled != 0` 235 [14],
 // ternary byte enable 205 [35], bool `&&` enable returned 211 [38], ternary returned as byte 205 [35], the byte
 // helper with a stipple local before the culling call 235 [14]. None gives retail's dead g_485898 loads.
+// Round 205: Four admission-mask result producers after setup 350/218/353/218;
+// the same per-entry producers 309/364/366/365. Original mask lifetime and body
+// restored; byte-zero admission, pass joins and clear-call transport remain.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

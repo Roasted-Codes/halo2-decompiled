@@ -575,6 +575,9 @@ struct s_item_collision_bsp
 // Round 376: Complete axial/fallback/both spin outputs 281/279/298; CRT publication 281/279/298;
 // both outputs declared before marker with assignment/CRT 298/298. Original spin workspaces,
 // inputs and includes restored.
+// Round 205: Common seed pointer after admission/before buffers/after buffers 325 each;
+// at the spin-branch boundary 280. Corresponding native field references 325/325/325/280.
+// Original receivers restored; protected plane-index width, plane joins and spin stores remain.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
