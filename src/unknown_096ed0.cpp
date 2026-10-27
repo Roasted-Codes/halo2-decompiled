@@ -54,6 +54,8 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Enabled/nonempty count initialization 230/219; narrow pending/active array names
 // 217/217; pending-before-ready/active-before-waiting names 217/217; enabled count
 // with pending-before-ready 230; nonempty count with active-before-waiting 219.
+// Callback priority/size names before handle homes, pending/active combinations
+// and after-handle query names: 217 each; receiver and callback homes remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
