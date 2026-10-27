@@ -169,6 +169,10 @@ void function_8dd70(void);
 // Constant observer/session/both homes at entry 244/225/224; entry long 230;
 // with observer/session/both entry homes 244/225/224; unsigned entry with both 224.
 // Both entry homes and bool/byte/char/long link result 228/228/228/225. All restored.
+// Lane 8 r58: noinline 0x662f0 (retail calls it) 286 at 816 bytes; with noinline 0xb2cc0
+// 379 at 728; inline+noinline registration callees 378/362 (eax reloaded, from esi);
+// with a bool link result 382. Retail reloads the global block before every call and
+// after every store through a pointer, as when these globals are address-taken.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

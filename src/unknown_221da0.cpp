@@ -785,6 +785,9 @@ real function_18cac0(long arg_0);
 // workspace and both: 252 each; the same four with the whole library clear return
 // 241 each. Original indexed traversal, native clear, gain result and executable
 // body restored at 225; aligned frame and scalar homes remain.
+// Lane 8 r58: max as a ternary store 229; table value first with negated test 254; real
+// table type 225; batch count read once 237; with real table 237. The alignment needs the
+// memset and a frame over 0x800: a table of 0x1c0 dwords or no memset gives the plain frame.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

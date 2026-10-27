@@ -175,6 +175,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Scoped output names in seven combinations 221 each; with separate channel names 221.
 // Common final publication bool/byte/short/long 301/301/300/299;
 // with touch admission before construction 343/343/346/341. Original restored.
+// Lane 8 r58: weighted id read into the animation id local / its own local 301/301; frame
+// byte in a long local for the compare and the conversion 260; both 280; channel data getter
+// call in the first two arms 221 (identical code, kept); with id local and long frame 280.
+// The loop's pointer/countdown spill is the extra frame dword; retail indexes by i.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
@@ -193,7 +197,7 @@ void function_10e530(long object_index, s_animation_state *state, long unused, d
 			channel.set_frame_position(0.0f);
 			channel.sample(vibration->frame, node_mask, node_count, transforms);
 			s_animation_data data;
-			function_1ddb40(&data, graph_tag_get(channel.graph_tag_index), channel.animation_id);
+			c_animation_channel_data_get(&channel, &data);
 			function_20adf0((s_anim_data *)&data, dest);
 		}
 		if (vibration->weighted_animation.index != NONE && state->channel_play(&channel, vibration->weighted_animation, 0))
@@ -213,7 +217,7 @@ void function_10e530(long object_index, s_animation_state *state, long unused, d
 			if (sampled)
 			{
 				s_animation_data data;
-				function_1ddb40(&data, graph_tag_get(channel.graph_tag_index), channel.animation_id);
+				c_animation_channel_data_get(&channel, &data);
 				function_20adf0((s_anim_data *)&data, dest);
 			}
 		}

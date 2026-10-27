@@ -160,6 +160,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // schedule with input+projection/input+cross/projection+cross/all row parts 281/291/299/281; second
 // schedule with all parts/direct sums 281/283. Every row stays symmetric; original helper and body
 // restored. Frame 0x1c versus 0x24 and half-angle/quaternion/cross spill sharing remain.
+// Lane 8 r58: plain half-angle locals 291 (sine half then in the parameter home as retail);
+// cross term first in the sums 291; helper result through a local vector 367 (plain 361);
+// helper in 0x11cb00's rotate-point operand/statement form 272 at 1317 bytes (retail's
+// cross/scalar spills and doubled w2 copies, quaternion registers permuted); with plain
+// halves 280; with sine-branch i/k/j, j/i/k, k/j/i 274/263/295; swapped state 272.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,
