@@ -458,6 +458,9 @@ extern point2f *g_468778;
 // Native memcpy for the facing-test planar initializer 384; with request, actor
 // fallback, both, constant fallback, request/constant, both fallbacks and all
 // three request transfers 384 each. Original planar transfers restored.
+// Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
+// all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
+// Exact-only grouping forms restored; actor/settings/prop carriers remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -673,6 +676,9 @@ static __forceinline long real_to_long(real value);
 // Entry/eligibility/final-approach/deadline Boolean reductions 506/493/407/440;
 // all mode reductions 510; entry plus modes 477; early test-derived eligibility
 // on the native velocity receiver 393; entry reduction plus that result 505.
+// Round 177: Shared dot at alignment/backward prediction/both/approach/alignment+approach/
+// backward+approach/all three, then all with opposite helper inputs: 386 each. Exact-only
+// grouping forms restored; early rejection and magnitude/query homes remain.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
