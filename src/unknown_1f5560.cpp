@@ -1349,6 +1349,10 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 // as retail, but the flag's `true` stays at entry, one line ahead of retail's); with the flag declared
 // or assigned at the side test 293/293 (flag then in the facing slot, result in the origin slot); with
 // that and the result declared first 303.
+// Round 26 (lane 9): new names for the stack points (desired, direction, difference, 3D origin) 252
+// each, no home moves; flag declared at the side test 287 (direction then at retail's 0x1c, but
+// result takes the origin slot, length the facing slot and facing moves to ebp); with result/radius/
+// flag renamed 287 each; with origin read directly 288; with facing read once through its address 287.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

@@ -1681,6 +1681,13 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // final test 810; definition first 810; definition before control 805; channel tests through a
 // pointer helper 838; overlay ratio clamp as a ternary 805. Retail inlines the first 0x11df30 call
 // and reads the projection input from the object in place.
+// Round 26 (lane 9): ours inlines 0x1cb490 (and 0x1cb410 below it) in the overlay loop, where retail
+// calls 0x1cb490 and inlines the first 0x11df30 instead (an inliner budget trade; 0x1cb490 can't be
+// noinline: matched 0x105e80/0x1ccae0 inline it). Unused model-tag local for retail's dead entry
+// lookup 805 (eliminated); ratio as 0.5f + x * 0.5f, x / 2.0f + 0.5f, (x + 1.0f) / 2.0f, 0.5f * x + 0.5f
+// 805 each (all compile to (x + 1) * 0.5; retail multiplies first); overlay loop as a for 875 (3338
+// bytes: the first 0x11df30 is then inlined as in retail, 0x1cb490 still inlined in the loop);
+// `++i < 3` / short index 805/805; `active` declared at the top of the aiming block 805.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

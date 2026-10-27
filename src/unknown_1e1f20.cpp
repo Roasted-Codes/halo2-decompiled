@@ -740,6 +740,11 @@ void swarm_leader_detach(long actor_index);
 // still needs src/unknown_1bba20.cpp. Short memory index 277 (identical); the memory loop as a for
 // loop 565 (1204 bytes); the counts loop as a for loop 309; both 565; the `current` store as a plain
 // `= NONE` 277 (identical, kept: the word cast was not needed).
+// Round 26 (lane 9): a __forceinline declaration of 0x26ed40 in this file with the memory loop calling
+// it 324 (917 bytes; it stays a call, so the helper's own file must allow inlining); flag test as a bool
+// cast 291; actor local in the slot loop 309; memory test without the entry pointer 277; prop view index
+// re-derived 278. Still BLOCKED-BY 0x26ed40 (src/unknown_26e370.cpp) and the bool parameter
+// (src/unknown_1bba20.cpp).
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

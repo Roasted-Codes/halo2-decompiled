@@ -252,11 +252,7 @@ struct s_object_header
 #define TAG_FROM_OBJECT(object) ((s_object_tag *)g_4e3b44[(object)->tag_index & 0xffff].bytes)
 
 
-// score 4 (was 92): the second scan's found block sets al after its last store and loads the short
-// through ax; retail sets al before the last store and uses cx. Its `result = true` first or with
-// `return result` 4; `result = true; ...; break;` 62/63; a found flag 4; one shared inline child
-// scan for both halves 312 (inline) / 165 (forceinline); type test inverted to `continue` 4;
-// a 600 s permuter run (52 tries), none below 4.
+/* advances the child iterator to the next child object of type 0 or 1 */
 // @retail 0xd0690
 bool function_d0690(s_object_child_iterator *iterator)
 {
@@ -308,14 +304,15 @@ bool function_d0690(s_object_child_iterator *iterator)
 				iterator->next = child->next_sibling;
 				if ((1 << child->type) & 3)
 				{
+					result = true;
 					iterator->child_index = index;
 					iterator->child_short = child->value1fc;
 					iterator->child_value = child->value14;
-					return true;
+					break;
 				}
 			}
 			if (result)
-				return result;
+				break;
 			long index = OBJECT_FROM_INDEX(iterator->current)->next_sibling;
 			while (index != NONE)
 			{
