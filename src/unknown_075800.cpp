@@ -1048,6 +1048,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // Five coherent formal orders on the two-phase body 191 each; unsigned selector
 // in address/selector/payload, selector/address/payload and payload/selector/address 191 each.
 // Reduced control 191; full 193. All signatures, caller arguments and bodies restored.
+// Round 245 (fast control 191): Single classifier with internal connection orders 5,7,6 / 6,5,7 /
+// 6,7,5 / 7,5,6 / 7,6,5 208/208/207/208/208; reverse connections with direct orders
+// 0,2,4,3 / 0,3,4,2 / 0,4,2,3 208/208/207. All regress at 432/444 bytes;
+// original phases restored. Incoming selector/message/address roles and dispatch root remain.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
