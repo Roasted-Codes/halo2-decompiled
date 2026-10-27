@@ -1613,6 +1613,11 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Native cursor/selection/all datum handles 684/684/684; existing prop receiver 707;
 // single strength observation 685; all handles with prop/strength/both 707/685/732.
 // Original complete body and all inherited input/helper declarations restored.
+// Round 140: Sequential absolute/relative velocity workspace with parent observation/shared player
+// ordinal/native established interactions 701/701/701/701/683/683/683/683; native visible/positive/retain
+// combinations and full-width player slot on that graph 682/704/682/707/685/707/710/706. Best 682 gains only
+// two, frame 0x74 versus 0x80; all original vectors, observations, result widths, ordinal lifetimes and input
+// access restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

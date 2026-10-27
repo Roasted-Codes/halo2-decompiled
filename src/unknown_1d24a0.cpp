@@ -104,7 +104,7 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  arg_3->k = local_0.k - arg_2->k * local_1;
  return function_30bf0(arg_3);
 }
-// score 920 (was 953): Frame 0x1f0 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// score 920 (was 920): Frame 0x1f0 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
 // Earlier: frame 0x1f4 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remained.
 // Earlier 1218 from 1259: frame agrees; early EBX save, array/entry allocation and delta reloads differ.
 // Function-scope linear change 1259; function-scope velocity outputs 1259; broader matrix workspace 1259;
@@ -138,6 +138,11 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // triples 34-48-56/34-48-66/34-56-66/48-56-66 973,974,987,959;
 // disjoint pairs 34-48+56-66/34-56+48-66/34-66+48-56 987,986,984.
 // Selected t5 920 plain; the same real response output is read before its next write.
+// Round 140: Shared change pairs 37/50,37/58,37/59,50/58,50/59,58/59 and linear/all phases
+// 969/945/988/945/988/956/960/1012; residual pairs 40/52,40/68,52/68/all 1012/966/988/1027; axis pairs
+// 31/43,31/63,43/63/all 1004/991/980/1018. Existing shared scale on the retained response graph, with shared
+// changes and consistent flag reads 1199/1201/1188/1200; all restored. Shared linear changes recover frame
+// 0x1d4 at 960; input and record homes still differ.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

@@ -208,6 +208,9 @@ void function_402b0(long cache_index, long mode)
 // Inline/noinline state-helper declaration with shared long/bool/byte/short pass
 // carriers 319f/290f/290f/285f; independent carriers 319f/290f/290f/285f.
 // Reduced control 202f; full baseline 183. All declarations and body restored.
+// Round 140: Repeated sample count observed once for passes 11/12/13, their pairs and all three; then all with
+// native Boolean selection 202/202/202/202/202/202/202/231 (fast control 202, full 183). Original observations
+// and selection restored; frame, cache/draw and state/API expansion remain.
 // @retail 0x404b0
 bool function_404b0(long mode)
 {
