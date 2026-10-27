@@ -364,6 +364,12 @@ bool function_26d370(point3f const *point, vector3f const *direction, plane3f co
 real function_30bf0(vector3f *vector);
 
 // score 184 (was 184): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// Round 57: retail's result stores are a spill of a long result (dword store, `mov ax, word` reload at
+// each tail-duplicated exit). Plain long result 241 (result home +0xc); short return type with every
+// declaration 186 (1311 B), with a plain long result 245; volatile short result 179 (aligned listing count
+// worse: 92 against 86), with the short return 186; else-arm secondary before primary 195; the two
+// out-of-range stores as else-if arms 184.
 // the register allocation differs from the first block
 // the register allocation differs from the first block
 // on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
