@@ -1309,6 +1309,9 @@ extern bool g_4ed39d;
 // Game/handled true chains in menu-first and handled-first order 184/186; lobby/handled chains 184/184; both menu-first/both handled-first/mixed orders 184/186/184/186. Byte homes and dialog joins remain.
 // Complement game/lobby/both/main/game-main/lobby-main/all menu results 184/184/184/184/184/214/184;
 // all complemented with the recovery result 174. Original result representations restored.
+// Recovery success read from game/lobby/both menu results 186/184/186; direct menu
+// success guards game/lobby/both 184/184/205; split both guards 205; both with low-mode
+// error sample 208. Original recovery producers, byte results and joins restored.
 // Round 160: Branch-local route result long/short/signed byte 254/251/251; callback-presence choice on
 // common flags query 202; long/byte route plus presence 258/263; message clear at publication 228; shared
 // user-flags workspace 184. Original flow, inherited qualifiers, callbacks and calls restored.

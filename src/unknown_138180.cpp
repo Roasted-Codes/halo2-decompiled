@@ -28,7 +28,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
-// score 157 (was 157): frame 0x14/0x18 and options/index/mask homes remain.
+// score 157 (was 157): Frame 0x14/0x18 and options/index/mask homes remain.
+// Earlier: frame 0x14/0x18 and options/index/mask homes remain.
 // Earlier: frame 0x18 agrees. Retail compares i and count signed
 // (long), stores count = 0 before the first loop and counts a player before
 // its uniqueness test. Registers still rotate: retail has options in edi
@@ -90,6 +91,10 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // shared switch-result tail with long/short 196/189, and with lower bound 194/189.
 // Entry zero lifetimes on independent passes: count 172; machine 171; player 157;
 // both ordinals 171; count/machine 184; count/player 172; all 184; ordinal role names 171.
+// With independent validation passes: conditional machine result 218; conditional duplicate
+// result 238; conditional machine/duplicate results 260; conditional local-machine result 258;
+// conditional machine/local results 283; conditional duplicate/local results 235; all three
+// conditional comparison results 282; conditional initial player result 245. All restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {

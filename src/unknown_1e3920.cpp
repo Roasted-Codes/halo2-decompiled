@@ -536,6 +536,7 @@ void function_118e80(long object_index, vector3f *forward);
 real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
+
 // score 273 (was 273): frame 0x8c versus 0x90, early NONE and held-direction byte home remain.
 // frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
@@ -552,6 +553,9 @@ real function_267370(long volatile object_index);
 // motion-direction reference 277; up reference 273 (plain).
 // Flag-range memset 441; movement-mode branches 369; named activity time 371;
 // per-use geometry fields 371; predicate/index role names 371 (fast control 371).
+// Held-direction pointer/reference 386/386; complete explicit plane-result arms 418;
+// true-first plane result 371; explicit arms with pointer/reference 425/425;
+// true-first result with pointer/reference 386/386 (fast control 371). All restored.
 // Round 167: Plane products, complete forward product terms, and both 371 each;
 // uniform four-use movement flags alone/with plane/with forward/with both 428 each;
 // complete named plane distance 371. Fast control 371; full baseline 273.
@@ -999,6 +1003,7 @@ void function_a7b30(long index);
 void __stdcall swarm_delete(long perception_index);
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type);
 
+
 // score 320 (was 320): Frame 0x118 agrees; sentinel EDI/ESI, squad/substitution homes and success layout remain.
 // Earlier 345 (was 364): frame 0x11c versus 0x118; sentinel and success blocks differ.
 // frame 0x118 agrees; entry sentinel, squad and substitution/result homes differ.
@@ -1046,6 +1051,8 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 377: Complete clear-mode bool/byte/short/long results 358/358/337/320;
 // guarded producers 349/349/345/328 (fast control 320). Both creation-call values
 // preserved; polarity does not recover sentinel or squad homes. All forms restored.
+// Native creation/request/both payloads 320/320/320; direct variant field alone/with
+// creation/with request/with both 339/339/339/339; direct variant with entry placement view 339.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -1618,6 +1625,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // remain.
 // Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
+// Round 206: Shared unit receiver 270; with entry weapon/ammunition/both output lifetimes 270/270/270;
+// both output lifetimes 270; shared unit with entry grenade receiver, weapon/grenade or all workspaces 270 each.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

@@ -247,6 +247,8 @@ struct s_physics_component_walk : s_havok_component
 // Round 375: Complete tested-status producers, guarded bool/byte/short/long
 // 319/319/300/319; eager replacement/clamp 304/304/298/307. All recover frame 0x18;
 // guarded short retains 922 bytes, others 898. Register roles still differ; restored.
+// Round 210: terminal/neighbor-owned first-body result 292/304; conditional result 296/303;
+// native word neighbors on those four graphs 317/312/299/307. First form recovers 0x18 and 922 bytes.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,

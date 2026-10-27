@@ -1352,6 +1352,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // eight isolated/combined source forms 265 each. Shared writer and sampler unchanged.
 // Round 197: complete definition/remapping/source observations and their four combinations
 // 267 each; all observations with a common genuine color workspace 267. Original writer/body restored.
+// Round 204: sibling reference clamps 267; common color/direct component/both 267/267/267;
+// bounded short counter with clamps 266; with common color/direct component/both 266/266/266.
+// One-point forms restored; descriptor/index capture and post-store rereads remain.
 // Round 161: Complete paired clamp results both/direct/mapped 382/356/291;
 // all results before sample publication both/direct/mapped 380/356/291; native color
 // results before sample publication both/direct 375/356. Original sample writes,

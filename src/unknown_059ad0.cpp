@@ -4374,6 +4374,10 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // combination improves the original 370; original body restored.
 // Round 229: Signed-byte acceptance/preference/equality/paired selection/all results 401/370/370/370/401;
 // identity equality with signed-byte preference/equality/all results 382/382/392. Original body restored.
+// Round 206: Four complete acceptance/preference/equal-choice role-name allocations 370 each;
+// all four allocations with native identity equality 382 each. Raw comparison and original names restored.
+// Round 211: Entry preference/equality/both lifetimes 381/381/381; success default alone/with
+// preference/equality/both entry lifetimes 381/391/391/391; native identifier library copy 370.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

@@ -173,6 +173,9 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // first/second/both dot inputs 1885/1772/2221; add+dot and scale+dot 2664/2554.
 // On the retained magnitude/second-cross graph, velocity/buffers/magnitude home names and
 // all four combinations 1402 each; all three second-cross component names 1402. All restored.
+// Round 208: named squared magnitude 1435; first/second normalizer component loops 1432/1410;
+// squared magnitude with first/second loops 1434/1411; both loops 1432; all three 1450;
+// all three with bounded word impact count 1445 (6238 bytes, frame 0x5d0).
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {

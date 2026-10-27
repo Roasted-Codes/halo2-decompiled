@@ -252,6 +252,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // 236, with one final geometry result 236. Entry/index and point homes remain.
 // Round 324: index/radius/center contract 192; radius/index/center 192; center/index/radius 190;
 // radius/center/index 192; the same orders with a full absolute ordinal 193/193/191/193.
+// Round 207: native list-storage construction in pointer/count/capacity, count/capacity/pointer,
+// value-initialized-header and shared member forms 247 each; the same four with uniform
+// at-use geometry selection 1000 each. All lose the matched caller; complete original restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

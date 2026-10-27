@@ -148,6 +148,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Query-source-only matrix with early/late world declarations 213/213; broad rotation 216;
 // distinct first world output 194; completed transpose alone/with first output 277/240;
 // late world and broad rotation 216; first world and broad rotation 194. All restored.
+// Shared double-factor cap scaling in place/through completed output 227/302 fast;
+// with broad rotation 235/310, first matrix output 239/314, completed transpose 240/315.
+// Query/rotation frame fixes still worsen cap scheduling; original helpers and matrices restored.
 // Round 160: Complete force products, linear integration results, angular integration results, both
 // result sets, norm squares, squared cap, all cap products and force-plus-cap products all 184. Every
 // expression tree, input observation, existing helper, matrix role and signed contact loop restored.

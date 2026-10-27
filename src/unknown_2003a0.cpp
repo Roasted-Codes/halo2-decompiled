@@ -2285,9 +2285,14 @@ PRIVATE __forceinline s_squad_datum *squad_iterator_next_201df0(s_squad_record_i
     return local_0;
 }
 
-// @retail 0x201df0
 // score 12 (was 12): the record pool's pointer is kept in EDI where retail keeps it in
 // EBX, so the count and the bit mask take the other two registers instead.
+// Further trials: pool/count/mask register rotation remains.
+// existing datum helper 23; common complete datum result 12.
+// absolute squad index 50; helper/common datum 23.
+// helper/absolute squad index 50; common datum/absolute squad index 50.
+// all three datum forms 50; all three/cursor first 48.
+// @retail 0x201df0
 void function_201df0(void)
 {
     s_squad_record_iterator local_0;

@@ -20,6 +20,11 @@ real normalize2d(point2f *arg_0);
 // 282/279/282; shared perpendicular with coherent point source 225; with split distances 225.
 // Staged second/first/both direction outputs 231/227/262; center-staged second alone/with first
 // 240/273; copied-point staged second/both/center pair 231/262/276. Opening directions restored.
+// Expanded radius and existing point-setter first/second/both combinations all 220;
+// native squared-vector helper 273. Original point construction restored.
+// Round 204: shared far-output store 252; native collision-test result 282; both 284;
+// later adjusted-point copy 267; with shared far store/collision result/both 272/283/285;
+// all with clean output access 301. Original output, spill and point lifetime restored.
 // Output EBX/EBP, point/vector homes and SSE scheduling remain.
 // No output self-address access 295; copied input/native object/both 281/295/281;
 // shared collision storage alone/with input/object/both 295/282/295/282;

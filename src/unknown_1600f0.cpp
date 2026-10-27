@@ -1005,7 +1005,39 @@ struct s_game_engine_globals_connections_view
 };
 
 /* builds a player's row of the scoreboard at a position */
-// score 184 (was 184): frame 0x6d8 agrees; retail stores the icon value in each arm (1, or the
+// score 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
+// default-zero byte icon 230, native integer 184; parsed-name scope 184;
+// separate connection rectangle 206; both name buffers scoped 184.
+// whole-row reference 184; column reference 184.
+// input-color reference 184; color snapshot 309.
+// channel samples 323; direct right edges 306.
+// trailing right edges 297; row reference with trailing edges 297.
+// Test-derived glyph 182 fast/plain (two-point gain rejected); separately gated query 204;
+// query Boolean 205; hidden-first with test/query values 229/249;
+// column observations 184; columns with test/query values 182/204.
+// Direct icon zero default 192; initializer zero default 208; separate place/icon/name
+// rectangles 184/229/222; place and icon rectangles 184; scoped numeric buffers 225;
+// scoped numeric buffers plus direct icon default 188 (all plain).
+// arithmetic fallback result/direct publication 216/210; actual icon/score/time/connection
+// receivers 214/184/186/318; icon receiver with arithmetic fallback 255; all receivers 317.
+// Place rectangle aggregate 206; icon rectangle aggregate 230; name rectangle aggregate 213; score
+// rectangle aggregate 239; time rectangle aggregate 237; connection rectangle aggregate 229; all
+// rectangle aggregates 320; trailing rectangle aggregates 306.
+// icon tail and time/connection register schedule still differ.
+// entry icon zero 261f; outer icon scope 184f.
+// zero before icon init 205f; zero before place format 248f.
+// signed word result 184f; unsigned native result 184f.
+// signed result before icon init 205f; native result before icon init 205f.
+// deferred icon tail and time/connection homes still differ.
+// Positive place visibility 318; horizontal/vertical/both live origin fields 184/184/184;
+// completed color alpha 184; visibility with origins 318; horizontal/both origins
+// with completed color alpha 184/184. Widget-root control equals the full baseline.
+// Dim-default glyph 183 (one-point gain rejected); glyph-last/icon-alpha-first metadata 184/184;
+// connection alpha first 185; two-use numeric width 281; time/connection bottom first 184/184;
+// dim default plus numeric width 281. Opening body restored.
+// Direct rectangle-left accumulation for score/time/connection individually, each pair and all
+// 184 each; all right/bottom field accumulations 184. Opening field expressions restored.
+// frame 0x6d8 agrees; retail stores the icon value in each arm (1, or the
 // dim value via neg/sbb/and) and places the else arm and the player-index/alpha tail after the score
 // column, jumping back to the name; the time/connection sums add name_width before score_width.
 // Tried: default-zero byte icon 230; native integer 184; parsed-name scope 184; separate connection

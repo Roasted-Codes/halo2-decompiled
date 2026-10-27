@@ -154,6 +154,8 @@ void function_8dd70(void);
 // All regress; original three-call chain, short stage results and clear restored.
 // long link 232; long observer 228; long link observer 230; long sessions 231; long link sessions 231; long
 // observer sessions 229; long all 231; word entry 230.
+// Round 210: entry constant homes with bool observer/session/both 228/228/235;
+// bool link plus observer/session/both 234/235/234; long-bool/bool-long stages 229/229.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

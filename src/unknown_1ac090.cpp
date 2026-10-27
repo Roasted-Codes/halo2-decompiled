@@ -784,6 +784,9 @@ bool function_1f8660(long arg_0);
 // every component product/status 173/173; both shared differences 172/172. Gains of one/two restored.
 // Round 197: read-only actor/state/both views 174/174/174; distinct selection/validation
 // reference lifetimes alone/actor/state/both 174/174/174/174; actor lookup at every use 230.
+// Round 204: shared release 204; native reference-produced result 226; absent-tag return
+// alone/reference result 226/220; skip return alone/reference result 223/229; both early
+// exits alone/reference result 221/222. Actor/result/count and direction homes remain.
 // Round 323: vehicle field at each use 174; radius read once 191; shared projections
 // 194; vehicle/radius 191; vehicle/projections 194; radius/projections 213; all 213; radius
 // and projections with native vehicle index 213. Original actor/result/count and direction homes remain.
@@ -1245,11 +1248,13 @@ struct s_1acda0
     byte unknown3c[0x40 - 0x3c];
 };
 
-// score 68 (was 114): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
+// score 68 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
 // Round 195: retained/default-false active result 139/106; each with direct child result 129/68;
 // complete timer predicate with those four 139/129/106/68. Default-false publication and child result kept.
+// Round 204: early state after/before actor on retained result graph 189/189; mode-produced active
+// 134; eligibility-produced active 134; both 199; early state with mode/eligibility/both 184/201/208.
 // Round 128: native data member 114; receiver before result/before actor/before first exit
 // 159/159/159; child result publication and direct return 118; request entry lifetime 118;
 // result/search role names 114; plain result 206. Early ESI, Boolean test and exit traffic remain;
