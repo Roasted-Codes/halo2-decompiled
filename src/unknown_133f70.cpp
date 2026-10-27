@@ -133,6 +133,10 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // all entry offsets with earlier real word cursor 155. Original body, cursor, observations and local qualifiers restored.
 // Count/word/byte, byte/count/word, byte/word/count and word/count/byte
 // declaration orders 154/155/154/155; same offset-step orders 155/156/156/155.
+// Native workspace construction from original/current/formal source at admission 208/210/208;
+// current source at iteration entry 210; the same four with existing word query 208/210/208/210.
+// Original/formal-source forms also lose the matched caller; frames grow to 0x21c.
+// Original conditional copy, query, cursor and local qualifiers retained.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *arg_1, bool arg_2)
 {

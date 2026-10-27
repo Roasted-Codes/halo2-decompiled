@@ -138,6 +138,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // reversed middle test 175, both reversed 177.
 // entry at use 153; chain at use 153; previous tag at use 153; entry chain at use 153; entry tag at use
 // 153; chain tag at use 153; all field observations 153; fields old record at use 153.
+// Published reciprocal log input with direct/scalar publication 284/153;
+// with paired-counter library clear 305/258, chained counters 284/155,
+// and long changed result 280/195. Exact original logarithm and reciprocal retained.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
