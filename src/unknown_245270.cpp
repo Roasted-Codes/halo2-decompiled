@@ -273,7 +273,9 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): frame 0x24 versus 0x2c; the source arrives in edx (retail: ecx, copied
+// score 204 (was 204): frame 0x24 versus 0x2c; source receiver and side-byte homes remain.
+// Earlier: Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
+// frame 0x24 versus 0x2c; the source arrives in edx (retail: ecx, copied
 // to esi, which keeps 0x245aa0 at 3); ours holds the transform in ebp from entry where retail
 // reads it from the stack at its test and borrows ebp (push/pop) only around the first plane
 // code; retail keeps the two material codes and the first side byte in separate stack homes and
@@ -378,6 +380,9 @@ void function_245400(s_source_245400 const *source, long index,
 // point workspace placement ties each. Original scalar inputs with separate native
 // rotation output copied before/after point transform 193/211, both declaration
 // scopes; direct final output with initial copy/branch results 193/229.
+// Round 211: complete native surface value, mutable/const, with primary-table-first-second /
+// primary-table-second-first / table-primary-first-second / table-second-primary-first publication
+// orders: 211/211/211/209 each; 789/789/789/787 bytes. Original record, reads and body restored.
 // Round 225: uniform primary-index/surface/both observations 208/203/208;
 // each with the material table read at every use 217/213/209; complete at-use
 // graph with signed/unsigned native low-word fields 209/209. Surface-only

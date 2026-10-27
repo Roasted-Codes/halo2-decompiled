@@ -2006,7 +2006,9 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
-// score 89 (was 89): frame 0x24 agrees; category-byte homes, removal completion and pool carriers remain.
+// score 89 (was 89): frame 0x24 agrees; category-byte homes and deletion completion differ.
+// Earlier: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
+// frame 0x24 agrees; category-byte homes, removal completion and pool carriers remain.
 // Earlier rejected pointer-clear diagnostic: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
 // flag, kept only on a match; build/r74/26b230.best3.cpp in lane 5): there only the two pool registers
 // differ: retail keeps the prop pool in edi and the node pool in ebp; ours swaps them. Start there.
@@ -2044,6 +2046,9 @@ void function_269250(long clump_index, long actor_index)
 // Current-member identity before lookup 204; successor published on continuation 200;
 // original-object accessor at every use 262; identity/successor, identity/accessor, successor/accessor,
 // all three 200/261/262/262; all with conditional unit admission 263. Original body restored.
+// Round 211: change-result gate before each prop lookup, on the shared-member/frame-0x24 body,
+// with original/reversed category declarations and native node/getter subsets: 111 four times /
+// 109 four times; both reach 741 bytes. Original traversal and completion tests restored.
 // DL159: single iteration-completion label 3; separate completion guards 3; reversed category declarations 5; category name/native node datum/node iterator/both iterator names 3/3/3/3; native node with reversed categories 5. Labels rejected as branch layout.
 // Structured unit continuation, with separate completion guards and native byte unit/change domains in all eight combinations, 89 each. Original body restored.
 // @retail 0x26ae30

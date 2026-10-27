@@ -429,6 +429,9 @@ real function_30bf0(vector3f *vector);
 // Round 249: coordinated projection inline/noinline 294/184; threshold inline/noinline
 // 184/184; both inline, projection-inline/threshold-noinline, projection-noinline/threshold-inline,
 // both noinline 294/294/184/184. Original declarations and bodies restored.
+// Round 212: outer/scaled/both range-failure returns with inherited result 216/219/253;
+// both plus missing-settings return 253; the four with ordinary result 329/314/273/275.
+// Frame 0x350 persists, entry roles move; original admission, result and observations restored.
 // Round 252: Final primary-test/complete-conditional/primary-first/distance-first results
 // 249/283/235/230; ordinary result storage 281/281/220/221. Original result graph and inherited storage
 // restored; result/range homes and SIMD allocation remain.

@@ -609,9 +609,8 @@ bool __stdcall function_21bf00(long looping_sound_index, long definition_index, 
 	s_type_5ef569 *sound = (s_type_5ef569 *)datum_get_inlined(LOOPING_SOUNDS, looping_sound_index);
 	if (sound)
 	{
-		long controller_index = sound->controller_index;
-		c_class_219e90 *controller = controller_get(controller_index);
-		if (controller_index == NONE || controller->synch_playback)
+		c_class_219e90 *controller = controller_get(sound->controller_index);
+		if (sound->controller_index == NONE || controller->synch_playback)
 		{
 			*source = sound->source;
 			result = true;
@@ -1071,6 +1070,10 @@ struct s_looping_promotion_table
 	s_looping_promotion *entries;
 };
 
+// score 72 (was 72): four-byte frame versus twelve; iterator and curve homes differ;
+// short curve 76; long curve 80; count renamed 72; table snapshot 72; pool snapshot 76;
+// count first 74; plain for 74; flag mask 72; shared lookup 72; short curve and lookup 76;
+// bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65.
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {
@@ -1097,6 +1100,9 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	}
 }
 
+// score 66 (was 66): missing twelve-byte frame, first-index convention and count home;
+// pool at each use 66; count declared first 66; count renamed 66; state guard 66;
+// plain for 66; iterator record 66; count-first iterator record 66; flag mask 66.
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {
