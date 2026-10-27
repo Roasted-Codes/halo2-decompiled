@@ -1137,7 +1137,7 @@ bool __stdcall function_26ccb0(s_pathfinding_data const *pathfinding, s_obstacle
 bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
-// score 444 (was 453): Frame 0x11c versus 0x10c; radius, zero and metadata/endpoint homes still differ.
+// score 444 (was 444): Frame 0x11c versus 0x10c; radius, zero and metadata/endpoint homes still differ.
 // Earlier at 453: Frame 0x10c and exact extent agree; radius, persistent zero and metadata/endpoint homes remain.
 // Earlier: Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
 // Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
@@ -1214,6 +1214,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 93 (fast base 453): `count > 1` arm first 466 (retail's branch placement); with a short loop
 // index 475; with the source pointer formed before the loop 466; all three 475; output element
 // formed at the emit point 518 (1692 bytes; aligned differences 604 -> 532).
+// Final source/emitted/both native coordinate values 476/484/557;
+// with existing point difference 492/484/557; both values emitted first
+// without/with point difference 557/557. All restored; original current record retained.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

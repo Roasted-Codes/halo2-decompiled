@@ -46,7 +46,7 @@ public:
 	s_result_319230 function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const;
 };
 
-// score 16 (was 22): the first receiver is loaded into ECX;
+// score 16 (was 16): the first receiver is loaded into ECX;
 // retail loads EAX, its table into EDX, then copies EAX to ECX.
 // Byte output, operand references, const/enum query, destructor slot,
 // concrete slots, inherited slots/base, signed output, owner references,
@@ -60,6 +60,9 @@ public:
 // Native Boolean/full-byte fields with cached owners 22; first owner read at each
 // use 16; second owner per-use 20 rejected; both per-use with byte bitfield 31.
 // First-owner per-use with the original byte field 16. Entry/receiver setup remains.
+// Returned byte on the first-owner per-use graph: direct construction 29; false/true
+// result 40/34; byte then kind 45; flag return and kind result 44; separate regions
+// and negative flag region 16/16; entry result with separate production 29. All restored.
 // @retail 0x319230
 s_result_319230 c_query_319230::function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const
 {
