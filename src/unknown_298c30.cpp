@@ -323,6 +323,10 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Rotation publication xzy/yxz/yzx/zxy/zyx 749/749/748/749/748;
 // endpoint yx alone/with yxz rotation 811/811; normalized kij publication 749.
 // One-point forms rejected; original helper stores and body restored.
+// Round 212: Split transformed output 749; planar pivot 755 (frame 0x114, first +0x14);
+// producer scopes 749/755; reverse transforms with full/planar pivot 819/829, scoped 819/829.
+// On the planar frame: initial/pivot/both radius joins 870/856/905; ordinary result 801;
+// later ordinary result 822; ordinary common exit 753; late radius 826; endpoint inline 755.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

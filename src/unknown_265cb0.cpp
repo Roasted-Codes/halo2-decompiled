@@ -1613,6 +1613,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Native cursor/selection/all datum handles 684/684/684; existing prop receiver 707;
 // single strength observation 685; all handles with prop/strength/both 707/685/732.
 // Original complete body and all inherited input/helper declarations restored.
+// Round 212: Common notice dispatch with short/word/long/dword selected event 734 each;
+// player admission shared before selection 711 each. Frame 0x7c remains; original calls restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {
