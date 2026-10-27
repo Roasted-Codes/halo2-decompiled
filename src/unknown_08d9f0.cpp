@@ -171,6 +171,9 @@ void function_8dd70(void);
 // Both entry homes and bool/byte/char/long link result 228/228/228/225. All restored.
 // Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
 // stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
+// Round 356: Native handler tail clear 249; gateway pointer/byte tail clear 251;
+// complete list clear 230; both tails 248; handler/list 249; gateway/list 251;
+// all three and native message-table extent 248/248. Original clear boundaries restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
