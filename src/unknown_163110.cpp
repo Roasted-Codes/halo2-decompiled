@@ -478,6 +478,8 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Round 160: diagnostic point/plane/both native inputs 1229/1363/1898;
 // scalar point/plane/both inputs 654/755/755; forced scalar point/both
 // expansion 654/755. Original diagnostic and transform helpers restored.
+// Round 149: Split native normal/distance outputs with all matrix, normal-input and distance-output
+// pointer/reference contracts [476, 476, 476, 476, 476, 476, 476, 476]; all restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

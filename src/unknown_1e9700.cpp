@@ -147,6 +147,8 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Round 160: native award counts/prefix ordinals 421/422; shared award/prefix/both
 // ordinals 421/421/421; native counts with shared ordinals/slot homes/early
 // credit default 421/421/452. Original types, lifetimes and loops restored.
+// Round 149: Shared current tick with rate, earlier code and clock receiver combinations [427, 450, 445,
+// 432, 427, 450, 445, 432]; all restored.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

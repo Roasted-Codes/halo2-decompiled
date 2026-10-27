@@ -977,6 +977,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // all with double selected fraction 337 (exact-only precision diagnostics; all restored).
 // Round 332: Candidate/collision/eligibility inline contracts, each and every
 // combination, 151; candidate/collision noinline pair 151. All restored.
+// Round 149: Native unsigned first/second identifier words and third full-word carrier, all combinations;
+// unsigned pair with second capture first [151, 151, 151, 151, 151, 151, 151, 149]; all restored.
 // Round 220: Collision/effect/both request declarations before the scan 200/200/200;
 // both at entry 203. Real request names, candidate-buffer name and both name groups 151/151/151;
 // combined pre-scan requests with names 200. Wider request lifetimes grow frame to 0x180;

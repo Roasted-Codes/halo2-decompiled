@@ -1068,6 +1068,8 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 176: Complementary substitution result bool/byte/short/long, guarded
 // producer 362/362/364/363; complete conditional producer 372/372/375/374.
 // Frame 0x118 agrees; sentinel and query-result homes persist. All forms restored.
+// Round 149: Substitution producer/test ordinary inline, noinline, paired and mixed contracts [320, 320,
+// 320, 320, 320, 320, 320, 320]; all restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

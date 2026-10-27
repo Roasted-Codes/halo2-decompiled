@@ -727,6 +727,8 @@ long function_1469f0(real seconds);
 // Round 178: Paired zero chains for old selection/cooldowns/both/active clears/old+active/
 // cooldowns+active/all/all opposite order 280/280/280/280/280/280/280/280 fast, control 280; full 279.
 // Four-byte frame and slot/state/final-cursor homes persist; original stores restored.
+// Round 151: All six byte cooldown values at each site or captured together, field/result clear tests: byte 276/276/337/337; promoted 322/301/358/344 (fast control 275, full 279). All restored.
+// Frame 12 agrees; local index EDX/EAX, AL/CL cooldowns, early scan reload and split elapsed increments remain.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {
