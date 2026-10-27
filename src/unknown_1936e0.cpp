@@ -368,6 +368,9 @@ void function_193c00(s_built_variant *variant, long name_string, long descriptio
 // Round 324: memset destination result 186; implicit type-four zero defaults 211; destination/type-four 211;
 // implicit type-five zero default 180 (below gate); destination/type-five 180; both default kinds 215;
 // destination/both 215; destination/defaults/native place values 215.
+// Round 167: Independent first/second/both type-four workspaces 202/198/203; separate
+// place pair 186; first/second/both with separate place pair 202/198/203; all
+// independent workspaces with native type-four value resets 216. All restored.
 // @retail 0x193c70
 void function_193c70(s_built_variant *variant, long index)
 {

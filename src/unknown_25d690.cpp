@@ -1169,7 +1169,7 @@ struct s_perception_origin_view;
 struct s_object_motion_view;
 short function_263ed0(long actor_index, s_perception_origin_view const *origin, point3f const *point,
 	s_location const *location, short type, short mode);
-short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
+long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
 void function_2640c0(long object_index, s_object_motion_view *result);
 
 // score 12 (was 83): retail copies object_index into edi just before the first function_badc0 call where ours

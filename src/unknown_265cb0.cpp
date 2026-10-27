@@ -363,7 +363,7 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
-// score 195 (was 195): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// score 184 (was 195): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
 // the register allocation differs from the first block
 // the register allocation differs from the first block
 // on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
@@ -403,8 +403,13 @@ real function_30bf0(vector3f *vector);
 // Round 71: renaming result/secondary/primary/range and a long result compile identically (slot order is not
 // name-driven here); separate `result = K; return result;` exits 269 (1333 bytes), with a long result 269;
 // if/else 3-or-2 with a long result 259; separate exits with a plain short result 328.
+// Round 167: Consistent long/dword return contracts with short/word result storage 200 each;
+// long/dword storage 195 each at retail length. On the complete long return/result graph,
+// separate 3/2 stores 255; projection fraction clamped in place 184 (plain, kept); both 241;
+// direct threshold accumulators 230. Keep long return/result, one projection fraction and
+// seat cursor stepped in the body; both external declarations agree, exact caller preserved.
 // @retail 0x263810
-short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
+long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
 	long const *actor_reference = &actor_index;
 	point3f const *const *endpoint_reference = &endpoint;
@@ -412,7 +417,7 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 	short const *mode_reference = &mode;
 	bool const *facing_reference = &use_facing;
 	bool *const *range_reference = &out_of_range;
-	volatile short result = 0;
+	volatile long result = 0;
 	if (mode == 0 || mode == 1)
 	{
 		s_actor_view *actor = actor_get(actor_index);
@@ -438,13 +443,12 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 					real amount;
 					if (function_26d370(point, &motion, &plane, &amount) && !(0.0f > amount))
 					{
-						real clipped_amount = amount;
-						if (clipped_amount > 1.0f) clipped_amount = 1.0f;
-						if (clipped_amount > 0.0f)
+						if (amount > 1.0f) amount = 1.0f;
+						if (amount > 0.0f)
 						{
-							delta.i = motion.i * clipped_amount + point->x - origin->x;
-							delta.j = motion.j * clipped_amount + point->y - origin->y;
-							delta.k = motion.k * clipped_amount + point->z - origin->z;
+							delta.i = motion.i * amount + point->x - origin->x;
+							delta.j = motion.j * amount + point->y - origin->y;
+							delta.k = motion.k * amount + point->z - origin->z;
 						}
 					}
 				}
@@ -476,7 +480,7 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 							s_object_seat seats[64];
 							short count = function_c8b80(object_index, seats, 64);
 							s_object_seat *seat = seats;
-							for (short i = 0; i < count; ++i, ++seat)
+							for (short i = 0; i < count; ++i)
 							{
 								long occupant = function_c8f60(seat->object_index, seat->seat_index);
 								if (occupant != NONE)
@@ -495,6 +499,7 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 										if (b > primary) primary = b;
 									}
 								}
+								++seat;
 							}
 						}
 					}
