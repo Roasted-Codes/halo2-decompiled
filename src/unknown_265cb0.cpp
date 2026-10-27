@@ -417,6 +417,9 @@ real function_30bf0(vector3f *vector);
 // Round 243: Native point/origin/both/endpoint values 351/363/396/327; point-endpoint
 // 366, origin-endpoint 378; all inputs in either declaration order 432/432. Original body
 // restored.
+// Round 249: coordinated projection inline/noinline 294/184; threshold inline/noinline
+// 184/184; both inline, projection-inline/threshold-noinline, projection-noinline/threshold-inline,
+// both noinline 294/294/184/184. Original declarations and bodies restored.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
