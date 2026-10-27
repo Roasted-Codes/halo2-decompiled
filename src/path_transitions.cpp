@@ -190,17 +190,22 @@ short function_26fe20(long object_index, s_object_marker *markers, short capacit
     return count;
 }
 
+/* the point at distance t along a vector from a point */
+static inline void point_along_vector(point3f const *point, vector3f const *vector, real t, point3f *result)
+{
+    result->x = vector->i * t + point->x;
+    result->y = vector->j * t + point->y;
+    result->z = vector->k * t + point->z;
+}
+
 // @retail 0x270130
 bool function_270130(s_object_marker const *marker, point3f const *position, real margin, point3f *out)
 {
     if (marker->unknown6c > 0.f)
     {
         vector3f delta;
-        delta.k = position->z - marker->matrix.position.z;
-        delta.j = position->y - marker->matrix.position.y;
-        delta.i = position->x - marker->matrix.position.x;
-        real distance = marker->matrix.up.k * delta.k + marker->matrix.up.j * delta.j +
-            delta.i * marker->matrix.up.i;
+        vector3d_from_points3d(&marker->matrix.position, position, &delta);
+        real distance = dot3f(&delta, &marker->matrix.up);
         if (distance < 0.f) distance = 0.f;
         else if (distance > marker->unknown6c) distance = marker->unknown6c;
         if (marker->unknown6c > margin * 2.f)
@@ -213,18 +218,23 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
             if (distance < 0.f) distance = 0.f;
             else if (distance > marker->unknown6c) distance = marker->unknown6c;
         }
-        out->x = distance * marker->matrix.up.i + marker->matrix.position.x;
-        out->y = distance * marker->matrix.up.j + marker->matrix.position.y;
-        out->z = distance * marker->matrix.up.k + marker->matrix.position.z;
+        point_along_vector(&marker->matrix.position, &marker->matrix.up, distance, out);
     }
     else
         *out = marker->matrix.position;
     return true;
 }
 
+// score 20 (was 108): retail passes the marker flags to 0x26fbf0 as a 16-bit argument
+// (`xor edx, edx; mov dx, [eax + 0x1c]`); declaring that parameter `word` gives 4 and keeps
+// 0x26fbf0 matched, but its other prototypes are in src/unknown_2c0d00.cpp. The squared distance
+// through vector3d_from_points3d/length_sq3f 30; difference orders xzy/yzx/zxy/zyx 24/26/26/24;
+// best before best_distance 20; the marker query before both 99; dot3f alignment 26; sum
+// x + y + z 20; nested point test 20.
 // @retail 0x26fc80
 bool function_26fc80(long actor_index, long object_index, real distance, void *path, point3f *point)
 {
+    bool result = false;
     s_actor_view *actor = actor_get(actor_index);
     s_transition_character *character = (s_transition_character *)function_1e4a50(actor->unknown054);
     if (character)
@@ -240,8 +250,8 @@ bool function_26fc80(long actor_index, long object_index, real distance, void *p
                 marker->matrix.forward.k * g_4687b0->k + g_4687b0->j * marker->matrix.forward.j;
             if (alignment > 0.95f)
             {
-                real y = actor->position.y - marker->matrix.position.y;
                 real x = actor->position.x - marker->matrix.position.x;
+                real y = actor->position.y - marker->matrix.position.y;
                 real z = actor->position.z - marker->matrix.position.z;
                 real squared = z * z + y * y + x * x;
                 if (best_distance > squared) { best_distance = squared; best = i; }
@@ -253,10 +263,10 @@ bool function_26fc80(long actor_index, long object_index, real distance, void *p
             *out = markers[best];
             if (point && !function_270130(out, &actor->position, distance, point))
                 *point = out->matrix.position;
-            return true;
+            result = true;
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x26fe90
@@ -517,12 +527,8 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
                     else fraction = 0.5f;
                     real first_distance = fraction * first_length;
                     real second_distance = fraction * second_length;
-                    start_out->point.x = first.i * first_distance + a->x;
-                    start_out->point.y = first.j * first_distance + a->y;
-                    start_out->point.z = first.k * first_distance + a->z;
-                    out->point.x = second.i * second_distance + c->x;
-                    out->point.y = second.j * second_distance + c->y;
-                    out->point.z = second.k * second_distance + c->z;
+                    point_along_vector(a, &first, first_distance, &start_out->point);
+                    point_along_vector(c, &second, second_distance, &out->point);
                     start_out->output_index = parent_point->output_index;
                     out->output_index = surface->destination_output;
                     *parent_node_index_out = parent_node_index;

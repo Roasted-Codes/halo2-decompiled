@@ -1642,7 +1642,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 810 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// score 805 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
 // computes the centred test once with x87 fabs before the blend block, copies the default angles as a
@@ -1676,15 +1676,20 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 187: basis matrix 807; matrix/shared cross 858; matrix pointer/reference/value
 // inputs 807/807/842; aggregate/member basis copies 1102/1102; matrix reference/shared
 // cross 851. The three-count gain is dropped; original independent vectors restored.
+// Round 7: graph looked up right after the state 805 (kept); with the final flags as a ternary 804;
+// final test with its arms swapped 810; activity as a logical and 849; a fresh object pointer for the
+// final test 810; definition first 810; definition before control 805; channel tests through a
+// pointer helper 838; overlay ratio clamp as a ternary 805. Retail inlines the first 0x11df30 call
+// and reads the projection input from the object in place.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
 {
 	s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(unit_index);
 	s_animation_state *state = UNIT_ANIMATION_STATE(unit);
+	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	s_unit_animation_control *control = UNIT_ANIMATION_CONTROL(unit);
 	s_unit_animation_definition *definition = (s_unit_animation_definition *)TAG_BYTES(unit->definition_index);
-	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	c_animation_channel channel;
 	if (control->channel_9c.graph_tag_index != NONE && control->channel_9c.animation_id.index != NONE)
 		control->channel_9c.sample(1.0f, node_mask, node_count, transforms);

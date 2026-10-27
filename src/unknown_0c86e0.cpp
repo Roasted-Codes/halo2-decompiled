@@ -97,6 +97,12 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 // shared weapon producer 131; user-result arms 125; both 125; signed-word user 128;
 // shared producer/word 128; word/result arms 122; all three 122; guarded weapon
 // result 135. Retain signed-word user/result arms; the six-count arm-only gain is rejected.
+// Retail re-fetches the unit after the two 0xbadc0 calls (index * 12 kept in esi); our link
+// knows 0xbadc0 writes no memory and reuses the entry pointer. With 0xbadc0 opaque (one-file
+// LTCG link) this body with a long user index gives retail's code apart from the callees'
+// conventions. Existing 0x14de90 getter 122; plus 0xcbd50 for the weapon 122; long user
+// index 125, with both getters 125; unit fetched at its first use 106 (376 bytes, but it
+// moves retail's entry fetch after the calls).
 // @retail 0xc86e0
 void function_c86e0(long unit_index, bool keep_weapon_zoom)
 {

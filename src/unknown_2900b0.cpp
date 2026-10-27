@@ -11,9 +11,12 @@ bool function_fa1a0(real arg_0, real arg_1, point3f const *arg_2, point3f const 
 	real *arg_9, real *arg_10, real *arg_11, real *arg_12, real *arg_13);
 real function_30bf0(vector3f *arg_0);
 
-// score 13 (was 13): our call to the ray/sphere helper hands the high_arc
-// argument over in edx instead of on the stack; the callee's body decides
-// the registers and it lives in src/projectiles.cpp, outside this lane.
+// score 13 (was 13): our call to the arc-aiming helper 0xfa1a0 passes its time-scale pointer
+// in edx where retail pushes it (retail's callee loads its gravity pointer into edx at entry,
+// ours into ebx, so ours has edx free for a parameter). The callee's body decides the registers
+// (src/projectiles.cpp, unmatched). Tried in the callee: the high-arc flag and the time-scale
+// pointer read once through their addresses 13/13; horizontal tests with the constant first 13;
+// the horizontal length computed after the gravity value 13; the gravity operands swapped 13.
 // @retail 0x2900b0
 bool function_2900b0(long arg_0, point3f const *arg_1, real arg_2, real arg_3, vector3f *arg_4)
 {

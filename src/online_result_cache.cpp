@@ -57,31 +57,31 @@ char *online_result_format(char *text, const char *format, ...);
 char *online_result_append(char *text, const char *format, ...);
 dword online_result_text_length(const char *text);
 
-// score 8 (was 8): byte returns and exit padding; integer return scores 0 but makes matched caller score 48;
-// native integer result and single exit 27; native boolean result and single exit 24; return final table
-// flag directly 20; plain status if 19; integer table flag 13; native service cursor loop 17; guard
-// returns before service scan 21; full integer return contract 0; integer literals in original boolean
-// return contract 8.
+/* the logon test is written out: calling the inline online_logon_connected()
+   compiles to the same code, but the extra inline expansion moves LTCG's
+   whole-program inlining enough that 0x73360 stops matching */
 // @retail 0xb36c0
 bool online_result_service_connected(void)
 {
+    bool logon_succeeded = false;
+    bool connected;
     if (g_467214 != NONE)
     {
         switch (online_task_get_logon_status(g_467214))
         {
         case 1:
-        {
-            bool connected = false;
-            for (long i = 0; i < 13; i++)
-                if (g_467178[i].service_id == 0x4d530064)
-                    connected = g_467178[i].connect;
-            if (connected)
-                return true;
+            logon_succeeded = true;
             break;
         }
-        }
     }
-    return false;
+    if (logon_succeeded)
+    {
+        connected = false;
+        for (long i = 0; i < 13; i++)
+            if (g_467178[i].service_id == 0x4d530064)
+                connected = g_467178[i].connect;
+    }
+    return logon_succeeded && connected;
 }
 
 // @retail 0xb3700

@@ -505,6 +505,10 @@ static __forceinline byte *function_9d952(long arg_0)
 // DL round 156: consistent requested handle 228; unsigned player/parent 196/196;
 // requested with player/parent 228/228; both resolved 196; all with signed/unsigned
 // requested handle 228/228. Original observations, handle types and short loop restored.
+// Round 28 (m3 lane 12): retail loads the object-pool global once ahead of the 0x800 parent test and
+// ahead of the 0x400000 test, reusing it in both arms and the next block (ours reloads it per block), and
+// keeps the flags in esi there. Packet declared before the flags 196; datum result at function scope 227;
+// slot shift named once 238; getter plain inline 196; unit index copied to a local 196.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

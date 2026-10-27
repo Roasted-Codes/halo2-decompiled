@@ -235,6 +235,12 @@ void function_2705c0(s_path_source *source, point3f const *point,
 // form (`result = true; break;`) matches, but unmatched 0x26c590 then takes its origin in ecx and its eight matched callers stop matching
 // (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
 // function scope 420, the edge iterator at function scope 420; none keeps its convention.
+// BLOCKED-BY 0x26c590. Retail keeps result false in al from
+// entry, so the location comes in edx and the node index in ebx. `bool result =
+// false;` with `result = true; break;` in the loop and one `return result;` matches,
+// but 0x26c590 (unmatched) then changes its own conventions and its eight matched
+// callers (0x1ab770, 0x1bd400, 0x1f5110, 0x26c4e0, 0x26cbe0, 0x26ccb0, 0x26d290,
+// 0x2c39f0) stop matching.
 // @retail 0x270600
 PRIVATE bool function_270600(s_path_location const *location, long node_index)
 {
