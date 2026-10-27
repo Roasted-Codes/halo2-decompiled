@@ -282,6 +282,11 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
 // Round 224: Uniform node-byte observations with branch/broad count, initialized/filled output
 // and original/success-local transform lifetimes 219/199/223/199/219/199/223/199. Original node snapshot and scopes restored.
+// Round 28 (m3 lane 12): retail's frame: query +0x20 shared with the loop's position, function-scope center
+// copy +0x30, loop bit mask +0x3c; its marking block is one tail-merged copy of the two sites. Long index
+// used for table and call 191 (index esi/entry edi, retail the other way); indexed entry at each use 271;
+// function-scope center copy with the query local to the list branch 199 (frame 0x10a4), unaligned 192;
+// one marking site with a `continue` 210 (comparison flips). All restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

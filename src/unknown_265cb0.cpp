@@ -434,6 +434,11 @@ real function_30bf0(vector3f *vector);
 // restored; result/range homes and SIMD allocation remain.
 // Round 196: Normalizer inline/noinline/combined/forceinline declarations, each with original
 // and post-normalization up lifetime, 184 each. Original declarations and body restored.
+// Round 28 (m3 lane 12): retail returns a short (`mov ax, word ptr [esp + 8]`) through separate result
+// exits; the 3/2 choice as if/else stores gives those exits and moves result toward retail's +0 slot
+// (241, 1327 bytes); with a short return 245 (needs 0x25c9d0's declaration changed too). Motion declared
+// before delta 184; result before the references 184; maxima as conditionals 184; a/b beside the maxima 184.
+// Ours also keeps secondary/primary in xmm registers across the seat loop; retail compares them in memory.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {

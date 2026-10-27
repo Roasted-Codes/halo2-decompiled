@@ -182,6 +182,10 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // 4/8,8/8,16/8,8/16: 240/224/240/241/224/241/240/241. Original native matrix alignments and scoped rotation restored.
 // Round 224: Existing query producer owns preceding inverse-mass scaling; scalar/state inputs
 // and vector pointer/reference 184/184/184/184; broad-rotation counterparts 221/221/221/221. Original boundary and scopes restored.
+// Round 28 (m3 lane 12): `0.0f - braking / dt` compiles to a product with -1/dt; `-(braking / dt)` gives
+// retail's subtraction from the zero register and retail's length (1265) but 221 fast; with function-scope
+// rotation (frame 0xc4, rotation at +0xac) 232; with one integration loop 221; acceleration folded into the
+// angular loop 270; inverse-mass products reversed 221 (no change). Float register allocation then differs.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

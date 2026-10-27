@@ -293,6 +293,12 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // after the transformed points 195. Ours also stores ta above tb (retail: ta below tb).
 // Round 151: Native right/up/right+up/forward/right+forward/up+forward/all/all+translation captures 261/257/690/257/690/690/690/690; forced pair/pair/pair/all expansion 476/471/476/639. Singles recover frame 0x2c but change input ownership; combined unforced helper outlines. All restored.
 // Original frame 0x30 versus 0x2c and inverse/point/factor homes remain; native basis captures do not qualify.
+// Round 28 (m3 lane 12): the inverses used directly, without fa/fb copies (non-perspective path sets both
+// to 1), gives retail's registers for the whole inverse/zero/output tail and 974 bytes, but 207; with b.y
+// computed before b.x the displaced point also takes retail's xmm7/xmm6, 206 (971 bytes); z, y, x order 201
+// (registers wrong); ta/tb declared first 206. Left: b at +0x10 (retail +0xc, frame 0x30 v 0x2c) and the second
+// inlined transform spilling two scaled components where retail spills one. Retail-order sum operands 195
+// (same code); a `d`-first parameter order needs callers in contributor files.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
