@@ -1071,6 +1071,9 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 5,23,6,24,7,22 / 24,5,23,6,22,7; connection/query interleaves 5,8,6,9,7,10 /
 // 8,5,9,6,10,7 / 5,9,6,10,7,8 / 10,5,9,6,8,7:
 // 193,192,193,192,195,194,195,195 fast; reduced control 191, full 193. Original executable source restored.
+// Round 224: Residual connection/free-case interleaves 5,11,6,18,7,8 / 11,5,18,6,8,7 /
+// 5,18,6,8,7,11 / 18,5,8,6,11,7 / 5,11,18,6,8,7 / 11,18,5,8,6,7 /
+// 18,11,5,6,8,7 / 8,5,11,6,18,7 195/194/195/194/195/192/192/194 fast. Original phases and handler tuples restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

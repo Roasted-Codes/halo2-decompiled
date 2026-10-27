@@ -180,6 +180,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // locals 221, with that and the brake helper 221. Aligned difference 143 of 289 (frame and float schedule).
 // Round 155: Native inverse-inertia/rotation matrix alignments 16/4,4/16,16/16,8/4,
 // 4/8,8/8,16/8,8/16: 240/224/240/241/224/241/240/241. Original native matrix alignments and scoped rotation restored.
+// Round 224: Existing query producer owns preceding inverse-mass scaling; scalar/state inputs
+// and vector pointer/reference 184/184/184/184; broad-rotation counterparts 221/221/221/221. Original boundary and scopes restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

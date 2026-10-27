@@ -280,6 +280,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // separate entry-time center point for the loop 221f, and the query in the list branch 221f. All restored.
 // Round 155: Real part-table byte/record cursors, mutable/read-only, each with original
 // or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
+// Round 224: Uniform node-byte observations with branch/broad count, initialized/filled output
+// and original/success-local transform lifetimes 219/199/223/199/219/199/223/199. Original node snapshot and scopes restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {
