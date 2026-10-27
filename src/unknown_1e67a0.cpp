@@ -749,6 +749,8 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // 266/288. Direct native scale reaches retail length but regresses; original sampled scaling retained.
 // Round 332: Sample-angle, turn-angle and paired trig scalar home names, each
 // and every combination, 155; all with projected-axis scalar home 155. All restored.
+// Round 150: Existing cross producer first/second value inputs and returned output, seven combinations 305/307/379/273/234/228/261; both input references 155. All restored.
+// Sampled-vector slot and rotation/output allocation remain.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,
