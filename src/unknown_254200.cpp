@@ -188,7 +188,19 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): Frame 0x14 versus 0x10; native color and reservation homes remain.
+// score 153 (was 153): frame 0x14 against 0x10; color copy and reservation homes remain.
+// Round 137 lead (fast and plain 18 at retail length; not kept: it writes the texture
+// coordinate sums out at each use): the getter result kept as a `color3f const *` read at the
+// vertex call (retail keeps it in EDI across 0x1cf50 and Begin; frame 0x10), every texture
+// coordinate written as `arg_1 * 0.5f + 0.5f` / `0.5f - arg_1 * 0.5f` in the four calls (only
+// then does the product move after the first reservation, as in retail; a named half span 384,
+// both locals after the first call 304, the lower or upper one named 309/20, assignments inside
+// the call 372), and the alpha as a byte (`mov dl, al`). Left at 18: after the second
+// coordinate call's reservation retail reloads the lower coordinate before the 16777215
+// constant (ours the constant first), and `arg_0->y + size` in the last two vertices loads y
+// first in retail (ours copies the size and folds y; operand order, a plain or if/else size
+// local all 18). The color pointer alone 349 (the half-span block then computes ahead of the
+// reservation), with the coordinate locals unchanged 349.
 // Earlier: frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
 // Frame 0x14 versus 0x10; color/coordinate homes and reservation scheduling remain.
 // Frame 0x14 versus 0x10 and reservation/coordinate homes remain. Fast control

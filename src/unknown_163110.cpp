@@ -378,62 +378,44 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 {
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
-// score 404 (was 404): Frameless admission/output EDI agree; camera/point saved registers and initial stores remain.
-// Camera/points saved registers and initial stores remain; input distance/whole-plane ownership does not qualify.
-// Earlier: Camera/point saved registers and initial stores remain; separate normal input improves plane scheduling.
-
-// frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
-// Frameless guard agrees; camera/points register ownership, plane reloads and first stores remain.
-// Earlier 412 (was 412): frameless entry agrees; camera/points EBX/EBP and initial store scheduling differ.
-// YZX normal inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
-// Camera/point saved registers and initial stores differ; complete buffered normal rows require an exact match.
-// Earlier: Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
-// Camera/point EBX/EBP ownership and initial store schedule remain. YZX normal
-// inputs 442; scalar-first normal rows 423; running distance 412 kept plain; diagnostic disjunctions 423;
-// native float error with distance 412.
-// Earlier 423 (was 423): camera/points use EBX/EBP rather than EBP/EBX;
-// corner loop 432; side-plane loop 1154; reverse direction loop 423;
-// default plane first 423; direct first-diagnostic expression 423.
-// Native matrix snapshot 778; input-rectangle products 446; coordinate-pair
-// product initialization 425; unsigned direction ordinal 423; optional-plane copy 647.
-// j90: camera/points saved registers remain exchanged; native copy boundaries tie and geometry/store lifetime changes regress.
-// normal setter 610; bounds copy block 423; position copy block 423; directions after bounds 578; complete
-// planes before normalize 515; identifier at geometry end 767
-// j92: camera/points saved registers remain exchanged; corner order and diagnostic/lifetime forms do not improve the frameless entry.
-// corners in index order 426; diagnostic result chain 423; plane tests result 671; camera plane predicate 669;
-// far depth snapshot 646.
-// Earlier 423 (was 423): Camera/points saved registers and initial store schedule remain.
-// corner point setters 622; rectangle CRT copy 423; plane array receiver 761;
-// native plane return 700; late right/top products 682 (fast).
-// Earlier 423 (was 423): camera/point homes and plane input/product residency remain.
-// Scaled distance 469; normal inputs KJI 433; normal names 423; helper order 422;
-// scaled distance/KJI 474; first slope before constants 478; all side slopes 618; last corner XYZ 424.
-// complete-normal-xyz 512 (exact only); distance-products-xyz 412.
-// complete-normal-distance-products-xyz 512 (exact only); complete-normal-yxz 512 (exact only).
-// complete-normal-xzy 511 (exact only); complete-normal-zxy 512 (exact only).
-// distance-products-yxz 426; distance-products-zxy 430.
-// Immutable scalar inputs 412; native/immutable native normal 789/789; complete row
-// accumulators 410; immutable inputs with row accumulators 410; native normal with rows 790;
-// parallel normal products 410; native normal/products 789. Two-point reductions rejected.
-// Round 129: separate normal pointer/reference/value 404/404/835; with matrix reference
-// 404/404/835; separate normal pointer/reference with output-address return 404/404.
-// Only separate normal pointer retained, plain 404; all original input copies precede stores.
-// Round 132: separate distance input 611; whole-plane pointer/reference/value 403/403/883;
-// rotation-scale-position inputs 684; with distance/plane pointer/reference 582/717/717.
-// One-point whole-plane reductions rejected; original in-place input copies retained.
-// Round 134: shared triple-test expression/success-result/failure-result/early-failures,
-// point first 1182/1170/1170/1182; point last 1182/1168/1168/1182.
-// Scalar normal arguments XYZ/XZY/YXZ/YZX/ZXY/ZYX 697/697/697/697/697/697;
-// scalar XYZ/ZYX with matrix reference 697/697.
-// Complete depth snapshot 733; all depth fields 667; identifier before rectangle 431; input rectangle
-// value 686; depth snapshot/identifier 733; fields/identifier 682; rectangle/snapshot 699;
-// rectangle/fields 683.
-// Round 145: On separate-normal input, parallel row accumulators 404; all row products named 407;
-// initial two-term sums 407; final forward terms 455. Scalar-first counterparts 404/407/407/455;
-// all restored.
-// Three-input transform formal orders M/O/N, N/M/O, N/O/M, O/M/N, O/N/M
-// 404/404/403/404/403; transform/diagnostic/both forced expansion 404/404/404.
-// One-point formal-order leads rejected; original helper contracts and all normal copies restored.
+// score 404 (was 404): frameless entry and the result in EDI agree. Left: retail keeps the
+// camera in EBP and the corner array in EBX (here exchanged); retail reads the copied rectangle
+// through the copy's address (`[eax+4]`...) after the identifier store, where ours reads
+// `[edi+0x14]`... ahead of it; plane input/product residency and the first store schedule.
+// Round 137: rectangle pointer/reference for the copy and the four products 415/415 (reads move
+// behind the identifier store as in retail, but the pointer takes EBP); corner-array pointer
+// for the corner stores and both 0x1429d0 arguments 655; depth read at each product 666; plain
+// plane test in place of the double negation 404 (same code); returns in place of the result
+// flag 688.
+// Earlier: YZX normal inputs 442; scalar-first normal rows 423; running distance 412 kept;
+// diagnostic disjunctions 423; native float error with distance 412; corner loop 432;
+// side-plane loop 1154; reverse direction loop 423; default plane first 423; direct
+// first-diagnostic expression 423; native matrix snapshot 778; input-rectangle products 446;
+// coordinate-pair product initialization 425; unsigned direction ordinal 423; optional-plane
+// copy 647; normal setter 610; bounds copy block 423; position copy block 423; directions after
+// bounds 578; complete planes before normalize 515; identifier at geometry end 767; corners in
+// index order 426; diagnostic result chain 423; plane tests result 671; camera plane predicate
+// 669; far depth snapshot 646; corner point setters 622; rectangle CRT copy 423; plane array
+// receiver 761; native plane return 700; late right/top products 682; scaled distance 469;
+// normal inputs KJI 433; normal names 423; helper order 422; scaled distance/KJI 474; first
+// slope before constants 478; all side slopes 618; last corner XYZ 424; complete-normal
+// xyz/yxz/xzy/zxy 512/512/511/512 and with distance products 512 (exact only);
+// distance-products xyz/yxz/zxy 412/426/430; immutable scalar inputs 412; native/immutable
+// native normal 789/789; complete row accumulators 410; immutable inputs with row accumulators
+// 410; native normal with rows 790; parallel normal products 410; native normal/products 789;
+// separate normal pointer/reference/value 404/404/835, with matrix reference 404/404/835, with
+// output-address return 404/404 (separate normal pointer kept); separate distance input 611;
+// whole-plane pointer/reference/value 403/403/883; rotation-scale-position inputs 684; with
+// distance/plane pointer/reference 582/717/717; shared triple-test expression/success-result/
+// failure-result/early-failures, point first 1182/1170/1170/1182, point last
+// 1182/1168/1168/1182; scalar normal arguments in all six orders 697; scalar XYZ/ZYX with matrix
+// reference 697/697; complete depth snapshot 733; all depth fields 667; identifier before
+// rectangle 431; input rectangle value 686; depth snapshot/identifier 733; fields/identifier
+// 682; rectangle/snapshot 699; rectangle/fields 683; on separate-normal input, parallel row
+// accumulators 404, all row products named 407, initial two-term sums 407, final forward terms
+// 455, scalar-first counterparts 404/407/407/455; three-input transform formal orders
+// M/O/N, N/M/O, N/O/M, O/M/N, O/N/M 404/404/403/404/403; transform/diagnostic/both forced
+// expansion 404/404/404.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

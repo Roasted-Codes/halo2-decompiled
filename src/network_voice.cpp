@@ -2877,39 +2877,41 @@ struct s_voice_route_choice
 	real distance;
 };
 
-// score 363 (was 363): frame 0x54 and scalar homes agree; entry registers and unrolled cursor bias differ.
-// Earlier at 394 (was 394): Frame 0x50 versus 0x54 and nearest/headset/cursor homes remain; selected-distance storage shortens the unrolled body.
-// Earlier: frame 0x50 versus 0x54 and nearest-choice homes still differ.
-// Direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
-// byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407.
-// Scalar role names 394; rejected-mode first 394; signed while traversal 394;
-// descriptor before pairs 394; existing mixer helper 461; byte radio with direct reads 411;
-// combined headset clear/set 519. Original body retained.
-// Boolean radio with unsigned nearest index 411; three mixer pairs 394;
-// conditional headset assignment 394; split initial/replacement nearest 412;
-// repeated player-field reads 472. Frame and route homes still differ; original retained.
-// Native Boolean/word radio with choice receiver 410/392; Boolean with three pairs 397;
-// plain pair loop 394, with Boolean 411; native descriptor alone 394 (retail length),
-// with native choice/Boolean 411; native choice/Boolean mixer-workspace names 410.
-// Headset rejection first 394, with native Boolean radio 411; selected nearest result 1101, with native
-// radio 1103, with both 1103; late mixer descriptor 394, with native radio 411; all three with native radio
-// 1103. Selected results prevent four-way expansion; all original code restored.
-// Per-choice pointer 393; signed-word radio 393; signed headset 394;
-// function-scope descriptor only 402; function-scope pairs only 401.
-// Selected route value 459; byte/word radio with route value 491/459;
-// route value with three pairs 469; native descriptor 464; word/three pairs 467;
-// byte/descriptor 495; native mixer combination 503. Frame shrinks to 0x40;
-// original indexed selection and mixer workspace retained.
-// nearest-distance 534; candidate-distance 526.
-// nearest-distance-bool 572; nearest-distance-word 533.
-// nearest-distance-descriptor 538; candidate-distance-bool 572.
-// candidate-distance-word 525; candidate-distance-native-mixer 576.
-// Radio predicate accumulation, bitwise long with either comparison order 436/436;
-// bitwise Boolean 363/363; logical long 1082/1082;
-// logical Boolean 1087/1087. Byte bitwise accumulation 363 plain kept; original indexed nearest selection retained.
-// Reused outgoing identity at branch/engine/entry/after-routing 376/375/425/452;
-// branch identity with three pairs/native descriptor 382/376; engine identity with three pairs 381;
-// post-routing identity with three pairs and native descriptor 464. Original identity construction retained.
+// score 363 (was 363): frame 0x54 and scalar homes agree; the unrolled loop's cursor bias (retail
+// &choices[i + 1].mode, here &choices[i].mode), entry registers (retail: talker in EBX, the
+// talker bit in EBP, zero in EBP so the initialized tests are `mov al / test al` and the two
+// final SetPlaybackPriority calls share one call) and the radio update (retail branches and
+// stores 1 into the byte) differ. Round 137: a per-choice pointer local
+// (`choice = &choices[i]`) gives retail's +0x10 cursor bias (compile-only and real) 395, and
+// with `if (mode == 2) radio = true; else if (!radio && ...)` 410 at 1270 bytes, frame 0x50,
+// though its aligned differences drop from 372 to 302: the branch form stops the headset mask
+// spilling to its stack home (retail spills it and reloads it in the first unrolled copy);
+// the if/else-if radio alone 411; a named talker bit 391, with the if/else-if radio 422; the
+// headset update through the existing flags_set_bit inline 363 (compiles the same), with the
+// pointer and radio forms 410.
+// Earlier: direct mode reads 394; nearest pointer 513; function-scope mixer workspaces 412;
+// byte radio 409; complete mixer aggregates 404; direct reads with wider workspace scope 407;
+// scalar role names 394; rejected-mode first 394; signed while traversal 394; descriptor before
+// pairs 394; existing mixer helper 461; byte radio with direct reads 411; combined headset
+// clear/set 519; boolean radio with unsigned nearest index 411; three mixer pairs 394;
+// conditional headset assignment 394; split initial/replacement nearest 412; repeated
+// player-field reads 472; native Boolean/word radio with choice receiver 410/392; Boolean with
+// three pairs 397; plain pair loop 394, with Boolean 411; native descriptor alone 394 (retail
+// length), with native choice/Boolean 411; native choice/Boolean mixer-workspace names 410;
+// headset rejection first 394, with native Boolean radio 411; selected nearest result 1101,
+// with native radio 1103, with both 1103; late mixer descriptor 394, with native radio 411;
+// all three with native radio 1103; per-choice pointer 393; signed-word radio 393; signed
+// headset 394; function-scope descriptor only 402; function-scope pairs only 401; selected
+// route value 459; byte/word radio with route value 491/459; route value with three pairs 469;
+// native descriptor 464; word/three pairs 467; byte/descriptor 495; native mixer combination
+// 503; nearest-distance 534; candidate-distance 526; nearest-distance-bool 572;
+// nearest-distance-word 533; nearest-distance-descriptor 538; candidate-distance-bool 572;
+// candidate-distance-word 525; candidate-distance-native-mixer 576; radio predicate
+// accumulation, bitwise long with either comparison order 436/436; bitwise Boolean 363/363
+// (kept, byte); logical long 1082/1082; logical Boolean 1087/1087; reused outgoing identity at
+// branch/engine/entry/after-routing 376/375/425/452; branch identity with three pairs/native
+// descriptor 382/376; engine identity with three pairs 381; post-routing identity with three
+// pairs and native descriptor 464.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
