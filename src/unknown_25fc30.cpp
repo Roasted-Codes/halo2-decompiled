@@ -263,6 +263,9 @@ bool __stdcall function_25dd30(long a, long b)
 // independent short later counters at 94 plain; original helpers and all call tuples retained.
 // Round 343: Total-position bound long/short before lookup 479/322; after lookup 481/322;
 // long bound with later permission/cone/reference/all long ordinals 976/458/765/1168. All restored; retained indexed graph stays 94.
+// Round 345: Native unsigned-short first/permission/cone/reference ordinals on the indexed
+// graph 453/442/240/252; first+permission/cone/reference/all 367/474/473/390. Original signed
+// comparisons and 94 body restored; all eight regress.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

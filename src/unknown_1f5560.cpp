@@ -1355,6 +1355,9 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // Round 221: common radial-offset target addition 281/278/292/291;
 // target-seeded center 319/303/315/299. Each group varies early
 // side-radius and common trace exit on ordinary inputs/side; all restored.
+// Round 347: ordinary origin with direct byte/short left state 302/305, Boolean/byte right 281/281;
+// complete facing scalar observations with those four states 284/298/300/300.
+// Last two reach 1173 bytes, but input/SSE register ownership regresses; original body restored.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

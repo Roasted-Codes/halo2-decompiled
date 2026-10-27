@@ -67,6 +67,7 @@ struct s_object_flags_256bd0
 // score 206 (was 206): Frame 0x114 versus 0x110, cached activity and geometry/actor homes remain.
 // Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 
+// Earlier: frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // frame 0x114 versus 0x110: our build hoists the swarm-activity byte out of
 // the iterator loop into a stack byte (back edge to its reload) where retail re-reads the ai
 // globals each pass; the 0x28dbd0 call passes the character in eax where retail passes the
@@ -107,6 +108,9 @@ struct s_object_flags_256bd0
 // 211/211; all four handles 211; all with double minimum comparison 306.
 // Round 180: Shared point setters for source/placement/both 310/292/318; native direction
 // initializer 251; with source/placement/both setters 275/310/288; selected point value 279.
+// Round 344: unsigned-word status 206; per-arm object result 206; per-arm status 272;
+// word status with object/status/both arms 206/272/272; both arms with signed status 272;
+// full unsigned status with both arms 275. All creation-call bindings preserved.
 // Round 243: Native actor/spawned-actor/unit metadata singly 206 each; all pairings 206
 // each; complete native and read-only native records 206/206. Original body, iterator
 // helper and includes restored.

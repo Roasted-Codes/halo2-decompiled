@@ -91,6 +91,9 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // Exact-match-only decision forms; all restored to the complementary waiting graph.
 // Existing lookup/ratings/transition inline declarations, all three pairs and all three
 // 439 each; all three noinline declarations 439. Original declarations and body restored.
+// Consistent live primary/secondary/both/owner receivers 462/463/468/470; primary,
+// secondary or both with live owner 461/456/466; all with direct state tests 466.
+// All restored; three combined forms report reduced-image callee caveats.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

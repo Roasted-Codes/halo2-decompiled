@@ -178,6 +178,8 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 // after seconds 28; existing unit random range 18; the file's random range 8/10; random local 8;
 // header-size pointer 8; flag store first 14; tick-rate cast 8; named seconds 8, before the state
 // pointer 6 (slot read after the seed store); permuter 88 tries 8.
+// Y346: complete additive term alone/with timer input 10/10; doubled range and timer input 8; all arithmetic
+// terms, entry workspaces, immutable inputs and later receiver 8/8/8/8; direct data-member observations 28.
 // @retail 0x1ac090
 bool __stdcall function_1ac090(long actor_index, s_slot *slot)
 {
@@ -208,6 +210,8 @@ void function_265bb0(long actor_index);
 // Round 323: long/word/dword/real delay with second writer 88/85/105/105;
 // the same delay carriers with native second output 88/85/105/105. Conversion-input packing
 // restores zero frame in some forms but regresses allocation; original body restored.
+// Y346: timer input/output order, scalar names and complete delay-product boundaries 60 (seven forms);
+// all with the second input named at computation 60.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {

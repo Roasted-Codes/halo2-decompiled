@@ -425,6 +425,9 @@ bool function_22acb4(long player_index);
 // Round 204: First-enum conditional seeds NONE/one/zero, each remaining order,
 // 193/192/165/189/284/283; branch-produced NONE/one seeds 193/165. Retained type
 // order 231; original first-mask producer restored. Extra second-mask spill remains.
+// Round 347: complete second result as unsigned byte on retained/first-enum/second-enum/both
+// producer graphs 269/204/250/280; signed byte repeats 269/204/250/280.
+// The second-enum byte form recovers the one-slot prologue, but later operations regress; body restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

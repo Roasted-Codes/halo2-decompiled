@@ -35,6 +35,8 @@ struct lane_a_mass_restore
 // read-only record and record/member form 6 each.
 // Native coefficient/pointer arrays separately/together/compound 6/6/6/6; plain nested
 // indexed/do/outer-only/unsigned-group traversals 64/86/6/64. Original fields and bodies restored.
+// Shared four-component loop, value/reference scale, both argument orders and
+// pointer/array inputs 56/48/56/48/56/48/56/48; original body restored.
 // @retail 0x315280
 void __cdecl lane_a_scale_masses(void *, lane_a_mass_restore *record)
 {
