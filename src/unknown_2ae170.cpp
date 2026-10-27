@@ -862,6 +862,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 183: Eight actual native-word destination declaration permutations
 // 227/228/228/225/228/224/227/228; starting with right ties, rear-first forms regress.
 // Original declarations restored; frame 0x20, mode/input-level and x87 tail homes remain.
+// Native-word destinations with bool/byte routing predicates and original/gain/level/both
+// read-at-use forms 242/271/302/323 each. Original scalar observations restored.
 // Round 190: Mode-first field-address selection with gain at entry/after selection/after
 // offset/after input level 247/247/258/258; constant-first counterpart 232/231/245/245. Every form
 // regresses; original helper and scalar lifetimes restored.
@@ -1109,6 +1111,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 190: Live input levels with bool/byte/short/word primary channel and entry-rear/live-rear
 // observations 221/229, 221/229, 213/231, 213/231. All regress; original scalar captures, channel
 // predicate and send expansion restored.
+// Round 194: Native byte/short/word/dword channel masks with retained rear samples
+// 200/198/198/199; with entry level sum 209/209/209/212. Small gains rejected;
+// original scalar captures, channel decision, helpers and sum grouping restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

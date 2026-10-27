@@ -75,6 +75,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 
 // score 186 (was 186): frame 0x11c against retail's 0x118; the request home is four bytes late and the
 // rotation's cross-term homes differ (retail spills two scalar cross terms, sine and cosine). Forms tried:
+// Round 43: mixed two-scalar cross pairs k/j/i-first 241/232/232; request-forward launch copy 246;
+// distinct forward input/local output 235; velocity output with shared/scalar speed scaling 209/209;
+// mixed cross with velocity output 240.
 // cross before trig 234; alignment before trig 234; shared velocity scale 213; plain rotation component loop
 // 234; global optimization off 549; named request word 213; complete creation-stage scope 213; random arm first
 // 284; shared rotation output setter 226; size optimization 563; rotation axis input first 213; rotation output
@@ -118,6 +121,10 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // outputs `axis * projection + vector * cosine - cross * sine`. Scalar helper forms all give frame 0x114
 // (four bytes short): the 0x194a10 form 234, the 0x2551f0 form 237, cross orders jki 234 (both output orders),
 // ijk 237, kji 234; a cross3f struct with scalar outputs keeps 0x11c, 213 (both output orders).
+// Round 59: ours keeps the vector's zero k in a register through the cross terms (retail reloads it as
+// a constant after the dot, so it spills one value fewer); helper locals named by role 186; the
+// existing 0x210850 called for the point output 352 (not inlined); zero component stored first 186;
+// forward copy before the two draws 256; axis term first in the output sums 186.
 // Round 192: reused orientation flags/source index/both 257/186/257; existing pooled-data
 // result initialized before its test 186, with flags/source/both 257/186/257; combined metadata
 // and conditional getter result 268. Original body/helpers restored; frame 0x11c versus 0x118 remains.

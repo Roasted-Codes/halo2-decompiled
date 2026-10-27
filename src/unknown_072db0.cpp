@@ -1320,7 +1320,7 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 202): Frame 0xfc agrees; key/statistic/group homes, cursor bias and grouped dispatch remain.
+// score 202 (was 202): frame 0xfc agrees; key/statistic/group homes, statistic cursor bias and grouped dispatch remain.
 // Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
 // Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
@@ -1398,8 +1398,12 @@ struct s_rating_summary
 // status with player indexing 202, with fifteen-bit counters 199 (rejected).
 // Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
 // 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
+// DL159: uniform name-input field observations, crossed with shared pass ordinal, shared three-count results and two-word prefix clear, 235/236/235/236/234/234/234/234. Shared ordinal recovers key home but regresses total; original character snapshot and body restored.
 // Round 210: Query-count table publication 123/132/213/231/312/321 gives
 // 202/206/213/344/214/345; entry table with 123/321 gives 202/345. Original restored.
+// Round 194: On native fifteen-bit player statistics and a shared pass ordinal,
+// byte/short/word/dword group counters with dword or word characters all 311;
+// original body and native collection extent restored. Key/group homes remain.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1641,6 +1645,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Read-builder count homes in six meaningful lexical orders, write-builder homes and both builders: 739 each on the retained word-completion/failure graph. Original count names, helpers, predicates and call tuples restored.
 // Round 343: Native request identity via library/aggregate copy 747/747; with real descriptor count 792/792;
 // terminal candidate reuse 742/742; count plus terminal reuse 836/836. All restored; original completion failure and word group remain.
+// Initial-pass signed-word group/availability/both/clears/group-clears/availability-clears/all
+// 752/761/764/737/752/761/764; all initial-pass unsigned-word indices 764.
 // Round 248: Complete returned-property extent and received total, signed/unsigned
 // with indexed access and before/after accumulation 737/754 each; native property
 // cursor with the same pairs 737/760 each. Original bound and accumulation restored.

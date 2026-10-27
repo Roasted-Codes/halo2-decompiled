@@ -824,7 +824,8 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 294 (was 308): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
+// score 292 (was 292): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
+// frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
 // clears flag 8 with `and byte ptr [ebp+0xd], 0xfe` and reloads (ours merges the three); retail
 // has no result slot but spills the tinted byte (ours keeps it in BL, the tag object in EDI where
 // retail uses EBX, and the particle/index registers swapped); 0x248750 takes the definition in
@@ -882,6 +883,15 @@ public:
 // Round 183: Five complete fixed-basis column-order permutations 320/320/326/326/320;
 // three default-position permutations 308/308/308. Original cases and copies restored;
 // early result/flag publication, location transport and selective tag expansion remain.
+// Round 195: Tint byte/word/long/dword carriers 298/301/299/299; the same carriers
+// declared before the matrix 298/301/299/299. Original bool, queries and body restored;
+// early result slot, tint spill and location/child transport remain.
+// Round 139: the flag word through a `word *` local (read, set/clear 0x200, flag8 bitfield clear)
+// gives retail's word store + byte clear 292, and testing 0x20 through the flag5 bitfield then
+// reproduces retail's `mov ax, [ebp+0xc]; test al, 0x20` exactly, but our entry `result = false`
+// store still sits there and every later instruction shifts (352); with the pointer and a value
+// local 292/292; the bitfield test on the value form 294; result declared at the end or direct
+// returns on top of the exact flag form 345/351 (frame 0x5c).
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1091,6 +1101,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // Round 376: Independent child cursor/receiver/both entry declarations 213/213/213; native
 // request with cursor/receiver/both 211/211/211; both with native request and positive/negative
 // child bit stores 340/340. Original lifetimes and stores restored.
+// Round 223: Real request parent aggregate/assignment receivers 235/238; with child bit stores
+// 369/255; location receiver 230; both aggregate/assignment 244/247; location with child stores 250.
 // Metadata lifetimes ending at the shader/table, reference chain or full tag chain give
 // 213/213/213; with native request initialization 211/211/211 (two-count gains rejected);
 // full tag scope with child set/clear stores 219, with native request as well 217.

@@ -1305,6 +1305,9 @@ void __stdcall function_205320(long group_index)
 // long pointer 18; first vehicle saved before the store 19; inverted test 24; squad lookup at each use 33;
 // squad computed before the NONE test 38 (at the top 42); ternary 45; one store after the test 47;
 // index local updated in place 56/57.
+// Round 42: named scaled offset signed/unsigned 18/18; const squad, then both pointers 18/18;
+// identifier as a real short field 18; low-word helper 44; typed pointer increment/address-of-element 18/18;
+// low-word equality 21; early high-bits predicate 18. The pool/index registers and three-address lea remain.
 // @retail 0x201ad0
 void function_201ad0(long squad_index, long object_index)
 {
@@ -1513,6 +1516,10 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // Round 347: uniform live squad admission with returned cursor/output index/both 78/76/78;
 // with library point copy alone/cursor/index/all 76/78/76/78; later minimum lifetime 76.
 // Prefix recovered through +0x54, but later pointer/register ownership still regresses; opening body restored.
+// Round 60: squad getter at each use 76 (entry code exact through +0x54; the loop's entry add then
+// splits around its first load); with the entry expression at each use 154; point per arm 69; point
+// at each use 69; first test through the entry expression 70; entry operand order, inline palette,
+// entries-base local, typed location record and an entry declared before the loop 76 each.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {

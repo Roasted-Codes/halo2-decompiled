@@ -277,7 +277,6 @@ long function_239d50(long count, point2f const *points, point2f *hull)
    the lowest */
 // score 203 (was 203): Frame 0x14 agrees; count/departure homes, scan bound, equality and compaction differ.
 // Earlier: scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
-// scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
 // Full count tests 274; current-point snapshot 271; byte start state 250; float workspace names 250; still-at-origin state 264; inline classifier declaration 250; forced equality declaration 250.
 // Unsigned word result 275; unsigned first/candidate ordinals 247/209 (caller lost); native compaction ordinals 285;
 // monotonic departure 263; compaction shared exit 279; heading initialized after lowest scan 234.
@@ -294,6 +293,13 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // 268/268; observed signed-word input count 203. Caller checked with each.
 // Equality input contracts (pointer order, first/second/both native references), each
 // with long/Boolean departure: 203/227/203/234/203/234/203/234. Helper and body restored.
+// Round 59: retail keeps the hull count at +0x10 and the departure flag as a byte in the index
+// output's argument home, sets the heading and the flag before the lowest scan, copies the count for
+// the scan bound, does not rotate the hull loop (test at its head, three back edges) and stores the
+// flag as `x = 0; if (...) x = 1`. Tried: departure bool/char/short 234/234/208, each with the heading
+// set before the scan 252/252/227 (bool: retail's two homes), long with it 220; on bool + heading
+// first: flag set only when unequal 265 (751 B, aligned closest), loop test without the short cast 245,
+// heading before the flag 250, flag after the current index 251.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -477,9 +483,18 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Native previous/plane/both observations 378/370/354; both native points 355;
 // all native inputs 376; complete plane/previous/both scalar observations 347/359/368.
 // Original inputs, copies and body restored.
+// Fraction default between/before deltas, before clipped publication and at iteration entry:
+// unsigned ordinal 211/211/209/209; signed ordinal 259/259/263/275. All restored;
+// the best three-point change does not qualify. Count/stride/prior and SIMD homes remain.
 // On the common failure-result graph: signed word/native count at entry or after
 // alias handling, each without/with shared copy extent: 212/289/211/211/303/225/212/212.
 // One-point forms rejected; original count observations, helpers and body restored.
+// Round 59: retail keeps the index as a word in memory (+0x14, tested `cmp ax, [count]`), the
+// previous point at +0x1c, the copy size at +0x18 and the plane reloaded from its argument home.
+// Tried: the previous side's volatile removed 227; signed short index 252 (869 B; retail's loop
+// tail, but the previous point stays in ESI); both 254 (frame +8, the widened index spilled);
+// long index without the volatile 272; the distance sums with the terms swapped (loop, fraction,
+// both) 212 (identical).
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

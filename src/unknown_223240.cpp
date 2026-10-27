@@ -78,6 +78,9 @@ void function_2232a0(void)
 // The tail call is BLOCKED-BY 0x2b5d0: its body is disabled and a /Gr stub takes the count in ECX and the
 // mode in EDX, where retail passes the count in EAX and the mode in ECX. Round 73: sibling clamp ternary
 // 182; pretested for loop 161; both 183; callee formals mode-first 151 (mode reaches ECX, count EDX).
+// Round 97: the existing 0x16a90 predicate for the layout test 151 (identical code); inverted count
+// condition 151, with the for loop 161; layout as one ternary 151; count defaulted to one before the
+// test 187 (543 bytes); count and layout declared before the scan index 151.
 // One-dword frame agrees; count/layout join, slot predicate and terminal/tail allocation still differ.
 // Earlier: One-dword frame agrees; common count/layout join, terminal registers and tail convention remain.
 // Earlier 151 (was 151): count-one paths still bypass the common count/layout join; tail call differs.
@@ -143,6 +146,9 @@ void function_2232a0(void)
 // Round 212: shared raw count drives clamp and layout, short/long with nested clamp
 // 167/177; exclusive clamp 146/149 (five/two-point gains rejected); the four with plain for
 // traversal 177/178/165/168. Original count producer, traversal and tail contract restored.
+// DH round 189: Native equality-bound ordinals: short/word/byte do 201/201/167; short/word/byte
+// for 180/180/166; short/word while 180/180. Original signed clamp, ordinal, scan, initializer and
+// tail restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

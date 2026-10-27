@@ -307,6 +307,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // DL round 156: coherent part/residency/transform provider inline contracts, singles,
 // pairs, all and all with separate noinline declarations 185 each. Original declarations
 // restored; transform forms lose reduced controls 0x31590/0x168d60 (also 0x23d030 without noinline).
+// DH round 189: Native/const fetch source capture with aggregate/library publication 185 each;
+// each with query memmove 207. All one-use captures and copy changes restored; defined failures
+// and protected call roles retained.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -419,6 +422,10 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // search 181 (kept); node count >= test 262/206; section groups after the surface lookup 254/214/177
 // (swaps model and collision registers unless the bounds read moves too); for vertex loop 181; part
 // range fields at their uses 180.
+// Round 97: bounds before the geometry-block call with section groups before the node search 143
+// (only BLOCKED-BY 0x11e800 registers, slots and the vertex cursor follow), same with a renamed
+// section local 143 (names do not move slots), with a for vertex loop 143; bounds with the model
+// lookup 221, plus early section groups 214.
 // Frame 0x58 agrees; region scheduling and range/vertex homes remain. Split
 // region/transform receivers 236; early section groups 254; both 254; byte return with
 // split/groups/both 237/255/255; signed-byte result with split/groups 236/254.
@@ -455,6 +462,8 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Round 212: complete native range mutable/const 193/193; native reference mutable/const
 // 194/194; both mutable/const 208/208; mesh field at every use 205; both const records with
 // mesh field observations 214. Original records, observations and protected interfaces restored.
+// DH round 189: Native lookup/extraction-array/node-output work-scope lifetimes, singles, pairs,
+// all and reversed all 181 each; all original producer/read phases restored.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

@@ -138,6 +138,9 @@ struct s_object_flags_256bd0
 // the step selecting the entry with a ternary inside the active test 263 (frame 0x110 through a
 // branchless select, the active byte still spilled); the next result in a named bool 206; the loop
 // distance through vector3d_from_points3d and length_sq3f 208.
+// Round 187: placement angle first 253; angle after position 249; angle last 251;
+// constants first 250; descending fields 243; angle then descending fields 269;
+// short stores first 215; position then descending constants 251. Original order restored.
 // Displacement producer orders xyz/xzy/yzx/zxy/zyx 206 each; all three named squares
 // after the deltas/interleaved with each delta 205/205; successive z-y-x additions 208.
 // One-count forms rejected; original arithmetic and helper restored.

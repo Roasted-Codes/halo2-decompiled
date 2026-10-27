@@ -181,6 +181,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // early BL/stack byte, but frame 0x84); before the listener call 288; after the 0x12c040 call/first/
 // second codec store 173 each; separate bool/byte flag set before the 0x12c040 call 290/280; bool flag 169.
 // Five coherent descriptor size/flags/input publication orders 169/169/171/171/169; reverse send-only/submix-only 167/167; complete reverse order with creation byte spanning reset 280. Original descriptors, byte state and body restored.
+// Round 157: speaker zero at query 338; speaker zero at entry 383; early category zero 165; early first-
+// channel zero 165; speaker/category defaults 383; speaker/first defaults 383; category/first defaults
+// 165; all three defaults 383. Original executable source restored.
 // Retained category index with current-element/advancing native count pointers, each
 // at-use/observed count and byte/Boolean creation state: 165/169/298/311/325/328/327/330.
 // Pointer steps stay in the body; original creation state and count observations restored.
@@ -190,6 +193,10 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 211: category start read from its published field at every creation use, with late byte /
 // late byte-word ordinal / late bool / late bool-word ordinal 393/398/399/401; the same four with
 // state across reset 297/296/296/295. Original first-channel snapshot and body restored.
+// Round 225: shared native descriptor across submix and plain/spatial/both buffer
+// phases 226/206/343; the same with creation byte across reset 282/284/361;
+// plain-submix/spatial-submix with consumed listener storage 226/206. Complete
+// descriptor resets preserved; original independent workspaces and byte lifetime restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
