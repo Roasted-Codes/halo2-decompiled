@@ -5201,6 +5201,8 @@ void __stdcall function_d6bc0(long object_index);
 // Round 166: Complete entry/placement/both byte displacements 172/315/306;
 // with direct countdown 175/325/324; both with later timer/native reset result 324/272.
 // All fast versus unchanged 153; complete original body restored.
+// Round 169: Countdown/spawn timer homes, each with independent displacement/accumulation
+// role names in all four combinations, 153 each. Frame 0x14/0x18 and timer/base homes remain.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
