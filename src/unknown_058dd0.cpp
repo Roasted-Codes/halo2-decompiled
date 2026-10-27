@@ -1289,7 +1289,7 @@ static __forceinline long function_724a6(s_surface_description *arg_0)
 }
 #pragma inline_depth(255)
 
-// score 7 (was 9): the session member is loaded into ecx (retail eax), the level's address into
+// score 7 (was 7): the session member is loaded into ecx (retail eax), the level's address into
 // edx (retail ecx) and the reloaded type into eax (retail edx), one rotation of the scratch
 // registers; the type filter (cmp 5/je, cmp 3/je, cmp 4/jne default) and both arms are retail's.
 // The named condition gives that filter (the || test written in the if lays the default arm
@@ -1338,6 +1338,9 @@ static __forceinline long function_724a6(s_surface_description *arg_0)
 // new classifier/member at use 165; new classifier/all roots and member 153.
 // classifier own inline with barrier 7; classifier own force-inline with barrier 7.
 // classifier own inline without barrier 86; classifier own force-inline without barrier 86.
+// Entry level/type declarations and a shared variant workspace, alone and combined: eight forms 7.
+// Width helper declared inline in its own unit and every prototype 7; force-inline 235 (584 bytes).
+// All restored; the member/level-address/type scratch-register rotation remains.
 // @retail 0x72330
 void function_72330(c_session_state_matchmaking *state)
 {
