@@ -2170,7 +2170,7 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // Earlier: the velocity sums in the material loop load the
 // aligned frame 0x34 agrees; normal/velocity XMM roles, early velocity loads and property-zero retention remain.
 
-// score 137 (was 137): the velocity sums in the material loop load the
+// score 109 (was 137): the velocity sums in the material loop load the
 // running sum second in retail, and the final scale and its stores are
 // scheduled differently.
 // Round 128: shared dot input order 137; consistent inverse-first/inverse-last products 137/137;

@@ -8,7 +8,7 @@
 #include "bounded_2e9530.h"
 #include "child_refresh_2e9210.h"
 
-// score 54 (was 54): Frame agrees; call and result-store ordering differs. Workspace
+// score 0 (was 54): Frame agrees; call and result-store ordering differs. Workspace
 // order 54; retained child 56; field order 58; both 60; input order 58;
 // input with child 60, with field 62, with both 64.
 // @retail 0x2e9210
