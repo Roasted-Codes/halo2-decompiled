@@ -182,23 +182,22 @@ short function_26fe20(long object_index, s_object_marker *markers, short capacit
     return count;
 }
 
-// score 72 (was 72): the distance's products and the first output product differ.
-// vector3d_from_points3d + dot3f(&delta, &up) 4 and the output through a file-private
-// point-along-vector helper (also used by 0x26f3f0) matched, but any new inline helper in this
-// file (it links ahead of src/unknown_072db0.cpp) makes the full check lose 0x73360; the same
-// delta and dot written out by hand 76; up-first output products 72. Without helpers: delta-first
-// products 72; delta in i, j, k order 76; dot in i, j, k order 72; `k + (j + i)` grouping 75.
+/* the point at distance t along a vector from a point */
+static inline void point_along_vector(point3f const *point, vector3f const *vector, real t, point3f *result)
+{
+    result->x = vector->i * t + point->x;
+    result->y = vector->j * t + point->y;
+    result->z = vector->k * t + point->z;
+}
+
 // @retail 0x270130
 bool function_270130(s_object_marker const *marker, point3f const *position, real margin, point3f *out)
 {
     if (marker->unknown6c > 0.f)
     {
         vector3f delta;
-        delta.k = position->z - marker->matrix.position.z;
-        delta.j = position->y - marker->matrix.position.y;
-        delta.i = position->x - marker->matrix.position.x;
-        real distance = marker->matrix.up.k * delta.k + marker->matrix.up.j * delta.j +
-            delta.i * marker->matrix.up.i;
+        vector3d_from_points3d(&marker->matrix.position, position, &delta);
+        real distance = dot3f(&delta, &marker->matrix.up);
         if (distance < 0.f) distance = 0.f;
         else if (distance > marker->unknown6c) distance = marker->unknown6c;
         if (marker->unknown6c > margin * 2.f)
@@ -211,9 +210,7 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
             if (distance < 0.f) distance = 0.f;
             else if (distance > marker->unknown6c) distance = marker->unknown6c;
         }
-        out->x = distance * marker->matrix.up.i + marker->matrix.position.x;
-        out->y = distance * marker->matrix.up.j + marker->matrix.position.y;
-        out->z = distance * marker->matrix.up.k + marker->matrix.position.z;
+        point_along_vector(&marker->matrix.position, &marker->matrix.up, distance, out);
     }
     else
         *out = marker->matrix.position;
@@ -523,12 +520,8 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
                     else fraction = 0.5f;
                     real first_distance = fraction * first_length;
                     real second_distance = fraction * second_length;
-                    start_out->point.x = first.i * first_distance + a->x;
-                    start_out->point.y = first.j * first_distance + a->y;
-                    start_out->point.z = first.k * first_distance + a->z;
-                    out->point.x = second.i * second_distance + c->x;
-                    out->point.y = second.j * second_distance + c->y;
-                    out->point.z = second.k * second_distance + c->z;
+                    point_along_vector(a, &first, first_distance, &start_out->point);
+                    point_along_vector(c, &second, second_distance, &out->point);
                     start_out->output_index = parent_point->output_index;
                     out->output_index = surface->destination_output;
                     *parent_node_index_out = parent_node_index;
