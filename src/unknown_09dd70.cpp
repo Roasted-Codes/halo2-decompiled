@@ -456,7 +456,7 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 196 (was 196): flags/packet/object registers and attachment call conventions differ;
+// score 196 (was 196): Flags/packet/object registers and protected attachment call conventions remain.
 // retail keeps the flags in ebx (reloaded from the parameter after calls), the weapon-slot loop
 // counter as a 32-bit value (inc/cmp 4/jb, no separate down counter) and the slot bit as the
 // masked flags value (and/test, not setne).
@@ -477,6 +477,8 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 199: Native packed packet cell 196; with word copy ordinal 197; captured low-word publication
 // 223; both 196; unsigned copied cell and the same three combinations 196/197/223/196 (fast). All
 // restored.
+// Round 148: native object fields at player, parent, packed identity and final-update receivers
+// 196 each; player+parent, packed+final, first three and all four 196 each.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

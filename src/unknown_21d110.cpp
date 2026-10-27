@@ -308,7 +308,7 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 }
 
 #define sound_effect_delete function_21dcf1
-// score 204 (was 204): Frame eight versus four, state/tag residences and start/delete expansion remain.
+// score 204 (was 204): Frame eight versus four and opposite start/delete expansion remain.
 // Frame eight versus four, state/tag residence and opposite start/deletion expansion remain.
 // Earlier: Frame eight versus four and opposite start/delete expansion remain; eight sensitive callers preserved.
 // Earlier: frame eight versus four and opposite start/delete expansion;
@@ -368,6 +368,8 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // with entry sound declaration 212. Effect-domain forms lose eight caller controls.
 // Round 327: current deletion record/pool/both 211/204/206; public creator noinline 204;
 // with record/pool/both 211/204/206; both observations and boundary with signed class byte 206.
+// Round 148: coherent private start tag/state order, unsigned result, unsigned tag, their pair/all
+// combinations and order with default-NONE rate admission 204 each.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {
