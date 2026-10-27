@@ -153,27 +153,30 @@ long function_26e940(long actor_index)
 // @retail 0x26e9c0
 short function_26e9c0(long actor_index, long joint_index)
 {
+	short result = NONE;
 	s_slot_owner_entry *actor = ACTOR_ENTRY(actor_index);
 
 	for (short i = 0; i < k_maximum_joint_invitations; i++)
 	{
 		if (actor->joint_invitations[i].type != NONE && actor->joint_invitations[i].joint_index == joint_index)
-			return i;
+		{
+			result = i;
+			break;
+		}
 	}
-	return NONE;
+	return result;
 }
 
 // @retail 0x26ed40
 bool joint_decline(long actor_index, short invitation_index)
 {
-	/* retail keeps invitation_index on the stack */
-	short const *reference = &invitation_index;
-	s_joint_invitation *invitation = &ACTOR_ENTRY(actor_index)->joint_invitations[*reference];
+	s_slot_owner_entry *actor = ACTOR_ENTRY(actor_index);
+	s_joint_invitation *invitation = &actor->joint_invitations[invitation_index];
 	joint_state *joint = JOINT_STATE(invitation->joint_index);
 
 	joint->participants[invitation->participant_index].actor_index = NONE;
 	joint->participants[invitation->participant_index].status = _participant_withdrawn;
-	invitation->type = NONE;
+	actor->joint_invitations[invitation_index].type = NONE;
 	return true;
 }
 
@@ -292,18 +295,17 @@ void function_26ec20(s_joint_header const *behavior, long leader_index)
 // @retail 0x26ecc0
 bool function_26ecc0(long actor_index, short invitation_index, s_joint_behavior_state *behavior)
 {
-	/* retail keeps invitation_index on the stack */
-	short const *reference = &invitation_index;
-	s_joint_invitation *invitation = &ACTOR_ENTRY(actor_index)->joint_invitations[*reference];
-	short participant_index = invitation->participant_index;
+	s_slot_owner_entry *actor = ACTOR_ENTRY(actor_index);
+	s_joint_invitation *invitation = &actor->joint_invitations[invitation_index];
 	joint_state *joint = JOINT_STATE(invitation->joint_index);
+	short participant_index = invitation->participant_index;
 
 	joint->participants[participant_index].status = _participant_accepted;
 	behavior->participant_index = participant_index;
 	behavior->waiting = false;
 	behavior->state_joint_index = invitation->joint_index;
 	joint->participant_count++;
-	invitation->type = NONE;
+	actor->joint_invitations[invitation_index].type = NONE;
 	return true;
 }
 

@@ -24,22 +24,38 @@ struct s_sky_surface_record
     dword color1;
 };
 
-PRIVATE __forceinline long sky_surface_tag(short index)
+/* the tag data of a scenario sky, or NULL when the index or its tag is NONE */
+PRIVATE __forceinline byte *sky_surface_data(short index)
 {
     byte *scenario = (byte *)g_4e0350;
-    long result = NONE;
+    long tag_index = NONE;
     if (index >= 0)
     {
         long count = *(long *)(scenario + 8);
         if (index < count)
-            result = *(long *)(*(byte **)(scenario + 0xc) + index * 8 + 4);
+            tag_index = *(long *)(*(byte **)(scenario + 0xc) + index * 8 + 4);
     }
+    byte *result = NULL;
+    if (tag_index != NONE)
+        result = g_4e3b44[tag_index & 0xffff].bytes;
     return result;
 }
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trig/color homes remain.
+// score 150 (was 213): Frame 0x8c agrees; the selector join and esi/edi saves now match (the sky
+// lookup helper returns the tag data, NULL by default, so the NONE join is not threaded). Left:
+// the sky/count homes, the pending trig products (retail computes cos/sin into two temporaries
+// before the three adds and adds the direction as the memory operand), blend registers, the
+// collision test's sete and the color0 store order.
+// Lane 5 r77 on the kept form: count without volatile 191 (804 bytes); light contribution vector
+// with fields read at each use 209 (837 bytes), with a plain count 166, plus the lights pointer
+// read in the loop 161, plus the count read from the field at each use 159 (sky/count homes and the
+// temporaries' homes then match retail; the adds still load the direction first, 4 bytes long),
+// plus color0 stored first 160; direction_from_angles for the contribution 173; pin_real for the
+// blend and colors 161 (same code); a pointer add helper and contribution array/initializer/
+// declaration-order forms keep the direction-first adds (screened); color0 first alone 149.
+// Earlier 213: frame 0x8c agrees; selector/count saves, sentinel join and pending trig/color homes remain.
 // Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
 // Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
@@ -76,73 +92,69 @@ long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_
     if (g_4b9ee9 && g_4b9eec != NONE)
     {
         long index = g_4b9eec;
-        long sky_index = sky_surface_tag((short)index);
-        if (sky_index != NONE)
+        byte *sky = sky_surface_data((short)index);
+        if (sky != NULL)
         {
-            byte *sky = g_4e3b44[sky_index & 0xffff].bytes;
-            if (sky != NULL)
+            vector3f direction = *g_4687a4;
+            color3f color = *(color3f *)g_468718;
+            real strength = 0.0f;
+            long volatile count = *(long *)(sky + 0x78);
+            if (count > 0)
             {
-                vector3f direction = *g_4687a4;
-                color3f color = *(color3f *)g_468718;
-                real strength = 0.0f;
-                long volatile count = *(long *)(sky + 0x78);
-                if (count > 0)
+                byte *lights = *(byte **)(sky + 0x7c);
+                for (long i = 0; i < count; ++i)
                 {
-                    byte *lights = *(byte **)(sky + 0x7c);
-                    for (long i = 0; i < count; ++i)
+                    byte *light = lights + i * 0x34;
+                    if (*(long *)(light + 0x2c) > 0)
                     {
-                        byte *light = lights + i * 0x34;
-                        if (*(long *)(light + 0x2c) > 0)
+                        byte *entry = *(byte **)(light + 0x30);
+                        real yaw = *(real *)(light + 0xc);
+                        real pitch = *(real *)(light + 0x10);
+                        real cosine = (real)cos(pitch);
+                        direction.i += (real)cos(yaw) * cosine;
+                        direction.j += (real)sin(yaw) * cosine;
+                        direction.k += (real)sin(pitch);
+                        if (i == 0)
                         {
-                            byte *entry = *(byte **)(light + 0x30);
-                            real yaw = *(real *)(light + 0xc);
-                            real pitch = *(real *)(light + 0x10);
-                            real cosine = (real)cos(pitch);
-                            direction.i += (real)cos(yaw) * cosine;
-                            direction.j += (real)sin(yaw) * cosine;
-                            direction.k += (real)sin(pitch);
-                            if (i == 0)
-                            {
-                                color = *(color3f *)(entry + 4);
-                                strength = *(real *)(entry + 0x10);
-                            }
-                            else if (*(real *)(entry + 0x10) > 0.0f)
-                            {
-                                real blend = 1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f);
-                                if (blend < 0.0f) blend = 0.0f;
-                                else if (blend > 1.0f) blend = 1.0f;
-                                function_131c20(&color, (color3f *)(entry + 4), 0, blend, &color);
-                                strength += *(real *)(entry + 0x10);
-                            }
+                            color = *(color3f *)(entry + 4);
+                            strength = *(real *)(entry + 0x10);
+                        }
+                        else if (*(real *)(entry + 0x10) > 0.0f)
+                        {
+                            real blend = 1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f);
+                            if (blend < 0.0f) blend = 0.0f;
+                            else if (blend > 1.0f) blend = 1.0f;
+                            function_131c20(&color, (color3f *)(entry + 4), 0, blend, &color);
+                            strength += *(real *)(entry + 0x10);
                         }
                     }
-                    function_30bf0(&direction);
-                    vector3f ray;
-                    ray.i = direction.i * 100.0f;
-                    ray.j = direction.j * 100.0f;
-                    ray.k = direction.k * 100.0f;
-                    bool hit = function_1697c0(0x10000001, point, &ray, ignore_object_index, NONE,
-                        (s_collision_result_1697c0 *)collision);
-                    if (!hit || *(short *)(collision + 0x5a) != NONE)
-                        color = *(color3f *)(sky + 0x34);
                 }
-                else
-                {
+                function_30bf0(&direction);
+                vector3f ray;
+                ray.i = direction.i * 100.0f;
+                ray.j = direction.j * 100.0f;
+                ray.k = direction.k * 100.0f;
+                bool hit = function_1697c0(0x10000001, point, &ray, ignore_object_index, NONE,
+                    (s_collision_result_1697c0 *)collision);
+                if (!hit || *(short *)(collision + 0x5a) != NONE)
                     color = *(color3f *)(sky + 0x34);
-                    direction.i = direction.j = direction.k = -1.0f;
-                    function_30bf0(&direction);
-                }
-                record->direction = direction;
-                record->color0 = 0xff555555;
-                if (color.red < 0.0f) color.red = 0.0f;
-                else if (color.red > 1.0f) color.red = 1.0f;
-                if (color.green < 0.0f) color.green = 0.0f;
-                else if (color.green > 1.0f) color.green = 1.0f;
-                if (color.blue < 0.0f) color.blue = 0.0f;
-                else if (color.blue > 1.0f) color.blue = 1.0f;
-                record->color1 = pack_color3f(&color);
-                result = 0;
             }
+            else
+            {
+                color = *(color3f *)(sky + 0x34);
+                direction.i = direction.j = direction.k = -1.0f;
+                function_30bf0(&direction);
+            }
+            record->direction = direction;
+            record->color0 = 0xff555555;
+            if (color.red < 0.0f) color.red = 0.0f;
+            else if (color.red > 1.0f) color.red = 1.0f;
+            if (color.green < 0.0f) color.green = 0.0f;
+            else if (color.green > 1.0f) color.green = 1.0f;
+            if (color.blue < 0.0f) color.blue = 0.0f;
+            else if (color.blue > 1.0f) color.blue = 1.0f;
+            record->color1 = pack_color3f(&color);
+            result = 0;
         }
     }
     return result;
