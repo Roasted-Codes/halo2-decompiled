@@ -518,7 +518,9 @@ struct s_sound_send_parameters
 			dword : 2;
 			dword flag3 : 1;
 			dword flag4 : 1;
-			dword : 27;
+			dword : 1;
+			dword flag6 : 1;
+			dword : 25;
 		};
 	};
 	real level;
@@ -568,7 +570,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 449 (was 449): Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
+// score 449 (was 449): Frame 0xec versus 0x94, workspace homes and repeated-conversion residency remain.
+// Earlier 449 from 463; Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
+// Frame 0xdc versus 0x94; workspace overlap and repeated conversions remain.
 // Round 55: retail's 0x37c5e4 calls are SetMixBins inside an inlined 0x2216f0 with a NULL list (its dead
 // count/pairs stores sit before each call), all three sets reuse one settings object, level00 is read
 // into esi and level04 into a 4-byte snapshot after the copy, and there are no loops: frame 0x94 =
@@ -611,6 +615,12 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // last-two and all workspace scopes 454/460/475/520 fast; with word ordinals 436 fast, 449 plain (kept).
 // Automatic table with first rear call or copied levels 456/466 fast. Table after settings copy or at first
 // traversal 427/428 fast, 455/450 plain; with word ordinals 437/438 fast. Original table producer kept.
+// Automatic routing word/byte/short tables with word ordinals; word/byte/short tables with long ordinals;
+// long/word tables with byte ordinals: 435/427/435/424/419/424/436/435 (fast); all restored. Ordinary t05
+// 455, t02 458, t04 456, t06 456; no qualifying gain.
+// Automatic-table pointer walks first/second/first+second/third/first+third/second+third/all:
+// 436/436/437/432/431/431/431 fast (control 436); shared table-end pointer 431.
+// All pointer walks 446 plain, three-point gain rejected; original word ordinals restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -653,12 +663,14 @@ void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effe
 }
 
 /* the level of the effect sends: none in mode 0 */
-inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_send_parameters *parameters, long mode)
+inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_parameters *parameters, long mode)
 {
-	return mode == 1 ? (TEST_FLAG(parameters->flags, 6) ? g_44f70c : effects->m_settings.level2c) : effects->m_settings.level10;
+	if (mode != 1) return effects->m_settings.level10;
+	if (TEST_FIELD_BIT(parameters->flag6)) return g_44f70c;
+	return effects->m_settings.level2c;
 }
 
-// score 447 (was 447): Frame twelve agrees; selected-level homes and SSE argument staging remain.
+// score 453 (was 447): Frame twelve agrees; incoming flags/receiver homes and SSE argument staging remain.
 // Frame 0xc agrees; selected-level homes and SSE argument staging remain different.
 // Earlier 453 from 460: frame twelve agrees; selected-level homes and SSE argument staging remain.
 // Base snapshot 514 (caller lost); bin snapshots 511; both 484; direct
@@ -680,12 +692,24 @@ inline real const &sound_effects_send_level(c_sound_effects *effects, s_sound_se
 // settings record 453; ordinary settings record 474; input record 517; special record/early gains 455;
 // ordinary record/early offset 476 (fast). Keep only paired gain declarations before the pure
 // selector.
+// Round 144: live ordinary gains with retained thresholds 500; selected-field reference 519;
+// word destinations 510; both 528; primary value with those four forms 503/521/490/518.
+// All restored; the 490 form loses the dispatcher. Frame/selected-level/SSE homes remain.
 // Reused buffer/alternate/all channel subtotals 470/498/520; complete front/rear
 // pair subtotals 484/458, both 494; repeated boosted offset 465; complete subtotal
 // graph 521. All restored; selected-level homes and SSE argument staging remain.
 // Live front/rear threshold references 489; selector field too 504; gain fields too
 // 515; both groups 533; native destinations with those four forms 498/518/528/544.
 // All expressions and opening body restored.
+// Round 171: Shared scalar selector/forced expansion/readonly inputs 447 each; ordinary input copy
+// 480; primary value 454; both copies 481; word destinations 461; primary value with native
+// destinations 457. Input-copy and final native-destination forms lose the dispatcher; all restored.
+// Frame 0xc agrees; selected-level homes, full-word destinations and SSE staging remain.
+// Shared selector complete-result/default-first/scalar-early/reference-early 447/454/454/451;
+// with native bit member 453/453/453/455. Complete scalar result rejected for one-use field copy.
+// Native-bit scalar early returns retained: split 238 to 224, direct 447 to 453, net eight plain.
+// Positive-mode original/native direct returns 447/447/453/453 (split 235 each, rejected);
+// native routing bit two on retained selector graph 453 (tie, reverted).
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -754,7 +778,11 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 	}
 }
 
-// score 238 (was 238): Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain. Round 55: retail
+// score 224 (was 238): Frame 0x20 versus 0x18, mode/input-level homes and the second x87 tail sum remain.
+// Earlier 238 from 254; complete scalar selector result 228 plain (one-use copy rejected); default-first/early
+// scalar/reference 232/243/238 fast; native-bit forms 226/224/224/227 with direct-route regressions.
+// Earlier: Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
+// Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain. Round 55: retail
 // tests send flag 6 as a bitfield (`shr eax, 6; test al, 1`, also in 0x2aefe0): a flag6 bitfield in the
 // helper gives 227 plain but 0x2aefe0 456 (447); with gain0c read at each use 261 (aligned closer:
 // retail never snapshots it); flags 2/3 as bitfields too 227/456; bool alternate with plain long
@@ -805,6 +833,13 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // live front/native widths and native-bit widths 256/256; input level/offset fields 322;
 // selected-field reference with live front, without/with native bit 312/312 (dispatcher lost).
 // Unqualified right/rear-left/both/rear-right/right+rear-right/both-rear/all words 267/261/266/262/267/261/267; all with native routing bit 265. Every right-word removal loses dispatcher; other subsets regress. Frame 0x1c/0x18, mode/level homes and tail sums remain.
+// Uniform gain/setting/both/inner-level/gain-inner/setting-inner/all sum operand orders; paired tail
+// operand order: 238/238/238/238/238/238/238/238 (fast); all restored.
+// Append native destination 238; shared append cached index/stores/cursor 269/265/252;
+// native destination with cached index/stores/cursor 269/265/252; cursor plus index 269.
+// All output-residency changes lose the dispatcher; append helper and body restored.
+// Negative-mode scalar selector with native bit six 224 plain; direct route 453, net eight.
+// Positive-mode scalar direct returns 235 with original/native extraction (three-point gains rejected).
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

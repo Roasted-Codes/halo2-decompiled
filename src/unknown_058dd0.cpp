@@ -1310,6 +1310,34 @@ static __forceinline long function_724a6(s_surface_description *arg_0)
 // loads before the limit store); an unsigned type read 86; summary/selected results as if
 // statements 7/7; member after the collection 8; values first 7; member through an inline getter
 // 7; 0x5c240 called directly is inlined (580 bytes; a noinline declaration here is ignored).
+// retail tests the variant type as cmp 5/je, cmp 3/je, cmp 4/jne default,
+// (MiniMax S run 4: an else-if chain of equality gotos for 5, 3 and 4 gives retail's filter but
+// scores 7, a gain under the bar: the session member, level address and reloaded type stay in
+// the wrong registers.)
+// ours turns the 3/4 cases into a jl/jg range; the session member travels in eax (ours ecx)
+// and the reloaded type in edx (ours eax). Every goto-free form lays the default block out
+// first: one 5 || 3 || 4 test or its negation (100), case 5/3/4 in one switch (108), cases
+// 1-2 and 3-5 with __assume(0) (134); separate case 3 and case 4 (103); 5 || 3 then a case 4
+// switch (100); a negated && test before the special block (100); the || test around a
+// case 1-2/3-5 switch with __assume(0) (111). The table itself is function_193440 inlined.
+// Member at each use 165; member before session root 9; common limit result 190;
+// retained width/minimum results 99/162; typed variant storage/native record copy 9/9;
+// typed storage with helper classification 128. Frame and first +0xe remain unchanged.
+// helper classification with fallback noinline 128; without the barrier 145;
+// fallback noinline alone 9; immutable member 9; member after collection 10;
+// immutable variant 9; immutable summary 9; immutable values 9;
+// immutable type 9; unsigned type 9.
+// Further trials: member/level-address allocation, range dispatch and reloaded type remain.
+// own fallback noinline/held dispatch 9; own fallback noinline/classifier with barrier 7.
+// own fallback noinline/classifier 86; own fallback noinline/classifier with native output 7.
+// own fallback inline/held dispatch 57; own fallback inline/classifier with barrier 128.
+// own fallback inline/classifier 145; own fallback inline/classifier with native output 128.
+// new classifier/uniform session 166; new classifier/collection at use 44.
+// new classifier/session and collection 184; new classifier/session and output 166.
+// new classifier/collection and output 44; new classifier/all roots 184.
+// new classifier/member at use 165; new classifier/all roots and member 153.
+// classifier own inline with barrier 7; classifier own force-inline with barrier 7.
+// classifier own inline without barrier 86; classifier own force-inline without barrier 86.
 // @retail 0x72330
 void function_72330(c_session_state_matchmaking *state)
 {

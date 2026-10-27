@@ -1379,7 +1379,10 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 241 (was 248): frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
+// score 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
+// Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
 // reloading the time globals) and esi/edi saved before the unit test (retail after it) differ.
 // Round 55 kept: the speed (5th argument) and acceleration limits passed in retail's roles (15/6 speed,
 // 72/27 acceleration), defaults in retail's store order, each look angle clamped in one statement.
@@ -1395,12 +1398,16 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
+// Earlier 250 (was 250): Frame 0x28 versus 0x2c and unit/mode/look homes remain.
 // Frame 0x28 versus 0x2c and unit/mode/look homes remain.
 // Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407; all
 // receivers/direct velocity 617/617 (fast preview 252).
 // frame 0x28/0x2c and unit/mode/look homes remain.
 // External user/unit/weapon records and user-unit pair 252 each; native dword
 // index/mode, callback at update, and unit-weapon-index combination 252 each (fast base 252).
+// Indexed user-record reads at every access 550; with live flags 544; direct channels 560;
+// both 538; complete coefficient selection with those four forms 550/544/560/538.
+// Frame stays 0x28 versus 0x2c; original user receiver and all smoothing inputs restored.
 // Complete entry spring phase, override-only receiver, entry look outputs and both 250 each;
 // narrower aiming pair within that phase, with the same four storage combinations, 254 each
 // (fast control 250, full baseline 248). Original phase scopes and all five smoothing calls restored.
@@ -1794,6 +1801,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // byte-logical-query-eligibility 422; byte-compound-query-eligibility 430.
 // word-logical-query-eligibility 448; word-compound-query-eligibility 448.
 // long-logical-query-eligibility 451; long-compound-query-eligibility 446.
+// Round 373: native quaternion-transform sway output, forced last/first 411/410;
+// ordinary inline last/first 769/768. Native orientation output gives the same
+// four scores. Reduced control 411/2166; full baseline 410/2154. All restored.
 // Native packed animation flags, logical result at bool/byte/word/long width 411/411/443/443; conditional result 446/446/442/443 (fast control 411/2166; full 410/2154). Frame 0x78 agrees; early blend byte and later receiver/sway homes remain.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)

@@ -110,7 +110,8 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 	out->up.k = inertia.m_col2(2);
 }
 
-// score 184 (was 184): Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
+// score 184 (was 184): frame 0x94 versus 0xc4 and query/rotation, reciprocal/product and brake homes remain.
+// Earlier: Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
 // Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
 // aligned query/rotation overlap, motion/reciprocal and cap-result allocation remain.
 // Earlier: Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
@@ -148,6 +149,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Query-source-only matrix with early/late world declarations 213/213; broad rotation 216;
 // distinct first world output 194; completed transpose alone/with first output 277/240;
 // late world and broad rotation 216; first world and broad rotation 194. All restored.
+// Shared double-factor cap scaling in place/through completed output 227/302 fast;
+// with broad rotation 235/310, first matrix output 239/314, completed transpose 240/315.
+// Query/rotation frame fixes still worsen cap scheduling; original helpers and matrices restored.
 // Round 160: Complete force products, linear integration results, angular integration results, both
 // result sets, norm squares, squared cap, all cap products and force-plus-cap products all 184. Every
 // expression tree, input observation, existing helper, matrix role and signed contact loop restored.
@@ -159,6 +163,15 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Virtual output pointer/mutable receiver/both 184/184/184; uniform angular terms alone/with
 // pointer/receiver/both 184 each; new query/product contract with distinct first result 194.
 // Aligned query/rotation overlap remains.
+// Coordinated body-scalar/limiter-scalar/query-output names and combinations
+// 184/184/184/184/184/184/184/184; last form also makes repeated body scalars const. All restored.
+// Round 168: Complete native converted matrix by fields/aggregate 270/270; with broad rotation
+// 268/268, distinct first product 290/290, both 273/273. Converter and body restored.
+// Combined scale/cap ownership: pointer forced/ordinary, reference and native inputs
+// 292/292/292/241; with broad rotation 274/274/274/256. Original limiter and scopes restored.
+// Round 333: Ordinary limiter/cap-first/both contracts 184/184/184; cap-first/both with broad rotation 221/221; ordinary limiter/cap-first/both with ordinary query expansion 184/184/184. Broad forms recover frame 0xc4 but regress; all original helpers, matrix scopes and calls restored.
+// Complete world-inertia producer with matrix/state pointer/reference inputs, forced 233 each;
+// ordinary matrix/state pointer/reference 462/468/462/468. Original query boundary restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
