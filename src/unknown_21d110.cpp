@@ -415,6 +415,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 179: global availability fields at each use, direct/complete/failure/staged result
 // at Boolean storage 204/204/204/204; native byte storage 204/204/204/204.
 // Original availability receiver, helper, field types and expansion policy restored.
+// Round 177: Complete start admission bool/byte/short/long and their complete complements
+// 204 each; every sensitive caller control remains matched. Original helper and body restored;
+// eight-byte frame and opposite start/delete expansion remain.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

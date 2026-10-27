@@ -709,6 +709,9 @@ long function_1469f0(real seconds);
 // shared scan/selected transition workspace 280/280/339/339. Unchanged fast control 280 versus full
 // 279; frame 4/12 and early slot/state/final-cursor homes remain. Original executable source, fixed
 // scan bounds and state/call observations restored.
+// Round 178: Paired zero chains for old selection/cooldowns/both/active clears/old+active/
+// cooldowns+active/all/all opposite order 280/280/280/280/280/280/280/280 fast, control 280; full 279.
+// Four-byte frame and slot/state/final-cursor homes persist; original stores restored.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {

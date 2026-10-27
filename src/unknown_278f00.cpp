@@ -81,6 +81,9 @@ void __stdcall function_b8890(long arg_0);
 // Unsigned first/second/both handle arrays 212/212/212; first/second/both
 // arrays with unsigned classification 212/212/212; complete unsigned processing 212;
 // unsigned arrays/processing with original signed classification 212. Original storage restored.
+// Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
+// combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
+// original induction restored. List/index/second-count homes and cleanup scheduling remain.
 // @retail 0x278f00
 void function_278f00()
 {
