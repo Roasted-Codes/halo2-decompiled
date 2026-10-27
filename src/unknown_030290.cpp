@@ -71,62 +71,34 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
-// score 112 (was 112): Frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes still differ.
-// Earlier: frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes differ.
-// coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
-// Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
-// only an XMM0/XMM1 colouring swap remains (retail keeps the horizontal
-// coordinate in XMM0 and the depth in XMM1, ours the other way round, through the whole body).
-// The half-viewport values as a local box2f 86 (kept: retail keeps them in four adjacent
-// slots, left/right/top/bottom); then depth first 85; r2 inline 86; coefficients after the box
-// 109; ratio before root 101; coordinates as a vector3f 86; cy/cz/cx order 117; a forceinline
-// per-axis helper 118; a 600 s permuter run, none below 86. No-link screens of every operand
-// and term order, names, vector locals and displacement forms keep the same colouring.
-// Earlier forms (164/112): coefficient names 209; viewport names 209; vertical coordinate first 211;
-// tangent names 209; shared root/ratio/tangent workspaces 209.
-// In-place displacements 257; depth-radius product 233; deferred second
-// tangents 164; near-plane early exit 240; shared depth square 209.
-// Direct radius 193; paired horizontal viewport observations 195; interleaved
-// first viewport observation 203; guarded second coordinates 193; invalid-depth
-// arms first 182. These forms retain the delayed second tangent calculations.
-// Direct-radius failed-discriminant arms first 185; behind-plane arm first
-// 213; named tangent quotients 193; ratio before root 193; earlier radius
-// square 193; shared root products 212.
-// Earlier: viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
-// Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
-// eager first tangent coordinates 164; in-place tangent projection 164.
-// Split viewport conversions 164; viewport conversions first 176; horizontal tangent scope 164;
-// tangent blend weights 164; horizontal root name 164.
-// Second depths early 197; second coordinates early 232; second pairs early 209;
-// horizontal pair early 247; vertical pair early 241; coordinate-before-depth pairs 112;
-// early depths with guarded coordinates 197; inline first coordinates 209.
-// On early coordinate/depth pairs: direct radius 205; coordinate role names 112.
-// Early-pair context: vertical coefficient names 112; vertical edge names 112; vertical-first coefficients 118;
-// coefficient fields at use 252; viewport first 130; later vertical viewport 217; later vertical coefficients 180; both later 217.
-// Coordinate accumulator x/depth/all 112 each; horizontal/depth/all leading products 112 each;
-// shared camera scale 245; branch-defined scaled components 137.
-// entry projection declarations 112; shared tangent declarations 149; both declarations 149; radial
-// values first 222; both radial squares first 227; viewport after discriminant 214; coefficients after
-// discriminant 137; shared difference helper 112.
+/* the vector scaled and rotated into the camera's frame (no translation) */
+__inline void transform_vector(s_camera const *camera, vector3f const *v, vector3f *out)
+{
+	real x = v->i, y = v->j, z = v->k;
+	if (camera->scale != 1.f)
+	{
+		x = camera->scale * x;
+		y = camera->scale * y;
+		z = camera->scale * z;
+	}
+	out->i = camera->right.i * x + camera->up.i * y + camera->forward.i * z;
+	out->j = camera->right.j * x + camera->up.j * y + camera->forward.j * z;
+	out->k = camera->right.k * x + camera->up.k * y + camera->forward.k * z;
+}
+
+/* the screen bounds of a sphere (centre p, radius) seen through the camera:
+   the tangents to it in the horizontal and vertical planes, projected */
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
+	/* read through its address, so the radius stays in its stack slot as in retail */
 	real const *radius_home = &radius;
 	real const &radius_value = *radius_home;
-	real dx = p->x - view->position.x;
-	real dy = p->y - view->position.y;
-	real dz = p->z - view->position.z;
-	real sx = dx, sy = dy, sz = dz;
-	if (camera->scale != 1.f)
-	{
-		sx = camera->scale * dx;
-		sy = camera->scale * dy;
-		sz = camera->scale * dz;
-	}
-
-	real cx = camera->forward.i * sz + camera->up.i * sy + camera->right.i * sx;
-	real cy = camera->forward.j * sz + camera->up.j * sy + camera->right.j * sx;
-	real cz = (camera->forward.k * sz + camera->up.k * sy + camera->right.k * sx) * -1.f;
+	vector3f delta;
+	vector3d_from_points3d(&view->position, p, &delta);
+	transform_vector(camera, &delta, &delta);
+	real cy = delta.j;
+	real cz = delta.k * -1.f;
 
 	if (cz + radius_value > 0.01f)
 	{
@@ -140,19 +112,19 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 		half.x1 = view->bounds.right * 0.5f;
 		half.y1 = view->bounds.bottom * 0.5f;
 
-		real xz = cx * cx + cz * cz;
+		real xz = delta.i * delta.i + cz * cz;
 		real r2 = radius_value * radius_value;
 		real disc = xz - r2;
 		if (disc > k_real_epsilon)
 		{
 			real root = (real)sqrt(disc);
 			real k = radius_value / xz;
-			real za = cz - (cz * radius_value + root * cx) * k;
-			real xb = cx - (cx * radius_value - root * cz) * k;
-			real zb = cz - (cz * radius_value - root * cx) * k;
+			real za = cz - (cz * radius_value + root * delta.i) * k;
+			real xb = delta.i - (delta.i * radius_value - root * cz) * k;
+			real zb = cz - (cz * radius_value - root * delta.i) * k;
 			if (za > 0.01f)
 			{
-				real xa = cx - (cx * radius_value + root * cz) * k;
+				real xa = delta.i - (delta.i * radius_value + root * cz) * k;
 				real n = xa / za * m78 + m98;
 				bounds->x0 = (1.f - n) * half.x0 + (n + 1.f) * half.x1;
 			}

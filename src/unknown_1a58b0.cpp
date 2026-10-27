@@ -2190,28 +2190,7 @@ long function_cb6d0(long unit_index);
 bool function_cb810(long unit_index, vector3f *vector);
 long function_baf40(long object_index);
 
-// score 4 (was 140): at retail's length; only the x87 dot product's term order differs (ours the i
-// term first, retail the j term).
-// Round 88: the relative velocity through vector3d_from_points3d (retail's three-float spill) 63, with
-// the player view formed between the pitch cosine and the yaw terms 19, with an offset pointer for
-// the candidate's offset 4 (kept). Offset product operands swapped 63; planar length terms reversed
-// 65; player view after the facing vector 141; relative declared first 19; cross-product operands
-// swapped 19; planar length before the difference 22; a 600 s permuter run on the 19 form, none below
-// 19; on the 4 form: dot terms or operands swapped 4/4/4; offset pointer declared earlier or const 4/4;
-// a 2-D dot-product helper 4.
-// Earlier: frame 0xb4 versus 0xb8; output record uses stack/EBP, retail EBX.
-// Full-width selector 203; later player view 200; wide secondary selector 177;
-// native vector/workspace role names 177; outer return guard 177.
-// Reversed velocity lexical homes 177; x/y/z scalar names 177; combined 177;
-// geometry-only scope 177; target frame pointer 264.
-// Round 280: entry workspaces 177; shared angle construction 202; in-place shared velocity difference 225;
-// candidate score tests 186; retained direction unit index 210.
-// Depth zero 280; target size 280; global optimization off 672;
-// record defaults before vector zeroing 179; planar length before velocity differences 181.
-// Controlled-unit snapshot 209; persistent score pair 186; weight/candidate guards 177/177; nested selection 185.
-// Selector interval 181; chained sentinels 177; chained score zero 177; component order 177; native score
-// clear 201. Output record reference 177; selected-object snapshot 177; native offset copy 242; guarded
-// relative components 211; empty planar path first 194. Contributor callees unchanged.
+/* the yaw and pitch rates toward the target chosen for a player's unit */
 // @retail 0x1a4900
 void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 {
@@ -2289,8 +2268,10 @@ void __stdcall function_1a4900(long arg_0, s_186ab2 *arg_1, vector3f *arg_2)
 				{
 					real local_17 = (real)sqrt(local_16);
 
+					real planar_dot = offset->i * relative.i + offset->j * relative.j;
+
 					arg_2->i = (offset->i * relative.j - offset->j * relative.i) / local_16;
-					arg_2->j = (relative.k * local_17 - (offset->j * relative.j + offset->i * relative.i) / local_17 * offset->k) /
+					arg_2->j = (relative.k * local_17 - planar_dot / local_17 * offset->k) /
 						(offset->k * offset->k + local_16);
 				}
 				else

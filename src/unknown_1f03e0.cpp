@@ -513,19 +513,16 @@ void function_1f2a80(byte const *request, bool moving,
         *out = *g_4687b0;
 }
 
-PRIVATE __forceinline void function_1f1461(vector3f const *arg_0, vector3f const *arg_1, vector3f *arg_2)
-{
-	arg_2->i = arg_0->j * arg_1->k - arg_0->k * arg_1->j;
-	arg_2->j = arg_0->k * arg_1->i - arg_0->i * arg_1->k;
-	arg_2->k = arg_0->i * arg_1->j - arg_0->j * arg_1->i;
-}
-
 PRIVATE __forceinline byte function_1f1462(dword arg_0)
 {
 	return (arg_0 >> 3) & 1;
 }
 
 // score 182 (was 182): frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
+// Round 90: the state dot through dot3f 262 / through a branch-local pointer 206 (both break caller 0x1e5af0);
+// the rotation dot through shape_dot 182 (same code), through dot3f 248; the plain mode bit test for the
+// one-caller bit helper 299 (breaks 0x1e5af0); the file's contact_cross for the duplicate cross helper 182
+// (same code; kept, the duplicate removed).
 // Earlier 182 (was 195): state/forward registers agree; rotation scheduling differs.
 // Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
 // vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
@@ -563,7 +560,7 @@ void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *u
     {
         vector3f up = ground->normal;
         vector3f axis;
-        function_1f1461((vector3f const *)(state + 0x100), &up, &axis);
+        contact_cross((vector3f const *)(state + 0x100), &up, &axis);
         bool rotate = true;
         if (function_30bf0(&axis) == 0.0f)
         {
@@ -583,23 +580,23 @@ void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *u
             real cosine = (real)cos(angle);
             real dot = (limited.k * axis.k + limited.j * axis.j + limited.i * axis.i) * (1.0f - cosine);
             vector3f cross;
-            function_1f1461(&limited, &axis, &cross);
+            contact_cross(&limited, &axis, &cross);
             limited.k = axis.k * dot + limited.k * cosine - cross.k * sine;
             limited.i = dot * axis.i + limited.i * cosine - cross.i * sine;
             limited.j = axis.j * dot + limited.j * cosine - cross.j * sine;
-            function_1f1461(&limited, &up, &cross);
+            contact_cross(&limited, &up, &cross);
             if (cross.k * axis.k + cross.j * axis.j + cross.i * axis.i > 0.0f)
                 up = limited;
         }
         vector3f const *old_forward = (vector3f const *)(state + 0xf4);
         vector3f cross;
-        function_1f1461(old_forward, &up, &cross);
+        contact_cross(old_forward, &up, &cross);
         vector3f forward;
-        function_1f1461(&up, &cross, &forward);
+        contact_cross(&up, &cross, &forward);
         if (function_30bf0(&forward) == 0.0f)
         {
-            function_1f1461(&up, (vector3f const *)(state + 0x100), &cross);
-            function_1f1461(&up, &cross, &forward);
+            contact_cross(&up, (vector3f const *)(state + 0x100), &cross);
+            contact_cross(&up, &cross, &forward);
             if (function_30bf0(&forward) == 0.0f)
             {
                 up = *g_4687b0;
@@ -642,40 +639,6 @@ PRIVATE inline real shape_dot(vector3f const &a, vector3f const &b)
     return a.k * b.k + a.j * b.j + a.i * b.i;
 }
 
-#pragma optimize("s", on)
-PRIVATE __forceinline void function_1f087c(vector3f *arg_0, vector3f const *arg_1, vector3f const *arg_2)
-{
-    real local_0 = arg_1->i + arg_2->i;
-    real local_1 = arg_1->j + arg_2->j;
-    real local_2 = arg_1->k + arg_2->k;
-    arg_0->i = local_0;
-    arg_0->j = local_1;
-    arg_0->k = local_2;
-}
-PRIVATE __forceinline void function_1f087d(vector3f *arg_0, vector3f const *arg_1, real arg_2, vector3f const *arg_3)
-{
-    real local_0 = arg_1->i * arg_2 - arg_3->i;
-    real local_1 = arg_1->j * arg_2 - arg_3->j;
-    real local_2 = arg_1->k * arg_2 - arg_3->k;
-    arg_0->i = local_0;
-    arg_0->j = local_1;
-    arg_0->k = local_2;
-}
-PRIVATE __forceinline void function_1f087e(vector3f *arg_0, real arg_1)
-{
-    arg_0->i *= arg_1;
-    arg_0->j *= arg_1;
-    arg_0->k *= arg_1;
-}
-PRIVATE __forceinline void function_1f087f(vector3f *arg_0, vector3f const *arg_1, vector3f const *arg_2, real arg_3)
-{
-    real local_0 = arg_1->i - arg_2->i * arg_3;
-    real local_1 = arg_1->j - arg_2->j * arg_3;
-    real local_2 = arg_1->k - arg_2->k * arg_3;
-    arg_0->i = local_0;
-    arg_0->j = local_1;
-    arg_0->k = local_2;
-}
 
 PRIVATE __forceinline void function_1f087b(vector3f const *arg_0, vector3f const *arg_1, vector3f *arg_2)
 {
@@ -687,16 +650,7 @@ PRIVATE __forceinline void function_1f087b(vector3f const *arg_0, vector3f const
     arg_2->k = local_2;
 }
 
-PRIVATE __forceinline vector3f function_1f0873(vector3f const &arg_0, vector3f const &arg_1)
-{
-    vector3f local_0;
-    local_0.i = arg_0.j * arg_1.k - arg_0.k * arg_1.j;
-    local_0.j = arg_0.k * arg_1.i - arg_0.i * arg_1.k;
-    local_0.k = arg_0.i * arg_1.j - arg_0.j * arg_1.i;
-    return local_0;
-}
 
-#pragma optimize("", on)
 struct s_flags_1f0870
 {
     dword enabled : 1;
@@ -707,48 +661,98 @@ struct s_flags_1f0870
     dword unknown5 : 27;
 };
 
-PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f const *arg_2, byte const *arg_3)
+
+// score 590 (was 582): frame 0x34 versus 0x30 and direct/vector homes remain; retail threads the
+// flying test across the desired normalization (eight 0x30bf0 calls, the ground arm and the plain limited
+// arm laid out after the return), ours does not (seven calls, all arms in place).
+// Round 90: the body moved out of its one-caller forceinline wrapper, its volatile velocity stores, volatile
+// gravity flag, size pragma and four one-caller vector helpers removed (582 -> 590, kept as clean-up: the
+// casts alone 634, casts and flag 603, pragma alone 582). On that body: shift-form flags 614; the existing
+// cross helper for the frame crosses 598. A from-scratch body in retail's map (basis copies, flags in
+// retail's order, the magnitude through magnitude3d, settings read at each use) 699-720: the output
+// pointer moves to the stack (ret 0xc) and the settings pointer stays in ebp across the normalizations.
+// Earlier 582 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain.
+// Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
+// Frame 0x34 versus 0x30; direct-mode carrier and original/limited vector homes remain.
+// Earlier: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
+// Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
+// Ordinary gravity with shared normalization 622; cached mode 648; limited-first 625;
+// request bitfields 621; global optimization off 2562; direct scalar lifetimes 623; bitfields plus scalars 626.
+// Request-record snapshot 625; inline depth two 621; ordinary gravity on native flags 621;
+// shared direct/general delta 621; complete horizontal point copies 630.
+// Earlier 614 from 621: frame 0x34 versus 0x30 and vector homes still differ.
+// Native enabled test 626; byte flag view 619; low-normal first 618; current-velocity snapshot 625;
+// repeated damping 624; native enabled/byte view 629; gravity first 616; byte view/low-normal 616;
+// gravity/low-normal 614 kept; gravity/byte view 618.
+// Earlier 614 from 614: Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
+// Earlier: frame 0x34 versus 0x30 and vector homes still differ.
+// Earlier: Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
+// direct 626; damping 619; gravity 619; all predicates 627; later input magnitude 619 (fast).
+// frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
+// Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
+// general distance result 614; masked final gravity word 634.
+// Earlier 614 from 614: frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
+// Earlier: frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
+// direct gravity 618; ordinary local output stores 634; native direct damping gravity 615; native direct
+// gravity damping 615; history time snapshot 614; ground vertical value 614; ground vector arm first 629.
+// frame 0x34 versus 0x30; direct-mode carrier and vector homes remain.
+// Basis capture on current join 631; desired/delta scope 614; scale/subtract value helpers 681;
+// later history maximum 614; shared lateral workspace 616.
+// Earlier 614 from 614: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
+// 614; normal-only value 685; facing-only value 641; up-only value 632; damping/gravity/direct order 614
+// (fast).
+// Earlier 614 from 614: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
+// 627; direct clipping scope 614; general clipping scope 614; scalar history change 741
+// (frame 0x30, 2920 bytes); shared cross products 626 (fast).
+// General/history/both value-add publications 659/641/690; disabled-input shared cross 582 (plain,
+// kept); final direct reuse 620; final mode/direct reuse 631; per-use flight field 623; four Boolean-
+// role names 614 (fast). Keep only the existing cross helper with the distinct local output.
+// Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
+// Earlier: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
+// Horizontal delta on retained join 614; signed-word direct/damping/gravity/flying 622/622/624/616.
+// @retail 0x1f0870
+void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
-#define settings (*(byte **)(arg_3 + 8))
+#define settings (*(byte **)(state + 8))
     dword mode = *(dword *)settings;
     bool flying = ((mode >> 3) & 1) != 0;
-    dword flags = *(dword *)(arg_3 + 0x14);
-    s_flags_1f0870 const *flags_view = (s_flags_1f0870 const *)(arg_3 + 0x14);
-    volatile bool gravity = TEST_FIELD_BIT(flags_view->gravity);
+    dword flags = *(dword *)(state + 0x14);
+    s_flags_1f0870 const *flags_view = (s_flags_1f0870 const *)(state + 0x14);
+    bool gravity = TEST_FIELD_BIT(flags_view->gravity);
     bool damping = TEST_FIELD_BIT(flags_view->damping);
     bool direct = TEST_FIELD_BIT(flags_view->direct);
-    vector3f const &input = *(vector3f const *)(arg_3 + 0x138);
-    vector3f const &facing = *(vector3f const *)(arg_3 + 0x9c);
-    vector3f const &up = *(vector3f const *)(arg_3 + 0x100);
-    vector3f const &normal = *(vector3f const *)(arg_3 + 0x8c);
-    vector3f const &basis = *(vector3f const *)(arg_3 + 0x118);
-    vector3f *velocity = (vector3f *)(arg_0 + 0xc);
+    vector3f const &input = *(vector3f const *)(state + 0x138);
+    vector3f const &facing = *(vector3f const *)(state + 0x9c);
+    vector3f const &up = *(vector3f const *)(state + 0x100);
+    vector3f const &normal = *(vector3f const *)(state + 0x8c);
+    vector3f const &basis = *(vector3f const *)(state + 0x118);
+    vector3f *velocity = (vector3f *)(out + 0xc);
     if (!(flags & 1))
     {
         vector3f left;
         contact_cross(&up, &facing, &left);
-        real scale = *(real *)(arg_3 + 0x20);
+        real scale = *(real *)(state + 0x20);
         real local_0 = input.i * scale;
         real local_1 = input.j * scale;
         real local_2 = input.k * scale;
-        (*(real volatile *)&velocity->i) = facing.i * local_0;
-        (*(real volatile *)&velocity->j) = facing.j * local_0;
-        (*(real volatile *)&velocity->k) = facing.k * local_0;
-        (*(real volatile *)&velocity->i) += left.i * local_1;
-        (*(real volatile *)&velocity->j) += left.j * local_1;
-        (*(real volatile *)&velocity->k) += left.k * local_1;
-        (*(real volatile *)&velocity->i) += up.i * local_2;
-        (*(real volatile *)&velocity->j) += up.j * local_2;
-        (*(real volatile *)&velocity->k) += up.k * local_2;
+        velocity->i = facing.i * local_0;
+        velocity->j = facing.j * local_0;
+        velocity->k = facing.k * local_0;
+        velocity->i += left.i * local_1;
+        velocity->j += left.j * local_1;
+        velocity->k += left.k * local_1;
+        velocity->i += up.i * local_2;
+        velocity->j += up.j * local_2;
+        velocity->k += up.k * local_2;
         gravity = false;
     }
     else if (direct)
     {
         vector3f delta;
-        delta.i = (*(real *)(arg_3 + 0x20)) * (facing.i * input.i - facing.j * input.j) - arg_2->i;
-        delta.j = (*(real *)(arg_3 + 0x20)) * (facing.j * input.i + facing.i * input.j) - arg_2->j;
+        delta.i = (*(real *)(state + 0x20)) * (facing.i * input.i - facing.j * input.j) - current->i;
+        delta.j = (*(real *)(state + 0x20)) * (facing.j * input.i + facing.i * input.j) - current->j;
         point2f limited = { delta.i, delta.j };
-        real step = *(real *)(arg_3 + 0x148) * g_510c54->rate;
+        real step = *(real *)(state + 0x148) * g_510c54->rate;
         if (normalize2d(&limited) > step)
         {
             limited.x *= step;
@@ -759,9 +763,9 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
             limited.x = delta.i;
             limited.y = delta.j;
         }
-        velocity->i = arg_2->i + limited.x;
-        velocity->j = arg_2->j + limited.y;
-        velocity->k = arg_2->k - *(real *)(arg_3 + 0x130) * g_510c54->rate;
+        velocity->i = current->i + limited.x;
+        velocity->j = current->j + limited.y;
+        velocity->k = current->k - *(real *)(state + 0x130) * g_510c54->rate;
     }
     else
     {
@@ -831,94 +835,63 @@ PRIVATE __forceinline void function_1f087a(byte *arg_0, byte *arg_1, vector3f co
                     (*(real *)(settings + 0x64) - *(real *)(settings + 0x60));
         }
         vector3f delta;
-        function_1f087d(&delta, &desired, (*(real *)(arg_3 + 0x20)) * magnitude, arg_2);
+        real speed = *(real *)(state + 0x20) * magnitude;
+        delta.i = desired.i * speed - current->i;
+        delta.j = desired.j * speed - current->j;
+        delta.k = desired.k * speed - current->k;
         vector3f limited = delta;
-        real step = *(real *)(arg_3 + 0x144) * g_510c54->rate;
+        real step = *(real *)(state + 0x144) * g_510c54->rate;
         bool limited_step = function_30bf0(&limited) > step;
         if (limited_step)
-            function_1f087e(&limited, step);
+        {
+            limited.i *= step;
+            limited.j *= step;
+            limited.k *= step;
+        }
         else
             limited = delta;
         if (!limited_step || flying)
             gravity = false;
-        if (!arg_3[0xa8] && *(long *)((byte *)g_51e9c4 + 0x18) - g_510c54->game_time <= 0)
-            function_1f087f(&limited, &limited, &normal, 0.234f);
+        if (!state[0xa8] && *(long *)((byte *)g_51e9c4 + 0x18) - g_510c54->game_time <= 0)
+        {
+            limited.i -= normal.i * 0.234f;
+            limited.j -= normal.j * 0.234f;
+            limited.k -= normal.k * 0.234f;
+        }
         if (damping)
         {
-            real fraction = 1.0f - *(real *)(arg_3 + 0x98);
+            real fraction = 1.0f - *(real *)(state + 0x98);
             limited.i *= fraction;
             limited.j *= fraction;
         }
         if (gravity)
-            limited.k -= *(real *)(arg_3 + 0x130) * g_510c54->rate;
-        function_1f087c(velocity, arg_2, &limited);
+            limited.k -= *(real *)(state + 0x130) * g_510c54->rate;
+        velocity->i = current->i + limited.i;
+        velocity->j = current->j + limited.j;
+        velocity->k = current->k + limited.k;
     }
-    if (!((*(dword *)settings >> 2) & 1) && !(*(dword const *)(arg_3 + 0x14) & 4))
+    if (!((*(dword *)settings >> 2) & 1) && !(*(dword const *)(state + 0x14) & 4))
     {
-        if (*(long *)(arg_1 + 0xc) != NONE && *(long *)(arg_1 + 0xc) == g_510c54->game_time - 1)
+        if (*(long *)(history + 0xc) != NONE && *(long *)(history + 0xc) == g_510c54->game_time - 1)
         {
-            vector3f change = shape_add(shape_subtract(input, *(vector3f *)(arg_1 + 0x10)), *(vector3f *)(arg_0 + 0x64));
+            vector3f change = shape_add(shape_subtract(input, *(vector3f *)(history + 0x10)), *(vector3f *)(out + 0x64));
             real maximum = (real)sqrt(change.k * change.k + change.j * change.j + change.i * change.i) + g_47ffb0;
-            vector3f offset = shape_subtract(*(vector3f const *)(arg_3 + 0x124), *(vector3f *)(arg_0 + 0x64));
+            vector3f offset = shape_subtract(*(vector3f const *)(state + 0x124), *(vector3f *)(out + 0x64));
             vector3f relative = shape_subtract(*velocity, offset);
             function_a75d0(&relative, maximum);
-            function_1f087c(velocity, &relative, &offset);
+            velocity->i = relative.i + offset.i;
+            velocity->j = relative.j + offset.j;
+            velocity->k = relative.k + offset.k;
         }
-        *(vector3f *)(arg_1 + 0x10) = input;
-        *(long *)(arg_1 + 0xc) = g_510c54->game_time;
+        *(vector3f *)(history + 0x10) = input;
+        *(long *)(history + 0xc) = g_510c54->game_time;
     }
     if (gravity)
-        *(dword *)arg_0 |= 1;
+        *(dword *)out |= 1;
     else
-        *(dword *)arg_0 &= ~1;
+        *(dword *)out &= ~1;
 }
 #undef settings
-
-// score 582 (was 614): Frame 0x34 versus 0x30 and direct/vector homes remain.
-// Earlier 621 from 625: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
-// Frame 0x34 versus 0x30; direct-mode carrier and original/limited vector homes remain.
-// Earlier: frame 0x34 versus 0x30; direct-bit and vector homes still differ.
-// Settings snapshot 631; common step 631; inline depth one 1367; scoped size 924; shared scale 630.
-// Ordinary gravity with shared normalization 622; cached mode 648; limited-first 625;
-// request bitfields 621; global optimization off 2562; direct scalar lifetimes 623; bitfields plus scalars 626.
-// Request-record snapshot 625; inline depth two 621; ordinary gravity on native flags 621;
-// shared direct/general delta 621; complete horizontal point copies 630.
-// Earlier 614 from 621: frame 0x34 versus 0x30 and vector homes still differ.
-// Native enabled test 626; byte flag view 619; low-normal first 618; current-velocity snapshot 625;
-// repeated damping 624; native enabled/byte view 629; gravity first 616; byte view/low-normal 616;
-// gravity/low-normal 614 kept; gravity/byte view 618.
-// Earlier 614 from 614: Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
-// Earlier: frame 0x34 versus 0x30 and vector homes still differ.
-// Earlier: Frame 0x34 versus 0x30; direct-bit and vector homes remain. Captured-word
-// direct 626; damping 619; gravity 619; all predicates 627; later input magnitude 619 (fast).
-// frame 0x34 versus 0x30; direct-mode register and vector homes still differ.
-// Native enabled on gravity/low-normal body 624; direct before damping 618; direct distance result 619;
-// general distance result 614; masked final gravity word 634.
-// Earlier 614 from 614: frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
-// Earlier: frame 0x34 versus 0x30 and direct/general vector homes differ. Tried native damping
-// direct gravity 618; ordinary local output stores 634; native direct damping gravity 615; native direct
-// gravity damping 615; history time snapshot 614; ground vertical value 614; ground vector arm first 629.
-// frame 0x34 versus 0x30; direct-mode carrier and vector homes remain.
-// Basis capture on current join 631; desired/delta scope 614; scale/subtract value helpers 681;
-// later history maximum 614; shared lateral workspace 616.
-// Earlier 614 from 614: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
-// 614; normal-only value 685; facing-only value 641; up-only value 632; damping/gravity/direct order 614
-// (fast).
-// Earlier 614 from 614: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
-// 627; direct clipping scope 614; general clipping scope 614; scalar history change 741
-// (frame 0x30, 2920 bytes); shared cross products 626 (fast).
-// General/history/both value-add publications 659/641/690; disabled-input shared cross 582 (plain,
-// kept); final direct reuse 620; final mode/direct reuse 631; per-use flight field 623; four Boolean-
-// role names 614 (fast). Keep only the existing cross helper with the distinct local output.
-// Earlier: Frame 0x34 versus 0x30 and direct/vector homes remain. Joint magnitude/desired scope
-// Earlier: frame 0x34 versus 0x30; direct/vector homes remain. Ground-only basis
-// Horizontal delta on retained join 614; signed-word direct/damping/gravity/flying 622/622/624/616.
-// @retail 0x1f0870
-void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
-{
-    function_1f087a(out, history, current, state);
-}
-#pragma optimize("", on)
 
 
 PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const *input, vector3f *out)
