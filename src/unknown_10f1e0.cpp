@@ -1276,6 +1276,9 @@ bool function_c70b0(long unit_index);
 // On the retained success-byte graph: short/long depletion 200/173; short/long
 // interruptibility 304/172; paired short-short/short-long/long-short/long-long
 // 309/201/304/174. Original canonical predicates and inherited argument handling restored.
+// Round 241: Complementary depletion bool/byte/short/long 335/335/346/345;
+// complementary interruptibility bool/byte/short/long 240/240/245/245. All restored;
+// frame eight, input/pool ownership, signed-count joins and byte normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1428,6 +1431,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 226: Shared held-query conditional/rejection returns 450/450; native signed-byte slot 451;
 // byte slot with conditional/rejection returns 451/451; ordinary inline conditional/rejection
 // returns 450/450, with byte conditional result 451. Frame/request/state homes remain.
+// Round 241: Complete complementary permission bool/byte/short/long 572/572/616/609;
+// with complementary base interruptibility 593/593/632/619. Original body restored;
+// frame eight versus twelve and requested/state/result homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
