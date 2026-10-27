@@ -273,7 +273,8 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
+// score 204 (was 204): frame 0x24 versus 0x2c; source receiver and side-byte homes remain.
+// Earlier: Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
 // a separate rotation output vector copied into the direction scores 193 but adds 19 bytes (one-use
 // staging copy, not kept).
 
@@ -346,6 +347,9 @@ void function_245400(s_source_245400 const *source, long index,
 // point workspace placement ties each. Original scalar inputs with separate native
 // rotation output copied before/after point transform 193/211, both declaration
 // scopes; direct final output with initial copy/branch results 193/229.
+// Round 211: complete native surface value, mutable/const, with primary-table-first-second /
+// primary-table-second-first / table-primary-first-second / table-second-primary-first publication
+// orders: 211/211/211/209 each; 789/789/789/787 bytes. Original record, reads and body restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

@@ -2004,7 +2004,8 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
-// score 89 (was 189). The 3 form clears the removed prop and tests it before the node scan (a set-and-test
+// score 89 (was 89): frame 0x24 agrees; category-byte homes and deletion completion differ.
+// Earlier: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
 // flag, kept only on a match; build/r74/26b230.best3.cpp in lane 5): there only the two pool registers
 // differ: retail keeps the prop pool in edi and the node pool in ebp; ours swaps them. Start there.
 // Round 74 (from 189): tail as a record-pool iterator walk, clump loop through the shared datum walk,
@@ -2041,6 +2042,9 @@ void function_269250(long clump_index, long actor_index)
 // Current-member identity before lookup 204; successor published on continuation 200;
 // original-object accessor at every use 262; identity/successor, identity/accessor, successor/accessor,
 // all three 200/261/262/262; all with conditional unit admission 263. Original body restored.
+// Round 211: change-result gate before each prop lookup, on the shared-member/frame-0x24 body,
+// with original/reversed category declarations and native node/getter subsets: 111 four times /
+// 109 four times; both reach 741 bytes. Original traversal and completion tests restored.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
