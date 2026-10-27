@@ -97,6 +97,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Loop remains rolled; extra branches and event/store sequencing regress. All restored.
 // Complete eligibility bool/byte/short/long results 190/190/190/190;
 // default-false reader-gate results 190/190/190/190. Pool reload and completion stores remain.
+// Common score result and one publication: bool/byte scoring results, both duration
+// factor orders and both whole-function/scoring event lifetimes all 239 (eight forms).
+// Original separate score publications, event storage and complete body restored.
 // Slot/limit/ticks/marker/unit/weapon home names and scalar/all combinations
 // 190 each (fast); original body restored.
 // Complete entry carried-unit value 221; with short slot/clock-first product/both

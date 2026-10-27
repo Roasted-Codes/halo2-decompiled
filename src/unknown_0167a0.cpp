@@ -141,6 +141,7 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Published reciprocal log input with direct/scalar publication 284/153;
 // with paired-counter library clear 305/258, chained counters 284/155,
 // and long changed result 280/195. Exact original logarithm and reciprocal retained.
+// Eager record/restore/final predicates and their pairs/all 303/219/168/291/296/206/276; all plus eager copy gate 293. Original double expression, observations and calls restored.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -877,6 +878,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // masked value 202.
 // Complete mapping-root observation alone/with value table/with remapping word/both 159/197/160/212;
 // the same four graphs with native unsigned slot 159/197/160/212 (all with ordinary body steps).
+// Direct/mapped/both word-field observations 199/177/185; each with consistent value-table fields 208/192/186; both with remapping-root observations alone/with value fields 185/186. Original body, dynamic bounds and shared writer restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

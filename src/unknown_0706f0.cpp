@@ -73,6 +73,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // Round 215: Coherent native byte/signed-byte virtual returns, each with byte/Boolean
 // result storage and original/retail case order, 243/241/243/241 each. Manager caller
 // loses its match in all eight; original Boolean contracts and complete body restored.
+// Continuous member induction on the byte-result frame: mutable/readonly cursors
+// 182/182; with physical dispatch order 183/183; Boolean result 243/243,
+// with physical order 241/241. Original ordinal traversal and byte result restored.
 // Round 233: Dispatch success-only result stores, byte/bool 277/253;
 // reversed captures, early terminal success, and both 277/253/277/253/277/253.
 // Original result assignments, captures and both local state stores restored.

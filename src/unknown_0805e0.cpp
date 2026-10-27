@@ -822,7 +822,7 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 181 (was 238): frame 0xc agrees; admission prefix, removed-index EDX/ESI and upper ECX/EAX remain.
+// score 66 (was 181): frame 0xc agrees; admission prefix, removed-index EDX/ESI and upper ECX/EAX remain.
 // Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
 // Paired range arms 373;
 // frame 0x0c agrees; removed-index registers, upper
@@ -858,6 +858,8 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // Constant removal result/shared full predicate with retained cases 385/381; with signed bounds 391/181 kept.
 // Existing initializer on those four forms 383/380/393/184; bounds alone 304; removal-first lower 181;
 // nonfull polarity 190; full-width admission result 402. Kept form is 1185/1171 bytes, plain 181.
+// Current admission/bounds with long adjustment 66; byte admission 181; native time 194;
+// long/byte 66, long/time 137, byte/time 194, all three 137; mutable removed/long 66.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {
@@ -899,7 +901,7 @@ long function_7fe90(const s_cached_player_identity *identity, long position, con
 			for (long i = upper - 1; i >= lower; i--)
 				g_4cf98c[i + 1] = g_4cf98c[i];
 		}
-		short change = downward ? -1 : 1;
+		long change = downward ? -1 : 1;
 		for (long i = 0; i < 350; i++)
 		{
 			s_player_configuration_cache_entry *entry = &g_4cf98c[i];

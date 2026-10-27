@@ -1423,6 +1423,9 @@ struct s_133f70;
 // Round 215: Complete per-entry mutable/const frame/view captures 372/372, function-entry
 // captures 384/384; shared two-use stamp on those scopes 361/361/383/383 (control 213).
 // All introduce a frame difference; complete original observations and body restored.
+// Native cache/previous and stamp/handle acceptance orders, logical fallback
+// and direct level invalidation: 326/213/326/366/369/367/369/349 fast against expanded control 213.
+// Original cache predicate, bitwise fallback and level guard restored.
 // Round 139: Shared cache-index homes at level+batch, level+usage, batch+usage and all three
 // boundaries each 213; those four with the uninitialized builder result declared at loop entry each
 // 213. Broad unchanged control also 213; reduced 0x31590 discrepancy already present. Full frame
