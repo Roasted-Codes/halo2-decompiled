@@ -1012,7 +1012,11 @@ done:
         *movement_out = movement;
 }
 
-// score 307 (was 307): Frame 0x18 versus 0x1c; actor/object roles, factor homes and x87 scheduling remain.
+real function_50650(real cosine);
+#define MIN(a, b) ((a) > (b) ? (b) : (a))
+
+// score 137 (was 307): frame and length agree; actor/object roles (EDI/ESI), the hoisted velocity j load,
+// the first clamp's x87 order and the epilogue pops' place in the final minimum remain.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following
 // factor 335; frame pointer 399; inline depth one 308 (fast). Scalar velocity 309;
 // approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast). object
@@ -1027,6 +1031,11 @@ done:
 // Round 124: Existing shared magnitude/normalizer 308/308; parallel double turning products 308;
 // paired complete speed projections 308; both scalar boundaries 308 (fast control 308, full baseline 307).
 // Original body and every math operation restored.
+// Round 54: all four factors 1.0 at entry 333; outer/inner MIN macro 327, inner MIN with a named
+// scale 206 (kept); float pow arguments 203; clamped arccosine call 269; float approach offsets 137;
+// float gap with `!(gap > 0)` 128; shared normalize 117 fast, 137 plain (kept); ternary first clamp
+// 304; inverse-first products 312; velocity copy j first 123; facing factor declared first 115;
+// actor offset first 117 (fast; plain base 137).
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1039,8 +1048,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
     byte *settings = (byte *)function_1e5450(actor_index, object->tag_index);
     real speed_scale;
     real turning_scale = 1.0f;
-    real facing_scale;
-    real velocity_scale;
+    real facing_scale = 1.0f;
+    real velocity_scale = 1.0f;
     real following_scale = 1.0f;
     speed_scale = *(real *)(actor + 0x4b4) != 0.0f ? *(real *)(actor + 0x4b4) : 1.0f;
     if (!ignore_facing)
@@ -1053,19 +1062,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
         vector2f velocity;
         velocity.i = object->velocity.i;
         velocity.j = object->velocity.j;
-        real length = (real)sqrt(velocity.j * velocity.j + velocity.i * velocity.i);
-        if (!(fabs(length) < 0.0001f))
-        {
-            real inverse = 1.0f / length;
-            velocity.i *= inverse;
-            velocity.j *= inverse;
-        }
+        normalize2d_fast(&velocity);
         velocity_scale = (desired->i * velocity.i + desired->j * velocity.j + 2.0f) * 0.3333333432674408f;
-    }
-    else
-    {
-        facing_scale = 1.0f;
-        velocity_scale = 1.0f;
     }
     real radius = *(real *)(settings + 0x1c);
     if (next_direction && radius * 2.0f > distance)
@@ -1074,10 +1072,7 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
         double dot = (double)desired->j * next_direction->j + (double)desired->i * next_direction->i;
         if (dot < -1.0) dot = -1.0;
         else if (dot > 1.0) dot = 1.0;
-        real value = (real)dot;
-        if (value < -1.0f) value = -1.0f;
-        else if (value > 1.0f) value = 1.0f;
-        real angle = (real)(acos(value) * 0.31830987334251404f);
+        real angle = function_50650((real)dot) * 0.31830987334251404f;
         real fraction = 1.0f - (angle > 1.0f ? 1.0f : angle);
         real scale = (1.0f - minimum) * fraction * fraction + minimum;
         turning_scale = (1.0f - scale) * distance / (radius * 2.0f) + scale;
@@ -1085,8 +1080,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
     real approach_scale = 1.0f;
     if (!actor[0x4ae])
     {
-        double x = (double)*(real *)(actor + 0x510) - position->x;
-        double y = (double)*(real *)(actor + 0x514) - position->y;
+        real x = *(real *)(actor + 0x510) - position->x;
+        real y = *(real *)(actor + 0x514) - position->y;
         real remaining = (real)sqrt(y * y + x * x);
         if (radius > remaining)
         {
@@ -1096,8 +1091,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
     }
     else if (*(real *)(actor + 0x4b0) != 0.0f)
     {
-        double x = (double)*(real *)(actor + 0x510) - position->x;
-        double y = (double)*(real *)(actor + 0x514) - position->y;
+        real x = *(real *)(actor + 0x510) - position->x;
+        real y = *(real *)(actor + 0x514) - position->y;
         real remaining = (real)sqrt(y * y + x * x);
         if (radius > remaining)
         {
@@ -1109,11 +1104,11 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
         *(long *)(actor + 0x5ac) != NONE)
     {
         s_slot_object_view *other = object_get(*(long *)(actor + 0x5ac));
-        double x = (double)object->unknown030.x - other->unknown030.x;
-        double y = (double)object->unknown030.y - other->unknown030.y;
-        double z = (double)object->unknown030.z - other->unknown030.z;
-        real gap = (real)(sqrt(z * z + y * y + x * x) - ((double)other->unknown03c + *(real *)(settings + 0x14)));
-        if (gap <= 0.0f)
+        real x = object->unknown030.x - other->unknown030.x;
+        real y = object->unknown030.y - other->unknown030.y;
+        real z = object->unknown030.z - other->unknown030.z;
+        real gap = (real)sqrt(z * z + y * y + x * x) - (other->unknown03c + *(real *)(settings + 0x14));
+        if (!(gap > 0.0f))
             gap = 0.0f;
         if (*(real *)(settings + 0x1c) > gap)
         {
@@ -1123,7 +1118,7 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
             {
                 real fraction = (*(real *)(settings + 0x1c) - gap) / *(real *)(settings + 0x1c);
                 fraction = fraction < 0.0f ? 0.0f : fraction > 1.0f ? 1.0f : fraction;
-                following_scale = (real)pow(1.0 - fraction, (double)closing * 0.5f);
+                following_scale = (real)pow(1.0f - fraction, closing * 0.5f);
             }
             if (gap < 2.0f)
             {
@@ -1133,10 +1128,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
             }
         }
     }
-    real scale = turning_scale > approach_scale ? approach_scale : turning_scale;
-    scale = facing_scale > scale ? scale : facing_scale;
-    scale = scale > following_scale ? following_scale : scale;
-    return scale * velocity_scale * speed_scale;
+    real scale = MIN(facing_scale, MIN(turning_scale, approach_scale));
+    return MIN(scale, following_scale) * velocity_scale * speed_scale;
 }
 
 
@@ -1273,7 +1266,7 @@ real normalize2d(point2f *v);
 
 PRIVATE inline real movement_normalize2d(point2f *v)
 {
-    real length = (real)sqrt((double)v->x * v->x + (double)v->y * v->y); // retail sums on the x87 stack
+    real length = (real)sqrt(v->x * v->x + v->y * v->y);
     if (!(fabs(length) < 0.0001f))
     {
         real inverse = 1.0f / length;
@@ -1286,9 +1279,7 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 
 PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 {
-    real local_0 = arg_0->x;
-    real local_1 = arg_0->y;
-    real local_2 = (real)sqrt((double)local_0 * local_0 + (double)local_1 * local_1); // retail sums on the x87 stack
+    real local_2 = (real)sqrt(arg_0->x * arg_0->x + arg_0->y * arg_0->y);
     if (!(fabs(local_2) < 0.0001f))
     {
         real local_3 = 1.0f / local_2;
@@ -1299,7 +1290,8 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
     return 0.0f;
 }
 
-// score 298 (was 298): Frame 0x3c agrees; radius/result homes and initial direction materialization differ.
+// score 278 (was 298): Frame 0x3c, direction block and result/radius homes agree; the type-0 arm is not
+// threaded on the volatile side flag, and a plain flag moves facing into EBP (entry record spilled).
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared
 // arccosine 296, late radius 312, frame pointer 401. Ordinary lifetimes: facing value 307; scalar
 // side 309; scalar center 306; origin constructed first 306; reused negative radius 329. Ordinary
@@ -1311,6 +1303,10 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // references 305; full-width side state 301 (fast). Sector before transforms 306; origin transform
 // first 306; pathfinding result first 306; late result on ordinary convention 307; redundant upper
 // clamp removed 318 (fast).
+// Round 54: float magnitudes 295; plain side flag 315; per-arm centre 294; shared point difference
+// with float magnitudes and per-arm centre 278 (kept); with plain flag 301; result/radius renames 298;
+// trace-hit single exit (goto or nested if) 278, with plain flag 275; negated early return 288;
+// facing reference 302; difference through the point-difference helper 278/275 (plain flag).
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)
@@ -1321,7 +1317,8 @@ real function_1f99d0(long actor_index, long object_index, short type, point2f co
     byte *entry = (byte *)function_1e5450(actor_index, object_get(object_index)->tag_index);
     real result = 0.0f;
     real radius = *(real *)(entry + 0x28);
-    point2f direction = { target->x - local_1->x, target->y - local_1->y };
+    point2f direction;
+    vector2d_from_points2d(local_1, target, &direction);
     function_1f99d1(&direction);
     point2f side = { 0.0f - direction.y, direction.x };
     volatile bool left = true;
@@ -1331,9 +1328,16 @@ real function_1f99d0(long actor_index, long object_index, short type, point2f co
     if (type == 0)
     {
         point2f perpendicular = { 0.0f - facing->y, facing->x };
-        real signed_radius = left ? radius : 0.0f - radius;
-        center.x = target->x + perpendicular.x * signed_radius;
-        center.y = target->y + perpendicular.y * signed_radius;
+        if (left)
+        {
+            center.x = target->x + perpendicular.x * radius;
+            center.y = target->y + perpendicular.y * radius;
+        }
+        else
+        {
+            center.x = target->x + perpendicular.x * (0.0f - radius);
+            center.y = target->y + perpendicular.y * (0.0f - radius);
+        }
     }
     else if (type == 1)
     {
