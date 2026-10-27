@@ -785,6 +785,9 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // Previous timestamp 17; event unit 17; both 17; recent timestamp test 17; snapshot recent test 17;
 // early event unit 98; early unit and timestamp 98; complete interval predicate 22.
+// Shared actor offset 67; amount actor offset 17; amount pool record 17;
+// delayed actor formation 241; prop-view getter 17; amount snapshot 17;
+// actor-index snapshot 17; amount parameter pointer 17.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
