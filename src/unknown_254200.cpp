@@ -300,6 +300,18 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Member color/all positions/all texture calls/all first-quad entries 2 each. Scalar-size form
 // plain confirms 2/2252, first +0x411: constant and lower-coordinate reloads reversed. Every
 // per-use form is exact-only and restored; original native color, word alpha and coordinates retained.
+// Pointer color, byte alpha and per-use coordinates: shared second-call lower value
+// mutable/const 294/294; reused from that call 293/293; earlier declarations 294/293;
+// native coordinate point aggregate/assigned 338/300. All restored.
+// On that graph, uniform texture products/upper sums/both/alpha product, existing
+// unit color helper alone/with products/with upper sums/all combined 2 each.
+// One 600 s filtered permuter search, 39 tries: best 2; the two reloads remain.
+// Every repeated-coordinate form restored; original color, alpha and locals retained.
+// Round 197 on the two-difference SDK graph: scalar color input, immutable input, scale
+// snapshot and all combinations, plus native input reference, 2 each; alpha word/short/long/
+// dword/int/const-word/const-long/const-dword 28/28/112/112/112/28/112/112; lower/upper
+// endpoints after the first position 293/330 and at the coordinate phase 363/363.
+// No exact match; every per-use coordinate form restored with the original body.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

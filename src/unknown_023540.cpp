@@ -2437,6 +2437,9 @@ dword __cdecl function_131fc0(real alpha);
 // construction with destination selection first 433/439; source selection first 439/433;
 // source construction before conditional destination 331 (four-point fast gain rejected);
 // conditional source then unconditional destination 427, against fast control 335.
+// Round 60: BLOCKED-BY 0x289e0 (the only caller, under #if 0, so LTCG gives inverse AL). Own-address
+// inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
+// dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2625,6 +2628,11 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Coefficient address at the consumer 506; direct bucket/sample/both 530/530/530;
+// consumer address with bucket/sample/both 506/506/506. Address begun at accepted
+// allocation with both direct receivers 527 (three-point gain rejected). The consumer
+// address (506, 1404/1543 bytes, frame 0x21c) was held in batch 135: with the rest of that batch it again
+// cost c_helper_b::v7 (0x73360) its match. Retry it only with a full check that keeps 0x73360 matched.
 // Round 190: Existing copy/inverse/coefficient inline declarations singly, in three pairs and
 // together 530 each; all three separate noinline declarations 850. Original helper declarations and
 // body restored; frame 0x20c/0x200 and separate-sample boundaries remain.
@@ -2728,6 +2736,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 }
 
 // score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
+// has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
+// its 0 lives there. 0x144f0 sits in a contributor file this round; no new form tried.
 // The stage call is BLOCKED-BY 0x144f0: retail passes tag in EAX, stage in ECX and the fallback in EBX
 // (ret 0xc), and reads the first bitmap formal as a full dword (cmovne). Round 73: for loop 334;
 // stage-nonzero ternary 334; selected bitmap local 294 at 2001 bytes (strength-reduced sampler table);
@@ -2765,6 +2776,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
+// Alpha clamps before initial setup first/second/both 445/433/469; before sampler
+// setup 358/389/341; both before shader clear 353; both at admitted entry 481.
+// Exact-only timing forms restored; original packing and sampler/draw calls retained.
 // Native tag block/bitmap records separately/together, their read-only receivers and
 // complete tag/bitmap observations at use: eight forms 334 each. Original receivers restored.
 // Complete alpha parameter results, ternary/else-if/independent clamps 353 each; native rectangle

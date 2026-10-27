@@ -788,6 +788,71 @@ real normalize2d(point2f *v);
 // six saved bytes shift the rest); retry outputs declared horizontal first 168; first normalization
 // tested `> 0.0f` with an early store-return 215 (890 B, our stores merge), in if/else arms 215;
 // `base_speed * 1.2f >= chosen_speed` early return 212 (retail's jae polarity).
+// frame 0x48 agrees; query-byte zero and trajectory call/output homes remain.
+// Frame 0x48 agrees; fast-byte zero, protected trajectory convention and retry/output homes remain.
+// frame 0x48 agrees; fast-byte zero source and protected trajectory convention remain.
+// Earlier 172 (was 191): fast-byte initialization and trajectory call convention;
+// search then selection 172; unsigned scan 178; fixed do/while 191;
+// types arm first 191; fallback setters 195; split plus unsigned scan 223.
+// signed-long search 192; signed-byte search 188; exact exhaustion 210;
+// named first normalization result 172; global optimization off 542.
+// low-bit presence guard 228; native type clamp 236; branch-defined chosen speed 220;
+// target snapshot 234; inline depth zero 231. Frame 0x48 still agrees.
+// Bounded for search 172; unsigned byte scan 233; chosen speed after query 190;
+// planar component stores 265; native masks/metadata snapshot 172 each;
+// retry requirement 196; first type from bits 277. Fast-byte zero and trajectory convention
+// still differ; original body restored.
+// Earlier: Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// result homes differ. Validity initialized in typed arm 241; first type initialized by branch
+// 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
+// movement flag stores 174; retry speed first 172; native planar output copies 172.
+// Earlier: frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Earlier 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
+// Earlier 172 (was 172): frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
+// Query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
+// first-type state 172/208; decisions after query 177; both byte decisions 172.
+// Word validity reaches 935 bytes but gains only two points and is restored.
+// Frame 0x48 agrees; fast-byte zero, trajectory arguments and retry/result homes differ.
+// separate retry force 196; long first-type result 235.
+// minimum after speed query 228; first type after speed query 175.
+// shared movement destination 172; native request copy 172.
+// earlier result declaration 172; minimum and retry force 227.
+// Earlier: query-byte zero, trajectory setup and scalar homes remain;
+// query-byte zero, trajectory setup and scalar homes remain;
+// Earlier 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
+// retry/movement/both threshold products 172/172/172; clamped upward result
+// 172, with both products 172; retry/movement/both eligibility results 172/172/172.
+// frame 0x48 agrees; fast-byte zero and trajectory convention remain.
+// Validation after query 220; with late minimum 220; early query output 171;
+// minimum first 174; early output/minimum 170; first-type first 172;
+// shared Boolean initialization 173; early output with late validation 218.
+// Fast-byte memset 172; actual actor/requested-type/maximum-type references 172 each;
+// actual destination/origin references 172 each; read-only unit view 172;
+// native two-component normalization workspace 206. Zero source and trajectory convention remain.
+// Both lookup globals at each use 172; request point setter 175; entry direction workspace 172;
+// globals/setter 175; globals/workspace 172; setter/workspace 175; all 175; word trajectory
+// result 211 (fast).
+// Round 199: Initial/retry/both scalar outputs at method entry 172 each; retry outputs at valid scope
+// 172; first entry plus retry valid 172; both entry with false validity return 172; retry valid with
+// false validity return 172; false validity return alone 172 (fast). All restored.
+// Round 180 complementary
+// validation/base-check/trajectory/validation-base/validation-trajectory/base-trajectory/all/byte trajectory
+// 217/173/223/172/212/226/225/223 (fast); all restored. Frame 0x48 agrees; immediate query zero and protected
+// trajectory convention remain.
+// Post-query force OR/guarded/conditional/complete arms 303/197/172/273; exact search bound 211;
+// mask-first search 228; complete requested-byte snapshot 240; snapshot plus force OR 300.
+// Shared validation/query result 172; two-use unit index 172; native origin value 229; result+index 172;
+// result+origin 229; index+origin 229; all 229; complete origin memcpy 229. All restored.
+// Round 245 (fast): Word validity with early query, early query/minimum, post-query first type,
+// and all three initialization changes 169/169/173/174; byte validity with the same four forms
+// 171/171/175/177. Best word forms reach 935 bytes at 169; three-point gain rejected.
+// Original query-byte allocation and protected trajectory convention remain.
+// Round 151: Two-use retry success with logical/bitwise/reversed logical joins before/after publication 216/239/218/254/215/243; promoted long/word result joins 200/203. All restored.
+// Frame 0x48 agrees; immediate query zero, protected trajectory convention and retry/output homes remain.
+// Native vector setter for planar zeros/actor fallback/default axis 172/218/187;
+// zero-actor/zero-axis/actor-axis/all 218/187/211/211; all plus request setter 222. All restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -1050,6 +1115,10 @@ real function_50650(real cosine);
 // shared inner minimum 335; all observations plus shared inner minimum 381. Original receivers restored.
 // Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
 // X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
+// Round 59 (fast control 117): offset-first actor expression 117; actor through the actor getter 117;
+// object before actor 118; speed factor declared last 117; ternary first clamp 117 (same code). The
+// velocity j preload matches the shape the in-place 3-D normalize gives in matched 0x179fb0 (every
+// component but the first preloaded before fsqrt); a hand-written 2-D copy of that shape 128.
 // Direct speed-factor default 302; all minimum spans 117; speed/spans 302; paired closing
 // projections 117; speed/projections 302; spans/projections 117; all 302; all with facing default
 // first 300 (fast control 117, full 137). All restored; actor/object homes, velocity preload
@@ -1347,6 +1416,8 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // `goto done` plus `if (left) return 0.0f - result;` 252 at 1173 bytes (kept); type exit also by
 // goto 264; transformed origin declared first 252; result declared first 275; trace_origin/
 // trace_direction names 252; origin read directly 267.
+// Round 151: Existing normalizer value/pointer inputs with output pointer 348/302, returned point 359/359, scalar input/output or return 319/298; void/value and returned/value movement contracts 350/339. All ordinary origin/side forms restored.
+// Frame 0x3c and original homes agree; zero/radius registers, facing transport and type-zero continuation remain.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

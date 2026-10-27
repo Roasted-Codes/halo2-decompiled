@@ -2216,6 +2216,9 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // and matched sample boundary preserved; first normal XMM roles, early velocity loads and property-zero lifetime remain.
 // Round 342: Shared normal/velocity length 123; shared inverse 162; both 168; outer sample vector 109;
 // vector plus length/inverse/both 123/162/168; all with one scan ordinal 168. Exact-length inverse forms regress; originals restored.
+// Round 157: normal reciprocal identity 138; velocity reciprocal identity 170; both reciprocals 184;
+// early normal length zero 109; early velocity length zero 109; both length defaults 109; reciprocals and
+// lengths 184; all with early speed sum 392. Original executable source restored.
 // Round 201: Successive normal/velocity sum workspace 109; with shared length/inverse/both
 // 115/109/123; the same four with persistent sample 109/115/109/123. Original accumulators restored.
 // @retail 0x1d87b0
@@ -2668,7 +2671,7 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 135 (was 168): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
+// score 135 (was 135): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
 // Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
 // staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
@@ -2708,6 +2711,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 147: admission mask 161; state masks 135; both masks 194; vertical product 168;
 // admission/product 161; state/product 135; both/product 194; guarded type mask 168; state zero
 // tests 135. Keep both native state zero tests; every other form restored.
+// Round 197: Readonly private linear/angular/both getter inputs 135 each; native signed-int
+// ordinal alone/with each input pair 135 each; readonly pair with common double scale 135.
+// Original native state-zero graph, helpers and ordinal restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

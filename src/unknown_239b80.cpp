@@ -291,6 +291,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // On the long departure state: signed-word/unsigned-word/unsigned-native/int result
 // 257/257/203/203; native input count 259, with signed/unsigned word result
 // 268/268; observed signed-word input count 203. Caller checked with each.
+// Equality input contracts (pointer order, first/second/both native references), each
+// with long/Boolean departure: 203/227/203/234/203/234/203/234. Helper and body restored.
 // Round 59: retail keeps the hull count at +0x10 and the departure flag as a byte in the index
 // output's argument home, sets the heading and the flag before the lowest scan, copies the count for
 // the scan bound, does not rotate the hull loop (test at its head, three back edges) and stores the
@@ -465,7 +467,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 212 (was 237): Retail length and common failure publication agree; count/stride/prior homes remain.
+// score 212 (was 212): Retail length and common failure publication agree; count/stride/prior homes remain.
 // Earlier: count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
 // Native current ordinal 249; long side states 264; prior-point ordinal 288; ordered fraction clamp 243; clear-mask arm first 243; shared normalized count 275; existing point difference 243.
 // Explicit source bit 243; unsigned input ordinal 237; word side states 263; retained signed distance 273; parallel edge scales 243.
@@ -481,6 +483,12 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // Native previous/plane/both observations 378/370/354; both native points 355;
 // all native inputs 376; complete plane/previous/both scalar observations 347/359/368.
 // Original inputs, copies and body restored.
+// Fraction default between/before deltas, before clipped publication and at iteration entry:
+// unsigned ordinal 211/211/209/209; signed ordinal 259/259/263/275. All restored;
+// the best three-point change does not qualify. Count/stride/prior and SIMD homes remain.
+// On the common failure-result graph: signed word/native count at entry or after
+// alias handling, each without/with shared copy extent: 212/289/211/211/303/225/212/212.
+// One-point forms rejected; original count observations, helpers and body restored.
 // Round 59: retail keeps the index as a word in memory (+0x14, tested `cmp ax, [count]`), the
 // previous point at +0x1c, the copy size at +0x18 and the plane reloaded from its argument home.
 // Tried: the previous side's volatile removed 227; signed short index 252 (869 B; retail's loop

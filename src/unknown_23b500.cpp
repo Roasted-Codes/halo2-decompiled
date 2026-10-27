@@ -649,9 +649,18 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 // Original helper/body restored; frame and protected child convention remain.
 // Plain predicted-point component loop with long/dword/short/byte ordinals 233/233/275/275;
 // the same output-pointer return forms 233/233/275/275. Original helper/body restored.
+// Round 205: Function-scope child/vehicle-point/projectile-point workspaces, all seven
+// combinations, and all three at object-iteration scope 201 each. Original lifetimes
+// restored; frame 0x50/0x54 and protected child-iterator convention remain.
 // Round 249: shared insertion count after point/first radius/second radius/lower height/
 // upper height/weight 232/232/230/229/228/219; reused count at entry/end 201/215.
 // Original append helper and body restored; protected child contract unchanged.
+// Round 252: Signed team snapshot char/short/int/long before child initializer 205/265/263/263; after
+// 205/265/181/181. The 181 forms recover frame 0x54 but lose the matched caller by seven preview
+// differences; one-use field snapshots remain unmatched and are rejected. Original player
+// receiver/count/AND body restored; frame and protected child-initializer contract remain.
+// Round 196: Category inserter inline/noinline/combined/forceinline declarations 230/201/230/465,
+// identically with readonly settings. Original declarations and complete body restored.
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {
