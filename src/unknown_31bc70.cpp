@@ -7,3 +7,15 @@ void *__fastcall function_31bc70(void *arg_0)
 {
 	return arg_0;
 }
+
+class query_31bc80
+{
+public:
+	void function_31bc80(bool *result) const;
+};
+
+// @retail 0x31bc80
+void query_31bc80::function_31bc80(bool *result) const
+{
+	*result = true;
+}
