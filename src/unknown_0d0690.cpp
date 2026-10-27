@@ -39,7 +39,8 @@ PRIVATE __forceinline long sky_surface_tag(short index)
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
+// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trig/color homes remain.
+// Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
 // Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
 // light/value fields 213; both views 213; frame pointer 296; status enum 213.
@@ -51,9 +52,13 @@ real function_30bf0(vector3f *vector);
 // Round 116: Direction initialization only with lights 213; color initialization only with lights 213; both 213; light-table field at each access 213; result from record validity 230. Opening code and inherited count qualifier restored.
 // Round 122: Query-only collision lifetime 230; validated-record collision lifetime 217; byte status
 // 217; strength lifetime inside light branch 211; parallel conditional channel clamps 213.
+// Native contribution aggregate with cached/direct angles 236/235;
+// native direct component fill 235; cached component orders ikj/jik/jki/kij/kji 219/212/221/216/219.
 // Existing scalar color/blend/both 213/213/213; existing color helper and helper plus blend 213/213;
 // entry strength snapshot alone/with scalar clamps/with color helper 225/225/225. All restored.
 // Round 181 complete data-pointer selector, guard returns, full selector, const data, explicit context and definite pointer arms 213/213/213/213/213/213; ordinary inline 256; validated data output 228 (fast); all restored. Frame 0x8c agrees; selector/count saves and pending trigonometric/color homes remain.
+// Native ray/fallback/both component loops with long ordinals 218/217/217; dword 218/217/217;
+// both with short/byte ordinals 244/244. Original body restored; selector and pending homes remain.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1274,6 +1279,7 @@ real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
 // score 364 (was 364): Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
+// Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
 // Earlier 364 (was 364): frame 0x4c versus 0x40; normal-copy and native color/rotation homes remain.
 // frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
 // Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
@@ -1298,6 +1304,8 @@ real function_30bf0(vector3f *vector);
 // limited-normal/turned-normal/all homes 364/364/364; outer rotation workspace 364.
 // All original normal, copied color and rotation values and helper boundaries retained.
 // Round 152: All rotation-row partial sums/products 364/438; all normalizer products 430 (retail frame/length); normalizer with rotation partials/products 430/449; all RGB blend products 429 (retail frame/length); blend/rotation partials 443; all parallel products 429.
+// Independent lower/upper bound records at entry, before fallback and original final phase:
+// all eight non-original phase pairs 364; original final-bound lifetimes restored.
 // Color clamp orders 102/210/201/012/021 386/377/393/393/387; first color scale orders rbg/grb/gbr 364/363/362.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
@@ -1689,6 +1697,10 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 181 material noinline 807; native status/mesh, vector, color, barycentric sample and combined role homes 790/790/790/790/790; single result exit 834; combined homes with material noinline 807 (fast); all restored. Frame 0x90 agrees; result/mesh/sample/UV homes and material/magnitude expansion remain.
 // Round 327: status tests 800; phase failure default 796; current group/index/data fields
 // 801/811/819; status tests with group/index 802/816; phase default with group and indices 815.
+// Round 331: magnitude noinline/inline/force-inline caller declarations, alone and
+// with material noinline, plus magnitude noinline/material inline: all seven 790f;
+// requested magnitude boundary with all shared vector scales 824f (3069 bytes).
+// Caller-local contracts do not resolve the expansion; all declarations and scales restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

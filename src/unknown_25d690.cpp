@@ -1169,7 +1169,7 @@ struct s_perception_origin_view;
 struct s_object_motion_view;
 short function_263ed0(long actor_index, s_perception_origin_view const *origin, point3f const *point,
 	s_location const *location, short type, short mode);
-short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
+long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
 void function_2640c0(long object_index, s_object_motion_view *result);
 
 // score 12 (was 83): retail copies object_index into edi just before the first function_badc0 call where ours
@@ -1347,9 +1347,18 @@ bool function_1e1de0(long arg_0);
 // Final producer orders activity/readiness/behavior 165; behavior/readiness/activity 164;
 // activity/behavior/readiness 163; behavior/activity/readiness 162; readiness/behavior/activity 165;
 // activity zero at entry 265, after object lookup 251, with behavior first 268.
+// Round 171: Complete mutable motion observation with copy orders anchor-position-location-facing /
+// anchor-location-position-facing / anchor-position-facing-location /
+// position-anchor-location-facing 294/284/294/294; immutable copies repeat 294/284/294/294. Original
+// body restored. Frame 0x84 agrees; early ESI, return-byte and actor/motion homes remain.
+// Round 147: Library first point/position/location/facing 165 each; both points/first-point-
+// facing/location-facing/all four 165 each in the current default-output graph.
+// Round 240: native character eligibility bool/byte/short/long 269/269/285/299;
+// complementary eligibility at the same widths 287/287/284/298. Original nullable receiver restored.
 // Actor/character/both constant defaults at entry 165/279/280; after clock 165/279/280; both before object lookup 165; actor at entry with character before lookup 165. Original default lifetimes retained.
 // Round 179: target-admission/target-publication/activity inline declaration subsets
 // 165/165/165/165/165/165/165; all three inline/noinline 165. Original declarations restored.
+// Scratch lifetime, split actor declarations, default order and scratch name: eight combinations 165.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

@@ -51,6 +51,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // all eight tested results 243. All original byte assignments restored.
 // Initial/type/final direct field observations 182/182/182; initial+type/initial+final/type+final/all
 // 182/182/182/182; all with the two-use secondary state 182. Original byte-result body restored.
+// Round 189 positive result after direct inactive-reset exit: byte/bool 241/253; terminal-true
+// before reset 241/253; retail case order 242/254; both interactions 242/254. Original shared exit
+// and byte result restored.
 // Inline live-state predicate at secondary/primary/both 227/223/227; existing live-state function
 // at secondary/primary/both 227/223/227; mixed helper boundaries 227/227. All fast.
 // Omit initial unused state store 226; omit final 219; phase result initialization 220; omit both
@@ -70,6 +73,16 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // Continuous member induction on the byte-result frame: mutable/readonly cursors
 // 182/182; with physical dispatch order 183/183; Boolean result 243/243,
 // with physical order 241/241. Original ordinal traversal and byte result restored.
+// Round 233: Dispatch success-only result stores, byte/bool 277/253;
+// reversed captures, early terminal success, and both 277/253/277/253/277/253.
+// Original result assignments, captures and both local state stores restored.
+// Scalar state/index/host/first spill/last spill homes 182 each; paired spills,
+// combined value homes, and all scalar homes 182 each (fast).
+// Separate initial-state, type and final-state lifetimes in all seven combinations
+// 182 each; all separate with retail case order 183. Original body restored.
+// Excluded-state conjunction owns the failed arm at initial/final/both joins 182/182/182;
+// each with Boolean result 243/243/243; both with physical case order at byte/Boolean
+// result 183/241 (fast). Original positive readiness arms and byte result restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

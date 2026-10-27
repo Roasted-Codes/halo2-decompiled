@@ -136,19 +136,47 @@ s_unknown_5c *function_221810(short index);
 long function_18d5b0(long label);
 void function_18d4f0(long object_index, char *audible, long *local_player_index);
 
-static __forceinline long float_to_int_nearest(real value)
+static __forceinline long game_seconds_to_ticks_round(real seconds)
 {
-	long result;
+	real ticks_real = (real)g_510c54->field_2_3 * seconds;
+	long ticks;
 
 	__asm
 	{
-		fld value
-		fistp result
+		fld ticks_real
+		fistp ticks
 	}
-	return result;
+	return ticks;
 }
 
-// score 118 (was 118): Frame 0xa8 agrees; first class lookup expansion and flags/result homes remain.
+// score 110 (was 118): frame 0xa8 and the request in EAX agree; the first class lookup expands
+// where retail calls it (and 0x21d110 takes the tag in EAX where retail passes the state there), so
+// the flag/priority/result homes, push placement and the end-test spill differ. Round 54: the
+// seconds-to-ticks rounding helper with the looping-sound global read at each use 110 kept
+// (helper alone 115); bitfield end tests 137 and on the kept form 122 (each loses eight callers);
+// mask bit 8 with bitfield bit 11 132; renamed rounding temporary 110; priority from the request's
+// audible field 109; that with the location copy after the flags 140. Earlier: word flags 158;
+// index-order variant guards 134; flag11 field store 134; combined location mask 118 kept;
+// original priority observation 133; priority arms 182; nested variant tests 182; shared exit 182;
+// marker memcpy 182; base-first flags 178 (caller losses); role names 182; source snapshot 178;
+// object snapshot 183; priority after flags 192; conditional flags then priority 187; deferred
+// flags publication 176; location first with copied audible priority 167 kept; location memcpy
+// 182; conditional end-time publications 175; outer state scope 167; early optional-size default
+// 164; size before marker copy 167; nested class tests 167; platform-flags block first 167;
+// platform index snapshot 167; redundant object/platform clears omitted 149 kept; scoped header on
+// clean flags 149; native flag8 conversion 157 (eight caller losses); repeated class index on
+// clean flags 159; location/priority phase after flags/header 188/194; first/shared class
+// receiver 167/167; seconds/ticks terms 167/167; phase with seconds 188; shared receiver with
+// seconds 167; late tag receiver 184; branch-assigned result 193; shared marker observation 167;
+// absent-marker-first 165; native short priority and padding memset 176; whole source flags 149;
+// clean state flags 169 (eight caller losses); variant fields before flag 149; audible-first
+// admission 149; post-query marker default 134 kept; size conditional 147; looping global reads
+// 130 fast/135 plain; time-global reads 134; size override before copy 134; whole
+// request/tag/class records and combinations 181/196/228/146/197/215/247; first class record 165;
+// consistent variant-pointer field reads 118; disjoint source mask OR 118; conditional optional
+// flags 161 and full flag expression 162 (eight caller losses each); nested class admission 118;
+// real class-word mask with direct query 135.
+// Frame 0xa8 agrees; first class lookup expansion and flags/result homes remain.
 // Frame 0xa8 and EAX request agree; first class lookup expansion and flag/result homes remain.
 // Word flags 158; index-order variant guards 134; flag11 field store 134; combined location mask 118 kept
 // plain; original priority observation 133.
@@ -231,14 +259,12 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 			s_sound_class_play_flags *sound_class = (s_sound_class_play_flags *)function_221810(sound->class_index);
 			if (TEST_FIELD_BIT(sound_class->flag1) && TEST_FIELD_BIT(sound_class->flag2))
 			{
-				s_game_time_globals *game_time = g_510c54;
-				long end_time = game_time->game_time + float_to_int_nearest((real)sound->duration * 0.001f * (real)game_time->field_2_3) + 10;
-				s_looping_sound_globals *globals = g_4ed288;
+				long end_time = g_510c54->game_time + game_seconds_to_ticks_round((real)sound->duration * 0.001f) + 10;
 
-				globals->value20 = end_time > globals->value20 ? end_time : globals->value20;
+				g_4ed288->value20 = end_time > g_4ed288->value20 ? end_time : g_4ed288->value20;
 				if ((state.location.flags & 0x900) || !state.location.audible)
 				{
-					globals->value24 = end_time > globals->value24 ? end_time : globals->value24;
+					g_4ed288->value24 = end_time > g_4ed288->value24 ? end_time : g_4ed288->value24;
 				}
 			}
 		}

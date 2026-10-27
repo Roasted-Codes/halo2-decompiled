@@ -28,7 +28,9 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 	return length;
 }
 
-// score 157 (was 157): frame 0x14/0x18 and options/index/mask homes remain.
+// score 157 (was 157): Frame 0x14/0x18 and options/index/mask homes remain.
+// frame 0x14 versus 0x18 and options/index/mask homes remain.
+// Earlier: frame 0x14/0x18 and options/index/mask homes remain.
 // Earlier: frame 0x18 agrees. Retail compares i and count signed
 // (long), stores count = 0 before the first loop and counts a player before
 // its uniqueness test. Registers still rotate: retail has options in edi
@@ -90,6 +92,12 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // shared switch-result tail with long/short 196/189, and with lower bound 194/189.
 // Entry zero lifetimes on independent passes: count 172; machine 171; player 157;
 // both ordinals 171; count/machine 184; count/player 172; all 184; ordinal role names 171.
+// With independent validation passes: conditional machine result 218; conditional duplicate
+// result 238; conditional machine/duplicate results 260; conditional local-machine result 258;
+// conditional machine/local results 283; conditional duplicate/local results 235; all three
+// conditional comparison results 282; conditional initial player result 245. All restored.
+// Complete accumulated/player/final comparison-result complements and combinations
+// 272/160/272/203/274/206/274/335; last form uses a native long final failure result. All restored.
 // Independent-pass complete mask observations 157; with native long/short membership 183/184; unsigned mask
 // bound 238; long accumulated/player/both validity 215/171/212; short accumulated validity 221. Original body
 // restored.
@@ -102,6 +110,8 @@ static inline dword string_length_bounded(const char *string, dword maximum_leng
 // Word uniqueness signed/unsigned 183/183; with word/byte accumulated result 230/183;
 // with word final/all-word results 230/245; with long/short membership 194/194.
 // These recover the opening frame and registers through +0x10 but regress overall; all restored.
+// Initial validation result from first two/three/four/five tests, bool 157 each;
+// complete entry result long/short/signed byte/byte 219/226/188/188. All restored.
 // @retail 0x138180
 bool __stdcall function_138180(const s_session_options *options)
 {
