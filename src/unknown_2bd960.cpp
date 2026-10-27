@@ -536,6 +536,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // 72/137/69/135/72/137/69/135 fast (unchanged control 72, full 23); restored.
 // Exact control-helper orders spline/points/index/output 70, with radius receiver 67;
 // spline/points/output/index 72, with radius 69. First order plus receiver kept, plain 18.
+// Round 218: Native numerator/denominator/quotient/sample names on exact control graph
+// 154/250/67/186/154/250/186/186 fast; pre-guard/shared versus independent
+// marker ordinals 68/134/134/134 fast (control 67, full 18). All restored.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {

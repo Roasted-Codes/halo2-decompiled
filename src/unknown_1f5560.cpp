@@ -1333,6 +1333,11 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // with float magnitudes and per-arm centre 278 (kept); with plain flag 301; result/radius renames 298;
 // trace-hit single exit (goto or nested if) 278, with plain flag 275; negated early return 288;
 // facing reference 302; difference through the point-difference helper 278/275 (plain flag).
+// Round 218, recovered direction graph with ordinary inputs/side: radius at each use
+// 274 at retail length (gain four rejected); negative radius 295; reused threshold 302;
+// negative/field radius with threshold 295/279; direct side result alone/with negative
+// radius/with negative and threshold 302/295/295. Actual trace common exit with field/
+// negative radius 278/299. All restored; zero/radius registers and side threading remain.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

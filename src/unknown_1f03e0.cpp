@@ -441,6 +441,8 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Round 166: Corresponding projection products named on both compared dots: i/k/j
 // 194/194/194; ik/ij/kj 197/197/197; all 194; all with both first sums 194. Original
 // expressions, early constants and pair-result join restored.
+// Round 218: Ordered upper/lower/predicate admission continuations, every nonempty
+// combination 177 each; all continuations with immutable contact count 194. Restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -735,6 +737,9 @@ struct s_flags_1f0870
 // Round 183 existing returned-vector cross for first flying / remaining flying / ground / all flying
 // 607/659/590/694; first flying plus ground / remaining flying plus ground / all active / all paths
 // 637/689/724/834 (fast). All restored; extra frame dword, direct bit and vector homes remain.
+// Round 218, cleaned body: complete native flag observation 623; gravity conjunction 611;
+// complete mode observation 625; flag/conjunction 645, flag/mode 605, conjunction/mode 652,
+// all 628; all with byte step result 628. Original complete observations and result restored.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
