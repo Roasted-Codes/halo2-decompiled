@@ -231,6 +231,8 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Initial component orders ikj/jik/jki/kij/kji 639/642/637/644/642; scale orders ikj/jik/jki 642/642/642.
 // Round 324: shared ramp time 665; third time 642; ramp/third 665; remaining distance 683; ramp/remaining 682;
 // third/remaining 683; all scalar workspaces 682; displacement workspace 665.
+// Output displacement/scale schedules ikj/jik/jki/kij/kji 641/643/642/644/644;
+// displacement-first, scale-first and scale-first per axis 642/642/642 (fast); caller matched.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

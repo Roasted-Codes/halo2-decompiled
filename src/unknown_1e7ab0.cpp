@@ -215,6 +215,8 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // and target names individually and together 627 each.
 // Flag-case order permutations 627/627/627/626/628; individual moves after case 18 609/646/643.
 // The 609 form worsens executable differing rows 552 to 561; restored.
+// Case pairs 10/11, 12/13, 15/18, 17/30, 20/23, 22/21, 5/6 and 7/8
+// reversed individually 627/629/625/627/627/630/633/636 (fast); original order restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
