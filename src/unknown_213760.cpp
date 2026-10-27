@@ -1174,6 +1174,9 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 
 // score 104 (was 104): frame 0x1144 and extent agree; file displacement, request-copy, the first read
 // call's handle copy and the write-success join remain.
+// frame 0x1144 and extent agree; file displacement (retail's product in ECX
+// and `lea ebp`), the task zeroing/path/counter registers, the first read call's handle copy, the
+// write-success join and retail's 1 held in ESI for two unmerged slot-range compares remain.
 // Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
 // frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
@@ -1239,6 +1242,19 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // validity declared at the loop top 104.
 // Round 187 actual handle-field reference at request/value/test groups, every nonempty
 // combination 104 each; full reference with immutable size limit 104. All restored.
+// Round 93: write success set by its own test 166 (914 bytes: every join matches; what is left is
+// retail's 1 held in ESI for two unmerged slot-range compares and the later slot test, and the
+// handle copy at the close call instead of the size query); that with the range test joined to
+// the validity test 166, with the handle declared s_file_handle 166; nested close test 104; long
+// expected size 104. A one-case switch 413; bounds from a const table or a type-to-slot switch
+// fold early and merge the compares (166).
+// Round 95: the inner slot test as `index != cache_file_slot_from_type(1) && index !=
+// cache_file_slot_from_type(2)` 104 (inlined and folded, identical code); the file pointer as
+// `g_557c90 + index` 104; the range joined to the validity test 104; the inner validity and slot
+// tests nested 104. Diagnostic: the range taken from a struct returned by value from an inline
+// type-to-range switch keeps the two compares apart (against ECX/EDX copies of 1, index in ESI),
+// with the write success set by its own test 161 (918 bytes); plain locals, enums, a local struct,
+// const tables and one-entry table loops all fold to one compare.
 // @retail 0x213970
 void function_213970(void)
 {

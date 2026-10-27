@@ -304,6 +304,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 192: two-use collision discriminator, reused reference surface ordinal and readonly
 // BSP/instance inputs, all seven combinations 185 each; combined unsigned discriminator 185.
 // Original observations, helper and all code restored; BSP/section and range/plane homes remain.
+// DL round 156: coherent part/residency/transform provider inline contracts, singles,
+// pairs, all and all with separate noinline declarations 185 each. Original declarations
+// restored; transform forms lose reduced controls 0x31590/0x168d60 (also 0x23d030 without noinline).
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -407,7 +410,15 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 /* the collision record's object index, re-read at each use as retail does (no local copy) */
 #define COLLISION_OBJECT_14A8E0 (*(long *)((byte const *)collision + 0x40))
 
-// score 236 (was 236): region scheduling and model/range/vertex homes remain.
+// score 181 (was 236): region code and node search now match; retail reads the model's bounds before
+// the geometry-block call (that read moved there gives 143 with the section groups ahead of the node
+// search, but it moves a definition read ahead of a call), keeps the vertex cursor in EBX and the
+// mesh spilled, and BLOCKED-BY 0x11e800: its vertices/point registers (ours eax/esi/edx/ecx, retail
+// eax/edx/ecx/esi) come from the contributor's body. Round 94: bool result 237 (886 bytes); signed
+// count from sizeof (jle) 236; region pointer before the test with both 195; plus NONE-result node
+// search 181 (kept); node count >= test 262/206; section groups after the surface lookup 254/214/177
+// (swaps model and collision registers unless the bounds read moves too); for vertex loop 181; part
+// range fields at their uses 180.
 // Frame 0x58 agrees; region scheduling and range/vertex homes remain. Split
 // region/transform receivers 236; early section groups 254; both 254; byte return with
 // split/groups/both 237/255/255; signed-byte result with split/groups 236/254.
@@ -445,7 +456,7 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)
 {
-	byte result = false;
+	bool result = false;
 	{
 		triangle->unknown18 = NONE;
 		*(long *)((byte *)triangle + 8) = NONE;
@@ -458,9 +469,9 @@ bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 		byte *model = g_4e3b44[model_index & 0xffff].bytes;
 		byte *object = *(byte **)(g_4e0300->data + (COLLISION_OBJECT_14A8E0 & 0xffff) * 12 + 8);
 		signed char *regions = (signed char *)(object + *(short *)(object + 0x11a));
+		byte *region_data = *(byte **)(model + 0x20) + (*(short *)((byte const *)collision + 0x44)) * 16;
 		if (regions[(*(short *)((byte const *)collision + 0x44))] != -1)
 		{
-			byte *region_data = *(byte **)(model + 0x20) + (*(short *)((byte const *)collision + 0x44)) * 16;
 			*(long *)((byte *)triangle + 0x14) =
 				*(short *)(*(byte **)(region_data + 0xc) + regions[(*(short *)((byte const *)collision + 0x44))] * 16 + 0xc);
 		}
@@ -473,7 +484,8 @@ bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 		s_vertex_bounds_23ac30 const *bounds = *(s_vertex_bounds_23ac30 const **)(model + 0x18);
 		object = *(byte **)(g_4e0300->data + (COLLISION_OBJECT_14A8E0 & 0xffff) * 12 + 8);
 		point3f point = collision->point;
-		if ((unsigned long)*(short *)(object + 0x114) / 0x34 > 0)
+		long transform_count = *(short *)(object + 0x114) / sizeof(transform4x3f);
+		if (transform_count > 0)
 		{
 			transform4x3f *matrix = (transform4x3f *)(object + *(short *)(object + 0x116)) + (*(short *)((byte const *)collision + 0x46));
 			function_142700(matrix, &collision->point, &point);
@@ -488,10 +500,16 @@ bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 		long node_count = *(long *)(section_mesh + 0x64);
 		if (node_count <= 0) goto done;
 		byte *nodes = *(byte **)(section_mesh + 0x68);
-		long node_index;
-		for (node_index = 0; node_index < node_count; ++node_index)
-			if (nodes[node_index] == (*(short *)((byte const *)collision + 0x46))) break;
-		if (node_index == node_count || node_index == NONE) goto done;
+		long node_index = NONE;
+		for (long node = 0; node < node_count; ++node)
+		{
+			if (nodes[node] == (*(short *)((byte const *)collision + 0x46)))
+			{
+				node_index = node;
+				break;
+			}
+		}
+		if (node_index == NONE) goto done;
 		byte *section_groups = *(byte **)(model + 0x80) + *(long *)((byte *)triangle + 0x14) * 8;
 		byte *surface_group = *(byte **)(section_groups + 4) + node_index * 16;
 		if (*(long *)surface_group != *(long *)(surface_set + 0x10)) goto done;

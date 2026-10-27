@@ -398,6 +398,9 @@ PRIVATE inline long polygon_round_19f(real value)
 // Round 194: Named real radial denominator at division/loop boundary, with ternary/explicit
 // alpha bounds and long/dword UV ordinals, all 366; without the denominator local 416.
 // Ordinary 366 loses both callers at two differences each; all trial forms restored.
+// Round 184: native attribute header with captured/live signed count and short/word
+// elements: actual cursor 379 each; direct array indexing 374 each (five-point
+// gain rejected). Frame 0x34 versus 0x30 and protected call transport remain.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

@@ -1260,6 +1260,10 @@ struct s_player_properties
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
 // score 184 (was 184): frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// Round 75: our zero stays in edx from the parameters test (cmp edi, edx) through both loops, so the
+// name count is spilled and the owner leaves edx. Count increment as its own statement 184; long mask
+// 184; inverted parameters test (clear first) 217; count declared after the index 184; `== 0` memcmp
+// test 184.
 // Round 90: a zero constant stays in edx from the parameters test to the record defaults, so the name count
 // lives in memory (retail: test edi, edi; the count in esi). Requested-record pointer first in the loop 199;
 // current as requested + 1 184; a player-record pointer 184; the record zero-initialised with braces 241;

@@ -2004,7 +2004,17 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
-// score 189 (was 189): frame 0x1c versus 0x24; current/replacement/object homes and iterator exit differ.
+// score 89 (was 189). The 3 form clears the removed prop and tests it before the node scan (a set-and-test
+// flag, kept only on a match; build/r74/26b230.best3.cpp in lane 5): there only the two pool registers
+// differ: retail keeps the prop pool in edi and the node pool in ebp; ours swaps them. Start there.
+// Round 74 (from 189): tail as a record-pool iterator walk, clump loop through the shared datum walk,
+// members through swarm_creature_iterator_next, unit set only when the mask test passes, the removed
+// prop cleared and the node scan guarded by it, flags/replacement declared first, together 3.
+// Then: first-node lookup through prop_get 3; node body through prop_ref_get 180; node step through
+// prop_ref_get 3; prop step reading the pool directly 3; swarm flag tested before the prop 185;
+// `continue` member loop 346; changed/unit in the prop loop condition 181; renamed swarm flag 89 (at 89);
+// a 600 s permuter run stopped by the harness before reporting.
+// Before round 74 (old body): frame 0x1c versus 0x24; current/replacement/object homes and iterator exit differed.
 // Byte type 195; membership result earlier 189; existing group lookup 189; removal arm first 189; guarded pointer-result loop 194.
 // Complete workspace scope 189; depth zero 391; member-link result first 222; replacement-result loop 206; promoted category 195.
 // Depth one 189; outer datum API 290; word unit 218; word group 192; calling scan 237.
@@ -2034,11 +2044,11 @@ void function_269250(long clump_index, long actor_index)
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
-	bool unit = false;
 	bool group_object = false;
+	bool unit = false;
+	long replacement = NONE;
 	s_slot_object_view *object = object_get(object_index);
 	short type = (char)object->type;
-	long replacement = NONE;
 	if (type == 12)
 	{
 		if (*(long *)((byte *)object + 0x134) == 0)
@@ -2050,19 +2060,13 @@ void function_26ae30(long object_index)
 				group_object = true;
 				if (perception != NONE)
 				{
-					long index = perception_get(perception)->object_index;
-					for (;;)
+					s_ai_object_iterator members;
+					members.next_index = perception_get(perception)->object_index;
+					while (swarm_creature_iterator_next(&members) != NULL)
 					{
-						if (index == NONE) break;
-						s_slot_object_view *member = object_get(index);
-						long current = index;
-						byte *member_extension = NULL;
-						if (*(long *)((byte *)member + 0x134) == 0)
-							member_extension = (byte *)member + *(short *)((byte *)member + 0x13a);
-						index = member_extension ? *(long *)(member_extension + 0xc) : NONE;
-						if (current != object_index)
+						if (members.index != object_index)
 						{
-							replacement = current;
+							replacement = members.index;
 							break;
 						}
 					}
@@ -2070,23 +2074,16 @@ void function_26ae30(long object_index)
 			}
 		}
 	}
-	else
-		unit = ((1 << type) & 3) != 0;
-	s_clump_pool_iterator groups;
-	if (g_4f55d0->active)
+	else if ((1 << type) & 3)
+		unit = true;
+	s_clump_datum_walk groups;
+	byte *group;
+	clump_datum_walk_new(&groups);
+	while ((group = clump_datum_walk_next(&groups, g_4f55d0->active)) != NULL)
 	{
-		groups.pool.data = g_502420;
-		groups.pool.index = NONE;
-	}
-	for (;;)
-	{
-		groups.current = NULL;
-		if (g_4f55d0->active)
-			groups.current = (s_clump *)data_iterator_next_inlined(&groups.pool);
-		if (!groups.current) break;
 		bool changed = false;
 		s_iterator props;
-		props.next = ((s_clump *)(g_502420->data + (groups.pool.datum_index & 0xffff) * sizeof(s_clump)))->first_prop;
+		props.next = ((s_clump *)(g_502420->data + (groups.clump_index & 0xffff) * sizeof(s_clump)))->first_prop;
 		s_type_76cf92 *prop;
 		while ((prop = clump_next_prop(&props)) != NULL)
 		{
@@ -2097,7 +2094,7 @@ void function_26ae30(long object_index)
 					*(long *)((byte *)prop + 8) = replacement;
 				else
 				{
-					function_26aaf0(groups.current, props.index);
+					function_26aaf0((s_clump *)group, props.index);
 					if (!unit) break;
 					continue;
 				}
@@ -2127,12 +2124,12 @@ void function_26ae30(long object_index)
 	}
 	if (object->type == 1)
 	{
-		for (long index = data_next_absolute_index_inlined(g_502414, 0);
-			index != NONE;
-			index = data_next_absolute_index_inlined(g_502414, index + 1))
+		s_record_pool_iterator trackings;
+		trackings.data = g_502414;
+		trackings.index = NONE;
+		byte *tracking;
+		while ((tracking = data_iterator_next_inlined(&trackings)) != NULL)
 		{
-			byte *tracking = g_502414->data + g_502414->size * index;
-			if (!tracking) break;
 			if (*(long *)(tracking + 0x40) == object_index)
 				*(long *)(tracking + 0x40) = NONE;
 		}
@@ -2198,6 +2195,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 192: actor/prop/node iterator lexical homes in all seven combinations 296 each;
 // complete native iterator/array homes 296. Frame 0x6a4, early reset-word SI and later
 // visibility/selection allocation unchanged; original names and all code restored.
+// DL round 156: native member/object generation ordinals word-word, word-long, long-word,
+// long-long, dword-long, long-dword, dword-word, word-dword
+// 311/323/323/299/299/299/323/323. Shared walk and original observations restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

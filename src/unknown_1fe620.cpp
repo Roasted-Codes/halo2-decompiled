@@ -46,6 +46,9 @@ static __forceinline long real_to_long(real value);
 // Round 194: Initial-test/point-query/optional-adjustment providers, inline
 // singly, in every pair and together, then all three noinline: 373 each.
 // All separate declarations restored; frame and early input allocation remain.
+// Round 184: native actor state-byte/timer-scalar/point-vector regions, all seven
+// nonempty combinations, and the genuine adjacent output-vector array 373 each.
+// External record layouts restored; raw actor receiver and original values retained.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

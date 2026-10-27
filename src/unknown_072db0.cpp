@@ -1393,6 +1393,9 @@ struct s_rating_summary
 // 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
 // completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
 // the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
+// Native full-width unsigned/signed status fields 202/202; native word/bitfield
+// admission with full sentinel 350/350; split sentinel halves 335/335; native
+// status with player indexing 202, with fifteen-bit counters 199 (rejected).
 // Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
 // 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
 // Round 194: On native fifteen-bit player statistics and a shared pass ordinal,
@@ -1600,7 +1603,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 739 (was 739): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
+// score 737 (was 737): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
 // Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
@@ -1639,6 +1642,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Read-builder count homes in six meaningful lexical orders, write-builder homes and both builders: 739 each on the retained word-completion/failure graph. Original count names, helpers, predicates and call tuples restored.
 // Round 343: Native request identity via library/aggregate copy 747/747; with real descriptor count 792/792;
 // terminal candidate reuse 742/742; count plus terminal reuse 836/836. All restored; original completion failure and word group remain.
+// Round 248: Complete returned-property extent and received total, signed/unsigned
+// with indexed access and before/after accumulation 737/754 each; native property
+// cursor with the same pairs 737/760 each. Original bound and accumulation restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

@@ -209,6 +209,10 @@ struct s_block_candidate
 // 379/379; conditional callback 366/366. Comparator inline/noinline on original
 // 370/370, on occupied-first conditional form 366/366. Original-order callback
 // forms 376/376/371/371. Four-point gain at retail length rejected; original code restored.
+// Round 148: insertion candidate reference 370; scanned candidate reference 370; allocated block
+// reference 370; both candidate references 370; insertion/allocated references 370;
+// scan/allocated references 370; all object references 370; all references/readonly block/policy
+// inline 370; isolated policy inline 370. All executable forms restored.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {
