@@ -301,6 +301,8 @@ bool function_404b0(long mode)
 // Earlier 226 (from 226): Unsigned-zero branch, pass-result homes and mode-two call expansion remain. shared single pass 275; shared
 // native masks for passes 16/1/3/8/20/7 give 226/226/226/230/226/226; all masks 230; with byte
 // lower-bound admission 229.
+// Entry tests selection/bit0/byte/flags in orders 2134/1324/1243/2143/1342/1423/2314/1432:
+// 237/230/233/244/235/308/239/308.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

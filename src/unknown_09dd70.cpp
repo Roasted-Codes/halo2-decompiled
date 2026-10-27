@@ -465,6 +465,7 @@ static __forceinline byte *function_9d952(long arg_0)
 // both bit extractions 252; byte slot 196; direct missing-parent slot 241;
 // primary word plus byte slot 241; word two-byte-copy ordinal 197 (828 bytes).
 
+// Fixed bits 10/11/12/13/22/23 shifted separately 196 each; lower four and all 196/196.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {
