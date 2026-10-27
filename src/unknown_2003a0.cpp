@@ -2916,7 +2916,7 @@ long function_203780(long arg_0, short arg_1, short arg_2, bool arg_3);
 long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
-// score 351 (was 383): Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
+// score 351 (was 351): Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
 // Earlier: frame 0x13c versus 0x134; scalar and spawn/definition homes differ.
 // Direct low-word index 387; other direct parameters 387; all direct reads 387;
 // workspace role names 387; one shared native request 399. Pool-first lookup
@@ -2936,6 +2936,8 @@ void function_2011f0(long arg_0);
 // Consistent squad-root displacement 358; with scenario/category/both observations 351/357/357;
 // negative reuse state on those four graphs 358/351/357/357;
 // scenario graph with early displacement/short placement/word squad/both inputs 351 each.
+// Early result constants and input guard in seven combinations 361/351/361/359/360/360/360;
+// both result lifetimes in positive-count branch 360.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

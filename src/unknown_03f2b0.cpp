@@ -1413,6 +1413,8 @@ struct s_133f70;
 // (all eight 356 fast). Original record access and body restored.
 // Round 330: Query/builder/output-query/lighting inline and noinline declarations: eight at 356f, matching
 // reduced control (frame 0x3400), versus full 213. All declarations restored; no reduced-only candidate.
+// Projection branch scope, later failure constant and earlier level constant combinations:
+// 356/371/371/356/356/371/371 fast; separate level initialization 356 fast.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
