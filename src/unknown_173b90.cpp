@@ -884,6 +884,9 @@ public:
 // and their combinations 308; native receivers/location for 308; native location/child/
 // successor/all handle domains 308; byte/signed-byte/word/bool canonical results
 // 374/374/308/375.
+// Round 174: existing cross input references 308; forward/up/both values 411/409/507;
+// reference inputs/output 308; native result with pointer/reference/value inputs 369/369/624.
+// Original helper and both calls restored; frame 0x60, flag/result and selective calls remain.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

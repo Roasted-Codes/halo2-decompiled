@@ -189,6 +189,10 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // Round 171 reduced control 680: short exponent 699; coefficient aggregate 680; symmetric weighted products
 // 691; short/aggregate 699; short/products 698; aggregate/products 691; all native boundaries 698; readonly
 // coefficients/native boundaries 698.
+// Round 174 reduced control 680: native curve reference 680; endpoints after saturation 681;
+// named remap span 680; reference/late 681; reference/span 680; late/span 681; all 681;
+// all with named scaled range 693. Original curve producer restored; full 626 baseline,
+// unaligned 0x1490 frame and stacked mode remain.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,

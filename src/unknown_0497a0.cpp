@@ -62,6 +62,10 @@
 // camera offset terms 594; trig/projection terms 594.
 // trig/camera terms 673; projection/camera terms 673.
 // all three term families 594; named modulation 673.
+// Round 174: consume cross vector in place 673; cross at displacement 707;
+// early sine factor 652, with late cross 709; factor after modulation 652, with late cross 709;
+// cross after first sine 673, with early factor 652. Original cross/scaler graph restored;
+// frame 0x64/0x60 and shape/basis/wave homes remain.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
