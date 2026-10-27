@@ -160,6 +160,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // schedule with input+projection/input+cross/projection+cross/all row parts 281/291/299/281; second
 // schedule with all parts/direct sums 281/283. Every row stays symmetric; original helper and body
 // restored. Frame 0x1c versus 0x24 and half-angle/quaternion/cross spill sharing remain.
+// Lane 8 r58: plain half-angle locals 291 (sine half then in the parameter home as retail);
+// cross term first in the sums 291; helper result through a local vector 367 (plain 361);
+// helper in 0x11cb00's rotate-point operand/statement form 272 at 1317 bytes (retail's
+// cross/scalar spills and doubled w2 copies, quaternion registers permuted); with plain
+// halves 280; with sine-branch i/k/j, j/i/k, k/j/i 274/263/295; swapped state 272.
 // Round 94: retail never reuses the quaternion's 16 bytes for the transform spills (ours spill the
 // cross terms into it) and keeps the clamped cosine, sine half and doubled scalar in the matrix
 // parameter's slot. Plain half-angle locals in place of the two-member struct 291 (frame 0x18);
@@ -168,6 +173,12 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Round 356: Existing inline point-rotation producer 272; independent half angles 280;
 // shared axis cross 251; independent halves/shared axis 239; with shared repair crosses
 // the same four forms 272/280/251/239. Original helper, paired halves and both cross phases restored.
+// Round 253: Cosine half owned by the quaternion scalar, cosine/sine-first 291/293;
+// with shared cross 265/267; shared double-factor scale 311/311 (1317 bytes);
+// both shared products 327/327. Original body and helpers restored.
+// Round 210: Scalar crosses with coefficient orders dot/s/w2, w2/dot/s, w2/s/dot,
+// s/dot/w2, s/w2/dot: 274/274/272/306/235; cross-first schedules 282/297/304.
+// Best 235 gains two, rejected; original helper/body restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

@@ -345,6 +345,8 @@ static inline bool teams_enabled_19e1c0()
 // three-point 430 form is ineligible; all restored.
 // Round 166: mode observations 433; engine result exit 433; fallback test result 435; mode with
 // exit/tests 433/435; native result with exit/tests/mode exit 704/703/704.
+// Round 150: Shared admission, shared engine getter, forced existing admission and native admission inputs 433 each; ordinary result on those four graphs 701 each. Original helper/include/result restored.
+// Frame 0x208/0x204, result/capacity homes and separate copy tails remain.
 // Round 353: target inline/noinline declarations 433/433; ordinary result
 // 701/701; forced admission helper 433/433; both 701/701.
 // Target metadata and original result/helper restored; matched caller preserved.

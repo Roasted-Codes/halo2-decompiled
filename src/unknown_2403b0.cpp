@@ -34,7 +34,7 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 	return !(table->flags[team] & 1);
 }
 
-// score 146 (was 146): frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
+// score 95 (was 95): frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
 // it, the completion bits use other registers, and the final predicate's layout differs. Kept: the two
 // completion bits set through byte_flags_set (retail stores the flag byte twice), 190 -> 146.
 // frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
@@ -157,6 +157,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // change); event initialization before both bits 109. On the 95 body: permission as `allowed = false;
 // if (0x15e410(team)) allowed = clear;` 128; engine call through game_engine_get 95; slot read without
 // the weapon pointer 95; position/event declarations swapped 95; signed-char predicate team 95.
+// Round 77: unit/weapon/both through object_get 95/95/95 (the pool read stays shared: both callees
+// between them only read memory in this build, so the reload looks like a callee-summary effect);
+// the entry guard split in two 95; the team as a long 119.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

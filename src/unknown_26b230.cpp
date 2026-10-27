@@ -166,7 +166,7 @@ void function_268840()
 	function_268c90();
 }
 
-// score 246 (was 246): frame 0x50 agrees; pool/NONE allocation and current/successor homes remain.
+// score 246 (was 246): frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
 // Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
@@ -216,6 +216,8 @@ void function_268840()
 // Original pool/header observations, body and contributor child interfaces restored. Frame 0x50
 // agrees; player-pool/NONE allocation, current/successor homes and protected child-call convention
 // remain.
+// DL159: actor-boundary player-pool lifetime 246; all squared products named 246; full-width expiry alone/with products 250/250; signed-byte retention alone/with products 247/247; both result domains alone/with products 251/251. Original observations, arithmetic and child interfaces restored.
+// Round 251: Branch-scoped retention bool/byte/short/long 247/247/247/246; with pool after iterator setup 297/297/296/297. Original actor-wide scope, pool observations and child interfaces restored.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2004,7 +2006,8 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
-// score 89 (was 189). The 3 form clears the removed prop and tests it before the node scan (a set-and-test
+// score 89 (was 89): frame 0x24 agrees; category-byte homes, removal completion and pool carriers remain.
+// Earlier rejected pointer-clear diagnostic: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
 // flag, kept only on a match; build/r74/26b230.best3.cpp in lane 5): there only the two pool registers
 // differ: retail keeps the prop pool in edi and the node pool in ebp; ours swaps them. Start there.
 // Round 74 (from 189): tail as a record-pool iterator walk, clump loop through the shared datum walk,
@@ -2041,6 +2044,8 @@ void function_269250(long clump_index, long actor_index)
 // Current-member identity before lookup 204; successor published on continuation 200;
 // original-object accessor at every use 262; identity/successor, identity/accessor, successor/accessor,
 // all three 200/261/262/262; all with conditional unit admission 263. Original body restored.
+// DL159: single iteration-completion label 3; separate completion guards 3; reversed category declarations 5; category name/native node datum/node iterator/both iterator names 3/3/3/3; native node with reversed categories 5. Labels rejected as branch layout.
+// Structured unit continuation, with separate completion guards and native byte unit/change domains in all eight combinations, 89 each. Original body restored.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

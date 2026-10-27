@@ -2146,8 +2146,12 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // low between/high before, after integers, after all 193/172/170;
 // low after/high before, after integers, after all 191/170/168.
 // Both mask updates after their original stores retained; 1070/1081 bytes.
+// Independent early parent result/store boundaries before/between/after: 288/288/285;
+// 267/266/169; 266/265. Original early stores and retained child timing restored.
 // Round 246: metadata/count/fraction defaults before the child getter in seven
 // combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
+// Round 197: Existing base-sync/identifier-map ordinary-inline-noinline declaration pairs,
+// all eight alternatives, 168 each; original declaration graph and body restored.
 // Round 352: persistent, child-value and induction/mask scalar-home groups, singly and all
 // combinations, 168; complete homes plus native header offset 167 (one point, rejected).
 // Original executable body and retained post-store child masks restored at 168/1070.

@@ -152,6 +152,11 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // Round 354 natural-loop graph: feature word before selector 26; both feature results before selector 25;
 // both with early word 192 (caller differs); conditional selector 16; decoded-selector name 16;
 // both ordinal role names 16; category before selector/feature observation 133/199. Original restored.
+// Round 77: word 22nd parameter in the definition and this declaration (diagnostic, third declaration
+// unresolved) 8; on it: category through the original 207; bool category array 8; category local at the
+// inner-loop top/before the call/before the inner loop/before the flag sample 134/8/195/198; instance
+// local 8; byte category cast 8; callee category byte/word 47/15. The register setup of the last three
+// arguments remains.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *record, bool arg_2)
 {

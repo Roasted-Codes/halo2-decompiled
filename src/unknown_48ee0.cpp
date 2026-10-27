@@ -72,6 +72,9 @@ extern real g_4c9798[36];
 // second on the stack. The two pointer parameters were named crossed against both callers (kept: now
 // swapped, data flow as retail, 295). Direction/origin fields read at each use 328; tag test as a
 // one-case switch 295; origin/direction references at entry 300.
+// Round 60: maximum width/height written through pointers by an inline helper 295; flag test as
+// a shifted bool, its negated-bool and its compare-with-zero spellings 311/337/295; offset as a
+// ternary 309.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

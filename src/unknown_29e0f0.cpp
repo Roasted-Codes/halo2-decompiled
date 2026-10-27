@@ -230,7 +230,7 @@ struct s_29e730
 };
 struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long field_54; };
 
-// score 52 (was 89): convention, frame, length and every path-block slot agree; the success-path copy
+// score 52 (was 52): convention, frame, length and every path-block slot agree; the success-path copy
 // registers and the NONE constant (retail EDX, ours EBX, so the end section's last index takes DX and
 // its copy ESI/EDX for retail's BX and EDI/ESI), the 0x29db90 setup (retail stores the list pointer
 // before forming it again in ESI) and the failure counter's register rotation remain.
@@ -269,6 +269,9 @@ struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long f
 // path point (cast) 86; offset through an inline add-scaled helper 87; shared function-scope path
 // temporaries 94; 4-path point in its own block 59 (no change); 0x29db90 list from the parameter 52,
 // result pointer local 56, short range local 57; end-section element written out at each use 76.
+// Round 208: direct/last/optional sentinel chains 52/69/69/52/52/69/69;
+// scratch count before pointer publication 52; native result-record library-copy
+// combinations 52/52/52/52/52/52/52. Copy/NONE and failure-counter registers remain.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,

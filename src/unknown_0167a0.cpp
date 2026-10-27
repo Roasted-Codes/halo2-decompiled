@@ -74,7 +74,7 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 132 (was 132): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
+// score 132 (was 132): frame four and numeric/reset sequence agree; logarithm factor width and restore pointer/mask homes remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
@@ -147,6 +147,7 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Minimal entry-field form kept after ordinary confirmation at retail length 972.
 // Existing updater inline declarations 16f60/17000/189a0, their three pairs/all,
 // and all three noinline declarations 132 each. Original declarations and body restored.
+// DL159: coherent updater inline definition/declaration 132; on that graph, global-first complete mask groups 001/010/011/100/101/110/111 all 132. Original provider specifications, exact logarithm and body restored.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -857,7 +858,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): Frame 0xc versus 0x10; entry/value homes and deferred descriptor rereads remain.
+// score 157 (was 157): frame 0xc versus retail 0x10; entry/value homes and deferred descriptor observations remain.
 // Earlier: Frame 0xc versus 0x10 and deferred descriptor rereads remain.
 // frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
@@ -892,6 +893,9 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Round 201: Native packed-range parameter and entry record: direct/count accessor/selector
 // fields/both 155/189/185/199; the same four with complete remapping fields 155/189/185/199. Two-point
 // body-step lead rejected; complete source restored.
+// DL159: actual direct/mapped/both selector field references 199/177/185; signed source field reference 157, with direct/mapped/both selectors 199/177/185; complete field graph with body cursor steps 185. Original copied fields, dynamic bounds and writer retained.
+// Round 206: Native ordinary/special/dirty output fields, individually, all three pairs and all
+// together 157 each; complete output fields with body cursor steps 155. Two-point gain rejected.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

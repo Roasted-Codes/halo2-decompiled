@@ -809,6 +809,8 @@ real normalize2d(point2f *v);
 // and all three initialization changes 169/169/173/174; byte validity with the same four forms
 // 171/171/175/177. Best word forms reach 935 bytes at 169; three-point gain rejected.
 // Original query-byte allocation and protected trajectory convention remain.
+// Round 151: Two-use retry success with logical/bitwise/reversed logical joins before/after publication 216/239/218/254/215/243; promoted long/word result joins 200/203. All restored.
+// Frame 0x48 agrees; immediate query zero, protected trajectory convention and retry/output homes remain.
 // Native vector setter for planar zeros/actor fallback/default axis 172/218/187;
 // zero-actor/zero-axis/actor-axis/all 218/187/211/211; all plus request setter 222. All restored.
 // @retail 0x1f8160
@@ -1073,6 +1075,10 @@ real function_50650(real cosine);
 // shared inner minimum 335; all observations plus shared inner minimum 381. Original receivers restored.
 // Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
 // X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
+// Round 59 (fast control 117): offset-first actor expression 117; actor through the actor getter 117;
+// object before actor 118; speed factor declared last 117; ternary first clamp 117 (same code). The
+// velocity j preload matches the shape the in-place 3-D normalize gives in matched 0x179fb0 (every
+// component but the first preloaded before fsqrt); a hand-written 2-D copy of that shape 128.
 // Direct speed-factor default 302; all minimum spans 117; speed/spans 302; paired closing
 // projections 117; speed/projections 302; spans/projections 117; all 302; all with facing default
 // first 300 (fast control 117, full 137). All restored; actor/object homes, velocity preload
@@ -1360,6 +1366,8 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // Round 347: ordinary origin with direct byte/short left state 302/305, Boolean/byte right 281/281;
 // complete facing scalar observations with those four states 284/298/300/300.
 // Last two reach 1173 bytes, but input/SSE register ownership regresses; original body restored.
+// Round 151: Existing normalizer value/pointer inputs with output pointer 348/302, returned point 359/359, scalar input/output or return 319/298; void/value and returned/value movement contracts 350/339. All ordinary origin/side forms restored.
+// Frame 0x3c and original homes agree; zero/radius registers, facing transport and type-zero continuation remain.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

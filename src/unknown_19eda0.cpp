@@ -392,12 +392,20 @@ PRIVATE inline long polygon_round_19f(real value)
     return result;
 }
 
-// score 379 (was 393): the fade clamp now computes a single radius*1.5 product, so the
+// score 379 (was 379): frame 0x34 versus 0x30; fade/radius homes and render-call transport differ.
+// Earlier at 393: the fade clamp now computes a single radius*1.5 product, so the
+// the fade clamp now computes a single radius*1.5 product, so the
 // radius keeps retail's xmm3; our fade block is still one instruction shorter than
 // retail's, and the call to function_4b2d0 still passes three stack arguments.
+// Round 194: Named real radial denominator at division/loop boundary, with ternary/explicit
+// alpha bounds and long/dword UV ordinals, all 366; without the denominator local 416.
+// Ordinary 366 loses both callers at two differences each; all trial forms restored.
 // Round 184: native attribute header with captured/live signed count and short/word
 // elements: actual cursor 379 each; direct array indexing 374 each (five-point
 // gain rejected). Frame 0x34 versus 0x30 and protected call transport remain.
+// Round 226: ordinary variant/body pointer advance with native material/group/shader records,
+// every pair/all three, and all plus native context byte 432 each at 1480/1518 bytes.
+// Both matched callers become 2; every record, input observation and original body restored.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

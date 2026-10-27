@@ -1268,7 +1268,7 @@ extern bool g_4ed39d;
    Retail passes all three arguments on the stack: reading the screen id
    through its address keeps it there */
 
-// score 184 (was 184): The game/main byte homes and dialog joins still differ.
+// score 156 (was 184): case 4 block order (retail: booted path, dialog show, mode switch), game/main byte homes and the lobby jump threading remain.
 // Frame 0x28 agrees; game/main byte homes and dialog joins remain.
 // game/main byte homes and dialog joins differ;
 // frame 0x28 agrees; game/main byte homes and dialog joins remain.
@@ -1339,6 +1339,9 @@ extern bool g_4ed39d;
 // its complement 198/198/209/215. Raw 169 adds arithmetic absent from retail, aligned edits 66 to 72;
 // original producers restored. Menu-byte homes and dialog joins remain.
 // Round 153: shared indirect load only 184; game-lobby/game-main/lobby-main constructor-and-load joins 195/195/190; corresponding partial indirect-load joins 184/184/184; shared load with direct constructor loaders 184. Original branch-local publication and both inherited qualifications restored.
+// Round 76: dialog flags read as call arguments 188; with the booted test inverted 165; plus one error read in
+// mode 6 156; plus main-menu show first 156 (aligned 75 -> 62, kept); the same without the inversion 182;
+// game flag not volatile 224f, with call arguments 219f; menu-flag renames (two orders) 156/156.
 // Round 155: Deferred native message declaration/partial initialization at game/lobby/main
 // consumers, their pairs/all, and common selection boundary: 225/215/215/233/233/224/220/228. Original publication lifetimes restored.
 // @retail 0x19ae0f
@@ -1417,15 +1420,19 @@ void function_19ae0f(long change, long pending, long error)
 				}
 				break;
 			case 6:
-				if (*error_reference == 0xe)
+			{
+				long error_code = *error_reference;
+
+				if (error_code == 0xe)
 				{
 					handled = function_148044(5, 4, 0xba);
 				}
-				else if (*error_reference == 0xdb || *error_reference == 0xed || *error_reference == 0xdc)
+				else if (error_code == 0xdb || error_code == 0xed || error_code == 0xdc)
 				{
 					handled = true;
 				}
 				break;
+			}
 			}
 			if (handled)
 			{
@@ -1473,12 +1480,7 @@ void function_19ae0f(long change, long pending, long error)
 			bool choice = false;
 			dialog_choice_callback first_chosen = dialog_callback_return_to_main_menu;
 			dialog_choice_callback second_chosen = 0;
-			if (g_4ee4c4.session_booted)
-			{
-				dialog_id = 0xb9;
-				g_4ee4c4.session_booted = false;
-			}
-			else
+			if (!g_4ee4c4.session_booted)
 			{
 				switch (mode)
 				{
@@ -1509,16 +1511,20 @@ void function_19ae0f(long change, long pending, long error)
 					return;
 				}
 			}
+			else
+			{
+				dialog_id = 0xb9;
+				g_4ee4c4.session_booted = false;
+			}
 			if (!window_manager_window_has_dialog(1, 4, dialog_id))
 			{
-				word show_options = function_1901fc();
 				if (choice)
 				{
-					dialog_choice_show(1, dialog_id, 4, show_options, first_chosen, second_chosen, 0);
+					dialog_choice_show(1, dialog_id, 4, function_1901fc(), first_chosen, second_chosen, 0);
 				}
 				else
 				{
-					dialog_ok_show(1, dialog_id, 4, show_options, first_chosen, 0);
+					dialog_ok_show(1, dialog_id, 4, function_1901fc(), first_chosen, 0);
 				}
 			}
 			return;
@@ -1541,15 +1547,17 @@ void function_19ae0f(long change, long pending, long error)
 		}
 		else if (show_main_menu)
 		{
-			if (!function_6c7e0())
+			if (function_6c7e0())
+			{
+				load = function_2310b7;
+				function_149f49((s_message *)&parameters, 7, 0, user_flags, 5, 4, (long)load);
+				parameters.load(&parameters);
+			}
+			else
 			{
 				function_1906b4();
 				function_1483c3(0);
-				return;
 			}
-			load = function_2310b7;
-			function_149f49((s_message *)&parameters, 7, 0, user_flags, 5, 4, (long)load);
-			parameters.load(&parameters);
 		}
 		else
 		{
