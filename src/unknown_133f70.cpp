@@ -148,6 +148,7 @@ short function_2cbf0(long arg_1, long arg_2, short arg_3, dword arg_4,
 // current source at iteration entry 210; the same four with existing word query 208/210/208/210.
 // Original/formal-source forms also lose the matched caller; frames grow to 0x21c.
 // Original conditional copy, query, cursor and local qualifiers retained.
+// With retained word recurrence, ordinary source/index/both carriers 207/193/200; conventional while alone/source/index/both 197/209/177/201; conventional for 186. Original body, cursor and inherited qualifiers restored; several forms also disturb the matched caller.
 // @retail 0x133f70
 void function_133f70(s_133f70 const *record, bool arg_2)
 {

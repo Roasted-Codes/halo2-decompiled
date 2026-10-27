@@ -97,6 +97,17 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // double projection 244; both 244; double launch speed 244; launch/trig 321; launch/projection 316; all three
 // 322; existing double velocity scaler 245; consumed-axis shared-scale orders projection/direction/cross 190,
 // cross/projection/direction 227, cross/direction/projection 236, direction/projection/cross 248,
+// direction/cross/projection 252; early cross 234; early alignment 235; cosine first 227. Frame
+// 0x11c versus 0x118 and rotation cross homes remain; original helper and all calls restored.
+// Round 175: Consumed-axis reference axis/direction/both 186/186/186;
+// axis value with pointer/reference direction 308/308; double trig input with
+// pointer/axis-reference/both-reference inputs 188/188/188. Original helper restored.
+// Round 177: Consumed-axis complete output by assignment/aggregate 287/287; native returned output with
+// pointer/reference axis 297/297; complete scalar/cross role names 186/186; early cross storage
+// with original/named scalars 186/186. Frame 0x11c versus 0x118 persists; all original code restored.
+// Round 243: Delayed-sine schedules 187/187/180/212/209/212/209; output loop 230; scalar
+// trig contracts 227/187/224/191. The 180 form fixes frame only, gains six and is
+// rejected; 209 fixes frame and request homes. Original helper and body restored.
 // direction/cross/projection 252; early cross 234; early alignment 235; cosine first 227; consumed-axis
 // reference axis/direction/both 186/186/186; axis value with pointer/reference direction 308/308; double trig
 // input with pointer/axis-reference/both-reference inputs 188/188/188.

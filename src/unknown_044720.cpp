@@ -255,6 +255,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Round 207: native list-storage construction in pointer/count/capacity, count/capacity/pointer,
 // value-initialized-header and shared member forms 247 each; the same four with uniform
 // at-use geometry selection 1000 each. All lose the matched caller; complete original restored.
+// Round 214: complete native large sphere, point-copy/component initial center, after/before lists
+// 207/235/205/234; component sphere initializer on those four graphs 199/247/201/247. All restored.
 // Round 148: coherent inline point/node/dispatch, point+node, point+dispatch, node+dispatch and
 // all three 190 each; coherent inline point with separate noinline 190.
 // Round 232: first header split 220; second header split 216.
@@ -269,6 +271,7 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Round 331: dispatch inline/noinline, node query inline/noinline, both inline,
 // both noinline and either mixed pair: all eight 190f. Entry/index and point
 // homes remain; both caller-local declarations and original body restored.
+// Round 153: one complete query at entry/original capture 264/260; each with shared marking 254/220; removing only query alignment gives 263/259/253/219. Aligned forms grow frame to 0x10a4; best remains worse than 190. Original query, marking sites and alignments restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

@@ -158,6 +158,9 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // All restored; success/type carriers and first-channel spill remain.
 // Direct output-buffer fields: plain 279; spatial 295; both 297; submix 233;
 // plain/submix 280; spatial/submix 282; all 297; repeated effect-mixbin field 290.
+// Across-reset creation state with plain/spatial/both value-initialized descriptions 297/299/298;
+// submix memset alone/with plain/spatial/both initializers 284/284/286/285; complete initialization
+// triple with original late state 250. Original descriptions and state lifetime restored.
 // Round 147: Chained zero levels 165; repeated coefficients 164; final volumes 164;
 // zero/coefficient 163; zero/volume 164; coefficient/volume 163; all three 162; all with shared
 // voice-count publication 161 (four-point gain rejected).
@@ -173,6 +176,7 @@ void function_221490(LPDIRECTSOUNDBUFFER *buffer_reference);
 // Round 58: one result byte set as the creation flag 173; set before the 0x12c040 call 285 (retail's
 // early BL/stack byte, but frame 0x84); before the listener call 288; after the 0x12c040 call/first/
 // second codec store 173 each; separate bool/byte flag set before the 0x12c040 call 290/280; bool flag 169.
+// Five coherent descriptor size/flags/input publication orders 169/169/171/171/169; reverse send-only/submix-only 167/167; complete reverse order with creation byte spanning reset 280. Original descriptors, byte state and body restored.
 // @retail 0x21e4b0
 bool function_21e4b0(s_sound_driver_counts const *counts)
 {
