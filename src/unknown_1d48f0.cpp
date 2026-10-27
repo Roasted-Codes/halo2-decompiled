@@ -87,6 +87,8 @@ const dword g_455978[81] = {
 // Round 54: noinline declaration of 0x11bed0 447 (and 0x11bed0 itself 19 in --fast: CAVEAT on its
 // callee 0x14a280); first release with the inline range check 442; both 401 (structural diff 36 vs 66);
 // with an `arg_8 ? 27 : 18` count 427, count alone 477.
+// Round 223: Both positive validation stages 350; result-terminated scan 395; optional failure
+// first 351; both 395; zero rejection removed on these graphs 408/411/407/411. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
