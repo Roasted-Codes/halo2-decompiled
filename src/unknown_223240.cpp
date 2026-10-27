@@ -132,6 +132,9 @@ void function_2232a0(void)
 // Existing complete layout query 151; query with ordinary pretest/single-first layout 161/168;
 // query with exclusive/conditional clamp 182/182; exclusive clamp with pretest 183;
 // native byte layout with query/do/pretest 189/177. Original expanded gate and loop retained.
+// Round 248: Split lower-bound phase across mode selection, snapshot/live field
+// with original/pretested traversal 152/163/152/163; split upper-bound phase
+// counterparts 185/195/185/195. Original count producer and loop restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

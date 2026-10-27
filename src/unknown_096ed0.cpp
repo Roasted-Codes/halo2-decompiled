@@ -772,7 +772,7 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 2 (was 154): Retail length and frame agree; case 5 loads the handle table into ECX, ours into EDX.
+// score 2 (was 2): Retail length and frame agree; case 5 loads the handle table into ECX, ours into EDX.
 // Round 73 kept: cleanup slot read at each use, full-width kind, nonzero-kind nesting, indexed
 // for loop with cases 1/3 sharing one call, count before the block stores, globals-parameter
 // release helper (154 -> 149 -> 26 -> 2). Case 5 forms then: entry pointer 50; reversed handle
@@ -826,6 +826,9 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 // restored.
 // Round 151: Inline reader byte/native 154/177; explicit descriptor/payload copies with each 154/177;
 // separate out-of-line reader counterparts 154/177/154/177. Reader contracts and all copies restored.
+// Round 248: State-first admission/nesting 103/114; state-first/handle-first failure
+// ladders 94/134; complete bool/long admission results handle-first 2/2, state-first
+// 103/103. Original handle-first short-circuit admission and callback retained.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {

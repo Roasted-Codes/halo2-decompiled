@@ -1308,6 +1308,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // byte/byte/short/word/long carriers 183/183/196/196/196. Original release and event code
 // restored.
 // Event owner/category/magnitude publication permutations 154/154/154/154/154; location first, owner last and location between owner/scalars 154/154/154. Original event and release code restored.
+// Round 248: Shared release state-mask/updated-byte inputs, publication before
+// inputs/after coefficient/after vector 200/203/204 each; reacquired item
+// before inputs/after vector 200/204. Original helper and byte stores restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

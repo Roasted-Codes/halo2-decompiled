@@ -1594,7 +1594,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 739 (was 739): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
+// score 737 (was 737): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
 // Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
@@ -1632,6 +1632,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Native player-array end bounds in availability/request/completion 837/792/792; availability-request/availability-completion/request-completion/all 878/905/857/951; all fixed clear array ends 771. Original ordinal traversals retained.
 // Round 343: Native request identity via library/aggregate copy 747/747; with real descriptor count 792/792;
 // terminal candidate reuse 742/742; count plus terminal reuse 836/836. All restored; original completion failure and word group remain.
+// Round 248: Complete returned-property extent and received total, signed/unsigned
+// with indexed access and before/after accumulation 737/754 each; native property
+// cursor with the same pairs 737/760 each. Original bound and accumulation restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
