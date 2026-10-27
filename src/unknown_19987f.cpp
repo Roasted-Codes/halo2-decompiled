@@ -1322,6 +1322,9 @@ extern bool g_4ed39d;
 // Round 175: Choice from the test, two/one alternatives: bool 168/184, byte 168/184,
 // short 175/189, long 173/192. Lower raw counts add conversion instructions and
 // worsen aligned sequence edits from 66 to 72-74; all original producers restored.
+// Round 178: Native availability result selects ID/ID+first/ID+second/all callbacks: 169/169/205/207;
+// its complement 198/198/209/215. Raw 169 adds arithmetic absent from retail, aligned edits 66 to 72;
+// original producers restored. Menu-byte homes and dialog joins remain.
 // @retail 0x19ae0f
 void function_19ae0f(long change, long pending, long error)
 {
