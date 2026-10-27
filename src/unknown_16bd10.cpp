@@ -826,6 +826,10 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // Round 250: Projection for/while/do loops 360/360/401; pan for/while/do loops 385/385/292; both
 // for/while loops 380/380 (expanded fast control 245). Original parallel rows restored; direction
 // preload, length/zero allocation and flag stores remain.
+// Round 188: Projection-case basis forward-left-up / up-forward-left / up-left-forward /
+// left-forward-up / left-up-forward, then normal before basis at forward-up-left /
+// up-forward-left / left-forward-up:
+// 247,247,248,248,247,279,279,279 fast; reduced control 245, full 245. Original executable source restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

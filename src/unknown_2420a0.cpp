@@ -2409,9 +2409,15 @@ bool function_241900(long player_index)
 }
 
 #pragma inline_depth(1)
-// @retail 0x242e00
 // score 13 (was 13): the cause's team is loaded into EAX where retail loads it into EDX, and the
 // fields of the event are written in the other order.
+// Round 8: early/top team declarations and player-team name 13 each; early event player 54;
+// early players with direct score-call arguments 54; branched initializer/engine-first 37;
+// selected type 54; default then override 41; direct array with branched initializer 37;
+// defaulted type with if, ternary reassignment or +=7 33 each; Boolean/arithmetic type 54 each.
+// The defaulted type reaches retail's early ECX data load but keeps its type branch and late stores.
+// Original body restored.
+// @retail 0x242e00
 void function_242e00(long player_index, long team)
 {
 	s_event event;

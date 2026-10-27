@@ -62,6 +62,13 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Native state with direct entry/entry-plus-peer/peer fields 236/238/266; native flags
 // with direct entry/peer 239/229; both snapshots with direct entry/entry-plus-peer/peer
 // 239/239/229. Original entry/peer cursors, field reads and callback/output homes restored.
+// Round 188: Chain-query inline/noinline/forceinline/inline-out-of-line declarations, then each
+// with native word state observed once:
+// 217,217,217,217,217,217,217,217 fast; reduced control 217, full 217. Original executable source restored.
+// Round 191: Native two-use payload mask at active gate, with original/cursor/
+// conditional size/both output forms 217/250/214/244; before state selection,
+// consistently serving applicable callbacks, 217/250/214/244. Three-point best
+// restored; original field observations, output graph and executable body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -772,63 +779,6 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 2 (was 2): Retail length and frame agree; case 5 loads the handle table into ECX, ours into EDX.
-// Round 73 kept: cleanup slot read at each use, full-width kind, nonzero-kind nesting, indexed
-// for loop with cases 1/3 sharing one call, count before the block stores, globals-parameter
-// release helper (154 -> 149 -> 26 -> 2). Case 5 forms then: entry pointer 50; reversed handle
-// compare 3; first-element/explicit-this/break-first/negated/ternary/long-item/dword-compare 2 each;
-// default-2-first 113; unsigned index or items store first 2; count declared first 4; data before
-// info 2; produced before memset 7; in-helper allocator/globals locals 26.
-// Native kind 211; role-named scalars 204; shared callback arm 222;
-// library descriptor/payload copies 204; pretested item while 220.
-// Unsigned native item total 204; joint count/error item guard 220; direct local output cursor 211;
-// pair-pointer cleanup 206; payload-before-info declaration 204.
-// Round 132: count after block publication 193 plain kept (688/692 bytes); frame 0x98,
-// count/kind/callback homes still differ. Entry decision/common exit/path results 271/248/206;
-// native-kind pairs 271/236/223; native kind plus count publication 204; both cursors after
-// publication 208; indexed post-publication output 212.
-// Count-bearing descriptor aggregate 208; update case first 211; persistent descriptor 204;
-// native high nibble 207; total-only lexical order 204.
-// Count-first declarations 205; entry-scope advancing cursor 217; produced before descriptor clear
-// 205; existing release helper 207; native kind with both initialization changes 212.
-// Round 111: Header error recheck removed 206; do-while error continuation 272; persistent native payload 204; persistent produced total 204; update error default first 204.
-// Item cursor 221; paired callback cursors 185 plain kept; all descriptor cursors 193;
-// unsigned error 193; word kind 204; default first 193; reverse cases 211;
-// all cursors with full-width kind 204.
-// Paired cursors with native kind 203; paired/native kind with pretested for 217.
-// Round 157: Range-first byte/native kind 232/198; count-default byte/native 232/218; terminal-test
-// count byte/native 214/219; test-count pretested while byte/native 214/215.
-// High/low cursor names 185; second cursor declared first 185; descriptor zero
-// initializer 186; names/declaration order 185; names/initializer 186;
-// declaration order/initializer 186; all three 186; cursor declarations before scalars 185.
-// callback-table 251; update-entry 198.
-// callback-table-update-entry 219; count-home-names 185.
-// callback-table-count-home-names 251; update-entry-count-home-names 198.
-// callback-table-update-entry-count-home-names 219; table-before-item-publication 251.
-// Round 199: Descriptor-owned item bound, byte kind with indexed/pretested/item-cursor/both forms
-// 216/203/181/191; native-kind counterparts 208/205/224/195 (fast). All restored.
-// Round 159: Second-only/first-only callback cursors with byte kind 218/218; native kind 219/219;
-// second-plus-item/first-plus-item cursors with byte kind 218/218 and native kind 219/219. All 704/692
-// bytes, frame 0x9c versus 0x98. Original paired cursors, item indexing, copies and cleanup restored.
-// Round 161: Failure-first 193; native kind 208; direct cleanup-array reads 178;
-// native kind plus array reads 202; metadata before copies 181; failure-first metadata
-// 193; failure-first native metadata 208; failure-first descriptor before index 193.
-// Seven/four-point previews rejected by minimum gain; original body restored.
-// Shared item/cleanup ordinal 185; with pretested items 222; case-local index 200;
-// case-local/pretested 266; native kind 203; native/pretested 217; native/case-local
-// 202; all three 217. Opening body restored.
-// Round 145: First-array endpoint byte/posttest 157, byte/pretest 250, native/posttest 177,
-// native/pretest 186; second-array counterparts 154/249/177/186. On second-array endpoint: enum
-// kind 177; shared creation arm 170; enum/shared arm 178; word kind 195.
-// Round 149: Second-array endpoint graph: scalar/buffer lexical home masks and entry buffer
-// declarations 154 each; range-first byte/native 216/205, default-first 228/221, terminal-produced
-// count 210/208; range/default native unsigned count 205/221. Original endpoint and full body
-// restored.
-// Round 151: Inline reader byte/native 154/177; explicit descriptor/payload copies with each 154/177;
-// separate out-of-line reader counterparts 154/177/154/177. Reader contracts and all copies restored.
-// Round 248: State-first admission/nesting 103/114; state-first/handle-first failure
-// ladders 94/134; complete bool/long admission results handle-first 2/2, state-first
-// 103/103. Original handle-first short-circuit admission and callback retained.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
@@ -898,7 +848,10 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 					break;
 				case 5:
 					if (entries[index].handle == (long)item && entries[index].state == 3)
-						error = table->owner->v6(item, info.c, 8, &produced, data.v, stream);
+					{
+						s_handle_peers *peers = table;
+						error = peers->owner->v6(item, info.c, 8, &produced, data.v, stream);
+					}
 					else
 						error = 2;
 					break;

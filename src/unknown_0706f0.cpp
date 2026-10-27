@@ -87,6 +87,8 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // each with Boolean result 243/243/243; both with physical case order at byte/Boolean
 // result 183/241 (fast). Original positive readiness arms and byte result restored.
 // Round 153: advancing member cursor on the retained byte graph 182; structured reset/active join indexed/cursor 182/182, native Boolean 243/243; successful-first join indexed/cursor 182/182, cursor Boolean 243. Original body and inherited state stores restored.
+// Round 155: Coherent inline dispatch-provider contracts individually, all six matched providers,
+// and all eight providers: 182 each. Original provider declarations and complete update body restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

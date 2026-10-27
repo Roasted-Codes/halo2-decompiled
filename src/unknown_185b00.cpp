@@ -765,6 +765,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Round 183: Direction reference/pointer-result/output-last 213/213/213; native vector result
 // 270; shared cosine 271, with reference/vector result 271/270; reversed scalar formals 227.
 // Original direction helper and body restored; upper-bound/range and pin homes remain.
+// Angle/pin/both input-formal reuse 176/257/257; each with a shared
+// double pitch cosine 226/285/285; both with inner marker scope 257,
+// with the shared terminal pin 272. Original scalar helpers and body restored.
 // Round 249: promoted yaw/pitch/both trig formals 181/222/174; native promoted
 // yaw/pitch/both inputs 181/226/172; both formals with shared pitch cosine 176,
 // yaw formal with shared pitch cosine 172. Original helper/body restored.

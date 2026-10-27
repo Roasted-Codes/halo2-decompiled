@@ -27,6 +27,14 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
 
 // score 170 (was 170): Frame 0x8c/0x94, raw secondary-result home and common probe tail remain.
+// Round 75 (all match-only, restored): clear state bool, one bool probe result for the mode-1/mode-2
+// probes with `category = 1` on a hit 28; with short category 26 (frame, slots, cmp ax all retail);
+// centre read through the cast parameter instead of the local copy 20: only the mode-1 x-row fold
+// remains (retail `movaps xmm1, xmm0; addss xmm1, [ebp]`, ours loads [ebp] early). On that body:
+// product-first rows 20/20, constant-left products 20, literal quarter 20, direction through a local
+// copy 26, short-circuit probe result 224; private point-from-line helper 26 (258 inside the pragma,
+// which blocks even __forceinline); noinline probe declaration without the pragma 393. Short
+// category alone 234, with bool clear state 225.
 // Earlier 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
 // Word category 225; native clear state 170; direct origin 172; distance category 175; side workspace 175.
 // Native clear with direct origin 171, word category 234, short return result 178.

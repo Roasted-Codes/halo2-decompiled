@@ -592,6 +592,14 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 
 
 // score 201 (was 201): frame 0x50/0x54, early EBX and child-iterator convention remain.
+// BLOCKED-BY 0xd0620 (contributor code, unmatched): retail passes the object index in eax and the child
+// iterator in ebx (ours pushes the iterator), so retail's ebx is taken through the child loop: it zeroes
+// ebx early for the object iterator and keeps both child flags on the stack (frame 0x54).
+// Round 74: retail's own shape is two flags (no unit child, every unit child friendly, both set from
+// the constant 1) and the three tail-merged calls: that form is 232 here at retail's length with the
+// aligned listing at 82 (count form 111), held back by the frame; with one call on a computed kind 273
+// (branchless select, 950 bytes); flags declared the other way 233; with bitfield exclusion bits 236;
+// with the flags set by one chained assignment 233.
 // Frame 0x50/0x54 and protected child-iterator register contract remain.
 // frame 0x50/0x54, early EBX and child-iterator convention remain.
 // Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;

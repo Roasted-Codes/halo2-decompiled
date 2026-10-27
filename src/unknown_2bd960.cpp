@@ -446,6 +446,11 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 // sum groupings 9/12/9; const table 10; all product orders x three groupings, with and without the
 // row pointer, 6-13; row cursor 9; flat table 10, with the row pointer 6; parameter reorders 10
 // (before the row pointer).
+// Shared square with const/products/early weights 110; early product-helper
+// input 5, late input 99; row/table/const/accumulation variants 5. All restored.
+// Native coefficient/plane rows with the shared product, either input order
+// and early/late weights 5 (439 bytes); quadratic coefficient still loads
+// separately. Grouped input and one-point reduction discarded.
 // Explicit shared square, immutable square, uniform named products and earlier weight-array
 // declaration: eight forms 110 each (425 bytes). Existing three-component product with powers
 // before the table 5/5 (439 bytes); after the table 99/99. Native row/direct table, immutable
@@ -551,6 +556,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // 72/137/69/135/72/137/69/135 fast (unchanged control 72, full 23); restored.
 // Exact control-helper orders spline/points/index/output 70, with radius receiver 67;
 // spline/points/output/index 72, with radius 69. First order plus receiver kept, plain 18.
+// Round 218: Native numerator/denominator/quotient/sample names on exact control graph
+// 154/250/67/186/154/250/186/186 fast; pre-guard/shared versus independent
+// marker ordinals 68/134/134/134 fast (control 67, full 18). All restored.
 // Round 144: sampling output/fraction/points order 67f; inline original and five
 // coordinated orders 219f each; separate noinline declaration 67f. Reduced control
 // 67f versus full 18; first sampling input XMM3/XMM2 and final marker roles remain.

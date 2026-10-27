@@ -1338,6 +1338,9 @@ static __forceinline long function_724a6(s_surface_description *arg_0)
 // new classifier/member at use 165; new classifier/all roots and member 153.
 // classifier own inline with barrier 7; classifier own force-inline with barrier 7.
 // classifier own inline without barrier 86; classifier own force-inline without barrier 86.
+// Entry level/type/shared-variant workspaces and role names 7; width inline 7,
+// force-inline 235. Long/unsigned-long classification results with either
+// or both upper clamps as conditional assignments 7 in all eight forms.
 // Entry level/type declarations and a shared variant workspace, alone and combined: eight forms 7.
 // Width helper declared inline in its own unit and every prototype 7; force-inline 235 (584 bytes).
 // All restored; the member/level-address/type scratch-register rotation remains.

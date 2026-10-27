@@ -977,6 +977,16 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // all with double selected fraction 337 (exact-only precision diagnostics; all restored).
 // Round 332: Candidate/collision/eligibility inline contracts, each and every
 // combination, 151; candidate/collision noinline pair 151. All restored.
+// Round 220: Collision/effect/both request declarations before the scan 200/200/200;
+// both at entry 203. Real request names, candidate-buffer name and both name groups 151/151/151;
+// combined pre-scan requests with names 200. Wider request lifetimes grow frame to 0x180;
+// original request ownership, query-first sweep and saved identifiers restored.
+// Round 199: Ordinary input/scalars/count/saved words/vector names/late quotient/early sweep/readonly
+// receivers 151/151/153/154/151/287/293/151. Consistent pool/header observations, alone, with word
+// order, with independent saved words and with early sweep: 346/339/346/339/348/341/291/275.
+// Round 201: Response storage: normal/sweep reorientation and sweep reflection 176/160/177; paired
+// direction/reflection 193/174; consumed-input left output alone/with sweep reflection 176/194; saved-
+// velocity left output 176. All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

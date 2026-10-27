@@ -135,11 +135,16 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // scalar home names, then all with the second-pass actor receiver, 164 each. Original names restored.
 // Eligibility result bool/const-bool/long/short with conditional or branch publication:
 // 194/200, 194/200, 195/178, 193/193; original body restored.
+// Native iterator constructors with implicit/explicit pool input, partial/full initialization and
+// free/member next contracts in all eight combinations 164 each. Original construction restored.
 // Second-pass combined bool/byte/short/long completion 164 each;
 // second-pass result-first bool/byte/short/long completion 164/164/188/186.
 // Round 248: One pool observation plus inline/noinline/both/force-inline finder
 // contracts with native partition 214/197/197/222; full-width partition
 // 216/165/165/223. Original pool observations, helper and contracts restored.
+// Round 204: Actual state-owner input to the existing step, owner last/first with
+// bool/byte/short/long completion, 164 each. Original helper and both traversals restored;
+// separate pool/iterator homes, early null and successor EBP remain.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

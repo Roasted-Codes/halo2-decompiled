@@ -73,6 +73,9 @@ void __stdcall function_b8890(long arg_0);
 // Earlier at 212 (was 212): list selection/count homes and cleanup schedule remain.
 // Round 330: Full-width unsigned first/second/search domains, seven combinations 212 each; all three with
 // both processing ordinals 212. Signed body/list bounds, retry and call cycle retained; original restored.
+// Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
+// combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
+// original induction restored. List/index/second-count homes and cleanup scheduling remain.
 // Round 235: Force-inline declaration at component-delete/detach boundaries 341/464;
 // with cleanup helper 411/532; with branched list selection 350/469; both boundaries
 // with branched selection 404/538. All helpers stay out of line; original body restored.
@@ -88,6 +91,8 @@ void __stdcall function_b8890(long arg_0);
 // Round 178: Reprocess islands with explicit advance on unflagged slots, for-loop selector/membership
 // combinations 270/270/241/239; while-loop combinations 270/270/241/239. All reach 954 bytes but regress;
 // original induction restored. List/index/second-count homes and cleanup scheduling remain.
+// Native byte flag unit with unchanged/bit-5/bit-6/both writes 212 each;
+// signed-byte flag unit with those four write forms 255 each. Original restored.
 // @retail 0x278f00
 void function_278f00()
 {

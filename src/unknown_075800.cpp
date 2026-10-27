@@ -1057,6 +1057,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 6,7,5 / 7,5,6 / 7,6,5 208/208/207/208/208; reverse connections with direct orders
 // 0,2,4,3 / 0,3,4,2 / 0,4,2,3 208/208/207. All regress at 432/444 bytes;
 // original phases restored. Incoming selector/message/address roles and dispatch root remain.
+// Round 188: Residual connection/peer interleaves 5,22,6,23,7,24 / 22,5,23,6,24,7 /
+// 5,23,6,24,7,22 / 24,5,23,6,22,7; connection/query interleaves 5,8,6,9,7,10 /
+// 8,5,9,6,10,7 / 5,9,6,10,7,8 / 10,5,9,6,8,7:
+// 193,192,193,192,195,194,195,195 fast; reduced control 191, full 193. Original executable source restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
