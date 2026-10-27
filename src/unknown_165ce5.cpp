@@ -1379,7 +1379,7 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// score 241 (was 241): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
 // Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
 // frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
@@ -1411,6 +1411,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Complete entry spring phase, override-only receiver, entry look outputs and both 250 each;
 // narrower aiming pair within that phase, with the same four storage combinations, 254 each
 // (fast control 250, full baseline 248). Original phase scopes and all five smoothing calls restored.
+// Explicit empty-unit return with the user receiver before/after admission and scoped
+// bool/byte/short/long storage 243/243/434/429 and 555/555/558/549 (fast control 243).
+// Original entry guard, receiver and state types restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

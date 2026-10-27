@@ -713,6 +713,8 @@ void swarm_leader_detach(long actor_index);
 // slots with those ordinals 284 each; shared callback element 284. Opening body restored.
 // Round 180: Shared cleanup getter/native prop fields/both 282 each; terminal indexed for
 // alone and with those three forms 314 each; signed stop while on the complete getter graph 299.
+// Existing complete count-record fields, terminal do with long/short/byte/unsigned
+// indices 282 each; terminal for 314/282/282/314. Original body and record view restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

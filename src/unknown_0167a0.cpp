@@ -884,6 +884,9 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Round 249: signed writer mask/value/both 155 each with body cursor steps;
 // each with a shared complement 201; both signed inputs with a shared masked
 // value 185, with both computed parts 187. Two-point forms dropped; helper/body restored.
+// Round 201: Native packed-range parameter and entry record: direct/count accessor/selector
+// fields/both 155/189/185/199; the same four with complete remapping fields 155/189/185/199. Two-point
+// body-step lead rejected; complete source restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
