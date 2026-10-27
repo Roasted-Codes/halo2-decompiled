@@ -711,7 +711,8 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 213 (was 213): Frame 0xa8 agrees; the upper-bound, range and pin input homes still differ.
+// score 172 (was 213): Frame 0xac versus 0xa8; pitch-bound and remaining scalar homes differ.
+// Earlier at 213: Frame 0xa8 agrees; upper-bound, range and pin input homes differ.
 // settings/direction/turn-difference homes and step-clamp scheduling
 // differ within frame 0xa8; the initial minimum home now agrees; retail keeps the
 // full turn in xmm3 and spills the range; the step pins get other registers.
@@ -751,6 +752,16 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // value/maximum/minimum 256, minimum/value/maximum 273, minimum/maximum/value 273,
 // maximum/value/minimum 266, maximum/minimum/value 273; original final clamp
 // with first/last reordered pin inputs 227/259. Original helper and calls restored.
+// Round 177: Complete positive yaw membership bool/byte/short/long 327/327/330/326;
+// complete exclusion bool/byte/short/long 327/327/330/326. Upper-bound/range homes persist;
+// original expressions and body restored.
+// Round 144: in-place positive span 184f/plain; native pitch/yaw/both names 213f;
+// span with pitch/yaw/both/all scalar names 184f each. Original names retained.
+// Direct movement fields/shared square/external vector reference on the normalized
+// span graph 172f each; first plain confirms 172. Either delayed bound form 327f;
+// separate positive result with fields/shared square/reference 284f each. Fields kept.
+// Five remaining scalar-pin input orders 172f each; earlier pitch error, explicit
+// rate branches and both 172f each. All helper inputs and scalar lifetimes restored.
 // Round 183: Direction reference/pointer-result/output-last 213/213/213; native vector result
 // 270; shared cosine 271, with reference/vector result 271/270; reversed scalar formals 227.
 // Original direction helper and body restored; upper-bound/range and pin homes remain.
@@ -778,10 +789,9 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 			real range = control_turn_difference(upper, lower);
 			real to_upper = control_turn_difference(upper, entry->facing.yaw);
 			real from_lower = control_turn_difference(entry->facing.yaw, lower);
-			real positive_range = range + 6.2831855f;
-			if (!(range < 0.0f)) positive_range = range;
-			if (!(to_upper >= 0.0f && positive_range > to_upper) &&
-				!(from_lower >= 0.0f && positive_range > from_lower))
+			if (range < 0.0f) range += 6.2831855f;
+			if (!(to_upper >= 0.0f && range > to_upper) &&
+				!(from_lower >= 0.0f && range > from_lower))
 			{
 				if (fabs(from_lower) < fabs(to_upper))
 					entry->facing.yaw = lower;
@@ -817,8 +827,7 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		{
 			real amount = (real)fabs(entry->facing.pitch - target) * 0.63661975f;
 			real delta = target - entry->facing.pitch;
-			vector3f velocity = unit->field_88;
-			real movement = (real)sqrt(velocity.i * velocity.i + velocity.j * velocity.j + velocity.k * velocity.k) * g_510c54->rate;
+			real movement = (real)sqrt(unit->field_88.i * unit->field_88.i + unit->field_88.j * unit->field_88.j + unit->field_88.k * unit->field_88.k) * g_510c54->rate;
 			real rate = target != 0.0f ? movement * amount * 0.08f : *(real *)(settings + 0x5c) * movement * amount;
 			entry->facing.pitch += control_pitch_pin(delta, -rate, rate);
 		}

@@ -2189,6 +2189,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 373: shared marking-chain walk ordinary/inline/forced 296/296/296;
 // entry chain workspace with the same boundaries 296/296/296; uniform structure
 // observations with ordinary/forced walk 331/331. Ordinary shared walk kept.
+// Round 144: existing complete actor/location/both views 296f each; cluster field
+// observations alone or with actor/location/both 296f each; both views and readonly
+// visibility row 296f. All restored; early reset-word and later allocation remain.
 // Round 183: Backward visibility source/destination/both pointer induction 331/322/358;
 // four default-position permutations 296/296/296/296; both pointers with default first 358.
 // Original merge and dispatch restored; reset-word SI and later cursor/selection homes remain.

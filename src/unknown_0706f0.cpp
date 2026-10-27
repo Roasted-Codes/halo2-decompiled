@@ -70,6 +70,9 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // after the reset exit 307/307/292/299. Original positive byte-result body restored.
 // On the byte-result graph: native owner/primary/secondary lexical homes, all
 // pairs, all three, and complete role-correct workspaces 182 each (eight forms).
+// Round 215: Coherent native byte/signed-byte virtual returns, each with byte/Boolean
+// result storage and original/retail case order, 243/241/243/241 each. Manager caller
+// loses its match in all eight; original Boolean contracts and complete body restored.
 // Continuous member induction on the byte-result frame: mutable/readonly cursors
 // 182/182; with physical dispatch order 183/183; Boolean result 243/243,
 // with physical order 241/241. Original ordinal traversal and byte result restored.
@@ -83,6 +86,7 @@ bool network_session_host_set_value49f8(c_class_58d20 *arg_0, long arg_1);
 // Excluded-state conjunction owns the failed arm at initial/final/both joins 182/182/182;
 // each with Boolean result 243/243/243; both with physical case order at byte/Boolean
 // result 183/241 (fast). Original positive readiness arms and byte result restored.
+// Round 153: advancing member cursor on the retained byte graph 182; structured reset/active join indexed/cursor 182/182, native Boolean 243/243; successful-first join indexed/cursor 182/182, cursor Boolean 243. Original body and inherited state stores restored.
 // @retail 0x706f0
 bool c_session_state_matchmaking::update()
 {

@@ -699,6 +699,8 @@ color3f *unpack_color3f(dword pixel, color3f *color);
 // Existing shared interpolation/trig/all clamps 66/203/195; staged interpolation 22;
 // native bound record 136; readonly data 22; upper-first endpoints 22; sequential endpoints 22.
 // Entry color/interval/data declarations, paired/all scopes and entry sample: eight forms 22 each.
+// Inline range-map helper modifying/returning its value 146/149; switch in a shared inline
+// helper with 0x1b2c0 22; sibling statement clamp 76; sibling named clamp 66.
 // @retail 0x1b580
 bool function_1b580(long unused, byte const *definition, long component, long mode, real *out)
 {

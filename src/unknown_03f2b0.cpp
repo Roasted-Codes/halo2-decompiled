@@ -1420,6 +1420,9 @@ struct s_133f70;
 // (all eight 356 fast). Original record access and body restored.
 // Round 330: Query/builder/output-query/lighting inline and noinline declarations: eight at 356f, matching
 // reduced control (frame 0x3400), versus full 213. All declarations restored; no reduced-only candidate.
+// Round 215: Complete per-entry mutable/const frame/view captures 372/372, function-entry
+// captures 384/384; shared two-use stamp on those scopes 361/361/383/383 (control 213).
+// All introduce a frame difference; complete original observations and body restored.
 // Native cache/previous and stamp/handle acceptance orders, logical fallback
 // and direct level invalidation: 326/213/326/366/369/367/369/349 fast against expanded control 213.
 // Original cache predicate, bitwise fallback and level guard restored.

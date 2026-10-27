@@ -2068,7 +2068,8 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 210 (was 210): frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
+// score 210 (was 210): object/offset homes and low-mask allocation remain;
+// frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // object/offset homes and low-mask allocation remain;
 // object/offset homes, low-mask allocation and the 23-byte deficit remain;
@@ -2127,6 +2128,8 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // names and source-first declarations 184; tail fractions, child fraction, mask names and both
 // scratch-home combinations 184; forced/ordinary/compiler-selected getter and clamp inline
 // contracts 184.
+// Entry declarations 021/102/120/201/210 and typed array/pointer accesses 210 each;
+// header local 209, rejected. Original lookup and body restored.
 // Round 234 on direct field clamps: low request intersection 210; named low bit 210;
 // early high bit alone/with intersection 295/295; native record cursor alone/with
 // intersection 213/213; unsigned bit ordinal and reversed count defaults with intersection

@@ -139,7 +139,12 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 947 (was 969): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
+// score 947 (was 947): Frame 0xe0 and state/output carriers now agree; settings/zero homes and flag schedules remain.
+// Retail re-reads the player-control global before its flag test, after the conditional magnitude/pow
+// calls, and keeps NONE in EBX; ours keeps the global in EBX from entry (LTCG trusts those callees here;
+// retail's address is never taken). Round 73: settings pointer after the clears 959; state entry after the
+// clears 957; state entry first 941 at 3779 bytes (entry loads out of retail's order); clears swapped 949;
+// if/else output pointer 986.
 // Earlier: frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.

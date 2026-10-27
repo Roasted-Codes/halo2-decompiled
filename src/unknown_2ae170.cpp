@@ -1077,6 +1077,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 330: t01-shared-front-late 319; t02-shared-rear-late 228; t03-shared-all-late 346; t04-shared-front-
 // early 335; t05-shared-rear-early 234; t06-shared-all-early 357; t07-forced-shared-late 200; t08-forced-
 // shared-early 212; shared helper declaration restored.
+// Round 241: Complementary channel bool/byte/short/long 202/202/194/203;
+// the same with four scalar lexical homes 202/202/194/203. Short complement
+// gains six, below retention threshold. Original frame 0x10 and x87 sums remain.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
