@@ -1591,8 +1591,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-
-// score 739 (was 739): Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
+// score 739 (was 739): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
+// Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
 // user-cursor and identity-word homes differ;
@@ -1619,6 +1619,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Admission-test result 739; eager failure OR 753; positive completion 739;
 // player-result-first OR 739; accumulated signed/unsigned failure 761/761;
 // signed positive completion 759; admission plus positive completion 739.
+// Round 137: SSE flag 755 (file gate failed);
+// inline read/result/write-result and combinations 739,739,739,739,739,739,739; outlined joint 739.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
