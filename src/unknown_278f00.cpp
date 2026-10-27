@@ -71,6 +71,8 @@ void __stdcall function_b8890(long arg_0);
 // both processing ordinals 212. Signed body/list bounds, retry and call cycle retained; original restored.
 // Complementary category bool/byte/short/long with signed second count 212/212/271/273;
 // unsigned second-count counterparts 212/212/271/273. Wide category frame 0x428; all restored.
+// Round 194: Shared array/header/group alone, all three pairs and all three together 212 each; all native
+// records with branched list selection 244. Original body and views restored.
 // @retail 0x278f00
 void function_278f00()
 {
