@@ -11,3 +11,7 @@ kind_object_3192b0 g_480bb8;
 kind_object_3192b0::kind_object_3192b0()
 {
 }
+
+// score 1 (was unwritten): base destructor call; explicit destructors 20;
+// allocator forms 1.
+// @retail 0x3192d0 deleting kind_object_3192b0
