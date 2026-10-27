@@ -335,59 +335,34 @@ void function_13ad48(long user_index, byte const *selectors, real *values, byte 
 
 bool function_22acb4(long player_index);
 
-// score 165 (was 165): extra second-mask spill and persistent constant homes remain.
-// Extra second-mask spill and persistent constant homes remain.
-// extra second-mask slot and retained constant registers differ;
-// third/second/fourth phases 265; fourth/second/third 261; third/fourth/second 246;
-// shared item guard 241; descending selection cases 232. Original body retained.
-// extra second-mask slot/constant registers remain;
-// set-only all masks 529; first 381; second 293; third 262; fourth 294.
-// extra second-mask slot and constant homes remain; second enum group kept.
-// Second/fourth/third phases 287; fourth/third/second 297; first enum group 238;
-// complete type-bit selection 227; second enum group 196; combined selections 201.
-// second-mask spill and constant homes remain.
-// Round 303: both enum groups 216; unified item predicate 256; multiplayer at use 257;
-// shifted source flags 281; fourth enum selection 284; one-case bit first 190;
-// one total enum-bit update 291. Final stores and query argument preserved.
-// second-mask spill/constant-one retention remain.
-// extra second-mask slot and retained constant registers differ;
-// Earlier 232 (was 232): extra second-mask slot/constant registers remain;
-// Earlier 196 (was 232): extra second-mask slot and constant homes remain; second enum group kept.
-// Earlier 190 (was 196): second-mask spill and constant homes remain.
-// Earlier 190 (was 190): second-mask spill/constant-one retention remain.
-// Total low-bit updates from seeded accumulators: second/third/both/fourth/
-// second-fourth/third-fourth/all 254,190,254,190,254,190,254; second seed 3 253.
-// second-mask slot and constant homes remain; second-mask bit orders
-// 16/2/4/8, 2/16/4/8, 2/4/16/8, 8/4/2/16 all 190;
-// 2/8/4/16, 16/8/4/2, 8/16/2/4, 4/8/16/2 all 190 at 884 bytes.
-// second-mask spill and constant homes remain.
-// First enum order one/zero/NONE 189 (below gate), zero/NONE/one 195, zero/one/NONE 195,
-// NONE/one/zero 197; native fourth on current enums 299; signed third/fourth/both 271/299/285.
-// second-mask spill and persistent constant homes remain.
-// Earlier 190 (was 190): second-mask spill and constant homes remain.
-// Fourth-mask code/side/flag-a/flag-b/flag-c observations once: 190/260/209/209/209;
-// all five/code plus flag-a/flag-b plus flag-c: 271/209/287. Second-mask spill remains.
-// second-mask spill and persistent constant homes remain.
-// Earlier 190 (was 190): second-mask spill and persistent constant homes remain.
-// Individual redundant clears removed: first16 284; second16 281; both16 290;
-// first2/4/8 286/286/290; first2+16 301; initial third128 249. All restored.
-// False-first total setters: first/second/third/fourth 190/190/248/207;
-// first-second/all 190/260. Clear-before-guarded-set second/all 259/340.
-// Round 364: Native enum/source-flags/first-bytes/fourth-bytes reads 190/190/190/190;
-// enum plus flags/first bytes 190/190; all scalar fields/all fields plus native items 190/190.
-// Round 366: Joint item/type-mask selection 298; mask-first stores 298; zero result 300;
-// initialized absent outputs 278; early first seed 298; signed third/native fourth/native second 316/308/285.
-// First/second enum observations once 292/284; flags at each use 190; both enum observations 284; first/second/both with live flags 292/284/284; unsigned-word enums with live flags 284. Extra second-mask spill and persistent constant homes remain.
-// Third-mask type order 132/213/231/312/321 190/273/165/251/190; item bits
-// 132 196; item bits 213 196; item bits 321 196. Keep type order 231, plain 165.
-// Round 206: On type order 231, total conditional result updates for first/second/third/fourth masks
-// 165 each; first-second, second-third, second-fourth and all masks 165 each. Original setter restored.
-// Round 166: Native source bits with Boolean conversion/total low-bit/false-first
-// second updates 164/296/275/295/164/296/275/297 fast. The 164 form gains one
-// length-penalty point only; extra slot remains. Original body and source fields restored.
-// Round 331, retained third-type order 231: first-enum orders 248/284/428/482/842
-// 192/193/284/283/189f; total second enum 234f; both enums 235f;
-// all mask declarations at entry 165f. Extra spill remains; all eight restored.
+// score 165 (was 165): our second mask is computed into ECX and spilled to an extra frame slot (retail keeps
+// it in EBX and has one local), and the constant held in a register differs (retail: 1 in EDI; ours: 2 or a
+// clear mask). Forms tried, by round:
+// phases third/second/fourth 265, fourth/second/third 261, third/fourth/second 246, second/fourth/third 287,
+// fourth/third/second 297; shared item guard 241; descending selection cases 232; set-only all masks 529,
+// first 381, second 293, third 262, fourth 294; first enum group 238; complete type-bit selection 227; second
+// enum group 196; combined selections 201; both enum groups 216; unified item predicate 256; multiplayer at use
+// 257; shifted source flags 281; fourth enum selection 284; one-case bit first 190; one total enum-bit update 291;
+// total low-bit updates from seeded accumulators second/third/both/fourth/second-fourth/third-fourth/all
+// 254/190/254/190/254/190/254, second seed 3 253; second-mask bit orders 16/2/4/8, 2/16/4/8, 2/4/16/8, 8/4/2/16,
+// 2/8/4/16, 16/8/4/2, 8/16/2/4, 4/8/16/2 all 190; first enum order one/zero/NONE 189, zero/NONE/one 195,
+// zero/one/NONE 195, NONE/one/zero 197, NONE/zero/one 192; native fourth 299; signed third/fourth/both
+// 271/299/285; fourth-mask code/side/flag-a/flag-b/flag-c observations once 190/260/209/209/209, all five 271,
+// code plus flag-a/flag-b 209, plus flag-c 287; redundant clears removed first16 284, second16 281, both16 290,
+// first2/4/8 286/286/290, first2+16 301, initial third128 249; false-first total setters first/second/third/
+// fourth 190/190/248/207, first-second/all 190/260; clear-before-guarded-set second/all 259/340; native
+// enum/source-flags/first-bytes/fourth-bytes reads 190 each; joint item/type-mask selection 298; mask-first
+// stores 298; zero result 300; initialized absent outputs 278; early first seed 298; signed third/native
+// fourth/native second 316/308/285; enum observations once first/second/both 292/284/284; flags at each use 190;
+// third type order 132/213/231/312/321 190/273/165/251/190, 123 190; item bits 196; total conditional result
+// updates 165; native source bits with boolean conversion 164 (one length point only); all mask declarations at
+// entry 165; second enum as four set-or-clears 234, with the first enum NONE/zero/one 235.
+// Round 57 (aligned listing counts, ours vs retail, in brackets): retail's own block order is the first enum
+// NONE/zero/one, the second enum as four set-or-clears (0x100 twice) and the third type order 1/2/3; together
+// 232 [aligned 84 -> 30]. On that body: short second 283 [19: 1 now in EDI as retail], long second 287 [18],
+// (short)(char) second 232 [30], `& (word)1` 232, second split into a store and `&= 1` 283 [19], short first
+// 268, all masks short 319, second declared at entry 232, flags read at each use 232, char flags local 233,
+// `(word)(flags & 1)` 289. Only the second-mask register (and with it the frame slot) still differs there.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

@@ -2533,6 +2533,12 @@ bool c_game_engine_markers::v46(dword flags, long, s_marker_update *update)
 }
 void function_15e360(point3f const *point, long object_index);
 
+// score 136 (was 136): retail keeps the player in EBP and the marker in EDI and spills the slot to the
+// player's argument home; ours keeps the slot in EBP, the marker in ESI and the player in EDI, and spills
+// the masked player index. Tried: the stored scale read back for its zero test 140 (retail's test-ax
+// form, registers unmoved); a named scale 140; that test without the player reference 145; without the
+// masked-index local 140; the team through the masked index 135 (603 B); the masked index at entry 136;
+// read through the player reference 140.
 // @retail 0x242ba0
 void function_242ba0(long marker_index, long object_index, long player_index)
 {
@@ -2596,38 +2602,47 @@ typedef bool (__stdcall *t_record_fill)(long, void *, long, long, long, void *, 
 void function_41490(short group, long tag, short kind, real distance, t_record_fill fill,
 	dword value, void (__stdcall *callback)(void *), void *context, point3f const *position);
 
+/* draws the circle of a slot's marker (a negative slot names the second set): 32 points around the
+   marker's position at the slot's radius, eight per quadrant */
 // @retail 0x244470
 void __stdcall function_244470(long arg_0, long arg_1, long arg_2, long arg_3,
 	long arg_4, long arg_5, void *arg_6)
 {
-	s_marker_entry *local_0 = g_4e0350->marker_entries;
-	long local_1;
+	s_marker_entry *entry;
+	point3f local_3;
 	real local_2;
 	if (arg_5 >= 0)
 	{
-		local_1 = g_51ec80->b[arg_5];
+		entry = &g_4e0350->marker_entries[g_51ec80->b[arg_5]];
+		local_3 = entry->position;
 		local_2 = g_51ec80->bounds[0][arg_5].x;
 	}
 	else
 	{
-		local_1 = g_51ec80->c[-1 - arg_5];
-		local_2 = g_51ec80->bounds[1][-1 - arg_5].x;
+		long index = -1 - arg_5;
+
+		entry = &g_4e0350->marker_entries[g_51ec80->c[index]];
+		local_3 = entry->position;
+		local_2 = g_51ec80->bounds[1][index].x;
 	}
-	point3f local_3 = local_0[local_1].position;
 	point2f local_4[32];
 	for (long local_5 = 0; local_5 < 8; ++local_5)
 	{
 		real local_6 = (real)local_5 * 0.19634954631328583f;
-		real local_7 = (real)sin(local_6) * local_2;
-		real local_8 = (real)cos(local_6) * local_2;
-		local_4[local_5].x = local_3.x + local_7;
-		local_4[local_5].y = local_3.y + local_8;
-		local_4[local_5 + 8].x = local_3.x + local_8;
-		local_4[local_5 + 8].y = local_3.y - local_7;
-		local_4[local_5 + 16].x = local_3.x - local_7;
-		local_4[local_5 + 16].y = local_3.y - local_8;
-		local_4[local_5 + 24].x = local_3.x - local_8;
-		local_4[local_5 + 24].y = local_3.y + local_7;
+		real sine = (real)sin(local_6);
+		real cosine = (real)cos(local_6);
+		point2f *first = &local_4[local_5];
+		point2f *second = &local_4[local_5 + 8];
+		point2f *third = &local_4[local_5 + 16];
+		point2f *fourth = &local_4[local_5 + 24];
+		first->x = local_3.x + sine * local_2;
+		first->y = local_3.y + cosine * local_2;
+		second->x = local_3.x + cosine * local_2;
+		second->y = local_3.y - sine * local_2;
+		third->x = local_3.x - sine * local_2;
+		third->y = local_3.y - cosine * local_2;
+		fourth->x = local_3.x - cosine * local_2;
+		fourth->y = local_3.y + sine * local_2;
 	}
 	real local_9 = local_4[1].x - local_4[0].x;
 	real local_10 = local_4[1].y - local_4[0].y;
