@@ -2068,7 +2068,36 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 210 (was 184): the clamps are PIN on the unit's fields (re-read at each use, as retail
+// score 184 (was 184): object/offset homes and low-mask allocation remain;
+// native unit view 184; read-only unit view 184; native child view 184;
+// both native views 184; unsigned result mask 184; child defaults reversed 186;
+// immutable output binding 184; read-only byte source 184.
+// frame 0x1c agrees; object/offset homes and slot mask differ.
+// Frame pointer 291; scalar clamp input 184; sample-first clamp result 189;
+// indexed snapshot records 230; native-word ordinary tail flags 192.
+// Frame 0x1c agrees; indexed lookup, object/offset homes and slot-mask allocation still
+// differ. offset receiver home 183; offset snapshot home 183; offset object home 183; offset
+// result home 183; receiver store lifetime 201; offset positive count 183; tail result mask
+// 208; offset tail result mask 207.
+// getter guard/exhaustive result 200; complete output receiver 184;
+// exhaustive child metadata/count/all results 234/299/311; ordered clamp results
+// and bound returns 191. Object/offset homes and low-mask allocation still differ.
+// object/offset homes and low-mask allocation remain;
+// getter byte slot 200; table/full identifier, object, table/decoded index 184;
+// header/object/table with byte slot 200; table word object slot plus byte slot 287.
+// object/offset homes and low-mask allocation remain;
+// reversed getter with short/byte/long slot 184/200/208; unsigned handle
+// combination 184/200/208; reversed short/long with scalar clamp 184/208.
+// header/object homes and low-mask allocation remain.
+// Clamp source/result names and source-first declarations 184/184/184;
+// tail fractions, child fraction, mask names and both scratch-home combinations 184 each.
+// object/offset homes and low-mask allocation remain;
+// forced/ordinary/compiler-selected getter and clamp inline contracts, all eight
+// alternatives 184 each. Both original helper contracts and bodies retained.
+// Native entry metadata+state/metadata/state 187/187/232; native reference 187; both request
+// predicates with native entry/raw cursor/metadata/state 237/238/238/263. All fast. Original
+// helpers, qualifiers and short cursor retained.
+// the clamps are PIN on the unit's fields (re-read at each use, as retail
 // does) in place of a helper that steered through a volatile local, the tail flags are declared
 // first and the dead volatile on the second flag is gone (aligned differences 126 -> 99; without
 // both volatiles the old body is 226). Retail keeps the requested flags in EDI and spills the

@@ -378,7 +378,10 @@ void c_class_19b8b1::v3()
 // the shared sound tail follows both action tails rather than separating them;
 // default sound 51; shared action groups 43; reversed action groups 45; shared actions and
 // default sound 65; sound selection result 16; single result exit 14; shared event type 50;
-// shared direction flags 40.
+// shared direction flags 40; sound call and return in every arm 24; primary arm with its own
+// sound and a shared sound 0 after the chain 24; sound selector before the action 36; inverted
+// flag tests with else goto 14; direction chain nested with one sound assignment 24;
+// permuter 600 s found nothing.
 // @retail 0x2540e8
 bool c_class_19b8b1::v10(s_widget_event *event)
 {

@@ -1241,6 +1241,9 @@ void function_17aec0(short node_index, s_effect_datum *effect, transform4x3f *ma
 // Tried (r27b): the plain form without the volatile reread, with or without the node local, 37 (the node
 // moves to eax and the flag to cl); a `short const *` reference to the node keeps it on the stack but
 // swaps the flag and matrix registers (cl/eax, retail al/ecx) 32.
+// Tried (r35): the qualified snapshot with a later plain parameter read 13; the direct fallback 31;
+// the initial read through its address 13; a C++ reference 32; an overwritten snapshot 37;
+// memcpy without the reread 37; `(void)&node_index` with either snapshot form 37.
 // @retail 0x17af30
 void function_17af30(bool field_b4, short node_index, s_effect_datum *effect, transform4x3f *matrix)
 {
@@ -2822,7 +2825,8 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 	return next_index;
 }
 
-// score 176 (was 176): Frame 0x50 agrees; early false BL, player bitmap/count carriers and point/advance scheduling remain.
+// score 176 (was 176): Frame 0x50 agrees; early false BL, bitmap/count/unit carriers and point/advance scheduling remain.
+// Frame 0x50 agrees; early false BL, player bitmap/count carriers and point/advance scheduling remain.
 // frame 0x50 agrees; early false-result, player bitmap/count carriers and point scheduling remain.
 // Persistent effect pool 194; persistent player pool 189; outer for 189;
 // squared distance compared first 176; player slot/unit names 189.
@@ -2841,6 +2845,17 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // readonly effect metadata 176. Original body, native widths and metadata restored.
 // Accumulated/selected test result 184/176; result after pool query/signed-byte result/function delta 176 each;
 // live tag radius/live unit fields 254/254; live tag with accumulated result 258.
+// Radius before displacement 176; displacement-first declaration 176; location-scoped matrix 176;
+// each pair and all three 176; absent-node point setter 228 (fast).
+// Complementary bool/test-produced/signed-byte/full-width status 176/176/176/176;
+// complementary success join/test-produced join 303/309; positive tested join 289;
+// initial salted-query truth 269. All original results and exits restored.
+// Round 165: Readonly player/unit/both receivers 176/176/176; each with readonly
+// metadata and both with metadata 176/176/176; squared distance at comparison 176;
+// all readonly receivers plus distance boundary 176. Original receivers and body restored.
+// Round 324: absolute effect slot 176; existing player search 176; slot/search 176; existing salted-index
+// conversion 254; slot/conversion 255; search/conversion 254; all three 255; full slot name with both helpers
+// 255.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

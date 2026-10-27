@@ -164,6 +164,8 @@ void function_11d610(quaternionf *q)
 // clamp as a ternary, sqrtf, i or k terms with swapped operands 11 each.
 // Shared point setter 11; scaled-component setter 19; shared cross plus setter 24; native coordinate
 // input/setter/scaled-setter 11/11/19; reused first-k/second-j scalar captures 24/30.
+// Reciprocal between k/j or j/i 29/32; native i coordinates, compound i or j, immutable
+// root, split cross declarations and reversed threshold 11 each.
 // @retail 0x11d6a0
 void function_11d6a0(
 	quaternionf *out,

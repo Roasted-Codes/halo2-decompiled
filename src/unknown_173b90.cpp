@@ -824,7 +824,38 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 308 (was 308): frame 0x60 agrees; the early result store, the flag 8 clear (retail
+// score 308 (was 308): Frame 0x60 agrees; result/flag clear, child homes and selective tag expansion remain.
+// Earlier: frame agrees; byte flag clear, child carriers and selective inlining differ.
+// Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
+// perpendicular call 394; inline depth one 394, zero 517.
+// Earlier context: frame 0x64 versus 0x60; flag clear and selective calls differ.
+// Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
+// child tag scalar 394; long result 329; dword flags 401.
+// Frame 0x60 now agrees; flag transfer, child carriers and selective calls
+// remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
+// 308 (plain verified); child for-loop 338.
+// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native
+// orientation result 373, with shared cross 373.
+// frame 0x60 agrees; early long-result store, flag transfer and child/call homes remain.
+// Ordinary local parent 366; word result 338; direct final result 388; direct parent color
+// Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
+// child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
+// Original entry result, ordinary pooled flags and all child calls restored.
+// Native flag bytes 382; flag-stage result 378; native flag overlay 382;
+// Overlay with flag-stage result 378; named byte transfer 411; transfer/result 411;
+// byte flags with ordinal observations 388; overlay/ordinal/result 384.
+// All native byte layouts lose five matched controls; original word flags retained.
+// Flag-stage long result/native bitfield transfer/direct visibility and combinations
+// 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
+// native-definition 308; shared-velocity-address 308.
+// native-definition-shared-velocity-address 308; readonly-particle 308.
+// native-definition-readonly-particle 308; shared-velocity-address-readonly-particle 308.
+// native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
+// Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
+// canonical results 374/374/308/375 on the recovered frame. Original body restored.
+// Round 329: cleanup/count/spawn/unlink inline or outlined inline: all 308; full-EAX
+// return with long/bool/complete-arm results 405/371/405. All declarations and return types restored.
+// frame 0x60 agrees; the early result store, the flag 8 clear (retail
 // stores the word, clears the bit with a byte and, then reloads), the location-loop and child
 // registers, and retail's inlined 0x137bd0 at the child-loop call (EBX then holds the tag
 // object and the tinted byte spills) differ. 0x137bd0's file is built /Ob1, which keeps it out
@@ -1032,8 +1063,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
     result->k = a->i * b->j - a->j * b->i;
 }
 
-// score 213 (was 213): frame and length agree; early EDI and tag carriers differ. Native draw 354; native
-// membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
+// score 213 (was 213): Frame/length agree; early EDI, tag/mask and child-render homes remain.
+// Native draw 354; native membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
 // native request initialization 211; immutable render inputs 213; native definition bit five 317; native
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
 // preference 646; child constant bit stores 220.
@@ -1044,6 +1075,8 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // predicates 287; signed render mask 213. Original source restored.
 // Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
 // availability result before the work guard 355. Early EDI/tag lifetimes remain.
+// Round 329: shared pool/data 339/354; group/render-mask/both observations 222/331/331;
+// pool with group/mask/both 275/364/364. Original receivers and every memory observation restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {
