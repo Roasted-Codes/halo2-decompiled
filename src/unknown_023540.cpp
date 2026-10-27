@@ -2582,7 +2582,7 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
     real red, real green, real blue, real *red_result, real *green_result, real *blue_result);
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
-// score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
+// score 506 (was 530): frame 0x21c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 // Round 73 (plain checks with 0x73360): the held round 90 body 401 and 0x73360 MATCH -> 33 again;
 // that body with the existing render-memory allocator, merged bool result, default light in the
@@ -2623,6 +2623,10 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Coefficient address at the consumer 506; direct bucket/sample/both 530/530/530;
+// consumer address with bucket/sample/both 506/506/506. Address begun at accepted
+// allocation with both direct receivers 527 (three-point gain rejected). Only the
+// consumer address retained; 1404/1543 bytes, frame 0x21c.
 // @retail 0x23690
 bool __stdcall function_23690(s_coefficient_layout const *layout, short order, long object_index,
     s_137801 const *vertices, long count, byte const *indices, long tag)
@@ -2642,7 +2646,6 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         real red[16], green[16], blue[16];
         long level = 5 - order;
         if (level > layout->level_count - 1) level = layout->level_count - 1;
-        real const *data = layout->data + layout->levels[level].offset;
         long stride = layout->groups * (layout->columns * 3 + 4);
         s_bucket_source const *buckets = (s_bucket_source const *)vertices;
         long total = function_023540((short)count, buckets, &g_4b89b0[g_5093e8], stride);
@@ -2695,7 +2698,7 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
                     function_143600((real const *)&rotation, 3, red, rotated_red);
                     function_143600((real const *)&rotation, 3, green, rotated_green);
                     function_143600((real const *)&rotation, 3, blue, rotated_blue);
-                    function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                    function_023ca0((s_block_layout const *)layout, layout->data + layout->levels[level].offset, rotated_red, rotated_green, rotated_blue, output);
                     output += stride;
                 }
             }
@@ -2758,6 +2761,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
+// Alpha clamps before initial setup first/second/both 445/433/469; before sampler
+// setup 358/389/341; both before shader clear 353; both at admitted entry 481.
+// Exact-only timing forms restored; original packing and sampler/draw calls retained.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

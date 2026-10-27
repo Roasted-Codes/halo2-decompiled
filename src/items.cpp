@@ -1308,6 +1308,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // byte/byte/short/word/long carriers 183/183/196/196/196. Original release and event code
 // restored.
 // Event owner/category/magnitude publication permutations 154/154/154/154/154; location first, owner last and location between owner/scalars 154/154/154. Original event and release code restored.
+// Whole flags byte as unsigned/signed/plain-char full-byte bitfields 154/154/154;
+// plain/signed-char scalars 154/154; full-byte bitfields with byte-unit named
+// flags 216/216/216. Original record declaration, masks and entire body restored.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
