@@ -69,9 +69,9 @@ Decompilation is under way, and 9737 retail functions now match byte for
 byte. The checker reports:
 
 ```
-matched 9737 of 11326 game functions (1584456 of 2786206 bytes, 56.87%)
+matched 9737 of 11326 game functions (1584420 of 2786206 bytes, 56.87%)
 matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
-matched 10921 of 17654 functions in scope (1743758 of 3904218 bytes, 44.66%)
+matched 10921 of 17654 functions in scope (1743722 of 3904218 bytes, 44.66%)
 ```
 
 Matched code so far includes:
