@@ -1716,7 +1716,7 @@ bool __stdcall function_e9500(long unit_index, s_unit_request *request)
 
 bool __stdcall function_10f430(long unit_index, long field_7c, long state_name, long weapon_name, long action_name,
 	real blend, bool flags, long mode);
-void function_edfa0(long unit_index, point2f const *facing);
+__declspec(noinline) void function_edfa0(long unit_index, point2f const *facing);
 void function_ba3d0(long unit_index);
 
 /* the request to play an animation impulse (type 25) */
@@ -4335,9 +4335,7 @@ void function_edfa0(long unit_index, point2f const *facing)
 
 	if (unit->parent_object_index == NONE)
 	{
-		unit->forward.j = facing->y;
-		unit->forward.i = facing->x;
-		unit->forward.k = 0.0f;
+		vector3f_assign(&unit->forward, facing->x, facing->y, 0.0f);
 		unit->up = *g_4687b0;
 	}
 }

@@ -2182,19 +2182,17 @@ void network_session_leave_joining(c_class_58d20 *session)
 	network_session_update_leaving_join(session);
 }
 
-// score 3 (was 3): retail sets the NONE carrier after clearing the state
-// block; ours sets it before the clear. Tried: the copy as a word loop
-// 49, as a pointer range or a byte loop 0 (not kept: the matched siblings
-// 0x61180 and 0x614a0 copy the same way with memcpy).
-// Complete field construction without scratch clear 48; clock before record
-// 28, after scratch clear 3; immutable initialized record 48; typed state
-// destination 11, without scratch clear 48, with immutable record 48, with
-// earlier clock 28. The original eight-byte frame and memcpy remain.
-// our NONE request sentinel is defined before clearing the
-// state block; retail defines it afterwards. Tried: the copy as a word loop
-// New trials: memmove 42; request field fill 3; clear result as copy target 9;
-// all-one record fill 31; tail-only clear 32; fill with memmove 37;
-// tail clear with fill 30; tail clear with memmove 46.
+// score 3 (was 3): retail sets the NONE carrier (ebx) after clearing the state block; ours sets
+// it before the clear. The carrier must stay live across the clear: set after it in the source,
+// it moves to eax and ebx is no longer saved. Tried: the copy as a word loop 49, as a pointer
+// range or a byte loop 0 (not kept: the matched siblings 0x61180 and 0x614a0 copy the same way
+// with memcpy); complete field construction without scratch clear 48; clock before record 28,
+// after scratch clear 3; immutable initialized record 48; typed state destination 11, without
+// scratch clear 48, with immutable record 48, with earlier clock 28; memmove 42; request field
+// fill 3; clear result as copy target 9; all-one record fill 31; tail-only clear 32; fill with
+// memmove 37; tail clear with fill 30; tail clear with memmove 46; NONE set after the state
+// clear 29; NONE before the clock 15; field fill (0xff memset) after the state clear 29; zero
+// initializer for the record 27; state-block pointer local for the clear and the copy 11.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {
@@ -2451,7 +2449,17 @@ bool network_session_handle_session_disband(c_class_58d20 *session, const s_type
 	return result;
 }
 
-// score 10 (was 10): the result carrier is a dword here (xor ebx,ebx, mov eax,1, mov al,bl)
+// score 10 (was 10): byte zero/result exits still differ (the union shares the reason and the
+// result). Retail is the sibling 0x5e150's plain shape (`bool result = false; ... result = true;`)
+// apart from the inlined disconnect's reason: retail keeps it in ebx (as 0x5ade0 does), ours
+// folds it into an immediate store; that plain shape alone is 14. Tried: full-state
+// nonzero/equality 39/40; joined state 39/40; scalar-state boundary 39/40; accepted-state
+// equality 55/36; result initialization width and success tails; peer result with
+// literal/result reason 24/23; peer-fed value/bool view 37/43; host-fed reason with bool/union
+// result 14/10; both test results 24; peer-fed common success 15; plain shape 14, with the
+// disconnect callee beside its retail neighbours 14, the callee copying its reason with memcpy
+// 14, building a one-field state record 14, reading its reason through its address 14.
+// the result carrier is a dword here (xor ebx,ebx, mov eax,1, mov al,bl)
 // where retail keeps a byte (xor bl,bl, mov al,1), so the disconnect path also falls into the
 // false-exit copy instead of retail's shared mov al,1 exit; the disconnect reason agrees.
 // result initialization width and success tails differ;

@@ -924,7 +924,8 @@ void __stdcall function_d6bc0(long arg_0);
 void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vector3f const *arg_3,
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
-// score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// score 156 (was 156): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
 // Round 44: short/long-unit adjacent word bitfields 151/339; first-third-second words 153;
 // word/handle acquisition order 218; normal between words 162; sweep in radius/center argument
 // evaluation 293/293; named radius on the current frame 151. Opening body restored.
@@ -997,6 +998,10 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Round 352: native stored-velocity fields with direct, scalar-first, named-product and combined
 // products 151 each; each with one three-use velocity snapshot 374 (frame 0x128). Original
 // external record, response expressions, query-first sweep and saved identifiers restored.
+// Round 7: response minimum as a ternary, response products scale-first, speed test summed j/k/i 156
+// each (identical code); sweep before the query 283 (now the start through the call matches; the
+// sweep stores land at 0x3c not retail's 0x48 and the candidate loop gains a jump over its alignment),
+// with quotient-first products 283. The zero register (retail XMM3) decides the response arm.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

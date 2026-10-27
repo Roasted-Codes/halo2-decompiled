@@ -189,6 +189,11 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // original terms restored. Normal/ray/hit and polygon homes remain.
 // Full shared normalization with cross/point/plain-loop combinations 253/250/253/250/258/261/258/261. Three-
 // point 250 forms restored; frame is now 0x7c versus 0x90.
+// Lane 9 r23: retail's homes (frame offsets) are fraction 0, plane 4, direction 0x14, ray start
+// 0x20, hit point 0x2c, hit byte 0x38, spills 0x3c..0x4f, polygon 0x50; ours are size-ordered (hit
+// byte 3, fraction 4, direction 8, ray start 0x14, point 0x20, plane 0x2c, polygon 0x3c). Hit point
+// or direction renamed to change name order 247/247 (same code); fraction as a ternary 249;
+// plane d cleared before normalizing 252; clamp as if/else 250.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
