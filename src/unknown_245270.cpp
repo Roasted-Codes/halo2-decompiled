@@ -274,9 +274,13 @@ void function_245400(s_source_245400 const *source, long index,
 		material->field_04, material->field_05, point, material->field_06);
 }
 // score 204 (was 204): Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
-
+// Round 74: plane table declared as a source field and read at each use 204; plane codes declared
+// before the edge vector 203; source parameter declared last (definition, declaration and the one
+// call) 204, still edx; material pointer for the final call (as 0x245400) 204; transformed point
+// declared with the edge vector 204. Retail's source arrives in ecx and is kept in esi until the
+// plane table read, which it schedules after the edge vector; ours reads every source field first.
 // Earlier: Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
-// score 204 (was 204): frame 0x24 versus 0x2c, the source register (edx here, ecx in retail,
+// Earlier: frame 0x24 versus 0x2c, the source register (edx here, ecx in retail,
 // which keeps 0x245aa0 at 3) and the separate side-byte homes differ. Ours holds the transform
 // pointer in ebp from entry, so the source pointer stays in a scratch register; retail reads the
 // transform from the stack at its test and borrows ebp briefly for the first plane code.
