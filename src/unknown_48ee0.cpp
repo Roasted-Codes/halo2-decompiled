@@ -58,6 +58,8 @@ extern real g_4c9798[36];
 // Round 213: direct lower/upper/both depth fields 294/295/294; each with distinct far normal
 // 294/295/294; both with distinct far point 302, with distinct far point and normal 294.
 // One-point gains rejected; original field snapshots and captured far normal restored.
+// Round 194: Native projection/dimension/border-identity row combinations 297/295/297/295/297/295/297; all
+// rows with projection scope 298. Original body restored.
 // Round 375: Complete near/far/shared-pair/distinct-pair plane outputs on the
 // retained far-normal graph 322/335/361/364; CRT copies 322/335/361/364.
 // Frame 0x30 versus 0x28; all exact-only output-record forms restored.

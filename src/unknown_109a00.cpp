@@ -144,7 +144,10 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 	return result;
 }
 
-// score 88 (was 88): Frame 0x88 and first point-velocity agree; second point-velocity and nonrotating schedules remain.
+// score 88 (was 88): Frame 0x88 agrees; the second point-velocity copy (angular i preloaded,
+// x offset before y) and the nonrotating scale (clock copied for j and k) remain, five bytes long.
+// Earlier: point-velocity and nonrotating scale/add
+// Frame 0x88 and first point-velocity agree; second point-velocity and nonrotating schedules remain.
 // Frame 0x88 and first point block agree; second point inputs, nonrotating products and five extra bytes remain.
 // Earlier: Frame 0x88 agrees; point-velocity and nonrotating scale/add
 // scheduling and the four-byte extent excess remain. Earlier shared point-velocity expansion changed
@@ -190,6 +193,10 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // At-use clock field 88 kept: all three products read the field consistently; first
 // point-velocity block now agrees. Native two-use initial velocity/field receiver/both
 // 185/166/185; with at-use clock 187/167/194; initial velocity with shared real scale 185.
+// The two point-velocity copies change schedule together: forms that give the second copy
+// retail's code break the first. Points-difference helper plus named scale plus scale helper
+// 164; i difference, named scale, then j and k 165 (nonrotating block exact, first copy off);
+// that with direct velocity fields 210; with the scale helper 165; with scale-helper delta 239.
 // With the returned point input: returned point 167; returned point and native original input
 // 201; returned point and early displacement 167; returned point, native original and early
 // displacement 201; returned point and complete scaled assignments 167; returned point, native

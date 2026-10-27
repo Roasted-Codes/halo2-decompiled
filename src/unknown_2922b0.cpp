@@ -141,6 +141,10 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // cross first/second/both value inputs 845/858/1045. Original helpers restored.
 // Collision-produced bool/byte hit entries with bool/byte/short/long success 700/690/690/690 each;
 // memory success recovered but tag/basis homes regress. Original producers and carriers restored.
+// Hit clear orders 3210/1032/2301/0213 629/629/629/629; success after
+// hit clear 0/1/2/3 686/686/686/686; original entry restored.
+// Round 343: Complete tag-range field reads 686; with shared cross products in basis/rotation/both
+// 664/686/665; projection/basis+projection/rotation+projection/all 691/668/691/668. All restore; retain original snapshots and helpers.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

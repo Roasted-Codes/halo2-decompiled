@@ -115,33 +115,30 @@ void __stdcall function_1ad130(long actor_index, s_slot *slot);
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1);
 void __stdcall function_1ada70(long actor_index, s_slot *slot);
 
-/* ---- slot type 0x2c ---- */
-
-// score 12 (was 12): conversion spills still use the rounding slot; timer-setting boundary 29, 29, 29, 33; output first 12, output scope 12, byte before rounding 19, native int output 12 (round 115).
-// integer conversion spills use the rounding slot rather than the parameter home;
-// existing rounding helper 29; named tick value with helper 29; later state with helper 29;
-// direct state fields with helper 29; unit range with helper 29; native range with helper 29;
-// unit range with parameter home 12; shared range with parameter home 12; existing time
-// conversion 29; time conversion and later state 29; unit range and time conversion 29.
-// @retail 0x1ac090
-bool __stdcall function_1ac090(long actor_index, s_slot *slot)
+/* the slot state of types 0x2c and 0x2b seen past its header (s_slot_2c's layout from +0xc),
+   as 0x1ac090 and 0x1acda0 read it */
+struct s_1acda0
 {
-	s_slot_2c *state = (s_slot_2c *)slot;
-	real scale = (slot_random() + 1.0f) * 2.0f;
-	long ticks;
-
-	*(real *)&slot = scale * g_510c54->field_2_3;
-	__asm
-	{
-		fld slot
-		fistp ticks
-	}
-	state->ticks = (short)ticks;
-	state->unknown39 = false;
-	return true;
-}
-
-void function_265bb0(long actor_index);
+    bool unknown0c;
+    bool unknown0d;
+    short ticks;
+    bool unknown10;
+    byte unknown11;
+    bool unknown12;
+    bool unknown13;
+    vector3f facing;
+    short unknown20;
+    short unknown22;
+    bool unknown24;
+    bool unknown25;
+    byte unknown26[2];
+    s_type_c3b527 point;
+    char unknown38;
+    bool unknown39;
+    bool unknown3a;
+    bool unknown3b;
+    byte unknown3c[0x40 - 0x3c];
+};
 
 PRIVATE __forceinline void local_0(real seconds, short *timer)
 {
@@ -164,6 +161,34 @@ PRIVATE __forceinline void local_1(real seconds, short *timer)
 	}
 	*timer = (short)ticks;
 }
+
+/* ---- slot type 0x2c ---- */
+
+// score 8 (was 12): ECX and EDX swapped: retail keeps the seed pointer (then the tick rate) in EDX
+// and the slot in ECX; frame, temporaries and every other instruction agree.
+// Earlier (slot cast, real stored in the slot parameter's home, asm in the body): existing rounding
+// helper 29; named tick value with helper 29; later state with helper 29; direct state fields with
+// helper 29; unit range with helper 29; native range with helper 29; unit range with parameter home 12;
+// shared range with parameter home 12; existing time conversion 29; time conversion and later state 29;
+// unit range and time conversion 29; output first 12, output scope 12, byte before rounding 19,
+// native int output 12.
+// Round 136: data block typed through slot->unknownc with the existing timer-setting helper (or a
+// plain seconds local and asm) 8: kept. Force-inline rounding helper 28 (34 on the data block);
+// data block with the parameter-home store 23; doubling after the rate multiply 10; state declared
+// after seconds 28; existing unit random range 18; the file's random range 8/10; random local 8;
+// header-size pointer 8; flag store first 14; tick-rate cast 8; named seconds 8, before the state
+// pointer 6 (slot read after the seed store); permuter 88 tries 8.
+// @retail 0x1ac090
+bool __stdcall function_1ac090(long actor_index, s_slot *slot)
+{
+	s_1acda0 *state = (s_1acda0 *)slot->unknownc;
+
+	local_1(g_510c54->field_2_3 * ((slot_random() + 1.0f) * 2.0f), &state->ticks);
+	state->unknown39 = false;
+	return true;
+}
+
+void function_265bb0(long actor_index);
 
 // score 60 (was 68): frame four versus retail zero (first tick in the frame, not the slot home);
 // slot, actor-table and object-table registers rotate and the mode is compared in memory.
@@ -1216,29 +1241,6 @@ bool function_2613d0(long arg_0, s_reference arg_1, s_prop_search *arg_2);
 bool __stdcall function_1acb50(long arg_0, s_slot *arg_1);
 
 #pragma inline_depth(0)
-/* the slot state of 0x1acda0 seen past its header (the same layout as s_slot_2c from +0xc) */
-struct s_1acda0
-{
-    bool unknown0c;
-    bool unknown0d;
-    short ticks;
-    bool unknown10;
-    byte unknown11;
-    bool unknown12;
-    bool unknown13;
-    vector3f facing;
-    short unknown20;
-    short unknown22;
-    bool unknown24;
-    bool unknown25;
-    byte unknown26[2];
-    s_type_c3b527 point;
-    char unknown38;
-    bool unknown39;
-    bool unknown3a;
-    bool unknown3b;
-    byte unknown3c[0x40 - 0x3c];
-};
 
 // score 68 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;

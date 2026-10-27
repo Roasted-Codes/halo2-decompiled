@@ -37,7 +37,13 @@ PRIVATE __forceinline bool polygon_clip_intersection_23a430(plane2f const *plane
 	return false;
 }
 
-// score 5 (was 5): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// score 5 (was 101): loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
+// intersection's x product loads the plane before the point. Round 72 (full build): helper
+// parameters (first, second, plane) 7 and (first, plane, second) 7, both making the second
+// intersection's x product plane-first too; (plane, second, first) 5; a separate input pointer
+// for the points or their copy 9 (x term first in the first intersection), declared first 9.
+// The fraction defaulted first,
+// loop setup stores [esp+0x10]/[esp+0x18] in another order, and the first
 // intersection's x product loads the plane before the point. The fraction defaulted first,
 // x-first displacements and the scale inside the output expressions gave retail's XMM homes
 // and length (101 -> 5). Then: current declared before previous 5; named current/previous
@@ -279,6 +285,9 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // lowest-coordinate order 203/203; heading before scan 220.
 // Shared difference predicate early returns bool/byte/short/long 220/220/202/213;
 // initialized difference result bool/byte/short/long 271/271/250/250. All restored.
+// On the long departure state: signed-word/unsigned-word/unsigned-native/int result
+// 257/257/203/203; native input count 259, with signed/unsigned word result
+// 268/268; observed signed-word input count 203. Caller checked with each.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -459,6 +468,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // status declaration order 264; previous-point address 237; displacement order 237.
 // Actual NONE failure/common publication unsigned/signed ordinal 212/252; ordinary previous side 227/254;
 // positive-first policies 211/251/256/253. Keep only the minimal 212 form; one-point tail edit restored.
+// Native previous/plane/both observations 378/370/354; both native points 355;
+// all native inputs 376; complete plane/previous/both scalar observations 347/359/368.
+// Original inputs, copies and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

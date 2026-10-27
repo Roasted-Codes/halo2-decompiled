@@ -11,10 +11,10 @@ void *c_havok_abstract_allocator::method9(long size)
 	char *page = (char *)((c_havok_abstract_allocator *)g_480118)->allocate16(capacity + 16, 0x12);
 	memcpy(page, m_unknown08, sizeof(m_unknown08));
 	char *payload = page + 16;
+	m_unknown08[3] = (long)payload;
 	m_unknown08[0] = (long)(payload + size);
 	m_unknown08[1] = capacity - size;
 	m_unknown08[2] = (long)page;
-	m_unknown08[3] = (long)payload;
 	return payload;
 }
 

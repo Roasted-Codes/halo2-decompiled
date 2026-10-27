@@ -49,6 +49,9 @@ const dword g_455978[81] = {
 // Frame 0x1d4 agrees; optional input registers, scalar homes and selective location/release expansion remain.
 // Earlier: Aligned frame 0x1d4 agrees; optional-input registers, scalar homes and helper expansion remain.
 // frame 0x1d4 agrees; optional-input registers, scalar homes and inline boundaries differ.
+// aligned frame 0x1d4 agrees; optional input/register roles (arg_9/arg_10 in
+// esi/edi swapped), scalar homes and selective helper expansion remain: ours inlines 0x11bed0 (retail
+// calls it at all its sites) and calls 0x279740 at both releases (retail inlines the first).
 // aligned frame 0x1d4 agrees; optional-input registers (ESI/EDI swapped), scalar homes
 // and selective helper expansion remain: retail calls 0x11bed0 out of line and inlines the cache-range
 // check of the first reference release (the form of 0x1d01c0), while ours does the opposite.
@@ -77,6 +80,10 @@ const dword g_455978[81] = {
 // bounds description ends before add/exclusion 406/363; full shape selection 350; word success 415.
 // Round 214: single native vector table, separate/reused radial sample and direct/shared ray difference
 // 350/350/350/350; real-row table with the same producer grid 447/447/362/362. All restored.
+// Noinline redeclaration of 0x11bed0 in this file 350 (ignored; still inlined); sample count as a
+// 27/18 ternary 477 (retail's form, but the flag then goes in a register and caller 0xc5460 changes);
+// ray endpoint adds as `x = x + i` 350; translation copy as three statements 354; upper bound as
+// radius-plus-coordinate 350.
 // Round 54: noinline declaration of 0x11bed0 447 (and 0x11bed0 itself 19 in --fast: CAVEAT on its
 // callee 0x14a280); first release with the inline range check 442; both 401 (structural diff 36 vs 66);
 // with an `arg_8 ? 27 : 18` count 427, count alone 477.
