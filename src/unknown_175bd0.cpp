@@ -2213,7 +2213,16 @@ event_done:
 
 #pragma inline_depth()
 
-// score 87 (was 87): Object-index reload (BLOCKED-BY 0xbadc0: retail reloads the index after it, so
+// score 63 (was 109): only the object index differs: ours keeps it in ESI from entry across 0xbadc0
+// and 0xbaf80 (NONE in EBX), retail reloads it after each call with NONE in ESI. Retail's callers
+// 0x10a390 and 0x16c2b0 keep an index across 0xbadc0, so its summary is not the cause. 0x1794a0's
+// first argument is the root index in retail (EAX after 0xbaf80).
+// Round 72: deleted effect cleared without the gotos, later block guarded by `effect &&` 63 (kept:
+// gives retail's destruction block placement); one destroy call through a flag 137; root index as
+// 0x1794a0's first argument 197; the object test as a second `if (effect && ...)` reached from the
+// deletion path 207 (retail's reload appears, NONE moves to EBX); that with the root index 130;
+// the index named at entry for the first test 63; the second test nested in `if (effect)` 207.
+// Object-index reload (BLOCKED-BY 0xbadc0: retail reloads the index after it, so
 // retail's 0xbadc0 is not read-only to LTCG) and the merged destruction call's place (ours keeps the
 // invisible arm's copy before the visible tests, retail the visible arm's copy) still differ.
 // Round 88: invisible arm's flag test the other way round (call to 0x177260 first) 87 (kept);
@@ -2294,20 +2303,20 @@ bool __stdcall function_1794e0(long effect_index)
 						function_177260(effect_index, false);
 				}
 				else if (function_177610(effect_index))
-					{ effect = 0; goto effect_done; }
+					effect = 0;
 			}
 			else if (TEST_FIELD_BIT(effect->flag2))
 			{
 				if (TEST_FIELD_BIT(effect->flag4))
 				{
 					if (function_177610(effect_index))
-						{ effect = 0; goto effect_done; }
+						effect = 0;
 				}
 				else
 					function_177310(effect_index);
 			}
 		}
-		if (TEST_FIELD_BIT(definition->flag3) || TEST_FIELD_BIT(definition->flag4))
+		if (effect && (TEST_FIELD_BIT(definition->flag3) || TEST_FIELD_BIT(definition->flag4)))
 		{
 			long object_index = effect->object_index;
 
@@ -2328,7 +2337,6 @@ bool __stdcall function_1794e0(long effect_index)
 			}
 		}
 	}
-effect_done:
 	return effect == 0;
 }
 

@@ -2671,6 +2671,10 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 323 (reduced control 128): common norm 139; common scale 128; real limit
 // literals 128; common norm/scale 139; norm/limits 139; scale/limits 128; all 139;
 // all with body-index name 139. Full-image save staging and paired getter homes remain.
+// Round 71: the full image keeps the three saves at entry only when src/unknown_0350e0.cpp is linked in
+// (any reduced image without it sinks them as retail does); float numerators 100.0f/50.0f give retail's
+// fdivr dword 168 (tie); direct array / pointer-to-array rigid body reads 128f; index declared before the
+// loop at function/block top 128f (address order stays [offset + data], retail [data + offset]).
 // Round 137: active-query bool/byte/short/long on nested admission 168,168,168,168;
 // on guarded exit 168,168,168,168 (controlled reduced scores).
 // Round 332 (reduced control 128): active/notification/impulse inline boundaries and
