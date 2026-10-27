@@ -1233,6 +1233,9 @@ bool network_message_read_header(s_bitstream *stream, long *type, c_type_659ceb 
 // oldest with bool/byte/short/signed-byte result 276,268,267,268;
 // oldest before false/newest first 269,158;
 // both endpoints with bool/byte/short/signed-byte result 282,262,218,262.
+// Round 138: shared lookup index/fragment/both/all walk carriers 141/141/141/141;
+// all with Boolean/short result 234/191; shared index-sequence/fragment-sequence 141/141.
+// Original walk locals and long result restored; oldest/false homes and allocator save remain.
 // @retail 0x95840
 bool __stdcall function_095840(s_network_stream_header *header, long *message_type, long *message_size, void *message_data)
 {

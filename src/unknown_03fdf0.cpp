@@ -288,7 +288,7 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 226 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
+// score 193 (was 226): Frame 0x48 and geometry agree; unsigned-zero branch and pass joins remain.
 // Common final flush 226; with noinline query 226, inline query 397; short/long/byte result
 // 254/300/226; noinline with short/byte 254/226.
 // unsigned-zero branch and pass-call boundaries differ;
@@ -320,6 +320,10 @@ bool function_404b0(long mode)
 // Formal-address removal, pass-phase false result, entry result and entry false result
 // 226/226/226/226; removal with pass false/entry/entry false 226/226/226;
 // isolated unsigned-byte lower-bound admission 225. Original body restored.
+// Round 138: independent pass outcomes bool/byte/short/long 226/226/255/297;
+// complete stipple choice bool/byte/short/long 193/193/226/226. Boolean role name,
+// negated range, direct outside range and byte outside range 193 each. Both named
+// Boolean stipple-enable choices kept, plain 193; unsigned-zero admission and pass joins remain.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {
@@ -380,7 +384,8 @@ bool function_3fdf0(long mode, bool single_pass)
             g_467130 = 1; g_467134 = 0; g_467138 = &g_4c1a48[0]; g_4858b4 = 1;
             function_14bc0(1, 0, true);
             if (!g_485a75 && !g_485a76) function_14b60(1, 0, 0.0f, 0);
-            function_15680(g_485898 >= 4 && g_485898 <= 7 ? 0 : 1);
+            bool stipple_enabled = g_485898 < 4 || g_485898 > 7;
+            function_15680(stipple_enabled);
         }
         else g_467130 = 0;
         function_15370(1);
@@ -390,7 +395,8 @@ bool function_3fdf0(long mode, bool single_pass)
         {
             g_467130 = 3; g_467134 = 0; g_467138 = &g_4c1a48[0]; g_4858b4 = g_4858b8;
             function_14bc0((short)g_4858b8, 0, true);
-            function_15680(g_485898 >= 4 && g_485898 <= 7 ? 0 : 1);
+            bool stipple_enabled = g_485898 < 4 || g_485898 > 7;
+            function_15680(stipple_enabled);
         }
         else g_467130 = 0;
         function_15370(1);
