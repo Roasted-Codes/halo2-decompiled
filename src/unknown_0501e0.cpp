@@ -72,7 +72,6 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // bytes); scaled values read from the input pointer 221, with shared scale 252.
 // Frame 0x18 versus 0x14; displacement/coefficient/result overlap remains.
 // Earlier: Frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
-
 // Frame 0x18 versus 0x14 and coefficient/input/result homes remain.
 // frame 0x18 versus 0x14 and coefficient/input/result overlap remain.
 // Global optimization off 961; depth zero 555; frame pointer 300;
@@ -117,9 +116,16 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // with indexed result 280/280/404; scaled input vector with output pointer/native return 312/404. Original helper and body restored.
 // Round 146: actual output-end !=/< with long/dword ordinals 406 each and short/word ordinals 378
 // each; original ordinal-controlled helper restored.
+// Lane 8 r58: second offset vector reused for the normalized segment (retail's [esp+8] slots,
+// 1136 bytes) 261; with it: scaled arm reading the input 261, if/else scaled copies 297,
+// scaled vector copy 326, camera-pointer helper rows/loop 292/258, plain rows 295, k/j/i
+// copies 260, k/j/i copies and scaling 259, k/j/i scaling 250; k/j/i scaling alone 245,
+// k/j/i copies and scaling alone 257.
 // Round 345: Live forward/up/right coefficient cursors 241/253/253; their pairs/all
 // 253/253/253/254; all with descending direct rows 267. Forward alone gives frame
 // 0x14 and 1136 bytes but regresses to 241; original helper and body restored.
+// Round 196: Descending transform rows with long/int/short/signed-byte ordinals: direct output
+// 275/275/407/407; descending output cursor 275/275/394/394. Original helper/body restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

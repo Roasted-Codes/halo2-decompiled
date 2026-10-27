@@ -132,6 +132,17 @@ void __stdcall function_c1670(long object_index)
 	saved_object->flag6 = false;
 }
 
+struct s_light_frame_ab
+{
+    point3f position;
+    point3f endpoint;
+    real clip_distance;
+    point3f field_1c_3;
+    vector3f forward;
+    vector3f up;
+    real radius;
+};
+
 struct s_light_ab
 {
 	short salt;
@@ -140,11 +151,15 @@ struct s_light_ab
 	long scenario_index;
 	long stamp;
 	long first_cluster_reference;
-	byte unknown14[0x24 - 0x14];
+	byte unknown14[4];
+	point3f centre;
 	real radius;
 	point3f fade_centre;
 	real fade_radius;
-	byte unknown38[0xd4 - 0x38];
+	point3f location_point;
+	byte unknown44[0x84 - 0x44];
+	s_light_frame_ab frame;
+	byte unknownc8[0xd4 - 0xc8];
 	vector3f colour_a;
 	vector3f colour_b;
 	byte unknownec[0xf8 - 0xec];
@@ -195,13 +210,17 @@ struct s_light_definition_ab
 {
 	dword flags;
 	short kind;
-	byte unknown06[0x18 - 6];
+	byte unknown06[0xc - 6];
+	real radius_scale;
+	byte unknown10[0x18 - 0x10];
 	real radius_a;
 	real radius_b;
 	s_light_cone_ab cone;
 	byte unknown34[0x7c - 0x34];
     long bitmap_index;
-    byte unknown80[0xb8 - 0x80];
+    byte unknown80[0x98 - 0x80];
+    real minimum_radius;
+    byte unknown9c[0xb8 - 0x9c];
 	short fade_distance;
 	short fade_colour;
 	short fade_range;
@@ -532,16 +551,6 @@ void function_c15a0()
     }
 }
 
-struct s_light_frame_ab
-{
-    point3f position;
-    point3f endpoint;
-    real clip_distance;
-    point3f field_1c_3;
-    vector3f forward;
-    vector3f up;
-    real radius;
-};
 extern point2f *g_468774;
 
 static inline real dot_product_c1a80(vector3f const *a, vector3f const *b)
@@ -843,56 +852,52 @@ void function_c28b0(long light_index)
     {
         real radius = (definition->flags & 2) ? shape.sphere.radius_a :
             (shape.sphere.radius_a > shape.sphere.radius_b ? shape.sphere.radius_a : shape.sphere.radius_b);
-        radius *= *(real *)((byte *)definition + 0xc);
-        real minimum = *(real *)((byte *)definition + 0x98);
-        radius = radius > minimum ? radius : minimum;
-        s_light_frame_ab *frame = (s_light_frame_ab *)((byte *)light + 0x84);
-        point3f *centre = (point3f *)((byte *)light + 0x18);
-        if (frame->clip_distance > 0.0f)
+        radius *= definition->radius_scale;
+        radius = radius > definition->minimum_radius ? radius : definition->minimum_radius;
+        if (light->frame.clip_distance > 0.0f)
         {
-            *centre = frame->field_1c_3;
-            light->radius = frame->clip_distance + radius;
+            light->centre = light->frame.field_1c_3;
+            light->radius = light->frame.clip_distance + radius;
         }
         else
         {
-            *centre = frame->position;
+            light->centre = light->frame.position;
             light->radius = radius;
         }
-        *(point3f *)((byte *)light + 0x38) = *centre;
-        light->fade_centre = *centre;
+        light->location_point = light->centre;
+        light->fade_centre = light->centre;
         light->fade_radius = light->radius;
     }
     else
     {
-        s_light_frame_ab *frame = (s_light_frame_ab *)((byte *)light + 0x84);
-        function_c1a80(frame, &shape, definition);
-        real width = shape.cone_render.slope_x * shape.cone.values[4] * 2.0f + shape.cone_render.width;
+        function_c1a80(&light->frame, &shape, definition);
+        real width = shape.cone.values[4] * shape.cone_render.slope_x * 2.0f + shape.cone_render.width;
         real height = shape.cone_render.aspect * width;
-        vector3f *direction = &shape.cone_render.direction;
-        real side = dot3f(direction, &shape.left);
+        real side = dot3f(&shape.left, &shape.cone_render.direction);
         real side_sign = side >= 0.0f ? 1.0f : -1.0f;
-        real up = dot3f(direction, &frame->up);
+        real up = dot3f(&shape.cone_render.direction, &light->frame.up);
         real up_sign = up >= 0.0f ? 1.0f : -1.0f;
-        vector3f unit = *direction;
+        vector3f unit = shape.cone_render.direction;
         function_30bf0(&unit);
         point3f corner;
         corner.x = g_468788->x + unit.i * shape.cone.values[4];
         corner.y = g_468788->y + unit.j * shape.cone.values[4];
         corner.z = g_468788->z + unit.k * shape.cone.values[4];
-        real side_extent = side_sign * width * 0.5f;
-        corner.x += shape.left.i * side_extent;
-        corner.y += shape.left.j * side_extent;
-        corner.z += shape.left.k * side_extent;
-        real up_extent = up_sign * height * 0.5f;
-        corner.x += frame->up.i * up_extent;
-        corner.y += frame->up.j * up_extent;
-        corner.z += frame->up.k * up_extent;
-        real radius = (real)(sqrt((double)corner.z * corner.z + (double)corner.y * corner.y + (double)corner.x * corner.x) * *(real *)((byte *)definition + 0xc));
-        real const *minimum = (real *)((byte *)definition + 0x98);
-        light->radius = radius > *minimum ? radius : *minimum;
-        point3f *centre = (point3f *)((byte *)light + 0x18);
-        *centre = frame->clip_distance > 0.0f ? frame->field_1c_3 : frame->position;
-        *(point3f *)((byte *)light + 0x38) = *centre;
+        point_add_scaled_c35a0(&corner, &shape.left, side_sign * width * 0.5f, &corner);
+        point_add_scaled_c35a0(&corner, &light->frame.up, up_sign * height * 0.5f, &corner);
+        real radius = (real)(sqrt(corner.z * corner.z + corner.y * corner.y + corner.x * corner.x) * definition->radius_scale);
+        radius = radius > definition->minimum_radius ? radius : definition->minimum_radius;
+        if (light->frame.clip_distance > 0.0f)
+        {
+            light->centre = light->frame.field_1c_3;
+            light->radius = radius;
+        }
+        else
+        {
+            light->centre = light->frame.position;
+            light->radius = radius;
+        }
+        light->location_point = light->centre;
     }
     function_c2c50(light_index);
 }

@@ -1834,6 +1834,10 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // ordinary inline last/first 769/768. Native orientation output gives the same
 // four scores. Reduced control 411/2166; full baseline 410/2154. All restored.
 // Native packed animation flags, logical result at bool/byte/word/long width 411/411/443/443; conditional result 446/446/442/443 (fast control 411/2166; full 410/2154). Frame 0x78 agrees; early blend byte and later receiver/sway homes remain.
+// Round 158: Early aiming default at two boundaries with bool/byte/short/long storage, then a complete
+// query-produced result at four widths and early bool/byte defaults (fast control 411; plain baseline 410).
+// Scores [393, 393, 426, 428, 411, 411, 434, 435, 441, 441, 471, 470, 441, 441]. Original executable body
+// restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

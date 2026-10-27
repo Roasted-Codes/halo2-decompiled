@@ -109,18 +109,16 @@ void class_3193c0::store_position(__m128 const *value)
 	previous_time += 1000000.0f;
 	field_70.m128_f32[3] = 0.0f;
 }
-// score 20 (was 41): direct transform output removes the aligned frame; translation copy still differs.
-// Native transform view 20; aligned quaternion load and library copy 29; explicit result
-// after call/at entry 41/41; retained translation 57; complete transform workspace 52.
-
 // @retail 0x3197f0
 void class_3193c0::set_rotation(__m128 const *value)
 {
 	field_60.m128_f32[3] += 1000000.0f;
 	rotation = *value;
-	transform_rotation.function_372500(&rotation);
+	transform_312630 *transform = (transform_312630 *)&transform_rotation;
+	((rotation_372500 *)&transform->rotation)->function_372500(&rotation);
+	_mm_store_ps(transform->translation.m128_f32, transform_translation);
 	// The rotation operation only changes three columns; retain translation.
-	((c_transformed_point *)&field_70)->transform(&transform_rotation, &field_20);
+	((c_transformed_point *)&field_70)->transform(transform, &field_20);
 	field_70.m128_f32[3] = 0.0f;
 }
 // @retail 0x319840
