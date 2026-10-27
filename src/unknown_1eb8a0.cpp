@@ -231,6 +231,13 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Initial component orders ikj/jik/jki/kij/kji 639/642/637/644/642; scale orders ikj/jik/jki 642/642/642.
 // Round 324: shared ramp time 665; third time 642; ramp/third 665; remaining distance 683; ramp/remaining 682;
 // third/remaining 683; all scalar workspaces 682; displacement workspace 665.
+// Round 376: Continuation status at entry in bool/byte/short/long 643/643/648/647; at output
+// phase 687/687/687/686. Original failure status, counter and caller preserved.
+// Round 237: One rate observation everywhere 742; native integer ticks 642, both 742;
+// ticks at each field use 663, with reused rate 718; rate with all left/right factors
+// 742/742, native ticks and all left factors 742. Original clock scalar forms restored.
+// Output displacement/scale schedules ikj/jik/jki/kij/kji 641/643/642/644/644;
+// displacement-first, scale-first and scale-first per axis 642/642/642 (fast); caller matched.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

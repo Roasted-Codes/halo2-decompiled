@@ -1275,24 +1275,23 @@ static inline bool ctf_engine_running()
 }
 
 // @retail 0x241520
-// score 77 (was 77): the flag byte is kept in DL where retail keeps it in a stack slot, and the record
-// pool's pointer is loaded into the other register.
 bool c_game_engine_markers::v16(long player_index, long object_index)
 {
-	bool result = ctf_engine_running();
+	bool result = true;
 
-	if (result && player_index != NONE && object_index != NONE)
+	if (!ctf_engine_running())
+		result = false;
+	else if (player_index != NONE && object_index != NONE)
 	{
 		s_player_view *player = ctf_player_get(player_index);
 		long slot = slot_object_get(object_index)->slot;
 
 		if (function_101280(object_index) == 1 && slot != NONE)
 		{
-			long engine_type = ctf_options()->engine_type;
-
-			if (engine_type == 9 && (g_51ec80->flags[slot] & 2))
+			if (ctf_options()->engine_type == 9 && (g_51ec80->flags[slot] & 2))
 				result = false;
-			else if (slot != 8 && (engine_type != 9 && slot == player->team || engine_type == 9 && slot != player->team))
+			else if (slot != 8 && (ctf_options()->engine_type != 9 && slot == player->team ||
+					ctf_options()->engine_type == 9 && slot != player->team))
 				result = false;
 		}
 	}
@@ -1936,7 +1935,10 @@ PRIVATE __forceinline short function_244301(short arg_0)
 
 // @retail 0x244300
 // score 68 (was 68): the record pool's pointer is loaded into EDX where retail loads it into ECX, and
-// the products of the dot product are computed in the other order.
+// the products of the dot product are computed in the other order. Round 70: the delta vector in a
+// loop local with the header from-points/length helpers gives retail's z,y,x products (68, the pad
+// shift remains); with it: constants getter 68; slot before the square 68; result after the point 68;
+// do-while loop 68; dword slot 68. A 600 s permuter run reached 13 only through volatile stores.
 bool function_244300(long object_index, long *player_index)
 {
 	bool result = false;

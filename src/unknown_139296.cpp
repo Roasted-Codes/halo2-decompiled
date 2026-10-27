@@ -335,7 +335,8 @@ void function_13ad48(long user_index, byte const *selectors, real *values, byte 
 
 bool function_22acb4(long player_index);
 
-// score 165 (was 190): extra second-mask spill and persistent constant homes remain.
+// score 165 (was 165): extra second-mask spill and persistent constant homes remain.
+// Extra second-mask spill and persistent constant homes remain.
 // extra second-mask slot and retained constant registers differ;
 // third/second/fourth phases 265; fourth/second/third 261; third/fourth/second 246;
 // shared item guard 241; descending selection cases 232. Original body retained.
@@ -379,6 +380,14 @@ bool function_22acb4(long player_index);
 // First/second enum observations once 292/284; flags at each use 190; both enum observations 284; first/second/both with live flags 292/284/284; unsigned-word enums with live flags 284. Extra second-mask spill and persistent constant homes remain.
 // Third-mask type order 132/213/231/312/321 190/273/165/251/190; item bits
 // 132 196; item bits 213 196; item bits 321 196. Keep type order 231, plain 165.
+// Round 206: On type order 231, total conditional result updates for first/second/third/fourth masks
+// 165 each; first-second, second-third, second-fourth and all masks 165 each. Original setter restored.
+// Round 166: Native source bits with Boolean conversion/total low-bit/false-first
+// second updates 164/296/275/295/164/296/275/297 fast. The 164 form gains one
+// length-penalty point only; extra slot remains. Original body and source fields restored.
+// Round 331, retained third-type order 231: first-enum orders 248/284/428/482/842
+// 192/193/284/283/189f; total second enum 234f; both enums 235f;
+// all mask declarations at entry 165f. Extra spill remains; all eight restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
