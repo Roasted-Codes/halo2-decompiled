@@ -86,6 +86,9 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // balance bool/byte 458/458; paired bool/byte 476/476. All eight widths restored.
 // Complementary waiting carrier signed byte/byte 439/439, short/word 450/450, long/dword 454/454; paired
 // waiting/final short 450, paired long 443. All restored.
+// Round 187 advance result carried through roster/count/member-readiness test outcomes,
+// each nonempty combination 459; full combination with native reset byte 465.
+// Exact-match-only decision forms; all restored to the complementary waiting graph.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

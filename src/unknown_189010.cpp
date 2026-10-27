@@ -149,7 +149,7 @@ static __forceinline long game_seconds_to_ticks_round(real seconds)
 	return ticks;
 }
 
-// score 110 (was 118): frame 0xa8 and the request in EAX agree; the first class lookup expands
+// score 110 (was 110): frame 0xa8 and the request in EAX agree; the first class lookup expands
 // where retail calls it (and 0x21d110 takes the tag in EAX where retail passes the state there), so
 // the flag/priority/result homes, push placement and the end-test spill differ. Round 54: the
 // seconds-to-ticks rounding helper with the looping-sound global read at each use 110 kept
@@ -206,6 +206,8 @@ static __forceinline long game_seconds_to_ticks_round(real seconds)
 // nested class admission 118; real class-word mask with direct query 135. All body/type trials restored.
 // State/result/flags/both names 118/118/118/118; early object/source/platform/all stores
 // 118/135/118/133; swapped object-source/source-platform stores 118/118.
+// Round 187 named duration/source expression parts and both 110/110/110; complete fresh
+// tag lookup alone and with those parts 158 each; all plus signed native flags 158. Restored.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
