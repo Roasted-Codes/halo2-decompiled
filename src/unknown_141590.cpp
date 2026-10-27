@@ -160,6 +160,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // schedule with input+projection/input+cross/projection+cross/all row parts 281/291/299/281; second
 // schedule with all parts/direct sums 281/283. Every row stays symmetric; original helper and body
 // restored. Frame 0x1c versus 0x24 and half-angle/quaternion/cross spill sharing remain.
+// Round 94: retail never reuses the quaternion's 16 bytes for the transform spills (ours spill the
+// cross terms into it) and keeps the clamped cosine, sine half and doubled scalar in the matrix
+// parameter's slot. Plain half-angle locals in place of the two-member struct 291 (frame 0x18);
+// transform cross orders jki/kji/jik/kij 286/290/235/284; transform into a result vector 367, with
+// jik 367. Body and helpers restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

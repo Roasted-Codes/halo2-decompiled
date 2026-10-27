@@ -174,6 +174,8 @@ void function_8dd70(void);
 // below (its definitions sit in a contributor file, so they cannot be folded here). Entry
 // test without the local 230; through an inline getter (result local, if/else) 230/230;
 // `initialized == false` 230; observer readiness as a bool if/else assignment 248.
+// Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
+// stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

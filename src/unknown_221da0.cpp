@@ -789,6 +789,8 @@ real function_18cac0(long arg_0);
 // a helper in another file (LTCG inlines it) 225 (still aligned); batch count read once
 // 237 (812 bytes); door clusters through the cached audibility pointer 233 (812 bytes); gain
 // loop bound read once 225; door count read once 237.
+// Round 180: Indexed gain-element pointer inside/before admission 225/225; complete result
+// arms 229/229; two-use old gain 262/262; old gain with complete arms 254/254.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

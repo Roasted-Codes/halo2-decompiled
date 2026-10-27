@@ -1068,6 +1068,18 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 }
 
 // score 213 (was 213): Frame/length agree; early EDI, tag/mask and child-render homes remain.
+// Round 57: the child flag copy as a set/clear if/else (retail's `test word; or word / and byte`)
+// gives retail's entry saves (the early exits reach the child loop, which then uses edi) and
+// child loop, but the inner tag value lands in eax (retail edx) and the extra `mov edx, eax`
+// before 0x137bd0 shifts everything after: 219. On that form: tag/reference/group declaration
+// orders 219, group read twice 228, a forceinline reference helper (tag, definition or system
+// argument, early return or if/else) 219, inverted or ternary selection 217, 0x23ea80's group
+// read 217, definition-pointer reads 219, TEST_FIELD_BIT set/clear 220; with request.system and
+// the location index read before the camera block (retail's order) 218, plus the bit-5 test in
+// this function's word-flag form (retail's `mov dl; shr dl, 5; test dl, 1`) 217, plus the cross
+// product's second products written b-first (retail's xmm0/xmm1) 217; camera inputs from the
+// copied locals 242. The tag register stays eax in every form (also compile-only with 0x137bd0
+// modelled as an edx argument).
 // Native draw 354; native membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
 // native request initialization 211; immutable render inputs 213; native definition bit five 317; native
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size

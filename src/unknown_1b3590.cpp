@@ -627,9 +627,15 @@ short actor_behavior_find_level(long owner_index, short type);
 // the found branch 132; NONE test as result = false in an else-if chain 59 (kept). On that: location
 // pointer 62; getter at each use after the loop 88; loop member reused 59; best locals first 59;
 // inverted selection test 59; slot data block view (unknownc) 59.
+// Round 218: Chained source validity with data block/alone 64/64; chained sentinels 61;
+// both chains 66; complete point after sector alone/with either/both chains 86/87/85/86.
+// Data-block form does not apply; original body and source construction restored.
 // Round 144, recovered result-first/iterator frame: native slot data 59f; movement
 // result 154f, with slot 154f; search result 121f; search/movement 145f; selection/
 // movement 137f; all results 154f, with slot 154f. Original body restored.
+// Round 41: selected target-index snapshot 62; source-selected target index 62;
+// all-phase target index 85; candidate-selected target index 85; candidate-selected location 84;
+// all-phase location 84; source-selected location 62; source-selected target pointer 131.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {

@@ -3117,6 +3117,11 @@ struct s_ammo_conversion_entry
 // Round 337: actual published round total short/word/long 225/225/229;
 // mode-test return producer 197 (gain 1, rejected); with short/word/long totals 231/231/235;
 // short total and mode producer with complementary byte acquisition 208. All restored.
+// Complementary bool/byte/short/long acquisition with the tag byte at every type test
+// 216/216/234/232; with result-controlled first-match scan 246/246/261/259. All restored.
+// Round 204: Shared three-use type-bit result bool/byte/word/dword with word acquisition
+// 218/215/214/221; with complementary byte acquisition 212/204/219/224. Original type
+// observation and result restored; extra frame word, destination/tag and conversion homes remain.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {

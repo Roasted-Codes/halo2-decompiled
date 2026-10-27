@@ -86,6 +86,31 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // the 0x173c10 method called 70; sample into the shared local before field_10 146; sample
 // local declared first 70; DATUM child 70; size optimization 525; inline depth one/two 142/142;
 // global optimization off 433; frame pointer 314; current-record update argument 142;
+// frame 0x10 and length agree. Left: field_10 is stored after the field_38
+// sample (retail stores it first) and the register rotation from the 0x173ba0 arguments on.
+// With field_10 first (retail's order) every register from the 0x173ba0 arguments to the end
+// matches, but the cached-record compare splits into `mov eax,[ebx+0x50]; cmp ebp,eax` after the
+// sample's x87 store (+2 bytes, adds the child-loop pad): 133. The split follows the x87 store in
+// every source shape tried; /G7, /Os or /arch:SSE2 fold it (compile-only), the file's flags don't.
+// Round 57: field_10 first 133; with a compiled-out statement before the compare 133; with the
+// cache-update stores swapped 129; with the sample through the existing reference helper into
+// field_38 or into local_9 133/133. Compile-only, all split: compare in an inline/forceinline
+// helper or bool local, reversed or == compare, typed/int compare, cache pointer copy or member,
+// loop/switch/goto wrappers, sample through an inline initialiser, a named-global or divided
+// scale, helper or direct word samples, field_08/local_3/link/flag statement orders.
+// Earlier: field_38 sample before the field_10 store 70 kept; in-loop lookup through the inline
+// particle_object_for_tag with the child getter nested in 0x173fd0's call 133 kept (nested getter
+// alone 160; inline/forceinline redeclarations of 0x137bd0 142); record-first reset without the
+// split temporary 133 kept; sample through the existing helper 70; the 0x173c10 method called 70;
+// sample into the shared local before field_10 146; sample local declared first 70; DATUM child
+// 70; function_137bd0_inline at the loop re-fetch 134, with the child-settings query in the call's
+// argument list 133 (a copy of 0x137bd0's body); comparison operands swapped 133; child/record
+// datum through DATUM 133; 0x175610's cache-update body 133; complete reconciliation before final
+// draw 133; final sample store after reconciliation 140, with early predicate/flags/both
+// 138/149/160; early cache predicate/masked flags/both across final draw 157/153/177; sample
+// output 142; age/time after sample 239/153; sample late age/time 239/153; late age time 236;
+// sample late age time 236; sample value 142; size optimization 525; inline depth one/two
+// 142/142; global optimization off 433; frame pointer 314; current-record update argument 142;
 // child-input scope 142; metadata read order 142; direct child getter 160; early result
 // declaration 142; word flag update 244; reciprocal default first 142; cache slot/early
 // flags/both/cache reference 142; reciprocal input 143; read-only settings view 142; spawn type
@@ -118,6 +143,17 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // order cannot reach `cmp ebp, [ebx+0x50]` from source. Tag index local 245; child definition
 // local 76; first lookup through the inline particle_object_for_tag 69; list-address pointer
 // locals 70; retail order through the shared sample local 133.
+// loop index declared before the loop 70/70.
+// changed-record predicate 142; actual head field 142; unsigned child handle 142; shared bounded
+// selector 142; word flags 142, with bounded selector 142; child zero-age before enable 142;
+// cache mask field/compare 142/142; existing cache evaluator/native receiver 142/142; refreshed
+// interface lifetime 142; child-result declaration home 142; live lifetime field 142;
+// bindings 158; common flags with current receiver 158; external parent/allocated
+// record/settings/child references and their pairs 142; parent/settings/both metadata fields,
+// first/last/both list fields, metadata with list fields, metadata with cache slot
+// effect/tag/settings home names, pairs, all three, allocation/spawn names 142 each.
+// Compile-only earlier: record-typed cache field, 0x175610's cache store order, an inline
+// cache-update helper, the scale through the shared word wrapper or a named temporary: no fold.
 // @retail 0x247fd0
 void function_247fd0(s_247fd3 *arg_1, s_particle_system_datum *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, dword arg_5, s_247fd0 *arg_0)
