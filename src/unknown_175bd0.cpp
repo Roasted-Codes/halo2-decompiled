@@ -2213,7 +2213,7 @@ event_done:
 
 #pragma inline_depth()
 
-// score 87 (was 109): Object-index reload (BLOCKED-BY 0xbadc0: retail reloads the index after it, so
+// score 87 (was 87): Object-index reload (BLOCKED-BY 0xbadc0: retail reloads the index after it, so
 // retail's 0xbadc0 is not read-only to LTCG) and the merged destruction call's place (ours keeps the
 // invisible arm's copy before the visible tests, retail the visible arm's copy) still differ.
 // Round 88: invisible arm's flag test the other way round (call to 0x177260 first) 87 (kept);
@@ -2233,6 +2233,8 @@ event_done:
 // joins differ. external tag record 109; external root record 109; wide visibility result 144;
 // byte visibility result 109; unsigned color handle 109; root velocity address 109; root location
 // address 109; origin output lifetime 247.
+// Round 208: tag at every use 205; integer destruction result 230; word visibility 130;
+// tag/result 244; tag/word 212; result/word 239; all three 248; unsigned result with all 248.
 // @retail 0x1794e0
 bool __stdcall function_1794e0(long effect_index)
 {
@@ -2662,7 +2664,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 153 (was 166): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
+// score 153 (was 153): Frame 0x7c and transform block agree; scalar homes, post-copy flags and random lifetime remain.
 // frame 0x7c and transform block agree; scalar homes, flag reloads and random-value lifetime remain.
 // Creation-result lifetime 166; detached byte at entry 166; scale at entry 166; explicit mode arms 166; up at entry 166.
 // Part-table cursor 340 rejected for short-counter wraparound.
@@ -2687,6 +2689,8 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Mode-first admission 358; joint outer spatial outputs 179; parent conditional 163; compound scale 166; tag-first eligibility 222.
 // Parent conditional with two-use lower 156, signed detached state 159, both 153 kept plain;
 // on both: unsigned mode 153, part point 166, conditional scale 156 (fast); follow-ups restored.
+// Round 208: uniform tag/event/part observations 334/349/266; tag+event 340;
+// tag+part 402; event+part 453; all owners 590; all owners with word creation result 618.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2856,6 +2860,8 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Round 324: absolute effect slot 176; existing player search 176; slot/search 176; existing salted-index
 // conversion 254; slot/conversion 255; search/conversion 254; all three 255; full slot name with both helpers
 // 255.
+// Round 208: per-test result with literal hit/exhaustion returns, bool/byte/short/long 176 each;
+// uniform player record 270; that record with bool/short/long per-test result 270 each.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
