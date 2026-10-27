@@ -2068,7 +2068,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 184 (was 184): object/offset homes and low-mask allocation remain;
+// score 210 (was 210): object/offset homes and low-mask allocation remain;
 // native unit view 184; read-only unit view 184; native child view 184;
 // both native views 184; unsigned result mask 184; child defaults reversed 186;
 // immutable output binding 184; read-only byte source 184.
@@ -2124,6 +2124,8 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // names and source-first declarations 184; tail fractions, child fraction, mask names and both
 // scratch-home combinations 184; forced/ordinary/compiler-selected getter and clamp inline
 // contracts 184.
+// Entry declarations 021/102/120/201/210 and typed array/pointer accesses 210 each;
+// header local 209, rejected. Original lookup and body restored.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

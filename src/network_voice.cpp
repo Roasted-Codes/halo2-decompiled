@@ -1253,6 +1253,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Native identity with original validation: rolled 316, counted 144; byte identity counted 112;
 // other-player identity 144; native/byte identity with channel rejection 144/112;
 // native/other-player identity with entry-width value 165/165. All lose the matched caller; original retained.
+// Counted traversal with immutable channels/player/both 112 each; pointer traversal
+// with the same forms 283 each; counted immutable identity/source 112/112.
+// Counted forms lose 0x54990; pointer forms preserve it. Original body restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2902,6 +2905,8 @@ struct s_voice_route_choice
 // Radio predicate accumulation, bitwise long with either comparison order 436/436;
 // bitwise Boolean 363/363; logical long 1082/1082;
 // logical Boolean 1087/1087. Byte bitwise accumulation 363 plain kept; original indexed nearest selection retained.
+// Byte-accumulation scalar declarations 021/102/120/201/210 and nearest/headset/radio
+// home renames 363 each; entry registers and traversal bias remain.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
