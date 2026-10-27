@@ -291,6 +291,8 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 58: transform helper locals renamed 195; inverse locals renamed 195; both 195 (identical code:
 // names do not move these slots); transformed points declared tb before ta 195; displaced point declared
 // after the transformed points 195. Ours also stores ta above tb (retail: ta below tb).
+// Round 151: Native right/up/right+up/forward/right+forward/up+forward/all/all+translation captures 261/257/690/257/690/690/690/690; forced pair/pair/pair/all expansion 476/471/476/639. Singles recover frame 0x2c but change input ownership; combined unforced helper outlines. All restored.
+// Original frame 0x30 versus 0x2c and inverse/point/factor homes remain; native basis captures do not qualify.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

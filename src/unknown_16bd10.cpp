@@ -823,6 +823,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // immutable direction 381 and length-at-expression 381. Executable differences
 // 233/354/354/383/383/357/357/357 versus baseline 233; all original receivers restored. Frame 0x48
 // agrees; direction preload, normal/length/zero allocation, flag stores and timer scheduling remain.
+// Round 206: All three length products named at their expression in orders kji/kij/jki/jik/ikj/ijk
+// 405/405/268/268/405/268; complete immutable products in jki/ijk order 268/268.
+// Original (k+j)+i grouping, operands, observations, helpers and calls restored.
 // Round 250: Projection for/while/do loops 360/360/401; pan for/while/do loops 385/385/292; both
 // for/while loops 380/380 (expanded fast control 245). Original parallel rows restored; direction
 // preload, length/zero allocation and flag stores remain.
@@ -830,6 +833,12 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // left-forward-up / left-up-forward, then normal before basis at forward-up-left /
 // up-forward-left / left-forward-up:
 // 247,247,248,248,247,279,279,279 fast; reduced control 245, full 245. Original executable source restored.
+// Round 190: separate blend output 337; native target quaternion mutable/const 367/367;
+// split output plus target 402; native converter result 363, with split output 393;
+// independent normalization value 367, with split output 375. All original quaternion boundaries restored.
+// Round 253: Parallel projection-product parts, ordinary/immutable 251/251;
+// pan first/both weighted parts 245/245; projection with either pan form 251/251;
+// native shared origin alone/with all parts 501/501 (1736 bytes). All restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

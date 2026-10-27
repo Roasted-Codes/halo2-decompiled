@@ -482,6 +482,10 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // 267; cluster local renamed three ways 276 each.
 // Round 180: Cue control/full-prefix clears 256/253; with pointer-tail clear 263/234;
 // the same four with chained index sentinels 257/253/263/234. Original cue helper restored.
+// Round 253: Complete primary-listener result bool/byte/short/long 223 each;
+// uniform cluster at use 272, with bool/short/long result 272 each. All restored.
+// Round 210: Late transition/fade/tag and their three strict pairs give
+// 242/244/266/253/278/291; early tag/fade alone 270/267. Original restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

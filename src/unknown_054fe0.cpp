@@ -1325,9 +1325,15 @@ struct s_player_properties
 // Round 179: first/second/both default arrays after name output 194/205/234;
 // two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
 // all scalar/array defaults after names 296. Original store phases restored.
+// Round 76: separate counters per loop 184; name loop on the player mask field 184; record declared once
+// before the loops 184; previous record before the parameters getter 190; getter before the owner 225.
 // Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
 // in three pairs and together 184 each; all three separate noinline declarations 237. Original
 // declarations and body restored; owner/count/zero allocation and requested cursor remain.
+// Round 225: real packed byte-quartet/byte-pair/short-pair declarations
+// 221/204/210; quartet-byte/quartet-short/byte-short pairs 208/217/221;
+// all groups 216, with promoted team 215. Byte-pair form reaches retail length
+// but regresses; original record declaration and team carrier restored.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

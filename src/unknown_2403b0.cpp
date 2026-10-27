@@ -35,6 +35,10 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 }
 
 // score 95 (was 95): frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
+// frame 0x3c agrees; the object-pool data pointer is cached where retail reloads
+// it, the completion bits use other registers, and the final predicate's layout differs. Kept: the two
+// completion bits set through byte_flags_set (retail stores the flag byte twice), 190 -> 146.
+// frame 0x3c agrees; the object-pool data pointer is spilled across 0xcbd50/0x101280
 // where retail reloads it (a forced reload, reverted at once, gives 72), the virtual-call setup and the
 // completion bits use other scratch registers, the team keeps `mov esi, edi` where retail re-extends
 // (`movsx esi, di`: only a long team cast back to short at the 0x242e00 call gives it; 0x242e00's
@@ -83,6 +87,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Round 62 (95 body): unit through the existing unit_weapon_view_get 95; predicate as `== 0` 95;
 // blocked as one value expression 95; second event initialized before both bits 107; both events
 // through the out-of-line initializer nested in the cause call 284 (not inlined).
+// Round 77: unit/weapon/both through object_get 95/95/95 (the pool read stays shared: both callees
+// between them only read memory in this build, so the reload looks like a callee-summary effect);
+// the entry guard split in two 95; the team as a long 119.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

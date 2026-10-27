@@ -75,6 +75,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 
 // score 186 (was 186): frame 0x11c against retail's 0x118; the request home is four bytes late and the
 // rotation's cross-term homes differ (retail spills two scalar cross terms, sine and cosine). Forms tried:
+// Round 43: mixed two-scalar cross pairs k/j/i-first 241/232/232; request-forward launch copy 246;
+// distinct forward input/local output 235; velocity output with shared/scalar speed scaling 209/209;
+// mixed cross with velocity output 240.
 // cross before trig 234; alignment before trig 234; shared velocity scale 213; plain rotation component loop
 // 234; global optimization off 549; named request word 213; complete creation-stage scope 213; random arm first
 // 284; shared rotation output setter 226; size optimization 563; rotation axis input first 213; rotation output
@@ -128,6 +131,8 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // DL round 156: per-component add/sub 233; two vector passes 225; native sums with
 // loop/aggregate input and loop/scalar output 225/229/229/225; parallel scalar sums
 // mutable/const 227/227. All increase the frame to 0x120; original helper restored.
+// Round 210: Native heading aggregate/zero-first with forward publication after draws,
+// before draws, between draws and after axis: 186/256/251/196 each. Original restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {
